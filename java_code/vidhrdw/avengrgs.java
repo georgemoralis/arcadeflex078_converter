@@ -32,8 +32,8 @@ public class avengrgs
 			y = spriteram32[offs+2]&0x7ff;
 			x = spriteram32[offs+3]&0x7ff; /* Bit 0100 0000 sometimes set?? sh2 bug? */
 	
-			if (x&0x400) x=-(0x400-(x&0x3ff));
-			if (y&0x400) y=-(0x400-(y&0x3ff));
+			if ((x & 0x400) != 0) x=-(0x400-(x&0x3ff));
+			if ((y & 0x400) != 0) y=-(0x400-(y&0x3ff));
 	
 			fx = spriteram32[offs+1]&0x8000;
 			fy = spriteram32[offs+1]&0x4000;
@@ -72,16 +72,16 @@ public class avengrgs
 			if (bank==3) color=rand()%0x7f;
 			if (bank==3) bank=1; /* Mirror, no roms for bank 3 */
 	
-	//if (xoffs&0x80)
+	//if ((xoffs & 0x80) != 0)
 	//xoffs=- (0x80 - (xoffs&0x7f));
 	
-			if (fx) x+=xoffs; else x-=xoffs; //check for signed offsets...
-			if (fy) y+=yoffs-16; else y-=yoffs; //check for signed offsets...
+			if (fx != 0) x+=xoffs; else x-=xoffs; //check for signed offsets...
+			if (fy != 0) y+=yoffs-16; else y-=yoffs; //check for signed offsets...
 	
 			color|=0x80;
 	
-			if (fx) xmult=-16; else xmult=16;
-			if (fy) ymult=-16; else ymult=16;
+			if (fx != 0) xmult=-16; else xmult=16;
+			if (fy != 0) ymult=-16; else ymult=16;
 	
 			for (by=0; by<h; by++) {
 				for (bx=0; bx<w; bx++) {

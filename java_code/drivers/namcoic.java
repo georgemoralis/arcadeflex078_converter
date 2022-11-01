@@ -37,7 +37,7 @@ public class namcoic
 	nth_byte16( const data16_t *pSource, int which )
 	{
 		data16_t data = pSource[which/2];
-		if( which&1 )
+		if ((which & 1) != 0)
 		{
 			return data&0xff;
 		}
@@ -54,7 +54,7 @@ public class namcoic
 	nth_word32( const data32_t *pSource, int which )
 	{
 		data32_t data = pSource[which/2];
-		if( which&1 )
+		if ((which & 1) != 0)
 		{
 			return data&0xffff;
 		}
@@ -174,7 +174,7 @@ public class namcoic
 			break;
 	
 		case NAMCOS21_STARBLADE: /* hack */
-			if( page )
+			if (page != 0)
 			{
 				hpos -= 0x80;
 				vpos -= 0x20;
@@ -201,10 +201,10 @@ public class namcoic
 				int dv = mSpritePos[0];
 				const data16_t *pWinAttr = &spriteram16[0x2400/2+((palette>>8)&0xf)*4];
 	
-				dh &= 0x1ff; if( dh&0x100 ) dh |= ~0x1ff;
-				dv &= 0x1ff; if( dv&0x100 ) dv |= ~0x1ff;
-				vpos&=0x7ff; if( vpos&0x400 ) vpos |= ~0x7ff;
-				hpos&=0x7ff; if( hpos&0x400 ) hpos |= ~0x7ff;
+				dh &= 0x1ff; if ((dh & 0x100) != 0) dh |= ~0x1ff;
+				dv &= 0x1ff; if ((dv & 0x100) != 0) dv |= ~0x1ff;
+				vpos&=0x7ff; if ((vpos & 0x400) != 0) vpos |= ~0x7ff;
+				hpos&=0x7ff; if ((hpos & 0x400) != 0) hpos |= ~0x7ff;
 				hpos += -0x26 - dh;
 				vpos += -0x19 - dv;
 				// 0026 0145 0019 00f8 (lucky&wild)
@@ -234,7 +234,7 @@ public class namcoic
 	
 		zoomx = (hsize<<16)/(num_cols*16);
 		dx = (dx*zoomx+0x8000)>>16;
-		if( flipx )
+		if (flipx != 0)
 		{
 			hpos += dx;
 		}
@@ -250,7 +250,7 @@ public class namcoic
 	
 		zoomy = (vsize<<16)/(num_rows*16);
 		dy = (dy*zoomy+0x8000)>>16;
-		if( flipy )
+		if (flipy != 0)
 		{
 			vpos += dy;
 		}
@@ -268,7 +268,7 @@ public class namcoic
 		{
 			tile_screen_height = 16*screen_height_remaining/source_height_remaining;
 			zoomy = (screen_height_remaining<<16)/source_height_remaining;
-			if( flipy )
+			if (flipy != 0)
 			{
 				sy -= tile_screen_height;
 			}
@@ -279,7 +279,7 @@ public class namcoic
 			{
 				tile_screen_width = 16*screen_width_remaining/source_width_remaining;
 				zoomx = (screen_width_remaining<<16)/source_width_remaining;
-				if( flipx )
+				if (flipx != 0)
 				{
 					sx -= tile_screen_width;
 				}
@@ -321,7 +321,7 @@ public class namcoic
 	{
 		mGfxC355 = gfxbank;
 		mPalXOR = palXOR;
-		if( codeToTile )
+		if (codeToTile != 0)
 		{
 			mpCodeToTile = codeToTile;
 		}
@@ -350,7 +350,7 @@ public class namcoic
 		{
 			which = pSpriteList16[i];
 			count++;
-			if( which&0x100 ) break;
+			if ((which & 0x100) != 0) break;
 		}
 		/* draw the sprites */
 		for( i=0; i<count; i++ )
@@ -437,8 +437,8 @@ public class namcoic
 			tile = (tile&0x7ff)|(bank*0x800);
 			mangle = tile&~(0x50);
 			/* the pixmap index is mangled, the transparency bitmask index is not */
-			if( tile&0x10 ) mangle |= 0x40;
-			if( tile&0x40 ) mangle |= 0x10;
+			if ((tile & 0x10) != 0) mangle |= 0x40;
+			if ((tile & 0x40) != 0) mangle |= 0x10;
 			break;
 	
 		case NAMCOS2_LUCKY_AND_WILD:
@@ -467,10 +467,10 @@ public class namcoic
 		case NAMCOS2_METAL_HAWK:
 		default:
 			mangle = tile&0x01ff;
-			if( tile&0x1000 ) mangle |= 0x0200;
-			if( tile&0x0200 ) mangle |= 0x0400;
-			if( tile&0x0400 ) mangle |= 0x0800;
-			if( tile&0x0800 ) mangle |= 0x1000;
+			if ((tile & 0x1000) != 0) mangle |= 0x0200;
+			if ((tile & 0x0200) != 0) mangle |= 0x0400;
+			if ((tile & 0x0400) != 0) mangle |= 0x0800;
+			if ((tile & 0x0800) != 0) mangle |= 0x1000;
 			break;
 		}
 		SET_TILE_INFO( mRozGfxBank,mangle,0/*color*/,0 );
@@ -587,15 +587,15 @@ public class namcoic
 					data16_t temp;
 	
 					temp = pSource[2];
-					if( temp&0x8000 ) temp |= 0xf000; else temp&=0x0fff; /* sign extend */
+					if ((temp & 0x8000) != 0) temp |= 0xf000; else temp&=0x0fff; /* sign extend */
 					incxx = (INT16)temp;
 	
 					temp = pSource[3];
-					if( temp&0x8000 ) temp |= 0xf000; else temp&=0x0fff; /* sign extend */
+					if ((temp & 0x8000) != 0) temp |= 0xf000; else temp&=0x0fff; /* sign extend */
 					incxy =  (INT16)temp;
 	
 					temp = pSource[4];
-					if( temp&0x8000 ) temp |= 0xf000; else temp&=0x0fff; /* sign extend */
+					if ((temp & 0x8000) != 0) temp |= 0xf000; else temp&=0x0fff; /* sign extend */
 					incyx =  (INT16)temp;
 	
 					incyy =  (INT16)pSource[5];
@@ -614,7 +614,7 @@ public class namcoic
 						mRozPage[which] = page;
 						bDirty = 1;
 					}
-					if( bDirty )
+					if (bDirty != 0)
 					{
 						tilemap_mark_all_tiles_dirty( mRozTilemap[which] );
 					}
@@ -854,7 +854,7 @@ public class namcoic
 	UpdateRoad( void )
 	{
 		int i;
-		if( mbRoadSomethingIsDirty )
+		if (mbRoadSomethingIsDirty != 0)
 		{
 			for( i=0; i<ROAD_TILE_COUNT_MAX; i++ )
 			{
@@ -886,15 +886,15 @@ public class namcoic
 		mbRoadNeedTransparent = 0;
 		mRoadGfxBank = gfxbank;
 		mpRoadDirty = auto_malloc(ROAD_TILE_COUNT_MAX);
-		if( mpRoadDirty )
+		if (mpRoadDirty != 0)
 		{
 			memset( mpRoadDirty,0x00,ROAD_TILE_COUNT_MAX );
 			mbRoadSomethingIsDirty = 0;
 			mpRoadRAM = auto_malloc(0x20000);
-			if( mpRoadRAM )
+			if (mpRoadRAM != 0)
 			{
 				struct GfxElement *pGfx = decodegfx( 0x10000+(UINT8 *)mpRoadRAM, &RoadTileLayout );
-				if( pGfx )
+				if (pGfx != 0)
 				{
 					pGfx->colortable = &Machine->remapped_colortable[0xf00];
 					pGfx->total_colors = 0x3f;
@@ -906,7 +906,7 @@ public class namcoic
 						ROAD_TILE_SIZE,ROAD_TILE_SIZE,
 						ROAD_COLS,ROAD_ROWS);
 	
-					if( mpRoadTilemap )
+					if (mpRoadTilemap != 0)
 					{
 						state_save_register_UINT8 ("namco_road", 0, "RoadDirty", mpRoadDirty, ROAD_TILE_COUNT_MAX);
 						state_save_register_UINT16("namco_road", 0, "RoadRAM",   mpRoadRAM,   0x20000 / 2);
@@ -947,7 +947,7 @@ public class namcoic
 			if( pri == ((screenx&0xe000)>>13) )
 			{
 				unsigned zoomx	= mpRoadRAM[0x1fe00/2+i+15]&0x3ff;
-				if( zoomx )
+				if (zoomx != 0)
 				{
 					unsigned sourcey = mpRoadRAM[0x1fc00/2+i+15]+yscroll;
 					const UINT16 *pSourceGfx = pSourceBitmap->line[sourcey&(ROAD_TILEMAP_HEIGHT-1)];
@@ -957,7 +957,7 @@ public class namcoic
 	
 					/* draw this scanline */
 					screenx &= 0x0fff; /* mask off priority bits */
-					if( screenx&0x0800 )
+					if ((screenx & 0x0800) != 0)
 					{
 						/* sign extend */
 						screenx -= 0x1000;
@@ -979,7 +979,7 @@ public class namcoic
 					}
 	
 					/* BUT: support transparent color for Thunder Ceptor */
-					if (mbRoadNeedTransparent)
+					if (mbRoadNeedTransparent != 0)
 					{
 						while( numpixels-- > 0 )
 						{

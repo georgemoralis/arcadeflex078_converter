@@ -104,13 +104,13 @@ public class cbasebal
 	
 	static NVRAM_HANDLER( cbasebal )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 		}
 	}

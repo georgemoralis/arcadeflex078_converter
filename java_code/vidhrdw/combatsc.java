@@ -105,9 +105,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if (attributes & 0x80) bank += 1;
-		if (attributes & 0x10) bank += 2;
-		if (attributes & 0x20) bank += 4;
+		if ((attributes & 0x80) != 0) bank += 1;
+		if ((attributes & 0x10) != 0) bank += 2;
+		if ((attributes & 0x20) != 0) bank += 4;
 	
 		color = ((K007121_ctrlram[0][6]&0x10)*2+16) + (attributes & 0x0f);
 	
@@ -130,9 +130,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if (attributes & 0x80) bank += 1;
-		if (attributes & 0x10) bank += 2;
-		if (attributes & 0x20) bank += 4;
+		if ((attributes & 0x80) != 0) bank += 1;
+		if ((attributes & 0x10) != 0) bank += 2;
+		if ((attributes & 0x20) != 0) bank += 4;
 	
 		color = ((K007121_ctrlram[1][6]&0x10)*2+16+4*16) + (attributes & 0x0f);
 	
@@ -169,9 +169,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if (attributes & 0x80) bank += 1;
-		if (attributes & 0x10) bank += 2;
-		if (attributes & 0x20) bank += 4;
+		if ((attributes & 0x80) != 0) bank += 1;
+		if ((attributes & 0x10) != 0) bank += 2;
+		if ((attributes & 0x20) != 0) bank += 4;
 	
 		pal = (bank == 0 || bank >= 0x1c || (attributes & 0x40)) ? 1 : 3;
 		color = pal*16;// + (attributes & 0x0f);
@@ -193,9 +193,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if (attributes & 0x80) bank += 1;
-		if (attributes & 0x10) bank += 2;
-		if (attributes & 0x20) bank += 4;
+		if ((attributes & 0x80) != 0) bank += 1;
+		if ((attributes & 0x10) != 0) bank += 2;
+		if ((attributes & 0x20) != 0) bank += 4;
 	
 		pal = (bank == 0 || bank >= 0x1c || (attributes & 0x40)) ? 5 : 7;
 		color = pal*16;// + (attributes & 0x0f);
@@ -300,7 +300,7 @@ public class combatsc
 			videoram[offset] = data;
 			if( offset<0x800 )
 			{
-				if (combasc_video_circuit)
+				if (combasc_video_circuit != 0)
 					tilemap_mark_tile_dirty(tilemap[1],offset & 0x3ff);
 				else
 					tilemap_mark_tile_dirty(tilemap[0],offset & 0x3ff);
@@ -363,7 +363,7 @@ public class combatsc
 	{
 		unsigned char *page = memory_region(REGION_CPU1) + 0x10000;
 	
-		if (data & 0x40)
+		if ((data & 0x40) != 0)
 		{
 			combasc_video_circuit = 1;
 			videoram = combasc_page[1];
@@ -378,7 +378,7 @@ public class combatsc
 	
 		priority = data & 0x20;
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 		{
 			cpu_setbank(1,page + 0x4000 * ((data & 0x0e) >> 1));
 		}
@@ -390,7 +390,7 @@ public class combatsc
 	
 	public static WriteHandlerPtr combascb_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x40)
+		if ((data & 0x40) != 0)
 		{
 			combasc_video_circuit = 1;
 			videoram = combasc_page[1];
@@ -407,7 +407,7 @@ public class combatsc
 			unsigned char *page = memory_region(REGION_CPU1) + 0x10000;
 			combasc_bank_select = data;
 	
-			if (data & 0x10)
+			if ((data & 0x10) != 0)
 			{
 				cpu_setbank(1,page + 0x4000 * ((data & 0x0e) >> 1));
 			}
@@ -456,7 +456,7 @@ public class combatsc
 	
 		if (offset == 3)
 		{
-			if (data & 0x08)
+			if ((data & 0x08) != 0)
 				memcpy(private_spriteram[combasc_video_circuit],combasc_page[combasc_video_circuit]+0x1000,0x800);
 			else
 				memcpy(private_spriteram[combasc_video_circuit],combasc_page[combasc_video_circuit]+0x1800,0x800);

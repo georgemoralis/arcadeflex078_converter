@@ -126,11 +126,11 @@ public class nbmj9195
 	
 	static NVRAM_HANDLER( sailorws )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, sailorws_nvram, sailorws_nvram_size);
 		else
 		{
-			if (file)
+			if (file != 0)
 				mame_fread(file, sailorws_nvram, sailorws_nvram_size);
 			else
 				memset(sailorws_nvram, 0, sailorws_nvram_size);
@@ -166,7 +166,7 @@ public class nbmj9195
 		// bit2: hopper
 		// bit3: coin lockout
 	
-		if (data & 0x04) sailorws_outcoin_flag ^= 1;
+		if ((data & 0x04) != 0) sailorws_outcoin_flag ^= 1;
 		else sailorws_outcoin_flag = 1;
 	}
 	

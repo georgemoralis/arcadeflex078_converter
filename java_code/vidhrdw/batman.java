@@ -254,7 +254,7 @@ public class batman
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority signals special rendering and doesn't draw anything */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 							continue;
 	
 						/* foreground playfield case */
@@ -309,7 +309,7 @@ public class batman
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority might mean palette kludges */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 						{
 							/* if bit 2 is set, start setting high palette bits */
 							if (mo[x] & 2)

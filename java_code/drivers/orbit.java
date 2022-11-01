@@ -36,7 +36,7 @@ public class orbit
 	
 	public static InterruptHandlerPtr orbit_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (orbit_nmi_enable)
+		if (orbit_nmi_enable != 0)
 		{
 			cpu_set_nmi_line(0, PULSE_LINE);
 		}
@@ -100,7 +100,7 @@ public class orbit
 	{
 		UINT8 bit = offset >> 1;
 	
-		if (offset & 1)
+		if ((offset & 1) != 0)
 		{
 			update_misc_flags(orbit_misc_flags | (1 << bit));
 		}

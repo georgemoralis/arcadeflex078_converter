@@ -47,7 +47,7 @@ public class suna16
 	
 	WRITE16_HANDLER( suna16_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (Machine->sample_rate != 0)
 				soundlatch_w( 0, data & 0xff );
@@ -58,7 +58,7 @@ public class suna16
 	
 	WRITE16_HANDLER( bssoccer_leds_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			set_led_status(0, data & 0x01);
 			set_led_status(1, data & 0x02);
@@ -72,7 +72,7 @@ public class suna16
 	
 	WRITE16_HANDLER( uballoon_leds_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_counter_w(0, data & 0x01);
 			set_led_status(0, data & 0x02);

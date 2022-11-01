@@ -43,7 +43,7 @@ public class portrait
 		int flags = 0;
 		int color   = 0;
 	
-		if( attr & 0x20 ) flags |= TILE_FLIPY;
+		if ((attr & 0x20) != 0) flags |= TILE_FLIPY;
 	
 		attr &= 0x07;
 		if(attr == 1) tilenum+=0x200; // 001
@@ -97,8 +97,8 @@ public class portrait
 			int tilenum = source[3];
 			int color = 0;
 			int flip = attr&0x20;
-			if( attr&0x04 ) sx |= 0x100;
-			if( attr&0x08 ) sy |= 0x100;
+			if ((attr & 0x04) != 0) sx |= 0x100;
+			if ((attr & 0x08) != 0) sy |= 0x100;
 	
 			sx += (source-portrait_spriteram)-8;
 			sx &= 0x1ff;

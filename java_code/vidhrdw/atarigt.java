@@ -246,7 +246,7 @@ public class atarigt
 		{
 			data32_t word = *base++;
 	
-			if (word & 0x80000000)
+			if ((word & 0x80000000) != 0)
 			{
 				int newscroll = (word >> 21) & 0x3ff;
 				int newbank = (word >> 16) & 0x1f;
@@ -264,7 +264,7 @@ public class atarigt
 				}
 			}
 	
-			if (word & 0x00008000)
+			if ((word & 0x00008000) != 0)
 			{
 				int newscroll = ((word >> 6) - (scanline + i)) & 0x1ff;
 				int newbank = word & 15;
@@ -597,7 +597,7 @@ public class atarigt
 			UINT32 *dst = (UINT32 *)bitmap->base + y * bitmap->rowpixels;
 	
 			/* Primal Rage: no TRAM, slightly different priorities */
-			if (atarigt_is_primrage)
+			if (atarigt_is_primrage != 0)
 			{
 				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
 				{
@@ -622,7 +622,7 @@ public class atarigt
 					rgb |= mram[2 * MRAM_ENTRIES + ((cra >>  0) & 0x01f)];
 	
 					/* final override */
-					if (color_latch & 7)
+					if ((color_latch & 7) != 0)
 						if (!(pf[x] & 0x3f) || !(pf[x] & 0x2000))
 							rgb = (0xff << rshift) | (0xff << gshift) | (0xff << bshift);
 							
@@ -669,9 +669,9 @@ public class atarigt
 						no_cra = 1;
 					if (!(!(cra & 0x8000) && (!(pf[x] & 0x1000) || !(pf[x] & 0x3f))))
 						no_tra = 1;
-					if (no_cra)
+					if (no_cra != 0)
 						cra = 0;
-					if (no_tra)
+					if (no_tra != 0)
 						tra = 0;
 					
 					/* compute the result */
@@ -680,7 +680,7 @@ public class atarigt
 					rgb |= mram[2 * MRAM_ENTRIES + mra + ((cra >>  0) & 0x01f) + ((tra << 5) & 0x3e0)];
 	
 					/* final override */
-					if (color_latch & 7)
+					if ((color_latch & 7) != 0)
 						if (!(pf[x] & 0x3f) || !(pf[x] & 0x2000))
 							rgb = (0xff << rshift) | (0xff << gshift) | (0xff << bshift);
 							

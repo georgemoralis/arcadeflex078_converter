@@ -26,7 +26,7 @@ public class mayumi
 	
 	public static InterruptHandlerPtr mayumi_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (int_enable)
+		if (int_enable != 0)
 			 cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	

@@ -537,7 +537,7 @@ public class travrusa
 		unsigned char *rom = memory_region(REGION_CPU1);
 		data8_t *buffer = malloc(0x2000);
 	
-		if (buffer)
+		if (buffer != 0)
 		{
 			memcpy(buffer,rom,0x2000);
 	

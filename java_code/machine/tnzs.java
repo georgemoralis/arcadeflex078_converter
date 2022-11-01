@@ -123,7 +123,7 @@ public class tnzs
 		logerror("PC %04x: read input %04x\n", activecpu_get_pc(), 0xf000 + offset);
 	
 		val = readinputport(7 + offset/2);
-		if (offset & 1)
+		if ((offset & 1) != 0)
 		{
 			return ((val >> 8) & 0xff);
 		}
@@ -158,11 +158,11 @@ public class tnzs
 		/* Credits are limited to 9, so more coins should be rejected */
 		/* Coin/Play settings must also be taken into consideration */
 	
-		if (coin & 0x08)	/* tilt */
+		if ((coin & 0x08) != 0)	/* tilt */
 			mcu_reportcoin = coin;
 		else if (coin && coin != insertcoin)
 		{
-			if (coin & 0x01)	/* coin A */
+			if ((coin & 0x01) != 0)	/* coin A */
 			{
 				logerror("Coin dropped into slot A\n");
 				coin_counter_w(0,1); coin_counter_w(0,0); /* Count slot A */
@@ -182,7 +182,7 @@ public class tnzs
 					}
 				}
 			}
-			if (coin & 0x02)	/* coin B */
+			if ((coin & 0x02) != 0)	/* coin B */
 			{
 				logerror("Coin dropped into slot B\n");
 				coin_counter_w(1,1); coin_counter_w(1,0); /* Count slot B */
@@ -202,7 +202,7 @@ public class tnzs
 					}
 				}
 			}
-			if (coin & 0x04)	/* service */
+			if ((coin & 0x04) != 0)	/* service */
 			{
 				logerror("Coin dropped into service slot C\n");
 				mcu_credits++;
@@ -229,7 +229,7 @@ public class tnzs
 		if (offset == 0)
 		{
 			/* if the mcu has just been reset, return startup code */
-			if (mcu_initializing)
+			if (mcu_initializing != 0)
 			{
 				mcu_initializing--;
 				return mcu_startup[2 - mcu_initializing];
@@ -245,7 +245,7 @@ public class tnzs
 					if (mcu_readcredits == 0)
 					{
 						mcu_readcredits = 1;
-						if (mcu_reportcoin & 0x08)
+						if ((mcu_reportcoin & 0x08) != 0)
 						{
 							mcu_initializing = 3;
 							return 0xee;	/* tilt */
@@ -274,10 +274,10 @@ public class tnzs
 			      1,2,3 = coin switch pressed
 			      e = tilt
 			*/
-			if (mcu_reportcoin & 0x08) return 0xe1;	/* tilt */
-			if (mcu_reportcoin & 0x01) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
-			if (mcu_reportcoin & 0x02) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
-			if (mcu_reportcoin & 0x04) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
+			if ((mcu_reportcoin & 0x08) != 0) return 0xe1;	/* tilt */
+			if ((mcu_reportcoin & 0x01) != 0) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
+			if ((mcu_reportcoin & 0x02) != 0) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
+			if ((mcu_reportcoin & 0x04) != 0) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
 			return 0x01;
 		}
 	} };
@@ -305,7 +305,7 @@ public class tnzs
 			*/
 	//		logerror("PC %04x (re %04x): write %02x to mcu %04x\n", activecpu_get_pc(), cpu_geturnpc(), data, 0xc000 + offset);
 	
-			if (mcu_initializing)
+			if (mcu_initializing != 0)
 			{
 				/* set up coin/credit settings */
 				mcu_coinage[mcu_coinage_init++] = data;
@@ -334,7 +334,7 @@ public class tnzs
 		if (offset == 0)
 		{
 			/* if the mcu has just been reset, return startup code */
-			if (mcu_initializing)
+			if (mcu_initializing != 0)
 			{
 				mcu_initializing--;
 				return mcu_startup[2 - mcu_initializing];
@@ -359,7 +359,7 @@ public class tnzs
 	
 				case 0xa0:
 					/* Read the credit counter */
-					if (mcu_reportcoin & 0x08)
+					if ((mcu_reportcoin & 0x08) != 0)
 					{
 						mcu_initializing = 3;
 						return 0xee;	/* tilt */
@@ -371,7 +371,7 @@ public class tnzs
 					if (mcu_readcredits == 0)
 					{
 						mcu_readcredits = 1;
-						if (mcu_reportcoin & 0x08)
+						if ((mcu_reportcoin & 0x08) != 0)
 						{
 							mcu_initializing = 3;
 							return 0xee;	/* tilt */
@@ -402,10 +402,10 @@ public class tnzs
 			      1,2,3 = coin switch pressed
 			      e = tilt
 			*/
-			if (mcu_reportcoin & 0x08) return 0xe1;	/* tilt */
-			if (mcu_reportcoin & 0x01) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
-			if (mcu_reportcoin & 0x02) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
-			if (mcu_reportcoin & 0x04) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
+			if ((mcu_reportcoin & 0x08) != 0) return 0xe1;	/* tilt */
+			if ((mcu_reportcoin & 0x01) != 0) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
+			if ((mcu_reportcoin & 0x02) != 0) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
+			if ((mcu_reportcoin & 0x04) != 0) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
 			return 0x01;
 		}
 	} };
@@ -438,7 +438,7 @@ public class tnzs
 	
 			logerror("PC %04x (re %04x): write %02x to mcu %04x\n", activecpu_get_pc(), cpu_geturnpc(), data, 0xc000 + offset);
 	
-			if (mcu_initializing)
+			if (mcu_initializing != 0)
 			{
 				/* set up coin/credit settings */
 				mcu_coinage[mcu_coinage_init++] = data;
@@ -707,7 +707,7 @@ public class tnzs
 	//	logerror("PC %04x: writing %02x to bankswitch\n", activecpu_get_pc(),data);
 	
 		/* bit 4 resets the second CPU */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
@@ -727,7 +727,7 @@ public class tnzs
 			case MCU_TNZS:
 			case MCU_CHUKATAI:
 					/* bit 2 resets the mcu */
-					if (data & 0x04)
+					if ((data & 0x04) != 0)
 					{
 						if (Machine->drv->cpu[2].cpu_type == CPU_I8X41)
 							cpu_set_reset_line(2,PULSE_LINE);
@@ -755,7 +755,7 @@ public class tnzs
 			case MCU_EXTRMATN:
 			case MCU_DRTOPPEL:
 					/* bit 2 resets the mcu */
-					if (data & 0x04)
+					if ((data & 0x04) != 0)
 						mcu_reset();
 					break;
 			default:

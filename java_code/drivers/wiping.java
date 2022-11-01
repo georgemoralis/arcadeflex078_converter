@@ -86,7 +86,7 @@ public class wiping
 	
 	public static WriteHandlerPtr subcpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);

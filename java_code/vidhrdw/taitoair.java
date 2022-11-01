@@ -117,7 +117,7 @@ public class taitoair
 			tile_offs = (TC0080VCO_spriteram[offs + 3] & 0x1fff) << 2;
 			ysize     = size[ ( TC0080VCO_spriteram[ offs ] & 0x0c00 ) >> 10 ];
 	
-			if (tile_offs)
+			if (tile_offs != 0)
 			{
 				/* Convert zoomy value to real value as zoomx */
 				zoomy = zoomy_conv_table[zoomy];
@@ -151,7 +151,7 @@ public class taitoair
 				if (x0 >= 0x200) x0 -= 0x400;
 				if (y0 >= 0x200) y0 -= 0x400;
 	
-				if (TC0080VCO_flipscreen)
+				if (TC0080VCO_flipscreen != 0)
 				{
 					x0 = 497 - x0;
 					y0 = 498 - y0;
@@ -179,7 +179,7 @@ public class taitoair
 							flipx = TC0080VCO_chain_ram_1[tile_offs] & 0x0040;
 							flipy = TC0080VCO_chain_ram_1[tile_offs] & 0x0080;
 	
-							if (TC0080VCO_flipscreen)
+							if (TC0080VCO_flipscreen != 0)
 							{
 								flipx ^= 0x0040;
 								flipy ^= 0x0080;

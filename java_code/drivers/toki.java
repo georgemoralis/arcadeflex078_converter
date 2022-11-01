@@ -56,7 +56,7 @@ public class toki
 		msm5205next>>=4;
 	
 		toggle ^= 1;
-		if (toggle)
+		if (toggle != 0)
 			cpu_set_nmi_line(1, PULSE_LINE);
 	}
 	
@@ -703,7 +703,7 @@ public class toki
 			memory_region(REGION_GFX2)[i] ^= 0xff;
 	
 		/* merge background tile graphics together */
-		if (temp)
+		if (temp != 0)
 		{
 			for (offs = 0; offs < memory_region_length(REGION_GFX3); offs += 0x20000)
 			{

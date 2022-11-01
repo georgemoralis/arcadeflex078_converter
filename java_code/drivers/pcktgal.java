@@ -29,10 +29,10 @@ public class pcktgal
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-		if (data & 1) { cpu_setbank(1,&RAM[0x4000]); }
+		if ((data & 1) != 0) { cpu_setbank(1,&RAM[0x4000]); }
 		else { cpu_setbank(1,&RAM[0x10000]); }
 	
-		if (data & 2) { cpu_setbank(2,&RAM[0x6000]); }
+		if ((data & 2) != 0) { cpu_setbank(2,&RAM[0x6000]); }
 		else { cpu_setbank(2,&RAM[0x12000]); }
 	} };
 	
@@ -40,7 +40,7 @@ public class pcktgal
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
-		if (data & 4) { cpu_setbank(3,&RAM[0x14000]); }
+		if ((data & 4) != 0) { cpu_setbank(3,&RAM[0x14000]); }
 		else { cpu_setbank(3,&RAM[0x10000]); }
 	} };
 	
@@ -60,7 +60,7 @@ public class pcktgal
 		msm5205next<<=4;
 	
 		toggle = 1 - toggle;
-		if (toggle)
+		if (toggle != 0)
 			cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 	}
 	

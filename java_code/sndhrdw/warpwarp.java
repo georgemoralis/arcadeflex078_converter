@@ -46,7 +46,7 @@ public class warpwarp
 		noise = 0x0000;  /* reset noise shifter */
 	
 	    /* faster decay enabled? */
-		if( sound_latch & 8 )
+		if ((sound_latch & 8) != 0)
 		{
 			/*
 			 * R85(?) is 10k, Rb is 0, C92 is 1uF
@@ -91,7 +91,7 @@ public class warpwarp
 		music2_latch = data;
 		music_volume = 0x7fff;
 		/* fast decay enabled? */
-		if( music2_latch & 16 )
+		if ((music2_latch & 16) != 0)
 		{
 			/*
 			 * Ra (R83?) is 10k, Rb is 0, C92 is 1uF

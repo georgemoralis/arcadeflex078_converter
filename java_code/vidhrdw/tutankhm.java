@@ -34,12 +34,12 @@ public class tutankhm
 		x2 = x1 + 1;
 		y2 = y1;
 	
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			x1 = 255 - x1;
 			x2 = 255 - x2;
 		}
-		if (flip_screen_y)
+		if (flip_screen_y != 0)
 		{
 			y1 = 255 - y1;
 			y2 = 255 - y2;
@@ -81,14 +81,14 @@ public class tutankhm
 			int scroll[32], i;
 	
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				for (i = 0;i < 8;i++)
 					scroll[i] = 0;
 				for (i = 8;i < 32;i++)
 				{
 					scroll[i] = -*tutankhm_scrollx;
-					if (flip_screen_y) scroll[i] = -scroll[i];
+					if (flip_screen_y != 0) scroll[i] = -scroll[i];
 				}
 			}
 			else
@@ -96,7 +96,7 @@ public class tutankhm
 				for (i = 0;i < 24;i++)
 				{
 					scroll[i] = -*tutankhm_scrollx;
-					if (flip_screen_y) scroll[i] = -scroll[i];
+					if (flip_screen_y != 0) scroll[i] = -scroll[i];
 				}
 				for (i = 24;i < 32;i++)
 					scroll[i] = 0;
@@ -160,7 +160,7 @@ public class tutankhm
 			destaddress >>= 1;
 			destaddress &= 0x7fff;
 	
-			if (srcflag) {
+			if (srcflag != 0) {
 				for (i=0;i<16;i++) {
 	
 	#define JUNOBLITPIXEL(x)									\

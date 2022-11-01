@@ -214,7 +214,7 @@ public class phoenix
 	
 		if ((offset & 0x7ff) < 0x340)
 		{
-			if (offset & 0x800)
+			if ((offset & 0x800) != 0)
 				tilemap_mark_tile_dirty(bg_tilemap,offset & 0x3ff);
 			else
 				tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
@@ -291,7 +291,7 @@ public class phoenix
 	
 	public static ReadHandlerPtr phoenix_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (cocktail_mode)
+		if (cocktail_mode != 0)
 			return (input_port_0_r(0) & 0x07) | (input_port_1_r(0) & 0xf8);
 		else
 			return input_port_0_r(0);
@@ -324,7 +324,7 @@ public class phoenix
 	{
 		int ret = phoenix_input_port_0_r(0);
 	
-		if (survival_protection_value)
+		if (survival_protection_value != 0)
 		{
 			ret ^= 0xf0;
 		}

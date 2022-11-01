@@ -224,7 +224,7 @@ public class seta2
 	
 	// "tilemap" sprite
 	
-				if (sprite & 0x8000)
+				if ((sprite & 0x8000) != 0)
 				{
 					struct rectangle clip;
 					int dx,x,y;
@@ -286,7 +286,7 @@ public class seta2
 							flipy = (attr & 0x0008);
 							color = (attr & 0xffe0) >> 5;
 	
-							if (tilesize) code &= ~3;
+							if (tilesize != 0) code &= ~3;
 	
 							for (ty = 0; ty <= tilesize; ty++)
 							{

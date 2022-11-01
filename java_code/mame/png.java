@@ -190,7 +190,7 @@ public class png
 			crc=crc32(0,str_chunk_type, 4);
 			chunk_type = convert_from_network_order(str_chunk_type);
 	
-			if (chunk_length)
+			if (chunk_length != 0)
 			{
 				if ((chunk_data = (UINT8 *)malloc(chunk_length+1))==NULL)
 				{
@@ -309,11 +309,11 @@ public class png
 				break;
 	
 			default:
-				if (chunk_type & 0x20000000)
+				if ((chunk_type & 0x20000000) != 0)
 					logerror("Ignoring ancillary chunk %s\n",str_chunk_type);
 				else
 					logerror("Ignoring critical chunk %s!\n",str_chunk_type);
-				if (chunk_data)
+				if (chunk_data != 0)
 					free(chunk_data);
 				break;
 			}
@@ -371,7 +371,7 @@ public class png
 			crc=crc32(0,str_chunk_type, 4);
 			chunk_type = convert_from_network_order(str_chunk_type);
 	
-			if (chunk_length)
+			if (chunk_length != 0)
 			{
 				if ((chunk_data = (UINT8 *)malloc(chunk_length+1))==NULL)
 				{
@@ -448,7 +448,7 @@ public class png
 				break;
 	
 			default:
-				if (chunk_data)
+				if (chunk_data != 0)
 					free(chunk_data);
 				break;
 			}
@@ -934,7 +934,7 @@ public class png
 	
 	int mng_capture_frame(mame_file *fp, struct mame_bitmap *bitmap)
 	{
-		if (mng_status)
+		if (mng_status != 0)
 		{
 			if(png_create_datastream(fp, bitmap) == 0)
 				return 0;

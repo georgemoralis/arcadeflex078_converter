@@ -185,12 +185,12 @@ public class gaelco2
 	
 	NVRAM_HANDLER( gaelco2 )
 	{
-		if (read_or_write){
+		if (read_or_write != 0){
 			EEPROM_save(file);
 		} else {
 			EEPROM_init(&gaelco2_eeprom_interface);
 	
-			if (file) EEPROM_load(file);
+			if (file != 0) EEPROM_load(file);
 		}
 	}
 	

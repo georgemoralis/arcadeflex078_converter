@@ -213,13 +213,13 @@ public class slikshot
 		_283e = ((UINT64)_27d8 * 0x4a574b) >> 16;
 	
 		/* adjust X based on the low bit of the beams */
-		if (beams & 1)
+		if ((beams & 1) != 0)
 			x = 0x7a + (_283e >> 16) - xoffs;
 		else
 			x = 0x7a - (_283e >> 16) - xoffs;
 	
 		/* apply a constant X scale */
-		if (xscale)
+		if (xscale != 0)
 			x = ((xscale * (x & 0xff)) >> 8) & 0xff;
 	
 		/* clamp if out of range */
@@ -375,13 +375,13 @@ public class slikshot
 								UINT16 *sens0, UINT16 *sens1, UINT16 *sens2, UINT16 *sens3)
 	{
 		/* if bit 0 of the beams is set, sensor 1 fired first; otherwise sensor 0 fired */
-		if (beams & 1)
+		if ((beams & 1) != 0)
 			*sens0 = 0, *sens1 = word3;
 		else
 			*sens0 = word3, *sens1 = 0;
 	
 		/* if bit 1 of the beams is set, sensor 3 had a larger value */
-		if (beams & 2)
+		if ((beams & 2) != 0)
 			*sens3 = word2 + word1, *sens2 = word2;
 		else
 			*sens2 = word2 + word1, *sens3 = word2;
@@ -430,13 +430,13 @@ public class slikshot
 			return 0x03 | (z80_clear_to_send << 7);
 	
 		/* 1 bit for each sensor */
-		if (sensor0)
+		if (sensor0 != 0)
 			result |= 1, sensor0--;
-		if (sensor1)
+		if (sensor1 != 0)
 			result |= 2, sensor1--;
-		if (sensor2)
+		if (sensor2 != 0)
 			result |= 4, sensor2--;
-		if (sensor3)
+		if (sensor3 != 0)
 			result |= 8, sensor3--;
 		result |= z80_clear_to_send << 7;
 	
@@ -501,7 +501,7 @@ public class slikshot
 		z80_ctrl = data;
 	
 		/* reset the Z80 on bit 4 changing */
-		if (delta & 0x10)
+		if ((delta & 0x10) != 0)
 		{
 	//		logerror("%15f: Reset Z80: %02x  PC=%04x\n", timer_get_time(), data & 0x10, cpunum_get_reg(2, Z80_PC));
 	
@@ -512,7 +512,7 @@ public class slikshot
 				cpu_set_reset_line(2, (data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
 	
 				/* on the rising edge, do housekeeping */
-				if (data & 0x10)
+				if ((data & 0x10) != 0)
 				{
 					sensor0 = nextsensor0;
 					sensor1 = nextsensor1;

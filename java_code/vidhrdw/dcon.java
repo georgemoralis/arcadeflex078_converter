@@ -28,7 +28,7 @@ public class dcon
 	
 	WRITE16_HANDLER( dcon_control_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			dcon_enable=data;
 			if ((dcon_enable&4)==4)
@@ -50,7 +50,7 @@ public class dcon
 	
 	WRITE16_HANDLER( dcon_gfxbank_w )
 	{
-		if (data&1)
+		if ((data & 1) != 0)
 			dcon_gfx_bank_select=0x1000;
 		else
 			dcon_gfx_bank_select=0;
@@ -178,9 +178,9 @@ public class dcon
 			y = spriteram16[offs+3];
 			x = spriteram16[offs+2];
 	
-			if (x&0x8000) x=0-(0x200-(x&0x1ff));
+			if ((x & 0x8000) != 0) x=0-(0x200-(x&0x1ff));
 			else x&=0x1ff;
-			if (y&0x8000) y=0-(0x200-(y&0x1ff));
+			if ((y & 0x8000) != 0) y=0-(0x200-(y&0x1ff));
 			else y&=0x1ff;
 	
 			color = spriteram16[offs+0]&0x3f;

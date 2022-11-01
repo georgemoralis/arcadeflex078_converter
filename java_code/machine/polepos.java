@@ -112,19 +112,19 @@ public class polepos
 	
 	public static InterruptHandlerPtr polepos_z8002_1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (z8002_1_nvi_enabled)
+		if (z8002_1_nvi_enabled != 0)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 	} };
 	
 	public static InterruptHandlerPtr polepos_z8002_2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (z8002_2_nvi_enabled)
+		if (z8002_2_nvi_enabled != 0)
 			cpu_set_irq_line(2, 0, ASSERT_LINE);
 	} };
 	
 	public static WriteHandlerPtr polepos_z8002_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 			cpu_set_reset_line(offset + 1, CLEAR_LINE);
 		else
 			cpu_set_reset_line(offset + 1, ASSERT_LINE);

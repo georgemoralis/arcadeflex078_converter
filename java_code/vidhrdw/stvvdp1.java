@@ -60,7 +60,7 @@ public class stvvdp1
 	#define STV_VDP1_EDSR ((stv_vdp1_regs[0x010/4] >> 16)&0x0000ffff)
 	#define STV_VDP1_CEF  (STV_VDP1_EDSR & 2)
 	#define STV_VDP1_BEF  (STV_VDP1_EDSR & 1)
-	#define SET_CEF_FROM_1_TO_0 	if(STV_VDP1_CEF)	 stv_vdp1_regs[0x010/4]^=0x00020000
+	#define SET_CEF_FROM_1_TO_0 	if (STV_VDP1_CEF != 0)	 stv_vdp1_regs[0x010/4]^=0x00020000
 	#define SET_CEF_FROM_0_TO_1     if(!(STV_VDP1_CEF))	 stv_vdp1_regs[0x010/4]^=0x00020000
 	/**/
 	
@@ -228,7 +228,7 @@ public class stvvdp1
 				mode = 0;
 				transmask = 0xf;
 	
-				if (shienryu_sprite_kludge)
+				if (shienryu_sprite_kludge != 0)
 				{
 					pix += 0x400;
 					pix &= 0x7ff;
@@ -247,9 +247,9 @@ public class stvvdp1
 				mode = 1;
 				transmask = 0xf;
 	
-				if (pix2 & 0xf)
+				if ((pix2 & 0xf) != 0)
 				{
-					if (pix & 0x8000)
+					if ((pix & 0x8000) != 0)
 					{
 						mode = 5;
 						transmask = 0x7fff;
@@ -262,7 +262,7 @@ public class stvvdp1
 				{
 					pix=pix2; // this is messy .. but just ensures that pen 0 isn't drawn
 				}
-				if (shienryu_sprite_kludge)
+				if (shienryu_sprite_kludge != 0)
 				{
 					pix &= 0x1ff;
 					pix += 0x400;
@@ -307,7 +307,7 @@ public class stvvdp1
 				mode = 1;
 				transmask = 0xf;
 	
-				if (pix & 0x8000)
+				if ((pix & 0x8000) != 0)
 				{
 					mode = 5;
 					transmask = 0x7fff;
@@ -317,7 +317,7 @@ public class stvvdp1
 	
 		if (mode != 5) // mode 0-4 are 'normal'
 		{
-			if (pix & transmask)
+			if ((pix & transmask) != 0)
 			{
 				/* there is probably a better way to do this .. it will probably have to change anyway because we'll be writing to the framebuffer instead */
 				int col;
@@ -329,7 +329,7 @@ public class stvvdp1
 		else // mode 5 is rgb mode
 		{
 			int col;
-			if (pix & 0x8000)
+			if ((pix & 0x8000) != 0)
 			{
 				col = pix;
 				col = ((col & 0x001f)*0x400) + (col & 0x03e0) + ((col & 0x7c00)/0x400);
@@ -639,7 +639,7 @@ public class stvvdp1
 	static int x2s(int v)
 	{
 		int r = v & 0x7ff;
-		if (r & 0x400)
+		if ((r & 0x400) != 0)
 			r -= 0x800;
 		return r + stvvdp1_local_x;
 	}
@@ -647,7 +647,7 @@ public class stvvdp1
 	static int y2s(int v)
 	{
 		int r = v & 0x7ff;
-		if (r & 0x400)
+		if ((r & 0x400) != 0)
 			r -= 0x800;
 		return r + stvvdp1_local_y;
 	}
@@ -679,14 +679,14 @@ public class stvvdp1
 		q[3].x = x2s(stv2_current_sprite.CMDXD);
 		q[3].y = y2s(stv2_current_sprite.CMDYD);
 	
-		if(direction & 1) { // xflip
+		if ((direction & 1) != 0) { // xflip
 			q[0].u = q[3].u = xsize-1;
 			q[1].u = q[2].u = 0;
 		} else {
 			q[0].u = q[3].u = 0;
 			q[1].u = q[2].u = xsize-1;
 		}
-		if(direction & 2) { // yflip
+		if ((direction & 2) != 0) { // yflip
 			q[0].v = q[1].v = ysize-1;
 			q[2].v = q[3].v = 0;
 		} else {
@@ -781,7 +781,7 @@ public class stvvdp1
 		    |    |
 		    3----2   */
 	
-		if (zoompoint)
+		if (zoompoint != 0)
 		{
 			q[0].x = x2s(x);
 			q[0].y = y2s(y);
@@ -805,14 +805,14 @@ public class stvvdp1
 		}
 	
 	
-		if(direction & 1) { // xflip
+		if ((direction & 1) != 0) { // xflip
 			q[0].u = q[3].u = xsize-1;
 			q[1].u = q[2].u = 0;
 		} else {
 			q[0].u = q[3].u = 0;
 			q[1].u = q[2].u = xsize-1;
 		}
-		if(direction & 2) { // yflip
+		if ((direction & 2) != 0) { // yflip
 			q[0].v = q[1].v = ysize-1;
 			q[2].v = q[3].v = 0;
 		} else {
@@ -850,12 +850,12 @@ public class stvvdp1
 	
 	
 	
-		if (vdp1_sprite_log) logerror ("Drawing Normal Sprite x %04x y %04x xsize %04x ysize %04x patterndata %06x\n",x,y,xsize,ysize,patterndata);
+		if (vdp1_sprite_log != 0) logerror ("Drawing Normal Sprite x %04x y %04x xsize %04x ysize %04x patterndata %06x\n",x,y,xsize,ysize,patterndata);
 	
 		for (ycnt = 0; ycnt != ysize; ycnt++) {
 	
 	
-			if (direction & 0x2) // 'yflip' (reverse direction)
+			if ((direction & 0x2) != 0) // 'yflip' (reverse direction)
 			{
 				drawypos = y+((ysize-1)-ycnt);
 			}
@@ -870,7 +870,7 @@ public class stvvdp1
 	
 				for (xcnt = 0; xcnt != xsize; xcnt ++)
 				{
-					if (direction & 0x1) // 'xflip' (reverse direction)
+					if ((direction & 0x1) != 0) // 'xflip' (reverse direction)
 					{
 						drawxpos = x+((xsize-1)-xcnt);
 					}
@@ -903,7 +903,7 @@ public class stvvdp1
 		spritecount = 0;
 		position = 0;
 	
-		if (vdp1_sprite_log) logerror ("Sprite List Process START\n");
+		if (vdp1_sprite_log != 0) logerror ("Sprite List Process START\n");
 	
 		vdp1_nest = -1;
 	
@@ -918,7 +918,7 @@ public class stvvdp1
 	
 		//	if (position >= ((0x80000/0x20)/4)) // safety check
 		//	{
-		//		if (vdp1_sprite_log) logerror ("Sprite List Position Too High!\n");
+		//		if (vdp1_sprite_log != 0) logerror ("Sprite List Position Too High!\n");
 		//		position = 0;
 		//	}
 	
@@ -926,7 +926,7 @@ public class stvvdp1
 	
 			if (stv2_current_sprite.CMDCTRL == 0x8000)
 			{
-				if (vdp1_sprite_log) logerror ("List Terminator (0x8000) Encountered, Sprite List Process END\n");
+				if (vdp1_sprite_log != 0) logerror ("List Terminator (0x8000) Encountered, Sprite List Process END\n");
 				goto end; // end of list
 			}
 	
@@ -950,36 +950,36 @@ public class stvvdp1
 			switch (stv2_current_sprite.CMDCTRL & 0x7000)
 			{
 				case 0x0000: // jump next
-					if (vdp1_sprite_log) logerror ("Sprite List Process + Next (Normal)\n");
+					if (vdp1_sprite_log != 0) logerror ("Sprite List Process + Next (Normal)\n");
 					position++;
 					break;
 				case 0x1000: // jump assign
-					if (vdp1_sprite_log) logerror ("Sprite List Process + Jump Old %06x New %06x\n", position, (stv2_current_sprite.CMDLINK>>2));
+					if (vdp1_sprite_log != 0) logerror ("Sprite List Process + Jump Old %06x New %06x\n", position, (stv2_current_sprite.CMDLINK>>2));
 					position= (stv2_current_sprite.CMDLINK>>2);
 					break;
 				case 0x2000: // jump call
 					if (vdp1_nest == -1)
 					{
-						if (vdp1_sprite_log) logerror ("Sprite List Process + Call Old %06x New %06x\n",position, (stv2_current_sprite.CMDLINK>>2));
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Process + Call Old %06x New %06x\n",position, (stv2_current_sprite.CMDLINK>>2));
 						vdp1_nest = position+1;
 						position = (stv2_current_sprite.CMDLINK>>2);
 					}
 					else
 					{
-						if (vdp1_sprite_log) logerror ("Sprite List Nested Call, ignoring\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Nested Call, ignoring\n");
 						position++;
 					}
 					break;
 				case 0x3000:
 					if (vdp1_nest != -1)
 					{
-						if (vdp1_sprite_log) logerror ("Sprite List Process + Return\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Process + Return\n");
 						position = vdp1_nest;
 						vdp1_nest = -1;
 					}
 					else
 					{
-						if (vdp1_sprite_log) logerror ("Attempted return from no subroutine, aborting\n");
+						if (vdp1_sprite_log != 0) logerror ("Attempted return from no subroutine, aborting\n");
 						position++;
 						goto end; // end of list
 					}
@@ -989,7 +989,7 @@ public class stvvdp1
 					position++;
 					break;
 				case 0x5000:
-					if (vdp1_sprite_log) logerror ("Sprite List Skip + Jump Old %06x New %06x\n", position, (stv2_current_sprite.CMDLINK>>2));
+					if (vdp1_sprite_log != 0) logerror ("Sprite List Skip + Jump Old %06x New %06x\n", position, (stv2_current_sprite.CMDLINK>>2));
 					draw_this_sprite = 0;
 					position= (stv2_current_sprite.CMDLINK>>2);
 	
@@ -998,14 +998,14 @@ public class stvvdp1
 					draw_this_sprite = 0;
 					if (vdp1_nest == -1)
 					{
-						if (vdp1_sprite_log) logerror ("Sprite List Skip + Call To Subroutine Old %06x New %06x\n",position, (stv2_current_sprite.CMDLINK>>2));
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Skip + Call To Subroutine Old %06x New %06x\n",position, (stv2_current_sprite.CMDLINK>>2));
 	
 						vdp1_nest = position+1;
 						position = (stv2_current_sprite.CMDLINK>>2);
 					}
 					else
 					{
-						if (vdp1_sprite_log) logerror ("Sprite List Nested Call, ignoring\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Nested Call, ignoring\n");
 						position++;
 					}
 					break;
@@ -1013,14 +1013,14 @@ public class stvvdp1
 					draw_this_sprite = 0;
 					if (vdp1_nest != -1)
 					{
-						if (vdp1_sprite_log) logerror ("Sprite List Skip + Return from Subroutine\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Skip + Return from Subroutine\n");
 	
 						position = vdp1_nest;
 						vdp1_nest = -1;
 					}
 					else
 					{
-						if (vdp1_sprite_log) logerror ("Attempted return from no subroutine, aborting\n");
+						if (vdp1_sprite_log != 0) logerror ("Attempted return from no subroutine, aborting\n");
 						position++;
 						goto end; // end of list
 					}
@@ -1033,53 +1033,53 @@ public class stvvdp1
 				switch (stv2_current_sprite.CMDCTRL & 0x000f)
 				{
 					case 0x0000:
-						if (vdp1_sprite_log) logerror ("Sprite List Normal Sprite\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Normal Sprite\n");
 						stv2_current_sprite.ispoly = 0;
 						stv_vpd1_draw_normal_sprite(bitmap,cliprect, 0);
 						break;
 	
 					case 0x0001:
-						if (vdp1_sprite_log) logerror ("Sprite List Scaled Sprite\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Scaled Sprite\n");
 						stv2_current_sprite.ispoly = 0;
 						stv_vpd1_draw_scaled_sprite(bitmap,cliprect);
 						break;
 	
 					case 0x0002:
-						if (vdp1_sprite_log) logerror ("Sprite List Distorted Sprite\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Distorted Sprite\n");
 						stv2_current_sprite.ispoly = 0;
 						stv_vpd1_draw_distorded_sprite(bitmap,cliprect);
 						break;
 	
 					case 0x0004:
-						if (vdp1_sprite_log) logerror ("Sprite List Polygon\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Polygon\n");
 						stv2_current_sprite.ispoly = 1;
 						stv_vpd1_draw_distorded_sprite(bitmap,cliprect);
 						break;
 	
 					case 0x0005:
-						if (vdp1_sprite_log) logerror ("Sprite List Polyline\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Polyline\n");
 						break;
 	
 					case 0x0006:
-						if (vdp1_sprite_log) logerror ("Sprite List Line\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Line\n");
 						break;
 	
 					case 0x0008:
-						if (vdp1_sprite_log) logerror ("Sprite List Set Command for User Clipping\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Set Command for User Clipping\n");
 						break;
 	
 					case 0x0009:
-						if (vdp1_sprite_log) logerror ("Sprite List Set Command for System Clipping\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Set Command for System Clipping\n");
 						break;
 	
 					case 0x000a:
-						if (vdp1_sprite_log) logerror ("Sprite List Local Co-Ordinate Set\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Local Co-Ordinate Set\n");
 						stvvdp1_local_x = stv2_current_sprite.CMDXA;
 						stvvdp1_local_y = stv2_current_sprite.CMDYA;
 						break;
 	
 					default:
-						if (vdp1_sprite_log) logerror ("Sprite List Illegal!\n");
+						if (vdp1_sprite_log != 0) logerror ("Sprite List Illegal!\n");
 						break;
 	
 	
@@ -1101,7 +1101,7 @@ public class stvvdp1
 	//	if(!(stv_scu[40] & 0x2000)) /*Sprite draw end irq*/
 	//		cpu_set_irq_line_and_vector(0, 2, HOLD_LINE , 0x4d);
 	
-		if (vdp1_sprite_log) logerror ("End of list processing!\n");
+		if (vdp1_sprite_log != 0) logerror ("End of list processing!\n");
 	}
 	
 	void video_update_vdp1(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
@@ -1115,7 +1115,7 @@ public class stvvdp1
 	//		FILE *fp;
 	//
 	//		fp=fopen("vdp1_ram.dmp", "w+b");
-	//		if (fp)
+	//		if (fp != 0)
 	//		{
 	//			fwrite(stv_vdp1, 0x00100000, 1, fp);
 	//			fclose(fp);

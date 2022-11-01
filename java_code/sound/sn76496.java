@@ -78,7 +78,7 @@ public class sn76496
 		/* update the output buffer before changing the registers */
 		stream_update(R->Channel,0);
 	
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 		{
 			int r = (data & 0x70) >> 4;
 			int c = r/2;

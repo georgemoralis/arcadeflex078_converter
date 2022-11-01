@@ -120,7 +120,7 @@ public class pastelgl
 		pastelgl_flipy = (data & 0x02) ? 1 : 0;
 		pastelgl_flipscreen = (data & 0x04) ? 0 : 1;
 		pastelgl_dispflag = (data & 0x08) ? 0 : 1;		// unused ?
-	//	if (data & 0xf0) usrintf_showmessage("Unknown GFXFLAG!! (%02X)", (data & 0xf0));
+	//	if ((data & 0xf0) != 0) usrintf_showmessage("Unknown GFXFLAG!! (%02X)", (data & 0xf0));
 	
 		if (nb1413m3_type == NB1413M3_PASTELGL)
 		{
@@ -186,7 +186,7 @@ public class pastelgl
 		unsigned char color;
 		unsigned char drawcolor;
 	
-		if (pastelgl_flipx)
+		if (pastelgl_flipx != 0)
 		{
 			pastelgl_drawx -= (pastelgl_sizex << 1);
 			startx = pastelgl_sizex;
@@ -201,7 +201,7 @@ public class pastelgl
 			skipx = 1;
 		}
 	
-		if (pastelgl_flipy)
+		if (pastelgl_flipy != 0)
 		{
 			pastelgl_drawy -= (pastelgl_sizey << 1);
 			starty = pastelgl_sizey;
@@ -234,7 +234,7 @@ public class pastelgl
 	
 				color = GFX[gfxaddr];
 	
-				if (pastelgl_flipscreen)
+				if (pastelgl_flipscreen != 0)
 				{
 					dx = (((pastelgl_drawx + x) ^ 0xff) & 0xff);
 					dy = (((pastelgl_drawy + y) ^ 0xff) & 0xff);
@@ -271,7 +271,7 @@ public class pastelgl
 					drawcolor = ((pastelgl_palbank * 0x10) + pastelgl_paltbl[color]);
 				}
 	
-				if (tflag)
+				if (tflag != 0)
 				{
 					pastelgl_videoram[(dy * Machine->drv->screen_width) + dx] = drawcolor;
 					plot_pixel(pastelgl_tmpbitmap, dx, dy, Machine->pens[drawcolor]);
@@ -320,7 +320,7 @@ public class pastelgl
 			}
 		}
 	
-		if (pastelgl_dispflag)
+		if (pastelgl_dispflag != 0)
 		{
 			copybitmap(bitmap, pastelgl_tmpbitmap, 0, 0, 0, 0, &Machine->visible_area, TRANSPARENCY_NONE, 0);
 		}

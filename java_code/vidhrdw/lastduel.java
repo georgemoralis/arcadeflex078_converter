@@ -138,7 +138,7 @@ public class lastduel
 	
 	WRITE16_HANDLER( lastduel_flip_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			flip_screen_set(data & 0x01);
 	
@@ -223,7 +223,7 @@ public class lastduel
 			int attr,sy,sx,flipx,flipy,code,color;
 	
 			attr = buffered_spriteram16[offs+1];
-			if (sprite_pri_mask)	/* only madgear seems to have this */
+			if (sprite_pri_mask != 0)	/* only madgear seems to have this */
 			{
 				if (pri==1 && (attr & sprite_pri_mask)) continue;
 				if (pri==0 && !(attr & sprite_pri_mask)) continue;
@@ -239,7 +239,7 @@ public class lastduel
 			flipy = attr & sprite_flipy_mask;	/* 0x40 for lastduel, 0x80 for madgear */
 			color = attr & 0x0f;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;

@@ -1703,7 +1703,7 @@ public class namcos86
 		size = memory_region_length(REGION_GFX1) * 2 / 3;
 		buffer = malloc( size );
 	
-		if ( buffer )
+		if (buffer != 0)
 		{
 			unsigned char *dest1 = gfx;
 			unsigned char *dest2 = gfx + ( size / 2 );
@@ -1729,7 +1729,7 @@ public class namcos86
 		size = memory_region_length(REGION_GFX2) * 2 / 3;
 		buffer = malloc( size );
 	
-		if ( buffer )
+		if (buffer != 0)
 		{
 			unsigned char *dest1 = gfx;
 			unsigned char *dest2 = gfx + ( size / 2 );

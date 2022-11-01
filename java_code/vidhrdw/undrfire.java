@@ -157,8 +157,8 @@ public class undrfire
 					px = k;
 					py = j;
 					/* pick tiles back to front for x and y flips */
-					if (flipx)  px = dimension-1-k;
-					if (flipy)  py = dimension-1-j;
+					if (flipx != 0)  px = dimension-1-k;
+					if (flipy != 0)  py = dimension-1-j;
 	
 					code = spritemap[map_offset + px + (py<<(dblsize+1))];
 	
@@ -174,7 +174,7 @@ public class undrfire
 					zx= x + (((k+1)*zoomx)/dimension) - curx;
 					zy= y + (((j+1)*zoomy)/dimension) - cury;
 	
-					if (sprites_flipscreen)
+					if (sprites_flipscreen != 0)
 					{
 						/* -zx/y is there to fix zoomed sprite coords in screenflip.
 						   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -196,7 +196,7 @@ public class undrfire
 					sprite_ptr->zoomx = zx << 12;
 					sprite_ptr->zoomy = zy << 12;
 	
-					if (primasks)
+					if (primasks != 0)
 					{
 						sprite_ptr->primask = primasks[priority];
 	
@@ -215,7 +215,7 @@ public class undrfire
 				}
 			}
 	
-			if (bad_chunks)
+			if (bad_chunks != 0)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	

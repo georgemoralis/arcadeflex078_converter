@@ -54,25 +54,25 @@ public class overdriv
 	
 	static WRITE16_HANDLER( K051316_0_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			K051316_0_w(offset,data >> 8);
 	}
 	
 	static WRITE16_HANDLER( K051316_1_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			K051316_1_w(offset,data >> 8);
 	}
 	
 	static WRITE16_HANDLER( K051316_ctrl_0_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			K051316_ctrl_0_w(offset,data >> 8);
 	}
 	
 	static WRITE16_HANDLER( K051316_ctrl_1_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			K051316_ctrl_1_w(offset,data >> 8);
 	}
 	
@@ -109,13 +109,13 @@ public class overdriv
 	
 	static NVRAM_HANDLER( overdriv )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,sizeof(default_eeprom));
@@ -136,7 +136,7 @@ public class overdriv
 	static WRITE16_HANDLER( eeprom_w )
 	{
 	//logerror("%06x: write %04x to eeprom_w\n",activecpu_get_pc(),data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 is data */
 			/* bit 1 is clock (active high) */
@@ -171,7 +171,7 @@ public class overdriv
 	
 	static WRITE16_HANDLER( cpuA_ctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 probably enables the second 68000 */
 			cpu_set_reset_line(1,(data & 0x01) ? CLEAR_LINE : ASSERT_LINE);
@@ -198,7 +198,7 @@ public class overdriv
 	{
 		COMBINE_DATA(&cpuB_ctrl);
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 = enable sprite ROM reading */
 			K053246_set_OBJCHA_line((data & 0x01) ? ASSERT_LINE : CLEAR_LINE);

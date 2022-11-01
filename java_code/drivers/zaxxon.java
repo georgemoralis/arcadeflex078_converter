@@ -238,18 +238,18 @@ public class zaxxon
 	{
 		if (offset == 1)
 		{
-			if (data & 0x02) sample_start(0, 0, 0);
+			if ((data & 0x02) != 0) sample_start(0, 0, 0);
 		}
 		else if (offset == 2)
 		{
 			data ^= 0xff;
 	
-			if (data & 0x80)
+			if ((data & 0x80) != 0)
 			{
-				if (data & 0x08) sample_start(1, 1, 0);
-				if (data & 0x04) sample_start(2, 2, 0);
-				if (data & 0x02) sample_start(3, 3, 0);
-				if (data & 0x01) sample_start(4, 4, 0);
+				if ((data & 0x08) != 0) sample_start(1, 1, 0);
+				if ((data & 0x04) != 0) sample_start(2, 2, 0);
+				if ((data & 0x02) != 0) sample_start(3, 3, 0);
+				if ((data & 0x01) != 0) sample_start(4, 4, 0);
 			}
 		}
 	} };
@@ -1644,7 +1644,7 @@ public class zaxxon
 			/* pick the offset in the table from bits 1, 3 and 5 of the source data */
 			j = ((src >> 1) & 1) + (((src >> 3) & 1) << 1) + (((src >> 5) & 1) << 2);
 			/* the bottom half of the translation table is the mirror image of the top */
-			if (src & 0x80) j = 7 - j;
+			if ((src & 0x80) != 0) j = 7 - j;
 	
 			/* decode the ROM data */
 			rom[A] = src ^ data_xortable[i][j];

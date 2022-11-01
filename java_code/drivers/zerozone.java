@@ -61,7 +61,7 @@ public class zerozone
 	
 	WRITE16_HANDLER( zerozone_sound_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			soundlatch_w(offset,data >> 8);
 			cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);

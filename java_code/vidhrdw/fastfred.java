@@ -168,7 +168,7 @@ public class fastfred
 	{
 		if (fastfred_attributesram[offset] != data)
 		{
-			if (offset & 0x01)
+			if ((offset & 0x01) != 0)
 			{
 				/* color change */
 				int i;
@@ -320,12 +320,12 @@ public class fastfred
 			}
 	
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;

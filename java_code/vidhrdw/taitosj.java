@@ -141,7 +141,7 @@ public class taitosj
 				int data;
 	
 				data = color_prom[0x10 * (i & 0x0f) + mask];
-				if (i & 0x10) data >>= 2;
+				if ((i & 0x10) != 0) data >>= 2;
 				data &= 0x03;
 				mask |= (1 << data);	/* in next loop, we'll see which of the remaining */
 										/* layers has top priority when this one is transparent */
@@ -615,7 +615,7 @@ public class taitosj
 	{
 		/* Draw the sprites. Note that it is important to draw them exactly in this */
 		/* order, to have the correct priorities (but they are still wrong sometimes.) */
-		if (taitosj_video_enable & 0x80)
+		if ((taitosj_video_enable & 0x80) != 0)
 		{
 			int offs;
 	
@@ -784,7 +784,7 @@ public class taitosj
 		}
 	
 		/* if characters changed, redraw everything */
-		if (alldirty)
+		if (alldirty != 0)
 		{
 			memset(dirtybuffer, 1,videoram_size);
 			memset(dirtybuffer2,1,videoram_size);

@@ -801,7 +801,7 @@ public class carpolo
 	
 		col = check_sprite_border_collision(car1_x, car1_y, car1_code, car1_flipy);
 	
-		if (col)
+		if (col != 0)
 		{
 			carpolo_generate_car_border_interrupt(0, (col == 2));
 		}
@@ -809,7 +809,7 @@ public class carpolo
 		{
 			col = check_sprite_border_collision(car2_x, car2_y, car2_code, car2_flipy);
 	
-			if (col)
+			if (col != 0)
 			{
 				carpolo_generate_car_border_interrupt(1, (col == 2));
 			}
@@ -817,7 +817,7 @@ public class carpolo
 			{
 				col = check_sprite_border_collision(car3_x, car3_y, car3_code, car3_flipy);
 	
-				if (col)
+				if (col != 0)
 				{
 					carpolo_generate_car_border_interrupt(2, (col == 2));
 				}
@@ -825,7 +825,7 @@ public class carpolo
 				{
 					col = check_sprite_border_collision(car4_x, car4_y, car4_code, car4_flipy);
 	
-					if (col)
+					if (col != 0)
 					{
 						carpolo_generate_car_border_interrupt(3, (col == 2));
 					}

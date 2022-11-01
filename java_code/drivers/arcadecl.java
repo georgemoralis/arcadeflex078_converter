@@ -87,10 +87,10 @@ public class arcadecl
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 4;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -135,7 +135,7 @@ public class arcadecl
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			OKIM6295_data_0_w(offset, (data >> 8) & 0xff);
 	}
 	
@@ -156,7 +156,7 @@ public class arcadecl
 		*/
 	
 		/* lower byte being modified? */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, (data & 0x80) ? 0x40000 : 0x00000);
 			atarigen_set_oki6295_vol((data & 0x001f) * 100 / 0x1f);

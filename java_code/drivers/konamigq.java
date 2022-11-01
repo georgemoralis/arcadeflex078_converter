@@ -68,7 +68,7 @@ public class konamigq
 	
 	static WRITE32_HANDLER( soundr3k_w )
 	{
-		if( ACCESSING_MSW32 )
+		if (ACCESSING_MSW32 != 0)
 		{
 			sndto000[ ( offset << 1 ) + 1 ] = data >> 16;
 			if( offset == 3 )
@@ -76,7 +76,7 @@ public class konamigq
 				cpu_set_irq_line( 1, 1, HOLD_LINE );
 			}
 		}
-		if( ACCESSING_LSW32 )
+		if (ACCESSING_LSW32 != 0)
 		{
 			sndto000[ offset << 1 ] = data;
 		}
@@ -157,14 +157,14 @@ public class konamigq
 	
 	static NVRAM_HANDLER( konamigq_93C46 )
 	{
-		if( read_or_write )
+		if (read_or_write != 0)
 		{
 			EEPROM_save( file );
 		}
 		else
 		{
 			EEPROM_init( &eeprom_interface_93C46 );
-			if( file )
+			if (file != 0)
 			{
 				EEPROM_load( file );
 			}
@@ -206,7 +206,7 @@ public class konamigq
 	
 	static WRITE32_HANDLER( pcmram_w )
 	{
-		if( ACCESSING_LSB32 )
+		if (ACCESSING_LSB32 != 0)
 		{
 			m_p_n_pcmram[ offset << 1 ] = data;
 		}
@@ -305,11 +305,11 @@ public class konamigq
 		data16_t data;
 	
 		data = 0;
-		if( ACCESSING_LSB16 )
+		if (ACCESSING_LSB16 != 0)
 		{
 			data |= K054539_1_r( offset );
 		}
-		if( ACCESSING_MSB16 )
+		if (ACCESSING_MSB16 != 0)
 		{
 			data |= K054539_0_r( offset ) << 8;
 		}
@@ -318,11 +318,11 @@ public class konamigq
 	
 	static WRITE16_HANDLER( dual539_w )
 	{
-		if( ACCESSING_LSB16 )
+		if (ACCESSING_LSB16 != 0)
 		{
 			K054539_1_w( offset, data );
 		}
-		if( ACCESSING_MSB16 )
+		if (ACCESSING_MSB16 != 0)
 		{
 			K054539_0_w( offset, data >> 8 );
 		}

@@ -65,7 +65,7 @@ public class dooyong
 	
 	WRITE16_HANDLER( rshark_ctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 flips screen */
 			flip_screen_set(data & 0x01);
@@ -98,7 +98,7 @@ public class dooyong
 			sy = (32 * ((offs/2) % 8) - scrolly) & 0xff;
 			flipx = attr & 0x02;
 			flipy = attr & 0x04;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 512-32 - sx;
 				sy = 256-32 - sy;
@@ -113,7 +113,7 @@ public class dooyong
 					sx,sy,
 					&Machine->visible_area,transparency,15);
 			/* wraparound */
-			if (scrolly & 0x1f)
+			if ((scrolly & 0x1f) != 0)
 			{
 				drawgfx(bitmap,Machine->gfx[gfx],
 						code,
@@ -146,7 +146,7 @@ public class dooyong
 			sy = (32 * ((offs/2) % 8) - scrolly) & 0xff;
 			flipx = attr & 0x40;
 			flipy = attr & 0x80;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 512-32 - sx;
 				sy = 256-32 - sy;
@@ -161,7 +161,7 @@ public class dooyong
 					sx,sy,
 					&Machine->visible_area,transparency,15);
 			/* wraparound */
-			if (scrolly & 0x1f)
+			if ((scrolly & 0x1f) != 0)
 			{
 				drawgfx(bitmap,Machine->gfx[gfx],
 						code,
@@ -194,7 +194,7 @@ public class dooyong
 			sy = (32 * ((offs/2) % 8) - scrolly) & 0xff;
 			flipx = 0;
 			flipy = attr & 0x04;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 512-32 - sx;
 				sy = 256-32 - sy;
@@ -209,7 +209,7 @@ public class dooyong
 					sx,sy,
 					&Machine->visible_area,transparency,15);
 			/* wraparound */
-			if (scrolly & 0x1f)
+			if ((scrolly & 0x1f) != 0)
 			{
 				drawgfx(bitmap,Machine->gfx[gfx],
 						code,
@@ -244,7 +244,7 @@ public class dooyong
 			if (sy > 256) sy -= 512;
 			flipx = attr & 0x40;
 			flipy = attr & 0x80;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 512-16 - sx;
 				sy = 256-16 - sy;
@@ -272,7 +272,7 @@ public class dooyong
 			attr = lastday_txvideoram[offs+0x800];
 			sx = offs / 32;
 			sy = offs % 32;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 63 - sx;
 				sy = 31 - sy;
@@ -298,7 +298,7 @@ public class dooyong
 			attr = lastday_txvideoram[offs+1];
 			sx = (offs/2) / 32;
 			sy = (offs/2) % 32;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 63 - sx;
 				sy = 31 - sy;
@@ -327,7 +327,7 @@ public class dooyong
 			code = buffered_spriteram[offs] | ((buffered_spriteram[offs+1] & 0xe0) << 3);
 			color = buffered_spriteram[offs+1] & 0x0f;
 	
-			if (pollux_extensions)
+			if (pollux_extensions != 0)
 			{
 				/* gulfstrm, pollux, bluehawk */
 				code |= ((buffered_spriteram[offs+0x1c] & 0x01) << 11);
@@ -347,7 +347,7 @@ public class dooyong
 				}
 			}
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 498 - sx;
 				sy = 240-16*height - sy;
@@ -385,7 +385,7 @@ public class dooyong
 				width = buffered_spriteram16[offs+1] & 0x000f;
 				height = (buffered_spriteram16[offs+1] & 0x00f0) >> 4;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 498-16*width - sx;
 					sy = 240-16*height - sy;
@@ -449,7 +449,7 @@ public class dooyong
 	public static VideoUpdateHandlerPtr video_update_primella  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bluehawk_draw_layer(bitmap,1,lastday_bgscroll,memory_region(REGION_GFX2)+memory_region_length(REGION_GFX2)-0x8000,TRANSPARENCY_NONE);
-		if (tx_pri) bluehawk_draw_tx(bitmap);
+		if (tx_pri != 0) bluehawk_draw_tx(bitmap);
 		bluehawk_draw_layer(bitmap,2,lastday_fgscroll,memory_region(REGION_GFX3)+memory_region_length(REGION_GFX3)-0x8000,TRANSPARENCY_PEN);
 		if (!tx_pri) bluehawk_draw_tx(bitmap);
 	} };

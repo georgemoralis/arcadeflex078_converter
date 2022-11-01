@@ -448,7 +448,7 @@ public class stvcd
 	
 		stat = 0;
 	
-	//	if(iso_media_present) stat |= CDSTAT_MEDIA_PRESENT;
+	//	if (iso_media_present != 0) stat |= CDSTAT_MEDIA_PRESENT;
 	
 	//	stat |= CDSTAT_CAN_RAW_AUDIO;
 	
@@ -847,11 +847,11 @@ public class stvcd
 	
 			// prevents update to change anything before
 			// the init string is read by the host
-			//if(CD_cr_first) return ();
+			//if (CD_cr_first != 0) return ();
 	
 			// prevents update from overwriting cr registers
 			// while a command is being written
-			//if(CD_cr_writing) return ();
+			//if (CD_cr_writing != 0) return ();
 	
 			if(CD_status == CDB_STAT_PAUSE){
 	

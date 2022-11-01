@@ -177,13 +177,13 @@ public class silkroad
 		if (keyboard_pressed(KEYCODE_D)) enable3 ^= 1;
 	*/
 	
-		if(enable1)	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+		if (enable1 != 0)	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	
 		silkroad_drawsprites(bitmap,cliprect,0);
-		if(enable2)	tilemap_draw(bitmap,cliprect,fg2_tilemap,0,0);
+		if (enable2 != 0)	tilemap_draw(bitmap,cliprect,fg2_tilemap,0,0);
 	
 		silkroad_drawsprites(bitmap,cliprect,1);
-		if(enable3)	tilemap_draw(bitmap,cliprect,fg3_tilemap,0,0);
+		if (enable3 != 0)	tilemap_draw(bitmap,cliprect,fg3_tilemap,0,0);
 	
 	/*
 		usrintf_showmessage	("Regs %08x %08x %08x %08x %08x",

@@ -140,13 +140,13 @@ public class c140
 				// now add the starting bank offsets based on the 2 
 				// chip select bits.
 				// 0x40000 picks individual 512k ROMs
-				if (adrs & 0x40000)
+				if ((adrs & 0x40000) != 0)
 				{
 					newadr += 0x80000;
 				}
 				
 				// and 0x200000 which group of chips...
-				if (adrs & 0x200000)
+				if ((adrs & 0x200000) != 0)
 				{
 					newadr += 0x100000;
 				}
@@ -167,7 +167,7 @@ public class c140
 			VOICE *v = &voi[offset>>4];
 			if( (offset&0xf)==0x5 )
 			{
-				if( data&0x80 )
+				if ((data & 0x80) != 0)
 				{
 					const struct voice_registers *vreg = (struct voice_registers *) &REG[offset&0x1f0];
 					v->key=1;
@@ -333,7 +333,7 @@ public class c140
 							}
 						}
 	
-						if( cnt )
+						if (cnt != 0)
 						{
 							prevdt=lastdt;
 							lastdt=pSampleData[pos];
@@ -408,7 +408,7 @@ public class c140
 	
 		/* allocate a pair of buffers to mix into - 1 second's worth should be more than enough */
 		mixer_buffer_left = malloc(2 * sizeof(INT16)*sample_rate );
-		if( mixer_buffer_left )
+		if (mixer_buffer_left != 0)
 		{
 			mixer_buffer_right = mixer_buffer_left + sample_rate;
 			return 0;

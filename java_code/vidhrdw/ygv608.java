@@ -458,7 +458,7 @@ public class ygv608
 		tilemap_A = NULL;
 		tilemap_B = NULL;
 	#ifdef _ENABLE_ROTATE_ZOOM
-		if( work_bitmap )
+		if (work_bitmap != 0)
 			bitmap_free( work_bitmap );
 	#endif
 	} };
@@ -694,7 +694,7 @@ public class ygv608
 	#endif
 	
 	#ifdef _ENABLE_ROTATE_ZOOM
-			if( work_bitmap )
+			if (work_bitmap != 0)
 				bitmap_free( work_bitmap );
 			work_bitmap = bitmap_alloc_depth( Machine->drv->screen_width,
 											  Machine->drv->screen_height,
@@ -709,7 +709,7 @@ public class ygv608
 	
 		if( ygv608.tilemap_resize )
 		{
-			if (tilemap_A)
+			if (tilemap_A != 0)
 			{
 				tilemap_dispose( tilemap_A );
 				tilemap_A = NULL;
@@ -732,7 +732,7 @@ public class ygv608
 			// for NCV1 it's sufficient to scroll only columns
 			tilemap_set_scroll_cols( tilemap_A, ygv608.page_x );
 	
-			if( tilemap_B )
+			if (tilemap_B != 0)
 			{
 				tilemap_dispose( tilemap_B );
 				tilemap_B = NULL;
@@ -1324,7 +1324,7 @@ public class ygv608
 	
 	  data = ( data >> 8 ) & 0xff;
 	
-	  if( 1 ) {
+	  if (1 != 0) {
 	    static char ascii[16];
 	    if( i%16 == 0 )
 	      logerror( "%04X: ", offset );
@@ -1555,7 +1555,7 @@ public class ygv608
 	  int i;
 	  char ascii[16];
 	
-	  if( oneshot )
+	  if (oneshot != 0)
 	    return( 0 );
 	  oneshot = 1;
 	

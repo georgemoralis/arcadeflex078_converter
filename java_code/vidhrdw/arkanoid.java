@@ -101,8 +101,8 @@ public class arkanoid
 	
 			sx = spriteram[offs];
 			sy = 248 - spriteram[offs + 1];
-			if (flip_screen_x) sx = 248 - sx;
-			if (flip_screen_y) sy = 248 - sy;
+			if (flip_screen_x != 0) sx = 248 - sx;
+			if (flip_screen_y != 0) sy = 248 - sy;
 	
 			code = spriteram[offs + 3] + ((spriteram[offs + 2] & 0x03) << 8) + 1024 * gfxbank;
 	

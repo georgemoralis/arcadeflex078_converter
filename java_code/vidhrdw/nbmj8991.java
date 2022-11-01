@@ -117,7 +117,7 @@ public class nbmj8991
 	
 	static void pstadium_calc_scrolly(void)
 	{
-		if (pstadium_flipscreen) pstadium_scrolly = (((pstadium_scrolly2 + pstadium_scrolly1 - 0xf0) ^ 0x1ff) & 0x1ff);
+		if (pstadium_flipscreen != 0) pstadium_scrolly = (((pstadium_scrolly2 + pstadium_scrolly1 - 0xf0) ^ 0x1ff) & 0x1ff);
 		else pstadium_scrolly = (((pstadium_scrolly2 + pstadium_scrolly1 + 1) - 0x10) & 0x1ff);
 	}
 	
@@ -266,7 +266,7 @@ public class nbmj8991
 		pstadium_calc_drawx();
 		pstadium_calc_drawy();
 	
-		if (pstadium_flipx)
+		if (pstadium_flipx != 0)
 		{
 			pstadium_drawx -= pstadium_sizex;
 			startx = pstadium_sizex;
@@ -281,7 +281,7 @@ public class nbmj8991
 			skipx = 1;
 		}
 	
-		if (pstadium_flipy)
+		if (pstadium_flipy != 0)
 		{
 			pstadium_drawy -= (pstadium_sizey + 1);
 			starty = pstadium_sizey;
@@ -312,7 +312,7 @@ public class nbmj8991
 	
 				color = GFX[gfxaddr++];
 	
-				if (pstadium_flipscreen)
+				if (pstadium_flipscreen != 0)
 				{
 					dx1 = (((((pstadium_drawx + x) * 2) + 0) ^ 0x3ff) & 0x3ff);
 					dx2 = (((((pstadium_drawx + x) * 2) + 1) ^ 0x3ff) & 0x3ff);
@@ -325,7 +325,7 @@ public class nbmj8991
 					dy = ((pstadium_drawy + y) & 0x1ff);
 				}
 	
-				if (pstadium_flipx)
+				if (pstadium_flipx != 0)
 				{
 					// flip
 					color1 = (color & 0xf0) >> 4;
@@ -346,12 +346,12 @@ public class nbmj8991
 	
 				nb1413m3_busyctr++;
 	
-				if (tflag1)
+				if (tflag1 != 0)
 				{
 					pstadium_videoram[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 					plot_pixel(pstadium_tmpbitmap, dx1, dy, Machine->pens[drawcolor1]);
 				}
-				if (tflag2)
+				if (tflag2 != 0)
 				{
 					pstadium_videoram[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 					plot_pixel(pstadium_tmpbitmap, dx2, dy, Machine->pens[drawcolor2]);
@@ -398,7 +398,7 @@ public class nbmj8991
 		pstadium_calc_scrollx();
 		pstadium_calc_scrolly();
 	
-		if (nb1413m3_inputport & 0x20)
+		if ((nb1413m3_inputport & 0x20) != 0)
 		{
 			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, &Machine->visible_area, TRANSPARENCY_NONE, 0);
 		}
@@ -430,7 +430,7 @@ public class nbmj8991
 		pstadium_calc_scrollx();
 		pstadium_calc_scrolly();
 	
-		if (pstadium_dispflag)
+		if (pstadium_dispflag != 0)
 		{
 			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, &Machine->visible_area, TRANSPARENCY_NONE, 0);
 		}

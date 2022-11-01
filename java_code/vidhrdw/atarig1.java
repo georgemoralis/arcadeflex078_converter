@@ -177,7 +177,7 @@ public class atarig1
 	
 			/* first word controls horizontal scroll */
 			word = *base++;
-			if (word & 0x8000)
+			if ((word & 0x8000) != 0)
 			{
 				int newscroll = ((word >> 6) + pfscroll_xoffset) & 0x1ff;
 				if (newscroll != playfield_xscroll)
@@ -190,7 +190,7 @@ public class atarig1
 	
 			/* second word controls vertical scroll and tile bank */
 			word = *base++;
-			if (word & 0x8000)
+			if ((word & 0x8000) != 0)
 			{
 				int newscroll = ((word >> 6) - (scanline + i)) & 0x1ff;
 				int newbank = word & 7;

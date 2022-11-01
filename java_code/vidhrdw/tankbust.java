@@ -50,11 +50,11 @@ public class tankbust
 	
 	
 	#if 0
-		if (attr&0x08)	//priority bg/sprites (1 = this bg tile on top of sprites)
+		if ((attr & 0x08) != 0)	//priority bg/sprites (1 = this bg tile on top of sprites)
 		{
 			color = ((int)rand()) & 0x0f;
 		}
-		if (attr&0x80)  //al the roofs of all buildings have this bit set. What's this ???
+		if ((attr & 0x80) != 0)  //al the roofs of all buildings have this bit set. What's this ???
 		{
 			color = ((int)rand()) & 0x0f;
 		}

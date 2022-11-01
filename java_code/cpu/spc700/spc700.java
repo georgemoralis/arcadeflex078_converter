@@ -632,7 +632,7 @@ public class spc700
 		PUSH_16(REG_PC);
 		PUSH_8(GET_REG_P_INT());
 		FLAG_I = IFLAG_SET;
-		if(INT_ACK)
+		if (INT_ACK != 0)
 			INT_ACK(0);
 		JUMP(read_16_VEC(VECTOR_IRQ));
 	}
@@ -640,7 +640,7 @@ public class spc700
 	#if !SPC700_OPTIMIZE_SNES
 	INLINE void CHECK_IRQ(void)
 	{
-		if(FLAG_I & LINE_IRQ)
+		if ((FLAG_I & LINE_IRQ) != 0)
 			SERVICE_IRQ();
 	}
 	#else
@@ -706,7 +706,7 @@ public class spc700
 	#define OP_AND1(BCLK)														\
 				CLK(BCLK);														\
 				DST = EA_IMM16();												\
-				if(FLAG_C & CFLAG_SET)											\
+				if ((FLAG_C & CFLAG_SET) != 0)											\
 				{																\
 					DST = read_16_IMM(DST);										\
 					SRC = 1 << (DST >> 13);										\
@@ -719,7 +719,7 @@ public class spc700
 	#define OP_ANDN1(BCLK)														\
 				CLK(BCLK);														\
 				DST = EA_IMM16();												\
-				if(FLAG_C & CFLAG_SET)											\
+				if ((FLAG_C & CFLAG_SET) != 0)											\
 				{																\
 					DST = read_16_IMM(DST);										\
 					SRC = 1 << (DST >> 13);										\
@@ -758,7 +758,7 @@ public class spc700
 				CLK(BCLK);														\
 				SRC     = OPER_8_DP();											\
 				DST     = OPER_8_IMM();											\
-				if(SRC & BIT)													\
+				if ((SRC & BIT) != 0)													\
 				{																\
 					CLK(1);														\
 					BRANCH(DST);												\
@@ -768,7 +768,7 @@ public class spc700
 	#define OP_BCC(BCLK, COND)													\
 				CLK(BCLK);														\
 				DST     = OPER_8_IMM();											\
-				if(COND)														\
+				if (COND != 0)														\
 				{																\
 					CLK(1);														\
 					BRANCH(DST);												\
@@ -1098,7 +1098,7 @@ public class spc700
 				DST     = OPER_16_IMM();										\
 				SRC     = 1 << (DST >> 13);										\
 				DST     &= 0x1fff;												\
-				if(FLAG_C & CFLAG_SET)											\
+				if ((FLAG_C & CFLAG_SET) != 0)											\
 					write_8_NORM(DST, read_8_NORM(DST) | SRC);					\
 				else															\
 					write_8_NORM(DST, read_8_NORM(DST) & ~SRC)
@@ -1367,7 +1367,7 @@ public class spc700
 	/* Get the current CPU context */
 	unsigned spc700_get_context(void *dst_context)
 	{
-		if(dst_context)
+		if (dst_context != 0)
 			*(spc700i_cpu_struct*)dst_context = spc700i_cpu;
 		return sizeof(spc700i_cpu);
 	}
@@ -1375,7 +1375,7 @@ public class spc700
 	/* Set the current CPU context */
 	void spc700_set_context(void *src_context)
 	{
-		if(src_context)
+		if (src_context != 0)
 		{
 			spc700i_cpu = *(spc700i_cpu_struct*)src_context;
 			JUMP(REG_PC);

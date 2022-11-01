@@ -72,7 +72,7 @@ public class cabal
 			int start, len;
 	
 			which = which&0x7f;
-			if( which ){
+			if (which != 0){
 				which = which*2+0x100;
 				start = RAM[offset+which] + 256*RAM[offset+which+1];
 				len = (RAM[offset+start]*256 + RAM[offset+start+1])*2;

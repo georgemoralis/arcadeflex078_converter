@@ -187,8 +187,8 @@ public class gottlieb
 			int sy = (spriteram[offs]) - 13;
 			int code = (255 ^ spriteram[offs + 2]) + 256 * spritebank;
 	
-			if (flip_screen_x) sx = 233 - sx;
-			if (flip_screen_y) sy = 244 - sy;
+			if (flip_screen_x != 0) sx = 233 - sx;
+			if (flip_screen_y != 0) sy = 244 - sy;
 	
 			if (spriteram[offs] || spriteram[offs + 1])	/* needed to avoid garbage on screen */
 				drawgfx(bitmap, Machine->gfx[1],
@@ -213,7 +213,7 @@ public class gottlieb
 	
 		gottlieb_draw_sprites(bitmap);
 	
-		if (background_priority)
+		if (background_priority != 0)
 		{
 			tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		}

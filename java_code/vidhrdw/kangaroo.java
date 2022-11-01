@@ -106,7 +106,7 @@ public class kangaroo
 	
 		/* this is a VERY crude way to handle the banked ROMs - but it's */
 		/* correct enough to pass the self test */
-		if (data & 0x05)
+		if ((data & 0x05) != 0)
 			cpu_setbank(1,&RAM[0x0000]);
 		else
 			cpu_setbank(1,&RAM[0x2000]);
@@ -167,8 +167,8 @@ public class kangaroo
 	
 			old_bank_select = new_bank_select = *kangaroo_bank_select;
 	
-			if (new_bank_select & 0x0c)  new_bank_select |= 0x0c;
-			if (new_bank_select & 0x03)  new_bank_select |= 0x03;
+			if ((new_bank_select & 0x0c) != 0)  new_bank_select |= 0x0c;
+			if ((new_bank_select & 0x03) != 0)  new_bank_select |= 0x03;
 			kangaroo_bank_select_w(0, new_bank_select & 0x05);
 	
 			for (x = 0;x <= xb;x++)
@@ -204,7 +204,7 @@ public class kangaroo
 	
 	INLINE void kangaroo_plot_pixel(struct mame_bitmap *bitmap, int x, int y, int col, int color_base, int flip)
 	{
-		if (flip)
+		if (flip != 0)
 		{
 			x = bitmap->width - 1 - x;
 			y = bitmap->height - 1 - y;
@@ -248,7 +248,7 @@ public class kangaroo
 		sy = offset % 256;
 		offs = sy * 256 + sx;
 	
-		if (a_G_B)
+		if (a_G_B != 0)
 		{
 			videoram[offs  ] = (videoram[offs  ] & 0xfc) | ((data & 0x10) >> 3) | ((data & 0x01) >> 0);
 			videoram[offs+1] = (videoram[offs+1] & 0xfc) | ((data & 0x20) >> 4) | ((data & 0x02) >> 1);
@@ -256,7 +256,7 @@ public class kangaroo
 			videoram[offs+3] = (videoram[offs+3] & 0xfc) | ((data & 0x80) >> 6) | ((data & 0x08) >> 3);
 		}
 	
-		if (a_Z_R)
+		if (a_Z_R != 0)
 		{
 			videoram[offs  ] = (videoram[offs  ] & 0xf3) | ((data & 0x10) >> 1) | ((data & 0x01) << 2);
 			videoram[offs+1] = (videoram[offs+1] & 0xf3) | ((data & 0x20) >> 2) | ((data & 0x02) << 1);
@@ -264,7 +264,7 @@ public class kangaroo
 			videoram[offs+3] = (videoram[offs+3] & 0xf3) | ((data & 0x80) >> 4) | ((data & 0x08) >> 1);
 		}
 	
-		if (b_G_B)
+		if (b_G_B != 0)
 		{
 			videoram[offs  ] = (videoram[offs  ] & 0xcf) | ((data & 0x10) << 1) | ((data & 0x01) << 4);
 			videoram[offs+1] = (videoram[offs+1] & 0xcf) | ((data & 0x20) >> 0) | ((data & 0x02) << 3);
@@ -272,7 +272,7 @@ public class kangaroo
 			videoram[offs+3] = (videoram[offs+3] & 0xcf) | ((data & 0x80) >> 2) | ((data & 0x08) << 1);
 		}
 	
-		if (b_Z_R)
+		if (b_Z_R != 0)
 		{
 			videoram[offs  ] = (videoram[offs  ] & 0x3f) | ((data & 0x10) << 3) | ((data & 0x01) << 6);
 			videoram[offs+1] = (videoram[offs+1] & 0x3f) | ((data & 0x20) << 2) | ((data & 0x02) << 5);
@@ -297,7 +297,7 @@ public class kangaroo
 	{
 		int scrollx, scrolly;
 	
-		if (screen_flipped)
+		if (screen_flipped != 0)
 		{
 			int x, y;
 	

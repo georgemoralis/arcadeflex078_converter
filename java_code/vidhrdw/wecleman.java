@@ -163,7 +163,7 @@ public class wecleman
 			gfx = (wecleman_gfx_bank[bank] << 15) + (code & 0x7fff);
 	
 			sprite->flags = 0;
-			if (code & 0x8000) { sprite->flags |= SPRITE_FLIPX; gfx += 1-sprite->tile_width; }
+			if ((code & 0x8000) != 0) { sprite->flags |= SPRITE_FLIPX; gfx += 1-sprite->tile_width; }
 			if (source[0x02/2] & 0x0200) sprite->flags |= SPRITE_FLIPY;
 	
 			gfx <<= 3;
@@ -332,7 +332,7 @@ public class wecleman
 					eax = *((char *)ebx + eax);
 					ecx += dx;
 					if (eax < 0) break;
-					if (eax)
+					if (eax != 0)
 					{
 						eax = pal_base[eax];
 						dst_ptr[ecx] = eax;
@@ -363,7 +363,7 @@ public class wecleman
 					eax = *((char *)ebx + eax);
 					ecx += dx;
 					if (eax < 0) break;
-					if (eax)
+					if (eax != 0)
 					{
 						if (eax != 0xa)
 							eax = pal_base[eax];
@@ -400,7 +400,7 @@ public class wecleman
 					eax = *((char *)ebx + eax);
 					ecx += dx;
 					if (eax < 0) break;
-					if (eax)
+					if (eax != 0)
 					{
 						if (eax != 0xa)
 							eax = pal_base[eax];
@@ -1076,7 +1076,7 @@ public class wecleman
 	
 		// bit0-6: background transition, 0=off, 1=on
 		// bit7: palette being changed, 0=no, 1=yes
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if ((data & 0x7f) == 0 && !cloud_ds)
 				cloud_ds = BLEND_INC;
@@ -1112,7 +1112,7 @@ public class wecleman
 		newword = COMBINE_DATA(&paletteram16[offset]);
 	
 		// the highest nibble has some unknown functions
-	//	if (newword & 0xf000) logerror("MSN set on color %03x: %1x\n", offset, newword>>12);
+	//	if ((newword & 0xf000) != 0) logerror("MSN set on color %03x: %1x\n", offset, newword>>12);
 	
 		r0 = newword; g0 = newword; b0 = newword;
 		g0 >>=4;      b0 >>=8;
@@ -1328,17 +1328,17 @@ public class wecleman
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		/* Draw the road (lines which have priority 0x02) */
-		if (video_on) wecleman_draw_road(bitmap, cliprect, 0x02);
+		if (video_on != 0) wecleman_draw_road(bitmap, cliprect, 0x02);
 	
 		/* Draw the background */
-		if (video_on) tilemap_draw(bitmap,cliprect, bg_tilemap, 0, 0);
+		if (video_on != 0) tilemap_draw(bitmap,cliprect, bg_tilemap, 0, 0);
 	
 		// draws the cloud layer; needs work
-		if (cloud_visible)
+		if (cloud_visible != 0)
 		{
 			mrct[0] = mrct[0x40] = mrct[0x200] = mrct[0x205];
 	
-			if (video_on) wecleman_draw_cloud(
+			if (video_on != 0) wecleman_draw_cloud(
 				bitmap,
 				Machine->gfx[0],
 				wecleman_pageram+0x1800,
@@ -1357,16 +1357,16 @@ public class wecleman
 		}
 	
 		/* Draw the foreground */
-		if (video_on) tilemap_draw(bitmap,cliprect, fg_tilemap, 0, 0);
+		if (video_on != 0) tilemap_draw(bitmap,cliprect, fg_tilemap, 0, 0);
 	
 		/* Draw the road (lines which have priority 0x04) */
-		if (video_on) wecleman_draw_road(bitmap,cliprect, 0x04);
+		if (video_on != 0) wecleman_draw_road(bitmap,cliprect, 0x04);
 	
 		/* Draw the sprites */
-		if (video_on) sprite_draw();
+		if (video_on != 0) sprite_draw();
 	
 		/* Draw the text layer */
-		if (video_on) tilemap_draw(bitmap,cliprect, txt_tilemap, 0, 0);
+		if (video_on != 0) tilemap_draw(bitmap,cliprect, txt_tilemap, 0, 0);
 	}
 	
 	/***************************************************************************
@@ -1386,15 +1386,15 @@ public class wecleman
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		/* Draw the background */
-		if (video_on) K051316_zoom_draw_0(bitmap,cliprect, 0, 0);
+		if (video_on != 0) K051316_zoom_draw_0(bitmap,cliprect, 0, 0);
 	
 		/* Draw the road */
-		if (video_on) hotchase_draw_road(bitmap, cliprect);
+		if (video_on != 0) hotchase_draw_road(bitmap, cliprect);
 	
 		/* Draw the sprites */
-		if (video_on) sprite_draw();
+		if (video_on != 0) sprite_draw();
 	
 		/* Draw the foreground (text) */
-		if (video_on) K051316_zoom_draw_1(bitmap,cliprect, 0, 0);
+		if (video_on != 0) K051316_zoom_draw_1(bitmap,cliprect, 0, 0);
 	} };
 }

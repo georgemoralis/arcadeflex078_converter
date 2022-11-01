@@ -72,7 +72,7 @@ public class blitgen
 		int bpp;
 		int i;
 		FILE *f = fopen( "mameblit.c", "w" );
-		if( f )
+		if (f != 0)
 		{
 	fprintf( f, "/**\n" );
 	fprintf( f, " * Do not modify this module directly.  It is generated code, written by blitgen.c\n" );
@@ -123,7 +123,7 @@ public class blitgen
 								int bRemapPens;
 	
 	fprintf( f, "\n" );
-								if( i )
+								if (i != 0)
 								{
 	fprintf( f, "static void blitzoom" );
 								}
@@ -170,7 +170,7 @@ public class blitgen
 	fprintf( f, "	for( x=sx; x<ex; x++ )\n" );
 	fprintf( f, "	{\n" );
 	
-								if( i )
+								if (i != 0)
 								{
 									switch( source_type )
 									{
@@ -189,7 +189,7 @@ public class blitgen
 									{
 									case SOURCE_4BPP:
 	fprintf( f, "		int data = ((UINT8 *)pSrc)[x_index>>1];\n" );
-	fprintf( f, "		if( x_index&1 ) data>>=4; else data&=0xf;\n" );
+	fprintf( f, "		if ((x_index & 1) != 0) data>>=4; else data&=0xf;\n" );
 										break;
 									case SOURCE_8BPP:
 	fprintf( f, "		int data = ((UINT8 *)pSrc)[x_index];\n" );
@@ -204,7 +204,7 @@ public class blitgen
 									bRemapPens = 1;
 								/* fallthrough */
 								case TRANSPARENCY_NONE_RAW:		/* opaque with no remapping */
-	fprintf( f, "		if(1){\n" );
+	fprintf( f, "		if (1 != 0){\n" );
 									break;
 	
 								case TRANSPARENCY_COLOR:		/* single remapped pen transparency with remapping */
@@ -251,7 +251,7 @@ public class blitgen
 									break;
 								}
 	
-								if( bRemapPens )
+								if (bRemapPens != 0)
 								{
 	fprintf( f, "			data = pPal[data];\n" );
 								}
@@ -410,7 +410,7 @@ public class blitgen
 							int buf_type;
 							for( buf_type=0; buf_type<BUF_TYPES; buf_type++ )
 							{
-								if( i )
+								if (i != 0)
 								{
 	fprintf( f, "(blitter *)blitzoom" );
 								}

@@ -89,7 +89,7 @@ public class phoenix
 				VMAX*2/3/(0.693*R41*C18d)
 	        }
 		};
-		if( output )
+		if (output != 0)
 		{
 			if (level > VMAX*1/3)
 			{
@@ -139,7 +139,7 @@ public class phoenix
 		#define R43 570000
 		#define R44 570000
 	
-		if( output )
+		if (output != 0)
 		{
 			if (level > VMIN)
 			{
@@ -202,14 +202,14 @@ public class phoenix
 	        }
 	    }
 	
-	    if( vco2 )
+	    if (vco2 != 0)
 		{
 			#define C22 100.0e-6
 			#define R42 10000
 			#define R45 51000
 			#define R46 51000
 			#define RP	27777	/* R42+R46 parallel with R45 */
-			if( vco1 )
+			if (vco1 != 0)
 			{
 				/*		R42 10k
 				 * +5V -/\/\/------------+
@@ -248,7 +248,7 @@ public class phoenix
 		}
 		else
 		{
-			if( vco1 )
+			if (vco1 != 0)
 			{
 				/*		R42 10k
 				 * +5V -/\/\/------------+
@@ -422,7 +422,7 @@ public class phoenix
 		#define R49 1000
 	    #define R51 330
 		#define R52 20000
-		if( sound_latch_a & 0x40 )
+		if ((sound_latch_a & 0x40) != 0)
 		{
 			if (level > VMIN)
 			{
@@ -466,7 +466,7 @@ public class phoenix
 	    #define R53 330
 		#define R54 47000
 	
-		if( sound_latch_a & 0x80 )
+		if ((sound_latch_a & 0x80) != 0)
 		{
 			if (level < VMAX)
 			{
@@ -568,7 +568,7 @@ public class phoenix
 		sound_latch_a = data;
 	
 		tone1_vco1_cap = (sound_latch_a >> 4) & 3;
-		if( sound_latch_a & 0x20 )
+		if ((sound_latch_a & 0x20) != 0)
 			tone1_level = VMAX * 10000 / (10000+10000);
 		else
 			tone1_level = VMAX;
@@ -582,7 +582,7 @@ public class phoenix
 		stream_update(channel,0);
 		sound_latch_b = data;
 	
-		if( sound_latch_b & 0x20 )
+		if ((sound_latch_b & 0x20) != 0)
 			tone2_level = VMAX * 10 / 11;
 		else
 			tone2_level = VMAX;

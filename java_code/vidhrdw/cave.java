@@ -239,7 +239,7 @@ public class cave
 	{
 		UINT32 code, color, pri, tile;
 	
-		if ( TDIM )
+		if (TDIM != 0)
 		{
 			tile	=	(tile_index % (512/8))/2 + ((tile_index / (512/8))/2)*(512/16);
 	
@@ -287,7 +287,7 @@ public class cave
 	{
 		UINT32 code, color, pri;
 	
-		if ( tiledim_2 )
+		if (tiledim_2 != 0)
 		{
 			UINT32 tile;
 			tile	=	(tile_index % (512/8))/2 + ((tile_index / (512/8))/2)*(512/16);
@@ -636,14 +636,14 @@ public class cave
 			sprite->line_offset		=	sprite->tile_width;
 			sprite->pal_data		=	base_pal + (attr & 0x3f00);	// first 0x4000 colors
 	
-			if (glob_flipx)	{ x = max_x - x - sprite->total_width;	flipx = !flipx; }
-			if (glob_flipy)	{ y = max_y - y - sprite->total_height;	flipy = !flipy; }
+			if (glob_flipx != 0)	{ x = max_x - x - sprite->total_width;	flipx = !flipx; }
+			if (glob_flipy != 0)	{ y = max_y - y - sprite->total_height;	flipy = !flipy; }
 	
 			sprite->x				=	x;
 			sprite->y				=	y;
 	
-			if (flipx)	sprite->flags |= SPRITE_FLIPX_CAVE;
-			if (flipy)	sprite->flags |= SPRITE_FLIPY_CAVE;
+			if (flipx != 0)	sprite->flags |= SPRITE_FLIPX_CAVE;
+			if (flipy != 0)	sprite->flags |= SPRITE_FLIPY_CAVE;
 	
 			sprite++;
 		}
@@ -715,14 +715,14 @@ public class cave
 			sprite->flags			=	SPRITE_VISIBLE_CAVE;
 			sprite->line_offset		=	sprite->tile_width;
 	
-			if (glob_flipx)	{ x = max_x - x - sprite->total_width;	flipx = !flipx; }
-			if (glob_flipy)	{ y = max_y - y - sprite->total_height;	flipy = !flipy; }
+			if (glob_flipx != 0)	{ x = max_x - x - sprite->total_width;	flipx = !flipx; }
+			if (glob_flipy != 0)	{ y = max_y - y - sprite->total_height;	flipy = !flipy; }
 	
 			sprite->x				=	x;
 			sprite->y				=	y;
 	
-			if (flipx)	sprite->flags |= SPRITE_FLIPX_CAVE;
-			if (flipy)	sprite->flags |= SPRITE_FLIPY_CAVE;
+			if (flipx != 0)	sprite->flags |= SPRITE_FLIPX_CAVE;
+			if (flipy != 0)	sprite->flags |= SPRITE_FLIPY_CAVE;
 	
 			sprite++;
 		}
@@ -912,17 +912,17 @@ public class cave
 				int xcount;
 				const unsigned char *source;
 	
-				if (ycount&0xffff0000){
+				if ((ycount & 0xffff0000) != 0){
 					xcount = xcount0;
 					pen_data+=sprite->line_offset*(ycount>>16);
 					ycount &= 0xffff;
 					source = pen_data;
 					for( x=x1; x!=x2; x+=dx ){
-						if (xcount&0xffff0000){
+						if ((xcount & 0xffff0000) != 0){
 							source+=xcount>>16;
 							xcount &= 0xffff;
 							pen = *source;
-							if (pen) dest[x] = pal_data[pen];
+							if (pen != 0) dest[x] = pal_data[pen];
 						}
 						xcount += sprite->zoomx_re;
 					}
@@ -1007,13 +1007,13 @@ public class cave
 				int xcount;
 				const unsigned char *source;
 	
-				if (ycount&0xffff0000){
+				if ((ycount & 0xffff0000) != 0){
 					xcount = xcount0;
 					pen_data+=sprite->line_offset*(ycount>>16);
 					ycount &= 0xffff;
 					source = pen_data;
 					for( x=x1; x!=x2; x+=dx ){
-						if (xcount&0xffff0000){
+						if ((xcount & 0xffff0000) != 0){
 							source+=xcount>>16;
 							xcount &= 0xffff;
 							pen = *source;
@@ -1099,7 +1099,7 @@ public class cave
 				source = pen_data;
 				for( x=x1; x!=x2; x+=dx ){
 					pen = *source;
-					if (pen) dest[x] = pal_data[pen];
+					if (pen != 0) dest[x] = pal_data[pen];
 					source++;
 				}
 				pen_data += sprite->line_offset;
@@ -1379,7 +1379,7 @@ public class cave
 					tilemap_set_scrollx(TILEMAP, 0, sx );
 				}
 	
-				if(flipy)
+				if (flipy != 0)
 				{
 					clip.min_y = cliprect->max_y - (endline-1 - cliprect->min_y);
 					clip.max_y = cliprect->max_y - (startline - cliprect->min_y);
@@ -1433,22 +1433,22 @@ public class cave
 		int layers_ctrl = -1;
 	
 		/* Choose the tilemap to display (8x8 tiles or 16x16 tiles) */
-		if (tilemap_0)
+		if (tilemap_0 != 0)
 		{	tiledim_0 = cave_vctrl_0[ 1 ] & 0x2000;
 			if (tiledim_0 != old_tiledim_0)	tilemap_mark_all_tiles_dirty(tilemap_0);
 			old_tiledim_0 = tiledim_0;		}
 	
-		if (tilemap_1)
+		if (tilemap_1 != 0)
 		{	tiledim_1 = cave_vctrl_1[ 1 ] & 0x2000;
 			if (tiledim_1 != old_tiledim_1)	tilemap_mark_all_tiles_dirty(tilemap_1);
 			old_tiledim_1 = tiledim_1;		}
 	
-		if (tilemap_2)
+		if (tilemap_2 != 0)
 		{	tiledim_2 = cave_vctrl_2[ 1 ] & 0x2000;
 			if (tiledim_2 != old_tiledim_2)	tilemap_mark_all_tiles_dirty(tilemap_2);
 			old_tiledim_2 = tiledim_2;		}
 	
-		if (tilemap_3)
+		if (tilemap_3 != 0)
 		{	tiledim_3 = cave_vctrl_3[ 1 ] & 0x2000;
 			if (tiledim_3 != old_tiledim_3)	tilemap_mark_all_tiles_dirty(tilemap_3);
 			old_tiledim_3 = tiledim_3;		}
@@ -1491,13 +1491,13 @@ public class cave
 	
 		/* Show the row / "column" scroll enable flags, when they change state */
 		rasflag = 0;
-		if (tilemap_0)	{	rasflag |= (cave_vctrl_0[0] & 0x4000) ? 0x0001 : 0;
+		if (tilemap_0 != 0)	{	rasflag |= (cave_vctrl_0[0] & 0x4000) ? 0x0001 : 0;
 							rasflag |= (cave_vctrl_0[1] & 0x4000) ? 0x0002 : 0;	}
-		if (tilemap_1)	{	rasflag |= (cave_vctrl_1[0] & 0x4000) ? 0x0010 : 0;
+		if (tilemap_1 != 0)	{	rasflag |= (cave_vctrl_1[0] & 0x4000) ? 0x0010 : 0;
 							rasflag |= (cave_vctrl_1[1] & 0x4000) ? 0x0020 : 0;	}
-		if (tilemap_2)	{	rasflag |= (cave_vctrl_2[0] & 0x4000) ? 0x0100 : 0;
+		if (tilemap_2 != 0)	{	rasflag |= (cave_vctrl_2[0] & 0x4000) ? 0x0100 : 0;
 							rasflag |= (cave_vctrl_2[1] & 0x4000) ? 0x0200 : 0;	}
-		if (tilemap_3)	{	rasflag |= (cave_vctrl_3[0] & 0x4000) ? 0x1000 : 0;
+		if (tilemap_3 != 0)	{	rasflag |= (cave_vctrl_3[0] & 0x4000) ? 0x1000 : 0;
 							rasflag |= (cave_vctrl_3[1] & 0x4000) ? 0x2000 : 0;	}
 		if (rasflag != old_rasflag)
 		{

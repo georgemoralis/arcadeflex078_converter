@@ -114,9 +114,9 @@ public class mcr2
 	{
 		int val = readinputport(6);
 	
-		if (val & 0x02)		/* left */
+		if ((val & 0x02) != 0)		/* left */
 			return 0x64 - 0x34;
-		if (val & 0x01)		/* right */
+		if ((val & 0x01) != 0)		/* right */
 			return 0x64 + 0x34;
 		return 0x64;
 	} };
@@ -126,9 +126,9 @@ public class mcr2
 	{
 		int val = readinputport(6);
 	
-		if (val & 0x08)		/* up */
+		if ((val & 0x08) != 0)		/* up */
 			return 0x64 - 0x34;
-		if (val & 0x04)		/* down */
+		if ((val & 0x04) != 0)		/* down */
 			return 0x64 + 0x34;
 		return 0x64;
 	} };
@@ -166,7 +166,7 @@ public class mcr2
 	public static ReadHandlerPtr twotigra_yoke1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int p1_yoke = readinputport(6);
-		if (p1_yoke & 0x10)
+		if ((p1_yoke & 0x10) != 0)
 		{
 			if ((p1_yoke & 0x01) != 0x01) return 0;
 			if ((p1_yoke & 0x02) != 0x02) return 255;
@@ -184,7 +184,7 @@ public class mcr2
 	public static ReadHandlerPtr twotigra_yoke2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int p1_yoke = readinputport(6);
-		if (p1_yoke & 0x10)
+		if ((p1_yoke & 0x10) != 0)
 		{
 			if ((p1_yoke & 0x04) != 0x04) return 0;
 			if ((p1_yoke & 0x08) != 0x08) return 255;

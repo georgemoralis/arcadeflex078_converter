@@ -166,7 +166,7 @@ public class asic65
 		/* parameters go to offset 0 */
 		if (!(offset & 1))
 		{
-			if (asic65_log) fprintf(asic65_log, " W=%04X", data);
+			if (asic65_log != 0) fprintf(asic65_log, " W=%04X", data);
 	
 			/* add to the parameter list, but don't overflow */
 			asic65_param[asic65_param_index++] = data;
@@ -178,7 +178,7 @@ public class asic65
 		else
 		{
 			int command = (data < MAX_COMMANDS) ? command_map[asic65_type][data] : OP_UNKNOWN;
-			if (asic65_log) fprintf(asic65_log, "\n(%06X)%c%04X:", activecpu_get_previouspc(), (command == OP_UNKNOWN) ? '*' : ' ', data);
+			if (asic65_log != 0) fprintf(asic65_log, "\n(%06X)%c%04X:", activecpu_get_previouspc(), (command == OP_UNKNOWN) ? '*' : ' ', data);
 	
 			/* set the command number and reset the parameter/result indices */
 			asic65_command = data;
@@ -395,7 +395,7 @@ public class asic65
 	#if LOG_ASIC
 		if (!asic65_log) asic65_log = fopen("asic65.log", "w");
 	#endif
-		if (asic65_log) fprintf(asic65_log, " (R=%04X)", result);
+		if (asic65_log != 0) fprintf(asic65_log, " (R=%04X)", result);
 	
 		return result;
 	}

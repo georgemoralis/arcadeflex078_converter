@@ -227,7 +227,7 @@ public class rainbow
 	
 	static WRITE16_HANDLER( jumping_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			jumping_latch = data & 0xff; /*M68000 writes .b to $400007*/
 			cpu_set_irq_line(1,0,HOLD_LINE);

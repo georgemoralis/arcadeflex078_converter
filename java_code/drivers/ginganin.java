@@ -123,7 +123,7 @@ public class ginganin
 	
 		MC6840_index0 = data;
 	
-		if (MC6840_index0 & 0x80)	/* enable timer output */
+		if ((MC6840_index0 & 0x80) != 0)	/* enable timer output */
 		{
 			if ((MC6840_register0 != S_TEMPO) && (MC6840_register0 != 0))
 			{

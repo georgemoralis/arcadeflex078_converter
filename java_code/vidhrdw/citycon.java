@@ -142,7 +142,7 @@ public class citycon
 			sx = spriteram[offs + 3];
 			sy = 239 - spriteram[offs];
 			flipx = ~spriteram[offs + 2] & 0x10;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 238 - sy;

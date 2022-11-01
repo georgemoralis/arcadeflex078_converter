@@ -34,7 +34,7 @@ public class gbusters
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
@@ -42,7 +42,7 @@ public class gbusters
 	
 	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
@@ -57,7 +57,7 @@ public class gbusters
 		/* bit 7 used (during gfx rom tests), but unknown */
 	
 		/* other bits unused/unknown */
-		if (data & 0xfe){
+		if ((data & 0xfe) != 0){
 			//logerror("%04x: (1f98) write %02x\n",activecpu_get_pc(), data);
 			//usrintf_showmessage("$1f98 = %02x", data);
 		}
@@ -78,7 +78,7 @@ public class gbusters
 		/* bit 7 is used but unknown */
 	
 		/* other bits unused/unknown */
-		if (data & 0xf8)
+		if ((data & 0xf8) != 0)
 		{
 			char baf[40];
 			logerror("%04x: (ccount) write %02x\n",activecpu_get_pc(), data);
@@ -408,7 +408,7 @@ public class gbusters
 		offs += (lines & 0x0f)*0x2000;
 		cpu_setbank( 1, &RAM[offs] );
 	
-		if (lines & 0xf0){
+		if ((lines & 0xf0) != 0){
 			//logerror("%04x: (lines) write %02x\n",activecpu_get_pc(), lines);
 			//usrintf_showmessage("lines = %02x", lines);
 		}

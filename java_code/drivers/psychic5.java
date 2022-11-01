@@ -350,7 +350,7 @@ public class psychic5
 		coin_counter_w(1, data & 0x02);
 	
 		// bit 7 toggles flip screen
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 		{
 			flip_screen_set(!flip_screen);
 		}

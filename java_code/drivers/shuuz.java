@@ -38,10 +38,10 @@ public class shuuz
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 4;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -111,7 +111,7 @@ public class shuuz
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_data_0_w(offset, data & 0xff);
 	}
 	

@@ -338,7 +338,7 @@ public class r3000
 	unsigned r3000_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst)
+		if (dst != 0)
 			*(r3000_regs *)dst = r3000;
 	
 		/* return the context size */
@@ -349,7 +349,7 @@ public class r3000
 	void r3000_set_context(void *src)
 	{
 		/* copy the context */
-		if (src)
+		if (src != 0)
 			r3000 = *(r3000_regs *)src;
 	
 		if (r3000.bigendian)
@@ -474,18 +474,18 @@ public class r3000
 			UINT32 diff = oldsr ^ val;
 	
 			/* handle cache isolation */
-			if (diff & SR_IsC)
+			if ((diff & SR_IsC) != 0)
 			{
-				if (val & SR_IsC)
+				if ((val & SR_IsC) != 0)
 					r3000.cur = *r3000.cache_hand;
 				else
 					r3000.cur = *r3000.memory_hand;
 			}
 	
 			/* handle cache switching */
-			if (diff & SR_SwC)
+			if ((diff & SR_SwC) != 0)
 			{
-				if (val & SR_SwC)
+				if ((val & SR_SwC) != 0)
 					r3000.cache = r3000.icache, r3000.cache_size = r3000.icache_size;
 				else
 					r3000.cache = r3000.dcache, r3000.cache_size = r3000.dcache_size;
@@ -516,8 +516,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop0_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop0_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop0_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop0_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop0_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop0_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -596,8 +596,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop1_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop1_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop1_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop1_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop1_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop1_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -663,8 +663,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop2_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop2_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop2_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop2_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop2_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop2_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -730,8 +730,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop3_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop3_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop3_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop3_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop3_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop3_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -814,20 +814,20 @@ public class r3000
 				case 0x00:	/* SPECIAL */
 					switch (op & 63)
 					{
-						case 0x00:	/* SLL */		if (RDREG) RDVAL = RTVAL << SHIFT;						break;
-						case 0x02:	/* SRL */		if (RDREG) RDVAL = RTVAL >> SHIFT;						break;
-						case 0x03:	/* SRA */		if (RDREG) RDVAL = (INT32)RTVAL >> SHIFT;				break;
-						case 0x04:	/* SLLV */		if (RDREG) RDVAL = RTVAL << (RSVAL & 31);				break;
-						case 0x06:	/* SRLV */		if (RDREG) RDVAL = RTVAL >> (RSVAL & 31);				break;
-						case 0x07:	/* SRAV */		if (RDREG) RDVAL = (INT32)RTVAL >> (RSVAL & 31);		break;
+						case 0x00:	/* SLL */		if (RDREG != 0) RDVAL = RTVAL << SHIFT;						break;
+						case 0x02:	/* SRL */		if (RDREG != 0) RDVAL = RTVAL >> SHIFT;						break;
+						case 0x03:	/* SRA */		if (RDREG != 0) RDVAL = (INT32)RTVAL >> SHIFT;				break;
+						case 0x04:	/* SLLV */		if (RDREG != 0) RDVAL = RTVAL << (RSVAL & 31);				break;
+						case 0x06:	/* SRLV */		if (RDREG != 0) RDVAL = RTVAL >> (RSVAL & 31);				break;
+						case 0x07:	/* SRAV */		if (RDREG != 0) RDVAL = (INT32)RTVAL >> (RSVAL & 31);		break;
 						case 0x08:	/* JR */		SETPC(RSVAL);											break;
 						case 0x09:	/* JALR */		SETPCL(RSVAL,RDREG);									break;
 						case 0x0c:	/* SYSCALL */	generate_exception(EXCEPTION_SYSCALL);					break;
 						case 0x0d:	/* BREAK */		generate_exception(EXCEPTION_BREAK);					break;
 						case 0x0f:	/* SYNC */		invalid_instruction(op);								break;
-						case 0x10:	/* MFHI */		if (RDREG) RDVAL = HIVAL;								break;
+						case 0x10:	/* MFHI */		if (RDREG != 0) RDVAL = HIVAL;								break;
 						case 0x11:	/* MTHI */		HIVAL = RSVAL;											break;
-						case 0x12:	/* MFLO */		if (RDREG) RDVAL = LOVAL;								break;
+						case 0x12:	/* MFLO */		if (RDREG != 0) RDVAL = LOVAL;								break;
 						case 0x13:	/* MTLO */		LOVAL = RSVAL;											break;
 						case 0x18:	/* MULT */
 							temp64 = (INT64)(INT32)RSVAL * (INT64)(INT32)RTVAL;
@@ -842,7 +842,7 @@ public class r3000
 							r3000_icount -= 11;
 							break;
 						case 0x1a:	/* DIV */
-							if (RTVAL)
+							if (RTVAL != 0)
 							{
 								LOVAL = (INT32)RSVAL / (INT32)RTVAL;
 								HIVAL = (INT32)RSVAL % (INT32)RTVAL;
@@ -850,7 +850,7 @@ public class r3000
 							r3000_icount -= 34;
 							break;
 						case 0x1b:	/* DIVU */
-							if (RTVAL)
+							if (RTVAL != 0)
 							{
 								LOVAL = RSVAL / RTVAL;
 								HIVAL = RSVAL % RTVAL;
@@ -861,18 +861,18 @@ public class r3000
 							if (ENABLE_OVERFLOWS && RSVAL > ~RTVAL) generate_exception(EXCEPTION_OVERFLOW);
 							else RDVAL = RSVAL + RTVAL;
 							break;
-						case 0x21:	/* ADDU */		if (RDREG) RDVAL = RSVAL + RTVAL;						break;
+						case 0x21:	/* ADDU */		if (RDREG != 0) RDVAL = RSVAL + RTVAL;						break;
 						case 0x22:	/* SUB */
 							if (ENABLE_OVERFLOWS && RSVAL < RTVAL) generate_exception(EXCEPTION_OVERFLOW);
 							else RDVAL = RSVAL - RTVAL;
 							break;
-						case 0x23:	/* SUBU */		if (RDREG) RDVAL = RSVAL - RTVAL;						break;
-						case 0x24:	/* AND */		if (RDREG) RDVAL = RSVAL & RTVAL;						break;
-						case 0x25:	/* OR */		if (RDREG) RDVAL = RSVAL | RTVAL;						break;
-						case 0x26:	/* XOR */		if (RDREG) RDVAL = RSVAL ^ RTVAL;						break;
-						case 0x27:	/* NOR */		if (RDREG) RDVAL = ~(RSVAL | RTVAL);					break;
-						case 0x2a:	/* SLT */		if (RDREG) RDVAL = (INT32)RSVAL < (INT32)RTVAL;			break;
-						case 0x2b:	/* SLTU */		if (RDREG) RDVAL = (UINT32)RSVAL < (UINT32)RTVAL;		break;
+						case 0x23:	/* SUBU */		if (RDREG != 0) RDVAL = RSVAL - RTVAL;						break;
+						case 0x24:	/* AND */		if (RDREG != 0) RDVAL = RSVAL & RTVAL;						break;
+						case 0x25:	/* OR */		if (RDREG != 0) RDVAL = RSVAL | RTVAL;						break;
+						case 0x26:	/* XOR */		if (RDREG != 0) RDVAL = RSVAL ^ RTVAL;						break;
+						case 0x27:	/* NOR */		if (RDREG != 0) RDVAL = ~(RSVAL | RTVAL);					break;
+						case 0x2a:	/* SLT */		if (RDREG != 0) RDVAL = (INT32)RSVAL < (INT32)RTVAL;			break;
+						case 0x2b:	/* SLTU */		if (RDREG != 0) RDVAL = (UINT32)RSVAL < (UINT32)RTVAL;		break;
 						case 0x30:	/* TEQ */		invalid_instruction(op);								break;
 						case 0x31:	/* TGEU */		invalid_instruction(op);								break;
 						case 0x32:	/* TLT */		invalid_instruction(op);								break;
@@ -912,15 +912,15 @@ public class r3000
 				case 0x07:	/* BGTZ */		if ((INT32)RSVAL > 0) ADDPC(SIMMVAL);							break;
 				case 0x08:	/* ADDI */
 					if (ENABLE_OVERFLOWS && RSVAL > ~SIMMVAL) generate_exception(EXCEPTION_OVERFLOW);
-					else if (RTREG) RTVAL = RSVAL + SIMMVAL;
+					else if (RTREG != 0) RTVAL = RSVAL + SIMMVAL;
 					break;
-				case 0x09:	/* ADDIU */		if (RTREG) RTVAL = RSVAL + SIMMVAL;								break;
-				case 0x0a:	/* SLTI */		if (RTREG) RTVAL = (INT32)RSVAL < (INT32)SIMMVAL;				break;
-				case 0x0b:	/* SLTIU */		if (RTREG) RTVAL = (UINT32)RSVAL < (UINT32)SIMMVAL;				break;
-				case 0x0c:	/* ANDI */		if (RTREG) RTVAL = RSVAL & UIMMVAL;								break;
-				case 0x0d:	/* ORI */		if (RTREG) RTVAL = RSVAL | UIMMVAL;								break;
-				case 0x0e:	/* XORI */		if (RTREG) RTVAL = RSVAL ^ UIMMVAL;								break;
-				case 0x0f:	/* LUI */		if (RTREG) RTVAL = UIMMVAL << 16;								break;
+				case 0x09:	/* ADDIU */		if (RTREG != 0) RTVAL = RSVAL + SIMMVAL;								break;
+				case 0x0a:	/* SLTI */		if (RTREG != 0) RTVAL = (INT32)RSVAL < (INT32)SIMMVAL;				break;
+				case 0x0b:	/* SLTIU */		if (RTREG != 0) RTVAL = (UINT32)RSVAL < (UINT32)SIMMVAL;				break;
+				case 0x0c:	/* ANDI */		if (RTREG != 0) RTVAL = RSVAL & UIMMVAL;								break;
+				case 0x0d:	/* ORI */		if (RTREG != 0) RTVAL = RSVAL | UIMMVAL;								break;
+				case 0x0e:	/* XORI */		if (RTREG != 0) RTVAL = RSVAL ^ UIMMVAL;								break;
+				case 0x0f:	/* LUI */		if (RTREG != 0) RTVAL = UIMMVAL << 16;								break;
 				case 0x10:	/* COP0 */		handle_cop0(op);												break;
 				case 0x11:	/* COP1 */		handle_cop1(op);												break;
 				case 0x12:	/* COP2 */		handle_cop2(op);												break;
@@ -929,12 +929,12 @@ public class r3000
 				case 0x15:	/* BNEL */		invalid_instruction(op);										break;
 				case 0x16:	/* BLEZL */		invalid_instruction(op);										break;
 				case 0x17:	/* BGTZL */		invalid_instruction(op);										break;
-				case 0x20:	/* LB */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG) RTVAL = (INT8)temp;		break;
-				case 0x21:	/* LH */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG) RTVAL = (INT16)temp;	break;
+				case 0x20:	/* LB */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (INT8)temp;		break;
+				case 0x21:	/* LH */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (INT16)temp;	break;
 				case 0x22:	/* LWL */		(*r3000.lwl)(op);												break;
-				case 0x23:	/* LW */		temp = RLONG(SIMMVAL+RSVAL); if (RTREG) RTVAL = temp;			break;
-				case 0x24:	/* LBU */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG) RTVAL = (UINT8)temp;	break;
-				case 0x25:	/* LHU */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG) RTVAL = (UINT16)temp;	break;
+				case 0x23:	/* LW */		temp = RLONG(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = temp;			break;
+				case 0x24:	/* LBU */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (UINT8)temp;	break;
+				case 0x25:	/* LHU */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (UINT16)temp;	break;
 				case 0x26:	/* LWR */		(*r3000.lwr)(op);												break;
 				case 0x28:	/* SB */		WBYTE(SIMMVAL+RSVAL, RTVAL);									break;
 				case 0x29:	/* SH */		WWORD(SIMMVAL+RSVAL, RTVAL); 									break;
@@ -1296,7 +1296,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG)
+		if (RTREG != 0)
 		{
 			if (!(offs & 3)) RTVAL = temp;
 			else
@@ -1311,7 +1311,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG)
+		if (RTREG != 0)
 		{
 			if ((offs & 3) == 3) RTVAL = temp;
 			else
@@ -1353,7 +1353,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG)
+		if (RTREG != 0)
 		{
 			if (!(offs & 3)) RTVAL = temp;
 			else
@@ -1368,7 +1368,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG)
+		if (RTREG != 0)
 		{
 			if ((offs & 3) == 3) RTVAL = temp;
 			else

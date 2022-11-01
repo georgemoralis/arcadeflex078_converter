@@ -59,7 +59,7 @@ public class ccastles
 		b = (data & 0x38) >> 3;
 		g = (data & 0x07);
 		/* a write to offset 32-63 means to set the msb of the red component */
-		if (offset & 0x20) r += 4;
+		if ((offset & 0x20) != 0) r += 4;
 	
 		/* bits are inverted */
 		r = 7-r;
@@ -282,7 +282,7 @@ public class ccastles
 		scrollx = 255 - *ccastles_scrollx;
 		scrolly = 255 - *ccastles_scrolly;
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			scrollx = 254 - scrollx;
 			scrolly = 231 - scrolly;

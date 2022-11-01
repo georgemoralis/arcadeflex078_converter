@@ -388,7 +388,7 @@ public class window
 				char *p = strchr(pwin->title, '\t');
 	
 				/* If the title contains a tab, split it into two parts */
-	            if( p )
+	            if (p != 0)
 				{
 	                i = 0;
 	                j = 1;
@@ -636,7 +636,7 @@ public class window
 		if( p_prio_map[win_offs] < pwin->prio )
 			return;
 	
-		if( state )
+		if (state != 0)
 		{
 			pwin->saved_text = p_text[win_offs];
 			pwin->saved_attr = p_attr[win_offs];
@@ -743,9 +743,9 @@ public class window
 	
 		/* Clear the screen. This *MUST* be before the shadow map is freed! */
 	
-		if( p_windows )
+		if (p_windows != 0)
 		{
-			if( p_text )
+			if (p_text != 0)
 			{
 				for (y = 0; y < screen_h; y++)
 					for (x = 0; x < screen_w; x++)
@@ -761,15 +761,15 @@ public class window
 	        }
 		}
 	
-		if( p_windows )
+		if (p_windows != 0)
 			MyFree((void **) &p_windows, "InitWindowEngine()");
-		if(  p_prio_map )
+		if (p_prio_map != 0)
 			MyFree((void **) &p_prio_map, "InitWindowEngine()");
-		if( p_shadow_map )
+		if (p_shadow_map != 0)
 			MyFree((void **) &p_shadow_map, "InitWindowEngine()");
-		if( p_text )
+		if (p_text != 0)
 			MyFree((void **) &p_text, "InitWindowEngine()");
-		if( p_attr )
+		if (p_attr != 0)
 			MyFree((void **) &p_attr, "InitWindowEngine()");
 	}
 	
@@ -1397,7 +1397,7 @@ public class window
 	    if( NULL == pwin->text )
 			return;
 	
-		if( state )
+		if (state != 0)
 			cursor = pwin->flags |= CURSOR_ON;
 		else
 			cursor = pwin->flags &= ~CURSOR_ON;

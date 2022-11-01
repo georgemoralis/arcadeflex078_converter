@@ -135,7 +135,7 @@ public class system16
 	
 	static WRITE16_HANDLER( sys16_3d_coinctrl_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x10;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -151,7 +151,7 @@ public class system16
 	
 	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if(sys16_custom_irq) sys16_custom_irq();
+		if (sys16_custom_irq != 0) sys16_custom_irq();
 		cpu_set_irq_line(0, 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
 	} };
 	
@@ -277,14 +277,14 @@ public class system16
 	
 	
 	static WRITE16_HANDLER( sound_command_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_irq_line( 1, 0, HOLD_LINE );
 		}
 	}
 	
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
 		}
@@ -298,7 +298,7 @@ public class system16
 	
 	static WRITE16_HANDLER( sys16_coinctrl_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x20;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -1093,7 +1093,7 @@ public class system16
 	MEMORY_END
 	
 	static WRITE16_HANDLER( atomicp_sound_w ){
-		if( ACCESSING_MSB ){
+		if (ACCESSING_MSB != 0){
 			if(offset==0)
 				YM2413_register_port_0_w(0,(data>>8)&0xff);
 			else
@@ -2183,7 +2183,7 @@ public class system16
 	static int eswat_tilebank0;
 	
 	static WRITE16_HANDLER( eswat_tilebank0_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			eswat_tilebank0 = data&0xff;
 		}
 	}
@@ -2920,7 +2920,7 @@ public class system16
 	
 	static WRITE16_HANDLER( ga_sound_command_w ){
 		COMBINE_DATA( &sys16_workingram[(0xecfc-0xc000)/2] );
-		if( ACCESSING_MSB ){
+		if (ACCESSING_MSB != 0){
 			soundlatch_w( 0,data>>8 );
 			cpu_set_irq_line( 1, 0, HOLD_LINE );
 		}
@@ -3303,16 +3303,16 @@ public class system16
 			// monitor
 			data=input_port_0_r( offset );
 			if(input_port_1_r( offset ) & 4){
-				if(dodge_toggle) data=0x38; else data=0x60;
+				if (dodge_toggle != 0) data=0x38; else data=0x60;
 			}
 			if(input_port_1_r( offset ) & 8){
-				if(dodge_toggle) data=0xc8; else data=0xa0;
+				if (dodge_toggle != 0) data=0xc8; else data=0xa0;
 			}
 			if(input_port_1_r( offset ) & 0x10){
-				if(dodge_toggle) data=0xff; else data=0xe0;
+				if (dodge_toggle != 0) data=0xff; else data=0xe0;
 			}
 			if(input_port_1_r( offset ) & 0x20){
-				if(dodge_toggle) data=0x0; else data=0x20;
+				if (dodge_toggle != 0) data=0x0; else data=0x20;
 			}
 			if( hwc_handles_shifts[offset]==0) dodge_toggle^=1;
 		}
@@ -3331,7 +3331,7 @@ public class system16
 	}
 	
 	static WRITE16_HANDLER( hwc_ctrl1_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			sys16_refreshenable = data & 0x20;
 			coin_counter_w(0,data & 0x01);
 			set_led_status(0,data & 0x04);
@@ -3340,9 +3340,9 @@ public class system16
 	}
 	
 	static WRITE16_HANDLER( hwc_ctrl2_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			/* bit 4 is GONG */
-	//		if (data & 0x10) usrintf_showmessage("GONG");
+	//		if ((data & 0x10) != 0) usrintf_showmessage("GONG");
 			/* are the following really lamps? */
 	//		set_led_status(1,data & 0x20);
 	//		set_led_status(2,data & 0x40);
@@ -3547,14 +3547,14 @@ public class system16
 	
 		// Hitting has 8 values, but for easy of playing, I've only added 3
 	
-		if(data1 &1) ret=0x00;
-		else if(data1 &2) ret=0x03;
-		else if(data1 &4) ret=0x07;
+		if ((data1 & 1) != 0) ret=0x00;
+		else if ((data1 & 2) != 0) ret=0x03;
+		else if ((data1 & 4) != 0) ret=0x07;
 		else ret=0x0f;
 	
-		if(data2 &1) ret|=0x00;
-		else if(data2 &2) ret|=0x30;
-		else if(data2 &4) ret|=0x70;
+		if ((data2 & 1) != 0) ret|=0x00;
+		else if ((data2 & 2) != 0) ret|=0x30;
+		else if ((data2 & 4) != 0) ret|=0x70;
 		else ret|=0xf0;
 	
 		return ret;
@@ -6020,7 +6020,7 @@ public class system16
 	MEMORY_END
 	
 	static WRITE16_HANDLER( wb3_sound_command_w ){
-		if( ACCESSING_MSB ) sound_command_w(offset,data>>8,0xff00); //*
+		if (ACCESSING_MSB != 0) sound_command_w(offset,data>>8,0xff00); //*
 	}
 	
 	static MEMORY_WRITE16_START( wb3_writemem )

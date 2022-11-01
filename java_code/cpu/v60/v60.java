@@ -451,14 +451,14 @@ public class v60
 	
 	unsigned v60_get_context(void *dst)
 	{
-		if(dst)
+		if (dst != 0)
 			*(struct v60info *)dst = v60;
 		return sizeof(struct v60info);
 	}
 	
 	void v60_set_context(void *src)
 	{
-		if(src)
+		if (src != 0)
 		{
 			v60 = *(struct v60info *)src;
 			ChangePC(PC);

@@ -25,7 +25,7 @@ public class crospang
 	
 	static WRITE16_HANDLER ( crospang_soundlatch_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
@@ -344,8 +344,8 @@ public class crospang
 			x &= 0x1ff;
 			y &= 0x1ff;
 	
-			if (x & 0x100) x-= 0x200;
-			if (y & 0x100) y-= 0x200;
+			if ((x & 0x100) != 0) x-= 0x200;
+			if ((y & 0x100) != 0) y-= 0x200;
 	
 			x-=44;
 			y+=8;

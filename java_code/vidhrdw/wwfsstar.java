@@ -149,7 +149,7 @@ public class wwfsstar
 	
 			enable = (source [1] & 0x0001);
 	
-			if (enable)
+			if (enable != 0)
 			{
 				ypos = ((source [0] & 0x00ff) | ((source [1] & 0x0004) << 6) );
 				ypos = (((256 - ypos) & 0x1ff) - 16) ;
@@ -162,7 +162,7 @@ public class wwfsstar
 				number = (source [3] & 0x00ff) | ((source [2] & 0x003f) << 8);
 				colourbank = (source [1] & 0x00f0) >> 4;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipy = !flipy;
 					flipx = !flipx;
@@ -172,7 +172,7 @@ public class wwfsstar
 	
 				for (count=0;count<chain;count++)
 				{
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						if (!flipy)
 						{

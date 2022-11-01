@@ -886,7 +886,7 @@ public class galaxian
 	{
 		if (galaxian_attributesram[offset] != data)
 		{
-			if (offset & 0x01)
+			if ((offset & 0x01) != 0)
 			{
 				/* color change */
 				int i;
@@ -896,7 +896,7 @@ public class galaxian
 			}
 			else
 			{
-				if (modify_ypos)
+				if (modify_ypos != 0)
 				{
 					modify_ypos(&data);
 				}
@@ -1235,7 +1235,7 @@ public class galaxian
 	
 	static void scramble_draw_bullets(struct mame_bitmap *bitmap, int offs, int x, int y)
 	{
-		if (flip_screen_x)  x++;
+		if (flip_screen_x != 0)  x++;
 	
 		x = x - 6;
 	
@@ -1249,7 +1249,7 @@ public class galaxian
 	
 	static void darkplnt_draw_bullets(struct mame_bitmap *bitmap, int offs, int x, int y)
 	{
-		if (flip_screen_x)  x++;
+		if (flip_screen_x != 0)  x++;
 	
 		x = x - 6;
 	
@@ -1289,7 +1289,7 @@ public class galaxian
 	
 	static void scramble_draw_background(struct mame_bitmap *bitmap)
 	{
-		if (background_enable)
+		if (background_enable != 0)
 		{
 			fillbitmap(bitmap,Machine->pens[BACKGROUND_COLOR_BASE],&Machine->visible_area);
 		}
@@ -1309,7 +1309,7 @@ public class galaxian
 	static void frogger_draw_background(struct mame_bitmap *bitmap)
 	{
 		/* color split point verified on real machine */
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			plot_box(bitmap,   0, 0, 128, 256, Machine->pens[0]);
 			plot_box(bitmap, 128, 0, 128, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
@@ -1347,7 +1347,7 @@ public class galaxian
 			if ((~prom[x] & 0x02) && background_green) color |= 0x02;
 			if ((~prom[x] & 0x01) && background_blue)  color |= 0x04;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 8 * (31 - x);
 			}
@@ -1362,7 +1362,7 @@ public class galaxian
 	
 	static void minefld_draw_background(struct mame_bitmap *bitmap)
 	{
-		if (background_enable)
+		if (background_enable != 0)
 		{
 			int x;
 	
@@ -1387,7 +1387,7 @@ public class galaxian
 	
 	static void rescue_draw_background(struct mame_bitmap *bitmap)
 	{
-		if (background_enable)
+		if (background_enable != 0)
 		{
 			int x;
 	
@@ -1422,7 +1422,7 @@ public class galaxian
 	
 		prom = memory_region(REGION_USER1);
 	
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			for (x = 0; x < 32; x++)
 			{
@@ -1510,7 +1510,7 @@ public class galaxian
 	
 	
 					color = (~(generator >> 8)) & 0x3f;
-					if (color)
+					if (color != 0)
 					{
 						stars[total_stars].x = x;
 						stars[total_stars].y = y;
@@ -1538,11 +1538,11 @@ public class galaxian
 			return;
 	
 	
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			x = 255 - x;
 		}
-		if (flip_screen_y)
+		if (flip_screen_y != 0)
 		{
 			y = 255 - y;
 		}
@@ -1775,7 +1775,7 @@ public class galaxian
 	
 	static void stars_scroll_callback(int param)
 	{
-		if (galaxian_stars_on)
+		if (galaxian_stars_on != 0)
 		{
 			stars_scrollpos++;
 		}
@@ -1802,12 +1802,12 @@ public class galaxian
 		UINT16 code = galaxian_videoram[tile_index];
 		UINT8 color = galaxian_attributesram[(x << 1) | 1] & color_mask;
 	
-		if (modify_charcode)
+		if (modify_charcode != 0)
 		{
 			modify_charcode(&code, x);
 		}
 	
-		if (modify_color)
+		if (modify_color != 0)
 		{
 			modify_color(&color);
 		}
@@ -1837,7 +1837,7 @@ public class galaxian
 				sy > Machine->visible_area.max_y)
 				continue;
 	
-			if (flip_screen_y)  sy = 255 - sy;
+			if (flip_screen_y != 0)  sy = 255 - sy;
 	
 			draw_bullets(bitmap, offs, sx, sy);
 		}
@@ -1862,28 +1862,28 @@ public class galaxian
 			code = spriteram[offs + 1] & 0x3f;
 			color = spriteram[offs + 2] & color_mask;
 	
-			if (modify_spritecode)
+			if (modify_spritecode != 0)
 			{
 				modify_spritecode(spriteram, &code, &flipx, &flipy, offs);
 			}
 	
-			if (modify_color)
+			if (modify_color != 0)
 			{
 				modify_color(&color);
 			}
 	
-			if (modify_ypos)
+			if (modify_ypos != 0)
 			{
 				modify_ypos(&sy);
 			}
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				flipy = !flipy;
 			}
@@ -1915,7 +1915,7 @@ public class galaxian
 		draw_background(bitmap);
 	
 	
-		if (galaxian_stars_on)
+		if (galaxian_stars_on != 0)
 		{
 			draw_stars(bitmap);
 		}
@@ -1924,7 +1924,7 @@ public class galaxian
 		tilemap_draw(bitmap, 0, tilemap, 0, 0);
 	
 	
-		if (draw_bullets)
+		if (draw_bullets != 0)
 		{
 			draw_bullets_common(bitmap);
 		}
@@ -1932,7 +1932,7 @@ public class galaxian
 	
 		draw_sprites(bitmap, galaxian_spriteram, galaxian_spriteram_size);
 	
-		if (spriteram2_present)
+		if (spriteram2_present != 0)
 		{
 			draw_sprites(bitmap, galaxian_spriteram2, galaxian_spriteram2_size);
 		}

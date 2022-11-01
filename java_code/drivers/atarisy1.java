@@ -160,15 +160,15 @@ public class atarisy1
 		/* all interrupts go through an LS148, which gives priority to the highest */
 		if (joystick_int && joystick_int_enable)
 			newstate = 2;
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 3;
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 4;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 6;
 	
 		/* set the new state of the IRQ lines */
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -307,7 +307,7 @@ public class atarisy1
 	static READ16_HANDLER( port4_r )
 	{
 		int temp = readinputport(4);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x0080;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0080;
 		return temp;
 	}
 	
@@ -323,8 +323,8 @@ public class atarisy1
 	{
 		int temp = readinputport(5);
 	
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x08;
-		if (atarigen_sound_to_cpu_ready) temp ^= 0x10;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x08;
+		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x10;
 		if (!(readinputport(4) & 0x0040)) temp ^= 0x80;
 	
 		return temp;
@@ -478,9 +478,9 @@ public class atarisy1
 		 *	ROM, so it doesn't matter which version we're actually executing.
 		 */
 	
-		if (address & 0x80000)
+		if ((address & 0x80000) != 0)
 			atarigen_slapstic_r(0,0);
-		else if (prevpc & 0x80000)
+		else if ((prevpc & 0x80000) != 0)
 			atarigen_slapstic_r((prevpc >> 1) & 0x3fff,0);
 	
 		return address;

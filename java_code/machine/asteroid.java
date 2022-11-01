@@ -54,7 +54,7 @@ public class asteroid
 		if (!avgdvg_done())
 			res |= 0x04;
 	
-		if (res & bitmask)
+		if ((res & bitmask) != 0)
 			res = 0x80;
 		else
 			res = ~0x80;
@@ -91,7 +91,7 @@ public class asteroid
 		if (!avgdvg_done())
 			res |= 0x01;
 	
-		if (res & bitmask)
+		if ((res & bitmask) != 0)
 			res = ~0x80;
 		else
 			res = 0x80;
@@ -112,7 +112,7 @@ public class asteroid
 		res=readinputport(1);
 		bitmask = (1 << offset);
 	
-		if (res & bitmask)
+		if ((res & bitmask) != 0)
 			res = 0x80;
 		else
 		 	res = ~0x80;

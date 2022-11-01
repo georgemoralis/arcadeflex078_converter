@@ -124,7 +124,7 @@ public class starfire
 	public static ReadHandlerPtr starfire_scratch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* A11 selects input ports */
-		if (offset & 0x800)
+		if ((offset & 0x800) != 0)
 			return (*input_read)(offset);
 	
 		/* convert to a videoram offset */

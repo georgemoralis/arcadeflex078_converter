@@ -121,7 +121,7 @@ public class sprint4
 	
 		UINT8 val;
 	
-		if (offset & 1)
+		if ((offset & 1) != 0)
 		{
 			val = 4 * gear[n];
 		}

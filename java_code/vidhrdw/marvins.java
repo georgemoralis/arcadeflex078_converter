@@ -296,7 +296,7 @@ public class marvins
 	
 		if( sprite_partition>0x64 ) sprite_partition = 0x64;
 	
-		if( priority )
+		if (priority != 0)
 		{
 			source = spriteram + sprite_partition;
 			finish = spriteram + 0x64;
@@ -317,9 +317,9 @@ public class marvins
 			int flipy = (attributes&0x20);
 			int flipx = 0;
 	
-			if( flipscreen )
+			if (flipscreen != 0)
 			{
-				if( flipy )
+				if (flipy != 0)
 				{
 				    flipx = 1; flipy = 0;
 				}
@@ -366,8 +366,8 @@ public class marvins
 		sect_rect(&finalclip, cliprect);
 	
 		if( (scroll_attributes & 4)==0 ) bg_scrollx += 256;
-		if( scroll_attributes & 1 ) sprite_scrollx += 256;
-		if( scroll_attributes & 2 ) fg_scrollx += 256;
+		if ((scroll_attributes & 1) != 0) sprite_scrollx += 256;
+		if ((scroll_attributes & 2) != 0) fg_scrollx += 256;
 	
 		/* palette bank for background/foreground is set by a memory-write handler */
 		update_palette(0);
@@ -425,8 +425,8 @@ public class marvins
 		sect_rect(&finalclip, cliprect);
 	
 		if( (scroll_attributes & 4)==0 ) bg_scrollx += 256;
-		if( scroll_attributes & 1 ) sprite_scrollx += 256;
-		if( scroll_attributes & 2 ) fg_scrollx += 256;
+		if ((scroll_attributes & 1) != 0) sprite_scrollx += 256;
+		if ((scroll_attributes & 2) != 0) fg_scrollx += 256;
 	
 		marvins_palette_bank_w(0, mem[0xc800]);
 		update_palette(1);

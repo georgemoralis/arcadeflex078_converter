@@ -6,14 +6,14 @@ UINT32 opINCB(void) /* TRUSTED */
 
 	amLength1=ReadAMAddress();
 
-	if (amFlag)
+	if (amFlag != 0)
 		appb=(UINT8)v60.reg[amOut];
 	else
 		appb=MemRead8(amOut);
 
 	ADDB(appb, 1);
 
-	if (amFlag)
+	if (amFlag != 0)
 		SETREG8(v60.reg[amOut], appb);
 	else
 		MemWrite8(amOut, appb);
@@ -29,14 +29,14 @@ UINT32 opINCH(void) /* TRUSTED */
 
 	amLength1=ReadAMAddress();
 
-	if (amFlag)
+	if (amFlag != 0)
 		apph=(UINT16)v60.reg[amOut];
 	else
 		apph=MemRead16(amOut);
 
 	ADDW(apph, 1);
 
-	if (amFlag)
+	if (amFlag != 0)
 		SETREG16(v60.reg[amOut], apph);
 	else
 		MemWrite16(amOut, apph);
@@ -52,14 +52,14 @@ UINT32 opINCW(void) /* TRUSTED */
 
 	amLength1=ReadAMAddress();
 
-	if (amFlag)
+	if (amFlag != 0)
 		appw=v60.reg[amOut];
 	else
 		appw=MemRead32(amOut);
 
 	ADDL(appw, 1);
 
-	if (amFlag)
+	if (amFlag != 0)
 		v60.reg[amOut]=appw;
 	else
 		MemWrite32(amOut,appw);
@@ -75,14 +75,14 @@ UINT32 opDECB(void) /* TRUSTED */
 
 	amLength1=ReadAMAddress();
 
-	if (amFlag)
+	if (amFlag != 0)
 		appb=(UINT8)v60.reg[amOut];
 	else
 		appb=MemRead8(amOut);
 
 	SUBB(appb, 1);
 
-	if (amFlag)
+	if (amFlag != 0)
 		SETREG8(v60.reg[amOut], appb);
 	else
 		MemWrite8(amOut, appb);
@@ -98,14 +98,14 @@ UINT32 opDECH(void) /* TRUSTED */
 
 	amLength1=ReadAMAddress();
 
-	if (amFlag)
+	if (amFlag != 0)
 		apph=(UINT16)v60.reg[amOut];
 	else
 		apph=MemRead16(amOut);
 
 	SUBW(apph, 1);
 
-	if (amFlag)
+	if (amFlag != 0)
 		SETREG16(v60.reg[amOut], apph);
 	else
 		MemWrite16(amOut, apph);
@@ -121,14 +121,14 @@ UINT32 opDECW(void) /* TRUSTED */
 
 	amLength1=ReadAMAddress();
 
-	if (amFlag)
+	if (amFlag != 0)
 		appw=v60.reg[amOut];
 	else
 		appw=MemRead32(amOut);
 
 	SUBL(appw, 1);
 
-	if (amFlag)
+	if (amFlag != 0)
 		v60.reg[amOut]=appw;
 	else
 		MemWrite32(amOut,appw);
@@ -237,19 +237,19 @@ UINT32 opTRAP(void)
 		if (!_OV) return amLength1+1;
 		else break;
 	case 1:
-		if (_OV) return amLength1+1;
+		if (_OV != 0) return amLength1+1;
 		else break;
 	case 2:
 		if (!_CY) return amLength1+1;
 		else break;
 	case 3:
-		if (_CY) return amLength1+1;
+		if (_CY != 0) return amLength1+1;
 		else break;
 	case 4:
 		if (!_Z) return amLength1+1;
 		else break;
 	case 5:
-		if (_Z) return amLength1+1;
+		if (_Z != 0) return amLength1+1;
 		else break;
 	case 6:
 		if (!(_CY | _Z)) return amLength1+1;
@@ -261,7 +261,7 @@ UINT32 opTRAP(void)
 		if (!_S) return amLength1+1;
 		else break;
 	case 9:
-		if (_S) return amLength1+1;
+		if (_S != 0) return amLength1+1;
 		else break;
 	case 10:
 		break;
@@ -374,19 +374,19 @@ UINT32 opSTTASK(void)
 
 	MemWrite32(adr, TKCW);
 	adr += 4;
-	if(SYCW & 0x100) {
+	if ((SYCW & 0x100) != 0) {
 		MemWrite32(adr, L0SP);
 		adr += 4;
 	}
-	if(SYCW & 0x200) {
+	if ((SYCW & 0x200) != 0) {
 		MemWrite32(adr, L1SP);
 		adr += 4;
 	}
-	if(SYCW & 0x400) {
+	if ((SYCW & 0x400) != 0) {
 		MemWrite32(adr, L2SP);
 		adr += 4;
 	}
-	if(SYCW & 0x800) {
+	if ((SYCW & 0x800) != 0) {
 		MemWrite32(adr, L3SP);
 		adr += 4;
 	}
@@ -427,7 +427,7 @@ UINT32 opTASI(void)
 	amLength1=ReadAMAddress();
 
 	// Load UINT8 from the address
-	if (amFlag)
+	if (amFlag != 0)
 		appb=(UINT8)v60.reg[amOut&0x1F];
 	else
 		appb=MemRead8(amOut);
@@ -436,7 +436,7 @@ UINT32 opTASI(void)
 	SUBB(appb, 0xff);
 
 	// Write FF in the operand
-	if (amFlag)
+	if (amFlag != 0)
 		SETREG8(v60.reg[amOut&0x1F], 0xFF);
 	else
 		MemWrite8(amOut,0xFF);

@@ -290,7 +290,7 @@ public class docastle
 				flipy = spriteram[offs + 2] & 0x80;
 			}
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

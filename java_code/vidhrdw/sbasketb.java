@@ -165,7 +165,7 @@ public class sbasketb
 				int flipx =  spriteram[offs + 1] & 0x40;
 				int flipy =  spriteram[offs + 1] & 0x80;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

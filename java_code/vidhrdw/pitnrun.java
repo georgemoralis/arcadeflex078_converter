@@ -209,12 +209,12 @@ public class pitnrun
 			flipy = (spriteram[offs+1]&0x80)>>7;
 			flipx = (spriteram[offs+1]&0x40)>>6;
 			
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 256 - sx;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;
@@ -264,10 +264,10 @@ public class pitnrun
 			dx=128-pitnrun_h_heed+((pitnrun_ha&8)<<5)+3;
 			dy=128-pitnrun_v_heed+((pitnrun_ha&0x10)<<4);
 			
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 				dx=128-dx+16;
 				
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 				dy=128-dy;
 	
 			myclip.min_x=dx;
@@ -287,7 +287,7 @@ public class pitnrun
 		
 		pitnrun_draw_sprites(bitmap,&myclip);
 	
-		if(pitnrun_ha&4)
+		if ((pitnrun_ha & 4) != 0)
 			copybitmap(bitmap,tmp_bitmap[pitnrun_ha&3],flip_screen_x,flip_screen_y,dx,dy,&myclip,TRANSPARENCY_PEN, 1);
 		tilemap_draw(bitmap,cliprect,fg, 0,0);
 	} };	

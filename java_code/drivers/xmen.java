@@ -38,13 +38,13 @@ public class xmen
 	
 	static NVRAM_HANDLER( xmen )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -63,7 +63,7 @@ public class xmen
 		/* bit 7 is EEPROM ready */
 		/* bit 14 is service button */
 		res = (EEPROM_read_bit() << 6) | input_port_2_word_r(0,0);
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xbfff;
@@ -74,7 +74,7 @@ public class xmen
 	static WRITE16_HANDLER( eeprom_w )
 	{
 	logerror("%06x: write %04x to 108000\n",activecpu_get_pc(),data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -86,7 +86,7 @@ public class xmen
 			EEPROM_set_cs_line((data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
 			EEPROM_set_clock_line((data & 0x08) ? ASSERT_LINE : CLEAR_LINE);
 		}
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			/* bit 8 = enable sprite ROM reading */
 			K053246_set_OBJCHA_line((data & 0x0100) ? ASSERT_LINE : CLEAR_LINE);
@@ -102,7 +102,7 @@ public class xmen
 	
 	static WRITE16_HANDLER( sound_cmd_w )
 	{
-		if (ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			data &= 0xff;
 			soundlatch_w(0, data);
 			if(!Machine->sample_rate)
@@ -118,7 +118,7 @@ public class xmen
 	
 	static WRITE16_HANDLER( xmen_18fa00_w )
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			/* bit 2 is interrupt enable */
 			interrupt_enable_w(0,data & 0x04);
 		}

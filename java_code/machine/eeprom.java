@@ -98,12 +98,12 @@ public class eeprom
 	
 	void nvram_handler_93C46(mame_file *file,int read_or_write)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
-			if (file)	EEPROM_load(file);
+			if (file != 0)	EEPROM_load(file);
 		}
 	}
 	
@@ -251,7 +251,7 @@ public class eeprom
 	
 	static void EEPROM_reset(void)
 	{
-	if (serial_count)
+	if (serial_count != 0)
 		logerror("EEPROM reset, buffer = %s\n",serial_buffer);
 	
 		serial_count = 0;
@@ -272,7 +272,7 @@ public class eeprom
 	{
 		int res;
 	
-		if (sending)
+		if (sending != 0)
 			res = (eeprom_data_bits >> intf->data_bits) & 1;
 		else
 		{
@@ -313,7 +313,7 @@ public class eeprom
 		{
 			if (reset_line == CLEAR_LINE)
 			{
-				if (sending)
+				if (sending != 0)
 				{
 					if (eeprom_clock_count == intf->data_bits && intf->enable_multi_read)
 					{
@@ -354,7 +354,7 @@ public class eeprom
 	
 	UINT8 * EEPROM_get_data_pointer(int * length)
 	{
-		if(length)
+		if (length != 0)
 			*length = MEMORY_SIZE;
 	
 		return eeprom_data;

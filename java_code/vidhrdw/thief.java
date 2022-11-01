@@ -98,23 +98,23 @@ public class thief
 	
 	public static ReadHandlerPtr thief_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *source = &videoram[offset];
-		if( thief_video_control&0x02 ) source+=0x2000*4; /* foreground/background */
+		if ((thief_video_control & 0x02) != 0) source+=0x2000*4; /* foreground/background */
 		return source[thief_read_mask*0x2000];
 	} };
 	
 	public static WriteHandlerPtr thief_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *dest = &videoram[offset];
-		if( thief_video_control&0x02 ){
+		if ((thief_video_control & 0x02) != 0){
 			dest+=0x2000*4; /* foreground/background */
 			dirtybuffer[offset+0x2000] = 1;
 		}
 		else {
 			dirtybuffer[offset] = 1;
 		}
-		if( thief_write_mask&0x1 ) dest[0x2000*0] = data;
-		if( thief_write_mask&0x2 ) dest[0x2000*1] = data;
-		if( thief_write_mask&0x4 ) dest[0x2000*2] = data;
-		if( thief_write_mask&0x8 ) dest[0x2000*3] = data;
+		if ((thief_write_mask & 0x1) != 0) dest[0x2000*0] = data;
+		if ((thief_write_mask & 0x2) != 0) dest[0x2000*1] = data;
+		if ((thief_write_mask & 0x4) != 0) dest[0x2000*2] = data;
+		if ((thief_write_mask & 0x8) != 0) dest[0x2000*3] = data;
 	} };
 	
 	/***************************************************************************/
@@ -150,7 +150,7 @@ public class thief
 		const UINT8 *source = videoram;
 		struct mame_bitmap *page;
 	
-		if( thief_video_control&4 ){ /* visible page */
+		if ((thief_video_control & 4) != 0){ /* visible page */
 			dirty += 0x2000;
 			source += 0x2000*4;
 			page = thief_page1;
@@ -168,7 +168,7 @@ public class thief
 				int plane2 = source[0x2000*2+offs];
 				int plane3 = source[0x2000*3+offs];
 				int bit;
-				if( flipscreen ){
+				if (flipscreen != 0){
 					for( bit=0; bit<8; bit++ ){
 						plot_pixel( page, 0xff - (xpos+bit), 0xff - ypos,
 							pal_data[
@@ -227,7 +227,7 @@ public class thief
 		x -= width*8;
 		xoffset = x&7;
 	
-		if( attributes&0x10 ){
+		if ((attributes & 0x10) != 0){
 			y += 7-height;
 			dy = 1;
 		}
@@ -247,7 +247,7 @@ public class thief
 				}
 				offs = (y*32+x/8+i)&0x1fff;
 				old_data = thief_videoram_r( offs );
-				if( xor_blit ){
+				if (xor_blit != 0){
 					thief_videoram_w( offs, old_data^(data>>xoffset) );
 				}
 				else {
@@ -257,7 +257,7 @@ public class thief
 				}
 				offs = (offs+1)&0x1fff;
 				old_data = thief_videoram_r( offs );
-				if( xor_blit ){
+				if (xor_blit != 0){
 					thief_videoram_w( offs, old_data^((data<<(8-xoffset))&0xff) );
 				}
 				else {

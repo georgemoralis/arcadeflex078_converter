@@ -211,11 +211,11 @@ public class esd16
 			sy	 =	0x100 - ((sy & 0xff)  - (sy & 0x100));
 			sy	-=	dimy*16;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{	flipx = !flipx;		sx = max_x - sx -    1 * 16 + 2;	// small offset
 				flipy = !flipy;		sy = max_y - sy - dimy * 16;	}
 	
-			if (flipy)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
+			if (flipy != 0)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
 			else		{	starty = sy;				endy = sy+dimy*16;	incy = +16;	}
 	
 			for (y = starty ; y != endy ; y += incy)
@@ -263,11 +263,11 @@ public class esd16
 	
 			sy = 0x1ff-sy;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{	flipx = !flipx;		sx = max_x - sx -    1 * 16 + 2;	// small offset
 				flipy = !flipy;		sy = max_y - sy - dimy * 16;	}
 	
-			if (flipy)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
+			if (flipy != 0)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
 			else		{	starty = sy-dimy*16;				endy = sy;	incy = +16;	}
 	
 			for (y = starty ; y != endy ; y += incy)
@@ -311,12 +311,12 @@ public class esd16
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
 		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
-		if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect,esdtilemap_1,0,0);
+		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_1,0,0);
 	
-		if (layers_ctrl & 4)	esd16_draw_sprites(bitmap,cliprect);
+		if ((layers_ctrl & 4) != 0)	esd16_draw_sprites(bitmap,cliprect);
 	} };
 	
 	
@@ -337,10 +337,10 @@ public class esd16
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
 		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
-		if (layers_ctrl & 2)
+		if ((layers_ctrl & 2) != 0)
 		{
 			if (head_layersize[0]&0x0002)
 			{
@@ -356,7 +356,7 @@ public class esd16
 			}
 	
 		}
-		if (layers_ctrl & 4)	hedpanic_draw_sprites(bitmap,cliprect);
+		if ((layers_ctrl & 4) != 0)	hedpanic_draw_sprites(bitmap,cliprect);
 	
 	
 	//	usrintf_showmessage("%04x %04x %04x %04x %04x",head_unknown1[0],head_layersize[0],head_unknown3[0],head_unknown4[0],head_unknown5[0]);

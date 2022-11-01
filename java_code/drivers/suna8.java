@@ -102,7 +102,7 @@ public class suna8
 	
 	static int is_special(int i)
 	{
-		if (i & 0x400)
+		if ((i & 0x400) != 0)
 		{
 			switch ( i & 0xf )
 			{
@@ -159,7 +159,7 @@ public class suna8
 				case 0x1:
 				case 0x2:
 				case 0x3:
-					if (i & 0x40)	encry = 0;
+					if ((i & 0x40) != 0)	encry = 0;
 					else			encry = 2;
 					break;
 	//828c:	e=0
@@ -275,19 +275,19 @@ public class suna8
 	//045: e=1 m=90
 	//5b5: e=2 m=90
 	//5d5: e=2 m=90
-					if (i & 0x400)	encry = 2;
+					if ((i & 0x400) != 0)	encry = 2;
 					else			encry = 1;
 					break;
 	
 	
 				case 0x7:
 				case 0x8:
-					if (i & 0x400)	{	encry = 1;	mask = 0x90;	}
+					if ((i & 0x400) != 0)	{	encry = 1;	mask = 0x90;	}
 					else			{	encry = 2;	}
 					break;
 	
 				case 0xc:
-					if (i & 0x400)	{	encry = 1;	mask = 0x10;	}
+					if ((i & 0x400) != 0)	{	encry = 1;	mask = 0x10;	}
 					else			{	encry = 0;	}
 					break;
 	
@@ -824,7 +824,7 @@ public class suna8
 	
 	public static ReadHandlerPtr hardhead_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (protection_val & 0x80)
+		if ((protection_val & 0x80) != 0)
 			return	((~offset & 0x20)			?	0x20 : 0) |
 					((protection_val & 0x04)	?	0x80 : 0) |
 					((protection_val & 0x01)	?	0x04 : 0);
@@ -835,7 +835,7 @@ public class suna8
 	
 	public static WriteHandlerPtr hardhead_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x80)	protection_val = data;
+		if ((data & 0x80) != 0)	protection_val = data;
 		else				protection_val = offset & 1;
 	} };
 	
@@ -2134,7 +2134,7 @@ public class suna8
 	{
 		if (cpu_getiloops())
 		{
-			if (suna8_nmi_enable)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if (suna8_nmi_enable != 0)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
@@ -2245,7 +2245,7 @@ public class suna8
 	{
 		if (cpu_getiloops())
 		{
-			if (suna8_nmi_enable)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if (suna8_nmi_enable != 0)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };

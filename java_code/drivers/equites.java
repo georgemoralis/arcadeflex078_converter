@@ -249,21 +249,21 @@ public class equites
 		int data;
 	
 		data = readinputport(0);
-		if (disablejoyport2) data = (data & 0x80ff) | (data<<8 & 0x7f00);
+		if (disablejoyport2 != 0) data = (data & 0x80ff) | (data<<8 & 0x7f00);
 	
 		return (data);
 	}
 	
 	static WRITE16_HANDLER(equites_flip0_w)
 	{
-		if (ACCESSING_LSB) disablejoyport2 = 1;
-		if (ACCESSING_MSB) equites_flip = 0;
+		if (ACCESSING_LSB != 0) disablejoyport2 = 1;
+		if (ACCESSING_MSB != 0) equites_flip = 0;
 	}
 	
 	static WRITE16_HANDLER(equites_flip1_w)
 	{
-		if (ACCESSING_LSB) disablejoyport2 = 0;
-		if (ACCESSING_MSB) equites_flip = 1;
+		if (ACCESSING_LSB != 0) disablejoyport2 = 0;
+		if (ACCESSING_MSB != 0) equites_flip = 1;
 	}
 	
 	// Splendor Blast Hardware
@@ -276,13 +276,13 @@ public class equites
 	
 	static WRITE16_HANDLER(splndrbt_flip0_w)
 	{
-		if (ACCESSING_LSB) splndrbt_flip = 0;
-		if (ACCESSING_MSB) equites_bgcolor_w(offset, data, 0x00ff);
+		if (ACCESSING_LSB != 0) splndrbt_flip = 0;
+		if (ACCESSING_MSB != 0) equites_bgcolor_w(offset, data, 0x00ff);
 	}
 	
 	static WRITE16_HANDLER(splndrbt_flip1_w)
 	{
-		if (ACCESSING_LSB) splndrbt_flip = 1;
+		if (ACCESSING_LSB != 0) splndrbt_flip = 1;
 	}
 	#if 0
 	static WRITE16_HANDLER(log16_w)

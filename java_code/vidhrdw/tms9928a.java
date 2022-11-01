@@ -345,7 +345,7 @@ public class tms9928a
 		int reg;
 	
 	    if (tms.latch) {
-	        if (data & 0x80) {
+	        if ((data & 0x80) != 0) {
 	            /* register write */
 				reg = data & 7;
 				/*if (tms.FirstByte != tms.Regs[reg])*/ /* Removed to fix ColecoVision MESS Driver*/
@@ -385,7 +385,7 @@ public class tms9928a
 	    case 0:
 	        if (tms.mode != TMS_MODE) {
 	            /* re-calculate masks and pattern generator & colour */
-	            if (val & 2) {
+	            if ((val & 2) != 0) {
 	                tms.colour = ((tms.Regs[3] & 0x80) * 64) & (tms.vramsize - 1);
 	                tms.colourmask = (tms.Regs[3] & 0x7f) * 8 | 7;
 	                tms.pattern = ((tms.Regs[4] & 4) * 2048) & (tms.vramsize - 1);
@@ -511,7 +511,7 @@ public class tms9928a
 				rt.min_x = LEFT_BORDER+256; rt.max_x = LEFT_BORDER+256+RIGHT_BORDER-1;
 				fillbitmap (bitmap, tms.BackColour, &rt);
 		    }
-			if (TMS_SPRITES_ENABLED)
+			if (TMS_SPRITES_ENABLED != 0)
 				_TMS9928A_sprites(bitmap);
 		}
 	
@@ -528,7 +528,7 @@ public class tms9928a
 	    /* when skipping frames, calculate sprite collision */
 	    if (osd_skip_this_frame() ) {
 	        if (tms.Change) {
-	            if (TMS_SPRITES_ENABLED) {
+	            if (TMS_SPRITES_ENABLED != 0) {
 	                _TMS9928A_sprites (NULL);
 	            }
 	        } else {
@@ -844,7 +844,7 @@ public class tms9928a
 	                } else limit[yy]--;
 	                line = 256*patternptr[yy-y] + patternptr[yy-y+16];
 	                for (xx=x;xx<(x+size);xx++) {
-	                    if (line & 0x8000) {
+	                    if ((line & 0x8000) != 0) {
 	                        if ((xx >= 0) && (xx < 256)) {
 	                            if (tms.dBackMem[yy*256+xx]) {
 	                                tms.StatusReg |= 0x20;
@@ -854,7 +854,7 @@ public class tms9928a
 	                            if (c && ! (tms.dBackMem[yy*256+xx] & 0x02))
 	                            {
 	                            	tms.dBackMem[yy*256+xx] |= 0x02;
-	                            	if (bmp)
+	                            	if (bmp != 0)
 										plot_pixel (bmp, LEFT_BORDER+xx, TOP_BORDER+yy, Machine->pens[c]);
 								}
 	                        }
@@ -883,7 +883,7 @@ public class tms9928a
 	                        } else limit[yy]--;
 	                        line = line2;
 	                        for (xx=x;xx<(x+size*2);xx+=2) {
-	                            if (line & 0x8000) {
+	                            if ((line & 0x8000) != 0) {
 	                                if ((xx >=0) && (xx < 256)) {
 	                                    if (tms.dBackMem[yy*256+xx]) {
 	                                        tms.StatusReg |= 0x20;
@@ -893,7 +893,7 @@ public class tms9928a
 			                            if (c && ! (tms.dBackMem[yy*256+xx] & 0x02))
 	        		                    {
 	                		            	tms.dBackMem[yy*256+xx] |= 0x02;
-	                                        if (bmp)
+	                                        if (bmp != 0)
 	                                        	plot_pixel (bmp, LEFT_BORDER+xx, TOP_BORDER+yy, Machine->pens[c]);
 	                		            }
 	                                }
@@ -906,7 +906,7 @@ public class tms9928a
 			                            if (c && ! (tms.dBackMem[yy*256+xx+1] & 0x02))
 	        		                    {
 	                		            	tms.dBackMem[yy*256+xx+1] |= 0x02;
-	                                        if (bmp)
+	                                        if (bmp != 0)
 	                                        	plot_pixel (bmp, LEFT_BORDER+xx+1, TOP_BORDER+yy, Machine->pens[c]);
 										}
 	                                }

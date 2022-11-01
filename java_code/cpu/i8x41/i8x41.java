@@ -513,9 +513,9 @@ public class i8x41
 			/* Configure upper lines on Port 2 for IRQ handshaking (P24 and P25) */
 	
 			ENABLE |= FLAGS;
-			if( STATE & OBF ) P2_HS |= 0x10;
+			if ((STATE & OBF) != 0) P2_HS |= 0x10;
 			else P2_HS &= 0xef;
-			if( STATE & IBF ) P2_HS |= 0x20;
+			if ((STATE & IBF) != 0) P2_HS |= 0x20;
 			else P2_HS &= 0xdf;
 			WP(0x02, (P2 & P2_HS) );
 		}
@@ -530,7 +530,7 @@ public class i8x41
 		if( 0 == (ENABLE & IBFI) )
 		{
 			ENABLE |= IBFI;		/* enable input buffer full interrupt */
-			if( STATE & IBF )	/* already got data in the buffer? */
+			if ((STATE & IBF) != 0)	/* already got data in the buffer? */
 				i8x41_set_irq_line(I8X41_INT_IBF, HOLD_LINE);
 		}
 	}
@@ -554,10 +554,10 @@ public class i8x41
 			(*i8x41.irq_callback)(I8X41_INT_IBF);
 	
 		STATE &= ~IBF;					/* clear input buffer full flag */
-		if( ENABLE & FLAGS )
+		if ((ENABLE & FLAGS) != 0)
 		{
 			P2_HS &= 0xdf;
-			if( STATE & OBF ) P2_HS |= 0x10;
+			if ((STATE & OBF) != 0) P2_HS |= 0x10;
 			else P2_HS &= 0xef;
 			WP(0x02, (P2 & P2_HS) );	/* Clear the DBBI IRQ out on P25 */
 		}
@@ -629,7 +629,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if( PSW & FC )
+		if ((PSW & FC) != 0)
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -641,7 +641,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if( STATE & F0 )
+		if ((STATE & F0) != 0)
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -653,7 +653,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if( STATE & F1 )
+		if ((STATE & F1) != 0)
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -728,7 +728,7 @@ public class i8x41
 		if( !(ENABLE & CNT) )
 		{
 			UINT8 level = RP(I8X41_t1);
-			if( level ) CONTROL |= TEST1;
+			if (level != 0) CONTROL |= TEST1;
 			else CONTROL &= ~TEST1;
 		}
 		if( !(CONTROL & TEST1) )
@@ -743,7 +743,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if( A )
+		if (A != 0)
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -755,7 +755,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if( STATE & OBF )
+		if ((STATE & OBF) != 0)
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -767,7 +767,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if( CONTROL & TOVF )
+		if ((CONTROL & TOVF) != 0)
 			PC = (PC & 0x700) | adr;
 		CONTROL &= ~TOVF;
 	}
@@ -795,7 +795,7 @@ public class i8x41
 		if( !(ENABLE & CNT) )
 		{
 			UINT8 level = RP(I8X41_t1);
-			if( level ) CONTROL |= TEST1;
+			if (level != 0) CONTROL |= TEST1;
 			else CONTROL &= ~TEST1;
 		}
 		if( (CONTROL & TEST1) )
@@ -1050,10 +1050,10 @@ public class i8x41
 	{
 		DBBO = A;			/* DBB output buffer */
 		STATE |= OBF;		/* assert the output buffer full flag */
-		if( ENABLE & FLAGS )
+		if ((ENABLE & FLAGS) != 0)
 		{
 			P2_HS |= 0x10;
-			if( STATE & IBF ) P2_HS |= 0x20;
+			if ((STATE & IBF) != 0) P2_HS |= 0x20;
 			else P2_HS &= 0xdf;
 			WP(0x02, (P2 & P2_HS) );	/* Assert the DBBO IRQ out on P24 */
 		}
@@ -1924,7 +1924,7 @@ public class i8x41
 			}
 	
 	
-			if( ENABLE & CNT )
+			if ((ENABLE & CNT) != 0)
 			{
 				inst_cycles = i8x41_cycles[op];
 				for ( ; inst_cycles > 0; inst_cycles-- )
@@ -1936,16 +1936,16 @@ public class i8x41
 						if (TIMER == 0)
 						{
 							CONTROL |= TOVF;
-							if( ENABLE & TCNTI )
+							if ((ENABLE & TCNTI) != 0)
 								CONTROL |= TIRQ_PEND;
 						}
 					}
-					if( T1_level ) CONTROL |= TEST1;
+					if (T1_level != 0) CONTROL |= TEST1;
 					else CONTROL &= ~TEST1;
 				}
 			}
 	
-			if( ENABLE & T )
+			if ((ENABLE & T) != 0)
 			{
 				PRESCALER += i8x41_cycles[op];
 				/**** timer is prescaled by 32 ****/
@@ -1956,13 +1956,13 @@ public class i8x41
 					if( TIMER == 0 )
 					{
 						CONTROL |= TOVF;
-						if( ENABLE & TCNTI )
+						if ((ENABLE & TCNTI) != 0)
 							CONTROL |= TIRQ_PEND;
 					}
 				}
 			}
 	
-			if( CONTROL & IRQ_PEND )	/* Are any Interrupts Pending ? */
+			if ((CONTROL & IRQ_PEND) != 0)	/* Are any Interrupts Pending ? */
 			{
 				if( 0 == (CONTROL & IRQ_EXEC) )	/* Are any Interrupts being serviced ? */
 				{
@@ -1983,7 +1983,7 @@ public class i8x41
 						PC = V_TIMER;
 						CONTROL &= ~TIRQ_PEND;
 						CONTROL |= TIRQ_EXEC;
-						if( ENABLE & T ) PRESCALER += 2;	/* 2 states */
+						if ((ENABLE & T) != 0) PRESCALER += 2;	/* 2 states */
 						i8x41_ICount -= 2;		/* 2 states to take interrupt */
 					}
 				}
@@ -2002,7 +2002,7 @@ public class i8x41
 	
 	unsigned i8x41_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			memcpy(dst, &i8x41, sizeof(I8X41));
 		return sizeof(I8X41);
 	}
@@ -2014,7 +2014,7 @@ public class i8x41
 	
 	void i8x41_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 			memcpy(&i8x41, src, sizeof(I8X41));
 	}
 	
@@ -2044,10 +2044,10 @@ public class i8x41
 		case I8X41_DATA:
 	//		logerror("i8x41 #%d:%03x  Reading DATA DBBI %02x.  State was %02x,  ", cpu_getactivecpu(), PC, DBBO, STATE);
 				STATE &= ~OBF;	/* reset the output buffer full flag */
-				if( ENABLE & FLAGS)
+				if ((ENABLE & FLAGS) != 0)
 				{
 					P2_HS &= 0xef;
-					if( STATE & IBF ) P2_HS |= 0x20;
+					if ((STATE & IBF) != 0) P2_HS |= 0x20;
 					else P2_HS &= 0xdf;
 					WP(0x02, (P2 & P2_HS) );	/* Clear the DBBO IRQ out on P24 */
 				}
@@ -2101,9 +2101,9 @@ public class i8x41
 					DBBO = val;
 				STATE &= ~F1;
 				STATE |= IBF;
-				if( ENABLE & IBFI )
+				if ((ENABLE & IBFI) != 0)
 					CONTROL |= IBFI_PEND;
-				if( ENABLE & FLAGS)
+				if ((ENABLE & FLAGS) != 0)
 				{
 					P2_HS |= 0x20;
 					if( 0 == (STATE & OBF) ) P2_HS |= 0x10;
@@ -2125,9 +2125,9 @@ public class i8x41
 					DBBO = val;
 				STATE |= F1;
 				STATE |= IBF;
-				if( ENABLE & IBFI )
+				if ((ENABLE & IBFI) != 0)
 					CONTROL |= IBFI_PEND;
-				if( ENABLE & FLAGS)
+				if ((ENABLE & FLAGS) != 0)
 				{
 					P2_HS |= 0x20;
 					if( 0 == (STATE & OBF) ) P2_HS |= 0x10;
@@ -2173,7 +2173,7 @@ public class i8x41
 			if (state != CLEAR_LINE)
 			{
 				STATE |= IBF;
-				if (ENABLE & IBFI)
+				if ((ENABLE & IBFI) != 0)
 				{
 					CONTROL |= IBFI_PEND;
 				}
@@ -2192,10 +2192,10 @@ public class i8x41
 			else
 			{
 				/* high to low transition? */
-				if( CONTROL & TEST1 )
+				if ((CONTROL & TEST1) != 0)
 				{
 					/* counting enabled? */
-					if( ENABLE & CNT )
+					if ((ENABLE & CNT) != 0)
 					{
 						TIMER++;
 						if( TIMER == 0 )

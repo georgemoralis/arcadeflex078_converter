@@ -149,7 +149,7 @@ public class toratora
 		timer++;	/* timer counting at 16 Hz */
 	
 		/* also, when the timer overflows (16 seconds) watchdog would kick in */
-		if (timer & 0x100) usrintf_showmessage("watchdog!");
+		if ((timer & 0x100) != 0) usrintf_showmessage("watchdog!");
 	} };
 	
 	public static ReadHandlerPtr toratora_timer_r  = new ReadHandlerPtr() { public int handler(int offset)

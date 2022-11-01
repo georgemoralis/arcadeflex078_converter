@@ -82,7 +82,7 @@ public class meadows
 			/* calculate frequency for counter #1 */
 			/* bit 0..3 of 0c01 are ctr preset */
 			preset = (meadows_0c01 & 15) ^ 15;
-			if (preset)
+			if (preset != 0)
 				freq1 = BASE_CTR1 / (preset + 1);
 			else amp = 0;
 			logerror("meadows ctr1 channel #%d preset:%3d freq:%5d amp:%d\n", channel, preset, freq1, amp);
@@ -96,7 +96,7 @@ public class meadows
 			/* 0c02 is ctr preset, 0c03 bit 0 enables division by 2 */
 			amp = ((meadows_0c03 & ENABLE_CTR2) != 0) ? 0xa0 : 0;
 			preset = meadows_0c02 ^ 0xff;
-			if (preset)
+			if (preset != 0)
 			{
 				freq2 = BASE_CTR2 / (preset + 1) / 2;
 				if ((meadows_0c03 & DIV2OR4_CTR2) == 0)
@@ -112,7 +112,7 @@ public class meadows
 		{
 			dac_enable = meadows_0c03 & ENABLE_DAC;
 	
-			if (dac_enable)
+			if (dac_enable != 0)
 				DAC_data_w(0, meadows_dac);
 			else
 				DAC_data_w(0, 0);
@@ -129,7 +129,7 @@ public class meadows
 	void meadows_sh_dac_w(int data)
 	{
 		meadows_dac = data;
-		if (dac_enable)
+		if (dac_enable != 0)
 			DAC_data_w(0, meadows_dac);
 		else
 			DAC_data_w(0, 0);

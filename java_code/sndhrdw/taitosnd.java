@@ -102,7 +102,7 @@ public class taitosnd
 				//logerror("taitosnd: Master issued control value %02x (PC = %08x) \n",data, activecpu_get_pc() );
 	//#endif
 				/* this does a hi-lo transition to reset the sound cpu */
-				if (data)
+				if (data != 0)
 					cpu_set_reset_line(1,ASSERT_LINE);
 				else
 				{
@@ -269,12 +269,12 @@ public class taitosnd
 	
 	WRITE16_HANDLER( taitosound_port16_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			taitosound_port_w(0,data & 0xff);
 	}
 	WRITE16_HANDLER( taitosound_comm16_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			taitosound_comm_w(0,data & 0xff);
 	}
 	READ16_HANDLER( taitosound_comm16_lsb_r )
@@ -285,12 +285,12 @@ public class taitosnd
 	
 	WRITE16_HANDLER( taitosound_port16_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			taitosound_port_w(0,data >> 8);
 	}
 	WRITE16_HANDLER( taitosound_comm16_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			taitosound_comm_w(0,data >> 8);
 	}
 	READ16_HANDLER( taitosound_comm16_msb_r )

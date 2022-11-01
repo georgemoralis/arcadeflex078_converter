@@ -109,7 +109,7 @@ public class atarijsa
 		}
 	
 		/* install POKEY memory handlers */
-		if (has_pokey)
+		if (has_pokey != 0)
 		{
 			install_mem_read_handler(cpunum, 0x2c00, 0x2c0f, pokey1_r);
 			install_mem_write_handler(cpunum, 0x2c00, 0x2c0f, pokey1_w);
@@ -191,8 +191,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x80;
-				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
 				if (!has_tms5220 || tms5220_ready_r()) result ^= 0x10;
 				break;
 	
@@ -246,7 +246,7 @@ public class atarijsa
 				*/
 	
 				/* handle TMS5220 I/O */
-				if (has_tms5220)
+				if (has_tms5220 != 0)
 				{
 					int count;
 	
@@ -295,7 +295,7 @@ public class atarijsa
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
-				if (has_oki6295)
+				if (has_oki6295 != 0)
 					result = OKIM6295_status_0_r(offset);
 				else
 					logerror("atarijsa: Unknown read at %04X\n", offset & 0x206);
@@ -318,8 +318,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x80;
-				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
 				break;
 	
 			case 0x006:		/* /IRQACK */
@@ -353,7 +353,7 @@ public class atarijsa
 				break;
 	
 			case 0x200:		/* /WRV */
-				if (has_oki6295)
+				if (has_oki6295 != 0)
 					OKIM6295_data_0_w(offset, data);
 				else
 					logerror("atarijsa: Unknown write (%02X) at %04X\n", data & 0xff, offset & 0x206);
@@ -416,7 +416,7 @@ public class atarijsa
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
-				if (has_oki6295)
+				if (has_oki6295 != 0)
 					result = OKIM6295_status_0_r(offset);
 				break;
 	
@@ -437,8 +437,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x90;
-				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
 				break;
 	
 			case 0x006:		/* /IRQACK */
@@ -476,7 +476,7 @@ public class atarijsa
 				break;
 	
 			case 0x200:		/* /WRV */
-				if (has_oki6295)
+				if (has_oki6295 != 0)
 					OKIM6295_data_0_w(offset, data);
 				break;
 	
@@ -547,9 +547,9 @@ public class atarijsa
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
-				if (has_oki6295)
+				if (has_oki6295 != 0)
 				{
-					if (offset & 1)
+					if ((offset & 1) != 0)
 						result = OKIM6295_status_1_r(offset);
 					else
 						result = OKIM6295_status_0_r(offset);
@@ -573,8 +573,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x90;
-				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
 				break;
 	
 			case 0x006:		/* /IRQACK */
@@ -612,9 +612,9 @@ public class atarijsa
 				break;
 	
 			case 0x200:		/* /WRV */
-				if (has_oki6295)
+				if (has_oki6295 != 0)
 				{
-					if (offset & 1)
+					if ((offset & 1) != 0)
 						OKIM6295_data_1_w(offset, data);
 					else
 						OKIM6295_data_0_w(offset, data);
@@ -685,10 +685,10 @@ public class atarijsa
 	
 	static void update_all_volumes(void)
 	{
-		if (has_pokey) atarigen_set_pokey_vol(overall_volume * pokey_volume / 100);
-		if (has_ym2151) atarigen_set_ym2151_vol(overall_volume * ym2151_volume / 100);
-		if (has_tms5220) atarigen_set_tms5220_vol(overall_volume * tms5220_volume / 100);
-		if (has_oki6295) atarigen_set_oki6295_vol(overall_volume * oki6295_volume / 100);
+		if (has_pokey != 0) atarigen_set_pokey_vol(overall_volume * pokey_volume / 100);
+		if (has_ym2151 != 0) atarigen_set_ym2151_vol(overall_volume * ym2151_volume / 100);
+		if (has_tms5220 != 0) atarigen_set_tms5220_vol(overall_volume * tms5220_volume / 100);
+		if (has_oki6295 != 0) atarigen_set_oki6295_vol(overall_volume * oki6295_volume / 100);
 	}
 	
 	

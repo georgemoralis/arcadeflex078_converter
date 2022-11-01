@@ -347,7 +347,7 @@ public class btime
 	
 	public static InterruptHandlerPtr lnc_sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-	    if (lnc_sound_interrupt_enabled)
+	    if (lnc_sound_interrupt_enabled != 0)
 	    	cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -383,7 +383,7 @@ public class btime
 	        sx = 31 - (offs / 32);
 	        sy = offs % 32;
 	
-	        if (flip_screen)
+	        if (flip_screen != 0)
 	        {
 	            sx = 31 - sx;
 	            sy = 31 - sy;
@@ -417,7 +417,7 @@ public class btime
 	        flipx = sprite_ram[offs + 0] & 0x04;
 	        flipy = sprite_ram[offs + 0] & 0x02;
 	
-	        if (flip_screen)
+	        if (flip_screen != 0)
 	        {
 	            sx = 240 - sx;
 	            sy = 240 - sy + sprite_y_adjust_flip_screen;
@@ -470,7 +470,7 @@ public class btime
 	            sx = 240 - (16 * (offs / 16) + scroll);
 	            sy = 16 * (offs % 16);
 	
-	            if (flip_screen)
+	            if (flip_screen != 0)
 	            {
 	                sx = 240 - sx;
 	                sy = 240 - sy;
@@ -539,14 +539,14 @@ public class btime
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
 	
-	    if (bnj_scroll1 & 0x10)
+	    if ((bnj_scroll1 & 0x10) != 0)
 	    {
 	        int i, start;
 	
 	        // Generate tile map
 	        static unsigned char btime_tilemap[4];
 	
-	        if (flip_screen)
+	        if (flip_screen != 0)
 	            start = 0;
 	        else
 	            start = 1;
@@ -606,7 +606,7 @@ public class btime
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
 	
-	    if (bnj_scroll1 & 0x04)
+	    if ((bnj_scroll1 & 0x04) != 0)
 	    {
 	        drawbackground(bitmap, zoar_scrollram);
 	
@@ -638,7 +638,7 @@ public class btime
 	     *  For each character in the background RAM, check if it has been
 	     *  modified since last time and update it accordingly.
 	     */
-	    if (bnj_scroll1)
+	    if (bnj_scroll1 != 0)
 	    {
 	        int scroll, offs;
 	
@@ -654,7 +654,7 @@ public class btime
 	            sy = 16 * (((offs % 0x100) < 0x80) ? offs % 8 : (offs % 8) + 8);
 	            sx = 496 - sx;
 	
-	            if (flip_screen)
+	            if (flip_screen != 0)
 	            {
 	                sx = 496 - sx;
 	                sy = 240 - sy;
@@ -711,7 +711,7 @@ public class btime
 	        sx = 31 - (offs / 32);
 	        sy = offs % 32;
 	
-	        if (flip_screen)
+	        if (flip_screen != 0)
 	        {
 	            sx = 31 - sx;
 	            sy = 31 - sy;

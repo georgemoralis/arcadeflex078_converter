@@ -99,7 +99,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( sndram_bank_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			sndram_bank = (data >> 16) & 0x1f;
 			sndram_set_bank();
@@ -147,9 +147,9 @@ public class djmain
 	{
 		data16_t ret = 0;
 	
-		if (ACCESSING_LSB16)
+		if (ACCESSING_LSB16 != 0)
 			ret |= K054539_1_r(offset);
-		if (ACCESSING_MSB16)
+		if (ACCESSING_MSB16 != 0)
 			ret |= K054539_0_r(offset)<<8;
 	
 		return ret;
@@ -157,9 +157,9 @@ public class djmain
 	
 	static WRITE16_HANDLER( dual539_16_w )
 	{
-		if (ACCESSING_LSB16)
+		if (ACCESSING_LSB16 != 0)
 			K054539_1_w(offset, data);
-		if (ACCESSING_MSB16)
+		if (ACCESSING_MSB16 != 0)
 			K054539_0_w(offset, data>>8);
 	}
 	
@@ -223,7 +223,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( v_ctrl_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			data >>= 16;
 			mem_mask >>= 16;
@@ -249,7 +249,7 @@ public class djmain
 	
 		offset += bank * 0x800 * 4;
 	
-		if (v_ctrl & 0x020)
+		if ((v_ctrl & 0x020) != 0)
 			offset += 0x800 * 2;
 	
 		return mem8[offset] * 0x01010000;
@@ -301,7 +301,7 @@ public class djmain
 	
 	static READ32_HANDLER( ide_std_r )
 	{
-		if (ACCESSING_LSB32)
+		if (ACCESSING_LSB32 != 0)
 			return ide_controller16_0_r(IDE_STD_OFFSET + offset, 0x00ff) >> 8;
 		else
 			return ide_controller16_0_r(IDE_STD_OFFSET + offset, 0x0000) << 16;
@@ -309,7 +309,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( ide_std_w )
 	{
-		if (ACCESSING_LSB32)
+		if (ACCESSING_LSB32 != 0)
 			ide_controller16_0_w(IDE_STD_OFFSET + offset, data << 8, 0x00ff);
 		else
 			ide_controller16_0_w(IDE_STD_OFFSET + offset, data >> 16, 0x0000);
@@ -422,7 +422,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( light_ctrl_1_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			switch (game_type)
 			{
@@ -449,7 +449,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( light_ctrl_2_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			switch (game_type)
 			{
@@ -507,7 +507,7 @@ public class djmain
 	{
 		pending_vb_int = 0;
 	
-		if (DISABLE_VB_INT)
+		if (DISABLE_VB_INT != 0)
 		{
 			pending_vb_int = 1;
 			return;

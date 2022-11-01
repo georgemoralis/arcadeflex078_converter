@@ -182,7 +182,7 @@ public class mrflea
 		1. triggered (in response to sound command)
 		2. heartbeat (for music timing)
 	*/
-		if( mrflea_status&0x08 ) return 0x00; /* process command */
+		if ((mrflea_status & 0x08) != 0) return 0x00; /* process command */
 		return 0x01; /* music/sound update? */
 	} };
 	

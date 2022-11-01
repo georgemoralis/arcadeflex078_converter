@@ -208,7 +208,7 @@ PREFIX(checkPiTarget)(const ENCODING *enc, const char *ptr,
   default:
     return 1;
   }
-  if (upper)
+  if (upper != 0)
     return 0;
   *tokPtr = XML_TOK_XML_DECL;
   return 1;
@@ -531,7 +531,7 @@ PREFIX(scanAtts)(const ENCODING *enc, const char *ptr, const char *end,
     CHECK_NAME_CASES(enc, ptr, end, nextTokPtr)
 #ifdef XML_NS
     case BT_COLON:
-      if (hadColon) {
+      if (hadColon != 0) {
         *nextTokPtr = ptr;
         return XML_TOK_INVALID;
       }
@@ -718,7 +718,7 @@ PREFIX(scanLt)(const ENCODING *enc, const char *ptr, const char *end,
     CHECK_NAME_CASES(enc, ptr, end, nextTokPtr)
 #ifdef XML_NS
     case BT_COLON:
-      if (hadColon) {
+      if (hadColon != 0) {
         *nextTokPtr = ptr;
         return XML_TOK_INVALID;
       }

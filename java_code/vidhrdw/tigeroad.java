@@ -23,7 +23,7 @@ public class tigeroad
 	{
 		int bank;
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			data = (data >> 8) & 0xff;
 	
@@ -98,7 +98,7 @@ public class tigeroad
 				if (sx > 0x100) sx -= 0x200;
 				if (sy > 0x100) sy -= 0x200;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

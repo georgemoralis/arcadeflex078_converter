@@ -282,7 +282,7 @@ public class suprnova
 		hit.flag |= hit.z_in >= 0 && hit.x_in >= 0                  ? 4 : 0;
 		hit.flag |= hit.y_in >= 0 && hit.z_in >= 0                  ? 2 : 0;
 		hit.flag |= hit.x_in >= 0 && hit.y_in >= 0                  ? 1 : 0;
-	/*  if(0)
+	/*  if (0 != 0)
 	    log_event("HIT", "Recalc, (%d,%d)-(%d,%d)-(%d,%d):(%d,%d)-(%d,%d)-(%d,%d):%04x, (%d,%d,%d), %04x",
 		      hit.x1p, hit.x1s, hit.y1p, hit.y1s, hit.z1p, hit.z1s,
 		      hit.x2p, hit.x2s, hit.y2p, hit.y2s, hit.z2p, hit.z2s,
@@ -697,21 +697,21 @@ public class suprnova
 		case 3:
 			if(((mem_mask & 0x0000ff00) == 0))
 			{ /* Interrupt Clear, do we need these? */
-	/*			if(data&0x01)
+	/*			if ((data & 0x01) != 0)
 					cpu_set_irq_line(0,1,CLEAR_LINE);
-				if(data&0x02)
+				if ((data & 0x02) != 0)
 					cpu_set_irq_line(0,3,CLEAR_LINE);
-				if(data&0x04)
+				if ((data & 0x04) != 0)
 					cpu_set_irq_line(0,5,CLEAR_LINE);
-				if(data&0x08)
+				if ((data & 0x08) != 0)
 					cpu_set_irq_line(0,7,CLEAR_LINE);
-				if(data&0x10)
+				if ((data & 0x10) != 0)
 					cpu_set_irq_line(0,9,CLEAR_LINE);
-				if(data&0x20)
+				if ((data & 0x20) != 0)
 					cpu_set_irq_line(0,0xb,CLEAR_LINE);
-				if(data&0x40)
+				if ((data & 0x40) != 0)
 					cpu_set_irq_line(0,0xd,CLEAR_LINE);
-				if(data&0x80)
+				if ((data & 0x80) != 0)
 					cpu_set_irq_line(0,0xf,CLEAR_LINE);*/
 	
 				/* idle skip for vblokbrk/sarukani, i can't find a better place to put it :-( but i think it works ok unless its making the game too fast */
@@ -796,12 +796,12 @@ public class suprnova
 			use_bright = use_v3_bright;
 		}
 	
-		if(use_bright) {
-			if(brightness_b) b = ((b<<3) * (brightness_b+1))>>8;
+		if (use_bright != 0) {
+			if (brightness_b != 0) b = ((b<<3) * (brightness_b+1))>>8;
 			else b = 0;
-			if(brightness_g) g = ((g<<3) * (brightness_g+1))>>8;
+			if (brightness_g != 0) g = ((g<<3) * (brightness_g+1))>>8;
 			else g = 0;
-			if(brightness_r) r = ((r<<3) * (brightness_r+1))>>8;
+			if (brightness_r != 0) r = ((r<<3) * (brightness_r+1))>>8;
 			else r = 0;
 		} else {
 			b <<= 3;
@@ -877,11 +877,11 @@ public class suprnova
 	{
 		int i;
 	
-		if(spc_changed)
+		if (spc_changed != 0)
 			for(i=0; i<=((0x40*256)-1); i++)
 				palette_set_rgb_brightness (i, bright_spc_r, bright_spc_g, bright_spc_b);
 	
-		if(v3_changed)
+		if (v3_changed != 0)
 			for(i=(0x40*256); i<=((0x80*256)-1); i++)
 				palette_set_rgb_brightness (i, bright_v3_r, bright_v3_g, bright_v3_b);
 	}
@@ -913,12 +913,12 @@ public class suprnova
 			brightness_r = bright_v3_r;
 		}
 	
-		if(use_bright) {
-			if(brightness_b) b = ((b<<3) * (brightness_b+1))>>8;
+		if (use_bright != 0) {
+			if (brightness_b != 0) b = ((b<<3) * (brightness_b+1))>>8;
 			else b = 0;
-			if(brightness_g) g = ((g<<3) * (brightness_g+1))>>8;
+			if (brightness_g != 0) g = ((g<<3) * (brightness_g+1))>>8;
 			else g = 0;
-			if(brightness_r) r = ((r<<3) * (brightness_r+1))>>8;
+			if (brightness_r != 0) r = ((r<<3) * (brightness_r+1))>>8;
 			else r = 0;
 		} else {
 			b <<= 3;

@@ -171,7 +171,7 @@ public class malzak
 							code += 64;
 					}
 				}
-				if (code & 0x80)
+				if ((code & 0x80) != 0)
 					colour = (saa5050_state.saa5050_forecol << 3) | saa5050_state.saa5050_backcol;
 				else
 					colour = saa5050_state.saa5050_forecol | (saa5050_state.saa5050_backcol << 3);

@@ -31,7 +31,7 @@ public class legionna
 	WRITE16_HANDLER( legionna_control_w )
 	{
 	#if 0
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			legionna_enable=data;
 			if ((legionna_enable&4)==4)
@@ -224,9 +224,9 @@ public class legionna
 			y = spriteram16[offs+3];
 			x = spriteram16[offs+2];
 	
-			if (x &0x8000)	x = -(0x200-(x &0x1ff));
+			if ((x & 0x8000) != 0)	x = -(0x200-(x &0x1ff));
 			else	x &= 0x1ff;
-			if (y &0x8000)	y = -(0x200-(y &0x1ff));
+			if ((y & 0x8000) != 0)	y = -(0x200-(y &0x1ff));
 			else	y &= 0x1ff;
 	
 			color = (data &0x3f) + 0x40;

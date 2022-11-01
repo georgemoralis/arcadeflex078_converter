@@ -504,7 +504,7 @@ public class williams
 		{
 			if (!(data & 0x04))
 				OKIM6295_set_bank_base(0, 0x00000);
-			else if (data & 0x01)
+			else if ((data & 0x01) != 0)
 				OKIM6295_set_bank_base(0, 0x40000);
 			else
 				OKIM6295_set_bank_base(0, 0x80000);
@@ -574,7 +574,7 @@ public class williams
 	void williams_cvsd_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state)
+		if (state != 0)
 		{
 			cvsd_bank_select_w(0, 0);
 			init_audio_state();
@@ -613,7 +613,7 @@ public class williams
 	void williams_adpcm_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state)
+		if (state != 0)
 		{
 			adpcm_bank_select_w(0, 0);
 			init_audio_state();
@@ -655,7 +655,7 @@ public class williams
 	void williams_narc_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state)
+		if (state != 0)
 		{
 			narc_master_bank_select_w(0, 0);
 			narc_slave_bank_select_w(0, 0);

@@ -367,9 +367,9 @@ public class atarigen
 	
 	NVRAM_HANDLER( atarigen )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, atarigen_eeprom, atarigen_eeprom_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, atarigen_eeprom, atarigen_eeprom_size);
 		else
 		{
@@ -377,7 +377,7 @@ public class atarigen
 			memset(atarigen_eeprom, 0xff, atarigen_eeprom_size);
 	
 			/* anything else must be decompressed */
-			if (atarigen_eeprom_default)
+			if (atarigen_eeprom_default != 0)
 			{
 				if (atarigen_eeprom_default[0] == 0)
 					decompress_eeprom_byte(atarigen_eeprom_default + 1);
@@ -463,7 +463,7 @@ public class atarigen
 		atarigen_slapstic = NULL;
 	
 		/* if we have a chip, install it */
-		if (chipnum)
+		if (chipnum != 0)
 		{
 			/* initialize the slapstic */
 			slapstic_init(chipnum);
@@ -474,7 +474,7 @@ public class atarigen
 	
 			/* allocate memory for a copy of bank 0 */
 			atarigen_slapstic_bank0 = auto_malloc(0x2000);
-			if (atarigen_slapstic_bank0)
+			if (atarigen_slapstic_bank0 != 0)
 				memcpy(atarigen_slapstic_bank0, atarigen_slapstic, 0x2000);
 		}
 	}
@@ -487,7 +487,7 @@ public class atarigen
 	
 	void atarigen_slapstic_reset(void)
 	{
-		if (atarigen_slapstic_num)
+		if (atarigen_slapstic_num != 0)
 		{
 			slapstic_reset();
 			update_bank(slapstic_bank());
@@ -620,19 +620,19 @@ public class atarigen
 	
 	WRITE16_HANDLER( atarigen_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			timer_set(TIME_NOW, data & 0xff, delayed_sound_w);
 	}
 	
 	WRITE16_HANDLER( atarigen_sound_upper_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			timer_set(TIME_NOW, (data >> 8) & 0xff, delayed_sound_w);
 	}
 	
 	WRITE32_HANDLER( atarigen_sound_upper32_w )
 	{
-		if (ACCESSING_MSB32)
+		if (ACCESSING_MSB32 != 0)
 			timer_set(TIME_NOW, (data >> 24) & 0xff, delayed_sound_w);
 	}
 	
@@ -748,7 +748,7 @@ public class atarigen
 	static void delayed_sound_w(int param)
 	{
 		/* warn if we missed something */
-		if (atarigen_cpu_to_sound_ready)
+		if (atarigen_cpu_to_sound_ready != 0)
 			logerror("Missed command from 68010\n");
 	
 		/* set up the states and signal an NMI to the sound CPU */
@@ -770,7 +770,7 @@ public class atarigen
 	static void delayed_6502_sound_w(int param)
 	{
 		/* warn if we missed something */
-		if (atarigen_sound_to_cpu_ready)
+		if (atarigen_sound_to_cpu_ready != 0)
 			logerror("Missed result from 6502\n");
 	
 		/* set up the states and signal the sound interrupt to the main CPU */
@@ -928,7 +928,7 @@ public class atarigen
 	static void scanline_timer(int scanline)
 	{
 		/* callback */
-		if (scanline_callback)
+		if (scanline_callback != 0)
 		{
 			(*scanline_callback)(scanline);
 	
@@ -976,7 +976,7 @@ public class atarigen
 		actual_vc_latch0 = actual_vc_latch1 = -1;
 	
 		/* start a timer to go off a little before scanline 0 */
-		if (atarivc_eof_data)
+		if (atarivc_eof_data != 0)
 			timer_set(cpu_getscanlinetime(0), 0, atarivc_eof_update);
 	}
 	
@@ -1014,7 +1014,7 @@ public class atarigen
 		{
 			static FILE *out;
 			if (!out) out = fopen("scroll.log", "w");
-			if (out)
+			if (out != 0)
 			{
 				for (i = 0; i < 64; i++)
 					fprintf(out, "%04X ", data[i]);
@@ -1414,7 +1414,7 @@ public class atarigen
 	{
 		COMBINE_DATA(&paletteram16[offset]);
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			int palentry = offset / 2;
 			int newword = (paletteram16[palentry * 2] & 0xff00) | (paletteram16[palentry * 2 + 1] >> 8);
@@ -1444,7 +1444,7 @@ public class atarigen
 	
 		COMBINE_DATA(&paletteram32[offset]);
 	
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			newword = paletteram32[offset] >> 16;
 	
@@ -1459,7 +1459,7 @@ public class atarigen
 			palette_set_color(offset * 2, r, g, b);
 		}
 	
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 		{
 			newword = paletteram32[offset] & 0xffff;
 	

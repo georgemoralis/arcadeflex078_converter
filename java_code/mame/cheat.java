@@ -1263,7 +1263,7 @@ public class cheat
 	{
 		int	code;
 	
-		if(flush)
+		if (flush != 0)
 		{
 			while(code_read_async() != CODE_NONE) ;
 	
@@ -1539,7 +1539,7 @@ public class cheat
 	
 		if(code == 0x08)
 		{
-			if(buf)
+			if (buf != 0)
 			{
 				UINT32	length = strlen(buf);
 	
@@ -1562,7 +1562,7 @@ public class cheat
 		}
 		else if(isprint(code))
 		{
-			if(buf)
+			if (buf != 0)
 			{
 				UINT32	length = strlen(buf);
 	
@@ -1630,20 +1630,20 @@ public class cheat
 		INT8	key;
 		UINT32	isNegative = data & mask;
 	
-		if(isNegative)
+		if (isNegative != 0)
 			data |= mask;
 	
 		key = ReadHexInput();
 	
 		if(key != -1)
 		{
-			if(isNegative)
+			if (isNegative != 0)
 				data = (~data) + 1;
 	
 			data <<= 4;
 			data |= key;
 	
-			if(isNegative)
+			if (isNegative != 0)
 				data = (~data) + 1;
 		}
 		else if(code_pressed_memory(KEYCODE_MINUS))
@@ -1729,14 +1729,14 @@ public class cheat
 	{
 		int	i;
 	
-		if(autoSaveEnabled)
+		if (autoSaveEnabled != 0)
 		{
 			DoAutoSaveCheats();
 		}
 	
 		DisposeCheatDatabase();
 	
-		if(watchList)
+		if (watchList != 0)
 		{
 			for(i = 0; i < watchListLength; i++)
 			{
@@ -1748,7 +1748,7 @@ public class cheat
 			watchList = NULL;
 		}
 	
-		if(searchList)
+		if (searchList != 0)
 		{
 			for(i = 0; i < searchListLength; i++)
 			{
@@ -1813,7 +1813,7 @@ public class cheat
 		total = 0;
 		sel = selection - 1;
 	
-		if(submenu_choice)
+		if (submenu_choice != 0)
 		{
 			switch(sel)
 			{
@@ -1826,14 +1826,14 @@ public class cheat
 					break;
 	
 				case kMenu_StartSearch:
-					if(useClassicSearchBox)
+					if (useClassicSearchBox != 0)
 						submenu_choice = DoSearchMenuClassic(bitmap, submenu_choice, 1);
 					else
 						submenu_choice = DoSearchMenu(bitmap, submenu_choice, 1);
 					break;
 	
 				case kMenu_ContinueSearch:
-					if(useClassicSearchBox)
+					if (useClassicSearchBox != 0)
 						submenu_choice = DoSearchMenuClassic(bitmap, submenu_choice, 0);
 					else
 						submenu_choice = DoSearchMenu(bitmap, submenu_choice, 0);
@@ -2079,7 +2079,7 @@ public class cheat
 			changed = 1;
 		}
 	
-		if(changed)
+		if (changed != 0)
 		{
 			RebuildStringTables();
 		}
@@ -2119,7 +2119,7 @@ public class cheat
 		action = &entry->actionList[0];
 	
 		// if we're just entering, save the value
-		if(firstTime)
+		if (firstTime != 0)
 		{
 			UINT32	min = EXTRACT_FIELD(action->type, UserSelectMinimum);
 			UINT32	max = action->originalDataField + min;
@@ -2360,7 +2360,7 @@ public class cheat
 		sel = selection - 1;
 	
 		/* If a submenu has been selected, go there */
-		if(submenu_choice)
+		if (submenu_choice != 0)
 		{
 			switch(submenu_id)
 			{
@@ -2454,7 +2454,7 @@ public class cheat
 	
 		if(cheatListLength == 0)
 		{
-			if(foundCheatDatabase)
+			if (foundCheatDatabase != 0)
 			{
 				menu_item[total] = "there are no cheats for this game";
 				menu_subitem[total] = NULL;
@@ -2505,7 +2505,7 @@ public class cheat
 			if(sel >= total)
 				sel = 0;
 	
-			if(cheatListLength)
+			if (cheatListLength != 0)
 			{
 				for(i = 0;	(i < fullMenuPageHeight / 2) &&
 							(sel < total - 1) &&
@@ -2524,7 +2524,7 @@ public class cheat
 			}
 			else
 			{
-				if(cheatListLength)
+				if (cheatListLength != 0)
 				{
 					for(i = 0;	(i < fullMenuPageHeight / 2) &&
 								(sel != total - 1) &&
@@ -2611,7 +2611,7 @@ public class cheat
 						}
 						else
 						{
-							if(active)
+							if (active != 0)
 								ActivateCheat(entry);
 							else
 								DeactivateCheat(entry);
@@ -2671,7 +2671,7 @@ public class cheat
 						}
 						else
 						{
-							if(active)
+							if (active != 0)
 								ActivateCheat(entry);
 							else
 								DeactivateCheat(entry);
@@ -2753,7 +2753,7 @@ public class cheat
 	
 			if(input_ui_pressed(IPT_UI_EDIT_CHEAT))
 			{
-				if(entry)
+				if (entry != 0)
 				{
 					submenu_id = 3;
 					submenu_choice = 1;
@@ -3075,7 +3075,7 @@ public class cheat
 	
 			UINT8		wasCommentOrSelect =	0;
 	
-			if(isSelect)
+			if (isSelect != 0)
 			{
 				// do extend name field
 	
@@ -3376,7 +3376,7 @@ public class cheat
 	
 					if(locationType != kLocation_IndirectIndexed)
 					{
-						if(operationParameter)
+						if (operationParameter != 0)
 						{
 							// do subtract minimum field
 	
@@ -3478,7 +3478,7 @@ public class cheat
 							total++;
 						}
 	
-						if(userSelect)
+						if (userSelect != 0)
 						{
 							{
 								// do user select minimum displayed value field
@@ -3722,7 +3722,7 @@ public class cheat
 		info = &menuItemInfo[sel];
 		action = &entry->actionList[info->subcheat];
 	
-		if(editActive)
+		if (editActive != 0)
 			flagBuf[sel] = 1;
 	
 		ui_displaymenu(bitmap, menuItem, menuSubItem, flagBuf, sel, 0);
@@ -4334,7 +4334,7 @@ public class cheat
 	
 		if(input_ui_pressed(IPT_UI_SELECT))
 		{
-			if(editActive)
+			if (editActive != 0)
 			{
 				editActive = 0;
 			}
@@ -4369,7 +4369,7 @@ public class cheat
 			}
 		}
 	
-		if(editActive)
+		if (editActive != 0)
 		{
 			// do edit text
 	
@@ -4561,7 +4561,7 @@ public class cheat
 			schedule_full_refresh();
 		}
 	
-		if(dirty)
+		if (dirty != 0)
 		{
 			UpdateCheatInfo(entry, 0);
 	
@@ -4867,9 +4867,9 @@ public class cheat
 			}
 		}
 	
-		if(doSearch)
+		if (doSearch != 0)
 		{
-			if(startNew)
+			if (startNew != 0)
 			{
 				InitializeNewSearch(search);
 			}
@@ -4981,7 +4981,7 @@ public class cheat
 			sprintf(valueBuffer, "%.*X", kSearchByteDigitsTable[search->bytes], search->value & kSearchByteMaskTable[search->bytes]);
 		}
 	
-		if(dontPrintNewLabels)
+		if (dontPrintNewLabels != 0)
 		{
 			menu_item[total] = kOperandNameTable[search->lhs];
 			menu_subitem[total] = NULL;
@@ -5070,7 +5070,7 @@ public class cheat
 		if(sel >= total)
 			sel = total - 1;
 	
-		if(editActive)
+		if (editActive != 0)
 			flagBuf[sel] = 1;
 	
 		ui_displaymenu(bitmap, menu_item, menu_subitem, flagBuf, sel, 0);
@@ -5232,7 +5232,7 @@ public class cheat
 	
 		if(input_ui_pressed(IPT_UI_SELECT))
 		{
-			if(editActive)
+			if (editActive != 0)
 			{
 				editActive = 0;
 			}
@@ -5251,7 +5251,7 @@ public class cheat
 						break;
 	
 					case kMenu_DoSearch:
-						if(startNew)
+						if (startNew != 0)
 						{
 							InitializeNewSearch(search);
 						}
@@ -5277,7 +5277,7 @@ public class cheat
 						break;
 	
 					case kMenu_SaveMemory:
-						if(startNew)
+						if (startNew != 0)
 						{
 							InitializeNewSearch(search);
 						}
@@ -5290,7 +5290,7 @@ public class cheat
 			}
 		}
 	
-		if(editActive)
+		if (editActive != 0)
 		{
 			switch(sel)
 			{
@@ -5336,7 +5336,7 @@ public class cheat
 	
 		menu_item = menuStrings.mainList;
 	
-		if(submenuChoice)
+		if (submenuChoice != 0)
 		{
 			submenuChoice = EditCheatMenu(bitmap, &cheatList[submenuCheat], submenuChoice);
 	
@@ -5513,7 +5513,7 @@ public class cheat
 	
 		sel = selection - 1;
 	
-		if(firstTime)
+		if (firstTime != 0)
 		{
 			search->currentRegionIdx = 0;
 			search->currentResultsPage = 0;
@@ -5680,7 +5680,7 @@ public class cheat
 			goToNextPage = 1;
 		}
 	
-		if(goToNextPage)
+		if (goToNextPage != 0)
 		{
 			search->currentResultsPage++;
 	
@@ -5705,7 +5705,7 @@ public class cheat
 			}
 		}
 	
-		if(goToPrevPage)
+		if (goToPrevPage != 0)
 		{
 			search->currentResultsPage--;
 	
@@ -5756,7 +5756,7 @@ public class cheat
 				search->currentRegionIdx = 0;
 		}
 	
-		if(selectedAddressGood)
+		if (selectedAddressGood != 0)
 		{
 			if(input_ui_pressed(IPT_UI_SAVE_CHEAT))
 			{
@@ -5832,7 +5832,7 @@ public class cheat
 	
 		sel = selection - 1;
 	
-		if(submenuChoice)
+		if (submenuChoice != 0)
 		{
 			submenuChoice = EditWatch(bitmap, &watchList[submenuWatch], submenuChoice);
 	
@@ -5920,7 +5920,7 @@ public class cheat
 		{
 			if(input_ui_pressed(IPT_UI_SAVE_CHEAT))
 			{
-				if(watch)
+				if (watch != 0)
 				{
 					CheatEntry	entry;
 	
@@ -5934,7 +5934,7 @@ public class cheat
 	
 			if(input_ui_pressed(IPT_UI_ADD_CHEAT))
 			{
-				if(watch)
+				if (watch != 0)
 				{
 					if(ShiftKeyPressed())
 					{
@@ -5961,7 +5961,7 @@ public class cheat
 				}
 				else
 				{
-					if(watch)
+					if (watch != 0)
 					{
 						watch->numElements = 0;
 					}
@@ -6153,7 +6153,7 @@ public class cheat
 		if(sel >= total)
 			sel = total - 1;
 	
-		if(editActive)
+		if (editActive != 0)
 			flagBuf[sel] = 1;
 	
 		ui_displaymenu(bitmap, menuItem, menuSubItem, flagBuf, sel, 0);
@@ -6398,7 +6398,7 @@ public class cheat
 	
 		if(input_ui_pressed(IPT_UI_SELECT))
 		{
-			if(editActive)
+			if (editActive != 0)
 			{
 				editActive = 0;
 			}
@@ -6426,7 +6426,7 @@ public class cheat
 			}
 		}
 	
-		if(editActive)
+		if (editActive != 0)
 		{
 			switch(sel)
 			{
@@ -6882,7 +6882,7 @@ public class cheat
 	
 		sel = selection - 1;
 	
-		if(submenuChoice)
+		if (submenuChoice != 0)
 		{
 			switch(sel)
 			{
@@ -7046,7 +7046,7 @@ public class cheat
 	
 				usrintf_showmessage_secs(1, "%s %s", ui_getstring(UI_cheats), cheatsDisabled ? ui_getstring (UI_off) : ui_getstring (UI_on));
 	
-				if(cheatsDisabled)
+				if (cheatsDisabled != 0)
 				{
 					for(i = 0; i < cheatListLength; i++)
 					{
@@ -7058,7 +7058,7 @@ public class cheat
 	
 		DisplayWatches(bitmap);
 	
-		if(cheatsDisabled)
+		if (cheatsDisabled != 0)
 			return;
 	
 		for(i = 0; i < cheatListLength; i++)
@@ -7074,7 +7074,7 @@ public class cheat
 	
 		while(traverse)
 		{
-			if(mask & traverse)
+			if ((mask & traverse) != 0)
 			{
 				*buf++ = (data & traverse) ? '1' : '0';
 				written++;
@@ -7125,7 +7125,7 @@ public class cheat
 	{
 		int		i;
 	
-		if(watchesDisabled)
+		if (watchesDisabled != 0)
 			return;
 	
 		for(i = 0; i < watchListLength; i++)
@@ -7219,13 +7219,13 @@ public class cheat
 	{
 		char	* temp = NULL;
 	
-		if(buf)
+		if (buf != 0)
 		{
 			UINT32	length = strlen(buf) + 1;
 	
 			temp = malloc(length);
 	
-			if(temp)
+			if (temp != 0)
 			{
 				memcpy(temp, buf, length);
 			}
@@ -7337,7 +7337,7 @@ public class cheat
 	
 	static void DisposeCheat(CheatEntry * entry)
 	{
-		if(entry)
+		if (entry != 0)
 		{
 			int	i;
 	
@@ -7450,7 +7450,7 @@ public class cheat
 	
 	static void DisposeAction(CheatAction * action)
 	{
-		if(action)
+		if (action != 0)
 		{
 			free(action->optionalName);
 	
@@ -7568,7 +7568,7 @@ public class cheat
 	
 	static void DisposeWatch(WatchInfo * watch)
 	{
-		if(watch)
+		if (watch != 0)
 		{
 			memset(watch, 0, sizeof(WatchInfo));
 		}
@@ -7604,7 +7604,7 @@ public class cheat
 	
 	static void AddCheatFromWatch(WatchInfo * watch)
 	{
-		if(watch)
+		if (watch != 0)
 		{
 			CheatEntry	* entry = GetNewCheat();
 			CheatAction	* action = &entry->actionList[0];
@@ -7762,7 +7762,7 @@ public class cheat
 	
 	static void InitSearch(SearchInfo * info)
 	{
-		if(info)
+		if (info != 0)
 		{
 			info->searchSpeed = kSearchSpeed_Medium;
 		}
@@ -8350,7 +8350,7 @@ public class cheat
 			*data = 0;
 		}
 	
-		if(linkCheat)
+		if (linkCheat != 0)
 		{
 			SET_MASK_FIELD(newCode, LinkEnable);
 		}
@@ -8606,7 +8606,7 @@ public class cheat
 				action->originalDataField = data;
 				action->extendData = extendData;
 	
-				if(recordNames)
+				if (recordNames != 0)
 				{
 					action->optionalName = CreateStringCopy(name);
 				}
@@ -8644,7 +8644,7 @@ public class cheat
 				(data == 0))
 			{
 				*outTraverse++ = 0;
-				if(first)
+				if (first != 0)
 					*mainTraverse++ = 0;
 	
 				if(buf[0])
@@ -8659,7 +8659,7 @@ public class cheat
 			else
 			{
 				*outTraverse++ = data;
-				if(first)
+				if (first != 0)
 					*mainTraverse++ = data;
 			}
 	
@@ -8674,7 +8674,7 @@ public class cheat
 	{
 		int	i;
 	
-		if(cheatList)
+		if (cheatList != 0)
 		{
 			for(i = 0; i < cheatListLength; i++)
 			{
@@ -8749,7 +8749,7 @@ public class cheat
 			bufTraverse += sprintf(bufTraverse, ":%s:%.8X:%.*X:%.8X:%.8X", Machine->gamedrv->name, type, addressLength, action->address, action->originalDataField, action->extendData);
 	#endif
 	
-			if(name)
+			if (name != 0)
 			{
 				bufTraverse += sprintf(bufTraverse, ":%s", name);
 	
@@ -9260,7 +9260,7 @@ public class cheat
 				if(	(address >= mwa->start) &&
 					(address <= mwa->end))
 				{
-					if(outRelativeAddress)
+					if (outRelativeAddress != 0)
 						*outRelativeAddress = address - mwa->start;
 	
 					return mwa->base;
@@ -9281,7 +9281,7 @@ public class cheat
 					return	(cpunum_read_byte(cpu, address + 0) <<  0);
 	
 			case 2:
-				if(swap)
+				if (swap != 0)
 				{
 					return	(cpunum_read_byte(cpu, address + 0) <<  0) |
 							(cpunum_read_byte(cpu, address + 1) <<  8);
@@ -9294,7 +9294,7 @@ public class cheat
 				break;
 	
 			case 3:
-				if(swap)
+				if (swap != 0)
 				{
 					return	(cpunum_read_byte(cpu, address + 0) <<  0) |
 							(cpunum_read_byte(cpu, address + 1) <<  8) |
@@ -9309,7 +9309,7 @@ public class cheat
 				break;
 	
 			case 4:
-				if(swap)
+				if (swap != 0)
 				{
 					return	(cpunum_read_byte(cpu, address + 0) <<  0) |
 							(cpunum_read_byte(cpu, address + 1) <<  8) |
@@ -9344,7 +9344,7 @@ public class cheat
 				case 2:
 					data = *((UINT16 *)&buf[address]);
 	
-					if(swap)
+					if (swap != 0)
 					{
 						data =	((data >> 8) & 0x00FF) |
 								((data << 8) & 0xFF00);
@@ -9354,7 +9354,7 @@ public class cheat
 				case 4:
 					data = *((UINT32 *)&buf[address]);
 	
-					if(swap)
+					if (swap != 0)
 					{
 						data =	((data >> 24) & 0x000000FF) |
 								((data >>  8) & 0x0000FF00) |
@@ -9373,7 +9373,7 @@ public class cheat
 	
 	generic:
 	
-		if(swap)
+		if (swap != 0)
 		{
 			UINT32	i;
 	
@@ -9400,7 +9400,7 @@ public class cheat
 				break;
 	
 			case 2:
-				if(swap)
+				if (swap != 0)
 				{
 					cpunum_write_byte(cpu, address + 0, (data >> 0) & 0xFF);
 					cpunum_write_byte(cpu, address + 1, (data >> 8) & 0xFF);
@@ -9413,7 +9413,7 @@ public class cheat
 				break;
 	
 			case 3:
-				if(swap)
+				if (swap != 0)
 				{
 					cpunum_write_byte(cpu, address + 0, (data >>  0) & 0xFF);
 					cpunum_write_byte(cpu, address + 1, (data >>  8) & 0xFF);
@@ -9428,7 +9428,7 @@ public class cheat
 				break;
 	
 			case 4:
-				if(swap)
+				if (swap != 0)
 				{
 					cpunum_write_byte(cpu, address + 0, (data >>  0) & 0xFF);
 					cpunum_write_byte(cpu, address + 1, (data >>  8) & 0xFF);
@@ -9461,7 +9461,7 @@ public class cheat
 					break;
 	
 				case 2:
-					if(swap)
+					if (swap != 0)
 					{
 						data =	((data >> 8) & 0x00FF) |
 								((data << 8) & 0xFF00);
@@ -9471,7 +9471,7 @@ public class cheat
 					break;
 	
 				case 4:
-					if(swap)
+					if (swap != 0)
 					{
 						data =	((data >> 24) & 0x000000FF) |
 								((data >>  8) & 0x0000FF00) |
@@ -9492,7 +9492,7 @@ public class cheat
 	
 	generic:
 	
-		if(swap)
+		if (swap != 0)
 		{
 			UINT32	i;
 	
@@ -9517,7 +9517,7 @@ public class cheat
 	{
 		CPUInfo	* temp = GetRegionCPUInfo(region);
 	
-		if(temp)
+		if (temp != 0)
 			return temp->endianness ^ 1;
 	
 		return 0;
@@ -9576,7 +9576,7 @@ public class cheat
 				int		region = REGION_CPU1 + parameter;
 				UINT8	* buf = memory_region(region);
 	
-				if(buf)
+				if (buf != 0)
 				{
 					if(IsAddressInRange(action, memory_region_length(region)))
 					{
@@ -9615,7 +9615,7 @@ public class cheat
 				CPUInfo	* info = GetCPUInfo(cpu);
 	
 				address = DoCPURead(cpu, action->address, addressBytes, CPUNeedsSwap(parameter) ^ swapBytes);
-				if(info)
+				if (info != 0)
 					address = DoShift(address, info->addressShift);
 				address += offset;
 	
@@ -9671,7 +9671,7 @@ public class cheat
 				int		region = REGION_CPU1 + parameter;
 				UINT8	* buf = memory_region(region);
 	
-				if(buf)
+				if (buf != 0)
 				{
 					if(IsAddressInRange(action, memory_region_length(region)))
 					{
@@ -9710,7 +9710,7 @@ public class cheat
 				CPUInfo	* info = GetCPUInfo(cpu);
 	
 				address = DoCPURead(cpu, action->address, addressBytes, CPUNeedsSwap(cpu) ^ swapBytes);
-				if(info)
+				if (info != 0)
 					address = DoShift(address, info->addressShift);
 				address += offset;
 	
@@ -9750,7 +9750,7 @@ public class cheat
 		UINT32		i;
 		CheatEntry	* associateEntry = NULL;
 	
-		if(associate)
+		if (associate != 0)
 			associateEntry = entry;
 	
 		if(!entry)
@@ -10218,7 +10218,7 @@ public class cheat
 					if(!(entry->actionList[i].flags & kActionFlag_OperationDone))
 						done = 0;
 	
-				if(done)
+				if (done != 0)
 				{
 					DeactivateCheat(entry);
 				}
@@ -10282,7 +10282,7 @@ public class cheat
 			}
 			else
 			{
-				if(isLoadTime)
+				if (isLoadTime != 0)
 				{
 					// check for mask == 0, fix
 					if(	(operation == kOperation_WriteMask) &&
@@ -10296,14 +10296,14 @@ public class cheat
 			action->flags = actionFlags;
 		}
 	
-		if(isOneShot)
+		if (isOneShot != 0)
 			flags |= kCheatFlag_OneShot;
-		if(isNull)
+		if (isNull != 0)
 			flags |= kCheatFlag_Null;
 	
 		entry->flags = (flags & kCheatFlag_InfoMask) | (entry->flags & ~kCheatFlag_InfoMask);
 	
-		if(isLoadTime)
+		if (isLoadTime != 0)
 			entry->flags &= ~kCheatFlag_Dirty;
 	}
 	
@@ -10349,7 +10349,7 @@ public class cheat
 						{
 							UINT32	mask = 1 << (31 - i);
 	
-							if(bitState)
+							if (bitState != 0)
 							{
 								info->addressMask |= mask;
 							}

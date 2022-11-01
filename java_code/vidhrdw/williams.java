@@ -143,7 +143,7 @@ public class williams
 			for (x = 0; x < pairs; x++, source += 256)
 			{
 				int pix = *source;
-				if (erase_behind) *source = 0;
+				if (erase_behind != 0) *source = 0;
 				*dest++ = pix >> 4;
 				*dest++ = pix & 0x0f;
 			}
@@ -195,8 +195,8 @@ public class williams
 	
 		/* pick the blitters */
 		blitter_table = williams_blitters;
-		if (williams_blitter_remap) blitter_table = blaster_blitters;
-		if (williams_blitter_clip) blitter_table = sinistar_blitters;
+		if (williams_blitter_remap != 0) blitter_table = blaster_blitters;
+		if (williams_blitter_clip != 0) blitter_table = sinistar_blitters;
 	
 		/* reset special-purpose flags */
 		blaster_remap_lookup = 0;
@@ -474,7 +474,7 @@ public class williams
 	
 		/* expand the lookup table so that we do one lookup per byte */
 		blaster_remap_lookup = auto_malloc(256 * 256);
-		if (blaster_remap_lookup)
+		if (blaster_remap_lookup != 0)
 			for (i = 0; i < 256; i++)
 			{
 				const UINT8 *table = memory_region(REGION_PROMS) + (i & 0x7f) * 16;
@@ -611,7 +611,7 @@ public class williams
 		(*blitter_table[(data >> 3) & 3])(sstart, dstart, w, h, data);
 	
 		/* compute the ending address */
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 			count = h;
 		else
 			count = w + w * h;
@@ -637,7 +637,7 @@ public class williams
 	#define BLIT_TRANSPARENT(offset, data, keepmask)		\
 	{														\
 		data = REMAP(data);									\
-		if (data)											\
+		if (data != 0)											\
 		{													\
 			int pix = BLITTER_DEST_READ(offset);			\
 			int tempmask = keepmask;						\
@@ -654,7 +654,7 @@ public class williams
 	#define BLIT_TRANSPARENT_SOLID(offset, data, keepmask)	\
 	{														\
 		data = REMAP(data);									\
-		if (data)											\
+		if (data != 0)											\
 		{													\
 			int pix = BLITTER_DEST_READ(offset);			\
 			int tempmask = keepmask;						\
@@ -853,8 +853,8 @@ public class williams
 	
 		/* determine the common mask */
 		keepmask = 0x00;
-		if (data & 0x80) keepmask |= 0xf0;
-		if (data & 0x40) keepmask |= 0x0f;
+		if ((data & 0x80) != 0) keepmask |= 0xf0;
+		if ((data & 0x40) != 0) keepmask |= 0x0f;
 		if (keepmask == 0xff)
 			return;
 	
@@ -883,7 +883,7 @@ public class williams
 				sstart += syadv;
 	
 				/* note that PlayBall! indicates the X coordinate doesn't wrap */
-				if (data & 0x02)
+				if ((data & 0x02) != 0)
 					dstart = (dstart & 0xff00) | ((dstart + dyadv) & 0xff);
 				else
 					dstart += dyadv;
@@ -933,7 +933,7 @@ public class williams
 				sstart += syadv;
 	
 				/* note that PlayBall! indicates the X coordinate doesn't wrap */
-				if (data & 0x02)
+				if ((data & 0x02) != 0)
 					dstart = (dstart & 0xff00) | ((dstart + dyadv) & 0xff);
 				else
 					dstart += dyadv;

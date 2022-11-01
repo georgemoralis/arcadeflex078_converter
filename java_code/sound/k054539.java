@@ -300,7 +300,7 @@ public class k054539
 				case 0x8: { // 4bit dpcm
 					cur_pos <<= 1;
 					cur_pfrac <<= 1;
-					if(cur_pfrac & 0x10000) {
+					if ((cur_pfrac & 0x10000) != 0) {
 						cur_pfrac &= 0xffff;
 						cur_pos |= 1;
 					}
@@ -324,7 +324,7 @@ public class k054539
 								goto end_channel_8;
 							}
 						next_iter:
-							if(cur_pos & 1)
+							if ((cur_pos & 1) != 0)
 								cur_val >>= 4;
 							else
 								cur_val &= 15;
@@ -339,7 +339,7 @@ public class k054539
 					}
 				end_channel_8:
 					cur_pfrac >>= 1;
-					if(cur_pos & 1)
+					if ((cur_pos & 1) != 0)
 						cur_pfrac |= 0x8000;
 					cur_pos >>= 1;
 					break;
@@ -402,7 +402,7 @@ public class k054539
 				if (!gc_active) usrintf_showmessage_secs(0, " ");
 			}
 	
-			if (gc_active)
+			if (gc_active != 0)
 			{
 				if (code_pressed_memory(KEYCODE_0_PAD)) gc_chip ^= 1;
 	
@@ -410,7 +410,7 @@ public class k054539
 				gc_j = 0;
 				if (code_pressed_memory(KEYCODE_4_PAD)) { gc_i--; gc_j = 1; }
 				if (code_pressed_memory(KEYCODE_6_PAD)) { gc_i++; gc_j = 1; }
-				if (gc_j) { gc_i &= 7; gc_pos[gc_chip] = gc_i; }
+				if (gc_j != 0) { gc_i &= 7; gc_pos[gc_chip] = gc_i; }
 	
 				if (code_pressed_memory(KEYCODE_5_PAD))
 					K054539_gain[gc_chip][gc_i] = 1.0;
@@ -421,7 +421,7 @@ public class k054539
 					gc_j = 0;
 					if (code_pressed_memory(KEYCODE_2_PAD)) { gc_f0 -= 0.1; gc_j = 1; }
 					if (code_pressed_memory(KEYCODE_8_PAD)) { gc_f0 += 0.1; gc_j = 1; }
-					if (gc_j) { if (gc_f0 < 0) gc_f0 = 0; *gc_fptr = gc_f0; }
+					if (gc_j != 0) { if (gc_f0 < 0) gc_f0 = 0; *gc_fptr = gc_f0; }
 				}
 	
 				gc_fptr = &K054539_gain[gc_chip][0] + 8;
@@ -490,7 +490,7 @@ public class k054539
 		bufp[0] = buf[0];
 		bufp[1] = buf[1];
 	
-		if (K054539_flags & K054539_REVERSE_STEREO) //*
+		if ((K054539_flags & K054539_REVERSE_STEREO) != 0) //*
 		{
 			panleft  = MIXER_PAN_RIGHT;
 			panright = MIXER_PAN_LEFT;
@@ -570,7 +570,7 @@ public class k054539
 			break;
 	
 			case 0x214:
-				if (latch)
+				if (latch != 0)
 				{
 					for(ch=0; ch<8; ch++)
 					{

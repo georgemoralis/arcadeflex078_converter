@@ -433,13 +433,13 @@ public class segasyse
 	
 		port_to_read = (data & 0x0c) >> 2;
 	
-		if (data & 1)
+		if ((data & 1) != 0)
 		{
 			int curr = readinputport(4);
 			diff1 = ((curr - last1) & 0x0fff) | (curr & 0xf000);
 			last1 = curr;
 		}
-		if (data & 2)
+		if ((data & 2) != 0)
 		{
 			int curr = readinputport(5) & 0x0fff;
 			diff2 = ((curr - last2) & 0x0fff) | (curr & 0xf000);

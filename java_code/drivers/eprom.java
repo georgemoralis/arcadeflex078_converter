@@ -50,17 +50,17 @@ public class eprom
 		int newstate = 0;
 		int newstate2 = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate |= 4, newstate2 |= 4;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate |= 6;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	
-		if (newstate2)
+		if (newstate2 != 0)
 			cpu_set_irq_line(1, newstate2, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 7, CLEAR_LINE);
@@ -87,8 +87,8 @@ public class eprom
 	{
 		int result = readinputport(1);
 	
-		if (atarigen_sound_to_cpu_ready) result ^= 0x0004;
-		if (atarigen_cpu_to_sound_ready) result ^= 0x0008;
+		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x0004;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0008;
 		result ^= 0x0010;
 	
 		return result;
@@ -114,9 +114,9 @@ public class eprom
 	static WRITE16_HANDLER( eprom_latch_w )
 	{
 		/* reset extra CPU */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
-			if (data & 1)
+			if ((data & 1) != 0)
 				cpu_set_reset_line(1, CLEAR_LINE);
 			else
 				cpu_set_reset_line(1, ASSERT_LINE);

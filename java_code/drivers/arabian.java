@@ -140,7 +140,7 @@ public class arabian
 		/* the self-tests */
 	
 		/* if the CPU reset line is being held down, just return RAM */
-		if (custom_cpu_reset)
+		if (custom_cpu_reset != 0)
 			return custom_cpu_ram[0x7f0 + offset];
 	
 		/* otherwise, assume the custom CPU is live */

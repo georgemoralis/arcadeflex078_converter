@@ -401,7 +401,7 @@ static void PREFIXV30(_0fpre) (void)	/* Opcode 0x0f */
 				result = result % 100;
 				v1 = ((result / 10) << 4) | (result % 10);
 				PutMemB(ES, di, v1);
-				if (v1)
+				if (v1 != 0)
 					I.ZeroVal = 0;
 				si++;
 				di++;
@@ -443,7 +443,7 @@ static void PREFIXV30(_0fpre) (void)	/* Opcode 0x0f */
 				}
 				v1 = ((result / 10) << 4) | (result % 10);
 				PutMemB(ES, di, v1);
-				if (v1)
+				if (v1 != 0)
 					I.ZeroVal = 0;
 				si++;
 				di++;
@@ -512,7 +512,7 @@ static void PREFIXV30(_0fpre) (void)	/* Opcode 0x0f */
 				}
 				v1 = ((result / 10) << 4) | (result % 10);
 /*				PutMemB(ES, di,v1); */	/* no store, only compare */
-				if (v1)
+				if (v1 != 0)
 					I.ZeroVal = 0;
 				si++;
 				di++;

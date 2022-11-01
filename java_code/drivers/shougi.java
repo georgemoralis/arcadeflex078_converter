@@ -314,7 +314,7 @@ public class shougi
 	static public static ReadHandlerPtr dummy_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		r ^= 1;
-		if(r)
+		if (r != 0)
 			return 0xff;
 		else
 			return 0;

@@ -239,7 +239,7 @@ public class tia
 		int j;
 		int k;
 	
-		if (REFP & 8)
+		if ((REFP & 8) != 0)
 		{
 			GRP = BITSWAP8(GRP, 0, 1, 2, 3, 4, 5, 6, 7);
 		}
@@ -308,7 +308,7 @@ public class tia
 		int i;
 		int j;
 	
-		if (REFPF)
+		if (REFPF != 0)
 		{
 			UINT32 swap = 0;
 	
@@ -316,7 +316,7 @@ public class tia
 			{
 				swap <<= 1;
 	
-				if (PF & 1)
+				if ((PF & 1) != 0)
 				{
 					swap |= 1;
 				}
@@ -350,7 +350,7 @@ public class tia
 	
 		for (i = 0; i < width; i++)
 		{
-			if (ENAB & 2)
+			if ((ENAB & 2) != 0)
 			{
 				p[horz % 160] = COLUPF >> 1;
 			}
@@ -456,7 +456,7 @@ public class tia
 		memset(lineM1, 0xFF, sizeof lineM1);
 		memset(lineBL, 0xFF, sizeof lineBL);
 	
-		if (VBLANK & 2)
+		if ((VBLANK & 2) != 0)
 		{
 			memset(temp, 0, 160);
 		}
@@ -471,7 +471,7 @@ public class tia
 	
 			memset(temp, COLUBK >> 1, 160);
 	
-			if (CTRLPF & 4)
+			if ((CTRLPF & 4) != 0)
 			{
 				drawS1(temp);
 				drawM1(temp);
@@ -561,7 +561,7 @@ public class tia
 		int button0 = readinputport(4) & 0x80;
 		int button1 = readinputport(5) & 0x80;
 	
-		if (VBLANK & 0x40)
+		if ((VBLANK & 0x40) != 0)
 		{
 			INPT4 &= button0;
 			INPT5 &= button1;
@@ -587,7 +587,7 @@ public class tia
 	
 	public static WriteHandlerPtr VSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 2)
+		if ((data & 2) != 0)
 		{
 			if (!(VSYNC & 2))
 			{
@@ -610,7 +610,7 @@ public class tia
 	
 	public static WriteHandlerPtr VBLANK_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 		{
 			paddle_cycles = activecpu_gettotalcycles();
 		}
@@ -765,7 +765,7 @@ public class tia
 	
 	public static WriteHandlerPtr RESMP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (RESMP0 & 2)
+		if ((RESMP0 & 2) != 0)
 		{
 			horzM0 = (horzP0 + 4 * nusiz[NUSIZ0 & 7][1]) % 160;
 		}
@@ -776,7 +776,7 @@ public class tia
 	
 	public static WriteHandlerPtr RESMP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (RESMP1 & 2)
+		if ((RESMP1 & 2) != 0)
 		{
 			horzM1 = (horzP1 + 4 * nusiz[NUSIZ1 & 7][1]) % 160;
 		}

@@ -349,8 +349,8 @@ XOR    CY, bit  01011110  bbbbbbbb          10* CY <- CY ^ (bit)
 SETB   bit      01011000  bbbbbbbb          13* (bit) <- 1
 CLR    bit      01011011  bbbbbbbb          13* (bit) <- 0
 NOT    bit      01011001  bbbbbbbb          13* (bit) <- !(bit)
-SK     bit      01011101  bbbbbbbb          10*  (b) skip if (bit) = 1
-SKN    bit      01010000  bbbbbbbb          10* !(b) skip if (bit) = 0
+SK     bit      01011101  bbbbbbbb          10*  (b) skip if (bit != 0) = 1
+SKN    bit      01010000  bbbbbbbb          10* !(b) skip if (bit != 0) = 0
 
 
 ------------------------
@@ -568,7 +568,7 @@ public class upd7810
 	#define SKIP_NC 	if (0 == (PSW & CY)) PSW |= SK
 	#define SKIP_Z		if (Z == (PSW & Z)) PSW |= SK
 	#define SKIP_NZ 	if (0 == (PSW & Z)) PSW |= SK
-	#define SET_Z(n)	if (n) PSW &= ~Z; else PSW |= Z
+	#define SET_Z(n)	if (n != 0) PSW &= ~Z; else PSW |= Z
 	
 	static data8_t RP(offs_t port)
 	{
@@ -825,10 +825,10 @@ public class upd7810
 		{
 			vector = 0x0028;
 		}
-		if (vector)
+		if (vector != 0)
 		{
 			/* acknowledge external IRQ */
-			if (irqline)
+			if (irqline != 0)
 				(*upd7810.irq_callback)(irqline);
 			SP--;
 			WM( SP, PSW );
@@ -845,7 +845,7 @@ public class upd7810
 	
 	static void upd7810_write_EOM(void)
 	{
-		if (EOM & 0x01) /* output LV0 content ? */
+		if ((EOM & 0x01) != 0) /* output LV0 content ? */
 		{
 			switch (EOM & 0x0e)
 			{
@@ -860,7 +860,7 @@ public class upd7810
 				break;
 			}
 		}
-		if (EOM & 0x10) /* output LV0 content ? */
+		if ((EOM & 0x10) != 0) /* output LV0 content ? */
 		{
 			switch (EOM & 0xe0)
 			{
@@ -899,14 +899,14 @@ public class upd7810
 				IRR |= INTFST;		/* serial transfer completed */
 		}
 		else
-		if (SMH & 0x04) /* send enable ? */
+		if ((SMH & 0x04) != 0) /* send enable ? */
 		{
 			/* nothing written into the transmitter buffer ? */
 	        if (0 == upd7810.txbuf)
 				return;
 	        upd7810.txbuf = 0;
 	
-	        if (SML & 0x03)         /* asynchronous mode ? */
+	        if ((SML & 0x03) != 0)         /* asynchronous mode ? */
 			{
 				switch (SML & 0xfc)
 				{
@@ -1001,7 +1001,7 @@ public class upd7810
 				/* serial receive completed interrupt */
 				IRR |= INTFSR;
 				/* now extract the data from the shift register */
-				if (SML & 0x03) 	/* asynchronous mode ? */
+				if ((SML & 0x03) != 0) 	/* asynchronous mode ? */
 				{
 					switch (SML & 0xfc)
 					{
@@ -1112,9 +1112,9 @@ public class upd7810
 			}
 		}
 		else
-		if (SMH & 0x08) /* receive enable ? */
+		if ((SMH & 0x08) != 0) /* receive enable ? */
 		{
-			if (SML & 0x03) 	/* asynchronous mode ? */
+			if ((SML & 0x03) != 0) 	/* asynchronous mode ? */
 			{
 				switch (SML & 0xfc)
 				{
@@ -1162,7 +1162,7 @@ public class upd7810
 			}
 			else
 			/* TSK bit set ? */
-			if (SMH & 0x40)
+			if ((SMH & 0x40) != 0)
 			{
 				upd7810.rxcnt = 8;
 			}
@@ -1172,7 +1172,7 @@ public class upd7810
 	static void upd7810_timers(int cycles)
 	{
 		/**** TIMER 0 ****/
-		if (TMM & 0x10) 		/* timer 0 upcounter reset ? */
+		if ((TMM & 0x10) != 0) 		/* timer 0 upcounter reset ? */
 			CNT0 = 0;
 		else
 		{
@@ -1260,7 +1260,7 @@ public class upd7810
 		}
 	
 		/**** TIMER 1 ****/
-		if (TMM & 0x80) 		/* timer 1 upcounter reset ? */
+		if ((TMM & 0x80) != 0) 		/* timer 1 upcounter reset ? */
 			CNT1 = 0;
 		else
 		{
@@ -1692,14 +1692,14 @@ public class upd7810
 	
 	unsigned upd7810_get_context (void *dst)
 	{
-		if (dst)
+		if (dst != 0)
 			memcpy(dst, &upd7810, sizeof(upd7810));
 		return sizeof(upd7810);
 	}
 	
 	void upd7810_set_context (void *src)
 	{
-		if (src)
+		if (src != 0)
 			memcpy(&upd7810, src, sizeof(upd7810));
 	}
 	

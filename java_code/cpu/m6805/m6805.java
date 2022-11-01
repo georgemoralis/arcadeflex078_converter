@@ -217,7 +217,7 @@ public class m6805
 	#define IDX1BYTE(b) {INDEXED1;b=RM(EAD);}
 	#define IDX2BYTE(b) {INDEXED2;b=RM(EAD);}
 	/* Macros for branch instructions */
-	#define BRANCH(f) { UINT8 t; IMMBYTE(t); if(f) { PC+=SIGNED(t); if (t==0xfe) { /* speed up busy loops */ if(m6805_ICount > 0) m6805_ICount = 0; } } }
+	#define BRANCH(f) { UINT8 t; IMMBYTE(t); if (f != 0) { PC+=SIGNED(t); if (t==0xfe) { /* speed up busy loops */ if(m6805_ICount > 0) m6805_ICount = 0; } } }
 	
 	/* what they say it is ... */
 	static unsigned char cycles1[] =
@@ -438,7 +438,7 @@ public class m6805
 	 ****************************************************************************/
 	unsigned m6805_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(m6805_Regs*)dst = m6805;
 	    return sizeof(m6805_Regs);
 	}
@@ -449,7 +449,7 @@ public class m6805
 	 ****************************************************************************/
 	void m6805_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			m6805 = *(m6805_Regs*)src;
 			S = SP_ADJUST( S );
@@ -899,7 +899,7 @@ public class m6805
 		m6805_reset(param);
 		/* Overide default 6805 type */
 		m6805.subtype = SUBTYPE_M68705;
-		if (p_amask)
+		if (p_amask != 0)
 			AMASK = *p_amask;
 		else
 			AMASK = 0x7ff; /* default if no AMASK is specified */

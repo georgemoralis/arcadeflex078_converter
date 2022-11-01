@@ -211,7 +211,7 @@ public class skyfox
 					x + (DX),y + (DY), \
 					&Machine->visible_area,TRANSPARENCY_PEN, 0xff); \
 	
-			if (skyfox_bg_ctrl & 1)	// flipscreen
+			if ((skyfox_bg_ctrl & 1) != 0)	// flipscreen
 			{
 				x = width  - x - (n-1)*8;
 				y = height - y - (n-1)*8;
@@ -219,10 +219,10 @@ public class skyfox
 				flipy = !flipy;
 			}
 	
-			if (flipx)	{ xstart = n-1;  xend = -1;  xinc = -1; }
+			if (flipx != 0)	{ xstart = n-1;  xend = -1;  xinc = -1; }
 			else		{ xstart = 0;    xend = n;   xinc = +1; }
 	
-			if (flipy)	{ ystart = n-1;  yend = -1;  yinc = -1; }
+			if (flipy != 0)	{ ystart = n-1;  yend = -1;  yinc = -1; }
 			else		{ ystart = 0;    yend = n;   yinc = +1; }
 	
 	
@@ -267,7 +267,7 @@ public class skyfox
 			x		=	RAM[offs+1]*2 + (i&1) + pos + ((i & 8)?512:0);
 			y		=	((i/8)/2)*8 + (i%8);
 	
-			if (skyfox_bg_ctrl & 1)	// flipscreen
+			if ((skyfox_bg_ctrl & 1) != 0)	// flipscreen
 			{
 				x = 512 * 2 - (x%(512*2));
 				y = 256     - (y%256);

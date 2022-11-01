@@ -198,7 +198,7 @@ public class fromanc2
 						break;
 		}
 	
-		if (fromanc2_playerside) ret = ((ret & 0xff00) >> 8) | ((ret & 0x00ff) << 8);
+		if (fromanc2_playerside != 0) ret = ((ret & 0xff00) >> 8) | ((ret & 0x00ff) << 8);
 	
 		return ret;
 	}
@@ -229,7 +229,7 @@ public class fromanc2
 	
 	static WRITE16_HANDLER( fromanc2_eeprom_w )
 	{
-		if (ACCESSING_MSB) {
+		if (ACCESSING_MSB != 0) {
 			// latch the bit
 			EEPROM_write_bit(data & 0x0100);
 	
@@ -243,7 +243,7 @@ public class fromanc2
 	
 	static WRITE16_HANDLER( fromancr_eeprom_w )
 	{
-		if (ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			fromancr_gfxbank_w(data & 0xfff8);
 	
 			// latch the bit
@@ -259,7 +259,7 @@ public class fromanc2
 	
 	static WRITE16_HANDLER( fromanc4_eeprom_w )
 	{
-		if (ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			// latch the bit
 			EEPROM_write_bit(data & 0x0004);
 	

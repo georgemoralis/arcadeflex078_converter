@@ -120,7 +120,7 @@ public class m72
 	
 	void m72_ym2151_irq_handler(int irq)
 	{
-		if (irq)
+		if (irq != 0)
 			timer_set(TIME_NOW,YM2151_ASSERT,setvector_callback);
 		else
 			timer_set(TIME_NOW,YM2151_CLEAR,setvector_callback);

@@ -288,7 +288,7 @@ public class suna8
 			y = (0x100 - y - dimy*8 ) & 0xff;
 	
 			/* Multi Sprite */
-			if ( multisprite )	{	mx += dimx*8;	x = mx;	}
+			if (multisprite != 0)	{	mx += dimx*8;	x = mx;	}
 			else					mx = x;
 	
 			gfxbank	*= 0x400;
@@ -310,10 +310,10 @@ public class suna8
 					int sx		=	 x + tx * 8;
 					int sy		=	(y + ty * 8) & 0xff;
 	
-					if (flipx)	tile_flipx = !tile_flipx;
-					if (flipy)	tile_flipy = !tile_flipy;
+					if (flipx != 0)	tile_flipx = !tile_flipx;
+					if (flipy != 0)	tile_flipy = !tile_flipy;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{	sx = max_x - sx;	tile_flipx = !tile_flipx;
 						sy = max_y - sy;	tile_flipy = !tile_flipy;	}
 	
@@ -378,7 +378,7 @@ public class suna8
 					int sx		=	 x + tx * 8;
 					int sy		=	(y + real_ty * 8) & 0xff;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{	sx = max_x - sx;	flipx = !flipx;
 						sy = max_y - sy;	flipy = !flipy;	}
 	

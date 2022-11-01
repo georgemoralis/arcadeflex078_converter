@@ -357,7 +357,7 @@ public class fantland
 	
 	public static InterruptHandlerPtr fantland_irq = new InterruptHandlerPtr() {public void handler()
 	{
-		if (fantland_nmi_enable & 8)
+		if ((fantland_nmi_enable & 8) != 0)
 			cpu_set_nmi_line(0, PULSE_LINE);
 	} };
 	

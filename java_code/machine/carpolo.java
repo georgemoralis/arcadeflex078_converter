@@ -288,12 +288,12 @@ public class carpolo
 		{
 			/* one line indicates if the pedal is pressed and the other
 			   how much, resulting in only two different possible levels */
-			if (port_value & 0x01)
+			if ((port_value & 0x01) != 0)
 			{
 				TTL74153_input_line_w(TTL74153_1K, 0, player, 1);
 				TTL74153_input_line_w(TTL74153_1K, 1, player, 0);
 			}
-			else if (port_value & 0x02)
+			else if ((port_value & 0x02) != 0)
 			{
 				TTL74153_input_line_w(TTL74153_1K, 0, player, 1);
 				TTL74153_input_line_w(TTL74153_1K, 1, player, 1);

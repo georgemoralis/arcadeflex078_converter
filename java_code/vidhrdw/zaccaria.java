@@ -187,7 +187,7 @@ public class zaccaria
 	
 	public static WriteHandlerPtr zaccaria_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset & 1)
+		if ((offset & 1) != 0)
 		{
 			if (zaccaria_attributesram[offset] != data)
 			{
@@ -226,7 +226,7 @@ public class zaccaria
 		int offs;
 		struct rectangle clip = *cliprect;
 	
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 			sect_rect(&clip, &spritevisiblearea_flipx);
 		else
 			sect_rect(&clip, &spritevisiblearea);
@@ -252,12 +252,12 @@ public class zaccaria
 			int flipx = spriteram_2[offs + 2] & 0x40;
 			int flipy = spriteram_2[offs + 2] & 0x80;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;
@@ -278,12 +278,12 @@ public class zaccaria
 			int flipx = spriteram[offs + 1] & 0x40;
 			int flipy = spriteram[offs + 1] & 0x80;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;

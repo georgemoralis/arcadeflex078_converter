@@ -219,7 +219,7 @@ public class berzerk
 	
 	/* One day I'll do this... */
 	
-		if (berzerknoisemulate)
+		if (berzerknoisemulate != 0)
 		{
 			return;
 			if (voicefrequency != 1750*(4-noise))
@@ -228,7 +228,7 @@ public class berzerk
 				voicevolume = 85*noise;
 			}
 	
-			if (noise)
+			if (noise != 0)
 			{
 				sample_set_freq(2,voicefrequency);
 				sample_set_volume(2,voicevolume);

@@ -194,7 +194,7 @@ public class vigilant
 			int color = attributes & 0x0F;
 			int tile_number = videoram[offs] | ((attributes & 0xF0) << 4);
 	
-			if (priority)	 /* foreground */
+			if (priority != 0)	 /* foreground */
 			{
 				if ((color & 0x0c) == 0x0c)	/* mask sprites */
 				{
@@ -238,7 +238,7 @@ public class vigilant
 		int scrollx = 0x17a + 16*8 - (rear_horiz_scroll_low + rear_horiz_scroll_high);
 	
 	
-		if (rear_refresh)
+		if (rear_refresh != 0)
 		{
 			update_background( );
 			rear_refresh=0;
@@ -276,7 +276,7 @@ public class vigilant
 			{
 				int c = code;
 	
-				if (flipy) c += h-1-y;
+				if (flipy != 0) c += h-1-y;
 				else c += y;
 	
 				drawgfx(bitmap,Machine->gfx[1],
@@ -313,7 +313,7 @@ public class vigilant
 			palette_set_color(512 + 16 + i,r,g,b);
 		}
 	
-		if (rear_disable)	 /* opaque foreground */
+		if (rear_disable != 0)	 /* opaque foreground */
 		{
 			draw_foreground(bitmap,0,1);
 			draw_sprites(bitmap,&bottomvisiblearea);

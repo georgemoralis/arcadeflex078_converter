@@ -483,7 +483,7 @@ public class dec0
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	
 		/* Simulate the processing time of the i8751, time value is guessed
-		if (i8751_timer)
+		if (i8751_timer != 0)
 			logerror("i8751:  Missed a timer!!!\n");
 		else
 			i8751_timer = timer_set(TIME_NOW, 0, i8751_callback);*/

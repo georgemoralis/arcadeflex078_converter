@@ -147,7 +147,7 @@ public class trackfld
 			int sx = spriteram[offs] - 1;
 			int sy = 240 - spriteram_2[offs + 1];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;
@@ -181,7 +181,7 @@ public class trackfld
 		for (row = 0; row < 32; row++)
 		{
 			scrollx = trackfld_scroll[row] + 256 * (trackfld_scroll2[row] & 0x01);
-			if (flip_screen) scrollx = -scrollx;
+			if (flip_screen != 0) scrollx = -scrollx;
 			tilemap_set_scrollx(bg_tilemap, row, scrollx);
 		}
 	

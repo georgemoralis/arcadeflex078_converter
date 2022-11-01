@@ -575,7 +575,7 @@ public class z80
 	 * Leave HALT state; write 0 to fake port
 	 ***************************************************************/
 	#define LEAVE_HALT {											\
-		if( _HALT )													\
+		if (_HALT != 0)													\
 		{															\
 			_HALT = 0;												\
 			_PC++;													\
@@ -718,7 +718,7 @@ public class z80
 	 ***************************************************************/
 	
 	#define JP_COND(cond)											\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			_PCD = ARG16();											\
 			change_pc16(_PCD);										\
@@ -771,7 +771,7 @@ public class z80
 	 * JR_COND
 	 ***************************************************************/
 	#define JR_COND(cond,opcode)									\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			INT8 arg = (INT8)ARG(); /* ARG() also increments _PC */ \
 			_PC += arg;				/* so don't do _PC += ARG() */	\
@@ -793,7 +793,7 @@ public class z80
 	 * CALL_COND
 	 ***************************************************************/
 	#define CALL_COND(cond,opcode)									\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			EA = ARG16();											\
 			PUSH( PC );												\
@@ -810,7 +810,7 @@ public class z80
 	 * RET_COND
 	 ***************************************************************/
 	#define RET_COND(cond,opcode)									\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			POP(PC);												\
 			change_pc16(_PCD);										\
@@ -1251,7 +1251,7 @@ public class z80
 		lo = _A & 15;												\
 		hi = _A / 16;												\
 																	\
-		if (cf)														\
+		if (cf != 0)														\
 		{															\
 			diff = (lo <= 9 && !hf) ? 0x60 : 0x66;					\
 		}															\
@@ -1273,7 +1273,7 @@ public class z80
 				}													\
 			}														\
 		}															\
-		if (nf) _A -= diff;											\
+		if (nf != 0) _A -= diff;											\
 		else _A += diff;											\
 																	\
 		_F = SZP[_A] | (_F & NF);									\
@@ -1702,14 +1702,14 @@ public class z80
 		if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */		\
 		if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */		\
 		_HL++; _DE++; _BC--;										\
-		if( _BC ) _F |= VF;											\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#else
 	#define LDI {													\
 		WM( _DE, RM(_HL) );											\
 		_F &= SF | ZF | YF | XF | CF;								\
 		_HL++; _DE++; _BC--;										\
-		if( _BC ) _F |= VF;											\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#endif
 	
@@ -1722,10 +1722,10 @@ public class z80
 		UINT8 res = _A - val;										\
 		_HL++; _BC--;												\
 		_F = (_F & CF) | (SZ[res] & ~(YF|XF)) | ((_A ^ val ^ res) & HF) | NF;  \
-		if( _F & HF ) res -= 1;										\
-		if( res & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */			\
-		if( res & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */			\
-		if( _BC ) _F |= VF;											\
+		if ((_F & HF) != 0) res -= 1;										\
+		if ((res & 0x02) != 0) _F |= YF; /* bit 1 -> flag 5 */			\
+		if ((res & 0x08) != 0) _F |= XF; /* bit 3 -> flag 3 */			\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#else
 	#define CPI {													\
@@ -1733,7 +1733,7 @@ public class z80
 		UINT8 res = _A - val;										\
 		_HL++; _BC--;												\
 		_F = (_F & CF) | SZ[res] | ((_A ^ val ^ res) & HF) | NF;	\
-		if( _BC ) _F |= VF;											\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#endif
 	
@@ -1749,8 +1749,8 @@ public class z80
 		_HL++;														\
 		_F = SZ[_B];												\
 		t = (unsigned)((_C + 1) & 0xff) + (unsigned)io;				\
-		if( io & SF ) _F |= NF;										\
-		if( t & 0x100 ) _F |= HF | CF;								\
+		if ((io & SF) != 0) _F |= NF;										\
+		if ((t & 0x100) != 0) _F |= HF | CF;								\
 		_F |= SZP[(UINT8)(t & 0x07) ^ _B] & PF;						\
 	}
 	#else
@@ -1774,8 +1774,8 @@ public class z80
 		_HL++;														\
 		_F = SZ[_B];												\
 		t = (unsigned)_L + (unsigned)io;							\
-		if( io & SF ) _F |= NF;										\
-		if( t & 0x100 ) _F |= HF | CF;								\
+		if ((io & SF) != 0) _F |= NF;										\
+		if ((t & 0x100) != 0) _F |= HF | CF;								\
 		_F |= SZP[(UINT8)(t & 0x07) ^ _B] & PF;						\
 	}
 	#else
@@ -1798,14 +1798,14 @@ public class z80
 		if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */		\
 		if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */		\
 		_HL--; _DE--; _BC--;										\
-		if( _BC ) _F |= VF;											\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#else
 	#define LDD {													\
 		WM( _DE, RM(_HL) );											\
 		_F &= SF | ZF | YF | XF | CF;								\
 		_HL--; _DE--; _BC--;										\
-		if( _BC ) _F |= VF;											\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#endif
 	
@@ -1818,10 +1818,10 @@ public class z80
 		UINT8 res = _A - val;										\
 		_HL--; _BC--;												\
 		_F = (_F & CF) | (SZ[res] & ~(YF|XF)) | ((_A ^ val ^ res) & HF) | NF;  \
-		if( _F & HF ) res -= 1;										\
-		if( res & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */			\
-		if( res & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */			\
-		if( _BC ) _F |= VF;											\
+		if ((_F & HF) != 0) res -= 1;										\
+		if ((res & 0x02) != 0) _F |= YF; /* bit 1 -> flag 5 */			\
+		if ((res & 0x08) != 0) _F |= XF; /* bit 3 -> flag 3 */			\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#else
 	#define CPD {													\
@@ -1829,7 +1829,7 @@ public class z80
 		UINT8 res = _A - val;										\
 		_HL--; _BC--;												\
 		_F = (_F & CF) | SZ[res] | ((_A ^ val ^ res) & HF) | NF;	\
-		if( _BC ) _F |= VF;											\
+		if (_BC != 0) _F |= VF;											\
 	}
 	#endif
 	
@@ -1845,8 +1845,8 @@ public class z80
 		_HL--;														\
 		_F = SZ[_B];												\
 		t = ((unsigned)(_C - 1) & 0xff) + (unsigned)io;				\
-		if( io & SF ) _F |= NF;										\
-		if( t & 0x100 ) _F |= HF | CF;								\
+		if ((io & SF) != 0) _F |= NF;										\
+		if ((t & 0x100) != 0) _F |= HF | CF;								\
 		_F |= SZP[(UINT8)(t & 0x07) ^ _B] & PF;						\
 	}
 	#else
@@ -1870,8 +1870,8 @@ public class z80
 		_HL--;														\
 		_F = SZ[_B];												\
 		t = (unsigned)_L + (unsigned)io;							\
-		if( io & SF ) _F |= NF;										\
-		if( t & 0x100 ) _F |= HF | CF;								\
+		if ((io & SF) != 0) _F |= NF;										\
+		if ((t & 0x100) != 0) _F |= HF | CF;								\
 		_F |= SZP[(UINT8)(t & 0x07) ^ _B] & PF;						\
 	}
 	#else
@@ -1888,7 +1888,7 @@ public class z80
 	 ***************************************************************/
 	#define LDIR													\
 		LDI;														\
-		if( _BC )													\
+		if (_BC != 0)													\
 		{															\
 			_PC -= 2;												\
 			CC(ex,0xb0);											\
@@ -1910,7 +1910,7 @@ public class z80
 	 ***************************************************************/
 	#define INIR													\
 		INI;														\
-		if( _B )													\
+		if (_B != 0)													\
 		{															\
 			_PC -= 2;												\
 			CC(ex,0xb2);											\
@@ -1921,7 +1921,7 @@ public class z80
 	 ***************************************************************/
 	#define OTIR													\
 		OUTI;														\
-		if( _B )													\
+		if (_B != 0)													\
 		{															\
 			_PC -= 2;												\
 			CC(ex,0xb3);											\
@@ -1932,7 +1932,7 @@ public class z80
 	 ***************************************************************/
 	#define LDDR													\
 		LDD;														\
-		if( _BC )													\
+		if (_BC != 0)													\
 		{															\
 			_PC -= 2;												\
 			CC(ex,0xb8);											\
@@ -1954,7 +1954,7 @@ public class z80
 	 ***************************************************************/
 	#define INDR													\
 		IND;														\
-		if( _B )													\
+		if (_B != 0)													\
 		{															\
 			_PC -= 2;												\
 			CC(ex,0xba);											\
@@ -1965,7 +1965,7 @@ public class z80
 	 ***************************************************************/
 	#define OTDR													\
 		OUTD;														\
-		if( _B )													\
+		if (_B != 0)													\
 		{															\
 			_PC -= 2;												\
 			CC(ex,0xbb);											\
@@ -3910,7 +3910,7 @@ public class z80
 	
 	static void take_interrupt(void)
 	{
-		if( _IFF1 )
+		if (_IFF1 != 0)
 		{
 			int irq_vector;
 	
@@ -4068,14 +4068,14 @@ public class z80
 		for (i = 0; i < 256; i++)
 		{
 			p = 0;
-			if( i&0x01 ) ++p;
-			if( i&0x02 ) ++p;
-			if( i&0x04 ) ++p;
-			if( i&0x08 ) ++p;
-			if( i&0x10 ) ++p;
-			if( i&0x20 ) ++p;
-			if( i&0x40 ) ++p;
-			if( i&0x80 ) ++p;
+			if ((i & 0x01) != 0) ++p;
+			if ((i & 0x02) != 0) ++p;
+			if ((i & 0x04) != 0) ++p;
+			if ((i & 0x08) != 0) ++p;
+			if ((i & 0x10) != 0) ++p;
+			if ((i & 0x20) != 0) ++p;
+			if ((i & 0x40) != 0) ++p;
+			if ((i & 0x80) != 0) ++p;
 			SZ[i] = i ? i & SF : ZF;
 	#if Z80_EXACT
 			SZ[i] |= (i & (YF | XF));		/* undocumented flag bits 5+3 */
@@ -4135,7 +4135,7 @@ public class z80
 		Z80.nmi_state = CLEAR_LINE;
 		Z80.irq_state = CLEAR_LINE;
 	
-		if( daisy_chain )
+		if (daisy_chain != 0)
 		{
 			while( daisy_chain->irq_param != -1 && Z80.irq_max < Z80_MAXDAISY )
 			{
@@ -4155,9 +4155,9 @@ public class z80
 	void z80_exit(void)
 	{
 	#if BIG_FLAGS_ARRAY
-		if (SZHVC_add) free(SZHVC_add);
+		if (SZHVC_add != 0) free(SZHVC_add);
 		SZHVC_add = NULL;
-		if (SZHVC_sub) free(SZHVC_sub);
+		if (SZHVC_sub != 0) free(SZHVC_sub);
 		SZHVC_sub = NULL;
 	#endif
 	}
@@ -4203,7 +4203,7 @@ public class z80
 	 ****************************************************************************/
 	unsigned z80_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(Z80_Regs*)dst = Z80;
 		return sizeof(Z80_Regs);
 	}
@@ -4213,7 +4213,7 @@ public class z80
 	 ****************************************************************************/
 	void z80_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 			Z80 = *(Z80_Regs*)src;
 		change_pc16(_PCD);
 	}

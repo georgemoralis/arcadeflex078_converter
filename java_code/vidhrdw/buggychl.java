@@ -132,8 +132,8 @@ public class buggychl
 	
 				dirtybuffer[0x400+offs] = 0;
 	
-				if (flip_screen_x) sx = 31 - sx;
-				if (flip_screen_y) sy = 31 - sy;
+				if (flip_screen_x != 0) sx = 31 - sx;
+				if (flip_screen_y != 0) sy = 31 - sy;
 	
 				drawgfx(tmpbitmap1,Machine->gfx[0],
 						code,
@@ -172,8 +172,8 @@ public class buggychl
 	
 			int code = videoram[offs];
 	
-			if (flip_screen_x) sx = 31 - sx;
-			if (flip_screen_y) sy = 31 - sy;
+			if (flip_screen_x != 0) sx = 31 - sx;
+			if (flip_screen_y != 0) sy = 31 - sy;
 	
 			drawgfx(bitmap,Machine->gfx[0],
 					code,
@@ -217,7 +217,7 @@ public class buggychl
 	
 					charline = zoomy_rom[y] & 0x07;
 					base_pos = zoomy_rom[y] & 0x38;
-					if (flipy) base_pos ^= 0x38;
+					if (flipy != 0) base_pos ^= 0x38;
 	
 					px = 0;
 					for (ch = 0;ch < 4;ch++)
@@ -236,7 +236,7 @@ public class buggychl
 							int col;
 	
 							col = pendata[x];
-							if (col)
+							if (col != 0)
 							{
 								int dx = flip_screen_x ? (255 - sx - px) : (sx + px);
 								if ((dx & ~0xff) == 0)
@@ -261,7 +261,7 @@ public class buggychl
 		int code;
 	
 	
-		if (sky_on)
+		if (sky_on != 0)
 			draw_sky(bitmap);
 		else
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
@@ -273,7 +273,7 @@ public class buggychl
 				decodechar(Machine->gfx[0],code,buggychl_character_ram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
 		}
 	
-		if (bg_on)
+		if (bg_on != 0)
 			draw_bg(bitmap);
 	
 		draw_sprites(bitmap);

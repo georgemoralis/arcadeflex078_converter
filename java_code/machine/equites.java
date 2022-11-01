@@ -282,7 +282,7 @@ public class equites
 		int pc, data, mode, col, row;
 		struct MRULE *ruleptr;
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			pc = activecpu_get_pc();
 	
@@ -366,7 +366,7 @@ public class equites
 						default:
 							return (equites_8404ram[offset]);
 					}
-					if (mode & MCU_RTNMSB) data >>= 8;
+					if ((mode & MCU_RTNMSB) != 0) data >>= 8;
 					return (data & 0xff);
 				}
 				ruleptr = ruleptr->next;

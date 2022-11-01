@@ -66,27 +66,27 @@ public class terracre
 			int sx = (pSource[3] & 0xff) - 0x80 + 256 * (attrs & 1);
 			int sy = 240 - (pSource[0] & 0xff);
 	
-			if( transparent_pen )
+			if (transparent_pen != 0)
 			{
 				int bank;
 	
-				if( attrs&0x02 ) tile |= 0x200;
-				if( attrs&0x10 ) tile |= 0x100;
+				if ((attrs & 0x02) != 0) tile |= 0x200;
+				if ((attrs & 0x10) != 0) tile |= 0x100;
 	
 				bank = (tile&0xfc)>>1;
-				if( tile&0x200 ) bank |= 0x80;
-				if( tile&0x100 ) bank |= 0x01;
+				if ((tile & 0x200) != 0) bank |= 0x80;
+				if ((tile & 0x100) != 0) bank |= 0x01;
 	
 				color &= 0xe;
 				color += 16*(spritepalettebank[bank]&0xf);
 			}
 			else
 			{
-				if( attrs&0x02 ) tile|= 0x100;
+				if ((attrs & 0x02) != 0) tile|= 0x100;
 				color += 16 * (spritepalettebank[(tile>>1)&0xff] & 0x0f);
 			}
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 					sx=240-sx;
 					sy=240-sy;
@@ -143,7 +143,7 @@ public class terracre
 		/* pens 0-7; the top two bits for pens 8-15. */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			if (i & 8) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
+			if ((i & 8) != 0) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
 			else COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0x30) >> 0);
 		}
 	
@@ -158,7 +158,7 @@ public class terracre
 	
 			for (j = 0;j < 16;j++)
 			{
-				if (i & 8)
+				if ((i & 8) != 0)
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x0c) << 2) + (*color_prom & 0x0f);
 				else
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x03) << 4) + (*color_prom & 0x0f);
@@ -185,7 +185,7 @@ public class terracre
 	
 	WRITE16_HANDLER( amazon_flipscreen_w )
 	{
-		if( ACCESSING_LSB )
+		if (ACCESSING_LSB != 0)
 		{
 			coin_counter_w( 0, data&0x01 );
 			coin_counter_w( 1, (data&0x02)>>1 );
@@ -219,7 +219,7 @@ public class terracre
 	
 	public static VideoUpdateHandlerPtr video_update_amazon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if( xscroll&0x2000 )
+		if ((xscroll & 0x2000) != 0)
 		{
 			fillbitmap( bitmap,get_black_pen(),cliprect );
 		}

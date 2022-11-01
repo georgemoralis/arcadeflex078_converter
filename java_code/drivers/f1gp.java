@@ -72,7 +72,7 @@ public class f1gp
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);

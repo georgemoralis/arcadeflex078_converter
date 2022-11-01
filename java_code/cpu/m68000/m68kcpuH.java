@@ -495,7 +495,7 @@ public class m68kcpuH
 		/* Clear all tracing */
 		#define m68ki_clear_trace() m68ki_tracing = 0
 		/* Cause a trace exception if we are tracing */
-		#define m68ki_exception_if_trace() if(m68ki_tracing) m68ki_exception_trace()
+		#define m68ki_exception_if_trace() if (m68ki_tracing != 0) m68ki_exception_trace()
 	#else
 		#define m68ki_trace_t1()
 		#define m68ki_trace_t0()
@@ -512,7 +512,7 @@ public class m68kcpuH
 			if(setjmp(m68ki_aerr_trap) != 0) \
 			{ \
 				m68ki_exception_address_error(); \
-				if(CPU_STOPPED) \
+				if (CPU_STOPPED != 0) \
 				{ \
 					SET_CYCLES(0); \
 					CPU_INT_CYCLES = 0; \
@@ -536,9 +536,9 @@ public class m68kcpuH
 	/* Logging */
 	#if M68K_LOG_ENABLE
 				
-		#define M68K_DO_LOG(A) if(M68K_LOG_FILEHANDLE) fprintf A
+		#define M68K_DO_LOG(A) if (M68K_LOG_FILEHANDLE != 0) fprintf A
 		#if M68K_LOG_1010_1111
-			#define M68K_DO_LOG_EMU(A) if(M68K_LOG_FILEHANDLE) fprintf A
+			#define M68K_DO_LOG_EMU(A) if (M68K_LOG_FILEHANDLE != 0) fprintf A
 		#else
 			#define M68K_DO_LOG_EMU(A)
 		#endif
@@ -1884,7 +1884,7 @@ public class m68kcpuH
 		CPU_STOPPED &= ~STOP_LEVEL_STOP;
 	
 		/* If we are halted, don't do anything */
-		if(CPU_STOPPED)
+		if (CPU_STOPPED != 0)
 			return;
 	
 		/* Acknowledge the interrupt */

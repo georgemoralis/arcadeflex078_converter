@@ -50,7 +50,7 @@ public class galspnbl
 	
 	WRITE16_HANDLER( galspnbl_scroll_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			screenscroll = 4-(data & 0xff);
 	}
 	

@@ -11,7 +11,7 @@ public class mario
 	
 	public static WriteHandlerPtr mario_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data)
+		if (data != 0)
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 		else
 			cpu_set_irq_line(1,0,CLEAR_LINE);
@@ -51,7 +51,7 @@ public class mario
 		if (state[offset] == data) return;
 	
 		state[offset] = data;
-		if (data)
+		if (data != 0)
 		{
 			switch (offset)
 			{

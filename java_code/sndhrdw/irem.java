@@ -31,20 +31,20 @@ public class irem
 		if ((port2 & 0x01) && !(data & 0x01))
 		{
 			/* control or data port? */
-			if (port2 & 0x04)
+			if ((port2 & 0x04) != 0)
 			{
 				/* PSG 0 or 1? */
-				if (port2 & 0x08)
+				if ((port2 & 0x08) != 0)
 					AY8910_control_port_0_w(0,port1);
-				if (port2 & 0x10)
+				if ((port2 & 0x10) != 0)
 					AY8910_control_port_1_w(0,port1);
 			}
 			else
 			{
 				/* PSG 0 or 1? */
-				if (port2 & 0x08)
+				if ((port2 & 0x08) != 0)
 					AY8910_write_port_0_w(0,port1);
-				if (port2 & 0x10)
+				if ((port2 & 0x10) != 0)
 					AY8910_write_port_1_w(0,port1);
 			}
 		}
@@ -55,9 +55,9 @@ public class irem
 	public static ReadHandlerPtr irem_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* PSG 0 or 1? */
-		if (port2 & 0x08)
+		if ((port2 & 0x08) != 0)
 			return AY8910_read_port_0_r(0);
-		if (port2 & 0x10)
+		if ((port2 & 0x10) != 0)
 			return AY8910_read_port_1_r(0);
 		return 0xff;
 	} };
@@ -97,7 +97,7 @@ public class irem
 	public static WriteHandlerPtr irem_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef MAME_DEBUG
-	if (data&0x0f) usrintf_showmessage("analog sound %x",data&0x0f);
+	if ((data & 0x0f) != 0) usrintf_showmessage("analog sound %x",data&0x0f);
 	#endif
 	} };
 	

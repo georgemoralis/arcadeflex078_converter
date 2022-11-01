@@ -153,7 +153,7 @@ public class winmain
 			{
 				// check if windows.txt exists
 				fp = fopen(helpfile, "r");
-				if (fp) {
+				if (fp != 0) {
 					fclose(fp);
 	
 					// if so, open it with the default application
@@ -173,7 +173,7 @@ public class winmain
 		// parse the map file, if present
 		strcpy(mapfile_name, argv[0]);
 		ext = strchr(mapfile_name, '.');
-		if (ext)
+		if (ext != 0)
 			strcpy(ext, ".map");
 		else
 			strcat(mapfile_name, ".map");
@@ -301,7 +301,7 @@ public class winmain
 		int i;
 	
 		// if we're hitting this recursively, just exit
-		if (already_hit)
+		if (already_hit != 0)
 			return EXCEPTION_EXECUTE_HANDLER;
 		already_hit = 1;
 	

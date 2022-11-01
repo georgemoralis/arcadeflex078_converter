@@ -340,13 +340,13 @@ public class mcr
 		int newstate = 0;
 	
 		/* all interrupts go through an LS148, which gives priority to the highest */
-		if (v493_irq_state)
+		if (v493_irq_state != 0)
 			newstate = v493_irq_vector;
-		if (m6840_irq_state)
+		if (m6840_irq_state != 0)
 			newstate = m6840_irq_vector;
 	
 		/* set the new state of the IRQ lines */
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -671,7 +671,7 @@ public class mcr
 			if (counter == 0 && (diffs & 0x01))
 			{
 				/* holding reset down */
-				if (data & 0x01)
+				if ((data & 0x01) != 0)
 				{
 					for (i = 0; i < 3; i++)
 					{
@@ -692,7 +692,7 @@ public class mcr
 			}
 	
 			/* changing the clock source? (needed for Zwackery) */
-			if (diffs & 0x02)
+			if ((diffs & 0x02) != 0)
 				reload_count(counter);
 	
 			LOG(("%06X:Counter %d control = %02X\n", activecpu_get_previouspc(), counter, data));
@@ -763,14 +763,14 @@ public class mcr
 	
 	WRITE16_HANDLER( mcr68_6840_upper_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			mcr68_6840_w_common(offset, (data >> 8) & 0xff);
 	}
 	
 	
 	WRITE16_HANDLER( mcr68_6840_lower_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			mcr68_6840_w_common(offset, data & 0xff);
 	}
 	

@@ -582,7 +582,7 @@ public class omegaf
 						((spriteram[offs + 2] & 0x08) << 7);
 	
 				big  = spriteram[offs + 2] & 4;
-				if (big)
+				if (big != 0)
 					tile >>= 2;
 				flipx = spriteram[offs + 2] & 0x10;
 				flipy = spriteram[offs + 2] & 0x20;
@@ -603,10 +603,10 @@ public class omegaf
 	{
 		fillbitmap(bitmap,Machine->pens[15],cliprect);	// ??
 	
-		if (bg0_enabled)	tilemap_draw(bitmap,cliprect, bg0_tilemap, 0, 0);
-		if (bg1_enabled)	tilemap_draw(bitmap,cliprect, bg1_tilemap, 0, 0);
-		if (bg2_enabled)	tilemap_draw(bitmap,cliprect, bg2_tilemap, 0, 0);
-		if ( sprite_overdraw_enabled )				/* overdraw sprite mode */
+		if (bg0_enabled != 0)	tilemap_draw(bitmap,cliprect, bg0_tilemap, 0, 0);
+		if (bg1_enabled != 0)	tilemap_draw(bitmap,cliprect, bg1_tilemap, 0, 0);
+		if (bg2_enabled != 0)	tilemap_draw(bitmap,cliprect, bg2_tilemap, 0, 0);
+		if (sprite_overdraw_enabled != 0)				/* overdraw sprite mode */
 		{
 			draw_sprites(bitmap_sp,cliprect);
 			copybitmap(bitmap, bitmap_sp, 0, 0, 0, 0,

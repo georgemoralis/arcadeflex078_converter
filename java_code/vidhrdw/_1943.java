@@ -193,7 +193,7 @@ public class _1943
 		int top,left,xscroll,yscroll;
 	
 	/* TODO: support flipscreen */
-		if (sc2on)
+		if (sc2on != 0)
 		{
 			p=memory_region(REGION_GFX5)+0x8000;
 			bg_scrolly = c1943_bgscrolly[0] + 256 * c1943_bgscrolly[1];
@@ -245,7 +245,7 @@ public class _1943
 		else fillbitmap(bitmap,get_black_pen(),cliprect);
 	
 	
-		if (objon)
+		if (objon != 0)
 		{
 			/* Draw the sprites which don't have priority over the foreground. */
 			for (offs = spriteram_size - 32;offs >= 0;offs -= 32)
@@ -259,7 +259,7 @@ public class _1943
 				{
 					sx = spriteram[offs + 3] - ((spriteram[offs + 1] & 0x10) << 4);
 					sy = spriteram[offs + 2];
-					if (flipscreen)
+					if (flipscreen != 0)
 					{
 						sx = 240 - sx;
 						sy = 240 - sy;
@@ -277,14 +277,14 @@ public class _1943
 	
 	
 	/* TODO: support flipscreen */
-		if (sc1on)
+		if (sc1on != 0)
 		{
 			p=memory_region(REGION_GFX5);
 	
 			bg_scrolly = c1943_scrolly[0] + 256 * c1943_scrolly[1];
 			bg_scrollx = c1943_scrollx[0];
 			offs = 16 * ((bg_scrolly>>5)+8)+2*(bg_scrollx>>5) ;
-			if (bg_scrollx & 0x80) offs -= 0x10;
+			if ((bg_scrollx & 0x80) != 0) offs -= 0x10;
 	
 			top = 8 - (bg_scrolly>>5) % 9;
 			left = (bg_scrollx>>5) % 9;
@@ -334,7 +334,7 @@ public class _1943
 		}
 	
 	
-		if (objon)
+		if (objon != 0)
 		{
 			/* Draw the sprites which have priority over the foreground. */
 			for (offs = spriteram_size - 32;offs >= 0;offs -= 32)
@@ -348,7 +348,7 @@ public class _1943
 				{
 					sx = spriteram[offs + 3] - ((spriteram[offs + 1] & 0x10) << 4);
 					sy = spriteram[offs + 2];
-					if (flipscreen)
+					if (flipscreen != 0)
 					{
 						sx = 240 - sx;
 						sy = 240 - sy;
@@ -365,14 +365,14 @@ public class _1943
 		}
 	
 	
-		if (chon)
+		if (chon != 0)
 		{
 			/* draw the frontmost playfield. They are characters, but draw them as sprites */
 			for (offs = videoram_size - 1;offs >= 0;offs--)
 			{
 				sx = offs % 32;
 				sy = offs / 32;
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

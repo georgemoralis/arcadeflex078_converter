@@ -33,7 +33,7 @@ public class wwfwfest
 		/* Videoram is 8 bit, upper & lower byte writes end up in the same place */
 		if (ACCESSING_MSB && ACCESSING_LSB) {
 			COMBINE_DATA(&wwfwfest_fg0_videoram[offset]);
-		} else if (ACCESSING_MSB) {
+		} else if (ACCESSING_MSB != 0) {
 			wwfwfest_fg0_videoram[offset]=(data>>8)&0xff;
 		} else {
 			wwfwfest_fg0_videoram[offset]=data&0xff;
@@ -187,7 +187,7 @@ public class wwfwfest
 	
 			enable = (source[1] & 0x0001);
 	
-			if (enable)	{
+			if (enable != 0)	{
 				xpos = +(source[5] & 0x00ff) | (source[1] & 0x0004) << 6;
 				if (xpos>512-16) xpos -=512;
 				ypos = (source[0] & 0x00ff) | (source[1] & 0x0002) << 7;
@@ -200,22 +200,22 @@ public class wwfwfest
 				number = (source[2] & 0x00ff) | (source[3] & 0x00ff) << 8;
 				colourbank = (source[4] & 0x000f);
 	
-				if (flip_screen) {
-					if (flipy) flipy=0; else flipy=1;
-					if (flipx) flipx=0; else flipx=1;
+				if (flip_screen != 0) {
+					if (flipy != 0) flipy=0; else flipy=1;
+					if (flipx != 0) flipx=0; else flipx=1;
 					ypos=240-ypos;
 					xpos=304-xpos;
 				}
 	
 				for (count=0;count<chain;count++) {
-					if (flip_screen) {
+					if (flip_screen != 0) {
 						if (!flipy) {
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos+(16*(chain-1))-(16*count),cliprect,TRANSPARENCY_PEN,0);
 						} else {
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos+16*count,cliprect,TRANSPARENCY_PEN,0);
 						}
 					} else {
-							if (flipy) {
+							if (flipy != 0) {
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos-(16*(chain-1))+(16*count),cliprect,TRANSPARENCY_PEN,0);
 						} else {
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos-16*count,cliprect,TRANSPARENCY_PEN,0);

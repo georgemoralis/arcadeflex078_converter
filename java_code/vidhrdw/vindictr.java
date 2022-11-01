@@ -255,7 +255,7 @@ public class vindictr
 	
 							SHADE = PAL(MPR1-0, LB7-0, PFX6-5, PFX3-2, PF/M)
 	
-							if (SHADE)
+							if (SHADE != 0)
 								CRA |= 0x100
 	
 							MOG3-1 = ~MAT3-1 if MAT6==1 and MSD3==1
@@ -263,7 +263,7 @@ public class vindictr
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority signals special rendering and doesn't draw anything */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 							continue;
 	
 						/* MO pen 1 doesn't draw, but it sets the SHADE flag and bumps the palette offset */
@@ -295,7 +295,7 @@ public class vindictr
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority might mean palette kludges */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 						{
 							/* if bit 2 is set, start setting high palette bits */
 							if (mo[x] & 2)

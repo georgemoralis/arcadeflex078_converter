@@ -118,7 +118,7 @@ public class wiping
 					sy = my - 2;
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -147,7 +147,7 @@ public class wiping
 			flipy = spriteram[offs] & 0x40;
 			flipx = spriteram[offs] & 0x80;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sy = 208 - sy;
 				flipx = !flipx;
@@ -188,7 +188,7 @@ public class wiping
 					sy = my - 2;
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;

@@ -130,10 +130,10 @@ public class nitedrvr
 		int gear;
 	
 		gear=input_port_2_r(0);
-		if (gear & 0x10)				nitedrvr_gear=1;
-		else if (gear & 0x20)			nitedrvr_gear=2;
-		else if (gear & 0x40)			nitedrvr_gear=3;
-		else if (gear & 0x80)			nitedrvr_gear=4;
+		if ((gear & 0x10) != 0)				nitedrvr_gear=1;
+		else if ((gear & 0x20) != 0)			nitedrvr_gear=2;
+		else if ((gear & 0x40) != 0)			nitedrvr_gear=3;
+		else if ((gear & 0x80) != 0)			nitedrvr_gear=4;
 	
 		switch (offset & 0x03)
 		{
@@ -193,9 +193,9 @@ public class nitedrvr
 		ac_line=(ac_line+1) % 3;
 	
 		port=input_port_4_r(0);
-		if (port & 0x10)				nitedrvr_track=0;
-		else if (port & 0x20)			nitedrvr_track=1;
-		else if (port & 0x40)			nitedrvr_track=2;
+		if ((port & 0x10) != 0)				nitedrvr_track=0;
+		else if ((port & 0x20) != 0)			nitedrvr_track=1;
+		else if ((port & 0x40) != 0)			nitedrvr_track=2;
 	
 		switch (offset & 0x07)
 		{
@@ -278,7 +278,7 @@ public class nitedrvr
 			nitedrvr_crash_data--;
 			discrete_sound_w(0, nitedrvr_crash_data);	// Crash Volume
 			if (!nitedrvr_crash_data) nitedrvr_crash_data_en = 0;	// Done counting?
-			if (nitedrvr_crash_data & 0x01)
+			if ((nitedrvr_crash_data & 0x01) != 0)
 			{
 				/* Invert video */
 				palette_set_color(1,0x00,0x00,0x00); /* BLACK */

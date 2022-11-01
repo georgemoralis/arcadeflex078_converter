@@ -51,7 +51,7 @@ public class rpunch
 	{
 		int data = videoram16[tile_index];
 		int code;
-		if (videoflags & 0x0400)	code = (data & 0x0fff) | 0x2000;
+		if ((videoflags & 0x0400) != 0)	code = (data & 0x0fff) | 0x2000;
 		else						code = (data & 0x1fff);
 	
 		SET_TILE_INFO(
@@ -65,7 +65,7 @@ public class rpunch
 	{
 		int data = videoram16[videoram_size / 4 + tile_index];
 		int code;
-		if (videoflags & 0x0800)	code = (data & 0x0fff) | 0x2000;
+		if ((videoflags & 0x0800) != 0)	code = (data & 0x0fff) | 0x2000;
 		else						code = (data & 0x1fff);
 	
 		SET_TILE_INFO(
@@ -111,7 +111,7 @@ public class rpunch
 		/* reset the sums and bitmap */
 		for (i = 0; i < BITMAP_HEIGHT; i++)
 			rpunch_bitmapsum[i] = (BITMAP_WIDTH/4) * 0xffff;
-		if (rpunch_bitmapram)
+		if (rpunch_bitmapram != 0)
 			memset(rpunch_bitmapram, 0xff, rpunch_bitmapram_size);
 	
 		/* reset the timer */
@@ -129,7 +129,7 @@ public class rpunch
 	
 	WRITE16_HANDLER( rpunch_bitmap_w )
 	{
-		if (rpunch_bitmapram)
+		if (rpunch_bitmapram != 0)
 		{
 			int oldword = rpunch_bitmapram[offset];
 			int newword = oldword;
@@ -207,7 +207,7 @@ public class rpunch
 	
 	WRITE16_HANDLER( rpunch_crtc_data_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			data &= 0xff;
 			switch (crtc_register)
@@ -227,14 +227,14 @@ public class rpunch
 	
 	WRITE16_HANDLER( rpunch_crtc_register_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			crtc_register = data & 0xff;
 	}
 	
 	
 	WRITE16_HANDLER( rpunch_ins_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (offset == 0)
 			{
@@ -341,7 +341,7 @@ public class rpunch
 		draw_sprites(bitmap,cliprect, 0, effbins);
 		tilemap_draw(bitmap,cliprect, background[1], 0,0);
 		draw_sprites(bitmap,cliprect, effbins, gins);
-		if (rpunch_bitmapram)
+		if (rpunch_bitmapram != 0)
 			draw_bitmap(bitmap,cliprect);
 	} };
 }

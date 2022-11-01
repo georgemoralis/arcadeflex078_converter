@@ -198,8 +198,8 @@ public class scramble
 	
 	
 		C = 0;
-		if (data & 1) C += 220000;	/* 220000pF = 0.220uF */
-		if (data & 2) C +=  47000;	/*  47000pF = 0.047uF */
+		if ((data & 1) != 0) C += 220000;	/* 220000pF = 0.220uF */
+		if ((data & 2) != 0) C +=  47000;	/*  47000pF = 0.047uF */
 		set_RC_filter(3*chip + channel,1000,5100,0,C);
 	}
 	

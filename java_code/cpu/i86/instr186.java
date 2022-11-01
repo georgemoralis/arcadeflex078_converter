@@ -166,7 +166,7 @@ static void PREFIX186(_enter)(void)    /* Opcode 0xc8 */
 	I.regs.w[SP] -= nb;
 	for (i=1;i<level;i++)
 		PUSH(GetMemW(SS,I.regs.w[BP]-i*2));
-	if (level) PUSH(I.regs.w[BP]);
+	if (level != 0) PUSH(I.regs.w[BP]);
 }
 
 static void PREFIX186(_leave)(void)    /* Opcode 0xc9 */

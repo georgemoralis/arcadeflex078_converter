@@ -322,7 +322,7 @@ public class make68k
 	{
 		int Work;
 	
-		if (Way)
+		if (Way != 0)
 		{
 			Work = (EA & 0x7);
 	
@@ -617,7 +617,7 @@ public class make68k
 	
 	#endif
 	
-		if (CheckInterrupt)
+		if (CheckInterrupt != 0)
 		{
 			fprintf(fp,"; Check for Interrupt waiting\n\n");
 			fprintf(fp,"\t\t test  byte [%s],07H\n",REG_IRQ);
@@ -689,22 +689,22 @@ public class make68k
 	
 	void SetFlags(char Size,int Sreg,int Testreg,int SetX,int Delayed)
 	{
-		if (Testreg) TestFlags(Size,Sreg);
+		if (Testreg != 0) TestFlags(Size,Sreg);
 	
 		fprintf(fp, "\t\t pushfd\n");
 	
-		if (Delayed)
+		if (Delayed != 0)
 		{
 			/* Rest of code done by Completed routine */
 	
-			if (SetX) FlagProcess = 2;
+			if (SetX != 0) FlagProcess = 2;
 			else FlagProcess = 1;
 		}
 		else
 		{
 			fprintf(fp, "\t\t pop   EDX\n");
 	
-			if (SetX) fprintf(fp, "\t\t mov   [%s],edx\n",REG_X);
+			if (SetX != 0) fprintf(fp, "\t\t mov   [%s],edx\n",REG_X);
 		}
 	}
 	
@@ -1377,7 +1377,7 @@ public class make68k
 	{
 		char *Label = GenerateLabel(0,1);
 	
-		if (SaveEDX)
+		if (SaveEDX != 0)
 			fprintf(fp, "\t\t push  edx\n");
 	
 		Memory_Fetch('W',EAX,FALSE);
@@ -1519,7 +1519,7 @@ public class make68k
 			fprintf(fp, "\t\t pop   ebx\n");
 		}
 	
-		if (SaveEDX)
+		if (SaveEDX != 0)
 			fprintf(fp, "\t\t pop   edx\n");
 	}
 	
@@ -1706,7 +1706,7 @@ public class make68k
 		else
 			MaskMode = 1;
 	
-		if (SaveEDX)
+		if (SaveEDX != 0)
 			Flags[3] = 'D';
 		else
 			Flags[3] = '-';
@@ -1880,7 +1880,7 @@ public class make68k
 	
 		/* Which Masking to Use ? */
 	
-		if (CalcAddress)
+		if (CalcAddress != 0)
 		{
 			if (Flags[5] != '-')
 				MaskMode = 2;
@@ -1890,7 +1890,7 @@ public class make68k
 		else
 			MaskMode = 0;
 	
-		if (SaveEDX)
+		if (SaveEDX != 0)
 			Flags[3] = 'D';
 		else
 			Flags[3] = '-';
@@ -1936,22 +1936,22 @@ public class make68k
 				break;
 	
 			case 2:
-				if (CalcAddress) EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
+				if (CalcAddress != 0) EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
 				Memory_Write(Size,EDI,EAX,Flags,MaskMode);
 				break;
 	
 			case 3:
-				if (CalcAddress) EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
+				if (CalcAddress != 0) EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
 				Memory_Write(Size,EDI,EAX,Flags,MaskMode);
 				break;
 	
 			case 4:
-				if (CalcAddress) EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
+				if (CalcAddress != 0) EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
 				Memory_Write(Size,EDI,EAX,Flags,MaskMode);
 				break;
 	
 			case 5:
-				if (CalcAddress)
+				if (CalcAddress != 0)
 				{
 					fprintf(fp, "\t\t push  EAX\n");
 					EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
@@ -1961,7 +1961,7 @@ public class make68k
 				break;
 	
 			case 6:
-				if (CalcAddress)
+				if (CalcAddress != 0)
 				{
 					fprintf(fp, "\t\t push  EAX\n");
 					EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
@@ -1971,7 +1971,7 @@ public class make68k
 				break;
 	
 			case 7:
-				if (CalcAddress)
+				if (CalcAddress != 0)
 				{
 					fprintf(fp, "\t\t push  EAX\n");
 					EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
@@ -1981,7 +1981,7 @@ public class make68k
 				break;
 	
 			case 8:
-				if (CalcAddress)
+				if (CalcAddress != 0)
 				{
 					fprintf(fp, "\t\t push  EAX\n");
 					EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
@@ -1991,7 +1991,7 @@ public class make68k
 				break;
 	
 			case 9:
-				if (CalcAddress)
+				if (CalcAddress != 0)
 				{
 					fprintf(fp, "\t\t push  EAX\n");
 					EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
@@ -2001,7 +2001,7 @@ public class make68k
 				break;
 	
 			case 10:
-				if (CalcAddress)
+				if (CalcAddress != 0)
 				{
 					fprintf(fp, "\t\t push  EAX\n");
 					EffectiveAddressCalculate(mode,Size,Rreg,SaveEDX);
@@ -2036,7 +2036,7 @@ public class make68k
 		{
 	
 			case 0:	/* A - Always */
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jmp   near %s\n",Label);
 				}
@@ -2053,7 +2053,7 @@ public class make68k
 				fprintf(fp, "\t\t mov   ah,dl\n");
 				fprintf(fp, "\t\t sahf\n");
 	
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t ja    near %s\n",Label);
 				}
@@ -2067,7 +2067,7 @@ public class make68k
 				fprintf(fp, "\t\t mov   ah,dl\n");
 				fprintf(fp, "\t\t sahf\n");
 	
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jbe   near %s\n",Label);
 				}
@@ -2080,7 +2080,7 @@ public class make68k
 			case 4:	/* CC */
 				fprintf(fp, "\t\t test  dl,1H\t\t;check carry\n");
 	
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jz    near %s\n",Label);
 				}
@@ -2092,7 +2092,7 @@ public class make68k
 	
 			case 5:	/* CS */
 				fprintf(fp,  "\t\t test  dl,1H\t\t;check carry\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jnz   near %s\n",Label);
 				}
@@ -2104,7 +2104,7 @@ public class make68k
 	
 			case 6:	/* NE */
 				fprintf(fp, "\t\t test  dl,40H\t\t;Check zero\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jz    near %s\n",Label);
 				}
@@ -2116,7 +2116,7 @@ public class make68k
 	
 			case 7:	/* EQ */
 				fprintf(fp, "\t\t test  dl,40H\t\t;Check zero\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jnz   near %s\n",Label);
 				}
@@ -2128,7 +2128,7 @@ public class make68k
 	
 			case 8:	/* VC */
 				fprintf(fp, "\t\t test  dh,8H\t\t;Check Overflow\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jz    near %s\n", Label);
 				}
@@ -2140,7 +2140,7 @@ public class make68k
 	
 			case 9:	/* VS */
 				fprintf(fp, "\t\t test  dh,8H\t\t;Check Overflow\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jnz   near %s\n", Label);
 				}
@@ -2152,7 +2152,7 @@ public class make68k
 	
 			case 10:	/* PL */
 				fprintf(fp,"\t\t test  dl,80H\t\t;Check Sign\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jz    near %s\n", Label);
 				}
@@ -2164,7 +2164,7 @@ public class make68k
 	
 			case 11:	/* MI */
 				fprintf(fp,"\t\t test  dl,80H\t\t;Check Sign\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jnz   near %s\n", Label);
 				}
@@ -2178,7 +2178,7 @@ public class make68k
 				fprintf(fp, "\t\t or    edx,200h\n");
 				fprintf(fp, "\t\t push  edx\n");
 				fprintf(fp, "\t\t popf\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jge   near %s\n",Label);
 				}
@@ -2192,7 +2192,7 @@ public class make68k
 				fprintf(fp, "\t\t or    edx,200h\n");
 				fprintf(fp, "\t\t push  edx\n");
 				fprintf(fp, "\t\t popf\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jl    near %s\n",Label);
 				}
@@ -2206,7 +2206,7 @@ public class make68k
 				fprintf(fp, "\t\t or    edx,200h\n");
 				fprintf(fp, "\t\t push  edx\n");
 				fprintf(fp, "\t\t popf\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jg    near %s\n",Label);
 				}
@@ -2220,7 +2220,7 @@ public class make68k
 				fprintf(fp, "\t\t or    edx,200h\n");
 				fprintf(fp, "\t\t push  edx\n");
 				fprintf(fp, "\t\t popf\n");
-				if (Condition)
+				if (Condition != 0)
 				{
 					fprintf(fp, "\t\t jle   near %s\n",Label);
 				}
@@ -3401,7 +3401,7 @@ public class make68k
 	
 						Immediate8();
 	
-						if (Opcode & 0x100)
+						if ((Opcode & 0x100) != 0)
 						{
 							/* SUBQ */
 							Operation = "sub";
@@ -4484,7 +4484,7 @@ public class make68k
 							fprintf(fp, "\t\t sub   ecx,ebx\n");
 							fprintf(fp, "\t\t mov   ebx,edx\n");
 							SetFlags('L',EBX,TRUE,FALSE,FALSE);
-							if (sign)
+							if (sign != 0)
 								fprintf(fp, "\t\t sar   ebx,cl\n");
 							else
 								fprintf(fp, "\t\t shr   ebx,cl\n");
@@ -5436,7 +5436,7 @@ public class make68k
 							}
 	
 							if (mode == 3)
-								fprintf(fp, "\t\t push   ecx\n");			/* if (An)+ then it needed later */
+								fprintf(fp, "\t\t push   ecx\n");			/* if (An != 0)+ then it needed later */
 	
 							EffectiveAddressCalculate(Dest,'L',ECX,TRUE);
 	

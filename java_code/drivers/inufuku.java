@@ -103,7 +103,7 @@ public class inufuku
 	
 	static WRITE16_HANDLER( inufuku_soundcommand_w )
 	{
-		if (ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 	
 			/* hack... sound doesn't work otherwise */
 			if (data == 0x08) return;

@@ -135,7 +135,7 @@ public class carjmbre
 					flipx = (spriteram[troffs+2]&0x40)>>6;
 					flipy = (spriteram[troffs+2]&0x80)>>7;
 	
-					if (carjmbre_flipscreen)
+					if (carjmbre_flipscreen != 0)
 					{
 						sx = (256+(226-sx))%256;
 						sy = 242-sy;

@@ -132,7 +132,7 @@ public class nbmj8891
 	
 		if (gionbana_flipscreen != gionbana_flipscreen_old)
 		{
-			if (gfxdraw_mode) gionbana_vramflip(1);
+			if (gfxdraw_mode != 0) gionbana_vramflip(1);
 			gionbana_vramflip(0);
 			gionbana_screen_refresh = 1;
 			gionbana_flipscreen_old = gionbana_flipscreen;
@@ -151,10 +151,10 @@ public class nbmj8891
 	
 	void gionbana_scrolly_w(int data)
 	{
-		if (gionbana_flipscreen) gionbana_scrolly1 = -2;
+		if (gionbana_flipscreen != 0) gionbana_scrolly1 = -2;
 		else gionbana_scrolly1 = 0;
 	
-		if (gionbana_flipscreen) gionbana_scrolly2 = (data ^ 0xff) & 0xff;
+		if (gionbana_flipscreen != 0) gionbana_scrolly2 = (data ^ 0xff) & 0xff;
 		else gionbana_scrolly2 = (data - 1) & 0xff;
 	}
 	
@@ -233,7 +233,7 @@ public class nbmj8891
 		unsigned char drawcolor1, drawcolor2;
 		int gfxaddr;
 	
-		if (gionbana_flipx)
+		if (gionbana_flipx != 0)
 		{
 			gionbana_drawx -= (gionbana_sizex << 1);
 			startx = gionbana_sizex;
@@ -248,7 +248,7 @@ public class nbmj8891
 			skipx = 1;
 		}
 	
-		if (gionbana_flipy)
+		if (gionbana_flipy != 0)
 		{
 			gionbana_drawy -= ((gionbana_sizey << 1) + 1);
 			starty = gionbana_sizey;
@@ -281,7 +281,7 @@ public class nbmj8891
 	
 				color = GFX[gfxaddr++];
 	
-				if (gionbana_flipscreen)
+				if (gionbana_flipscreen != 0)
 				{
 					dx1 = (((((gionbana_drawx + x) * 2) + 0) ^ 0x1ff) & 0x1ff);
 					dx2 = (((((gionbana_drawx + x) * 2) + 1) ^ 0x1ff) & 0x1ff);
@@ -296,7 +296,7 @@ public class nbmj8891
 					dy2 = ((gionbana_drawy + y + (-gionbana_scrolly2 & 0xff)) & 0xff);
 				}
 	
-				if (gionbana_flipx)
+				if (gionbana_flipx != 0)
 				{
 					// flip
 					color1 = (color & 0xf0) >> 4;
@@ -312,16 +312,16 @@ public class nbmj8891
 				drawcolor1 = gionbana_paltbl[((gionbana_paltblnum & 0x7f) << 4) + color1];
 				drawcolor2 = gionbana_paltbl[((gionbana_paltblnum & 0x7f) << 4) + color2];
 	
-				if (gfxdraw_mode)
+				if (gfxdraw_mode != 0)
 				{
-					if (gionbana_vram & 0x01)
+					if ((gionbana_vram & 0x01) != 0)
 					{
 						tflag1 = (drawcolor1 != 0xff) ? 1 : 0;
 						tflag2 = (drawcolor2 != 0xff) ? 1 : 0;
 					}
 					else
 					{
-						if (gionbana_vram & 0x08)
+						if ((gionbana_vram & 0x08) != 0)
 						{
 							tflag1 = (drawcolor1 != 0xff) ? 1 : 0;
 							tflag2 = (drawcolor2 != 0xff) ? 1 : 0;
@@ -344,29 +344,29 @@ public class nbmj8891
 	
 				nb1413m3_busyctr++;
 	
-				if (gfxdraw_mode)
+				if (gfxdraw_mode != 0)
 				{
-					if (gionbana_vram & 0x01)
+					if ((gionbana_vram & 0x01) != 0)
 					{
-						if (tflag1)
+						if (tflag1 != 0)
 						{
 							gionbana_videoram0[(dy1 * Machine->drv->screen_width) + dx1] = drawcolor1;
 							plot_pixel(gionbana_tmpbitmap0, dx1, dy1, Machine->pens[drawcolor1]);
 						}
-						if (tflag2)
+						if (tflag2 != 0)
 						{
 							gionbana_videoram0[(dy1 * Machine->drv->screen_width) + dx2] = drawcolor2;
 							plot_pixel(gionbana_tmpbitmap0, dx2, dy1, Machine->pens[drawcolor2]);
 						}
 					}
-					if (gionbana_vram & 0x02)
+					if ((gionbana_vram & 0x02) != 0)
 					{
-						if (tflag1)
+						if (tflag1 != 0)
 						{
 							gionbana_videoram1[(dy2 * Machine->drv->screen_width) + dx1] = drawcolor1;
 							plot_pixel(gionbana_tmpbitmap1, dx1, dy2, Machine->pens[drawcolor1]);
 						}
-						if (tflag2)
+						if (tflag2 != 0)
 						{
 							gionbana_videoram1[(dy2 * Machine->drv->screen_width) + dx2] = drawcolor2;
 							plot_pixel(gionbana_tmpbitmap1, dx2, dy2, Machine->pens[drawcolor2]);
@@ -375,12 +375,12 @@ public class nbmj8891
 				}
 				else
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						gionbana_videoram0[(dy2 * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(gionbana_tmpbitmap0, dx1, dy2, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						gionbana_videoram0[(dy2 * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(gionbana_tmpbitmap0, dx2, dy2, Machine->pens[drawcolor2]);
@@ -444,7 +444,7 @@ public class nbmj8891
 					plot_pixel(gionbana_tmpbitmap0, x, y, Machine->pens[color]);
 				}
 			}
-			if (gfxdraw_mode)
+			if (gfxdraw_mode != 0)
 			{
 				for (y = 0; y < Machine->drv->screen_height; y++)
 				{
@@ -457,9 +457,9 @@ public class nbmj8891
 			}
 		}
 	
-		if (gionbana_dispflag)
+		if (gionbana_dispflag != 0)
 		{
-			if (gfxdraw_mode)
+			if (gfxdraw_mode != 0)
 			{
 				copyscrollbitmap(bitmap, gionbana_tmpbitmap0, 0, 0, 1, &gionbana_scrolly1, &Machine->visible_area, TRANSPARENCY_NONE, 0);
 				copyscrollbitmap(bitmap, gionbana_tmpbitmap1, 0, 0, 1, &gionbana_scrolly2, &Machine->visible_area, TRANSPARENCY_PEN, Machine->pens[0xff]);

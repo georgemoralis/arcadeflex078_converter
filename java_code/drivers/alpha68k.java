@@ -235,7 +235,7 @@ public class alpha68k
 	
 	static READ16_HANDLER( control_1_r )
 	{
-		if (invert_controls)
+		if (invert_controls != 0)
 			return ~(readinputport(0) + (readinputport(1) << 8));
 	
 		return (readinputport(0) + (readinputport(1) << 8));
@@ -243,7 +243,7 @@ public class alpha68k
 	
 	static READ16_HANDLER( control_2_r )
 	{
-		if (invert_controls)
+		if (invert_controls != 0)
 			return ~(readinputport(3) + ((~(1 << (readinputport(5) * 12 / 256))) << 8));
 	
 		return readinputport(3) + /* Low byte of CN1 */
@@ -257,7 +257,7 @@ public class alpha68k
 	
 	static READ16_HANDLER( control_3_r )
 	{
-		if (invert_controls)
+		if (invert_controls != 0)
 			return ~((( ~(1 << (readinputport(6) * 12 / 256)) )<<8)&0xff00);
 	
 		return (( ~(1 << (readinputport(6) * 12 / 256)) )<<8)&0xff00;
@@ -266,7 +266,7 @@ public class alpha68k
 	/* High 4 bits of CN1 & CN2 */
 	static READ16_HANDLER( control_4_r )
 	{
-		if (invert_controls)
+		if (invert_controls != 0)
 			return ~(((( ~(1 << (readinputport(6) * 12 / 256))  ) <<4)&0xf000)
 			 + ((( ~(1 << (readinputport(5) * 12 / 256))  )    )&0x0f00));
 	
@@ -278,28 +278,28 @@ public class alpha68k
 	
 	static WRITE16_HANDLER( kyros_sound_w )
 	{
-		if(ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			soundlatch_w(0, (data>>8)&0xff);
 	}
 	
 	static WRITE16_HANDLER( alpha68k_II_sound_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			soundlatch_w(0, data&0xff);
 	}
 	
 	static WRITE16_HANDLER( alpha68k_V_sound_w )
 	{
 		/* Sound & fix bank select are in the same word */
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			soundlatch_w(0,data&0xff);
-		if(ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			alpha68k_V_video_bank_w((data>>8)&0xff);
 	}
 	//AT
 	static WRITE16_HANDLER( paddlema_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0, data);
 			cpu_set_irq_line(1, 0, HOLD_LINE);
@@ -308,7 +308,7 @@ public class alpha68k
 	
 	static WRITE16_HANDLER( tnexspce_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0, data);
 			cpu_set_nmi_line(1, PULSE_LINE);

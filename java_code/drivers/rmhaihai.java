@@ -754,7 +754,7 @@ public class rmhaihai
 		/* unpack the high bit of gfx */
 		for (b = size - 0x4000;b >= 0;b -= 0x4000)
 		{
-			if (b) memcpy(rom + b,rom + b/2,0x2000);
+			if (b != 0) memcpy(rom + b,rom + b/2,0x2000);
 	
 			for (a = 0;a < 0x2000;a++)
 			{

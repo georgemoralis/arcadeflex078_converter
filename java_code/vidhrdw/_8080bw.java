@@ -256,7 +256,7 @@ public class _8080bw
 	
 	void c8080bw_screen_red_w(int data)
 	{
-		if (screen_red_enabled)
+		if (screen_red_enabled != 0)
 		{
 			set_vh_global_attribute(&screen_red, data);
 		}
@@ -307,7 +307,7 @@ public class _8080bw
 	
 	static void plot_pixel_8080(int x, int y, int col)
 	{
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			x = 255-x;
 			y = 255-y;
@@ -416,7 +416,7 @@ public class _8080bw
 			/* cloud appears in this part of the screen */
 			for (i = 0; i < 8; i++)
 			{
-				if (data & 0x01)
+				if ((data & 0x01) != 0)
 				{
 					col = fore_color;
 				}
@@ -512,7 +512,7 @@ public class _8080bw
 	
 		for (i = 0; i < 8; i++)
 		{
-			if (data & 0x01)
+			if ((data & 0x01) != 0)
 			{
 				col = 1;	/* white foreground */
 			}
@@ -638,7 +638,7 @@ public class _8080bw
 	
 		death_colors_timing = (death_colors_timing + 1) & 15;
 	
-		if (death_colors_timing & 1) /* 1,3,5,7,9,11,13,15 */
+		if ((death_colors_timing & 1) != 0) /* 1,3,5,7,9,11,13,15 */
 			death_colors_rng = (((death_colors_rng ^ (death_colors_rng<<1) ^ 0x80)&0x80)>>7) | ((death_colors_rng&0x7f)<<1);
 	
 		b_to_g = (death_colors_rng & 0x20) >> 5;
@@ -650,7 +650,7 @@ public class _8080bw
 			g_to_r = 0;	
 	
 	
-		if (last_colors_change)
+		if (last_colors_change != 0)
 		{
 			/* normal palette */
 			for (i = 0; i < 8; i++)
@@ -670,9 +670,9 @@ public class _8080bw
 				int g = 0xff * ((i >> 1) & 1);
 				int b = 0xff * ((i >> 2) & 1);
 	
-				if (b_to_g)
+				if (b_to_g != 0)
 					g |= b;	/* perhaps we should use |= instead ? */
-				if (g_to_r)
+				if (g_to_r != 0)
 					r |= g;	/* perhaps we should use |= instead ? */
 	
 				palette_set_color(i,r,g,b);
@@ -830,7 +830,7 @@ public class _8080bw
 	
 		x = sight_xc;
 		y = sight_yc;
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			x = 255-x;
 			y = 255-y;
@@ -1051,7 +1051,7 @@ public class _8080bw
 		else
 			col = 1;	/* red */
 	
-		if (color_map_select)
+		if (color_map_select != 0)
 		{
 			x = 240 - x;
 			y = 31 - y;

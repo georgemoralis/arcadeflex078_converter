@@ -138,7 +138,7 @@ public class policetr
 					for (x = 0, curx = srcx; x < dstw; x++, curx += srcxstep)
 					{
 						UINT8 pixel = src[(curx >> 16) % SRCBITMAP_WIDTH];
-						if (pixel)
+						if (pixel != 0)
 							dst[x] = color | (pixel & mask);
 					}
 				}
@@ -160,7 +160,7 @@ public class policetr
 	WRITE32_HANDLER( policetr_video_w )
 	{
 		/* we assume 4-byte accesses */
-		if (mem_mask)
+		if (mem_mask != 0)
 			logerror("%08X: policetr_video_w access with mask %08X\n", activecpu_get_previouspc(), ~mem_mask);
 	
 		/* 4 offsets */

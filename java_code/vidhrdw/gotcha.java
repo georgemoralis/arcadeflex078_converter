@@ -79,13 +79,13 @@ public class gotcha
 	
 	WRITE16_HANDLER( gotcha_gfxbank_select_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			banksel = (data & 0x0300) >> 8;
 	}
 	
 	WRITE16_HANDLER( gotcha_gfxbank_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			if (gfxbank[banksel] != ((data & 0x0f00) >> 8))
 			{

@@ -144,7 +144,7 @@ public class i286
 		for (i = 0;i < 256; i++)
 		{
 			for (j = i, c = 0; j > 0; j >>= 1)
-				if (j & 1) c++;
+				if ((j & 1) != 0) c++;
 	
 			parity_table[i] = !(c & 1);
 		}
@@ -174,14 +174,14 @@ public class i286
 		/* in my docu not all registers are initialized! */
 		//memset( &I, 0, sizeof(I) );
 	
-		if (urinit) {
+		if (urinit != 0) {
 			i286_urinit();
 			urinit=0;
 	
 			/* this function seams to be called as a result of
 			   cpu_set_reset_line */
 			/* If a reset parameter is given, take it as pointer to an address mask */
-			if( param )
+			if (param != 0)
 				I.amask = *(unsigned*)param;
 			else
 				I.amask = 0x00ffff;
@@ -215,17 +215,17 @@ public class i286
 	
 	unsigned i286_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(i286_Regs*)dst = I;
 		 return sizeof(i286_Regs);
 	}
 	
 	void i286_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			I = *(i286_Regs*)src;
-			if (PM) {
+			if (PM != 0) {
 	
 			} else {
 				I.base[CS] = SegBase(CS);
@@ -278,7 +278,7 @@ public class i286
 		switch( regnum )
 		{
 			case REG_PC:
-				if (PM) {
+				if (PM != 0) {
 				} else {
 					if (val - I.base[CS] >= 0x10000)
 					{
@@ -290,7 +290,7 @@ public class i286
 				break;
 			case I286_IP: I.pc = I.base[CS] + val; break;
 			case REG_SP:
-				if (PM) {
+				if (PM != 0) {
 				} else {
 					if( val - I.base[SS] < 0x10000 )
 					{

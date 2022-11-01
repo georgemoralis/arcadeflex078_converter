@@ -247,7 +247,7 @@ public class superqix
 			int sx = spriteram[offs + 1];
 			int sy = spriteram[offs + 2];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

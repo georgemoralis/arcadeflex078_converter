@@ -62,12 +62,12 @@ public class playmark
 	
 	static WRITE16_HANDLER( coinctrl_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			coin_counter_w(0,data & 0x0100);
 			coin_counter_w(1,data & 0x0200);
 		}
-		if (data & 0xfcff)
+		if ((data & 0xfcff) != 0)
 			logerror("Writing %04x to unknown coin control bits\n",data);
 	}
 	
@@ -93,7 +93,7 @@ public class playmark
 	
 	static NVRAM_HANDLER( wbeachvl )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 		{
 			EEPROM_save(file);
 		}
@@ -101,7 +101,7 @@ public class playmark
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 			else
 			{
@@ -123,7 +123,7 @@ public class playmark
 	
 	static WRITE16_HANDLER( wbeachvl_coin_eeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bits 0-3 are coin counters? (only 0 used?) */
 			coin_counter_w(0,data & 0x01);
@@ -141,7 +141,7 @@ public class playmark
 	
 	static WRITE16_HANDLER( playmark_snd_command_w )
 	{
-		if (ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			playmark_snd_command = (data & 0xff);
 			playmark_snd_flag = 1;
 			cpu_yield();
@@ -166,7 +166,7 @@ public class playmark
 	
 	public static ReadHandlerPtr playmark_snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (playmark_snd_flag) {
+		if (playmark_snd_flag != 0) {
 			playmark_snd_flag = 0;
 			return 0x00;
 		}

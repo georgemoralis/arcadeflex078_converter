@@ -993,7 +993,7 @@ public class jack
 		{
 			data = rom[A];
 	
-			if (A & 0x1000)
+			if ((A & 0x1000) != 0)
 			{
 				/* unencrypted = D0 D2 D5 D1 D3 D6 D4 D7 */
 				rom[A+diff] =

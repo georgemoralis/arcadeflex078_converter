@@ -31,7 +31,7 @@ public class flkatck
 	
 	public static InterruptHandlerPtr flkatck_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (flkatck_irq_enabled)
+		if (flkatck_irq_enabled != 0)
 			cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
 	} };
 	
@@ -56,13 +56,13 @@ public class flkatck
 	
 		switch ((offset & 0x1c) >> 2){
 			case 0x00:	/* inputs + DIPSW #3 + coinsw */
-				if (offset & 0x02)
+				if ((offset & 0x02) != 0)
 					data = readinputport(2 + (offset & 0x01));
 				else
 					data = readinputport(4 + (offset & 0x01));
 				break;
 			case 0x01:	/* DIPSW #1 & DIPSW #2 */
-				if (offset & 0x02)
+				if ((offset & 0x02) != 0)
 					data = readinputport(1 - (offset & 0x01));
 				break;
 		}

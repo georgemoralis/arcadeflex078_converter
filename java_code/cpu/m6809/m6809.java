@@ -174,7 +174,7 @@ public class m6809
 	#define CHANGE_PC change_pc16(PCD)
 	#if 0
 	#define CHANGE_PC	{			\
-		if( m6809_slapstic )		\
+		if (m6809_slapstic != 0)		\
 			cpu_setOPbase16(PCD);	\
 		else						\
 			change_pc16(PCD);		\
@@ -361,7 +361,7 @@ public class m6809
 	#define BRANCH(f) { 					\
 		UINT8 t;							\
 		IMMBYTE(t); 						\
-		if( f ) 							\
+		if (f != 0) 							\
 		{									\
 			PC += SIGNED(t);				\
 			CHANGE_PC;						\
@@ -371,7 +371,7 @@ public class m6809
 	#define LBRANCH(f) {                    \
 		PAIR t; 							\
 		IMMWORD(t); 						\
-		if( f ) 							\
+		if (f != 0) 							\
 		{									\
 			m6809_ICount -= 1;				\
 			PC += t.w.l;					\
@@ -424,7 +424,7 @@ public class m6809
 	 ****************************************************************************/
 	unsigned m6809_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(m6809_Regs*)dst = m6809;
 		return sizeof(m6809_Regs);
 	}
@@ -434,7 +434,7 @@ public class m6809
 	 ****************************************************************************/
 	void m6809_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 			m6809 = *(m6809_Regs*)src;
 		CHANGE_PC;
 	

@@ -65,7 +65,7 @@ public class sbowling
 	
 	static void plot_pixel_sbw(int x, int y, int col)
 	{
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			y = 255-y;
 			x = 247-x;
@@ -179,7 +179,7 @@ public class sbowling
 	
 	static READ_HANDLER (controls_r)
 	{
-		if(sbw_system&2)
+		if ((sbw_system & 2) != 0)
 			return input_port_2_r(0);
 		else
 			return input_port_3_r(0);

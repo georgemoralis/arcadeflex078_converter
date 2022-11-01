@@ -3500,7 +3500,7 @@ public class harddriv
 		atarigen_eeprom_default = default_eeprom;
 	
 		/* install handlers for the compact driving games' inputs */
-		if (compact_inputs)
+		if (compact_inputs != 0)
 		{
 			install_mem_read16_handler(hdcpu_main, 0x400000, 0x400001, hdc68k_wheel_r);
 			install_mem_write16_handler(hdcpu_main, 0x408000, 0x408001, hdc68k_wheel_edge_reset_w);

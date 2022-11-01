@@ -138,7 +138,7 @@ public class stfight
 	    int i;
 	
 	    // Was the coin mech queried by software?
-	    if( stfight_coin_mech_query_active )
+	    if (stfight_coin_mech_query_active != 0)
 	    {
 	        stfight_coin_mech_query_active = 0;
 	        return( (~stfight_coin_mech_query) & 0x03 );

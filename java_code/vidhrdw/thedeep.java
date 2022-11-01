@@ -195,10 +195,10 @@ public class thedeep
 			nx = 1 << ((attr & 0x06) >> 1);
 			ny = 1 << ((attr & 0x18) >> 3);
 	
-			if (color & 1)	sx -= 256;
-			if (attr  & 1)	sy -= 256;
+			if ((color & 1) != 0)	sx -= 256;
+			if ((attr & 1) != 0)	sy -= 256;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;

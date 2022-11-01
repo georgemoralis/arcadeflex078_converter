@@ -111,7 +111,7 @@ public class ninjaw
 	//		if (invis && (priority==1)) continue;
 	
 	#ifdef MAME_DEBUG
-			if (data & 0x80f0)   unknown |= (data &0x80f0);
+			if ((data & 0x80f0) != 0)   unknown |= (data &0x80f0);
 	#endif
 	
 			y += y_offs;
@@ -140,7 +140,7 @@ public class ninjaw
 		}
 	
 	#ifdef MAME_DEBUG
-		if (unknown)
+		if (unknown != 0)
 			usrintf_showmessage("unknown sprite bits: %04x",unknown);
 	#endif
 	}
@@ -167,7 +167,7 @@ public class ninjaw
 		nodraw |= TC0100SCN_tilemap_draw(bitmap,cliprect,2,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);	/* right */
 	
 		/* Ensure screen blanked even when bottom layers not drawn due to disable bit */
-		if (nodraw) fillbitmap(bitmap, get_black_pen(), cliprect);
+		if (nodraw != 0) fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		/* Sprites can be under/over the layer below text layer */
 		ninjaw_draw_sprites(bitmap,cliprect,1,8); // draw sprites with priority 1 which are under the mid layer

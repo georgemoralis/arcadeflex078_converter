@@ -138,7 +138,7 @@ public class shuuz
 							mopf = 1;
 	
 						/* if MO/PF is 1, we draw the MO */
-						if (mopf)
+						if (mopf != 0)
 							pf[x] = mo[x];
 	
 						/* erase behind ourselves */

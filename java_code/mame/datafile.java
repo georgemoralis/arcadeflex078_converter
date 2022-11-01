@@ -155,7 +155,7 @@ public class datafile
 	                {
 	                        /* Store away our file position (if given on input) */
 	
-	                        if (pdwPosition)
+	                        if (pdwPosition != 0)
 	                                *pdwPosition = dwFilePos;
 	
 	                        /* If it's a separator, special case it */
@@ -210,7 +210,7 @@ public class datafile
 	
 	                                /* Connect up the */
 	
-	                                if (ppszTokenText)
+	                                if (ppszTokenText != 0)
 	                                        *ppszTokenText = bToken;
 	
 	                                return(TOKEN_SYMBOL);
@@ -279,7 +279,7 @@ public class datafile
 	
 	                                                mame_fseek(fp, dwPos, SEEK_SET);
 	
-	                                                if (pdwPosition)
+	                                                if (pdwPosition != 0)
 	                                                        *pdwPosition = dwPos;
 	
 	                                                if (LF == bData)        /* LF? Good! */
@@ -319,7 +319,7 @@ public class datafile
 	{
 	        /* If the file is open, time for fclose. */
 	
-	        if (fp)
+	        if (fp != 0)
 	        {
 	                mame_fclose(fp);
 	        }
@@ -540,7 +540,7 @@ public class datafile
 	                token = GetNextToken ((UINT8 **)&s, &tell);
 	                if (TOKEN_INVALID == token) continue;
 	
-	                if (found)
+	                if (found != 0)
 	                {
 	                        /* end entry when a tag is encountered */
 	                        if (TOKEN_SYMBOL == token && DATAFILE_TAG == s[0] && TOKEN_LINEBREAK == prev_token) break;
@@ -626,13 +626,13 @@ public class datafile
 	        if (ParseOpen (history_filename))
 	        {
 	                /* create index if necessary */
-	                if (hist_idx)
+	                if (hist_idx != 0)
 	                        history = 1;
 	                else
 	                        history = (index_datafile (&hist_idx) != 0);
 	
 	                /* load history text */
-	                if (hist_idx)
+	                if (hist_idx != 0)
 	                {
 	                        const struct GameDriver *gdrv;
 	
@@ -644,7 +644,7 @@ public class datafile
 	                                gdrv = gdrv->clone_of;
 	                        } while (err && gdrv);
 	
-	                        if (err) history = 0;
+	                        if (err != 0) history = 0;
 	                }
 	                ParseClose ();
 	        }
@@ -656,13 +656,13 @@ public class datafile
 	        if (ParseOpen (mameinfo_filename))
 	        {
 	                /* create index if necessary */
-	                if (mame_idx)
+	                if (mame_idx != 0)
 	                        mameinfo = 1;
 	                else
 	                        mameinfo = (index_datafile (&mame_idx) != 0);
 	
 	                /* load informational text (append) */
-	                if (mame_idx)
+	                if (mame_idx != 0)
 	                {
 	                        int len = strlen (buffer);
 	                        const struct GameDriver *gdrv;
@@ -675,7 +675,7 @@ public class datafile
 	                                gdrv = gdrv->clone_of;
 	                        } while (err && gdrv);
 	
-	                        if (err) mameinfo = 0;
+	                        if (err != 0) mameinfo = 0;
 	                }
 	                ParseClose ();
 	        }

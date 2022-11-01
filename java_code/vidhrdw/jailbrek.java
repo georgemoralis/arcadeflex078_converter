@@ -106,7 +106,7 @@ public class jailbrek
 			int sx = spriteram[i + 2] - ((attr & 0x80) << 1);
 			int sy = spriteram[i + 3];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

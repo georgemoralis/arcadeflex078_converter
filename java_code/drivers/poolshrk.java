@@ -65,9 +65,9 @@ public class poolshrk
 	
 	public static WriteHandlerPtr poolshrk_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset & 2)
+		if ((offset & 2) != 0)
 			set_led_status(0, offset & 1);
-		if (offset & 4)
+		if ((offset & 4) != 0)
 			set_led_status(1, offset & 1);
 	} };
 	

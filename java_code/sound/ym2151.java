@@ -526,7 +526,7 @@ public class ym2151
 	
 			n = (int)m;		/* 16 bits here */
 			n >>= 4;		/* 12 bits here */
-			if (n&1)		/* round to closest */
+			if ((n & 1) != 0)		/* round to closest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -566,7 +566,7 @@ public class ym2151
 			o = o / (ENV_STEP/4);
 	
 			n = (int)(2.0*o);
-			if (n&1)						/* round to closest */
+			if ((n & 1) != 0)						/* round to closest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -771,22 +771,22 @@ public class ym2151
 	
 	INLINE void envelope_KONKOFF(YM2151Operator * op, int v)
 	{
-		if (v&0x08)	/* M1 */
+		if ((v & 0x08) != 0)	/* M1 */
 			KEY_ON (op+0, 1)
 		else
 			KEY_OFF(op+0,~1)
 	
-		if (v&0x20)	/* M2 */
+		if ((v & 0x20) != 0)	/* M2 */
 			KEY_ON (op+1, 1)
 		else
 			KEY_OFF(op+1,~1)
 	
-		if (v&0x10)	/* C1 */
+		if ((v & 0x10) != 0)	/* C1 */
 			KEY_ON (op+2, 1)
 		else
 			KEY_OFF(op+2,~1)
 	
-		if (v&0x40)	/* C2 */
+		if ((v & 0x40) != 0)	/* C2 */
 			KEY_ON (op+3, 1)
 		else
 			KEY_OFF(op+3,~1)
@@ -1047,7 +1047,7 @@ public class ym2151
 			switch(r){
 			case 0x01:	/* LFO reset(bit 1), Test Register (other bits) */
 				chip->test = v;
-				if (v&2) chip->lfo_phase = 0;
+				if ((v & 2) != 0) chip->lfo_phase = 0;
 				break;
 	
 			case 0x08:
@@ -1076,14 +1076,14 @@ public class ym2151
 	
 				chip->irq_enable = v;	/* bit 3-timer B, bit 2-timer A, bit 7 - CSM */
 	
-				if (v&0x20)	/* reset timer B irq flag */
+				if ((v & 0x20) != 0)	/* reset timer B irq flag */
 				{
 					int oldstate = chip->status & 3;
 					chip->status &= 0xfd;
 					if ((oldstate==2) && (chip->irqhandler)) (*chip->irqhandler)(0);
 				}
 	
-				if (v&0x10)	/* reset timer A irq flag */
+				if ((v & 0x10) != 0)	/* reset timer A irq flag */
 				{
 					int oldstate = chip->status & 3;
 					chip->status &= 0xfe;
@@ -1091,7 +1091,7 @@ public class ym2151
 	
 				}
 	
-				if (v&0x02){	/* load and start timer B */
+				if ((v & 0x02) != 0){	/* load and start timer B */
 					#ifdef USE_MAME_TIMERS
 					/* ASG 980324: added a real timer */
 					/* start timer _only_ if it wasn't already started (it will reload time value next round) */
@@ -1116,7 +1116,7 @@ public class ym2151
 					#endif
 				}
 	
-				if (v&0x01){	/* load and start timer A */
+				if ((v & 0x01) != 0){	/* load and start timer A */
 					#ifdef USE_MAME_TIMERS
 					/* ASG 980324: added a real timer */
 					/* start timer _only_ if it wasn't already started (it will reload time value next round) */
@@ -1150,7 +1150,7 @@ public class ym2151
 				break;
 	
 			case 0x19:	/* PMD (bit 7==1) or AMD (bit 7==0) */
-				if (v&0x80)
+				if ((v & 0x80) != 0)
 					chip->pmd = v & 0x7f;
 				else
 					chip->amd = v & 0x7f;
@@ -1330,7 +1330,7 @@ public class ym2151
 	#ifdef LOG_CYM_FILE
 	static void cymfile_callback (int n)
 	{
-		if (cymfile)
+		if (cymfile != 0)
 			fputc( (unsigned char)0, cymfile );
 	}
 	#endif
@@ -1478,7 +1478,7 @@ public class ym2151
 	{
 		int i;
 	
-		if (YMPSG)
+		if (YMPSG != 0)
 			return -1;	/* duplicate init. */
 	
 		YMNumChips = num;
@@ -1522,7 +1522,7 @@ public class ym2151
 	
 	#ifdef LOG_CYM_FILE
 		cymfile = fopen("2151_.cym","wb");
-		if (cymfile)
+		if (cymfile != 0)
 			timer_pulse ( TIME_IN_HZ(110), 0, cymfile_callback); /*110 Hz pulse timer*/
 		else
 			logerror("Could not create file 2151_.cym\n");
@@ -2180,7 +2180,7 @@ public class ym2151
 				else
 					mod_ind <<= (op->pms - 5);
 	
-				if (mod_ind)
+				if (mod_ind != 0)
 				{
 					UINT32 kc_channel =	op->kc_i + mod_ind;
 					(op+0)->phase += ( (PSG->freq[ kc_channel + (op+0)->dt2 ] + (op+0)->dt1) * (op+0)->mul ) >> 1;

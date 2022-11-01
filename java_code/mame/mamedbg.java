@@ -528,7 +528,7 @@ public class mamedbg
 	
 		font = decodegfx(fontdata,&fontlayout);
 	
-		if (font)
+		if (font != 0)
 		{
 			font->colortable = Machine->debug_remapped_colortable;
 			font->total_colors = DEBUGGER_TOTAL_COLORS*DEBUGGER_TOTAL_COLORS;
@@ -710,7 +710,7 @@ public class mamedbg
 	
 		} while (k == KEYCODE_NONE);
 		debugger_idle = 0;
-		if (cursor_on)
+		if (cursor_on != 0)
 			toggle_cursor(Machine->debug_bitmap, Machine->debugger_font);
 	
 		return k;
@@ -1090,12 +1090,12 @@ public class mamedbg
 	{
 		unsigned val = 0, digit;
 	
-		if (size) *size = 0;
+		if (size != 0) *size = 0;
 		while( isdigit( *(*parg) ) )
 		{
 			digit = *(*parg) - '0';
 			val = (val * 10) + digit;
-			if( size ) (*size)++;
+			if (size != 0) (*size)++;
 			(*parg) += 1;
 		}
 		while( isspace(*(*parg)) ) *parg += 1;
@@ -1113,13 +1113,13 @@ public class mamedbg
 	{
 		unsigned val = 0, digit;
 	
-		if (size) *size = 0;
+		if (size != 0) *size = 0;
 		while( isxdigit( *(*parg) ) )
 		{
 			digit = toupper(*(*parg)) - '0';
 			if( digit > 9 ) digit -= 7;
 			val = (val << 4) | digit;
-			if( size ) (*size)++;
+			if (size != 0) (*size)++;
 			(*parg) += 1;
 		}
 		while( isspace(*(*parg)) ) *parg += 1;
@@ -1220,7 +1220,7 @@ public class mamedbg
 			break;
 	
 		case EA_REL_PC: /* Relative program counter change */
-			if( dbg_dasm_relative_jumps )
+			if (dbg_dasm_relative_jumps != 0)
 			{
 				if( size == 0 )
 					return "$";
@@ -1370,7 +1370,7 @@ public class mamedbg
 			}
 		}
 	
-		if( length )
+		if (length != 0)
 		{
 			while( isspace(*(*parg)) ) *parg += 1;
 		}
@@ -1380,7 +1380,7 @@ public class mamedbg
 			result = xtou( parg, &length );
 		}
 	
-		if( size ) *size += length;
+		if (size != 0) *size += length;
 	
 		return result;
 	}
@@ -1408,14 +1408,14 @@ public class mamedbg
 			if( strncmp(*parg, opt, length) == 0 )
 			{
 				*parg = p;
-				if( size ) *size = length;
+				if (size != 0) *size = length;
 				return opt_count;
 			}
 			opt_count++;
 		}
 	
 		result = xtou( parg, &length );
-		if( size ) *size += length;
+		if (size != 0) *size += length;
 	
 		return result;
 	}
@@ -1433,7 +1433,7 @@ public class mamedbg
 		while( isspace(*s) ) s++;
 		*parg = s;
 	
-		if( size ) *size = l;
+		if (size != 0) *size = l;
 	
 		return filename;
 	}
@@ -1519,14 +1519,14 @@ public class mamedbg
 			{
 				if( !isalnum( (*parg)[l] ) )
 				{
-					if( size ) *size = l;
+					if (size != 0) *size = l;
 					*parg += l;
 					while( isspace(*(*parg)) ) *parg += 1;
 					return DBGREGS.id[i];
 				}
 			}
 		}
-		if( size ) *size = 0;
+		if (size != 0) *size = 0;
 		return 0;
 	}
 	
@@ -1559,7 +1559,7 @@ public class mamedbg
 		regnum = get_register_id( parg, &l );
 		if( regnum > 0 )
 		{
-			if( size ) *size = l;
+			if (size != 0) *size = l;
 			return activecpu_get_reg( regnum );
 		}
 		/* default to hex value */
@@ -1575,7 +1575,7 @@ public class mamedbg
 	{
 		char name[100];
 	
-		if( trace_on )
+		if (trace_on != 0)
 			return;
 	
 		for( tracecpu = 0; tracecpu < total_cpu; tracecpu++ )
@@ -2454,7 +2454,7 @@ public class mamedbg
 		}
 	
 		/* show the scanline position, if appropriate */
-		if (dbg_show_scanline)
+		if (dbg_show_scanline != 0)
 		{
 			win_printf( win, "Scanline: %d Horz: %d\n", cpu_getscanline(), cpu_gethorzbeampos());
 			y++;
@@ -2504,7 +2504,7 @@ public class mamedbg
 						regs->max_width = strlen(name) + 1;
 					/* Find a colon */
 					p = strchr( name, ':' );
-					if( p )
+					if (p != 0)
 					{
 						pedit->w = strlen( p + 1 );
 					}
@@ -2512,7 +2512,7 @@ public class mamedbg
 					{
 						/* Or else find an apostrophe */
 						p = strchr( name, '\'' );
-						if( p )
+						if (p != 0)
 						{
 							/* Include the apostrophe in the name! */
 							++p;
@@ -2615,7 +2615,7 @@ public class mamedbg
 				if( DBGDASM.pc_cur == pc )
 					win_set_title( win, "%s", get_ea_info(pc) );
 	
-				if( dbg_dasm_opcodes )
+				if (dbg_dasm_opcodes != 0)
 				{
 					unsigned p = rshift(pc);
 					unsigned n = rshift(pc_next);
@@ -2842,7 +2842,7 @@ public class mamedbg
 	{
 		unsigned len_addr = (ABITS + ASHIFT + 3) / 4;
 	
-		if( set_title )
+		if (set_title != 0)
 		{
 			if( DBGMEM[which].internal )
 				win_set_title( WIN_MEM(active_cpu,which), "CPU internal" );
@@ -3047,7 +3047,7 @@ public class mamedbg
 		default:
 			cmd_default( i );
 		}
-		if( update_window )
+		if (update_window != 0)
 		{
 			DBGDASM.pc_end = dump_dasm( DBGDASM.pc_top );
 		}
@@ -3226,7 +3226,7 @@ public class mamedbg
 			update_window = 1;
 		}
 	
-		if( update_window )
+		if (update_window != 0)
 		{
 			memcpy( DBGMEM[which].backup, DBGMEM[which].newval, DBGMEM[which].size );
 			dump_mem( which, 0 );
@@ -3275,7 +3275,7 @@ public class mamedbg
 				}
 			}
 		}
-		if( dbg_info_once )
+		if (dbg_info_once != 0)
 		{
 			win_set_title( WIN_CMDS(active_cpu), "%s%s", dbg_info_once, hist_info );
 			dbg_info_once = NULL;
@@ -3640,10 +3640,10 @@ public class mamedbg
 		int length;
 	
 		element = get_option_or_value( &cmd, &length, ELEMENT_NAMES );
-		if( length )
+		if (length != 0)
 		{
 			fg = get_option_or_value( &cmd, &length, COLOR_NAMES );
-			if( length )
+			if (length != 0)
 			{
 				bg = get_option_or_value( &cmd, &length, COLOR_NAMES );
 				if( !length ) bg = 0;	/* BLACK is default background */
@@ -3694,11 +3694,11 @@ public class mamedbg
 		{
 			DBG.brk_regs_oldval = activecpu_get_reg(DBG.brk_regs);
 			data = get_register_or_value( &cmd, &length );
-			if( length )
+			if (length != 0)
 			{
 				DBG.brk_regs_newval = data;
 				data = get_register_or_value( &cmd, &length );
-				if( length )
+				if (length != 0)
 				{
 					DBG.brk_regs_mask = data;
 					/* Remove masked bits from the new value too ;-) */
@@ -3751,14 +3751,14 @@ public class mamedbg
 	
 		DBG.brk_data = rshift(DBG.brk_data) & AMASK; /* EHC 11/14/99: Need to shift + mask otherwise we die */
 	
-		if( length )
+		if (length != 0)
 		{
 			data = RDMEM(DBG.brk_data);
 	
 			DBG.brk_data_oldval = data;
 			data = get_register_or_value( &cmd, &length );
 	
-			if( length )
+			if (length != 0)
 			{
 				DBG.brk_data_newval = data;
 			}
@@ -3799,10 +3799,10 @@ public class mamedbg
 		int length;
 	
 		DBG.brk_exec = get_register_or_value( &cmd, &length );
-		if( length )
+		if (length != 0)
 		{
 			times = get_register_or_value( &cmd, &length );
-			if( length )
+			if (length != 0)
 			{
 				DBG.brk_exec_times = times;
 				DBG.brk_exec_reset = times;
@@ -3850,10 +3850,10 @@ public class mamedbg
 		int length;
 	
 		which = xtou( &cmd, &length );
-		if( length )
+		if (length != 0)
 		{
 			address = get_register_or_value( &cmd, &length );
-			if( length )
+			if (length != 0)
 			{
 				which = (which - 1) % MAX_MEM;
 			}
@@ -3928,7 +3928,7 @@ public class mamedbg
 	
 			fprintf(file, "%0*X: ", width, pc );
 	
-			if( opcodes )
+			if (opcodes != 0)
 			{
 				switch( ALIGN )
 				{
@@ -4020,7 +4020,7 @@ public class mamedbg
 		pgm_memory_base = 0;	/* default to data mode (offset 0) */
 		datasize = ALIGN*2; 	/* default to align unit of that CPU */
 		data = get_option_or_value( &cmd, &length, "BYTE\0WORD\0DWORD\0");
-		if( length )
+		if (length != 0)
 		{
 			if( data > 2 )
 			{
@@ -4034,7 +4034,7 @@ public class mamedbg
 			}
 			/* look if there's also an ASCII mode specified */
 			data = get_option_or_value( &cmd, &length, "OFF\0TRANSLATE\0FULL\0" );
-			if( length )
+			if (length != 0)
 			{
 				if( data > 2 )
 				{
@@ -4045,7 +4045,7 @@ public class mamedbg
 				asciimode = data;
 				/* look if there's also an PROG/DATA mode specified */
 				data = get_option_or_value( &cmd, &length, "PROG\0DATA\0" );
-				if( length )
+				if (length != 0)
 				{
 					if( data > 1 )
 					{
@@ -4058,7 +4058,7 @@ public class mamedbg
 			}
 		}
 	
-		if( pgm_memory_base )
+		if (pgm_memory_base != 0)
 			pgm_memory_base = PGM_MEMORY;
 	
 		file = fopen(filename, "w");
@@ -4093,7 +4093,7 @@ public class mamedbg
 			if( (offs & 15) == 15 )
 			{
 				unsigned o;
-				if( asciimode )
+				if (asciimode != 0)
 				{
 					fputc( ' ', file );
 					if( asciimode == 1 )
@@ -4171,7 +4171,7 @@ public class mamedbg
 			return;
 		}
 	
-		if( save_what )
+		if (save_what != 0)
 			save_what = PGM_MEMORY;
 	
 		for( offs = 0; offs + start <= end; offs++ )
@@ -4196,12 +4196,12 @@ public class mamedbg
 		int length;
 	
 		which = xtou( &cmd, &length );
-		if( length )
+		if (length != 0)
 		{
 			which = (which - 1) % MAX_MEM;
 			address = get_register_or_value( &cmd, &length );
 			address = rshift(address) & AMASK;
-			if( length )
+			if (length != 0)
 			{
 				DBGMEM[which].offset = address % DBGMEM[which].size;
 				DBGMEM[which].base = address - DBGMEM[which].offset;
@@ -4421,7 +4421,7 @@ public class mamedbg
 		int length;
 	
 		brk = get_register_or_value( &cmd, &length );
-		if( length )
+		if (length != 0)
 			DBG.brk_temp = brk;
 	
 		dbg_update = 0;
@@ -4546,7 +4546,7 @@ public class mamedbg
 		if( regnum > 0 )
 		{
 			address = get_register_or_value( &cmd, &length );
-			if( length )
+			if (length != 0)
 			{
 				activecpu_set_reg( regnum, address );
 				if( regnum > 1 )
@@ -4583,7 +4583,7 @@ public class mamedbg
 		int length;
 	
 		which = dtou( &cmd, &length );
-		if( length )
+		if (length != 0)
 		{
 			which = (which - 1) % 2;
 			mode = get_option_or_value( &cmd, &length, "BYTE\0WORD\0DWORD\0" );
@@ -5016,7 +5016,7 @@ public class mamedbg
 		unsigned data;
 		int length;
 		data = dtou( &cmd, &length );
-		if( length )
+		if (length != 0)
 			dbg_trace_delay = data;
 		else
 			dbg_trace_delay = 0x7fffffff;
@@ -5144,7 +5144,7 @@ public class mamedbg
 		if( dbg_dasm_opcodes != state )
 		{
 			dbg_dasm_opcodes = state;
-			if( state )
+			if (state != 0)
 			{
 				win_set_prio( win, 0 );
 				win_set_w( win, w + dw	);
@@ -5232,7 +5232,7 @@ public class mamedbg
 		/* See if there is an existing global mamedbg config file */
 		strcpy( filename, "mamedbg.cfg" );
 		file = fopen( filename, "r" );
-		if( file )
+		if (file != 0)
 		{
 			char *cmdline = CMD, *p;
 			int cmd;
@@ -5244,9 +5244,9 @@ public class mamedbg
 				if( *cmdline == ';' || *cmdline == '#' )
 					continue;
 				p = strchr( cmdline, '\r' );
-				if( p ) *p = '\0';
+				if (p != 0) *p = '\0';
 				p = strchr( cmdline, '\n' );
-				if( p ) *p = '\0';
+				if (p != 0) *p = '\0';
 				/* Make it all upper case */
 				strcpy( cmdline, upper(cmdline) );
 				cmd = edit_cmds_parse( cmdline );
@@ -5260,7 +5260,7 @@ public class mamedbg
 			/* See if there is an existing startup file <game>.cf<cpunum> */
 			sprintf( filename, "%s.cf%d", Machine->gamedrv->name, active_cpu );
 			file = fopen( filename, "r" );
-			if( file )
+			if (file != 0)
 			{
 				char *cmdline = CMD, *p;
 				int cmd;
@@ -5272,9 +5272,9 @@ public class mamedbg
 					if( *cmdline == ';' || *cmdline == '#' )
 						continue;
 					p = strchr( cmdline, '\r' );
-					if( p ) *p = '\0';
+					if (p != 0) *p = '\0';
 					p = strchr( cmdline, '\n' );
-					if( p ) *p = '\0';
+					if (p != 0) *p = '\0';
 					/* Make it all upper case */
 					strcpy( cmdline, upper(cmdline) );
 					cmd = edit_cmds_parse( cmdline );
@@ -5316,7 +5316,7 @@ public class mamedbg
 				debug_key_pressed = seq_pressed(input_port_type_seq(IPT_UI_ON_SCREEN_DISPLAY));
 		}
 	
-		if( dbg_fast )
+		if (dbg_fast != 0)
 		{
 			if( !debug_key_pressed ) return;
 			dbg_fast = 0;
@@ -5329,7 +5329,7 @@ public class mamedbg
 	
 		cputype = Machine->drv->cpu[active_cpu].cpu_type;
 	
-		if( trace_on )
+		if (trace_on != 0)
 		{
 			trace_select();
 			trace_output();
@@ -5375,7 +5375,7 @@ public class mamedbg
 			dbg_trace = 0;
 		}
 	
-		if( dbg_step )
+		if (dbg_step != 0)
 		{
 			DBGDASM.pc_cur = activecpu_get_pc();
 			dbg_step = 0;
@@ -5386,7 +5386,7 @@ public class mamedbg
 	
 		while( dbg_active && !dbg_step )
 		{
-			if( dbg_trace )
+			if (dbg_trace != 0)
 			{
 				dbg_step = 1;
 				if( --debug_trace_delay > 0 )
@@ -5398,7 +5398,7 @@ public class mamedbg
 					if (dbg_trace_delay != 0x7fffffff)
 						update_video_and_audio();
 					debug_trace_delay = dbg_trace_delay;
-					if( debug_key_pressed )
+					if (debug_key_pressed != 0)
 					{
 						dbg_trace = 0;
 						dbg_step = 0;
@@ -5407,7 +5407,7 @@ public class mamedbg
 				}
 			}
 	
-			if( dbg_update )
+			if (dbg_update != 0)
 			{
 				if( active_cpu != previous_active_cpu )
 				{

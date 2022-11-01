@@ -164,22 +164,22 @@ public class atarisy2
 	
 	static void update_interrupts(void)
 	{
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			cpu_set_irq_line(0, 3, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 3, CLEAR_LINE);
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			cpu_set_irq_line(0, 2, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 2, CLEAR_LINE);
 	
-		if (p2portwr_state)
+		if (p2portwr_state != 0)
 			cpu_set_irq_line(0, 1, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 1, CLEAR_LINE);
 	
-		if (p2portrd_state)
+		if (p2portrd_state != 0)
 			cpu_set_irq_line(0, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
@@ -199,7 +199,7 @@ public class atarisy2
 		{
 			/* generate the 32V interrupt (IRQ 2) */
 			if ((scanline % 64) == 0)
-				if (interrupt_enable & 4)
+				if ((interrupt_enable & 4) != 0)
 					atarigen_scanline_int_gen();
 		}
 	}
@@ -239,7 +239,7 @@ public class atarisy2
 	public static InterruptHandlerPtr vblank_int = new InterruptHandlerPtr() {public void handler()
 	{
 		/* clock the VBLANK through */
-		if (interrupt_enable & 8)
+		if ((interrupt_enable & 8) != 0)
 			atarigen_video_int_gen();
 	} };
 	
@@ -255,7 +255,7 @@ public class atarisy2
 	static WRITE16_HANDLER( int1_ack_w )
 	{
 		/* reset sound CPU */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			cpu_set_reset_line(1, (data & 1) ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
@@ -326,8 +326,8 @@ public class atarisy2
 	{
 		int result = input_port_1_r(offset) | (input_port_2_r(offset) << 8);
 	
-		if (atarigen_cpu_to_sound_ready) result ^= 0x20;
-		if (atarigen_sound_to_cpu_ready) result ^= 0x10;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x20;
+		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x10;
 	
 		return result;
 	}
@@ -337,8 +337,8 @@ public class atarisy2
 	{
 		int result = input_port_0_r(offset);
 	
-		if (atarigen_cpu_to_sound_ready) result ^= 0x01;
-		if (atarigen_sound_to_cpu_ready) result ^= 0x02;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x01;
+		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x02;
 		if (!has_tms5220 || tms5220_ready_r()) result ^= 0x04;
 		if (!(input_port_2_r(offset) & 0x80)) result ^= 0x10;
 	
@@ -350,7 +350,7 @@ public class atarisy2
 	{
 		(void)offset;
 	
-		if (has_tms5220)
+		if (has_tms5220 != 0)
 		{
 			data = 12 | ((data >> 5) & 1);
 			tms5220_set_frequency(ATARI_CLOCK_20MHz/4 / (16 - data) / 2);
@@ -466,7 +466,7 @@ public class atarisy2
 	public static WriteHandlerPtr tms5220_strobe_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (!(offset & 1) && tms5220_data_strobe)
-			if (has_tms5220)
+			if (has_tms5220 != 0)
 				tms5220_data_w(0, tms5220_data);
 		tms5220_data_strobe = offset & 1;
 	} };

@@ -60,7 +60,7 @@ public class supbtime
 			if (x>320) continue;
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -68,12 +68,12 @@ public class supbtime
 				inc = 1;
 			}
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				y=240-y;
 				x=304-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
@@ -197,7 +197,7 @@ public class supbtime
 	
 		tilemap_set_scrollx( pf1_tilemap,0, supbtime_control_0[1] );
 		tilemap_set_scrolly( pf1_tilemap,0, supbtime_control_0[2] );
-		if (flipscreen)
+		if (flipscreen != 0)
 			tilemap_set_scrollx( pf2_tilemap,0, supbtime_control_0[3]+1 );
 		else
 			tilemap_set_scrollx( pf2_tilemap,0, supbtime_control_0[3]-1 );

@@ -241,12 +241,12 @@ public class segac2
 		int level = 0;
 	
 		/* determine which interrupt is active */
-		if (ym3438_int) level = 2;
-		if (scanline_int) level = 4;
-		if (vblank_int) level = 6;
+		if (ym3438_int != 0) level = 2;
+		if (scanline_int != 0) level = 4;
+		if (vblank_int != 0) level = 6;
 	
 		/* either set or clear the appropriate lines */
-		if (level)
+		if (level != 0)
 			cpu_set_irq_line(0, level, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -403,7 +403,7 @@ public class segac2
 	static WRITE16_HANDLER( ym3438_w )
 	{
 		/* only works if we're accessing the low byte */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static UINT8 last_port;
 	
@@ -429,11 +429,11 @@ public class segac2
 		switch (offset)
 		{
 			case 0:
-				if (ACCESSING_MSB)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB != 0)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_A_w		(0,	(data >> 0) & 0xff);
 				break;
 			case 1:
-				if (ACCESSING_MSB)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB != 0)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_B_w		(0,	(data >> 0) & 0xff);
 				break;
 		}
@@ -449,7 +449,7 @@ public class segac2
 			return;
 	
 		/* only works if we're accessing the low byte */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			UPD7759_reset_w(0, 0);
 			UPD7759_reset_w(0, 1);
@@ -464,7 +464,7 @@ public class segac2
 	static WRITE16_HANDLER( sn76489_w )
 	{
 		/* only works if we're accessing the low byte */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			SN76496_0_w(0, data & 0xff);
 	}
 	
@@ -564,7 +564,7 @@ public class segac2
 	static WRITE16_HANDLER( ribbit_palette_w )
 	{
 		int newoffs = (offset & 0x60f) | (swizzle_table[swizzle_table_index][(offset >> 4) & 0x1f] << 4);
-		if (LOG_PALETTE)
+		if (LOG_PALETTE != 0)
 			if (offset % 16 == 0) logerror("%06X:palette_w @ %03X(%03X) = %04X [swizzle_table=%d]\n", activecpu_get_previouspc(), newoffs, offset, data, swizzle_table_index);
 		palette_w(newoffs, data, mem_mask);
 	}
@@ -616,7 +616,7 @@ public class segac2
 		{
 			case 0x00:	return 0xff00 | readinputport(1);
 			case 0x01:	return 0xff00 | readinputport(2);
-			case 0x02:	if (sound_banks)
+			case 0x02:	if (sound_banks != 0)
 							return 0xff00 | (UPD7759_0_busy_r(0) << 6) | 0xbf; /* must return high bit on */
 						else
 							return 0xffff;
@@ -679,11 +679,11 @@ public class segac2
 			case 0x0f:
 				/* ???? */
 				if (data != 0x88)
-					if (LOG_IOCHIP) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
+					if (LOG_IOCHIP != 0) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
 				break;
 	
 			default:
-				if (LOG_IOCHIP) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
+				if (LOG_IOCHIP != 0) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
 				break;
 		}
 	}
@@ -711,7 +711,7 @@ public class segac2
 		segac2_enable_display(~data & 1);
 	
 		/* log anything suspicious */
-		if (LOG_IOCHIP)
+		if (LOG_IOCHIP != 0)
 			if (data != 6 && data != 7) logerror("%06x:control_w suspicious value = %02X (%d)\n", activecpu_get_previouspc(), data, cpu_getscanline());
 	}
 	
@@ -733,7 +733,7 @@ public class segac2
 	/* protection chip reads */
 	static READ16_HANDLER( prot_r )
 	{
-		if (LOG_PROTECTION) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
+		if (LOG_PROTECTION != 0) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
 		return prot_read_buf | 0xf0;
 	}
 	
@@ -756,9 +756,9 @@ public class segac2
 		table_index = (prot_write_buf & 0xf0) | prot_read_buf;
 	
 		/* determine the value to return, should a read occur */
-		if (prot_table)
+		if (prot_table != 0)
 			prot_read_buf = (prot_table[table_index >> 3] << (4 * (table_index & 7))) >> 28;
-		if (LOG_PROTECTION) logerror("%06X:protection w=%02X, new result=%02X\n", activecpu_get_previouspc(), data & 0x0f, prot_read_buf);
+		if (LOG_PROTECTION != 0) logerror("%06X:protection w=%02X, new result=%02X\n", activecpu_get_previouspc(), data & 0x0f, prot_read_buf);
 	
 		/* if the palette changed, force an update */
 		if (new_sp_palbase != segac2_sp_palbase || new_bg_palbase != segac2_bg_palbase)
@@ -766,7 +766,7 @@ public class segac2
 			force_partial_update((cpu_getscanline()) + 1 + scanbase);
 			segac2_sp_palbase = new_sp_palbase;
 			segac2_bg_palbase = new_bg_palbase;
-			if (LOG_PALETTE) logerror("Set palbank: %d/%d (scan=%d)\n", segac2_bg_palbase, segac2_sp_palbase, cpu_getscanline());
+			if (LOG_PALETTE != 0) logerror("Set palbank: %d/%d (scan=%d)\n", segac2_bg_palbase, segac2_sp_palbase, cpu_getscanline());
 		}
 	}
 	
@@ -778,9 +778,9 @@ public class segac2
 		/* encoded in a way that tells us the return values directly; this */
 		/* function just feeds it what it wants */
 		int table_index = (prot_write_buf & 0xf0) | ((prot_write_buf >> 8) & 0x0f);
-		if (prot_table)
+		if (prot_table != 0)
 			prot_read_buf = (prot_table[table_index >> 3] << (4 * (table_index & 7))) >> 28;
-		if (LOG_PROTECTION) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
+		if (LOG_PROTECTION != 0) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
 		return prot_read_buf | 0xf0;
 	}
 	
@@ -813,7 +813,7 @@ public class segac2
 	static WRITE16_HANDLER( counter_timer_w )
 	{
 		/* only LSB matters */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/*int value = data & 1;*/
 			switch (data & 0x1e)
@@ -866,9 +866,9 @@ public class segac2
 	{
 		int i;
 	
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, main_ram, 0x10000);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, main_ram, 0x10000);
 		else
 			for (i = 0; i < 0x10000/2; i++)
@@ -1068,11 +1068,11 @@ public class segac2
 			switch (offset & 3)
 			{
 			case 0:
-				if (ACCESSING_MSB)	 return YM2612_status_port_0_A_r(0) << 8;
+				if (ACCESSING_MSB != 0)	 return YM2612_status_port_0_A_r(0) << 8;
 				else 				 return YM2612_read_port_0_r(0);
 				break;
 			case 2:
-				if (ACCESSING_MSB)	return YM2612_status_port_0_B_r(0) << 8;
+				if (ACCESSING_MSB != 0)	return YM2612_status_port_0_B_r(0) << 8;
 				else 				return 0;
 				break;
 			}
@@ -1110,8 +1110,8 @@ public class segac2
 		{
 			offset &=0x1fff;
 	
-		if (ACCESSING_LSB) genesis_z80_ram[offset+1] = data & 0xff;
-		if (ACCESSING_MSB) genesis_z80_ram[offset] = (data >> 8) & 0xff;
+		if (ACCESSING_LSB != 0) genesis_z80_ram[offset+1] = data & 0xff;
+		if (ACCESSING_MSB != 0) genesis_z80_ram[offset] = (data >> 8) & 0xff;
 		}
 	
 		/* YM2610 */
@@ -1120,11 +1120,11 @@ public class segac2
 			switch (offset & 3)
 			{
 			case 0:
-				if (ACCESSING_MSB)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB != 0)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_A_w		(0,	(data >> 0) & 0xff);
 				break;
 			case 2:
-				if (ACCESSING_MSB)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB != 0)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_B_w		(0,	(data >> 0) & 0xff);
 				break;
 			}
@@ -1149,8 +1149,8 @@ public class segac2
 	
 			if ( (offset >= 0x10) && (offset <=0x17) )
 			{
-				if (ACCESSING_LSB) SN76496_0_w(0, data & 0xff);
-				if (ACCESSING_MSB) SN76496_0_w(0, (data >>8) & 0xff);
+				if (ACCESSING_LSB != 0) SN76496_0_w(0, data & 0xff);
+				if (ACCESSING_MSB != 0) SN76496_0_w(0, (data >>8) & 0xff);
 			}
 	
 		}
@@ -1220,7 +1220,7 @@ public class segac2
 	
 				return_value = (genesis_io_ram[offset] & 0x80) | return_value;
 	//			logerror ("reading joypad 1 , type %02x %02x\n",genesis_io_ram[offset] & 0x80, return_value &0x7f);
-				if(bios_ctrl_inputs & 0x04) return_value = 0xff;
+				if ((bios_ctrl_inputs & 0x04) != 0) return_value = 0xff;
 				break;
 	
 			case 2: /* port B data (joypad 1) */
@@ -1239,7 +1239,7 @@ public class segac2
 				}
 				return_value = (genesis_io_ram[offset] & 0x80) | return_value;
 	//			logerror ("reading joypad 2 , type %02x %02x\n",genesis_io_ram[offset] & 0x80, return_value &0x7f);
-				if(bios_ctrl_inputs & 0x04) return_value = 0xff;
+				if ((bios_ctrl_inputs & 0x04) != 0) return_value = 0xff;
 				break;
 	
 			default:
@@ -1500,11 +1500,11 @@ public class segac2
 	
 	static WRITE16_HANDLER ( genesis_z80_ram_w )
 	{
-		if (z80running) logerror("Z80 written whilst running!\n");
+		if (z80running != 0) logerror("Z80 written whilst running!\n");
 		logerror("68000->z80 sound write, %x to %x\n", data, offset);
 	
-		if (ACCESSING_LSB) genesis_z80_ram[(offset<<1)+1] = data & 0xff;
-		if (ACCESSING_MSB) genesis_z80_ram[offset<<1] = (data >> 8) & 0xff;
+		if (ACCESSING_LSB != 0) genesis_z80_ram[(offset<<1)+1] = data & 0xff;
+		if (ACCESSING_MSB != 0) genesis_z80_ram[offset<<1] = (data >> 8) & 0xff;
 	}
 	
 	static MEMORY_READ_START(genesis_z80_readmem)
@@ -1607,7 +1607,7 @@ public class segac2
 		else
 		{
 			if(game_banksel == 0x60 || game_banksel == 0x61)  /* read game info ROM */
-				if(bios_width & 0x08)
+				if ((bios_width & 0x08) != 0)
 					return game[((game_banksel)*0x8000 + offset)/2];
 				else
 					return game[((game_banksel)*0x8000 + offset)];

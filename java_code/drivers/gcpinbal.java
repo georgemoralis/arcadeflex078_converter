@@ -134,7 +134,7 @@ public class gcpinbal
 	
 			// MSM6585 bank, coin LEDs, maybe others?
 			case 0x44:
-				if (data & 0x10)
+				if ((data & 0x10) != 0)
 				{
 					bank = 0x100000;
 				}

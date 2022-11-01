@@ -306,11 +306,11 @@ public class nmk16
 	{
 		static UINT8 scroll[4];
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			scroll[offset] = (data >> 8) & 0xff;
 	
-			if (offset & 2)
+			if ((offset & 2) != 0)
 				tilemap_set_scrolly(bg_tilemap,0,scroll[2] * 256 + scroll[3]);
 			else
 				tilemap_set_scrollx(bg_tilemap,0,scroll[0] * 256 + scroll[1] - videoshift);
@@ -319,13 +319,13 @@ public class nmk16
 	
 	WRITE16_HANDLER( nmk_scroll_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static UINT8 scroll[4];
 	
 			scroll[offset] = data & 0xff;
 	
-			if (offset & 2)
+			if ((offset & 2) != 0)
 				tilemap_set_scrolly(bg_tilemap,0,scroll[2] * 256 + scroll[3]);
 			else
 				tilemap_set_scrollx(bg_tilemap,0,scroll[0] * 256 + scroll[1] - videoshift);
@@ -334,13 +334,13 @@ public class nmk16
 	
 	WRITE16_HANDLER( nmk_scroll_2_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static UINT8 scroll[4];
 	
 			scroll[offset] = data & 0xff;
 	
-			if (offset & 2)
+			if ((offset & 2) != 0)
 				tilemap_set_scrolly(fg_tilemap,0,scroll[2] * 256 + scroll[3]);
 			else
 				tilemap_set_scrollx(fg_tilemap,0,scroll[0] * 256 + scroll[1] - videoshift);
@@ -371,13 +371,13 @@ public class nmk16
 	
 	WRITE16_HANDLER( nmk_flipscreen_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			flip_screen_set(data & 0x01);
 	}
 	
 	WRITE16_HANDLER( nmk_tilebank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (bgbank != (data & 0xff))
 			{
@@ -389,13 +389,13 @@ public class nmk16
 	
 	WRITE16_HANDLER( bioship_scroll_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			bioship_scroll[offset]=data>>8;
 	}
 	
 	WRITE16_HANDLER( bioship_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (bioship_background_bank != data)
 			{
@@ -444,7 +444,7 @@ public class nmk16
 	
 				if ((pri&pri_mask)!=priority) continue;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 368 - sx;
 					sy = 240 - sy;
@@ -503,7 +503,7 @@ public class nmk16
 	
 				if ((pri&pri_mask)!=priority) continue;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 368 - sx;
 					sy = 240 - sy;
@@ -571,7 +571,7 @@ public class nmk16
 	
 		tilemap_set_scrollx(tx_tilemap,0,-videoshift);
 	
-		if (redraw_bitmap)
+		if (redraw_bitmap != 0)
 		{
 			int bank = bioship_background_bank * 0x2000;
 			int sx=0, sy=0, offs;

@@ -515,13 +515,13 @@ public class toaplan2
 		video_status = 0xff00;						/* Set signals inactive */
 		video_status |= (current_scanline & 0xff);	/* Scanline */
 	
-		if (vblank_irq) {
+		if (vblank_irq != 0) {
 			video_status &= ~0x0100;
 		}
 		if (prev_scanline != current_scanline) {
 			video_status &= ~0x8000;				/* Activate V-Sync Clk */
 		}
-	//	if (current_beampos) {
+	//	if (current_beampos != 0) {
 	//		video_status &= ~0x4000;
 	//	}
 	//	current_beampos = ~current_beampos;
@@ -538,7 +538,7 @@ public class toaplan2
 		/* | Coin Lockout 2 | Coin Lockout 1 | Coin Count 2 | Coin Count 1 | */
 		/* |     Bit 3      |     Bit 2      |     Bit 1    |     Bit 0    | */
 	
-		if (data & 0x0f)
+		if ((data & 0x0f) != 0)
 		{
 			coin_lockout_w( 0, ((data & 4) ? 0 : 1) );
 			coin_lockout_w( 1, ((data & 8) ? 0 : 1) );
@@ -549,14 +549,14 @@ public class toaplan2
 		{
 			coin_lockout_global_w(1); /* Lock all coin slots */
 		}
-		if (data & 0xe0)
+		if ((data & 0xe0) != 0)
 		{
 			logerror("Writing unknown upper bits (%02x) to coin control\n",data);
 		}
 	} };
 	static WRITE16_HANDLER( toaplan2_coin_word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			toaplan2_coin_w(offset, data & 0xff);
 			if (toaplan2_sub_cpu == CPU_2_Z80)
@@ -580,7 +580,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( toaplan2_shared_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			toaplan2_shared_ram[offset] = data & 0xff;
 		}
@@ -591,7 +591,7 @@ public class toaplan2
 		/* Command sent to secondary CPU. Support for HD647180 will be
 		   required when a ROM dump becomes available for this hardware */
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (toaplan2_sub_cpu == CPU_2_Z80)			/* Whoopee */
 			{
@@ -628,7 +628,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( pipibibi_z80_task_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			toaplan2_shared_ram[0] = data & 0xff;
 		}
@@ -693,7 +693,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( ghox_mcu_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			mcu_data = data;
 			if ((data >= 0xd0) && (data < 0xe0))
@@ -751,7 +751,7 @@ public class toaplan2
 	}
 	static WRITE16_HANDLER( ghox_shared_ram_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			toaplan2_shared_ram16[offset] = data & 0xff;
 		}
@@ -782,7 +782,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( shared_ram_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			data &= 0xff;
 			switch (offset * 2)
@@ -845,7 +845,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( Zx80_command_port_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			mcu_data = data;
 		logerror("PC:%08x Writing command (%04x) to Zx80 secondary CPU command/status port\n",activecpu_get_previouspc(),mcu_data);
@@ -859,7 +859,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( Zx80_sharedram_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			Zx80_shared_ram[offset] = data & 0xff;
 		}
@@ -867,7 +867,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( oki_bankswitch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 		}
@@ -886,7 +886,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( raizing_shared_ram_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			raizing_shared_ram[offset] = data & 0xff;
 		}
@@ -1013,7 +1013,7 @@ public class toaplan2
 	}
 	static WRITE16_HANDLER( batrider_z80_busreq_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			raizing_Z80_busreq = (data & 0xff);
 		}
@@ -1092,13 +1092,13 @@ public class toaplan2
 	{
 		/* Pin 6 of 93C66 is connected to Gnd! */
 	
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C66);
 	
-			if (file) EEPROM_load(file);
+			if (file != 0) EEPROM_load(file);
 			else
 			{
 				if (bbakraid_unlimited_ver == 1)
@@ -1127,7 +1127,7 @@ public class toaplan2
 		if (data & ~0x001f)
 			logerror("CPU #0 PC:%06X - Unknown EEPROM data being written %04X\n",activecpu_get_pc(),data);
 	
-		if ( ACCESSING_LSB )
+		if (ACCESSING_LSB != 0)
 		{
 			// chip select
 			EEPROM_set_cs_line((data & 0x01) ? CLEAR_LINE : ASSERT_LINE );

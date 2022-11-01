@@ -205,7 +205,7 @@ public class jrpacman
 					{
 						sy = my;
 						sx = mx+2;
-						if (flipscreen)
+						if (flipscreen != 0)
 						{
 							sx = 35 - sx;
 							sy = 55 - sy;
@@ -226,7 +226,7 @@ public class jrpacman
 						{
 							sy = mx - 2;
 							sx = my - 58;
-							if (flipscreen)
+							if (flipscreen != 0)
 							{
 								sx = 35 - sx;
 								sy = 55 - sy;
@@ -244,7 +244,7 @@ public class jrpacman
 						{
 							sy = mx - 2;
 							sx = my - 22;
-							if (flipscreen)
+							if (flipscreen != 0)
 							{
 								sx = 35 - sx;
 								sy = 55 - sy;
@@ -273,7 +273,7 @@ public class jrpacman
 			for (i = 34;i < 36;i++)
 				scrolly[i] = 0;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				for (i = 0;i < 36;i++)
 					scrolly[i] = 224 - scrolly[i];

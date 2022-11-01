@@ -154,11 +154,11 @@ public class raiden
 			sprite = buffered_spriteram[offs+2]+(buffered_spriteram[offs+3]<<8);
 			sprite &= 0x0fff;
 	
-			if (flipscreen) {
+			if (flipscreen != 0) {
 				x=240-x;
 				y=240-y;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 			}
 	
 			drawgfx(bitmap,Machine->gfx[3],

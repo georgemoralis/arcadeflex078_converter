@@ -902,7 +902,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if(FLAG_C)
+		if (FLAG_C != 0)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -928,7 +928,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if(FLAG_C)
+		if (FLAG_C != 0)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -954,7 +954,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if(FLAG_C)
+		if (FLAG_C != 0)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -980,7 +980,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if(FLAG_C)
+		if (FLAG_C != 0)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -1006,7 +1006,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if(FLAG_C)
+		if (FLAG_C != 0)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -1799,7 +1799,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(andi, 16, tos, .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			uint src = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -2221,7 +2221,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(bcc, 8, ., .)
 	{
-		if(M68KMAKE_CC)
+		if (M68KMAKE_CC != 0)
 		{
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
 			m68ki_branch_8(MASK_OUT_ABOVE_8(REG_IR));
@@ -2233,7 +2233,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(bcc, 16, ., .)
 	{
-		if(M68KMAKE_CC)
+		if (M68KMAKE_CC != 0)
 		{
 			uint offset = OPER_I_16();
 			REG_PC -= 2;
@@ -2250,7 +2250,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if(M68KMAKE_CC)
+			if (M68KMAKE_CC != 0)
 			{
 				uint offset = OPER_I_32();
 				REG_PC -= 4;
@@ -4383,7 +4383,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(dbcc, 16, ., .)
 	{
-		if(M68KMAKE_NOT_CC)
+		if (M68KMAKE_NOT_CC != 0)
 		{
 			uint* r_dst = &DY;
 			uint res = MASK_OUT_ABOVE_16(*r_dst - 1);
@@ -4688,12 +4688,12 @@ public class m68k_in
 							FLAG_V = VFLAG_SET;
 							return;
 						}
-						if(dividend_neg)
+						if (dividend_neg != 0)
 						{
 							remainder = (uint)MASK_OUT_ABOVE_32(-(sint)remainder);
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 						}
-						if(divisor_neg)
+						if (divisor_neg != 0)
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 					}
 	
@@ -4899,12 +4899,12 @@ public class m68k_in
 							FLAG_V = VFLAG_SET;
 							return;
 						}
-						if(dividend_neg)
+						if (dividend_neg != 0)
 						{
 							remainder = (uint)MASK_OUT_ABOVE_32(-(sint)remainder);
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 						}
-						if(divisor_neg)
+						if (divisor_neg != 0)
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 					}
 	
@@ -5117,7 +5117,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(eori, 16, tos, .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			uint src = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -6670,7 +6670,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 16, tos, d)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			m68ki_set_sr(DY);
 			return;
@@ -6681,7 +6681,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 16, tos, .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			uint new_sr = M68KMAKE_GET_OPER_AY_16;
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -6694,7 +6694,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 32, fru, .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			AY = REG_USP;
 			return;
@@ -6705,7 +6705,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 32, tou, .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
 			REG_USP = AY;
@@ -6719,7 +6719,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if(FLAG_S)
+			if (FLAG_S != 0)
 			{
 				uint word2 = OPER_I_16();
 	
@@ -6785,7 +6785,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if(FLAG_S)
+			if (FLAG_S != 0)
 			{
 				uint word2 = OPER_I_16();
 	
@@ -7135,7 +7135,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if(FLAG_S)
+			if (FLAG_S != 0)
 			{
 				uint word2 = OPER_I_16();
 				uint ea = M68KMAKE_GET_EA_AY_8;
@@ -7170,7 +7170,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if(FLAG_S)
+			if (FLAG_S != 0)
 			{
 				uint word2 = OPER_I_16();
 				uint ea = M68KMAKE_GET_EA_AY_16;
@@ -7205,7 +7205,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if(FLAG_S)
+			if (FLAG_S != 0)
 			{
 				uint word2 = OPER_I_16();
 				uint ea = M68KMAKE_GET_EA_AY_32;
@@ -8080,7 +8080,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(ori, 16, tos, .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			uint src = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -8183,7 +8183,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(reset, 0, ., .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			m68ki_output_reset();		   /* auto-disable (see m68kcpu.h) */
 			USE_CYCLES(CYC_RESET);
@@ -8942,7 +8942,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(rte, 32, ., .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			uint new_sr;
 			uint new_pc;
@@ -9240,7 +9240,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(scc, 8, ., d)
 	{
-		if(M68KMAKE_CC)
+		if (M68KMAKE_CC != 0)
 		{
 			DY |= 0xff;
 			return;
@@ -9257,7 +9257,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(stop, 0, ., .)
 	{
-		if(FLAG_S)
+		if (FLAG_S != 0)
 		{
 			uint new_sr = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -9979,7 +9979,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if(M68KMAKE_CC)
+			if (M68KMAKE_CC != 0)
 				m68ki_exception_trap(EXCEPTION_TRAPV);	/* HJB 990403 */
 			return;
 		}
@@ -9991,7 +9991,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if(M68KMAKE_CC)
+			if (M68KMAKE_CC != 0)
 			{
 				m68ki_exception_trap(EXCEPTION_TRAPV);	/* HJB 990403 */
 				return;
@@ -10007,7 +10007,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if(M68KMAKE_CC)
+			if (M68KMAKE_CC != 0)
 			{
 				m68ki_exception_trap(EXCEPTION_TRAPV);	/* HJB 990403 */
 				return;

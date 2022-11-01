@@ -168,8 +168,8 @@ public class tilemap
 					{
 						x = tx;
 						y = ty;
-						if( i&TILE_FLIPX ) x = tilemap->cached_tile_width-1-x;
-						if( i&TILE_FLIPY ) y = tilemap->cached_tile_height-1-y;
+						if ((i & TILE_FLIPX) != 0) x = tilemap->cached_tile_width-1-x;
+						if ((i & TILE_FLIPY) != 0) y = tilemap->cached_tile_height-1-y;
 						*pPenToPixel++ = x+y*MAX_TILESIZE;
 					}
 				}
@@ -373,7 +373,7 @@ public class tilemap
 	{
 		int i;
 	
-		if (pcode)
+		if (pcode != 0)
 			for( i=0; i<count; i++ )
 			{
 				pri[i] |= pcode;
@@ -384,7 +384,7 @@ public class tilemap
 	{
 		int i;
 	
-		if (pcode)
+		if (pcode != 0)
 			for( i=0; i<count; i++ )
 			{
 				if( (pMask[i]&mask)==value )
@@ -772,7 +772,7 @@ public class tilemap
 	
 		state_save_register_func_postload(tilemap_reset);
 		priority_bitmap = bitmap_alloc_depth( screen_width, screen_height, -8 );
-		if( priority_bitmap )
+		if (priority_bitmap != 0)
 		{
 			priority_bitmap_pitch_line = ((UINT8 *)priority_bitmap->line[1]) - ((UINT8 *)priority_bitmap->line[0]);
 			return 0;
@@ -808,7 +808,7 @@ public class tilemap
 		int num_tiles;
 	
 		tilemap = calloc( 1,sizeof( struct tilemap ) );
-		if( tilemap )
+		if (tilemap != 0)
 		{
 			num_tiles = num_cols*num_rows;
 			tilemap->num_logical_cols = num_cols;
@@ -899,7 +899,7 @@ public class tilemap
 		{
 			prev = first_tilemap;
 			while( prev && prev->next != tilemap ) prev = prev->next;
-			if( prev ) prev->next =tilemap->next;
+			if (prev != 0) prev->next =tilemap->next;
 		}
 		PenToPixel_Term( tilemap );
 		free( tilemap->logical_rowscroll );
@@ -937,12 +937,12 @@ public class tilemap
 		{
 			tilemap->attributes = attributes;
 			tilemap->orientation = Machine->orientation;
-			if( attributes&TILEMAP_FLIPY )
+			if ((attributes & TILEMAP_FLIPY) != 0)
 			{
 				tilemap->orientation ^= ORIENTATION_FLIP_Y;
 			}
 	
-			if( attributes&TILEMAP_FLIPX )
+			if ((attributes & TILEMAP_FLIPX) != 0)
 			{
 				tilemap->orientation ^= ORIENTATION_FLIP_X;
 			}
@@ -1221,7 +1221,7 @@ public class tilemap
 			colscroll	= tilemap->cached_colscroll;
 	
 			/* clipping */
-			if( cliprect )
+			if (cliprect != 0)
 			{
 				left	= cliprect->min_x;
 				top		= cliprect->min_y;
@@ -1285,9 +1285,9 @@ public class tilemap
 				switch( dest->depth )
 				{
 				case 32:
-					if (priority)
+					if (priority != 0)
 					{
-						if( flags&TILEMAP_ALPHA )
+						if ((flags & TILEMAP_ALPHA) != 0)
 						{
 							blit.draw_masked = (blitmask_t)pbt32;
 							blit.draw_opaque = (blitopaque_t)pbo32;
@@ -1301,7 +1301,7 @@ public class tilemap
 					else
 					{
 						//* AAT APR2003: added 32-bit no-priority counterpart
-						if( flags&TILEMAP_ALPHA )
+						if ((flags & TILEMAP_ALPHA) != 0)
 						{
 							blit.draw_masked = (blitmask_t)npbt32;
 							blit.draw_opaque = (blitopaque_t)npbo32;
@@ -1315,7 +1315,7 @@ public class tilemap
 					blit.screen_bitmap_pitch_line /= 4;
 					break;
 				case 15:
-					if( flags&TILEMAP_ALPHA )
+					if ((flags & TILEMAP_ALPHA) != 0)
 					{
 						blit.draw_masked = (blitmask_t)pbt15;
 						blit.draw_opaque = (blitopaque_t)pbo15;
@@ -1334,7 +1334,7 @@ public class tilemap
 						blit.draw_masked = (blitmask_t)pdt16pal;
 						blit.draw_opaque = (blitopaque_t)pdo16pal;
 					}
-					else if (priority)
+					else if (priority != 0)
 					{
 						blit.draw_masked = (blitmask_t)pdt16;
 						blit.draw_opaque = (blitopaque_t)pdo16;
@@ -1356,7 +1356,7 @@ public class tilemap
 	
 			if( !(tilemap->type==TILEMAP_OPAQUE || (flags&TILEMAP_IGNORE_TRANSPARENCY)) )
 			{
-				if( flags&TILEMAP_BACK )
+				if ((flags & TILEMAP_BACK) != 0)
 				{
 					mask	|= TILE_FLAG_BG_OPAQUE;
 					value	|= TILE_FLAG_BG_OPAQUE;
@@ -1569,7 +1569,7 @@ public class tilemap
 	
 				if( !(tilemap->type==TILEMAP_OPAQUE || (flags&TILEMAP_IGNORE_TRANSPARENCY)) )
 				{
-					if( flags&TILEMAP_BACK )
+					if ((flags & TILEMAP_BACK) != 0)
 					{
 						mask	|= TILE_FLAG_BG_OPAQUE;
 						value	|= TILE_FLAG_BG_OPAQUE;
@@ -1730,7 +1730,7 @@ public class tilemap
 		const UINT16 *src;
 		const UINT8 *pMask;
 	
-		if (clip)
+		if (clip != 0)
 		{
 			startx += clip->min_x * incxx + clip->min_y * incyx;
 			starty += clip->min_x * incxy + clip->min_y * incyy;
@@ -1883,7 +1883,7 @@ public class tilemap
 		}
 		else
 		{
-			if (wraparound)
+			if (wraparound != 0)
 			{
 				/* plot with wraparound */
 				while (sy <= ey)
@@ -1993,7 +1993,7 @@ public class tilemap
 		if( x1<x2 && y1<y2 ) /* do nothing if totally clipped */
 		{
 			priority_bitmap_baseaddr = xpos + (UINT8 *)priority_bitmap->line[y1];
-			if( screen )
+			if (screen != 0)
 			{
 				dest_baseaddr = xpos + (DATA_TYPE *)screen->line[y1];
 			}
@@ -2174,7 +2174,7 @@ public class tilemap
 	
 		pPenToPixel = tilemap->pPenToPixel[flags&(TILE_FLIPY|TILE_FLIPX)];
 	
-		if( flags&TILE_4BPP )
+		if ((flags & TILE_4BPP) != 0)
 		{
 			for( ty=tile_height; ty!=0; ty-- )
 			{
@@ -2268,7 +2268,7 @@ public class tilemap
 		bWhollyOpaque = 1;
 		bWhollyTransparent = 1;
 	
-		if( flags&TILE_4BPP )
+		if ((flags & TILE_4BPP) != 0)
 		{
 			for( ty=tile_height; ty!=0; ty-- )
 			{
@@ -2368,12 +2368,12 @@ public class tilemap
 		bWhollyOpaque = 1;
 		bWhollyTransparent = 1;
 	
-		if( flags&TILE_IGNORE_TRANSPARENCY )
+		if ((flags & TILE_IGNORE_TRANSPARENCY) != 0)
 		{
 			transparent_pen = ~0;
 		}
 	
-		if( flags&TILE_4BPP )
+		if ((flags & TILE_4BPP) != 0)
 		{
 			for( ty=tile_height; ty!=0; ty-- )
 			{
@@ -2464,7 +2464,7 @@ public class tilemap
 		int and_flags = ~0;
 		int or_flags = 0;
 	
-		if( flags&TILE_4BPP )
+		if ((flags & TILE_4BPP) != 0)
 		{
 			for( ty=tile_height; ty!=0; ty-- )
 			{
@@ -2544,7 +2544,7 @@ public class tilemap
 		int and_flags = ~0;
 		int or_flags = 0;
 	
-		if( flags&TILE_4BPP )
+		if ((flags & TILE_4BPP) != 0)
 		{
 			for( ty=tile_height; ty!=0; ty-- )
 			{
@@ -2625,7 +2625,7 @@ public class tilemap
 		UINT32 y;
 		UINT32 pen;
 	
-		if( flags&TILE_4BPP )
+		if ((flags & TILE_4BPP) != 0)
 		{
 			for( ty=tile_height; ty!=0; ty-- )
 			{

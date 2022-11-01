@@ -150,7 +150,7 @@ public class sauro
 	
 			flipx = spriteram[offs+3] & 0x04;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				sx = (235 - sx) & 0xff;  // The &0xff is not 100% percent correct
@@ -229,7 +229,7 @@ public class sauro
 	
 			flipx = spriteram[offs+3] & 0x04;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				sx = (235 - sx) & 0xff;  /* The &0xff is not 100% percent correct */

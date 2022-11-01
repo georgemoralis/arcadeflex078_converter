@@ -110,7 +110,7 @@ public class blueprnt
 	
 				sx = 31 - offs / 32;
 				sy = offs % 32;
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -131,7 +131,7 @@ public class blueprnt
 			int i;
 	
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				for (i = 0;i < 32;i++)
 				{
@@ -160,7 +160,7 @@ public class blueprnt
 			sy = 240 - spriteram[offs + 0];
 			flipx = spriteram[offs + 2] & 0x40;
 			flipy = spriteram[offs + 2 - 4] & 0x80;	/* -4? Awkward, isn't it? */
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 248 - sx;
 				sy = 240 - sy;
@@ -187,7 +187,7 @@ public class blueprnt
 	
 				sx = 31 - offs / 32;
 				sy = offs % 32;
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

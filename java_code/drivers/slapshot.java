@@ -254,7 +254,7 @@ public class slapshot
 			taitosound_comm_w (0,(data >> 8) & 0xff);
 	
 	#ifdef MAME_DEBUG
-		if (data & 0xff)
+		if ((data & 0xff) != 0)
 			usrintf_showmessage("taito_msb_sound_w to low byte: %04x",data);
 	#endif
 	}

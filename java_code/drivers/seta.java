@@ -1299,7 +1299,7 @@ public class seta
 	
 	static WRITE16_HANDLER( sharedram_68000_w )
 	{
-		if (ACCESSING_LSB)	sharedram[offset] = data & 0xff;
+		if (ACCESSING_LSB != 0)	sharedram[offset] = data & 0xff;
 	}
 	
 	
@@ -1318,7 +1318,7 @@ public class seta
 		switch(offset)
 		{
 			case 0/2:	// bit 0: reset sub cpu?
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					if ( !(old_data&1) && (data&1) )
 						cpu_set_reset_line(1,PULSE_LINE);
@@ -1330,11 +1330,11 @@ public class seta
 				break;
 	
 			case 4/2:	// not sure
-				if (ACCESSING_LSB)	soundlatch_w(0, data & 0xff);
+				if (ACCESSING_LSB != 0)	soundlatch_w(0, data & 0xff);
 				break;
 	
 			case 6/2:	// not sure
-				if (ACCESSING_LSB)	soundlatch2_w(0, data & 0xff);
+				if (ACCESSING_LSB != 0)	soundlatch2_w(0, data & 0xff);
 				break;
 		}
 	
@@ -1406,7 +1406,7 @@ public class seta
 		int ctrl2	=	spriteram16[ 0x602/2 ];
 		if (~ctrl2 & 0x20)
 		{
-			if (ctrl2 & 0x40)
+			if ((ctrl2 & 0x40) != 0)
 				memcpy(&spriteram16_2[0x0000/2],&spriteram16_2[0x2000/2],0x2000/2);
 			else
 				memcpy(&spriteram16_2[0x2000/2],&spriteram16_2[0x0000/2],0x2000/2);
@@ -1534,7 +1534,7 @@ public class seta
 	
 	WRITE16_HANDLER( calibr50_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_word_w(0,data,mem_mask);
 			cpu_set_nmi_line(1,PULSE_LINE);
@@ -1619,7 +1619,7 @@ public class seta
 	{
 		static int old_tiles_offset = 0;
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			seta_tiles_offset = (data & 0x10) ? 0x4000: 0;
 			if (old_tiles_offset != seta_tiles_offset)	tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
@@ -1826,7 +1826,7 @@ public class seta
 	{
 		static int bit_count = 0, old_clock = 0;
 	
-		if(data&4) { bit_count = 0; return; } // Reset
+		if ((data & 4) != 0) { bit_count = 0; return; } // Reset
 	
 		if((data&1) == old_clock) return; // No change
 	
@@ -2413,7 +2413,7 @@ public class seta
 	
 	WRITE16_HANDLER( kiwame_nvram_w )
 	{
-		if (ACCESSING_LSB)	COMBINE_DATA( &kiwame_nvram[offset] );
+		if (ACCESSING_LSB != 0)	COMBINE_DATA( &kiwame_nvram[offset] );
 	}
 	
 	READ16_HANDLER( kiwame_input_r )
@@ -2554,7 +2554,7 @@ public class seta
 	
 	static WRITE16_HANDLER( utoukond_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			cpu_set_irq_line(1,0,HOLD_LINE);
 			soundlatch_w(0,data & 0xff);
@@ -8103,7 +8103,7 @@ public class seta
 	WRITE16_HANDLER( twineagl_200100_w )
 	{
 	logerror("%04x: twineagl_200100_w %d = %02x\n",activecpu_get_pc(),offset,data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			xram[offset] = data & 0xff;
 	}
 	

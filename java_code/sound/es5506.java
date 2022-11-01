@@ -982,19 +982,19 @@ public class es5506
 	void ES5506_sh_stop(void)
 	{
 		/* free memory */
-		if (accumulator)
+		if (accumulator != 0)
 			free(accumulator);
 		accumulator = NULL;
 	
-		if (scratch)
+		if (scratch != 0)
 			free(scratch);
 		scratch = NULL;
 	
-		if (ulaw_lookup)
+		if (ulaw_lookup != 0)
 			free(ulaw_lookup);
 		ulaw_lookup = NULL;
 	
-		if (volume_lookup)
+		if (volume_lookup != 0)
 			free(volume_lookup);
 		volume_lookup = NULL;
 	
@@ -1575,13 +1575,13 @@ public class es5506
 	
 	WRITE16_HANDLER( ES5506_data_0_word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			es5506_reg_write(&es5506[0], offset, data);
 	}
 	
 	WRITE16_HANDLER( ES5506_data_1_word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			es5506_reg_write(&es5506[1], offset, data);
 	}
 	
@@ -1645,7 +1645,7 @@ public class es5506
 		switch (offset)
 		{
 			case 0x00:	/* CR */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 	#if RAINE_CHECK
 					voice->control &= ~(CONTROL_STOPMASK | CONTROL_LOOPMASK | CONTROL_DIR);
@@ -1655,7 +1655,7 @@ public class es5506
 					voice->control |= (data & (CONTROL_STOPMASK | CONTROL_LOOPMASK | CONTROL_IRQE | CONTROL_DIR | CONTROL_IRQ)) |
 									  ((data << 12) & CONTROL_BS0);
 				}
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 				{
 					voice->control &= ~(CONTROL_CA0 | CONTROL_CA1 | CONTROL_LPMASK);
 					voice->control |= ((data >> 2) & CONTROL_LPMASK) |
@@ -1667,36 +1667,36 @@ public class es5506
 				break;
 	
 			case 0x01:	/* FC */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->freqcount = (voice->freqcount & ~0x001fe) | ((data & 0x00ff) << 1);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->freqcount = (voice->freqcount & ~0x1fe00) | ((data & 0xff00) << 1);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, freq count=%08x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->freqcount);
 				break;
 	
 			case 0x02:	/* STRT (hi) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->start = (voice->start & ~0x03fc0000) | ((data & 0x00ff) << 18);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->start = (voice->start & ~0x7c000000) | ((data & 0x1f00) << 18);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, loop start=%08x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->start);
 				break;
 	
 			case 0x03:	/* STRT (lo) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->start = (voice->start & ~0x00000380) | ((data & 0x00e0) << 2);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->start = (voice->start & ~0x0003fc00) | ((data & 0xff00) << 2);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, loop start=%08x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->start);
 				break;
 	
 			case 0x04:	/* END (hi) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->end = (voice->end & ~0x03fc0000) | ((data & 0x00ff) << 18);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->end = (voice->end & ~0x7c000000) | ((data & 0x1f00) << 18);
 	#if RAINE_CHECK
 				voice->control |= CONTROL_STOP0;
@@ -1706,9 +1706,9 @@ public class es5506
 				break;
 	
 			case 0x05:	/* END (lo) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->end = (voice->end & ~0x00000380) | ((data & 0x00e0) << 2);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->end = (voice->end & ~0x0003fc00) | ((data & 0xff00) << 2);
 	#if RAINE_CHECK
 				voice->control |= CONTROL_STOP0;
@@ -1718,50 +1718,50 @@ public class es5506
 				break;
 	
 			case 0x06:	/* K2 */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->k2 = (voice->k2 & ~0x00f0) | (data & 0x00f0);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->k2 = (voice->k2 & ~0xff00) | (data & 0xff00);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, K2=%04x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->k2);
 				break;
 	
 			case 0x07:	/* K1 */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->k1 = (voice->k1 & ~0x00f0) | (data & 0x00f0);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->k1 = (voice->k1 & ~0xff00) | (data & 0xff00);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, K1=%04x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->k1);
 				break;
 	
 			case 0x08:	/* LVOL */
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->lvol = (voice->lvol & ~0xff00) | (data & 0xff00);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, left vol=%04x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->lvol);
 				break;
 	
 			case 0x09:	/* RVOL */
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->rvol = (voice->rvol & ~0xff00) | (data & 0xff00);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, right vol=%04x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->rvol);
 				break;
 	
 			case 0x0a:	/* ACC (hi) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->accum = (voice->accum & ~0x03fc0000) | ((data & 0x00ff) << 18);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->accum = (voice->accum & ~0x7c000000) | ((data & 0x1f00) << 18);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, accum=%08x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->accum);
 				break;
 	
 			case 0x0b:	/* ACC (lo) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->accum = (voice->accum & ~0x000003fc) | ((data & 0x00ff) << 2);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->accum = (voice->accum & ~0x0003fc00) | ((data & 0xff00) << 2);
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, accum=%08x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->accum);
@@ -1771,7 +1771,7 @@ public class es5506
 				break;
 	
 			case 0x0d:	/* ACT */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					double sample_rate = chip->master_clock / (double)(16 * ((data & 0x1f) + 1));
 					if (Machine->sample_rate)
@@ -1787,7 +1787,7 @@ public class es5506
 				break;
 	
 			case 0x0f:	/* PAGE */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					chip->current_page = data & 0x7f;
 				break;
 		}
@@ -1799,13 +1799,13 @@ public class es5506
 		switch (offset)
 		{
 			case 0x00:	/* CR */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					voice->control &= ~(CONTROL_STOPMASK | CONTROL_BS0 | CONTROL_LOOPMASK | CONTROL_IRQE | CONTROL_DIR | CONTROL_IRQ);
 					voice->control |= (data & (CONTROL_STOPMASK | CONTROL_LOOPMASK | CONTROL_IRQE | CONTROL_DIR | CONTROL_IRQ)) |
 									  ((data << 12) & CONTROL_BS0);
 				}
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 				{
 					voice->control &= ~(CONTROL_CA0 | CONTROL_CA1 | CONTROL_LPMASK);
 					voice->control |= ((data >> 2) & CONTROL_LPMASK) |
@@ -1816,54 +1816,54 @@ public class es5506
 				break;
 	
 			case 0x01:	/* O4(n-1) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->o4n1 = (voice->o4n1 & ~0x00ff) | (data & 0x00ff);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->o4n1 = (INT16)((voice->o4n1 & ~0xff00) | (data & 0xff00));
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, O4(n-1)=%05x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->o4n1 & 0x3ffff);
 				break;
 	
 			case 0x02:	/* O3(n-1) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->o3n1 = (voice->o3n1 & ~0x00ff) | (data & 0x00ff);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->o3n1 = (INT16)((voice->o3n1 & ~0xff00) | (data & 0xff00));
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, O3(n-1)=%05x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->o3n1 & 0x3ffff);
 				break;
 	
 			case 0x03:	/* O3(n-2) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->o3n2 = (voice->o3n2 & ~0x00ff) | (data & 0x00ff);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->o3n2 = (INT16)((voice->o3n2 & ~0xff00) | (data & 0xff00));
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, O3(n-2)=%05x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->o3n2 & 0x3ffff);
 				break;
 	
 			case 0x04:	/* O2(n-1) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->o2n1 = (voice->o2n1 & ~0x00ff) | (data & 0x00ff);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->o2n1 = (INT16)((voice->o2n1 & ~0xff00) | (data & 0xff00));
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, O2(n-1)=%05x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->o2n1 & 0x3ffff);
 				break;
 	
 			case 0x05:	/* O2(n-2) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->o2n2 = (voice->o2n2 & ~0x00ff) | (data & 0x00ff);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->o2n2 = (INT16)((voice->o2n2 & ~0xff00) | (data & 0xff00));
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, O2(n-2)=%05x\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->o2n2 & 0x3ffff);
 				break;
 	
 			case 0x06:	/* O1(n-1) */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					voice->o1n1 = (voice->o1n1 & ~0x00ff) | (data & 0x00ff);
-				if (ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					voice->o1n1 = (INT16)((voice->o1n1 & ~0xff00) | (data & 0xff00));
 				if (LOG_COMMANDS && eslog)
 					fprintf(eslog, "%06x:voice %d, O1(n-1)=%05x (accum=%08x)\n", activecpu_get_previouspc(), chip->current_page & 0x1f, voice->o2n1 & 0x3ffff, voice->accum);
@@ -1878,7 +1878,7 @@ public class es5506
 				break;
 	
 			case 0x0d:	/* ACT */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					double sample_rate = chip->master_clock / (double)(16 * ((data & 0x1f) + 1));
 					if (Machine->sample_rate)
@@ -1894,7 +1894,7 @@ public class es5506
 				break;
 	
 			case 0x0f:	/* PAGE */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					chip->current_page = data & 0x7f;
 				break;
 		}
@@ -1923,7 +1923,7 @@ public class es5506
 				break;
 	
 			case 0x0d:	/* ACT */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					double sample_rate = chip->master_clock / (double)(16 * ((data & 0x1f) + 1));
 					if (Machine->sample_rate)
@@ -1939,7 +1939,7 @@ public class es5506
 				break;
 	
 			case 0x0f:	/* PAGE */
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					chip->current_page = data & 0x7f;
 				break;
 		}

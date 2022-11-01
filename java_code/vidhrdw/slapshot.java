@@ -178,7 +178,7 @@ public class slapshot
 		color = 0;
 	
 		x_offset = taito_hide_pixels;   /* Get rid of 0-3 unwanted pixels on edge of screen. */
-		if (sprites_flipscreen) x_offset = -x_offset;
+		if (sprites_flipscreen != 0) x_offset = -x_offset;
 	
 		/* safety check to avoid getting stuck in bank 2 for games using only one bank */
 		if (area == 0x8000 &&
@@ -197,7 +197,7 @@ public class slapshot
 				disabled = spriteram_buffered[(offs+10)/2] & 0x1000;
 				sprites_flipscreen = spriteram_buffered[(offs+10)/2] & 0x2000;
 				x_offset = taito_hide_pixels;   /* Get rid of 0-3 unwanted pixels on edge of screen. */
-				if (sprites_flipscreen) x_offset = -x_offset;
+				if (sprites_flipscreen != 0) x_offset = -x_offset;
 				area = 0x8000 * (spriteram_buffered[(offs+10)/2] & 0x0001);
 				continue;
 			}
@@ -222,7 +222,7 @@ public class slapshot
 				if (scroll1y >= 0x800) scroll1y -= 0x1000;   /* signed value */
 			}
 	
-			if (disabled)
+			if (disabled != 0)
 				continue;
 	
 			spritedata = spriteram_buffered[(offs+8)/2];
@@ -243,7 +243,7 @@ public class slapshot
 					big_sprite = 1;   /* we have started a new big sprite */
 				}
 			}
-			else if (big_sprite)
+			else if (big_sprite != 0)
 			{
 				last_continuation_tile = 1;   /* don't clear big_sprite until last tile done */
 			}
@@ -265,12 +265,12 @@ public class slapshot
 	// journey in MjnQuest). You will see they are 1 pixel too far to the right.
 	// Where is this extra pixel offset coming from??
 	
-				if (x & 0x8000)   /* absolute (koshien) */
+				if ((x & 0x8000) != 0)   /* absolute (koshien) */
 				{
 					scrollx = - x_offset - 0x60;
 					scrolly = 0;
 				}
-				else if (x & 0x4000)   /* ignore extra scroll */
+				else if ((x & 0x4000) != 0)   /* ignore extra scroll */
 				{
 					scrollx = master_scrollx - x_offset - 0x60;
 					scrolly = master_scrolly;
@@ -308,7 +308,7 @@ public class slapshot
 	/* Black lines between flames in Gunfront attract before the zoom
 	   finishes suggest these calculations are flawed? */
 	
-			if (big_sprite)
+			if (big_sprite != 0)
 			{
 				zoomx = zoomxlatch;
 				zoomy = zoomylatch;
@@ -336,7 +336,7 @@ public class slapshot
 				zy = (0x100 - zoomy) / 16;
 			}
 	
-			if (last_continuation_tile)
+			if (last_continuation_tile != 0)
 			{
 				big_sprite=0;
 				last_continuation_tile=0;
@@ -394,7 +394,7 @@ public class slapshot
 			cury = (y + scrolly) & 0xfff;
 			if (cury >= 0x800)	cury -= 0x1000;   /* treat it as signed */
 	
-			if (sprites_flipscreen)
+			if (sprites_flipscreen != 0)
 			{
 				/* -zx/y is there to fix zoomed sprite coords in screenflip.
 				   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -420,7 +420,7 @@ public class slapshot
 				sprite_ptr->zoomx = zx << 12;
 				sprite_ptr->zoomy = zy << 12;
 	
-				if (primasks)
+				if (primasks != 0)
 				{
 					sprite_ptr->primask = primasks[(color & 0xc0) >> 6];
 	
@@ -460,7 +460,7 @@ public class slapshot
 	
 	static void taito_handle_sprite_buffering(void)
 	{
-		if (prepare_sprites)	/* no buffering */
+		if (prepare_sprites != 0)	/* no buffering */
 		{
 			memcpy(spriteram_buffered,spriteram16,spriteram_size);
 			prepare_sprites = 0;

@@ -83,7 +83,7 @@ public class grchamp
 	} };
 	public static WriteHandlerPtr grchamp_led_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( data )
+		if (data != 0)
 		{
 			int which = data&0x7;
 			grchamp_led_reg[which][0] = grchamp_led_data0; /* digit */
@@ -118,7 +118,7 @@ public class grchamp
 		{
 			result |= 0x4; // crash on bottom half of screen
 		}
-		if( grchamp_collision&2 )
+		if ((grchamp_collision & 2) != 0)
 		{
 			result = rand()&0xff; // OBJECT crash
 		}

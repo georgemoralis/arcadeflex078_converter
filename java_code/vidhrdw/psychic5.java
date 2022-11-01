@@ -343,7 +343,7 @@ public class psychic5
 	{
 		int offs;
 	
-		if (title_screen)
+		if (title_screen != 0)
 			return;
 		else
 			bg_clip_mode = -10;
@@ -360,10 +360,10 @@ public class psychic5
 			int sy = spriteram[offs];
 			int size32 = attr & 0x08;
 	
-			if (attr & 0x01) sx -= 256;
-			if (attr & 0x04) sy -= 256;
+			if ((attr & 0x01) != 0) sx -= 256;
+			if ((attr & 0x04) != 0) sy -= 256;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 224 - sx;
 				sy = 224 - sy;
@@ -371,7 +371,7 @@ public class psychic5
 				flipy = !flipy;
 			}
 	
-			if (flipy)
+			if (flipy != 0)
 			{
 				tileofs0 = 1; tileofs1 = 0;	tileofs2 = 3; tileofs3 = 2;
 			}
@@ -380,7 +380,7 @@ public class psychic5
 				tileofs0 = 0; tileofs1 = 1;	tileofs2 = 2; tileofs3 = 3;
 			}
 	
-			if (flipx)
+			if (flipx != 0)
 			{
 				temp1 = tileofs0;
 				temp2 = tileofs1;
@@ -390,7 +390,7 @@ public class psychic5
 				tileofs3 = temp2;
 			}
 	
-			if (size32)
+			if (size32 != 0)
 			{
 				DRAW_SPRITE(code + tileofs0, sx, sy)
 				DRAW_SPRITE(code + tileofs1, sx, sy + 16)
@@ -399,7 +399,7 @@ public class psychic5
 			}
 			else
 			{
-				if (flip_screen)
+				if (flip_screen != 0)
 					DRAW_SPRITE(code, sx + 16, sy + 16)
 				else
 					DRAW_SPRITE(code, sx, sy)
@@ -419,7 +419,7 @@ public class psychic5
 	
 		if (ps5_io_ram[BG_SCREEN_MODE] & 0x01)  /* background enable */
 		{
-			if (title_screen)
+			if (title_screen != 0)
 			{
 				struct rectangle clip = *cliprect;
 	
@@ -465,7 +465,7 @@ public class psychic5
 						bg_clip_mode = 8;
 				}
 	
-				if (bg_clip_mode)
+				if (bg_clip_mode != 0)
 				{
 					if (bg_clip_mode == 1)
 						clip.min_y = sy1;

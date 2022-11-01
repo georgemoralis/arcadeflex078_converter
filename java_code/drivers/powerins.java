@@ -52,7 +52,7 @@ public class powerins
 	
 	static WRITE16_HANDLER( powerins_okibank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			unsigned char *RAM = memory_region(REGION_SOUND1);
 			int new_bank = data & 0x7;
@@ -67,7 +67,7 @@ public class powerins
 	
 	static WRITE16_HANDLER( powerin2_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0, data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);

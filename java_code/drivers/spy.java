@@ -43,13 +43,13 @@ public class spy
 	
 	public static ReadHandlerPtr spy_bankedram1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (rambank & 1)
+		if ((rambank & 1) != 0)
 		{
 			return paletteram_r(offset);
 		}
-		else if (rambank & 2)
+		else if ((rambank & 2) != 0)
 		{
-			if (pmcbank)
+			if (pmcbank != 0)
 			{
 				//logerror("%04x read pmcram %04x\n",activecpu_get_pc(),offset);
 				return pmcram[offset];
@@ -66,13 +66,13 @@ public class spy
 	
 	public static WriteHandlerPtr spy_bankedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (rambank & 1)
+		if ((rambank & 1) != 0)
 		{
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		}
-		else if (rambank & 2)
+		else if ((rambank & 2) != 0)
 		{
-			if (pmcbank)
+			if (pmcbank != 0)
 			{
 				//logerror("%04x pmcram %04x = %02x\n",activecpu_get_pc(),offset,data);
 				pmcram[offset] = data;
@@ -161,7 +161,7 @@ public class spy
 	if ((data & 1) == 0) usrintf_showmessage("bankswitch RAM bank 0");
 	
 		/* bit 1-4 = ROM bank */
-		if (data & 0x10) offs = 0x20000 + (data & 0x06) * 0x1000;
+		if ((data & 0x10) != 0) offs = 0x20000 + (data & 0x06) * 0x1000;
 		else offs = 0x10000 + (data & 0x0e) * 0x1000;
 		cpu_setbank(1,&rom[offs]);
 	} };

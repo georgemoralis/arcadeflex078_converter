@@ -112,14 +112,14 @@ public class psikyo4
 	
 	static NVRAM_HANDLER(93C56)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 		{
 			EEPROM_save(file);
 		}
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C56);
-			if (file)
+			if (file != 0)
 			{
 				EEPROM_load(file);
 			}
@@ -136,7 +136,7 @@ public class psikyo4
 	
 	static WRITE32_HANDLER( ps4_eeprom_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			EEPROM_write_bit((data & 0x00200000) ? 1 : 0);
 			EEPROM_set_cs_line((data & 0x00800000) ? CLEAR_LINE : ASSERT_LINE);
@@ -150,7 +150,7 @@ public class psikyo4
 	
 	static READ32_HANDLER( ps4_eeprom_r )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			return ((EEPROM_read_bit() << 20)); /* EEPROM */
 		}
@@ -170,10 +170,10 @@ public class psikyo4
 		int ret = 0xff;
 		int sel = (ps4_io_select[0] & 0x0000ff00) >> 8;
 	
-		if (sel & 1) ret &= readinputport(0+4*offset);
-		if (sel & 2) ret &= readinputport(1+4*offset);
-		if (sel & 4) ret &= readinputport(2+4*offset);
-		if (sel & 8) ret &= readinputport(3+4*offset);
+		if ((sel & 1) != 0) ret &= readinputport(0+4*offset);
+		if ((sel & 2) != 0) ret &= readinputport(1+4*offset);
+		if ((sel & 4) != 0) ret &= readinputport(2+4*offset);
+		if ((sel & 8) != 0) ret &= readinputport(3+4*offset);
 	
 		return ret<<24 | readinputport(8);
 	}
@@ -222,7 +222,7 @@ public class psikyo4
 	
 	static WRITE32_HANDLER( ps4_screen1_brt_w )
 	{
-		if(ACCESSING_LSB32) {
+		if (ACCESSING_LSB32 != 0) {
 			/* Need seperate brightness for both screens if displaying together */
 			double brt1 = data & 0xff;
 			static double oldbrt1;
@@ -248,7 +248,7 @@ public class psikyo4
 	
 	static WRITE32_HANDLER( ps4_screen2_brt_w )
 	{
-		if(ACCESSING_LSB32) {
+		if (ACCESSING_LSB32 != 0) {
 			/* Need seperate brightness for both screens if displaying together */
 			double brt2 = data & 0xff;
 			static double oldbrt2;
@@ -385,7 +385,7 @@ public class psikyo4
 	
 	static void irqhandler(int linestate)
 	{
-		if (linestate)
+		if (linestate != 0)
 			cpu_set_irq_line(0, 12, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 12, CLEAR_LINE);

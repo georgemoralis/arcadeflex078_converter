@@ -82,7 +82,7 @@ int jagobj_init(void)
 
 INLINE void bitmap_4_draw(INT32 firstpix, INT32 iwidth, data32_t *src, INT32 xpos, UINT8 flags, INT32 dxpos)
 {
-	if (firstpix & 7)
+	if ((firstpix & 7) != 0)
 	{
 		UINT32 pixsrc = src[firstpix / 8];
 		while (firstpix & 7)
@@ -248,7 +248,7 @@ static void (*bitmap4[8])(INT32, INT32, data32_t *, INT32) =
 
 INLINE void bitmap_8_draw(INT32 firstpix, INT32 iwidth, data32_t *src, INT32 xpos, UINT8 flags, INT32 dxpos)
 {
-	if (firstpix & 3)
+	if ((firstpix & 3) != 0)
 	{
 		UINT32 pixsrc = src[firstpix / 4];
 		while (firstpix & 3)
@@ -378,7 +378,7 @@ static void (*bitmap8[8])(INT32, INT32, data32_t *, INT32) =
 
 INLINE void bitmap_16_draw(INT32 firstpix, INT32 iwidth, data32_t *src, INT32 xpos, UINT8 flags, INT32 dxpos)
 {
-	if (firstpix & 1)
+	if ((firstpix & 1) != 0)
 	{
 		UINT16 pix = src[firstpix / 2];
 		if ((!(flags & 4) || pix) && (UINT32)xpos < 360)
@@ -504,7 +504,7 @@ static data32_t *process_bitmap(data32_t *objdata, int vc, int logit)
 	UINT32 data = (upper >> 11);
 	data32_t *src = (data32_t *)get_jaguar_memory(data << 3);
 
-	if (logit)
+	if (logit != 0)
 	{
 		/* second phrase */
 		UINT32 upper2 = objdata[2];
@@ -681,7 +681,7 @@ static data32_t *process_scaled_bitmap(data32_t *objdata, int vc, int logit)
 	UINT32 lower3 = objdata[5];
 	INT32 remainder = (lower3 >> 16) & 0xff;
 
-	if (logit)
+	if (logit != 0)
 	{
 		/* second phrase */
 		UINT32 upper2 = objdata[2];
@@ -731,7 +731,7 @@ static data32_t *process_scaled_bitmap(data32_t *objdata, int vc, int logit)
 		/* only handle pitch=0 for now */
 		if (pitch != 1)
 			logerror("Unhandled pitch = %d\n", pitch);
-		if (flags & 2)
+		if ((flags & 2) != 0)
 		{
 			printf("Unhandled blend mode in scaled bitmap case\n");
 			logerror("Unhandled blend mode in scaled bitmap case\n");
@@ -857,32 +857,32 @@ static data32_t *process_branch(data32_t *objdata, int vc, int logit)
 	{
 		/* 0: branch if ypos == vc or ypos == 0x7ff */
 		case 0:
-			if (logit) logerror("        branch if %X == vc or %X == 0x7ff to %06X\n", ypos, ypos, link << 3);
+			if (logit != 0) logerror("        branch if %X == vc or %X == 0x7ff to %06X\n", ypos, ypos, link << 3);
 			taken = (ypos == vc) || (ypos == 0x7ff);
 			break;
 
 		/* 1: branch if ypos > vc */
 		case 1:
-			if (logit) logerror("        branch if %X > vc to %06X\n", ypos, link << 3);
+			if (logit != 0) logerror("        branch if %X > vc to %06X\n", ypos, link << 3);
 			taken = (ypos > vc);
 			break;
 
 		/* 2: branch if ypos < vc */
 		case 2:
-			if (logit) logerror("        branch if %X < vc to %06X\n", ypos, link << 3);
+			if (logit != 0) logerror("        branch if %X < vc to %06X\n", ypos, link << 3);
 			taken = (ypos < vc);
 			break;
 
 		/* 3: branch if object processor flag is set */
 		case 3:
-			if (logit) logerror("        branch if object flag set to %06X\n", link << 3);
+			if (logit != 0) logerror("        branch if object flag set to %06X\n", link << 3);
 			fprintf(stderr, "Unhandled branch!\n");
 			link = 0, taken = 1;
 			break;
 
 		/* 4: branch on second half of display line */
 		case 4:
-			if (logit) logerror("        branch if second half of line to %06X\n", link << 3);
+			if (logit != 0) logerror("        branch if second half of line to %06X\n", link << 3);
 			taken = (vc & 1);
 			break;
 
@@ -938,21 +938,21 @@ static void process_object_list(struct mame_bitmap *bitmap, const struct rectang
 				{
 					/* bitmap object */
 					case 0:
-						if (logit)
+						if (logit != 0)
 							logerror("bitmap = %08X-%08X %08X-%08X\n", objdata[0], objdata[1], objdata[2], objdata[3]);
 						objdata = process_bitmap(objdata, vc, logit);
 						break;
 
 					/* scaled bitmap object */
 					case 1:
-						if (logit)
+						if (logit != 0)
 							logerror("scaled = %08X-%08X %08X-%08X %08X-%08X\n", objdata[0], objdata[1], objdata[2], objdata[3], objdata[4], objdata[5]);
 						objdata = process_scaled_bitmap(objdata, vc, logit);
 						break;
 
 					/* branch */
 					case 3:
-						if (logit)
+						if (logit != 0)
 							logerror("branch = %08X-%08X\n", objdata[0], objdata[1]);
 						objdata = process_branch(objdata, vc, logit);
 						break;
@@ -963,9 +963,9 @@ static void process_object_list(struct mame_bitmap *bitmap, const struct rectang
 						int interrupt = (objdata[1] >> 3) & 1;
 						done = 1;
 
-						if (logit)
+						if (logit != 0)
 							logerror("stop   = %08X-%08X\n", objdata[0], objdata[1]);
-						if (interrupt)
+						if (interrupt != 0)
 						{
 #ifndef MESS
 							fprintf(stderr, "stop int=%d\n", interrupt);

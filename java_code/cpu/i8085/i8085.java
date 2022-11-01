@@ -1284,16 +1284,16 @@ public class i8085
 		{
 			zs = 0;
 			if (i==0) zs |= ZF;
-			if (i&128) zs |= SF;
+			if ((i & 128) != 0) zs |= SF;
 			p = 0;
-			if (i&1) ++p;
-			if (i&2) ++p;
-			if (i&4) ++p;
-			if (i&8) ++p;
-			if (i&16) ++p;
-			if (i&32) ++p;
-			if (i&64) ++p;
-			if (i&128) ++p;
+			if ((i & 1) != 0) ++p;
+			if ((i & 2) != 0) ++p;
+			if ((i & 4) != 0) ++p;
+			if ((i & 8) != 0) ++p;
+			if ((i & 16) != 0) ++p;
+			if ((i & 32) != 0) ++p;
+			if ((i & 64) != 0) ++p;
+			if ((i & 128) != 0) ++p;
 			ZS[i] = zs;
 			ZSP[i] = zs | ((p&1) ? 0 : VF);
 		}
@@ -1352,7 +1352,7 @@ public class i8085
 	 ****************************************************************************/
 	unsigned i8085_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(i8085_Regs*)dst = I;
 		return sizeof(i8085_Regs);
 	}
@@ -1362,7 +1362,7 @@ public class i8085
 	 ****************************************************************************/
 	void i8085_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			I = *(i8085_Regs*)src;
 			change_pc16(I.PC.d);
@@ -1450,7 +1450,7 @@ public class i8085
 	void i8085_set_SID(int state)
 	{
 		LOG(("i8085: SID %d\n", state));
-		if (state)
+		if (state != 0)
 			I.IM |= IM_SID;
 		else
 			I.IM &= ~IM_SID;
@@ -1470,7 +1470,7 @@ public class i8085
 	void i8085_set_TRAP(int state)
 	{
 		LOG(("i8085: TRAP %d\n", state));
-		if (state)
+		if (state != 0)
 		{
 			I.IREQ |= IM_TRAP;
 			if( I.ISRV & IM_TRAP ) return;	/* already servicing TRAP ? */
@@ -1489,7 +1489,7 @@ public class i8085
 	void i8085_set_RST75(int state)
 	{
 		LOG(("i8085: RST7.5 %d\n", state));
-		if( state )
+		if (state != 0)
 		{
 	
 			I.IREQ |= IM_RST75; 			/* request RST7.5 */
@@ -1509,7 +1509,7 @@ public class i8085
 	void i8085_set_RST65(int state)
 	{
 		LOG(("i8085: RST6.5 %d\n", state));
-		if( state )
+		if (state != 0)
 		{
 			I.IREQ |= IM_RST65; 			/* request RST6.5 */
 			if( I.IM & IM_RST65 ) return;	/* if masked, ignore it for now */
@@ -1531,7 +1531,7 @@ public class i8085
 	void i8085_set_RST55(int state)
 	{
 		LOG(("i8085: RST5.5 %d\n", state));
-		if( state )
+		if (state != 0)
 		{
 			I.IREQ |= IM_RST55; 			/* request RST5.5 */
 			if( I.IM & IM_RST55 ) return;	/* if masked, ignore it for now */
@@ -1553,7 +1553,7 @@ public class i8085
 	void i8085_set_INTR(int state)
 	{
 		LOG(("i8085: INTR %d\n", state));
-		if( state )
+		if (state != 0)
 		{
 			I.IREQ |= IM_INTR;				/* request INTR */
 			//I.INTR = state;

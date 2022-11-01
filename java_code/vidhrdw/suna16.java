@@ -70,7 +70,7 @@ public class suna16
 	
 	WRITE16_HANDLER( suna16_flipscreen_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			flip_screen_set( data & 1 );
 			color_bank = data & 4;
@@ -96,14 +96,14 @@ public class suna16
 	
 	READ16_HANDLER( suna16_paletteram16_r )
 	{
-		if (color_bank)	return paletteram16_2[offset];
+		if (color_bank != 0)	return paletteram16_2[offset];
 		else			return paletteram16[offset];
 	}
 	
 	WRITE16_HANDLER( suna16_paletteram16_w )
 	{
 		int r,g,b;
-		if (color_bank)	data = COMBINE_DATA(&paletteram16_2[offset]);
+		if (color_bank != 0)	data = COMBINE_DATA(&paletteram16_2[offset]);
 		else			data = COMBINE_DATA(&paletteram16[offset]);
 		r = (data >>  0) & 0x1F;
 		g = (data >>  5) & 0x1F;
@@ -160,7 +160,7 @@ public class suna16
 			x = (x & 0xff) - (x & 0x100);
 			y = (y0 - (y & 0xff) - dimy*8 ) & 0xff;
 	
-			if (flipx)	{ tile_xstart = dimx-1; tile_xinc = -1; }
+			if (flipx != 0)	{ tile_xstart = dimx-1; tile_xinc = -1; }
 			else		{ tile_xstart = 0;		tile_xinc = +1; }
 	
 			tile_y = 0; 	tile_yinc = +1;
@@ -184,9 +184,9 @@ public class suna16
 					int tile_flipx	=	tile & 0x4000;
 					int tile_flipy	=	tile & 0x8000;
 	
-					if (flipx)	tile_flipx = !tile_flipx;
+					if (flipx != 0)	tile_flipx = !tile_flipx;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = max_x - sx;
 						sy = max_y - sy;

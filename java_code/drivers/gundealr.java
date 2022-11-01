@@ -65,7 +65,7 @@ public class gundealr
 	{
 		if (cpu_getiloops() == 0)
 		{
-			if (input_ports_hack)
+			if (input_ports_hack != 0)
 			{
 				unsigned char *RAM = memory_region(REGION_CPU1);
 				RAM[0xe004] = readinputport(4);	/* COIN */

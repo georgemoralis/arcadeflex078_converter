@@ -188,8 +188,8 @@ public class mcr3
 	
 	public static WriteHandlerPtr demoderb_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x40) input_mux = 1;
-		if (data & 0x80) input_mux = 0;
+		if ((data & 0x40) != 0) input_mux = 1;
+		if ((data & 0x80) != 0) input_mux = 0;
 		turbocs_data_w(offset, data);
 	} };
 	
@@ -429,9 +429,9 @@ public class mcr3
 	
 	static NVRAM_HANDLER( mcr3 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, videoram, videoram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, videoram, videoram_size);
 		else
 			memset(videoram, 0, videoram_size);

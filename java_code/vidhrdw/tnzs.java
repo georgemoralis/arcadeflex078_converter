@@ -102,7 +102,7 @@ public class tnzs
 		for (column = 0;column < tot;column++)
 		{
 			scrollx = tnzs_scrollram[column*16+4] - ((upperbits & 0x01) * 256);
-			if (tnzs_screenflip)
+			if (tnzs_screenflip != 0)
 				scrolly = tnzs_scrollram[column*16] + 1 - 256;
 			else
 				scrolly = -tnzs_scrollram[column*16] + 1;
@@ -121,7 +121,7 @@ public class tnzs
 					sy = y*16;
 					flipx = m[i + 0x1000] & 0x80;
 					flipy = m[i + 0x1000] & 0x40;
-					if (tnzs_screenflip)
+					if (tnzs_screenflip != 0)
 					{
 						sy = 240 - sy;
 						flipx = !flipx;
@@ -163,7 +163,7 @@ public class tnzs
 			sy = 240 - y_pointer[i];
 			flipx = ctrl_pointer[i] & 0x80;
 			flipy = ctrl_pointer[i] & 0x40;
-			if (tnzs_screenflip)
+			if (tnzs_screenflip != 0)
 			{
 				sy = 240 - sy;
 				flipx = !flipx;

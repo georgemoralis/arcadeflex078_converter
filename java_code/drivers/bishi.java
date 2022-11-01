@@ -62,7 +62,7 @@ public class bishi
 	
 	static WRITE16_HANDLER( bishi_sound_w )
 	{
-	 	if (offset)
+	 	if (offset != 0)
 			YMZ280B_data_0_w(offset, data>>8);
 	 	else
 			YMZ280B_register_0_w(offset, data>>8);
@@ -214,7 +214,7 @@ public class bishi
 	
 	static void sound_irq_gen(int state)
 	{
-		if (state)
+		if (state != 0)
 			cpu_set_irq_line(0, MC68000_IRQ_1, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, MC68000_IRQ_1, CLEAR_LINE);

@@ -428,14 +428,14 @@ public class supertnk
 		{
 			raw = pMem[i];
 			code = 0;
-			if( raw&0x01 ) code |= 0x80;
-			if( raw&0x02 ) code |= 0x40;
-			if( raw&0x04 ) code |= 0x20;
-			if( raw&0x08 ) code |= 0x10;
-			if( raw&0x10 ) code |= 0x08;
-			if( raw&0x20 ) code |= 0x04;
-			if( raw&0x40 ) code |= 0x02;
-			if( raw&0x80 ) code |= 0x01;
+			if ((raw & 0x01) != 0) code |= 0x80;
+			if ((raw & 0x02) != 0) code |= 0x40;
+			if ((raw & 0x04) != 0) code |= 0x20;
+			if ((raw & 0x08) != 0) code |= 0x10;
+			if ((raw & 0x10) != 0) code |= 0x08;
+			if ((raw & 0x20) != 0) code |= 0x04;
+			if ((raw & 0x40) != 0) code |= 0x02;
+			if ((raw & 0x80) != 0) code |= 0x01;
 			pMem[i] = code;
 		};
 	

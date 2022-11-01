@@ -268,7 +268,7 @@ public class bbusters
 	static READ16_HANDLER( mechatt_gun_r )
 	{
 		int baseport=2,x,y;
-		if (offset) baseport=4; /* Player 2 */
+		if (offset != 0) baseport=4; /* Player 2 */
 	
 		x=readinputport(baseport);
 		y=readinputport(baseport+1);
@@ -687,11 +687,11 @@ public class bbusters
 	
 	static NVRAM_HANDLER( bbusters )
 	{
-		if( read_or_write ) {
+		if (read_or_write != 0) {
 			mame_fwrite (file, eprom_data, 0x80);
 		}
 		else {
-			if (file)
+			if (file != 0)
 				mame_fread (file, eprom_data, 0x80);
 			else
 				memset (eprom_data, 0xff, 0x80);

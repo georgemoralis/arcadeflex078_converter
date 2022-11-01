@@ -459,7 +459,7 @@ public class _99xxcoreH
 		static int readbyte(int addr)
 		{
 			TMS99XX_ICOUNT -= 2;
-			if (addr & 1)
+			if ((addr & 1) != 0)
 			{
 				extra_byte = cpu_readmem14(addr-1);
 				return cpu_readmem14(addr);
@@ -474,7 +474,7 @@ public class _99xxcoreH
 		static void writebyte (int addr, int data)
 		{
 			TMS99XX_ICOUNT -= 2;
-			if (addr & 1)
+			if ((addr & 1) != 0)
 			{
 				extra_byte = cpu_readmem14(addr-1);
 	
@@ -591,7 +591,7 @@ public class _99xxcoreH
 					/* timer mode, timer disabled */
 					value = 0;
 	
-				if (addr & 1)
+				if ((addr & 1) != 0)
 					return (value & 0xFF);
 				else
 					return (value >> 8);
@@ -737,7 +737,7 @@ public class _99xxcoreH
 	
 			#ifdef MAME_DEBUG
 			{
-				if (mame_debug)
+				if (mame_debug != 0)
 				{
 					setstat();
 	
@@ -841,7 +841,7 @@ public class _99xxcoreH
 						contextswitch(level*4); /* load vector, save PC, WP and ST */
 	
 						/* change interrupt mask */
-						if (level)
+						if (level != 0)
 						{
 							I.STATUS = (I.STATUS & 0xFFF0) | (level -1);  /* decrement mask */
 							I.interrupt_pending = 0;  /* as a consequence, the interrupt request will be subsequently ignored */
@@ -897,7 +897,7 @@ public class _99xxcoreH
 	{
 		setstat();
 	
-		if( dst )
+		if (dst != 0)
 			*(tms99xx_Regs*)dst = I;
 	
 		return sizeof(tms99xx_Regs);
@@ -905,7 +905,7 @@ public class _99xxcoreH
 	
 	void TMS99XX_SET_CONTEXT(void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			I = *(tms99xx_Regs*)src;
 			/* We have to make additionnal checks this, because Mame debugger can foolishly initialize
@@ -1209,7 +1209,7 @@ public class _99xxcoreH
 	
 			if (((I.int_state & mask) != 0) ^ (state != 0))
 			{	/* only if state changes */
-				if (state)
+				if (state != 0)
 				{
 					I.int_state |= mask;
 	
@@ -1290,7 +1290,7 @@ public class _99xxcoreH
 				/* normal behavior */
 				current_int = I.int_state | I.int_latch;
 	
-			if (current_int)
+			if (current_int != 0)
 				/* find first bit to 1 */
 				/* possible values : 1, 3, 4 */
 				for (level=0; ! (current_int & 1); current_int >>= 1, level++)
@@ -1397,7 +1397,7 @@ public class _99xxcoreH
 	/* set decrementer mode flag */
 	static void set_flag0(int val)
 	{
-		if (val)
+		if (val != 0)
 			I.flag |= 1;
 		else
 			I.flag &= ~ 1;
@@ -1408,7 +1408,7 @@ public class _99xxcoreH
 	/* set decrementer enable flag */
 	static void set_flag1(int val)
 	{
-		if (val)
+		if (val != 0)
 			I.flag |= 2;
 		else
 			I.flag &= ~ 2;
@@ -1464,7 +1464,7 @@ public class _99xxcoreH
 			else if ((CRUAddr >= 0xF75) && (CRUAddr < 0xF80))
 			{	/* user defined flags */
 				int mask = 1 << (CRUAddr - 0xF70);
-				if (Value & 0x01)
+				if ((Value & 0x01) != 0)
 					I.flag |= mask;
 				else
 					I.flag &= ~ mask;
@@ -1689,7 +1689,7 @@ public class _99xxcoreH
 	
 			imm = fetch();
 	
-			if (reg)
+			if (reg != 0)
 			{	/* @>xxxx(Rx) */
 				CYCLES(8, 3);
 				return(readword(reg + I.WP) + imm);
@@ -1736,7 +1736,7 @@ public class _99xxcoreH
 	
 			imm = fetch();
 	
-			if (reg)
+			if (reg != 0)
 			{	/* @>xxxx(Rx) */
 				CYCLES(8, 3);
 				return(readword(reg + I.WP) + imm);
@@ -1809,7 +1809,7 @@ public class _99xxcoreH
 	static void h0000(UINT16 opcode)
 	{
 	#if 0
-		if (opcode & 0x30)
+		if ((opcode & 0x30) != 0)
 		{	/* STPC STore Program Counter */
 	
 		}
@@ -2272,12 +2272,12 @@ public class _99xxcoreH
 			/* NEG --- NEGate */
 			/* *S = -*S */
 			value = - (INT16) readword(addr);
-			if (value)
+			if (value != 0)
 				I.STATUS &= ~ ST_C;
 			else
 				I.STATUS |= ST_C;
 	#if (TMS99XX_MODEL == TMS9940_ID)
-			if (value & 0x0FFF)
+			if ((value & 0x0FFF) != 0)
 				I.STATUS &= ~ ST_DC;
 			else
 				I.STATUS |= ST_DC;
@@ -2495,7 +2495,7 @@ public class _99xxcoreH
 	============================================================================*/
 	static void h0c00(UINT16 opcode)
 	{
-		if (opcode & 0x30)
+		if ((opcode & 0x30) != 0)
 		{
 	#if 0
 			switch ((opcode & 0x30) >> 4)
@@ -2803,19 +2803,19 @@ public class _99xxcoreH
 	
 				while (a != 0)
 				{
-					if (a & 1)  /* If current bit is set, */
+					if ((a & 1) != 0)  /* If current bit is set, */
 						i++;      /* increment bit count. */
 					a >>= 1U;   /* Next bit. */
 				}
 	
 				/* Set ST_OP bit. */
-				/*if (i & 1)
+				/*if ((i & 1) != 0)
 					I.STATUS |= ST_OP;
 				else
 					I.STATUS &= ~ ST_OP;*/
 	
 				/* Jump accordingly. */
-				if (i & 1)  /*(I.STATUS & ST_OP)*/
+				if ((i & 1) != 0)  /*(I.STATUS & ST_OP)*/
 				{
 					I.PC += (offset + offset);
 					CYCLES(10, 3);
@@ -3071,7 +3071,7 @@ public class _99xxcoreH
 				/* just for once, tms9995 behaves like earlier 8-bit tms99xx chips */
 				/* this must be because instruction decoding is too complex */
 				value = readword(addr);
-				if (addr & 1)
+				if ((addr & 1) != 0)
 					value &= 0xFF;
 				else
 					value = (value >> 8) & 0xFF;
@@ -3111,7 +3111,7 @@ public class _99xxcoreH
 				value = readCRU((READREG(R12) >> 1), cnt);
 				setst_byte_laep(value);
 	
-				if (addr & 1)
+				if ((addr & 1) != 0)
 					writeword(addr, (value & 0x00FF) | (value2 & 0xFF00));
 				else
 					writeword(addr, (value2 & 0x00FF) | ((value << 8) & 0xFF00));

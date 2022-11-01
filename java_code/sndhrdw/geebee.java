@@ -37,7 +37,7 @@ public class geebee
 		volume = 0x7fff; /* set volume */
 		noise = 0x0000;  /* reset noise shifter */
 		/* faster decay enabled? */
-		if( sound_latch & 8 )
+		if ((sound_latch & 8) != 0)
 		{
 			/*
 			 * R24 is 10k, Rb is 0, C57 is 1uF

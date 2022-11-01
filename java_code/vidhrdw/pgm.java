@@ -36,7 +36,7 @@ public class pgm
 		aoffset = (bdata[(boffset+3) & bdatasize] << 24) | (bdata[(boffset+2) & bdatasize] << 16) | (bdata[(boffset+1) & bdatasize] << 8) | (bdata[(boffset+0) & bdatasize] << 0);
 		aoffset = aoffset >> 2; aoffset *= 3;
 	
-	// 	if(aoffset)	logerror ("aoffset %08x boffset %08x\n",aoffset,boffset);
+	// 	if (aoffset != 0)	logerror ("aoffset %08x boffset %08x\n",aoffset,boffset);
 	
 		boffset += 4; /* because the first dword is the a data offset */
 		if (!(flip & 0x02)) { /* NO Y FLIP */
@@ -52,22 +52,22 @@ public class pgm
 							offset = xdrawpos + ((448+32+32) * ydrawpos);
 							dest = &sprite_bitmap[offset];
 							msk = (( bdata[(boffset+0) & bdatasize] << 8) |( bdata[(boffset+1) & bdatasize] << 0) );
-							if (!(msk & 0x0100)) { if (draw)  dest[0]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0200)) { if (draw)  dest[1]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0400)) { if (draw)  dest[2]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0800)) { if (draw)  dest[3]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x1000)) { if (draw)  dest[4]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x2000)) { if (draw)  dest[5]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x4000)) { if (draw)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x8000)) { if (draw)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0001)) { if (draw)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0002)) { if (draw)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0004)) { if (draw)  dest[10] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0008)) { if (draw)  dest[11] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0010)) { if (draw)  dest[12] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0020)) { if (draw)  dest[13] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0040)) { if (draw)  dest[14] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0080)) { if (draw)  dest[15] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0100)) { if (draw != 0)  dest[0]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0200)) { if (draw != 0)  dest[1]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0400)) { if (draw != 0)  dest[2]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0800)) { if (draw != 0)  dest[3]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x1000)) { if (draw != 0)  dest[4]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x2000)) { if (draw != 0)  dest[5]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x4000)) { if (draw != 0)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x8000)) { if (draw != 0)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0001)) { if (draw != 0)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0002)) { if (draw != 0)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0004)) { if (draw != 0)  dest[10] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0008)) { if (draw != 0)  dest[11] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0010)) { if (draw != 0)  dest[12] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0020)) { if (draw != 0)  dest[13] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0040)) { if (draw != 0)  dest[14] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0080)) { if (draw != 0)  dest[15] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
 						}
 						boffset+=2;
 					}
@@ -80,22 +80,22 @@ public class pgm
 							offset = xdrawpos + ((448+32+32) * ydrawpos);
 							dest = &sprite_bitmap[offset];
 							msk = (( bdata[(boffset+0) & bdatasize] << 8) |( bdata[(boffset+1) & bdatasize] << 0) );
-							if (!(msk & 0x0100)) { if (draw)  dest[15]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0200)) { if (draw)  dest[14]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0400)) { if (draw)  dest[13]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0800)) { if (draw)  dest[12]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x1000)) { if (draw)  dest[11]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x2000)) { if (draw)  dest[10]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x4000)) { if (draw)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x8000)) { if (draw)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0001)) { if (draw)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0002)) { if (draw)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0004)) { if (draw)  dest[5] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0008)) { if (draw)  dest[4] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0010)) { if (draw)  dest[3] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0020)) { if (draw)  dest[2] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0040)) { if (draw)  dest[1] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0080)) { if (draw)  dest[0] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0100)) { if (draw != 0)  dest[15]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0200)) { if (draw != 0)  dest[14]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0400)) { if (draw != 0)  dest[13]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0800)) { if (draw != 0)  dest[12]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x1000)) { if (draw != 0)  dest[11]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x2000)) { if (draw != 0)  dest[10]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x4000)) { if (draw != 0)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x8000)) { if (draw != 0)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0001)) { if (draw != 0)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0002)) { if (draw != 0)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0004)) { if (draw != 0)  dest[5] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0008)) { if (draw != 0)  dest[4] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0010)) { if (draw != 0)  dest[3] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0020)) { if (draw != 0)  dest[2] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0040)) { if (draw != 0)  dest[1] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0080)) { if (draw != 0)  dest[0] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
 						}
 						boffset+=2;
 					}
@@ -114,22 +114,22 @@ public class pgm
 							offset = xdrawpos + ((448+32+32) * ydrawpos);
 							dest = &sprite_bitmap[offset];
 							msk = (( bdata[(boffset+0) & bdatasize] << 8) |( bdata[(boffset+1) & bdatasize] << 0) );
-							if (!(msk & 0x0100)) { if (draw)  dest[0]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0200)) { if (draw)  dest[1]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0400)) { if (draw)  dest[2]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0800)) { if (draw)  dest[3]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x1000)) { if (draw)  dest[4]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x2000)) { if (draw)  dest[5]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x4000)) { if (draw)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x8000)) { if (draw)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0001)) { if (draw)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0002)) { if (draw)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0004)) { if (draw)  dest[10] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0008)) { if (draw)  dest[11] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0010)) { if (draw)  dest[12] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0020)) { if (draw)  dest[13] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0040)) { if (draw)  dest[14] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0080)) { if (draw)  dest[15] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0100)) { if (draw != 0)  dest[0]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0200)) { if (draw != 0)  dest[1]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0400)) { if (draw != 0)  dest[2]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0800)) { if (draw != 0)  dest[3]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x1000)) { if (draw != 0)  dest[4]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x2000)) { if (draw != 0)  dest[5]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x4000)) { if (draw != 0)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x8000)) { if (draw != 0)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0001)) { if (draw != 0)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0002)) { if (draw != 0)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0004)) { if (draw != 0)  dest[10] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0008)) { if (draw != 0)  dest[11] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0010)) { if (draw != 0)  dest[12] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0020)) { if (draw != 0)  dest[13] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0040)) { if (draw != 0)  dest[14] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0080)) { if (draw != 0)  dest[15] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
 						}
 						boffset+=2;
 					}
@@ -142,22 +142,22 @@ public class pgm
 							offset = xdrawpos + ((448+32+32) * ydrawpos);
 							dest = &sprite_bitmap[offset];
 							msk = (( bdata[(boffset+0) & bdatasize] << 8) |( bdata[(boffset+1) & bdatasize] << 0) );
-							if (!(msk & 0x0100)) { if (draw)  dest[15]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0200)) { if (draw)  dest[14]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0400)) { if (draw)  dest[13]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0800)) { if (draw)  dest[12]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x1000)) { if (draw)  dest[11]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x2000)) { if (draw)  dest[10]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x4000)) { if (draw)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x8000)) { if (draw)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0001)) { if (draw)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0002)) { if (draw)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0004)) { if (draw)  dest[5] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0008)) { if (draw)  dest[4] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0010)) { if (draw)  dest[3] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0020)) { if (draw)  dest[2] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0040)) { if (draw)  dest[1] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
-							if (!(msk & 0x0080)) { if (draw)  dest[0] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0100)) { if (draw != 0)  dest[15]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0200)) { if (draw != 0)  dest[14]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0400)) { if (draw != 0)  dest[13]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0800)) { if (draw != 0)  dest[12]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x1000)) { if (draw != 0)  dest[11]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x2000)) { if (draw != 0)  dest[10]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x4000)) { if (draw != 0)  dest[9]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x8000)) { if (draw != 0)  dest[8]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0001)) { if (draw != 0)  dest[7]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0002)) { if (draw != 0)  dest[6]  = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0004)) { if (draw != 0)  dest[5] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0008)) { if (draw != 0)  dest[4] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0010)) { if (draw != 0)  dest[3] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0020)) { if (draw != 0)  dest[2] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0040)) { if (draw != 0)  dest[1] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
+							if (!(msk & 0x0080)) { if (draw != 0)  dest[0] = adata[aoffset & adatasize]+ palt*32;aoffset++; }
 						}
 						boffset+=2;
 					}

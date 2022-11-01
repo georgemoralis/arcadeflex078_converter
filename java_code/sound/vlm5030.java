@@ -247,13 +247,13 @@ public class vlm5030
 	
 		/* command byte check */
 		cmd = VLM5030_rom[VLM5030_address&VLM5030_address_mask];
-		if( cmd & 0x01 )
+		if ((cmd & 0x01) != 0)
 		{	/* extend frame */
 			new_energy = new_pitch = 0;
 			for(i=0;i<=9;i++)
 				new_k[i] = 0;
 			VLM5030_address++;
-			if( cmd & 0x02 )
+			if ((cmd & 0x02) != 0)
 			{	/* end of speech */
 	
 				/* logerror("VLM5030 %04X end \n",VLM5030_address ); */
@@ -456,9 +456,9 @@ public class vlm5030
 		VLM5030_parameter = param;
 	
 		/* bit 0,1 : 4800bps / 9600bps , interporator step */
-		if(param&2) /* bit 1 = 1 , 9600bps */
+		if ((param & 2) != 0) /* bit 1 = 1 , 9600bps */
 			interp_step = 4; /* 9600bps : no interporator */
-		else if(param&1) /* bit1 = 0 & bit0 = 1 , 4800bps */
+		else if ((param & 1) != 0) /* bit1 = 0 & bit0 = 1 , 4800bps */
 			interp_step = 2; /* 4800bps : 2 interporator */
 		else	/* bit1 = bit0 = 0 : 2400bps */
 			interp_step = 1; /* 2400bps : 4 interporator */
@@ -467,9 +467,9 @@ public class vlm5030
 		VLM5030_frame_size = VLM5030_speed_table[(param>>3) &7];
 	
 		/* bit 6,7 : low / high pitch */
-		if(param&0x80)	/* bit7=1 , high pitch */
+		if ((param & 0x80) != 0)	/* bit7=1 , high pitch */
 			pitch_offset = -8;
-		else if(param&0x40)	/* bit6=1 , low pitch */
+		else if ((param & 0x40) != 0)	/* bit6=1 , low pitch */
 			pitch_offset = 8;
 		else
 			pitch_offset = 0;
@@ -536,7 +536,7 @@ public class vlm5030
 	/* set RST pin level : reset / set table address A8-A15 */
 	void VLM5030_RST (int pin )
 	{
-		if( pin_RST )
+		if (pin_RST != 0)
 		{
 			if( !pin )
 			{	/* H -> L : latch parameters */
@@ -546,10 +546,10 @@ public class vlm5030
 		}
 		else
 		{
-			if( pin )
+			if (pin != 0)
 			{	/* L -> H : reset chip */
 				pin_RST = 1;
-				if( pin_BSY )
+				if (pin_BSY != 0)
 				{
 					VLM5030_reset();
 				}
@@ -577,7 +577,7 @@ public class vlm5030
 			{	/* H -> L */
 				pin_ST = 0;
 	
-				if( pin_VCU )
+				if (pin_VCU != 0)
 				{	/* direct access mode & address High */
 					vcu_addr_h = ((int)latch_data<<8) + 0x01;
 				}
@@ -590,7 +590,7 @@ public class vlm5030
 						return;
 					}
 					/* check access mode */
-					if( vcu_addr_h )
+					if (vcu_addr_h != 0)
 					{	/* direct access mode */
 						VLM5030_address = (vcu_addr_h&0xff00) + latch_data;
 						vcu_addr_h = 0;

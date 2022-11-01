@@ -56,11 +56,11 @@ public class hyperspt
 	
 	static NVRAM_HANDLER( hyperspt )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 		{
 			mame_fwrite(file,nvram,nvram_size);
 	
-			if (we_flipped_the_switch)
+			if (we_flipped_the_switch != 0)
 			{
 				struct InputPort *in;
 	
@@ -87,7 +87,7 @@ public class hyperspt
 		}
 		else
 		{
-			if (file)
+			if (file != 0)
 			{
 				mame_fread(file,nvram,nvram_size);
 				we_flipped_the_switch = 0;

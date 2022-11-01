@@ -512,7 +512,7 @@ public class crimfght
 		int offs = 0;
 	
 		/* bit 5 = select work RAM or palette */
-		if (lines & 0x20){
+		if ((lines & 0x20) != 0){
 			memory_set_bankhandler_r (1, 0, paletteram_r);							/* palette */
 			memory_set_bankhandler_w (1, 0, paletteram_xBBBBBGGGGGRRRRR_swap_w);	/* palette */
 		}

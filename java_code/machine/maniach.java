@@ -97,7 +97,7 @@ public class maniach
 	public static ReadHandlerPtr maniach_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		portC_in = 0;
-		if (main_sent) portC_in |= 0x01;
+		if (main_sent != 0) portC_in |= 0x01;
 		if (!mcu_sent) portC_in |= 0x02;
 	//logerror("%04x: 68705 port C read %02x\n",activecpu_get_pc(),portC_in);
 		return (portC_out & ddrC) | (portC_in & ~ddrC);

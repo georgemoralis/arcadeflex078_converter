@@ -124,7 +124,7 @@ public class i86
 		for (i = 0; i < 256; i++)
 		{
 			for (j = i, c = 0; j > 0; j >>= 1)
-				if (j & 1)
+				if ((j & 1) != 0)
 					c++;
 	
 			parity_table[i] = !(c & 1);
@@ -166,14 +166,14 @@ public class i86
 	
 	unsigned i86_get_context(void *dst)
 	{
-		if (dst)
+		if (dst != 0)
 			*(i86_Regs *) dst = I;
 		return sizeof (i86_Regs);
 	}
 	
 	void i86_set_context(void *src)
 	{
-		if (src)
+		if (src != 0)
 		{
 			I = *(i86_Regs *)src;
 			I.base[CS] = SegBase(CS);
@@ -550,7 +550,7 @@ public class i86
 	
 		v30_pushf();
 		I.TF = I.IF = 0;
-		if (md_flag)
+		if (md_flag != 0)
 			SetMD(0);					   /* clear Mode-flag = start 8080 emulation mode */
 	
 		if (int_num == -1)

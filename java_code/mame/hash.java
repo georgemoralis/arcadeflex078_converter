@@ -308,7 +308,7 @@ public class hash
 			functions = ~functions;
 	
 		for (i=1; i != (1<<HASH_NUM_FUNCTIONS); i<<=1)
-			if (functions & i)
+			if ((functions & i) != 0)
 			{
 				int offs1, offs2;
 	
@@ -535,7 +535,7 @@ public class hash
 		{
 			unsigned func = 1 << i;
 			
-			if (functions & func)
+			if ((functions & func) != 0)
 			{
 				hash_function_desc* desc = hash_get_function_desc(func);
 				UINT8 chksum[256];

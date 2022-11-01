@@ -295,7 +295,7 @@ public class taito_l
 			flipx = buffered_spriteram[offs + 3] & 0x01;
 			flipy = buffered_spriteram[offs + 3] & 0x02;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 304 - sx;
 				sy = 240 - sy;
@@ -320,27 +320,27 @@ public class taito_l
 	
 	
 		dx = taitol_rambanks[0x73f4]|(taitol_rambanks[0x73f5]<<8);
-		if (flipscreen)
+		if (flipscreen != 0)
 			dx = ((dx & 0xfffc) | ((dx - 3) & 0x0003)) ^ 0xf;
 		dy = taitol_rambanks[0x73f6];
 		tilemap_set_scrollx(bg18_tilemap,0,-dx);
 		tilemap_set_scrolly(bg18_tilemap,0,-dy);
 	
 		dx = taitol_rambanks[0x73fc]|(taitol_rambanks[0x73fd]<<8);
-		if (flipscreen)
+		if (flipscreen != 0)
 			dx = ((dx & 0xfffc) | ((dx - 3) & 0x0003)) ^ 0xf;
 		dy = taitol_rambanks[0x73fe];
 		tilemap_set_scrollx(bg19_tilemap,0,-dx);
 		tilemap_set_scrolly(bg19_tilemap,0,-dy);
 	
 	
-		if (cur_ctrl & 0x20)	/* display enable */
+		if ((cur_ctrl & 0x20) != 0)	/* display enable */
 		{
 			fillbitmap(priority_bitmap,0,cliprect);
 	
 			tilemap_draw(bitmap,cliprect,bg19_tilemap,0,0);
 	
-			if (cur_ctrl & 0x08)	/* sprites always over BG1 */
+			if ((cur_ctrl & 0x08) != 0)	/* sprites always over BG1 */
 				tilemap_draw(bitmap,cliprect,bg18_tilemap,0,0);
 			else					/* split priority */
 				tilemap_draw(bitmap,cliprect,bg18_tilemap,0,1);

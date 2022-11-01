@@ -137,9 +137,9 @@ public class namcona
 		data16_t data16 = mpROM[addr/2];
 		int dat = (addr&1)?(data16&0xff):(data16>>8);
 	
-		if( flag&0x100 )
+		if ((flag & 0x100) != 0)
 		{
-			if( dat&0x80 )
+			if ((dat & 0x80) != 0)
 			{
 				dat = -(dat&0x7f) - 1;
 			}
@@ -256,7 +256,7 @@ public class namcona
 		data8_t set = ReadMetaDataByte(pSequence->addr++);
 		data8_t data = 0;
 		int i;
-		if( bCommon )
+		if (bCommon != 0)
 		{
 			data = ReadMetaDataByte( pSequence->addr++ );
 		}
@@ -320,7 +320,7 @@ public class namcona
 	PlayNote( struct sequence *pSequence, int chan, data8_t data )
 	{
 		struct voice *pVoice = &mVoice[pSequence->channel[chan]];
-		if( data & 0x80 )
+		if ((data & 0x80) != 0)
 		{
 			pVoice->bActive = 0;
 		}
@@ -378,7 +378,7 @@ public class namcona
 		data16_t *pStatus = GetSequenceStatusAddr(pSequence);
 		data16_t data = *pStatus;
 	
-		if( data&0x0040 )
+		if ((data & 0x0040) != 0)
 		{ /* bit 0x0040 indicates that a sound request was written by the main CPU */
 			int offs = ReadMetaDataWord(0)+(data>>8)*2;
 			memset( pSequence, 0x00, sizeof(struct sequence) );
@@ -397,7 +397,7 @@ public class namcona
 			else
 			{
 				int code = ReadMetaDataByte(pSequence->addr++);
-				if( code&0x80 )
+				if ((code & 0x80) != 0)
 				{
 					pSequence->pause = pSequence->tempo*((code&0x3f)+1);
 				}
@@ -630,10 +630,10 @@ public class namcona
 		memset( mSequence, 0x00, sizeof(mSequence) );
 	
 		mpMixerBuffer = auto_malloc( sizeof(INT16)*mSampleRate*2 );
-		if( mpMixerBuffer )
+		if (mpMixerBuffer != 0)
 		{
 			mpPitchTable = auto_malloc( sizeof(INT32)*0xff );
-			if( mpPitchTable )
+			if (mpPitchTable != 0)
 			{
 				int i;
 				for( i=0; i<0xff; i++ )
@@ -739,17 +739,17 @@ public class namcona
 	{
 		#if 0
 		FILE *f = fopen("snd.txt","w");
-		if( f )
+		if (f != 0)
 		{
 			unsigned char *special = malloc(0x10000);
-			if( special )
+			if (special != 0)
 			{
 				int i,addr, table;
 				memset( special, 0x00, 0x10000 );
 				for( i=0; i<0x12; i+=2 )
 				{
 					addr = ReadMetaDataWord(i);
-					if( i ) special[addr] = 1;
+					if (i != 0) special[addr] = 1;
 					fprintf( f, "%04x: %04x\n", i, addr );
 				}
 				table = 0x12;

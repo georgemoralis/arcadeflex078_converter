@@ -29,9 +29,9 @@ public class parodius
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (videobank & 0x01)
+		if ((videobank & 0x01) != 0)
 		{
-			if (videobank & 0x04)
+			if ((videobank & 0x04) != 0)
 				return paletteram_r(offset + 0x0800);
 			else
 				return paletteram_r(offset);
@@ -42,9 +42,9 @@ public class parodius
 	
 	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videobank & 0x01)
+		if ((videobank & 0x01) != 0)
 		{
-			if (videobank & 0x04)
+			if ((videobank & 0x04) != 0)
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset + 0x0800,data);
 			else
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
@@ -55,7 +55,7 @@ public class parodius
 	
 	public static ReadHandlerPtr parodius_052109_053245_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (videobank & 0x02)
+		if ((videobank & 0x02) != 0)
 			return K053245_r(offset);
 		else
 			return K052109_r(offset);
@@ -63,7 +63,7 @@ public class parodius
 	
 	public static WriteHandlerPtr parodius_052109_053245_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videobank & 0x02)
+		if ((videobank & 0x02) != 0)
 			K053245_w(offset,data);
 		else
 			K052109_w(offset,data);
@@ -71,7 +71,7 @@ public class parodius
 	
 	public static WriteHandlerPtr parodius_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videobank & 0xf8) logerror("%04x: videobank = %02x\n",activecpu_get_pc(),data);
+		if ((videobank & 0xf8) != 0) logerror("%04x: videobank = %02x\n",activecpu_get_pc(),data);
 	
 		/* bit 0 = select palette or work RAM at 0000-07ff */
 		/* bit 1 = select 052109 or 053245 at 2000-27ff */
@@ -418,7 +418,7 @@ public class parodius
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int offs = 0;
 	
-		if (lines & 0xf0) logerror("%04x: setlines %02x\n",activecpu_get_pc(),lines);
+		if ((lines & 0xf0) != 0) logerror("%04x: setlines %02x\n",activecpu_get_pc(),lines);
 	
 		offs = 0x10000 + (((lines & 0x0f)^0x0f) * 0x4000);
 		if (offs >= 0x48000) offs -= 0x40000;

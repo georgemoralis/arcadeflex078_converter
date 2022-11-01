@@ -112,7 +112,7 @@ public class playch10
 	
 	public static WriteHandlerPtr pc10_PPURES_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if ( data & 1 )
+		if ((data & 1) != 0)
 			ppu2c03b_reset( 0, /* cpu_getscanlineperiod() * */ 2 );
 	} };
 	
@@ -179,7 +179,7 @@ public class playch10
 	public static WriteHandlerPtr pc10_in0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Toggling bit 0 high then low resets both controllers */
-		if ( data & 1 )
+		if ((data & 1) != 0)
 			return;
 	
 		/* load up the latches */
@@ -187,7 +187,7 @@ public class playch10
 		input_latch[1] = readinputport( 4 );
 	
 		/* apply any masking from the BIOS */
-		if ( cntrl_mask )
+		if (cntrl_mask != 0)
 		{
 			/* mask out select and start */
 			input_latch[0] &= ~0x0c;
@@ -216,7 +216,7 @@ public class playch10
 		input_latch[1] >>= 1;
 	
 		/* do the gun thing */
-		if ( pc10_gun_controller )
+		if (pc10_gun_controller != 0)
 		{
 			int trigger = readinputport( 3 );
 			int x = readinputport( 5 );
@@ -325,7 +325,7 @@ public class playch10
 		int reg = ( offset >> 13 );
 	
 		/* reset mapper */
-		if ( data & 0x80 )
+		if ((data & 0x80) != 0)
 		{
 			mmc1_shiftreg = mmc1_shiftcount = 0;
 	
@@ -391,7 +391,7 @@ public class playch10
 				break;
 	
 				case 2: /* video rom banking - bank 1 - 4k only */
-					if ( vrom4k )
+					if (vrom4k != 0)
 						ppu2c03b_set_videorom_bank( 0, 4, 4, ( mmc1_shiftreg & 0x1f ), 256 );
 				break;
 	
@@ -407,7 +407,7 @@ public class playch10
 						else
 						{
 							/* switch 16k */
-							if ( switchlow )
+							if (switchlow != 0)
 							{
 								/* low */
 								memcpy( &memory_region( REGION_CPU2 )[0x08000], &memory_region( REGION_CPU2 )[0x010000+bank], 0x4000 );
@@ -657,7 +657,7 @@ public class playch10
 					int bank;
 	
 					/* reset the banks */
-					if ( gboard_command & 0x40 )
+					if ((gboard_command & 0x40) != 0)
 					{
 						/* high bank */
 						bank = gboard_banks[0] * 0x2000 + 0x10000;
@@ -706,7 +706,7 @@ public class playch10
 						break;
 	
 						case 6: /* program banking */
-							if ( gboard_command & 0x40 )
+							if ((gboard_command & 0x40) != 0)
 							{
 								/* high bank */
 								gboard_banks[0] = data & 0x1f;
@@ -742,7 +742,7 @@ public class playch10
 			case 0x2000: /* mirroring */
 				if( !gboard_4screen )
 				{
-					if ( data & 0x40 )
+					if ((data & 0x40) != 0)
 						ppu2c03b_set_mirroring( 0, PPU_MIRROR_HIGH );
 					else
 						ppu2c03b_set_mirroring( 0, ( data & 1 ) ? PPU_MIRROR_HORZ : PPU_MIRROR_VERT );
@@ -812,7 +812,7 @@ public class playch10
 	{
 		int bank = data & 7;
 	
-		if ( data & 0x10 )
+		if ((data & 0x10) != 0)
 			ppu2c03b_set_mirroring( 0, PPU_MIRROR_HIGH );
 		else
 			ppu2c03b_set_mirroring( 0, PPU_MIRROR_LOW );

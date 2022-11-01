@@ -114,7 +114,7 @@ public class fuukifg3
 	
 	static WRITE32_HANDLER( paletteram32_xRRRRRGGGGGBBBBB_dword_w )
 	{
-		if(ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			int r,g,b;
 			COMBINE_DATA(&paletteram32[offset]);
@@ -130,7 +130,7 @@ public class fuukifg3
 			palette_set_color(offset*2,r,g,b);
 		}
 	
-		if(ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 		{
 			int r,g,b;
 			COMBINE_DATA(&paletteram32[offset]);
@@ -495,7 +495,7 @@ public class fuukifg3
 		if ( ((fuuki32_vregs[0x1c/4]>>16) & 0xff) == (INTERRUPTS_NUM-1 - cpu_getiloops()) )
 		{
 			cpu_set_irq_line(0, 5, PULSE_LINE);	// Raster Line IRQ
-			if(fuuki32_raster_enable) force_partial_update(cpu_getscanline());
+			if (fuuki32_raster_enable != 0) force_partial_update(cpu_getscanline());
 		}
 	} };
 	

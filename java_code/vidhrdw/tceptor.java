@@ -595,7 +595,7 @@ public class tceptor
 		}
 	
 		/* if SPR_MASK_COLOR pen is used, restore pixels from previous bitmap */
-		if (need_mask)
+		if (need_mask != 0)
 		{
 			int x, y;
 	

@@ -235,7 +235,7 @@ public class mcr12
 		sy += 32;
 	
 		/* adjust for vflip */
-		if (vflip)
+		if (vflip != 0)
 			src += 31 * gfx->line_modulo;
 	
 		/* loop over lines in the sprite */
@@ -258,7 +258,7 @@ public class mcr12
 			}
 	
 			/* adjust for vflip */
-			if (vflip)
+			if (vflip != 0)
 				src -= 2 * gfx->line_modulo;
 		}
 	}
@@ -292,7 +292,7 @@ public class mcr12
 			y = (240 - spriteram[offs]) * 2;
 	
 			/* apply cocktail mode */
-			if (mcr_cocktail_flip)
+			if (mcr_cocktail_flip != 0)
 			{
 				hflip = !hflip;
 				vflip = !vflip;
@@ -358,7 +358,7 @@ public class mcr12
 			for (x = 0; x < 16; x++)
 			{
 				int pixel = *src;
-				if (pixel & 7)
+				if ((pixel & 7) != 0)
 					plot_pixel(bitmap, sx + x, sy, pens[pixel]);
 				*src++ = 0;
 			}
@@ -408,7 +408,7 @@ public class mcr12
 				int attr;
 				
 				/* adjust for cocktail flip */
-				if (mcr_cocktail_flip)
+				if (mcr_cocktail_flip != 0)
 				{
 					tx = xtiles - 1 - tx;
 					ty = ytiles - 1 - ty;

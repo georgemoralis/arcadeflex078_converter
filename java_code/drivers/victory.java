@@ -131,7 +131,7 @@ public class victory
 	
 	public static ReadHandlerPtr sound_response_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (LOG_SOUND) logerror("%04X:!!!! Sound response read = %02X\n", activecpu_get_previouspc(), sound_response);
+		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound response read = %02X\n", activecpu_get_previouspc(), sound_response);
 		pia_0_cb1_w(0, 0);
 		return sound_response;
 	} };
@@ -139,7 +139,7 @@ public class victory
 	
 	public static ReadHandlerPtr sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (LOG_SOUND) logerror("%04X:!!!! Sound status read = %02X\n", activecpu_get_previouspc(), (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6));
+		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound status read = %02X\n", activecpu_get_previouspc(), (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6));
 		return (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6);
 	} };
 	
@@ -148,7 +148,7 @@ public class victory
 	{
 		pia_0_porta_w(0, data);
 		pia_0_ca1_w(0, 0);
-		if (LOG_SOUND) logerror("%04X:!!!! Sound command = %02X\n", activecpu_get_previouspc(), data);
+		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound command = %02X\n", activecpu_get_previouspc(), data);
 	}
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -160,20 +160,20 @@ public class victory
 	public static WriteHandlerPtr victory_sound_response_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_response = data;
-		if (LOG_SOUND) logerror("%04X:!!!! Sound response = %02X\n", activecpu_get_previouspc(), data);
+		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound response = %02X\n", activecpu_get_previouspc(), data);
 	} };
 	
 	
 	public static WriteHandlerPtr victory_sound_irq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (LOG_SOUND) logerror("%04X:!!!! Sound IRQ clear = %02X\n", activecpu_get_previouspc(), data);
+		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound IRQ clear = %02X\n", activecpu_get_previouspc(), data);
 		if (!data) pia_0_ca1_w(0, 1);
 	} };
 	
 	
 	public static WriteHandlerPtr victory_main_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (LOG_SOUND) logerror("%04X:!!!! Sound ack = %02X\n", activecpu_get_previouspc(), data);
+		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound ack = %02X\n", activecpu_get_previouspc(), data);
 		if (sound_response_ack_clk && !data)
 			pia_0_cb1_w(0, 1);
 		sound_response_ack_clk = data;

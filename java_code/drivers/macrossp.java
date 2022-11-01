@@ -278,7 +278,7 @@ public class macrossp
 	
 	static WRITE32_HANDLER( macrossp_soundcmd_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			//logerror("%08x write soundcmd %08x (%08x)\n",activecpu_get_pc(),data,mem_mask);
 			soundlatch_word_w(0,data >> 16,0);

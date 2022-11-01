@@ -29,7 +29,7 @@ public class drmicro
 	
 	public static InterruptHandlerPtr drmicro_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (drmicro_nmi_enable)
+		if (drmicro_nmi_enable != 0)
 			 cpu_set_nmi_line(0, PULSE_LINE);
 	} };
 	

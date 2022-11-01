@@ -166,7 +166,7 @@ public class mikie
 			int flipx = ~spriteram[offs] & 0x10;
 			int flipy = spriteram[offs] & 0x20;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sy = 242 - sy;
 				flipy = !flipy;

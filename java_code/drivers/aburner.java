@@ -534,7 +534,7 @@ public class aburner
 	
 	static int sys16_analog_select;
 	static WRITE16_HANDLER( aburner_analog_select_w ){
-		if( ACCESSING_LSB ) sys16_analog_select = data&0xff;
+		if (ACCESSING_LSB != 0) sys16_analog_select = data&0xff;
 	}
 	
 	static READ16_HANDLER( aburner_analog_r ){

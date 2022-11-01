@@ -519,7 +519,7 @@ public class disc_mth
 		onres=0;
 		for(loop=0;loop<DISC_LADDER_MAXRES;loop++)
 		{
-			if(select&0x01) onres+=((struct discrete_ladder*)node->custom)->resistors[loop];
+			if ((select & 0x01) != 0) onres+=((struct discrete_ladder*)node->custom)->resistors[loop];
 			select=select>>1;
 		}
 	

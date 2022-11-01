@@ -721,7 +721,7 @@ public class neogeo
 	
 	WRITE16_HANDLER( neogeo_sram16_w )
 	{
-		if (sram_locked)
+		if (sram_locked != 0)
 		{
 	logerror("PC %06x: warning: write %02x to SRAM %04x while it was protected\n",activecpu_get_pc(),data,offset<<1);
 		}
@@ -739,7 +739,7 @@ public class neogeo
 	
 	NVRAM_HANDLER( neogeo )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 		{
 			/* Save the SRAM settings */
 			mame_fwrite_msbfirst(file,neogeo_sram16,0x2000);
@@ -750,7 +750,7 @@ public class neogeo
 		else
 		{
 			/* Load the SRAM settings for this game */
-			if (file)
+			if (file != 0)
 				mame_fread_msbfirst(file,neogeo_sram16,0x2000);
 			else
 				memset(neogeo_sram16,0,0x10000);
@@ -796,7 +796,7 @@ public class neogeo
 	
 	WRITE16_HANDLER( neogeo_memcard16_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (memcard_status==1)
 				neogeo_memcard[offset] = data & 0xff;

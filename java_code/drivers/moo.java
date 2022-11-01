@@ -73,13 +73,13 @@ public class moo
 	
 	static NVRAM_HANDLER( moo )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -99,7 +99,7 @@ public class moo
 		/* bits 4-7 are DIP switches */
 		res = EEPROM_read_bit() | input_port_1_r(0);
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -129,7 +129,7 @@ public class moo
 		EEPROM_set_cs_line((cur_control2 & 0x02) ? CLEAR_LINE : ASSERT_LINE);
 		EEPROM_set_clock_line((cur_control2 & 0x04) ? ASSERT_LINE : CLEAR_LINE);
 	
-		if (data & 0x100)
+		if ((data & 0x100) != 0)
 		{
 			K053246_set_OBJCHA_line(ASSERT_LINE);
 		}
@@ -162,12 +162,12 @@ public class moo
 		}
 		while (--counter);
 	
-		if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
+		if (num_inactive != 0) do { *dst = 0; dst += 8; } while (--num_inactive);
 	}
 	
 	static void dmaend_callback(int data)
 	{
-		if (cur_control2 & 0x800)
+		if ((cur_control2 & 0x800) != 0)
 			cpu_set_irq_line(0, 4, HOLD_LINE);
 	}
 	
@@ -182,7 +182,7 @@ public class moo
 		}
 	
 		// trigger V-blank interrupt
-		if (cur_control2 & 0x20)
+		if ((cur_control2 & 0x20) != 0)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
 	}
 	
@@ -255,7 +255,7 @@ public class moo
 	/* of RAM, but they put 0x10000 there. The CPU can access them all. */
 	static READ16_HANDLER( K053247_scattered_word_r )
 	{
-		if (offset & 0x0078)
+		if ((offset & 0x0078) != 0)
 			return spriteram16[offset];
 		else
 		{
@@ -266,7 +266,7 @@ public class moo
 	
 	static WRITE16_HANDLER( K053247_scattered_word_w )
 	{
-		if (offset & 0x0078)
+		if ((offset & 0x0078) != 0)
 			COMBINE_DATA(spriteram16+offset);
 		else
 		{

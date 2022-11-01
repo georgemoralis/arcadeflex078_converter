@@ -66,7 +66,7 @@ public class fuukifg2
 	
 	static WRITE16_HANDLER( fuuki16_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_nmi_line(1,PULSE_LINE);
@@ -557,7 +557,7 @@ public class fuukifg2
 		if ( (fuuki16_vregs[0x1c/2] & 0xff) == (INTERRUPTS_NUM-1 - cpu_getiloops()) )
 		{
 			cpu_set_irq_line(0, 5, PULSE_LINE);	// Raster Line IRQ
-			if(fuuki16_raster_enable) force_partial_update(cpu_getscanline());
+			if (fuuki16_raster_enable != 0) force_partial_update(cpu_getscanline());
 		}
 	} };
 	

@@ -49,7 +49,7 @@ public class blmbycar
 	
 	WRITE16_HANDLER( blmbycar_okibank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			unsigned char *RAM = memory_region(REGION_SOUND1);
 			memcpy(&RAM[0x30000],&RAM[0x40000 + 0x10000*(data & 0xf)],0x10000);
@@ -70,13 +70,13 @@ public class blmbycar
 	
 	static WRITE16_HANDLER( blmbycar_pot_wheel_reset_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			pot_wheel = ~readinputport(2) & 0xff;
 	}
 	
 	static WRITE16_HANDLER( blmbycar_pot_wheel_shift_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static int old;
 			if ( ((old & 0xff) == 0xff) && ((data & 0xff) == 0) )

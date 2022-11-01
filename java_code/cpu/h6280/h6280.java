@@ -185,7 +185,7 @@ public class h6280
 	
 	#ifdef  MAME_DEBUG
 		 	{
-				if (mame_debug)
+				if (mame_debug != 0)
 				{
 					/* Copy the segmentation registers for debugger to use */
 					int i;
@@ -234,14 +234,14 @@ public class h6280
 	
 	unsigned h6280_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(h6280_Regs*)dst = h6280;
 		return sizeof(h6280_Regs);
 	}
 	
 	void h6280_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 			h6280 = *(h6280_Regs*)src;
 	}
 	
@@ -485,7 +485,7 @@ public class h6280
 				return;
 	
 			case 1: /* Counter enable */
-				if(data&1)
+				if ((data & 1) != 0)
 				{	/* stop -> start causes reload */
 					if(h6280.timer_status==0) h6280.timer_value=h6280.timer_load;
 				}

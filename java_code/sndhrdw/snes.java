@@ -290,42 +290,42 @@ public class snes
 				break;
 			case DSP_KON:		/* Key On */
 				snes_dsp.key_on = data;
-				if( data & 0x1 )
+				if ((data & 0x1) != 0)
 				{
 					snes_dsp.voice[0].key = 1;
 					snes_dsp_decode_sample( 0 );
 				}
-				if( data & 0x2 )
+				if ((data & 0x2) != 0)
 				{
 					snes_dsp.voice[1].key = 1;
 					snes_dsp_decode_sample( 1 );
 				}
-				if( data & 0x4 )
+				if ((data & 0x4) != 0)
 				{
 					snes_dsp.voice[2].key = 1;
 					snes_dsp_decode_sample( 2 );
 				}
-				if( data & 0x8 )
+				if ((data & 0x8) != 0)
 				{
 					snes_dsp.voice[3].key = 1;
 					snes_dsp_decode_sample( 3 );
 				}
-				if( data & 0x10 )
+				if ((data & 0x10) != 0)
 				{
 					snes_dsp.voice[4].key = 1;
 					snes_dsp_decode_sample( 4 );
 				}
-				if( data & 0x20 )
+				if ((data & 0x20) != 0)
 				{
 					snes_dsp.voice[5].key = 1;
 					snes_dsp_decode_sample( 5 );
 				}
-				if( data & 0x40 )
+				if ((data & 0x40) != 0)
 				{
 					snes_dsp.voice[6].key = 1;
 					snes_dsp_decode_sample( 6 );
 				}
-				if( data & 0x80 )
+				if ((data & 0x80) != 0)
 				{
 					snes_dsp.voice[7].key = 1;
 					snes_dsp_decode_sample( 7 );
@@ -333,14 +333,14 @@ public class snes
 				break;
 			case DSP_KOF:		/* Key Off */
 				snes_dsp.key_off = data;
-				if( data & 0x1 ) snes_dsp.voice[0].key = 0;
-				if( data & 0x2 ) snes_dsp.voice[1].key = 0;
-				if( data & 0x4 ) snes_dsp.voice[2].key = 0;
-				if( data & 0x8 ) snes_dsp.voice[3].key = 0;
-				if( data & 0x10 ) snes_dsp.voice[4].key = 0;
-				if( data & 0x20 ) snes_dsp.voice[5].key = 0;
-				if( data & 0x40 ) snes_dsp.voice[6].key = 0;
-				if( data & 0x80 ) snes_dsp.voice[7].key = 0;
+				if ((data & 0x1) != 0) snes_dsp.voice[0].key = 0;
+				if ((data & 0x2) != 0) snes_dsp.voice[1].key = 0;
+				if ((data & 0x4) != 0) snes_dsp.voice[2].key = 0;
+				if ((data & 0x8) != 0) snes_dsp.voice[3].key = 0;
+				if ((data & 0x10) != 0) snes_dsp.voice[4].key = 0;
+				if ((data & 0x20) != 0) snes_dsp.voice[5].key = 0;
+				if ((data & 0x40) != 0) snes_dsp.voice[6].key = 0;
+				if ((data & 0x80) != 0) snes_dsp.voice[7].key = 0;
 				break;
 			case DSP_FLG:		/* Flags (reset,mute,ecen,nck) */
 				snes_dsp.flags = data;
@@ -431,12 +431,12 @@ public class snes
 				timer_enable( timers[1].timer, timers[1].enabled );
 				timers[2].enabled = (data & 0x4) >> 2;
 				timer_enable( timers[2].timer, timers[2].enabled );
-				if( data & 0x10 )
+				if ((data & 0x10) != 0)
 				{
 					spc_port_in[0] = spc_port_out[0] = 0;
 					spc_port_in[1] = spc_port_out[1] = 0;
 				}
-				if( data & 0x20 )
+				if ((data & 0x20) != 0)
 				{
 					spc_port_in[2] = spc_port_out[2] = 0;
 					spc_port_in[3] = spc_port_out[3] = 0;
@@ -467,7 +467,7 @@ public class snes
 	
 	public static ReadHandlerPtr spc_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if( spc_showrom )
+		if (spc_showrom != 0)
 		{
 			return spc_iplrom[offset];
 		}

@@ -420,7 +420,7 @@ public class kchamp
 	
 	public static InterruptHandlerPtr kc_interrupt = new InterruptHandlerPtr() {public void handler() {
 	
-		if ( nmi_enable )
+		if (nmi_enable != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -428,7 +428,7 @@ public class kchamp
 	
 		static int counter = 0;
 	
-		if ( msm_play_lo_nibble )
+		if (msm_play_lo_nibble != 0)
 			MSM5205_data_w( 0, msm_data & 0x0f );
 		else
 			MSM5205_data_w( 0, ( msm_data >> 4 ) & 0x0f );
@@ -436,7 +436,7 @@ public class kchamp
 		msm_play_lo_nibble ^= 1;
 	
 		if ( !( counter ^= 1 ) ) {
-			if ( sound_nmi_enable ) {
+			if (sound_nmi_enable != 0) {
 				cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
 			}
 		}
@@ -468,7 +468,7 @@ public class kchamp
 	
 	public static InterruptHandlerPtr sound_int = new InterruptHandlerPtr() {public void handler() {
 	
-		if ( sound_nmi_enable )
+		if (sound_nmi_enable != 0)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

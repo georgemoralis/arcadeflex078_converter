@@ -154,13 +154,13 @@ public class namcona1
 	
 	static NVRAM_HANDLER( namcosna1 )
 	{
-		if( read_or_write )
+		if (read_or_write != 0)
 		{
 			mame_fwrite( file, namcona1_nvmem, NA1_NVRAM_SIZE );
 		}
 		else
 		{
-			if (file)
+			if (file != 0)
 			{
 				mame_fread( file, namcona1_nvmem, NA1_NVRAM_SIZE );
 			}
@@ -189,7 +189,7 @@ public class namcona1
 	
 	static WRITE16_HANDLER( namcona1_nvram_w )
 	{
-		if( ACCESSING_LSB )
+		if (ACCESSING_LSB != 0)
 		{
 			namcona1_nvmem[offset] = data&0xff;
 		}
@@ -407,8 +407,8 @@ public class namcona1
 				break;
 	
 			case NAMCO_TINKLPIT:
-				if( data&0x2000 ) data |= 0x20; /* throw */
-				if( data&0x4000 ) data |= 0x10; /* jump */
+				if ((data & 0x2000) != 0) data |= 0x20; /* throw */
+				if ((data & 0x4000) != 0) data |= 0x10; /* jump */
 				if( i==1 )
 				{
 					if( readinputport(1)&0x80 ) data |= 0x80; /* P1 start */
@@ -451,10 +451,10 @@ public class namcona1
 			int p1 = readinputport(1);
 			int p2 = readinputport(2);
 			data32_t code = 0;
-			if( p2&0x40 ) code |= 0x2000; // enter (top-level of self-test)
-			if( p2&0x20 ) code |= 0x1000; // exit  (top-level of self-test)
-			if( p1&0x40 ) code |= 0x0020; // next  (top-level of self-test)
-			if( p1&0x20 ) code |= 0x0010; // prev  (top-level of self-test)
+			if ((p2 & 0x40) != 0) code |= 0x2000; // enter (top-level of self-test)
+			if ((p2 & 0x20) != 0) code |= 0x1000; // exit  (top-level of self-test)
+			if ((p1 & 0x40) != 0) code |= 0x0020; // next  (top-level of self-test)
+			if ((p1 & 0x20) != 0) code |= 0x0010; // prev  (top-level of self-test)
 			code = ~code;
 			mcu_ram[0xffc/2] = code>>16;
 			mcu_ram[0xffe/2] = code&0xffff;
@@ -852,7 +852,7 @@ public class namcona1
 		blit_setup( dst1, &dest_bytes_per_row, &dst_pitch, gfxbank);
 		blit_setup( src1, &source_bytes_per_row, &src_pitch, gfxbank );
 	
-		if( num_bytes&1 )
+		if ((num_bytes & 1) != 0)
 		{
 			num_bytes++;
 		}
@@ -971,7 +971,7 @@ public class namcona1
 		{
 			simulate_mcu();
 		}
-		if( mEnableInterrupts )
+		if (mEnableInterrupts != 0)
 		{
 			if( (namcona1_vreg[0x1a/2]&(1<<level))==0 )
 			{

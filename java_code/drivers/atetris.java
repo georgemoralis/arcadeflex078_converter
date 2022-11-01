@@ -158,7 +158,7 @@ public class atetris
 	
 	public static WriteHandlerPtr nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (nvram_write_enable)
+		if (nvram_write_enable != 0)
 			generic_nvram[offset] = data;
 		nvram_write_enable = 0;
 	} };

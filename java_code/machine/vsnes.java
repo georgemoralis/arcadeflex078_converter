@@ -118,7 +118,7 @@ public class vsnes
 	public static WriteHandlerPtr vsnes_in0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Toggling bit 0 high then low resets both controllers */
-		if ( data & 1 )
+		if ((data & 1) != 0)
 		{
 			/* load up the latches */
 			input_latch[0] = readinputport( 0 );
@@ -182,7 +182,7 @@ public class vsnes
 	public static WriteHandlerPtr vsnes_in0_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Toggling bit 0 high then low resets both controllers */
-		if ( data & 1 )
+		if ((data & 1) != 0)
 		{
 			/* load up the latches */
 			input_latch[2] = readinputport( 4 );
@@ -230,7 +230,7 @@ public class vsnes
 		ppu2c03b_reset( 0, 1 );
 	
 		/* if we need to remap, install the callback */
-		if ( remapped_colortable )
+		if (remapped_colortable != 0)
 			ppu2c03b_set_vidaccess_callback( 0, remap_colors );
 	}
 	
@@ -249,7 +249,7 @@ public class vsnes
 		ppu2c03b_reset( 1,1 );
 	
 		/* if we need to remap, install the callback */
-		if ( remapped_colortable )
+		if (remapped_colortable != 0)
 		{
 			ppu2c03b_set_vidaccess_callback( 0, remap_colors );
 			ppu2c03b_set_vidaccess_callback( 1, remap_colors );
@@ -339,21 +339,21 @@ public class vsnes
 	{
 		static int zapstore;
 	
-		if (vsnes_do_vrom_bank)
+		if (vsnes_do_vrom_bank != 0)
 		{
 			/* switch vrom */
 			ppu2c03b_set_videorom_bank( 0, 0, 8, ( data & 4 ) ? 1 : 0, 512 );
 		}
 	
 		/* here we do things a little different */
-		if ( data & 1 )
+		if ((data & 1) != 0)
 		{
 	
 			/* load up the latches */
 			input_latch[0] = readinputport( 0 );
 	
 			/* do the gun thing */
-			if ( vsnes_gun_controller )
+			if (vsnes_gun_controller != 0)
 			{
 				int x = readinputport( 4 );
 				int y = readinputport( 5 );
@@ -548,7 +548,7 @@ public class vsnes
 		int reg = ( offset >> 13 );
 	
 		/* reset mapper */
-		if ( data & 0x80 )
+		if ((data & 0x80) != 0)
 		{
 			drmario_shiftreg = drmario_shiftcount = 0;
 	
@@ -615,7 +615,7 @@ public class vsnes
 				break;
 	
 				case 2: /* video rom banking - bank 1 - 4k only */
-					if ( vrom4k )
+					if (vrom4k != 0)
 						ppu2c03b_set_videorom_bank( 0, 4, 4, drmario_shiftreg, 256 );
 				break;
 	
@@ -631,7 +631,7 @@ public class vsnes
 						else
 						{
 							/* switch 16k */
-							if ( switchlow )
+							if (switchlow != 0)
 							{
 								/* low */
 								memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x010000+bank], 0x4000 );
@@ -802,7 +802,7 @@ public class vsnes
 		MMC3_prg0 &= MMC3_prg_mask;
 		MMC3_prg1 &= MMC3_prg_mask;
 	
-		if (MMC3_cmd & 0x40)
+		if ((MMC3_cmd & 0x40) != 0)
 		{
 			memcpy( &memory_region( REGION_CPU1 )[0x8000], &memory_region( REGION_CPU1 )[(MMC3_prg_chunks-1) * 0x4000 + 0x10000], 0x2000 );
 			memcpy( &memory_region( REGION_CPU1 )[0xc000], &memory_region( REGION_CPU1 )[0x2000 * (MMC3_prg0) + 0x10000], 0x2000 );
@@ -897,11 +897,11 @@ public class vsnes
 				break;
 			}
 			case 0x2000: /* $a000 */
-				if (data & 0x40)
+				if ((data & 0x40) != 0)
 					ppu2c03b_set_mirroring(0, PPU_MIRROR_HIGH);
 				else
 				{
-					if (data & 0x01)
+					if ((data & 0x01) != 0)
 						ppu2c03b_set_mirroring(0, PPU_MIRROR_HORZ);
 					else
 						ppu2c03b_set_mirroring(0, PPU_MIRROR_VERT);
@@ -1026,7 +1026,7 @@ public class vsnes
 	
 	public static ReadHandlerPtr supxevs_read_prot_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if( supxevs_prot_index )
+		if (supxevs_prot_index != 0)
 			return 0;
 		else
 			return 0x01;
@@ -1034,7 +1034,7 @@ public class vsnes
 	
 	public static ReadHandlerPtr supxevs_read_prot_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if( supxevs_prot_index )
+		if (supxevs_prot_index != 0)
 			return 0xd1;
 		else
 			return 0x89;
@@ -1042,7 +1042,7 @@ public class vsnes
 	
 	public static ReadHandlerPtr supxevs_read_prot_4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if( supxevs_prot_index )
+		if (supxevs_prot_index != 0)
 		{
 			supxevs_prot_index = 0;
 			return 0x3e;

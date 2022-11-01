@@ -59,7 +59,7 @@ void F7aDecodeOperands(UINT32 (*DecodeOp1)(void), UINT8 dim1, UINT32 (*DecodeOp2
 
 	// Decode length
 	appb=OpRead8(PC+2+amLength1);
-	if (appb&0x80)
+	if ((appb & 0x80) != 0)
 		f7aLenOp1=v60.reg[appb&0x1F];
 	else
 		f7aLenOp1=appb;
@@ -74,7 +74,7 @@ void F7aDecodeOperands(UINT32 (*DecodeOp1)(void), UINT8 dim1, UINT32 (*DecodeOp2
 
 	// Decode length
 	appb=OpRead8(PC+3+amLength1+amLength2);
-	if (appb&0x80)
+	if ((appb & 0x80) != 0)
 		f7aLenOp2=v60.reg[appb&0x1F];
 	else
 		f7aLenOp2=appb;
@@ -93,7 +93,7 @@ void F7bDecodeFirstOperand(UINT32 (*DecodeOp1)(void), UINT8 dim1)
 
 	// Decode ext
 	appb=OpRead8(PC+2+amLength1);
-	if (appb&0x80)
+	if ((appb & 0x80) != 0)
 		f7bLen=v60.reg[appb&0x1F];
 	else
 		f7bLen=appb;
@@ -146,33 +146,33 @@ void F7cDecodeOperands(UINT32 (*DecodeOp1)(void), UINT8 dim1, UINT32 (*DecodeOp2
 
 	// Decode ext
 	appb=OpRead8(PC+2+amLength1+amLength2);
-	if (appb&0x80)
+	if ((appb & 0x80) != 0)
 		f7cLen=v60.reg[appb&0x1F];
 	else
 		f7cLen=appb;
 }
 
 #define F7CLOADOP1BYTE(appb) \
-	if (f7cFlag1) \
+	if (f7cFlag1 != 0) \
 		appb = (UINT8)(v60.reg[f7cOp1]&0xFF); \
 	else \
 		appb = MemRead8(f7cOp1);
 
 #define F7CLOADOP2BYTE(appb) \
-	if (f7cFlag2) \
+	if (f7cFlag2 != 0) \
 		appb = (UINT8)(v60.reg[f7cOp2]&0xFF); \
 	else \
 		appb = MemRead8(f7cOp2);
 
 
 #define F7CSTOREOP2BYTE() \
-	if (f7cFlag2) \
+	if (f7cFlag2 != 0) \
 		SETREG8(v60.reg[f7cOp2], appb); \
 	else \
 		MemWrite8(f7cOp2, appb);
 
 #define F7CSTOREOP2HALF() \
-	if (f7cFlag2) \
+	if (f7cFlag2 != 0) \
 		SETREG16(v60.reg[f7cOp2], apph); \
 	else \
 		MemWrite16(f7cOp2, apph);
@@ -185,7 +185,7 @@ UINT32 opCMPSTRB(UINT8 bFill, UINT8 bStop)
 	F7aDecodeOperands(ReadAMAddress,0,ReadAMAddress,0);
 
 	// Filling
-	if (bFill)
+	if (bFill != 0)
 	{
 		if (f7aLenOp1 < f7aLenOp2)
 		{
@@ -203,7 +203,7 @@ UINT32 opCMPSTRB(UINT8 bFill, UINT8 bStop)
 
 	_Z = 0;
 	_S = 0;
-	if (bStop) _CY = 1;
+	if (bStop != 0) _CY = 1;
 
 	for (i=0;i<dest;i++)
 	{
@@ -219,7 +219,7 @@ UINT32 opCMPSTRB(UINT8 bFill, UINT8 bStop)
 			_S=0;	break;
 		}
 
-		if (bStop)
+		if (bStop != 0)
 			if (c1==(UINT8)R26 || c2==(UINT8)R26)
 			{
 				_CY=0;
@@ -251,7 +251,7 @@ UINT32 opCMPSTRH(UINT8 bFill, UINT8 bStop)
 	F7aDecodeOperands(ReadAMAddress,0,ReadAMAddress,0);
 
 	// Filling
-	if (bFill)
+	if (bFill != 0)
 	{
 		if (f7aLenOp1 < f7aLenOp2)
 		{
@@ -269,7 +269,7 @@ UINT32 opCMPSTRH(UINT8 bFill, UINT8 bStop)
 
 	_Z = 0;
 	_S = 0;
-	if (bStop) _CY = 1;
+	if (bStop != 0) _CY = 1;
 
 	for (i=0;i<dest;i++)
 	{
@@ -285,7 +285,7 @@ UINT32 opCMPSTRH(UINT8 bFill, UINT8 bStop)
 			_S=0;	break;
 		}
 
-		if (bStop)
+		if (bStop != 0)
 			if (c1==(UINT16)R26 || c2==(UINT16)R26)
 			{
 				_CY=0;
@@ -316,7 +316,7 @@ UINT32 opMOVSTRUB(UINT8 bFill, UINT8 bStop) /* TRUSTED (0,0) (1,0) */
 	UINT32 i,dest;
 	UINT8 c1;
 
-//	if (bStop)
+//	if (bStop != 0)
 //	{
 //		int a=1;
 //	}
@@ -386,7 +386,7 @@ UINT32 opMOVSTRUH(UINT8 bFill, UINT8 bStop) /* TRUSTED (0,0) (1,0) */
 	UINT32 i,dest;
 	UINT16 c1;
 
-//	if (bStop)
+//	if (bStop != 0)
 //	{	int a=1; }
 
 	F7aDecodeOperands(ReadAMAddress,1,ReadAMAddress,1);

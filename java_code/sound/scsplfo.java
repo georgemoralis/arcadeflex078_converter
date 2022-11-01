@@ -132,7 +132,7 @@ void LFO_ComputeStep(struct _LFO *LFO,data32_t LFOF,data32_t LFOWS,data32_t LFOS
 {
     float step=(float) LFOFreq[LFOF]*256.0/(float)Machine->sample_rate;
     LFO->phase_step=(unsigned int) ((float) (1<<LFO_SHIFT)*step);
-    if(ALFO)
+    if (ALFO != 0)
     {
 		switch(LFOWS)
 		{

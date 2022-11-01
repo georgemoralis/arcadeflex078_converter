@@ -92,7 +92,7 @@ public class galpanic
 			attr1 = spriteram16[offs + 3];
 			x = spriteram16[offs + 4] - ((attr1 & 0x01) << 8);
 			y = spriteram16[offs + 5] + ((attr1 & 0x02) << 7);
-			if (attr1 & 0x04)	/* multi sprite */
+			if ((attr1 & 0x04) != 0)	/* multi sprite */
 			{
 				sx += x;
 				sy += y;
@@ -156,7 +156,7 @@ public class galpanic
 			sx = offs % 256;
 			sy = offs / 256;
 			color = galpanic_fgvideoram[offs];
-			if (color)
+			if (color != 0)
 				plot_pixel(bitmap, sx, sy, Machine->pens[color]);
 		}
 	}

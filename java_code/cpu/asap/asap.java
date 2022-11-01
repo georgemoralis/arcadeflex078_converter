@@ -418,9 +418,9 @@ public class asap
 	unsigned asap_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst)
+		if (dst != 0)
 		{
-			if (src2val)
+			if (src2val != 0)
 				memcpy(&asap.r[0], &src2val[REGBASE], 32 * sizeof(UINT32));
 			*(asap_regs *)dst = asap;
 		}
@@ -433,10 +433,10 @@ public class asap
 	void asap_set_context(void *src)
 	{
 		/* copy the context */
-		if (src)
+		if (src != 0)
 		{
 			asap = *(asap_regs *)src;
-			if (src2val)
+			if (src2val != 0)
 				memcpy(&src2val[REGBASE], &asap.r[0], 32 * sizeof(UINT32));
 			UPDATEPC();
 	
@@ -458,7 +458,7 @@ public class asap
 			opcode = malloc(32 * 32 * 2 * sizeof(void *));
 	
 		/* fill opcode table */
-		if (opcode)
+		if (opcode != 0)
 		{
 			int op, dst, cond;
 	
@@ -469,7 +469,7 @@ public class asap
 							opcode[(op << 6) + (dst << 1) + cond] = conditiontable[dst & 15];
 						else if (cond && dst == 0)
 							opcode[(op << 6) + (dst << 1) + cond] = opcodetable[op][3];
-						else if (cond)
+						else if (cond != 0)
 							opcode[(op << 6) + (dst << 1) + cond] = opcodetable[op][2];
 						else if (dst == 0)
 							opcode[(op << 6) + (dst << 1) + cond] = opcodetable[op][1];
@@ -482,7 +482,7 @@ public class asap
 			src2val = malloc(65536 * sizeof(UINT32));
 	
 		/* fill scr2 table */
-		if (src2val)
+		if (src2val != 0)
 		{
 			int i;
 	
@@ -1134,7 +1134,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 2);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if (src1 & 0xc0000000)
+		if ((src1 & 0xc0000000) != 0)
 			SET_CFLAG(1);
 		if (((src1 ^ (src1 >> 1)) & 0x20000000) || (src1 ^ (src1 >> 2)) & 0x20000000)
 			SET_VFLAG(1);
@@ -1148,7 +1148,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 2);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if (src1 & 0xc0000000)
+		if ((src1 & 0xc0000000) != 0)
 			SET_CFLAG(1);
 		if (((src1 ^ (src1 >> 1)) & 0x20000000) || (src1 ^ (src1 >> 2)) & 0x20000000)
 			SET_VFLAG(1);
@@ -1168,7 +1168,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 1);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if (src1 & 0x80000000)
+		if ((src1 & 0x80000000) != 0)
 			SET_CFLAG(1);
 		if ((src1 ^ (src1 >> 1)) & 0x40000000)
 			SET_VFLAG(1);
@@ -1182,7 +1182,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 1);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if (src1 & 0x80000000)
+		if ((src1 & 0x80000000) != 0)
 			SET_CFLAG(1);
 		if ((src1 ^ (src1 >> 1)) & 0x40000000)
 			SET_VFLAG(1);

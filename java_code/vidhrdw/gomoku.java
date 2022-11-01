@@ -151,8 +151,8 @@ public class gomoku
 	
 				color = 0x20;				// 黒(枠外)
 	
-				if (bgdata & 0x01) color = 0x21;	// 茶(盤)
-				if (bgdata & 0x02) color = 0x20;	// 黒(枠線)
+				if ((bgdata & 0x01) != 0) color = 0x21;	// 茶(盤)
+				if ((bgdata & 0x02) != 0) color = 0x20;	// 黒(枠線)
 	
 				plot_pixel(gomoku_bg_bitmap, (255 - x + 7), (255 - y - 1), color);
 			}
@@ -177,7 +177,7 @@ public class gomoku
 		int color;
 	
 		/* draw background layer */
-		if (gomoku_bg_dispsw)
+		if (gomoku_bg_dispsw != 0)
 		{
 			/* copy bg bitmap */
 			copybitmap(bitmap, gomoku_bg_bitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
@@ -193,13 +193,13 @@ public class gomoku
 						bgdata = GOMOKU_BG_D[ GOMOKU_BG_X[x] + (GOMOKU_BG_Y[y] << 4) ];
 						bgram = gomoku_bgram[bgoffs];
 	
-						if (bgdata & 0x04)
+						if ((bgdata & 0x04) != 0)
 						{
-							if (bgram & 0x01)
+							if ((bgram & 0x01) != 0)
 							{
 								color = 0x2f;	// 明るい黒(石)
 							}
-							else if (bgram & 0x02)
+							else if ((bgram & 0x02) != 0)
 							{
 								color = 0x22;	// 白(石)
 							}
@@ -223,13 +223,13 @@ public class gomoku
 						bgdata = GOMOKU_BG_D[ GOMOKU_BG_X[x] + (GOMOKU_BG_Y[y] << 4) ];
 						bgram = gomoku_bgram[bgoffs];
 	
-						if (bgdata & 0x08)
+						if ((bgdata & 0x08) != 0)
 						{
-							if (bgram & 0x04)
+							if ((bgram & 0x04) != 0)
 							{
 								color = 0x2f;	// 明るい黒(カーソル)
 							}
-							else if (bgram & 0x08)
+							else if ((bgram & 0x08) != 0)
 							{
 								color = 0x22;	// 白(カーソル)
 							}
@@ -264,7 +264,7 @@ public class gomoku
 				}
 			} else key_ins = 0;
 	
-			if (dispsw)
+			if (dispsw != 0)
 			{
 				for (y = 0; y < 16; y++)
 				{
@@ -313,7 +313,7 @@ public class gomoku
 	{
 		FILE *fp;
 		fp=fopen("TILE_VID.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(&videoram[0], videoram_size, 1, fp);
 			usrintf_showmessage("saved");

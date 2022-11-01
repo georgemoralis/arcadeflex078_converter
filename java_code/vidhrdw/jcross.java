@@ -205,11 +205,11 @@ public class jcross
 		int bg_scrolly = jcross_vregs[3];
 		int bg_scrollx = jcross_vregs[4];
 	
-		if( scroll_attributes & 1 ) sprite_scrollx += 256;
-		if( scroll_attributes & 2 ) bg_scrollx += 256;
+		if ((scroll_attributes & 1) != 0) sprite_scrollx += 256;
+		if ((scroll_attributes & 2) != 0) bg_scrollx += 256;
 	
-		if( scroll_attributes & 8 ) sprite_scrolly += 256;
-		if( scroll_attributes & 0x10 ) bg_scrolly += 256;
+		if ((scroll_attributes & 8) != 0) sprite_scrolly += 256;
+		if ((scroll_attributes & 0x10) != 0) bg_scrolly += 256;
 		update_palette(1);
 	
 	

@@ -184,7 +184,7 @@ public class atarigx2
 		{
 			data32_t word = *base++;
 	
-			if (word & 0x80000000)
+			if ((word & 0x80000000) != 0)
 			{
 				int newscroll = (word >> 21) & 0x3ff;
 				int newbank = (word >> 16) & 0x1f;
@@ -202,7 +202,7 @@ public class atarigx2
 				}
 			}
 	
-			if (word & 0x00008000)
+			if ((word & 0x00008000) != 0)
 			{
 				int newscroll = ((word >> 6) - (scanline + i)) & 0x1ff;
 				int newbank = word & 15;

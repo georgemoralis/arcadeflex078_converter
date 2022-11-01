@@ -126,7 +126,7 @@ public class srmp2
 	
 			int color   = (x >> 11) & 0x1f;
 	
-			if (flip)
+			if (flip != 0)
 			{
 				y = max_y - y;
 				flipx = !flipx;
@@ -135,7 +135,7 @@ public class srmp2
 	
 			code = code & 0x3fff;
 	
-			if (srmp2_color_bank) color |= 0x20;
+			if (srmp2_color_bank != 0) color |= 0x20;
 	
 			drawgfx(bitmap, Machine->gfx[0],
 					code,
@@ -193,7 +193,7 @@ public class srmp2
 	
 				if (upper & (1 << col))	sx += 256;
 	
-				if (flip)
+				if (flip != 0)
 				{
 					sy = max_y - 14 - sy - 0x100;
 					flipx = !flipx;
@@ -285,9 +285,9 @@ public class srmp2
 			int flipy	=	code & 0x4000;
 	
 			code = (code & 0x1fff);
-			if (gfxbank) code += ((srmp3_gfx_bank + 1) * 0x2000);
+			if (gfxbank != 0) code += ((srmp3_gfx_bank + 1) * 0x2000);
 	
-			if (flip)
+			if (flip != 0)
 			{
 				y = max_y - y;
 				flipx = !flipx;
@@ -356,7 +356,7 @@ public class srmp2
 	
 				if (upper & (1 << col))	sx += 256;
 	
-				if (flip)
+				if (flip != 0)
 				{
 					sy = max_y - 16 - sy - 0x100;
 					flipx = !flipx;
@@ -441,9 +441,9 @@ public class srmp2
 			int flipy	=	code & 0x4000;
 	
 			code = (code & 0x1fff);
-			if (gfxbank) code += ((mjyuugi_gfx_bank + 1) * 0x2000);
+			if (gfxbank != 0) code += ((mjyuugi_gfx_bank + 1) * 0x2000);
 	
-			if (flip)
+			if (flip != 0)
 			{
 				y = max_y - y
 					+(Machine->drv->screen_height-(Machine->visible_area.max_y + 1));

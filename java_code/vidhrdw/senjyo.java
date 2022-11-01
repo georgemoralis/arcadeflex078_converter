@@ -131,7 +131,7 @@ public class senjyo
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
-		if (senjyo)
+		if (senjyo != 0)
 		{
 			bg1_tilemap = tilemap_create(senjyo_bg1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16,32);
 			bg2_tilemap = tilemap_create(get_bg2_tile_info,   tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16,48);	/* only 16x32 used by Star Force */
@@ -237,11 +237,11 @@ public class senjyo
 			count = 0;
 			strwid = senjyo_bgstripes;
 			if (strwid == 0) strwid = 0x100;
-			if (flip_screen) strwid ^= 0xff;
+			if (flip_screen != 0) strwid ^= 0xff;
 	
 			for (x = 0;x < 256;x++)
 			{
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					for (y = 0;y < 256;y++)
 					{
@@ -285,7 +285,7 @@ public class senjyo
 						sx = (8 * (offs % 8) + x) + 256-64;
 						sy = ((offs & 0x1ff) / 8) + 96;
 	
-						if (flip_screen)
+						if (flip_screen != 0)
 						{
 							sx = 255 - sx;
 							sy = 255 - sy;
@@ -313,24 +313,24 @@ public class senjyo
 	
 			if (((spriteram[offs+1] & 0x30) >> 4) == priority)
 			{
-				if (senjyo)	/* Senjyo */
+				if (senjyo != 0)	/* Senjyo */
 					big = (spriteram[offs] & 0x80);
 				else	/* Star Force */
 					big = ((spriteram[offs] & 0xc0) == 0xc0);
 				sx = spriteram[offs+3];
-				if (big)
+				if (big != 0)
 					sy = 224-spriteram[offs+2];
 				else
 					sy = 240-spriteram[offs+2];
 				flipx = spriteram[offs+1] & 0x40;
 				flipy = spriteram[offs+1] & 0x80;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
 	
-					if (big)
+					if (big != 0)
 					{
 						sx = 224 - sx;
 						sy = 226 - sy;
@@ -370,26 +370,26 @@ public class senjyo
 	
 			scrollx = senjyo_scrollx1[0];
 			scrolly = senjyo_scrolly1[0] + 256 * senjyo_scrolly1[1];
-			if (flip_screen)
+			if (flip_screen != 0)
 				scrollx = -scrollx;
 			tilemap_set_scrollx(bg1_tilemap,0,scrollx);
 			tilemap_set_scrolly(bg1_tilemap,0,scrolly);
 	
 			scrollx = senjyo_scrollx2[0];
 			scrolly = senjyo_scrolly2[0] + 256 * senjyo_scrolly2[1];
-			if (scrollhack)	/* Star Force, but NOT the encrypted version */
+			if (scrollhack != 0)	/* Star Force, but NOT the encrypted version */
 			{
 				scrollx = senjyo_scrollx1[0];
 				scrolly = senjyo_scrolly1[0] + 256 * senjyo_scrolly1[1];
 			}
-			if (flip_screen)
+			if (flip_screen != 0)
 				scrollx = -scrollx;
 			tilemap_set_scrollx(bg2_tilemap,0,scrollx);
 			tilemap_set_scrolly(bg2_tilemap,0,scrolly);
 	
 			scrollx = senjyo_scrollx3[0];
 			scrolly = senjyo_scrolly3[0] + 256 * senjyo_scrolly3[1];
-			if (flip_screen)
+			if (flip_screen != 0)
 				scrollx = -scrollx;
 			tilemap_set_scrollx(bg3_tilemap,0,scrollx);
 			tilemap_set_scrolly(bg3_tilemap,0,scrolly);

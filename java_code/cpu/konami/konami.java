@@ -308,7 +308,7 @@ public class konami
 	#define BRANCH(f) { 					\
 		UINT8 t;							\
 		IMMBYTE(t); 						\
-		if( f ) 							\
+		if (f != 0) 							\
 		{									\
 			PC += SIGNED(t);				\
 			change_pc16(PC);	/* TS 971002 */ \
@@ -318,7 +318,7 @@ public class konami
 	#define LBRANCH(f) {                    \
 		PAIR t; 							\
 		IMMWORD(t); 						\
-		if( f ) 							\
+		if (f != 0) 							\
 		{									\
 			konami_ICount -= 1;				\
 			PC += t.w.l;					\
@@ -390,7 +390,7 @@ public class konami
 	 ****************************************************************************/
 	unsigned konami_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(konami_Regs*)dst = konami;
 		return sizeof(konami_Regs);
 	}
@@ -400,7 +400,7 @@ public class konami
 	 ****************************************************************************/
 	void konami_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 			konami = *(konami_Regs*)src;
 	    change_pc16(PC);    /* TS 971002 */
 	

@@ -44,7 +44,7 @@ public class avalnche
 				discrete_sound_w(4, (~data) & 0x01);
 				break;
 			case 0x02:		/* VIDEO INVERT */
-				if (data & 0x01)
+				if ((data & 0x01) != 0)
 				{
 					palette_set_color(0,0,0,0);
 					palette_set_color(1,255,255,255);

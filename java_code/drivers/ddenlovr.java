@@ -164,14 +164,14 @@ public class ddenlovr
 		if (!(dynax_clip_ctrl & 4) && y < dynax_clip_y) return;
 		if (!(dynax_clip_ctrl & 8) && y >= dynax_clip_y) return;
 	
-		if (dynax_dest_layer & 0x0001) pixmap[0][512*y+x] = pen;
-		if (dynax_dest_layer & 0x0002) pixmap[1][512*y+x] = pen;
-		if (dynax_dest_layer & 0x0004) pixmap[2][512*y+x] = pen;
-		if (dynax_dest_layer & 0x0008) pixmap[3][512*y+x] = pen;
-		if (dynax_dest_layer & 0x0100) pixmap[4][512*y+x] = pen;
-		if (dynax_dest_layer & 0x0200) pixmap[5][512*y+x] = pen;
-		if (dynax_dest_layer & 0x0400) pixmap[6][512*y+x] = pen;
-		if (dynax_dest_layer & 0x0800) pixmap[7][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0001) != 0) pixmap[0][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0002) != 0) pixmap[1][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0004) != 0) pixmap[2][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0008) != 0) pixmap[3][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0100) != 0) pixmap[4][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0200) != 0) pixmap[5][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0400) != 0) pixmap[6][512*y+x] = pen;
+		if ((dynax_dest_layer & 0x0800) != 0) pixmap[7][512*y+x] = pen;
 	}
 	
 	
@@ -247,7 +247,7 @@ public class ddenlovr
 					{
 						int length = fetch_word(src_data,src_len,&bit_addr,arg_size);
 						int pen = fetch_word(src_data,src_len,&bit_addr,pen_size);
-						if (dynax_blit_pen_mode) pen = (dynax_blit_pen & 0x0f);
+						if (dynax_blit_pen_mode != 0) pen = (dynax_blit_pen & 0x0f);
 						pen |= dynax_blit_pen & 0xf0;
 						while (length-- >= 0)
 						{
@@ -263,7 +263,7 @@ public class ddenlovr
 						while (length-- >= 0)
 						{
 							int pen = fetch_word(src_data,src_len,&bit_addr,pen_size);
-							if (dynax_blit_pen_mode) pen = (dynax_blit_pen & 0x0f);
+							if (dynax_blit_pen_mode != 0) pen = (dynax_blit_pen & 0x0f);
 							pen |= dynax_blit_pen & 0xf0;
 							do_plot(x,dynax_blit_y,pen);
 							x += xinc;
@@ -328,7 +328,7 @@ public class ddenlovr
 			switch(dynax_blit_reg[blitter] & 0x3f)
 			{
 			case 0x00:
-				if (blitter)	dynax_dest_layer = (dynax_dest_layer & 0x00ff) | (data<<8);
+				if (blitter != 0)	dynax_dest_layer = (dynax_dest_layer & 0x00ff) | (data<<8);
 				else			dynax_dest_layer = (dynax_dest_layer & 0xff00) | (data<<0);
 				break;
 	
@@ -339,7 +339,7 @@ public class ddenlovr
 			case 0x03:
 				dynax_blit_flip = data;
 	#ifdef MAME_DEBUG
-	if (dynax_blit_flip & 0xfc) usrintf_showmessage("dynax_blit_flip = %02x",dynax_blit_flip);
+	if ((dynax_blit_flip & 0xfc) != 0) usrintf_showmessage("dynax_blit_flip = %02x",dynax_blit_flip);
 	#endif
 				break;
 	
@@ -461,14 +461,14 @@ public class ddenlovr
 			if (start + length > 512*512)
 				length = 512*512 - start;
 	
-			if (dynax_dest_layer & 0x0001) memset(pixmap[0] + start,dynax_blit_pen,length);
-			if (dynax_dest_layer & 0x0002) memset(pixmap[1] + start,dynax_blit_pen,length);
-			if (dynax_dest_layer & 0x0004) memset(pixmap[2] + start,dynax_blit_pen,length);
-			if (dynax_dest_layer & 0x0008) memset(pixmap[3] + start,dynax_blit_pen,length);
-			if (dynax_dest_layer & 0x0100) memset(pixmap[4] + start,dynax_blit_pen,length);
-			if (dynax_dest_layer & 0x0200) memset(pixmap[5] + start,dynax_blit_pen,length);
-			if (dynax_dest_layer & 0x0400) memset(pixmap[6] + start,dynax_blit_pen,length);
-			if (dynax_dest_layer & 0x0800) memset(pixmap[7] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0001) != 0) memset(pixmap[0] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0002) != 0) memset(pixmap[1] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0004) != 0) memset(pixmap[2] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0008) != 0) memset(pixmap[3] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0100) != 0) memset(pixmap[4] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0200) != 0) memset(pixmap[5] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0400) != 0) memset(pixmap[6] + start,dynax_blit_pen,length);
+			if ((dynax_dest_layer & 0x0800) != 0) memset(pixmap[7] + start,dynax_blit_pen,length);
 		}
 	}
 					}
@@ -489,14 +489,14 @@ public class ddenlovr
 		usrintf_showmessage("FILL command X %03x Y %03x",dynax_blit_x,dynax_blit_y);
 	#endif
 	
-						if (dynax_dest_layer & 0x0001) memset(pixmap[0] + start,dynax_blit_pen,512*512 - start);
-						if (dynax_dest_layer & 0x0002) memset(pixmap[1] + start,dynax_blit_pen,512*512 - start);
-						if (dynax_dest_layer & 0x0004) memset(pixmap[2] + start,dynax_blit_pen,512*512 - start);
-						if (dynax_dest_layer & 0x0008) memset(pixmap[3] + start,dynax_blit_pen,512*512 - start);
-						if (dynax_dest_layer & 0x0100) memset(pixmap[4] + start,dynax_blit_pen,512*512 - start);
-						if (dynax_dest_layer & 0x0200) memset(pixmap[5] + start,dynax_blit_pen,512*512 - start);
-						if (dynax_dest_layer & 0x0400) memset(pixmap[6] + start,dynax_blit_pen,512*512 - start);
-						if (dynax_dest_layer & 0x0800) memset(pixmap[7] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0001) != 0) memset(pixmap[0] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0002) != 0) memset(pixmap[1] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0004) != 0) memset(pixmap[2] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0008) != 0) memset(pixmap[3] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0100) != 0) memset(pixmap[4] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0200) != 0) memset(pixmap[5] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0400) != 0) memset(pixmap[6] + start,dynax_blit_pen,512*512 - start);
+						if ((dynax_dest_layer & 0x0800) != 0) memset(pixmap[7] + start,dynax_blit_pen,512*512 - start);
 					}
 					else if (data == 0x13)
 					{
@@ -515,7 +515,7 @@ public class ddenlovr
 	usrintf_showmessage("LINE X");
 	if (dynax_clip_ctrl != 0x0f)
 		usrintf_showmessage("LINE X clipx=%03x clipy=%03x ctrl=%x",dynax_clip_x,dynax_clip_y,dynax_clip_ctrl);
-	if (dynax_blit_flip)
+	if (dynax_blit_flip != 0)
 		usrintf_showmessage("LINE X flip=%x",dynax_blit_flip);
 	#endif
 	
@@ -565,7 +565,7 @@ public class ddenlovr
 	#endif
 					}
 	
-					if (irq_vector)
+					if (irq_vector != 0)
 					{
 						/* quizchq */
 						cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, irq_vector);
@@ -573,7 +573,7 @@ public class ddenlovr
 					else
 					{
 						/* ddenlovr */
-						if (dynax_blitter_irq_enable)
+						if (dynax_blitter_irq_enable != 0)
 						{
 							dynax_blitter_irq_flag = 1;
 							cpu_set_irq_line(0,1,HOLD_LINE);
@@ -598,16 +598,16 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_blitter_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			blitter_w(0,offset,data & 0xff,0);
 	}
 	
 	
 	static WRITE16_HANDLER( ddenlovr_blitter_irq_ack_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
-			if (data & 1)
+			if ((data & 1) != 0)
 			{
 				dynax_blitter_irq_enable = 1;
 			}
@@ -632,7 +632,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_bgcolor_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			dynax_bgcolor_w(offset,data);
 	}
 	
@@ -649,7 +649,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_priority_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			dynax_priority_w(offset,data);
 	}
 	
@@ -667,7 +667,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_layer_enable_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			dynax_layer_enable_w(offset,data);
 	}
 	
@@ -690,7 +690,7 @@ public class ddenlovr
 				for (x = cliprect->min_x;x <= cliprect->max_x;x++)
 				{
 					int pen = pixmap[layer][512 * ((y + scrolly) & 0x1ff) + ((x + scrollx) & 0x1ff)];
-					if (pen & 0x0f)
+					if ((pen & 0x0f) != 0)
 					{
 						((UINT16 *)bitmap->line[y])[x] = pen | palbase;
 					}
@@ -758,7 +758,7 @@ public class ddenlovr
 	//if (!keyboard_pressed(KEYCODE_R))
 			copylayer(framebuffer,&Machine->visible_area,order[pri][3]);
 	
-			if (extra_layers)
+			if (extra_layers != 0)
 			{
 	
 			pri = dynax_priority2;
@@ -790,12 +790,12 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_coincounter_0_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			coin_counter_w(0, data & 1);
 	}
 	static WRITE16_HANDLER( ddenlovr_coincounter_1_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			coin_counter_w(1, data & 1);
 	}
 	
@@ -826,7 +826,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_palette_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			rongrong_palette_w(offset,data & 0xff);
 	}
 	
@@ -844,7 +844,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_palette_base_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			dynax_palette_base[offset] = data & 0xff;
 	}
 	
@@ -856,7 +856,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_oki_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_set_bank_base(0, (data & 7) * 0x40000);
 	}
 	
@@ -865,7 +865,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( quiz365_oki_bank1_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			okibank = (okibank & 2) | (data & 1);
 			OKIM6295_set_bank_base(0, okibank * 0x40000);
@@ -874,7 +874,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( quiz365_oki_bank2_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			okibank = (okibank & 1) | ((data & 1) << 1);
 			OKIM6295_set_bank_base(0, okibank * 0x40000);
@@ -982,13 +982,13 @@ public class ddenlovr
 	
 	WRITE16_HANDLER( quiz365_select2_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			rongrong_select2 = data;
 	}
 	
 	static WRITE16_HANDLER( quiz365_coincounter_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (rongrong_select2 == 0x1c)
 			{
@@ -1114,7 +1114,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( nettoqc_coincounter_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_counter_w(0, data & 0x01);
 			coin_counter_w(1, data & 0x04);
@@ -1124,7 +1124,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( nettoqc_oki_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_set_bank_base(0, (data & 3) * 0x40000);
 	}
 	

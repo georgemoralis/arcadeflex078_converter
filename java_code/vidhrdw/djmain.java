@@ -83,12 +83,12 @@ public class djmain
 				{
 					int c = code;
 	
-					if (flipx)
+					if (flipx != 0)
 						c += xoffset[size - x - 1];
 					else
 						c += xoffset[x];
 	
-					if (flipy)
+					if (flipy != 0)
 						c += yoffset[size - y - 1];
 					else
 						c += yoffset[y];
@@ -191,7 +191,7 @@ public class djmain
 	
 			if (layer == NUM_LAYERS)
 			{
-				if (enables & K55_INP_SUB2)
+				if ((enables & K55_INP_SUB2) != 0)
 					djmain_draw_sprites(bitmap, cliprect);
 			}
 			else

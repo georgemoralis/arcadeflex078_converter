@@ -826,7 +826,7 @@ public class ym2413
 				unsigned int block_fnum = CH->block_fnum * 2;
 				signed int lfo_fn_table_index_offset = lfo_pm_table[LFO_PM + fnum_lfo ];
 	
-				if (lfo_fn_table_index_offset)	/* LFO phase modulation active */
+				if (lfo_fn_table_index_offset != 0)	/* LFO phase modulation active */
 				{
 					block_fnum += lfo_fn_table_index_offset;
 					block = (block_fnum&0x1c00) >> 10;
@@ -1078,22 +1078,22 @@ public class ym2413
 	
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | (0xd0>>2); */
-			if (res2)
+			if (res2 != 0)
 				phase = (0x200|(0xd0>>2));
 	
 	
 			/* when phase & 0x200 is set and noise=1 then phase = 0x200|0xd0 */
 			/* when phase & 0x200 is set and noise=0 then phase = 0x200|(0xd0>>2), ie no change */
-			if (phase&0x200)
+			if ((phase & 0x200) != 0)
 			{
-				if (noise)
+				if (noise != 0)
 					phase = 0x200|0xd0;
 			}
 			else
 			/* when phase & 0x200 is clear and noise=1 then phase = 0xd0>>2 */
 			/* when phase & 0x200 is clear and noise=0 then phase = 0xd0, ie no change */
 			{
-				if (noise)
+				if (noise != 0)
 					phase = 0xd0>>2;
 			}
 	
@@ -1115,7 +1115,7 @@ public class ym2413
 			/* when noisebit = 0 pass the phase from calculation above */
 			/* when noisebit = 1 phase ^= 0x100; */
 			/* in other words: phase ^= (noisebit<<8); */
-			if (noise)
+			if (noise != 0)
 				phase ^= 0x100;
 	
 			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2->wavetable) * 2;
@@ -1148,7 +1148,7 @@ public class ym2413
 			unsigned char res2 = (bit3e | bit5e);
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | 0x100; */
-			if (res2)
+			if (res2 != 0)
 				phase = 0x300;
 	
 			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2->wavetable) * 2;
@@ -1175,7 +1175,7 @@ public class ym2413
 	
 			n = (int)m;		/* 16 bits here */
 			n >>= 4;		/* 12 bits here */
-			if (n&1)		/* round to nearest */
+			if ((n & 1) != 0)		/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1213,7 +1213,7 @@ public class ym2413
 			o = o / (ENV_STEP/4);
 	
 			n = (int)(2.0*o);
-			if (n&1)						/* round to nearest */
+			if ((n & 1) != 0)						/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1619,7 +1619,7 @@ public class ym2413
 	
 			case 0x0e:	/* x, x, r,bd,sd,tom,tc,hh */
 			{
-				if(v&0x20)
+				if ((v & 0x20) != 0)
 				{
 					if ((chip->rhythm&0x20)==0)
 					/*rhythm off to on*/
@@ -1658,7 +1658,7 @@ public class ym2413
 						SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 					}
 					/* BD key on/off */
-					if(v&0x10)
+					if ((v & 0x10) != 0)
 					{
 						KEY_ON (&chip->P_CH[6].SLOT[SLOT1], 2);
 						KEY_ON (&chip->P_CH[6].SLOT[SLOT2], 2);
@@ -1669,16 +1669,16 @@ public class ym2413
 						KEY_OFF(&chip->P_CH[6].SLOT[SLOT2],~2);
 					}
 					/* HH key on/off */
-					if(v&0x01) KEY_ON (&chip->P_CH[7].SLOT[SLOT1], 2);
+					if ((v & 0x01) != 0) KEY_ON (&chip->P_CH[7].SLOT[SLOT1], 2);
 					else       KEY_OFF(&chip->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key on/off */
-					if(v&0x08) KEY_ON (&chip->P_CH[7].SLOT[SLOT2], 2);
+					if ((v & 0x08) != 0) KEY_ON (&chip->P_CH[7].SLOT[SLOT2], 2);
 					else       KEY_OFF(&chip->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key on/off */
-					if(v&0x04) KEY_ON (&chip->P_CH[8].SLOT[SLOT1], 2);
+					if ((v & 0x04) != 0) KEY_ON (&chip->P_CH[8].SLOT[SLOT1], 2);
 					else       KEY_OFF(&chip->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY key on/off */
-					if(v&0x02) KEY_ON (&chip->P_CH[8].SLOT[SLOT2], 2);
+					if ((v & 0x02) != 0) KEY_ON (&chip->P_CH[8].SLOT[SLOT2], 2);
 					else       KEY_OFF(&chip->P_CH[8].SLOT[SLOT2],~2);
 				}
 				else
@@ -1739,7 +1739,7 @@ public class ym2413
 	
 			CH = &chip->P_CH[chan];
 	
-			if(r&0x10)
+			if ((r & 0x10) != 0)
 			{	/* 10-18: FNUM 0-7 */
 				block_fnum  = (CH->block_fnum&0x0f00) | v;
 			}
@@ -1747,7 +1747,7 @@ public class ym2413
 			{	/* 20-28: suson, keyon, block, FNUM 8 */
 				block_fnum = ((v&0x0f)<<8) | (CH->block_fnum&0xff);
 	
-				if(v&0x10)
+				if ((v & 0x10) != 0)
 				{
 					KEY_ON (&CH->SLOT[SLOT1], 1);
 					KEY_ON (&CH->SLOT[SLOT2], 1);
@@ -1848,7 +1848,7 @@ public class ym2413
 	#ifdef LOG_CYM_FILE
 	static void cymfile_callback (int n)
 	{
-		if (cymfile)
+		if (cymfile != 0)
 		{
 			fputc( (unsigned char)8, cymfile );
 		}
@@ -1873,7 +1873,7 @@ public class ym2413
 	
 	#ifdef LOG_CYM_FILE
 		cymfile = fopen("2413_.cym","wb");
-		if (cymfile)
+		if (cymfile != 0)
 			timer_pulse ( TIME_IN_HZ(110), 0, cymfile_callback); /*110 Hz pulse timer*/
 		else
 			logerror("Could not create file 2413_.cym\n");
@@ -1884,8 +1884,8 @@ public class ym2413
 	
 	static void OPLL_UnLockTable(void)
 	{
-		if(num_lock) num_lock--;
-		if(num_lock) return;
+		if (num_lock != 0) num_lock--;
+		if (num_lock != 0) return;
 	
 		/* last time */
 	
@@ -2027,7 +2027,7 @@ public class ym2413
 	{
 		int i;
 	
-		if (YM2413NumChips)
+		if (YM2413NumChips != 0)
 			return -1;	/* duplicate init. */
 	
 		YM2413NumChips = num;

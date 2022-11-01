@@ -170,7 +170,7 @@ public class armedf
 	
 	WRITE16_HANDLER( terraf_fg_scrollx_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			armedf_fg_scrollx = data >> 8;
 			waiting_msb = 1;
@@ -179,9 +179,9 @@ public class armedf
 	
 	WRITE16_HANDLER( terraf_fg_scrolly_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
-			if (waiting_msb)
+			if (waiting_msb != 0)
 				terraf_scroll_msb = data >> 8;
 			else
 				armedf_fg_scrolly = data >> 8;
@@ -190,7 +190,7 @@ public class armedf
 	
 	WRITE16_HANDLER( terraf_fg_scroll_msb_arm_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			waiting_msb = 0;
 	}
 	
@@ -239,7 +239,7 @@ public class armedf
 			int sx = buffered_spriteram16[offs+3];
 			int sy = sprite_offy+240-(buffered_spriteram16[offs+0]&0x1ff);
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				sx = 320 - sx + 176;	/* don't ask where 176 comes from, just tried it out */
 				sy = 240 - sy + 1;		/* don't ask where 1 comes from, just tried it out */
 				flipx = !flipx;			/* the values seem to result in pixel-correct placement */
@@ -295,7 +295,7 @@ public class armedf
 				break;
 		}
 	
-		if( armedf_vreg & 0x0800 )
+		if ((armedf_vreg & 0x0800) != 0)
 		{
 			tilemap_draw( bitmap, cliprect, bg_tilemap, 0, 0);
 		}
@@ -304,11 +304,11 @@ public class armedf
 			fillbitmap( bitmap, get_black_pen(), cliprect ); /* disabled bg_tilemap - all black? */
 		}
 	
-		if( sprite_enable ) draw_sprites( bitmap, cliprect, 2 );
+		if (sprite_enable != 0) draw_sprites( bitmap, cliprect, 2 );
 		tilemap_draw( bitmap, cliprect, fg_tilemap, 0, 0);
-		if( sprite_enable ) draw_sprites( bitmap, cliprect, 1 );
+		if (sprite_enable != 0) draw_sprites( bitmap, cliprect, 1 );
 		tilemap_draw( bitmap, cliprect, tx_tilemap, 0, 0);
-		if( sprite_enable ) draw_sprites( bitmap, cliprect, 0 );
+		if (sprite_enable != 0) draw_sprites( bitmap, cliprect, 0 );
 	
 		if( keyboard_pressed(KEYCODE_1 ) ||
 			keyboard_pressed(KEYCODE_2 ) )

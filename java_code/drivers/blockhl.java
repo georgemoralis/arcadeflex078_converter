@@ -46,7 +46,7 @@ public class blockhl
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
@@ -54,7 +54,7 @@ public class blockhl
 	
 	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;

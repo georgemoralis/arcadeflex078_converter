@@ -85,7 +85,7 @@ public class simpsons
 		{
 			offs = offset >> 1;
 	
-			if (offset & 1)
+			if ((offset & 1) != 0)
 				return(spriteram16[offs] & 0xff);
 			else
 				return(spriteram16[offs] >> 8);
@@ -101,7 +101,7 @@ public class simpsons
 		{
 			offs = offset >> 1;
 	
-			if (offset & 1)
+			if ((offset & 1) != 0)
 				spriteram16[offs] = (spriteram16[offs] & 0xff00) | data;
 			else
 				spriteram16[offs] = (spriteram16[offs] & 0x00ff) | (data<<8);
@@ -111,7 +111,7 @@ public class simpsons
 	
 	void simpsons_video_banking(int bank)
 	{
-		if (bank & 1)
+		if ((bank & 1) != 0)
 		{
 			memory_set_bankhandler_r(3,0,paletteram_r);
 			memory_set_bankhandler_w(3,0,paletteram_xBBBBBGGGGGRRRRR_swap_w);
@@ -122,7 +122,7 @@ public class simpsons
 			memory_set_bankhandler_w(3,0,K052109_w);
 		}
 	
-		if (bank & 2)
+		if ((bank & 2) != 0)
 		{
 			memory_set_bankhandler_r(4,0,simpsons_K053247_r);
 			memory_set_bankhandler_w(4,0,simpsons_K053247_w);

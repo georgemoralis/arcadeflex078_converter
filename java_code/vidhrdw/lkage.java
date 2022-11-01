@@ -135,7 +135,7 @@ public class lkage
 				int sy = 256 -16*height -source[1];
 				int sprite_number = source[3] + ((attributes & 0x04) << 6);
 	
-				if (flip_screen_x)
+				if (flip_screen_x != 0)
 				{
 					sx = 240 - sx - 6;
 					flipx = !flipx;
@@ -143,7 +143,7 @@ public class lkage
 				else
 					sx -= 23;
 				sx = ((sx + 8) & 0xff) - 8;
-				if (flip_screen_y)
+				if (flip_screen_y != 0)
 				{
 					sy = 256 - 16*height - sy;
 					flipy = !flipy;

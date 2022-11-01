@@ -359,7 +359,7 @@ public class x86drc
 		drc_append_save_volatiles(drc);									// save volatiles
 		_call(target);													// call	target
 		drc_append_restore_volatiles(drc);								// restore volatiles
-		if (stackadj)
+		if (stackadj != 0)
 			_add_r32_imm(REG_ESP, stackadj);							// adjust stack
 	}
 	
@@ -511,7 +511,7 @@ public class x86drc
 				offset = DasmI386(buffer, addr);
 				sprintf(buffer2, "\t%08x: %s\n", addr, buffer);
 				logerror("%s", buffer2);
-				if (f)
+				if (f != 0)
 					fputs(buffer2, f);
 				addr += offset;
 			}

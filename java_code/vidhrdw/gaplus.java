@@ -290,7 +290,7 @@ public class gaplus
 	
 				if (number >= 128*3) continue;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -385,7 +385,7 @@ public class gaplus
 				sy = my + 2;
 			}
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 27 - sx;
 				sy = 35 - sy;

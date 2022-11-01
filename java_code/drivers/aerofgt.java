@@ -78,7 +78,7 @@ public class aerofgt
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -88,7 +88,7 @@ public class aerofgt
 	
 	static WRITE16_HANDLER( turbofrc_sound_command_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,(data >> 8) & 0xff);

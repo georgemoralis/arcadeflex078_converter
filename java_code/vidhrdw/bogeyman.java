@@ -133,7 +133,7 @@ public class bogeyman
 		{
 			int attr = spriteram[offs];
 	
-			if (attr & 0x01)
+			if ((attr & 0x01) != 0)
 			{
 				int code = spriteram[offs + 1] + ((attr & 0x40) << 2);
 				int color = (attr & 0x08) >> 3;
@@ -143,9 +143,9 @@ public class bogeyman
 				int sy = (240 - spriteram[offs + 2]) & 0xff;
 				int multi = attr & 0x10;
 	
-				if (multi) sy -= 16;
+				if (multi != 0) sy -= 16;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -160,7 +160,7 @@ public class bogeyman
 					&Machine->visible_area,
 					TRANSPARENCY_PEN, 0);
 	
-				if (multi)
+				if (multi != 0)
 				{
 					drawgfx(bitmap,Machine->gfx[2],
 						code + 1, color,

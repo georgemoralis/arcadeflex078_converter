@@ -113,8 +113,8 @@ public class mcatadv
 			int xcnt,ycnt;
 			int pix;
 	
-			if (x & 0x200) x-=0x400;
-			if (y & 0x200) y-=0x400;
+			if ((x & 0x200) != 0) x-=0x400;
+			if ((y & 0x200) != 0) y-=0x400;
 	
 	#if 0 // For Flipscreen/Cocktail
 			if(mcatadv_vidregs[0]&0x8000)
@@ -147,7 +147,7 @@ public class mcatadv
 							if (offset >= 0x500000*2) offset = 0;
 							pix = sprdata[offset/2];
 	
-							if (offset & 1)  pix = pix >> 4;
+							if ((offset & 1) != 0)  pix = pix >> 4;
 							pix &= 0x0f;
 	
 							if ((drawxpos >= cliprect->min_x) && (drawxpos <= cliprect->max_x) && pix)

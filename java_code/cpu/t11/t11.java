@@ -287,7 +287,7 @@ public class t11
 	
 	unsigned t11_get_context(void *dst)
 	{
-		if (dst)
+		if (dst != 0)
 			*(t11_Regs *)dst = t11;
 		return sizeof(t11_Regs);
 	}
@@ -302,7 +302,7 @@ public class t11
 	
 	void t11_set_context(void *src)
 	{
-		if (src)
+		if (src != 0)
 			t11 = *(t11_Regs *)src;
 		t11_check_irqs();
 	}

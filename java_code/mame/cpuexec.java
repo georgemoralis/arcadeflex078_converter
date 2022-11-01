@@ -379,7 +379,7 @@ public class cpuexec
 	{
 	#ifdef MAME_DEBUG
 		/* initialize the debugger */
-		if (mame_debug)
+		if (mame_debug != 0)
 			mame_debug_init();
 	#endif
 	
@@ -412,7 +412,7 @@ public class cpuexec
 	
 	#ifdef MAME_DEBUG
 		/* shut down the debugger */
-		if (mame_debug)
+		if (mame_debug != 0)
 			mame_debug_exit();
 	#endif
 	}
@@ -470,7 +470,7 @@ public class cpuexec
 		/* open the file */
 		file = mame_fopen(Machine->gamedrv->name, loadsave_schedule_name, FILETYPE_STATE, 1);
 	
-		if (file)
+		if (file != 0)
 		{
 			/* write the save state */
 			state_save_save_begin(file);
@@ -524,7 +524,7 @@ public class cpuexec
 		file = mame_fopen(Machine->gamedrv->name, loadsave_schedule_name, FILETYPE_STATE, 0);
 	
 		/* if successful, load it */
-		if (file)
+		if (file != 0)
 		{
 			/* start loading */
 			if (!state_save_load_begin(file))
@@ -595,7 +595,7 @@ public class cpuexec
 		cpu_loadsave_reset();
 	
 		loadsave_schedule_name = malloc(strlen(name) + 1);
-		if (loadsave_schedule_name)
+		if (loadsave_schedule_name != 0)
 		{
 			strcpy(loadsave_schedule_name, name);
 			loadsave_schedule = type;
@@ -628,7 +628,7 @@ public class cpuexec
 	void cpu_loadsave_reset(void)
 	{
 		loadsave_schedule = LOADSAVE_NONE;
-		if (loadsave_schedule_name)
+		if (loadsave_schedule_name != 0)
 		{
 			free(loadsave_schedule_name);
 			loadsave_schedule_name = NULL;
@@ -1887,7 +1887,7 @@ public class cpuexec
 	
 			/* see if we need to allocate a CPU timer */
 			ipf = Machine->drv->cpu[cpunum].timed_interrupts_per_second;
-			if (ipf)
+			if (ipf != 0)
 			{
 				cpu[cpunum].timedint_period = cpu_computerate(ipf);
 				cpu[cpunum].timedint_timer = timer_alloc(cpu_timedintcallback);

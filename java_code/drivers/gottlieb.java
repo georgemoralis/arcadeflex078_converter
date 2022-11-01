@@ -280,9 +280,9 @@ public class gottlieb
 					/* bit 7 missing audio clock */
 					return ((current_frame / 10000) & 0x7) | (audioready << 3) | 0x10 | (discready << 5);
 				} else {	/* read audio buffer */
-					if (skipfirstbyte) audioptr++;
+					if (skipfirstbyte != 0) audioptr++;
 					skipfirstbyte = 0;
-					if (audiobuffer_region) {
+					if (audiobuffer_region != 0) {
 						logerror("audio bufread: %02x\n",audiobuffer_region[audioptr]);
 						return audiobuffer_region[audioptr++];
 					} else {
@@ -366,9 +366,9 @@ public class gottlieb
 			access_time--;
 			if (access_time == 0)
 				discready = 1;
-		} else if (laserdisc_playing) {
+		} else if (laserdisc_playing != 0) {
 			odd_field ^= 1;
-			if (odd_field)		/* the manual says the video frame number is only present in the odd field) */
+			if (odd_field != 0)		/* the manual says the video frame number is only present in the odd field) */
 			{
 				current_frame++;
 	logerror("current frame : %d\n",current_frame);

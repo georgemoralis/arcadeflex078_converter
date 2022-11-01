@@ -208,7 +208,7 @@ public class gaelco
 			int yflip = attr & 0x40;
 			int spr_size;
 	
-			if (attr & 0x04){
+			if ((attr & 0x04) != 0){
 				spr_size = 1;
 			}
 			else{

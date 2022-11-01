@@ -53,7 +53,7 @@ public class djboy
 	public static VideoUpdateHandlerPtr video_update_djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,32);
-		if( background )
+		if (background != 0)
 		{
 			return 0;
 		}
@@ -79,7 +79,7 @@ public class djboy
 				int code	=	pSource[offs + 0x600] + ((gfx & 0x3f) << 8);
 				int flipx	=	gfx & 0x80;
 				int flipy	=	gfx & 0x40;
-				if( attr & 0x04 )
+				if ((attr & 0x04) != 0)
 				{
 					sx += x;
 					sy += y;

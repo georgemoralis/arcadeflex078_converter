@@ -110,7 +110,7 @@ public class timer
 			return cpunum_get_localtime(activecpu);
 		
 		/* if we're currently in a callback, use the timer's expiration time as a base */
-		if (callback_timer)
+		if (callback_timer != 0)
 			return callback_timer_expire_time;
 		
 		/* otherwise, return 0 */
@@ -189,7 +189,7 @@ public class timer
 		}
 	
 		/* need to insert after the last one */
-		if (lt)
+		if (lt != 0)
 			lt->next = timer;
 		else
 			timer_head = timer;
@@ -509,7 +509,7 @@ public class timer
 		which->tag = -1;
 	
 		/* free it up by adding it back to the free list */
-		if (timer_free_tail)
+		if (timer_free_tail != 0)
 			timer_free_tail->next = which;
 		else
 			timer_free_head = which;

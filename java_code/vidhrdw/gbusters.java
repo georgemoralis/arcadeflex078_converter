@@ -65,7 +65,7 @@ public class gbusters
 		K052109_tilemap_update();
 	
 		/* sprite priority 3 = disable */
-		if (gbusters_priority)
+		if (gbusters_priority != 0)
 		{
 	//		K051960_sprites_draw(bitmap,cliprect,1,1);	/* are these used? */
 			tilemap_draw(bitmap,cliprect,K052109_tilemap[2],TILEMAP_IGNORE_TRANSPARENCY,0);

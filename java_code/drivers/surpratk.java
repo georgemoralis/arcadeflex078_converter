@@ -32,14 +32,14 @@ public class surpratk
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (videobank & 0x02)
+		if ((videobank & 0x02) != 0)
 		{
-			if (videobank & 0x04)
+			if ((videobank & 0x04) != 0)
 				return paletteram_r(offset + 0x0800);
 			else
 				return paletteram_r(offset);
 		}
-		else if (videobank & 0x01)
+		else if ((videobank & 0x01) != 0)
 			return K053245_r(offset);
 		else
 			return ram[offset];
@@ -47,14 +47,14 @@ public class surpratk
 	
 	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videobank & 0x02)
+		if ((videobank & 0x02) != 0)
 		{
-			if (videobank & 0x04)
+			if ((videobank & 0x04) != 0)
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset + 0x0800,data);
 			else
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		}
-		else if (videobank & 0x01)
+		else if ((videobank & 0x01) != 0)
 			K053245_w(offset,data);
 		else
 			ram[offset] = data;

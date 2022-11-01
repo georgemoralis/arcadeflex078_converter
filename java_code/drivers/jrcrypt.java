@@ -346,7 +346,7 @@ public class jrcrypt
 			}
 			else
 			{
-				if (encrypted)
+				if (encrypted != 0)
 					unmapped_encrypted++;
 				else
 					unmapped++;

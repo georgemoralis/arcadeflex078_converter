@@ -67,7 +67,7 @@ public class btoads
 	
 	static WRITE16_HANDLER( main_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			timer_set(TIME_NOW, data & 0xff, delayed_sound_w);
 	}
 	
@@ -76,9 +76,9 @@ public class btoads
 	{
 		int result = readinputport(4) & ~0x81;
 	
-		if (sound_to_main_ready)
+		if (sound_to_main_ready != 0)
 			result |= 0x01;
-		if (main_to_sound_ready)
+		if (main_to_sound_ready != 0)
 			result |= 0x80;
 		return result;
 	}
@@ -135,7 +135,7 @@ public class btoads
 	
 	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (sound_int_state & 0x80)
+		if ((sound_int_state & 0x80) != 0)
 		{
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 			sound_int_state = 0x00;

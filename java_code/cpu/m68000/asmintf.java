@@ -450,7 +450,7 @@ public class asmintf
 			a68k_memory_intf = interface_a24_d16;
 	
 		// Import encryption routines if present
-		if (param)
+		if (param != 0)
 		{
 			a68k_memory_intf.read8pc = interface->read8pc;
 			a68k_memory_intf.read16pc = interface->read16pc;
@@ -482,7 +482,7 @@ public class asmintf
 	#ifdef MAME_DEBUG
 	    do
 	    {
-			if (mame_debug)
+			if (mame_debug != 0)
 	        {
 				#ifdef TRACE68K
 	
@@ -534,14 +534,14 @@ public class asmintf
 	
 	unsigned m68000_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(a68k_cpu_context*)dst = M68000_regs;
 		return sizeof(a68k_cpu_context);
 	}
 	
 	void m68000_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			M68000_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68000_regs.Memory_Interface;
@@ -788,7 +788,7 @@ public class asmintf
 	
 	void m68010_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 	    {
 			M68000_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68000_regs.Memory_Interface;
@@ -885,7 +885,7 @@ public class asmintf
 	#ifdef MAME_DEBUG
 	    do
 	    {
-			if (mame_debug)
+			if (mame_debug != 0)
 	        {
 				#ifdef TRACE68K
 	
@@ -936,14 +936,14 @@ public class asmintf
 	
 	unsigned m68020_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(a68k_cpu_context*)dst = M68020_regs;
 		return sizeof(a68k_cpu_context);
 	}
 	
 	void m68020_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 	    {
 			M68020_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68020_regs.Memory_Interface;
@@ -1184,7 +1184,7 @@ public class asmintf
 	
 	void m68ec020_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 	    {
 			M68020_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68020_regs.Memory_Interface;

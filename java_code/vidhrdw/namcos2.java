@@ -465,8 +465,8 @@ public class namcos2
 					{
 						gfx.width = 16;
 						gfx.height = 16;
-						if( offset2&0x0001 ) gfx.gfxdata += 16;
-						if( offset2&0x0002 ) gfx.gfxdata += 16*gfx.line_modulo;
+						if ((offset2 & 0x0001) != 0) gfx.gfxdata += 16;
+						if ((offset2 & 0x0002) != 0) gfx.gfxdata += 16*gfx.line_modulo;
 					}
 	
 					drawgfxzoom(bitmap,&gfx,
@@ -524,7 +524,7 @@ public class namcos2
 			int sizex=(xpos>>10)&0x3f;
 			int sprn=(tile>>2)&0x7ff;
 	
-			if( tile&0x2000 ) sprn&=0x3ff; else sprn|=0x400;
+			if ((tile & 0x2000) != 0) sprn&=0x3ff; else sprn|=0x400;
 			if((sizey-1) && sizex && ((attrs>>1)&7)==pri )
 			{
 				int bSmallSprite =
@@ -568,7 +568,7 @@ public class namcos2
 				if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
 				if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
 	
-				if( bSmallSprite )
+				if (bSmallSprite != 0)
 				{
 					sizex = 16;
 					sizey = 16;
@@ -648,7 +648,7 @@ public class namcos2
 		if( CreateTilemaps()==0 )
 		{
 			tilemap_roz = tilemap_create(get_tile_info_roz,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,256,256);
-			if( tilemap_roz )
+			if (tilemap_roz != 0)
 			{
 				tilemap_set_transparent_pen(tilemap_roz,0xff);
 				DrawSpriteInit();

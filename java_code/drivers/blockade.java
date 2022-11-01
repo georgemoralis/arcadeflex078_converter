@@ -130,12 +130,12 @@ public class blockade
 	
 	public static WriteHandlerPtr blockade_coin_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	    if (data & 0x80)
+	    if ((data & 0x80) != 0)
 	    {
 	    #ifdef BLOCKADE_LOG
 	        printf("Reset Coin Latch\n");
 	    #endif
-	        if (just_been_reset)
+	        if (just_been_reset != 0)
 	        {
 	            just_been_reset = 0;
 	            coin_latch = 0;
@@ -144,7 +144,7 @@ public class blockade
 	            coin_latch = 1;
 	    }
 	
-	    if (data & 0x20)
+	    if ((data & 0x20) != 0)
 	    {
 	    #ifdef BLOCKADE_LOG
 	        printf("Pin 19 High\n");

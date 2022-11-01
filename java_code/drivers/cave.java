@@ -126,8 +126,8 @@ public class cave
 	{
 		int result = 0x0003;
 	
-		if (vblank_irq)		result ^= 0x01;
-		if (unknown_irq)	result ^= 0x02;
+		if (vblank_irq != 0)		result ^= 0x01;
+		if (unknown_irq != 0)	result ^= 0x02;
 	
 		if (offset == 4/2)	vblank_irq = 0;
 		if (offset == 6/2)	unknown_irq = 0;
@@ -241,9 +241,9 @@ public class cave
 	/* Handles writes to the YMZ280B */
 	static WRITE16_HANDLER( cave_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
-			if (offset)	YMZ280B_data_0_w     (offset, data & 0xff);
+			if (offset != 0)	YMZ280B_data_0_w     (offset, data & 0xff);
 			else		YMZ280B_register_0_w (offset, data & 0xff);
 		}
 	}
@@ -293,7 +293,7 @@ public class cave
 		if (data & ~0xfe00)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if ( ACCESSING_MSB )  // even address
+		if (ACCESSING_MSB != 0)  // even address
 		{
 			coin_lockout_w(1,~data & 0x8000);
 			coin_lockout_w(0,~data & 0x4000);
@@ -319,7 +319,7 @@ public class cave
 	
 	WRITE16_HANDLER( hotdogst_eeprom_msb_w )
 	{
-		if ( ACCESSING_MSB )  // even address
+		if (ACCESSING_MSB != 0)  // even address
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x0800);
@@ -337,7 +337,7 @@ public class cave
 		if (data & ~0x00ef)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if ( ACCESSING_LSB )  // odd address
+		if (ACCESSING_LSB != 0)  // odd address
 		{
 			coin_lockout_w(1,~data & 0x0008);
 			coin_lockout_w(0,~data & 0x0004);
@@ -358,7 +358,7 @@ public class cave
 	/*	- No eeprom or lockouts */
 	WRITE16_HANDLER( gaia_coin_lsb_w )
 	{
-		if ( ACCESSING_LSB )  // odd address
+		if (ACCESSING_LSB != 0)  // odd address
 		{
 			coin_counter_w(1, data & 0x0002);
 			coin_counter_w(0, data & 0x0001);
@@ -372,7 +372,7 @@ public class cave
 		if (data & ~0xff00)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if ( ACCESSING_MSB )  // even address
+		if (ACCESSING_MSB != 0)  // even address
 		{
 			coin_counter_w(1, data & 0x2000);
 			coin_counter_w(0, data & 0x1000);
@@ -393,16 +393,16 @@ public class cave
 	
 	NVRAM_HANDLER( cave )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file) EEPROM_load(file);
+			if (file != 0) EEPROM_load(file);
 			else
 			{
-				if (cave_default_eeprom)	/* Set the EEPROM to Factory Defaults */
+				if (cave_default_eeprom != 0)	/* Set the EEPROM to Factory Defaults */
 					EEPROM_set_data(cave_default_eeprom,cave_default_eeprom_length);
 			}
 		}
@@ -532,7 +532,7 @@ public class cave
 	{
 		if (Machine->sample_rate == 0)	return;
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* The OKI6295 ROM space is divided in four banks, each one indepentently
 			   controlled. The sample table at the beginning of the addressing space is

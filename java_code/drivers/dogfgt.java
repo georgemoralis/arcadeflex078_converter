@@ -34,7 +34,7 @@ public class dogfgt
 	{
 		/* bit 0 used but unknown */
 	
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 	} };
 	
@@ -60,7 +60,7 @@ public class dogfgt
 		if ((last & 0x20) == 0x20 && (data & 0x20) == 0x00)
 		{
 			/* bit 4 goes to the 8910 #0 BC1 pin */
-			if (last & 0x10)
+			if ((last & 0x10) != 0)
 				AY8910_control_port_0_w(0,soundlatch);
 			else
 				AY8910_write_port_0_w(0,soundlatch);
@@ -69,7 +69,7 @@ public class dogfgt
 		if ((last & 0x80) == 0x80 && (data & 0x80) == 0x00)
 		{
 			/* bit 6 goes to the 8910 #1 BC1 pin */
-			if (last & 0x40)
+			if ((last & 0x40) != 0)
 				AY8910_control_port_1_w(0,soundlatch);
 			else
 				AY8910_write_port_1_w(0,soundlatch);

@@ -137,7 +137,7 @@ public class yiear
 			int sy = 240 - spriteram[offs + 1];
 			int sx = spriteram_2[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;

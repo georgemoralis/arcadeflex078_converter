@@ -66,7 +66,7 @@ public class aeroboto
 	static public static WriteHandlerPtr aeroboto_1a2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		aeroboto_mainram[0x01a2] = data;
-		if (data) disable_irq = 1;
+		if (data != 0) disable_irq = 1;
 	} };
 	
 	public static Memory_ReadAddress readmem[]={

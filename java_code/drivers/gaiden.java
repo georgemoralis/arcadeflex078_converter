@@ -155,8 +155,8 @@ public class gaiden
 	
 	static WRITE16_HANDLER( gaiden_sound_command_w )
 	{
-		if (ACCESSING_LSB) soundlatch_w(0,data & 0xff);	/* Ninja Gaiden */
-		if (ACCESSING_MSB) soundlatch_w(0,data >> 8);	/* Tecmo Knight */
+		if (ACCESSING_LSB != 0) soundlatch_w(0,data & 0xff);	/* Ninja Gaiden */
+		if (ACCESSING_MSB != 0) soundlatch_w(0,data >> 8);	/* Tecmo Knight */
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	}
 	
@@ -170,7 +170,7 @@ public class gaiden
 	
 	static WRITE16_HANDLER( wildfang_protection_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			static int jumpcode;
 			static int jumppoints[] =
@@ -304,7 +304,7 @@ public class gaiden
 	
 	static WRITE16_HANDLER( raiga_protection_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			static int jumpcode;
 	

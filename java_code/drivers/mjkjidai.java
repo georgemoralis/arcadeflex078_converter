@@ -60,7 +60,7 @@ public class mjkjidai
 	
 		res |= (readinputport(3) & 0xc0);
 	
-		if (nvram_init_count)
+		if (nvram_init_count != 0)
 		{
 			nvram_init_count--;
 			res &= 0xbf;
@@ -85,9 +85,9 @@ public class mjkjidai
 	
 	void nvram_handler_mjkjidai(mame_file *file, int read_or_write)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, nvram, nvram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, nvram, nvram_size);
 		else
 		{

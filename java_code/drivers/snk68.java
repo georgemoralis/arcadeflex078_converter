@@ -118,7 +118,7 @@ public class snk68
 	{
 		/* top byte is used, meaning unknown */
 		/* bottom byte is protection in ikari 3 and streetsm */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			invert_controls = ((data & 0xff) == 0x07) ? 0xff : 0x00;
 	}
 	

@@ -188,7 +188,7 @@ public class vsnes
 	{
 		coin_counter_w( 0, data & 0x01 );
 		coin = data;
-		if( data & 0xfe ) //"bnglngby" and "cluclu"
+		if ((data & 0xfe) != 0) //"bnglngby" and "cluclu"
 		{
 			//do something?
 			logerror("vsnes_coin_counter_w: pc = 0x%04x - data = 0x%02x\n", activecpu_get_pc(), data);
@@ -204,7 +204,7 @@ public class vsnes
 	public static WriteHandlerPtr vsnes_coin_counter_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w( 1, data & 0x01 );
-		if( data & 0xfe ) //vsbball service mode
+		if ((data & 0xfe) != 0) //vsbball service mode
 		{
 			//do something?
 			logerror("vsnes_coin_counter_1_w: pc = 0x%04x - data = 0x%02x\n", activecpu_get_pc(), data);

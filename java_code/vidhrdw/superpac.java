@@ -115,7 +115,7 @@ public class superpac
 				int flipy = spriteram_3[offs] & 2;
 				int pens;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -173,7 +173,7 @@ public class superpac
 							drawgfx(bitmap, gfx, sprite + 3, color, flipx, flipy, x + 0,  y - 16, clip, drawmode, pens);
 							drawgfx(bitmap, gfx, sprite + 2, color, flipx, flipy, x + 16, y - 16, clip, drawmode, pens);
 						}
-						else if (flipy)
+						else if (flipy != 0)
 						{
 							drawgfx(bitmap, gfx, sprite + 0, color, flipx, flipy, x + 0,  y - 0,  clip, drawmode, pens);
 							drawgfx(bitmap, gfx, sprite + 1, color, flipx, flipy, x + 16, y - 0,  clip, drawmode, pens);
@@ -243,7 +243,7 @@ public class superpac
 					sy = my - 2;
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -285,7 +285,7 @@ public class superpac
 					sy = my - 2;
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;

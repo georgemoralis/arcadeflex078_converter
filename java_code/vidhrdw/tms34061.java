@@ -177,7 +177,7 @@ public class tms34061
 		UINT16 oldval = tms34061.regs[regnum];
 	
 		/* store the hi/lo half */
-		if (offset & 0x02)
+		if ((offset & 0x02) != 0)
 			tms34061.regs[regnum] = (tms34061.regs[regnum] & 0x00ff) | (data << 8);
 		else
 			tms34061.regs[regnum] = (tms34061.regs[regnum] & 0xff00) | data;
@@ -244,7 +244,7 @@ public class tms34061
 		data8_t result;
 	
 		/* extract the correct portion of the register */
-		if (offset & 0x02)
+		if ((offset & 0x02) != 0)
 			result = tms34061.regs[regnum] >> 8;
 		else
 			result = tms34061.regs[regnum];
@@ -260,7 +260,7 @@ public class tms34061
 	
 			/* vertical count register: return the current scanline */
 			case TMS34061_VERCOUNTER:
-				if (offset & 0x02)
+				if ((offset & 0x02) != 0)
 					result = cpu_getscanline() >> 8;
 				else
 					result = cpu_getscanline();
@@ -370,7 +370,7 @@ public class tms34061
 	{
 		/* determine the offset, then adjust it */
 		offs_t pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
-		if (offset)
+		if (offset != 0)
 			adjust_xyaddress(offset);
 	
 		/* adjust for the upper bits */
@@ -393,7 +393,7 @@ public class tms34061
 	{
 		/* determine the offset, then adjust it */
 		offs_t pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
-		if (offset)
+		if (offset != 0)
 			adjust_xyaddress(offset);
 	
 		/* adjust for the upper bits */

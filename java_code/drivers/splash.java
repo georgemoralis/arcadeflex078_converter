@@ -26,7 +26,7 @@ public class splash
 	
 	static WRITE16_HANDLER( splash_sh_irqtrigger_w )
 	{
-		if (ACCESSING_LSB){
+		if (ACCESSING_LSB != 0){
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
 		}
@@ -49,7 +49,7 @@ public class splash
 	
 	WRITE16_HANDLER( splash_coin_w )
 	{
-		if (ACCESSING_MSB){
+		if (ACCESSING_MSB != 0){
 			switch ((offset >> 3)){
 				case 0x00:	/* Coin Lockouts */
 				case 0x01:

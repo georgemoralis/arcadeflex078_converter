@@ -203,7 +203,7 @@ public class tecmo
 			int flags = spriteram[offs+3];
 			int priority = flags>>6;
 			int bank = spriteram[offs+0];
-			if (bank & 4)
+			if ((bank & 4) != 0)
 			{ /* visible */
 				int which = spriteram[offs+1];
 				int code,xpos,ypos,flipx,flipy,priority_mask,x,y;
@@ -222,7 +222,7 @@ public class tecmo
 				flipx = bank & 1;
 				flipy = bank & 2;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					xpos = 256 - (8 * size) - xpos;
 					ypos = 256 - (8 * size) - ypos;

@@ -151,12 +151,12 @@ public class gauntlet
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate |= 4;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate |= 6;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -166,7 +166,7 @@ public class gauntlet
 	static void scanline_update(int scanline)
 	{
 		/* sound IRQ is on 32V */
-		if (scanline & 32)
+		if ((scanline & 32) != 0)
 			atarigen_6502_irq_gen();
 		else
 			atarigen_6502_irq_ack_r(0);
@@ -198,27 +198,27 @@ public class gauntlet
 		int result = readinputport(real_port);
 		int fake = readinputport(fake_port);
 	
-		if (fake & 0x01)			/* up */
+		if ((fake & 0x01) != 0)			/* up */
 		{
-			if (fake & 0x04)		/* up and left */
+			if ((fake & 0x04) != 0)		/* up and left */
 				result &= ~0x20;
-			else if (fake & 0x08)	/* up and right */
+			else if ((fake & 0x08) != 0)	/* up and right */
 				result &= ~0x10;
 			else					/* up only */
 				result &= ~0x30;
 		}
-		else if (fake & 0x02)		/* down */
+		else if ((fake & 0x02) != 0)		/* down */
 		{
-			if (fake & 0x04)		/* down and left */
+			if ((fake & 0x04) != 0)		/* down and left */
 				result &= ~0x80;
-			else if (fake & 0x08)	/* down and right */
+			else if ((fake & 0x08) != 0)	/* down and right */
 				result &= ~0x40;
 			else					/* down only */
 				result &= ~0xc0;
 		}
-		else if (fake & 0x04)		/* left only */
+		else if ((fake & 0x04) != 0)		/* left only */
 			result &= ~0x60;
-		else if (fake & 0x08)		/* right only */
+		else if ((fake & 0x08) != 0)		/* right only */
 			result &= ~0x90;
 	
 		return result;
@@ -234,8 +234,8 @@ public class gauntlet
 	static READ16_HANDLER( port4_r )
 	{
 		int temp = readinputport(4);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x0020;
-		if (atarigen_sound_to_cpu_ready) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0020;
+		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x0010;
 		return temp;
 	}
 	
@@ -249,7 +249,7 @@ public class gauntlet
 	
 	static WRITE16_HANDLER( sound_reset_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			int oldword = sound_reset_val;
 			COMBINE_DATA(&sound_reset_val);
@@ -274,8 +274,8 @@ public class gauntlet
 	{
 		int temp = 0x30;
 	
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x80;
-		if (atarigen_sound_to_cpu_ready) temp ^= 0x40;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x80;
+		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x40;
 		if (tms5220_ready_r()) temp ^= 0x20;
 		if (!(readinputport(4) & 0x0008)) temp ^= 0x10;
 	
@@ -1633,7 +1633,7 @@ public class gauntlet
 	
 		/* highly strange -- the address bits on the chip at 2J (and only that
 		   chip) are scrambled -- this is verified on the schematics! */
-		if (data)
+		if (data != 0)
 		{
 			memcpy(data, &gfx2_base[0x88000], 0x8000);
 			for (i = 0; i < 0x8000; i++)

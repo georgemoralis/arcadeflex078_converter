@@ -145,11 +145,11 @@ public class cvs
 	
 	    /* Unimplemented */
 	
-	    if(data & 2)   logerror("       SHADE BRIGHTER TO RIGHT\n");
-	    if(data & 4)   logerror("       SCREEN ROTATE\n");
-	    if(data & 8)   logerror("       SHADE BRIGHTER TO LEFT\n");
-	    if(data & 64)  logerror("       SHADE BRIGHTER TO BOTTOM\n");
-	    if(data & 128) logerror("       SHADE BRIGHTER TO TOP\n");
+	    if ((data & 2) != 0)   logerror("       SHADE BRIGHTER TO RIGHT\n");
+	    if ((data & 4) != 0)   logerror("       SCREEN ROTATE\n");
+	    if ((data & 8) != 0)   logerror("       SHADE BRIGHTER TO LEFT\n");
+	    if ((data & 64) != 0)  logerror("       SHADE BRIGHTER TO BOTTOM\n");
+	    if ((data & 128) != 0) logerror("       SHADE BRIGHTER TO TOP\n");
 	
 	    /* Implemented */
 	
@@ -445,11 +445,11 @@ public class cvs
 	
 	INLINE void plot_star(struct mame_bitmap *bitmap, int x, int y)
 	{
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			x = 255 - x;
 		}
-		if (flip_screen_y)
+		if (flip_screen_y != 0)
 		{
 			y = 255 - y;
 		}
@@ -527,7 +527,7 @@ public class cvs
 	                else if((colorram[offs] & 0x01) == 0) forecolor=257;
 	            }
 	
-	            if(forecolor)
+	            if (forecolor != 0)
 	 			    drawgfx(collision_background,Machine->gfx[character_bank],
 					        character,
 						    forecolor,
@@ -614,13 +614,13 @@ public class cvs
 	
 	        	     pen = S1 | S2 | S3;
 	
-	                 if(pen)
+	                 if (pen != 0)
 	                 {
 	             	    UINT16 *address = (UINT16 *)dst;
-					    if (pen & 0xff000000) address[BL3] = Machine->pens[(pen >> 24) & 15];
-					    if (pen & 0x00ff0000) address[BL2] = Machine->pens[(pen >> 16) & 15];
-					    if (pen & 0x0000ff00) address[BL1] = Machine->pens[(pen >>  8) & 15];
-					    if (pen & 0x000000ff) address[BL0] = Machine->pens[(pen & 15)];
+					    if ((pen & 0xff000000) != 0) address[BL3] = Machine->pens[(pen >> 24) & 15];
+					    if ((pen & 0x00ff0000) != 0) address[BL2] = Machine->pens[(pen >> 16) & 15];
+					    if ((pen & 0x0000ff00) != 0) address[BL1] = Machine->pens[(pen >>  8) & 15];
+					    if ((pen & 0x000000ff) != 0) address[BL0] = Machine->pens[(pen & 15)];
 	
 	                    /* Collision Detection */
 	
@@ -630,15 +630,15 @@ public class cvs
 					    if (spb[BL1] != Machine->pens[0]) SB |= 0x00000800;
 					    if (spb[BL0] != Machine->pens[0]) SB |= 0x00000008;
 	
-	       	            if (S1 & S2) CollisionRegister |= 1;
-	       	            if (S2 & S3) CollisionRegister |= 2;
-	    			    if (S1 & S3) CollisionRegister |= 4;
+	       	            if ((S1 & S2) != 0) CollisionRegister |= 1;
+	       	            if ((S2 & S3) != 0) CollisionRegister |= 2;
+	    			    if ((S1 & S3) != 0) CollisionRegister |= 4;
 	
-	                    if (SB)
+	                    if (SB != 0)
 	                    {
-	    			        if (S1 & SB) CollisionRegister |= 16;
-	   			            if (S2 & SB) CollisionRegister |= 32;
-	       	                if (S3 & SB) CollisionRegister |= 64;
+	    			        if ((S1 & SB) != 0) CollisionRegister |= 16;
+	   			            if ((S2 & SB) != 0) CollisionRegister |= 32;
+	       	                if ((S3 & SB) != 0) CollisionRegister |= 64;
 	                    }
 	                 }
 	
@@ -667,13 +667,13 @@ public class cvs
 	
 	        	     pen = S1 | S2 | S3;
 	
-	                 if(pen)
+	                 if (pen != 0)
 	                 {
 	             	    UINT8 *address = (UINT8 *)dst;
-					    if (pen & 0xff000000) address[BL3] = Machine->pens[(pen >> 24) & 15];
-					    if (pen & 0x00ff0000) address[BL2] = Machine->pens[(pen >> 16) & 15];
-					    if (pen & 0x0000ff00) address[BL1] = Machine->pens[(pen >>  8) & 15];
-					    if (pen & 0x000000ff) address[BL0] = Machine->pens[(pen & 15)];
+					    if ((pen & 0xff000000) != 0) address[BL3] = Machine->pens[(pen >> 24) & 15];
+					    if ((pen & 0x00ff0000) != 0) address[BL2] = Machine->pens[(pen >> 16) & 15];
+					    if ((pen & 0x0000ff00) != 0) address[BL1] = Machine->pens[(pen >>  8) & 15];
+					    if ((pen & 0x000000ff) != 0) address[BL0] = Machine->pens[(pen & 15)];
 	
 	                    /* Collision Detection */
 	
@@ -683,15 +683,15 @@ public class cvs
 					    if (spb[BL1] != Machine->pens[0]) SB |= 0x00000800;
 					    if (spb[BL0] != Machine->pens[0]) SB |= 0x00000008;
 	
-	       	            if (S1 & S2) CollisionRegister |= 1;
-	       	            if (S2 & S3) CollisionRegister |= 2;
-	    			    if (S1 & S3) CollisionRegister |= 4;
+	       	            if ((S1 & S2) != 0) CollisionRegister |= 1;
+	       	            if ((S2 & S3) != 0) CollisionRegister |= 2;
+	    			    if ((S1 & S3) != 0) CollisionRegister |= 4;
 	
-	                    if (SB)
+	                    if (SB != 0)
 	                    {
-	    			        if (S1 & SB) CollisionRegister |= 16;
-	   			            if (S2 & SB) CollisionRegister |= 32;
-	       	                if (S3 & SB) CollisionRegister |= 64;
+	    			        if ((S1 & SB) != 0) CollisionRegister |= 16;
+	   			            if ((S2 & SB) != 0) CollisionRegister |= 32;
+	       	                if ((S3 & SB) != 0) CollisionRegister |= 64;
 	                    }
 	                 }
 	
@@ -703,7 +703,7 @@ public class cvs
 	
 	    /* Stars */
 	
-	    if(stars_on)
+	    if (stars_on != 0)
 	    {
 			for (offs = 0;offs < total_stars;offs++)
 			{

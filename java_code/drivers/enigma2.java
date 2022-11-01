@@ -43,7 +43,7 @@ public class enigma2
 	
 			for (i = 0; i < 8; i++)
 			{
-				if( data & 0x80 )
+				if ((data & 0x80) != 0)
 					plot_pixel(tmpbitmap, x, 255 - y, cmap?(memory_region(REGION_PROMS)[((y+16) >> 3 << 5) | ((col+i) >> 3)] & 0x07):Machine->pens[7]);
 				else
 					plot_pixel(tmpbitmap, x, 255 - y, Machine->pens[0]);

@@ -428,11 +428,11 @@ public class bsmt2000
 		int i;
 	
 		/* free memory */
-		if (accumulator)
+		if (accumulator != 0)
 			free(accumulator);
 		accumulator = NULL;
 	
-		if (scratch)
+		if (scratch != 0)
 			free(scratch);
 		scratch = NULL;
 	

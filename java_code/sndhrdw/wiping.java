@@ -135,7 +135,7 @@ public class wiping
 							if (voice->oneshotplaying)
 							{
 								/* use full byte, first the high 4 bits, then the low 4 bits */
-								if (offs & 1)
+								if ((offs & 1) != 0)
 									*mix++ += ((w[offs>>1] & 0x0f) - 8) * v;
 								else
 									*mix++ += (((w[offs>>1]>>4) & 0x0f) - 8) * v;
@@ -147,7 +147,7 @@ public class wiping
 						offs = (c >> 15) & 0x1f;
 	
 						/* use full byte, first the high 4 bits, then the low 4 bits */
-						if (offs & 1)
+						if ((offs & 1) != 0)
 							*mix++ += ((w[offs>>1] & 0x0f) - 8) * v;
 						else
 							*mix++ += (((w[offs>>1]>>4) & 0x0f) - 8) * v;

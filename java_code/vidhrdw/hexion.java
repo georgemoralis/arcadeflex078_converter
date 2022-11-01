@@ -83,7 +83,7 @@ public class hexion
 		cpu_setbank(1,rom + 0x2000 * (data & 0x0f));
 	
 		/* does bit 6 trigger the 052591? */
-		if (data & 0x40)
+		if ((data & 0x40) != 0)
 		{
 			int bank = unkram[0]&1;
 			memset(vram[bank],unkram[1],0x2000);
@@ -93,7 +93,7 @@ public class hexion
 		pmcbank = (data & 0x80) >> 7;
 	
 		/* other bits unknown */
-	if (data & 0x30)
+	if ((data & 0x30) != 0)
 		usrintf_showmessage("bankswitch %02x",data&0xf0);
 	
 	//logerror("%04x: bankswitch_w %02x\n",activecpu_get_pc(),data);
@@ -129,7 +129,7 @@ public class hexion
 		}
 		else if (bankctrl == 0)
 		{
-			if (pmcbank)
+			if (pmcbank != 0)
 			{
 	//logerror("%04x: bankedram_w offset %04x, data %02x, bankctrl = %02x\n",activecpu_get_pc(),offset,data,bankctrl);
 				if (vram[rambank][offset] != data)
@@ -143,7 +143,7 @@ public class hexion
 		}
 		else if (bankctrl == 2 && offset < 0x800)
 		{
-			if (pmcbank)
+			if (pmcbank != 0)
 			{
 	//logerror("%04x: unkram_w offset %04x, data %02x, bankctrl = %02x\n",activecpu_get_pc(),offset,data,bankctrl);
 				unkram[offset] = data;

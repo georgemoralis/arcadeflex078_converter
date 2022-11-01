@@ -161,7 +161,7 @@ public class f1gp
 	
 	WRITE16_HANDLER( f1gp_gfxctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			flipscreen = data & 0x20;
 			gfxctrl = data & 0xdf;
@@ -170,7 +170,7 @@ public class f1gp
 	
 	WRITE16_HANDLER( f1gp2_gfxctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			flipscreen = data & 0x20;
 	
@@ -180,7 +180,7 @@ public class f1gp
 			gfxctrl = data & 0xdf;
 		}
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			if (f1gp2_roz_bank != (data >> 8))
 			{
@@ -233,14 +233,14 @@ public class f1gp
 			{
 				int sx,sy;
 	
-				if (flipy) sy = ((oy + zoomy * (ysize - y) + 16) & 0x1ff) - 16;
+				if (flipy != 0) sy = ((oy + zoomy * (ysize - y) + 16) & 0x1ff) - 16;
 				else sy = ((oy + zoomy * y + 16) & 0x1ff) - 16;
 	
 				for (x = 0;x <= xsize;x++)
 				{
 					int code;
 	
-					if (flipx) sx = ((ox + zoomx * (xsize - x) + 16) & 0x1ff) - 16;
+					if (flipx != 0) sx = ((ox + zoomx * (xsize - x) + 16) & 0x1ff) - 16;
 					else sx = ((ox + zoomx * x + 16) & 0x1ff) - 16;
 	
 					if (chip == 0)
@@ -290,7 +290,7 @@ public class f1gp
 		};
 	
 	
-		if (dirtygfx)
+		if (dirtygfx != 0)
 		{
 			int i;
 	
@@ -369,20 +369,20 @@ public class f1gp
 			{
 				int sx,sy;
 	
-				if (flipy) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
+				if (flipy != 0) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
 				else sy = ((oy + zoomy * y / 2 + 16) & 0x1ff) - 16;
 	
 				for (x = 0;x <= xsize;x++)
 				{
 					int code;
 	
-					if (flipx) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
+					if (flipx != 0) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
 					else sx = ((ox + zoomx * x / 2 + 16) & 0x1ff) - 16;
 	
 					code = f1gp2_sprcgram[map_start & 0x3fff];
 					map_start++;
 	
-					if (flipscreen)
+					if (flipscreen != 0)
 						drawgfxzoom(bitmap,Machine->gfx[1],
 								code,
 								color,
@@ -406,7 +406,7 @@ public class f1gp
 	
 	public static VideoUpdateHandlerPtr video_update_f1gp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (gfxctrl & 4)	/* blank screen */
+		if ((gfxctrl & 4) != 0)	/* blank screen */
 		{
 			fillbitmap(bitmap, get_black_pen(), cliprect);
 		}

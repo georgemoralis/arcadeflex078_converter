@@ -236,13 +236,13 @@ public class afega
 			sx = (sx & 0xff) - (sx & 0x100);
 			sy = (sy & 0xff) - (sy & 0x100);
 	
-			if (flip_screen_x)	{	flipx = !flipx;		sx = max_x - sx - xnum * 16;	}
-			if (flip_screen_y)	{	flipy = !flipy;		sy = max_y - sy - ynum * 16;	}
+			if (flip_screen_x != 0)	{	flipx = !flipx;		sx = max_x - sx - xnum * 16;	}
+			if (flip_screen_y != 0)	{	flipy = !flipy;		sy = max_y - sy - ynum * 16;	}
 	
-			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 			for (y = ystart; y != yend; y += yinc)
@@ -306,12 +306,12 @@ public class afega
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
 		else					fillbitmap(bitmap,get_black_pen(),cliprect);
 	
-		if (layers_ctrl & 2) 	afega_draw_sprites(bitmap,cliprect);
+		if ((layers_ctrl & 2) != 0) 	afega_draw_sprites(bitmap,cliprect);
 	
-		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
+		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
 	} };
 	
 	/* Same as 'afega', but no screen flip support */
@@ -341,12 +341,12 @@ public class afega
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
 		else					fillbitmap(bitmap,get_black_pen(),cliprect);
 	
-		if (layers_ctrl & 2) 	afega_draw_sprites(bitmap,cliprect);
+		if ((layers_ctrl & 2) != 0) 	afega_draw_sprites(bitmap,cliprect);
 	
-		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
+		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
 	} };
 	
 }

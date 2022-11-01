@@ -78,9 +78,9 @@ public class namcos3d
 				for( x=0; x<16; x++ )
 				{
 					ix = x; iy = y;
-					if( attr&4 ) ix = 15-ix;
-					if( attr&2 ) iy = 15-iy;
-					if( attr&8 ){ temp = ix; ix = iy; iy = temp; }
+					if ((attr & 4) != 0) ix = 15-ix;
+					if ((attr & 2) != 0) iy = 15-iy;
+					if ((attr & 8) != 0){ temp = ix; ix = iy; iy = temp; }
 					mXYAttrToPixel[attr][x][y] = (iy<<4)|ix;
 				}
 			}
@@ -91,14 +91,14 @@ public class namcos3d
 	namcos3d_Init( int width, int height, void *pTilemapROM, void *pTextureROM )
 	{
 		namco_zbuffer = auto_malloc( width*height*sizeof(*namco_zbuffer) );
-		if( namco_zbuffer )
+		if (namco_zbuffer != 0)
 		{
 			if( pTilemapROM && pTextureROM )
 			{ /* following setup is Namco System 22 specific */
 				int i;
 				const data8_t *pSource = 0x200000 + (data8_t *)pTilemapROM;
 				data8_t *pDest = auto_malloc(0x80000*2); /* TBA: recycle pTilemapROM */
-				if( pDest )
+				if (pDest != 0)
 				{
 					InitXYAttrToPixel();
 					mpTextureTileMapAttr = pDest;
@@ -216,7 +216,7 @@ public class namcos3d
 			int x0 = (int)e1->x;
 			int x1 = (int)e2->x;
 			int w = x1-x0;
-			if( w )
+			if (w != 0)
 			{
 				double u = e1->u; /* u/z */
 				double v = e1->v; /* v/z */
@@ -250,7 +250,7 @@ public class namcos3d
 						int r = color>>16;
 						int g = (color>>8)&0xff;
 						int b = color&0xff;
-						if( mbShade )
+						if (mbShade != 0)
 						{
 							int shade = i/z;
 							r+=shade; if( r<0 ) r = 0; else if( r>0xff ) r = 0xff;
@@ -298,7 +298,7 @@ public class namcos3d
 		ystart = v0->y;
 		yend   = v2->y;
 		dy = yend-ystart;
-		if( dy )
+		if (dy != 0)
 		{
 			int y;
 			edge e1; /* short edge (top and bottom) */
@@ -334,7 +334,7 @@ public class namcos3d
 			ystart = v0->y;
 			yend = v1->y;
 			dy = yend-ystart;
-			if( dy )
+			if (dy != 0)
 			{
 				e1.x = v0->x;
 				e1.u = v0->u;
@@ -381,7 +381,7 @@ public class namcos3d
 			ystart = v1->y;
 			yend = v2->y;
 			dy = yend-ystart;
-			if( dy )
+			if (dy != 0)
 			{
 				e1.x = v1->x;
 				e1.u = v1->u;
@@ -491,7 +491,7 @@ public class namcos3d
 		if( VertexEqual(&v[0],&v[2]) ) return;
 		if( VertexEqual(&v[1],&v[2]) ) return;
 	
-		if( flags&0x0020 ) /* one-sided */
+		if ((flags & 0x0020) != 0) /* one-sided */
 		{
 			if( (v[2].x*((v[0].z*v[1].y)-(v[0].y*v[1].z)))+
 				(v[2].y*((v[0].x*v[1].z)-(v[0].z*v[1].x)))+

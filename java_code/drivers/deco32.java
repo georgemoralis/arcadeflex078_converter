@@ -225,7 +225,7 @@ public class deco32
 	
 	static WRITE32_HANDLER( fghthist_eeprom_w )
 	{
-		if (ACCESSING_LSB32) {
+		if (ACCESSING_LSB32 != 0) {
 			EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 			EEPROM_write_bit(data & 0x10);
 			EEPROM_set_cs_line((data & 0x40) ? CLEAR_LINE : ASSERT_LINE);
@@ -244,7 +244,7 @@ public class deco32
 	{
 	//logerror("%08x:Read gun %d\n",activecpu_get_pc(),offset);
 	//return ((rand()%0xffff)<<16) | rand()%0xffff;
-		if (offset) /* Mirror of player 1 and player 2 fire buttons */
+		if (offset != 0) /* Mirror of player 1 and player 2 fire buttons */
 			return readinputport(5) | ((rand()%0xff)<<16);
 		return readinputport(4) | readinputport(6) | (readinputport(6)<<16) | (readinputport(6)<<24); //((rand()%0xff)<<16);
 	}
@@ -296,7 +296,7 @@ public class deco32
 	
 	static WRITE32_HANDLER( dragngun_eeprom_w )
 	{
-		if (ACCESSING_LSB32) {
+		if (ACCESSING_LSB32 != 0) {
 			EEPROM_set_clock_line((data & 0x2) ? ASSERT_LINE : CLEAR_LINE);
 			EEPROM_write_bit(data & 0x1);
 			EEPROM_set_cs_line((data & 0x4) ? CLEAR_LINE : ASSERT_LINE);
@@ -376,7 +376,7 @@ public class deco32
 	
 			*/
 			if ((data&0x40)==0) {
-				if (bufPtr) {
+				if (bufPtr != 0) {
 					int i;
 					logerror("Eprom reset (bit count %d): ",readBitCount);
 					for (i=0; i<bufPtr; i++)
@@ -468,7 +468,7 @@ public class deco32
 		deco32_pri_w(0,data&0x3,0); /* Bit 0 - layer priority toggle, Bit 1 - BG2/3 Joint mode (8bpp) */
 	
 		/* Sound board reset control */
-		if (data&0x80)
+		if ((data & 0x80) != 0)
 			cpu_set_reset_line(1, CLEAR_LINE);
 		else
 			cpu_set_reset_line(1, ASSERT_LINE);
@@ -1575,13 +1575,13 @@ public class deco32
 	
 	static NVRAM_HANDLER(tattass)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			int len;
 			EEPROM_init(&eeprom_interface_tattass);
-			if (file) EEPROM_load(file);
+			if (file != 0) EEPROM_load(file);
 			else memcpy(EEPROM_get_data_pointer(&len),tattass_default_eprom,0x160);
 		}
 	}

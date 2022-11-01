@@ -460,12 +460,12 @@ public class m68kmake
 		va_end(args);
 		fprintf(stderr, "\n");
 	
-		if(g_prototype_file) fclose(g_prototype_file);
-		if(g_table_file) fclose(g_table_file);
-		if(g_ops_ac_file) fclose(g_ops_ac_file);
-		if(g_ops_dm_file) fclose(g_ops_dm_file);
-		if(g_ops_nz_file) fclose(g_ops_nz_file);
-		if(g_input_file) fclose(g_input_file);
+		if (g_prototype_file != 0) fclose(g_prototype_file);
+		if (g_table_file != 0) fclose(g_table_file);
+		if (g_ops_ac_file != 0) fclose(g_ops_ac_file);
+		if (g_ops_dm_file != 0) fclose(g_ops_dm_file);
+		if (g_ops_nz_file != 0) fclose(g_ops_nz_file);
+		if (g_input_file != 0) fclose(g_input_file);
 	
 		exit(EXIT_FAILURE);
 	}
@@ -479,12 +479,12 @@ public class m68kmake
 		va_end(args);
 		perror("");
 	
-		if(g_prototype_file) fclose(g_prototype_file);
-		if(g_table_file) fclose(g_table_file);
-		if(g_ops_ac_file) fclose(g_ops_ac_file);
-		if(g_ops_dm_file) fclose(g_ops_dm_file);
-		if(g_ops_nz_file) fclose(g_ops_nz_file);
-		if(g_input_file) fclose(g_input_file);
+		if (g_prototype_file != 0) fclose(g_prototype_file);
+		if (g_table_file != 0) fclose(g_table_file);
+		if (g_ops_ac_file != 0) fclose(g_ops_ac_file);
+		if (g_ops_dm_file != 0) fclose(g_ops_dm_file);
+		if (g_ops_nz_file != 0) fclose(g_ops_nz_file);
+		if (g_input_file != 0) fclose(g_input_file);
 	
 		exit(EXIT_FAILURE);
 	}
@@ -738,7 +738,7 @@ public class m68kmake
 				for(j=0;j<replace->length;j++)
 				{
 					ptr = strstr(output, replace->replace[j][0]);
-					if(ptr)
+					if (ptr != 0)
 					{
 						/* We found something to replace */
 						found = 1;
@@ -1205,7 +1205,7 @@ public class m68kmake
 		}
 	
 		/* kill any trailing blank lines */
-		if(first_blank)
+		if (first_blank != 0)
 			ptr = first_blank;
 		*ptr++ = 0;
 	}
@@ -1328,7 +1328,7 @@ public class m68kmake
 				error_exit("Premature EOF while reading input file");
 			if(strcmp(section_id, ID_PROTOTYPE_HEADER) == 0)
 			{
-				if(prototype_header_read)
+				if (prototype_header_read != 0)
 					error_exit("Duplicate prototype header");
 				read_insert(temp_insert);
 				fprintf(g_prototype_file, "%s\n\n", temp_insert);
@@ -1336,7 +1336,7 @@ public class m68kmake
 			}
 			else if(strcmp(section_id, ID_TABLE_HEADER) == 0)
 			{
-				if(table_header_read)
+				if (table_header_read != 0)
 					error_exit("Duplicate table header");
 				read_insert(temp_insert);
 				fprintf(g_table_file, "%s", temp_insert);
@@ -1344,7 +1344,7 @@ public class m68kmake
 			}
 			else if(strcmp(section_id, ID_OPHANDLER_HEADER) == 0)
 			{
-				if(ophandler_header_read)
+				if (ophandler_header_read != 0)
 					error_exit("Duplicate opcode handler header");
 				read_insert(temp_insert);
 				fprintf(g_ops_ac_file, "%s\n\n", temp_insert);
@@ -1354,21 +1354,21 @@ public class m68kmake
 			}
 			else if(strcmp(section_id, ID_PROTOTYPE_FOOTER) == 0)
 			{
-				if(prototype_footer_read)
+				if (prototype_footer_read != 0)
 					error_exit("Duplicate prototype footer");
 				read_insert(prototype_footer_insert);
 				prototype_footer_read = 1;
 			}
 			else if(strcmp(section_id, ID_TABLE_FOOTER) == 0)
 			{
-				if(table_footer_read)
+				if (table_footer_read != 0)
 					error_exit("Duplicate table footer");
 				read_insert(table_footer_insert);
 				table_footer_read = 1;
 			}
 			else if(strcmp(section_id, ID_OPHANDLER_FOOTER) == 0)
 			{
-				if(ophandler_footer_read)
+				if (ophandler_footer_read != 0)
 					error_exit("Duplicate opcode handler footer");
 				read_insert(ophandler_footer_insert);
 				ophandler_footer_read = 1;
@@ -1382,7 +1382,7 @@ public class m68kmake
 				if(!ophandler_header_read)
 					error_exit("Table body encountered before opcode handler header");
 	
-				if(table_body_read)
+				if (table_body_read != 0)
 					error_exit("Duplicate table body");
 	
 				populate_table();
@@ -1399,7 +1399,7 @@ public class m68kmake
 				if(!table_body_read)
 					error_exit("Opcode handlers encountered before table body");
 	
-				if(ophandler_body_read)
+				if (ophandler_body_read != 0)
 					error_exit("Duplicate opcode handler section");
 	
 				process_opcode_handlers();

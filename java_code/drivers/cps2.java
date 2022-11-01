@@ -171,7 +171,7 @@ public class cps2
 			cps1_output[0x50/2] = scanline1;
 			cps1_output[0x52/2] = scanline2;
 			cpu_set_irq_line(0, 2, HOLD_LINE);
-			if(scancalls)
+			if (scancalls != 0)
 			{
 				cps2_set_sprite_priorities();
 				force_partial_update(240);
@@ -194,13 +194,13 @@ public class cps2
 	
 	static NVRAM_HANDLER( cps2 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 	        EEPROM_init(&cps2_eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 		}
 	}
@@ -212,7 +212,7 @@ public class cps2
 	
 	WRITE16_HANDLER( cps2_eeprom_port_w )
 	{
-	    if (ACCESSING_MSB)
+	    if (ACCESSING_MSB != 0)
 	    {
 		/* bit 0 - Unused */
 		/* bit 1 - Unused */
@@ -229,7 +229,7 @@ public class cps2
 		EEPROM_set_cs_line((data & 0x4000) ? CLEAR_LINE : ASSERT_LINE);
 		}
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 		/* bit 0 - coin counter 1 */
 		/* bit 0 - coin counter 2 */

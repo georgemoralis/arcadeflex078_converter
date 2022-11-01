@@ -143,7 +143,7 @@ public class jrpacman
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat)
+		if (speedcheat != 0)
 		{
 			if (readinputport(3) & 1)	/* check status of the fake dip switch */
 			{

@@ -142,7 +142,7 @@ INLINE void execute_one(void)
 	OP = ROPCODE(dsp32.PC);
 	dsp32_icount -= 4;	/* 4 clocks per cycle */
 	dsp32.PC += 4;
-	if (OP)
+	if (OP != 0)
 		(*dsp32ops[OP >> 21])();
 }
 
@@ -194,7 +194,7 @@ INLINE UINT8 cau_read_pi_1byte(int pi)
 {
 	int p = (pi >> 5) & 0x1f;
 	int i = (pi >> 0) & 0x1f;
-	if (p)
+	if (p != 0)
 	{
 		UINT32 result = RBYTE(dsp32.r[p]);
 		dsp32.r[p] = TRUNCATE24(dsp32.r[p] + dsp32.r[i]);
@@ -209,7 +209,7 @@ INLINE UINT16 cau_read_pi_2byte(int pi)
 {
 	int p = (pi >> 5) & 0x1f;
 	int i = (pi >> 0) & 0x1f;
-	if (p)
+	if (p != 0)
 	{
 		UINT32 result = RWORD(dsp32.r[p]);
 		if (i < 22 || i > 23)
@@ -227,7 +227,7 @@ INLINE UINT32 cau_read_pi_4byte(int pi)
 {
 	int p = (pi >> 5) & 0x1f;
 	int i = (pi >> 0) & 0x1f;
-	if (p)
+	if (p != 0)
 	{
 		UINT32 result = RLONG(dsp32.r[p]);
 		if (i < 22 || i > 23)
@@ -245,7 +245,7 @@ INLINE void cau_write_pi_1byte(int pi, UINT8 val)
 {
 	int p = (pi >> 5) & 0x1f;
 	int i = (pi >> 0) & 0x1f;
-	if (p)
+	if (p != 0)
 	{
 		WBYTE(dsp32.r[p], val);
 		dsp32.r[p] = TRUNCATE24(dsp32.r[p] + dsp32.r[i]);
@@ -259,7 +259,7 @@ INLINE void cau_write_pi_2byte(int pi, UINT16 val)
 {
 	int p = (pi >> 5) & 0x1f;
 	int i = (pi >> 0) & 0x1f;
-	if (p)
+	if (p != 0)
 	{
 		WWORD(dsp32.r[p], val);
 		if (i < 22 || i > 23)
@@ -276,7 +276,7 @@ INLINE void cau_write_pi_4byte(int pi, UINT32 val)
 {
 	int p = (pi >> 5) & 0x1f;
 	int i = (pi >> 0) & 0x1f;
-	if (p)
+	if (p != 0)
 	{
 		WLONG(dsp32.r[p], (INT32)(val << 8) >> 8);
 		if (i < 22 || i > 23)
@@ -464,7 +464,7 @@ INLINE double dau_read_pi_double_1st(int pi, int multiplier)
 	int i = (pi >> 0) & 7;
 
 	lastp = p;
-	if (p)
+	if (p != 0)
 	{
 		UINT32 result = RLONG(dsp32.r[p]);
 		if (i < 6)
@@ -487,7 +487,7 @@ INLINE double dau_read_pi_double_2nd(int pi, int multiplier, double xval)
 
 	if (p == 15) p = lastp;		/* P=15 means Z inherits from Y, Y inherits from X */
 	lastp = p;
-	if (p)
+	if (p != 0)
 	{
 		UINT32 result;
 		result = RLONG(dsp32.r[p]);
@@ -510,7 +510,7 @@ INLINE UINT32 dau_read_pi_4bytes(int pi)
 	int i = (pi >> 0) & 7;
 
 	lastp = p;
-	if (p)
+	if (p != 0)
 	{
 		UINT32 result = RLONG(dsp32.r[p]);
 		if (i < 6)
@@ -532,7 +532,7 @@ INLINE UINT16 dau_read_pi_2bytes(int pi)
 	int i = (pi >> 0) & 7;
 
 	lastp = p;
-	if (p)
+	if (p != 0)
 	{
 		UINT32 result = RWORD(dsp32.r[p]);
 		if (i < 6)
@@ -554,7 +554,7 @@ INLINE void dau_write_pi_double(int pi, double val)
 	int i = (pi >> 0) & 7;
 
 	if (p == 15) p = lastp;		/* P=15 means Z inherits from Y, Y inherits from X */
-	if (p)
+	if (p != 0)
 	{
 		WLONG_DEFERRED(dsp32.r[p], double_to_dsp(val));
 		if (i < 6)
@@ -575,7 +575,7 @@ INLINE void dau_write_pi_4bytes(int pi, UINT32 val)
 	int i = (pi >> 0) & 7;
 
 	if (p == 15) p = lastp;		/* P=15 means Z inherits from Y, Y inherits from X */
-	if (p)
+	if (p != 0)
 	{
 		lastp = p;
 		WLONG_DEFERRED(dsp32.r[p], val);
@@ -597,7 +597,7 @@ INLINE void dau_write_pi_2bytes(int pi, UINT16 val)
 	int i = (pi >> 0) & 7;
 
 	if (p == 15) p = lastp;		/* P=15 means Z inherits from Y, Y inherits from X */
-	if (p)
+	if (p != 0)
 	{
 		lastp = p;
 		WWORD_DEFERRED(dsp32.r[p], val);
@@ -746,7 +746,7 @@ static void goto_pl(void)
 
 static void goto_mi(void)
 {
-	if (nFLAG)
+	if (nFLAG != 0)
 	{
 		UINT32 op = OP;
 		execute_one();
@@ -770,7 +770,7 @@ static void goto_ne(void)
 
 static void goto_eq(void)
 {
-	if (zFLAG)
+	if (zFLAG != 0)
 	{
 		UINT32 op = OP;
 		execute_one();
@@ -794,7 +794,7 @@ static void goto_vc(void)
 
 static void goto_vs(void)
 {
-	if (vFLAG)
+	if (vFLAG != 0)
 	{
 		UINT32 op = OP;
 		execute_one();
@@ -818,7 +818,7 @@ static void goto_cc(void)
 
 static void goto_cs(void)
 {
-	if (cFLAG)
+	if (cFLAG != 0)
 	{
 		UINT32 op = OP;
 		execute_one();
@@ -914,7 +914,7 @@ static void goto_auc(void)
 
 static void goto_aus(void)
 {
-	if (DEFERRED_VUFLAGS & UFLAGBIT)
+	if ((DEFERRED_VUFLAGS & UFLAGBIT) != 0)
 	{
 		UINT32 op = OP;
 		execute_one();
@@ -986,7 +986,7 @@ static void goto_avc(void)
 
 static void goto_avs(void)
 {
-	if (DEFERRED_VUFLAGS & VFLAGBIT)
+	if ((DEFERRED_VUFLAGS & VFLAGBIT) != 0)
 	{
 		UINT32 op = OP;
 		execute_one();
@@ -1199,7 +1199,7 @@ static void add_si(void)
 
 static void add_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1214,7 +1214,7 @@ static void add_ss(void)
 
 static void mul2_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1228,7 +1228,7 @@ static void mul2_s(void)
 
 static void subr_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1249,7 +1249,7 @@ static void addr_ss(void)
 
 static void sub_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1264,7 +1264,7 @@ static void sub_ss(void)
 
 static void neg_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1278,7 +1278,7 @@ static void neg_s(void)
 
 static void andc_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1293,7 +1293,7 @@ static void andc_ss(void)
 
 static void cmp_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int drval = REG16((OP >> 16) & 0x1f);
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1305,7 +1305,7 @@ static void cmp_ss(void)
 
 static void xor_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1320,7 +1320,7 @@ static void xor_ss(void)
 
 static void rcr_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1335,7 +1335,7 @@ static void rcr_s(void)
 
 static void or_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1350,7 +1350,7 @@ static void or_ss(void)
 
 static void rcl_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1365,7 +1365,7 @@ static void rcl_s(void)
 
 static void shr_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1380,7 +1380,7 @@ static void shr_s(void)
 
 static void div2_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1395,7 +1395,7 @@ static void div2_s(void)
 
 static void and_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1410,7 +1410,7 @@ static void and_ss(void)
 
 static void test_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int drval = REG16((OP >> 16) & 0x1f);
 		int s1rval = REG16((OP >> 5) & 0x1f);
@@ -1542,7 +1542,7 @@ static void adde_si(void)
 
 static void adde_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1557,7 +1557,7 @@ static void adde_ss(void)
 
 static void mul2e_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1571,7 +1571,7 @@ static void mul2e_s(void)
 
 static void subre_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1592,7 +1592,7 @@ static void addre_ss(void)
 
 static void sube_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1607,7 +1607,7 @@ static void sube_ss(void)
 
 static void nege_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1621,7 +1621,7 @@ static void nege_s(void)
 
 static void andce_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1636,7 +1636,7 @@ static void andce_ss(void)
 
 static void cmpe_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int drval = REG24((OP >> 16) & 0x1f);
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1648,7 +1648,7 @@ static void cmpe_ss(void)
 
 static void xore_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1663,7 +1663,7 @@ static void xore_ss(void)
 
 static void rcre_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1678,7 +1678,7 @@ static void rcre_s(void)
 
 static void ore_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1693,7 +1693,7 @@ static void ore_ss(void)
 
 static void rcle_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1708,7 +1708,7 @@ static void rcle_s(void)
 
 static void shre_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1723,7 +1723,7 @@ static void shre_s(void)
 
 static void div2e_s(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1738,7 +1738,7 @@ static void div2e_s(void)
 
 static void ande_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int dr = (OP >> 16) & 0x1f;
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -1753,7 +1753,7 @@ static void ande_ss(void)
 
 static void teste_ss(void)
 {
-	if (CONDITION_IS_TRUE)
+	if (CONDITION_IS_TRUE != 0)
 	{
 		int drval = REG24((OP >> 16) & 0x1f);
 		int s1rval = REG24((OP >> 5) & 0x1f);
@@ -2512,7 +2512,7 @@ static void d5_ifalt(void)
 	int ar = (OP >> 21) & 3;
 	double res = dsp32.a[ar];
 	int zpi = (OP >> 0) & 0x7f;
-	if (NFLAG)
+	if (NFLAG != 0)
 		res = dau_read_pi_double_1st(OP >> 7, 0);
 	if (zpi != 7)
 		dau_write_pi_double(zpi, res);
@@ -2525,7 +2525,7 @@ static void d5_ifaeq(void)
 	int ar = (OP >> 21) & 3;
 	double res = dsp32.a[ar];
 	int zpi = (OP >> 0) & 0x7f;
-	if (ZFLAG)
+	if (ZFLAG != 0)
 		res = dau_read_pi_double_1st(OP >> 7, 0);
 	if (zpi != 7)
 		dau_write_pi_double(zpi, res);

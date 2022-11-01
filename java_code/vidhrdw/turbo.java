@@ -339,9 +339,9 @@ public class turbo
 		for (i = 0; i < 16; i++)
 		{
 			UINT32 value = 0;
-			if (i & 1) value |= 0x00000001;
-			if (i & 2) value |= 0x00000100;
-			if (i & 4) value |= 0x00010000;
+			if ((i & 1) != 0) value |= 0x00000001;
+			if ((i & 2) != 0) value |= 0x00000100;
+			if ((i & 4) != 0) value |= 0x00010000;
 	
 			/* special value for the end-of-row */
 			if ((i & 0x0c) == 0x04) value = END_OF_ROW_VALUE;
@@ -459,14 +459,14 @@ public class turbo
 		/* expand the sprite priority map */
 		for (i = 0; i < (1 << 8); i++)
 		{
-			if (i & 0x01) sprite_expanded_priority[i] = 0 | 8;
-			else if (i & 0x02) sprite_expanded_priority[i] = 1 | 8;
-			else if (i & 0x04) sprite_expanded_priority[i] = 2 | 8;
-			else if (i & 0x08) sprite_expanded_priority[i] = 3 | 8;
-			else if (i & 0x10) sprite_expanded_priority[i] = 4 | 8;
-			else if (i & 0x20) sprite_expanded_priority[i] = 5 | 8;
-			else if (i & 0x40) sprite_expanded_priority[i] = 6 | 8;
-			else if (i & 0x80) sprite_expanded_priority[i] = 7 | 8;
+			if ((i & 0x01) != 0) sprite_expanded_priority[i] = 0 | 8;
+			else if ((i & 0x02) != 0) sprite_expanded_priority[i] = 1 | 8;
+			else if ((i & 0x04) != 0) sprite_expanded_priority[i] = 2 | 8;
+			else if ((i & 0x08) != 0) sprite_expanded_priority[i] = 3 | 8;
+			else if ((i & 0x10) != 0) sprite_expanded_priority[i] = 4 | 8;
+			else if ((i & 0x20) != 0) sprite_expanded_priority[i] = 5 | 8;
+			else if ((i & 0x40) != 0) sprite_expanded_priority[i] = 6 | 8;
+			else if ((i & 0x80) != 0) sprite_expanded_priority[i] = 7 | 8;
 			else sprite_expanded_priority[i] = 0;
 			sprite_expanded_priority[i] *= 4;
 		}
@@ -518,7 +518,7 @@ public class turbo
 		for (i = 0; i < 0x200; i++)
 		{
 			int value = sega_sprite_position[i];
-			if (value)
+			if (value != 0)
 			{
 				int base = (i & 0x100) >> 5;
 				int which;
@@ -557,7 +557,7 @@ public class turbo
 		for (i = 0; i < 0x200; i++)
 		{
 			int value = sega_sprite_position[i];
-			if (value)
+			if (value != 0)
 			{
 				int base = (i & 0x01) << 3;
 				int which;
@@ -739,7 +739,7 @@ public class turbo
 					int carry = (x + i + turbo_opb) >> 8;
 	
 					/* the carry selects which inputs to use (p. 141) */
-					if (carry)
+					if (carry != 0)
 					{
 						sel	 = turbo_ipb;
 						coch = turbo_ipc >> 4;
@@ -781,7 +781,7 @@ public class turbo
 					turbo_collision |= collision_map[(enable & 7) | (slipar_acciar >> 1)];
 	
 					/* we only need to continue if we're actually drawing */
-					if (bitmap)
+					if (bitmap != 0)
 					{
 						int bacol, red, grn, blu, priority, forebits, mx;
 	
@@ -815,7 +815,7 @@ public class turbo
 			}
 	
 			/* render the scanline */
-			if (bitmap)
+			if (bitmap != 0)
 				draw_scanline8(bitmap, 8, y, VIEW_WIDTH - 8, &scanline[8], colortable, -1);
 		}
 	}
@@ -870,7 +870,7 @@ public class turbo
 					mux = mplb ? sprite_priority_base[sprite_enable[x + i]] : 0;
 	
 					/* mux3 selects either sprite or foreground */
-					if (mux & 0x20)
+					if ((mux & 0x20) != 0)
 						bits = (sprite_buffer[x + i] >> (mux & 0x1c)) & 0x0f;
 					else
 						bits = forebits;
@@ -936,7 +936,7 @@ public class turbo
 					/* final result is based on sprite/foreground/star priorities */
 					if (!(forepri & 0x80))
 						bits = 1024 | forebits;
-					else if (mux & 0x20)
+					else if ((mux & 0x20) != 0)
 						bits = (buckrog_obch << 7) | ((mux & 0x1c) << 2) | ((sprite_buffer[x + i] >> (mux & 0x1c)) & 0x0f);
 					else if (!(forepri & 0x40))
 						bits = 1024 | forebits;

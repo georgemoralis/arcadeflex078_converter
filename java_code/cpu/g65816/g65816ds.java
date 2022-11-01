@@ -175,7 +175,7 @@ public class g65816ds
 	
 	   val &= 0xff;
 	
-	   if(val & 0x80)
+	   if ((val & 0x80) != 0)
 	      sprintf(str, "-$%x", (0-val) & 0x7f);
 	   else
 	      sprintf(str, "$%x", val & 0x7f);
@@ -189,7 +189,7 @@ public class g65816ds
 	
 	   val &= 0xffff;
 	
-	   if(val & 0x8000)
+	   if ((val & 0x8000) != 0)
 	      sprintf(str, "-$%x", (0-val) & 0x7fff);
 	   else
 	      sprintf(str, "$%x", val & 0x7fff);

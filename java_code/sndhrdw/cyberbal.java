@@ -47,8 +47,8 @@ public class cyberbal
 	{
 		int temp = readinputport(3);
 		if (!(readinputport(0) & 0x8000)) temp ^= 0x80;
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x40;
-		if (atarigen_sound_to_cpu_ready) temp ^= 0x20;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x40;
+		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x20;
 		return temp;
 	} };
 	
@@ -56,8 +56,8 @@ public class cyberbal
 	public static ReadHandlerPtr cyberbal_sound_6502_stat_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int temp = 0xff;
-		if (sound_data_from_6502_ready) temp ^= 0x80;
-		if (sound_data_from_68k_ready) temp ^= 0x40;
+		if (sound_data_from_6502_ready != 0) temp ^= 0x80;
+		if (sound_data_from_68k_ready != 0) temp ^= 0x40;
 		return temp;
 	} };
 	
@@ -104,12 +104,12 @@ public class cyberbal
 	{
 		int newstate = 0;
 	
-		if (fast_68k_int)
+		if (fast_68k_int != 0)
 			newstate |= 6;
-		if (io_68k_int)
+		if (io_68k_int != 0)
 			newstate |= 2;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(3, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(3, 7, CLEAR_LINE);
@@ -128,7 +128,7 @@ public class cyberbal
 	
 	WRITE16_HANDLER( cyberbal_io_68k_irq_ack_w )
 	{
-		if (io_68k_int)
+		if (io_68k_int != 0)
 		{
 			io_68k_int = 0;
 			update_sound_68k_interrupts();
@@ -142,15 +142,15 @@ public class cyberbal
 	
 		sound_data_from_6502_ready = 0;
 	
-		if (sound_data_from_6502_ready) temp ^= 0x08;
-		if (sound_data_from_68k_ready) temp ^= 0x04;
+		if (sound_data_from_6502_ready != 0) temp ^= 0x08;
+		if (sound_data_from_68k_ready != 0) temp ^= 0x04;
 		return temp;
 	}
 	
 	
 	WRITE16_HANDLER( cyberbal_sound_68k_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			sound_data_from_68k = (data >> 8) & 0xff;
 			sound_data_from_68k_ready = 1;
@@ -162,7 +162,7 @@ public class cyberbal
 	{
 		DAC_data_16_w((offset >> 3) & 1, (((data >> 3) & 0x800) | ((data >> 2) & 0x7ff)) << 4);
 	
-		if (fast_68k_int)
+		if (fast_68k_int != 0)
 		{
 			fast_68k_int = 0;
 			update_sound_68k_interrupts();

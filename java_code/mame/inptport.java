@@ -1581,7 +1581,7 @@ public class inptport
 		memcpy(inputport_defaults_backup,inputport_defaults,sizeof(inputport_defaults));
 	
 		cfg = config_open(NULL);
-		if (cfg)
+		if (cfg != 0)
 		{
 			config_read_default_ports(cfg, inputport_defaults);
 			config_close(cfg);
@@ -1593,7 +1593,7 @@ public class inptport
 		config_file *cfg;
 	
 		cfg = config_create(NULL);
-		if (cfg)
+		if (cfg != 0)
 		{
 			config_write_default_ports(cfg, inputport_defaults_backup, inputport_defaults);
 			config_close(cfg);
@@ -1617,18 +1617,18 @@ public class inptport
 		load_default_keys();
 	
 		cfg = config_open(Machine->gamedrv->name);
-		if (cfg)
+		if (cfg != 0)
 			{
 			err = config_read_ports(cfg, Machine->input_ports_default, Machine->input_ports);
-			if (err)
+			if (err != 0)
 					goto getout;
 	
 			err = config_read_coin_and_ticket_counters(cfg, coins, lastcoin, coinlockedout, &dispensed_tickets);
-			if (err)
+			if (err != 0)
 					goto getout;
 	
 			err = config_read_mixer_config(cfg, &mixercfg);
-			if (err)
+			if (err != 0)
 				goto getout;
 	
 			mixer_load_config(&mixercfg);
@@ -1905,7 +1905,7 @@ public class inptport
 		save_default_keys();
 	
 		cfg = config_create(Machine->gamedrv->name);
-		if (cfg)
+		if (cfg != 0)
 			{
 			mixer_save_config(&mixercfg);
 	
@@ -2092,7 +2092,7 @@ public class inptport
 	
 		if (in->type & IPF_REVERSE) delta = -delta;
 	
-		if (is_gun)
+		if (is_gun != 0)
 		{
 			/* The OSD lightgun call should return the delta from the middle of the screen
 			when the gun is fired (not the absolute pixel value), and 0 when the gun is
@@ -2126,7 +2126,7 @@ public class inptport
 			}
 		}
 	
-		if (is_stick)
+		if (is_stick != 0)
 		{
 			int new, prev;
 	
@@ -2200,7 +2200,7 @@ public class inptport
 	
 		current += delta;
 	
-		if (check_bounds)
+		if (check_bounds != 0)
 		{
 			int temp;
 	
@@ -2258,9 +2258,9 @@ public class inptport
 		input_port_value[port] &= ~in->mask;
 		input_port_value[port] |= current & in->mask;
 	
-		if (playback)
+		if (playback != 0)
 			readword(playback,&input_port_value[port]);
-		if (record)
+		if (record != 0)
 			writeword(record,input_port_value[port]);
 	#ifdef MAME_NET
 		if ( net_active() && (default_player != NET_SPECTATOR) )
@@ -2598,7 +2598,7 @@ public class inptport
 			if (in->type == IPT_PORT) in++;
 		}
 	
-		if (playback)
+		if (playback != 0)
 		{
 			int i;
 	
@@ -2634,7 +2634,7 @@ public class inptport
 		inputx_update(input_port_value);
 	#endif
 	
-		if (record)
+		if (record != 0)
 		{
 			int i;
 	
@@ -2695,7 +2695,7 @@ public class inptport
 			struct InputPort *in;
 	
 			in=input_analog[i];
-			if (in)
+			if (in != 0)
 			{
 				update_analog_port(i);
 			}
@@ -2711,7 +2711,7 @@ public class inptport
 	
 		/* Update analog ports on demand */
 		in=input_analog[port];
-		if (in)
+		if (in != 0)
 		{
 			scale_analog_port(port);
 		}
@@ -2965,7 +2965,7 @@ public class inptport
 	
 			pik = osd_input_keywords;
 	
-			if (pik)
+			if (pik != 0)
 			{
 				while (!found && pik->name && pik->name[0] != 0)
 				{

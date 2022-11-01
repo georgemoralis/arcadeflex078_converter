@@ -296,7 +296,7 @@ public class starshp1
 	
 			for (x = h1; x <= h2; x++)
 			{
-				if (starshp1_circle_mod)
+				if (starshp1_circle_mod != 0)
 				{
 					if (p[x] & 1)
 					{

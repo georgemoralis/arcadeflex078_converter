@@ -432,7 +432,7 @@ OP(op,ff) { RST(0x38);												} /* RST  7 		  */
 
 static void take_interrupt(int irq)
 {
-	if( _IFF1 )
+	if (_IFF1 != 0)
 	{
 		int irq_vector;
 

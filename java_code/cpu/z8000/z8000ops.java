@@ -31,14 +31,14 @@
  ******************************************/
 INLINE void CHANGE_FCW(UINT16 fcw)
 {
-	if (fcw & F_S_N) {			/* system mode now? */
+	if ((fcw & F_S_N) != 0) {			/* system mode now? */
 		if (!(FCW & F_S_N)) {	/* and not before? */
 			UINT16 tmp = RW(SP);
 			RW(SP) = NSP;
 			NSP = tmp;
 		}
 	} else {					/* user mode now */
-		if (FCW & F_S_N) {		/* and not before? */
+		if ((FCW & F_S_N) != 0) {		/* and not before? */
 			UINT16 tmp = RW(SP);
 			RW(SP) = NSP;
 			NSP = tmp;
@@ -439,7 +439,7 @@ INLINE void TESTB(UINT8 result)
 INLINE void TESTW(UINT16 dest)
 {
 	CLR_ZS;
-    if (!dest) SET_Z; else if (dest & S16) SET_S;
+    if (!dest) SET_Z; else if ((dest & S16) != 0) SET_S;
 }
 
 /******************************************
@@ -449,7 +449,7 @@ INLINE void TESTW(UINT16 dest)
 INLINE void TESTL(UINT32 dest)
 {
 	CLR_ZS;
-	if (!dest) SET_Z; else if (dest & S32) SET_S;
+	if (!dest) SET_Z; else if ((dest & S32) != 0) SET_S;
 }
 
 /******************************************
@@ -555,7 +555,7 @@ INLINE UINT32 DIVW(UINT32 dest, UINT16 value)
 	UINT32 result = dest;
 	UINT16 remainder = 0;
 	CLR_CZSV;
-	if (value)
+	if (value != 0)
 	{
 		UINT16 qsign = ((dest >> 16) ^ value) & S16;
 		UINT16 rsign = (dest >> 16) & S16;
@@ -563,8 +563,8 @@ INLINE UINT32 DIVW(UINT32 dest, UINT16 value)
 		if ((INT16)value < 0) value = -value;
 		result = dest / value;
 		remainder = dest % value;
-		if (qsign) result = -result;
-		if (rsign) remainder = -remainder;
+		if (qsign != 0) result = -result;
+		if (rsign != 0) remainder = -remainder;
 		if ((INT32)result < -0x8000 || (INT32)result > 0x7fff)
 		{
 			INT32 temp = (INT32)result >> 1;
@@ -599,7 +599,7 @@ INLINE UINT64 DIVL(UINT64 dest, UINT32 value)
 	UINT64 result = dest;
 	UINT32 remainder = 0;
 	CLR_CZSV;
-	if (value)
+	if (value != 0)
 	{
 		UINT32 qsign = ((dest >> 32) ^ value) & S32;
 		UINT32 rsign = (dest >> 32) & S32;
@@ -607,8 +607,8 @@ INLINE UINT64 DIVL(UINT64 dest, UINT32 value)
 		if ((INT32)value < 0) value = -value;
 		result = dest / value;
 		remainder = dest % value;
-		if (qsign) result = -result;
-		if (rsign) remainder = -remainder;
+		if (qsign != 0) result = -result;
+		if (rsign != 0) remainder = -remainder;
 		if ((INT64)result < -0x80000000 || (INT64)result > 0x7fffffff)
 		{
 			INT64 temp = (INT64)result >> 1;
@@ -642,9 +642,9 @@ INLINE UINT8 RLB(UINT8 dest, UINT8 twice)
 {
 	UINT8 result = (dest << 1) | (dest >> 7);
 	CLR_CZSV;
-	if (twice) result = (result << 1) | (result >> 7);
+	if (twice != 0) result = (result << 1) | (result >> 7);
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (result & 0x01) SET_C;
+	if ((result & 0x01) != 0) SET_C;
     if ((result ^ dest) & S08) SET_V;
 	return result;
 }
@@ -657,9 +657,9 @@ INLINE UINT16 RLW(UINT16 dest, UINT8 twice)
 {
 	UINT16 result = (dest << 1) | (dest >> 15);
 	CLR_CZSV;
-	if (twice) result = (result << 1) | (result >> 15);
+	if (twice != 0) result = (result << 1) | (result >> 15);
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (result & 0x0001) SET_C;
+	if ((result & 0x0001) != 0) SET_C;
     if ((result ^ dest) & S16) SET_V;
 	return result;
 }
@@ -673,13 +673,13 @@ INLINE UINT8 RLCB(UINT8 dest, UINT8 twice)
     UINT8 c = dest & S08;
 	UINT8 result = (dest << 1) | GET_C;
 	CLR_CZSV;
-	if (twice) {
+	if (twice != 0) {
 		UINT8 c1 = c >> 7;
         c = result & S08;
 		result = (result << 1) | c1;
 	}
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S08) SET_V;
 	return result;
 }
@@ -693,13 +693,13 @@ INLINE UINT16 RLCW(UINT16 dest, UINT8 twice)
     UINT16 c = dest & S16;
 	UINT16 result = (dest << 1) | GET_C;
 	CLR_CZSV;
-	if (twice) {
+	if (twice != 0) {
 		UINT16 c1 = c >> 15;
         c = result & S16;
 		result = (result << 1) | c1;
     }
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S16) SET_V;
 	return result;
 }
@@ -712,8 +712,8 @@ INLINE UINT8 RRB(UINT8 dest, UINT8 twice)
 {
 	UINT8 result = (dest >> 1) | (dest << 7);
 	CLR_CZSV;
-	if (twice) result = (result >> 1) | (result << 7);
-    if (!result) SET_Z; else if (result & S08) SET_SC;
+	if (twice != 0) result = (result >> 1) | (result << 7);
+    if (!result) SET_Z; else if ((result & S08) != 0) SET_SC;
     if ((result ^ dest) & S08) SET_V;
 	return result;
 }
@@ -726,8 +726,8 @@ INLINE UINT16 RRW(UINT16 dest, UINT8 twice)
 {
 	UINT16 result = (dest >> 1) | (dest << 15);
 	CLR_CZSV;
-	if (twice) result = (result >> 1) | (result << 15);
-    if (!result) SET_Z; else if (result & S16) SET_SC;
+	if (twice != 0) result = (result >> 1) | (result << 15);
+    if (!result) SET_Z; else if ((result & S16) != 0) SET_SC;
     if ((result ^ dest) & S16) SET_V;
 	return result;
 }
@@ -741,13 +741,13 @@ INLINE UINT8 RRCB(UINT8 dest, UINT8 twice)
 	UINT8 c = dest & 1;
 	UINT8 result = (dest >> 1) | (GET_C << 7);
 	CLR_CZSV;
-	if (twice) {
+	if (twice != 0) {
 		UINT8 c1 = c << 7;
 		c = result & 1;
 		result = (result >> 1) | c1;
 	}
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S08) SET_V;
 	return result;
 }
@@ -761,13 +761,13 @@ INLINE UINT16 RRCW(UINT16 dest, UINT8 twice)
 	UINT16 c = dest & 1;
 	UINT16 result = (dest >> 1) | (GET_C << 15);
 	CLR_CZSV;
-	if (twice) {
+	if (twice != 0) {
 		UINT16 c1 = c << 15;
 		c = result & 1;
 		result = (result >> 1) | c1;
     }
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S16) SET_V;
 	return result;
 }
@@ -792,7 +792,7 @@ INLINE UINT8 SDAB(UINT8 dest, INT8 count)
 		count++;
 	}
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S08) SET_V;
 	return (UINT8)result;
 }
@@ -817,7 +817,7 @@ INLINE UINT16 SDAW(UINT16 dest, INT8 count)
 		count++;
 	}
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S16) SET_V;
 	return (UINT16)result;
 }
@@ -842,7 +842,7 @@ INLINE UINT32 SDAL(UINT32 dest, INT8 count)
 		count++;
 	}
     CHK_XXXL_ZS;    /* set Z and S flags for result long       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S32) SET_V;
 	return (UINT32) result;
 }
@@ -867,7 +867,7 @@ INLINE UINT8 SDLB(UINT8 dest, INT8 count)
 		count++;
 	}
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S08) SET_V;
 	return result;
 }
@@ -892,7 +892,7 @@ INLINE UINT16 SDLW(UINT16 dest, INT8 count)
 		count++;
 	}
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S16) SET_V;
 	return result;
 }
@@ -917,7 +917,7 @@ INLINE UINT32 SDLL(UINT32 dest, INT8 count)
 		count++;
 	}
     CHK_XXXL_ZS;    /* set Z and S flags for result long       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S32) SET_V;
 	return result;
 }
@@ -932,7 +932,7 @@ INLINE UINT8 SLAB(UINT8 dest, UINT8 count)
 	UINT8 result = (UINT8)((INT8)dest << count);
 	CLR_CZSV;
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S08) SET_V;
 	return result;
 }
@@ -947,7 +947,7 @@ INLINE UINT16 SLAW(UINT16 dest, UINT8 count)
 	UINT16 result = (UINT16)((INT16)dest << count);
 	CLR_CZSV;
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S16) SET_V;
 	return result;
 }
@@ -962,7 +962,7 @@ INLINE UINT32 SLAL(UINT32 dest, UINT8 count)
 	UINT32 result = (UINT32)((INT32)dest << count);
 	CLR_CZSV;
     CHK_XXXL_ZS;    /* set Z and S flags for result long       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
     if ((result ^ dest) & S32) SET_V;
 	return result;
 }
@@ -977,7 +977,7 @@ INLINE UINT8 SLLB(UINT8 dest, UINT8 count)
 	UINT8 result = dest << count;
 	CLR_CZS;
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -991,7 +991,7 @@ INLINE UINT16 SLLW(UINT16 dest, UINT8 count)
 	UINT16 result = dest << count;
 	CLR_CZS;
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1005,7 +1005,7 @@ INLINE UINT32 SLLL(UINT32 dest, UINT8 count)
 	UINT32 result = dest << count;
 	CLR_CZS;
     CHK_XXXL_ZS;    /* set Z and S flags for result long       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1019,7 +1019,7 @@ INLINE UINT8 SRAB(UINT8 dest, UINT8 count)
 	UINT8 result = (UINT8)((INT8)dest >> count);
 	CLR_CZSV;
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1033,7 +1033,7 @@ INLINE UINT16 SRAW(UINT16 dest, UINT8 count)
 	UINT16 result = (UINT16)((INT16)dest >> count);
 	CLR_CZSV;
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1047,7 +1047,7 @@ INLINE UINT32 SRAL(UINT32 dest, UINT8 count)
 	UINT32 result = (UINT32)((INT32)dest >> count);
 	CLR_CZSV;
     CHK_XXXL_ZS;    /* set Z and S flags for result long       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1061,7 +1061,7 @@ INLINE UINT8 SRLB(UINT8 dest, UINT8 count)
 	UINT8 result = dest >> count;
 	CLR_CZS;
     CHK_XXXB_ZS;    /* set Z and S flags for result byte       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1075,7 +1075,7 @@ INLINE UINT16 SRLW(UINT16 dest, UINT8 count)
 	UINT16 result = dest >> count;
 	CLR_CZS;
     CHK_XXXW_ZS;    /* set Z and S flags for result word       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1089,7 +1089,7 @@ INLINE UINT32 SRLL(UINT32 dest, UINT8 count)
 	UINT32 result = dest >> count;
 	CLR_CZS;
     CHK_XXXL_ZS;    /* set Z and S flags for result long       */
-	if (c) SET_C;
+	if (c != 0) SET_C;
 	return result;
 }
 
@@ -1531,7 +1531,7 @@ static void Z0E_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: ext0e  $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
 	}
@@ -1545,7 +1545,7 @@ static void Z0F_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: ext0f  $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -1824,22 +1824,22 @@ static void Z1E_ddN0_cccc(void)
 	GET_CCC(OP0,NIB3);
 	GET_DST(OP0,NIB2);
 	switch (cc) {
-		case  0: if (CC0) PC = RW(dst); break;
-		case  1: if (CC1) PC = RW(dst); break;
-		case  2: if (CC2) PC = RW(dst); break;
-		case  3: if (CC3) PC = RW(dst); break;
-		case  4: if (CC4) PC = RW(dst); break;
-		case  5: if (CC5) PC = RW(dst); break;
-		case  6: if (CC6) PC = RW(dst); break;
-		case  7: if (CC7) PC = RW(dst); break;
-		case  8: if (CC8) PC = RW(dst); break;
-		case  9: if (CC9) PC = RW(dst); break;
-		case 10: if (CCA) PC = RW(dst); break;
-		case 11: if (CCB) PC = RW(dst); break;
-		case 12: if (CCC) PC = RW(dst); break;
-		case 13: if (CCD) PC = RW(dst); break;
-		case 14: if (CCE) PC = RW(dst); break;
-		case 15: if (CCF) PC = RW(dst); break;
+		case  0: if (CC0 != 0) PC = RW(dst); break;
+		case  1: if (CC1 != 0) PC = RW(dst); break;
+		case  2: if (CC2 != 0) PC = RW(dst); break;
+		case  3: if (CC3 != 0) PC = RW(dst); break;
+		case  4: if (CC4 != 0) PC = RW(dst); break;
+		case  5: if (CC5 != 0) PC = RW(dst); break;
+		case  6: if (CC6 != 0) PC = RW(dst); break;
+		case  7: if (CC7 != 0) PC = RW(dst); break;
+		case  8: if (CC8 != 0) PC = RW(dst); break;
+		case  9: if (CC9 != 0) PC = RW(dst); break;
+		case 10: if (CCA != 0) PC = RW(dst); break;
+		case 11: if (CCB != 0) PC = RW(dst); break;
+		case 12: if (CCC != 0) PC = RW(dst); break;
+		case 13: if (CCD != 0) PC = RW(dst); break;
+		case 14: if (CCE != 0) PC = RW(dst); break;
+		case 15: if (CCF != 0) PC = RW(dst); break;
 	}
 	change_pc16bew(PC);
 }
@@ -2275,7 +2275,7 @@ static void Z36_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvd36 $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -2313,7 +2313,7 @@ static void Z38_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvd38 $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -3768,22 +3768,22 @@ static void Z5E_0000_cccc_addr(void)
 	GET_CCC(OP0,NIB3);
 	GET_ADDR(OP1);
 	switch (cc) {
-		case  0: if (CC0) PC = addr; break;
-		case  1: if (CC1) PC = addr; break;
-		case  2: if (CC2) PC = addr; break;
-		case  3: if (CC3) PC = addr; break;
-		case  4: if (CC4) PC = addr; break;
-		case  5: if (CC5) PC = addr; break;
-		case  6: if (CC6) PC = addr; break;
-		case  7: if (CC7) PC = addr; break;
-		case  8: if (CC8) PC = addr; break;
-		case  9: if (CC9) PC = addr; break;
-		case 10: if (CCA) PC = addr; break;
-		case 11: if (CCB) PC = addr; break;
-		case 12: if (CCC) PC = addr; break;
-		case 13: if (CCD) PC = addr; break;
-		case 14: if (CCE) PC = addr; break;
-		case 15: if (CCF) PC = addr; break;
+		case  0: if (CC0 != 0) PC = addr; break;
+		case  1: if (CC1 != 0) PC = addr; break;
+		case  2: if (CC2 != 0) PC = addr; break;
+		case  3: if (CC3 != 0) PC = addr; break;
+		case  4: if (CC4 != 0) PC = addr; break;
+		case  5: if (CC5 != 0) PC = addr; break;
+		case  6: if (CC6 != 0) PC = addr; break;
+		case  7: if (CC7 != 0) PC = addr; break;
+		case  8: if (CC8 != 0) PC = addr; break;
+		case  9: if (CC9 != 0) PC = addr; break;
+		case 10: if (CCA != 0) PC = addr; break;
+		case 11: if (CCB != 0) PC = addr; break;
+		case 12: if (CCC != 0) PC = addr; break;
+		case 13: if (CCD != 0) PC = addr; break;
+		case 14: if (CCE != 0) PC = addr; break;
+		case 15: if (CCF != 0) PC = addr; break;
 	}
 	change_pc16bew(PC);
 }
@@ -3799,22 +3799,22 @@ static void Z5E_ddN0_cccc_addr(void)
 	GET_ADDR(OP1);
 	addr += RW(dst);
 	switch (cc) {
-		case  0: if (CC0) PC = addr; break;
-		case  1: if (CC1) PC = addr; break;
-		case  2: if (CC2) PC = addr; break;
-		case  3: if (CC3) PC = addr; break;
-		case  4: if (CC4) PC = addr; break;
-		case  5: if (CC5) PC = addr; break;
-		case  6: if (CC6) PC = addr; break;
-		case  7: if (CC7) PC = addr; break;
-		case  8: if (CC8) PC = addr; break;
-		case  9: if (CC9) PC = addr; break;
-		case 10: if (CCA) PC = addr; break;
-		case 11: if (CCB) PC = addr; break;
-		case 12: if (CCC) PC = addr; break;
-		case 13: if (CCD) PC = addr; break;
-		case 14: if (CCE) PC = addr; break;
-		case 15: if (CCF) PC = addr; break;
+		case  0: if (CC0 != 0) PC = addr; break;
+		case  1: if (CC1 != 0) PC = addr; break;
+		case  2: if (CC2 != 0) PC = addr; break;
+		case  3: if (CC3 != 0) PC = addr; break;
+		case  4: if (CC4 != 0) PC = addr; break;
+		case  5: if (CC5 != 0) PC = addr; break;
+		case  6: if (CC6 != 0) PC = addr; break;
+		case  7: if (CC7 != 0) PC = addr; break;
+		case  8: if (CC8 != 0) PC = addr; break;
+		case  9: if (CC9 != 0) PC = addr; break;
+		case 10: if (CCA != 0) PC = addr; break;
+		case 11: if (CCB != 0) PC = addr; break;
+		case 12: if (CCC != 0) PC = addr; break;
+		case 13: if (CCD != 0) PC = addr; break;
+		case 14: if (CCE != 0) PC = addr; break;
+		case 15: if (CCF != 0) PC = addr; break;
 	}
 	change_pc16bew(PC);
 }
@@ -4355,7 +4355,7 @@ static void Z78_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvd78 $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -4541,7 +4541,7 @@ static void Z7E_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvd7e $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -4837,7 +4837,7 @@ static void Z8E_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: ext8e  $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -4851,7 +4851,7 @@ static void Z8F_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: ext8f  $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -5009,7 +5009,7 @@ static void Z9D_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvd9d $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -5023,22 +5023,22 @@ static void Z9E_0000_cccc(void)
 {
 	GET_CCC(OP0,NIB3);
 	switch (cc) {
-		case  0: if (CC0) PC = POPW( SP ); break;
-		case  1: if (CC1) PC = POPW( SP ); break;
-		case  2: if (CC2) PC = POPW( SP ); break;
-		case  3: if (CC3) PC = POPW( SP ); break;
-		case  4: if (CC4) PC = POPW( SP ); break;
-		case  5: if (CC5) PC = POPW( SP ); break;
-		case  6: if (CC6) PC = POPW( SP ); break;
-		case  7: if (CC7) PC = POPW( SP ); break;
-		case  8: if (CC8) PC = POPW( SP ); break;
-		case  9: if (CC9) PC = POPW( SP ); break;
-		case 10: if (CCA) PC = POPW( SP ); break;
-		case 11: if (CCB) PC = POPW( SP ); break;
-		case 12: if (CCC) PC = POPW( SP ); break;
-		case 13: if (CCD) PC = POPW( SP ); break;
-		case 14: if (CCE) PC = POPW( SP ); break;
-		case 15: if (CCF) PC = POPW( SP ); break;
+		case  0: if (CC0 != 0) PC = POPW( SP ); break;
+		case  1: if (CC1 != 0) PC = POPW( SP ); break;
+		case  2: if (CC2 != 0) PC = POPW( SP ); break;
+		case  3: if (CC3 != 0) PC = POPW( SP ); break;
+		case  4: if (CC4 != 0) PC = POPW( SP ); break;
+		case  5: if (CC5 != 0) PC = POPW( SP ); break;
+		case  6: if (CC6 != 0) PC = POPW( SP ); break;
+		case  7: if (CC7 != 0) PC = POPW( SP ); break;
+		case  8: if (CC8 != 0) PC = POPW( SP ); break;
+		case  9: if (CC9 != 0) PC = POPW( SP ); break;
+		case 10: if (CCA != 0) PC = POPW( SP ); break;
+		case 11: if (CCB != 0) PC = POPW( SP ); break;
+		case 12: if (CCC != 0) PC = POPW( SP ); break;
+		case 13: if (CCD != 0) PC = POPW( SP ); break;
+		case 14: if (CCE != 0) PC = POPW( SP ); break;
+		case 15: if (CCF != 0) PC = POPW( SP ); break;
 	}
 	change_pc16bew(PC);
 }
@@ -5051,7 +5051,7 @@ static void Z9F_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvd9f $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -5225,22 +5225,22 @@ static void ZAE_dddd_cccc(void)
 	GET_DST(OP0,NIB2);
 	UINT8 tmp = RB(dst) & ~1;
 	switch (cc) {
-		case  0: if (CC0) tmp |= 1; break;
-		case  1: if (CC1) tmp |= 1; break;
-		case  2: if (CC2) tmp |= 1; break;
-		case  3: if (CC3) tmp |= 1; break;
-		case  4: if (CC4) tmp |= 1; break;
-		case  5: if (CC5) tmp |= 1; break;
-		case  6: if (CC6) tmp |= 1; break;
-		case  7: if (CC7) tmp |= 1; break;
-		case  8: if (CC8) tmp |= 1; break;
-		case  9: if (CC9) tmp |= 1; break;
-		case 10: if (CCA) tmp |= 1; break;
-		case 11: if (CCB) tmp |= 1; break;
-		case 12: if (CCC) tmp |= 1; break;
-		case 13: if (CCD) tmp |= 1; break;
-		case 14: if (CCE) tmp |= 1; break;
-		case 15: if (CCF) tmp |= 1; break;
+		case  0: if (CC0 != 0) tmp |= 1; break;
+		case  1: if (CC1 != 0) tmp |= 1; break;
+		case  2: if (CC2 != 0) tmp |= 1; break;
+		case  3: if (CC3 != 0) tmp |= 1; break;
+		case  4: if (CC4 != 0) tmp |= 1; break;
+		case  5: if (CC5 != 0) tmp |= 1; break;
+		case  6: if (CC6 != 0) tmp |= 1; break;
+		case  7: if (CC7 != 0) tmp |= 1; break;
+		case  8: if (CC8 != 0) tmp |= 1; break;
+		case  9: if (CC9 != 0) tmp |= 1; break;
+		case 10: if (CCA != 0) tmp |= 1; break;
+		case 11: if (CCB != 0) tmp |= 1; break;
+		case 12: if (CCC != 0) tmp |= 1; break;
+		case 13: if (CCD != 0) tmp |= 1; break;
+		case 14: if (CCE != 0) tmp |= 1; break;
+		case 15: if (CCF != 0) tmp |= 1; break;
     }
 	RB(dst) = tmp;
 }
@@ -5255,22 +5255,22 @@ static void ZAF_dddd_cccc(void)
 	GET_DST(OP0,NIB2);
 	UINT16 tmp = RW(dst) & ~1;
 	switch (cc) {
-		case  0: if (CC0) tmp |= 1; break;
-		case  1: if (CC1) tmp |= 1; break;
-		case  2: if (CC2) tmp |= 1; break;
-		case  3: if (CC3) tmp |= 1; break;
-		case  4: if (CC4) tmp |= 1; break;
-		case  5: if (CC5) tmp |= 1; break;
-		case  6: if (CC6) tmp |= 1; break;
-		case  7: if (CC7) tmp |= 1; break;
-		case  8: if (CC8) tmp |= 1; break;
-		case  9: if (CC9) tmp |= 1; break;
-		case 10: if (CCA) tmp |= 1; break;
-		case 11: if (CCB) tmp |= 1; break;
-		case 12: if (CCC) tmp |= 1; break;
-		case 13: if (CCD) tmp |= 1; break;
-		case 14: if (CCE) tmp |= 1; break;
-		case 15: if (CCF) tmp |= 1; break;
+		case  0: if (CC0 != 0) tmp |= 1; break;
+		case  1: if (CC1 != 0) tmp |= 1; break;
+		case  2: if (CC2 != 0) tmp |= 1; break;
+		case  3: if (CC3 != 0) tmp |= 1; break;
+		case  4: if (CC4 != 0) tmp |= 1; break;
+		case  5: if (CC5 != 0) tmp |= 1; break;
+		case  6: if (CC6 != 0) tmp |= 1; break;
+		case  7: if (CC7 != 0) tmp |= 1; break;
+		case  8: if (CC8 != 0) tmp |= 1; break;
+		case  9: if (CC9 != 0) tmp |= 1; break;
+		case 10: if (CCA != 0) tmp |= 1; break;
+		case 11: if (CCB != 0) tmp |= 1; break;
+		case 12: if (CCC != 0) tmp |= 1; break;
+		case 13: if (CCD != 0) tmp |= 1; break;
+		case 14: if (CCE != 0) tmp |= 1; break;
+		case 15: if (CCF != 0) tmp |= 1; break;
     }
 	RW(dst) = tmp;
 }
@@ -5284,9 +5284,9 @@ static void ZB0_dddd_0000(void)
 	GET_DST(OP0,NIB2);
 	UINT8 result;
 	UINT16 idx = RB(dst);
-	if (FCW & F_C)	idx |= 0x100;
-	if (FCW & F_H)	idx |= 0x200;
-	if (FCW & F_DA) idx |= 0x400;
+	if ((FCW & F_C) != 0)	idx |= 0x100;
+	if ((FCW & F_H) != 0)	idx |= 0x200;
+	if ((FCW & F_DA) != 0) idx |= 0x400;
 	result = Z8000_dab[idx];
 	CLR_CZS;
 	CHK_XXXB_ZS;
@@ -5336,7 +5336,7 @@ static void ZB2_dddd_0001_imm8(void)
 {
 	GET_DST(OP0,NIB2);
 	GET_IMM16(OP1);
-	if (imm16 & S16)
+	if ((imm16 & S16) != 0)
 		RB(dst) = SRLB( RB(dst), -(INT16)imm16 );
 	else
 		RB(dst) = SLLB( RB(dst), imm16 );
@@ -5385,7 +5385,7 @@ static void ZB2_dddd_1001_imm8(void)
 {
 	GET_DST(OP0,NIB2);
 	GET_IMM16(OP1);
-	if (imm16 & S16)
+	if ((imm16 & S16) != 0)
 		RB(dst) = SRAB( RB(dst), -(INT16)imm16 );
 	else
 		RB(dst) = SLAB( RB(dst), imm16 );
@@ -5434,7 +5434,7 @@ static void ZB3_dddd_0001_imm8(void)
 {
 	GET_DST(OP0,NIB2);
 	GET_IMM16(OP1);
-	if (imm16 & S16)
+	if ((imm16 & S16) != 0)
 		RW(dst) = SRLW( RW(dst), -(INT16)imm16 );
 	else
         RW(dst) = SLLW( RW(dst), imm16 );
@@ -5472,7 +5472,7 @@ static void ZB3_dddd_0101_imm8(void)
 {
 	GET_DST(OP0,NIB2);
 	GET_IMM16(OP1);
-	if (imm16 & S16)
+	if ((imm16 & S16) != 0)
 		RL(dst) = SRLL( RL(dst), -(INT16)imm16 );
 	else
 		RL(dst) = SLLL( RL(dst), imm16 );
@@ -5510,7 +5510,7 @@ static void ZB3_dddd_1001_imm8(void)
 {
 	GET_DST(OP0,NIB2);
 	GET_IMM16(OP1);
-	if (imm16 & S16)
+	if ((imm16 & S16) != 0)
 		RW(dst) = SRAW( RW(dst), -(INT16)imm16 );
 	else
         RW(dst) = SLAW( RW(dst), imm16 );
@@ -5548,7 +5548,7 @@ static void ZB3_dddd_1101_imm8(void)
 {
 	GET_DST(OP0,NIB2);
 	GET_IMM16(OP1);
-	if (imm16 & S16)
+	if ((imm16 & S16) != 0)
 		RL(dst) = SRAL( RL(dst), -(INT16)imm16 );
 	else
 		RL(dst) = SLAL( RL(dst), imm16 );
@@ -5631,7 +5631,7 @@ static void ZB8_ddN0_0010_0000_rrrr_ssN0_0000(void)
 	GET_CNT(OP1,NIB1);
 	UINT8 xlt = RDMEM_B( (UINT16)(RW(src) + RDMEM_B(RW(dst))) );
 	RB(2) = xlt;
-	if (xlt) CLR_Z; else SET_Z;
+	if (xlt != 0) CLR_Z; else SET_Z;
 	RW(dst)++;
 	if (--RW(cnt)) CLR_V; else SET_V;
 }
@@ -5647,7 +5647,7 @@ static void ZB8_ddN0_0110_0000_rrrr_ssN0_1110(void)
 	GET_CNT(OP1,NIB1);
 	UINT8 xlt = RDMEM_B( (UINT16)(RW(src) + RDMEM_B(RW(dst))) );
 	RB(2) = xlt;
-	if (xlt) CLR_Z; else SET_Z;
+	if (xlt != 0) CLR_Z; else SET_Z;
 	RW(dst)++;
 	if (--RW(cnt)) { CLR_V; PC -= 4; } else SET_V;
 }
@@ -5663,7 +5663,7 @@ static void ZB8_ddN0_1010_0000_rrrr_ssN0_0000(void)
 	GET_CNT(OP1,NIB1);
 	UINT8 xlt = RDMEM_B( (UINT16)(RW(src) + RDMEM_B(RW(dst))) );
 	RB(2) = xlt;
-	if (xlt) CLR_Z; else SET_Z;
+	if (xlt != 0) CLR_Z; else SET_Z;
     RW(dst)--;
 	if (--RW(cnt)) CLR_V; else SET_V;
 }
@@ -5679,7 +5679,7 @@ static void ZB8_ddN0_1110_0000_rrrr_ssN0_1110(void)
 	GET_CNT(OP1,NIB1);
 	UINT8 xlt = RDMEM_B( (UINT16)(RW(src) + RDMEM_B(RW(dst))) );
 	RB(2) = xlt;
-	if (xlt) CLR_Z; else SET_Z;
+	if (xlt != 0) CLR_Z; else SET_Z;
     RW(dst)--;
 	if (--RW(cnt)) { CLR_V; PC -= 4; } else SET_V;
 }
@@ -5752,7 +5752,7 @@ static void ZB9_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvdb9 $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -5771,22 +5771,22 @@ static void ZBA_ssN0_0000_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPB( RB(dst), RDMEM_B(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(src)++;
 	if (--RW(cnt)) CLR_V; else SET_V;
@@ -5821,22 +5821,22 @@ static void ZBA_ssN0_0010_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPB( RDMEM_B(RW(dst)), RDMEM_B(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(dst)++;
 	RW(src)++;
@@ -5855,22 +5855,22 @@ static void ZBA_ssN0_0100_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPB( RB(dst), RDMEM_B(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(src)++;
 	if (--RW(cnt)) { CLR_V; if (!(FCW & F_Z)) PC -= 4; } else SET_V;
@@ -5888,22 +5888,22 @@ static void ZBA_ssN0_0110_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPB( RDMEM_B(RW(dst)), RDMEM_B(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(dst)++;
 	RW(src)++;
@@ -5922,22 +5922,22 @@ static void ZBA_ssN0_1000_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
     CPB( RB(dst), RDMEM_B(RW(src)) );
     switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
     RW(src)--;
 	if (--RW(cnt)) CLR_V; else SET_V;
@@ -5972,22 +5972,22 @@ static void ZBA_ssN0_1010_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
     CPB( RDMEM_B(RW(dst)), RDMEM_B(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(dst)--;
 	RW(src)--;
@@ -6006,22 +6006,22 @@ static void ZBA_ssN0_1100_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPB( RB(dst), RDMEM_B(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
     RW(src)--;
 	if (--RW(cnt)) { CLR_V; if (!(FCW & F_Z)) PC -= 4; } else SET_V;
@@ -6039,22 +6039,22 @@ static void ZBA_ssN0_1110_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
     CPB( RDMEM_B(RW(dst)), RDMEM_B(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
 	}
 	RW(dst)--;
 	RW(src)--;
@@ -6073,22 +6073,22 @@ static void ZBB_ssN0_0000_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RW(dst), RDMEM_W(RW(src)) );
     switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
     RW(src) += 2;
 	if (--RW(cnt)) CLR_V; else SET_V;
@@ -6123,22 +6123,22 @@ static void ZBB_ssN0_0010_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RDMEM_W(RW(dst)), RDMEM_W(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(dst) += 2;
 	RW(src) += 2;
@@ -6157,22 +6157,22 @@ static void ZBB_ssN0_0100_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RW(dst), RDMEM_W(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(src) += 2;
 	if (--RW(cnt)) { CLR_V; if (!(FCW & F_Z)) PC -= 4; } else SET_V;
@@ -6190,22 +6190,22 @@ static void ZBB_ssN0_0110_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RDMEM_W(RW(dst)), RDMEM_W(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
 	RW(dst) += 2;
     RW(src) += 2;
@@ -6224,22 +6224,22 @@ static void ZBB_ssN0_1000_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RW(dst), RDMEM_W(RW(src)) );
     switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
     RW(src) -= 2;
 	if (--RW(cnt)) CLR_V; else SET_V;
@@ -6274,22 +6274,22 @@ static void ZBB_ssN0_1010_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RDMEM_W(RW(dst)), RDMEM_W(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
     RW(dst) -= 2;
     RW(src) -= 2;
@@ -6308,22 +6308,22 @@ static void ZBB_ssN0_1100_0000_rrrr_dddd_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RW(dst), RDMEM_W(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
     RW(src) -= 2;
 	if (--RW(cnt)) { CLR_V; if (!(FCW & F_Z)) PC -= 4; } else SET_V;
@@ -6341,22 +6341,22 @@ static void ZBB_ssN0_1110_0000_rrrr_ddN0_cccc(void)
 	GET_CNT(OP1,NIB1);
 	CPW( RDMEM_W(RW(dst)), RDMEM_W(RW(src)) );
 	switch (cc) {
-		case  0: if (CC0) SET_Z; else CLR_Z; break;
-		case  1: if (CC1) SET_Z; else CLR_Z; break;
-		case  2: if (CC2) SET_Z; else CLR_Z; break;
-		case  3: if (CC3) SET_Z; else CLR_Z; break;
-		case  4: if (CC4) SET_Z; else CLR_Z; break;
-		case  5: if (CC5) SET_Z; else CLR_Z; break;
-		case  6: if (CC6) SET_Z; else CLR_Z; break;
-		case  7: if (CC7) SET_Z; else CLR_Z; break;
-		case  8: if (CC8) SET_Z; else CLR_Z; break;
-		case  9: if (CC9) SET_Z; else CLR_Z; break;
-		case 10: if (CCA) SET_Z; else CLR_Z; break;
-		case 11: if (CCB) SET_Z; else CLR_Z; break;
-		case 12: if (CCC) SET_Z; else CLR_Z; break;
-		case 13: if (CCD) SET_Z; else CLR_Z; break;
-		case 14: if (CCE) SET_Z; else CLR_Z; break;
-		case 15: if (CCF) SET_Z; else CLR_Z; break;
+		case  0: if (CC0 != 0) SET_Z; else CLR_Z; break;
+		case  1: if (CC1 != 0) SET_Z; else CLR_Z; break;
+		case  2: if (CC2 != 0) SET_Z; else CLR_Z; break;
+		case  3: if (CC3 != 0) SET_Z; else CLR_Z; break;
+		case  4: if (CC4 != 0) SET_Z; else CLR_Z; break;
+		case  5: if (CC5 != 0) SET_Z; else CLR_Z; break;
+		case  6: if (CC6 != 0) SET_Z; else CLR_Z; break;
+		case  7: if (CC7 != 0) SET_Z; else CLR_Z; break;
+		case  8: if (CC8 != 0) SET_Z; else CLR_Z; break;
+		case  9: if (CC9 != 0) SET_Z; else CLR_Z; break;
+		case 10: if (CCA != 0) SET_Z; else CLR_Z; break;
+		case 11: if (CCB != 0) SET_Z; else CLR_Z; break;
+		case 12: if (CCC != 0) SET_Z; else CLR_Z; break;
+		case 13: if (CCD != 0) SET_Z; else CLR_Z; break;
+		case 14: if (CCE != 0) SET_Z; else CLR_Z; break;
+		case 15: if (CCF != 0) SET_Z; else CLR_Z; break;
     }
     RW(dst) -= 2;
     RW(src) -= 2;
@@ -6410,7 +6410,7 @@ static void ZBF_imm8(void)
 {
 	GET_IMM8(0);
 	LOG(("Z8K#%d %04x: rsvdbf $%02x\n", cpu_getactivecpu(), PC, imm8));
-    if (FCW & F_EPU) {
+    if ((FCW & F_EPU) != 0) {
 		/* Z8001 EPU code goes here */
 		(void)imm8;
     }
@@ -6450,22 +6450,22 @@ static void ZE_cccc_dsp8(void)
 	GET_DSP8;
 	GET_CCC(OP0,NIB1);
 	switch (cc) {
-		case  0: if (CC0) PC += dsp8 * 2; break;
-		case  1: if (CC1) PC += dsp8 * 2; break;
-		case  2: if (CC2) PC += dsp8 * 2; break;
-		case  3: if (CC3) PC += dsp8 * 2; break;
-		case  4: if (CC4) PC += dsp8 * 2; break;
-		case  5: if (CC5) PC += dsp8 * 2; break;
-		case  6: if (CC6) PC += dsp8 * 2; break;
-		case  7: if (CC7) PC += dsp8 * 2; break;
-		case  8: if (CC8) PC += dsp8 * 2; break;
-		case  9: if (CC9) PC += dsp8 * 2; break;
-		case 10: if (CCA) PC += dsp8 * 2; break;
-		case 11: if (CCB) PC += dsp8 * 2; break;
-		case 12: if (CCC) PC += dsp8 * 2; break;
-		case 13: if (CCD) PC += dsp8 * 2; break;
-		case 14: if (CCE) PC += dsp8 * 2; break;
-		case 15: if (CCF) PC += dsp8 * 2; break;
+		case  0: if (CC0 != 0) PC += dsp8 * 2; break;
+		case  1: if (CC1 != 0) PC += dsp8 * 2; break;
+		case  2: if (CC2 != 0) PC += dsp8 * 2; break;
+		case  3: if (CC3 != 0) PC += dsp8 * 2; break;
+		case  4: if (CC4 != 0) PC += dsp8 * 2; break;
+		case  5: if (CC5 != 0) PC += dsp8 * 2; break;
+		case  6: if (CC6 != 0) PC += dsp8 * 2; break;
+		case  7: if (CC7 != 0) PC += dsp8 * 2; break;
+		case  8: if (CC8 != 0) PC += dsp8 * 2; break;
+		case  9: if (CC9 != 0) PC += dsp8 * 2; break;
+		case 10: if (CCA != 0) PC += dsp8 * 2; break;
+		case 11: if (CCB != 0) PC += dsp8 * 2; break;
+		case 12: if (CCC != 0) PC += dsp8 * 2; break;
+		case 13: if (CCD != 0) PC += dsp8 * 2; break;
+		case 14: if (CCE != 0) PC += dsp8 * 2; break;
+		case 15: if (CCF != 0) PC += dsp8 * 2; break;
     }
 	change_pc16bew(PC);
 }

@@ -128,8 +128,8 @@ public class dynduke
 	{
 		static int old_back,old_fore;
 	
-		if (data&0x01) back_bankbase=0x1000; else back_bankbase=0;
-		if (data&0x10) fore_bankbase=0x1000; else fore_bankbase=0;
+		if ((data & 0x01) != 0) back_bankbase=0x1000; else back_bankbase=0;
+		if ((data & 0x10) != 0) fore_bankbase=0x1000; else fore_bankbase=0;
 	
 		if (back_bankbase!=old_back)
 			tilemap_mark_all_tiles_dirty(bg_layer);
@@ -148,10 +148,10 @@ public class dynduke
 	
 		if (offset!=6) return;
 	
-		if (data&0x1) back_enable=0; else back_enable=1;
-		if (data&0x2) back_palbase=16; else back_palbase=0;
-		if (data&0x4) fore_enable=0; else fore_enable=1;
-		if (data&0x8) sprite_enable=0; else sprite_enable=1;
+		if ((data & 0x1) != 0) back_enable=0; else back_enable=1;
+		if ((data & 0x2) != 0) back_palbase=16; else back_palbase=0;
+		if ((data & 0x4) != 0) fore_enable=0; else fore_enable=1;
+		if ((data & 0x8) != 0) sprite_enable=0; else sprite_enable=1;
 	
 		if (back_palbase!=old_bpal)
 			tilemap_mark_all_tiles_dirty(bg_layer);
@@ -185,11 +185,11 @@ public class dynduke
 			sprite = buffered_spriteram[offs+2]+(buffered_spriteram[offs+3]<<8);
 			sprite &= 0x3fff;
 	
-			if (flipscreen) {
+			if (flipscreen != 0) {
 				x=240-x;
 				y=240-y;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 			}
 	
 			drawgfx(bitmap,Machine->gfx[3],
@@ -209,7 +209,7 @@ public class dynduke
 		tilemap_set_enable( bg_layer,back_enable);
 		tilemap_set_enable( fg_layer,fore_enable);
 	
-		if (back_enable)
+		if (back_enable != 0)
 			tilemap_draw(bitmap,cliprect,bg_layer,TILEMAP_BACK,0);
 		else
 			fillbitmap(bitmap,Machine->pens[0],cliprect);

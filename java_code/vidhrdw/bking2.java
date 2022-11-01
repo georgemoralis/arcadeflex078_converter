@@ -252,8 +252,8 @@ public class bking2
 	
 		int flags = 0;
 	
-		if (code1 & 4) flags |= TILE_FLIPX;
-		if (code1 & 8) flags |= TILE_FLIPY;
+		if ((code1 & 4) != 0) flags |= TILE_FLIPX;
+		if ((code1 & 8) != 0) flags |= TILE_FLIPY;
 	
 		SET_TILE_INFO(0, code0 + 256 * code1, palette_bank, flags)
 	}

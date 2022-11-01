@@ -95,7 +95,7 @@ public class xevious
 		{
 			int c = (color_prom[0] & 0x0f) | ((color_prom[TOTAL_COLORS(2)] & 0x0f) << 4);
 	
-			if (c & 0x80) COLOR(2,i) = c & 0x7f;
+			if ((c & 0x80) != 0) COLOR(2,i) = c & 0x7f;
 			else COLOR(2,i) = 0x80; /* transparent */
 	
 			color_prom++;
@@ -168,7 +168,7 @@ public class xevious
 		{
 			int c = (color_prom[0] & 0x0f) | ((color_prom[0x400] & 0x0f) << 4);
 	
-			if (c & 0x80) COLOR(2,i) = c & 0x7f;
+			if ((c & 0x80) != 0) COLOR(2,i) = c & 0x7f;
 			else COLOR(2,i) = 0x80; /* transparent */
 	
 			color_prom++;
@@ -288,7 +288,7 @@ public class xevious
 		switch (reg)
 		{
 		case 0:
-			if (flip_screen)
+			if (flip_screen != 0)
 				tilemap_set_scrollx(bg_tilemap,0,scroll-312);
 			else
 				tilemap_set_scrollx(bg_tilemap,0,scroll+20);
@@ -395,7 +395,7 @@ public class xevious
 				color = spriteram[offs + 1] & 0x7f;
 				flipx = spriteram_3[offs] & 4;
 				flipy = spriteram_3[offs] & 8;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;

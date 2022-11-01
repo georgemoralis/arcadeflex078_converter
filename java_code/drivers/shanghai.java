@@ -195,7 +195,7 @@ public class shanghai
 						break;
 				}
 	
-				if (opcode & 0x0800)
+				if ((opcode & 0x0800) != 0)
 				{
 					if (ay == 0) break;
 					else if (ay > 0)
@@ -229,7 +229,7 @@ public class shanghai
 				}
 			}
 	
-			if (opcode & 0x0800)
+			if ((opcode & 0x0800) != 0)
 			{
 				ay = _ay;
 				if (_ax < 0)
@@ -651,7 +651,7 @@ public class shanghai
 			{
 	logerror("PC %05x: HD63484 register %02x write %04x\n",activecpu_get_pc(),regno,val);
 				HD63484_reg[regno/2] = val;
-				if (regno & 0x80) regno += 2;	/* autoincrement */
+				if ((regno & 0x80) != 0) regno += 2;	/* autoincrement */
 			}
 		}
 	} };

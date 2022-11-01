@@ -88,7 +88,7 @@ public class midtunit
 	
 	/* macros */
 	#define TMS_SET_IRQ_LINE(x)				\
-		if (midtunit_using_34020) 			\
+		if (midtunit_using_34020 != 0) 			\
 			tms34020_set_irq_line(0, x); 	\
 		else 								\
 			tms34010_set_irq_line(0, x);	\
@@ -180,18 +180,18 @@ public class midtunit
 	WRITE16_HANDLER( midtunit_vram_w )
 	{
 		offset *= 2;
-		if (videobank_select)
+		if (videobank_select != 0)
 		{
-			if (ACCESSING_LSB)
+			if (ACCESSING_LSB != 0)
 				local_videoram[offset] = (data & 0xff) | ((dma_register[DMA_PALETTE] & 0xff) << 8);
-			if (ACCESSING_MSB)
+			if (ACCESSING_MSB != 0)
 				local_videoram[offset + 1] = ((data >> 8) & 0xff) | (dma_register[DMA_PALETTE] & 0xff00);
 		}
 		else
 		{
-			if (ACCESSING_LSB)
+			if (ACCESSING_LSB != 0)
 				local_videoram[offset] = (local_videoram[offset] & 0xff) | ((data & 0xff) << 8);
-			if (ACCESSING_MSB)
+			if (ACCESSING_MSB != 0)
 				local_videoram[offset + 1] = (local_videoram[offset + 1] & 0xff) | (data & 0xff00);
 		}
 	}
@@ -200,9 +200,9 @@ public class midtunit
 	WRITE16_HANDLER( midtunit_vram_data_w )
 	{
 		offset *= 2;
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			local_videoram[offset] = (data & 0xff) | ((dma_register[DMA_PALETTE] & 0xff) << 8);
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			local_videoram[offset + 1] = ((data >> 8) & 0xff) | (dma_register[DMA_PALETTE] & 0xff00);
 	}
 	
@@ -210,9 +210,9 @@ public class midtunit
 	WRITE16_HANDLER( midtunit_vram_color_w )
 	{
 		offset *= 2;
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			local_videoram[offset] = (local_videoram[offset] & 0xff) | ((data & 0xff) << 8);
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			local_videoram[offset + 1] = (local_videoram[offset + 1] & 0xff) | (data & 0xff00);
 	}
 	
@@ -220,7 +220,7 @@ public class midtunit
 	READ16_HANDLER( midtunit_vram_r )
 	{
 		offset *= 2;
-		if (videobank_select)
+		if (videobank_select != 0)
 			return (local_videoram[offset] & 0x00ff) | (local_videoram[offset + 1] << 8);
 		else
 			return (local_videoram[offset] >> 8) | (local_videoram[offset + 1] & 0xff00);
@@ -413,7 +413,7 @@ public class midtunit
 			UINT16 *d;																\
 																					\
 			/* handle skipping */													\
-			if (skip)																\
+			if (skip != 0)																\
 			{																		\
 				UINT8 value = EXTRACTGEN(0xff);										\
 				o += 8;																\
@@ -421,7 +421,7 @@ public class midtunit
 				/* adjust for preskip */											\
 				pre = (value & 0x0f) << (dma_state.preskip + 8);					\
 				tx = pre / xstep;													\
-				if (xflip)															\
+				if (xflip != 0)															\
 					sx = (sx - tx) & XPOSMASK;										\
 				else																\
 					sx = (sx + tx) & XPOSMASK;										\
@@ -473,7 +473,7 @@ public class midtunit
 						int pixel = (extractor(mask));								\
 																					\
 						/* non-zero pixel case */									\
-						if (pixel)													\
+						if (pixel != 0)													\
 						{															\
 							if (nonzero == PIXEL_COLOR)								\
 								d[sx] = color;										\
@@ -493,7 +493,7 @@ public class midtunit
 				}																	\
 																					\
 				/* update pointers */												\
-				if (xflip) 															\
+				if (xflip != 0) 															\
 					sx = (sx - 1) & XPOSMASK;										\
 				else 																\
 					sx = (sx + 1) & XPOSMASK;										\
@@ -523,7 +523,7 @@ public class midtunit
 			{																		\
 				iy += 0x100;														\
 				width = dma_state.width;											\
-				if (skip)															\
+				if (skip != 0)															\
 				{																	\
 					offset += 8;													\
 					width -= (pre + post) >> 8;										\
@@ -636,9 +636,9 @@ public class midtunit
 	static void dma_callback(int is_in_34010_context)
 	{
 		dma_register[DMA_COMMAND] &= ~0x8000; /* tell the cpu we're done */
-		if (is_in_34010_context)
+		if (is_in_34010_context != 0)
 		{
-			if (midtunit_using_34020)
+			if (midtunit_using_34020 != 0)
 				tms34020_set_irq_callback(temp_irq_callback);
 			else
 				tms34010_set_irq_callback(temp_irq_callback);
@@ -806,7 +806,7 @@ public class midtunit
 		/* starting skip value, and the lower byte is the ending    */
 		/* skip value; for the NBA Jam, Hangtime, and Open Ice, the */
 		/* full word seems to be the starting skip value.           */
-		if (command & 0x40)
+		if ((command & 0x40) != 0)
 		{
 			dma_state.startskip = dma_register[DMA_LRSKIP] & 0xff;
 			dma_state.endskip = dma_register[DMA_LRSKIP] >> 8;
@@ -820,7 +820,7 @@ public class midtunit
 		/* then draw */
 		if (dma_state.xstep == 0x100 && dma_state.ystep == 0x100)
 		{
-			if (command & 0x80)
+			if ((command & 0x80) != 0)
 				(*dma_draw_skip_noscale[command & 0x1f])();
 			else
 				(*dma_draw_noskip_noscale[command & 0x1f])();
@@ -829,7 +829,7 @@ public class midtunit
 		}
 		else
 		{
-			if (command & 0x80)
+			if ((command & 0x80) != 0)
 				(*dma_draw_skip_scale[command & 0x1f])();
 			else
 				(*dma_draw_noskip_scale[command & 0x1f])();
@@ -847,7 +847,7 @@ public class midtunit
 		/* used to initiate the DMA. What they do is start the DMA, *then* set */
 		/* up the memory for it, which means that there must be some non-zero  */
 		/* delay that gives them enough time to build up the DMA command list  */
-		if (FAST_DMA)
+		if (FAST_DMA != 0)
 		{
 			if (command != 0x8000)
 				dma_callback(1);
@@ -890,7 +890,7 @@ public class midtunit
 		cpuintrf_pop_context();
 	
 		/* determine the base of the videoram */
-		if (midtunit_using_34020)
+		if (midtunit_using_34020 != 0)
 			offset = (tms34020_get_DPYSTRT(0) >> 3) & 0x3ffff;
 		else
 			offset = ((~tms34010_get_DPYSTRT(0) & 0x1ff0) << 5) & 0x3ffff;

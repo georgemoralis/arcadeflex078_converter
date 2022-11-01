@@ -98,9 +98,9 @@ public class itech32
 		if (qint != -1) qint_state = qint;
 	
 		/* determine which level is active */
-		if (vint_state) level = 1;
-		if (xint_state) level = 2;
-		if (qint_state) level = 3;
+		if (vint_state != 0) level = 1;
+		if (xint_state != 0) level = 2;
+		if (qint_state != 0) level = 3;
 	
 		/* Driver's Edge shifts the interrupts a bit */
 		if (is_drivedge && level) level += 2;
@@ -114,7 +114,7 @@ public class itech32
 		int level = determine_irq_state(vint, xint, qint);
 	
 		/* update it */
-		if (level)
+		if (level != 0)
 			cpu_set_irq_line(0, level, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -125,7 +125,7 @@ public class itech32
 	{
 		/* signal the NMI */
 		itech32_update_interrupts(1, -1, -1);
-		if (FULL_LOGGING) logerror("------------ VBLANK (%d) --------------", cpu_getscanline());
+		if (FULL_LOGGING != 0) logerror("------------ VBLANK (%d) --------------", cpu_getscanline());
 	} };
 	
 	
@@ -160,7 +160,7 @@ public class itech32
 		ticket_dispenser_init(200, TICKET_MOTOR_ACTIVE_HIGH, TICKET_STATUS_ACTIVE_HIGH);
 	
 		/* map the mirrored RAM in Driver's Edge */
-		if (is_drivedge)
+		if (is_drivedge != 0)
 			cpu_setbank(2, main_ram);
 	}
 	
@@ -175,7 +175,7 @@ public class itech32
 	static READ16_HANDLER( special_port3_r )
 	{
 		int result = readinputport(3);
-		if (sound_int_state) result ^= 0x08;
+		if (sound_int_state != 0) result ^= 0x08;
 		return result;
 	}
 	
@@ -183,7 +183,7 @@ public class itech32
 	static READ16_HANDLER( special_port4_r )
 	{
 		int result = readinputport(4);
-		if (sound_int_state) result ^= 0x08;
+		if (sound_int_state != 0) result ^= 0x08;
 		return result;
 	}
 	
@@ -337,7 +337,7 @@ public class itech32
 	
 	static WRITE16_HANDLER( sound_data_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			timer_set(TIME_NOW, data & 0xff, delayed_sound_data_w);
 	}
 	
@@ -444,7 +444,7 @@ public class itech32
 				break;
 	
 			default:	/* log everything else */
-				if (FULL_LOGGING) logerror("VIA write(%02x) = %02x", offset, data);
+				if (FULL_LOGGING != 0) logerror("VIA write(%02x) = %02x", offset, data);
 				break;
 		}
 	
@@ -469,7 +469,7 @@ public class itech32
 				break;
 		}
 	
-		if (FULL_LOGGING) logerror("VIA read(%02x) = %02x", offset, result);
+		if (FULL_LOGGING != 0) logerror("VIA read(%02x) = %02x", offset, result);
 		return result;
 	} };
 	
@@ -562,9 +562,9 @@ public class itech32
 	{
 		int i;
 	
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, main_ram, main_ram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, main_ram, main_ram_size);
 		else
 			for (i = 0x80; i < main_ram_size; i++)
@@ -576,9 +576,9 @@ public class itech32
 	{
 		int i;
 	
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, nvram, nvram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, nvram, nvram_size);
 		else
 			for (i = 0; i < nvram_size; i++)

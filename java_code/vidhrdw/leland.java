@@ -309,7 +309,7 @@ public class leland
 	        	break;
 	
 	        case 3:	/* write hi/lo = data (alternating) */
-	        	if (trans)
+	        	if (trans != 0)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr] & 0xf0;
 	        		if (!(data & 0x0f)) data |= leland_video_ram[addr] & 0x0f;
@@ -321,7 +321,7 @@ public class leland
 	
 	        case 5:	/* write hi = data */
 	        	state->latch[1] = data;
-	        	if (trans)
+	        	if (trans != 0)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr | 1] & 0xf0;
 	        		if (!(data & 0x0f)) data |= leland_video_ram[addr | 1] & 0x0f;
@@ -332,7 +332,7 @@ public class leland
 	
 	        case 6:	/* write lo = data */
 	        	state->latch[0] = data;
-	        	if (trans)
+	        	if (trans != 0)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr & ~1] & 0xf0;
 	        		if (!(data & 0x0f)) data |= leland_video_ram[addr & ~1] & 0x0f;
@@ -376,7 +376,7 @@ public class leland
 	
 	public static WriteHandlerPtr leland_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (sync_next_write)
+		if (sync_next_write != 0)
 		{
 			timer_set(TIME_NOW, 0x00000 | (offset << 8) | data, leland_delayed_mvram_w);
 			sync_next_write = 0;
@@ -427,7 +427,7 @@ public class leland
 	public static WriteHandlerPtr ataxx_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
-		if (sync_next_write)
+		if (sync_next_write != 0)
 		{
 			timer_set(TIME_NOW, 0x00000 | (offset << 8) | data, leland_delayed_mvram_w);
 			sync_next_write = 0;

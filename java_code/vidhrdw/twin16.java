@@ -85,7 +85,7 @@ public class twin16
 	
 			flip_screen_x_set(video_register & TWIN16_SCREEN_FLIPX);
 	
-			if (twin16_custom_vidhrdw)
+			if (twin16_custom_vidhrdw != 0)
 				flip_screen_y_set(video_register & TWIN16_SCREEN_FLIPY);
 			else
 				flip_screen_y_set(~video_register & TWIN16_SCREEN_FLIPY);
@@ -118,7 +118,7 @@ public class twin16
 		if( xpos>=320 ) xpos -= 65536;
 		if( ypos>=256 ) ypos -= 65536;
 	
-		if (pri) pval=2; else pval=8;
+		if (pri != 0) pval=2; else pval=8;
 	
 		{
 			{
@@ -164,14 +164,14 @@ public class twin16
 		memset( &spriteram16[0x1800], 0, 0x800 );
 		while( source<finish ){
 			UINT16 priority = source[0];
-			if( priority & 0x8000 ){
+			if ((priority & 0x8000) != 0){
 				UINT16 *dest = &spriteram16[0x1800 + 4*(priority&0xff)];
 	
 				INT32 xpos = (0x10000*source[4])|source[5];
 				INT32 ypos = (0x10000*source[6])|source[7];
 	
 				UINT16 attributes = source[2]&0x03ff; /* scale,size,color */
-				if( priority & 0x0200 ) attributes |= 0x4000;
+				if ((priority & 0x0200) != 0) attributes |= 0x4000;
 				/* Todo:  priority & 0x0100 is also used */
 				attributes |= 0x8000;
 	
@@ -246,7 +246,7 @@ public class twin16
 	
 						case 2:
 						pen_data = twin16_gfx_rom + 0x80000;
-						if( code&0x4000 ) pen_data += 0x40000;
+						if ((code & 0x4000) != 0) pen_data += 0x40000;
 						break;
 	
 						case 3:
@@ -257,12 +257,12 @@ public class twin16
 				}
 				pen_data += code*0x40;
 	
-				if( video_register&TWIN16_SCREEN_FLIPY ){
+				if ((video_register & TWIN16_SCREEN_FLIPY) != 0){
 					if (ypos>65000) ypos=ypos-65536; /* Bit hacky */
 					ypos = 256-ypos-height;
 					flipy = !flipy;
 				}
-				if( video_register&TWIN16_SCREEN_FLIPX ){
+				if ((video_register & TWIN16_SCREEN_FLIPX) != 0){
 					if (xpos>65000) xpos=xpos-65536; /* Bit hacky */
 					xpos = 320-xpos-width;
 					flipx = !flipx;
@@ -314,17 +314,17 @@ public class twin16
 			bank_table[3] = 3;
 		}
 	
-		if( video_register&TWIN16_SCREEN_FLIPX ){
+		if ((video_register & TWIN16_SCREEN_FLIPX) != 0){
 			dx = 256-dx-64;
 			tile_flipx = !tile_flipx;
 		}
 	
-		if( video_register&TWIN16_SCREEN_FLIPY ){
+		if ((video_register & TWIN16_SCREEN_FLIPY) != 0){
 			dy = 256-dy;
 			tile_flipy = !tile_flipy;
 		}
 	
-		if( tile_flipy ){
+		if (tile_flipy != 0){
 			y1 = 7; y2 = -1; yd = -1;
 		}
 		else {
@@ -336,8 +336,8 @@ public class twin16
 			int sy = (i/64)*8;
 			int xpos,ypos;
 	
-			if( video_register&TWIN16_SCREEN_FLIPX ) sx = 63*8 - sx;
-			if( video_register&TWIN16_SCREEN_FLIPY ) sy = 63*8 - sy;
+			if ((video_register & TWIN16_SCREEN_FLIPX) != 0) sx = 63*8 - sx;
+			if ((video_register & TWIN16_SCREEN_FLIPY) != 0) sy = 63*8 - sy;
 	
 			xpos = (sx-dx)&0x1ff;
 			ypos = (sy-dy)&0x1ff;
@@ -360,9 +360,9 @@ public class twin16
 					UINT16 data;
 					int pen;
 	
-					if( tile_flipx )
+					if (tile_flipx != 0)
 					{
-						if( opaque )
+						if (opaque != 0)
 						{
 							{
 								for( y=y1; y!=y2; y+=yd )
@@ -401,20 +401,20 @@ public class twin16
 									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
-									if( data )
+									if (data != 0)
 									{
-										pen = (data>>4*3)&0xf; if( pen ) { dest[7] = pal_data[pen]; pdest[7]|=4; }
-										pen = (data>>4*2)&0xf; if( pen ) { dest[6] = pal_data[pen]; pdest[6]|=4; }
-										pen = (data>>4*1)&0xf; if( pen ) { dest[5] = pal_data[pen]; pdest[5]|=4; }
-										pen = (data>>4*0)&0xf; if( pen ) { dest[4] = pal_data[pen]; pdest[4]|=4; }
+										pen = (data>>4*3)&0xf; if (pen != 0) { dest[7] = pal_data[pen]; pdest[7]|=4; }
+										pen = (data>>4*2)&0xf; if (pen != 0) { dest[6] = pal_data[pen]; pdest[6]|=4; }
+										pen = (data>>4*1)&0xf; if (pen != 0) { dest[5] = pal_data[pen]; pdest[5]|=4; }
+										pen = (data>>4*0)&0xf; if (pen != 0) { dest[4] = pal_data[pen]; pdest[4]|=4; }
 									}
 									data = *gfx_data++;
-									if( data )
+									if (data != 0)
 									{
-										pen = (data>>4*3)&0xf; if( pen ) { dest[3] = pal_data[pen]; pdest[3]|=4; }
-										pen = (data>>4*2)&0xf; if( pen ) { dest[2] = pal_data[pen]; pdest[2]|=4; }
-										pen = (data>>4*1)&0xf; if( pen ) { dest[1] = pal_data[pen]; pdest[1]|=4; }
-										pen = (data>>4*0)&0xf; if( pen ) { dest[0] = pal_data[pen]; pdest[0]|=4; }
+										pen = (data>>4*3)&0xf; if (pen != 0) { dest[3] = pal_data[pen]; pdest[3]|=4; }
+										pen = (data>>4*2)&0xf; if (pen != 0) { dest[2] = pal_data[pen]; pdest[2]|=4; }
+										pen = (data>>4*1)&0xf; if (pen != 0) { dest[1] = pal_data[pen]; pdest[1]|=4; }
+										pen = (data>>4*0)&0xf; if (pen != 0) { dest[0] = pal_data[pen]; pdest[0]|=4; }
 									}
 								}
 							}
@@ -422,7 +422,7 @@ public class twin16
 					}
 					else
 					{
-						if( opaque )
+						if (opaque != 0)
 						{
 							{
 								for( y=y1; y!=y2; y+=yd )
@@ -462,20 +462,20 @@ public class twin16
 									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
-									if( data )
+									if (data != 0)
 									{
-										pen = (data>>4*3)&0xf; if( pen ) { dest[0] = pal_data[pen]; pdest[0]|=4; }
-										pen = (data>>4*2)&0xf; if( pen ) { dest[1] = pal_data[pen]; pdest[1]|=4; }
-										pen = (data>>4*1)&0xf; if( pen ) { dest[2] = pal_data[pen]; pdest[2]|=4; }
-										pen = (data>>4*0)&0xf; if( pen ) { dest[3] = pal_data[pen]; pdest[3]|=4; }
+										pen = (data>>4*3)&0xf; if (pen != 0) { dest[0] = pal_data[pen]; pdest[0]|=4; }
+										pen = (data>>4*2)&0xf; if (pen != 0) { dest[1] = pal_data[pen]; pdest[1]|=4; }
+										pen = (data>>4*1)&0xf; if (pen != 0) { dest[2] = pal_data[pen]; pdest[2]|=4; }
+										pen = (data>>4*0)&0xf; if (pen != 0) { dest[3] = pal_data[pen]; pdest[3]|=4; }
 									}
 									data = *gfx_data++;
-									if( data )
+									if (data != 0)
 									{
-										pen = (data>>4*3)&0xf; if( pen ) { dest[4] = pal_data[pen]; pdest[4]|=4; }
-										pen = (data>>4*2)&0xf; if( pen ) { dest[5] = pal_data[pen]; pdest[5]|=4; }
-										pen = (data>>4*1)&0xf; if( pen ) { dest[6] = pal_data[pen]; pdest[6]|=4; }
-										pen = (data>>4*0)&0xf; if( pen ) { dest[7] = pal_data[pen]; pdest[7]|=4; }
+										pen = (data>>4*3)&0xf; if (pen != 0) { dest[4] = pal_data[pen]; pdest[4]|=4; }
+										pen = (data>>4*2)&0xf; if (pen != 0) { dest[5] = pal_data[pen]; pdest[5]|=4; }
+										pen = (data>>4*1)&0xf; if (pen != 0) { dest[6] = pal_data[pen]; pdest[6]|=4; }
+										pen = (data>>4*0)&0xf; if (pen != 0) { dest[7] = pal_data[pen]; pdest[7]|=4; }
 									}
 								}
 							}

@@ -29,7 +29,7 @@ static void PREFIX86(_interrupt)(unsigned int_num)
 		int_num = (*I.irq_callback)(0);
 
 #ifdef I286
-	if (PM) {
+	if (PM != 0) {
 		i286_interrupt_descriptor(int_num);
 	} else {
 #endif
@@ -1380,7 +1380,7 @@ static void PREFIX86(_pop_di)(void)    /* Opcode 0x5f */
 static void PREFIX86(_jo)(void)    /* Opcode 0x70 */
 {
 	int tmp = (int)((INT8)FETCH);
-	if (OF)
+	if (OF != 0)
 	{
 		I.pc += tmp;
 		ICOUNT -= cycles.jcc_t;
@@ -1403,7 +1403,7 @@ static void PREFIX86(_jno)(void)    /* Opcode 0x71 */
 static void PREFIX86(_jb)(void)    /* Opcode 0x72 */
 {
 	int tmp = (int)((INT8)FETCH);
-	if (CF) {
+	if (CF != 0) {
 		I.pc += tmp;
 		ICOUNT -= cycles.jcc_t;
 /* ASG - can probably assume this is safe
@@ -1425,7 +1425,7 @@ static void PREFIX86(_jnb)(void)    /* Opcode 0x73 */
 static void PREFIX86(_jz)(void)    /* Opcode 0x74 */
 {
 	int tmp = (int)((INT8)FETCH);
-	if (ZF) {
+	if (ZF != 0) {
 		I.pc += tmp;
 		ICOUNT -= cycles.jcc_t;
 /* ASG - can probably assume this is safe
@@ -1469,7 +1469,7 @@ static void PREFIX86(_jnbe)(void)    /* Opcode 0x77 */
 static void PREFIX86(_js)(void)    /* Opcode 0x78 */
 {
 	int tmp = (int)((INT8)FETCH);
-    if (SF) {
+    if (SF != 0) {
 		I.pc += tmp;
 		ICOUNT -= cycles.jcc_t;
 /* ASG - can probably assume this is safe
@@ -1491,7 +1491,7 @@ static void PREFIX86(_jns)(void)    /* Opcode 0x79 */
 static void PREFIX86(_jp)(void)    /* Opcode 0x7a */
 {
 	int tmp = (int)((INT8)FETCH);
-    if (PF) {
+    if (PF != 0) {
 		I.pc += tmp;
 		ICOUNT -= cycles.jcc_t;
 /* ASG - can probably assume this is safe
@@ -1831,12 +1831,12 @@ static void PREFIX86(_mov_wsreg)(void)    /* Opcode 0x8c */
 	unsigned ModRM = FETCH;
 	ICOUNT -= (ModRM >= 0xc0) ? cycles.mov_rs : cycles.mov_ms;
 #ifdef I286
-	if (ModRM & 0x20) {	/* HJB 12/13/98 1xx is invalid */
+	if ((ModRM & 0x20) != 0) {	/* HJB 12/13/98 1xx is invalid */
 		i286_trap2(ILLEGAL_INSTRUCTION);
 		return;
 	}
 #else
-	if (ModRM & 0x20) return;	/* HJB 12/13/98 1xx is invalid */
+	if ((ModRM & 0x20) != 0) return;	/* HJB 12/13/98 1xx is invalid */
 #endif
 	PutRMWord(ModRM,I.sregs[(ModRM & 0x38) >> 3]);
 }
@@ -2418,7 +2418,7 @@ static void PREFIX86(_int)(void)    /* Opcode 0xcd */
 
 static void PREFIX86(_into)(void)    /* Opcode 0xce */
 {
-	if (OF) {
+	if (OF != 0) {
 		ICOUNT -= cycles.into_t;
 #ifdef V20
 		PREFIX(_interrupt)(4,0);
@@ -2589,7 +2589,7 @@ static void PREFIX86(_loop)(void)    /* Opcode 0xe2 */
 
 	I.regs.w[CX]=tmp;
 
-    if (tmp) {
+    if (tmp != 0) {
 		ICOUNT -= cycles.loop_t;
 		I.pc += disp;
 /* ASG - can probably assume this is safe
@@ -2830,7 +2830,7 @@ static void PREFIX86(_f6pre)(void)
 
 			result = I.regs.w[AX];
 
-			if (tmp)
+			if (tmp != 0)
 			{
 				if ((result / tmp) > 0xff)
 				{
@@ -2866,7 +2866,7 @@ static void PREFIX86(_f6pre)(void)
 
 			result = I.regs.w[AX];
 
-			if (tmp)
+			if (tmp != 0)
 			{
 				tmp2 = result % (INT16)((INT8)tmp);
 
@@ -2980,7 +2980,7 @@ static void PREFIX86(_f7pre)(void)
 
 			result = (I.regs.w[DX] << 16) + I.regs.w[AX];
 
-			if (tmp)
+			if (tmp != 0)
 			{
 				tmp2 = result % tmp;
 				if ((result / tmp) > 0xffff)
@@ -3017,7 +3017,7 @@ static void PREFIX86(_f7pre)(void)
 
 			result = (I.regs.w[DX] << 16) + I.regs.w[AX];
 
-			if (tmp)
+			if (tmp != 0)
 			{
 				tmp2 = result % (INT32)((INT16)tmp);
 				if ((result /= (INT32)((INT16)tmp)) > 0xffff)

@@ -224,7 +224,7 @@ public class popeye
 			sx = 8 * (offset % 128);
 			sy = 8 * (offset / 128);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 				sy = 512-8 - sy;
 	
 			colour = Machine->pens[data & 0x0f];
@@ -241,7 +241,7 @@ public class popeye
 			sx = 8 * (offset % 64);
 			sy = 4 * (offset / 64);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 				sy = 512-4 - sy;
 	
 			colour = Machine->pens[data & 0x0f];
@@ -258,7 +258,7 @@ public class popeye
 	public static WriteHandlerPtr skyskipr_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = ((offset & 0xfc0) << 1) | (offset & 0x03f);
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 			offset |= 0x40;
 	
 		popeye_bitmap_w(offset,data);
@@ -342,7 +342,7 @@ public class popeye
 			if (bitmap_type == TYPE_SKYSKIPR)
 				scrollx = 2*scrollx - 512;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				if (bitmap_type == TYPE_POPEYE)
 					scrollx = -scrollx;
@@ -388,7 +388,7 @@ public class popeye
 			sx = 2*(spriteram[offs])-8;
 			sy = 2*(256-spriteram[offs + 1]);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;

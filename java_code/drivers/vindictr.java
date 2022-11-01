@@ -55,12 +55,12 @@ public class vindictr
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate |= 4;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate |= 6;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -88,27 +88,27 @@ public class vindictr
 		int result = readinputport(real_port);
 		int fake = readinputport(fake_port);
 	
-		if (fake & 0x01)			/* up */
+		if ((fake & 0x01) != 0)			/* up */
 		{
-			if (fake & 0x04)		/* up and left */
+			if ((fake & 0x04) != 0)		/* up and left */
 				result &= ~0x2000;
-			else if (fake & 0x08)	/* up and right */
+			else if ((fake & 0x08) != 0)	/* up and right */
 				result &= ~0x1000;
 			else					/* up only */
 				result &= ~0x3000;
 		}
-		else if (fake & 0x02)		/* down */
+		else if ((fake & 0x02) != 0)		/* down */
 		{
-			if (fake & 0x04)		/* down and left */
+			if ((fake & 0x04) != 0)		/* down and left */
 				result &= ~0x8000;
-			else if (fake & 0x08)	/* down and right */
+			else if ((fake & 0x08) != 0)	/* down and right */
 				result &= ~0x4000;
 			else					/* down only */
 				result &= ~0xc000;
 		}
-		else if (fake & 0x04)		/* left only */
+		else if ((fake & 0x04) != 0)		/* left only */
 			result &= ~0x6000;
-		else if (fake & 0x08)		/* right only */
+		else if ((fake & 0x08) != 0)		/* right only */
 			result &= ~0x9000;
 	
 		return result;
@@ -124,8 +124,8 @@ public class vindictr
 	static READ16_HANDLER( port1_r )
 	{
 		int result = fake_inputs(1, 4);
-		if (atarigen_sound_to_cpu_ready) result ^= 0x0004;
-		if (atarigen_cpu_to_sound_ready) result ^= 0x0008;
+		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x0004;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0008;
 		result ^= 0x0010;
 		return result;
 	}

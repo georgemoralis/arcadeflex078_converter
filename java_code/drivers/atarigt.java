@@ -60,14 +60,14 @@ public class atarigt
 	{
 		int newstate = 0;
 	
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 3;
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 4;
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 6;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -91,7 +91,7 @@ public class atarigt
 	
 	static void cage_irq_callback(int reason)
 	{
-		if (reason)
+		if (reason != 0)
 			atarigen_sound_int_gen();
 		else
 			atarigen_sound_int_ack_w(0,0,0);
@@ -123,8 +123,8 @@ public class atarigt
 	static READ32_HANDLER( special_port3_r )
 	{
 		int temp = readinputport(3);
-		if (atarigen_video_int_state) temp ^= 0x0001;
-		if (atarigen_scanline_int_state) temp ^= 0x0002;
+		if (atarigen_video_int_state != 0) temp ^= 0x0001;
+		if (atarigen_scanline_int_state != 0) temp ^= 0x0002;
 		return (temp << 16) | temp;
 	}
 	
@@ -136,27 +136,27 @@ public class atarigt
 	
 		pots[0] = pots[1] = pots[2] = pots[3] = 0x80;
 	
-		if (fake & 0x01)			/* up */
+		if ((fake & 0x01) != 0)			/* up */
 		{
-			if (fake & 0x04)		/* up and left */
+			if ((fake & 0x04) != 0)		/* up and left */
 				pots[3] = 0x00;
-			else if (fake & 0x08)	/* up and right */
+			else if ((fake & 0x08) != 0)	/* up and right */
 				pots[1] = 0x00;
 			else					/* up only */
 				pots[1] = pots[3] = 0x00;
 		}
-		else if (fake & 0x02)		/* down */
+		else if ((fake & 0x02) != 0)		/* down */
 		{
-			if (fake & 0x04)		/* down and left */
+			if ((fake & 0x04) != 0)		/* down and left */
 				pots[3] = 0xff;
-			else if (fake & 0x08)	/* down and right */
+			else if ((fake & 0x08) != 0)	/* down and right */
 				pots[1] = 0xff;
 			else					/* down only */
 				pots[1] = pots[3] = 0xff;
 		}
-		else if (fake & 0x04)		/* left only */
+		else if ((fake & 0x04) != 0)		/* left only */
 			pots[1] = 0xff, pots[3] = 0x00;
-		else if (fake & 0x08)		/* right only */
+		else if ((fake & 0x08) != 0)		/* right only */
 			pots[3] = 0xff, pots[1] = 0x00;
 	}
 	#endif
@@ -225,7 +225,7 @@ public class atarigt
 	static WRITE32_HANDLER( mo_command_w )
 	{
 		COMBINE_DATA(mo_command);
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			atarirle_command_w(0, ((data & 0xffff) == 2) ? ATARIRLE_COMMAND_CHECKSUM : ATARIRLE_COMMAND_DRAW);
 	}
 	
@@ -247,9 +247,9 @@ public class atarigt
 	{
 		data32_t result = 0;
 		
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			result |= cage_control_r();
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			result |= main_from_cage_r() << 16;
 		return result;
 	}
@@ -257,9 +257,9 @@ public class atarigt
 	
 	static WRITE32_HANDLER( sound_data_w )
 	{
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			cage_control_w(data);
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			main_to_cage_w(data >> 16);
 	}
 	

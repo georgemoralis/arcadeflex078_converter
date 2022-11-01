@@ -486,7 +486,7 @@ public class exidy
 			switch (offset & 0x03)
 			{
 				case 0:	/* port A */
-					if (has_hc55516)
+					if (has_hc55516 != 0)
 						cpu_set_reset_line(2, (data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
 					riot_porta_data = (riot_porta_data & ~riot_porta_ddr) | (data & riot_porta_ddr);
 					break;
@@ -496,7 +496,7 @@ public class exidy
 					break;
 	
 				case 2:	/* port B */
-					if (has_tms5220)
+					if (has_tms5220 != 0)
 					{
 						if (!(data & 0x01) && (riot_portb_data & 0x01))
 						{
@@ -570,7 +570,7 @@ public class exidy
 					return riot_porta_ddr;
 	
 				case 0x02:	/* port B */
-					if (has_tms5220)
+					if (has_tms5220 != 0)
 					{
 						riot_portb_data &= ~0x0c;
 						if (!tms5220_ready_r()) riot_portb_data |= 0x04;
@@ -584,7 +584,7 @@ public class exidy
 		}
 	
 		/* interrupt flags are read if A2 == 1 and A0 == 1 */
-		else if (offset & 0x01)
+		else if ((offset & 0x01) != 0)
 		{
 			int temp = riot_irq_flag;
 			riot_irq_flag = 0;

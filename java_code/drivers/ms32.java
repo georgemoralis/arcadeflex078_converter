@@ -277,7 +277,7 @@ public class ms32
 	
 	static WRITE32_HANDLER( reset_sub_w )
 	{
-		if(data) cpu_set_reset_line(1,PULSE_LINE); // 0 too ?
+		if (data != 0) cpu_set_reset_line(1,PULSE_LINE); // 0 too ?
 	}
 	
 	
@@ -350,7 +350,7 @@ public class ms32
 	
 	static WRITE32_HANDLER( pip_w )
 	{
-		if (data)
+		if (data != 0)
 			usrintf_showmessage("fce00a7c = %02x",data);
 	}
 	

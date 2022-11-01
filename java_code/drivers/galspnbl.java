@@ -37,7 +37,7 @@ public class galspnbl
 	
 	static WRITE16_HANDLER( soundcommand_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);

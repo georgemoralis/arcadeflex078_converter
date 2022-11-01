@@ -103,7 +103,7 @@ public class arcadecl
 		rampart_bitmap_render(bitmap, cliprect);
 	
 		/* draw and merge the MO */
-		if (has_mo)
+		if (has_mo != 0)
 		{
 			struct atarimo_rect_list rectlist;
 			struct mame_bitmap *mobitmap;

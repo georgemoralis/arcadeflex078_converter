@@ -280,7 +280,7 @@ public class _2610intf
 	WRITE16_HANDLER( YM2610_control_port_0_A_lsb_w )
 	{
 	//logerror("PC %04x: 2610 Reg A %02X",activecpu_get_pc(),data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(0,0,data);
 		}
@@ -295,7 +295,7 @@ public class _2610intf
 	WRITE16_HANDLER( YM2610_control_port_0_B_lsb_w )
 	{
 	//logerror("PC %04x: 2610 Reg B %02X",activecpu_get_pc(),data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(0,2,data);
 		}
@@ -310,7 +310,7 @@ public class _2610intf
 	} };
 	
 	WRITE16_HANDLER( YM2610_control_port_1_A_lsb_w ){
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(1,0,data);
 		}
@@ -321,7 +321,7 @@ public class _2610intf
 	} };
 	
 	WRITE16_HANDLER( YM2610_control_port_1_B_lsb_w ){
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(1,2,data);
 		}
@@ -340,7 +340,7 @@ public class _2610intf
 	WRITE16_HANDLER( YM2610_data_port_0_A_lsb_w )
 	{
 	//logerror(" =%02X\n",data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(0,1,data);
 		}
@@ -355,7 +355,7 @@ public class _2610intf
 	WRITE16_HANDLER( YM2610_data_port_0_B_lsb_w )
 	{
 	//logerror(" =%02X\n",data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(0,3,data);
 		}
@@ -370,7 +370,7 @@ public class _2610intf
 	} };
 	
 	WRITE16_HANDLER( YM2610_data_port_1_A_lsb_w ){
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(1,1,data);
 		}
@@ -381,7 +381,7 @@ public class _2610intf
 	} };
 	
 	WRITE16_HANDLER( YM2610_data_port_1_B_lsb_w ){
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			YM2610Write(1,3,data);
 		}

@@ -1495,7 +1495,7 @@ public class z180
 				{
 					cpu_writemem20(dar0++, IN(sar0));
 					/* edge sensitive DREQ0 ? */
-					if (IO_DCNTL & Z180_DCNTL_DIM0)
+					if ((IO_DCNTL & Z180_DCNTL_DIM0) != 0)
 					{
 						Z180.iol &= ~Z180_DREQ0;
 						count = 0;
@@ -1516,7 +1516,7 @@ public class z180
 	            {
 					cpu_writemem20(dar0--, IN(sar0));
 					/* edge sensitive DREQ0 ? */
-					if (IO_DCNTL & Z180_DCNTL_DIM0)
+					if ((IO_DCNTL & Z180_DCNTL_DIM0) != 0)
 					{
 						Z180.iol &= ~Z180_DREQ0;
 						count = 0;
@@ -1538,7 +1538,7 @@ public class z180
 	            {
 					OUT(dar0, cpu_readmem20(sar0++));
 					/* edge sensitive DREQ0 ? */
-					if (IO_DCNTL & Z180_DCNTL_DIM0)
+					if ((IO_DCNTL & Z180_DCNTL_DIM0) != 0)
 					{
 						Z180.iol &= ~Z180_DREQ0;
 						count = 0;
@@ -1550,7 +1550,7 @@ public class z180
 	            {
 					OUT(dar0, cpu_readmem20(sar0--));
 					/* edge sensitive DREQ0 ? */
-					if (IO_DCNTL & Z180_DCNTL_DIM0)
+					if ((IO_DCNTL & Z180_DCNTL_DIM0) != 0)
 					{
 						Z180.iol &= ~Z180_DREQ0;
 						count = 0;
@@ -1627,7 +1627,7 @@ public class z180
 		}
 	
 		/* edge sensitive DREQ1 ? */
-		if (IO_DCNTL & Z180_DCNTL_DIM1)
+		if ((IO_DCNTL & Z180_DCNTL_DIM1) != 0)
 			Z180.iol &= ~Z180_DREQ1;
 	
 		IO_MAR1L = mar1;
@@ -1654,120 +1654,120 @@ public class z180
 		UINT32 changes = Z180.iol ^ data;
 	
 	    /* I/O asynchronous clock 0 (active high) or DREQ0 (mux) */
-		if (changes & Z180_CKA0)
+		if ((changes & Z180_CKA0) != 0)
 		{
 			LOG(("Z180 #%d CKA0   %d\n", cpu_getactivecpu(), data & Z180_CKA0 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_CKA0) | (data & Z180_CKA0);
 	    }
 	
 	    /* I/O asynchronous clock 1 (active high) or TEND1 (mux) */
-		if (changes & Z180_CKA1)
+		if ((changes & Z180_CKA1) != 0)
 		{
 			LOG(("Z180 #%d CKA1   %d\n", cpu_getactivecpu(), data & Z180_CKA1 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_CKA1) | (data & Z180_CKA1);
 	    }
 	
 	    /* I/O serial clock (active high) */
-		if (changes & Z180_CKS)
+		if ((changes & Z180_CKS) != 0)
 		{
 			LOG(("Z180 #%d CKS    %d\n", cpu_getactivecpu(), data & Z180_CKS ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_CKS) | (data & Z180_CKS);
 	    }
 	
 	    /* I   clear to send 0 (active low) */
-		if (changes & Z180_CTS0)
+		if ((changes & Z180_CTS0) != 0)
 		{
 			LOG(("Z180 #%d CTS0   %d\n", cpu_getactivecpu(), data & Z180_CTS0 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_CTS0) | (data & Z180_CTS0);
 	    }
 	
 	    /* I   clear to send 1 (active low) or RXS (mux) */
-		if (changes & Z180_CTS1)
+		if ((changes & Z180_CTS1) != 0)
 		{
 			LOG(("Z180 #%d CTS1   %d\n", cpu_getactivecpu(), data & Z180_CTS1 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_CTS1) | (data & Z180_CTS1);
 	    }
 	
 	    /* I   data carrier detect (active low) */
-		if (changes & Z180_DCD0)
+		if ((changes & Z180_DCD0) != 0)
 		{
 			LOG(("Z180 #%d DCD0   %d\n", cpu_getactivecpu(), data & Z180_DCD0 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_DCD0) | (data & Z180_DCD0);
 	    }
 	
 	    /* I   data request DMA ch 0 (active low) or CKA0 (mux) */
-		if (changes & Z180_DREQ0)
+		if ((changes & Z180_DREQ0) != 0)
 		{
 			LOG(("Z180 #%d DREQ0  %d\n", cpu_getactivecpu(), data & Z180_DREQ0 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_DREQ0) | (data & Z180_DREQ0);
 	    }
 	
 	    /* I   data request DMA ch 1 (active low) */
-		if (changes & Z180_DREQ1)
+		if ((changes & Z180_DREQ1) != 0)
 		{
 			LOG(("Z180 #%d DREQ1  %d\n", cpu_getactivecpu(), data & Z180_DREQ1 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_DREQ1) | (data & Z180_DREQ1);
 	    }
 	
 	    /* I   asynchronous receive data 0 (active high) */
-		if (changes & Z180_RXA0)
+		if ((changes & Z180_RXA0) != 0)
 		{
 			LOG(("Z180 #%d RXA0   %d\n", cpu_getactivecpu(), data & Z180_RXA0 ? 1 : 0));
 	        Z180.iol = (Z180.iol & ~Z180_RXA0) | (data & Z180_RXA0);
 	    }
 	
 	    /* I   asynchronous receive data 1 (active high) */
-		if (changes & Z180_RXA1)
+		if ((changes & Z180_RXA1) != 0)
 		{
 			LOG(("Z180 #%d RXA1   %d\n", cpu_getactivecpu(), data & Z180_RXA1 ? 1 : 0));
 			Z180.iol = (Z180.iol & ~Z180_RXA1) | (data & Z180_RXA1);
 	    }
 	
 	    /* I   clocked serial receive data (active high) or CTS1 (mux) */
-		if (changes & Z180_RXS)
+		if ((changes & Z180_RXS) != 0)
 		{
 			LOG(("Z180 #%d RXS    %d\n", cpu_getactivecpu(), data & Z180_RXS ? 1 : 0));
 	        Z180.iol = (Z180.iol & ~Z180_RXS) | (data & Z180_RXS);
 	    }
 	
 	    /*   O request to send (active low) */
-		if (changes & Z180_RTS0)
+		if ((changes & Z180_RTS0) != 0)
 		{
 			LOG(("Z180 #%d RTS0   won't change output\n", cpu_getactivecpu()));
 	    }
 	
 	    /*   O transfer end 0 (active low) or CKA1 (mux) */
-		if (changes & Z180_TEND0)
+		if ((changes & Z180_TEND0) != 0)
 		{
 			LOG(("Z180 #%d TEND0  won't change output\n", cpu_getactivecpu()));
 	    }
 	
 	    /*   O transfer end 1 (active low) */
-		if (changes & Z180_TEND1)
+		if ((changes & Z180_TEND1) != 0)
 		{
 			LOG(("Z180 #%d TEND1  won't change output\n", cpu_getactivecpu()));
 	    }
 	
 	    /*   O transfer out (PRT channel, active low) or A18 (mux) */
-		if (changes & Z180_A18_TOUT)
+		if ((changes & Z180_A18_TOUT) != 0)
 		{
 			LOG(("Z180 #%d TOUT   won't change output\n", cpu_getactivecpu()));
 	    }
 	
 	    /*   O asynchronous transmit data 0 (active high) */
-		if (changes & Z180_TXA0)
+		if ((changes & Z180_TXA0) != 0)
 		{
 			LOG(("Z180 #%d TXA0   won't change output\n", cpu_getactivecpu()));
 	    }
 	
 	    /*   O asynchronous transmit data 1 (active high) */
-		if (changes & Z180_TXA1)
+		if ((changes & Z180_TXA1) != 0)
 		{
 			LOG(("Z180 #%d TXA1   won't change output\n", cpu_getactivecpu()));
 	    }
 	
 	    /*   O clocked serial transmit data (active high) */
-		if (changes & Z180_TXS)
+		if ((changes & Z180_TXS) != 0)
 		{
 			LOG(("Z180 #%d TXS    won't change output\n", cpu_getactivecpu()));
 	    }
@@ -1886,14 +1886,14 @@ public class z180
 		for (i = 0; i < 256; i++)
 		{
 			p = 0;
-			if( i&0x01 ) ++p;
-			if( i&0x02 ) ++p;
-			if( i&0x04 ) ++p;
-			if( i&0x08 ) ++p;
-			if( i&0x10 ) ++p;
-			if( i&0x20 ) ++p;
-			if( i&0x40 ) ++p;
-			if( i&0x80 ) ++p;
+			if ((i & 0x01) != 0) ++p;
+			if ((i & 0x02) != 0) ++p;
+			if ((i & 0x04) != 0) ++p;
+			if ((i & 0x08) != 0) ++p;
+			if ((i & 0x10) != 0) ++p;
+			if ((i & 0x20) != 0) ++p;
+			if ((i & 0x40) != 0) ++p;
+			if ((i & 0x80) != 0) ++p;
 			SZ[i] = i ? i & SF : ZF;
 	#if Z180_EXACT
 			SZ[i] |= (i & (YF | XF));		/* undocumented flag bits 5+3 */
@@ -1987,7 +1987,7 @@ public class z180
 		IO_OMCR    = Z180_OMCR_RESET;
 		IO_IOCR    = Z180_IOCR_RESET;
 	
-		if( daisy_chain )
+		if (daisy_chain != 0)
 		{
 			while( daisy_chain->irq_param != -1 && Z180.irq_max < Z80_MAXDAISY )
 			{
@@ -2007,9 +2007,9 @@ public class z180
 	void z180_exit(void)
 	{
 	#if BIG_FLAGS_ARRAY
-		if (SZHVC_add) free(SZHVC_add);
+		if (SZHVC_add != 0) free(SZHVC_add);
 		SZHVC_add = NULL;
-		if (SZHVC_sub) free(SZHVC_sub);
+		if (SZHVC_sub != 0) free(SZHVC_sub);
 		SZHVC_sub = NULL;
 	#endif
 	}
@@ -2089,7 +2089,7 @@ public class z180
 	 ****************************************************************************/
 	unsigned z180_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(Z180_Regs*)dst = Z180;
 		return sizeof(Z180_Regs);
 	}
@@ -2099,7 +2099,7 @@ public class z180
 	 ****************************************************************************/
 	void z180_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 			Z180 = *(Z180_Regs*)src;
 		z180_change_pc(_PCD);
 	}

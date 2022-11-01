@@ -185,17 +185,17 @@ public class mcr68
 		/*      A E      = middle right/down                    */
 		/*      9 B D F  = full right/down                      */
 	
-		if (joystick & 0x0001) result |= 0x0040;
-		else if (joystick & 0x0002) result |= 0x0090;
+		if ((joystick & 0x0001) != 0) result |= 0x0040;
+		else if ((joystick & 0x0002) != 0) result |= 0x0090;
 	
-		if (joystick & 0x0004) result |= 0x0004;
-		else if (joystick & 0x0008) result |= 0x0009;
+		if ((joystick & 0x0004) != 0) result |= 0x0004;
+		else if ((joystick & 0x0008) != 0) result |= 0x0009;
 	
-		if (joystick & 0x0010) result |= 0x4000;
-		else if (joystick & 0x0020) result |= 0x9000;
+		if ((joystick & 0x0010) != 0) result |= 0x4000;
+		else if ((joystick & 0x0020) != 0) result |= 0x9000;
 	
-		if (joystick & 0x0040) result |= 0x0400;
-		else if (joystick & 0x0080) result |= 0x0900;
+		if ((joystick & 0x0040) != 0) result |= 0x0400;
+		else if ((joystick & 0x0080) != 0) result |= 0x0900;
 	
 		return result;
 	}
@@ -220,7 +220,7 @@ public class mcr68
 	static WRITE16_HANDLER( pigskin_protection_w )
 	{
 		/* ignore upper-byte only */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* track the last 5 bytes */
 			protection_data[0] = protection_data[1];
@@ -261,11 +261,11 @@ public class mcr68
 	
 		/* see archrivl_port_1_r for 49-way joystick description */
 	
-		if (joystick & 0x0001) result |= 0x4000;
-		else if (joystick & 0x0002) result |= 0x9000;
+		if ((joystick & 0x0001) != 0) result |= 0x4000;
+		else if ((joystick & 0x0002) != 0) result |= 0x9000;
 	
-		if (joystick & 0x0004) result |= 0x0400;
-		else if (joystick & 0x0008) result |= 0x0900;
+		if ((joystick & 0x0004) != 0) result |= 0x0400;
+		else if ((joystick & 0x0008) != 0) result |= 0x0900;
 	
 		return result;
 	}
@@ -278,11 +278,11 @@ public class mcr68
 	
 		/* see archrivl_port_1_r for 49-way joystick description */
 	
-		if (joystick & 0x0010) result |= 0x4000;
-		else if (joystick & 0x0020) result |= 0x9000;
+		if ((joystick & 0x0010) != 0) result |= 0x4000;
+		else if ((joystick & 0x0020) != 0) result |= 0x9000;
 	
-		if (joystick & 0x0040) result |= 0x0400;
-		else if (joystick & 0x0080) result |= 0x0900;
+		if ((joystick & 0x0040) != 0) result |= 0x0400;
+		else if ((joystick & 0x0080) != 0) result |= 0x0900;
 	
 		return result;
 	}

@@ -495,16 +495,16 @@ public class wgp
 		}
 		else	/* Digital steer */
 		{
-			if (fake & 0x8)	/* pressing down */
+			if ((fake & 0x8) != 0)	/* pressing down */
 				steer = 0x20;
 	
-			if (fake & 0x4)	/* pressing up */
+			if ((fake & 0x4) != 0)	/* pressing up */
 				steer = 0x60;
 	
-			if (fake & 0x2)	/* pressing right */
+			if ((fake & 0x2) != 0)	/* pressing right */
 				steer = 0x00;
 	
-			if (fake & 0x1)	/* pressing left */
+			if ((fake & 0x1) != 0)	/* pressing left */
 				steer = 0x80;
 		}
 	

@@ -12,7 +12,7 @@
  * Leave HALT state; write 0 to fake port
  ***************************************************************/
 #define LEAVE_HALT {											\
-	if( _HALT ) 												\
+	if (_HALT != 0) 												\
 	{															\
 		_HALT = 0;												\
 		_PC++;													\
@@ -208,7 +208,7 @@ void cpu_setOPbasez180(int pc)
  ***************************************************************/
 
 #define JP_COND(cond)											\
-	if( cond )													\
+	if (cond != 0)													\
 	{															\
 		_PCD = ARG16(); 										\
 		z180_change_pc(_PCD);									\
@@ -261,7 +261,7 @@ void cpu_setOPbasez180(int pc)
  * JR_COND
  ***************************************************************/
 #define JR_COND(cond,opcode)									\
-	if( cond )													\
+	if (cond != 0)													\
 	{															\
 		INT8 arg = (INT8)ARG(); /* ARG() also increments _PC */ \
 		_PC += arg; 			/* so don't do _PC += ARG() */  \
@@ -283,7 +283,7 @@ void cpu_setOPbasez180(int pc)
  * CALL_COND
  ***************************************************************/
 #define CALL_COND(cond,opcode)									\
-	if( cond )													\
+	if (cond != 0)													\
 	{															\
 		EA = ARG16();											\
 		PUSH( PC ); 											\
@@ -300,7 +300,7 @@ void cpu_setOPbasez180(int pc)
  * RET_COND
  ***************************************************************/
 #define RET_COND(cond,opcode)									\
-	if( cond )													\
+	if (cond != 0)													\
 	{															\
 		POP(PC);												\
 		z180_change_pc(_PCD);									\
@@ -606,9 +606,9 @@ INLINE UINT8 DEC(UINT8 value)
  ***************************************************************/
 #define DAA {													\
 	int idx = _A;												\
-	if( _F & CF ) idx |= 0x100; 								\
-	if( _F & HF ) idx |= 0x200; 								\
-	if( _F & NF ) idx |= 0x400; 								\
+	if ((_F & CF) != 0) idx |= 0x100; 								\
+	if ((_F & HF) != 0) idx |= 0x200; 								\
+	if ((_F & NF) != 0) idx |= 0x400; 								\
 	_AF = DAATable[idx];										\
 }
 
@@ -872,14 +872,14 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */		\
 	if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */		\
 	_HL++; _DE++; _BC--;										\
-	if( _BC ) _F |= VF; 										\
+	if (_BC != 0) _F |= VF; 										\
 }
 #else
 #define LDI {													\
 	WM( _DE, RM(_HL) ); 										\
 	_F &= SF | ZF | YF | XF | CF;								\
 	_HL++; _DE++; _BC--;										\
-	if( _BC ) _F |= VF; 										\
+	if (_BC != 0) _F |= VF; 										\
 }
 #endif
 
@@ -892,10 +892,10 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	UINT8 res = _A - val;										\
 	_HL++; _BC--;												\
 	_F = (_F & CF) | (SZ[res] & ~(YF|XF)) | ((_A ^ val ^ res) & HF) | NF;  \
-	if( _F & HF ) res -= 1; 									\
-	if( res & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */			\
-	if( res & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */			\
-	if( _BC ) _F |= VF; 										\
+	if ((_F & HF) != 0) res -= 1; 									\
+	if ((res & 0x02) != 0) _F |= YF; /* bit 1 -> flag 5 */			\
+	if ((res & 0x08) != 0) _F |= XF; /* bit 3 -> flag 3 */			\
+	if (_BC != 0) _F |= VF; 										\
 }
 #else
 #define CPI {													\
@@ -903,7 +903,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	UINT8 res = _A - val;										\
 	_HL++; _BC--;												\
 	_F = (_F & CF) | SZ[res] | ((_A ^ val ^ res) & HF) | NF;	\
-	if( _BC ) _F |= VF; 										\
+	if (_BC != 0) _F |= VF; 										\
 }
 #endif
 
@@ -917,7 +917,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	WM( _HL, io );												\
 	_HL++;														\
 	_F = SZ[_B];												\
-	if( io & SF ) _F |= NF; 									\
+	if ((io & SF) != 0) _F |= NF; 									\
 	if( (_C + io + 1) & 0x100 ) _F |= HF | CF;					\
 	if( (irep_tmp1[_C & 3][io & 3] ^							\
 		 breg_tmp2[_B] ^										\
@@ -944,7 +944,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	OUT( _BC, io ); 											\
 	_HL++;														\
 	_F = SZ[_B];												\
-	if( io & SF ) _F |= NF; 									\
+	if ((io & SF) != 0) _F |= NF; 									\
 	if( (_C + io + 1) & 0x100 ) _F |= HF | CF;					\
 	if( (irep_tmp1[_C & 3][io & 3] ^							\
 		 breg_tmp2[_B] ^										\
@@ -972,14 +972,14 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */		\
 	if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */		\
 	_HL--; _DE--; _BC--;										\
-	if( _BC ) _F |= VF; 										\
+	if (_BC != 0) _F |= VF; 										\
 }
 #else
 #define LDD {													\
 	WM( _DE, RM(_HL) ); 										\
 	_F &= SF | ZF | YF | XF | CF;								\
 	_HL--; _DE--; _BC--;										\
-	if( _BC ) _F |= VF; 										\
+	if (_BC != 0) _F |= VF; 										\
 }
 #endif
 
@@ -992,10 +992,10 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	UINT8 res = _A - val;										\
 	_HL--; _BC--;												\
 	_F = (_F & CF) | (SZ[res] & ~(YF|XF)) | ((_A ^ val ^ res) & HF) | NF;  \
-	if( _F & HF ) res -= 1; 									\
-	if( res & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */			\
-	if( res & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */			\
-	if( _BC ) _F |= VF; 										\
+	if ((_F & HF) != 0) res -= 1; 									\
+	if ((res & 0x02) != 0) _F |= YF; /* bit 1 -> flag 5 */			\
+	if ((res & 0x08) != 0) _F |= XF; /* bit 3 -> flag 3 */			\
+	if (_BC != 0) _F |= VF; 										\
 }
 #else
 #define CPD {													\
@@ -1003,7 +1003,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	UINT8 res = _A - val;										\
 	_HL--; _BC--;												\
 	_F = (_F & CF) | SZ[res] | ((_A ^ val ^ res) & HF) | NF;	\
-	if( _BC ) _F |= VF; 										\
+	if (_BC != 0) _F |= VF; 										\
 }
 #endif
 
@@ -1017,7 +1017,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	WM( _HL, io );												\
 	_HL--;														\
 	_F = SZ[_B];												\
-	if( io & SF ) _F |= NF; 									\
+	if ((io & SF) != 0) _F |= NF; 									\
 	if( (_C + io - 1) & 0x100 ) _F |= HF | CF;					\
 	if( (drep_tmp1[_C & 3][io & 3] ^							\
 		 breg_tmp2[_B] ^										\
@@ -1044,7 +1044,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	OUT( _BC, io ); 											\
 	_HL--;														\
 	_F = SZ[_B];												\
-	if( io & SF ) _F |= NF; 									\
+	if ((io & SF) != 0) _F |= NF; 									\
 	if( (_C + io - 1) & 0x100 ) _F |= HF | CF;					\
 	if( (drep_tmp1[_C & 3][io & 3] ^							\
 		 breg_tmp2[_B] ^										\
@@ -1066,7 +1066,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define LDIR													\
 	LDI;														\
-	if( _BC )													\
+	if (_BC != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xb0);											\
@@ -1088,7 +1088,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define INIR													\
 	INI;														\
-	if( _B )													\
+	if (_B != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xb2);											\
@@ -1099,7 +1099,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define OTIR													\
 	OUTI;														\
-	if( _B )													\
+	if (_B != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xb3);											\
@@ -1110,7 +1110,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define LDDR													\
 	LDD;														\
-	if( _BC )													\
+	if (_BC != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xb8);											\
@@ -1132,7 +1132,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define INDR													\
 	IND;														\
-	if( _B )													\
+	if (_B != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xba);											\
@@ -1143,7 +1143,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define OTDR													\
 	OUTD;														\
-	if( _B )													\
+	if (_B != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xbb);											\
@@ -1241,7 +1241,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define OTIMR													\
 	OTIM;														\
-	if( _B )													\
+	if (_B != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xb3);											\
@@ -1252,7 +1252,7 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
  ***************************************************************/
 #define OTDMR													\
 	OTDM;														\
-	if( _B )													\
+	if (_B != 0)													\
 	{															\
 		_PC -= 2;												\
 		CC(ex,0xb3);											\

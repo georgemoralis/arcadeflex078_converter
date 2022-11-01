@@ -80,7 +80,7 @@ public class speedspn
 			int ypos = source[3];
 			int color;
 	
-			if (attr&0x10) xpos +=0x100;
+			if ((attr & 0x10) != 0) xpos +=0x100;
 	
 			xpos = 0x1f8-xpos;
 			tileno += ((attr & 0xe0) >> 5) * 0x100;
@@ -100,7 +100,7 @@ public class speedspn
 	
 	VIDEO_UPDATE(speedspn)
 	{
-		if (speedspn_display_disable)
+		if (speedspn_display_disable != 0)
 		{
 			fillbitmap(bitmap,get_black_pen(),cliprect);
 			return;

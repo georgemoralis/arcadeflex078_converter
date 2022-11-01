@@ -63,7 +63,7 @@ public class spacefb
 	
 		for (i = 0;i < 4 * 8;i++)
 		{
-			if (i & 3) colortable[i] = i;
+			if ((i & 3) != 0) colortable[i] = i;
 			else colortable[i] = 0;
 		}
 	} };
@@ -122,13 +122,13 @@ public class spacefb
 	
 			col = (~cnt & 0x03) | col_bit2;
 	
-			if (cnt)
+			if (cnt != 0)
 			{
-				if (cnt & 0x20)
+				if ((cnt & 0x20) != 0)
 				{
 					/* Draw bullets */
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 260 - sx;
 						sy = 252 - sy;
@@ -142,11 +142,11 @@ public class spacefb
 							&Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 				}
-				else if (cnt & 0x40)
+				else if ((cnt & 0x40) != 0)
 				{
 					sy -= 5;	/* aligns the spaceship and the bullet */
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 256 - sx;
 						sy = 248 - sy;

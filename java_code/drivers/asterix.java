@@ -55,13 +55,13 @@ public class asterix
 	
 	static NVRAM_HANDLER( asterix )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -80,7 +80,7 @@ public class asterix
 		/* bit 10 is service button */
 		res = (EEPROM_read_bit()<<8) | input_port_1_word_r(0,0);
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xfbff;
@@ -100,7 +100,7 @@ public class asterix
 	
 	static WRITE16_HANDLER( control2_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			cur_control2 = data;
 			/* bit 0 is data */

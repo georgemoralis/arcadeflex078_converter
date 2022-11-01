@@ -129,7 +129,7 @@ public class crbaloon
 	
 		tilemap_draw(tmpbitmap, 0, bg_tilemap, 0, 0);
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			by += 32;
 		}

@@ -253,7 +253,7 @@ public class kingobox
 			int sx = spriteram[offs+1];
 			int sy = spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -320,7 +320,7 @@ public class kingobox
 			int sx = spriteram[offs+2];
 			int sy = spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

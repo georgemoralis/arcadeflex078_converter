@@ -106,7 +106,7 @@ public class yunsun16
 	
 	static WRITE16_HANDLER( magicbub_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 	/*
 	HACK: the game continuously sends this. It'll play the oki sample

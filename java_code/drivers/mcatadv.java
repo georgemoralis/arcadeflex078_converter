@@ -89,7 +89,7 @@ public class mcatadv
 	
 	static WRITE16_HANDLER( mcat_coin_w )
 	{
-		if(ACCESSING_MSB16)
+		if (ACCESSING_MSB16 != 0)
 		{
 			coin_counter_w(0, data & 0x1000);
 			coin_counter_w(1, data & 0x2000);

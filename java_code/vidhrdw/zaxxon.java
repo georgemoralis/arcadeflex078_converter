@@ -352,7 +352,7 @@ public class zaxxon
 				int sx = ((spriteram[offs + 3] + 16) & 0xff) - 32;
 				int sy = 255 - spriteram[offs] - 16;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -507,7 +507,7 @@ public class zaxxon
 				int sx = ((spriteram[offs + 2 + 3] + 16) & 0xff) - 31;
 				int sy = 255 - spriteram[offs + 2] - 15;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -545,7 +545,7 @@ public class zaxxon
 				int sx = ((spriteram[offs + 3] + 16) & 0xff) - 32;
 				int sy = 255 - spriteram[offs] - 16;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;

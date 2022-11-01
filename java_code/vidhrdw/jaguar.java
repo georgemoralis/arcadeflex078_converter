@@ -419,7 +419,7 @@ public class jaguar
 					UINT8 b = (blu_lookup[i >> 8] * (i & 0xff)) >> 8;
 	
 					/* if the low bit is set, treat it as 5-5-5 RGB instead */
-					if (i & 1)
+					if ((i & 1) != 0)
 					{
 						r = (i >> 11) & 31;
 						g = (i >> 1) & 31;
@@ -697,9 +697,9 @@ public class jaguar
 	
 	WRITE32_HANDLER( jaguar_tom_regs32_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			jaguar_tom_regs_w(offset * 2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			jaguar_tom_regs_w(offset * 2 + 1, data, mem_mask);
 	}
 	
@@ -783,7 +783,7 @@ public class jaguar
 		process_object_list(bitmap, cliprect);
 	
 		/* render the crosshair */
-		if (cojag_draw_crosshair)
+		if (cojag_draw_crosshair != 0)
 		{
 			int beamx, beamy;
 	

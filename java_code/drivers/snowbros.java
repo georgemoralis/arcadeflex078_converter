@@ -100,7 +100,7 @@ public class snowbros
 	
 	static WRITE16_HANDLER( snowbros_68000_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -109,7 +109,7 @@ public class snowbros
 	
 	static WRITE16_HANDLER( semicom_soundcmd_w )
 	{
-		if (ACCESSING_LSB) soundlatch_w(0,data & 0xff);
+		if (ACCESSING_LSB != 0) soundlatch_w(0,data & 0xff);
 	}
 	
 	
@@ -1209,7 +1209,7 @@ public class snowbros
 			FILE *fp;
 	
 			fp=fopen("cookie", "w+b");
-			if (fp)
+			if (fp != 0)
 			{
 				fwrite(HCROM, 0x80000, 1, fp);
 				fclose(fp);
@@ -1249,7 +1249,7 @@ public class snowbros
 		{
 			int i;
 			for (i = 0;i < len; i++)
-				if (i&1) buffer[i] = BITSWAP8(src[i],6,7,5,4,3,2,1,0);
+				if ((i & 1) != 0) buffer[i] = BITSWAP8(src[i],6,7,5,4,3,2,1,0);
 				else buffer[i] = src[i];
 	
 			memcpy(src,buffer,len);

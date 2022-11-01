@@ -102,11 +102,11 @@ public class namcos2
 	size_t namcos2_eeprom_size;
 	
 	NVRAM_HANDLER( namcos2 ){
-		if( read_or_write ){
+		if (read_or_write != 0){
 			mame_fwrite (file, namcos2_eeprom, namcos2_eeprom_size);
 		}
 		else {
-			if (file)
+			if (file != 0)
 			{
 				mame_fread (file, namcos2_eeprom, namcos2_eeprom_size);
 			}
@@ -474,7 +474,7 @@ public class namcos2
 		case 0x1e2000: /* Sound CPU Reset control */
 			if( cpu == CPU_MASTER )
 			{
-				if(data&0x01)
+				if ((data & 0x01) != 0)
 				{
 					/* Resume execution */
 					cpu_set_reset_line (NAMCOS2_CPU3, CLEAR_LINE);
@@ -498,7 +498,7 @@ public class namcos2
 		case 0x1e4000: /* Alt 68000 & IO CPU Reset */
 			if( cpu == CPU_MASTER )
 			{
-				if(data&0x01)
+				if ((data & 0x01) != 0)
 				{
 					/* Resume execution */
 					cpu_set_reset_line(altCPU, CLEAR_LINE);
@@ -636,7 +636,7 @@ public class namcos2
 	
 		/* Check if this is a start of conversion */
 		/* Input ports 2 thru 9 are the analog channels */
-		if(data&0x40)
+		if ((data & 0x40) != 0)
 		{
 			/* Set the conversion complete flag */
 			namcos2_mcu_analog_complete=2;
@@ -678,7 +678,7 @@ public class namcos2
 			}
 	#endif
 			/* If the interrupt enable bit is set trigger an A/D IRQ */
-			if(data&0x20)
+			if ((data & 0x20) != 0)
 			{
 				cpu_set_irq_line( CPU_MCU, HD63705_INT_ADCONV , PULSE_LINE);
 			}
@@ -691,7 +691,7 @@ public class namcos2
 	
 		/* ADEF flag is only cleared AFTER a read from control THEN a read from DATA */
 		if(namcos2_mcu_analog_complete==2) namcos2_mcu_analog_complete=1;
-		if(namcos2_mcu_analog_complete) data|=0x80;
+		if (namcos2_mcu_analog_complete != 0) data|=0x80;
 	
 		/* Mask on the lower 6 register bits, Irq EN/Channel/Clock */
 		data|=namcos2_mcu_analog_ctrl&0x3f;

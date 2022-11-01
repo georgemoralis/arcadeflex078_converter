@@ -232,20 +232,20 @@ public class harddriv
 	{
 		int newstate = 0;
 	
-		if (msp_irq_state)
+		if (msp_irq_state != 0)
 			newstate = 1;
-		if (adsp_irq_state)
+		if (adsp_irq_state != 0)
 			newstate = 2;
-		if (gsp_irq_state)
+		if (gsp_irq_state != 0)
 			newstate = 3;
-		if (atarigen_sound_int_state)	/* /LINKIRQ on STUN Runner */
+		if (atarigen_sound_int_state != 0)	/* /LINKIRQ on STUN Runner */
 			newstate = 4;
-		if (irq_state)
+		if (irq_state != 0)
 			newstate = 5;
-		if (duart_irq_state)
+		if (duart_irq_state != 0)
 			newstate = 6;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(hdcpu_main, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(hdcpu_main, 7, CLEAR_LINE);
@@ -388,7 +388,7 @@ public class harddriv
 		result = (result | 0x0f00) ^ (hdc68k_shifter_state << 8);
 	
 		/* merge in the wheel edge latch bit */
-		if (hdc68k_wheel_edge)
+		if (hdc68k_wheel_edge != 0)
 			result ^= 0x4000;
 	
 		hdc68k_last_port1 = result;
@@ -401,7 +401,7 @@ public class harddriv
 		data16_t result = readinputport(1);
 	
 		/* merge in the wheel edge latch bit */
-		if (hdc68k_wheel_edge)
+		if (hdc68k_wheel_edge != 0)
 			result ^= 0x4000;
 	
 		return result;
@@ -459,14 +459,14 @@ public class harddriv
 		COMBINE_DATA(&adc_control);
 	
 		/* handle a write to the 8-bit ADC address select */
-		if (adc_control & 0x08)
+		if ((adc_control & 0x08) != 0)
 		{
 			adc8_select = adc_control & 0x07;
 			adc8_data = readinputport(2 + adc8_select);
 		}
 	
 		/* handle a write to the 12-bit ADC address select */
-		if (adc_control & 0x40)
+		if ((adc_control & 0x40) != 0)
 		{
 			adc12_select = (adc_control >> 4) & 0x03;
 			adc12_data = readinputport(10 + adc12_select) << 4;
@@ -684,7 +684,7 @@ public class harddriv
 	
 	WRITE16_HANDLER( hd68k_duart_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			int newdata = (data >> 8) & 0xff;
 			duart_write_data[offset] = newdata;
@@ -736,7 +736,7 @@ public class harddriv
 			if (new_shiftreg != last_gsp_shiftreg)
 			{
 				last_gsp_shiftreg = new_shiftreg;
-				if (new_shiftreg)
+				if (new_shiftreg != 0)
 					cpu_yield();
 			}
 		}
@@ -788,7 +788,7 @@ public class harddriv
 		COMBINE_DATA(&newdata);
 	
 		/* if being written from the 68000, synchronize on it */
-		if (hd34010_host_access)
+		if (hd34010_host_access != 0)
 			timer_set(TIME_NOW, newdata | (offset << 16) | (which << 28), stmsp_sync_update);
 	
 		/* otherwise, just update */
@@ -919,7 +919,7 @@ public class harddriv
 		{
 			static FILE *commands;
 			if (!commands) commands = fopen("commands.log", "w");
-			if (commands)
+			if (commands != 0)
 			{
 				INT16 *base = (INT16 *)&som_memory[data * 0x2000];
 				INT16 *end = base + (UINT16)*base++;
@@ -1041,8 +1041,8 @@ public class harddriv
 	READ16_HANDLER( hd68k_adsp_irq_state_r )
 	{
 		int result = 0xfffd;
-		if (adsp_xflag) result ^= 2;
-		if (adsp_irq_state) result ^= 1;
+		if (adsp_xflag != 0) result ^= 2;
+		if (adsp_irq_state != 0) result ^= 1;
 		logerror("%06X:68k reads ADSP interrupt state = %04x\n", activecpu_get_previouspc(), result);
 		return result;
 	}
@@ -1159,7 +1159,7 @@ public class harddriv
 				/* connected to the /BR (bus request) line; this effectively halts */
 				/* the ADSP at the next instruction boundary */
 				adsp_br = !val;
-				if (adsp_br)
+				if (adsp_br != 0)
 					cpu_set_halt_line(hdcpu_adsp, ASSERT_LINE);
 				else
 				{
@@ -1208,9 +1208,9 @@ public class harddriv
 	READ16_HANDLER( hd68k_ds3_girq_state_r )
 	{
 		int result = 0x0fff;
-		if (ds3_g68flag) result ^= 0x8000;
-		if (ds3_gflag) result ^= 0x4000;
-		if (ds3_g68irqs) result ^= 0x2000;
+		if (ds3_g68flag != 0) result ^= 0x8000;
+		if (ds3_gflag != 0) result ^= 0x4000;
+		if (ds3_g68irqs != 0) result ^= 0x2000;
 		if (!adsp_irq_state) result ^= 0x1000;
 		return result;
 	}
@@ -1318,9 +1318,9 @@ public class harddriv
 	
 			case 1:
 				result = 0x0fff;
-				if (ds3_gcmd) result ^= 0x8000;
-				if (ds3_g68flag) result ^= 0x4000;
-				if (ds3_gflag) result ^= 0x2000;
+				if (ds3_gcmd != 0) result ^= 0x8000;
+				if (ds3_g68flag != 0) result ^= 0x4000;
+				if (ds3_gflag != 0) result ^= 0x2000;
 				return result;
 	
 			case 6:
@@ -1570,7 +1570,7 @@ public class harddriv
 	
 	WRITE32_HANDLER( rddsp32_sync0_w )
 	{
-		if (hddsk_pio_access)
+		if (hddsk_pio_access != 0)
 		{
 			data32_t *dptr = &rddsp32_sync[0][offset];
 			data32_t newdata = *dptr;
@@ -1586,7 +1586,7 @@ public class harddriv
 	
 	WRITE32_HANDLER( rddsp32_sync1_w )
 	{
-		if (hddsk_pio_access)
+		if (hddsk_pio_access != 0)
 		{
 			data32_t *dptr = &rddsp32_sync[1][offset];
 			data32_t newdata = *dptr;

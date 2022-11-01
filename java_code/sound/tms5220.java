@@ -145,7 +145,7 @@ public class tms5220
 	#if USE_OBSOLETE_HACK
 		speak_delay_frames = 0;
 	#endif
-		if (irq_func) irq_func(0);
+		if (irq_func != 0) irq_func(0);
 		buffer_empty = buffer_low = 1;
 	
 		RDB_flag = FALSE;
@@ -164,7 +164,7 @@ public class tms5220
 		memset(u, 0, sizeof(u));
 		memset(x, 0, sizeof(x));
 	
-		if (load_address_callback)
+		if (load_address_callback != 0)
 			(*load_address_callback)(0);
 	
 		schedule_dummy_read = TRUE;
@@ -248,14 +248,14 @@ public class tms5220
 	        fifo_count++;
 	
 			/* if we were speaking, then we're no longer empty */
-			if (speak_external)
+			if (speak_external != 0)
 				buffer_empty = 0;
 	
-	        if (DEBUG_5220) logerror("Added byte to FIFO (size=%2d)\n", fifo_count);
+	        if (DEBUG_5220 != 0) logerror("Added byte to FIFO (size=%2d)\n", fifo_count);
 	    }
 	    else
 	    {
-	        if (DEBUG_5220) logerror("Ran out of room in the FIFO!\n");
+	        if (DEBUG_5220 != 0) logerror("Ran out of room in the FIFO!\n");
 	    }
 	
 	    /* update the buffer low state */
@@ -292,7 +292,7 @@ public class tms5220
 	
 	int tms5220_status_read(void)
 	{
-		if (RDB_flag)
+		if (RDB_flag != 0)
 		{	/* if last command was read, return data register */
 			RDB_flag = FALSE;
 			return(data_register);
@@ -303,7 +303,7 @@ public class tms5220
 			/* clear the interrupt pin */
 			set_interrupt_state(0);
 	
-			if (DEBUG_5220) logerror("Status read: TS=%d BL=%d BE=%d\n", talk_status, buffer_low, buffer_empty);
+			if (DEBUG_5220 != 0) logerror("Status read: TS=%d BL=%d BE=%d\n", talk_status, buffer_low, buffer_empty);
 	
 			return (talk_status << 7) | (buffer_low << 6) | (buffer_empty << 5);
 		}
@@ -411,7 +411,7 @@ public class tms5220
 	
 	#if 0
 		/* we are to speak, yet we fill with 0s until start of next frame */
-		if (first_frame)
+		if (first_frame != 0)
 		{
 			while ((size > 0) && ((sample_count != 0) || (interp_count != 0)))
 			{
@@ -426,7 +426,7 @@ public class tms5220
 	
 	#if USE_OBSOLETE_HACK
 	    /* apply some delay before we actually consume data; Victory requires this */
-	    if (speak_delay_frames)
+	    if (speak_delay_frames != 0)
 	    {
 	    	if (size <= speak_delay_frames)
 	    	{
@@ -478,7 +478,7 @@ public class tms5220
 	                target_energy = current_energy;
 					/*interp_count = sample_count =*/ pitch_count = 0;
 					last_frame = 0;
-					if (tms5220_speaking)
+					if (tms5220_speaking != 0)
 						/* new speech command in progress */
 						first_frame = 1;
 					else
@@ -628,7 +628,7 @@ public class tms5220
 	    unsigned char cmd;
 	
 	    /* if there are stray bits, ignore them */
-		if (fifo_bits_taken)
+		if (fifo_bits_taken != 0)
 		{
 			fifo_bits_taken = 0;
 	        fifo_count--;
@@ -646,37 +646,37 @@ public class tms5220
 			switch (cmd & 0x70)
 			{
 			case 0x10 : /* read byte */
-				if (schedule_dummy_read)
+				if (schedule_dummy_read != 0)
 				{
 					schedule_dummy_read = FALSE;
-					if (read_callback)
+					if (read_callback != 0)
 						(*read_callback)(1);
 				}
-				if (read_callback)
+				if (read_callback != 0)
 					data_register = (*read_callback)(8);	/* read one byte from speech ROM... */
 				RDB_flag = TRUE;
 				break;
 	
 			case 0x30 : /* read and branch */
-				if (DEBUG_5220) logerror("read and branch command received\n");
+				if (DEBUG_5220 != 0) logerror("read and branch command received\n");
 				RDB_flag = FALSE;
-				if (read_and_branch_callback)
+				if (read_and_branch_callback != 0)
 					(*read_and_branch_callback)();
 				break;
 	
 			case 0x40 : /* load address */
 				/* tms5220 data sheet says that if we load only one 4-bit nibble, it won't work.
 				  This code does not care about this. */
-				if (load_address_callback)
+				if (load_address_callback != 0)
 					(*load_address_callback)(cmd & 0x0f);
 				schedule_dummy_read = TRUE;
 				break;
 	
 			case 0x50 : /* speak */
-				if (schedule_dummy_read)
+				if (schedule_dummy_read != 0)
 				{
 					schedule_dummy_read = FALSE;
-					if (read_callback)
+					if (read_callback != 0)
 						(*read_callback)(1);
 				}
 				tms5220_speaking = 1;
@@ -707,10 +707,10 @@ public class tms5220
 				break;
 	
 			case 0x70 : /* reset */
-				if (schedule_dummy_read)
+				if (schedule_dummy_read != 0)
 				{
 					schedule_dummy_read = FALSE;
-					if (read_callback)
+					if (read_callback != 0)
 						(*read_callback)(1);
 				}
 				tms5220_reset();
@@ -734,7 +734,7 @@ public class tms5220
 	{
 	    int val = 0;
 	
-		if (speak_external)
+		if (speak_external != 0)
 		{
 			/* extract from FIFO */
 	    	while (count--)
@@ -752,7 +752,7 @@ public class tms5220
 		else
 		{
 			/* extract from speech ROM */
-			if (read_callback)
+			if (read_callback != 0)
 				val = (* read_callback)(count);
 		}
 	
@@ -795,12 +795,12 @@ public class tms5220
 			return 1;
 		}
 	
-		if (speak_external)
+		if (speak_external != 0)
 	    	/* count the total number of bits available */
 			bits = fifo_count * 8 - fifo_bits_taken;
 	
 	    /* attempt to extract the energy index */
-		if (speak_external)
+		if (speak_external != 0)
 		{
 	    bits -= 4;
 	    if (bits < 0)
@@ -812,7 +812,7 @@ public class tms5220
 		/* if the index is 0 or 15, we're done */
 		if (indx == 0 || indx == 15)
 		{
-			if (DEBUG_5220) logerror("  (4-bit energy=%d frame)\n",new_energy);
+			if (DEBUG_5220 != 0) logerror("  (4-bit energy=%d frame)\n",new_energy);
 	
 			/* clear fifo if stop frame encountered */
 			if (indx == 15)
@@ -825,7 +825,7 @@ public class tms5220
 		}
 	
 	    /* attempt to extract the repeat flag */
-		if (speak_external)
+		if (speak_external != 0)
 		{
 	    bits -= 1;
 	    if (bits < 0)
@@ -834,7 +834,7 @@ public class tms5220
 	    rep_flag = extract_bits(1);
 	
 	    /* attempt to extract the pitch */
-		if (speak_external)
+		if (speak_external != 0)
 		{
 	    bits -= 6;
 	    if (bits < 0)
@@ -844,12 +844,12 @@ public class tms5220
 	    new_pitch = pitchtable[indx] / 256;
 	
 	    /* if this is a repeat frame, just copy the k's */
-	    if (rep_flag)
+	    if (rep_flag != 0)
 	    {
 	        for (i = 0; i < 10; i++)
 	            new_k[i] = old_k[i];
 	
-	        if (DEBUG_5220) logerror("  (11-bit energy=%d pitch=%d rep=%d frame)\n", new_energy, new_pitch, rep_flag);
+	        if (DEBUG_5220 != 0) logerror("  (11-bit energy=%d pitch=%d rep=%d frame)\n", new_energy, new_pitch, rep_flag);
 	        goto done;
 	    }
 	
@@ -857,7 +857,7 @@ public class tms5220
 	    if (indx == 0)
 	    {
 	        /* attempt to extract 4 K's */
-			if (speak_external)
+			if (speak_external != 0)
 			{
 	        bits -= 18;
 	        if (bits < 0)
@@ -871,12 +871,12 @@ public class tms5220
 			else
 				new_k[3] = k4table[extract_bits(4)];
 	
-	        if (DEBUG_5220) logerror("  (29-bit energy=%d pitch=%d rep=%d 4K frame)\n", new_energy, new_pitch, rep_flag);
+	        if (DEBUG_5220 != 0) logerror("  (29-bit energy=%d pitch=%d rep=%d 4K frame)\n", new_energy, new_pitch, rep_flag);
 	        goto done;
 	    }
 	
 	    /* else we need 10 K's */
-		if (speak_external)
+		if (speak_external != 0)
 		{
 	    bits -= 39;
 	    if (bits < 0)
@@ -897,18 +897,18 @@ public class tms5220
 	    new_k[8] = k9table[extract_bits(3)];
 	    new_k[9] = k10table[extract_bits(3)];
 	
-	    if (DEBUG_5220) logerror("  (50-bit energy=%d pitch=%d rep=%d 10K frame)\n", new_energy, new_pitch, rep_flag);
+	    if (DEBUG_5220 != 0) logerror("  (50-bit energy=%d pitch=%d rep=%d 10K frame)\n", new_energy, new_pitch, rep_flag);
 	
 	done:
-		if (DEBUG_5220)
+		if (DEBUG_5220 != 0)
 		{
-			if (speak_external)
+			if (speak_external != 0)
 				logerror("Parsed a frame successfully in FIFO - %d bits remaining\n", bits);
 			else
 				logerror("Parsed a frame successfully in ROM\n");
 		}
 	
-		if (the_first_frame)
+		if (the_first_frame != 0)
 		{
 			/* if this is the first frame, no previous frame to take as a starting point */
 			old_energy = new_energy;
@@ -923,7 +923,7 @@ public class tms5220
 	
 	ranout:
 	
-	    if (DEBUG_5220) logerror("Ran out of bits on a parse!\n");
+	    if (DEBUG_5220 != 0) logerror("Ran out of bits on a parse!\n");
 	
 	    /* this is an error condition; mark the buffer empty and turn off speaking */
 	    buffer_empty = 1;
@@ -955,7 +955,7 @@ public class tms5220
 	            set_interrupt_state(1);
 	        buffer_low = 1;
 	
-	        if (DEBUG_5220) logerror("Buffer low set\n");
+	        if (DEBUG_5220 != 0) logerror("Buffer low set\n");
 	    }
 	
 	    /* did we just become full? */
@@ -963,7 +963,7 @@ public class tms5220
 	    {
 	        buffer_low = 0;
 	
-	        if (DEBUG_5220) logerror("Buffer low cleared\n");
+	        if (DEBUG_5220 != 0) logerror("Buffer low cleared\n");
 	    }
 	}
 	

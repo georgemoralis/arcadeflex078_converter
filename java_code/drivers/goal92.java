@@ -21,7 +21,7 @@ public class goal92
 	
 	static WRITE16_HANDLER( goal92_sound_command_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			soundlatch_w(0, (data >> 8) & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);

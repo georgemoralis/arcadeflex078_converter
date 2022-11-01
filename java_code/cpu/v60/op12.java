@@ -20,37 +20,37 @@ UINT8 f12Flag1, f12Flag2;
  */
 
 #define F12LOADOPBYTE(num)			  \
-	if (f12Flag##num)								\
+	if (f12Flag##num != 0)								\
 		appb = (UINT8)v60.reg[f12Op##num];  \
 	else														\
 		appb = MemRead8(f12Op##num);
 
 #define F12LOADOPHALF(num)			  \
-	if (f12Flag##num)								\
+	if (f12Flag##num != 0)								\
 		apph = (UINT16)v60.reg[f12Op##num];  \
 	else														\
 		apph = MemRead16(f12Op##num);
 
 #define F12LOADOPWORD(num)			  \
-	if (f12Flag##num)								\
+	if (f12Flag##num != 0)								\
 		appw = v60.reg[f12Op##num];  \
 	else														\
 		appw = MemRead32(f12Op##num);
 
 #define F12STOREOPBYTE(num)				\
-	if (f12Flag##num)								\
+	if (f12Flag##num != 0)								\
 		SETREG8(v60.reg[f12Op##num], appb);	\
 	else														\
 		MemWrite8(f12Op##num,appb);
 
 #define F12STOREOPHALF(num)				\
-	if (f12Flag##num)								\
+	if (f12Flag##num != 0)								\
 		SETREG16(v60.reg[f12Op##num], apph);	\
 	else														\
 		MemWrite16(f12Op##num,apph);
 
 #define F12STOREOPWORD(num)				\
-	if (f12Flag##num)								\
+	if (f12Flag##num != 0)								\
 		v60.reg[f12Op##num] = appw;	\
 	else														\
 		MemWrite32(f12Op##num,appw);
@@ -85,7 +85,7 @@ void F12DecodeFirstOperand(UINT32 (*DecodeOp1)(void), UINT8 dim1)
 	if12 = OpRead8(PC + 1);
 
 	// Check if F1 or F2
-	if (if12 & 0x80)
+	if ((if12 & 0x80) != 0)
 	{
 		modDim = dim1;
 		modM = if12 & 0x40;
@@ -97,7 +97,7 @@ void F12DecodeFirstOperand(UINT32 (*DecodeOp1)(void), UINT8 dim1)
 	else
 	{
 		// Check D flag
-		if (if12 & 0x20)
+		if ((if12 & 0x20) != 0)
 		{
 			modDim = dim1;
 			modM = if12 & 0x40;
@@ -141,7 +141,7 @@ void F12WriteSecondOperand(UINT8 dim2)
 	modDim = dim2;
 
 	// Check if F1 or F2
-	if (if12 & 0x80)
+	if ((if12 & 0x80) != 0)
 	{
 		modM = if12 & 0x20;
 		modAdd = PC + 2 + amLength1;
@@ -151,7 +151,7 @@ void F12WriteSecondOperand(UINT8 dim2)
 	else
 	{
 		// Check D flag
-		if (if12 & 0x20)
+		if ((if12 & 0x20) != 0)
 		{
 			switch (dim2)
 			{
@@ -186,7 +186,7 @@ void F12DecodeOperands(UINT32 (*DecodeOp1)(void), UINT8 dim1, UINT32 (*DecodeOp2
 	UINT8 _if12 = OpRead8(PC + 1);
 
 	// Check if F1 or F2
-	if (_if12 & 0x80)
+	if ((_if12 & 0x80) != 0)
 	{
 		modDim = dim1;
 		modM = _if12 & 0x40;
@@ -205,7 +205,7 @@ void F12DecodeOperands(UINT32 (*DecodeOp1)(void), UINT8 dim1, UINT32 (*DecodeOp2
 	else
 	{
 		// Check D flag
-		if (_if12 & 0x20)
+		if ((_if12 & 0x20) != 0)
 		{
 			if (DecodeOp2==ReadAMAddress)
 			{
@@ -591,7 +591,7 @@ UINT32 opDIVX(void)
 
 	F12DecodeOperands(ReadAM,2,ReadAMAddress,3);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		a=v60.reg[f12Op2&0x1F];
 		b=v60.reg[(f12Op2&0x1F)+1];
@@ -610,7 +610,7 @@ UINT32 opDIVX(void)
 	_S = ((a & 0x80000000)!=0);
 	_Z = (a == 0);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		v60.reg[f12Op2&0x1F]=a;
 		v60.reg[(f12Op2&0x1F)+1]=b;
@@ -631,7 +631,7 @@ UINT32 opDIVUX(void)
 
 	F12DecodeOperands(ReadAM,2,ReadAMAddress,3);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		a=v60.reg[f12Op2&0x1F];
 		b=v60.reg[(f12Op2&0x1F)+1];
@@ -649,7 +649,7 @@ UINT32 opDIVUX(void)
 	_S = ((a & 0x80000000) != 0);
 	_Z = (a == 0);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		v60.reg[f12Op2&0x1F]=a;
 		v60.reg[(f12Op2&0x1F)+1]=b;
@@ -672,7 +672,7 @@ UINT32 opDIVUB(void) /* TRUSTED */
 	F12LOADOP2BYTE();
 
 	_OV = 0;
-	if (f12Op1)	appb /= (UINT8)f12Op1;
+	if (f12Op1 != 0)	appb /= (UINT8)f12Op1;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
 
@@ -688,7 +688,7 @@ UINT32 opDIVUH(void) /* TRUSTED */
 	F12LOADOP2HALF();
 
 	_OV = 0;
-	if (f12Op1)	apph /= (UINT16)f12Op1;
+	if (f12Op1 != 0)	apph /= (UINT16)f12Op1;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
 
@@ -704,7 +704,7 @@ UINT32 opDIVUW(void) /* TRUSTED */
 	F12LOADOP2WORD();
 
 	_OV = 0;
-	if (f12Op1)	appw /= f12Op1;
+	if (f12Op1 != 0)	appw /= f12Op1;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
 
@@ -766,19 +766,19 @@ UINT32 opLDTASK(void)
 
 	TKCW = MemRead32(f12Op2);
 	f12Op2 += 4;
-	if(SYCW & 0x100) {
+	if ((SYCW & 0x100) != 0) {
 		L0SP = MemRead32(f12Op2);
 		f12Op2 += 4;
 	}
-	if(SYCW & 0x200) {
+	if ((SYCW & 0x200) != 0) {
 		L1SP = MemRead32(f12Op2);
 		f12Op2 += 4;
 	}
-	if(SYCW & 0x400) {
+	if ((SYCW & 0x400) != 0) {
 		L2SP = MemRead32(f12Op2);
 		f12Op2 += 4;
 	}
-	if(SYCW & 0x800) {
+	if ((SYCW & 0x800) != 0) {
 		L3SP = MemRead32(f12Op2);
 		f12Op2 += 4;
 	}
@@ -803,7 +803,7 @@ UINT32 opMOVD(void) /* TRUSTED */
 
 	F12DecodeOperands(ReadAMAddress,3,ReadAMAddress,3);
 
-	if (f12Flag1)
+	if (f12Flag1 != 0)
 	{
 		a=v60.reg[f12Op1&0x1F];
 		b=v60.reg[(f12Op1&0x1F)+1];
@@ -814,7 +814,7 @@ UINT32 opMOVD(void) /* TRUSTED */
 		b=MemRead32(f12Op1+4);
 	}
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		v60.reg[f12Op2&0x1F]=a;
 		v60.reg[(f12Op2&0x1F)+1]=b;
@@ -1172,7 +1172,7 @@ UINT32 opNOT1(void) /* TRUSTED */
 	_CY = ((appw & (1<<f12Op1))!=0);
 	_Z = !(_CY);
 
-	if (_CY)
+	if (_CY != 0)
 		appw &= ~(1<<f12Op1);
 	else
 		appw |= (1<<f12Op1);
@@ -1249,7 +1249,7 @@ UINT32 opREMB(void)
 	F12LOADOP2BYTE();
 
 	_OV = 0;
-	if (f12Op1)
+	if (f12Op1 != 0)
 		appb= (INT8)appb % (INT8)f12Op1;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
@@ -1266,7 +1266,7 @@ UINT32 opREMH(void)
 	F12LOADOP2HALF();
 
 	_OV = 0;
-	if (f12Op1)
+	if (f12Op1 != 0)
 		apph=(INT16)apph % (INT16)f12Op1;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
@@ -1283,7 +1283,7 @@ UINT32 opREMW(void)
 	F12LOADOP2WORD();
 
 	_OV = 0;
-	if (f12Op1)
+	if (f12Op1 != 0)
 		appw=(INT32)appw % (INT32)f12Op1;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
@@ -1300,7 +1300,7 @@ UINT32 opREMUB(void)
 	F12LOADOP2BYTE();
 
 	_OV = 0;
-	if (f12Op1)
+	if (f12Op1 != 0)
 		appb %= (UINT8)f12Op1;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
@@ -1317,7 +1317,7 @@ UINT32 opREMUH(void)
 	F12LOADOP2HALF();
 
 	_OV = 0;
-	if (f12Op1)
+	if (f12Op1 != 0)
 		apph %= (UINT16)f12Op1;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
@@ -1334,7 +1334,7 @@ UINT32 opREMUW(void)
 	F12LOADOP2WORD();
 
 	_OV = 0;
-	if (f12Op1)
+	if (f12Op1 != 0)
 		appw %= f12Op1;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
@@ -1636,7 +1636,7 @@ UINT32 opSETF(void)
 		else modWriteValB=1;
 		break;
 	case 1:
-		if (_OV) modWriteValB=0;
+		if (_OV != 0) modWriteValB=0;
 		else modWriteValB=1;
 		break;
 	case 2:
@@ -1644,7 +1644,7 @@ UINT32 opSETF(void)
 		else modWriteValB=1;
 		break;
 	case 3:
-		if (_CY) modWriteValB=0;
+		if (_CY != 0) modWriteValB=0;
 		else modWriteValB=1;
 		break;
 	case 4:
@@ -1652,7 +1652,7 @@ UINT32 opSETF(void)
 		else modWriteValB=1;
 		break;
 	case 5:
-		if (_Z) modWriteValB=0;
+		if (_Z != 0) modWriteValB=0;
 		else modWriteValB=1;
 		break;
 	case 6:
@@ -1668,7 +1668,7 @@ UINT32 opSETF(void)
 		else modWriteValB=1;
 		break;
 	case 9:
-		if (_S) modWriteValB=0;
+		if (_S != 0) modWriteValB=0;
 		else modWriteValB=1;
 		break;
 	case 10:
@@ -2307,7 +2307,7 @@ UINT32 opMULX(void)
 
 	F12DecodeOperands(ReadAM,2,ReadAMAddress,3);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		a=v60.reg[f12Op2&0x1F];
 	}
@@ -2324,7 +2324,7 @@ UINT32 opMULX(void)
 	_S = ((b & 0x80000000) != 0);
 	_Z = (a == 0 && b == 0);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		v60.reg[f12Op2&0x1F]=a;
 		v60.reg[(f12Op2&0x1F)+1]=b;
@@ -2345,7 +2345,7 @@ UINT32 opMULUX(void)
 
 	F12DecodeOperands(ReadAM,2,ReadAMAddress,3);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		a=v60.reg[f12Op2&0x1F];
 	}
@@ -2361,7 +2361,7 @@ UINT32 opMULUX(void)
 	_S = ((b & 0x80000000) != 0);
 	_Z = (a == 0 && b == 0);
 
-	if (f12Flag2)
+	if (f12Flag2 != 0)
 	{
 		v60.reg[f12Op2&0x1F]=a;
 		v60.reg[(f12Op2&0x1F)+1]=b;

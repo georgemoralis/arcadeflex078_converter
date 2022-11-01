@@ -58,7 +58,7 @@ public class targ
 		int maxfreq;
 	
 	
-		if (targ_spec_flag) maxfreq = MAXFREQ_A_TARG;
+		if (targ_spec_flag != 0) maxfreq = MAXFREQ_A_TARG;
 		else maxfreq = MAXFREQ_A_SPECTAR;
 	
 	    sound_a_freq = data;
@@ -96,12 +96,12 @@ public class targ
 		int maxfreq;
 	
 	
-		if (targ_spec_flag) maxfreq = MAXFREQ_A_TARG;
+		if (targ_spec_flag != 0) maxfreq = MAXFREQ_A_TARG;
 		else maxfreq = MAXFREQ_A_SPECTAR;
 	
-	    if (offset) {
-	        if (targ_spec_flag) {
-	            if (data & 0x02)
+	    if (offset != 0) {
+	        if (targ_spec_flag != 0) {
+	            if ((data & 0x02) != 0)
 	                tone_offset=16;
 	            else
 	                tone_offset=0;
@@ -133,19 +133,19 @@ public class targ
 	
 	        /* Crash */
 	        if RISING_EDGE(0x20) {
-	            if (data & 0x40) {
+	            if ((data & 0x40) != 0) {
 	                sample_start(1,2,0); }
 	            else {
 	                sample_start(1,0,0); }
 	        }
 	
 	        /* Sspec */
-	        if (data & 0x10) {
+	        if ((data & 0x10) != 0) {
 	            sample_stop(2);
 	        }
 	        else {
 	            if ((data & 0x08) != (targ_sh_ctrl0 & 0x08)) {
-	            if (data & 0x08) {
+	            if ((data & 0x08) != 0) {
 	                sample_start(2,3,1); }
 	            else {
 	                sample_start(2,4,1); }

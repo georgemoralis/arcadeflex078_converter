@@ -364,7 +364,7 @@ public class wecleman
 	*/
 	static WRITE16_HANDLER( irqctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			// logerror("CPU #0 - PC = %06X - $140005 <- %02X (old value: %02X)\n",activecpu_get_pc(), data&0xFF, old_data&0xFF);
 	
@@ -373,7 +373,7 @@ public class wecleman
 				cpu_set_irq_line(1,4,HOLD_LINE);
 	
 			// Bit 1 : NSUBRST
-			if (data & 2)   cpu_set_reset_line(1, CLEAR_LINE  );
+			if ((data & 2) != 0)   cpu_set_reset_line(1, CLEAR_LINE  );
 			else                    cpu_set_reset_line(1, ASSERT_LINE );
 	
 			// Bit 2 : SOUND-ON
@@ -398,7 +398,7 @@ public class wecleman
 	*/
 	static WRITE16_HANDLER( selected_ip_w )
 	{
-		if (ACCESSING_LSB) wecleman_selected_ip = data & 0xff;	// latch the value
+		if (ACCESSING_LSB != 0) wecleman_selected_ip = data & 0xff;	// latch the value
 	}
 	
 	/* $140021.b - Return the previously selected input port's value */
@@ -583,22 +583,22 @@ public class wecleman
 	
 	static WRITE16_HANDLER( hotchase_K051316_0_w )
 	{
-		if (ACCESSING_LSB)      K051316_0_w(offset, data & 0xff);
+		if (ACCESSING_LSB != 0)      K051316_0_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( hotchase_K051316_1_w )
 	{
-		if (ACCESSING_LSB)      K051316_1_w(offset, data & 0xff);
+		if (ACCESSING_LSB != 0)      K051316_1_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( hotchase_K051316_ctrl_0_w )
 	{
-		if (ACCESSING_LSB)      K051316_ctrl_0_w(offset, data & 0xff);
+		if (ACCESSING_LSB != 0)      K051316_ctrl_0_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( hotchase_K051316_ctrl_1_w )
 	{
-		if (ACCESSING_LSB)      K051316_ctrl_1_w(offset, data & 0xff);
+		if (ACCESSING_LSB != 0)      K051316_ctrl_1_w(offset, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( hotchase_soundlatch_w );
@@ -685,7 +685,7 @@ public class wecleman
 	/* 140001.b */
 	WRITE16_HANDLER( wecleman_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xFF);
 			cpu_set_irq_line(2,0, HOLD_LINE);
@@ -757,7 +757,7 @@ public class wecleman
 	/* 140001.b */
 	WRITE16_HANDLER( hotchase_soundlatch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xFF);
 			cpu_set_irq_line(2,M6809_IRQ_LINE, HOLD_LINE);
@@ -1310,7 +1310,7 @@ public class wecleman
 	{
 		data8_t *buffer = malloc(len);
 	
-		if (buffer)
+		if (buffer != 0)
 		{
 			int i;
 	

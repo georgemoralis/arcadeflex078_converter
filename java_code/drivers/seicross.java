@@ -59,11 +59,11 @@ public class seicross
 	
 	static NVRAM_HANDLER( seicross )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file,nvram,nvram_size);
 		else
 		{
-			if (file)
+			if (file != 0)
 				mame_fread(file,nvram,nvram_size);
 			else
 			{

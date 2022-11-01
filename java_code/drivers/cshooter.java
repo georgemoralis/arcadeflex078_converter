@@ -100,7 +100,7 @@ public class cshooter
 		int attr = (cshooter_txram[tile_index*2+1]);
 		int rg;
 		rg=0;
-		if (attr & 0x20) rg = 1;
+		if ((attr & 0x20) != 0) rg = 1;
 	
 		SET_TILE_INFO(
 	

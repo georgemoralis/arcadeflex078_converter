@@ -28,7 +28,7 @@ public class system18
 	static data16_t sys16_coinctrl;
 	
 	static WRITE16_HANDLER( sys18_refreshenable_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			sys16_coinctrl = data&0xff;
 			sys16_refreshenable = sys16_coinctrl & 0x02;
 			/* bit 2 is also used (0 in shadow dancer) */
@@ -140,7 +140,7 @@ public class system18
 	};
 	
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
 		}

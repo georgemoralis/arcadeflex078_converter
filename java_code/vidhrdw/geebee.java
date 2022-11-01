@@ -160,7 +160,7 @@ public class geebee
 					sy = 8*my;
 				}
 	
-				if (geebee_inv)
+				if (geebee_inv != 0)
 				{
 					sx = 33*8 - sx;
 					sy = 31*8 - sy;
@@ -176,7 +176,7 @@ public class geebee
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
 	
-		if( geebee_ball_on )
+		if (geebee_ball_on != 0)
 		{
 			int x, y;
 	

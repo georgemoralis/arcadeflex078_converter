@@ -125,7 +125,7 @@ public class airbustr
 	static int bg_scrollx, bg_scrolly, fg_scrollx, fg_scrolly, highbits;
 	int xoffs, yoffs;
 	
-		if (flipscreen)	{	xoffs = -0x06a;		yoffs = -0x1ff;}
+		if (flipscreen != 0)	{	xoffs = -0x06a;		yoffs = -0x1ff;}
 		else			{	xoffs = -0x094;		yoffs = -0x100;}
 	
 		switch (offset)		// offset 0 <-> port 4
@@ -195,10 +195,10 @@ public class airbustr
 				int flipy	=	gfx & 0x40;
 	
 				/* multi sprite */
-				if (attr & 0x04)	{ sx += x;		sy += y;}
+				if ((attr & 0x04) != 0)	{ sx += x;		sy += y;}
 				else				{ sx  = x;		sy  = y;}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 240 - sx;		sy = 240 - sy;
 					flipx = !flipx;		flipy = !flipy;
@@ -212,7 +212,7 @@ public class airbustr
 						cliprect,TRANSPARENCY_PEN,0);
 	
 				/* let's get back to normal to support multi sprites */
-				if (flipscreen)	{sx = 240 - sx;		sy = 240 - sy;}
+				if (flipscreen != 0)	{sx = 240 - sx;		sy = 240 - sy;}
 	
 			}
 		}

@@ -137,7 +137,7 @@ public class starfire
 			return;
 	
 		/* selector 6A */
-		if (offset & 0x2000)
+		if ((offset & 0x2000) != 0)
 		{
 			sh = (starfire_vidctrl >> 1) & 0x07;
 			lr = starfire_vidctrl & 0x01;
@@ -150,7 +150,7 @@ public class starfire
 	
 		/* mirror bits 5B/5C/5D/5E */
 		dm = data;
-		if (lr)
+		if (lr != 0)
 			dm = ((dm & 0x01) << 7) | ((dm & 0x02) << 5) | ((dm & 0x04) << 3) | ((dm & 0x08) << 1) |
 			     ((dm & 0x10) >> 1) | ((dm & 0x20) >> 3) | ((dm & 0x40) >> 5) | ((dm & 0x80) >> 7);
 	
@@ -161,7 +161,7 @@ public class starfire
 		/* ROLL */
 		if ((offset & 0x1f00) == 0x1f00)
 		{
-			if (starfire_vidctrl1 & 0x10)
+			if ((starfire_vidctrl1 & 0x10) != 0)
 				mask &= 0x00ff;
 			else
 				mask &= 0xff00;
@@ -200,9 +200,9 @@ public class starfire
 		/* color output */
 		if (!(offset & 0x2000) && !(starfire_vidctrl1 & 0x80))
 		{
-			if (mask & 0xff00)
+			if ((mask & 0xff00) != 0)
 				starfire_colorram[offset1] = starfire_color;
-			if (mask & 0x00ff)
+			if ((mask & 0x00ff) != 0)
 				starfire_colorram[offset2] = starfire_color;
 		}
 	} };
@@ -214,7 +214,7 @@ public class starfire
 		int offset2 = (offset + 0x100) & 0x1fff;
 	
 		/* selector 6A */
-		if (offset & 0x2000)
+		if ((offset & 0x2000) != 0)
 			sh = (starfire_vidctrl >> 1) & 0x07;
 		else
 			sh = (starfire_vidctrl >> 5) & 0x07;
@@ -225,7 +225,7 @@ public class starfire
 		/* ROLL */
 		if ((offset & 0x1f00) == 0x1f00)
 		{
-			if (starfire_vidctrl1 & 0x10)
+			if ((starfire_vidctrl1 & 0x10) != 0)
 				mask &= 0x00ff;
 			else
 				mask &= 0xff00;

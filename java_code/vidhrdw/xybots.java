@@ -135,7 +135,7 @@ public class xybots
 	
 							PRIEN = ~(~MOPIX3 & ~MOPIX2 & ~MOPIX1) = (MOPIX3-0 > 1)
 	
-							if (PRIEN)
+							if (PRIEN != 0)
 								PF/MO = (~MOPRI3-0 > PFCOL3-0)
 							else
 								PF/MO = (~MOPRI3-0 >= PFCOL3-0)
@@ -149,7 +149,7 @@ public class xybots
 						int pfcolor = (pf[x] >> 4) & 0x0f;
 						int prien = ((mo[x] & 0x0f) > 1);
 	
-						if (prien)
+						if (prien != 0)
 						{
 							if (mopriority <= pfcolor)
 							{

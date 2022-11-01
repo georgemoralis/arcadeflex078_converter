@@ -185,7 +185,7 @@ public class rpunch
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			timer_set(TIME_NOW, data & 0xff, sound_command_w_callback);
 	}
 	

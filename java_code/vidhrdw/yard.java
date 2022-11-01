@@ -270,7 +270,7 @@ public class yard
 					sx += 32;
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 63 - sx;
 					sy = 31 - sy;
@@ -292,7 +292,7 @@ public class yard
 	
 			scroll_x = (*yard_scroll_x_high * 0x100) + *yard_scroll_x_low;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				scroll_x += 256;
 				scroll_y = *yard_scroll_y_low ;
@@ -319,7 +319,7 @@ public class yard
 			flipx =  spriteram[offs + 1] & 0x40;
 			flipy =  spriteram[offs + 1] & 0x80;
 	
-			if (flipy)
+			if (flipy != 0)
 			{
 				code2 = code1;
 				code1 += 0x40;
@@ -329,7 +329,7 @@ public class yard
 				code2 = code1 + 0x40;
 			}
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;

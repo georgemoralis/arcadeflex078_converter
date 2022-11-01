@@ -528,7 +528,7 @@ public class darius
 	
 	static void darius_adpcm_int (int data)
 	{
-		if (nmi_enable)
+		if (nmi_enable != 0)
 		{
 			cpu_set_nmi_line(3, PULSE_LINE);
 		}

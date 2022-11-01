@@ -237,14 +237,14 @@ public class atarisy1
 		diff = oldselect ^ newselect;
 	
 		/* sound CPU reset */
-		if (diff & 0x0080)
+		if ((diff & 0x0080) != 0)
 		{
 			cpu_set_reset_line(1, (newselect & 0x0080) ? CLEAR_LINE : ASSERT_LINE);
 			if (!(newselect & 0x0080)) atarigen_sound_reset();
 		}
 	
 		/* if MO or playfield banks change, force a partial update */
-		if (diff & 0x003c)
+		if ((diff & 0x003c) != 0)
 			force_partial_update(scanline);
 	
 		/* motion object bank select */
@@ -252,7 +252,7 @@ public class atarisy1
 		update_timers(scanline);
 	
 		/* playfield bank select */
-		if (diff & 0x0004)
+		if ((diff & 0x0004) != 0)
 		{
 			playfield_tile_bank = (newselect >> 2) & 1;
 			tilemap_mark_all_tiles_dirty(atarigen_playfield_tilemap);

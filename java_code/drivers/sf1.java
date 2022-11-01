@@ -34,7 +34,7 @@ public class sf1
 	
 	static WRITE16_HANDLER( sf1_coin_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_counter_w(0,data & 0x01);
 			coin_counter_w(1,data & 0x02);
@@ -47,7 +47,7 @@ public class sf1
 	
 	static WRITE16_HANDLER( soundcmd_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);

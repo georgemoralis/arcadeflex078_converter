@@ -40,7 +40,7 @@ public class suprnova
 		while(size>0) {
 			UINT8 code = *src++;
 			size -= (code & 0x7f) + 1;
-			if(code & 0x80) {
+			if ((code & 0x80) != 0) {
 				code &= 0x7f;
 				do {
 					*dst++ = *src++;
@@ -141,7 +141,7 @@ public class suprnova
 	
 	#define z_draw_pixel()				\
 		UINT8 val = src[xs >> 6];			\
-		if(val)					\
+		if (val != 0)					\
 			plot_pixel( bitmap, xd>>6, yd>>6, val + colour*256 );
 	
 	#define z_x_dst(op)			\
@@ -285,8 +285,8 @@ public class suprnova
 	
 		sprite_y_scroll = ((skns_spc_regs[0x08/4] & 0x7fc0) >> 6); // RWR2
 		sprite_x_scroll = ((skns_spc_regs[0x10/4] & 0x7fc0) >> 6); // RWR4
-		if (sprite_y_scroll&0x100) sprite_y_scroll -= 0x200; // Signed
-		if (sprite_x_scroll&0x100) sprite_x_scroll -= 0x200; // Signed
+		if ((sprite_y_scroll & 0x100) != 0) sprite_y_scroll -= 0x200; // Signed
+		if ((sprite_x_scroll & 0x100) != 0) sprite_x_scroll -= 0x200; // Signed
 	
 		group_x_offset[0] = (skns_spc_regs[0x18/4] & 0xffc0) >> 6; // RWR6
 		group_y_offset[0] = (skns_spc_regs[0x1c/4] & 0xffc0) >> 6; // RWR7
@@ -349,7 +349,7 @@ public class suprnova
 					xpos += sprite_x_scroll; // Global offset
 					ypos += sprite_y_scroll;
 	
-					if (group_enable)
+					if (group_enable != 0)
 					{
 						group_number = (source[0] & 0x00001800) >> 11;
 	
@@ -382,12 +382,12 @@ public class suprnova
 				sy = ypos;
 	
 				/* Global Sprite Flip (sengekis) */
-				if (sprite_flip&2)
+				if ((sprite_flip & 2) != 0)
 				{
 					xflip ^= 1;
 					sx = Machine->visible_area.max_x+1 - sx;
 				}
-				if (sprite_flip&1)
+				if ((sprite_flip & 1) != 0)
 				{
 					yflip ^= 1;
 					sy = Machine->visible_area.max_y+1 - sy;
@@ -436,7 +436,7 @@ public class suprnova
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix) plot_pixel( bitmap, sx+xx, sy+yy, pix+ colour*256 ); // change later
+										if (pix != 0) plot_pixel( bitmap, sx+xx, sy+yy, pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -452,7 +452,7 @@ public class suprnova
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix) plot_pixel( bitmap, sx+xx, sy+(ysize-1-yy), pix+ colour*256 ); // change later
+										if (pix != 0) plot_pixel( bitmap, sx+xx, sy+(ysize-1-yy), pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -468,7 +468,7 @@ public class suprnova
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix) plot_pixel( bitmap, sx+(xsize-1-xx), sy+yy, pix+ colour*256 ); // change later
+										if (pix != 0) plot_pixel( bitmap, sx+(xsize-1-xx), sy+yy, pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -485,7 +485,7 @@ public class suprnova
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix) plot_pixel( bitmap, sx+(xsize-1-xx), sy+(ysize-1-yy), pix+ colour*256 ); // change later
+										if (pix != 0) plot_pixel( bitmap, sx+(xsize-1-xx), sy+(ysize-1-yy), pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -591,7 +591,7 @@ public class suprnova
 		UINT32 startx,starty;
 		int incxx,incxy,incyx,incyy;
 	
-		if (enable_a)
+		if (enable_a != 0)
 		{
 			startx = skns_v3_regs[0x1c/4];
 				incyy  = skns_v3_regs[0x30/4]; // was xx, changed for sarukani
@@ -608,7 +608,7 @@ public class suprnova
 				startx >>= 8; // Lose Floating point
 				starty >>= 8;
 	
-				if(columnscroll_a) {
+				if (columnscroll_a != 0) {
 					tilemap_set_scroll_rows(skns_tilemap_A,1);
 					tilemap_set_scroll_cols(skns_tilemap_A,0x400);
 	
@@ -643,7 +643,7 @@ public class suprnova
 		UINT32 startx,starty;
 		int incxx,incxy,incyx,incyy;
 	
-		if (enable_b)
+		if (enable_b != 0)
 		{
 			startx = skns_v3_regs[0x40/4];
 				incyy  = skns_v3_regs[0x54/4];
@@ -660,7 +660,7 @@ public class suprnova
 				startx >>= 8;
 				starty >>= 8;
 	
-				if(columnscroll_b) {
+				if (columnscroll_b != 0) {
 					tilemap_set_scroll_rows(skns_tilemap_B,1);
 					tilemap_set_scroll_cols(skns_tilemap_B,0x400);
 	
@@ -702,7 +702,7 @@ public class suprnova
 	
 		if (!(skns_v3_regs[0x0c/4] & 0x0100)); // if tilemap b is in 8bpp mode
 		{
-			if (skns_v3t_somedirty)
+			if (skns_v3t_somedirty != 0)
 			{
 				skns_v3t_somedirty = 0;
 	
@@ -728,7 +728,7 @@ public class suprnova
 	
 		if (skns_v3_regs[0x0c/4] & 0x0100); // if tilemap b is in 4bpp mode
 		{
-			if (skns_v3t_4bpp_somedirty)
+			if (skns_v3t_4bpp_somedirty != 0)
 			{
 				skns_v3t_4bpp_somedirty = 0;
 	
@@ -776,8 +776,8 @@ public class suprnova
 	
 			if (!supernova_pri_a) { supernova_draw_a(bitmap,cliprect,tran); tran = 1;}
 			if (!supernova_pri_b) { supernova_draw_b(bitmap,cliprect,tran); tran = 1;}
-			if (supernova_pri_a) { supernova_draw_a(bitmap,cliprect,tran); tran = 1;}
-			if (supernova_pri_b) { supernova_draw_b(bitmap,cliprect,tran); tran = 1;}
+			if (supernova_pri_a != 0) { supernova_draw_a(bitmap,cliprect,tran); tran = 1;}
+			if (supernova_pri_b != 0) { supernova_draw_b(bitmap,cliprect,tran); tran = 1;}
 	
 	
 		}

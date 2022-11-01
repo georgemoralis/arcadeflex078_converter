@@ -153,7 +153,7 @@ public class tms32010
 	{
 		if ((INT32)(~(oldacc.d ^ addval) & (oldacc.d ^ R.ACC.d)) < 0) {
 			SET(OV_FLAG);
-			if (OVM)
+			if (OVM != 0)
 				R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 		}
 	}
@@ -161,7 +161,7 @@ public class tms32010
 	{
 		if ((INT32)((oldacc.d ^ subval) & (oldacc.d ^ R.ACC.d)) < 0) {
 			SET(OV_FLAG);
-			if (OVM)
+			if (OVM != 0)
 				R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 		}
 	}
@@ -211,7 +211,7 @@ public class tms32010
 	{
 		GET_MEM_ADDR(DMA_DP);
 		R.ALU.d = (UINT16)M_RDRAM(memaccess);
-		if (signext) R.ALU.d = (INT16)R.ALU.d;
+		if (signext != 0) R.ALU.d = (INT16)R.ALU.d;
 		R.ALU.d <<= shift;
 		if (R.opcode.b.l & 0x80) {
 			UPDATE_AR();
@@ -370,7 +370,7 @@ public class tms32010
 	}
 	static void bv(void)
 	{
-			if (OV) {
+			if (OV != 0) {
 				R.PC = M_RDOP_ARG(R.PC);
 				CLR(OV_FLAG);
 			}
@@ -822,7 +822,7 @@ public class tms32010
 	 ****************************************************************************/
 	unsigned tms32010_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(tms32010_Regs*)dst = R;
 		return sizeof(tms32010_Regs);
 	}
@@ -832,7 +832,7 @@ public class tms32010
 	 ****************************************************************************/
 	void tms32010_set_context (void *src)
 	{
-		if (src)
+		if (src != 0)
 			R = *(tms32010_Regs*)src;
 	}
 	

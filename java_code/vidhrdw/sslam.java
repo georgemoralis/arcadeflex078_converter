@@ -45,7 +45,7 @@ public class sslam
 	
 			if (!eightbyeight)
 			{
-				if (flipx)
+				if (flipx != 0)
 				{
 					drawgfx(bitmap,gfx,number,colr,1,0,xpos+8,ypos,cliprect,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,gfx,number+1,colr,1,0,xpos+8,ypos+8,cliprect,TRANSPARENCY_PEN,0);
@@ -62,7 +62,7 @@ public class sslam
 			}
 			else
 			{
-				if (flipx)
+				if (flipx != 0)
 				{
 					drawgfx(bitmap,gfx,number+2,colr>>12,1,0,xpos,ypos,cliprect,TRANSPARENCY_PEN,0);
 				}

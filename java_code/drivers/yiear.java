@@ -78,7 +78,7 @@ public class yiear
 	public static InterruptHandlerPtr yiear_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* can't use nmi_line_pulse() because interrupt_enable_w() effects it */
-		if (nmi_enable) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+		if (nmi_enable != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	

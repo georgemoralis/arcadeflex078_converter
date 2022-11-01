@@ -187,7 +187,7 @@ public class yunsun16
 			x	+=	sprites_scrolldx;
 			y	+=	sprites_scrolldy;
 	
-			if (flip_screen)	// not used?
+			if (flip_screen != 0)	// not used?
 			{
 				flipx = !flipx;		x = max_x - x - 16;
 				flipy = !flipy;		y = max_y - y - 16;

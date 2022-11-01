@@ -808,7 +808,7 @@ public class adpcm
 			/* determine which voice(s) (voice is set by a 1 bit in the upper 4 bits of the second byte) */
 			for (i = 0; i < OKIM6295_VOICES; i++, temp >>= 1)
 			{
-				if (temp & 1)
+				if ((temp & 1) != 0)
 				{
 					struct ADPCMVoice *voice = &adpcm[num * OKIM6295_VOICES + i];
 	
@@ -856,7 +856,7 @@ public class adpcm
 		}
 	
 		/* if this is the start of a command, remember the sample number for next time */
-		else if (data & 0x80)
+		else if ((data & 0x80) != 0)
 		{
 			okim6295_command[num] = data & 0x7f;
 		}
@@ -869,7 +869,7 @@ public class adpcm
 			/* determine which voice(s) (voice is set by a 1 bit in bits 3-6 of the command */
 			for (i = 0; i < 4; i++, temp >>= 1)
 			{
-				if (temp & 1)
+				if ((temp & 1) != 0)
 				{
 					struct ADPCMVoice *voice = &adpcm[num * OKIM6295_VOICES + i];
 	
@@ -961,37 +961,37 @@ public class adpcm
 	
 	WRITE16_HANDLER( OKIM6295_data_0_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_data_w(0, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( OKIM6295_data_1_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_data_w(1, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( OKIM6295_data_2_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_data_w(2, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( OKIM6295_data_0_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			OKIM6295_data_w(0, data >> 8);
 	}
 	
 	WRITE16_HANDLER( OKIM6295_data_1_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			OKIM6295_data_w(1, data >> 8);
 	}
 	
 	WRITE16_HANDLER( OKIM6295_data_2_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			OKIM6295_data_w(2, data >> 8);
 	}
 }

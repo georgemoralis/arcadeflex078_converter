@@ -318,7 +318,7 @@ public class mpatrol
 		clip->min_x = Machine->visible_area.min_x;
 		clip->max_x = Machine->visible_area.max_x;
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			clip->min_y = Machine->drv->screen_height - 1 - max_y;
 			clip->max_y = Machine->drv->screen_height - 1 - min_y;
@@ -339,7 +339,7 @@ public class mpatrol
 		get_clip(&clip1, ypos,            ypos + BGHEIGHT - 1);
 		get_clip(&clip2, ypos + BGHEIGHT, ypos_end);
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			xpos = 256 - xpos;
 			ypos = Machine->drv->screen_height - BGHEIGHT - ypos;
@@ -382,7 +382,7 @@ public class mpatrol
 				color = colorram[offs] & 0x1f;
 				if (sy >= 7) color += 32;	/* lines 7-31 are transparent */
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -422,7 +422,7 @@ public class mpatrol
 			clip.min_x = Machine->visible_area.min_x;
 			clip.max_x = Machine->visible_area.max_x;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				clip.min_y = 25 * 8;
 				clip.max_y = 32 * 8 - 1;
@@ -463,7 +463,7 @@ public class mpatrol
 			sy = 241 - spriteram_2[offs];
 			flipx = spriteram_2[offs + 1] & 0x40;
 			flipy = spriteram_2[offs + 1] & 0x80;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;
@@ -486,7 +486,7 @@ public class mpatrol
 			sy = 241 - spriteram[offs];
 			flipx = spriteram[offs + 1] & 0x40;
 			flipy = spriteram[offs + 1] & 0x80;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;

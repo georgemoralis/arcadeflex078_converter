@@ -127,7 +127,7 @@ public class exprraid
 			int sx = ((248 - spriteram[offs + 2]) & 0xff) - 8;
 			int sy = spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -143,7 +143,7 @@ public class exprraid
 	
 			/* double height */
 	
-			if (attr & 0x10)
+			if ((attr & 0x10) != 0)
 			{
 				drawgfx(bitmap,Machine->gfx[1],
 					code + 1, color,

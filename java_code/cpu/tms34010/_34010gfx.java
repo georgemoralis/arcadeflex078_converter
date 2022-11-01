@@ -97,7 +97,7 @@ static int apply_window(const char *inst_name,int srcbpp, UINT32 *srcaddr, XY *d
 		diff = WSTART_X - sx;
 		if (diff > 0)
 		{
-			if (srcaddr)
+			if (srcaddr != 0)
 				*srcaddr += diff * srcbpp;
 			sx += diff;
 			V_FLAG = 1;
@@ -113,7 +113,7 @@ static int apply_window(const char *inst_name,int srcbpp, UINT32 *srcaddr, XY *d
 		diff = WSTART_Y - sy;
 		if (diff > 0)
 		{
-			if (srcaddr)
+			if (srcaddr != 0)
 				*srcaddr += diff * SPTCH;
 			sy += diff;
 			V_FLAG = 1;
@@ -171,8 +171,8 @@ int compute_fill_cycles(int left_partials, int right_partials, int full_words, i
 {
 	int dstwords;
 
-	if (left_partials) full_words += 1;
-	if (right_partials) full_words += 1;
+	if (left_partials != 0) full_words += 1;
+	if (right_partials != 0) full_words += 1;
 	dstwords = full_words;
 
 	return (dstwords * op_timing) * rows + 2;
@@ -182,8 +182,8 @@ int compute_pixblt_cycles(int left_partials, int right_partials, int full_words,
 {
 	int srcwords, dstwords;
 
-	if (left_partials) full_words += 1;
-	if (right_partials) full_words += 1;
+	if (left_partials != 0) full_words += 1;
+	if (right_partials != 0) full_words += 1;
 	srcwords = full_words;
 	dstwords = full_words;
 
@@ -194,8 +194,8 @@ int compute_pixblt_b_cycles(int left_partials, int right_partials, int full_word
 {
 	int srcwords, dstwords;
 
-	if (left_partials) full_words += 1;
-	if (right_partials) full_words += 1;
+	if (left_partials != 0) full_words += 1;
+	if (right_partials != 0) full_words += 1;
 	srcwords = full_words * bpp / 16;
 	dstwords = full_words;
 
@@ -1064,7 +1064,7 @@ public class _34010gfx
 			/* handle flipping the addresses */
 			yreverse = (IOREG(REG_CONTROL) >> 9) & 1;
 			if (!src_is_linear || !dst_is_linear)
-				if (yreverse)
+				if (yreverse != 0)
 				{
 					saddr += (dy - 1) * SPTCH;
 					daddr += (dy - 1) * DPTCH;
@@ -1248,11 +1248,11 @@ public class _34010gfx
 			P_FLAG = 0;
 			if (src_is_linear && dst_is_linear)
 				SADDR += DYDX_Y * SPTCH;
-			else if (src_is_linear)
+			else if (src_is_linear != 0)
 				SADDR += DYDX_Y * SPTCH;
 			else
 				SADDR_Y += DYDX_Y;
-			if (dst_is_linear)
+			if (dst_is_linear != 0)
 				DADDR += DYDX_Y * DPTCH;
 			else
 				DADDR_Y += DYDX_Y;
@@ -1312,7 +1312,7 @@ public class _34010gfx
 			{
 				saddr += dx * BITS_PER_PIXEL;
 				daddr += dx * BITS_PER_PIXEL;
-				if (yreverse)
+				if (yreverse != 0)
 				{
 					saddr += (dy - 1) * SPTCH;
 					daddr += (dy - 1) * DPTCH;
@@ -1492,11 +1492,11 @@ public class _34010gfx
 			P_FLAG = 0;
 			if (src_is_linear && dst_is_linear)
 				SADDR += DYDX_Y * SPTCH;
-			else if (src_is_linear)
+			else if (src_is_linear != 0)
 				SADDR += DYDX_Y * SPTCH;
 			else
 				SADDR_Y += DYDX_Y;
-			if (dst_is_linear)
+			if (dst_is_linear != 0)
 				DADDR += DYDX_Y * DPTCH;
 			else
 				DADDR_Y += DYDX_Y;
@@ -1701,7 +1701,7 @@ public class _34010gfx
 			tms34010_ICount -= state.gfxcycles;
 			P_FLAG = 0;
 			SADDR += DYDX_Y * SPTCH;
-			if (dst_is_linear)
+			if (dst_is_linear != 0)
 				DADDR += DYDX_Y * DPTCH;
 			else
 				DADDR_Y += DYDX_Y;
@@ -1891,7 +1891,7 @@ public class _34010gfx
 		{
 			tms34010_ICount -= state.gfxcycles;
 			P_FLAG = 0;
-			if (dst_is_linear)
+			if (dst_is_linear != 0)
 				DADDR += DYDX_Y * DPTCH;
 			else
 			{

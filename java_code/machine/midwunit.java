@@ -77,7 +77,7 @@ public class midwunit
 	
 	WRITE16_HANDLER( midwunit_cmos_w )
 	{
-		if (cmos_write_enable)
+		if (cmos_write_enable != 0)
 		{
 			COMBINE_DATA(&((data16_t *)generic_nvram)[offset]);
 			cmos_write_enable = 0;
@@ -267,7 +267,7 @@ public class midwunit
 		int result = 0;
 	
 		/* convert to a byte offset */
-		if (offset & 1)
+		if ((offset & 1) != 0)
 			return 0;
 		offset /= 2;
 	
@@ -654,7 +654,7 @@ public class midwunit
 	
 	WRITE16_HANDLER( midxunit_security_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			security_bits = data & 0x0f;
 	}
 	
@@ -694,14 +694,14 @@ public class midwunit
 	WRITE16_HANDLER( midwunit_sound_w )
 	{
 		/* check for out-of-bounds accesses */
-		if (offset)
+		if (offset != 0)
 		{
 			logerror("%08X:Unexpected write to sound (hi) = %04X\n", activecpu_get_pc(), data);
 			return;
 		}
 	
 		/* call through based on the sound type */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			logerror("%08X:Sound write = %04X\n", activecpu_get_pc(), data);
 			dcs_data_w(data & 0xff);

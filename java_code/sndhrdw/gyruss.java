@@ -62,8 +62,8 @@ public class gyruss
 	
 	
 			C = 0;
-			if (data & 1) C += 47000;	/* 47000pF = 0.047uF */
-			if (data & 2) C += 220000;	/* 220000pF = 0.22uF */
+			if ((data & 1) != 0) C += 47000;	/* 47000pF = 0.047uF */
+			if ((data & 2) != 0) C += 220000;	/* 220000pF = 0.22uF */
 			data >>= 2;
 			set_RC_filter(3*chip + i,1000,2200,200,C);
 		}

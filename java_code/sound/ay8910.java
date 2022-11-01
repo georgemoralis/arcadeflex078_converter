@@ -304,7 +304,7 @@ public class ay8910
 	{
 		struct AY8910 *PSG = &AYPSG[chip];
 	
-		if (a & 1)
+		if ((a & 1) != 0)
 		{	/* Data port */
 			AYWriteReg(chip,PSG->register_latch,data);
 		}
@@ -344,32 +344,32 @@ public class ay8910
 	public static WriteHandlerPtr AY8910_control_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(2,0,data); } };
 	public static WriteHandlerPtr AY8910_control_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(3,0,data); } };
 	public static WriteHandlerPtr AY8910_control_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(4,0,data); } };
-	WRITE16_HANDLER( AY8910_control_port_0_lsb_w ) { if (ACCESSING_LSB) AY8910Write(0,0,data & 0xff); }
-	WRITE16_HANDLER( AY8910_control_port_1_lsb_w ) { if (ACCESSING_LSB) AY8910Write(1,0,data & 0xff); }
-	WRITE16_HANDLER( AY8910_control_port_2_lsb_w ) { if (ACCESSING_LSB) AY8910Write(2,0,data & 0xff); }
-	WRITE16_HANDLER( AY8910_control_port_3_lsb_w ) { if (ACCESSING_LSB) AY8910Write(3,0,data & 0xff); }
-	WRITE16_HANDLER( AY8910_control_port_4_lsb_w ) { if (ACCESSING_LSB) AY8910Write(4,0,data & 0xff); }
-	WRITE16_HANDLER( AY8910_control_port_0_msb_w ) { if (ACCESSING_MSB) AY8910Write(0,0,data >> 8); }
-	WRITE16_HANDLER( AY8910_control_port_1_msb_w ) { if (ACCESSING_MSB) AY8910Write(1,0,data >> 8); }
-	WRITE16_HANDLER( AY8910_control_port_2_msb_w ) { if (ACCESSING_MSB) AY8910Write(2,0,data >> 8); }
-	WRITE16_HANDLER( AY8910_control_port_3_msb_w ) { if (ACCESSING_MSB) AY8910Write(3,0,data >> 8); }
-	WRITE16_HANDLER( AY8910_control_port_4_msb_w ) { if (ACCESSING_MSB) AY8910Write(4,0,data >> 8); }
+	WRITE16_HANDLER( AY8910_control_port_0_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(0,0,data & 0xff); }
+	WRITE16_HANDLER( AY8910_control_port_1_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(1,0,data & 0xff); }
+	WRITE16_HANDLER( AY8910_control_port_2_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(2,0,data & 0xff); }
+	WRITE16_HANDLER( AY8910_control_port_3_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(3,0,data & 0xff); }
+	WRITE16_HANDLER( AY8910_control_port_4_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(4,0,data & 0xff); }
+	WRITE16_HANDLER( AY8910_control_port_0_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(0,0,data >> 8); }
+	WRITE16_HANDLER( AY8910_control_port_1_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(1,0,data >> 8); }
+	WRITE16_HANDLER( AY8910_control_port_2_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(2,0,data >> 8); }
+	WRITE16_HANDLER( AY8910_control_port_3_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(3,0,data >> 8); }
+	WRITE16_HANDLER( AY8910_control_port_4_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(4,0,data >> 8); }
 	
 	public static WriteHandlerPtr AY8910_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(0,1,data); } };
 	public static WriteHandlerPtr AY8910_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(1,1,data); } };
 	public static WriteHandlerPtr AY8910_write_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(2,1,data); } };
 	public static WriteHandlerPtr AY8910_write_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(3,1,data); } };
 	public static WriteHandlerPtr AY8910_write_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data) { AY8910Write(4,1,data); } };
-	WRITE16_HANDLER( AY8910_write_port_0_lsb_w ) { if (ACCESSING_LSB) AY8910Write(0,1,data & 0xff); }
-	WRITE16_HANDLER( AY8910_write_port_1_lsb_w ) { if (ACCESSING_LSB) AY8910Write(1,1,data & 0xff); }
-	WRITE16_HANDLER( AY8910_write_port_2_lsb_w ) { if (ACCESSING_LSB) AY8910Write(2,1,data & 0xff); }
-	WRITE16_HANDLER( AY8910_write_port_3_lsb_w ) { if (ACCESSING_LSB) AY8910Write(3,1,data & 0xff); }
-	WRITE16_HANDLER( AY8910_write_port_4_lsb_w ) { if (ACCESSING_LSB) AY8910Write(4,1,data & 0xff); }
-	WRITE16_HANDLER( AY8910_write_port_0_msb_w ) { if (ACCESSING_MSB) AY8910Write(0,1,data >> 8); }
-	WRITE16_HANDLER( AY8910_write_port_1_msb_w ) { if (ACCESSING_MSB) AY8910Write(1,1,data >> 8); }
-	WRITE16_HANDLER( AY8910_write_port_2_msb_w ) { if (ACCESSING_MSB) AY8910Write(2,1,data >> 8); }
-	WRITE16_HANDLER( AY8910_write_port_3_msb_w ) { if (ACCESSING_MSB) AY8910Write(3,1,data >> 8); }
-	WRITE16_HANDLER( AY8910_write_port_4_msb_w ) { if (ACCESSING_MSB) AY8910Write(4,1,data >> 8); }
+	WRITE16_HANDLER( AY8910_write_port_0_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(0,1,data & 0xff); }
+	WRITE16_HANDLER( AY8910_write_port_1_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(1,1,data & 0xff); }
+	WRITE16_HANDLER( AY8910_write_port_2_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(2,1,data & 0xff); }
+	WRITE16_HANDLER( AY8910_write_port_3_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(3,1,data & 0xff); }
+	WRITE16_HANDLER( AY8910_write_port_4_lsb_w ) { if (ACCESSING_LSB != 0) AY8910Write(4,1,data & 0xff); }
+	WRITE16_HANDLER( AY8910_write_port_0_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(0,1,data >> 8); }
+	WRITE16_HANDLER( AY8910_write_port_1_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(1,1,data >> 8); }
+	WRITE16_HANDLER( AY8910_write_port_2_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(2,1,data >> 8); }
+	WRITE16_HANDLER( AY8910_write_port_3_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(3,1,data >> 8); }
+	WRITE16_HANDLER( AY8910_write_port_4_msb_w ) { if (ACCESSING_MSB != 0) AY8910Write(4,1,data >> 8); }
 	
 	
 	
@@ -456,7 +456,7 @@ public class ay8910
 				if (PSG->CountN < left) nextevent = PSG->CountN;
 				else nextevent = left;
 	
-				if (outn & 0x08)
+				if ((outn & 0x08) != 0)
 				{
 					if (PSG->OutputA) vola += PSG->CountA;
 					PSG->CountA -= nextevent;
@@ -497,7 +497,7 @@ public class ay8910
 					}
 				}
 	
-				if (outn & 0x10)
+				if ((outn & 0x10) != 0)
 				{
 					if (PSG->OutputB) volb += PSG->CountB;
 					PSG->CountB -= nextevent;
@@ -530,7 +530,7 @@ public class ay8910
 					}
 				}
 	
-				if (outn & 0x20)
+				if ((outn & 0x20) != 0)
 				{
 					if (PSG->OutputC) volc += PSG->CountC;
 					PSG->CountC -= nextevent;

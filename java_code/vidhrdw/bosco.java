@@ -273,7 +273,7 @@ public class bosco
 				sy = offs / 32;
 				flipx = ~bosco_colorram2[offs] & 0x40;
 				flipy = bosco_colorram2[offs] & 0x80;
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -304,7 +304,7 @@ public class bosco
 				sy = offs / 32 - 2;
 				flipx = ~colorram[offs] & 0x40;
 				flipy = colorram[offs] & 0x80;
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -329,7 +329,7 @@ public class bosco
 		for (offs = 0;offs < spriteram_size;offs += 2)
 		{
 			sx = spriteram[offs + 1] - displacement;
-	if (flipscreen) sx += 32;
+	if (flipscreen != 0) sx += 32;
 			sy = 225 - spriteram_2[offs] - displacement;
 	
 			drawgfx(bitmap,Machine->gfx[1],
@@ -346,7 +346,7 @@ public class bosco
 			int scrollx,scrolly;
 	
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				scrollx = (bosco_scrollx +32);//- 3*displacement) + 32;
 				scrolly = (bosco_scrolly + 16) - 32;
@@ -362,7 +362,7 @@ public class bosco
 	
 	
 		/* radar */
-		if (flipscreen)
+		if (flipscreen != 0)
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -376,7 +376,7 @@ public class bosco
 	
 			x = bosco_radarx[offs] + ((~bosco_radarattr[offs] & 0x01) << 8) - 2;
 			y = 235 - bosco_radary[offs];
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				x -= 1;
 				y += 2;

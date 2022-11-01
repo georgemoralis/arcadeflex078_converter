@@ -66,7 +66,7 @@ public class lemmings
 		int r,g,b;
 	
 		COMBINE_DATA(&paletteram16[offset]);
-		if (offset&1) offset--;
+		if ((offset & 1) != 0) offset--;
 	
 		b = (paletteram16[offset] >> 0) & 0xff;
 		g = (paletteram16[offset+1] >> 8) & 0xff;

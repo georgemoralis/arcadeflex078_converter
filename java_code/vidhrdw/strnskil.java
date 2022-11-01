@@ -112,7 +112,7 @@ public class strnskil
 			int sy = spriteram[offs];
 			int px, py;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				px = 240 - sx + 0; /* +2 or +0 ? */
 				py = sy;

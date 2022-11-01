@@ -227,7 +227,7 @@ public class rallyx
 	const int displacement = 1;
 	
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			scrollx = (*rallyx_scrollx - displacement) + 32;
 			scrolly = (*rallyx_scrolly + 16) - 32;
@@ -255,7 +255,7 @@ public class rallyx
 				sy = offs / 32;
 				flipx = ~rallyx_colorram2[offs] & 0x40;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -286,7 +286,7 @@ public class rallyx
 				sy = offs / 32 - 2;
 				flipx = ~colorram[offs] & 0x40;
 				flipy = colorram[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -335,7 +335,7 @@ public class rallyx
 			sy = offs / 32;
 			flipx = ~rallyx_colorram2[offs] & 0x40;
 			flipy = rallyx_colorram2[offs] & 0x80;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
@@ -359,7 +359,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen)
+		if (flip_screen != 0)
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -372,7 +372,7 @@ public class rallyx
 	
 			x = rallyx_radarx[offs] + ((~rallyx_radarattr[offs] & 0x01) << 8);
 			y = 237 - rallyx_radary[offs];
-			if (flip_screen) x -= 3;
+			if (flip_screen != 0) x -= 3;
 	
 			drawgfx(bitmap,Machine->gfx[2],
 					((rallyx_radarattr[offs] & 0x0e) >> 1) ^ 0x07,
@@ -392,7 +392,7 @@ public class rallyx
 	const int displacement = 0;
 	
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			scrollx = (*rallyx_scrollx - displacement) + 32;
 			scrolly = (*rallyx_scrolly + 16) - 32;
@@ -417,7 +417,7 @@ public class rallyx
 				sy = offs / 32;
 				flipx = ~rallyx_colorram2[offs] & 0x40;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -448,7 +448,7 @@ public class rallyx
 				sy = offs / 32 - 2;
 				flipx = ~colorram[offs] & 0x40;
 				flipy = colorram[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -486,7 +486,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen)
+		if (flip_screen != 0)
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -533,7 +533,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = rallyx_colorram2[offs] & 0x80;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -565,7 +565,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = colorram[offs] & 0x80;
 				flipy = colorram[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -588,7 +588,7 @@ public class rallyx
 			int scrollx,scrolly;
 	
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				scrollx = (*rallyx_scrollx) + 32;
 				scrolly = (*rallyx_scrolly + 16) - 32;
@@ -604,7 +604,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen)
+		if (flip_screen != 0)
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -635,7 +635,7 @@ public class rallyx
 	
 			x = rallyx_radarx[offs] + ((~rallyx_radarattr[offs] & 0x08) << 5);
 			y = 237 - rallyx_radary[offs];
-			if (flip_screen) x -= 3;
+			if (flip_screen != 0) x -= 3;
 	
 			/* handle reduced visible area in some games */
 			if (flip_screen && Machine->drv->default_visible_area.max_x == 32*8-1) x += 32;
@@ -672,7 +672,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = rallyx_colorram2[offs] & 0x80;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -704,7 +704,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = colorram[offs] & 0x80;
 				flipy = colorram[offs] & 0x80;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -727,7 +727,7 @@ public class rallyx
 			int scrollx,scrolly;
 	
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				scrollx = (*rallyx_scrollx) + 32;
 				scrolly = (*rallyx_scrolly + 16) - 32;
@@ -743,7 +743,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen)
+		if (flip_screen != 0)
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -757,10 +757,10 @@ public class rallyx
 	
 			sx = spriteram[offs + 1] - 1;
 			sy = 224 - spriteram_2[offs];
-	if (flip_screen) sx += 32;
+	if (flip_screen != 0) sx += 32;
 			flipx = ~spriteram[offs] & 1;
 			flipy = ~spriteram[offs] & 2;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;
@@ -790,7 +790,7 @@ public class rallyx
 			*/
 	
 			x = rallyx_radarx[offs] + ((~rallyx_radarattr[offs & 0x0f] & 0x08) << 5);
-			if (flip_screen) x += 32;
+			if (flip_screen != 0) x += 32;
 			y = 237 - rallyx_radary[offs];
 	
 	

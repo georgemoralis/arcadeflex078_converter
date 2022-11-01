@@ -104,7 +104,7 @@ public class oneshot
 	
 	static WRITE16_HANDLER( soundbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * ((data & 0x03) ^ 0x03));
 		}

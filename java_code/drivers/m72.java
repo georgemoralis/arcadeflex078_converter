@@ -131,7 +131,7 @@ public class m72
 	static INTERRUPT_GEN(fake_nmi)
 	{
 		int sample = m72_sample_r(0);
-		if (sample)
+		if (sample != 0)
 			m72_sample_w(0,sample);
 	}
 	

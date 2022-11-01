@@ -113,13 +113,13 @@ public class tail2nos
 	
 	WRITE16_HANDLER( tail2nos_gfxbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			int bank;
 	
 			/* bits 0 and 2 select char bank */
-			if (data & 0x04) bank = 2;
-			else if (data & 0x01) bank = 1;
+			if ((data & 0x04) != 0) bank = 2;
+			else if ((data & 0x01) != 0) bank = 1;
 			else bank = 0;
 	
 			if (charbank != bank)
@@ -129,7 +129,7 @@ public class tail2nos
 			}
 	
 			/* bit 5 seems to select palette bank (used on startup) */
-			if (data & 0x20) bank = 7;
+			if ((data & 0x20) != 0) bank = 7;
 			else bank = 3;
 	
 			if (charpalette != bank)
@@ -198,7 +198,7 @@ public class tail2nos
 		};
 	
 	
-		if (dirtygfx)
+		if (dirtygfx != 0)
 		{
 			int i;
 	
@@ -217,7 +217,7 @@ public class tail2nos
 		}
 	
 	
-		if (video_enable)
+		if (video_enable != 0)
 		{
 			K051316_zoom_draw_0(bitmap,cliprect,0,0);
 			drawsprites(bitmap,cliprect);

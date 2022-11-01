@@ -11,7 +11,7 @@ public class dkong
 	
 	public static WriteHandlerPtr dkong_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data)
+		if (data != 0)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
@@ -23,7 +23,7 @@ public class dkong
 	
 		if (state[offset] != data)
 		{
-			if (data)
+			if (data != 0)
 				sample_start (offset, offset, 0);
 			state[offset] = data;
 		}
@@ -35,7 +35,7 @@ public class dkong
 	
 		if (death != data)
 		{
-			if (data)
+			if (data != 0)
 				sample_stop (7);
 			sample_start (6, 4, 0);
 			death = data;
@@ -48,7 +48,7 @@ public class dkong
 	
 		if (drop != data)
 		{
-			if (data)
+			if (data != 0)
 				sample_start (7, 5, 0);
 			drop = data;
 		}
@@ -60,7 +60,7 @@ public class dkong
 	
 		if (roar != data)
 		{
-			if (data)
+			if (data != 0)
 				sample_start (7,2,0);
 			roar = data;
 		}
@@ -72,7 +72,7 @@ public class dkong
 	
 		if (jump != data)
 		{
-			if (data)
+			if (data != 0)
 				sample_start (6,0,0);
 			jump = data;
 		}
@@ -84,7 +84,7 @@ public class dkong
 	
 		if (land != data)
 		{
-			if (data)
+			if (data != 0)
 				sample_stop (7);
 			sample_start (4,1,0);
 			land = data;
@@ -115,7 +115,7 @@ public class dkong
 	
 		if (snapjaw != data)
 		{
-			if (data)
+			if (data != 0)
 				sample_stop (7);
 			sample_start (4,7,0);
 			snapjaw = data;

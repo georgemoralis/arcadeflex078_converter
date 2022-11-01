@@ -81,7 +81,7 @@ public class _2151intf
 	
 		intf = msound->sound_interface;
 	
-		if( mode ) FMMode = CHIP_YM2151_ALT;
+		if (mode != 0) FMMode = CHIP_YM2151_ALT;
 		else       FMMode = CHIP_YM2151_DAC;
 	
 		switch(FMMode)
@@ -329,7 +329,7 @@ public class _2151intf
 	
 	public static WriteHandlerPtr YM2151_word_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset)
+		if (offset != 0)
 			YM2151_data_port_0_w(0,data);
 		else
 			YM2151_register_port_0_w(0,data);
@@ -337,7 +337,7 @@ public class _2151intf
 	
 	public static WriteHandlerPtr YM2151_word_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset)
+		if (offset != 0)
 			YM2151_data_port_1_w(0,data);
 		else
 			YM2151_register_port_1_w(0,data);
@@ -361,37 +361,37 @@ public class _2151intf
 	
 	WRITE16_HANDLER( YM2151_register_port_0_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_register_port_0_w(0, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( YM2151_register_port_1_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_register_port_1_w(0, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( YM2151_register_port_2_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_register_port_2_w(0, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( YM2151_data_port_0_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_data_port_0_w(0, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( YM2151_data_port_1_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_data_port_1_w(0, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( YM2151_data_port_2_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_data_port_2_w(0, data & 0xff);
 	}
 	

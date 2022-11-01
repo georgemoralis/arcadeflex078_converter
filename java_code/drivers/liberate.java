@@ -35,7 +35,7 @@ public class liberate
 		const data8_t *ROM = memory_region(REGION_USER1);
 	
 		/* The tilemap bank can be swapped into main memory */
-		if (deco16_bank)
+		if (deco16_bank != 0)
 			return ROM[offset];
 	
 		/* Else the handler falls through to read the usual address */
@@ -57,7 +57,7 @@ public class liberate
 	{
 		const data8_t *ROM = memory_region(REGION_CPU1);
 	
-		if (deco16_bank) {
+		if (deco16_bank != 0) {
 			if (offset==0) return readinputport(1); /* Player 1 controls */
 			if (offset==1) return readinputport(2); /* Player 2 controls */
 			if (offset==2) return readinputport(3); /* Vblank, coins */

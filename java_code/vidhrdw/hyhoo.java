@@ -133,7 +133,7 @@ public class hyhoo
 	{
 		hyhoo_drawy = (data ^ 0xff);
 	
-		if (hyhoo_flipscreen) hyhoo_scrolly = -2;
+		if (hyhoo_flipscreen != 0) hyhoo_scrolly = -2;
 		else hyhoo_scrolly = 0;
 	}
 	
@@ -194,7 +194,7 @@ public class hyhoo
 	
 		hyhoo_gfxrom |= ((nb1413m3_sndrombank1 & 0x02) << 3);
 	
-		if (hyhoo_flipx)
+		if (hyhoo_flipx != 0)
 		{
 			hyhoo_drawx -= (hyhoo_sizex << 1);
 			startx = hyhoo_sizex;
@@ -209,7 +209,7 @@ public class hyhoo
 			skipx = 1;
 		}
 	
-		if (hyhoo_flipy)
+		if (hyhoo_flipy != 0)
 		{
 			hyhoo_drawy -= ((hyhoo_sizey << 1) + 1);
 			starty = hyhoo_sizey;
@@ -240,7 +240,7 @@ public class hyhoo
 	
 				color = GFX[gfxaddr++];
 	
-				if (hyhoo_flipscreen)
+				if (hyhoo_flipscreen != 0)
 				{
 					dx1 = (((((hyhoo_drawx + x) * 2) + 0) ^ 0x1ff) & 0x1ff);
 					dx2 = (((((hyhoo_drawx + x) * 2) + 1) ^ 0x1ff) & 0x1ff);
@@ -253,11 +253,11 @@ public class hyhoo
 					dy = ((hyhoo_drawy + y) & 0xff);
 				}
 	
-				if (hyhoo_gfxflag2 & 0x04)
+				if ((hyhoo_gfxflag2 & 0x04) != 0)
 				{
 					// 65536 colors mode
 	
-					if (hyhoo_gfxflag2 & 0x20)
+					if ((hyhoo_gfxflag2 & 0x20) != 0)
 					{
 						// 65536 colors (lower)
 	
@@ -297,7 +297,7 @@ public class hyhoo
 				{
 					// Palettized picture mode
 	
-					if (hyhoo_flipx)
+					if (hyhoo_flipx != 0)
 					{
 						// flip
 						color1 = (color & 0xf0) >> 4;
@@ -334,12 +334,12 @@ public class hyhoo
 	
 				nb1413m3_busyctr++;
 	
-				if (tflag1)
+				if (tflag1 != 0)
 				{
 					hyhoo_videoram[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 					plot_pixel(hyhoo_tmpbitmap, dx1, dy, Machine->pens[drawcolor1]);
 				}
-				if (tflag2)
+				if (tflag2 != 0)
 				{
 					hyhoo_videoram[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 					plot_pixel(hyhoo_tmpbitmap, dx2, dy, Machine->pens[drawcolor2]);
@@ -388,7 +388,7 @@ public class hyhoo
 			}
 		}
 	
-		if (hyhoo_dispflag)
+		if (hyhoo_dispflag != 0)
 		{
 			copyscrollbitmap(bitmap, hyhoo_tmpbitmap, 0, 0, 1, &hyhoo_scrolly, &Machine->visible_area, TRANSPARENCY_NONE, 0);
 		}

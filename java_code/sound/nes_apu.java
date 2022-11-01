@@ -586,7 +586,7 @@ public class nes_apu
 	      break;
 	
 	   case APU_SMASK:
-	      if (value & 0x01)
+	      if ((value & 0x01) != 0)
 	         cur->squ[0].enabled = TRUE;
 	      else
 	      {
@@ -594,7 +594,7 @@ public class nes_apu
 	         cur->squ[0].vbl_length = 0;
 	      }
 	
-	      if (value & 0x02)
+	      if ((value & 0x02) != 0)
 	         cur->squ[1].enabled = TRUE;
 	      else
 	      {
@@ -602,7 +602,7 @@ public class nes_apu
 	         cur->squ[1].vbl_length = 0;
 	      }
 	
-	      if (value & 0x04)
+	      if ((value & 0x04) != 0)
 	         cur->tri.enabled = TRUE;
 	      else
 	      {
@@ -613,7 +613,7 @@ public class nes_apu
 	         cur->tri.write_latency = 0;
 	      }
 	
-	      if (value & 0x08)
+	      if ((value & 0x08) != 0)
 	         cur->noi.enabled = TRUE;
 	      else
 	      {
@@ -621,7 +621,7 @@ public class nes_apu
 	         cur->noi.vbl_length = 0;
 	      }
 	
-	      if (value & 0x10)
+	      if ((value & 0x10) != 0)
 	      {
 	         /* only reset dpcm values if DMA is finished */
 	         if (FALSE == cur->dpcm.enabled)

@@ -167,7 +167,7 @@ public class rastan
 	//	usrintf_showmessage("%d %d",input_port_5_word_r(0,0xffff),input_port_6_word_r(0,0xffff));
 	
 		/* See if we should draw artificial gun targets */
-		if (1) //input_port_4_word_r(0,0) &0x1)	/* Fake DSW */
+		if (1 != 0) //input_port_4_word_r(0,0) &0x1)	/* Fake DSW */
 		{
 			/* Draw an aiming crosshair */
 			draw_crosshair(bitmap,(input_port_4_word_r(0,0xffff)*320)/256,input_port_5_word_r(0,0xffff),cliprect);

@@ -192,7 +192,7 @@ public class dec0
 			if (x>256) continue; /* Speedup */
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -200,11 +200,11 @@ public class dec0
 				inc = 1;
 			}
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				y=240-y;
 				x=240-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
@@ -534,12 +534,12 @@ public class dec0
 			if (!(dec0_pri & 4))
 				dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
-			if (dec0_pri & 2)
+			if ((dec0_pri & 2) != 0)
 				dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
-			if (dec0_pri & 4)
+			if ((dec0_pri & 4) != 0)
 				dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT,1); /* Foreground pens only */
 		}
 		else
@@ -552,12 +552,12 @@ public class dec0
 			if (!(dec0_pri & 4))
 				dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
-			if (dec0_pri & 2)
+			if ((dec0_pri & 2) != 0)
 				dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
-			if (dec0_pri & 4)
+			if ((dec0_pri & 4) != 0)
 				dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 		}
 	
@@ -574,12 +574,12 @@ public class dec0
 		dec0_pf2_update();
 		dec0_pf3_update();
 	
-		if (dec0_pri & 0x04)
+		if ((dec0_pri & 0x04) != 0)
 			trans = 0x08;
 		else
 			trans = 0x00;
 	
-		if (dec0_pri & 0x01)
+		if ((dec0_pri & 0x01) != 0)
 		{
 			/* WARNING: inverted wrt Midnight Resistance */
 			/* Robocop uses it only for the title screen, so this might be just */
@@ -588,7 +588,7 @@ public class dec0
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if (dec0_pri & 0x02)
+			if ((dec0_pri & 0x02) != 0)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK,0);
@@ -599,14 +599,14 @@ public class dec0
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if (dec0_pri & 0x02)
+			if ((dec0_pri & 0x02) != 0)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 		}
 	
-		if (dec0_pri & 0x02)
+		if ((dec0_pri & 0x02) != 0)
 			dec0_drawsprites(bitmap,cliprect,0x08,trans ^ 0x08);
 		else
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
@@ -635,7 +635,7 @@ public class dec0
 		dec0_pf2_update();
 		dec0_pf3_update();
 	
-		if (dec0_pri & 0x01)
+		if ((dec0_pri & 0x01) != 0)
 		{
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
@@ -670,7 +670,7 @@ public class dec0
 	
 		dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
-		if (dec0_pri&0x80)
+		if ((dec0_pri & 0x80) != 0)
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
 		dec0_pf1_draw(bitmap,cliprect,0,0);
@@ -682,7 +682,7 @@ public class dec0
 	{
 		int trans;
 	
-		if (dec0_pri & 0x04)
+		if ((dec0_pri & 0x04) != 0)
 			trans = 0x00;
 		else trans = 0x08;
 	
@@ -690,12 +690,12 @@ public class dec0
 		dec0_pf2_update();
 		dec0_pf3_update();
 	
-		if (dec0_pri & 0x01)
+		if ((dec0_pri & 0x01) != 0)
 		{
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if (dec0_pri & 0x02)
+			if ((dec0_pri & 0x02) != 0)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK,0);
@@ -706,14 +706,14 @@ public class dec0
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if (dec0_pri & 0x02)
+			if ((dec0_pri & 0x02) != 0)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 		}
 	
-		if (dec0_pri & 0x02)
+		if ((dec0_pri & 0x02) != 0)
 			dec0_drawsprites(bitmap,cliprect,0x08,trans ^ 0x08);
 		else
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
@@ -808,7 +808,7 @@ public class dec0
 	
 	public static WriteHandlerPtr dec0_pf3_data_8bit_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset&1) { /* MSB has changed */
+		if ((offset & 1) != 0) { /* MSB has changed */
 			data16_t lsb=dec0_pf3_data[offset>>1];
 			data16_t newword=(lsb&0xff) | (data<<8);
 			dec0_pf3_data[offset>>1]=newword;
@@ -825,7 +825,7 @@ public class dec0
 	
 	public static ReadHandlerPtr dec0_pf3_data_8bit_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (offset&1) /* MSB */
+		if ((offset & 1) != 0) /* MSB */
 			return dec0_pf3_data[offset>>1]>>8;
 	
 		return dec0_pf3_data[offset>>1]&0xff;

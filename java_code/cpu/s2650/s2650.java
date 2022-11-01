@@ -112,7 +112,7 @@ public class s2650
 				vector = (*S.irq_callback)(0) & 0xff;				\
 				/* build effective address within first 8K page */	\
 				S.ea = S2650_relative[vector] & PMSK;				\
-				if (vector & 0x80)		/* indirect bit set ? */	\
+				if ((vector & 0x80) != 0)		/* indirect bit set ? */	\
 				{													\
 					int addr = S.ea;								\
 					s2650_ICount -= 2;								\
@@ -218,7 +218,7 @@ public class s2650
 		UINT8 hr = ARG();	/* get 'holding register' */            \
 		/* build effective address within current 8K page */		\
 		S.ea = page + ((S.iar + S2650_relative[hr]) & PMSK);		\
-		if (hr & 0x80) { /* indirect bit set ? */					\
+		if ((hr & 0x80) != 0) { /* indirect bit set ? */					\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -237,7 +237,7 @@ public class s2650
 		UINT8 hr = ARG();	/* get 'holding register' */            \
 		/* build effective address from 0 */						\
 		S.ea = (S2650_relative[hr] & PMSK);							\
-		if (hr & 0x80) { /* indirect bit set ? */					\
+		if ((hr & 0x80) != 0) { /* indirect bit set ? */					\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -259,7 +259,7 @@ public class s2650
 		/* build effective address within current 8K page */		\
 		S.ea = S.page + (((hr << 8) + dr) & PMSK);					\
 		/* indirect addressing ? */ 								\
-		if (hr & 0x80) {											\
+		if ((hr & 0x80) != 0) {											\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -301,7 +301,7 @@ public class s2650
 		/* build address in 32K address space */					\
 		S.ea = ((hr << 8) + dr) & AMSK; 							\
 		/* indirect addressing ? */ 								\
-		if (hr & 0x80) {											\
+		if ((hr & 0x80) != 0) {											\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -336,7 +336,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BRR(cond) 											\
 	{																\
-		if (cond)													\
+		if (cond != 0)													\
 		{															\
 			REL_EA( S.page );										\
 			S.page = S.ea & PAGE;									\
@@ -363,7 +363,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BRA(cond) 											\
 	{																\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			BRA_EA();												\
 			S.page = S.ea & PAGE;									\
@@ -391,7 +391,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BSR(cond) 											\
 	{																\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			REL_EA(S.page); 										\
 			S.psu  = (S.psu & ~SP) | ((S.psu + 1) & SP);			\
@@ -422,7 +422,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BSA(cond) 											\
 	{																\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			BRA_EA();												\
 			S.psu = (S.psu & ~SP) | ((S.psu + 1) & SP); 			\
@@ -454,7 +454,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_RET(cond) 											\
 	{																\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			S.ea = S.ras[S.psu & SP];								\
 			S.psu = (S.psu & ~SP) | ((S.psu - 1) & SP); 			\
@@ -472,7 +472,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_RETE(cond)											\
 	{																\
-		if( cond )													\
+		if (cond != 0)													\
 		{															\
 			S.ea = S.ras[S.psu & SP];								\
 			S.psu = (S.psu & ~SP) | ((S.psu - 1) & SP); 			\
@@ -542,7 +542,7 @@ public class s2650
 		/* add source; carry only if WC is set */					\
 		UINT16 res = dest + source + ((S.psl >> 3) & S.psl & C);	\
 		S.psl &= ~(C | OVF | IDC);									\
-		if(res & 0x100) S.psl |= C; 							    \
+		if ((res & 0x100) != 0) S.psl |= C; 							    \
 	    dest = res & 0xff;                                          \
 		if( (dest & 15) < (before & 15) ) S.psl |= IDC; 			\
 		SET_CC_OVF_ADD(dest,before,source);							\
@@ -769,14 +769,14 @@ public class s2650
 	
 	unsigned s2650_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(s2650_Regs*)dst = S;
 		return sizeof(s2650_Regs);
 	}
 	
 	void s2650_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			S = *(s2650_Regs*)src;
 			S.page = S.page & PAGE;
@@ -871,7 +871,7 @@ public class s2650
 	
 	void s2650_set_flag(int state)
 	{
-	    if (state)
+	    if (state != 0)
 	        S.psu |= FO;
 	    else
 	        S.psu &= ~FO;
@@ -884,7 +884,7 @@ public class s2650
 	
 	void s2650_set_sense(int state)
 	{
-	    if (state)
+	    if (state != 0)
 	        S.psu |= SI;
 	    else
 	        S.psu &= ~SI;

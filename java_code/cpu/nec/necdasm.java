@@ -348,7 +348,7 @@ public class necdasm
 	static char *addr_to_hex(UINT32 addr, int splitup) {
 	  static char buffer[11];
 	
-	  if (splitup) {
+	  if (splitup != 0) {
 	    if (fp_segment(addr)==0 || fp_offset(addr)==0xffff) /* 'coz of wraparound */
 	      sprintf(buffer, "%04X", (unsigned)fp_offset(addr) );
 	    else
@@ -444,7 +444,7 @@ public class necdasm
 	
 	  switch (subtype) {
 	  case 'q':
-	       if (wordop) {
+	       if (wordop != 0) {
 	         if (opsize==16) {
 	           n = 2;
 	         } else {
@@ -492,7 +492,7 @@ public class necdasm
 	    buff[i] = getbyte();
 	  for (; i<extend; i++)
 	    buff[i] = (buff[i-1] & 0x80) ? 0xff : 0;
-	  if (s) {
+	  if (s != 0) {
 	    uprintf("%02X%02X:", (unsigned)buff[n-1], (unsigned)buff[n-2]);
 	    n -= 2;
 	  }
@@ -535,7 +535,7 @@ public class necdasm
 	         signchar = '-';
 	       } else
 	         signchar = '+';
-	       if (sign)
+	       if (sign != 0)
 			 uprintf("%c$%02lX", (char)signchar, delta & 0xFFL);
 	       else
 			 uprintf("$%02lX", delta & 0xFFL);
@@ -547,7 +547,7 @@ public class necdasm
 	         delta = -delta;
 	       } else
 	         signchar = '+';
-	       if (sign)
+	       if (sign != 0)
 			 uprintf("%c$%04lX", (char)signchar, delta & 0xFFFFL);
 	       else
 			 uprintf("$%04lX", delta & 0xFFFFL);
@@ -559,7 +559,7 @@ public class necdasm
 	         signchar = '-';
 	       } else
 	         signchar = '+';
-	       if (sign)
+	       if (sign != 0)
 			 uprintf("%c$%08lX", (char)signchar, delta & 0xFFFFFFFFL);
 	       else
 			 uprintf("$%08lX", delta & 0xFFFFFFFFL);
@@ -597,8 +597,8 @@ public class necdasm
 	    reg_name(rm, subtype);
 	    return;
 	  }
-	  if (must_do_size) {
-	    if (wordop) {
+	  if (must_do_size != 0) {
+	    if (wordop != 0) {
 			ua_str("word ");
 	    } else {
 		  ua_str("byte ");
@@ -792,7 +792,7 @@ public class necdasm
 	            ua_str(opmap1[c]);
 	            break;
 	       case ':':
-	            if (prefix)
+	            if (prefix != 0)
 	              uprintf("%cs:", prefix);
 	            break;
 	       case ' ':
@@ -879,7 +879,7 @@ public class necdasm
 		invalid_opcode = 0;
 		ua_str(opmap1[c]);
 	
-	  	if (invalid_opcode) {
+	  	if (invalid_opcode != 0) {
 			/* restart output buffer */
 			ubufp = buffer;
 			/* invalid instruction, use db xx */

@@ -45,9 +45,9 @@ public class midyunit
 	
 	static NVRAM_HANDLER( midyunit )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, midyunit_cmos_ram, 0x8000);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, midyunit_cmos_ram, 0x8000);
 		else
 			memset(midyunit_cmos_ram, 0, 0x8000);

@@ -102,7 +102,7 @@ public class speedatk
 		region = (colorram[tile_index] & 0x10) >> 4;
 	
 		color += 2;
-		if(region)
+		if (region != 0)
 			color += 0x10;
 	
 		SET_TILE_INFO(region, code, color, 0)

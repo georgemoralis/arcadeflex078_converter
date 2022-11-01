@@ -42,11 +42,11 @@ public class sprint8
 			{
 				color |= 1;
 			}
-			if (code & 0x80)
+			if ((code & 0x80) != 0)
 			{
 				color |= 2;
 			}
-			if (tile_index & 0x200)
+			if ((tile_index & 0x200) != 0)
 			{
 				color |= 4;
 			}
@@ -131,7 +131,7 @@ public class sprint8
 			int x = sprint8_pos_h_ram[i];
 			int y = sprint8_pos_v_ram[i];
 	
-			if (code & 0x80)
+			if ((code & 0x80) != 0)
 			{
 				x |= 0x100;
 			}

@@ -149,7 +149,7 @@ public class slapfght
 	/* Generate interrups only if they have been enabled */
 	public static InterruptHandlerPtr getstar_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (getstar_sh_intenabled)
+		if (getstar_sh_intenabled != 0)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -195,7 +195,7 @@ public class slapfght
 		if ((ddrB & 0x02) && (~data & 0x02) && (portB_out & 0x02))
 		{
 			portA_in = from_main;
-			if (main_sent) cpu_set_irq_line(2,0,CLEAR_LINE);
+			if (main_sent != 0) cpu_set_irq_line(2,0,CLEAR_LINE);
 			main_sent = 0;
 		}
 		if ((ddrB & 0x04) && (data & 0x04) && (~portB_out & 0x04))
@@ -217,7 +217,7 @@ public class slapfght
 	{
 		portC_in = 0;
 		if (!main_sent) portC_in |= 0x01;
-		if (mcu_sent) portC_in |= 0x02;
+		if (mcu_sent != 0) portC_in |= 0x02;
 		return (portC_out & ddrC) | (portC_in & ~ddrC);
 	} };
 	

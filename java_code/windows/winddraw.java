@@ -146,7 +146,7 @@ public class winddraw
 		{
 			clear = *outer;
 			clear.right = inner->left;
-			if (surface)
+			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
@@ -155,7 +155,7 @@ public class winddraw
 		{
 			clear = *outer;
 			clear.left = inner->right;
-			if (surface)
+			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
@@ -164,7 +164,7 @@ public class winddraw
 		{
 			clear = *outer;
 			clear.bottom = inner->top;
-			if (surface)
+			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
@@ -173,7 +173,7 @@ public class winddraw
 		{
 			clear = *outer;
 			clear.top = inner->bottom;
-			if (surface)
+			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	}
@@ -215,7 +215,7 @@ public class winddraw
 			needs_6bpp_per_gun	= ((attributes & VIDEO_NEEDS_6BITS_PER_GUN) != 0);
 			pixel_aspect_ratio	= (attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK);
 		}
-		if (effect)
+		if (effect != 0)
 		{
 			effect_min_xscale = effect->min_xscale;
 			effect_min_yscale = effect->min_yscale;
@@ -245,7 +245,7 @@ public class winddraw
 		}
 	
 		// determine if hardware stretching is available
-		if (win_dd_hw_stretch)
+		if (win_dd_hw_stretch != 0)
 			win_dd_hw_stretch = ((ddraw_caps.dwCaps & DDCAPS_BLTSTRETCH) != 0);
 		if (win_dd_hw_stretch && verbose)
 			fprintf(stderr, "Hardware stretching supported\n");
@@ -407,7 +407,7 @@ public class winddraw
 			else
 				target_width *= 2;
 		}
-		else if (win_old_scanlines)
+		else if (win_old_scanlines != 0)
 			target_width *= 2, target_height *= 2;
 		if (pixel_aspect_ratio == VIDEO_PIXEL_ASPECT_RATIO_2_1)
 		{
@@ -418,7 +418,7 @@ public class winddraw
 		}
 	
 		// hardware stretch modes prefer at least win_gfx_zoom times expansion (default is 2)
-		if (win_dd_hw_stretch)
+		if (win_dd_hw_stretch != 0)
 		{
 			if (target_width < max_width * win_gfx_zoom + 2)
 				target_width = max_width * win_gfx_zoom + 2;
@@ -506,7 +506,7 @@ public class winddraw
 	
 			// enumerate display modes
 			best_score = 0.0;
-			if (ddraw4)
+			if (ddraw4 != 0)
 				result = IDirectDraw4_EnumDisplayModes(ddraw4, (win_match_refresh || win_gfx_refresh) ? DDEDM_REFRESHRATES : 0, NULL, NULL, enum2_callback);
 			else
 				result = IDirectDraw_EnumDisplayModes(ddraw, 0, NULL, NULL, enum_callback);
@@ -516,9 +516,9 @@ public class winddraw
 				goto cant_enumerate_modes;
 			}
 	
-			if (verbose)
+			if (verbose != 0)
 			{
-				if (best_refresh)
+				if (best_refresh != 0)
 					fprintf(stderr, "Best mode = %dx%dx%d @ %d Hz\n", best_width, best_height, best_depth, best_refresh);
 				else
 					fprintf(stderr, "Best mode = %dx%dx%d @ default Hz\n", best_width, best_height, best_depth);
@@ -528,7 +528,7 @@ public class winddraw
 			if (best_width != 0)
 			{
 				// use the DDraw 4 version to set the refresh rate if we can
-				if (ddraw4)
+				if (ddraw4 != 0)
 					result = IDirectDraw4_SetDisplayMode(ddraw4, best_width, best_height, best_depth, best_refresh, 0);
 				else
 					result = IDirectDraw_SetDisplayMode(ddraw, best_width, best_height, best_depth);
@@ -589,7 +589,7 @@ public class winddraw
 		result = IDirectDraw_CreateSurface(ddraw, &primary_desc, &primary_surface, NULL);
 		if (result != DD_OK)
 		{
-			if (verbose)
+			if (verbose != 0)
 				fprintf(stderr, "Error creating primary surface: %08x\n", (UINT32)result);
 			goto cant_create_primary;
 		}
@@ -610,7 +610,7 @@ public class winddraw
 			set_brightness();
 	
 		// print out the good stuff
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Primary surface created: %dx%dx%d (R=%08x G=%08x B=%08x)\n",
 					(int)primary_desc.dwWidth,
 					(int)primary_desc.dwHeight,
@@ -633,14 +633,14 @@ public class winddraw
 		}
 	
 		// stretch mode: create a blit surface
-		if (win_dd_hw_stretch)
+		if (win_dd_hw_stretch != 0)
 		{
 			if (create_blit_surface())
 				goto cant_create_blit;
 		}
 	
 		// create a clipper for windowed mode
-		if (win_window_mode)
+		if (win_window_mode != 0)
 		{
 			if (create_clipper())
 				goto cant_init_clipper;
@@ -652,12 +652,12 @@ public class winddraw
 	
 		// error handling
 	cant_init_clipper:
-		if (blit_surface)
+		if (blit_surface != 0)
 			IDirectDrawSurface_Release(blit_surface);
 		blit_surface = NULL;
 	cant_create_blit:
 	cant_get_back_surface:
-		if (gamma_control)
+		if (gamma_control != 0)
 			IDirectDrawColorControl_Release(gamma_control);
 		gamma_control = NULL;
 	cant_get_primary_desc:
@@ -731,7 +731,7 @@ public class winddraw
 		}
 		if (result != DD_OK)
 		{
-			if (verbose)
+			if (verbose != 0)
 				fprintf(stderr, "Error creating blit surface: %08x\n", (UINT32)result);
 			goto cant_create_blit;
 		}
@@ -748,7 +748,7 @@ public class winddraw
 		compute_color_masks(&blit_desc);
 	
 		// print out the good stuff
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Blit surface created: %dx%dx%d (R=%08x G=%08x B=%08x)\n",
 					(int)blit_desc.dwWidth,
 					(int)blit_desc.dwHeight,
@@ -760,7 +760,7 @@ public class winddraw
 	
 		// error handling
 	cant_get_blit_desc:
-		if (blit_surface)
+		if (blit_surface != 0)
 			IDirectDrawSurface_Release(blit_surface);
 		blit_surface = NULL;
 	cant_create_blit:
@@ -781,13 +781,13 @@ public class winddraw
 		result = IDirectDrawSurface_QueryInterface(primary_surface, &IID_IDirectDrawGammaControl, (void **)&gamma_control);
 		if (result != DD_OK)
 		{
-			if (verbose)
+			if (verbose != 0)
 				fprintf(stderr, "Warning: could not create gamma control to change brightness: %08x\n", (UINT32)result);
 			gamma_control = NULL;
 		}
 	
 		// if we got it, proceed
-		if (gamma_control)
+		if (gamma_control != 0)
 		{
 			DDGAMMARAMP ramp;
 			int i;
@@ -865,13 +865,13 @@ public class winddraw
 	
 		// erase the blit surface
 		blitfx.DUMMYUNIONNAMEN(5).dwFillColor = 0;
-		if (blit_surface)
+		if (blit_surface != 0)
 			result = IDirectDrawSurface_Blt(blit_surface, NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 	
 		// loop through enough to get all the back buffers
 		if (!win_window_mode)
 		{
-			if (back_surface)
+			if (back_surface != 0)
 				for (i = 0; i < 5; i++)
 				{
 					// first flip
@@ -894,22 +894,22 @@ public class winddraw
 	static void release_surfaces(void)
 	{
 		// release the blit surface
-		if (blit_surface)
+		if (blit_surface != 0)
 			IDirectDrawSurface_Release(blit_surface);
 		blit_surface = NULL;
 	
 		// release the clipper
-		if (primary_clipper)
+		if (primary_clipper != 0)
 			IDirectDrawClipper_Release(primary_clipper);
 		primary_clipper = NULL;
 	
 		// release the color controls
-		if (gamma_control)
+		if (gamma_control != 0)
 			IDirectDrawColorControl_Release(gamma_control);
 		gamma_control = NULL;
 	
 		// release the primary surface
-		if (primary_surface)
+		if (primary_surface != 0)
 			IDirectDrawSurface_Release(primary_surface);
 		primary_surface = NULL;
 	}
@@ -992,7 +992,7 @@ public class winddraw
 		int result;
 	
 		// handle forced updates
-		if (forced_updates)
+		if (forced_updates != 0)
 		{
 			forced_updates--;
 			update = 1;
@@ -1008,7 +1008,7 @@ public class winddraw
 	
 		// if we're using hardware stretching, render to the blit surface,
 		// then blit that and stretch
-		if (win_dd_hw_stretch)
+		if (win_dd_hw_stretch != 0)
 			result = render_to_blit(bitmap, bounds, vector_dirty_pixels, update);
 	
 		// otherwise, render directly to the primary/back surface
@@ -1031,12 +1031,12 @@ public class winddraw
 		int result = throttle;
 	
 		// if we're using dirty pixels, we must succeed as well, or else we will leave debris
-		if (vector_dirty_pixels)
+		if (vector_dirty_pixels != 0)
 			result = 1;
 	
 		// if we're blitting a different source rect than before, we also must
 		// succeed, or else we will miss some areas
-		if (bounds)
+		if (bounds != 0)
 		{
 			if (bounds->min_x != last_bounds.min_x || bounds->min_y != last_bounds.min_y ||
 				bounds->max_x != last_bounds.max_x || bounds->max_y != last_bounds.max_y)
@@ -1074,7 +1074,7 @@ public class winddraw
 			return 1;
 		if (result != DD_OK)
 		{
-			if (verbose)
+			if (verbose != 0)
 				fprintf(stderr, "Unable to lock blit_surface: %08x\n", (UINT32)result);
 			return 0;
 		}
@@ -1132,7 +1132,7 @@ public class winddraw
 		src.bottom = (win_visible_height * effect_min_yscale) + 2;
 	
 		// window mode
-		if (win_window_mode)
+		if (win_window_mode != 0)
 		{
 			// just convert the client area to screen coords
 			GetClientRect(win_video_window, &dst);
@@ -1179,7 +1179,7 @@ public class winddraw
 		return 1;
 	
 	surface_lost:
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Recreating surfaces\n");
 	
 		// go ahead and adjust the window
@@ -1228,13 +1228,13 @@ public class winddraw
 		if (result != DD_OK && result != DDERR_WASSTILLDRAWING)
 		{
 			// otherwise, print the error and fall back
-			if (verbose)
+			if (verbose != 0)
 				fprintf(stderr, "Unable to blt blit_surface: %08x\n", (UINT32)result);
 			return 0;
 		}
 	
 		// erase the edges if updating
-		if (update)
+		if (update != 0)
 		{
 			RECT outer;
 			win_ddraw_fullscreen_margins(primary_desc.dwWidth, primary_desc.dwHeight, &outer);
@@ -1264,7 +1264,7 @@ public class winddraw
 		return 1;
 	
 	surface_lost:
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Recreating surfaces\n");
 	
 		// go ahead and adjust the window
@@ -1297,7 +1297,7 @@ public class winddraw
 	
 	tryagain:
 		// window mode
-		if (win_window_mode)
+		if (win_window_mode != 0)
 		{
 			// just convert the client area to screen coords
 			GetClientRect(win_video_window, &outer);
@@ -1331,7 +1331,7 @@ public class winddraw
 		inner.bottom = inner.top + win_visible_height * ymult;
 	
 		// make sure we're not clipped
-		if (win_window_mode)
+		if (win_window_mode != 0)
 		{
 			UINT8 clipbuf[sizeof(RGNDATA) + sizeof(RECT)];
 			RGNDATA *clipdata = (RGNDATA *)clipbuf;
@@ -1363,7 +1363,7 @@ public class winddraw
 			return 1;
 		if (result != DD_OK)
 		{
-			if (verbose)
+			if (verbose != 0)
 				fprintf(stderr, "Unable to lock target_surface: %08x\n", (UINT32)result);
 			return 0;
 		}
@@ -1415,7 +1415,7 @@ public class winddraw
 		IDirectDrawSurface_Unlock(target_surface, NULL);
 	
 		// erase the edges if updating
-		if (update)
+		if (update != 0)
 			erase_outer_rect(&outer, &inner, target_surface);
 	
 		// full screen mode: flip
@@ -1441,7 +1441,7 @@ public class winddraw
 		return 1;
 	
 	surface_lost:
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Recreating surfaces\n");
 	
 		// go ahead and adjust the window

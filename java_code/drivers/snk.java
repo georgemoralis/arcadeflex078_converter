@@ -376,11 +376,11 @@ public class snk
 	} };
 	
 	void snk_sound_callback0_w( int state ){ /* ? */
-		if( state ) snk_sound_register |= 0x01;
+		if (state != 0) snk_sound_register |= 0x01;
 	}
 	
 	void snk_sound_callback1_w( int state ){ /* ? */
-		if( state ) snk_sound_register |= 0x02;
+		if (state != 0) snk_sound_register |= 0x02;
 	}
 	
 	static struct YM3526interface ym3526_interface = {
@@ -574,7 +574,7 @@ public class snk
 			case 0xe60:
 			case 0xe80:
 			case 0xea0:
-			case 0xee0: if( hard_flags ) return 0xff;
+			case 0xee0: if (hard_flags != 0) return 0xff;
 		}
 		return io_ram[offset];
 	} };
@@ -611,7 +611,7 @@ public class snk
 			case 0xe60:
 			case 0xe80:
 			case 0xea0:
-			case 0xee0: if( hard_flags ) return 0xff;
+			case 0xee0: if (hard_flags != 0) return 0xff;
 		}
 		return io_ram[offset];
 	} };

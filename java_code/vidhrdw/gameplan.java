@@ -68,7 +68,7 @@ public class gameplan
 		if (offset == 0)
 		{
 	#ifdef VERBOSE
-			if (finished_sound)  logerror("[GAME: checking sound request ack: OK (%d)]\n", finished_sound);
+			if (finished_sound != 0)  logerror("[GAME: checking sound request ack: OK (%d)]\n", finished_sound);
 			else  logerror("[GAME: checking sound request ack: BAD (%d)]\n", finished_sound);
 	#endif
 	
@@ -108,7 +108,7 @@ public class gameplan
 		}
 		else if (offset == 0x0c)	/* PCR */
 		{
-			if (data & 0x80)
+			if ((data & 0x80) != 0)
 			{
 				if ((data & 0x60) == 0x60)
 					cb2 = 1;
@@ -200,9 +200,9 @@ public class gameplan
 		{
 			if (r0 == 0)
 			{
-				if (gameplan_this_is_kaos)
+				if (gameplan_this_is_kaos != 0)
 					colour = ~data & 0x07;
-				else if (data & 0x0f)
+				else if ((data & 0x0f) != 0)
 				{
 	#ifdef VERBOSE
 					logerror("  !movement command %02x unknown\n", data);
@@ -217,16 +217,16 @@ public class gameplan
 	#endif
 	#endif
 	
-				if (data & 0x20)
+				if ((data & 0x20) != 0)
 				{
-					if (data & 0x80)
+					if ((data & 0x80) != 0)
 						ypos--;
 					else
 						ypos++;
 				}
-				if (data & 0x10)
+				if ((data & 0x10) != 0)
 				{
-					if (data & 0x40)
+					if ((data & 0x40) != 0)
 						xpos--;
 					else
 						xpos++;

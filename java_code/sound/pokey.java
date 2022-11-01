@@ -280,7 +280,7 @@ public class pokey
 			else															\
 				toggle = pokey[chip].output[ch] == !P17(chip);				\
 		}																	\
-		if( toggle )														\
+		if (toggle != 0)														\
 		{																	\
 			if( pokey[chip].audible[ch] )									\
 			{																\
@@ -327,7 +327,7 @@ public class pokey
 			else															\
 				toggle = pokey[chip].output[ch] == !P17(chip);				\
 		}																	\
-		if( toggle )														\
+		if (toggle != 0)														\
 		{																	\
 			if( pokey[chip].output[ch] )									\
 				sum -= pokey[chip].volume[ch];								\
@@ -682,13 +682,13 @@ public class pokey
 	
 	void pokey_sh_stop (void)
 	{
-		if( rand17 ) free(rand17);
+		if (rand17 != 0) free(rand17);
 		rand17 = NULL;
-		if( poly17 ) free(poly17);
+		if (poly17 != 0) free(poly17);
 		poly17 = NULL;
-		if( rand9 )  free(rand9);
+		if (rand9 != 0)  free(rand9);
 		rand9 = NULL;
-		if( poly9 )  free(poly9);
+		if (poly9 != 0)  free(poly9);
 		poly9 = NULL;
 	}
 	
@@ -703,7 +703,7 @@ public class pokey
 	    /* check if some of the requested timer interrupts are enabled */
 		timers &= p->IRQEN;
 	
-	    if( timers )
+	    if (timers != 0)
 	    {
 			/* set the enabled timer irq status bits */
 			p->IRQST |= timers;
@@ -717,22 +717,22 @@ public class pokey
 	static char *audc2str(int val)
 	{
 		static char buff[80];
-		if( val & NOTPOLY5 )
+		if ((val & NOTPOLY5) != 0)
 		{
-			if( val & PURE )
+			if ((val & PURE) != 0)
 				strcpy(buff,"pure");
 			else
-			if( val & POLY4 )
+			if ((val & POLY4) != 0)
 				strcpy(buff,"poly4");
 			else
 				strcpy(buff,"poly9/17");
 		}
 		else
 		{
-			if( val & PURE )
+			if ((val & PURE) != 0)
 				strcpy(buff,"poly5");
 			else
-			if( val & POLY4 )
+			if ((val & POLY4) != 0)
 				strcpy(buff,"poly4+poly5");
 			else
 				strcpy(buff,"poly9/17+poly5");
@@ -743,23 +743,23 @@ public class pokey
 	static char *audctl2str(int val)
 	{
 		static char buff[80];
-		if( val & POLY9 )
+		if ((val & POLY9) != 0)
 			strcpy(buff,"poly9");
 		else
 			strcpy(buff,"poly17");
-		if( val & CH1_HICLK )
+		if ((val & CH1_HICLK) != 0)
 			strcat(buff,"+ch1hi");
-		if( val & CH3_HICLK )
+		if ((val & CH3_HICLK) != 0)
 			strcat(buff,"+ch3hi");
-		if( val & CH12_JOINED )
+		if ((val & CH12_JOINED) != 0)
 			strcat(buff,"+ch1/2");
-		if( val & CH34_JOINED )
+		if ((val & CH34_JOINED) != 0)
 			strcat(buff,"+ch3/4");
-		if( val & CH1_FILTER )
+		if ((val & CH1_FILTER) != 0)
 			strcat(buff,"+ch1filter");
-		if( val & CH2_FILTER )
+		if ((val & CH2_FILTER) != 0)
 			strcat(buff,"+ch2filter");
-		if( val & CLK_15KHZ )
+		if ((val & CLK_15KHZ) != 0)
 			strcat(buff,"+clk15");
 	    return buff;
 	}
@@ -1431,7 +1431,7 @@ public class pokey
 	void pokey_break_w(int chip, int shift)
 	{
 		struct POKEYregisters *p = &pokey[chip];
-	    if( shift )                     /* shift code ? */
+	    if (shift != 0)                     /* shift code ? */
 			p->SKSTAT |= SK_SHIFT;
 		else
 			p->SKSTAT &= ~SK_SHIFT;
@@ -1469,11 +1469,11 @@ public class pokey
 	{
 		struct POKEYregisters *p = &pokey[chip];
 	    /* make code ? */
-		if( make )
+		if (make != 0)
 		{
 			p->KBCODE = kbcode;
 			p->SKSTAT |= SK_KEYBD;
-			if( kbcode & 0x40 ) 		/* shift code ? */
+			if ((kbcode & 0x40) != 0) 		/* shift code ? */
 				p->SKSTAT |= SK_SHIFT;
 			else
 				p->SKSTAT &= ~SK_SHIFT;

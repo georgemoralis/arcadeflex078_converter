@@ -335,14 +335,14 @@ public class video
 		int temp;
 	
 		// apply X/Y swap first
-		if (blit_swapxy)
+		if (blit_swapxy != 0)
 		{
 			temp = rect->min_x; rect->min_x = rect->min_y; rect->min_y = temp;
 			temp = rect->max_x; rect->max_x = rect->max_y; rect->max_y = temp;
 		}
 	
 		// apply X flip
-		if (blit_flipx)
+		if (blit_flipx != 0)
 		{
 			temp = video_width - rect->min_x - 1;
 			rect->min_x = video_width - rect->max_x - 1;
@@ -350,7 +350,7 @@ public class video
 		}
 	
 		// apply Y flip
-		if (blit_flipy)
+		if (blit_flipy != 0)
 		{
 			temp = video_height - rect->min_y - 1;
 			rect->min_y = video_height - rect->max_y - 1;
@@ -369,7 +369,7 @@ public class video
 		int temp;
 	
 		// unapply Y flip
-		if (blit_flipy)
+		if (blit_flipy != 0)
 		{
 			temp = video_height - rect->min_y - 1;
 			rect->min_y = video_height - rect->max_y - 1;
@@ -377,7 +377,7 @@ public class video
 		}
 	
 		// unapply X flip
-		if (blit_flipx)
+		if (blit_flipx != 0)
 		{
 			temp = video_width - rect->min_x - 1;
 			rect->min_x = video_width - rect->max_x - 1;
@@ -385,7 +385,7 @@ public class video
 		}
 	
 		// unapply X/Y swap last
-		if (blit_swapxy)
+		if (blit_swapxy != 0)
 		{
 			temp = rect->min_x; rect->min_x = rect->min_y; rect->min_y = temp;
 			temp = rect->max_x; rect->max_x = rect->max_y; rect->max_y = temp;
@@ -445,7 +445,7 @@ public class video
 				}
 	
 		// fill in the resulting RGB components
-		if (rgb_components)
+		if (rgb_components != 0)
 		{
 			if (video_depth == 32)
 			{
@@ -545,7 +545,7 @@ public class video
 		if (input_ui_pressed(IPT_UI_FRAMESKIP_INC))
 		{
 			// if autoframeskip, disable auto and go to 0
-			if (autoframeskip)
+			if (autoframeskip != 0)
 			{
 				autoframeskip = 0;
 				frameskip = 0;
@@ -573,7 +573,7 @@ public class video
 		if (input_ui_pressed(IPT_UI_FRAMESKIP_DEC))
 		{
 			// if autoframeskip, disable auto and go to max
-			if (autoframeskip)
+			if (autoframeskip != 0)
 			{
 				autoframeskip = 0;
 				frameskip = FRAMESKIP_LEVELS-1;
@@ -626,7 +626,7 @@ public class video
 		cycles_t target, curr, cps;
 	
 		// if we're only syncing to the refresh, bail now
-		if (win_sync_refresh)
+		if (win_sync_refresh != 0)
 			return;
 	
 		// this counts as idle time
@@ -687,13 +687,13 @@ public class video
 		{
 			UINT32 dirtyflags = palette_lookups_invalid ? ~0 : display->game_palette_dirty[i / 32];
 	//		UINT32 dirtyflags = display->game_palette_dirty[i / 32];
-			if (dirtyflags)
+			if (dirtyflags != 0)
 			{
 				display->game_palette_dirty[i / 32] = 0;
 	
 				// loop over all 32 bits and update dirty entries
 				for (j = 0; (j < 32) && (i+j < display->game_palette_entries); j++, dirtyflags >>= 1)
-					if (dirtyflags & 1)
+					if ((dirtyflags & 1) != 0)
 					{
 						// extract the RGB values
 						rgb_t rgbvalue = display->game_palette[i + j];
@@ -858,7 +858,7 @@ public class video
 		cycles_t cps = osd_cycles_per_second();
 	
 		// if this is the first time through, initialize the previous time value
-		if (warming_up)
+		if (warming_up != 0)
 		{
 			last_skipcount0_time = osd_cycles() - (int)((double)FRAMESKIP_LEVELS * (double)cps / video_fps);
 			warming_up = 0;
@@ -943,13 +943,13 @@ public class video
 				int tx = x, ty = y;
 	
 				// apply the rotation/flipping
-				if (blit_swapxy)
+				if (blit_swapxy != 0)
 				{
 					t = tx; tx = ty; ty = t;
 				}
-				if (blit_flipx)
+				if (blit_flipx != 0)
 					tx = copy->width - tx - 1;
-				if (blit_flipy)
+				if (blit_flipy != 0)
 					ty = copy->height - ty - 1;
 	
 				// read the old pixel and copy to the new location
@@ -972,14 +972,14 @@ public class video
 		newbounds = *bounds;
 	
 		// apply X/Y swap first
-		if (blit_swapxy)
+		if (blit_swapxy != 0)
 		{
 			t = newbounds.min_x; newbounds.min_x = newbounds.min_y; newbounds.min_y = t;
 			t = newbounds.max_x; newbounds.max_x = newbounds.max_y; newbounds.max_y = t;
 		}
 	
 		// apply X flip
-		if (blit_flipx)
+		if (blit_flipx != 0)
 		{
 			t = copy->width - newbounds.min_x - 1;
 			newbounds.min_x = copy->width - newbounds.max_x - 1;
@@ -987,7 +987,7 @@ public class video
 		}
 	
 		// apply Y flip
-		if (blit_flipy)
+		if (blit_flipy != 0)
 		{
 			t = copy->height - newbounds.min_y - 1;
 			newbounds.min_y = copy->height - newbounds.max_y - 1;
@@ -1008,7 +1008,7 @@ public class video
 	{
 		// note that we were paused during this autoframeskip cycle
 		game_is_paused = paused;
-		if (game_is_paused)
+		if (game_is_paused != 0)
 			game_was_paused = 1;
 	
 		// tell the input system

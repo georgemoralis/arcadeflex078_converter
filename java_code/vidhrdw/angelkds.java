@@ -191,11 +191,11 @@ public class angelkds
 		UINT8 bank = attr & 0x08;
 		UINT8 color = attr & 0x03;
 	
-		if (bank) tile_no +=0x100;
+		if (bank != 0) tile_no +=0x100;
 	
 		ypos= 0xff-ypos;
 	
-		if (enable & enable_n)
+		if ((enable & enable_n) != 0)
 		{
 				drawgfx(
 						bitmap,

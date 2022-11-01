@@ -98,7 +98,7 @@ public class ultraman
 	
 	WRITE16_HANDLER( ultraman_gfxctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/*	bit 0: enable wraparound for scr #1
 				bit 1: msb of code for scr #1

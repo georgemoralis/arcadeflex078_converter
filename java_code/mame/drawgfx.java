@@ -279,7 +279,7 @@ public class drawgfx
 	
 	void freegfx(struct GfxElement *gfx)
 	{
-		if (gfx)
+		if (gfx != 0)
 		{
 			free(gfx->pen_usage);
 			if (!(gfx->flags & GFX_DONT_FREE_GFXDATA))
@@ -604,7 +604,7 @@ public class drawgfx
 	#define DECLAREG(function,args,body) void function##8 args body
 	#define DECLARE_SWAP_RAW_PRI(function,args,body)
 	#define BLOCKMOVE(function,flipx,args) \
-		if (flipx) blockmove_##function##_flipx##8 args ; \
+		if (flipx != 0) blockmove_##function##_flipx##8 args ; \
 		else blockmove_##function##8 args
 	#define BLOCKMOVELU(function,args) \
 		blockmove_##function##8 args
@@ -692,7 +692,7 @@ public class drawgfx
 	#define DECLAREG(function,args,body) void function##16 args body
 	#define DECLARE_SWAP_RAW_PRI(function,args,body)
 	#define BLOCKMOVE(function,flipx,args) \
-		if (flipx) blockmove_##function##_flipx##16 args ; \
+		if (flipx != 0) blockmove_##function##_flipx##16 args ; \
 		else blockmove_##function##16 args
 	#define BLOCKMOVELU(function,args) \
 		blockmove_##function##16 args
@@ -740,7 +740,7 @@ public class drawgfx
 	#define COLOR_ARG unsigned int colorbase,UINT8 *pridata,UINT32 pmask
 	#define INCREMENT_DST(n) {dstdata+=(n);pridata += (n);}
 	#define LOOKUP(n) (colorbase + (n))
-	#define SETPIXELCOLOR(dest,n) { UINT8 r8=pridata[dest]; if(!(1<<(r8&0x1f)&pmask)){ if(afterdrawmask){ r8&=0x7f; r8|=0x1f; dstdata[dest]=(n); pridata[dest]=r8; } else if(!(r8&0x80)){ dstdata[dest]=SHADOW32(n); pridata[dest]|=0x80; } } }
+	#define SETPIXELCOLOR(dest,n) { UINT8 r8=pridata[dest]; if(!(1<<(r8&0x1f)&pmask)){ if (afterdrawmask != 0){ r8&=0x7f; r8|=0x1f; dstdata[dest]=(n); pridata[dest]=r8; } else if(!(r8&0x80)){ dstdata[dest]=SHADOW32(n); pridata[dest]|=0x80; } } }
 	#define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_raw_pri32 args body
 	#undef DECLARE_SWAP_RAW_PRI
 	#undef COLOR_ARG
@@ -749,7 +749,7 @@ public class drawgfx
 	
 	#define COLOR_ARG const pen_t *paldata,UINT8 *pridata,UINT32 pmask
 	#define LOOKUP(n) (paldata[n])
-	#define SETPIXELCOLOR(dest,n) { UINT8 r8=pridata[dest]; if(!(1<<(r8&0x1f)&pmask)){ if(afterdrawmask){ r8&=0x7f; r8|=0x1f; dstdata[dest]=(n); pridata[dest]=r8; } else if(!(r8&0x80)){ dstdata[dest]=SHADOW32(n); pridata[dest]|=0x80; } } }
+	#define SETPIXELCOLOR(dest,n) { UINT8 r8=pridata[dest]; if(!(1<<(r8&0x1f)&pmask)){ if (afterdrawmask != 0){ r8&=0x7f; r8|=0x1f; dstdata[dest]=(n); pridata[dest]=r8; } else if(!(r8&0x80)){ dstdata[dest]=SHADOW32(n); pridata[dest]|=0x80; } } }
 	#define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_pri32 args body
 	#undef DECLARE_SWAP_RAW_PRI
 	#undef COLOR_ARG
@@ -787,7 +787,7 @@ public class drawgfx
 	#define DECLAREG(function,args,body) void function##32 args body
 	#define DECLARE_SWAP_RAW_PRI(function,args,body)
 	#define BLOCKMOVE(function,flipx,args) \
-		if (flipx) blockmove_##function##_flipx##32 args ; \
+		if (flipx != 0) blockmove_##function##_flipx##32 args ; \
 		else blockmove_##function##32 args
 	#define BLOCKMOVELU(function,args) \
 		blockmove_##function##32 args
@@ -1004,7 +1004,7 @@ public class drawgfx
 		struct rectangle orig_clip;
 	
 	
-		if (clip)
+		if (clip != 0)
 		{
 			orig_clip.min_x = clip->min_x;
 			orig_clip.max_x = clip->max_x;
@@ -1392,7 +1392,7 @@ public class drawgfx
 	
 	
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
-		if(clip)
+		if (clip != 0)
 		{
 			myclip.min_x = clip->min_x;
 			myclip.max_x = clip->max_x;
@@ -1431,7 +1431,7 @@ public class drawgfx
 					int x_index_base;
 					int y_index;
 	
-					if( flipx )
+					if (flipx != 0)
 					{
 						x_index_base = (sprite_screen_width-1)*dx;
 						dx = -dx;
@@ -1441,7 +1441,7 @@ public class drawgfx
 						x_index_base = 0;
 					}
 	
-					if( flipy )
+					if (flipy != 0)
 					{
 						y_index = (sprite_screen_height-1)*dy;
 						dy = -dy;
@@ -1451,7 +1451,7 @@ public class drawgfx
 						y_index = 0;
 					}
 	
-					if( clip )
+					if (clip != 0)
 					{
 						if( sx < clip->min_x)
 						{ /* clip left */
@@ -1485,7 +1485,7 @@ public class drawgfx
 						/* case 0: TRANSPARENCY_NONE */
 						if (transparency == TRANSPARENCY_NONE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								if (gfx->flags & GFX_PACKED)
 								{
@@ -1569,7 +1569,7 @@ public class drawgfx
 						/* case 1: TRANSPARENCY_PEN */
 						if (transparency == TRANSPARENCY_PEN)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								if (gfx->flags & GFX_PACKED)
 								{
@@ -1664,7 +1664,7 @@ public class drawgfx
 						/* case 1b: TRANSPARENCY_PEN_RAW */
 						if (transparency == TRANSPARENCY_PEN_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -1711,7 +1711,7 @@ public class drawgfx
 						/* case 1c: TRANSPARENCY_BLEND_RAW */
 						if (transparency == TRANSPARENCY_BLEND_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -1758,7 +1758,7 @@ public class drawgfx
 						/* case 2: TRANSPARENCY_PENS */
 						if (transparency == TRANSPARENCY_PENS)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -1806,7 +1806,7 @@ public class drawgfx
 						/* case 3: TRANSPARENCY_COLOR */
 						else if (transparency == TRANSPARENCY_COLOR)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -1853,7 +1853,7 @@ public class drawgfx
 						/* case 4: TRANSPARENCY_PEN_TABLE */
 						if (transparency == TRANSPARENCY_PEN_TABLE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -1926,7 +1926,7 @@ public class drawgfx
 						/* case 4b: TRANSPARENCY_PEN_TABLE_RAW */
 						if (transparency == TRANSPARENCY_PEN_TABLE_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2023,7 +2023,7 @@ public class drawgfx
 					int x_index_base;
 					int y_index;
 	
-					if( flipx )
+					if (flipx != 0)
 					{
 						x_index_base = (sprite_screen_width-1)*dx;
 						dx = -dx;
@@ -2033,7 +2033,7 @@ public class drawgfx
 						x_index_base = 0;
 					}
 	
-					if( flipy )
+					if (flipy != 0)
 					{
 						y_index = (sprite_screen_height-1)*dy;
 						dy = -dy;
@@ -2043,7 +2043,7 @@ public class drawgfx
 						y_index = 0;
 					}
 	
-					if( clip )
+					if (clip != 0)
 					{
 						if( sx < clip->min_x)
 						{ /* clip left */
@@ -2077,7 +2077,7 @@ public class drawgfx
 						/* case 0: TRANSPARENCY_NONE */
 						if (transparency == TRANSPARENCY_NONE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								if (gfx->flags & GFX_PACKED)
 								{
@@ -2162,7 +2162,7 @@ public class drawgfx
 						/* case 1: TRANSPARENCY_PEN */
 						if (transparency == TRANSPARENCY_PEN)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								if (gfx->flags & GFX_PACKED)
 								{
@@ -2257,7 +2257,7 @@ public class drawgfx
 						/* case 1b: TRANSPARENCY_PEN_RAW */
 						if (transparency == TRANSPARENCY_PEN_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2304,7 +2304,7 @@ public class drawgfx
 						/* case 1c: TRANSPARENCY_BLEND_RAW */
 						if (transparency == TRANSPARENCY_BLEND_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2351,7 +2351,7 @@ public class drawgfx
 						/* case 2: TRANSPARENCY_PENS */
 						if (transparency == TRANSPARENCY_PENS)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2399,7 +2399,7 @@ public class drawgfx
 						/* case 3: TRANSPARENCY_COLOR */
 						else if (transparency == TRANSPARENCY_COLOR)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2446,7 +2446,7 @@ public class drawgfx
 						/* case 4: TRANSPARENCY_PEN_TABLE */
 						if (transparency == TRANSPARENCY_PEN_TABLE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2466,7 +2466,7 @@ public class drawgfx
 												ah = pri[x];
 												if (((1 << (ah & 0x1f)) & pri_mask) == 0)
 												{
-													if (ah & 0x80)
+													if ((ah & 0x80) != 0)
 														dest[x] = palette_shadow_table[pal[c]];
 													else
 														dest[x] = pal[c];
@@ -2520,7 +2520,7 @@ public class drawgfx
 						/* case 4b: TRANSPARENCY_PEN_TABLE_RAW */
 						if (transparency == TRANSPARENCY_PEN_TABLE_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2540,7 +2540,7 @@ public class drawgfx
 												ah = pri[x];
 												if (((1 << (ah & 0x1f)) & pri_mask) == 0)
 												{
-													if (ah & 0x80)
+													if ((ah & 0x80) != 0)
 														dest[x] = palette_shadow_table[color + c];
 													else
 														dest[x] = color + c;
@@ -2594,7 +2594,7 @@ public class drawgfx
 						/* case 5: TRANSPARENCY_ALPHAONE */
 						if (transparency == TRANSPARENCY_ALPHAONE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2652,7 +2652,7 @@ public class drawgfx
 						/* case 6: TRANSPARENCY_ALPHA */
 						if (transparency == TRANSPARENCY_ALPHA)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2700,7 +2700,7 @@ public class drawgfx
 						/* case 7: TRANSPARENCY_ALPHARANGE */
 						if (transparency == TRANSPARENCY_ALPHARANGE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2780,7 +2780,7 @@ public class drawgfx
 					int x_index_base;
 					int y_index;
 	
-					if( flipx )
+					if (flipx != 0)
 					{
 						x_index_base = (sprite_screen_width-1)*dx;
 						dx = -dx;
@@ -2790,7 +2790,7 @@ public class drawgfx
 						x_index_base = 0;
 					}
 	
-					if( flipy )
+					if (flipy != 0)
 					{
 						y_index = (sprite_screen_height-1)*dy;
 						dy = -dy;
@@ -2800,7 +2800,7 @@ public class drawgfx
 						y_index = 0;
 					}
 	
-					if( clip )
+					if (clip != 0)
 					{
 						if( sx < clip->min_x)
 						{ /* clip left */
@@ -2834,7 +2834,7 @@ public class drawgfx
 						/* case 0: TRANSPARENCY_NONE */
 						if (transparency == TRANSPARENCY_NONE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2876,7 +2876,7 @@ public class drawgfx
 						/* case 1: TRANSPARENCY_PEN */
 						if (transparency == TRANSPARENCY_PEN)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2923,7 +2923,7 @@ public class drawgfx
 						/* case 1b: TRANSPARENCY_PEN_RAW */
 						if (transparency == TRANSPARENCY_PEN_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -2970,7 +2970,7 @@ public class drawgfx
 						/* case 1c: TRANSPARENCY_BLEND_RAW */
 						if (transparency == TRANSPARENCY_BLEND_RAW)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3017,7 +3017,7 @@ public class drawgfx
 						/* case 2: TRANSPARENCY_PENS */
 						if (transparency == TRANSPARENCY_PENS)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3065,7 +3065,7 @@ public class drawgfx
 						/* case 3: TRANSPARENCY_COLOR */
 						else if (transparency == TRANSPARENCY_COLOR)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3116,7 +3116,7 @@ public class drawgfx
 							UINT32 *dest;
 							int c, x, x_index;
 	
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3189,7 +3189,7 @@ public class drawgfx
 							UINT32 *dest;
 							int c, x, x_index;
 	
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3259,7 +3259,7 @@ public class drawgfx
 						/* case 5: TRANSPARENCY_ALPHAONE */
 						if (transparency == TRANSPARENCY_ALPHAONE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3317,7 +3317,7 @@ public class drawgfx
 						/* case 6: TRANSPARENCY_ALPHA */
 						if (transparency == TRANSPARENCY_ALPHA)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3365,7 +3365,7 @@ public class drawgfx
 						/* case 7: TRANSPARENCY_ALPHARANGE */
 						if (transparency == TRANSPARENCY_ALPHARANGE)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -3548,7 +3548,7 @@ public class drawgfx
 	
 	#define ADJUST_8													\
 		int ydir;														\
-		if (flipy)														\
+		if (flipy != 0)														\
 		{																\
 			INCREMENT_DST(VMODULO * (dstheight-1))						\
 			srcdata += (srcheight - dstheight - topskip) * srcmodulo;	\
@@ -3559,7 +3559,7 @@ public class drawgfx
 			srcdata += topskip * srcmodulo;								\
 			ydir = 1;													\
 		}																\
-		if (flipx)														\
+		if (flipx != 0)														\
 		{																\
 			INCREMENT_DST(HMODULO * (dstwidth-1))						\
 			srcdata += (srcwidth - dstwidth - leftskip);				\
@@ -3571,7 +3571,7 @@ public class drawgfx
 	
 	#define ADJUST_4													\
 		int ydir;														\
-		if (flipy)														\
+		if (flipy != 0)														\
 		{																\
 			INCREMENT_DST(VMODULO * (dstheight-1))						\
 			srcdata += (srcheight - dstheight - topskip) * srcmodulo;	\
@@ -3582,7 +3582,7 @@ public class drawgfx
 			srcdata += topskip * srcmodulo;								\
 			ydir = 1;													\
 		}																\
-		if (flipx)														\
+		if (flipx != 0)														\
 		{																\
 			INCREMENT_DST(HMODULO * (dstwidth-1))						\
 			srcdata += (srcwidth - dstwidth - leftskip)/2;				\
@@ -3602,7 +3602,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
@@ -3673,14 +3673,14 @@ public class drawgfx
 	{
 		ADJUST_4
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
 			while (dstheight)
 			{
 				end = dstdata - dstwidth*HMODULO;
-				if (leftskip)
+				if (leftskip != 0)
 				{
 					SETPIXELCOLOR(0,LOOKUP(*srcdata>>4))
 					srcdata++;
@@ -3723,7 +3723,7 @@ public class drawgfx
 			while (dstheight)
 			{
 				end = dstdata + dstwidth*HMODULO;
-				if (leftskip)
+				if (leftskip != 0)
 				{
 					SETPIXELCOLOR(0,LOOKUP(*srcdata>>4))
 					srcdata++;
@@ -3766,7 +3766,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 			int trans4;
@@ -3875,7 +3875,7 @@ public class drawgfx
 	{
 		ADJUST_4
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
@@ -3884,7 +3884,7 @@ public class drawgfx
 				int col;
 	
 				end = dstdata - dstwidth*HMODULO;
-				if (leftskip)
+				if (leftskip != 0)
 				{
 					col = *(srcdata++)>>4;
 					if (col != transpen) SETPIXELCOLOR(0,LOOKUP(col))
@@ -3917,7 +3917,7 @@ public class drawgfx
 				int col;
 	
 				end = dstdata + dstwidth*HMODULO;
-				if (leftskip)
+				if (leftskip != 0)
 				{
 					col = *(srcdata++)>>4;
 					if (col != transpen) SETPIXELCOLOR(0,LOOKUP(col))
@@ -3948,7 +3948,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 			int trans4;
@@ -4060,7 +4060,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 			UINT32 *sd4;
@@ -4073,7 +4073,7 @@ public class drawgfx
 					int col;
 	
 					col = *(srcdata++);
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(0,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(0,LOOKUP(col))
 					INCREMENT_DST(-HMODULO)
 				}
 				sd4 = (UINT32 *)srcdata;
@@ -4085,13 +4085,13 @@ public class drawgfx
 					INCREMENT_DST(-4*HMODULO)
 					col4 = *(sd4++);
 					col = (col4 >> SHIFT0) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(4*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(4*HMODULO,LOOKUP(col))
 					col = (col4 >> SHIFT1) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(3*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(3*HMODULO,LOOKUP(col))
 					col = (col4 >> SHIFT2) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(2*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(2*HMODULO,LOOKUP(col))
 					col = (col4 >> SHIFT3) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(1*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(1*HMODULO,LOOKUP(col))
 				}
 				srcdata = (UINT8 *)sd4;
 				while (dstdata > end)
@@ -4099,7 +4099,7 @@ public class drawgfx
 					int col;
 	
 					col = *(srcdata++);
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(0,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(0,LOOKUP(col))
 					INCREMENT_DST(-HMODULO)
 				}
 	
@@ -4121,7 +4121,7 @@ public class drawgfx
 					int col;
 	
 					col = *(srcdata++);
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(0,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(0,LOOKUP(col))
 					INCREMENT_DST(HMODULO)
 				}
 				sd4 = (UINT32 *)srcdata;
@@ -4132,13 +4132,13 @@ public class drawgfx
 	
 					col4 = *(sd4++);
 					col = (col4 >> SHIFT0) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(0*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(0*HMODULO,LOOKUP(col))
 					col = (col4 >> SHIFT1) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(1*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(1*HMODULO,LOOKUP(col))
 					col = (col4 >> SHIFT2) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(2*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(2*HMODULO,LOOKUP(col))
 					col = (col4 >> SHIFT3) & 0xff;
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(3*HMODULO,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(3*HMODULO,LOOKUP(col))
 					INCREMENT_DST(4*HMODULO)
 				}
 				srcdata = (UINT8 *)sd4;
@@ -4147,7 +4147,7 @@ public class drawgfx
 					int col;
 	
 					col = *(srcdata++);
-					if (PEN_IS_OPAQUE) SETPIXELCOLOR(0,LOOKUP(col))
+					if (PEN_IS_OPAQUE != 0) SETPIXELCOLOR(0,LOOKUP(col))
 					INCREMENT_DST(HMODULO)
 				}
 	
@@ -4163,7 +4163,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
@@ -4208,7 +4208,7 @@ public class drawgfx
 	{
 		ADJUST_4
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
@@ -4217,7 +4217,7 @@ public class drawgfx
 				int col;
 	
 				end = dstdata - dstwidth*HMODULO;
-				if (leftskip)
+				if (leftskip != 0)
 				{
 					col = *(srcdata++)>>4;
 					if (colortable[col] != transcolor) SETPIXELCOLOR(0,LOOKUP(col))
@@ -4250,7 +4250,7 @@ public class drawgfx
 				int col;
 	
 				end = dstdata + dstwidth*HMODULO;
-				if (leftskip)
+				if (leftskip != 0)
 				{
 					col = *(srcdata++)>>4;
 					if (colortable[col] != transcolor) SETPIXELCOLOR(0,LOOKUP(col))
@@ -4282,7 +4282,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
@@ -4359,7 +4359,7 @@ public class drawgfx
 	
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
@@ -4436,7 +4436,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 			int trans4;
@@ -4619,7 +4619,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 			int trans4;
@@ -4729,7 +4729,7 @@ public class drawgfx
 	{
 		ADJUST_8
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			DATA_TYPE *end;
 	
@@ -5146,14 +5146,14 @@ public class drawgfx
 				case TRANSPARENCY_NONE:
 					if (gfx->flags & GFX_PACKED)
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVEPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask));
 						else
 							BLOCKMOVELU(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata));
 					}
 					else
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVEPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask));
 						else
 							BLOCKMOVELU(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata));
@@ -5163,14 +5163,14 @@ public class drawgfx
 				case TRANSPARENCY_NONE_RAW:
 					if (gfx->flags & GFX_PACKED)
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVERAWPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
 						else
 							BLOCKMOVERAW(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
 					}
 					else
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVERAWPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
 						else
 							BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
@@ -5180,14 +5180,14 @@ public class drawgfx
 				case TRANSPARENCY_PEN:
 					if (gfx->flags & GFX_PACKED)
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
 						else
 							BLOCKMOVELU(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
 					}
 					else
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVEPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
 						else
 							BLOCKMOVELU(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
@@ -5197,14 +5197,14 @@ public class drawgfx
 				case TRANSPARENCY_PEN_RAW:
 					if (gfx->flags & GFX_PACKED)
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVERAWPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
 						else
 							BLOCKMOVERAW(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
 					}
 					else
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVERAWPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
 						else
 							BLOCKMOVERAW(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
@@ -5212,14 +5212,14 @@ public class drawgfx
 					break;
 	
 				case TRANSPARENCY_PENS:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
 					else
 						BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
 					break;
 	
 				case TRANSPARENCY_PENS_RAW:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVERAWPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
 					else
 						BLOCKMOVERAW(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
@@ -5228,14 +5228,14 @@ public class drawgfx
 				case TRANSPARENCY_COLOR:
 					if (gfx->flags & GFX_PACKED)
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
 						else
 							BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
 					}
 					else
 					{
-						if (pribuf)
+						if (pribuf != 0)
 							BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
 						else
 							BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
@@ -5243,49 +5243,49 @@ public class drawgfx
 					break;
 	
 				case TRANSPARENCY_PEN_TABLE:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVEPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
 					else
 						BLOCKMOVELU(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
 					break;
 	
 				case TRANSPARENCY_PEN_TABLE_RAW:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVERAWPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
 					else
 						BLOCKMOVERAW(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
 					break;
 	
 				case TRANSPARENCY_BLEND_RAW:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVERAWPRI(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
 					else
 						BLOCKMOVERAW(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
 					break;
 	
 				case TRANSPARENCY_ALPHAONE:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVEPRI(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color & 0xff, (transparent_color>>8) & 0xff));
 					else
 						BLOCKMOVELU(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color & 0xff, (transparent_color>>8) & 0xff));
 					break;
 	
 				case TRANSPARENCY_ALPHA:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVEPRI(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
 					else
 						BLOCKMOVELU(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
 					break;
 	
 				case TRANSPARENCY_ALPHARANGE:
-					if (pribuf)
+					if (pribuf != 0)
 						BLOCKMOVEPRI(8toN_alpharange,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
 					else
 						BLOCKMOVELU(8toN_alpharange,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
 					break;
 	
 				default:
-					if (pribuf)
+					if (pribuf != 0)
 						usrintf_showmessage("pdrawgfx pen mode not supported");
 					else
 						usrintf_showmessage("drawgfx pen mode not supported");
@@ -5331,7 +5331,7 @@ public class drawgfx
 			DATA_TYPE *dd = ((DATA_TYPE *)dest->line[sy]) + sx;						/* dest data */
 			int dm = ((DATA_TYPE *)dest->line[1])-((DATA_TYPE *)dest->line[0]);		/* dest modulo */
 	
-			if (flipx)
+			if (flipx != 0)
 			{
 				//if ((sx-ox) == 0) sd += gfx->width - sw;
 				sd += src->width -1 -(sx-ox);
@@ -5339,7 +5339,7 @@ public class drawgfx
 			else
 				sd += (sx-ox);
 	
-			if (flipy)
+			if (flipy != 0)
 			{
 				//if ((sy-oy) == 0) sd += sm * (gfx->height - sh);
 				//dd += dm * (sh - 1);
@@ -5397,7 +5397,7 @@ public class drawgfx
 		DATA_TYPE *dest;
 	
 	
-		if (clip)
+		if (clip != 0)
 		{
 			startx += clip->min_x * incxx + clip->min_y * incyx;
 			starty += clip->min_x * incxy + clip->min_y * incyy;
@@ -5443,7 +5443,7 @@ public class drawgfx
 							cx = startx;
 							cy = starty >> 16;
 							dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
-							if (priority)
+							if (priority != 0)
 							{
 								UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
 								DATA_TYPE *src = (DATA_TYPE *)srcbitmap->line[cy];
@@ -5504,7 +5504,7 @@ public class drawgfx
 							cx = startx;
 							cy = starty >> 16;
 							dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
-							if (priority)
+							if (priority != 0)
 							{
 								UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
 								DATA_TYPE *src = (DATA_TYPE *)srcbitmap->line[cy];
@@ -5550,7 +5550,7 @@ public class drawgfx
 		}
 		else
 		{
-			if (wraparound)
+			if (wraparound != 0)
 			{
 				/* plot with wraparound */
 				while (sy <= ey)
@@ -5559,7 +5559,7 @@ public class drawgfx
 					cx = startx;
 					cy = starty;
 					dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
-					if (priority)
+					if (priority != 0)
 					{
 						UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
 	
@@ -5608,7 +5608,7 @@ public class drawgfx
 					cx = startx;
 					cy = starty;
 					dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
-					if (priority)
+					if (priority != 0)
 					{
 						UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
 	
@@ -5670,7 +5670,7 @@ public class drawgfx
 			int xadv = 1;
 	
 			/* with pen lookups */
-			if (pens)
+			if (pens != 0)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -5716,7 +5716,7 @@ public class drawgfx
 			int xadv = 1;
 	
 			/* with pen lookups */
-			if (pens)
+			if (pens != 0)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -5762,7 +5762,7 @@ public class drawgfx
 			int xadv = 1;
 	
 			/* with pen lookups */
-			if (pens)
+			if (pens != 0)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -5815,7 +5815,7 @@ public class drawgfx
 			int xadv = 1;
 	
 			/* with pen lookups */
-			if (pens)
+			if (pens != 0)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -5875,7 +5875,7 @@ public class drawgfx
 			int xadv = 1;
 	
 			/* with pen lookups */
-			if (pens)
+			if (pens != 0)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -5935,7 +5935,7 @@ public class drawgfx
 			int xadv = 1;
 	
 			/* with pen lookups */
-			if (pens)
+			if (pens != 0)
 			{
 				if (transparent_pen == -1)
 					while (length--)

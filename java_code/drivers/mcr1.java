@@ -114,7 +114,7 @@ public class mcr1
 		/* mode, they will respond. However, if you try it in a 2-player   */
 		/* game in cocktail mode, they don't work at all. So we fake-mux   */
 		/* the controls through player 1's ports */
-		if (mcr_cocktail_flip)
+		if (mcr_cocktail_flip != 0)
 			return readinputport(0) | 0x08;
 		else
 			return ((readinputport(0) & ~0x14) | 0x08) | ((readinputport(0) & 0x08) >> 1) | ((readinputport(2) & 0x01) << 4);
@@ -124,7 +124,7 @@ public class mcr1
 	public static ReadHandlerPtr solarfox_input_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/*  same deal as above */
-		if (mcr_cocktail_flip)
+		if (mcr_cocktail_flip != 0)
 			return readinputport(1) | 0xf0;
 		else
 			return (readinputport(1) >> 4) | 0xf0;
@@ -142,11 +142,11 @@ public class mcr1
 	{
 		unsigned char *ram = memory_region(REGION_CPU1);
 	
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, &ram[0x7000], 0x800);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, &ram[0x7000], 0x800);
-		else if (nvram_init)
+		else if (nvram_init != 0)
 			memcpy(&ram[0x7000], nvram_init, 16);
 	}
 	

@@ -128,7 +128,7 @@ public class snk68
 	
 	WRITE16_HANDLER( pow_flipscreen16_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 		    flip_screen_set(data & 0x08);
 		    sprite_flip=data&0x4;
@@ -185,7 +185,7 @@ public class snk68
 			my=0x200 - my;
 			my-=0x200;
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				mx=240-mx;
 				my=240-my;
 			}
@@ -193,15 +193,15 @@ public class snk68
 			for (i=0; i<0x80; i+=4) {
 				color=spriteram16[(offs+i+(0x1000*j)+0x1000)>>1]&0x7f;
 	
-				if (color) {
+				if (color != 0) {
 					tile=spriteram16[(offs+2+i+(0x1000*j)+0x1000)>>1];
 					fy=tile&0x8000;
 					fx=tile&0x4000;
 					tile&=0x3fff;
 	
-					if (flip_screen) {
-						if (fx) fx=0; else fx=1;
-						if (fy) fy=0; else fy=1;
+					if (flip_screen != 0) {
+						if (fx != 0) fx=0; else fx=1;
+						if (fy != 0) fy=0; else fy=1;
 					}
 	
 					drawgfx(bitmap,Machine->gfx[1],
@@ -212,7 +212,7 @@ public class snk68
 						cliprect,TRANSPARENCY_PEN,0);
 				}
 	
-				if (flip_screen) {
+				if (flip_screen != 0) {
 					my-=16;
 					if (my < -0x100) my+=0x200;
 				}
@@ -261,16 +261,16 @@ public class snk68
 			my=0x200 - my;
 			my-=0x200;
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				mx=240-mx;
 				my=240-my;
 			}
 	
 			for (i=0; i<0x80; i+=4) {
 				color=spriteram16[(offs+i+z)>>1]&0x7f;
-				if (color) {
+				if (color != 0) {
 					tile=spriteram16[(offs+2+i+z)>>1];
-					if (sprite_flip) {
+					if (sprite_flip != 0) {
 						fx=0;
 						fy=tile&0x8000;
 					} else {
@@ -278,9 +278,9 @@ public class snk68
 						fx=tile&0x8000;
 					}
 	
-					if (flip_screen) {
-						if (fx) fx=0; else fx=1;
-						if (fy) fy=0; else fy=1;
+					if (flip_screen != 0) {
+						if (fx != 0) fx=0; else fx=1;
+						if (fy != 0) fy=0; else fy=1;
 					}
 	
 					tile&=0x7fff;
@@ -293,7 +293,7 @@ public class snk68
 						mx,my,
 						cliprect,TRANSPARENCY_PEN,0);
 				}
-				if (flip_screen) {
+				if (flip_screen != 0) {
 					my-=16;
 					if (my < -0x100) my+=0x200;
 				}

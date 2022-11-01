@@ -130,13 +130,13 @@ public class mitchell
 	
 	public static WriteHandlerPtr pang_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (video_bank) mgakuen_objram_w(offset,data);
+		if (video_bank != 0) mgakuen_objram_w(offset,data);
 		else mgakuen_videoram_w(offset,data);
 	} };
 	
 	public static ReadHandlerPtr pang_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (video_bank) return mgakuen_objram_r(offset);
+		if (video_bank != 0) return mgakuen_objram_r(offset);
 		else return mgakuen_videoram_r(offset);
 	} };
 	
@@ -201,13 +201,13 @@ public class mitchell
 	
 	public static WriteHandlerPtr pang_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (paletteram_bank) paletteram_xxxxRRRRGGGGBBBB_w(offset + 0x800,data);
+		if (paletteram_bank != 0) paletteram_xxxxRRRRGGGGBBBB_w(offset + 0x800,data);
 		else paletteram_xxxxRRRRGGGGBBBB_w(offset,data);
 	} };
 	
 	public static ReadHandlerPtr pang_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (paletteram_bank) return paletteram_r(offset + 0x800);
+		if (paletteram_bank != 0) return paletteram_r(offset + 0x800);
 		return paletteram_r(offset);
 	} };
 	
@@ -243,7 +243,7 @@ public class mitchell
 			sx = pang_objram[offs+3] + ((attr & 0x10) << 4);
 			sy = ((pang_objram[offs+2] + 8) & 0xff) - 8;
 			code += (attr & 0xe0) << 3;
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;

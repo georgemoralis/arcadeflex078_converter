@@ -299,7 +299,7 @@ public class battlera
 					mx,my,
 					clip,TRANSPARENCY_PEN,0);
 	
-				if (cgx)
+				if (cgx != 0)
 					drawgfx(bitmap,Machine->gfx[1],
 							code2,
 							colour,
@@ -307,7 +307,7 @@ public class battlera
 							mx+16,my,
 							clip,TRANSPARENCY_PEN,0);
 				my+=16;
-				/* if (cgx) */ /* Different from console? */
+				/* if (cgx != 0) */ /* Different from console? */
 				code+=2;
 				code2+=2;
 				/*else code+=1; */ /* Different from console? */
@@ -379,13 +379,13 @@ public class battlera
 		/* Todo:  Background enable (not used anyway) */
 	
 		/* Render low priority sprites, if enabled */
-		if (sb_enable) draw_sprites(bitmap,clip,0);
+		if (sb_enable != 0) draw_sprites(bitmap,clip,0);
 	
 		/* Render background over sprites */
 		copyscrollbitmap(bitmap,front_bitmap,1,&scrollx,1,&scrolly,clip,TRANSPARENCY_COLOR,256);
 	
 		/* Render high priority sprites, if enabled */
-		if (sb_enable) draw_sprites(bitmap,clip,1);
+		if (sb_enable != 0) draw_sprites(bitmap,clip,1);
 	}
 	
 	/******************************************************************************/
@@ -456,7 +456,7 @@ public class battlera
 		else if (current_scanline==240) {
 			bldwolf_vblank=1;
 			battlera_raster_partial_refresh(Machine->scrbitmap,last_line,240);
-			if (irq_enable)
+			if (irq_enable != 0)
 				cpu_set_irq_line(0, 0, HOLD_LINE); /* VBL */
 		}
 	

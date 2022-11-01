@@ -199,7 +199,7 @@ public class eprom
 						int forcemc0 = 0, shade = 1, pfm = 1, m7 = 0;
 	
 						/* upper bit of MO priority signals special rendering and doesn't draw anything */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 							continue;
 	
 						/* compute the FORCEMC signal */
@@ -240,9 +240,9 @@ public class eprom
 						}
 						else
 						{
-							if (shade)
+							if (shade != 0)
 								pf[x] |= 0x100;
-							if (m7)
+							if (m7 != 0)
 								pf[x] |= 0x080;
 						}
 	
@@ -266,7 +266,7 @@ public class eprom
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority might mean palette kludges */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 						{
 							/* if bit 2 is set, start setting high palette bits */
 							if (mo[x] & 2)

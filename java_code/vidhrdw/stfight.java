@@ -276,11 +276,11 @@ public class stfight
 				// a sign extension bit in the sprite attribute
 				if( sx >= 0xf0 )
 				{
-					if (attr & 0x80)
+					if ((attr & 0x80) != 0)
 					    sx -= 0x100;
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

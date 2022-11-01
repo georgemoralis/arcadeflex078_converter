@@ -202,7 +202,7 @@ public class streams
 	
 		stream_sample_rate[channel] = sample_rate;
 		stream_buffer_pos[channel] = 0;
-		if (sample_rate)
+		if (sample_rate != 0)
 			stream_sample_length[channel] = 1000000 / sample_rate;
 		else
 			stream_sample_length[channel] = 0;
@@ -234,7 +234,7 @@ public class streams
 	
 			stream_sample_rate[channel+i] = sample_rate;
 			stream_buffer_pos[channel+i] = 0;
-			if (sample_rate)
+			if (sample_rate != 0)
 				stream_sample_length[channel+i] = 1000000 / sample_rate;
 			else
 				stream_sample_length[channel+i] = 0;

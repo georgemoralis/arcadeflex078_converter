@@ -96,7 +96,7 @@ public class pgmprot
 	
 	WRITE16_HANDLER( pgm_asic3_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if(asic3_reg < 3)
 				asic3_latch[asic3_reg] = data << 1;
@@ -125,7 +125,7 @@ public class pgmprot
 	
 	WRITE16_HANDLER( pgm_asic3_reg_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			asic3_reg = data & 0xff;
 	}
 	
@@ -236,7 +236,7 @@ public class pgmprot
 			case 0xcc: //BG
 	   			{
 	   	 		int y=ASICPARAMS[0xcc];
-	    		if(y&0x400)    //y is signed (probably x too and it also applies to TXT, but I've never seen it used)
+	    		if ((y & 0x400) != 0)    //y is signed (probably x too and it also applies to TXT, but I've never seen it used)
 	     			y=-(0x400-(y&0x3ff));
 	    		val=0x900000+(((ASICPARAMS[0xcb]+(y)*64)*4)/*&0x1fff*/);
 	   			}

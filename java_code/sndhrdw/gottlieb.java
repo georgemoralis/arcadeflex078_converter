@@ -242,7 +242,7 @@ public class gottlieb
 	public static WriteHandlerPtr common_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Bit 0 enables and starts NMI timer */
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 		{
 			/* base clock is 250kHz divided by 256 */
 			double interval = TIME_IN_HZ(250000.0/256/(256-nmi_rate));
@@ -264,10 +264,10 @@ public class gottlieb
 		if ((last & 0x04) == 0x04 && (data & 0x04) == 0x00)
 		{
 			/* bit 3 selects which of the two 8913 to enable */
-			if (data & 0x08)
+			if ((data & 0x08) != 0)
 			{
 				/* bit 4 goes to the 8913 BC1 pin */
-				if (data & 0x10)
+				if ((data & 0x10) != 0)
 					AY8910_control_port_0_w(0,psg_latch);
 				else
 					AY8910_write_port_0_w(0,psg_latch);
@@ -275,7 +275,7 @@ public class gottlieb
 			else
 			{
 				/* bit 4 goes to the 8913 BC1 pin */
-				if (data & 0x10)
+				if ((data & 0x10) != 0)
 					AY8910_control_port_1_w(0,psg_latch);
 				else
 					AY8910_write_port_1_w(0,psg_latch);
@@ -320,7 +320,7 @@ public class gottlieb
 	
 	public static WriteHandlerPtr exterm_ym2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (ym2151_port)
+		if (ym2151_port != 0)
 		{
 			YM2151_data_port_0_w(offset, data);
 		}
@@ -348,7 +348,7 @@ public class gottlieb
 	
 	WRITE16_HANDLER( gottlieb_sh_word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			gottlieb_sh_w(offset, data);
 	}
 	

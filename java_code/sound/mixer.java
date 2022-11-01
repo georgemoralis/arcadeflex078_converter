@@ -139,7 +139,7 @@ public class mixer
 	
 		mixerlogerror(("Mixer:mixer_channel_resample_set(%s,%d,%d)\n",channel->name,from_frequency,lowpass_frequency,restart));
 	
-		if (restart)
+		if (restart != 0)
 		{
 			mixerlogerror(("\tpivot=0\n"));
 			channel->pivot = 0;
@@ -470,7 +470,7 @@ public class mixer
 		unsigned count;
 	
 	#ifdef MMSND
-		if( mmsnd_stereomono ){
+		if (mmsnd_stereomono != 0){
 		  /**** all sound mono mode ****/
 		  /* save */
 		  unsigned save_pivot = channel->pivot;
@@ -514,7 +514,7 @@ public class mixer
 		unsigned count;
 	
 	#ifdef MMSND
-		if( mmsnd_stereomono ){
+		if (mmsnd_stereomono != 0){
 		  /**** all sound mono mode ****/
 		  /* save */
 		  unsigned save_pivot = channel->pivot;
@@ -562,7 +562,7 @@ public class mixer
 		int mixing_volume[2];
 	
 		/* compute the overall mixing volume */
-		if (mixer_sound_enabled)
+		if (mixer_sound_enabled != 0)
 		{
 			mixing_volume[0] = ((channel->left_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
 			mixing_volume[1] = ((channel->right_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
@@ -611,7 +611,7 @@ public class mixer
 		int mixing_volume[2];
 	
 		/* compute the overall mixing volume */
-		if (mixer_sound_enabled)
+		if (mixer_sound_enabled != 0)
 		{
 			mixing_volume[0] = ((channel->left_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
 			mixing_volume[1] = ((channel->right_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
@@ -1134,7 +1134,7 @@ public class mixer
 		profiler_mark(PROFILER_MIXER);
 	
 		/* compute the overall mixing volume */
-		if (mixer_sound_enabled) {
+		if (mixer_sound_enabled != 0) {
 			mixing_volume[0] = ((channel->left_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
 			mixing_volume[1] = ((channel->right_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
 		} else {

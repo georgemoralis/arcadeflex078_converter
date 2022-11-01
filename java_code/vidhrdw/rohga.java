@@ -107,7 +107,7 @@ public class rohga
 			if (y >= 256) y -= 512;
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -115,11 +115,11 @@ public class rohga
 				inc = 1;
 			}
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				x=304-x;
 				y=240-y;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=-16;
 			}
 			else mult=+16;
@@ -200,7 +200,7 @@ public class rohga
 			if (y >= 256) y -= 512;
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -208,18 +208,18 @@ public class rohga
 				inc = 1;
 			}
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				x=304-x;
 				y=240-y;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=-16;
 			}
 			else
 				mult=+16;
 	
-			if (fx) fx=0; else fx=1;
-			if (fy) fy=0; else fy=1;
+			if (fx != 0) fx=0; else fx=1;
+			if (fy != 0) fy=0; else fy=1;
 	
 			while (multi >= 0)
 			{
@@ -370,7 +370,7 @@ public class rohga
 	//			else
 	//				tilemap_pri=8; 
 	
-				if (deco16_priority)
+				if (deco16_priority != 0)
 					tilemap_pri=8;
 				else
 					tilemap_pri=64;
@@ -387,27 +387,27 @@ public class rohga
 			fy = (spriteptr[offs+0]&0x8000);
 	
 			if (!flip_screen) { /* Inverted from Mutant Fighter! */
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 	
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
 				if (sx>0x180) sx=-(0x200 - sx);
 				if (sy>0x180) sy=-(0x200 - sy);
 	
-				if (fx) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
-				if (fy) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
+				if (fx != 0) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
+				if (fy != 0) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
 			} else {
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
-				if (sx&0x100) sx=-(0x100 - (sx&0xff));
-				if (sy&0x100) sy=-(0x100 - (sy&0xff));
+				if ((sx & 0x100) != 0) sx=-(0x100 - (sx&0xff));
+				if ((sy & 0x100) != 0) sy=-(0x100 - (sy&0xff));
 				sx = 304 - sx;
 				sy = 240 - sy;
 				if (sx >= 432) sx -= 512;
 				if (sy >= 384) sy -= 512;
-				if (fx) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
-				if (fy) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
+				if (fx != 0) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
+				if (fy != 0) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
 			}
 	
 			for (x=0; x<w; x++) {

@@ -76,13 +76,13 @@ public class gaplus
 	
 	public static InterruptHandlerPtr gaplus_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
-	    if (int_enable_2)
+	    if (int_enable_2 != 0)
 	    	cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
 	public static InterruptHandlerPtr gaplus_interrupt_3 = new InterruptHandlerPtr() {public void handler()
 	{
-	    if (int_enable_3)
+	    if (int_enable_3 != 0)
 	    	cpu_set_irq_line(2, 0, HOLD_LINE);
 	} };
 	

@@ -234,7 +234,7 @@ public class konamigx
 	
 		for(i=0; i<ecount; i++) {
 			unsigned int adr = sprites[i].adr;
-			if(adr) {
+			if (adr != 0) {
 				unsigned int set =(cpu_readmem24bedw_word(adr) << 16)|cpu_readmem24bedw_word(adr+2);
 				unsigned short glob_x = cpu_readmem24bedw_word(adr+4);
 				unsigned short glob_y = cpu_readmem24bedw_word(adr+8);
@@ -250,27 +250,27 @@ public class konamigx
 				unsigned short v;
 	
 				v = cpu_readmem24bedw_word(adr+24);
-				if(v & 0x8000) {
+				if ((v & 0x8000) != 0) {
 					color_mask = 0xf3ff;
 					color_val |= (v & 3) << 10;
 				}
 	
 				v = cpu_readmem24bedw_word(adr+26);
-				if(v & 0x8000) {
+				if ((v & 0x8000) != 0) {
 					color_mask &= 0xfcff;
 					color_val  |= (v & 3) << 8;
 				}
 	
 				v = cpu_readmem24bedw_word(adr+18);
-				if(v & 0x8000) {
+				if ((v & 0x8000) != 0) {
 					color_mask &= 0xff1f;
 					color_val  |= v & 0xe0;
 				}
 	
 				v = cpu_readmem24bedw_word(adr+16);
-				if(v & 0x8000)
+				if ((v & 0x8000) != 0)
 					color_set = v & 0x1f;
-				if(v & 0x4000)
+				if ((v & 0x4000) != 0)
 					color_rotate = v & 0x1f;
 	
 				if(!zoom_x)
@@ -302,14 +302,14 @@ public class konamigx
 						if(zoom_x != 0x40)
 							x = x*0x40/zoom_x;
 	
-						if(flip_x)
+						if (flip_x != 0)
 							x = glob_x - x;
 						else
 							x = glob_x + x;
 						if(x < -256 || x > 512+32)
 							goto next;
 	
-						if(flip_y)
+						if (flip_y != 0)
 							y = glob_y - y;
 						else
 							y = glob_y + y;
@@ -317,9 +317,9 @@ public class konamigx
 							goto next;
 	
 						col = (col & color_mask) | color_val;
-						if(color_set)
+						if (color_set != 0)
 							col = (col & 0xffe0) | color_set;
-						if(color_rotate)
+						if (color_rotate != 0)
 							col = (col & 0xffe0) | ((col + color_rotate) & 0x1f);
 	
 						cpu_writemem24bedw_word(spr   , (flip ^ glob_f) | sprites[i].pri);
@@ -429,7 +429,7 @@ public class konamigx
 	*/
 				break;
 			case 1: // Run program
-				if(esc_cb) {
+				if (esc_cb != 0) {
 					UINT32 p1 = (cpu_readmem24bedw_word(params+0)<<16) | cpu_readmem24bedw_word(params+2);
 					UINT32 p2 = (cpu_readmem24bedw_word(params+4)<<16) | cpu_readmem24bedw_word(params+6);
 					UINT32 p3 = (cpu_readmem24bedw_word(params+8)<<16) | cpu_readmem24bedw_word(params+10);
@@ -443,7 +443,7 @@ public class konamigx
 			}
 			cpu_writemem24bedw(data+9, ESTATE_END);
 	
-			if (konamigx_wrport1_1 & 0x10)
+			if ((konamigx_wrport1_1 & 0x10) != 0)
 			{
 				gx_rdport1_3 &= ~8;
 				cpu_set_irq_line(0, 4, HOLD_LINE);
@@ -471,13 +471,13 @@ public class konamigx
 	
 	static NVRAM_HANDLER(konamigx_93C46)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -541,7 +541,7 @@ public class konamigx
 	//		logerror("write %x to IRQ register (PC=%x)\n", konamigx_wrport1_1, activecpu_get_pc());
 	
 			// gx_syncen is to ensure each IRQ is trigger at least once after being enabled
-			if (konamigx_wrport1_1 & 0x80) gx_syncen |= konamigx_wrport1_1 & 0x1f;
+			if ((konamigx_wrport1_1 & 0x80) != 0) gx_syncen |= konamigx_wrport1_1 & 0x1f;
 		}
 	}
 	
@@ -562,7 +562,7 @@ public class konamigx
 		// bit 16 = DOTSEL0
 		if (!(mem_mask & 0x00ff0000))
 		{
-			if (data & 0x400000)
+			if ((data & 0x400000) != 0)
 			{
 				// enable 68k
 				// clear the halt condition and reset the 68000
@@ -712,7 +712,7 @@ public class konamigx
 		if (resume_trigger && suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 		// IRQ 1 is the main 60hz vblank interrupt
-		if (gx_syncen & 0x20)
+		if ((gx_syncen & 0x20) != 0)
 		{
 			gx_syncen &= ~0x20;
 	
@@ -734,7 +734,7 @@ public class konamigx
 		// IRQ 1 is the main 60hz vblank interrupt
 		// the gx_syncen & 0x20 test doesn't work on type 3 or 4 ROM boards, likely because the ROM board
 		// generates the timing in those cases.  With this change, rushing heroes and rng2 boot :)
-		if (1) // gx_syncen & 0x20)
+		if (1 != 0) // gx_syncen & 0x20)
 		{
 			gx_syncen &= ~0x20;
 	
@@ -757,7 +757,7 @@ public class konamigx
 		else	// hblank
 		{
 			// IRQ 2 is a programmable interrupt with scanline resolution
-			if (gx_syncen & 0x40)
+			if ((gx_syncen & 0x40) != 0)
 			{
 				gx_syncen &= ~0x40;
 	
@@ -902,7 +902,7 @@ public class konamigx
 					break;
 	
 				case 5:	// got command, latch in the proper analog read
-					if (analog_cmd & 4)
+					if ((analog_cmd & 4) != 0)
 					{
 						analog_latch = readinputport(10);	// gas
 					}
@@ -945,7 +945,7 @@ public class konamigx
 	{
 		int res = (readinputport(1)<<24) | (readinputport(8)<<8);
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= ~0x08000000;
@@ -1114,7 +1114,7 @@ public class konamigx
 						logerror("GXT4: unknown protection command %x (PC=%x)\n", last_prot_op, activecpu_get_pc());
 					}
 	
-					if (konamigx_wrport1_1 & 0x10)
+					if ((konamigx_wrport1_1 & 0x10) != 0)
 					{
 						gx_rdport1_3 &= ~8;
 						cpu_set_irq_line(0, 4, HOLD_LINE);
@@ -1348,9 +1348,9 @@ public class konamigx
 	{
 		data16_t ret = 0;
 	
-		if (ACCESSING_LSB16)
+		if (ACCESSING_LSB16 != 0)
 			ret |= K054539_1_r(offset);
-		if (ACCESSING_MSB16)
+		if (ACCESSING_MSB16 != 0)
 			ret |= K054539_0_r(offset)<<8;
 	
 		return ret;
@@ -1358,9 +1358,9 @@ public class konamigx
 	
 	static WRITE16_HANDLER( dual539_w )
 	{
-		if (ACCESSING_LSB16)
+		if (ACCESSING_LSB16 != 0)
 			K054539_1_w(offset, data);
-		if (ACCESSING_MSB16)
+		if (ACCESSING_MSB16 != 0)
 			K054539_0_w(offset, data>>8);
 	}
 	

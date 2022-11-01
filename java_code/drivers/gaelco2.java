@@ -255,7 +255,7 @@ public class gaelco2
 			clr_gun_int = 0;
 		}
 		else if (cpu_getiloops() % 2){
-			if (clr_gun_int){
+			if (clr_gun_int != 0){
 				cpu_set_irq_line(0, 4, HOLD_LINE);
 			}
 		}

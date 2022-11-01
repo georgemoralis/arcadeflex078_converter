@@ -54,7 +54,7 @@ public class nycaptor
 	#ifdef MAME_DEBUG
 	  if(nycaptor_mask&(1<<tile_info.priority))
 	  {
-	    if(nycaptor_spot)pal=0xe;else pal=4;
+	    if (nycaptor_spot != 0)pal=0xe;else pal=4;
 	  }
 	#endif
 	
@@ -95,7 +95,7 @@ public class nycaptor
 	
 	public static WriteHandlerPtr nycaptor_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset & 0x100)
+		if ((offset & 0x100) != 0)
 			paletteram_xxxxBBBBGGGGRRRR_split2_w((offset & 0xff) + (palette_bank << 8),data);
 		else
 			paletteram_xxxxBBBBGGGGRRRR_split1_w((offset & 0xff) + (palette_bank << 8),data);
@@ -103,7 +103,7 @@ public class nycaptor
 	
 	public static ReadHandlerPtr nycaptor_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (offset & 0x100)
+		if ((offset & 0x100) != 0)
 			return paletteram_2[ (offset & 0xff) + (palette_bank << 8) ];
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];
@@ -224,7 +224,7 @@ public class nycaptor
 	{
 	#ifdef MAME_DEBUG
 	  nycaptor_setmask();
-	  if(nycaptor_mask&0x1000)
+	  if ((nycaptor_mask & 0x1000) != 0)
 	  {
 	     	tilemap_draw(bitmap,cliprect,tilemap,TILEMAP_BACK|3,0);
 	     	tilemap_draw(bitmap,cliprect,tilemap,TILEMAP_FRONT|3,0);

@@ -136,7 +136,7 @@ public class inufuku
 				for (y = 0; y <= ysize; y++) {
 					int sx, sy;
 	
-					if (flipy)
+					if (flipy != 0)
 						sy = (oy + zoomy * (ysize - y) / 2 + 16) & 0x1ff;
 					else
 						sy = (oy + zoomy * y / 2 + 16) & 0x1ff;
@@ -144,7 +144,7 @@ public class inufuku
 					for (x = 0; x <= xsize; x++) {
 						int code;
 	
-						if (flipx)
+						if (flipx != 0)
 							sx = (ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff;
 						else
 							sx = (ox + zoomx * x / 2 + 16) & 0x1ff;
@@ -252,7 +252,7 @@ public class inufuku
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 		fillbitmap(priority_bitmap, 0, NULL);
 	
-		if (inufuku_bg_raster) {
+		if (inufuku_bg_raster != 0) {
 			tilemap_set_scroll_rows(inufuku_bg_tilemap, 512);
 			for (i = 0; i < 256; i++) tilemap_set_scrollx(inufuku_bg_tilemap, (inufuku_bg_scrolly + i) & 0x1ff, inufuku_bg_rasterram[i]);
 		}

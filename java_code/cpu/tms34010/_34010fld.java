@@ -98,7 +98,7 @@ public class _34010fld
 	
 	void wfield_16(offs_t offset,data32_t data)
 	{
-		if (offset & 0x0f)
+		if ((offset & 0x0f) != 0)
 		{
 			WFIELDMAC(0xffff,1);
 		}
@@ -302,7 +302,7 @@ public class _34010fld
 	data32_t rfield_z_16(offs_t offset)
 	{
 		UINT32 ret;
-		if (offset & 0x0f)
+		if ((offset & 0x0f) != 0)
 		{
 			RFIELDMAC(0xffff,1);
 		}
@@ -480,7 +480,7 @@ public class _34010fld
 	data32_t rfield_s_08(offs_t offset)
 	{
 		UINT32 ret;
-		if (offset & 0x07)
+		if ((offset & 0x07) != 0)
 		{
 			RFIELDMAC(0xff,9);
 		}
@@ -542,7 +542,7 @@ public class _34010fld
 	data32_t rfield_s_16(offs_t offset)
 	{
 		UINT32 ret;
-		if (offset & 0x0f)
+		if ((offset & 0x0f) != 0)
 		{
 			RFIELDMAC(0xffff,1);
 		}

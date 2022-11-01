@@ -215,7 +215,7 @@ public class blmbycar
 			int	pri			=	(~attr >> 3) & 0x1;		// Priority (1 = Low)
 			int pri_mask	=	~((1 << (pri+1)) - 1);	// Above the first "pri" levels
 	
-			if (x & 0x4000)	continue;	// ? To get rid of the "shadow" blocks
+			if ((x & 0x4000) != 0)	continue;	// ? To get rid of the "shadow" blocks
 	
 			x	=	(x & 0x1ff) - 0x10;
 			y	=	0xf0 - ((y & 0xff)  - (y & 0x100));
@@ -264,16 +264,16 @@ public class blmbycar
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (layers_ctrl&1)
+		if ((layers_ctrl & 1) != 0)
 			for (i = 0; i <= 1; i++)
 				tilemap_draw(bitmap, cliprect, tilemap_0, i, i);
 		else	fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
-		if (layers_ctrl&2)
+		if ((layers_ctrl & 2) != 0)
 			for (i = 0; i <= 1; i++)
 				tilemap_draw(bitmap, cliprect, tilemap_1, i, i);
 	
-		if (layers_ctrl&8)
+		if ((layers_ctrl & 8) != 0)
 			blmbycar_draw_sprites(bitmap, cliprect);
 	} };
 }

@@ -80,7 +80,7 @@ public class taito_f3
 	static void timer_callback(int param)
 	{
 		/* Only cause IRQ if the mask is set to allow it */
-		if (m68681_imr&8) {
+		if ((m68681_imr & 8) != 0) {
 			cpu_irq_line_vector_w(1, 6, vector_reg);
 			cpu_set_irq_line(1, 6, ASSERT_LINE);
 			imr_status|=0x8;
@@ -175,7 +175,7 @@ public class taito_f3
 	READ16_HANDLER(es5510_dsp_r)
 	{
 	//	logerror("%06x: DSP read offset %04x (data is %04x)\n",activecpu_get_pc(),offset,es5510_dsp_ram[offset]);
-	//	if (es_tmp) return es5510_dsp_ram[offset];
+	//	if (es_tmp != 0) return es5510_dsp_ram[offset];
 	/*
 		switch (offset) {
 			case 0x00: return (es5510_gpr_latch>>16)&0xff;

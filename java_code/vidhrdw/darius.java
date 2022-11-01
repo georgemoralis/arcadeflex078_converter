@@ -111,7 +111,7 @@ public class darius
 		{
 			code = spriteram16[offs+2] &0x1fff;
 	
-			if (code)
+			if (code != 0)
 			{
 				data = spriteram16[offs];
 				sy = (256-data) & 0x1ff;

@@ -161,7 +161,7 @@ public class mystston
 		{
 			int attr = spriteram[offs];
 	
-			if (attr & 0x01)
+			if ((attr & 0x01) != 0)
 			{
 				int code = spriteram[offs + 1] + ((attr & 0x10) << 4);
 				int color = (attr & 0x08) >> 3;
@@ -170,7 +170,7 @@ public class mystston
 				int sx = 240 - spriteram[offs + 3];
 				int sy = (240 - spriteram[offs + 2]) & 0xff;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

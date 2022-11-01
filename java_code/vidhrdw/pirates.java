@@ -97,7 +97,7 @@ public class pirates
 			xpos = source[1] - 32;
 			ypos = source[-1];	// indeed...
 	
-			if (ypos & 0x8000) break;	/* end-of-list marker */
+			if ((ypos & 0x8000) != 0) break;	/* end-of-list marker */
 	
 			code = source[2] >> 2;
 			color = source[0] & 0xff;

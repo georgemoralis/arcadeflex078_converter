@@ -245,10 +245,10 @@ public class irobot
 		IR_CPU_STATE;
 	
 		if (!irmb_running) d |= 0x20;
-		if (irvg_running) d |= 0x40;
+		if (irvg_running != 0) d |= 0x40;
 	
 		//        d = (irmb_running * 0x20) | (irvg_running * 0x40);
-		if (irvg_vblank) d = d | 0x80;
+		if (irvg_vblank != 0) d = d | 0x80;
 	#if IR_TIMING
 		/* flags are cleared by callbacks */
 	#else
@@ -345,7 +345,7 @@ public class irobot
 	
 			if (curop->diren || (irmb_latch & 0x6000) == 0)
 				d = ((UINT16 *)mbRAM)[ad & 0xfff];				/* MB RAM read */
-			else if (irmb_latch & 0x4000)
+			else if ((irmb_latch & 0x4000) != 0)
 				d = ((UINT16 *)mbROM)[ad + 0x2000];				/* MB ROM read, CEMATH = 1 */
 			else
 				d = ((UINT16 *)mbROM)[ad & 0x1fff];				/* MB ROM read, CEMATH = 0 */
@@ -427,7 +427,7 @@ public class irobot
 				dirmask = 0x0000;
 				latchmask = 0x3FFC;
 			}
-			if (ramsel & 2)
+			if ((ramsel & 2) != 0)
 				latchmask |= 0x0003;
 			else
 				dirmask |= 0x0003;
@@ -569,10 +569,10 @@ public class irobot
 	
 	
 	#define JUMP0 	curop++;
-	#define JUMP1	if (cflag) curop = curop->nxtop; else curop++;
+	#define JUMP1	if (cflag != 0) curop = curop->nxtop; else curop++;
 	#define JUMP2	if (!zresult) curop = curop->nxtop; else curop++;
 	#define JUMP3	if (!nflag) curop = curop->nxtop; else curop++;
-	#define JUMP4	if (nflag) curop = curop->nxtop; else curop++;
+	#define JUMP4	if (nflag != 0) curop = curop->nxtop; else curop++;
 	#define JUMP5	curop = curop->nxtop;
 	#define JUMP6	irmb_stack[SP] = curop + 1; SP = (SP + 1) & 15; curop = curop->nxtop;
 	#define JUMP7	SP = (SP - 1) & 15; curop = irmb_stack[SP];

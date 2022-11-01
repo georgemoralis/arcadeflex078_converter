@@ -136,10 +136,10 @@ public class system24
 		case 3:
 		default: {
 			int res = fdc_data;
-			if(fdc_drq) {
+			if (fdc_drq != 0) {
 				fdc_span--;
 				//			logerror("Read %02x (%d)\n", res, fdc_span);
-				if(fdc_span) {
+				if (fdc_span != 0) {
 					fdc_pt++;
 					fdc_data = *fdc_pt;
 				} else {
@@ -160,7 +160,7 @@ public class system24
 		if(!track_size)
 			return;
 	
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			data &= 0xff;
 			switch(offset) {
 			case 0:
@@ -222,7 +222,7 @@ public class system24
 				fdc_sector = data;
 				break;
 			case 3:
-				if(fdc_drq) {
+				if (fdc_drq != 0) {
 					//				logerror("Write %02x (%d)\n", data, fdc_span);
 					*fdc_pt++ = data;
 					fdc_span--;
@@ -250,7 +250,7 @@ public class system24
 	
 	static WRITE16_HANDLER( fdc_ctrl_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			logerror("FDC control %02x\n", data & 0xff);
 	}
 	
@@ -334,7 +334,7 @@ public class system24
 	{
 		switch(port) {
 		case 3:
-			if(data & 4)
+			if ((data & 4) != 0)
 				cur_input_line = (cur_input_line + 1) & 7;
 			break;
 		case 7: // DAC
@@ -362,7 +362,7 @@ public class system24
 	
 	static WRITE16_HANDLER( hotrod3_ctrl_w )
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			data &= 3;
 			if(data == 3)
 				hotrod_ctrl_cur = 0;
@@ -373,7 +373,7 @@ public class system24
 	
 	static READ16_HANDLER( hotrod3_ctrl_r )
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			switch(offset) {
 				// Steering dials
 			case 0:
@@ -423,14 +423,14 @@ public class system24
 	static void reset_reset(void)
 	{
 		int changed = resetcontrol ^ prev_resetcontrol;
-		if(changed & 2) {
-			if(resetcontrol & 2) {
+		if ((changed & 2) != 0) {
+			if ((resetcontrol & 2) != 0) {
 				cpu_set_halt_line(1, CLEAR_LINE);
 				cpu_set_reset_line(1, PULSE_LINE);
 			} else
 				cpu_set_halt_line(1, ASSERT_LINE);
 		}
-		if(changed & 4)
+		if ((changed & 4) != 0)
 			YM2151ResetChip(0);
 		prev_resetcontrol = resetcontrol;
 	}
@@ -460,7 +460,7 @@ public class system24
 	
 	static WRITE16_HANDLER( curbank_w )
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			curbank = data & 0xff;
 			reset_bank();
 		}
@@ -522,13 +522,13 @@ public class system24
 	
 	static WRITE16_HANDLER( ym_register_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_register_port_0_w(0, data);
 	}
 	
 	static WRITE16_HANDLER( ym_data_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			YM2151_data_port_0_w(0, data);
 	}
 	
@@ -553,7 +553,7 @@ public class system24
 	
 	static WRITE16_HANDLER( mlatch_w )
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			int i;
 			unsigned char mxor = 0;
 			if(!mlatch_table) {
@@ -632,7 +632,7 @@ public class system24
 			break;
 		}
 		case 1:
-			if(ACCESSING_LSB) {
+			if (ACCESSING_LSB != 0) {
 				UINT8 old_tb = irq_timerb;
 				irq_timerb = data;
 				if(old_tb != irq_timerb)
@@ -672,10 +672,10 @@ public class system24
 		int irq = cpu_getiloops() ? IRQ_SPRITE : IRQ_VBLANK;
 		int mask = 1 << irq;
 	
-		if(irq_allow0 & mask)
+		if ((irq_allow0 & mask) != 0)
 			cpu_set_irq_line(0, 1+irq, HOLD_LINE);
 	
-		if(irq_allow1 & mask)
+		if ((irq_allow1 & mask) != 0)
 			cpu_set_irq_line(1, 1+irq, HOLD_LINE);
 	
 		if(!cpu_getiloops()) {
@@ -935,7 +935,7 @@ public class system24
 	{
 		if(!track_size || !file)
 			return;
-		if(read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, memory_region(REGION_USER2), 2*track_size);
 		else
 			mame_fread(file, memory_region(REGION_USER2), 2*track_size);

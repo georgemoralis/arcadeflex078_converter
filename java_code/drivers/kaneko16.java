@@ -803,7 +803,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( kaneko16_coin_lockout_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			coin_counter_w(0,   data  & 0x0100);
 			coin_counter_w(1,   data  & 0x0200);
@@ -855,14 +855,14 @@ public class kaneko16
 	/* Clear the cause of the interrupt */
 	static WRITE16_HANDLER( sandscrp_irq_cause_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			kaneko16_sprite_flipx	=	data & 1;
 			kaneko16_sprite_flipy	=	data & 1;
 	
-			if (data & 0x08)	sprite_irq  = 0;
-			if (data & 0x10)	unknown_irq = 0;
-			if (data & 0x20)	vblank_irq  = 0;
+			if ((data & 0x08) != 0)	sprite_irq  = 0;
+			if ((data & 0x10) != 0)	unknown_irq = 0;
+			if ((data & 0x20) != 0)	vblank_irq  = 0;
 		}
 	
 		update_irq_state();
@@ -879,7 +879,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( kaneko16_soundlatch_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			soundlatch_w(0, (data & 0xff00) >> 8 );
 			cpu_set_nmi_line(1,PULSE_LINE);
@@ -906,7 +906,7 @@ public class kaneko16
 		/* Each 2149 register is mapped to a different address */
 		AY8910_control_port_0_w(0,offset);
 		/* The registers are mapped to odd addresses, except one! */
-		if (ACCESSING_LSB)	AY8910_write_port_0_w(0, data       & 0xff);
+		if (ACCESSING_LSB != 0)	AY8910_write_port_0_w(0, data       & 0xff);
 		else				AY8910_write_port_0_w(0,(data >> 8) & 0xff);
 	}
 	WRITE16_HANDLER( kaneko16_YM2149_1_w )
@@ -914,7 +914,7 @@ public class kaneko16
 		/* Each 2149 register is mapped to a different address */
 		AY8910_control_port_1_w(0,offset);
 		/* The registers are mapped to odd addresses, except one! */
-		if (ACCESSING_LSB)	AY8910_write_port_1_w(0, data       & 0xff);
+		if (ACCESSING_LSB != 0)	AY8910_write_port_1_w(0, data       & 0xff);
 		else				AY8910_write_port_1_w(0,(data >> 8) & 0xff);
 	}
 	
@@ -940,7 +940,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( kaneko16_eeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x02);
@@ -1101,7 +1101,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( bloodwar_oki_0_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * (data & 0x3) );
 	//		logerror("CPU #0 PC %06X : OKI0  bank %08X\n",activecpu_get_pc(),data);
@@ -1110,7 +1110,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( bloodwar_oki_1_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(1, 0x40000 * (data & 0x3) );
 	//		logerror("CPU #0 PC %06X : OKI1  bank %08X\n",activecpu_get_pc(),data);
@@ -1119,7 +1119,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( bloodwar_coin_lockout_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			coin_counter_w(0, data & 0x0100);
 	
@@ -1201,7 +1201,7 @@ public class kaneko16
 	static int bank0;
 	WRITE16_HANDLER( gtmr_oki_0_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, 0x10000 * (data & 0xF) );
 			bank0 = (data & 0xF);
@@ -1211,7 +1211,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( gtmr_oki_1_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(1, 0x40000 * (data & 0x1) );
 	//		logerror("CPU #0 PC %06X : OKI1 bank %08X\n",activecpu_get_pc(),data);
@@ -1233,13 +1233,13 @@ public class kaneko16
 	{
 		static int pend = 0;
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 	
-			if (pend)	pend = 0;
+			if (pend != 0)	pend = 0;
 			else
 			{
-				if (data & 0x80)
+				if ((data & 0x80) != 0)
 				{
 					int samp = data &0x7f;
 	
@@ -1263,7 +1263,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( gtmr_oki_1_data_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_data_1_w(0,data);
 	//		logerror("CPU #0 PC %06X : OKI1 <- %08X\n",activecpu_get_pc(),data);
@@ -1434,7 +1434,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( sandscrp_coin_counter_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_counter_w(0,   data  & 0x0001);
 			coin_counter_w(1,   data  & 0x0002);
@@ -1452,7 +1452,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( sandscrp_latchstatus_word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			latch1_full = data & 0x80;
 			latch2_full = data & 0x40;
@@ -1467,7 +1467,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( sandscrp_soundlatch_word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			latch1_full = 1;
 			soundlatch_w(0, data & 0xff);
@@ -1520,7 +1520,7 @@ public class kaneko16
 	/* Untested */
 	WRITE16_HANDLER( shogwarr_oki_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, 0x10000 * ((data >> 0) & 0x3) );
 			OKIM6295_set_bank_base(1, 0x10000 * ((data >> 4) & 0x3) );

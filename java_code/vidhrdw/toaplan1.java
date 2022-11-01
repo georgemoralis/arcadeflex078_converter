@@ -491,7 +491,7 @@ public class toaplan1
 			logerror("Setting BCU controller flipscreen port to %04x\n",data);
 			bcu_flipscreen = data & 0x01;		/* 0x0001 = flip, 0x0000 = no flip */
 			tilemap_set_flip(ALL_TILEMAPS, (data ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0));
-			if (bcu_flipscreen)
+			if (bcu_flipscreen != 0)
 			{
 				scrollx_offs1 = 0x080 - 6;
 				scrollx_offs2 = 0x080 - 4;
@@ -518,7 +518,7 @@ public class toaplan1
 			logerror("Setting BCU controller flipscreen port to %04x\n",data);
 			bcu_flipscreen = data & 0x01;		/* 0x0001 = flip, 0x0000 = no flip */
 			tilemap_set_flip(ALL_TILEMAPS, (data ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0));
-			if (bcu_flipscreen)
+			if (bcu_flipscreen != 0)
 			{
 				scrollx_offs1 = 0x011 - 6;
 				scrollx_offs2 = 0x011 - 4;
@@ -544,7 +544,7 @@ public class toaplan1
 	
 	WRITE16_HANDLER( toaplan1_fcu_flipscreen_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			logerror("Setting FCU controller flipscreen port to %04x\n",data);
 			fcu_flipscreen = data & 0x8000;	/* 0x8000 = flip, 0x0000 = no flip */
@@ -814,7 +814,7 @@ public class toaplan1
 		{
 			offs_t sprite_voffs;
 			while (keyboard_pressed(KEYCODE_M)) ;
-			if (toaplan1_spritesizeram16)			/* FCU controller */
+			if (toaplan1_spritesizeram16 != 0)			/* FCU controller */
 			{
 				int schar,sattr,sxpos,sypos,bschar,bsattr,bsxpos,bsypos;
 				data16_t *size  = (data16_t *)(toaplan1_spritesizeram16);
@@ -864,7 +864,7 @@ public class toaplan1
 			data16_t *bsize = (data16_t *)(toaplan1_buffered_spritesizeram16);
 			offs_t offs;
 			while (keyboard_pressed(KEYCODE_SLASH)) ;
-			if (toaplan1_spritesizeram16)			/* FCU controller */
+			if (toaplan1_spritesizeram16 != 0)			/* FCU controller */
 			{
 				logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
 				logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
@@ -914,7 +914,7 @@ public class toaplan1
 			displog += 1;
 			displog &= 1;
 		}
-		if (displog)
+		if (displog != 0)
 		{
 			logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
 			logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
@@ -1079,7 +1079,7 @@ public class toaplan1
 				if (sy_base >= 0x180) sy_base -= 0x200;
 	
 				/****** flip the sprite layer ******/
-				if (fcu_flipscreen)
+				if (fcu_flipscreen != 0)
 				{
 					sx_base += 8;
 					if ((Machine->orientation & ORIENTATION_MASK) == ROT0)
@@ -1096,12 +1096,12 @@ public class toaplan1
 	
 				for (dim_y = 0; dim_y < sprite_sizey; dim_y += 8)
 				{
-					if (fcu_flipscreen) sy = sy_base - dim_y;
+					if (fcu_flipscreen != 0) sy = sy_base - dim_y;
 					else                sy = sy_base + dim_y;
 	
 					for (dim_x = 0; dim_x < sprite_sizex; dim_x += 8)
 					{
-						if (fcu_flipscreen) sx = sx_base - dim_x;
+						if (fcu_flipscreen != 0) sx = sx_base - dim_x;
 						else                sx = sx_base + dim_x;
 	
 						drawgfx(bitmap,Machine->gfx[1],
@@ -1138,7 +1138,7 @@ public class toaplan1
 					color  = attrib & 0x3f;
 					sx = (buffered_spriteram16[offs + 2] >> 7) & 0x1ff;
 					flipx = attrib & 0x100;
-					if (flipx) sx -= 15;
+					if (flipx != 0) sx -= 15;
 					flipy = attrib & 0x200;
 					drawgfx(bitmap,Machine->gfx[1],
 						sprite,

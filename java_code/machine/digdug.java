@@ -95,7 +95,7 @@ public class digdug
 			case 0x71:
 				if (offset == 0)
 				{
-					if (mode)	/* switch mode */
+					if (mode != 0)	/* switch mode */
 					{
 						/* bit 7 is the service switch */
 	                    return readinputport(4);
@@ -261,7 +261,7 @@ public class digdug
 	
 	public static WriteHandlerPtr digdug_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);
@@ -284,7 +284,7 @@ public class digdug
 	
 	public static InterruptHandlerPtr digdug_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_1)
+		if (interrupt_enable_1 != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -299,7 +299,7 @@ public class digdug
 	
 	public static InterruptHandlerPtr digdug_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_2)
+		if (interrupt_enable_2 != 0)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
@@ -314,7 +314,7 @@ public class digdug
 	
 	public static InterruptHandlerPtr digdug_interrupt_3 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_3)
+		if (interrupt_enable_3 != 0)
 			cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 }

@@ -242,7 +242,7 @@ public class m90
 		if (!pf2_enable)
 			fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
-		if (pf2_enable)
+		if (pf2_enable != 0)
 		{
 			if (m90_video_control_data[0xc] & 0x4)
 				tilemap_draw(bitmap,cliprect,pf2_wide_layer,0,0);
@@ -255,7 +255,7 @@ public class m90
 				tilemap_draw(bitmap,cliprect,pf2_layer,1,1);
 		}
 	
-		if (pf1_enable)
+		if (pf1_enable != 0)
 		{
 			if (m90_video_control_data[0xa] & 0x4)
 				tilemap_draw(bitmap,cliprect,pf1_wide_layer,0,0);

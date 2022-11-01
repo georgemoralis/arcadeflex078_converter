@@ -203,7 +203,7 @@ public class dec8
 		switch (offset) {
 		case 0: /* High byte */
 			i8751_value=(i8751_value&0xff) | (data<<8);
-			if (int_enable) cpu_set_irq_line (0, M6809_IRQ_LINE, HOLD_LINE); /* IRQ on *high* byte only */
+			if (int_enable != 0) cpu_set_irq_line (0, M6809_IRQ_LINE, HOLD_LINE); /* IRQ on *high* byte only */
 			break;
 		case 1: /* Low byte */
 			i8751_value=(i8751_value&0xff00) | data;
@@ -225,7 +225,7 @@ public class dec8
 		if ((i8751_value>>8)==0x07) {i8751_return=0x700 | ((coin2 / 10) << 4) | (coin2 % 10);  } /* Coin 2 */
 		if ((i8751_value>>8)==0x08 && coin2 && !offset) {i8751_return=0x800; coin2--; } /* Coin 2 clear */
 		/* Commands 0x9xx do nothing */
-		if ((i8751_value>>8)==0x0a) {i8751_return=0xa00 | snd; if (snd) snd=0; }
+		if ((i8751_value>>8)==0x0a) {i8751_return=0xa00 | snd; if (snd != 0) snd=0; }
 	} };
 	
 	public static WriteHandlerPtr shackled_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -363,8 +363,8 @@ public class dec8
 		bankaddress = 0x10000 + (data >> 4) * 0x4000;
 		cpu_setbank(1,&RAM[bankaddress]);
 	
-		if (data&1) int_enable=1; else int_enable=0;
-		if (data&2) nmi_enable=1; else nmi_enable=0;
+		if ((data & 1) != 0) int_enable=1; else int_enable=0;
+		if ((data & 2) != 0) nmi_enable=1; else nmi_enable=0;
 		flip_screen_set(data & 0x08);
 	} };
 	
@@ -399,7 +399,7 @@ public class dec8
 		static int toggle =0;
 	
 		toggle ^= 1;
-		if (toggle)
+		if (toggle != 0)
 			cpu_set_irq_line(2,M6502_IRQ_LINE,HOLD_LINE);
 	
 		MSM5205_data_w (0,msm5205next>>4);
@@ -421,7 +421,7 @@ public class dec8
 	{
 		unsigned char *RAM = memory_region(REGION_CPU3);
 	
-		if (data&8) { cpu_setbank(3,&RAM[0x14000]); }
+		if ((data & 8) != 0) { cpu_setbank(3,&RAM[0x14000]); }
 		else { cpu_setbank(3,&RAM[0x10000]); }
 	} };
 	
@@ -2105,12 +2105,12 @@ public class dec8
 		if (((i8751_out & 0x2) != 0x2) && latch[2]) {latch[2]=0; cpu_set_irq_line(0,M6809_IRQ_LINE,HOLD_LINE); i8751_return=0x2001; } /* Player 3 coin */
 		if (((i8751_out & 0x1) != 0x1) && latch[3]) {latch[3]=0; cpu_set_irq_line(0,M6809_IRQ_LINE,HOLD_LINE); i8751_return=0x1001; } /* Service */
 	
-		if (nmi_enable) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
+		if (nmi_enable != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
 	} };
 	
 	public static InterruptHandlerPtr gondo_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (nmi_enable)
+		if (nmi_enable != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
 	} };
 	

@@ -128,7 +128,7 @@ public class shangkid
 				break;
 			}
 	
-			if( bank&0x01 ) tile += 0x40;
+			if ((bank & 0x01) != 0) tile += 0x40;
 			transparent_pen = 7;
 		}
 	
@@ -290,7 +290,7 @@ public class shangkid
 			sy = 240-videoram[0x1380+i];
 	
 			sx = videoram[0x1381+i]-64+8+16;
-			if( attr&1 ) sx += 0x100;
+			if ((attr & 1) != 0) sx += 0x100;
 	
 			drawgfx(
 					bitmap,

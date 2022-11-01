@@ -83,7 +83,7 @@
 	pair.b.l = SPL+RDOPARG();									\
 	pair.b.h = SPH; 											\
 	EAL = RDMEM(pair.d);										\
-	if( P & F_E )												\
+	if ((P & F_E) != 0)												\
 		pair.b.l++; 											\
 	else														\
 		pair.w.l++; 											\
@@ -110,13 +110,13 @@
  * push a register onto the stack
  ***************************************************************/
 #undef PUSH
-#define PUSH(Rg) WRMEM(SPD, Rg); if (P&F_E) { S--; } else { SW--; }
+#define PUSH(Rg) WRMEM(SPD, Rg); if ((P & F_E) != 0) { S--; } else { SW--; }
 
 /***************************************************************
  * pull a register from the stack
  ***************************************************************/
 #undef PULL
-#define PULL(Rg) if (P&F_E) { S++; } else { SW++; } Rg = RDMEM(SPD)
+#define PULL(Rg) if ((P & F_E) != 0) { S++; } else { SW++; } Rg = RDMEM(SPD)
 
 /* the order in which the args are pushed is correct! */
 #define PUSH_WORD(pair) PUSH(pair.b.l);PUSH(pair.b.h)
@@ -127,7 +127,7 @@
  ***************************************************************/
 #undef BRA
 #define BRA(cond)												\
-	if (cond)													\
+	if (cond != 0)													\
 	{															\
 		tmp = RDOPARG();										\
 		EAW = PCW + (signed char)tmp;							\
@@ -143,7 +143,7 @@
  *	BRA  branch relative
  ***************************************************************/
 #define BRA_WORD(cond)											\
-	if (cond)													\
+	if (cond != 0)													\
 	{															\
 		EAL = RDOPARG();										\
 		EAH = RDOPARG();										\
@@ -180,7 +180,7 @@
  *	rts imm
  ***************************************************************/
 #define RTN 												\
-  if (P&F_E) { S+=tmp; } else { SW+=tmp; }
+  if ((P & F_E) != 0) { S+=tmp; } else { SW+=tmp; }
 
 /* 65ce02 ******************************************************
  *	NEG accu
@@ -400,7 +400,7 @@
  ***************************************************************/
 #undef PLP
 #define PLP 													\
-	if ( P & F_I )												\
+	if ((P & F_I) != 0)												\
 	{															\
 		UINT8 temp; \
 		PULL(temp);												\

@@ -109,11 +109,11 @@ public class bzone
 			}
 	
 			/* explosion enable: charge C14 */
-			if( latch & 0x01 )
+			if ((latch & 0x01) != 0)
 				explosion_amp = 32767;
 	
 			/* explosion output? */
-			if( explosion_out )
+			if (explosion_out != 0)
 			{
 				if( explosion_amp > 0 )
 				{
@@ -135,18 +135,18 @@ public class bzone
 				 * I don't know the amplification of the op-amp
 				 * and feedback, so the loud/soft values are arbitrary
 				 */
-				if( latch & 0x02 )	/* explosion loud ? */
+				if ((latch & 0x02) != 0)	/* explosion loud ? */
 					sum += EXP(0,explosion_amp)/3;
 				else
 					sum += EXP(0,explosion_amp)/4;
 			}
 	
 			/* shell enable: charge C9 */
-			if( latch & 0x04 )
+			if ((latch & 0x04) != 0)
 				shell_amp = 32767;
 	
 			/* shell output? */
-			if( shell_out )
+			if (shell_out != 0)
 			{
 				if( shell_amp > 0 )
 				{
@@ -168,13 +168,13 @@ public class bzone
 				 * I don't know the amplification of the op-amp
 				 * and feedback, so the loud/soft values are arbitrary
 				 */
-				if( latch & 0x08 )	/* shell loud ? */
+				if ((latch & 0x08) != 0)	/* shell loud ? */
 					sum += EXP(0,shell_amp)/3;
 				else
 					sum += EXP(0,shell_amp)/4;
 			}
 	
-			if( latch & 0x80 )
+			if ((latch & 0x80) != 0)
 			{
 				static double r0 = 1.0/1e12, r1 = 1.0/1e12;
 	
@@ -211,7 +211,7 @@ public class bzone
 					if( ++motor_counter_b == 16 )
 						motor_counter_b = 4;
 	
-					if( motor_counter_a & 8 )	/* bit 3 */
+					if ((motor_counter_a & 8) != 0)	/* bit 3 */
 						r1 += 1.0/33000;
 					else
 						r0 += 1.0/33000;
@@ -220,7 +220,7 @@ public class bzone
 					else
 						r0 += 1.0/33000;
 	
-					if( motor_counter_b & 8 )	/* bit 3 */
+					if ((motor_counter_b & 8) != 0)	/* bit 3 */
 						r1 += 1.0/33000;
 					else
 						r0 += 1.0/33000;

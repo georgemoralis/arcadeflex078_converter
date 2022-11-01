@@ -32,7 +32,7 @@ public class jackal
 		{
 			COLOR(0,i) = (i & 0xff) + 256;
 			/* this is surely wrong - is there a PROM missing? */
-			if (i & 0x0f)
+			if ((i & 0x0f) != 0)
 				COLOR(0,i) |= i/256;
 		}
 		for (i = 0;i < TOTAL_COLORS(1);i++)
@@ -90,13 +90,13 @@ public class jackal
 			sp  = sram[offs+4];
 	
 			if (sy > 0xF0) sy = sy - 256;
-			if (sp & 0x01) sx = sx - 256;
+			if ((sp & 0x01) != 0) sx = sx - 256;
 	
 			flipx = sp & 0x20;
 			flipy = sp & 0x40;
 			color = ((sn2 & 0xf0)>>4);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;
@@ -104,7 +104,7 @@ public class jackal
 				sy = 240 - sy;
 			}
 	
-			if (sp & 0xC)    /* half sized sprite */
+			if ((sp & 0xC) != 0)    /* half sized sprite */
 			{
 				spritenum = sn1*4 + ((sn2 & (8+4)) >> 2) + ((sn2 & (2+1)) << 10);
 	
@@ -152,7 +152,7 @@ public class jackal
 			{
 				spritenum = sn1 + ((sn2 & 0x3) << 8);
 	
-				if (sp & 0x10)
+				if ((sp & 0x10) != 0)
 				{
 					drawgfx(bitmap,Machine->gfx[bank],
 						spritenum,

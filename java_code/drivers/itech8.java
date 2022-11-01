@@ -231,11 +231,11 @@ public class itech8
 			int level = 0;
 	
 			/* determine which level is active */
-			if (blitter_int) level = 2;
-			if (periodic_int) level = 3;
+			if (blitter_int != 0) level = 2;
+			if (periodic_int != 0) level = 3;
 	
 			/* update it */
-			if (level)
+			if (level != 0)
 				cpu_set_irq_line(0, level, ASSERT_LINE);
 			else
 				cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -256,7 +256,7 @@ public class itech8
 		itech8_update_interrupts(1, -1, -1);
 		itech8_update_interrupts(0, -1, -1);
 	
-		if (FULL_LOGGING) logerror("------------ VBLANK (%d) --------------\n", cpu_getscanline());
+		if (FULL_LOGGING != 0) logerror("------------ VBLANK (%d) --------------\n", cpu_getscanline());
 	} };
 	
 	
@@ -480,7 +480,7 @@ public class itech8
 				break;
 	
 			default:	/* log everything else */
-				if (FULL_LOGGING) logerror("VIA write(%02x) = %02x\n", offset, data);
+				if (FULL_LOGGING != 0) logerror("VIA write(%02x) = %02x\n", offset, data);
 				break;
 		}
 	} };
@@ -504,7 +504,7 @@ public class itech8
 				break;
 		}
 	
-		if (FULL_LOGGING) logerror("VIA read(%02x) = %02x\n", offset, result);
+		if (FULL_LOGGING != 0) logerror("VIA read(%02x) = %02x\n", offset, result);
 		return result;
 	} };
 	
@@ -539,53 +539,53 @@ public class itech8
 	
 	static WRITE16_HANDLER( sound_data16_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			sound_data_w(0, data >> 8);
 	}
 	
 	
 	static WRITE16_HANDLER( grom_bank16_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			*itech8_grom_bank = data >> 8;
 	}
 	
 	
 	static WRITE16_HANDLER( display_page16_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			*itech8_display_page = ~data >> 8;
 	}
 	
 	
 	static WRITE16_HANDLER( tms34061_latch16_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			tms34061_latch_w(0, data >> 8);
 	}
 	
 	
 	static WRITE16_HANDLER( blitter16_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			itech8_blitter_w(offset * 2 + 0, data >> 8);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			itech8_blitter_w(offset * 2 + 1, data);
 	}
 	
 	
 	static WRITE16_HANDLER( palette16_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			itech8_palette_w(offset / 8, data >> 8);
 	}
 	
 	
 	static WRITE16_HANDLER( tms34061_16_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			itech8_tms34061_w(offset * 2 + 0, data >> 8);
-		else if (ACCESSING_LSB)
+		else if (ACCESSING_LSB != 0)
 			itech8_tms34061_w(offset * 2 + 1, data);
 	}
 	
@@ -601,9 +601,9 @@ public class itech8
 	{
 		int i;
 	
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, main_ram, main_ram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, main_ram, main_ram_size);
 		else
 			for (i = 0; i < main_ram_size; i++)

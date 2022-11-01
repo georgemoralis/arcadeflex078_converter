@@ -212,7 +212,7 @@ public class mazerbla
 		}
 	
 	
-		if (dbg_info)
+		if (dbg_info != 0)
 		{
 			trueorientation = Machine->orientation;
 			Machine->orientation = ROT0;
@@ -754,7 +754,7 @@ public class mazerbla
 		case 0x0e:
 		case 0x0d:
 		case 0x0c:
-	//if (dbg_gfx_e)
+	//if (dbg_gfx_e != 0)
 	//{
 		//if (vbank==dbg_vbank)
 		{
@@ -805,7 +805,7 @@ public class mazerbla
 		case 0x0a:/* verified - 1bpp */
 		case 0x09:/* verified - 1bpp: gun crosshair */
 		case 0x08:/* */
-	//if (dbg_gfx_e)
+	//if (dbg_gfx_e != 0)
 	//{
 		//if (vbank==dbg_vbank)
 		{
@@ -839,7 +839,7 @@ public class mazerbla
 		case 0x03:
 		case 0x01:
 		case 0x00:
-	//if (dbg_gfx_e)
+	//if (dbg_gfx_e != 0)
 	//{
 		//if (vbank==dbg_vbank)
 		{
@@ -888,7 +888,7 @@ public class mazerbla
 	unsigned char * rom = memory_region(REGION_CPU3) + (gfx_rom_bank * 0x2000) + 0x10000;
 	
 	/*
-		//if (0) //(mode != 0x07)
+		//if (0 != 0) //(mode != 0x07)
 		{
 			logerror("paladr=");
 			logerror("%3x ",VCU_gfx_param_addr );
@@ -926,7 +926,7 @@ public class mazerbla
 		case 0x03:
 	/* ... this may proove that there is really only one area and that
 	 the draw command/palette selector is done via the 'mode' only ... */
-		//if (dbg_clr_e)
+		//if (dbg_clr_e != 0)
 		{
 			offs = VCU_gfx_addr;
 	

@@ -44,8 +44,8 @@ public class tsamurai
 	static void get_fg_tile_info(int tile_index)
 	{
 		int tile_number = videoram[tile_index];
-		if (textbank1 & 0x01) tile_number += 256; /* legacy */
-		if (textbank2 & 0x01) tile_number += 512; /* Mission 660 add-on */
+		if ((textbank1 & 0x01) != 0) tile_number += 256; /* legacy */
+		if ((textbank2 & 0x01) != 0) tile_number += 512; /* Mission 660 add-on */
 		SET_TILE_INFO(
 				1,
 				tile_number,
@@ -136,7 +136,7 @@ public class tsamurai
 		if( colorram[offset]!=data )
 		{
 			colorram[offset]=data;
-			if (offset & 1)
+			if ((offset & 1) != 0)
 			{
 				int col = offset/2;
 				int row;
@@ -191,7 +191,7 @@ public class tsamurai
 			/* So I'm using this specific check. -kal 11 jul 2002 */
 	//		if(sprite_type == 1) sy=sy+2;
 	
-			if( flip_screen )
+			if (flip_screen != 0)
 			{
 				drawgfx( bitmap,gfx,
 					sprite_number&0x7f,
@@ -262,7 +262,7 @@ public class tsamurai
 	{
 		int tile_number = videoram[tile_index];
 		int color = vsgongf_color&0x1f;
-		if( textbank1 ) tile_number += 0x100;
+		if (textbank1 != 0) tile_number += 0x100;
 		SET_TILE_INFO(
 				1,
 				tile_number,

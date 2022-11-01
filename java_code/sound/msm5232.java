@@ -341,7 +341,7 @@ public class msm5232
 		if (ofst < 0x08) /* pitch */
 		{
 			int ch = ofst&7;
-			if(data&0x80)
+			if ((data & 0x80) != 0)
 			{
 				if(data >= 0xd8)
 				{
@@ -419,7 +419,7 @@ public class msm5232
 				/*if (chip->control1 != data)
 					logerror("msm5232: control1 ctrl=%x OE=%x\n", data&0xf0, data&0x0f);*/
 	
-				/*if (data & 0x10)
+				/*if ((data & 0x10) != 0)
 					usrintf_showmessage("msm5232: control1 ctrl=%2x\n", data);*/
 	
 				chip->control1 = data;
@@ -439,7 +439,7 @@ public class msm5232
 				/*if (chip->control2 != data)
 					logerror("msm5232: control2 ctrl=%x OE=%x\n", data&0xf0, data&0x0f);*/
 	
-				/*if (data & 0x10)
+				/*if ((data & 0x10) != 0)
 					usrintf_showmessage("msm5232: control2 ctrl=%2x\n", data);*/
 	
 				chip->control2 = data;

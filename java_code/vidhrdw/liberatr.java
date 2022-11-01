@@ -129,7 +129,7 @@ public class liberatr
 		g = ((~data     ) & 0x07) * 0x24 + 3;  if (g == 3)  g = 0;
 		b = ((~data >> 5) & 0x06) * 0x24 + 3;  if (b == 3)  b = 0;
 	
-		if (offset & 0x10)
+		if ((offset & 0x10) != 0)
 		{
 			/* bitmap colorram values */
 			offset = penmap[offset & 0x07];
@@ -198,7 +198,7 @@ public class liberatr
 					   latitude and longitude scaled from the scaling PROMS
 					*/
 					address = (latitude << 5) + segment;
-					if (planet_select)
+					if (planet_select != 0)
 						planet_data = (planet_rom[0x0000+address] << 8) + planet_rom[0x1000+address];
 					else
 						planet_data = (planet_rom[0x2000+address] << 8) + planet_rom[0x3000+address];
@@ -210,7 +210,7 @@ public class liberatr
 					/* scale the longitude limit (adding the starting longitude) */
 					address = longitude + ( length >> 1 ) + ( length & 1 );		/* shift with rounding */
 					visible_array[segment] = (( address & 0x100 ) ? 1 : 0);
-					if (address & 0x80)
+					if ((address & 0x80) != 0)
 					{
 						longitude_scale_factor = 0xff;
 					}

@@ -196,7 +196,7 @@ public class kabuki
 	
 		/* the main CPU can read the ROM and checksum it to verify that it hasn't been */
 		/* replaced with a decrypted one. */
-		if (backup) memcpy(backup,rom,0x8000);
+		if (backup != 0) memcpy(backup,rom,0x8000);
 	
 		memory_set_opcode_base(1,rom+diff);
 		kabuki_decode(rom,rom+diff,rom,0x0000,0x8000, swap_key1,swap_key2,addr_key,xor_key);

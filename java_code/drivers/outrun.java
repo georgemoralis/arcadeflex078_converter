@@ -90,7 +90,7 @@ public class outrun
 	{
 		UINT8 *buf = malloc( source_size );
 		UINT8 *buf_base = buf;
-		if( buf ){
+		if (buf != 0){
 			UINT8 *gr = memory_region(REGION_GFX3);
 			UINT8 *grr = NULL;
 		    int i,j,k;
@@ -159,7 +159,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( sys16_3d_coinctrl_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x10;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -175,7 +175,7 @@ public class outrun
 	
 	#if 0
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
 		}
@@ -189,7 +189,7 @@ public class outrun
 	#if 0
 	static WRITE16_HANDLER( sys16_coinctrl_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x20;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -203,7 +203,7 @@ public class outrun
 	#endif
 	
 	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if(sys16_custom_irq) sys16_custom_irq();
+		if (sys16_custom_irq != 0) sys16_custom_irq();
 		cpu_set_irq_line(cpu_getactivecpu(), 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
 	} };
 	
@@ -238,10 +238,10 @@ public class outrun
 	
 	static WRITE16_HANDLER( sound_shared_ram_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			sound_shared_ram[offset*2+1] = data&0xff;
 		}
-		if( ACCESSING_MSB ){
+		if (ACCESSING_MSB != 0){
 			sound_shared_ram[offset*2] = data>>8;
 		}
 	}
@@ -677,7 +677,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( outrun_analog_select_w )
 	{
-		if ( ACCESSING_LSB )
+		if (ACCESSING_LSB != 0)
 		{
 			selected_analog = (data & 0x0c) >> 2;
 		}
@@ -689,10 +689,10 @@ public class outrun
 	{
 		int ret=input_port_2_r( offset );
 		int data=input_port_1_r( offset );
-		if(data & 4) or_gear=0;
-		else if(data & 8) or_gear=1;
+		if ((data & 4) != 0) or_gear=0;
+		else if ((data & 8) != 0) or_gear=1;
 	
-		if(or_gear) ret|=0x10;
+		if (or_gear != 0) ret|=0x10;
 		else ret&=0xef;
 	
 		return ret;
@@ -705,7 +705,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( outrun_ctrl1_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			sys16_refreshenable = data & 0x20;
 			/* bit 0 always 1? */
 			/* bits 2-3 continuously change: 00-01-10-11; this is the same that
@@ -715,7 +715,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( outrun_ctrl2_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			/* bit 0 always 1? */
 			set_led_status(0,data & 0x04);
 			set_led_status(1,data & 0x02);	/* brakes */

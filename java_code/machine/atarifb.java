@@ -30,7 +30,7 @@ public class atarifb
 		discrete_sound_w(3, (data & 0x10) ? 0 : 1);	// Attract
 		discrete_sound_w(4,  data & 0x04);		// Noise Enable / Kicker
 	
-		if (GAME_IS_SOCCER)
+		if (GAME_IS_SOCCER != 0)
 		{
 			/* bit 0 = whistle */
 			/* bit 1 = hit */
@@ -43,12 +43,12 @@ public class atarifb
 			set_led_status(1,data & 0x80);
 		}
 	
-		if (GAME_IS_FOOTBALL4)
+		if (GAME_IS_FOOTBALL4 != 0)
 			coin_counter_w (1, data & 0x80);
 		
-		if (GAME_IS_BASEBALL)
+		if (GAME_IS_BASEBALL != 0)
 		{
-			if (data & 0x80)
+			if ((data & 0x80) != 0)
 			{
 				/* Invert video */
 				palette_set_color(2,0x00,0x00,0x00); /* black  */
@@ -70,7 +70,7 @@ public class atarifb
 	
 		coin_counter_w (0, data & 0x10);
 	
-		if (GAME_IS_SOCCER)
+		if (GAME_IS_SOCCER != 0)
 		{
 			coin_counter_w (1, data & 0x20);
 			coin_counter_w (2, data & 0x40);

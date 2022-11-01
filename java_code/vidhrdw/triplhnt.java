@@ -83,7 +83,7 @@ public class triplhnt
 	
 			/* sprite placement might be wrong */
 	
-			if (triplhnt_sprite_zoom)
+			if (triplhnt_sprite_zoom != 0)
 			{
 				rect.min_x = hpos - 16;
 				rect.min_y = 196 - vpos;

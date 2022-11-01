@@ -59,7 +59,7 @@ public class sega
 		do {
 			draw = vectorram[symbolIndex++];
 	
-			if (draw & 1)	/* if symbol active */
+			if ((draw & 1) != 0)	/* if symbol active */
 			{
 				currentX    = vectorram[symbolIndex + 0] | (vectorram[symbolIndex + 1] << 8);
 				currentY    = vectorram[symbolIndex + 2] | (vectorram[symbolIndex + 3] << 8);
@@ -95,7 +95,7 @@ public class sega
 					color = VECTOR_COLOR222((attrib >> 1) & 0x3f);
 					if ((attrib & 1) && color)
 					{
-						if (translucency)
+						if (translucency != 0)
 							intensity = 0xa0; /* leave room for translucency */
 						else
 							intensity = 0xff;

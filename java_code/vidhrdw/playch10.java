@@ -13,7 +13,7 @@ public class playch10
 	
 	public static WriteHandlerPtr playch10_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (pc10_sdcs)
+		if (pc10_sdcs != 0)
 		{
 			if (videoram[offset] != data)
 			{
@@ -134,7 +134,7 @@ public class playch10
 			ppu2c03b_render( 0, bitmap, 0, 0, 0, 30*8 );
 	
 			/* if this is a gun game, draw a simple crosshair */
-			if ( pc10_gun_controller )
+			if (pc10_gun_controller != 0)
 			{
 				int x_center = readinputport( 5 );
 				int y_center = readinputport( 6 ) + 30*8;

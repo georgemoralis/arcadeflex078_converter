@@ -68,7 +68,7 @@ public class hiscore
 	{
 		const char *string = *pString;
 		UINT32 result = 0;
-		if (string)
+		if (string != 0)
 		{
 			for(;;)
 			{
@@ -173,14 +173,14 @@ public class hiscore
 		mame_file *f = mame_fopen (Machine->gamedrv->name, 0, FILETYPE_HIGHSCORE, 0);
 		state.hiscores_have_been_loaded = 1;
 		LOG(("hs_load\n"));
-		if (f)
+		if (f != 0)
 		{
 			struct mem_range *mem_range = state.mem_range;
 			LOG(("loading...\n"));
 			while (mem_range)
 			{
 				UINT8 *data = malloc (mem_range->num_bytes);
-				if (data)
+				if (data != 0)
 				{
 					/*	this buffer will almost certainly be small
 						enough to be dynamically allocated, but let's
@@ -200,14 +200,14 @@ public class hiscore
 	{
 		mame_file *f = mame_fopen (Machine->gamedrv->name, 0, FILETYPE_HIGHSCORE, 1);
 		LOG(("hs_save\n"));
-		if (f)
+		if (f != 0)
 		{
 			struct mem_range *mem_range = state.mem_range;
 			LOG(("saving...\n"));
 			while (mem_range)
 			{
 				UINT8 *data = malloc (mem_range->num_bytes);
-				if (data)
+				if (data != 0)
 				{
 					/*	this buffer will almost certainly be small
 						enough to be dynamically allocated, but let's
@@ -233,7 +233,7 @@ public class hiscore
 	
 		LOG(("hs_open: '%s'\n", name));
 	
-		if (f)
+		if (f != 0)
 		{
 			char buffer[MAX_CONFIG_LINE_SIZE];
 			enum { FIND_NAME, FIND_DATA, FETCH_DATA } mode;
@@ -253,7 +253,7 @@ public class hiscore
 				{
 					const char *pBuf = buffer;
 					struct mem_range *mem_range = malloc(sizeof(struct mem_range));
-					if (mem_range)
+					if (mem_range != 0)
 					{
 						mem_range->cpu = hexstr2num (&pBuf);
 						mem_range->addr = hexstr2num (&pBuf);

@@ -105,7 +105,7 @@ public class galivan
 		/* pens 0-7; the top two bits for pens 8-15. */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			if (i & 8) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
+			if ((i & 8) != 0) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
 			else COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0x30) >> 0);
 		}
 	
@@ -121,7 +121,7 @@ public class galivan
 	
 			for (j = 0;j < 16;j++)
 			{
-				if (i & 8)
+				if ((i & 8) != 0)
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x0c) << 2) + (*color_prom & 0x0f);
 				else
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x03) << 4) + (*color_prom & 0x0f);
@@ -284,7 +284,7 @@ public class galivan
 		tilemap_set_flip (tx_tilemap, flipscreen ? TILEMAP_FLIPX|TILEMAP_FLIPY : 0);
 	
 		/* bit 3 text bank flag ??? */
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 		{
 			/* This is a temporary condition specification. */
 	
@@ -336,9 +336,9 @@ public class galivan
 	{
 		static int up = 0;
 		if (offset == 1) {
-			if (data & 0x80)
+			if ((data & 0x80) != 0)
 				up = 1;
-			else if (up) {
+			else if (up != 0) {
 				layers = data & 0x60;
 				up = 0;
 			}
@@ -387,7 +387,7 @@ public class galivan
 	
 			sx = (spriteram[offs+3] - 0x80) + 256 * (attr & 0x01);
 			sy = 240 - spriteram[offs];
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -413,7 +413,7 @@ public class galivan
 		tilemap_set_scrollx(bg_tilemap,0,scrollx[0] + 256 * (scrollx[1] & 0x07));
 		tilemap_set_scrolly(bg_tilemap,0,scrolly[0] + 256 * (scrolly[1] & 0x07));
 	
-		if (layers & 0x40)
+		if ((layers & 0x40) != 0)
 			fillbitmap(bitmap,Machine->pens[0],cliprect);
 		else
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
@@ -431,7 +431,7 @@ public class galivan
 		tilemap_set_scrollx(bg_tilemap,0,scrollx[0] + 256 * (scrollx[1] & 0x1f));
 		tilemap_set_scrolly(bg_tilemap,0,scrolly[0] + 256 * (scrolly[1] & 0xff));
 	
-		if (ninjemak_dispdisable)
+		if (ninjemak_dispdisable != 0)
 			fillbitmap(bitmap,Machine->pens[0],cliprect);
 		else
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);

@@ -52,12 +52,12 @@ public class freekick
 			int flipy = 0;
 			int color = spriteram[offs + 1] & 0x1f;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				xpos = 240 - xpos;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				ypos = 256 - ypos;
 				flipy = !flipy;
@@ -87,12 +87,12 @@ public class freekick
 			int flipy = 0;//spriteram[offs + 0] & 0x40;
 			int color = spriteram[offs + 1] & 0x0f;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				xpos = 240 - xpos;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				ypos = 256 - ypos;
 				flipy = !flipy;
@@ -123,12 +123,12 @@ public class freekick
 			int flipy = spriteram[offs + 2] & 0x40;
 			int color = spriteram[offs + 2] & 0x1f;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				xpos = 240 - xpos;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				ypos = 256 - ypos;
 				flipy = !flipy;

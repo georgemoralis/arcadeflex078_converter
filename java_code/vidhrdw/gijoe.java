@@ -90,7 +90,7 @@ public class gijoe
 		// update tile offsets
 		K056832_read_AVAC(&vrc_mode, &vrc_new);
 	
-		if (vrc_mode)
+		if (vrc_mode != 0)
 		{
 			for (dirty=0xf000; dirty; dirty>>=4) if ((AVAC_vrc & dirty) != (vrc_new & dirty)) mask |= dirty;
 	
@@ -114,7 +114,7 @@ public class gijoe
 			if (layer_colorbase[i] != colorbase_new) { layer_colorbase[i] = colorbase_new; dirty = 1; }
 			if (AVAC_occupancy[i] & mask) dirty = 1;
 	
-			if (dirty) { AVAC_occupancy[i] = 0; K056832_mark_plane_dirty(i); }
+			if (dirty != 0) { AVAC_occupancy[i] = 0; K056832_mark_plane_dirty(i); }
 		}
 	
 		/*

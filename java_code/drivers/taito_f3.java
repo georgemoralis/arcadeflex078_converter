@@ -108,7 +108,7 @@ public class taito_f3
 				watchdog_reset_w(0,0);
 				return;
 			case 0x01: /* Coin counters & lockouts */
-				if (ACCESSING_MSB32) {
+				if (ACCESSING_MSB32 != 0) {
 					coin_lockout_w(0,~data & 0x01000000);
 					coin_lockout_w(1,~data & 0x02000000);
 					coin_counter_w(0, data & 0x04000000);
@@ -117,14 +117,14 @@ public class taito_f3
 				}
 				return;
 			case 0x04: /* Eeprom */
-				if (ACCESSING_LSB32) {
+				if (ACCESSING_LSB32 != 0) {
 					EEPROM_set_clock_line((data & 0x08) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x04);
 					EEPROM_set_cs_line((data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
 				}
 				return;
 			case 0x05:	/* Player 3 & 4 coin counters */
-				if (ACCESSING_MSB32) {
+				if (ACCESSING_MSB32 != 0) {
 					coin_lockout_w(2,~data & 0x01000000);
 					coin_lockout_w(3,~data & 0x02000000);
 					coin_counter_w(2, data & 0x04000000);
@@ -153,7 +153,7 @@ public class taito_f3
 			unsigned int idx;
 	
 			idx = (offset << 1) & 0x1e;
-			if (ACCESSING_LSW32)
+			if (ACCESSING_LSW32 != 0)
 				idx += 1;
 	
 			if (idx >= 8)
@@ -2822,7 +2822,7 @@ public class taito_f3
 			indices are always related to 4 bpp data, even in 6 bpp games.
 	
 		*/
-		if (uses_5bpp_tiles)
+		if (uses_5bpp_tiles != 0)
 			for (i=half; i<size; i+=2)
 				gfx[i+1]=0;
 	

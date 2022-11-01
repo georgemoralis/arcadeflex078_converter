@@ -163,7 +163,7 @@ public class tait8741
 						}
 						break;
 					case TAITO8741_PORT:
-						if( data & 0xf8)
+						if ((data & 0xf8) != 0)
 						{ /* ?? */
 						}
 						else
@@ -194,7 +194,7 @@ public class tait8741
 					break;
 				case 0x08:	/* latch received serial data */
 					st->txd[0] = st->portHandler ? st->portHandler(0) : 0;
-					if( sst )
+					if (sst != 0)
 					{
 						timer_set (TIME_NOW,num,taito8741_serial_tx);
 						st->serial_out = 0;
@@ -217,7 +217,7 @@ public class tait8741
 				case 0x62:  /* 8741-3   : ? */
 					break;
 				case 0x4a:	/* ?? syncronus with other cpu and return 00H */
-					if( sst )
+					if (sst != 0)
 					{
 						if(sst->pending4a)
 						{
@@ -324,44 +324,44 @@ public class tait8741
 	/* Write port handler */
 	public static WriteHandlerPtr TAITO8741_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(offset&1) I8741_command_w(0,data);
+		if ((offset & 1) != 0) I8741_command_w(0,data);
 		else         I8741_data_w(0,data);
 	} };
 	public static WriteHandlerPtr TAITO8741_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(offset&1) I8741_command_w(1,data);
+		if ((offset & 1) != 0) I8741_command_w(1,data);
 		else         I8741_data_w(1,data);
 	} };
 	public static WriteHandlerPtr TAITO8741_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(offset&1) I8741_command_w(2,data);
+		if ((offset & 1) != 0) I8741_command_w(2,data);
 		else         I8741_data_w(2,data);
 	} };
 	public static WriteHandlerPtr TAITO8741_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(offset&1) I8741_command_w(3,data);
+		if ((offset & 1) != 0) I8741_command_w(3,data);
 		else         I8741_data_w(3,data);
 	} };
 	
 	/* Read port handler */
 	public static ReadHandlerPtr TAITO8741_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(offset&1) return I8741_status_r(0);
+		if ((offset & 1) != 0) return I8741_status_r(0);
 		return I8741_data_r(0);
 	} };
 	public static ReadHandlerPtr TAITO8741_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(offset&1) return I8741_status_r(1);
+		if ((offset & 1) != 0) return I8741_status_r(1);
 		return I8741_data_r(1);
 	} };
 	public static ReadHandlerPtr TAITO8741_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(offset&1) return I8741_status_r(2);
+		if ((offset & 1) != 0) return I8741_status_r(2);
 		return I8741_data_r(2);
 	} };
 	public static ReadHandlerPtr TAITO8741_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(offset&1) return I8741_status_r(3);
+		if ((offset & 1) != 0) return I8741_status_r(3);
 		return I8741_data_r(3);
 	} };
 }

@@ -187,7 +187,7 @@ public class skydiver
 			charcode = (charcode & 0x07) | ((charcode & 0x60) >> 2);
 			color = pic & 0x01;
 	
-			if (wide)
+			if (wide != 0)
 			{
 				sx -= 8;
 			}

@@ -219,7 +219,7 @@ public class lwings
 				flipx = buffered_spriteram[offs + 1] & 0x02;
 				flipy = buffered_spriteram[offs + 1] & 0x04;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -257,7 +257,7 @@ public class lwings
 					   ((buffered_spriteram[offs + 1] & 0x80) << 3);
 				color = (buffered_spriteram[offs + 1] & 0x0e) >> 1;
 	
-				if( bAvengersHardware )
+				if (bAvengersHardware != 0)
 				{
 					flipx = 0;										/* Avengers */
 					flipy = ~buffered_spriteram[offs + 1] & 0x10;
@@ -268,7 +268,7 @@ public class lwings
 					flipy = 1;
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

@@ -192,9 +192,9 @@ public class jedi
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
-	    if (data & 0x01) cpu_setbank(1, &RAM[0x10000]);
-	    if (data & 0x02) cpu_setbank(1, &RAM[0x14000]);
-	    if (data & 0x04) cpu_setbank(1, &RAM[0x18000]);
+	    if ((data & 0x01) != 0) cpu_setbank(1, &RAM[0x10000]);
+	    if ((data & 0x02) != 0) cpu_setbank(1, &RAM[0x14000]);
+	    if ((data & 0x04) != 0) cpu_setbank(1, &RAM[0x18000]);
 	} };
 	
 	
@@ -333,7 +333,7 @@ public class jedi
 	
 	public static WriteHandlerPtr nvram_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (nvram_enabled)
+		if (nvram_enabled != 0)
 			generic_nvram[offset] = data;
 	} };
 	

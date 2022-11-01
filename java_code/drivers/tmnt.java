@@ -109,9 +109,9 @@ public class tmnt
 	{
 		/* it seems that a word write is supposed to affect only the MSB. The */
 		/* "ROUND 1" text in punkshtj goes lost otherwise. */
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			K052109_w(offset,(data >> 8) & 0xff);
-		else if (ACCESSING_LSB)
+		else if (ACCESSING_LSB != 0)
 			K052109_w(offset + 0x2000,data & 0xff);
 	}
 	
@@ -129,7 +129,7 @@ public class tmnt
 	/* A1, A5 and A6 don't go to the 053245. */
 	static READ16_HANDLER( K053245_scattered_word_r )
 	{
-		if (offset & 0x0031)
+		if ((offset & 0x0031) != 0)
 			return spriteram16[offset];
 		else
 		{
@@ -160,9 +160,9 @@ public class tmnt
 	{
 		offset &= ~1;	/* handle mirror address */
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			K053244_w(offset,(data >> 8) & 0xff);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			K053244_w(offset + 1,data & 0xff);
 	}
 	
@@ -176,7 +176,7 @@ public class tmnt
 				break;
 	
 			default:
-				if (cbj_snd_irqlatch)
+				if (cbj_snd_irqlatch != 0)
 					cpu_set_irq_line(0, MC68000_IRQ_6, HOLD_LINE);
 				break;
 		}
@@ -198,7 +198,7 @@ public class tmnt
 	
 	static WRITE16_HANDLER( tmnt_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			soundlatch_w(0,data & 0xff);
 	}
 	
@@ -228,10 +228,10 @@ public class tmnt
 	
 	static WRITE16_HANDLER( glfgreat_sound_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			K053260_0_w(offset, (data >> 8) & 0xff);
 	
-		if (offset)
+		if (offset != 0)
 			cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	}
 	
@@ -242,7 +242,7 @@ public class tmnt
 	
 	static WRITE16_HANDLER( prmrsocr_sound_cmd_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			data &= 0xff;
 			if (offset == 0) soundlatch_w(0,data);
@@ -291,7 +291,7 @@ public class tmnt
 		UPD7759_reset_w(0, data & 2);
 	
 		/* bit 2 plays the title music */
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 		{
 			if (!sample_playing(0))	sample_start(0,0,0);
 		}
@@ -478,13 +478,13 @@ public class tmnt
 	
 	static NVRAM_HANDLER( eeprom )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -502,7 +502,7 @@ public class tmnt
 		/* bit 3 is service button */
 		/* bit 6 is ??? VBLANK? OBJMPX? */
 		res = input_port_2_word_r(0,0);
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -531,7 +531,7 @@ public class tmnt
 		/* bit 2 is VBLANK (???) */
 		/* bit 7 is service button */
 		res = EEPROM_read_bit() | input_port_3_word_r(0,0);
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0x7f;
@@ -550,7 +550,7 @@ public class tmnt
 		/* bit 2 is VBLANK (???) */
 		/* bit 3 is service button */
 		res = EEPROM_read_bit() | input_port_3_word_r(0,0);
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -561,7 +561,7 @@ public class tmnt
 	
 	static WRITE16_HANDLER( detatwin_eeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 is data */
 			/* bit 1 is cs (active low) */
@@ -588,13 +588,13 @@ public class tmnt
 	
 	static NVRAM_HANDLER( thndrx2 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&thndrx2_eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -609,7 +609,7 @@ public class tmnt
 		int res;
 	
 		res = input_port_0_word_r(0,0);
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xf7ff;
@@ -635,7 +635,7 @@ public class tmnt
 	{
 		static int last;
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 is data */
 			/* bit 1 is cs (active low) */
@@ -661,7 +661,7 @@ public class tmnt
 		int res;
 	
 		res = input_port_0_word_r(0,0);
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xfdff;
@@ -678,12 +678,12 @@ public class tmnt
 	
 	static WRITE16_HANDLER( prmrsocr_eeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			prmrsocr_122000_w(offset,data,mem_mask);
 		}
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			/* bit 8 is data */
 			/* bit 9 is cs (active low) */
@@ -701,7 +701,7 @@ public class tmnt
 	
 	static WRITE16_HANDLER( cbj_snd_w )
 	{
-		if (offset)
+		if (offset != 0)
 		{
 			YM2151_data_port_0_w(0, data>>8);
 		}
@@ -1070,10 +1070,10 @@ public class tmnt
 		i = mod[0];
 		attr2 |= i & 0x0060;	// priority
 		keepaspect = (i & 0x0014) == 0x0014;
-		if (i & 0x8000) { attr1 |= 0x8000; }	// active
-		if (keepaspect)	{ attr1 |= 0x4000; }	// keep aspect
+		if ((i & 0x8000) != 0) { attr1 |= 0x8000; }	// active
+		if (keepaspect != 0)	{ attr1 |= 0x4000; }	// keep aspect
 	//	if (i & 0x????) { attr1 ^= 0x2000; yoffs = -yoffs; }	// flip y (not used?)
-		if (i & 0x4000) { attr1 ^= 0x1000; xoffs = -xoffs; }	// flip x
+		if ((i & 0x4000) != 0) { attr1 ^= 0x1000; xoffs = -xoffs; }	// flip x
 	
 		xmod = (INT16)mod[6];	// global x
 		ymod = (INT16)mod[7];	// global y

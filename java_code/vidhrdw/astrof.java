@@ -118,7 +118,7 @@ public class astrof
 		x = (offset >> 8) << 3;
 		y = 255 - (offset & 0xff);
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			x = 255 - x;
 			y = 255 - y;
@@ -233,7 +233,7 @@ public class astrof
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_astrof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (do_modify_palette)
+		if (do_modify_palette != 0)
 		{
 			modify_palette();
 	

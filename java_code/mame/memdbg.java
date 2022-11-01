@@ -154,7 +154,7 @@ public class memdbg
 				{
 					if( pCurAlloc == pMemPtr )
 					{
-						if( pPrevAlloc )
+						if (pPrevAlloc != 0)
 						{
 							pPrevAlloc->pNextAllocation = pMemPtr->pNextAllocation;
 						}
@@ -171,7 +171,7 @@ public class memdbg
 					pCurAlloc = pCurAlloc->pNextAllocation;
 				}
 			}
-			if( pErrorString )
+			if (pErrorString != 0)
 			{
 				printf( "ERROR!!! %s!: %p %s.%d\n",
 					pErrorString,

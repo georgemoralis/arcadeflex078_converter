@@ -363,7 +363,7 @@ public class ppu2c03b
 			index2 = nes_vram[ ( page2 >> 6 ) | tile_page ] + ( page2 & 0x3f );
 	
 			//27/12/2002
-			if( ppu_latch )
+			if (ppu_latch != 0)
 			{
 				(*ppu_latch)(( tile_page << 10 ) | ( page2 << 4 ));
 			}
@@ -464,7 +464,7 @@ public class ppu2c03b
 	
 			if ( size == 16 ) {
 				/* if it's 8x16 and odd-numbered, draw the other half instead */
-				if ( tile & 0x01 )
+				if ((tile & 0x01) != 0)
 				{
 					tile &= ~0x01;
 					tile |= 0x100;
@@ -478,25 +478,25 @@ public class ppu2c03b
 			index1 = chips[num].nes_vram[page] + ( tile & 0x3f );
 	
 			//27/12/2002
-			if ( ppu_latch )
+			if (ppu_latch != 0)
 				(*ppu_latch)(( sprite_page << 10 ) | ( (tile & 0xff) << 4 ));
 	
 			/* compute the character's line to draw */
 			sprite_line = scanline - y;
 	
-			if ( flipy )
+			if (flipy != 0)
 				sprite_line = ( size - 1 ) - sprite_line;
 	
 			paldata = &color_table[4 * color];
 			start = ( index1 % total_elements ) * char_modulo + sprite_line * line_modulo;
 			sd = &gfx_data[start];
 	
-			if ( pri )
+			if (pri != 0)
 			{
 				/* draw the low-priority sprites */
 				int j;
 	
-				if ( flipx )
+				if (flipx != 0)
 				{
 					for ( j = 0; j < 8; j++ )
 					{
@@ -552,7 +552,7 @@ public class ppu2c03b
 				/* draw the high-priority sprites */
 				int j;
 	
-				if ( flipx )
+				if (flipx != 0)
 				{
 					for ( j = 0; j < 8; j++ )
 					{
@@ -604,7 +604,7 @@ public class ppu2c03b
 				}
 			}
 	
-			if ( drawn )
+			if (drawn != 0)
 			{
 				/* if there are more than 8 sprites on this line, set the flag */
 				spriteCount++;
@@ -660,7 +660,7 @@ public class ppu2c03b
 		refresh_data += 0x1000;
 	
 		/* if it's rolled, increment the coarse y-scroll */
-		if ( refresh_data & 0x8000 )
+		if ((refresh_data & 0x8000) != 0)
 		{
 			UINT16 tmp;
 			tmp = ( refresh_data & 0x03e0 ) + 0x20;
@@ -900,7 +900,7 @@ public class ppu2c03b
 				ret = chips[num].videoram_data_latch;
 	
 				//27/12/2002
-				if ( ppu_latch )
+				if (ppu_latch != 0)
 					(*ppu_latch)( chips[num].videoram_addr & 0x3fff );
 	
 				if ( ( chips[num].videoram_addr >= 0x2000 ) && ( chips[num].videoram_addr <= 0x3fef ) )
@@ -1030,7 +1030,7 @@ public class ppu2c03b
 					int tempAddr = chips[num].videoram_addr & 0x3fff;
 	
 					//27/12/2002
-					if ( ppu_latch )
+					if (ppu_latch != 0)
 						(*ppu_latch)( tempAddr );
 	
 					/* if there's a callback, call it now */
@@ -1078,7 +1078,7 @@ public class ppu2c03b
 	
 						data &= 0x3f;
 	
-						if ( tempAddr & 0x03 )
+						if ((tempAddr & 0x03) != 0)
 						{
 							Machine->gfx[intf->gfx_layout_number[num]]->colortable[ tempAddr & 0x1f ] = Machine->pens[color_base+data];
 							chips[num].colortable_mono[tempAddr & 0x1f] = Machine->pens[color_base+(data & 0xf0)];

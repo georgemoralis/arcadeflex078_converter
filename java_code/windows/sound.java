@@ -206,7 +206,7 @@ public class sound
 			fprintf(stderr, "Sound buffer: overflows=%d underflows=%d\n", buffer_overflows, buffer_underflows);
 	
 	#if LOG_SOUND
-		if (sound_log)
+		if (sound_log != 0)
 			fprintf(sound_log, "Sound buffer: overflows=%d underflows=%d\n", buffer_overflows, buffer_underflows);
 		fclose(sound_log);
 	#endif
@@ -432,9 +432,9 @@ public class sound
 	
 	void osd_sound_enable(int enable_it)
 	{
-		if (stream_buffer)
+		if (stream_buffer != 0)
 		{
-			if (enable_it)
+			if (enable_it != 0)
 				IDirectSoundBuffer_SetVolume(stream_buffer, attenuation * 100);
 			else
 				IDirectSoundBuffer_SetVolume(stream_buffer, DSBVOLUME_MIN);
@@ -537,7 +537,7 @@ public class sound
 	static void dsound_kill(void)
 	{
 		// release the object
-		if (dsound)
+		if (dsound != 0)
 			IDirectSound_Release(dsound);
 		dsound = NULL;
 	}
@@ -583,7 +583,7 @@ public class sound
 			fprintf(stderr, "Error getting primary format: %08x\n", (UINT32)result);
 			goto cant_get_primary_format;
 		}
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Primary buffer: %d Hz, %d bits, %d channels\n",
 					(int)primary_format.nSamplesPerSec, (int)primary_format.wBitsPerSample, (int)primary_format.nChannels);
 	
@@ -638,11 +638,11 @@ public class sound
 	static void dsound_destroy_buffers(void)
 	{
 		// stop any playback
-		if (stream_buffer)
+		if (stream_buffer != 0)
 			IDirectSoundBuffer_Stop(stream_buffer);
 	
 		// release the buffer
-		if (stream_buffer)
+		if (stream_buffer != 0)
 			IDirectSoundBuffer_Release(stream_buffer);
 		stream_buffer = NULL;
 	}

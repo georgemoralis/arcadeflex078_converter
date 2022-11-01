@@ -68,7 +68,7 @@ public class ohmygod
 	
 	WRITE16_HANDLER( ohmygod_spritebank_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			spritebank = data & 0x8000;
 	}
 	

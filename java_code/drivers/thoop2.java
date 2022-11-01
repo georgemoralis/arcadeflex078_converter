@@ -74,14 +74,14 @@ public class thoop2
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB){
+		if (ACCESSING_LSB != 0){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}
 	
 	WRITE16_HANDLER( thoop2_coin_w )
 	{
-		if (ACCESSING_LSB){
+		if (ACCESSING_LSB != 0){
 			switch ((offset >> 3)){
 				case 0x00:	/* Coin Lockouts */
 				case 0x01:

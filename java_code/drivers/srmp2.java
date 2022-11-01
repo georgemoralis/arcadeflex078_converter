@@ -235,7 +235,7 @@ public class srmp2
 	{
 		unsigned char *ROM = memory_region(REGION_SOUND1);
 	
-		if (srmp2_adpcm_sptr)
+		if (srmp2_adpcm_sptr != 0)
 		{
 			if (srmp2_adpcm_data == -1)
 			{
@@ -366,7 +366,7 @@ public class srmp2
 	
 		srmp2_adpcm_bank = ((data & 0xe0) >> 5);
 	
-		if (data & 0x1f) addr = ((0x10000 + (0x2000 * (data & 0x0f))) - 0x8000);
+		if ((data & 0x1f) != 0) addr = ((0x10000 + (0x2000 * (data & 0x0f))) - 0x8000);
 		else addr = 0x10000;
 	
 		cpu_setbank(1, &ROM[addr]);

@@ -234,8 +234,8 @@ public class gcpinbal
 				y = ((spriteram16[offs+2]) &0xff) + (((spriteram16[offs+3]) &0xff) << 8);
 	
 				/* Treat coords as signed */
-				if (x & 0x8000)  x -= 0x10000;
-				if (y & 0x8000)  y -= 0x10000;
+				if ((x & 0x8000) != 0)  x -= 0x10000;
+				if ((y & 0x8000) != 0)  y -= 0x10000;
 	
 				col  =   ((spriteram16[offs+7]) &0x0f) | 0x60;
 				chain =   (spriteram16[offs+4]) &0x07;
@@ -262,7 +262,7 @@ public class gcpinbal
 	
 					if ((spriteram16[offs+4]) &0x08)	/* Y chain */
 					{
-						if (flipy)	cury -= 16;
+						if (flipy != 0)	cury -= 16;
 						else cury += 16;
 					}
 					else	/* X chain */
@@ -273,7 +273,7 @@ public class gcpinbal
 			}
 		}
 	#if 0
-		if (rotate)
+		if (rotate != 0)
 		{
 			char buf[80];
 			sprintf(buf,"sprite rotate offs %04x ?",rotate);

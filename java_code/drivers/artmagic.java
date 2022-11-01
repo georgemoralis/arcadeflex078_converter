@@ -52,12 +52,12 @@ public class artmagic
 	{
 		int irq_lines = 0;
 	
-		if (tms_irq)
+		if (tms_irq != 0)
 			irq_lines |= 4;
-		if (hack_irq)
+		if (hack_irq != 0)
 			irq_lines |= 5;
 	
-		if (irq_lines)
+		if (irq_lines != 0)
 			cpu_set_irq_line(0, irq_lines, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -970,10 +970,10 @@ public class artmagic
 		for (i = 0;i < 16;i++)
 		{
 			artmagic_xor[i] = 0x0462;
-			if (i & 1) artmagic_xor[i] ^= 0x0011;
-			if (i & 2) artmagic_xor[i] ^= 0x2200;
-			if (i & 4) artmagic_xor[i] ^= 0x4004;
-			if (i & 8) artmagic_xor[i] ^= 0x0880;
+			if ((i & 1) != 0) artmagic_xor[i] ^= 0x0011;
+			if ((i & 2) != 0) artmagic_xor[i] ^= 0x2200;
+			if ((i & 4) != 0) artmagic_xor[i] ^= 0x4004;
+			if ((i & 8) != 0) artmagic_xor[i] ^= 0x0880;
 		}
 	}
 	
@@ -986,10 +986,10 @@ public class artmagic
 		for (i = 0;i < 16;i++)
 		{
 			artmagic_xor[i] = 0x0891;
-			if (i & 1) artmagic_xor[i] ^= 0x1100;
-			if (i & 2) artmagic_xor[i] ^= 0x0022;
-			if (i & 4) artmagic_xor[i] ^= 0x0440;
-			if (i & 8) artmagic_xor[i] ^= 0x8008;
+			if ((i & 1) != 0) artmagic_xor[i] ^= 0x1100;
+			if ((i & 2) != 0) artmagic_xor[i] ^= 0x0022;
+			if ((i & 4) != 0) artmagic_xor[i] ^= 0x0440;
+			if ((i & 8) != 0) artmagic_xor[i] ^= 0x8008;
 		}
 	}
 	

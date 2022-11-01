@@ -181,7 +181,7 @@ public class ssv
 	{
 		if (cpu_getiloops())
 		{
-			if(interrupt_ultrax)
+			if (interrupt_ultrax != 0)
 			{
 				requested_int |= 1 << 1;	// needed by ultrax to coin up, breaks cairblad
 				update_irq_state();
@@ -220,7 +220,7 @@ public class ssv
 	static WRITE16_HANDLER( ssv_lockout_w )
 	{
 	//	usrintf_showmessage("%02X",data & 0xff);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_lockout_w(1,~data & 0x01);
 			coin_lockout_w(0,~data & 0x02);
@@ -235,7 +235,7 @@ public class ssv
 	static WRITE16_HANDLER( ssv_lockout_inv_w )
 	{
 	//	usrintf_showmessage("%02X",data & 0xff);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_lockout_w(1, data & 0x01);
 			coin_lockout_w(0, data & 0x02);
@@ -267,10 +267,10 @@ public class ssv
 	
 	NVRAM_HANDLER( ssv )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, ssv_nvram, ssv_nvram_size);
 		else
-			if (file)
+			if (file != 0)
 				mame_fread(file, ssv_nvram, ssv_nvram_size);
 	}
 	
@@ -368,10 +368,10 @@ public class ssv
 	static READ16_HANDLER( hypreact_input_r )
 	{
 		data16_t input_sel = *ssv_input_sel;
-		if (input_sel & 0x0001)	return readinputport(5);
-		if (input_sel & 0x0002)	return readinputport(6);
-		if (input_sel & 0x0004)	return readinputport(7);
-		if (input_sel & 0x0008)	return readinputport(8);
+		if ((input_sel & 0x0001) != 0)	return readinputport(5);
+		if ((input_sel & 0x0002) != 0)	return readinputport(6);
+		if ((input_sel & 0x0004) != 0)	return readinputport(7);
+		if ((input_sel & 0x0008) != 0)	return readinputport(8);
 		logerror("CPU #0 PC %06X: unknown input read: %04X\n",activecpu_get_pc(),input_sel);
 		return 0xffff;
 	}
@@ -504,10 +504,10 @@ public class ssv
 	static READ16_HANDLER( srmp4_input_r )
 	{
 		data16_t input_sel = *ssv_input_sel;
-		if (input_sel & 0x0002)	return readinputport(5);
-		if (input_sel & 0x0004)	return readinputport(6);
-		if (input_sel & 0x0008)	return readinputport(7);
-		if (input_sel & 0x0010)	return readinputport(8);
+		if ((input_sel & 0x0002) != 0)	return readinputport(5);
+		if ((input_sel & 0x0004) != 0)	return readinputport(6);
+		if ((input_sel & 0x0008) != 0)	return readinputport(7);
+		if ((input_sel & 0x0010) != 0)	return readinputport(8);
 		logerror("CPU #0 PC %06X: unknown input read: %04X\n",activecpu_get_pc(),input_sel);
 		return 0xffff;
 	}
@@ -540,7 +540,7 @@ public class ssv
 	
 	static WRITE16_HANDLER( srmp7_sound_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			int bank = 0x400000 * (data & 1);
 			ES5506_voice_bank_0_w(2, bank);
@@ -552,10 +552,10 @@ public class ssv
 	static READ16_HANDLER( srmp7_input_r )
 	{
 		data16_t input_sel = *ssv_input_sel;
-		if (input_sel & 0x0002)	return readinputport(5);
-		if (input_sel & 0x0004)	return readinputport(6);
-		if (input_sel & 0x0008)	return readinputport(7);
-		if (input_sel & 0x0010)	return readinputport(8);
+		if ((input_sel & 0x0002) != 0)	return readinputport(5);
+		if ((input_sel & 0x0004) != 0)	return readinputport(6);
+		if ((input_sel & 0x0008) != 0)	return readinputport(7);
+		if ((input_sel & 0x0010) != 0)	return readinputport(8);
 		logerror("CPU #0 PC %06X: unknown input read: %04X\n",activecpu_get_pc(),input_sel);
 		return 0xffff;
 	}
@@ -614,11 +614,11 @@ public class ssv
 	
 	static WRITE16_HANDLER( sxyreact_dial_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static int old;
 	
-			if (data & 0x20)
+			if ((data & 0x20) != 0)
 				serial = readinputport(6) & 0xff;
 	
 			if ( (old & 0x40) && !(data & 0x40) )	// $40 -> $00

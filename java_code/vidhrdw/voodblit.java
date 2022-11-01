@@ -92,7 +92,7 @@ void RENDERFUNC(void)
 
 #if (TRACK_LOD)
 	int lodbin[9];
-	if (loglod)
+	if (loglod != 0)
 	{
 		int tlod;
 		logerror("-----\n");
@@ -519,7 +519,7 @@ void RENDERFUNC(void)
 								
 							/* texel 1 */
 							factorsum += factor = ((s & 0xff) * (0x100 - (t & 0xff))) >> 8;
-							if (factor)
+							if (factor != 0)
 							{
 								/* fetch raw texel data */
 								if (!TEXTUREMODE1_BITS(11,1))
@@ -535,7 +535,7 @@ void RENDERFUNC(void)
 
 							/* texel 2 */
 							factorsum += factor = ((0x100 - (s & 0xff)) * (t & 0xff)) >> 8;
-							if (factor)
+							if (factor != 0)
 							{
 								/* fetch raw texel data */
 								if (!TEXTUREMODE1_BITS(11,1))
@@ -551,7 +551,7 @@ void RENDERFUNC(void)
 								
 							/* texel 3 */
 							factor = 0x100 - factorsum;
-							if (factor)
+							if (factor != 0)
 							{
 								/* fetch raw texel data */
 								if (!TEXTUREMODE1_BITS(11,1))
@@ -875,7 +875,7 @@ void RENDERFUNC(void)
 							
 						/* texel 1 */
 						factorsum += factor = ((s & 0xff) * (0x100 - (t & 0xff))) >> 8;
-						if (factor)
+						if (factor != 0)
 						{
 							/* fetch raw texel data */
 							if (!TEXTUREMODE0_BITS(11,1))
@@ -891,7 +891,7 @@ void RENDERFUNC(void)
 
 						/* texel 2 */
 						factorsum += factor = ((0x100 - (s & 0xff)) * (t & 0xff)) >> 8;
-						if (factor)
+						if (factor != 0)
 						{
 							/* fetch raw texel data */
 							if (!TEXTUREMODE0_BITS(11,1))
@@ -907,7 +907,7 @@ void RENDERFUNC(void)
 							
 						/* texel 3 */
 						factor = 0x100 - factorsum;
-						if (factor)
+						if (factor != 0)
 						{
 							/* fetch raw texel data */
 							if (!TEXTUREMODE0_BITS(11,1))
@@ -1325,7 +1325,7 @@ void RENDERFUNC(void)
 						
 						if (!FOGMODE_BITS(2,1))				/* fogmult */
 						{
-							if (fogalpha)
+							if (fogalpha != 0)
 							{
 								r = (r * (0x100 - fogalpha)) >> 8;
 								g = (g * (0x100 - fogalpha)) >> 8;
@@ -1514,7 +1514,7 @@ void RENDERFUNC(void)
 	voodoo_regs[fbiPixelsIn] &= 0xffffff;
 
 #if (TRACK_LOD)
-	if (loglod) logerror("LOD: bins=%d %d %d %d %d %d %d %d %d\n", lodbin[0], lodbin[1], lodbin[2], lodbin[3], lodbin[4], lodbin[5], lodbin[6], lodbin[7], lodbin[8]);
+	if (loglod != 0) logerror("LOD: bins=%d %d %d %d %d %d %d %d %d\n", lodbin[0], lodbin[1], lodbin[2], lodbin[3], lodbin[4], lodbin[5], lodbin[6], lodbin[7], lodbin[8]);
 #endif
 }
 

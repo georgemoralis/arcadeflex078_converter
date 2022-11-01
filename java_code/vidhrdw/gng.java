@@ -135,7 +135,7 @@ public class gng
 			int flipx = attributes & 0x04;
 			int flipy = attributes & 0x08;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

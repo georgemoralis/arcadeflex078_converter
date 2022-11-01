@@ -107,7 +107,7 @@ public class ajax
 	
 		fillbitmap(bitmap,get_black_pen(),cliprect);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[2],0,1);
-		if (ajax_priority)
+		if (ajax_priority != 0)
 		{
 			/* basic layer order is B, zoom, A, F */
 			K051316_zoom_draw_0(bitmap,cliprect,0,4);

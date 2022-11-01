@@ -469,7 +469,7 @@ public class taito_f3
 	
 	#if DEBUG_F3
 	//if((tile&0xffff)>Machine->gfx[1]->total_elements) printf("tile code:%04x\n",tile&0xffff);
-		if(deb_tileflag)
+		if (deb_tileflag != 0)
 		{
 			int c=tile&0xffff;
 			if(abtype==deb_tile_code) c=0;
@@ -518,7 +518,7 @@ public class taito_f3
 		int color,col_off;
 		int y_offs=(f3_control_1[2]&0x1ff)+scroll_kludge_y;
 	
-		if (flipscreen) y_offs+=0x100;
+		if (flipscreen != 0) y_offs+=0x100;
 	
 		/* Colour is shared with VRAM layer */
 		if ((((tile_index%32)*8 + y_offs)&0x1ff)>0xff)
@@ -526,7 +526,7 @@ public class taito_f3
 		else
 			col_off=((tile_index%32)*0x40)+((tile_index&0xfe0)>>5);
 	
-		if (col_off&1)
+		if ((col_off & 1) != 0)
 		   	color = ((videoram32[col_off>>1]&0xffff)>>9)&0x3f;
 		else
 			color = ((videoram32[col_off>>1]>>16)>>9)&0x3f;
@@ -585,21 +585,21 @@ public class taito_f3
 		}							\
 	}
 	
-		if (deb_enable) {
+		if (deb_enable != 0) {
 			FILE *fp;
 	
 			fp=fopen("line.dmp","wb");
-			if (fp) {
+			if (fp != 0) {
 				FWRITE32(f3_line_ram,0x10000/4,fp);
 				fclose(fp);
 			}
 			fp=fopen("sprite.dmp","wb");
-			if (fp) {
+			if (fp != 0) {
 				FWRITE32(spriteram32,0x10000/4,fp);
 				fclose(fp);
 			}
 			fp=fopen("vram.dmp","wb");
-			if (fp) {
+			if (fp != 0) {
 				FWRITE32(f3_pf_data,0xc000/4,fp);
 				fclose(fp);
 			}
@@ -859,7 +859,7 @@ public class taito_f3
 		the trashing of priority ram.  If anyone has information on what the real machine does,
 		please let me know! */
 		if (f3_game==DARIUSG) {
-			if (skip_this_frame)
+			if (skip_this_frame != 0)
 				return;
 			if (offset==0xb000/4 && data==0x003f0000) {
 				skip_this_frame=1;
@@ -1090,137 +1090,137 @@ public class taito_f3
 	static int dpix_1_noalpha(UINT32 s_pix) {dval = s_pix; return 1;}
 	static int dpix_ret1(UINT32 s_pix) {return 1;}
 	static int dpix_ret0(UINT32 s_pix) {return 0;}
-	static int dpix_1_1(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_1(s_pix); return 1;}
-	static int dpix_1_2(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_2(s_pix); return 1;}
-	static int dpix_1_4(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_4(s_pix); return 1;}
-	static int dpix_1_5(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_5(s_pix); return 1;}
-	static int dpix_1_6(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_6(s_pix); return 1;}
-	static int dpix_1_8(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_8(s_pix); return 1;}
-	static int dpix_1_9(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_9(s_pix); return 1;}
-	static int dpix_1_a(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_a(s_pix); return 1;}
+	static int dpix_1_1(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_1(s_pix); return 1;}
+	static int dpix_1_2(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_2(s_pix); return 1;}
+	static int dpix_1_4(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_4(s_pix); return 1;}
+	static int dpix_1_5(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_5(s_pix); return 1;}
+	static int dpix_1_6(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_6(s_pix); return 1;}
+	static int dpix_1_8(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_8(s_pix); return 1;}
+	static int dpix_1_9(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_9(s_pix); return 1;}
+	static int dpix_1_a(UINT32 s_pix) {if (s_pix != 0) f3_alpha_blend_1_a(s_pix); return 1;}
 	
 	static int dpix_2a_0(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_2a_0(s_pix);
+		if (s_pix != 0) f3_alpha_blend_2a_0(s_pix);
 		else	  dval = 0;
-		if(pdest_2a) {pval |= pdest_2a;return 0;}
+		if (pdest_2a != 0) {pval |= pdest_2a;return 0;}
 		return 1;
 	}
 	static int dpix_2a_4(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_2a_4(s_pix);
-		if(pdest_2a) {pval |= pdest_2a;return 0;}
+		if (s_pix != 0) f3_alpha_blend_2a_4(s_pix);
+		if (pdest_2a != 0) {pval |= pdest_2a;return 0;}
 		return 1;
 	}
 	static int dpix_2a_8(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_2a_8(s_pix);
-		if(pdest_2a) {pval |= pdest_2a;return 0;}
+		if (s_pix != 0) f3_alpha_blend_2a_8(s_pix);
+		if (pdest_2a != 0) {pval |= pdest_2a;return 0;}
 		return 1;
 	}
 	
 	static int dpix_3a_0(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_3a_0(s_pix);
+		if (s_pix != 0) f3_alpha_blend_3a_0(s_pix);
 		else	  dval = 0;
-		if(pdest_3a) {pval |= pdest_3a;return 0;}
+		if (pdest_3a != 0) {pval |= pdest_3a;return 0;}
 		return 1;
 	}
 	static int dpix_3a_1(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_3a_1(s_pix);
-		if(pdest_3a) {pval |= pdest_3a;return 0;}
+		if (s_pix != 0) f3_alpha_blend_3a_1(s_pix);
+		if (pdest_3a != 0) {pval |= pdest_3a;return 0;}
 		return 1;
 	}
 	static int dpix_3a_2(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_3a_2(s_pix);
-		if(pdest_3a) {pval |= pdest_3a;return 0;}
+		if (s_pix != 0) f3_alpha_blend_3a_2(s_pix);
+		if (pdest_3a != 0) {pval |= pdest_3a;return 0;}
 		return 1;
 	}
 	
 	static int dpix_2b_0(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_2b_0(s_pix);
+		if (s_pix != 0) f3_alpha_blend_2b_0(s_pix);
 		else	  dval = 0;
-		if(pdest_2b) {pval |= pdest_2b;return 0;}
+		if (pdest_2b != 0) {pval |= pdest_2b;return 0;}
 		return 1;
 	}
 	static int dpix_2b_4(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_2b_4(s_pix);
-		if(pdest_2b) {pval |= pdest_2b;return 0;}
+		if (s_pix != 0) f3_alpha_blend_2b_4(s_pix);
+		if (pdest_2b != 0) {pval |= pdest_2b;return 0;}
 		return 1;
 	}
 	static int dpix_2b_8(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_2b_8(s_pix);
-		if(pdest_2b) {pval |= pdest_2b;return 0;}
+		if (s_pix != 0) f3_alpha_blend_2b_8(s_pix);
+		if (pdest_2b != 0) {pval |= pdest_2b;return 0;}
 		return 1;
 	}
 	
 	static int dpix_3b_0(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_3b_0(s_pix);
+		if (s_pix != 0) f3_alpha_blend_3b_0(s_pix);
 		else	  dval = 0;
-		if(pdest_3b) {pval |= pdest_3b;return 0;}
+		if (pdest_3b != 0) {pval |= pdest_3b;return 0;}
 		return 1;
 	}
 	static int dpix_3b_1(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_3b_1(s_pix);
-		if(pdest_3b) {pval |= pdest_3b;return 0;}
+		if (s_pix != 0) f3_alpha_blend_3b_1(s_pix);
+		if (pdest_3b != 0) {pval |= pdest_3b;return 0;}
 		return 1;
 	}
 	static int dpix_3b_2(UINT32 s_pix)
 	{
-		if(s_pix) f3_alpha_blend_3b_2(s_pix);
-		if(pdest_3b) {pval |= pdest_3b;return 0;}
+		if (s_pix != 0) f3_alpha_blend_3b_2(s_pix);
+		if (pdest_3b != 0) {pval |= pdest_3b;return 0;}
 		return 1;
 	}
 	
 	static int dpix_2_0(UINT32 s_pix)
 	{
 		UINT8 tr2=tval&1;
-		if(s_pix)
+		if (s_pix != 0)
 		{
-			if(tr2==tr_2b)		{f3_alpha_blend_2b_0(s_pix);if(pdest_2b) pval |= pdest_2b;else return 1;}
-			else if(tr2==tr_2a)	{f3_alpha_blend_2a_0(s_pix);if(pdest_2a) pval |= pdest_2a;else return 1;}
+			if(tr2==tr_2b)		{f3_alpha_blend_2b_0(s_pix);if (pdest_2b != 0) pval |= pdest_2b;else return 1;}
+			else if(tr2==tr_2a)	{f3_alpha_blend_2a_0(s_pix);if (pdest_2a != 0) pval |= pdest_2a;else return 1;}
 		}
 		else
 		{
-			if(tr2==tr_2b)		{dval = 0;if(pdest_2b) pval |= pdest_2b;else return 1;}
-			else if(tr2==tr_2a)	{dval = 0;if(pdest_2a) pval |= pdest_2a;else return 1;}
+			if(tr2==tr_2b)		{dval = 0;if (pdest_2b != 0) pval |= pdest_2b;else return 1;}
+			else if(tr2==tr_2a)	{dval = 0;if (pdest_2a != 0) pval |= pdest_2a;else return 1;}
 		}
 		return 0;
 	}
 	static int dpix_2_4(UINT32 s_pix)
 	{
 		UINT8 tr2=tval&1;
-		if(s_pix)
+		if (s_pix != 0)
 		{
-			if(tr2==tr_2b)		{f3_alpha_blend_2b_4(s_pix);if(pdest_2b) pval |= pdest_2b;else return 1;}
-			else if(tr2==tr_2a)	{f3_alpha_blend_2a_4(s_pix);if(pdest_2a) pval |= pdest_2a;else return 1;}
+			if(tr2==tr_2b)		{f3_alpha_blend_2b_4(s_pix);if (pdest_2b != 0) pval |= pdest_2b;else return 1;}
+			else if(tr2==tr_2a)	{f3_alpha_blend_2a_4(s_pix);if (pdest_2a != 0) pval |= pdest_2a;else return 1;}
 		}
 		else
 		{
-			if(tr2==tr_2b)		{if(pdest_2b) pval |= pdest_2b;else return 1;}
-			else if(tr2==tr_2a)	{if(pdest_2a) pval |= pdest_2a;else return 1;}
+			if(tr2==tr_2b)		{if (pdest_2b != 0) pval |= pdest_2b;else return 1;}
+			else if(tr2==tr_2a)	{if (pdest_2a != 0) pval |= pdest_2a;else return 1;}
 		}
 		return 0;
 	}
 	static int dpix_2_8(UINT32 s_pix)
 	{
 		UINT8 tr2=tval&1;
-		if(s_pix)
+		if (s_pix != 0)
 		{
-			if(tr2==tr_2b)		{f3_alpha_blend_2b_8(s_pix);if(pdest_2b) pval |= pdest_2b;else return 1;}
-			else if(tr2==tr_2a)	{f3_alpha_blend_2a_8(s_pix);if(pdest_2a) pval |= pdest_2a;else return 1;}
+			if(tr2==tr_2b)		{f3_alpha_blend_2b_8(s_pix);if (pdest_2b != 0) pval |= pdest_2b;else return 1;}
+			else if(tr2==tr_2a)	{f3_alpha_blend_2a_8(s_pix);if (pdest_2a != 0) pval |= pdest_2a;else return 1;}
 		}
 		else
 		{
-			if(tr2==tr_2b)		{if(pdest_2b) pval |= pdest_2b;else return 1;}
-			else if(tr2==tr_2a)	{if(pdest_2a) pval |= pdest_2a;else return 1;}
+			if(tr2==tr_2b)		{if (pdest_2b != 0) pval |= pdest_2b;else return 1;}
+			else if(tr2==tr_2a)	{if (pdest_2a != 0) pval |= pdest_2a;else return 1;}
 		}
 		return 0;
 	}
@@ -1228,52 +1228,52 @@ public class taito_f3
 	static int dpix_3_0(UINT32 s_pix)
 	{
 		UINT8 tr2=tval&1;
-		if(s_pix)
+		if (s_pix != 0)
 		{
-			if(tr2==tr_3b)		{f3_alpha_blend_3b_0(s_pix);if(pdest_3b) pval |= pdest_3b;else return 1;}
-			else if(tr2==tr_3a)	{f3_alpha_blend_3a_0(s_pix);if(pdest_3a) pval |= pdest_3a;else return 1;}
+			if(tr2==tr_3b)		{f3_alpha_blend_3b_0(s_pix);if (pdest_3b != 0) pval |= pdest_3b;else return 1;}
+			else if(tr2==tr_3a)	{f3_alpha_blend_3a_0(s_pix);if (pdest_3a != 0) pval |= pdest_3a;else return 1;}
 		}
 		else
 		{
-			if(tr2==tr_3b)		{dval = 0;if(pdest_3b) pval |= pdest_3b;else return 1;}
-			else if(tr2==tr_3a)	{dval = 0;if(pdest_3a) pval |= pdest_3a;else return 1;}
+			if(tr2==tr_3b)		{dval = 0;if (pdest_3b != 0) pval |= pdest_3b;else return 1;}
+			else if(tr2==tr_3a)	{dval = 0;if (pdest_3a != 0) pval |= pdest_3a;else return 1;}
 		}
 		return 0;
 	}
 	static int dpix_3_1(UINT32 s_pix)
 	{
 		UINT8 tr2=tval&1;
-		if(s_pix)
+		if (s_pix != 0)
 		{
-			if(tr2==tr_3b)		{f3_alpha_blend_3b_1(s_pix);if(pdest_3b) pval |= pdest_3b;else return 1;}
-			else if(tr2==tr_3a)	{f3_alpha_blend_3a_1(s_pix);if(pdest_3a) pval |= pdest_3a;else return 1;}
+			if(tr2==tr_3b)		{f3_alpha_blend_3b_1(s_pix);if (pdest_3b != 0) pval |= pdest_3b;else return 1;}
+			else if(tr2==tr_3a)	{f3_alpha_blend_3a_1(s_pix);if (pdest_3a != 0) pval |= pdest_3a;else return 1;}
 		}
 		else
 		{
-			if(tr2==tr_3b)		{if(pdest_3b) pval |= pdest_3b;else return 1;}
-			else if(tr2==tr_3a)	{if(pdest_3a) pval |= pdest_3a;else return 1;}
+			if(tr2==tr_3b)		{if (pdest_3b != 0) pval |= pdest_3b;else return 1;}
+			else if(tr2==tr_3a)	{if (pdest_3a != 0) pval |= pdest_3a;else return 1;}
 		}
 		return 0;
 	}
 	static int dpix_3_2(UINT32 s_pix)
 	{
 		UINT8 tr2=tval&1;
-		if(s_pix)
+		if (s_pix != 0)
 		{
-			if(tr2==tr_3b)		{f3_alpha_blend_3b_2(s_pix);if(pdest_3b) pval |= pdest_3b;else return 1;}
-			else if(tr2==tr_3a)	{f3_alpha_blend_3a_2(s_pix);if(pdest_3a) pval |= pdest_3a;else return 1;}
+			if(tr2==tr_3b)		{f3_alpha_blend_3b_2(s_pix);if (pdest_3b != 0) pval |= pdest_3b;else return 1;}
+			else if(tr2==tr_3a)	{f3_alpha_blend_3a_2(s_pix);if (pdest_3a != 0) pval |= pdest_3a;else return 1;}
 		}
 		else
 		{
-			if(tr2==tr_3b)		{if(pdest_3b) pval |= pdest_3b;else return 1;}
-			else if(tr2==tr_3a)	{if(pdest_3a) pval |= pdest_3a;else return 1;}
+			if(tr2==tr_3b)		{if (pdest_3b != 0) pval |= pdest_3b;else return 1;}
+			else if(tr2==tr_3a)	{if (pdest_3a != 0) pval |= pdest_3a;else return 1;}
 		}
 		return 0;
 	}
 	
 	INLINE void dpix_1_sprite(UINT32 s_pix)
 	{
-		if(s_pix)
+		if (s_pix != 0)
 		{
 			UINT8 p1 = pval&0xf0;
 			if     (p1==0x10)	f3_alpha_blend_1_1(s_pix);
@@ -1515,7 +1515,7 @@ public class taito_f3
 		int i=0,y=draw_line_num[0];
 		int ty = y;
 	
-		if (orient & ORIENTATION_FLIP_Y)
+		if ((orient & ORIENTATION_FLIP_Y) != 0)
 		{
 			ty = bitmap->height - 1 - ty;
 			yadv = -yadv;
@@ -1561,14 +1561,14 @@ public class taito_f3
 						{
 							case 0: if((sprite_pri=sprite[0]&pval))
 									{
-										if(sprite_noalp_0) break;
+										if (sprite_noalp_0 != 0) break;
 										if(!dpix_sp[sprite_pri]) break;
 										if(dpix_sp[sprite_pri][pval>>4](*dsti)) {*dsti=dval;break;}
 									}
-									{tval=*tsrc0;if(tval&0xf0) if(dpix_lp[0][pval>>4](clut[*src0])) {*dsti=dval;break;}}
+									{tval=*tsrc0;if ((tval & 0xf0) != 0) if(dpix_lp[0][pval>>4](clut[*src0])) {*dsti=dval;break;}}
 							case 1: if((sprite_pri=sprite[1]&pval))
 									{
-										if(sprite_noalp_1) break;
+										if (sprite_noalp_1 != 0) break;
 										if(!dpix_sp[sprite_pri])
 										{
 											if(!(pval&0xf0)) break;
@@ -1576,10 +1576,10 @@ public class taito_f3
 										}
 										if(dpix_sp[sprite_pri][pval>>4](*dsti)) {*dsti=dval;break;}
 									}
-									{tval=*tsrc1;if(tval&0xf0) if(dpix_lp[1][pval>>4](clut[*src1])) {*dsti=dval;break;}}
+									{tval=*tsrc1;if ((tval & 0xf0) != 0) if(dpix_lp[1][pval>>4](clut[*src1])) {*dsti=dval;break;}}
 							case 2: if((sprite_pri=sprite[2]&pval))
 									{
-										if(sprite_noalp_2) break;
+										if (sprite_noalp_2 != 0) break;
 										if(!dpix_sp[sprite_pri])
 										{
 											if(!(pval&0xf0)) break;
@@ -1587,10 +1587,10 @@ public class taito_f3
 										}
 										if(dpix_sp[sprite_pri][pval>>4](*dsti)) {*dsti=dval;break;}
 									}
-									{tval=*tsrc2;if(tval&0xf0) if(dpix_lp[2][pval>>4](clut[*src2])) {*dsti=dval;break;}}
+									{tval=*tsrc2;if ((tval & 0xf0) != 0) if(dpix_lp[2][pval>>4](clut[*src2])) {*dsti=dval;break;}}
 							case 3: if((sprite_pri=sprite[3]&pval))
 									{
-										if(sprite_noalp_3) break;
+										if (sprite_noalp_3 != 0) break;
 										if(!dpix_sp[sprite_pri])
 										{
 											if(!(pval&0xf0)) break;
@@ -1598,10 +1598,10 @@ public class taito_f3
 										}
 										if(dpix_sp[sprite_pri][pval>>4](*dsti)) {*dsti=dval;break;}
 									}
-									{tval=*tsrc3;if(tval&0xf0) if(dpix_lp[3][pval>>4](clut[*src3])) {*dsti=dval;break;}}
+									{tval=*tsrc3;if ((tval & 0xf0) != 0) if(dpix_lp[3][pval>>4](clut[*src3])) {*dsti=dval;break;}}
 							case 4: if((sprite_pri=sprite[4]&pval))
 									{
-										if(sprite_noalp_4) break;
+										if (sprite_noalp_4 != 0) break;
 										if(!dpix_sp[sprite_pri])
 										{
 											if(!(pval&0xf0)) break;
@@ -1660,7 +1660,7 @@ public class taito_f3
 		int i=0,y=draw_line_num[0];
 		int ty = y;
 	
-		if (orient & ORIENTATION_FLIP_Y)
+		if ((orient & ORIENTATION_FLIP_Y) != 0)
 		{
 			ty = bitmap->height - 1 - ty;
 			yadv = -yadv;
@@ -1719,7 +1719,7 @@ public class taito_f3
 		tile_num=(((line_t->x_zoom[line]*320+(x_index_fx & 0xffff)+0xffff)>>16)+(tile_index%16)+15)/16;
 		tile_index/=16;
 	
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			pf_base=f3_pf_data_n+((31-(y_index/16))<<twidth_mask_bit);
 			tile_index=(twidth_mask-tile_index)-tile_num+1;
@@ -1733,10 +1733,10 @@ public class taito_f3
 		for(i=0;i<tile_num;i++)
 		{
 			UINT32 tile=pf_base[(tile_index)&twidth_mask];
-			if(tile&0xffff)
+			if ((tile & 0xffff) != 0)
 			{
 				trans_all=0;
-				if(opaque_all)
+				if (opaque_all != 0)
 				{
 					if(tile_opaque_pf[(tile&0xffff)%total_elements]!=1) opaque_all=0;
 				}
@@ -1755,19 +1755,19 @@ public class taito_f3
 					else if(!opaque_all) break;
 				}
 			}
-			else if(opaque_all) opaque_all=0;
+			else if (opaque_all != 0) opaque_all=0;
 	
 			tile_index++;
 		}
 	
-		if(trans_all)	{line_t->alpha_mode[line]=0;return;}
+		if (trans_all != 0)	{line_t->alpha_mode[line]=0;return;}
 	
 		if(alpha_mode>1)
 		{
 			line_t->alpha_mode[line]|=alpha_type<<4;
 		}
 	
-		if(opaque_all)
+		if (opaque_all != 0)
 			line_t->alpha_mode[line]|=0x80;
 	}
 	
@@ -1799,7 +1799,7 @@ public class taito_f3
 		int y_index_fx;
 	
 		sx+=(46<<16);//+scroll_kludge_x;
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			line_base=0xa1fe + (pos*0x200);
 			zoom_base=0x81fe + (pos*0x200);
@@ -1833,7 +1833,7 @@ public class taito_f3
 		while(y!=y_end)
 		{
 			/* The zoom, column and row values can latch according to control ram */
-			if (y&1)
+			if ((y & 1) != 0)
 			{
 				if (f3_line_ram[0x300+(y>>1)]&bit_select1)
 					x_offset=(f3_line_ram[line_base/4]&0xffff)<<10;
@@ -1876,14 +1876,14 @@ public class taito_f3
 			if(y_zoom && line_enable && (colscroll!=0 || x_zoom!=y_zoom)) y_zoom=0x10000;
 	
 	
-	//		if (line_enable)
+	//		if (line_enable != 0)
 			{
 				if (!pri || (!flipscreen && y<24) || (flipscreen && y>231) ||
 					(pri&0xc000)==0xc000 || !(pri&0x2000)/**/)
 	 				line_enable=0;
-				else if(pri&0x4000)	//alpha1
+				else if ((pri & 0x4000) != 0)	//alpha1
 					line_enable=2;
-				else if(pri&0x8000)	//alpha2
+				else if ((pri & 0x8000) != 0)	//alpha2
 					line_enable=3;
 				else
 					line_enable=1;
@@ -1898,7 +1898,7 @@ public class taito_f3
 	
 			if(!pos)
 			{
-				if (y&1)
+				if ((y & 1) != 0)
 				{
 					if (f3_line_ram[(0x0600/4)+(y>>1)]&0x8)
 						spri=f3_line_ram[spri_base/4]&0xffff;
@@ -1988,7 +1988,7 @@ public class taito_f3
 	#if DEBUG_F3
 		int enable[4]={~0,~0,~0,~0};
 	
-		if(deb_enable)
+		if (deb_enable != 0)
 		{
 			if (keyboard_pressed(KEYCODE_Z)) enable[0]=0;
 			if (keyboard_pressed(KEYCODE_X)) enable[1]=0;
@@ -2002,7 +2002,7 @@ public class taito_f3
 		}
 	#endif	//DEBUG_F3
 	
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			rot=ORIENTATION_FLIP_Y;
 			ys=0;
@@ -2165,7 +2165,7 @@ public class taito_f3
 				{
 					UINT8 sprite_alpha_mode=(sprite_alpha>>(i*2))&3;
 					UINT8 sftbit=1<<i;
-					if(sprite_pri_usage&sftbit)
+					if ((sprite_pri_usage & sftbit) != 0)
 					{
 						if(sprite_alpha_mode==1)
 						{
@@ -2178,7 +2178,7 @@ public class taito_f3
 						}
 						else if(sprite_alpha_mode==2)
 						{
-							if(sprite_alpha&0xff00)
+							if ((sprite_alpha & 0xff00) != 0)
 							{
 								if(f3_alpha_level_3as==0 && f3_alpha_level_3ad==255) sprite_pri_usage&=~sftbit;
 								else
@@ -2254,7 +2254,7 @@ public class taito_f3
 	
 	
 				/* enable/disable alpha blend */
-				if (alpha_disable)
+				if (alpha_disable != 0)
 				{
 					if(alpha_mode[0]>1) alpha_mode[0]=1;
 					if(alpha_mode[1]>1) alpha_mode[1]=1;
@@ -2416,7 +2416,7 @@ public class taito_f3
 	#if DEBUG_F3
 					if(!alpha_mode[pos]) usrintf_showmessage("layer priority error");
 	#endif	//DEBUG_F3
-					if(alpha) dpix_lp[i]=dpix_n[1];
+					if (alpha != 0) dpix_lp[i]=dpix_n[1];
 					else	  dpix_lp[i]=dpix_n[0];
 				}
 			}
@@ -2424,8 +2424,8 @@ public class taito_f3
 			else if(!alpha) sprite[4]|=0x100;
 	
 	#if DEBUG_F3
-			if(alpha) deb_alpha_cnt++;
-			if(deb_enable)
+			if (alpha != 0) deb_alpha_cnt++;
+			if (deb_enable != 0)
 				sprintf(deb_buf[8],"spr:%3x %3x %3x %3x %3x",sprite[0],
 															sprite[1],
 															sprite[2],
@@ -2459,7 +2459,7 @@ public class taito_f3
 		}
 		tilemap_set_enable(pixel_layer,1);
 	
-		if (flipscreen) {
+		if (flipscreen != 0) {
 			tilemap_set_scrollx( pixel_layer,0,(f3_control_1[2]>>16)-(512-320)-16);
 			tilemap_set_scrolly( pixel_layer,0,-(f3_control_1[2]&0xff));
 		} else {
@@ -2472,14 +2472,14 @@ public class taito_f3
 		pivot_clip.max_x=512;//Machine->visible_area.max_x;
 		pivot_clip.min_y=Machine->visible_area.min_y;
 		pivot_clip.max_y=Machine->visible_area.max_y;
-		if (flipscreen)
+		if (flipscreen != 0)
 			pivot_base=0x61fe;
 		else
 			pivot_base=0x6000;
 	
 		for (i=0; i<256; i++) {
 			/* Loop through until first visible line */
-			if (pivot_base&2) {
+			if ((pivot_base & 2) != 0) {
 				if ((f3_line_ram[pivot_base/4]&0xa000)==0xa000) {
 					pivot_clip.min_y=i;
 					i=256;
@@ -2490,14 +2490,14 @@ public class taito_f3
 					i=256;
 				}
 			}
-			if (flipscreen) pivot_base-=2; else pivot_base+=2;
+			if (flipscreen != 0) pivot_base-=2; else pivot_base+=2;
 		}
 	
 		if (!flipscreen)
 			pixel_layer_clip = pivot_clip;
 	
 		/* Decode chars & mark tilemap dirty */
-		if (pivot_changed)
+		if (pivot_changed != 0)
 			for (tile = 0;tile < 2048;tile++)
 				if (pivot_dirty[tile]) {
 					decodechar(Machine->gfx[3],tile,(UINT8 *)f3_pivot_ram,Machine->drv->gfxdecodeinfo[3].gfxlayout);
@@ -2521,7 +2521,7 @@ public class taito_f3
 			mx = (offs%128)/2;
 			my = offs/128;
 	
-			if (offs&2)
+			if ((offs & 2) != 0)
 	        	tile = videoram32[offs>>2]&0xffff;
 			else
 				tile = videoram32[offs>>2]>>16;
@@ -2537,9 +2537,9 @@ public class taito_f3
 	        if (!tile) continue;
 	
 			/* Graphics flip */
-			if (flipscreen) {
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+			if (flipscreen != 0) {
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				drawgfx(bitmap,Machine->gfx[0],
 						tile,
 						color,
@@ -2561,7 +2561,7 @@ public class taito_f3
 	
 	#define PSET_T					\
 		c = *source;				\
-		if(c)						\
+		if (c != 0)						\
 		{							\
 			p=*pri;					\
 			if(!p || p==0xff)		\
@@ -2597,7 +2597,7 @@ public class taito_f3
 		pri_dst=1<<pri_dst;
 	
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
-		if(clip)
+		if (clip != 0)
 		{
 			myclip.min_x = clip->min_x;
 			myclip.max_x = clip->max_x;
@@ -2630,7 +2630,7 @@ public class taito_f3
 				int x_index_base;
 				int y_index;
 	
-				if( flipx )
+				if (flipx != 0)
 				{
 					x_index_base = 15;
 					dx = -1;
@@ -2640,7 +2640,7 @@ public class taito_f3
 					x_index_base = 0;
 				}
 	
-				if( flipy )
+				if (flipy != 0)
 				{
 					y_index = 15;
 					dy = -1;
@@ -2650,7 +2650,7 @@ public class taito_f3
 					y_index = 0;
 				}
 	
-				if( clip )
+				if (clip != 0)
 				{
 					if( sx < clip->min_x)
 					{ /* clip left */
@@ -2762,7 +2762,7 @@ public class taito_f3
 		pri_dst=1<<pri_dst;
 	
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
-		if(clip)
+		if (clip != 0)
 		{
 			myclip.min_x = clip->min_x;
 			myclip.max_x = clip->max_x;
@@ -2795,7 +2795,7 @@ public class taito_f3
 				int x_index_base;
 				int y_index;
 	
-				if( flipx )
+				if (flipx != 0)
 				{
 					x_index_base = (scalex-1)*dx;
 					dx = -dx;
@@ -2805,7 +2805,7 @@ public class taito_f3
 					x_index_base = 0;
 				}
 	
-				if( flipy )
+				if (flipy != 0)
 				{
 					y_index = (scaley-1)*dy;
 					dy = -dy;
@@ -2815,7 +2815,7 @@ public class taito_f3
 					y_index = 0;
 				}
 	
-				if( clip )
+				if (clip != 0)
 				{
 					if( sx < clip->min_x)
 					{ /* clip left */
@@ -2857,7 +2857,7 @@ public class taito_f3
 							for( x=sx; x<ex; x++ )
 							{
 								int c = source[x_index>>16];
-								if(c)
+								if (c != 0)
 								{
 									UINT8 p=pri[x];
 									if (p == 0 || p == 0xff)
@@ -2920,7 +2920,7 @@ public class taito_f3
 				*/
 	
 				/* Sprite bank select */
-				if (cntrl&1) {
+				if ((cntrl & 1) != 0) {
 					offs=offs|0x2000;
 					sprite_top=sprite_top|0x2000;
 				}
@@ -2972,20 +2972,20 @@ public class taito_f3
 	#endif
 	
 			/* Check if this sprite is part of a continued block */
-			if (multi) {
+			if (multi != 0) {
 				/* Bit 0x4 is 'use previous colour' for this block part */
-				if (spritecont&0x4) color=last_color;
+				if ((spritecont & 0x4) != 0) color=last_color;
 				else color=(spriteram32_ptr[offs+2]>>16)&0xff;
 	
 	#ifdef DARIUSG_KLUDGE
 				if (f3_game==DARIUSG || f3_game==GEKIRIDO || f3_game==CLEOPATR) {
 					/* Adjust X Position */
 					if ((spritecont & 0x40) == 0) {
-						if (spritecont & 0x4) {
+						if ((spritecont & 0x4) != 0) {
 							x = block_x;
 						} else {
 							this_x = spriteram32_ptr[offs+1]>>16;
-							if (this_x&0x800) this_x= 0 - (0x800 - (this_x&0x7ff)); else this_x&=0x7ff;
+							if ((this_x & 0x800) != 0) this_x= 0 - (0x800 - (this_x&0x7ff)); else this_x&=0x7ff;
 	
 							if ((spriteram32_ptr[offs+1]>>16)&0x8000) {
 								this_x+=0;
@@ -3008,11 +3008,11 @@ public class taito_f3
 	
 					/* Adjust Y Position */
 					if ((spritecont & 0x10) == 0) {
-						if (spritecont & 0x4) {
+						if ((spritecont & 0x4) != 0) {
 							y = block_y;
 						} else {
 							this_y = spriteram32_ptr[offs+1]&0xffff;
-							if (this_y&0x800) this_y= 0 - (0x800 - (this_y&0x7ff)); else this_y&=0x7ff;
+							if ((this_y & 0x800) != 0) this_y= 0 - (0x800 - (this_y&0x7ff)); else this_y&=0x7ff;
 	
 							if ((spriteram32_ptr[offs+1]>>16)&0x8000) {
 								this_y+=0;
@@ -3066,8 +3066,8 @@ public class taito_f3
 				/* Sprite positioning */
 				this_y = spriteram32_ptr[offs+1]&0xffff;
 				this_x = spriteram32_ptr[offs+1]>>16;
-				if (this_y&0x800) this_y= 0 - (0x800 - (this_y&0x7ff)); else this_y&=0x7ff;
-				if (this_x&0x800) this_x= 0 - (0x800 - (this_x&0x7ff)); else this_x&=0x7ff;
+				if ((this_y & 0x800) != 0) this_y= 0 - (0x800 - (this_y&0x7ff)); else this_y&=0x7ff;
+				if ((this_x & 0x800) != 0) this_x= 0 - (0x800 - (this_x&0x7ff)); else this_x&=0x7ff;
 	
 				/* Ignore both scroll offsets for this block */
 				if ((spriteram32_ptr[offs+1]>>16)&0x8000) {
@@ -3106,7 +3106,7 @@ public class taito_f3
 			if (!sprite) continue;
 			if (!x_addition || !y_addition) continue;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				int tx,ty;
 				if (f3_game == GSEEKER )
@@ -3198,7 +3198,7 @@ public class taito_f3
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
 		/* Dynamically decode VRAM chars if dirty */
-		if (vram_changed)
+		if (vram_changed != 0)
 			for (tile = 0;tile < 256;tile++)
 				if (vram_dirty[tile]) {
 					decodechar(Machine->gfx[0],tile,(UINT8 *)f3_vram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
@@ -3206,7 +3206,7 @@ public class taito_f3
 				}
 		vram_changed=0;
 	
-	//	if (scroll_dirty)
+	//	if (scroll_dirty != 0)
 		{
 			sy_fix[0]=((f3_control_0[2]&0xffff0000)>> 7)+(scroll_kludge_y<<16);
 			sy_fix[1]=((f3_control_0[2]&0x0000ffff)<< 9)+((scroll_kludge_y+pf23_y_kludge)<<16);
@@ -3233,7 +3233,7 @@ public class taito_f3
 			sx_fix[3]+=deb_sc_x;
 	#endif	//DEBUG_F3
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sy_fix[0]= 0x3000000-sy_fix[0];
 				sy_fix[1]= 0x3000000-sy_fix[1];
@@ -3253,7 +3253,7 @@ public class taito_f3
 	
 		fillbitmap(pri_alp_bitmap,0,cliprect);
 	#if DEBUG_F3
-	if (deb_enable) fillbitmap(bitmap,255,cliprect);
+	if (deb_enable != 0) fillbitmap(bitmap,255,cliprect);
 	#endif	//DEBUG_F3
 	
 		/* Pixel layer */
@@ -3320,7 +3320,7 @@ public class taito_f3
 		if (!keyboard_pressed(KEYCODE_LSHIFT) && keyboard_pressed_memory(KEYCODE_F1))
 		{
 			alpha_disable=!alpha_disable;
-			if(alpha_disable)
+			if (alpha_disable != 0)
 				usrintf_showmessage("alpha blending:off");
 			else usrintf_showmessage("alpha blending:on");
 		}
@@ -3348,7 +3348,7 @@ public class taito_f3
 				if(debdisp==4) debdisp = 0;
 			}
 	
-			if(debdisp)
+			if (debdisp != 0)
 			{
 				int sft;
 				if (keyboard_pressed(KEYCODE_K))	cz_line--;
@@ -3422,7 +3422,7 @@ public class taito_f3
 								);
 				}
 	
-				if(1)
+				if (1 != 0)
 				{
 					if (keyboard_pressed_memory(KEYCODE_0_PAD))	deb_sc_x-=0x0400;
 					if (keyboard_pressed_memory(KEYCODE_DEL_PAD))	deb_sc_x+=0x0400;

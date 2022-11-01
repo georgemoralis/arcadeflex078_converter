@@ -283,9 +283,9 @@ public class cosmic
 	
 				for (i = 0; i < 8; i++)
 				{
-					if (data & 0x80)
+					if ((data & 0x80) != 0)
 					{
-						if (flip_screen)
+						if (flip_screen != 0)
 							plot_pixel(bitmap, 255-x, 255-y, pen);
 						else
 							plot_pixel(bitmap,     x,     y, pen);
@@ -313,7 +313,7 @@ public class cosmic
 				code  = ~spriteram[offs  ] & 0x3f;
 				color = ~spriteram[offs+3] & color_mask;
 	
-				if (extra_sprites)
+				if (extra_sprites != 0)
 				{
 					code |= (spriteram[offs+3] & 0x08) << 3;
 				}
@@ -364,7 +364,7 @@ public class cosmic
 				int hc, hb_;
 	
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 					x1 = x - cpu_getcurrentframe();
 				else
 					x1 = x + cpu_getcurrentframe();
@@ -452,7 +452,7 @@ public class cosmic
 					{
 						pen_t pen = Machine->pens[4];	/* blue */
 	
-						if (flip_screen)
+						if (flip_screen != 0)
 							plot_pixel(bitmap, 255-x, 255-y, pen);
 						else
 							plot_pixel(bitmap,     x,     y, pen);
@@ -582,7 +582,7 @@ public class cosmic
 				{
 					pen_t pen = Machine->pens[color];
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 						plot_pixel(bitmap, 255-x, 255-y, pen);
 					else
 						plot_pixel(bitmap,     x,     y, pen);
@@ -595,7 +595,7 @@ public class cosmic
 	
 	
 			// this is obviously wrong
-			if (vb_)
+			if (vb_ != 0)
 			{
 				water++;
 			}
@@ -651,7 +651,7 @@ public class cosmic
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
-	    if (background_enable)
+	    if (background_enable != 0)
 	    {
 	    	devzone_draw_grid(bitmap);
 		}
@@ -673,7 +673,7 @@ public class cosmic
 	
 		draw_sprites(bitmap, 0x07, 0);
 	
-	    if (background_enable)
+	    if (background_enable != 0)
 	    {
 	    	nomnlnd_draw_background(bitmap);
 		}

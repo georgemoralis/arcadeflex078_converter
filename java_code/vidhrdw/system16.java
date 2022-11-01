@@ -252,7 +252,7 @@ public class system16
 	
 		priority = 1<<priority;
 	
-		if( flipy ){
+		if (flipy != 0){
 			dy = -1;
 			y0 += screen_height-1;
 		}
@@ -260,7 +260,7 @@ public class system16
 			dy = 1;
 		}
 	
-		if( flipx ){
+		if (flipx != 0){
 			dx = -1;
 			x0 += screen_width-1;
 		}
@@ -288,7 +288,7 @@ public class system16
 							{
 								if( pen && pen!=0xf && sx>=cliprect->min_x && sx<=cliprect->max_x ){
 									if(!(pri[sx]&priority)){
-										if (full_shadow)
+										if (full_shadow != 0)
 											dest[sx] = shadow_base[dest[sx]&shadow_mask];
 										else if (partial_shadow && pen==shadow_pen)
 											dest[sx] = shadow_base[dest[sx]&shadow_mask];
@@ -305,7 +305,7 @@ public class system16
 							{
 								if( pen && pen!=0xf && sx>=cliprect->min_x && sx<=cliprect->max_x ){
 									if(!(pri[sx]&priority)){
-										if (full_shadow)
+										if (full_shadow != 0)
 											dest[sx] = shadow_base[dest[sx]&shadow_mask];
 										else if (partial_shadow && pen==shadow_pen)
 											dest[sx] = shadow_base[dest[sx]&shadow_mask];
@@ -394,12 +394,12 @@ public class system16
 				pitch = sprite.pitch;
 				flipy = pitch & 0x80;
 				width = pitch & 0x7f;
-				if (pitch & 0x80) width = 0x80 - width;
+				if ((pitch & 0x80) != 0) width = 0x80 - width;
 				pitch = width << 1;
 				width <<= 2;
 				eos = 0;
 	
-				if( b3d ) // outrun/aburner
+				if (b3d != 0) // outrun/aburner
 				{
 					if (b3d == 2) eos = 1;
 					if (xpos < 0 && flipx) continue;
@@ -409,8 +409,8 @@ public class system16
 					screen_width = width*0x200/sprite.zoomx;
 	
 					if (flipx && flipy) { mod_h = -logical_height;   mod_x = 4; }
-					else if     (flipx) { mod_h = -1; xpos++;        mod_x = 4; }
-					else if     (flipy) { mod_h = -logical_height;   mod_x = 0; }
+					else if (flipx != 0) { mod_h = -1; xpos++;        mod_x = 4; }
+					else if (flipy != 0) { mod_h = -logical_height;   mod_x = 0; }
 					else                { mod_h = 0;                 mod_x = 0; }
 	
 					if( sprite.flags & SYS16_SPR_DRAW_TO_TOP )
@@ -431,8 +431,8 @@ public class system16
 					screen_width = width*(0x800-sprite.zoomx)/0x800;
 	
 					if (flipx && flipy) { mod_h = -logical_height-1; mod_x = 4; }
-					else if     (flipx) { mod_h = 0;                 mod_x = 4; }
-					else if     (flipy) { mod_h = -logical_height;   mod_x = 0; }
+					else if (flipx != 0) { mod_h = 0;                 mod_x = 4; }
+					else if (flipy != 0) { mod_h = -logical_height;   mod_x = 0; }
 					else                { mod_h = 1;                 mod_x = 0; }
 				}
 				else
@@ -445,8 +445,8 @@ public class system16
 					if (sprite.zoomx) screen_width = screen_width*(0x800 - sprite.zoomx)/0x800 + 2;
 	
 					if (flipx && flipy) { mod_h = -logical_height-1; mod_x = 2; }
-					else if     (flipx) { mod_h = 0;                 mod_x = 2; }
-					else if     (flipy) { mod_h = -logical_height;   mod_x = 0; }
+					else if (flipx != 0) { mod_h = 0;                 mod_x = 2; }
+					else if (flipy != 0) { mod_h = -logical_height;   mod_x = 0; }
 					else                { mod_h = 1;                 mod_x = 0; }
 				}
 	
@@ -502,17 +502,17 @@ public class system16
 			UINT8 b = (newword & 0xf00)>>7;
 			if( sys16_dactype == 0 ){ /* we should really use two distinct paletteram_w handlers */
 				/* dac_type == 0 (from GCS file) */
-				if (newword&0x1000) r|=1;
-				if (newword&0x2000) g|=2;
-				if (newword&0x8000) g|=1;
-				if (newword&0x4000) b|=1;
+				if ((newword & 0x1000) != 0) r|=1;
+				if ((newword & 0x2000) != 0) g|=2;
+				if ((newword & 0x8000) != 0) g|=1;
+				if ((newword & 0x4000) != 0) b|=1;
 			}
 			else if( sys16_dactype == 1 ){
 				/* dac_type == 1 (from GCS file) Shinobi Only*/
-				if (newword&0x1000) r|=1;
-				if (newword&0x4000) g|=2;
-				if (newword&0x8000) g|=1;
-				if (newword&0x2000) b|=1;
+				if ((newword & 0x1000) != 0) r|=1;
+				if ((newword & 0x4000) != 0) g|=2;
+				if ((newword & 0x8000) != 0) g|=1;
+				if ((newword & 0x2000) != 0) b|=1;
 			}
 	
 	#ifndef TRANSPARENT_SHADOWS
@@ -551,10 +551,10 @@ public class system16
 			old_tile_bank0 = sys16_tile_bank0;
 			tilemap_mark_all_tiles_dirty( text_layer );
 		}
-		if( all_dirty ){
+		if (all_dirty != 0){
 			tilemap_mark_all_tiles_dirty( background );
 			tilemap_mark_all_tiles_dirty( foreground );
-			if( sys16_18_mode ){
+			if (sys16_18_mode != 0){
 				tilemap_mark_all_tiles_dirty( background2 );
 				tilemap_mark_all_tiles_dirty( foreground2 );
 			}
@@ -574,7 +574,7 @@ public class system16
 						tilemap_mark_tile_dirty( foreground, offset );
 					}
 				}
-				if( sys16_18_mode ){
+				if (sys16_18_mode != 0){
 					if( old_bg2_page[i]!=sys16_bg2_page[i] ){
 						old_bg2_page[i] = sys16_bg2_page[i];
 						for( offset = page0; offset<page0+64*32; offset++ ){
@@ -627,7 +627,7 @@ public class system16
 			tile_info.priority = ((data&0xff00) >= sys16_bg_priority_value)?1:0;
 			break;
 		case 3: // sys18 games
-			if( data&0x8000 ){
+			if ((data & 0x8000) != 0){
 				tile_info.priority = 2;
 			}
 			else {
@@ -756,7 +756,7 @@ public class system16
 			if( sys16_fg_page[2]==page ) tilemap_mark_tile_dirty( foreground, offset+64*32*2 );
 			if( sys16_fg_page[3]==page ) tilemap_mark_tile_dirty( foreground, offset+64*32*3 );
 	
-			if( sys16_18_mode ){
+			if (sys16_18_mode != 0){
 				if( sys16_bg2_page[0]==page ) tilemap_mark_tile_dirty( background2, offset+64*32*0 );
 				if( sys16_bg2_page[1]==page ) tilemap_mark_tile_dirty( background2, offset+64*32*1 );
 				if( sys16_bg2_page[2]==page ) tilemap_mark_tile_dirty( background2, offset+64*32*2 );
@@ -860,7 +860,7 @@ public class system16
 				palette_set_color( i, 0,0,0 );
 			}
 	
-			if(sys16_bg1_trans) tilemap_set_transparent_pen( background, 0 );
+			if (sys16_bg1_trans != 0) tilemap_set_transparent_pen( background, 0 );
 			tilemap_set_transparent_pen( foreground, 0 );
 			tilemap_set_transparent_pen( text_layer, 0 );
 	
@@ -927,7 +927,7 @@ public class system16
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
-		if(ret) return 1;
+		if (ret != 0) return 1;
 	
 		sys16_textlayer_lo_min=0;
 		sys16_textlayer_lo_max=0;
@@ -961,11 +961,11 @@ public class system16
 			if( video_start_system16()==0 ){
 				tilemap_set_transparent_pen( foreground2, 0 );
 	
-				if(sys18_splittab_fg_x){
+				if (sys18_splittab_fg_x != 0){
 					tilemap_set_scroll_rows( foreground , 64 );
 					tilemap_set_scroll_rows( foreground2 , 64 );
 				}
-				if(sys18_splittab_bg_x){
+				if (sys18_splittab_bg_x != 0){
 					tilemap_set_scroll_rows( background , 64 );
 					tilemap_set_scroll_rows( background2 , 64 );
 				}
@@ -990,7 +990,7 @@ public class system16
 	/***************************************************************************/
 	
 	static void sys16_vh_refresh_helper( void ){
-		if( sys18_splittab_bg_x ){
+		if (sys18_splittab_bg_x != 0){
 			if( (sys16_bg_scrollx&0xff00)  != sys16_rowscroll_scroll ){
 				tilemap_set_scroll_rows( background , 1 );
 				tilemap_set_scrollx( background, 0, -320-sys16_bg_scrollx+sys16_bgxoffset );
@@ -1011,7 +1011,7 @@ public class system16
 			tilemap_set_scrollx( background, 0, -320-sys16_bg_scrollx+sys16_bgxoffset );
 		}
 	
-		if( sys18_splittab_bg_y ){
+		if (sys18_splittab_bg_y != 0){
 			if( (sys16_bg_scrolly&0xff00)  != sys16_rowscroll_scroll ){
 				tilemap_set_scroll_cols( background , 1 );
 				tilemap_set_scrolly( background, 0, -256+sys16_bg_scrolly );
@@ -1032,7 +1032,7 @@ public class system16
 			tilemap_set_scrolly( background, 0, -256+sys16_bg_scrolly );
 		}
 	
-		if( sys18_splittab_fg_x ){
+		if (sys18_splittab_fg_x != 0){
 			if( (sys16_fg_scrollx&0xff00)  != sys16_rowscroll_scroll ){
 				tilemap_set_scroll_rows( foreground , 1 );
 				tilemap_set_scrollx( foreground, 0, -320-sys16_fg_scrollx+sys16_fgxoffset );
@@ -1053,7 +1053,7 @@ public class system16
 			tilemap_set_scrollx( foreground, 0, -320-sys16_fg_scrollx+sys16_fgxoffset );
 		}
 	
-		if( sys18_splittab_fg_y ){
+		if (sys18_splittab_fg_y != 0){
 			if( (sys16_fg_scrolly&0xff00)  != sys16_rowscroll_scroll ){
 				tilemap_set_scroll_cols( foreground , 1 );
 				tilemap_set_scrolly( foreground, 0, -256+sys16_fg_scrolly );
@@ -1077,7 +1077,7 @@ public class system16
 	
 	static void sys18_vh_screenrefresh_helper( void ){
 		int i;
-		if( sys18_splittab_bg_x ){ // screenwise rowscroll?
+		if (sys18_splittab_bg_x != 0){ // screenwise rowscroll?
 			int offset,offset2, scroll,scroll2,orig_scroll;
 	
 			offset = 32+((sys16_bg_scrolly&0x1f8) >> 3); // 0x00..0x3f
@@ -1088,7 +1088,7 @@ public class system16
 				if((sys16_bg_scrollx  &0xff00) != 0x8000) scroll = sys16_bg_scrollx;
 				if((sys16_bg2_scrollx &0xff00) != 0x8000) scroll2 = sys16_bg2_scrollx;
 	
-				if(orig_scroll&0x8000){ // background2
+				if ((orig_scroll & 0x8000) != 0){ // background2
 					tilemap_set_scrollx( background , (i+offset)&0x3f, TILE_LINE_DISABLED );
 					tilemap_set_scrollx( background2, (i+offset2)&0x3f, -320-(scroll2&0x3ff)+sys16_bgxoffset );
 				}
@@ -1106,7 +1106,7 @@ public class system16
 		tilemap_set_scrolly( background , 0, -256+sys16_bg_scrolly );
 		tilemap_set_scrolly( background2, 0, -256+sys16_bg2_scrolly );
 	
-		if( sys18_splittab_fg_x ){
+		if (sys18_splittab_fg_x != 0){
 			int offset,offset2, scroll,scroll2,orig_scroll;
 	
 			offset = 32+((sys16_fg_scrolly&0x1f8) >> 3);
@@ -1118,7 +1118,7 @@ public class system16
 	
 				if( (sys16_fg2_scrollx &0xff00) != 0x8000 ) scroll2 = sys16_fg2_scrollx;
 	
-				if( orig_scroll&0x8000 ){
+				if ((orig_scroll & 0x8000) != 0){
 					tilemap_set_scrollx( foreground , (i+offset)&0x3f, TILE_LINE_DISABLED );
 					tilemap_set_scrollx( foreground2, (i+offset2)&0x3f, -320-(scroll2&0x3ff)+sys16_fgxoffset );
 				}
@@ -1144,14 +1144,14 @@ public class system16
 	public static VideoUpdateHandlerPtr video_update_system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
 	
-		if( sys16_update_proc ) sys16_update_proc();
+		if (sys16_update_proc != 0) sys16_update_proc();
 		update_page();
 		sys16_vh_refresh_helper(); /* set scroll registers */
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		tilemap_draw( bitmap,cliprect, background, TILEMAP_IGNORE_TRANSPARENCY, 0x00 );
-		if(sys16_bg_priority_mode) tilemap_draw( bitmap,cliprect, background, TILEMAP_IGNORE_TRANSPARENCY | 1, 0x00 );
+		if (sys16_bg_priority_mode != 0) tilemap_draw( bitmap,cliprect, background, TILEMAP_IGNORE_TRANSPARENCY | 1, 0x00 );
 	//	sprite_draw(sprite_list,3); // needed for Aurail
 		if( sys16_bg_priority_mode==2 ) tilemap_draw( bitmap,cliprect, background, 1, 0x01 );// body slam (& wrestwar??)
 	//	sprite_draw(sprite_list,2);
@@ -1168,12 +1168,12 @@ public class system16
 	
 	public static VideoUpdateHandlerPtr video_update_system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
-		if( sys16_update_proc ) sys16_update_proc();
+		if (sys16_update_proc != 0) sys16_update_proc();
 		update_page();
 		sys18_vh_screenrefresh_helper(); /* set scroll registers */
 	
 		fillbitmap(priority_bitmap,0,NULL);
-		if(sys18_bg2_active)
+		if (sys18_bg2_active != 0)
 			tilemap_draw( bitmap,cliprect, background2, 0, 0 );
 		else
 			fillbitmap(bitmap,Machine->pens[0],cliprect);
@@ -1187,10 +1187,10 @@ public class system16
 	//	sprite_draw(sprite_list,2);
 		tilemap_draw( bitmap,cliprect, background, 2, 0x3 );
 	
-		if(sys18_fg2_active) tilemap_draw( bitmap,cliprect, foreground2, 0, 0x3 );
+		if (sys18_fg2_active != 0) tilemap_draw( bitmap,cliprect, foreground2, 0, 0x3 );
 		tilemap_draw( bitmap,cliprect, foreground, 0, 0x3 );
 	//	sprite_draw(sprite_list,1);
-		if(sys18_fg2_active) tilemap_draw( bitmap,cliprect, foreground2, 1, 0x7 );
+		if (sys18_fg2_active != 0) tilemap_draw( bitmap,cliprect, foreground2, 1, 0x7 );
 		tilemap_draw( bitmap,cliprect, foreground, 1, 0x7 );
 	
 		tilemap_draw( bitmap,cliprect, text_layer, 1, 0x7 );
@@ -1227,7 +1227,7 @@ public class system16
 		sprintf( fname, "road%d.txt",fcount );
 		fcount++;
 		f = fopen( fname,"w" );
-		if( f ){
+		if (f != 0){
 			const UINT16 *source = sys16_gr_ver;
 			for( i=0; i<0x1000; i++ ){
 				if( (i&0x1f)==0 ) fprintf( f, "\n %04x: ", i );
@@ -1252,7 +1252,7 @@ public class system16
 				}
 	
 				for(i=cliprect->min_y;i<=cliprect->max_y;i++){
-					if(yflip) ypos=223-i;
+					if (yflip != 0) ypos=223-i;
 					else ypos=i;
 					ver_data=*data_ver;
 					if((ver_data & 0x400) == priority)
@@ -1282,7 +1282,7 @@ public class system16
 							hor_pos = sys16_gr_hor[ver_data];
 							ver_data = ver_data << sys16_gr_bitmap_width;
 	
-							if(hor_pos & 0xf000)
+							if ((hor_pos & 0xf000) != 0)
 							{
 								// reverse
 								hor_pos=((0-((hor_pos&0x7ff)^7))+0x9f8)&0x3ff;
@@ -1316,7 +1316,7 @@ public class system16
 				}
 	
 				for(i=cliprect->min_y;i<=cliprect->max_y;i++){ /* with each scanline */
-					if( yflip ) ypos=223-i; else ypos=i;
+					if (yflip != 0) ypos=223-i; else ypos=i;
 					ver_data= *data_ver; /* scanline parameters */
 					/*
 						gr_ver:
@@ -1355,7 +1355,7 @@ public class system16
 							colors[4] = paldata2[ sys16_gr_colorflip[colorflip][3] ];
 	
 							hor_pos = sys16_gr_hor[ver_data];
-							if( hor_pos & 0xf000 ){ // reverse (precalculated)
+							if ((hor_pos & 0xf000) != 0){ // reverse (precalculated)
 								hor_pos=((0-((hor_pos&0x7ff)^7))+0x9f8)&0x3ff;
 							}
 							else { // normal
@@ -1379,7 +1379,7 @@ public class system16
 	
 	public static VideoUpdateHandlerPtr video_update_hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
-		if( sys16_update_proc ) sys16_update_proc();
+		if (sys16_update_proc != 0) sys16_update_proc();
 		update_page();
 	
 		tilemap_set_scrollx( background, 0, -320-sys16_bg_scrollx+sys16_bgxoffset );
@@ -1432,13 +1432,13 @@ public class system16
 	
 				for(i=cliprect->min_y;i<=cliprect->max_y;i++)
 				{
-					if(yflip) ypos=223-i;
+					if (yflip != 0) ypos=223-i;
 					else ypos=i;
 					ver_data = *data_ver;
 					if((ver_data & 0x800) == priority)
 					{
 	
-						if(ver_data & 0x800) /* disable */
+						if ((ver_data & 0x800) != 0) /* disable */
 						{
 							colors[0] = paldata1[ ver_data&0x3f ];
 							// fill line
@@ -1508,11 +1508,11 @@ public class system16
 				}
 	
 				for(i=cliprect->min_y;i<=cliprect->max_y;i++){
-					if(yflip) ypos=223-i;
+					if (yflip != 0) ypos=223-i;
 					else ypos=i;
 					ver_data= *data_ver;
 					if((ver_data & 0x800) == priority){
-						if(ver_data & 0x800){
+						if ((ver_data & 0x800) != 0){
 							colors[0] = paldata1[ ver_data&0x3f ];
 							// fill line
 							line16 = (UINT16 *)bitmap->line[ypos];
@@ -1563,7 +1563,7 @@ public class system16
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
-		if(ret) return 1;
+		if (ret != 0) return 1;
 	
 		sys16_textlayer_lo_min=0;
 		sys16_textlayer_lo_max=0;
@@ -1577,8 +1577,8 @@ public class system16
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
-		if( sys16_refreshenable ){
-			if( sys16_update_proc ) sys16_update_proc();
+		if (sys16_refreshenable != 0){
+			if (sys16_update_proc != 0) sys16_update_proc();
 			update_page();
 	
 			tilemap_set_scrollx( background, 0, -320-sys16_bg_scrollx+sys16_bgxoffset );
@@ -1604,7 +1604,7 @@ public class system16
 	
 	UINT8 *aburner_unpack_backdrop( const UINT8 *baseaddr ){
 		UINT8 *result = auto_malloc(512*256*2);
-		if( result ){
+		if (result != 0){
 			int page;
 			for( page=0; page<2; page++ ){
 				UINT8 *dest = result + 512*256*page;
@@ -1617,8 +1617,8 @@ public class system16
 						int data1 = source[x/8 + 0x4000];
 						int bit = 0x80>>(x&7);
 						int pen = 0;
-						if( data0 & bit ) pen+=1;
-						if( data1 & bit ) pen+=2;
+						if ((data0 & bit) != 0) pen+=1;
+						if ((data1 & bit) != 0) pen+=2;
 						dest[x] = pen;
 					}
 	
@@ -1648,7 +1648,7 @@ public class system16
 	
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
-		if(ret) return 1;
+		if (ret != 0) return 1;
 	
 		foreground2 = tilemap_create(
 			get_fg2_tile_info,
@@ -1666,7 +1666,7 @@ public class system16
 	
 		if( foreground2 && background2 ){
 			ret = video_start_system16();
-			if(ret) return 1;
+			if (ret != 0) return 1;
 			tilemap_set_transparent_pen( foreground2, 0 );
 			sys16_18_mode = 1;
 	
@@ -1714,7 +1714,7 @@ public class system16
 			int sx;
 			UINT16 line = vreg[0x100+sy];
 	
-			if( page&4 ){ /* flying */
+			if ((page & 4) != 0){ /* flying */
 				int xscroll = vreg[0x200+sy] - 0x552;
 				UINT16 sky = Machine->pens[0x1720];
 				UINT16 ground = Machine->pens[0x1700];
@@ -1731,14 +1731,14 @@ public class system16
 					}
 				}
 			}
-			else if( line&0x800 ){
+			else if ((line & 0x800) != 0){
 				/* opaque fill; the least significant nibble selects color */
 				unsigned short color = Machine->pens[0x1780+(line&0xf)];
 				for( sx=cliprect->min_x; sx<=cliprect->max_x; sx++ ){
 					*dest++ = color;
 				}
 			}
-			else if( page&0xc0 ){ /* road */
+			else if ((page & 0xc0) != 0){ /* road */
 				const UINT8 *source = aburner_backdrop+(line&0xff)*512 + 512*256*(page&1);
 				UINT16 xscroll = (512-320)/2;
 				// 040d 04b0 0552: normal: sky,horizon,sea
@@ -1776,7 +1776,7 @@ public class system16
 			sprintf( fname, "road%d.txt",fcount );
 			fcount++;
 			f = fopen( fname,"w" );
-			if( f ){
+			if (f != 0){
 				const UINT16 *source = sys16_roadram;
 				for( i=0; i<0x1000; i++ ){
 					if( (i&0x1f)==0 ) fprintf( f, "\n %04x: ", i );
@@ -1845,7 +1845,7 @@ public class system16
 				if((sys16_bg_scrollx  &0xff00) != 0x8000) scroll = sys16_bg_scrollx;
 				if((sys16_bg2_scrollx &0xff00) != 0x8000) scroll2 = sys16_bg2_scrollx;
 	
-				if( orig_scroll&0x8000 ){ // background2
+				if ((orig_scroll & 0x8000) != 0){ // background2
 					tilemap_set_scrollx( background , (i+offset)&0x3f, TILE_LINE_DISABLED );
 					tilemap_set_scrollx( background2, (i+offset2)&0x3f, -320-(scroll2&0x3ff)+sys16_bgxoffset );
 				}
@@ -1870,7 +1870,7 @@ public class system16
 	
 				if( (sys16_fg2_scrollx &0xff00) != 0x8000 ) scroll2 = sys16_fg2_scrollx;
 	
-				if( orig_scroll&0x8000 ){ // foreground2
+				if ((orig_scroll & 0x8000) != 0){ // foreground2
 					tilemap_set_scrollx( foreground , (i+offset)&0x3f, TILE_LINE_DISABLED );
 					tilemap_set_scrollx( foreground2, (i+offset2)&0x3f, -320-(scroll2&0x3ff)+sys16_fgxoffset );
 				}

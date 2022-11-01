@@ -841,7 +841,7 @@ public class slapstic
 	static int alt2_kludge(offs_t offset)
 	{
 		/* 68k case is fairly complex: we need to look for special triplets */
-		if (access_68k)
+		if (access_68k != 0)
 		{
 			UINT32 pc = activecpu_get_previouspc();
 	
@@ -1117,7 +1117,7 @@ public class slapstic
 	
 		if (!slapsticlog)
 			slapsticlog = fopen("slapstic.log", "w");
-		if (slapsticlog)
+		if (slapsticlog != 0)
 		{
 			double time = timer_get_time();
 	

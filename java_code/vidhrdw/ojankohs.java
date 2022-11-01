@@ -182,7 +182,7 @@ public class ojankohs
 	
 			tilemap_set_flip(ALL_TILEMAPS, ojankohs_flipscreen ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0);
 	
-			if (ojankohs_flipscreen) {
+			if (ojankohs_flipscreen != 0) {
 				ojankohs_scrollx = -0xe0;
 				ojankohs_scrolly = -0x20;
 			}
@@ -269,7 +269,7 @@ public class ojankohs
 		x = (offset & 0x3f) << 2;
 		xx = 0;
 	
-		if (ojankohs_flipscreen) {
+		if (ojankohs_flipscreen != 0) {
 			x = 0xfc - x;
 			y = 0xff - y;
 			xx = 3;

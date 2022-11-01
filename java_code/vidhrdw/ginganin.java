@@ -241,7 +241,7 @@ public class ginganin
 			x = (x & 0xFF) - (x & 0x100);
 			y = (y & 0xFF) - (y & 0x100);
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				x = 240 - x;		y = 240 - y;
 				flipx = !flipx; 	flipy = !flipy;
@@ -293,12 +293,12 @@ public class ginganin
 	#endif
 	
 	
-		if (layers_ctrl1 & 1)	tilemap_draw(bitmap,cliprect, bg_tilemap,  0,0);
+		if ((layers_ctrl1 & 1) != 0)	tilemap_draw(bitmap,cliprect, bg_tilemap,  0,0);
 		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
-		if (layers_ctrl1 & 2)	tilemap_draw(bitmap,cliprect, fg_tilemap,  0,0);
-		if (layers_ctrl1 & 8)	draw_sprites(bitmap,cliprect);
-		if (layers_ctrl1 & 4)	tilemap_draw(bitmap,cliprect, tx_tilemap, 0,0);
+		if ((layers_ctrl1 & 2) != 0)	tilemap_draw(bitmap,cliprect, fg_tilemap,  0,0);
+		if ((layers_ctrl1 & 8) != 0)	draw_sprites(bitmap,cliprect);
+		if ((layers_ctrl1 & 4) != 0)	tilemap_draw(bitmap,cliprect, tx_tilemap, 0,0);
 	
 	} };
 	

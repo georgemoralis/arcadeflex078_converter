@@ -96,13 +96,13 @@ public class xexex
 	
 	static NVRAM_HANDLER( xexex )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -120,7 +120,7 @@ public class xexex
 	/* A1, A5 and A6 don't go to the 053247. */
 	static READ16_HANDLER( K053247_scattered_word_r )
 	{
-		if (offset & 0x0031)
+		if ((offset & 0x0031) != 0)
 			return spriteram16[offset];
 		else
 		{
@@ -131,7 +131,7 @@ public class xexex
 	
 	static WRITE16_HANDLER( K053247_scattered_word_w )
 	{
-		if (offset & 0x0031)
+		if ((offset & 0x0031) != 0)
 			COMBINE_DATA(spriteram16+offset);
 		else
 		{
@@ -173,7 +173,7 @@ public class xexex
 		}
 		while (--counter);
 	
-		if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
+		if (num_inactive != 0) do { *dst = 0; dst += 8; } while (--num_inactive);
 	}
 	
 	static READ16_HANDLER( spriteram16_mirror_r )
@@ -207,7 +207,7 @@ public class xexex
 		/* bit 3 is service button */
 		res = EEPROM_read_bit() | input_port_1_r(0);
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -250,10 +250,10 @@ public class xexex
 	
 	static WRITE16_HANDLER( sound_cmd1_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			// anyone knows why 0x1a keeps lurking the sound queue in the world version???
-			if (xexex_strip0x1a)
+			if (xexex_strip0x1a != 0)
 				if (soundlatch2_r(0)==1 && data==0x1a) return;
 	
 			soundlatch_w(0, data & 0xff);
@@ -262,7 +262,7 @@ public class xexex
 	
 	static WRITE16_HANDLER( sound_cmd2_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch2_w(0, data & 0xff);
 		}
@@ -305,10 +305,10 @@ public class xexex
 	
 	static void dmaend_callback(int data)
 	{
-		if (cur_control2 & 0x0040)
+		if ((cur_control2 & 0x0040) != 0)
 		{
 			// foul-proof (CPU0 could be deactivated while we wait)
-			if (suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
+			if (suspension_active != 0) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 			// IRQ 5 is the "object DMA end interrupt" and shouldn't be triggered
 			// if object data isn't ready for DMA within the frame.
@@ -318,13 +318,13 @@ public class xexex
 	
 	public static InterruptHandlerPtr xexex_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
+		if (suspension_active != 0) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 		switch (cpu_getiloops())
 		{
 			case 0:
 				// IRQ 6 is for test mode only
-				if (cur_control2 & 0x0020)
+				if ((cur_control2 & 0x0020) != 0)
 					cpu_set_irq_line(0, 6, HOLD_LINE);
 			break;
 	
@@ -340,7 +340,7 @@ public class xexex
 	
 				// IRQ 4 is the V-blank interrupt. It controls color, sound and
 				// vital game logics that shouldn't be interfered by frame-drop.
-				if (cur_control2 & 0x0800)
+				if ((cur_control2 & 0x0800) != 0)
 					cpu_set_irq_line(0, 4, HOLD_LINE);
 			break;
 		}

@@ -82,13 +82,13 @@ public class mystwarr
 	
 	static NVRAM_HANDLER(mystwarr)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -100,13 +100,13 @@ public class mystwarr
 	
 	static NVRAM_HANDLER(gaiapols)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_gaia);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -118,11 +118,11 @@ public class mystwarr
 	
 	static READ16_HANDLER( mweeprom_r )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			int res = readinputport(1) | EEPROM_read_bit();
 	
-			if (init_eeprom_count)
+			if (init_eeprom_count != 0)
 			{
 				init_eeprom_count--;
 				res &= ~0x04;
@@ -138,11 +138,11 @@ public class mystwarr
 	
 	static READ16_HANDLER( vseeprom_r )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			int res = readinputport(1) | EEPROM_read_bit();
 	
-			if (init_eeprom_count)
+			if (init_eeprom_count != 0)
 			{
 				init_eeprom_count--;
 				res &= ~0x08;
@@ -158,7 +158,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( mweeprom_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			EEPROM_write_bit((data&0x0100) ? 1 : 0);
 			EEPROM_set_cs_line((data&0x0200) ? CLEAR_LINE : ASSERT_LINE);
@@ -172,7 +172,7 @@ public class mystwarr
 	
 	static READ16_HANDLER( dddeeprom_r )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			return (readinputport(1) | EEPROM_read_bit())<<8;
 		}
@@ -182,7 +182,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( mmeeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			EEPROM_write_bit((data&0x01) ? 1 : 0);
 			EEPROM_set_cs_line((data&0x02) ? CLEAR_LINE : ASSERT_LINE);
@@ -374,7 +374,7 @@ public class mystwarr
 	{
 		int res = readinputport(0);
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= ~0x10;
@@ -387,7 +387,7 @@ public class mystwarr
 	{
 		int res = (readinputport(0)<<8) | readinputport(2);
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= ~0x0800;
@@ -400,7 +400,7 @@ public class mystwarr
 	/* of RAM, but they put 0x10000 there. The CPU can access them all. */
 	static READ16_HANDLER( K053247_scattered_word_r )
 	{
-		if (offset & 0x0078)
+		if ((offset & 0x0078) != 0)
 			return spriteram16[offset];
 		else
 		{
@@ -411,7 +411,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( K053247_scattered_word_w )
 	{
-		if (offset & 0x0078)
+		if ((offset & 0x0078) != 0)
 		{
 	//		printf("spr write %x to %x (PC=%x)\n", data, offset, activecpu_get_pc());
 			COMBINE_DATA(spriteram16+offset);
@@ -588,7 +588,7 @@ public class mystwarr
 	// Martial Champion specific interfaces
 	static READ16_HANDLER( K053247_martchmp_word_r )
 	{
-		if (offset & 0x0018)
+		if ((offset & 0x0018) != 0)
 			return spriteram16[offset];
 		else
 		{
@@ -599,7 +599,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( K053247_martchmp_word_w )
 	{
-		if (offset & 0x0018)
+		if ((offset & 0x0018) != 0)
 		{
 			COMBINE_DATA(spriteram16+offset);
 		}
@@ -618,7 +618,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( mccontrol_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			mw_irq_control = data>>8;
 			// bit 0 = watchdog
@@ -627,7 +627,7 @@ public class mystwarr
 	
 			K053246_set_OBJCHA_line((data&0x04) ? ASSERT_LINE : CLEAR_LINE);
 	
-	//		if (data & 0xf8) logerror("Unk write %x to mccontrol\n", data);
+	//		if ((data & 0xf8) != 0) logerror("Unk write %x to mccontrol\n", data);
 	
 		}
 	

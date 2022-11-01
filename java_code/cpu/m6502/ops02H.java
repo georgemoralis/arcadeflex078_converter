@@ -107,7 +107,7 @@
  *	extra cycle if page boundary is crossed
  ***************************************************************/
 #define BRA(cond)												\
-	if (cond)													\
+	if (cond != 0)													\
 	{															\
 		tmp = RDOPARG();										\
 		EAW = PCW + (signed char)tmp;							\
@@ -249,7 +249,7 @@
  *	ADC Add with carry
  ***************************************************************/
 #define ADC 													\
-	if (P & F_D)												\
+	if ((P & F_D) != 0)												\
 	{															\
 	int c = (P & F_C);											\
 	int lo = (A & 0x0f) + (tmp & 0x0f) + c; 					\
@@ -261,12 +261,12 @@
 			hi += 0x10; 										\
 			lo += 0x06; 										\
 		}														\
-		if (hi&0x80) P|=F_N;									\
+		if ((hi & 0x80) != 0) P|=F_N;									\
 		if (~(A^tmp) & (A^hi) & F_N)							\
 			P |= F_V;											\
 		if (hi > 0x90)											\
 			hi += 0x60; 										\
-		if (hi & 0xff00)										\
+		if ((hi & 0xff00) != 0)										\
 			P |= F_C;											\
 		A = (lo & 0x0f) + (hi & 0xf0);							\
 	}															\
@@ -277,7 +277,7 @@
 		P &= ~(F_V | F_C);										\
 		if (~(A^tmp) & (A^sum) & F_N)							\
 			P |= F_V;											\
-		if (sum & 0xff00)										\
+		if ((sum & 0xff00) != 0)										\
 			P |= F_C;											\
 		A = (UINT8) sum;										\
 		SET_NZ(A); \
@@ -561,7 +561,7 @@
  *	PLP Pull processor status (flags)
  ***************************************************************/
 #define PLP 													\
-	if ( P & F_I ) {											\
+	if ((P & F_I) != 0) {											\
 		PULL(P);												\
 		if ((m6502.irq_state != CLEAR_LINE) && !(P & F_I)) {	\
 			LOG(("M6502#%d PLP sets after_cli\n",cpu_getactivecpu())); \
@@ -623,13 +623,13 @@
  *	SBC Subtract with carry
  ***************************************************************/
 #define SBC 													\
-	if (P & F_D)												\
+	if ((P & F_D) != 0)												\
 	{															\
 		int c = (P & F_C) ^ F_C;								\
 		int sum = A - tmp - c;									\
 		int lo = (A & 0x0f) - (tmp & 0x0f) - c; 				\
 		int hi = (A & 0xf0) - (tmp & 0xf0); 					\
-		if (lo & 0x10)											\
+		if ((lo & 0x10) != 0)											\
 		{														\
 			lo -= 6;											\
 			hi--;												\
@@ -637,7 +637,7 @@
 		P &= ~(F_V | F_C|F_Z|F_N);								\
 		if( (A^tmp) & (A^sum) & F_N )							\
 			P |= F_V;											\
-		if( hi & 0x0100 )										\
+		if ((hi & 0x0100) != 0)										\
 			hi -= 0x60; 										\
 		if( (sum & 0xff00) == 0 )								\
 			P |= F_C;											\

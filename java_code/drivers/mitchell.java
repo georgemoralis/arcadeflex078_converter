@@ -87,21 +87,21 @@ public class mitchell
 	
 	static NVRAM_HANDLER( mitchell )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 		{
 			EEPROM_save(file);					/* EEPROM */
-			if (nvram_size)	/* Super Pang, Block Block */
+			if (nvram_size != 0)	/* Super Pang, Block Block */
 				mame_fwrite(file,nvram,nvram_size);	/* NVRAM */
 		}
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);					/* EEPROM */
-				if (nvram_size)	/* Super Pang, Block Block */
+				if (nvram_size != 0)	/* Super Pang, Block Block */
 					mame_fread(file,nvram,nvram_size);	/* NVRAM */
 			}
 			else
@@ -157,12 +157,12 @@ public class mitchell
 	{
 		static int dir[2];
 	
-		if (dial_selected)
+		if (dial_selected != 0)
 		{
 			int delta;
 	
 			delta = (readinputport(4 + offset) - dial[offset]) & 0xff;
-			if (delta & 0x80)
+			if ((delta & 0x80) != 0)
 			{
 				delta = (-delta) & 0xff;
 				if (dir[offset])
@@ -239,11 +239,11 @@ public class mitchell
 				return readinputport(1 + offset);
 				break;
 			case 1:	/* Mahjong games */
-				if (offset) return mahjong_input_r(offset-1);
+				if (offset != 0) return mahjong_input_r(offset-1);
 				else return readinputport(1);
 				break;
 			case 2:	/* Block Block - dial control */
-				if (offset) return block_input_r(offset-1);
+				if (offset != 0) return block_input_r(offset-1);
 				else return readinputport(1);
 				break;
 			case 3:	/* Super Pang - simulate START 1 press to initialize EEPROM */

@@ -53,7 +53,7 @@ public class triplhnt
 		/* BIT6 => TAPE CTRL   */
 		/* BIT7 => SPRITE BANK */
 	
-		if (offset & 1)
+		if ((offset & 1) != 0)
 		{
 			triplhnt_misc_flags |= 1 << bit;
 	

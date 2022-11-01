@@ -49,11 +49,11 @@ public class nemesis
 		code = nemesis_videoram1f[offs];
 		color = nemesis_videoram2f[offs];
 		flags = 0;
-		if ( color & 0x80)  flags |= TILE_FLIPX;
-		if ( code & 0x0800) flags |= TILE_FLIPY;
+		if ((color & 0x80) != 0)  flags |= TILE_FLIPX;
+		if ((code & 0x0800) != 0) flags |= TILE_FLIPY;
 		if ((~code & 0x2000) || ((code & 0xc000) == 0x4000))
 			 flags |= TILE_IGNORE_TRANSPARENCY;
-		if (code & 0xf800) {
+		if ((code & 0xf800) != 0) {
 			SET_TILE_INFO( 0, code&0x7ff, color&0x7f, flags );
 		} else {
 			SET_TILE_INFO( 0, 0x800, 0x00, 0 );
@@ -67,11 +67,11 @@ public class nemesis
 		code = nemesis_videoram1b[offs];
 		color = nemesis_videoram2b[offs];
 		flags = 0;
-		if ( color & 0x80)  flags |= TILE_FLIPX;
-		if ( code & 0x0800) flags |= TILE_FLIPY;
+		if ((color & 0x80) != 0)  flags |= TILE_FLIPX;
+		if ((code & 0x0800) != 0) flags |= TILE_FLIPY;
 		if ((~code & 0x2000) || ((code & 0xc000) == 0x4000))
 			 flags |= TILE_IGNORE_TRANSPARENCY;
-		if (code & 0xf800) {
+		if ((code & 0xf800) != 0) {
 			SET_TILE_INFO( 0, code&0x7ff, color&0x7f, flags );
 		} else {
 			SET_TILE_INFO( 0, 0x800, 0x00, 0 );
@@ -81,10 +81,10 @@ public class nemesis
 	
 	WRITE16_HANDLER( nemesis_gfx_flipx_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			flipscreen = data & 0x01;
-			if (flipscreen)
+			if (flipscreen != 0)
 				tilemap_flip |= TILEMAP_FLIPX;
 			else
 				tilemap_flip &= ~TILEMAP_FLIPX;
@@ -95,9 +95,9 @@ public class nemesis
 	
 	WRITE16_HANDLER( nemesis_gfx_flipy_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
-			if (data & 0x01)
+			if ((data & 0x01) != 0)
 				tilemap_flip |= TILEMAP_FLIPY;
 			else
 				tilemap_flip &= ~TILEMAP_FLIPY;
@@ -444,10 +444,10 @@ public class nemesis
 							break;
 					}
 	
-					if( zoom )
+					if (zoom != 0)
 					{
 						zoom = ((1<<16)*0x80/zoom) + 0x0200;
-						if (flipscreen)
+						if (flipscreen != 0)
 						{
 							sx = 256 - ((zoom * w) >> 16) - sx;
 							sy = 256 - ((zoom * h) >> 16) - sy;
@@ -486,7 +486,7 @@ public class nemesis
 				char_dirty[offs] = 0;
 			}
 		}
-		if( bAnyDirty )
+		if (bAnyDirty != 0)
 		{
 			tilemap_mark_all_tiles_dirty( background );
 			tilemap_mark_all_tiles_dirty( foreground );

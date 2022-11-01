@@ -295,7 +295,7 @@ public class qix
 	{
 		UINT8 *RAM = memory_region(REGION_CPU2);
 	
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 			cpu_setbank(1, &RAM[0x10000]);
 		else
 			cpu_setbank(1, &RAM[0xa000]);
@@ -438,7 +438,7 @@ public class qix
 	
 	public static WriteHandlerPtr qixmcu_coinctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 		{
 			cpu_set_irq_line(3, M6809_IRQ_LINE, ASSERT_LINE);
 			/* spin for a while to let the 68705 write the result */

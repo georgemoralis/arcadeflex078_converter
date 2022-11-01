@@ -328,7 +328,7 @@ public class bosco
 					if ((p4 & 0x08) == 0 && credits >= 2)
 						credits -= 2;
 	
-					if (mode)	/* switch mode */
+					if (mode != 0)	/* switch mode */
 						return (p4 & 0x80);
 					else	/* credits mode: return number of credits in BCD format */
 						return (credits / 10) * 16 + credits % 10;
@@ -581,7 +581,7 @@ public class bosco
 	
 	public static WriteHandlerPtr bosco_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);
@@ -606,7 +606,7 @@ public class bosco
 	{
 		bosco_vh_interrupt();	/* update the background stars position */
 	
-		if (interrupt_enable_1)
+		if (interrupt_enable_1 != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -621,7 +621,7 @@ public class bosco
 	
 	public static InterruptHandlerPtr bosco_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_2)
+		if (interrupt_enable_2 != 0)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
@@ -636,7 +636,7 @@ public class bosco
 	
 	public static InterruptHandlerPtr bosco_interrupt_3 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_3)
+		if (interrupt_enable_3 != 0)
 			cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 }

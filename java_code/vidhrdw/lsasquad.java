@@ -25,7 +25,7 @@ public class lsasquad
 	
 			base = 64 * scrollram[offs+1];
 			sx = 8*(offs/4) + scrollx;
-			if (flip_screen) sx = 248 - sx;
+			if (flip_screen != 0) sx = 248 - sx;
 			sx &= 0xff;
 	
 			for (y = 0;y < 32;y++)
@@ -33,7 +33,7 @@ public class lsasquad
 				int attr;
 	
 				sy = 8*y + scrolly;
-				if (flip_screen) sy = 248 - sy;
+				if (flip_screen != 0) sy = 248 - sy;
 				sy &= 0xff;
 	
 				attr = videoram[base + 2*y + 1];
@@ -73,7 +73,7 @@ public class lsasquad
 			flipx = attr & 0x40;
 			flipy = attr & 0x80;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

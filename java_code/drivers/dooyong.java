@@ -62,7 +62,7 @@ public class dooyong
 		bankaddress = 0x10000 + (data & 0x07) * 0x4000;
 		cpu_setbank(1,&RAM[bankaddress]);
 	
-	if (data & 0xf8) usrintf_showmessage("bankswitch %02x",data);
+	if ((data & 0xf8) != 0) usrintf_showmessage("bankswitch %02x",data);
 	} };
 	
 	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)

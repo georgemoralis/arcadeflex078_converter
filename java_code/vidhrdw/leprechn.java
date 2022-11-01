@@ -69,7 +69,7 @@ public class leprechn
 	{
 		int sx,sy;
 	
-		if (pending)
+		if (pending != 0)
 		{
 			plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
 	        videoram[y * Machine->drv->screen_width + x] = color;
@@ -83,17 +83,17 @@ public class leprechn
 	
 	        color = data & 0x0f;
 	
-			if (data & 0x10)
+			if ((data & 0x10) != 0)
 			{
-				if (data & 0x40)
+				if ((data & 0x40) != 0)
 					x--;
 				else
 					x++;
 			}
 	
-			if (data & 0x20)
+			if ((data & 0x20) != 0)
 			{
-				if (data & 0x80)
+				if ((data & 0x80) != 0)
 					y--;
 				else
 					y++;

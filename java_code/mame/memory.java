@@ -916,7 +916,7 @@ public class memory
 		/* remember the base for banks */
 		if (handler >= STATIC_BANK1 && handler <= STATIC_BANKMAX)
 		{
-			if (iswrite)
+			if (iswrite != 0)
 				bankdata[handler].writeoffset = start;
 			else
 				bankdata[handler].readoffset = start;
@@ -1145,7 +1145,7 @@ public class memory
 		memset(data->write.table, STATIC_UNMAP, 1 << LEVEL1_BITS(data->ebits));
 	
 		/* initialize the pointers to the handlers */
-		if (ismemory)
+		if (ismemory != 0)
 		{
 			data->read.handlers = (dbits == 32) ? rmemhandler32 : (dbits == 16) ? rmemhandler16 : rmemhandler8;
 			data->write.handlers = (dbits == 32) ? wmemhandler32 : (dbits == 16) ? wmemhandler16 : wmemhandler8;
@@ -1189,7 +1189,7 @@ public class memory
 			}
 	
 			/* verify the read handlers */
-			if (mra)
+			if (mra != 0)
 			{
 				/* verify the MEMPORT_READ_START header */
 				if (mra->start == MEMPORT_MARKER && mra->end != 0)
@@ -1214,7 +1214,7 @@ public class memory
 			}
 	
 			/* verify the write handlers */
-			if (mwa)
+			if (mwa != 0)
 			{
 				/* verify the MEMPORT_WRITE_START header */
 				if (mwa->start == MEMPORT_MARKER && mwa->end != 0)
@@ -1268,7 +1268,7 @@ public class memory
 			}
 	
 			/* verify the read handlers */
-			if (mra)
+			if (mra != 0)
 			{
 				/* verify the PORT_READ_START header */
 				if (mra->start == MEMPORT_MARKER && mra->end != 0)
@@ -1283,7 +1283,7 @@ public class memory
 			}
 	
 			/* verify the write handlers */
-			if (mwa)
+			if (mwa != 0)
 			{
 				/* verify the PORT_WRITE_START header */
 				if (mwa->start == MEMPORT_MARKER && mwa->end != 0)
@@ -1435,7 +1435,7 @@ public class memory
 			const struct Memory_WriteAddress *mwa, *mwa_start = Machine->drv->cpu[cpunum].memory_write;
 	
 			/* install the read handlers */
-			if (mra_start)
+			if (mra_start != 0)
 			{
 				/* first find the end and check for address bits */
 				for (mra = mra_start; !IS_MEMPORT_END(mra); mra++)
@@ -1449,7 +1449,7 @@ public class memory
 			}
 	
 			/* install the write handlers */
-			if (mwa_start)
+			if (mwa_start != 0)
 			{
 				/* first find the end and check for address bits */
 				for (mwa = mwa_start; !IS_MEMPORT_END(mwa); mwa++)
@@ -1486,7 +1486,7 @@ public class memory
 			const struct IO_WritePort *mwa, *mwa_start = Machine->drv->cpu[cpunum].port_write;
 	
 			/* install the read handlers */
-			if (mra_start)
+			if (mra_start != 0)
 			{
 				/* first find the end and check for address bits */
 				for (mra = mra_start; !IS_MEMPORT_END(mra); mra++)
@@ -1500,7 +1500,7 @@ public class memory
 			}
 	
 			/* install the write handlers */
-			if (mwa_start)
+			if (mwa_start != 0)
 			{
 				/* first find the end and check for address bits */
 				for (mwa = mwa_start; !IS_MEMPORT_END(mwa); mwa++)
@@ -1591,9 +1591,9 @@ public class memory
 	
 			mask = 0;
 	
-			if (mode & RG_READ_MASK)
+			if ((mode & RG_READ_MASK) != 0)
 				mask |= RG_READ_MASK;
-			if (mode & RG_WRITE_MASK)
+			if ((mode & RG_WRITE_MASK) != 0)
 				mask |= RG_WRITE_MASK;
 	
 			(*cur)->flags = ((*cur)->flags & ~mask) | mode;
@@ -1665,7 +1665,7 @@ public class memory
 			}
 	
 	
-			if (mra_start)
+			if (mra_start != 0)
 			{
 				for (mra = mra_start; !IS_MEMPORT_END(mra); mra++);
 				mra--;
@@ -1699,7 +1699,7 @@ public class memory
 					}
 				}
 			}
-			if (mwa_start)
+			if (mwa_start != 0)
 			{
 				for (mwa = mwa_start; !IS_MEMPORT_END(mwa); mwa++);
 				mwa--;
@@ -1749,7 +1749,7 @@ public class memory
 						}
 						end = e->end;
 					}
-					else if (active)
+					else if (active != 0)
 					{
 						register_zone (cpunum, start, end);
 						active = 0;
@@ -2300,7 +2300,7 @@ public class memory
 		UINT8 entry;																		\
 																							\
 		/* allow overrides */																\
-		if (opbasefunc) 																	\
+		if (opbasefunc != 0) 																	\
 		{																					\
 			pc = (*opbasefunc)(pc);															\
 			if (pc == ~0)																	\
@@ -2939,7 +2939,7 @@ public class memory
 		for (i = 0;drivers[i];i++)
 		{
 			const struct RomModule *romp = drivers[i]->rom;
-			if (romp)
+			if (romp != 0)
 			{
 				for (cpunum = 0;cpunum < MAX_CPU;cpunum++)
 				{
@@ -2950,12 +2950,12 @@ public class memory
 						const struct IO_ReadPort *iora = drivers[i]->drv->cpu[cpunum].port_read;
 						const struct IO_WritePort *iowa = drivers[i]->drv->cpu[cpunum].port_write;
 	
-						if (mra)
+						if (mra != 0)
 							for ( ; !IS_MEMPORT_END(mra); mra++)
 								if (!IS_MEMPORT_MARKER(mra))
 								{
 									size_t size = mra->end - mra->start + 1;
-									if (size)
+									if (size != 0)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)
@@ -2977,12 +2977,12 @@ public class memory
 									}
 								}
 	
-						if (mwa)
+						if (mwa != 0)
 							for ( ; !IS_MEMPORT_END(mwa); mwa++)
 								if (!IS_MEMPORT_MARKER(mwa))
 								{
 									size_t size = mwa->end - mwa->start + 1;
-									if (size)
+									if (size != 0)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)
@@ -3004,12 +3004,12 @@ public class memory
 									}
 								}
 	
-						if (iora)
+						if (iora != 0)
 							for ( ; !IS_MEMPORT_END(iora); iora++)
 								if (!IS_MEMPORT_MARKER(iora))
 								{
 									size_t size = iora->end - iora->start + 1;
-									if (size)
+									if (size != 0)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)
@@ -3031,12 +3031,12 @@ public class memory
 									}
 								}
 	
-						if (iowa)
+						if (iowa != 0)
 							for ( ; !IS_MEMPORT_END(iowa); iowa++)
 								if (!IS_MEMPORT_MARKER(iowa))
 								{
 									size_t size = iowa->end - iowa->start + 1;
-									if (size)
+									if (size != 0)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)

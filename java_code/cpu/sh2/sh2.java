@@ -2316,7 +2316,7 @@ public class sh2
 		sh2.m = m;
 		memset(sh2.m, 0, 0x200);
 	
-		if(conf)
+		if (conf != 0)
 			sh2.is_slave = conf->is_slave;
 		else
 			sh2.is_slave = 0;
@@ -2400,7 +2400,7 @@ public class sh2
 	/* Get registers, return context size */
 	unsigned sh2_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			memcpy(dst, &sh2, sizeof(SH2));
 		return sizeof(SH2);
 	}
@@ -2408,7 +2408,7 @@ public class sh2
 	/* Set registers */
 	void sh2_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 			memcpy(&sh2, src, sizeof(SH2));
 	}
 	
@@ -2417,7 +2417,7 @@ public class sh2
 		int divider = div_tab[(sh2.m[5] >> 8) & 3];
 		UINT32 cur_time = cpunum_gettotalcycles(sh2.cpu_number);
 	
-		if(divider)
+		if (divider != 0)
 			sh2.frc += (cur_time - sh2.frc_base) >> divider;
 		sh2.frc_base = cur_time;
 	}
@@ -2450,7 +2450,7 @@ public class sh2
 	
 		if(max_delta != 0xfffff) {
 			int divider = div_tab[(sh2.m[5] >> 8) & 3];
-			if(divider) {
+			if (divider != 0) {
 				max_delta <<= divider;
 				sh2.frc_base = cpunum_gettotalcycles(sh2.cpu_number);
 				timer_adjust(sh2.timer, TIME_IN_CYCLES(max_delta, sh2.cpu_number), sh2.cpu_number, 0);
@@ -2473,7 +2473,7 @@ public class sh2
 			{
 				int mask = (sh2.m[4]>>8) & sh2.m[4];
 				irq = level;
-				if(mask & ICF)
+				if ((mask & ICF) != 0)
 					vector = (sh2.m[0x19] >> 8) & 0x7f;
 				else if(mask & (OCFA|OCFB))
 					vector = sh2.m[0x19] & 0x7f;
@@ -2717,7 +2717,7 @@ public class sh2
 				INT32 a = sh2.m[0x41];
 				INT32 b = sh2.m[0x40];
 				LOG(("SH2 #%d div+mod %d/%d\n", cpu_getactivecpu(), a, b));
-				if (b)
+				if (b != 0)
 				{
 					sh2.m[0x45] = a / b;
 					sh2.m[0x44] = a % b;
@@ -2745,7 +2745,7 @@ public class sh2
 				INT64 a = sh2.m[0x45] | ((UINT64)(sh2.m[0x44]) << 32);
 				INT64 b = sh2.m[0x40];
 				LOG(("SH2 #%d div+mod %lld/%lld\n", cpu_getactivecpu(), a, b));
-				if (b)
+				if (b != 0)
 				{
 					INT64 q = a / b;
 					if (q != (INT32)q)

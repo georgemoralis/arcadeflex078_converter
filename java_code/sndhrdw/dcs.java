@@ -357,7 +357,7 @@ public class dcs
 		dcs.rombank = 0;
 		dcs.srambank = 0;
 		dcs.drambank = 0;
-		if (dcs_sram_bank0)
+		if (dcs_sram_bank0 != 0)
 		{
 			cpu_setbank(20, memory_region(REGION_CPU1 + dcs_cpunum) + ADSP2100_SIZE + 0x8000);
 			cpu_setbank(21, dcs_sram_bank0);
@@ -452,7 +452,7 @@ public class dcs
 		dcs.fifo_status_r = NULL;
 		
 		/* install the speedup handler */
-		if (polling_offset)
+		if (polling_offset != 0)
 			dcs_polling_base = install_mem_read16_handler(dcs_cpunum, ADSP_DATA_ADDR_RANGE(polling_offset, polling_offset), dcs_polling_r);
 	
 		/* reset the system */
@@ -611,7 +611,7 @@ public class dcs
 	void dcs_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state)
+		if (state != 0)
 		{
 			logerror("%08x: DCS reset = %d\n", activecpu_get_pc(), state);
 	
@@ -705,7 +705,7 @@ public class dcs
 			}
 	#endif
 	
-		if (LOG_DCS_IO)
+		if (LOG_DCS_IO != 0)
 			logerror("%08X:dcs_data_w(%04X)\n", activecpu_get_pc(), data);
 	
 		cpu_boost_interleave(TIME_IN_USEC(0.5), TIME_IN_USEC(5));
@@ -731,7 +731,7 @@ public class dcs
 	{
 		if (dcs.auto_ack)
 			input_latch_ack_w(0,0,0);
-		if (LOG_DCS_IO)
+		if (LOG_DCS_IO != 0)
 			logerror("%08X:input_latch_r(%04X)\n", activecpu_get_pc(), dcs.input_data);
 		return dcs.input_data;
 	}
@@ -753,7 +753,7 @@ public class dcs
 	
 	static WRITE16_HANDLER( output_latch_w )
 	{
-		if (LOG_DCS_IO)
+		if (LOG_DCS_IO != 0)
 			logerror("%08X:output_latch_w(%04X) (empty=%d)\n", activecpu_get_pc(), data, IS_OUTPUT_EMPTY());
 		timer_set(TIME_NOW, data, latch_delayed_w);
 	}
@@ -779,7 +779,7 @@ public class dcs
 		if (dcs.auto_ack)
 			delayed_ack_w(0);
 	
-		if (LOG_DCS_IO)
+		if (LOG_DCS_IO != 0)
 			logerror("%08X:dcs_data_r(%04X)\n", activecpu_get_pc(), dcs.output_data);
 		return dcs.output_data;
 	}
@@ -792,7 +792,7 @@ public class dcs
 	
 	static void output_control_delayed_w(int data)
 	{
-		if (LOG_DCS_IO)
+		if (LOG_DCS_IO != 0)
 			logerror("output_control = %04X\n", data);
 		dcs.output_control = data;
 		dcs.output_control_cycles = 0;
@@ -801,7 +801,7 @@ public class dcs
 	
 	static WRITE16_HANDLER( output_control_w )
 	{
-		if (LOG_DCS_IO)
+		if (LOG_DCS_IO != 0)
 			logerror("%04X:output_control = %04X\n", activecpu_get_pc(), data);
 		timer_set(TIME_NOW, data, output_control_delayed_w);
 	}
@@ -862,7 +862,7 @@ public class dcs
 				dcs.buffer_in -= DCS_BUFFER_SIZE;
 			}
 	
-			if (LOG_BUFFER_FILLING)
+			if (LOG_BUFFER_FILLING != 0)
 				logerror("DCS dac update: bytes in buffer = %d\n", dcs.buffer_in - (current >> 16));
 	
 			/* update the final values */
@@ -916,7 +916,7 @@ public class dcs
 				dcs.buffer_in -= DCS_BUFFER_SIZE;
 			}
 	
-			if (LOG_BUFFER_FILLING)
+			if (LOG_BUFFER_FILLING != 0)
 				logerror("DCS dac update: bytes in buffer = %d\n", dcs.buffer_in - (current >> 16));
 	
 			/* update the final values */
@@ -960,7 +960,7 @@ public class dcs
 		switch (offset)
 		{
 			case SYSCONTROL_REG:
-				if (data & 0x0200)
+				if ((data & 0x0200) != 0)
 				{
 					/* boot force */
 					cpu_set_reset_line(dcs_cpunum, PULSE_LINE);

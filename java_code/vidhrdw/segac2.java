@@ -227,9 +227,9 @@ public class segac2
 			int orig_color = i & 0x7ff;
 			int half_bright = i & 0x800;
 	
-			if (orig_color & 0x100)
+			if ((orig_color & 0x100) != 0)
 				transparent_lookup[i] = orig_color;
-			else if (half_bright)
+			else if (half_bright != 0)
 				transparent_lookup[i] = orig_color | 0x800;
 			else
 				transparent_lookup[i] = orig_color | 0x1000;
@@ -614,10 +614,10 @@ public class segac2
 		{
 			case 0x00:	/* Write data */
 			case 0x01:
-				if (mem_mask)
+				if (mem_mask != 0)
 				{
 					data &= ~mem_mask;
-					 if (ACCESSING_MSB)
+					 if (ACCESSING_MSB != 0)
 					 	data |= data >> 8;
 					 else
 					 	data |= data << 8;
@@ -627,10 +627,10 @@ public class segac2
 	
 			case 0x02:	/* Control Write */
 			case 0x03:
-				if (mem_mask)
+				if (mem_mask != 0)
 				{
 					data &= ~mem_mask;
-					 if (ACCESSING_MSB)
+					 if (ACCESSING_MSB != 0)
 					 	data |= data >> 8;
 					 else
 					 	data |= data << 8;
@@ -691,7 +691,7 @@ public class segac2
 		vdp_cmdpart = 0;
 	
 		/* handle the fill case */
-		if (vdp_dmafill)
+		if (vdp_dmafill != 0)
 		{
 			vdp_dma_fill(data);
 			vdp_dmafill = 0;
@@ -710,7 +710,7 @@ public class segac2
 					force_partial_update((cpu_getscanline()) + scanbase);
 	
 				/* write to VRAM */
-				if (vdp_address & 1)
+				if ((vdp_address & 1) != 0)
 					data = ((data & 0xff) << 8) | ((data >> 8) & 0xff);
 				VDP_VRAM_BYTE(vdp_address & ~1) = data >> 8;
 				VDP_VRAM_BYTE(vdp_address |  1) = data;
@@ -729,7 +729,7 @@ public class segac2
 					force_partial_update((cpu_getscanline()) + scanbase);
 	
 				/* write to VSRAM */
-				if (vdp_address & 1)
+				if ((vdp_address & 1) != 0)
 					data = ((data & 0xff) << 8) | ((data >> 8) & 0xff);
 				VDP_VSRAM_BYTE(vdp_address & ~1) = data >> 8;
 				VDP_VSRAM_BYTE(vdp_address |  1) = data;
@@ -789,7 +789,7 @@ public class segac2
 		vdp_cmdpart = 0;
 	
 		/* set the VBLANK bit */
-		if (internal_vblank)
+		if (internal_vblank != 0)
 			status |= 0x0008;
 	
 		/* set the HBLANK bit */
@@ -848,7 +848,7 @@ public class segac2
 		switch (regnum)
 		{
 			case 0x01: /* video modes */
-				if (regdat & 8)
+				if ((regdat & 8) != 0)
 					usrintf_showmessage("Video height = 240!");
 				break;
 	
@@ -1111,7 +1111,7 @@ public class segac2
 		/* compute the windowing for this line */
 		if ((window_down && line >= window_vpos) || (!window_down && line < window_vpos))
 			window_lclip = 0, window_rclip = BITMAP_WIDTH - 1;
-		else if (window_right)
+		else if (window_right != 0)
 			window_lclip = window_hpos, window_rclip = BITMAP_WIDTH - 1;
 		else
 			window_lclip = 0, window_rclip = window_hpos - 1;
@@ -1250,27 +1250,27 @@ public class segac2
 					/* non-flipped */
 					if (!(tile & 0x0800))
 					{
-						col = EXTRACT_PIXEL(mytile, 0); if (col) bmap[0] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 1); if (col) bmap[1] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 2); if (col) bmap[2] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 3); if (col) bmap[3] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 4); if (col) bmap[4] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 5); if (col) bmap[5] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 6); if (col) bmap[6] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 7); if (col) bmap[7] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 0); if (col != 0) bmap[0] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 1); if (col != 0) bmap[1] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 2); if (col != 0) bmap[2] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 3); if (col != 0) bmap[3] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 4); if (col != 0) bmap[4] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 5); if (col != 0) bmap[5] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 6); if (col != 0) bmap[6] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 7); if (col != 0) bmap[7] = colbase + col;
 					}
 	
 					/* horizontal flip */
 					else
 					{
-						col = EXTRACT_PIXEL(mytile, 7); if (col) bmap[0] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 6); if (col) bmap[1] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 5); if (col) bmap[2] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 4); if (col) bmap[3] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 3); if (col) bmap[4] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 2); if (col) bmap[5] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 1); if (col) bmap[6] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 0); if (col) bmap[7] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 7); if (col != 0) bmap[0] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 6); if (col != 0) bmap[1] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 5); if (col != 0) bmap[2] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 4); if (col != 0) bmap[3] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 3); if (col != 0) bmap[4] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 2); if (col != 0) bmap[5] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 1); if (col != 0) bmap[6] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 0); if (col != 0) bmap[7] = colbase + col;
 					}
 				}
 	
@@ -1330,63 +1330,63 @@ public class segac2
 		/* non-transparent */
 		if ((colbase & 0x30) != 0x30 || !(segac2_vdp_regs[12] & 0x08))
 		{
-			col = EXTRACT_PIXEL(tile, 0); if (col) bmap[0] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 1); if (col) bmap[1] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 2); if (col) bmap[2] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 3); if (col) bmap[3] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 4); if (col) bmap[4] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 5); if (col) bmap[5] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 6); if (col) bmap[6] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 7); if (col) bmap[7] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 0); if (col != 0) bmap[0] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 1); if (col != 0) bmap[1] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 2); if (col != 0) bmap[2] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 3); if (col != 0) bmap[3] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 4); if (col != 0) bmap[4] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 5); if (col != 0) bmap[5] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 6); if (col != 0) bmap[6] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 7); if (col != 0) bmap[7] = colbase + col;
 		}
 	
 		/* transparent */
 		else
 		{
 			col = EXTRACT_PIXEL(tile, 0);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[0] = colbase + col;
 				else bmap[0] = transparent_lookup[((col & 1) << 11) | (bmap[0] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 1);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[1] = colbase + col;
 				else bmap[1] = transparent_lookup[((col & 1) << 11) | (bmap[1] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 2);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[2] = colbase + col;
 				else bmap[2] = transparent_lookup[((col & 1) << 11) | (bmap[2] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 3);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[3] = colbase + col;
 				else bmap[3] = transparent_lookup[((col & 1) << 11) | (bmap[3] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 4);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[4] = colbase + col;
 				else bmap[4] = transparent_lookup[((col & 1) << 11) | (bmap[4] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 5);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[5] = colbase + col;
 				else bmap[5] = transparent_lookup[((col & 1) << 11) | (bmap[5] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 6);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[6] = colbase + col;
 				else bmap[6] = transparent_lookup[((col & 1) << 11) | (bmap[6] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 7);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[7] = colbase + col;
 				else bmap[7] = transparent_lookup[((col & 1) << 11) | (bmap[7] & 0x7ff)];
@@ -1408,63 +1408,63 @@ public class segac2
 		/* non-transparent */
 		if ((colbase & 0x30) != 0x30 || !(segac2_vdp_regs[12] & 0x08))
 		{
-			col = EXTRACT_PIXEL(tile, 7); if (col) bmap[0] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 6); if (col) bmap[1] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 5); if (col) bmap[2] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 4); if (col) bmap[3] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 3); if (col) bmap[4] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 2); if (col) bmap[5] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 1); if (col) bmap[6] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 0); if (col) bmap[7] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 7); if (col != 0) bmap[0] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 6); if (col != 0) bmap[1] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 5); if (col != 0) bmap[2] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 4); if (col != 0) bmap[3] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 3); if (col != 0) bmap[4] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 2); if (col != 0) bmap[5] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 1); if (col != 0) bmap[6] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 0); if (col != 0) bmap[7] = colbase + col;
 		}
 	
 		/* transparent */
 		else
 		{
 			col = EXTRACT_PIXEL(tile, 7);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[0] = colbase + col;
 				else bmap[0] = transparent_lookup[((col & 1) << 11) | (bmap[0] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 6);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[1] = colbase + col;
 				else bmap[1] = transparent_lookup[((col & 1) << 11) | (bmap[1] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 5);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[2] = colbase + col;
 				else bmap[2] = transparent_lookup[((col & 1) << 11) | (bmap[2] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 4);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[3] = colbase + col;
 				else bmap[3] = transparent_lookup[((col & 1) << 11) | (bmap[3] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 3);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[4] = colbase + col;
 				else bmap[4] = transparent_lookup[((col & 1) << 11) | (bmap[4] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 2);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[5] = colbase + col;
 				else bmap[5] = transparent_lookup[((col & 1) << 11) | (bmap[5] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 1);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[6] = colbase + col;
 				else bmap[6] = transparent_lookup[((col & 1) << 11) | (bmap[6] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 0);
-			if (col)
+			if (col != 0)
 			{
 				if (col < 0x0e) bmap[7] = colbase + col;
 				else bmap[7] = transparent_lookup[((col & 1) << 11) | (bmap[7] & 0x7ff)];

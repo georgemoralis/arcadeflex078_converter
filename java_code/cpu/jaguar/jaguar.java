@@ -324,12 +324,12 @@ public class jaguar
 			return;
 	
 		/* determine which interrupt */
-		if (bits & 0x01) which = 0;
-		if (bits & 0x02) which = 1;
-		if (bits & 0x04) which = 2;
-		if (bits & 0x08) which = 3;
-		if (bits & 0x10) which = 4;
-		if (bits & 0x20) which = 5;
+		if ((bits & 0x01) != 0) which = 0;
+		if ((bits & 0x02) != 0) which = 1;
+		if ((bits & 0x04) != 0) which = 2;
+		if ((bits & 0x08) != 0) which = 3;
+		if ((bits & 0x10) != 0) which = 4;
+		if ((bits & 0x20) != 0) which = 5;
 	
 		/* set the interrupt flag */
 		jaguar.FLAGS |= IFLAG;
@@ -388,7 +388,7 @@ public class jaguar
 	unsigned jaguargpu_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst)
+		if (dst != 0)
 			*(jaguar_regs *)dst = jaguar;
 	
 		/* return the context size */
@@ -398,7 +398,7 @@ public class jaguar
 	unsigned jaguardsp_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst)
+		if (dst != 0)
 			*(jaguar_regs *)dst = jaguar;
 	
 		/* return the context size */
@@ -409,7 +409,7 @@ public class jaguar
 	void jaguargpu_set_context(void *src)
 	{
 		/* copy the context */
-		if (src)
+		if (src != 0)
 			jaguar = *(jaguar_regs *)src;
 	
 		/* check for IRQs */
@@ -419,7 +419,7 @@ public class jaguar
 	void jaguardsp_set_context(void *src)
 	{
 		/* copy the context */
-		if (src)
+		if (src != 0)
 			jaguar = *(jaguar_regs *)src;
 	
 		/* check for IRQs */
@@ -440,7 +440,7 @@ public class jaguar
 			mirror_table = malloc(65536 * sizeof(mirror_table[0]));
 	
 		/* fill in the mirror table */
-		if (mirror_table)
+		if (mirror_table != 0)
 			for (i = 0; i < 65536; i++)
 				mirror_table[i] = ((i >> 15) & 0x0001) | ((i >> 13) & 0x0002) |
 				                  ((i >> 11) & 0x0004) | ((i >> 9)  & 0x0008) |
@@ -456,18 +456,18 @@ public class jaguar
 			condition_table = malloc(32 * 8 * sizeof(condition_table[0]));
 	
 		/* fill in the condition table */
-		if (condition_table)
+		if (condition_table != 0)
 			for (i = 0; i < 8; i++)
 				for (j = 0; j < 32; j++)
 				{
 					int result = 1;
-					if (j & 1)
-						if (i & ZFLAG) result = 0;
-					if (j & 2)
+					if ((j & 1) != 0)
+						if ((i & ZFLAG) != 0) result = 0;
+					if ((j & 2) != 0)
 						if (!(i & ZFLAG)) result = 0;
-					if (j & 4)
+					if ((j & 4) != 0)
 						if (i & (CFLAG << (j >> 4))) result = 0;
-					if (j & 8)
+					if ((j & 8) != 0)
 						if (!(i & (CFLAG << (j >> 4)))) result = 0;
 					condition_table[i * 32 + j] = result;
 				}
@@ -498,7 +498,7 @@ public class jaguar
 	{
 		init_tables();
 	
-		if (config)
+		if (config != 0)
 			jaguar.cpu_interrupt = config->cpu_int_callback;
 	
 		jaguar.b0 = jaguar.r;
@@ -523,11 +523,11 @@ public class jaguar
 	
 	INLINE void common_exit(void)
 	{
-		if (mirror_table)
+		if (mirror_table != 0)
 			free(mirror_table);
 		mirror_table = NULL;
 	
-		if (condition_table)
+		if (condition_table != 0)
 			free(condition_table);
 		condition_table = NULL;
 	}
@@ -949,7 +949,7 @@ public class jaguar
 		int dreg = jaguar.op & 31;
 		UINT32 res = jaguar.r[dreg];
 		CLR_ZNC;
-		if (res & 0x80000000)
+		if ((res & 0x80000000) != 0)
 		{
 			jaguar.r[dreg] = res = -res;
 			jaguar.FLAGS |= CFLAG;
@@ -1065,7 +1065,7 @@ public class jaguar
 		int dreg = jaguar.op & 31;
 		UINT32 r1 = jaguar.r[(jaguar.op >> 5) & 31];
 		UINT32 r2 = jaguar.r[dreg];
-		if (r1)
+		if (r1 != 0)
 		{
 			if (jaguar.ctrl[D_DIVCTRL] & 1)
 			{
@@ -1663,7 +1663,7 @@ public class jaguar
 	
 				/* combine the data properly */
 				jaguar.ctrl[offset] = newval & (ZFLAG | CFLAG | NFLAG | EINT04FLAGS | RPAGEFLAG);
-				if (newval & IFLAG)
+				if ((newval & IFLAG) != 0)
 					jaguar.ctrl[offset] |= oldval & IFLAG;
 	
 				/* clear interrupts */
@@ -1700,19 +1700,19 @@ public class jaguar
 					cpu_set_halt_line(cpunum, (newval & 1) ? CLEAR_LINE : ASSERT_LINE);
 					cpu_yield();
 				}
-				if (newval & 0x02)
+				if ((newval & 0x02) != 0)
 				{
 					if (jaguar.cpu_interrupt)
 						(*jaguar.cpu_interrupt)();
 					jaguar.ctrl[offset] &= ~0x02;
 				}
-				if (newval & 0x04)
+				if ((newval & 0x04) != 0)
 				{
 					jaguar.ctrl[G_CTRL] |= 1 << 6;
 					jaguar.ctrl[offset] &= ~0x04;
 					check_irqs();
 				}
-				if (newval & 0x18)
+				if ((newval & 0x18) != 0)
 				{
 					logerror("GPU single stepping was enabled!\n");
 				}
@@ -1776,7 +1776,7 @@ public class jaguar
 	
 				/* combine the data properly */
 				jaguar.ctrl[offset] = newval & (ZFLAG | CFLAG | NFLAG | EINT04FLAGS | EINT5FLAG | RPAGEFLAG);
-				if (newval & IFLAG)
+				if ((newval & IFLAG) != 0)
 					jaguar.ctrl[offset] |= oldval & IFLAG;
 	
 				/* clear interrupts */
@@ -1814,19 +1814,19 @@ public class jaguar
 					cpu_set_halt_line(cpunum, (newval & 1) ? CLEAR_LINE : ASSERT_LINE);
 					cpu_yield();
 				}
-				if (newval & 0x02)
+				if ((newval & 0x02) != 0)
 				{
 					if (jaguar.cpu_interrupt)
 						(*jaguar.cpu_interrupt)();
 					jaguar.ctrl[offset] &= ~0x02;
 				}
-				if (newval & 0x04)
+				if ((newval & 0x04) != 0)
 				{
 					jaguar.ctrl[D_CTRL] |= 1 << 6;
 					jaguar.ctrl[offset] &= ~0x04;
 					check_irqs();
 				}
-				if (newval & 0x18)
+				if ((newval & 0x18) != 0)
 				{
 					logerror("DSP single stepping was enabled!\n");
 				}

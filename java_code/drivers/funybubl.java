@@ -362,7 +362,7 @@ public class funybubl
 			FILE *fp;
 	
 			fp=fopen("funnybubsprites", "w+b");
-			if (fp)
+			if (fp != 0)
 			{
 				fwrite(&banked_videoram[0x1000], 0x1000, 1, fp);
 				fclose(fp);

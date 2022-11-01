@@ -328,7 +328,7 @@ public class tms32025
 	{
 		if ((INT32)(~(oldacc.d ^ addval) & (oldacc.d ^ R.ACC.d)) < 0) {
 			SET0(OV_FLAG);
-			if (OVM)
+			if (OVM != 0)
 				R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 		}
 	}
@@ -336,7 +336,7 @@ public class tms32025
 	{
 		if ((INT32)((oldacc.d ^ subval) & (oldacc.d ^ R.ACC.d)) < 0) {
 			SET0(OV_FLAG);
-			if (OVM)
+			if (OVM != 0)
 				R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 		}
 	}
@@ -389,7 +389,7 @@ public class tms32025
 		else R.external_mem_access = 0;
 	
 		R.ALU.d = (UINT16)M_RDRAM(memaccess);
-		if (signext) R.ALU.d = (INT16)R.ALU.d;
+		if (signext != 0) R.ALU.d = (INT16)R.ALU.d;
 		R.ALU.d <<= shift;
 	
 		if (R.opcode.b.l & 0x80) MODIFY_AR_ARP();
@@ -442,7 +442,7 @@ public class tms32025
 	{
 			if ( (INT32)(R.ACC.d) < 0 ) {
 				R.ACC.d = -R.ACC.d;
-				if (OVM) {
+				if (OVM != 0) {
 					SET0(OV_FLAG);
 					if (R.ACC.d == 0x80000000) R.ACC.d-- ;
 				}
@@ -461,7 +461,7 @@ public class tms32025
 	{
 			oldacc.d = R.ACC.d;
 			GETDATA(0,0);
-			if (CARRY) R.ALU.d++;
+			if (CARRY != 0) R.ALU.d++;
 			R.ACC.d += R.ALU.d;
 			CALCULATE_ADD_OVERFLOW(R.ALU.d);
 			CALCULATE_ADD_CARRY();
@@ -473,7 +473,7 @@ public class tms32025
 			R.ACC.w.h += R.ALU.w.l;
 			if ((INT16)(~(oldacc.w.h ^ R.ALU.w.l) & (oldacc.w.h ^ R.ACC.w.h)) < 0) {
 				SET0(OV_FLAG);
-				if (OVM)
+				if (OVM != 0)
 					R.ACC.w.h = ((INT16)oldacc.w.h < 0) ? 0x8000 : 0x7fff;
 			}
 			if ( ((INT16)(oldacc.w.h) < 0) && ((INT16)(R.ACC.w.h) >= 0) ) {
@@ -508,7 +508,7 @@ public class tms32025
 	static void adlk(void)
 	{
 			oldacc.d = R.ACC.d;
-			if (SXM) R.ALU.d =  (INT16)M_RDOP_ARG(R.PC);
+			if (SXM != 0) R.ALU.d =  (INT16)M_RDOP_ARG(R.PC);
 			else     R.ALU.d = (UINT16)M_RDOP_ARG(R.PC);
 			R.PC++;
 			R.ALU.d <<= (R.opcode.b.h & 0xf);
@@ -559,7 +559,7 @@ public class tms32025
 	}
 	static void bbnz(void)
 	{
-			if (TC) R.PC = M_RDOP_ARG(R.PC);
+			if (TC != 0) R.PC = M_RDOP_ARG(R.PC);
 			else R.PC++ ;
 			MODIFY_AR_ARP();
 	}
@@ -571,7 +571,7 @@ public class tms32025
 	}
 	static void bc(void)
 	{
-			if (CARRY) R.PC = M_RDOP_ARG(R.PC);
+			if (CARRY != 0) R.PC = M_RDOP_ARG(R.PC);
 			else R.PC++ ;
 			MODIFY_AR_ARP();
 	}
@@ -662,7 +662,7 @@ public class tms32025
 	}
 	static void bv(void)
 	{
-			if (OV) {
+			if (OV != 0) {
 				R.PC = M_RDOP_ARG(R.PC);
 				CLR0(OV_FLAG);
 			}
@@ -821,7 +821,7 @@ public class tms32025
 	}
 	static void lalk(void)
 	{
-			if (SXM) {
+			if (SXM != 0) {
 				R.ALU.d = (INT16)M_RDOP_ARG(R.PC);
 				R.ACC.d = R.ALU.d << (R.opcode.b.h & 0xf);
 			}
@@ -1009,7 +1009,7 @@ public class tms32025
 	{
 			if (R.ACC.d == 0x80000000) {
 				SET0(OV_FLAG);
-				if (OVM) R.ACC.d = 0x7fffffff;
+				if (OVM != 0) R.ACC.d = 0x7fffffff;
 			}
 			else R.ACC.d = -R.ACC.d;
 			if (R.ACC.d) CLR0(C_FLAG);
@@ -1094,7 +1094,7 @@ public class tms32025
 	{
 			R.ALU.d = R.ACC.d;
 			R.ACC.d <<= 1;
-			if (CARRY) R.ACC.d |= 1;
+			if (CARRY != 0) R.ACC.d |= 1;
 			if (R.ALU.d & 0x80000000) SET1(C_FLAG);
 			else CLR1(C_FLAG);
 	}
@@ -1102,7 +1102,7 @@ public class tms32025
 	{
 			R.ALU.d = R.ACC.d;
 			R.ACC.d >>= 1;
-			if (CARRY) R.ACC.d |= 0x80000000;
+			if (CARRY != 0) R.ACC.d |= 0x80000000;
 			if (R.ALU.d & 1) SET1(C_FLAG);
 			else CLR1(C_FLAG);
 	}
@@ -1185,7 +1185,7 @@ public class tms32025
 	{
 			R.ALU.d = R.ACC.d;
 			R.ACC.d >>= 1;
-			if (SXM) {
+			if (SXM != 0) {
 				if (R.ALU.d & 0x80000000) R.ACC.d |= 0x80000000;
 			}
 			if (R.ALU.d & 1) SET1(C_FLAG);
@@ -1307,7 +1307,7 @@ public class tms32025
 			R.ACC.w.h -= R.ALU.w.l;
 			if ((INT16)((oldacc.w.h ^ R.ALU.w.l) & (oldacc.w.h ^ R.ACC.w.h)) < 0) {
 				SET0(OV_FLAG);
-				if (OVM)
+				if (OVM != 0)
 					R.ACC.w.h = ((INT16)oldacc.w.h < 0) ? 0x8000 : 0x7fff;
 			}
 			if ( ((INT16)(oldacc.w.h) >= 0) && ((INT16)(R.ACC.w.h) < 0) ) {
@@ -1822,7 +1822,7 @@ public class tms32025
 				S_OUT(TMS32025_HOLDA,ASSERT_LINE);	/* Hold-Ack (active low) */
 			}
 			R.hold = 1;
-			if (HM) {
+			if (HM != 0) {
 				tms32025_icount = 0;		/* Exit */
 			}
 			else {
@@ -1972,7 +1972,7 @@ public class tms32025
 	 ****************************************************************************/
 	unsigned tms32025_get_context (void *dst)
 	{
-		if (dst)
+		if (dst != 0)
 			*(tms32025_Regs*)dst = R;
 		return sizeof(tms32025_Regs);
 	}
@@ -1982,7 +1982,7 @@ public class tms32025
 	 ****************************************************************************/
 	void tms32025_set_context (void *src)
 	{
-		if (src)
+		if (src != 0)
 			R = *(tms32025_Regs*)src;
 	}
 	

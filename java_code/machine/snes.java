@@ -477,7 +477,7 @@ public class snes
 				{
 					/* FIXME: need to handle STAT78 reset */
 					static UINT8 read_ophct = 0;
-					if( read_ophct )
+					if (read_ophct != 0)
 					{
 						value = (snes_ppu.beam.latch_horz >> 8) & 0x1;
 						read_ophct = 0;
@@ -493,7 +493,7 @@ public class snes
 				{
 					/* FIXME: need to handle STAT78 reset */
 					static UINT8 read_opvct = 0;
-					if( read_opvct )
+					if (read_opvct != 0)
 					{
 						value = (snes_ppu.beam.latch_vert >> 8) & 0x1;
 						read_opvct = 0;
@@ -514,7 +514,7 @@ public class snes
 			case APU01:		/* Audio port register */
 			case APU02:		/* Audio port register */
 			case APU03:		/* Audio port register */
-				if( spc_usefakeapu )
+				if (spc_usefakeapu != 0)
 					return fakespc_port_r( offset & 0x3 );
 				else
 				return spc_port_out[offset & 0x3];
@@ -697,7 +697,7 @@ public class snes
 			case OAMADDH:	/* Address for accessing OAM (high) */
 				snes_ppu.oam.address_high = data & 0x1;
 				snes_ppu.oam.address = ((data & 0x1) << 8) + snes_ppu.oam.address_low;
-				if( data & 0x80 )
+				if ((data & 0x80) != 0)
 					snes_ppu.oam.high_priority = snes_ppu.oam.address;
 				snes_ram[OAMDATA] = 0;
 				break;
@@ -787,7 +787,7 @@ public class snes
 			case VMAIN:		/* VRAM address increment value designation */
 				{
 					/* FIXME: We don't support full graphic properly yet */
-					if( data & 0xc )
+					if ((data & 0xc) != 0)
 					{
 						vram_fg_incr = vram_fg_count = 0x10 << ((data & 0xc) >> 2);
 						vram_fg_cntr = 8;
@@ -971,11 +971,11 @@ public class snes
 					g = (snes_cgram[FIXED_COLOUR] & 0x3e0) >> 5;
 					b = (snes_cgram[FIXED_COLOUR] & 0x7c00) >> 10;
 					/* Set new value */
-					if( data & 0x20 )
+					if ((data & 0x20) != 0)
 						r = data & 0x1f;
-					if( data & 0x40 )
+					if ((data & 0x40) != 0)
 						g = data & 0x1f;
-					if( data & 0x80 )
+					if ((data & 0x80) != 0)
 						b = data & 0x1f;
 					snes_cgram[FIXED_COLOUR] = (r | (g << 5) | (b << 10));
 	
@@ -998,7 +998,7 @@ public class snes
 			case APU01:		/* Audio port register */
 			case APU02:		/* Audio port register */
 			case APU03:		/* Audio port register */
-				if( spc_usefakeapu )
+				if (spc_usefakeapu != 0)
 					fakespc_port_w( offset & 0x3, data );
 				else
 				{
@@ -1530,7 +1530,7 @@ public class snes
 		/* Assume priority of the 8 DMA channels is 0-7 */
 		for( i = 0; i < 8; i++ )
 		{
-			if( snes_hdma_chnl & mask )
+			if ((snes_hdma_chnl & mask) != 0)
 			{
 				/* Check if we need to read a new line from the table */
 				if( !(snes_ram[SNES_DMA_BASE + dma + 0xa] & 0x7f ) )
@@ -1608,7 +1608,7 @@ public class snes
 				}
 	
 				/* Update address */
-				if( contmode )
+				if (contmode != 0)
 				{
 					if( snes_ram[SNES_DMA_BASE + dma] & 0x40 )	/* Indirect */
 					{
@@ -1649,7 +1649,7 @@ public class snes
 		/* Assume priority of the 8 DMA channels is 0-7 */
 		for( i = 0; i < 8; i++ )
 		{
-			if( channels & mask )
+			if ((channels & mask) != 0)
 			{
 				/* Find transfer addresses */
 				abus = (snes_ram[SNES_DMA_BASE + dma + 4] << 16) + (snes_ram[SNES_DMA_BASE + dma + 3] << 8) + snes_ram[SNES_DMA_BASE + dma + 2];

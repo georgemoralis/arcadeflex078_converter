@@ -52,13 +52,13 @@ public class superpac
 	void superpac_update_credits (void)
 	{
 		int val = readinputport (3) & 0x0f, temp;
-		if (val & 1)
+		if ((val & 1) != 0)
 		{
 			if (!coin1) credits++, coin1++;
 		}
 		else coin1 = 0;
 	
-		if (val & 2)
+		if ((val & 2) != 0)
 		{
 			if (!coin2) credits++, coin2++;
 		}
@@ -66,13 +66,13 @@ public class superpac
 	
 		temp = readinputport (1) & 7;
 		val = readinputport (3) >> 4;
-		if (val & 1)
+		if ((val & 1) != 0)
 		{
 			if (!start1 && credits >= credden[temp]) credits -= credden[temp], start1++;
 		}
 		else start1 = 0;
 	
-		if (val & 2)
+		if ((val & 2) != 0)
 		{
 			if (!start2 && credits >= 2 * credden[temp]) credits -= 2 * credden[temp], start2++;
 		}

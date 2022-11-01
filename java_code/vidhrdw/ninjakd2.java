@@ -65,7 +65,7 @@ public class ninjakd2
 		{
 			ninjakd2_bgenable_ram[offset] = data;
 			bg_enable = data;
-			if (bg_enable)
+			if (bg_enable != 0)
 			 memset(bg_dirtybuffer, 1, ninjakd2_backgroundram_size / 2);
 			else
 			 fillbitmap(bitmap_bg, Machine->pens[0],0);
@@ -193,13 +193,13 @@ public class ninjakd2
 	{
 		int scrollx,scrolly;
 	
-		if (bg_enable)
+		if (bg_enable != 0)
 			ninjakd2_draw_background(bitmap_bg);
 	
 		scrollx = -((ninjakd2_scrollx_ram[0]+ninjakd2_scrollx_ram[1]*256) & 0x1FF);
 		scrolly = -((ninjakd2_scrolly_ram[0]+ninjakd2_scrolly_ram[1]*256) & 0x1FF);
 	
-		if (sp_overdraw)	/* overdraw sprite mode */
+		if (sp_overdraw != 0)	/* overdraw sprite mode */
 		{
 			ninjakd2_draw_sprites(bitmap_sp);
 			ninjakd2_draw_foreground(bitmap_sp);

@@ -242,7 +242,7 @@ public class pacland
 			int flipy = spriteram_3[offs] & 2;
 			int flipx = spriteram_3[offs] & 1;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				x += 8;
 				flipx = !flipx;
@@ -292,7 +292,7 @@ public class pacland
 						DRAW_SPRITE( 2+sprite, x+16, y-16 )
 						DRAW_SPRITE( 1+sprite, x, y )
 						DRAW_SPRITE( sprite, x+16, y )
-					} else if ( flipx ) {
+					} else if (flipx != 0) {
 						DRAW_SPRITE( 1+sprite, x, y-16 )
 						DRAW_SPRITE( sprite, x+16, y-16 )
 						DRAW_SPRITE( 3+sprite, x, y )

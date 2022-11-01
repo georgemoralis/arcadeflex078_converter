@@ -121,7 +121,7 @@ public class ajax
 				data = readinputport(5);
 				break;
 			case 0x06:	/* 1P inputs + DIPSW #1 & #2 */
-				if (offset & 0x02)
+				if ((offset & 0x02) != 0)
 					data = readinputport(offset & 0x01);
 				else
 					data = readinputport(3 + (offset & 0x01));
@@ -141,10 +141,10 @@ public class ajax
 	{
 		switch ((offset & 0x01c0) >> 6){
 			case 0x00:	/* NSFIRQ + AFR */
-				if (offset)
+				if (offset != 0)
 					watchdog_reset_w(0, data);
 				else{
-					if (firq_enable)	/* Cause interrupt on slave CPU */
+					if (firq_enable != 0)	/* Cause interrupt on slave CPU */
 						cpu_set_irq_line(1, M6809_FIRQ_LINE, HOLD_LINE);
 				}
 				break;

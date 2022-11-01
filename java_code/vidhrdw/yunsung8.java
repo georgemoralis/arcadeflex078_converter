@@ -70,7 +70,7 @@ public class yunsung8
 		if (offset < 0x0800)	bank = yunsung8_videobank & 2;
 		else					bank = yunsung8_videobank & 1;
 	
-		if (bank)	return yunsung8_videoram_0[offset];
+		if (bank != 0)	return yunsung8_videoram_0[offset];
 		else		return yunsung8_videoram_1[offset];
 	} };
 	
@@ -83,7 +83,7 @@ public class yunsung8
 			unsigned char *RAM;
 			int r,g,b,color;
 	
-			if (bank)	RAM = yunsung8_videoram_0;
+			if (bank != 0)	RAM = yunsung8_videoram_0;
 			else		RAM = yunsung8_videoram_1;
 	
 			RAM[offset] = data;
@@ -104,7 +104,7 @@ public class yunsung8
 			if (offset < 0x1000)	tile = (offset-0x0800);		// c800-cfff: Banked Color RAM
 			else				 	tile = (offset-0x1000)/2;	// d000-dfff: Banked Tiles RAM
 	
-			if (bank)	{	yunsung8_videoram_0[offset] = data;
+			if (bank != 0)	{	yunsung8_videoram_0[offset] = data;
 							tilemap_mark_tile_dirty(tilemap_0, tile);	}
 			else		{	yunsung8_videoram_1[offset] = data;
 							tilemap_mark_tile_dirty(tilemap_1, tile);	}
@@ -215,9 +215,9 @@ public class yunsung8
 	}
 	#endif
 	
-		if (layers_ctrl&1)	tilemap_draw(bitmap,cliprect, tilemap_0, 0,0);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0, 0,0);
 		else				fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
-		if (layers_ctrl&2)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
+		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
 	} };
 }

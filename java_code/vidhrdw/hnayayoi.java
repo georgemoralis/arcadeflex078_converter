@@ -238,14 +238,14 @@ public class hnayayoi
 		{
 			UINT16 *dst = dstbase;
 	
-			if (transp)
+			if (transp != 0)
 			{
 				for (countx = 255; countx >= 0; countx--, dst += 2)
 				{
 					pen = *(src1++);
-					if (pen) *dst     = palbase + pen;
+					if (pen != 0) *dst     = palbase + pen;
 					pen = *(src2++);
-					if (pen) *(dst+1) = palbase + pen;
+					if (pen != 0) *(dst+1) = palbase + pen;
 				}
 			}
 			else

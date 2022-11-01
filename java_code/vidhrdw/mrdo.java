@@ -72,11 +72,11 @@ public class mrdo
 		{
 			float par = 0;
 	
-			if (i & 1) par += 1.0/R1;
-			if (i & 2) par += 1.0/R2;
-			if (i & 4) par += 1.0/R3;
-			if (i & 8) par += 1.0/R4;
-			if (par)
+			if ((i & 1) != 0) par += 1.0/R1;
+			if ((i & 2) != 0) par += 1.0/R2;
+			if ((i & 4) != 0) par += 1.0/R3;
+			if ((i & 8) != 0) par += 1.0/R4;
+			if (par != 0)
 			{
 				par = 1/par;
 				pot[i] = pull/(pull+par) - potadjust;
@@ -208,7 +208,7 @@ public class mrdo
 	{
 		/* This is NOT affected by flipscreen (so stop it happening) */
 	
-		if (flipscreen) tilemap_set_scrolly(bg_tilemap,0,((256-data) & 0xff));
+		if (flipscreen != 0) tilemap_set_scrolly(bg_tilemap,0,((256-data) & 0xff));
 		else tilemap_set_scrolly(bg_tilemap,0,data);
 	} };
 	

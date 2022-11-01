@@ -23,7 +23,7 @@ INLINE void illegal( void )
 	PUSHWORD(pX);
 	PUSHBYTE(DP);
 
-	if ( MD & MD_EM )
+	if ((MD & MD_EM) != 0)
 	{
 		PUSHBYTE(F);
 		PUSHBYTE(E);
@@ -400,14 +400,14 @@ INLINE void exg( void )
 		case  5: PC = t2; CHANGE_PC; break;
 		case  6: W = t2;  break;
 		case  7: V = t2;  break;
-		case  8: if (promote) D = t2; else A = t2; break;
-		case  9: if (promote) D = t2; else B = t2; break;
+		case  8: if (promote != 0) D = t2; else A = t2; break;
+		case  9: if (promote != 0) D = t2; else B = t2; break;
 		case 10: CC = t2; break;
 		case 11: DP = t2; break;
 		case 12: /* 0 = t2 */ break;
 		case 13: /* 0 = t2 */ break;
-		case 14: if (promote) W = t2; else E = t2; break;
-		case 15: if (promote) W = t2; else F = t2; break;
+		case 14: if (promote != 0) W = t2; else E = t2; break;
+		case 15: if (promote != 0) W = t2; else F = t2; break;
 	}
 	switch(tb&15) {
 		case  0: D = t1;  break;
@@ -418,14 +418,14 @@ INLINE void exg( void )
 		case  5: PC = t1; CHANGE_PC; break;
 		case  6: W = t1;  break;
 		case  7: V = t1;  break;
-		case  8: if (promote) D = t1; else A = t1; break;
-		case  9: if (promote) D = t1; else B = t1; break;
+		case  8: if (promote != 0) D = t1; else A = t1; break;
+		case  9: if (promote != 0) D = t1; else B = t1; break;
 		case 10: CC = t1; break;
 		case 11: DP = t1; break;
 		case 12: /* 0 = t1 */ break;
 		case 13: /* 0 = t1 */ break;
-		case 14: if (promote) W = t1; else E = t1; break;
-		case 15: if (promote) W = t1; else F = t1; break;
+		case 14: if (promote != 0) W = t1; else E = t1; break;
+		case 15: if (promote != 0) W = t1; else F = t1; break;
 	}
 }
 
@@ -470,14 +470,14 @@ INLINE void tfr( void )
 		case  5: PC = t; CHANGE_PC; break;
 		case  6: W = t;  break;
 		case  7: V = t;  break;
-		case  8: if (promote) D = t; else A = t; break;
-		case  9: if (promote) D = t; else B = t; break;
+		case  8: if (promote != 0) D = t; else A = t; break;
+		case  9: if (promote != 0) D = t; else B = t; break;
 		case 10: CC = t; break;
 		case 11: DP = t; break;
 		case 12: /* 0 = t1 */ break;
 		case 13: /* 0 = t1 */ break;
-		case 14: if (promote) W = t; else E = t; break;
-		case 15: if (promote) W = t; else F = t; break;
+		case 14: if (promote != 0) W = t; else E = t; break;
+		case 15: if (promote != 0) W = t; else F = t; break;
 	}
 }
 
@@ -695,14 +695,14 @@ INLINE void lble( void )
 		case  5: src16Reg = &PC; large = TRUE; break;						\
 		case  6: src16Reg = &W; large = TRUE;  break;						\
 		case  7: src16Reg = &V; large = TRUE;  break;						\
-		case  8: if (promote) src16Reg = &D; else src8Reg = &A; break;		\
-		case  9: if (promote) src16Reg = &D; else src8Reg = &B; break;		\
-		case 10: if (promote) src16Reg = &z16; else src8Reg = &CC; break;	\
-		case 11: if (promote) src16Reg = &z16; else src8Reg = &DP; break;	\
-		case 12: if (promote) src16Reg = &z16; else src8Reg = &z8; break;	\
-		case 13: if (promote) src16Reg = &z16; else src8Reg = &z8; break;	\
-		case 14: if (promote) src16Reg = &W; else src8Reg = &E; break;		\
-		default: if (promote) src16Reg = &W; else src8Reg = &F; break;		\
+		case  8: if (promote != 0) src16Reg = &D; else src8Reg = &A; break;		\
+		case  9: if (promote != 0) src16Reg = &D; else src8Reg = &B; break;		\
+		case 10: if (promote != 0) src16Reg = &z16; else src8Reg = &CC; break;	\
+		case 11: if (promote != 0) src16Reg = &z16; else src8Reg = &DP; break;	\
+		case 12: if (promote != 0) src16Reg = &z16; else src8Reg = &z8; break;	\
+		case 13: if (promote != 0) src16Reg = &z16; else src8Reg = &z8; break;	\
+		case 14: if (promote != 0) src16Reg = &W; else src8Reg = &E; break;		\
+		default: if (promote != 0) src16Reg = &W; else src8Reg = &F; break;		\
 	}																		\
 	switch(tb&15) {															\
 		case  0: dst16Reg = &D; large = TRUE;  break;						\
@@ -713,14 +713,14 @@ INLINE void lble( void )
 		case  5: dst16Reg = &PC; large = TRUE; break;						\
 		case  6: dst16Reg = &W; large = TRUE;  break;						\
 		case  7: dst16Reg = &V; large = TRUE;  break;						\
-		case  8: if (promote) dst16Reg = &D; else dst8Reg = &A; break;		\
-		case  9: if (promote) dst16Reg = &D; else dst8Reg = &B; break;		\
-		case 10: if (promote) dst16Reg = &z16; else dst8Reg = &CC; break;	\
-		case 11: if (promote) dst16Reg = &z16; else dst8Reg = &DP; break;	\
-		case 12: if (promote) dst16Reg = &z16; else dst8Reg = &z8; break;	\
-		case 13: if (promote) dst16Reg = &z16; else dst8Reg = &z8; break;	\
-		case 14: if (promote) dst16Reg = &W; else dst8Reg = &E; break;		\
-		default: if (promote) dst16Reg = &W; else dst8Reg = &F; break;		\
+		case  8: if (promote != 0) dst16Reg = &D; else dst8Reg = &A; break;		\
+		case  9: if (promote != 0) dst16Reg = &D; else dst8Reg = &B; break;		\
+		case 10: if (promote != 0) dst16Reg = &z16; else dst8Reg = &CC; break;	\
+		case 11: if (promote != 0) dst16Reg = &z16; else dst8Reg = &DP; break;	\
+		case 12: if (promote != 0) dst16Reg = &z16; else dst8Reg = &z8; break;	\
+		case 13: if (promote != 0) dst16Reg = &z16; else dst8Reg = &z8; break;	\
+		case 14: if (promote != 0) dst16Reg = &W; else dst8Reg = &E; break;		\
+		default: if (promote != 0) dst16Reg = &W; else dst8Reg = &F; break;		\
 	}																		\
 
 /* $1030 addr_r r1 + r2 -> r2 */
@@ -736,7 +736,7 @@ INLINE void addr_r( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = *src16Reg + *dst16Reg;
 		CLR_HNZVC;
@@ -769,7 +769,7 @@ INLINE void adcr( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = *src16Reg + *dst16Reg + (CC & CC_C);
 		CLR_HNZVC;
@@ -803,7 +803,7 @@ INLINE void subr( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = (UINT32)*dst16Reg - (UINT32)*src16Reg;
 		CLR_NZVC;
@@ -836,7 +836,7 @@ INLINE void sbcr( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = (UINT32)*dst16Reg - (UINT32)*src16Reg - (CC & CC_C);
 		CLR_NZVC;
@@ -869,7 +869,7 @@ INLINE void andr( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = *src16Reg & *dst16Reg;
 		CLR_NZV;
@@ -902,7 +902,7 @@ INLINE void orr( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = *src16Reg | *dst16Reg;
 		CLR_NZV;
@@ -935,7 +935,7 @@ INLINE void eorr( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = *src16Reg ^ *dst16Reg;
 		CLR_NZV;
@@ -968,7 +968,7 @@ INLINE void cmpr( void )
 
 	REGREG_PREAMBLE;
 
-	if ( large )
+	if (large != 0)
 	{
 		r16 = (UINT32)*dst16Reg - (UINT32)*src16Reg;
 		CLR_NZVC;
@@ -1256,14 +1256,14 @@ INLINE void pshs( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x80 ) { PUSHWORD(pPC); hd6309_ICount -= 2; }
-	if( t&0x40 ) { PUSHWORD(pU);  hd6309_ICount -= 2; }
-	if( t&0x20 ) { PUSHWORD(pY);  hd6309_ICount -= 2; }
-	if( t&0x10 ) { PUSHWORD(pX);  hd6309_ICount -= 2; }
-	if( t&0x08 ) { PUSHBYTE(DP);  hd6309_ICount -= 1; }
-	if( t&0x04 ) { PUSHBYTE(B);   hd6309_ICount -= 1; }
-	if( t&0x02 ) { PUSHBYTE(A);   hd6309_ICount -= 1; }
-	if( t&0x01 ) { PUSHBYTE(CC);  hd6309_ICount -= 1; }
+	if ((t & 0x80) != 0) { PUSHWORD(pPC); hd6309_ICount -= 2; }
+	if ((t & 0x40) != 0) { PUSHWORD(pU);  hd6309_ICount -= 2; }
+	if ((t & 0x20) != 0) { PUSHWORD(pY);  hd6309_ICount -= 2; }
+	if ((t & 0x10) != 0) { PUSHWORD(pX);  hd6309_ICount -= 2; }
+	if ((t & 0x08) != 0) { PUSHBYTE(DP);  hd6309_ICount -= 1; }
+	if ((t & 0x04) != 0) { PUSHBYTE(B);   hd6309_ICount -= 1; }
+	if ((t & 0x02) != 0) { PUSHBYTE(A);   hd6309_ICount -= 1; }
+	if ((t & 0x01) != 0) { PUSHBYTE(CC);  hd6309_ICount -= 1; }
 }
 
 /* $1038 PSHSW inherent ----- */
@@ -1283,17 +1283,17 @@ INLINE void puls( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x01 ) { PULLBYTE(CC); hd6309_ICount -= 1; }
-	if( t&0x02 ) { PULLBYTE(A);  hd6309_ICount -= 1; }
-	if( t&0x04 ) { PULLBYTE(B);  hd6309_ICount -= 1; }
-	if( t&0x08 ) { PULLBYTE(DP); hd6309_ICount -= 1; }
-	if( t&0x10 ) { PULLWORD(XD); hd6309_ICount -= 2; }
-	if( t&0x20 ) { PULLWORD(YD); hd6309_ICount -= 2; }
-	if( t&0x40 ) { PULLWORD(UD); hd6309_ICount -= 2; }
-	if( t&0x80 ) { PULLWORD(PCD); CHANGE_PC; hd6309_ICount -= 2; }
+	if ((t & 0x01) != 0) { PULLBYTE(CC); hd6309_ICount -= 1; }
+	if ((t & 0x02) != 0) { PULLBYTE(A);  hd6309_ICount -= 1; }
+	if ((t & 0x04) != 0) { PULLBYTE(B);  hd6309_ICount -= 1; }
+	if ((t & 0x08) != 0) { PULLBYTE(DP); hd6309_ICount -= 1; }
+	if ((t & 0x10) != 0) { PULLWORD(XD); hd6309_ICount -= 2; }
+	if ((t & 0x20) != 0) { PULLWORD(YD); hd6309_ICount -= 2; }
+	if ((t & 0x40) != 0) { PULLWORD(UD); hd6309_ICount -= 2; }
+	if ((t & 0x80) != 0) { PULLWORD(PCD); CHANGE_PC; hd6309_ICount -= 2; }
 
 	/* HJB 990225: moved check after all PULLs */
-	if( t&0x01 ) { CHECK_IRQ_LINES(); }
+	if ((t & 0x01) != 0) { CHECK_IRQ_LINES(); }
 }
 
 /* $1039 PULSW inherent ----- */
@@ -1313,14 +1313,14 @@ INLINE void pshu( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x80 ) { PSHUWORD(pPC); hd6309_ICount -= 2; }
-	if( t&0x40 ) { PSHUWORD(pS);  hd6309_ICount -= 2; }
-	if( t&0x20 ) { PSHUWORD(pY);  hd6309_ICount -= 2; }
-	if( t&0x10 ) { PSHUWORD(pX);  hd6309_ICount -= 2; }
-	if( t&0x08 ) { PSHUBYTE(DP);  hd6309_ICount -= 1; }
-	if( t&0x04 ) { PSHUBYTE(B);   hd6309_ICount -= 1; }
-	if( t&0x02 ) { PSHUBYTE(A);   hd6309_ICount -= 1; }
-	if( t&0x01 ) { PSHUBYTE(CC);  hd6309_ICount -= 1; }
+	if ((t & 0x80) != 0) { PSHUWORD(pPC); hd6309_ICount -= 2; }
+	if ((t & 0x40) != 0) { PSHUWORD(pS);  hd6309_ICount -= 2; }
+	if ((t & 0x20) != 0) { PSHUWORD(pY);  hd6309_ICount -= 2; }
+	if ((t & 0x10) != 0) { PSHUWORD(pX);  hd6309_ICount -= 2; }
+	if ((t & 0x08) != 0) { PSHUBYTE(DP);  hd6309_ICount -= 1; }
+	if ((t & 0x04) != 0) { PSHUBYTE(B);   hd6309_ICount -= 1; }
+	if ((t & 0x02) != 0) { PSHUBYTE(A);   hd6309_ICount -= 1; }
+	if ((t & 0x01) != 0) { PSHUBYTE(CC);  hd6309_ICount -= 1; }
 }
 
 /* 37 PULU inherent ----- */
@@ -1328,17 +1328,17 @@ INLINE void pulu( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x01 ) { PULUBYTE(CC); hd6309_ICount -= 1; }
-	if( t&0x02 ) { PULUBYTE(A);  hd6309_ICount -= 1; }
-	if( t&0x04 ) { PULUBYTE(B);  hd6309_ICount -= 1; }
-	if( t&0x08 ) { PULUBYTE(DP); hd6309_ICount -= 1; }
-	if( t&0x10 ) { PULUWORD(XD); hd6309_ICount -= 2; }
-	if( t&0x20 ) { PULUWORD(YD); hd6309_ICount -= 2; }
-	if( t&0x40 ) { PULUWORD(SD); hd6309_ICount -= 2; }
-	if( t&0x80 ) { PULUWORD(PCD); CHANGE_PC; hd6309_ICount -= 2; }
+	if ((t & 0x01) != 0) { PULUBYTE(CC); hd6309_ICount -= 1; }
+	if ((t & 0x02) != 0) { PULUBYTE(A);  hd6309_ICount -= 1; }
+	if ((t & 0x04) != 0) { PULUBYTE(B);  hd6309_ICount -= 1; }
+	if ((t & 0x08) != 0) { PULUBYTE(DP); hd6309_ICount -= 1; }
+	if ((t & 0x10) != 0) { PULUWORD(XD); hd6309_ICount -= 2; }
+	if ((t & 0x20) != 0) { PULUWORD(YD); hd6309_ICount -= 2; }
+	if ((t & 0x40) != 0) { PULUWORD(SD); hd6309_ICount -= 2; }
+	if ((t & 0x80) != 0) { PULUWORD(PCD); CHANGE_PC; hd6309_ICount -= 2; }
 
 	/* HJB 990225: moved check after all PULLs */
-	if( t&0x01 ) { CHECK_IRQ_LINES(); }
+	if ((t & 0x01) != 0) { CHECK_IRQ_LINES(); }
 }
 
 /* $38 ILLEGAL */
@@ -1362,12 +1362,12 @@ INLINE void rti( void )
 	UINT8 t;
 	PULLBYTE(CC);
 	t = CC & CC_E;		/* HJB 990225: entire state saved? */
-	if(t)
+	if (t != 0)
 	{
 		hd6309_ICount -= 9;
 		PULLBYTE(A);
 		PULLBYTE(B);
-		if ( MD & MD_EM )
+		if ((MD & MD_EM) != 0)
 		{
 			PULLBYTE(E);
 			PULLBYTE(F);
@@ -1400,7 +1400,7 @@ INLINE void cwai( void )
 	PUSHWORD(pY);
 	PUSHWORD(pX);
 	PUSHBYTE(DP);
-	if ( MD & MD_EM )
+	if ((MD & MD_EM) != 0)
 	{
 		PUSHBYTE(E);
 		PUSHBYTE(F);
@@ -1420,7 +1420,7 @@ INLINE void mul( void )
 {
 	UINT16 t;
 	t = A * B;
-	CLR_ZC; SET_Z16(t); if(t&0x80) SEC;
+	CLR_ZC; SET_Z16(t); if ((t & 0x80) != 0) SEC;
 	D = t;
 }
 
@@ -1435,7 +1435,7 @@ INLINE void swi( void )
 	PUSHWORD(pY);
 	PUSHWORD(pX);
 	PUSHBYTE(DP);
-	if ( MD & MD_EM )
+	if ((MD & MD_EM) != 0)
 	{
 		PUSHBYTE(F);
 		PUSHBYTE(E);
@@ -1609,7 +1609,7 @@ INLINE void swi2( void )
 	PUSHWORD(pY);
 	PUSHWORD(pX);
 	PUSHBYTE(DP);
-	if ( MD & MD_EM )
+	if ((MD & MD_EM) != 0)
 	{
 		PUSHBYTE(F);
 		PUSHBYTE(E);
@@ -1630,7 +1630,7 @@ INLINE void swi3( void )
 	PUSHWORD(pY);
 	PUSHWORD(pX);
 	PUSHBYTE(DP);
-	if ( MD & MD_EM )
+	if ((MD & MD_EM) != 0)
 	{
 		PUSHBYTE(F);
 		PUSHBYTE(E);
@@ -2752,7 +2752,7 @@ INLINE void divd_im( void )
 		CLR_NZVC;
 		SET_NZ8(B);
 
-		if( B & 0x01 )
+		if ((B & 0x01) != 0)
 			SEC;
 
 		if ( (v > 127) || (v < -128) )
@@ -2784,7 +2784,7 @@ INLINE void divq_im( void )
 		CLR_NZVC;
 		SET_NZ16(W);
 
-		if( W & 0x0001 )
+		if ((W & 0x0001) != 0)
 			SEC;
 
 		if ( (v > 65534) || (v < -65535) )
@@ -3057,7 +3057,7 @@ INLINE void divd_di( void )
 		CLR_NZVC;
 		SET_NZ8(B);
 
-		if( B & 0x01 )
+		if ((B & 0x01) != 0)
 			SEC;
 
 		if ( (v > 127) || (v < -128) )
@@ -3090,7 +3090,7 @@ INLINE void divq_di( void )
 		CLR_NZVC;
 		SET_NZ16(W);
 
-		if( W & 0x0001 )
+		if ((W & 0x0001) != 0)
 			SEC;
 
 		if ( (v > 65534) || (v < -65535) )
@@ -3431,7 +3431,7 @@ INLINE void divd_ix( void )
 		CLR_NZVC;
 		SET_NZ8(B);
 
-		if( B & 0x01 )
+		if ((B & 0x01) != 0)
 			SEC;
 
 		if ( (v > 127) || (v < -128) )
@@ -3466,7 +3466,7 @@ INLINE void divq_ix( void )
 		CLR_NZVC;
 		SET_NZ16(W);
 
-		if( W & 0x0001 )
+		if ((W & 0x0001) != 0)
 			SEC;
 
 		if ( (v > 65534) || (v < -65535) )
@@ -3793,7 +3793,7 @@ INLINE void divd_ex( void )
 		CLR_NZVC;
 		SET_NZ8(B);
 
-		if( B & 0x01 )
+		if ((B & 0x01) != 0)
 			SEC;
 
 		if ( (v > 127) || (v < -128) )
@@ -3826,7 +3826,7 @@ INLINE void divq_ex( void )
 		CLR_NZVC;
 		SET_NZ16(W);
 
-		if( W & 0x0001 )
+		if ((W & 0x0001) != 0)
 			SEC;
 
 		if ( (v > 65534) || (v < -65535) )

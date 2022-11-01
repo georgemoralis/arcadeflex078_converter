@@ -131,9 +131,9 @@ public class sengokmj
 			y = (spriteram[offs+6])+(spriteram[offs+7]<<8);
 			x = 128 + (spriteram[offs+4])+(spriteram[offs+5]<<8);
 	
-			if (x&0x8000) x=0-(0x200-(x&0x1ff));
+			if ((x & 0x8000) != 0) x=0-(0x200-(x&0x1ff));
 			//else x&=0x1ff;
-			if (y&0x8000) y=0-(0x200-(y&0x1ff));
+			if ((y & 0x8000) != 0) y=0-(0x200-(y&0x1ff));
 			//else y&=0x1ff;
 	
 			color = (spriteram[offs+0]&0x3f);

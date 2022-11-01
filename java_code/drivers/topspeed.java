@@ -287,19 +287,19 @@ public class topspeed
 		}
 		else	/* Digital steer */
 		{
-			if (fake & 0x8)	/* pressing down */
+			if ((fake & 0x8) != 0)	/* pressing down */
 				steer = 0xff40;
 	
-			if (fake & 0x2)	/* pressing right */
+			if ((fake & 0x2) != 0)	/* pressing right */
 				steer = 0x007f;
 	
-			if (fake & 0x1)	/* pressing left */
+			if ((fake & 0x1) != 0)	/* pressing left */
 				steer = 0xff80;
 	
 			/* To allow hiscore input we must let you return to
 			   continuous input type while you press up */
 	
-			if (fake & 0x4)	/* pressing up */
+			if ((fake & 0x4) != 0)	/* pressing up */
 				steer = analogue_steer;
 		}
 	

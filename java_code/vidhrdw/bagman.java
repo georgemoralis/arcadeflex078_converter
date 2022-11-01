@@ -137,12 +137,12 @@ public class bagman
 			sy = 240 - spriteram[offs + 2];
 			flipx = spriteram[offs] & 0x40;
 			flipy = spriteram[offs] & 0x80;
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx +1;	/* compensate misplacement */
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;

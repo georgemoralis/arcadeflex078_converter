@@ -47,7 +47,7 @@ public class starwars
 	MACHINE_INIT( starwars )
 	{
 		/* ESB-specific */
-		if (is_esb)
+		if (is_esb != 0)
 		{
 			/* reset the slapstic */
 			slapstic_reset();

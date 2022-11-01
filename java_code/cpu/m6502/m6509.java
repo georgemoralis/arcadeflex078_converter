@@ -173,14 +173,14 @@ public class m6509
 	
 	unsigned m6509_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(m6509_Regs*)dst = m6509;
 		return sizeof(m6509_Regs);
 	}
 	
 	void m6509_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			m6509 = *(m6509_Regs*)src;
 			change_pc20(PCD);

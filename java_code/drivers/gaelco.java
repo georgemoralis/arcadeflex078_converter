@@ -71,7 +71,7 @@ public class gaelco
 	
 	WRITE16_HANDLER( bigkarnk_sound_command_w )
 	{
-		if (ACCESSING_LSB){
+		if (ACCESSING_LSB != 0){
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,M6809_FIRQ_LINE,HOLD_LINE);
 		}
@@ -79,7 +79,7 @@ public class gaelco
 	
 	WRITE16_HANDLER( bigkarnk_coin_w )
 	{
-		if (ACCESSING_LSB){
+		if (ACCESSING_LSB != 0){
 			switch ((offset >> 3)){
 				case 0x00:	/* Coin Lockouts */
 				case 0x01:
@@ -307,7 +307,7 @@ public class gaelco
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB){
+		if (ACCESSING_LSB != 0){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}

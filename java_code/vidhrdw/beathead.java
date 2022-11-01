@@ -180,7 +180,7 @@ public class beathead
 		if (offset == 0)
 		{
 			COMBINE_DATA(&hsyncram_offset);
-			if (hsyncram_offset & 0x800)
+			if ((hsyncram_offset & 0x800) != 0)
 				hsyncram_start = hsyncram_offset & 0x7ff;
 		}
 	

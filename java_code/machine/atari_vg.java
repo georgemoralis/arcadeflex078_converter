@@ -47,7 +47,7 @@ public class atari_vg
 			0x04 = write mode? - writes only
 			0x08 = set addr latch?
 		*/
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 			earom_data = earom[earom_offset];
 		if ((data & 0x0c) == 0x0c)
 		{
@@ -59,9 +59,9 @@ public class atari_vg
 	
 	NVRAM_HANDLER( atari_vg )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file,earom,EAROM_SIZE);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file,earom,EAROM_SIZE);
 		else
 			memset(earom,0,EAROM_SIZE);

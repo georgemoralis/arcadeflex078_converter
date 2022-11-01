@@ -86,7 +86,7 @@ public class grobda
 			int flipy = spriteram[offs+0x1780] & 2;
 			int width,height;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;
@@ -168,7 +168,7 @@ public class grobda
 					sy = my - 2;
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;

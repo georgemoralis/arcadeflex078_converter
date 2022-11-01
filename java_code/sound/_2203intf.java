@@ -171,7 +171,7 @@ public class _2203intf
 	
 	public static WriteHandlerPtr YM2203_word_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset)
+		if (offset != 0)
 			YM2203_write_port_0_w(0,data);
 		else
 			YM2203_control_port_0_w(0,data);
@@ -179,7 +179,7 @@ public class _2203intf
 	
 	public static WriteHandlerPtr YM2203_word_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset)
+		if (offset != 0)
 			YM2203_write_port_1_w(0,data);
 		else
 			YM2203_control_port_1_w(0,data);

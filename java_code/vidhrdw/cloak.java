@@ -79,9 +79,9 @@ public class cloak
 	{
 		bmap = data & 0x01;
 	
-		if (data & 0x02)	/* clear */
+		if ((data & 0x02) != 0)	/* clear */
 		{
-			if (bmap)
+			if (bmap != 0)
 			{
 				fillbitmap(tmpbitmap, Machine->pens[16], &Machine->visible_area);
 				memset(tmpvideoram, 0, 256*256);
@@ -111,7 +111,7 @@ public class cloak
 	{
 		int ret;
 	
-		if (bmap)
+		if (bmap != 0)
 		{
 			ret = tmpvideoram2[y * 256 + x];
 		}
@@ -136,7 +136,7 @@ public class cloak
 			default:
 				color = data & 0x07;
 	
-				if (bmap)
+				if (bmap != 0)
 				{
 					plot_pixel(tmpbitmap, (x-6)&0xff, y, Machine->pens[16 + color]);
 					tmpvideoram[y*256+x] = color;
@@ -224,7 +224,7 @@ public class cloak
 			int sx = spriteram[offs + 192];
 			int sy = 240 - spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx -= 9;
 				sy = 240 - sy;

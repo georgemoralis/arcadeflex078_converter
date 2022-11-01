@@ -28,7 +28,7 @@ public class goal92
 	{
 		COMBINE_DATA(&fg_bank);
 	
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			tilemap_mark_all_tiles_dirty(foreground_layer);
 		}
@@ -88,7 +88,7 @@ public class goal92
 	
 		tile &= 0xfff;
 	
-		if(fg_bank & 0xff)
+		if ((fg_bank & 0xff) != 0)
 		{
 			region = 3;
 			tile |= 0x1000;
@@ -112,7 +112,7 @@ public class goal92
 	
 			y = spriteram16[offs+0];
 	
-			if (y & 0x8000)
+			if ((y & 0x8000) != 0)
 				break;
 	
 			if (!(data & 0x8000))
@@ -167,7 +167,7 @@ public class goal92
 		tilemap_set_scrollx( background_layer, 0, goal92_scrollram16[0] + 60);
 		tilemap_set_scrolly( background_layer, 0, goal92_scrollram16[1] + 8);
 	
-		if(fg_bank & 0xff)
+		if ((fg_bank & 0xff) != 0)
 		{
 			tilemap_set_scrollx( foreground_layer, 0, goal92_scrollram16[0] + 60);
 			tilemap_set_scrolly( foreground_layer, 0, goal92_scrollram16[1] + 8);
@@ -188,7 +188,7 @@ public class goal92
 	
 		tilemap_draw(bitmap,cliprect,foreground_layer,0,0);
 	
-		if(fg_bank & 0xff)
+		if ((fg_bank & 0xff) != 0)
 			draw_sprites(bitmap,cliprect,1);
 	
 		draw_sprites(bitmap,cliprect,0);

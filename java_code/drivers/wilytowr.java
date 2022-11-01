@@ -187,7 +187,7 @@ public class wilytowr
 			int sx = spriteram[offs + 3];
 			int sy = 238 - spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 238 - sy;

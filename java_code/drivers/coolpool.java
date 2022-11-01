@@ -271,7 +271,7 @@ public class coolpool
 	
 	static READ16_HANDLER( dsp_bio_line_r )
 	{
-		if (cmd_pending) return CLEAR_LINE;
+		if (cmd_pending != 0) return CLEAR_LINE;
 		else return ASSERT_LINE;
 	}
 	
@@ -876,15 +876,15 @@ public class coolpool
 			lo = code_rom[a] & 0xff;
 	
 			nhi = BITSWAP8(hi,5,2,0,7,6,4,3,1) ^ 0x29;
-			if (hi & 0x01) nhi ^= 0x03;
-			if (hi & 0x10) nhi ^= 0xc1;
-			if (hi & 0x20) nhi ^= 0x40;
-			if (hi & 0x40) nhi ^= 0x12;
+			if ((hi & 0x01) != 0) nhi ^= 0x03;
+			if ((hi & 0x10) != 0) nhi ^= 0xc1;
+			if ((hi & 0x20) != 0) nhi ^= 0x40;
+			if ((hi & 0x40) != 0) nhi ^= 0x12;
 	
 			nlo = BITSWAP8(lo,5,3,4,6,7,1,2,0) ^ 0x80;
 			if ((lo & 0x02) && (lo & 0x04)) nlo ^= 0x01;
-			if (lo & 0x04) nlo ^= 0x0c;
-			if (lo & 0x08) nlo ^= 0x10;
+			if ((lo & 0x04) != 0) nlo ^= 0x0c;
+			if ((lo & 0x08) != 0) nlo ^= 0x10;
 	
 			code_rom[a] = (nhi << 8) | nlo;
 		}

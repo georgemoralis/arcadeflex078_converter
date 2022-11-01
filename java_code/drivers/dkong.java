@@ -201,7 +201,7 @@ public class dkong
 	public static ReadHandlerPtr dkong_sh_tune_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 *SND = memory_region(REGION_CPU2);
-		if (page & 0x40)
+		if ((page & 0x40) != 0)
 		{
 			switch (offset)
 			{
@@ -224,7 +224,7 @@ public class dkong
 	{
 		envelope=exp(-tt);
 		DAC_data_w(0,(int)(data*envelope));
-		if (decay) tt+=TSTEP;
+		if (decay != 0) tt+=TSTEP;
 		else tt=0;
 	} };
 	
@@ -627,7 +627,7 @@ public class dkong
 	
 	public static WriteHandlerPtr dkong3_2a03_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);

@@ -111,7 +111,7 @@ public class ymf278b
 		if(slot->RC != 15)
 		{
 			oct = slot->OCT;
-			if (oct & 8) oct |= -8;
+			if ((oct & 8) != 0) oct |= -8;
 	
 			res = (oct+slot->RC)*2 + (slot->FN & 0x200 ? 1 : 0) + val*4;
 		}
@@ -382,7 +382,7 @@ public class ymf278b
 				ymf278b_timer_b_reset(num);
 				break;
 			case 0x04:
-				if(data & 0x80)
+				if ((data & 0x80) != 0)
 					chip->current_irq = 0;
 				else
 				{
@@ -483,7 +483,7 @@ public class ymf278b
 					break;
 				case 4:
 					slot->pan = data&0xf;
-					if (data & 0x80)
+					if ((data & 0x80) != 0)
 					{
 						unsigned int step;
 						int oct;
@@ -491,7 +491,7 @@ public class ymf278b
 						slot->active = 1;
 	
 						oct = slot->OCT;
-						if(oct & 8)
+						if ((oct & 8) != 0)
 							oct |= -8;
 	
 						slot->env_step = 0;

@@ -206,14 +206,14 @@ public class m6502
 	
 	unsigned m6502_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(m6502_Regs*)dst = m6502;
 		return sizeof(m6502_Regs);
 	}
 	
 	void m6502_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			m6502 = *(m6502_Regs*)src;
 			change_pc16(PCD);

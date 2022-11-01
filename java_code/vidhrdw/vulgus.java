@@ -200,7 +200,7 @@ public class vulgus
 			sx = spriteram[offs + 3];
 			sy = spriteram[offs + 2];
 			dir = 1;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

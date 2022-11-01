@@ -239,7 +239,7 @@ public class seta
 			---- ---- ---- -2--		Coin #0 Lock Out
 			---- ---- ---- --1-		Coin #1 Counter
 			---- ---- ---- ---0		Coin #0 Counter		*/
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					seta_coin_lockout_w (data & 0x0f);
 					seta_sound_enable_w (data & 0x20);
@@ -249,7 +249,7 @@ public class seta
 				break;
 	
 			case 2/2:
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					int new_bank;
 	
@@ -366,7 +366,7 @@ public class seta
 		data16_t newword = COMBINE_DATA(&seta_vram_0[offset]);
 		if (oldword != newword)
 		{
-			if (offset & 0x1000)
+			if ((offset & 0x1000) != 0)
 				tilemap_mark_tile_dirty(tilemap_1, offset & 0x7ff);
 			else
 				tilemap_mark_tile_dirty(tilemap_0, offset & 0x7ff);
@@ -379,7 +379,7 @@ public class seta
 		data16_t newword = COMBINE_DATA(&seta_vram_2[offset]);
 		if (oldword != newword)
 		{
-			if (offset & 0x1000)
+			if ((offset & 0x1000) != 0)
 				tilemap_mark_tile_dirty(tilemap_3, offset & 0x7ff);
 			else
 				tilemap_mark_tile_dirty(tilemap_2, offset & 0x7ff);
@@ -388,7 +388,7 @@ public class seta
 	
 	WRITE16_HANDLER( twineagl_tilebank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			data &= 0xff;
 			if (twineagl_tilebank[offset] != data)
@@ -700,7 +700,7 @@ public class seta
 	
 				if (upper & (1 << col))	sx += 256;
 	
-				if (flip)
+				if (flip != 0)
 				{
 					sy = max_y - sy;
 					flipx = !flipx;
@@ -761,7 +761,7 @@ public class seta
 			int bank	=	(x & 0x0600) >> 9;
 			int color	=	( x >> (16-5) ) % total_color_codes;
 	
-			if (flip)
+			if (flip != 0)
 			{
 				y = (0x100 - Machine->drv->screen_height) + max_y - y;
 				flipx = !flipx;
@@ -847,7 +847,7 @@ public class seta
 	
 		x_0 += 0x10 - global_offsets->tilemap_offs[flip ? 1 : 0];
 		y_0 -= (256 - vis_dimy)/2;
-		if (flip)
+		if (flip != 0)
 		{
 			x_0 = -x_0 - 512;
 			y_0 = y_0 - vis_dimy;
@@ -858,7 +858,7 @@ public class seta
 		tilemap_set_scrolly (tilemap_0, 0, y_0);
 		tilemap_set_scrolly (tilemap_1, 0, y_0);
 	
-		if (tilemap_2)
+		if (tilemap_2 != 0)
 		{
 			x_1		=	seta_vctrl_2[ 0/2 ];
 			y_1		=	seta_vctrl_2[ 2/2 ];
@@ -869,7 +869,7 @@ public class seta
 	
 			x_1 += 0x10 - global_offsets->tilemap_offs[flip ? 1 : 0];
 			y_1 -= (256 - vis_dimy)/2;
-			if (flip)
+			if (flip != 0)
 			{
 				x_1 = -x_1 - 512;
 				y_1 = y_1 - vis_dimy;
@@ -892,58 +892,58 @@ public class seta
 		if (keyboard_pressed(KEYCODE_A))	msk |= 8;
 		if (msk != 0) layers_ctrl &= msk;
 	
-		if (tilemap_2)		usrintf_showmessage("VR:%04X-%04X-%04X L0:%04X L1:%04X",seta_vregs[0],seta_vregs[1],seta_vregs[2],seta_vctrl_0[4/2],seta_vctrl_2[4/2]);
-		else if (tilemap_0)	usrintf_showmessage("L0:%04X",seta_vctrl_0[4/2]);
+		if (tilemap_2 != 0)		usrintf_showmessage("VR:%04X-%04X-%04X L0:%04X L1:%04X",seta_vregs[0],seta_vregs[1],seta_vregs[2],seta_vctrl_0[4/2],seta_vctrl_2[4/2]);
+		else if (tilemap_0 != 0)	usrintf_showmessage("L0:%04X",seta_vctrl_0[4/2]);
 	}
 	#endif
 	
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
-		if (order & 1)	// swap the layers?
+		if ((order & 1) != 0)	// swap the layers?
 		{
-			if (tilemap_2)
+			if (tilemap_2 != 0)
 			{
-				if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_2, TILEMAP_IGNORE_TRANSPARENCY, 0);
-				if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_3, TILEMAP_IGNORE_TRANSPARENCY, 0);
+				if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2, TILEMAP_IGNORE_TRANSPARENCY, 0);
+				if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_3, TILEMAP_IGNORE_TRANSPARENCY, 0);
 			}
 	
-			if (order & 2)	// layer-sprite priority?
+			if ((order & 2) != 0)	// layer-sprite priority?
 			{
-				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
-				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
-				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
+				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
+				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
+				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
 			}
 			else
 			{
-				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
-				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
-				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
+				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
+				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
+				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
 			}
 		}
 		else
 		{
-			if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_0,  TILEMAP_IGNORE_TRANSPARENCY, 0);
-			if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_1,  TILEMAP_IGNORE_TRANSPARENCY, 0);
+			if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0,  TILEMAP_IGNORE_TRANSPARENCY, 0);
+			if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1,  TILEMAP_IGNORE_TRANSPARENCY, 0);
 	
-			if (order & 2)	// layer-sprite priority?
+			if ((order & 2) != 0)	// layer-sprite priority?
 			{
-				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
+				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
 	
-				if (tilemap_2)
+				if (tilemap_2 != 0)
 				{
-					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
-					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
+					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
+					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
 				}
 			}
 			else
 			{
-				if (tilemap_2)
+				if (tilemap_2 != 0)
 				{
-					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
-					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
+					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
+					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
 				}
 	
-				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
+				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
 			}
 		}
 	

@@ -117,12 +117,12 @@ public class foodf
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate |= 1;
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate |= 2;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -132,7 +132,7 @@ public class foodf
 	static void scanline_update(int scanline)
 	{
 		/* INT 1 is on 32V */
-		if (scanline & 32)
+		if ((scanline & 32) != 0)
 			atarigen_scanline_int_gen();
 	}
 	
@@ -153,7 +153,7 @@ public class foodf
 	
 	static WRITE16_HANDLER( digital_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			foodf_set_flip(data & 0x01);
 	
@@ -198,9 +198,9 @@ public class foodf
 	static READ16_HANDLER( pokey2_word_r ) { return pokey2_r(offset); }
 	static READ16_HANDLER( pokey3_word_r ) { return pokey3_r(offset); }
 	
-	static WRITE16_HANDLER( pokey1_word_w ) { if (ACCESSING_LSB) pokey1_w(offset, data & 0xff); }
-	static WRITE16_HANDLER( pokey2_word_w ) { if (ACCESSING_LSB) pokey2_w(offset, data & 0xff); }
-	static WRITE16_HANDLER( pokey3_word_w ) { if (ACCESSING_LSB) pokey3_w(offset, data & 0xff); }
+	static WRITE16_HANDLER( pokey1_word_w ) { if (ACCESSING_LSB != 0) pokey1_w(offset, data & 0xff); }
+	static WRITE16_HANDLER( pokey2_word_w ) { if (ACCESSING_LSB != 0) pokey2_w(offset, data & 0xff); }
+	static WRITE16_HANDLER( pokey3_word_w ) { if (ACCESSING_LSB != 0) pokey3_w(offset, data & 0xff); }
 	
 	
 	

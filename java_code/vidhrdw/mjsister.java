@@ -66,9 +66,9 @@ public class mjsister
 		c1 = data & 0x0f;
 		c2 = (data & 0xf0) >> 4;
 	
-		if (c1)
+		if (c1 != 0)
 			c1 += colorbank * 0x20 + 0x10;
-		if (c2)
+		if (c2 != 0)
 			c2 += colorbank * 0x20 + 0x10;
 	
 		plot_pixel(mjsister_tmpbitmap1, x*2,   y, Machine->pens[c1] );
@@ -77,7 +77,7 @@ public class mjsister
 	
 	public static WriteHandlerPtr mjsister_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (vrambank)
+		if (vrambank != 0)
 		{
 			mjsister_videoram1[offset] = data;
 			mjsister_plot1(offset,data);
@@ -94,7 +94,7 @@ public class mjsister
 		int f = mjsister_flip_screen;
 		int i,j;
 	
-		if (mjsister_screen_redraw)
+		if (mjsister_screen_redraw != 0)
 		{
 			int offs;
 	
@@ -107,7 +107,7 @@ public class mjsister
 			mjsister_screen_redraw = 0;
 		}
 	
-		if (mjsister_video_enable)
+		if (mjsister_video_enable != 0)
 		{
 			for (i=0; i<256; i++)
 			{

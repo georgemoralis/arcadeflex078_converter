@@ -101,7 +101,7 @@ public class skyraid
 	
 			vert -= 31;
 	
-			if (flag & 1)
+			if ((flag & 1) != 0)
 			{
 				drawgfx(bitmap, Machine->gfx[1],
 					code ^ 15, code >> 3, 0, 0,

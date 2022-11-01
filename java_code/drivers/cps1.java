@@ -83,12 +83,12 @@ public class cps1
 		bankaddr = (data * 0x4000) & (length-1);
 		cpu_setbank(1,&RAM[0x10000 + bankaddr]);
 	
-		if (data & 0xfe) logerror("%04x: write %02x to f004\n",activecpu_get_pc(),data);
+		if ((data & 0xfe) != 0) logerror("%04x: write %02x to f004\n",activecpu_get_pc(),data);
 	} };
 	
 	static WRITE16_HANDLER( cps1_sound_fade_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			cps1_sound_fade_timer = data & 0xff;
 	}
 	
@@ -99,7 +99,7 @@ public class cps1
 	
 	static WRITE16_HANDLER( cps1_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			soundlatch_w(0,data & 0xff);
 	}
 	
@@ -107,7 +107,7 @@ public class cps1
 	{
 	//	usrintf_showmessage("coinctrl %04x",data);
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			coin_counter_w(0,data & 0x0100);
 			coin_counter_w(1,data & 0x0200);
@@ -115,7 +115,7 @@ public class cps1
 			coin_lockout_w(1,~data & 0x0800);
 		}
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* mercs sets bit 0 */
 			set_led_status(0,data & 0x02);
@@ -126,7 +126,7 @@ public class cps1
 	
 	static WRITE16_HANDLER( cpsq_coinctrl2_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_counter_w(2,data & 0x01);
 			coin_lockout_w(2,~data & 0x02);
@@ -183,7 +183,7 @@ public class cps1
 	{
 		unsigned char *rom = memory_region(REGION_USER1);
 	
-		if (rom) return rom[offset] | 0xff00;
+		if (rom != 0) return rom[offset] | 0xff00;
 		else
 		{
 			usrintf_showmessage("%06x: read sound ROM byte %04x",activecpu_get_pc(),offset);
@@ -198,7 +198,7 @@ public class cps1
 	
 	WRITE16_HANDLER( qsound_sharedram1_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			qsound_sharedram1[offset] = data;
 	}
 	
@@ -209,7 +209,7 @@ public class cps1
 	
 	static WRITE16_HANDLER( qsound_sharedram2_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			qsound_sharedram2[offset] = data;
 	}
 	
@@ -260,26 +260,26 @@ public class cps1
 	
 	static NVRAM_HANDLER( qsound )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&qsound_eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 		}
 	}
 	
 	static NVRAM_HANDLER( pang3 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&pang3_eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 		}
 	}
@@ -291,7 +291,7 @@ public class cps1
 	
 	WRITE16_HANDLER( cps1_eeprom_port_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/*
 			bit 0 = data
@@ -7405,13 +7405,13 @@ public class cps1
 			/* only the low 8 bits of each word are encrypted */
 			src = rom[A/2];
 			dst = src & 0xff00;
-			if ( src & 0x01) dst ^= 0x04;
-			if ( src & 0x02) dst ^= 0x21;
-			if ( src & 0x04) dst ^= 0x01;
+			if ((src & 0x01) != 0) dst ^= 0x04;
+			if ((src & 0x02) != 0) dst ^= 0x21;
+			if ((src & 0x04) != 0) dst ^= 0x01;
 			if (~src & 0x08) dst ^= 0x50;
-			if ( src & 0x10) dst ^= 0x40;
-			if ( src & 0x20) dst ^= 0x06;
-			if ( src & 0x40) dst ^= 0x08;
+			if ((src & 0x10) != 0) dst ^= 0x40;
+			if ((src & 0x20) != 0) dst ^= 0x06;
+			if ((src & 0x40) != 0) dst ^= 0x08;
 			if (~src & 0x80) dst ^= 0x88;
 			rom[A/2] = dst;
 		}

@@ -76,10 +76,10 @@ public class astinvad
 			sample_stop(0);
 		}
 	
-		if (bitsGoneHi & 0x01) sample_start(0, SND_UFO, 1);
-		if (bitsGoneHi & 0x02) sample_start(1, SND_SHOT, 0);
-		if (bitsGoneHi & 0x04) sample_start(2, SND_BASEHIT, 0);
-		if (bitsGoneHi & 0x08) sample_start(3, SND_INVADERHIT, 0);
+		if ((bitsGoneHi & 0x01) != 0) sample_start(0, SND_UFO, 1);
+		if ((bitsGoneHi & 0x02) != 0) sample_start(1, SND_SHOT, 0);
+		if ((bitsGoneHi & 0x04) != 0) sample_start(2, SND_BASEHIT, 0);
+		if ((bitsGoneHi & 0x08) != 0) sample_start(3, SND_INVADERHIT, 0);
 	
 		astinvad_set_flash(data & 0x04); /* LT 20-3-1998 */
 	
@@ -93,11 +93,11 @@ public class astinvad
 	
 		int bitsGoneHi = data & ~state;
 	
-		if (bitsGoneHi & 0x01) sample_start(5, SND_FLEET1, 0);
-		if (bitsGoneHi & 0x02) sample_start(5, SND_FLEET2, 0);
-		if (bitsGoneHi & 0x04) sample_start(5, SND_FLEET3, 0);
-		if (bitsGoneHi & 0x08) sample_start(5, SND_FLEET4, 0);
-		if (bitsGoneHi & 0x10) sample_start(4, SND_UFOHIT, 0);
+		if ((bitsGoneHi & 0x01) != 0) sample_start(5, SND_FLEET1, 0);
+		if ((bitsGoneHi & 0x02) != 0) sample_start(5, SND_FLEET2, 0);
+		if ((bitsGoneHi & 0x04) != 0) sample_start(5, SND_FLEET3, 0);
+		if ((bitsGoneHi & 0x08) != 0) sample_start(5, SND_FLEET4, 0);
+		if ((bitsGoneHi & 0x10) != 0) sample_start(4, SND_UFOHIT, 0);
 	
 		flip_screen_set(readinputport(3) & data & 0x20);
 	
@@ -116,15 +116,15 @@ public class astinvad
 			sample_stop(0);
 		}
 	
-		if (bitsGoneHi & 0x01) sample_start(1, SND_SHOT, 0);
-		if (bitsGoneHi & 0x02) sample_start(2, SND_BASEHIT, 0);
-		if (bitsGoneHi & 0x04) sample_start(4, SND_UFOHIT, 0);
-		if (bitsGoneHi & 0x08) sample_start(0, SND_UFO, 1);
+		if ((bitsGoneHi & 0x01) != 0) sample_start(1, SND_SHOT, 0);
+		if ((bitsGoneHi & 0x02) != 0) sample_start(2, SND_BASEHIT, 0);
+		if ((bitsGoneHi & 0x04) != 0) sample_start(4, SND_UFOHIT, 0);
+		if ((bitsGoneHi & 0x08) != 0) sample_start(0, SND_UFO, 1);
 	
-		if (bitsGoneHi & 0x10) sample_start(5, SND_FLEET1, 0);
-		if (bitsGoneHi & 0x20) sample_start(5, SND_FLEET2, 0);
-		if (bitsGoneHi & 0x40) sample_start(5, SND_FLEET3, 0);
-		if (bitsGoneHi & 0x80) sample_start(5, SND_FLEET4, 0);
+		if ((bitsGoneHi & 0x10) != 0) sample_start(5, SND_FLEET1, 0);
+		if ((bitsGoneHi & 0x20) != 0) sample_start(5, SND_FLEET2, 0);
+		if ((bitsGoneHi & 0x40) != 0) sample_start(5, SND_FLEET3, 0);
+		if ((bitsGoneHi & 0x80) != 0) sample_start(5, SND_FLEET4, 0);
 	
 		state = data;
 	} };
@@ -138,7 +138,7 @@ public class astinvad
 	
 		mixer_sound_enable_global_w(data & 0x02);
 	
-		if (bitsGoneHi & 0x04) sample_start(3, SND_INVADERHIT, 0);
+		if ((bitsGoneHi & 0x04) != 0) sample_start(3, SND_INVADERHIT, 0);
 	
 		flip_screen_set(readinputport(3) & data & 0x80);
 	

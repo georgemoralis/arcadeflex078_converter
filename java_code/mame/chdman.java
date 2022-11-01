@@ -114,7 +114,7 @@ public class chdman
 	
 		chunk = intvalue % 1000;
 		intvalue /= 1000;
-		if (intvalue)
+		if (intvalue != 0)
 		{
 			print_big_int(intvalue, output);
 			strcat(output, ",");
@@ -280,7 +280,7 @@ public class chdman
 					printf("Input SHA1 verified\n");
 			}
 		}
-		else if (special_error_count)
+		else if (special_error_count != 0)
 			printf("WARNING: found %d errors in the input file, checksums not verified\n", special_error_count);
 		else
 			printf("WARNING: entire input file not read, checksums not verified\n");
@@ -566,11 +566,11 @@ public class chdman
 	
 	error:
 		/* clean up our mess */
-		if (outfile)
+		if (outfile != 0)
 			(*chdman_interface.close)(outfile);
-		if (hunk)
+		if (hunk != 0)
 			free(hunk);
-		if (infile)
+		if (infile != 0)
 			chd_close(infile);
 	}
 	
@@ -637,7 +637,7 @@ public class chdman
 					actualmd5[12], actualmd5[13], actualmd5[14], actualmd5[15]);
 	
 			/* fix it */
-			if (fix)
+			if (fix != 0)
 			{
 				memcpy(header.md5, actualmd5, sizeof(header.md5));
 				fixed = 1;
@@ -665,7 +665,7 @@ public class chdman
 						actualsha1[16], actualsha1[17], actualsha1[18], actualsha1[19]);
 	
 				/* fix it */
-				if (fix)
+				if (fix != 0)
 				{
 					memcpy(header.sha1, actualsha1, sizeof(header.sha1));
 					fixed = 1;
@@ -677,7 +677,7 @@ public class chdman
 		chd_close(chd);
 	
 		/* update the header */
-		if (fixed)
+		if (fixed != 0)
 		{
 			err = chd_set_header(inputfile, &header);
 			if (err != CHDERR_NONE)
@@ -921,7 +921,7 @@ public class chdman
 		}
 	
 		/* print some info */
-		if (parentfile)
+		if (parentfile != 0)
 		{
 			printf("Parent file:  %s\n", parentfile);
 			printf("Diff file:    %s\n", inputfile);
@@ -933,7 +933,7 @@ public class chdman
 			printf("Maximum hunk: %d\n", maxhunk);
 	
 		/* open the parent CHD */
-		if (parentfile)
+		if (parentfile != 0)
 		{
 			parentchd = chd_open(parentfile, 0, NULL);
 			if (!parentchd)
@@ -1000,11 +1000,11 @@ public class chdman
 	
 	error:
 		/* close everything down */
-		if (outputchd)
+		if (outputchd != 0)
 			chd_close(outputchd);
-		if (inputchd)
+		if (inputchd != 0)
 			chd_close(inputchd);
-		if (parentchd)
+		if (parentchd != 0)
 			chd_close(parentchd);
 		if (err != CHDERR_NONE)
 			remove(outputfile);
@@ -1083,11 +1083,11 @@ public class chdman
 	
 	error:
 		/* close everything down */
-		if (outputchd)
+		if (outputchd != 0)
 			chd_close(outputchd);
-		if (inputchd)
+		if (inputchd != 0)
 			chd_close(inputchd);
-		if (parentchd)
+		if (parentchd != 0)
 			chd_close(parentchd);
 		if (err != CHDERR_NONE)
 			remove(outputfile);
@@ -1189,7 +1189,7 @@ public class chdman
 		chd_close(chd);
 	
 		/* restore the read-only state */
-		if (was_readonly)
+		if (was_readonly != 0)
 			header.flags &= ~CHDFLAGS_IS_WRITEABLE;
 	
 		/* set the new logical size */
@@ -1208,9 +1208,9 @@ public class chdman
 		return;
 	
 	cleanup:
-		if (chd)
+		if (chd != 0)
 			chd_close(chd);
-		if (was_readonly)
+		if (was_readonly != 0)
 		{
 			header.flags &= ~CHDFLAGS_IS_WRITEABLE;
 			chd_set_header(inoutfile, &header);
@@ -1376,7 +1376,7 @@ public class chdman
 					bytestochecksum = special_original_logicalbytes - special_bytes_checksummed;
 	
 				/* update the two checksums */
-				if (bytestochecksum)
+				if (bytestochecksum != 0)
 				{
 					MD5Update(&special_md5, buffer, bytestochecksum);
 					sha1_update(&special_sha1, bytestochecksum, buffer);

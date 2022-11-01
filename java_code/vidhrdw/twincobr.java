@@ -279,7 +279,7 @@ public class twincobr
 					color  = attribute & 0x3f;
 					sx = buffered_spriteram16[offs + 2] >> 7;
 					flipx = attribute & 0x100;
-					if (flipx) sx -= 14;		/* should really be 15 */
+					if (flipx != 0) sx -= 14;		/* should really be 15 */
 					flipy = attribute & 0x200;
 					drawgfx(bitmap,Machine->gfx[3],
 						sprite,
@@ -321,7 +321,7 @@ public class twincobr
 				code = twincobr_bgvideoram16[offs+twincobr_bg_ram_bank];
 				tile  = (code & 0x0fff);
 				color = (code & 0xf000) >> 12;
-				if (twincobr_flip_screen) { sx=63-sx; sy=63-sy; }
+				if (twincobr_flip_screen != 0) { sx=63-sx; sy=63-sy; }
 				drawgfx(tmpbitmap,Machine->gfx[2],
 					tile,
 					color,
@@ -333,7 +333,7 @@ public class twincobr
 	
 		/* copy the background graphics */
 		{
-			if (twincobr_flip_screen) {
+			if (twincobr_flip_screen != 0) {
 				scroll_x = (twincobr_flip_x_base + bgscrollx + 0x141) & 0x1ff;
 				scroll_y = (twincobr_flip_y_base + bgscrolly + 0xf1) & 0x1ff;
 			}
@@ -368,7 +368,7 @@ public class twincobr
 			code  = twincobr_fgvideoram16[vidramaddr & 0xfff];
 			tile  = (code & 0x0fff) | twincobr_fg_rom_bank;
 			color = (code & 0xf000) >> 12;
-			if (twincobr_flip_screen) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
+			if (twincobr_flip_screen != 0) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
 			else { xpos=(sx*8) - (scroll_x&7); ypos=(sy*8) - (scroll_y&7); }
 			drawgfx(bitmap,Machine->gfx[1],
 				tile,
@@ -425,7 +425,7 @@ public class twincobr
 			code  = videoram16[vidramaddr & 0x7ff];
 			tile  = (code & 0x07ff);
 			color = (code & 0xf800) >> 11;
-			if (twincobr_flip_screen) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
+			if (twincobr_flip_screen != 0) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
 			else { xpos=(sx*8) - (scroll_x&7); ypos=(sy*8) - (scroll_y&7); }
 			drawgfx(bitmap,Machine->gfx[0],
 				tile,

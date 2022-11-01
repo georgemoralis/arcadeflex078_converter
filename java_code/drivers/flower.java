@@ -73,7 +73,7 @@ public class flower
 	
 	public static InterruptHandlerPtr sn_irq = new InterruptHandlerPtr() {public void handler()
 	{
-		if (sn_irq_enable)
+		if (sn_irq_enable != 0)
 			cpu_set_irq_line(2, 0, ASSERT_LINE);
 	} };
 	
@@ -85,7 +85,7 @@ public class flower
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
-		if (sn_nmi_enable)
+		if (sn_nmi_enable != 0)
 			cpu_set_nmi_line(2, PULSE_LINE);
 	} };
 	

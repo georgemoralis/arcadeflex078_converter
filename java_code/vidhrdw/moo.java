@@ -137,7 +137,7 @@ public class moo
 					dirty = 1;
 				}
 			}
-			if (dirty) K056832_MarkAllTilemapsDirty();
+			if (dirty != 0) K056832_MarkAllTilemapsDirty();
 		}
 	
 		layers[0] = 1;

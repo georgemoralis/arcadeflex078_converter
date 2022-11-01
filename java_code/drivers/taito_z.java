@@ -807,7 +807,7 @@ public class taito_z
 	
 		sci_int6 = !sci_int6;
 	
-		if (sci_int6)
+		if (sci_int6 != 0)
 			timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
@@ -822,7 +822,7 @@ public class taito_z
 		// Unsure how many int6's per frame, copy SCI for now
 		dblaxle_int6 = !dblaxle_int6;
 	
-		if (dblaxle_int6)
+		if (dblaxle_int6 != 0)
 			timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 	
 		cpu_set_irq_line(0, 4, HOLD_LINE);
@@ -865,13 +865,13 @@ public class taito_z
 	
 	static NVRAM_HANDLER( spacegun )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
@@ -934,11 +934,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if (fake &0x4)
+			if ((fake & 0x4) != 0)
 			{
 				steer = 0x60;
 			}
-			else if (fake &0x8)
+			else if ((fake & 0x8) != 0)
 			{
 				steer = 0xff9f;
 			}
@@ -973,11 +973,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if (fake &0x4)
+			if ((fake & 0x4) != 0)
 			{
 				steer = 0xff80;
 			}
-			else if (fake &0x8)
+			else if ((fake & 0x8) != 0)
 			{
 				steer = 0x7f;
 			}
@@ -1088,11 +1088,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if (fake &0x4)
+			if ((fake & 0x4) != 0)
 			{
 				steer = 0xffa0;
 			}
-			else if (fake &0x8)
+			else if ((fake & 0x8) != 0)
 			{
 				steer = 0x5f;
 			}
@@ -1171,11 +1171,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if (fake &0x4)
+			if ((fake & 0x4) != 0)
 			{
 				steer = 0xffc0;
 			}
-			else if (fake &0x8)
+			else if ((fake & 0x8) != 0)
 			{
 				steer = 0x3f;
 			}
@@ -1250,7 +1250,7 @@ public class taito_z
 			taitosound_comm_w (0, data & 0xff);
 	
 	#ifdef MAME_DEBUG
-	//	if (data & 0xff00)
+	//	if ((data & 0xff00) != 0)
 	//	{
 	//		char buf[80];
 	//
@@ -1276,7 +1276,7 @@ public class taito_z
 			taitosound_comm_w (0,(data >> 8) & 0xff);
 	
 	#ifdef MAME_DEBUG
-		if (data & 0xff)
+		if ((data & 0xff) != 0)
 		{
 			char buf[80];
 	

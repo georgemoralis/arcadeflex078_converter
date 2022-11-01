@@ -215,7 +215,7 @@ public class namcos21
 	
 	static WRITE16_HANDLER( namcos2_68k_dualportram_word_w )
 	{
-		if( ACCESSING_LSB )
+		if (ACCESSING_LSB != 0)
 		{
 			mpDualPortRAM[offset] = data & 0xff;
 		}

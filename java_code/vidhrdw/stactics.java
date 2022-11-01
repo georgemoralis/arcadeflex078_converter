@@ -373,19 +373,19 @@ public class stactics
 	        {
 	            case 4:  // Page D
 	            {
-	                if (data&0x01)
+	                if ((data & 0x01) != 0)
 	                    d_offset = offset&0xff;
 	                break;
 	            }
 	            case 5:  // Page E
 	            {
-	                if (data&0x01)
+	                if ((data & 0x01) != 0)
 	                    e_offset = offset&0xff;
 	                break;
 	            }
 	            case 6:  // Page F
 	            {
-	                if (data&0x01)
+	                if ((data & 0x01) != 0)
 	                    f_offset = offset&0xff;
 	                break;
 	            }

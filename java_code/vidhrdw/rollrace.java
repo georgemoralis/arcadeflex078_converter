@@ -87,10 +87,10 @@ public class rollrace
 	
 				sx = ( offs%32 ) ;
 	
-				if(ra_flipx)
+				if (ra_flipx != 0)
 					sx = 31-sx ;
 	
-				if(ra_flipy)
+				if (ra_flipy != 0)
 					sy = 31-sy ;
 	
 				drawgfx(bitmap,
@@ -120,9 +120,9 @@ public class rollrace
 			if(sx && sy)
 			{
 	
-			if(ra_flipx)
+			if (ra_flipx != 0)
 				sx = 224 - sx;
-			if(ra_flipy)
+			if (ra_flipy != 0)
 				sy = 224 - sy;
 	
 			if(spriteram[offs+1] & 0x80)
@@ -130,7 +130,7 @@ public class rollrace
 	
 			bank = (( spriteram[offs+1] & 0x40 ) >> 6 ) ;
 	
-			if(bank)
+			if (bank != 0)
 				bank += ra_spritebank;
 	
 			drawgfx(bitmap, Machine->gfx[ RA_SP_BASE + bank ],
@@ -160,7 +160,7 @@ public class rollrace
 			   scroll = (248 - scroll) % 256;
 			}
 	
-			if (ra_flipx) sx = 31 - sx;
+			if (ra_flipx != 0) sx = 31 - sx;
 	
 			drawgfx(bitmap,Machine->gfx[RA_FGCHAR_BASE + ra_chrbank]  ,
 				videoram[ offs ]  ,

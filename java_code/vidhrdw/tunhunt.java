@@ -364,7 +364,7 @@ public class tunhunt
 			int vstretch,
 			int hstretch )
 	{
-		if( hstretch )
+		if (hstretch != 0)
 		{
 			int sx,sy;
 			for( sx=0; sx<256; sx+=16 )

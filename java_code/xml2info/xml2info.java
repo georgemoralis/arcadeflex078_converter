@@ -690,7 +690,7 @@ public class xml2info
 	
 			if (state->error == 0) {
 				c = identify(state->depth, state->level);
-				if (c) {
+				if (c != 0) {
 					state->level[state->depth].process = c->process;
 					state->level[state->depth].process(state, token_open, 0, 0, attributes);
 				} else {
@@ -780,7 +780,7 @@ public class xml2info
 				break;
 			}
 	
-			if (done)
+			if (done != 0)
 				break;
 		}
 	

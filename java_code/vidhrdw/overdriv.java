@@ -20,7 +20,7 @@ public class overdriv
 	static void overdriv_sprite_callback(int *code,int *color,int *priority_mask)
 	{
 		int pri = (*color & 0xffe0) >> 5;	/* ??????? */
-		if (pri) *priority_mask = 0x02;
+		if (pri != 0) *priority_mask = 0x02;
 		else     *priority_mask = 0x00;
 	
 		*color = sprite_colorbase + (*color & 0x001f);

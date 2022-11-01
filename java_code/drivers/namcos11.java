@@ -477,11 +477,11 @@ public class namcos11
 	{
 		verboselog( 2, "bankswitch_rom32_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 	
-		if( ACCESSING_LSW32 )
+		if (ACCESSING_LSW32 != 0)
 		{
 			bankswitch_rom8( ( offset * 2 ), data & 0xffff );
 		}
-		if( ACCESSING_MSW32 )
+		if (ACCESSING_MSW32 != 0)
 		{
 			bankswitch_rom8( ( offset * 2 ) + 1, data >> 16 );
 		}
@@ -491,11 +491,11 @@ public class namcos11
 	{
 		verboselog( 2, "bankswitch_rom64_upper_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 	
-		if( ACCESSING_LSW32 )
+		if (ACCESSING_LSW32 != 0)
 		{
 			m_n_bankoffset = 0;
 		}
-		if( ACCESSING_MSW32 )
+		if (ACCESSING_MSW32 != 0)
 		{
 			m_n_bankoffset = 16;
 		}
@@ -512,11 +512,11 @@ public class namcos11
 	{
 		verboselog( 2, "bankswitch_rom64_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 	
-		if( ACCESSING_LSW32 )
+		if (ACCESSING_LSW32 != 0)
 		{
 			bankswitch_rom64( ( offset * 2 ), data & 0xffff );
 		}
-		if( ACCESSING_MSW32 )
+		if (ACCESSING_MSW32 != 0)
 		{
 			bankswitch_rom64( ( offset * 2 ) + 1, data >> 16 );
 		}

@@ -103,10 +103,10 @@ public class warpwarp
 		int res;
 	
 		res = readinputport(2 + (flip_screen & 1));
-		if (res & 1) return 23;
-		if (res & 2) return 63;
-		if (res & 4) return 111;
-		if (res & 8) return 167;
+		if ((res & 1) != 0) return 23;
+		if ((res & 2) != 0) return 63;
+		if ((res & 4) != 0) return 111;
+		if ((res & 8) != 0) return 167;
 		return 255;
 	} };
 	

@@ -223,7 +223,7 @@ public class kncljoe
 		int i, j, pribase[4]={0x0180, 0x0080, 0x0100, 0x0000};
 	
 		/* score covers sprites */
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			if (clip.max_y > Machine->visible_area.max_y - 64)
 				clip.max_y = Machine->visible_area.max_y - 64;
@@ -246,10 +246,10 @@ public class kncljoe
 			int flipy = !(attr & 0x80);
 			int color = attr & 0x0f;
 	
-			if (attr & 0x10) code += 512;
-			if (attr & 0x20) code += 256;
+			if ((attr & 0x10) != 0) code += 512;
+			if ((attr & 0x20) != 0) code += 256;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;

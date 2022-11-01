@@ -353,7 +353,7 @@ public class williams
 		sinistar_clip = (data & 0x04) ? 0x7400 : 0xffff;
 	
 		/* set the bank */
-		if (vram_bank)
+		if (vram_bank != 0)
 		{
 			cpu_setbank(1, williams_bank_base);
 		}
@@ -456,7 +456,7 @@ public class williams
 	
 	public static ReadHandlerPtr williams_input_port_49way_0_5_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (port_select)
+		if (port_select != 0)
 			return williams_49way_port_0_r(0);
 		else
 			return readinputport(5);
@@ -683,14 +683,14 @@ public class williams
 		altkeys = readinputport(3);
 	
 		/* modify the standard keys with the cheat keys */
-		if (altkeys)
+		if (altkeys != 0)
 		{
 			keys |= altkeys;
 			if (memory_region(REGION_CPU1)[0xa0bb] == 0xfd)
 			{
-				if (keys & 0x02)
+				if ((keys & 0x02) != 0)
 					keys = (keys & 0xfd) | 0x40;
-				else if (keys & 0x40)
+				else if ((keys & 0x40) != 0)
 					keys = (keys & 0xbf) | 0x02;
 			}
 		}
@@ -771,14 +771,14 @@ public class williams
 		altkeys = input_port_3_r(0);
 	
 		/* modify the standard keys with the cheat keys */
-		if (altkeys)
+		if (altkeys != 0)
 		{
 			keys |= altkeys;
 			if (memory_region(REGION_CPU1)[0x9c92] == 0xfd)
 			{
-				if (keys & 0x02)
+				if ((keys & 0x02) != 0)
 					keys = (keys & 0xfd) | 0x40;
-				else if (keys & 0x40)
+				else if ((keys & 0x40) != 0)
 					keys = (keys & 0xbf) | 0x02;
 			}
 		}
@@ -808,7 +808,7 @@ public class williams
 		vram_bank = data;
 	
 		/* non-zero banks map to RAM and the currently-selected bank */
-		if (vram_bank)
+		if (vram_bank != 0)
 		{
 			cpu_setbank(1, &RAM[blaster_bank_offset[blaster_bank]]);
 			cpu_setbank(2, williams_bank_base + 0x4000);
@@ -830,7 +830,7 @@ public class williams
 		blaster_bank = data & 15;
 	
 		/* only need to change anything if we're not pointing to VRAM */
-		if (vram_bank)
+		if (vram_bank != 0)
 		{
 			cpu_setbank(1, &RAM[blaster_bank_offset[blaster_bank]]);
 		}
@@ -884,13 +884,13 @@ public class williams
 	
 	#if 0
 		/* gun coil */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			printf("[gun coil] ");
 		else
 			printf("           ");
 	
 		/* feather coil */
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 			printf("[feather coil] ");
 		else
 			printf("               ");

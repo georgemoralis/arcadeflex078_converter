@@ -36,7 +36,7 @@ public class astinvad
 	
 		for (i = 0; i < 8; i++)
 		{
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				plot_pixel(tmpbitmap, 255 - (x + i), 255 - y, (data & 1) ? col : 0);
 			}
@@ -149,7 +149,7 @@ public class astinvad
 	
 	public static VideoUpdateHandlerPtr video_update_astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (astinvad_flash)
+		if (astinvad_flash != 0)
 		{
 			fillbitmap(bitmap, 1, cliprect);
 		}

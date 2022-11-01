@@ -270,7 +270,7 @@ public class unico
 			sx	=	(sx & 0x1ff) - (sx & 0x200);
 			sy	=	(sy & 0x1ff) - (sy & 0x200);
 	
-			if (flipx)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
+			if (flipx != 0)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
 			else		{	startx = sx;				endx = sx+dimx*16;	incx = +16;	}
 	
 			for (x = startx ; x != endx ; x += incx)
@@ -323,7 +323,7 @@ public class unico
 			sx	=	(sx & 0x1ff) - (sx & 0x200);
 			sy	=	(sy & 0x1ff) - (sy & 0x200);
 	
-			if (flipx)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
+			if (flipx != 0)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
 			else		{	startx = sx;				endx = sx+dimx*16;	incx = +16;	}
 	
 			for (x = startx ; x != endx ; x += incx)
@@ -378,15 +378,15 @@ public class unico
 		fillbitmap(bitmap,Machine->pens[0x1f00],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
-		if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
-		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
+		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
+		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
 	
 		/* Sprites are drawn last, using pdrawgfx */
-		if (layers_ctrl & 8)	unico_draw_sprites(bitmap,cliprect);
+		if ((layers_ctrl & 8) != 0)	unico_draw_sprites(bitmap,cliprect);
 	
 		/* Draw the gunsight for ligth gun games */
-		if (unico_has_lightgun) {
+		if (unico_has_lightgun != 0) {
 			draw_crosshair(bitmap,
 				readinputport(6)*384/256,
 				readinputport(5)*224/256,
@@ -428,15 +428,15 @@ public class unico
 		fillbitmap(bitmap,Machine->pens[0x1f00],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
-		if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
-		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
+		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
+		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
 	
 		/* Sprites are drawn last, using pdrawgfx */
-		if (layers_ctrl & 8)	unico_draw_sprites32(bitmap,cliprect);
+		if ((layers_ctrl & 8) != 0)	unico_draw_sprites32(bitmap,cliprect);
 	
 		/* Draw the gunsight for ligth gun games */
-		if (unico_has_lightgun) {
+		if (unico_has_lightgun != 0) {
 			draw_crosshair(bitmap,
 				readinputport(6)*384/256,
 				readinputport(5)*224/256,

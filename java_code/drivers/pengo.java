@@ -542,7 +542,7 @@ public class pengo
 			/* pick the offset in the table from bits 1, 3 and 5 of the source data */
 			j = ((src >> 1) & 1) + (((src >> 3) & 1) << 1) + (((src >> 5) & 1) << 2);
 			/* the bottom half of the translation table is the mirror image of the top */
-			if (src & 0x80) j = 7 - j;
+			if ((src & 0x80) != 0) j = 7 - j;
 	
 			/* decode the ROM data */
 			rom[A] = src ^ data_xortable[i][j];

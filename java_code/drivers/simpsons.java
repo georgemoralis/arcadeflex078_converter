@@ -286,12 +286,12 @@ public class simpsons
 		}
 		while (--counter);
 	
-		if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
+		if (num_inactive != 0) do { *dst = 0; dst += 8; } while (--num_inactive);
 	}
 	
 	static void dmaend_callback(int data)
 	{
-		if (simpsons_firq_enabled)
+		if (simpsons_firq_enabled != 0)
 			cpu_set_irq_line(0, KONAMI_FIRQ_LINE, HOLD_LINE);
 	}
 	

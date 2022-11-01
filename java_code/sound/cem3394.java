@@ -232,7 +232,7 @@ public class cem3394
 				/* this is a kludge; Snake Pit uses very small pulse widths in the tune during */
 				/* level 1; this makes the melody almost silent unless we enforce a minimum */
 				/* pulse width; even then, it's pretty tinny */
-				if (LIMIT_STEP)
+				if (LIMIT_STEP != 0)
 				{
 					if (pulse_width <= step) pulse_width = step + 1;
 					else if (pulse_width >= FRACTION_ONE - step) pulse_width = FRACTION_ONE - step - 1;
@@ -370,7 +370,7 @@ public class cem3394
 	
 	void cem3394_sh_stop(void)
 	{
-		if (mixer_buffer)
+		if (mixer_buffer != 0)
 			free(mixer_buffer);
 		mixer_buffer = external_buffer = NULL;
 	}
@@ -475,7 +475,7 @@ public class cem3394
 				else
 				{
 					temp = voltage * 0.5;
-					if (LIMIT_WIDTH)
+					if (LIMIT_WIDTH != 0)
 						temp = MINIMUM_WIDTH + (MAXIMUM_WIDTH - MINIMUM_WIDTH) * temp;
 					chip->pulse_width = (UINT32)(temp * FRACTION_ONE_D);
 					chip->wave_select |= WAVE_PULSE;

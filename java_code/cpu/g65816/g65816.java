@@ -227,7 +227,7 @@ public class g65816
 	/* Get the current CPU context */
 	unsigned g65816_get_context(void *dst_context)
 	{
-		if(dst_context)
+		if (dst_context != 0)
 			*(g65816i_cpu_struct*)dst_context = g65816i_cpu;
 		return sizeof(g65816i_cpu);
 	}
@@ -235,7 +235,7 @@ public class g65816
 	/* Set the current CPU context */
 	void g65816_set_context(void *src_context)
 	{
-		if(src_context)
+		if (src_context != 0)
 		{
 			g65816i_cpu = *(g65816i_cpu_struct*)src_context;
 			g65816i_jumping(REGISTER_PB | REGISTER_PC);

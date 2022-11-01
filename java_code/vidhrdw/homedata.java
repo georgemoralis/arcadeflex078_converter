@@ -99,7 +99,7 @@ public class homedata
 			}
 			data  = pBlitData[SourceAddr++];
 	
-			if (opcode&0x80)
+			if ((opcode & 0x80) != 0)
 				NumTiles = 0x80-(opcode&0x7f);
 			else
 				NumTiles = 0x40-(opcode&0x3f);
@@ -120,7 +120,7 @@ public class homedata
 					}
 				} /* i!=0 */
 	
-				if (data)	/* 00 is a nop */
+				if (data != 0)	/* 00 is a nop */
 					mrokumei_videoram_w( BaseAddr + DestAddr, data );
 	
 				if (homedata_vreg[1] & 0x80)	/* flip screen */
@@ -210,7 +210,7 @@ public class homedata
 					}
 				} /* i!=0 */
 	
-				if (data)	/* 00 is a nop */
+				if (data != 0)	/* 00 is a nop */
 				{
 					int addr = BaseAddr + (DestAddr & 0x3fff);
 					int dat = data;
@@ -219,7 +219,7 @@ public class homedata
 					{
 						addr = ((addr & 0xc000) >> 2) | ((addr & 0x1f00) >> 1) | (addr & 0x7f);
 	
-						if( flipx )
+						if (flipx != 0)
 						{
 							if ((BaseAddr & 0x4000) == 0) dat |= 0x80;
 							addr ^= 0x007c;
@@ -285,7 +285,7 @@ public class homedata
 			}
 			data  = pBlitData[SourceAddr++];
 	
-			if (opcode & 0x80)
+			if ((opcode & 0x80) != 0)
 				NumTiles = 0x80-(opcode&0x7f);
 			else
 				NumTiles = 0x40-(opcode&0x3f);
@@ -306,7 +306,7 @@ public class homedata
 					}
 				} /* i!=0 */
 	
-				if (data)	/* 00 is a nop */
+				if (data != 0)	/* 00 is a nop */
 				{
 					int addr = BaseAddr + (DestAddr & 0x3fff);
 	
@@ -456,7 +456,7 @@ public class homedata
 		int color = (attr & 0x7c) >> 2;
 		int flags = homedata_flipscreen;
 	
-		if (attr & 0x80) flags ^= TILE_FLIPX;
+		if ((attr & 0x80) != 0) flags ^= TILE_FLIPX;
 	
 		SET_TILE_INFO( layer, code, color, flags );
 	}
@@ -697,7 +697,7 @@ public class homedata
 	
 	public static WriteHandlerPtr mrokumei_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x80) mrokumei_handleblit(((blitter_bank & 0x04) >> 2) * 0x10000);
+		if ((data & 0x80) != 0) mrokumei_handleblit(((blitter_bank & 0x04) >> 2) * 0x10000);
 	
 		/* bit 0 = bank switch; used by hourouki to access the
 		   optional service mode ROM (not available in current dump) */
@@ -884,7 +884,7 @@ public class homedata
 		   blanked = c1 c0 ff --
 		  */
 	
-		if (blitter_bank & 0x04)
+		if ((blitter_bank & 0x04) != 0)
 		{
 			if (homedata_vreg[0x4] == 0xae || homedata_vreg[0x4] == 0xb8)
 			{

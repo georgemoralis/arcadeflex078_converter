@@ -183,7 +183,7 @@ public class pipedrm
 		/* Hatris polls commands *and* listens to the NMI; this causes it to miss */
 		/* sound commands. It's possible the NMI isn't really hooked up on the YM2608 */
 		/* sound board. */
-		if (data & 0x100)
+		if ((data & 0x100) != 0)
 			cpu_set_nmi_line(1, ASSERT_LINE);
 	}
 	

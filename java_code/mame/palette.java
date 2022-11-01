@@ -278,7 +278,7 @@ public class palette
 	
 		if ((table_ptr32 = shadow_table_base[mode]) == NULL) return;
 	
-		if (style) // monotone shadows(style 1) or highlights(style 2)
+		if (style != 0) // monotone shadows(style 1) or highlights(style 2)
 		{
 			if (factor < 0) factor = 0;
 	
@@ -322,7 +322,7 @@ public class palette
 						g = g>>FP & 0x03e0;
 						b = b>>FP & 0x001f;
 	
-						if (d32)
+						if (d32 != 0)
 							table_ptr32[i] = (UINT32)(r<<9 | g<<6 | b<<3);
 						else
 							((UINT16*)table_ptr32)[i] = (UINT16)(r | g | b);
@@ -344,7 +344,7 @@ public class palette
 							if (g >= FMAX) g = 0x03e0; else g = g>>(FP-5)  & 0x03e0;
 							if (b >= FMAX) b = 0x001f; else b = b>>(FP);
 	
-							if (d32)
+							if (d32 != 0)
 								table_ptr32[i] = (UINT32)(r<<9 | g<<6 | b<<3);
 							else
 								((UINT16*)table_ptr32)[i] = (UINT16)(r | g | b);
@@ -365,13 +365,13 @@ public class palette
 							if (g > FMAX) ov += g - FMAX;
 							if (b > FMAX) ov += b - FMAX;
 	
-							if (ov) { ov >>= 2;  r += ov;  g += ov;  b += ov; }
+							if (ov != 0) { ov >>= 2;  r += ov;  g += ov;  b += ov; }
 	
 							if (r >= FMAX) r = 0x7c00; else r = r>>(FP-10) & 0x7c00;
 							if (g >= FMAX) g = 0x03e0; else g = g>>(FP-5)  & 0x03e0;
 							if (b >= FMAX) b = 0x001f; else b = b>>(FP);
 	
-							if (d32)
+							if (d32 != 0)
 								table_ptr32[i] = (UINT32)(r<<9 | g<<6 | b<<3);
 							else
 								((UINT16*)table_ptr32)[i] = (UINT16)(r | g | b);
@@ -394,7 +394,7 @@ public class palette
 							if (g > 0x03e0) g = 0x03e0;
 							if (b > 0x001f) b = 0x001f;
 	
-							if (d32)
+							if (d32 != 0)
 								table_ptr32[i] = (UINT32)(r<<9 | g<<6 | b<<3);
 							else
 								((UINT16*)table_ptr32)[i] = (UINT16)(r | g | b);
@@ -429,7 +429,7 @@ public class palette
 			dr <<= 10; dg <<= 5;
 			d32 = (colormode == DIRECT_32BIT);
 	
-			if (noclip)
+			if (noclip != 0)
 			{
 				for (i=0; i<32768; i++)
 				{
@@ -441,7 +441,7 @@ public class palette
 					g &= 0x03e0;
 					b &= 0x001f;
 	
-					if (d32)
+					if (d32 != 0)
 						table_ptr32[i] = (UINT32)(r<<9 | g<<6 | b<<3);
 					else
 						((UINT16*)table_ptr32)[i] = (UINT16)(r | g | b);
@@ -459,7 +459,7 @@ public class palette
 					if (g < 0) g = 0; else if (g > 0x03e0) g = 0x03e0;
 					if (b < 0) b = 0; else if (b > 0x001f) b = 0x001f;
 	
-					if (d32)
+					if (d32 != 0)
 						table_ptr32[i] = (UINT32)(r<<9 | g<<6 | b<<3);
 					else
 						((UINT16*)table_ptr32)[i] = (UINT16)(r | g | b);
@@ -797,7 +797,7 @@ public class palette
 			display->game_palette_entries = total_colors_with_ui;
 			display->game_palette_dirty = dirty_palette;
 	
-			if (adjusted_palette_dirty)
+			if (adjusted_palette_dirty != 0)
 				display->changed_flags |= GAME_PALETTE_CHANGED;
 		}
 	
@@ -816,7 +816,7 @@ public class palette
 	#endif
 	
 		/* update the dirty state */
-		if (debug_palette_dirty)
+		if (debug_palette_dirty != 0)
 			display->changed_flags |= DEBUG_PALETTE_CHANGED;
 	
 		/* clear the dirty flags */
@@ -911,7 +911,7 @@ public class palette
 						if (g > FMAX) ov += g - FMAX;
 						if (b > FMAX) ov += b - FMAX;
 	
-						if (ov) { ov >>= 2;  r += ov;  g += ov;  b += ov; }
+						if (ov != 0) { ov >>= 2;  r += ov;  g += ov;  b += ov; }
 	
 						if (r >= FMAX) r = 0xff0000; else r = (r >> PEN_BRIGHTNESS_BITS) << 16;
 						if (g >= FMAX) g = 0x00ff00; else g = (g >> PEN_BRIGHTNESS_BITS) << 8;
@@ -956,7 +956,7 @@ public class palette
 						if (g > FMAX) ov += g - FMAX;
 						if (b > FMAX) ov += b - FMAX;
 	
-						if (ov) { ov >>= 2;  r += ov;  g += ov;  b += ov; }
+						if (ov != 0) { ov >>= 2;  r += ov;  g += ov;  b += ov; }
 	
 						if (r >= FMAX) r = 0xff0000; else r = (r >> PEN_BRIGHTNESS_BITS) << 16;
 						if (g >= FMAX) g = 0x00ff00; else g = (g >> PEN_BRIGHTNESS_BITS) << 8;
@@ -994,7 +994,7 @@ public class palette
 		int i;
 	
 		/* regenerate the color correction table if needed */
-		if (brightness_or_gamma_changed)
+		if (brightness_or_gamma_changed != 0)
 			for (i = 0; i < sizeof(color_correct_table); i++)
 			{
 				int value = (int)(255.0 * (global_brightness * global_brightness_adjust) * pow((double)i * (1.0 / 255.0), 1.0 / global_gamma) + 0.5);
@@ -1350,15 +1350,15 @@ public class palette
 		i = (data >> 6) & 0x03;
 		/* red component */
 		r = (data << 2) & 0x0c;
-		if (r) r |= i;
+		if (r != 0) r |= i;
 		r *= 0x11;
 		/* green component */
 		g = (data >> 0) & 0x0c;
-		if (g) g |= i;
+		if (g != 0) g |= i;
 		g *= 0x11;
 		/* blue component */
 		b = (data >> 2) & 0x0c;
-		if (b) b |= i;
+		if (b != 0) b |= i;
 		b *= 0x11;
 	
 		palette_set_color(offset,r,g,b);

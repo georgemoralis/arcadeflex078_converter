@@ -42,7 +42,7 @@ public class bogeyman
 		if ((last & 0x20) == 0x20 && (data & 0x20) == 0x00)
 		{
 			/* bit 4 goes to the 8910 #0 BC1 pin */
-			if (last & 0x10)
+			if ((last & 0x10) != 0)
 				AY8910_control_port_0_w(0,psg_latch);
 			else
 				AY8910_write_port_0_w(0,psg_latch);
@@ -51,7 +51,7 @@ public class bogeyman
 		if ((last & 0x80) == 0x80 && (data & 0x80) == 0x00)
 		{
 			/* bit 6 goes to the 8910 #1 BC1 pin */
-			if (last & 0x40)
+			if ((last & 0x40) != 0)
 				AY8910_control_port_1_w(0,psg_latch);
 			else
 				AY8910_write_port_1_w(0,psg_latch);

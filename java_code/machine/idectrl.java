@@ -260,7 +260,7 @@ public class idectrl
 		ide->status |= IDE_STATUS_BUSY;
 		
 		/* set a timer */
-		if (buffer_ready)
+		if (buffer_ready != 0)
 			timer_set(time, ide - idestate, delayed_interrupt_buffer_ready);
 		else
 			timer_set(time, ide - idestate, delayed_interrupt);
@@ -428,13 +428,13 @@ public class idectrl
 		int size = 4;
 	
 		/* determine which real offset */
-		if (mem_mask & 0x000000ff)
+		if ((mem_mask & 0x000000ff) != 0)
 		{
 			(*offset)++, size = 3;
-			if (mem_mask & 0x0000ff00)
+			if ((mem_mask & 0x0000ff00) != 0)
 			{
 				(*offset)++, size = 2;
-				if (mem_mask & 0x00ff0000)
+				if ((mem_mask & 0x00ff0000) != 0)
 					(*offset)++, size = 1;
 			}
 		}
@@ -457,7 +457,7 @@ public class idectrl
 		int size = 2;
 	
 		/* determine which real offset */
-		if (mem_mask & 0x000000ff)
+		if ((mem_mask & 0x000000ff) != 0)
 			(*offset)++, size = 1;
 	
 		if (!(mem_mask & 0x0000ff00))
@@ -1498,7 +1498,7 @@ public class idectrl
 	
 				/* handle controller reset */
 				//if (data == 0x04)
-				if (data & 0x04)
+				if ((data & 0x04) != 0)
 				{
 					ide->status |= IDE_STATUS_BUSY;
 					ide->status &= ~IDE_STATUS_DRIVE_READY;
@@ -1591,9 +1591,9 @@ public class idectrl
 			ide->bus_master_status = (old & 0x9f) | (val & 0x60);
 			
 			/* clear interrupt and error bits */
-			if (val & IDE_BUSMASTER_STATUS_IRQ)
+			if ((val & IDE_BUSMASTER_STATUS_IRQ) != 0)
 				ide->bus_master_status &= ~IDE_BUSMASTER_STATUS_IRQ;
-			if (val & IDE_BUSMASTER_STATUS_ERROR)
+			if ((val & IDE_BUSMASTER_STATUS_ERROR) != 0)
 				ide->bus_master_status &= ~IDE_BUSMASTER_STATUS_ERROR;
 		}
 		

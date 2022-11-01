@@ -174,7 +174,7 @@
  ***************************************************************/
 #undef BRA
 #define BRA(cond)                                               \
-	if (cond)													\
+	if (cond != 0)													\
 	{															\
 		tmp = RDOPARG();										\
 		EAW = PCW + (signed char)tmp;							\

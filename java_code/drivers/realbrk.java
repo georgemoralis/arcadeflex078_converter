@@ -51,12 +51,12 @@ public class realbrk
 	static READ16_HANDLER( realbrk_dsw_r )
 	{
 		data16_t sel = ~realbrk_dsw_select[0];
-		if (sel & 0x01)	return	(readinputport(2) & 0x00ff) << 8;		// DSW1 low bits
-		if (sel & 0x02)	return	(readinputport(3) & 0x00ff) << 8;		// DSW2 low bits
-		if (sel & 0x04)	return	(readinputport(4) & 0x00ff) << 8;		// DSW3 low bits
-		if (sel & 0x08)	return	(readinputport(5) & 0x00ff) << 8;		// DSW4 low bits
+		if ((sel & 0x01) != 0)	return	(readinputport(2) & 0x00ff) << 8;		// DSW1 low bits
+		if ((sel & 0x02) != 0)	return	(readinputport(3) & 0x00ff) << 8;		// DSW2 low bits
+		if ((sel & 0x04) != 0)	return	(readinputport(4) & 0x00ff) << 8;		// DSW3 low bits
+		if ((sel & 0x08) != 0)	return	(readinputport(5) & 0x00ff) << 8;		// DSW4 low bits
 	
-		if (sel & 0x10)	return	((readinputport(2) & 0x0300) << 0) |	// DSWs high 2 bits
+		if ((sel & 0x10) != 0)	return	((readinputport(2) & 0x0300) << 0) |	// DSWs high 2 bits
 								((readinputport(3) & 0x0300) << 2) |
 								((readinputport(4) & 0x0300) << 4) |
 								((readinputport(5) & 0x0300) << 6) ;

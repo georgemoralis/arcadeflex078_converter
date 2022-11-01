@@ -114,7 +114,7 @@ public class ddragon
 	
 		/* bit 3 unknown */
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			dd_sub_cpu_busy = 0x00;
 		else if (dd_sub_cpu_busy == 0x00)
 			cpu_set_irq_line( 1, sprite_irq, (sprite_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
@@ -150,7 +150,7 @@ public class ddragon
 	
 		/* bit 3 unknown */
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			dd_sub_cpu_busy = 0x00;
 		else if (dd_sub_cpu_busy == 0x00)
 			cpu_set_irq_line( 1, sprite_irq, (sprite_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
@@ -245,7 +245,7 @@ public class ddragon
 			/* This is a guess, but makes sense.. The mcu definitely interrupts the main cpu.
 			I don't know what bit is the assert and what is the clear though (in comparison
 			it's quite obvious from the Double Dragon 2 code, below). */
-			if (data&3) {
+			if ((data & 3) != 0) {
 				cpu_set_irq_line(0,M6809_IRQ_LINE,ASSERT_LINE);
 				cpu_set_irq_line(1,sprite_irq, CLEAR_LINE );
 			}

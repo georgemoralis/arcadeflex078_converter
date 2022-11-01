@@ -176,7 +176,7 @@ public class fileio
 		}
 	
 		/* if we have a filename, we're done */
-		if (has_filename)
+		if (has_filename != 0)
 			return;
 	
 		/* if the path already exists, we're done */
@@ -382,7 +382,7 @@ public class fileio
 		}
 	
 		// set the count
-		if (count)
+		if (count != 0)
 			*count = list->pathcount;
 	
 		// return a valid path always
@@ -407,7 +407,7 @@ public class fileio
 	
 		/* compose the full path */
 		*output = 0;
-		if (basepath)
+		if (basepath != 0)
 			appendstring(output, basepath);
 		if (*output && !is_pathsep(output[_tcslen(output) - 1]))
 			appendstring(output, "\\");
@@ -452,7 +452,7 @@ public class fileio
 		attributes = GetFileAttributes(fullpath);
 		if (attributes == INVALID_FILE_ATTRIBUTES)
 			return PATH_NOT_FOUND;
-		else if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+		else if ((attributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
 			return PATH_IS_DIRECTORY;
 		else
 			return PATH_IS_FILE;
@@ -712,7 +712,7 @@ public class fileio
 	#ifndef WINUI
 	int osd_display_loading_rom_message(const char *name,struct rom_load_data *romdata)
 	{
-		if (name)
+		if (name != 0)
 			fprintf(stdout, "loading %-12s\r", name);
 		else
 			fprintf(stdout, "                    \r");

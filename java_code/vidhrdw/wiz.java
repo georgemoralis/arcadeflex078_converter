@@ -177,7 +177,7 @@ public class wiz
 			sx = offs % 32;
 			sy = offs / 32;
 	
-			if (colortype)
+			if (colortype != 0)
 			{
 				col = (wiz_attributesram[2 * sx + 1] & 0x07);
 			}
@@ -187,11 +187,11 @@ public class wiz
 			}
 	
 			scroll = (8*sy + 256 - wiz_attributesram[2 * sx]) % 256;
-			if (flipy)
+			if (flipy != 0)
 			{
 			   scroll = (248 - scroll) % 256;
 			}
-			if (flipx) sx = 31 - sx;
+			if (flipx != 0) sx = 31 - sx;
 	
 	
 			drawgfx(bitmap,Machine->gfx[bank],
@@ -216,7 +216,7 @@ public class wiz
 			sx = offs % 32;
 			sy = offs / 32;
 	
-			if (colortype)
+			if (colortype != 0)
 			{
 				col = (wiz_attributesram2[2 * sx + 1] & 0x07);
 			}
@@ -226,11 +226,11 @@ public class wiz
 			}
 	
 			scroll = (8*sy + 256 - wiz_attributesram2[2 * sx]) % 256;
-			if (flipy)
+			if (flipy != 0)
 			{
 			   scroll = (248 - scroll) % 256;
 			}
-			if (flipx) sx = 31 - sx;
+			if (flipx != 0) sx = 31 - sx;
 	
 	
 			drawgfx(bitmap,Machine->gfx[char_bank[1]],
@@ -257,7 +257,7 @@ public class wiz
 	
 			if (!sx || !sy) continue;
 	
-			if ( flipx) sx = 240 - sx;
+			if (flipx != 0) sx = 240 - sx;
 			if (!flipy) sy = 240 - sy;
 	
 			drawgfx(bitmap,Machine->gfx[bank],

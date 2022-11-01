@@ -503,7 +503,7 @@ public class m68kcpu
 			case M68K_REG_PC:	m68ki_jump(MASK_OUT_ABOVE_32(value)); return;
 			case M68K_REG_SR:	m68ki_set_sr(value); return;
 			case M68K_REG_SP:	REG_SP = MASK_OUT_ABOVE_32(value); return;
-			case M68K_REG_USP:	if(FLAG_S)
+			case M68K_REG_USP:	if (FLAG_S != 0)
 									REG_USP = MASK_OUT_ABOVE_32(value);
 								else
 									REG_SP = MASK_OUT_ABOVE_32(value);
@@ -805,13 +805,13 @@ public class m68kcpu
 	
 	unsigned int m68k_get_context(void* dst)
 	{
-		if(dst) *(m68ki_cpu_core*)dst = m68ki_cpu;
+		if (dst != 0) *(m68ki_cpu_core*)dst = m68ki_cpu;
 		return sizeof(m68ki_cpu_core);
 	}
 	
 	void m68k_set_context(void* src)
 	{
-		if(src) m68ki_cpu = *(m68ki_cpu_core*)src;
+		if (src != 0) m68ki_cpu = *(m68ki_cpu_core*)src;
 	}
 	
 	

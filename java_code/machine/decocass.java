@@ -277,7 +277,7 @@ public class decocass
 		cpu_set_reset_line( 1, data & 0x01 );
 	
 		/* on reset also remove the sound timer */
-		if (data & 1)
+		if ((data & 1) != 0)
 			timer_adjust(decocass_sound_timer, TIME_NEVER, 0, 0);
 	
 		/* 8041 active low reset */
@@ -311,7 +311,7 @@ public class decocass
 		crc16_lsb = (crc16_lsb >> 1) | (c1 << 7);
 	
 		/* feedback into bit 7 */
-		if (feedback)
+		if (feedback != 0)
 			crc16_lsb |= 0x80;
 		else
 			crc16_lsb &= ~0x80;
@@ -335,7 +335,7 @@ public class decocass
 		double tape_time = tape_time0;
 		int offset, rclk, rdata, tape_bit, tape_byte, tape_block;
 	
-		if (tape_timer)
+		if (tape_timer != 0)
 			tape_time += tape_dir * timer_timeelapsed(tape_timer);
 	
 		if (tape_time < 0.0)
@@ -584,7 +584,7 @@ public class decocass
 			data8_t save;
 			UINT8 *prom = memory_region(REGION_USER1);
 	
-			if (firsttime)
+			if (firsttime != 0)
 			{
 				LOG(4,("prom data:\n"));
 				for (promaddr = 0; promaddr < 32; promaddr++)
@@ -1231,7 +1231,7 @@ public class decocass
 		}
 		else
 		{
-			if (type4_latch)
+			if (type4_latch != 0)
 			{
 				UINT8 *prom = memory_region(REGION_USER1);
 	
@@ -1275,7 +1275,7 @@ public class decocass
 		}
 		else
 		{
-			if (type4_latch)
+			if (type4_latch != 0)
 			{
 				type4_ctrs = (type4_ctrs & 0xff00) | data;
 				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> CTRS LSB (%04x)\n", timer_get_time(), activecpu_get_previouspc(), offset, data, type4_ctrs));
@@ -1314,7 +1314,7 @@ public class decocass
 		}
 		else
 		{
-			if (type5_latch)
+			if (type5_latch != 0)
 			{
 				data = 0x55;	/* Only a fixed value? It looks like this is all we need to do */
 				LOG(3,("%9.7f 6502-PC: %04x decocass_type5_r(%02x): $%02x '%c' <- fixed value???\n", timer_get_time(), activecpu_get_previouspc(), offset, data, (data >= 32) ? data : '.'));
@@ -1352,7 +1352,7 @@ public class decocass
 		}
 		else
 		{
-			if (type5_latch)
+			if (type5_latch != 0)
 			{
 				/* write nowhere?? */
 				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "nowhere?"));
@@ -1401,7 +1401,7 @@ public class decocass
 		}
 		else
 		{
-			if (decocass_dongle_r)
+			if (decocass_dongle_r != 0)
 				data = (*decocass_dongle_r)(offset);
 			else
 				data = 0xff;
@@ -1411,7 +1411,7 @@ public class decocass
 	
 	public static WriteHandlerPtr decocass_e5xx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (decocass_dongle_w)
+		if (decocass_dongle_w != 0)
 		{
 			(*decocass_dongle_w)(offset, data);
 			return;

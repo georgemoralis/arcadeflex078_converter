@@ -106,11 +106,11 @@ public class capbowl
 	
 	static NVRAM_HANDLER( capbowl )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file,generic_nvram,generic_nvram_size);
 		else
 		{
-			if (file)
+			if (file != 0)
 				mame_fread(file,generic_nvram,generic_nvram_size);
 			else
 			{

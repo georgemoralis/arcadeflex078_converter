@@ -218,7 +218,7 @@ public class fromance
 	
 	public static WriteHandlerPtr fromance_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			switch (offset)
 			{

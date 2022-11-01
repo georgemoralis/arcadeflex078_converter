@@ -74,7 +74,7 @@ public class xevious
 	
 		/* get BS to 12 bit data from 2A,2B */
 		adr_2b = ((xevious_bs[1]&0x7e)<<6)|((xevious_bs[0]&0xfe)>>1);
-		if( adr_2b & 1 ){
+		if ((adr_2b & 1) != 0){
 			/* high bits select */
 			dat1 = ((rom2a[adr_2b>>1]&0xf0)<<4)|rom2b[adr_2b];
 		}else{
@@ -82,13 +82,13 @@ public class xevious
 		    dat1 = ((rom2a[adr_2b>>1]&0x0f)<<8)|rom2b[adr_2b];
 		}
 		adr_2c = (dat1 & 0x1ff)<<2;
-		if( offset & 0x01 )
+		if ((offset & 0x01) != 0)
 			adr_2c += (1<<11);	/* signal 4H to A11 */
 		if( (xevious_bs[0]&1) ^ ((dat1>>10)&1) )
 			adr_2c |= 1;
 		if( (xevious_bs[1]&1) ^ ((dat1>>9)&1) )
 			adr_2c |= 2;
-		if( offset & 0x01 ){
+		if ((offset & 0x01) != 0){
 			/* return BB1 */
 			dat2 = rom2c[adr_2c];
 		}else{
@@ -239,7 +239,7 @@ public class xevious
 			case 0x01:	/* read input */
 				if (offset == 0)
 				{
-					if (mode)	/* switch mode */
+					if (mode != 0)	/* switch mode */
 					{
 						/* bit 7 is the service switch */
 						return readinputport(4);
@@ -380,7 +380,7 @@ public class xevious
 	
 	public static WriteHandlerPtr xevious_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);
@@ -403,7 +403,7 @@ public class xevious
 	
 	public static InterruptHandlerPtr xevious_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_1)
+		if (interrupt_enable_1 != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -418,7 +418,7 @@ public class xevious
 	
 	public static InterruptHandlerPtr xevious_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_2)
+		if (interrupt_enable_2 != 0)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
@@ -433,7 +433,7 @@ public class xevious
 	
 	public static InterruptHandlerPtr xevious_interrupt_3 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_3)
+		if (interrupt_enable_3 != 0)
 			cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -477,7 +477,7 @@ public class xevious
 	
 		battles_customio_prev_command = battles_customio_command;
 	
-		if( battles_customio_command & 0x10 ){
+		if ((battles_customio_command & 0x10) != 0){
 			if( battles_customio_command_count == 0 ){
 				cpu_set_irq_line(3, IRQ_LINE_NMI, PULSE_LINE);
 			}else{

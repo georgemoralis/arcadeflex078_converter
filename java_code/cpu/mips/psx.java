@@ -1600,7 +1600,7 @@ public class psx
 	
 	unsigned mips_get_context( void *dst )
 	{
-		if( dst )
+		if (dst != 0)
 		{
 			*(mips_cpu_context *)dst = mipscpu;
 		}
@@ -1609,7 +1609,7 @@ public class psx
 	
 	void mips_set_context( void *src )
 	{
-		if( src )
+		if (src != 0)
 		{
 			mipscpu = *(mips_cpu_context *)src;
 			change_pc32ledw( mipscpu.pc );

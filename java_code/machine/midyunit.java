@@ -130,7 +130,7 @@ public class midyunit
 		logerror("%08x:Protection write = %04X\n", activecpu_get_pc(), data);
 	
 		/* only go down this path if we have a data structure */
-		if (prot_data)
+		if (prot_data != 0)
 		{
 			/* mask off the data */
 			data &= 0x0f00;
@@ -400,7 +400,7 @@ public class midyunit
 	
 	static READ16_HANDLER( term2_speedup_r )
 	{
-		if (offset)
+		if (offset != 0)
 		{
 			return midyunit_scratch_ram[TOWORD(0xaa050)];
 		}
@@ -456,7 +456,7 @@ public class midyunit
 					a8  = READ_INT32(a1+0x1c0);						/* MOVE   *A1(1C0h),A8,1 */
 					a7  = READ_INT32(a1+0x1a0);						/* MOVE   *A1(1A0h),A7,1 */
 					a14 = (INT32)(READ_INT16(a1+0x220));			/* MOVE   *A1(220h),A14,0 */
-					if (a14 & 0x6000)								/* BTST   Eh,A14 */
+					if ((a14 & 0x6000) != 0)								/* BTST   Eh,A14 */
 					{												/* JRNE   FFC07C50h */
 						goto t2_FFC07C50;							/* BTST   Dh,A14 */
 					}												/* JRNE   FFC07C50h */
@@ -1141,7 +1141,7 @@ public class midyunit
 	WRITE16_HANDLER( midyunit_sound_w )
 	{
 		/* check for out-of-bounds accesses */
-		if (offset)
+		if (offset != 0)
 		{
 			logerror("%08X:Unexpected write to sound (hi) = %04X\n", activecpu_get_pc(), data);
 			return;

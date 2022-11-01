@@ -125,7 +125,7 @@ public class bombjack
 				sy = 241-spriteram[offs+2];
 			flipx = spriteram[offs+1] & 0x40;
 			flipy =	spriteram[offs+1] & 0x80;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				if (spriteram[offs+1] & 0x20)
 				{

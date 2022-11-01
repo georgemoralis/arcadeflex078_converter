@@ -178,7 +178,7 @@ public class gberet
 		int scroll;
 	
 		scroll = data;
-		if (offset) scroll |= 0x100;
+		if (offset != 0) scroll |= 0x100;
 	
 		for (offset = 6;offset < 29;offset++)
 			tilemap_set_scrollx(bg_tilemap,offset,scroll + 64-8);
@@ -191,7 +191,7 @@ public class gberet
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else if (cpu_getiloops() % 2)
 		{
-			if (interruptenable)
+			if (interruptenable != 0)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };
@@ -225,7 +225,7 @@ public class gberet
 				flipx = sr[offs+1] & 0x10;
 				flipy = sr[offs+1] & 0x20;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -263,7 +263,7 @@ public class gberet
 				flipx = sr[offs+3] & 0x10;
 				flipy = sr[offs+3] & 0x20;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

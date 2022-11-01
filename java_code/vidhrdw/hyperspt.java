@@ -140,7 +140,7 @@ public class hyperspt
 			int flipx = ~spriteram[offs] & 0x40;
 			int flipy = spriteram[offs] & 0x80;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;
@@ -178,7 +178,7 @@ public class hyperspt
 		for (row = 0; row < 32; row++)
 		{
 			int scrollx = hyperspt_scroll[row * 2] + (hyperspt_scroll[(row * 2) + 1] & 0x01) * 256;
-			if (flip_screen) scrollx = -scrollx;
+			if (flip_screen != 0) scrollx = -scrollx;
 			tilemap_set_scrollx(bg_tilemap, row, scrollx);
 		}
 	

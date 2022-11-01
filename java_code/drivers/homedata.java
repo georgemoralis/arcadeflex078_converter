@@ -279,7 +279,7 @@ public class homedata
 			 */
 			res |= homedata_visible_page << 7;
 	
-			if (vblank) res |= 0x40;
+			if (vblank != 0) res |= 0x40;
 	
 			vblank = 0;
 		}
@@ -298,7 +298,7 @@ public class homedata
 	
 	public static ReadHandlerPtr mrokumei_sound_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (sndbank & 4)
+		if ((sndbank & 4) != 0)
 			return(soundlatch_r(0));
 		else
 			return memory_region(REGION_CPU2)[0x10000 + offset + (sndbank & 1) * 0x10000];
@@ -403,7 +403,7 @@ public class homedata
 	
 		res |= BIT(upd7807_portc,2) * 0x01;		// bit 0 = upd7807 status
 		res |= BIT(upd7807_portc,6) * 0x02;		// bit 1 = upd7807 data
-		if (vblank) res |= 0x04;				// bit 2 = vblank
+		if (vblank != 0) res |= 0x04;				// bit 2 = vblank
 		res |= homedata_visible_page * 0x08;	// bit 3 = visible page
 	
 		vblank = 0;
@@ -473,13 +473,13 @@ public class homedata
 	
 	//	logerror("%04x: keyboard_r with port A = %02x\n",activecpu_get_pc(),upd7807_porta);
 	
-		if (upd7807_porta & 0x80)
+		if ((upd7807_porta & 0x80) != 0)
 		{
 			/* player 1 + dip switches */
 			int row = (upd7807_porta & 0x07);
 			return readinputport(2 + row) | (((dips >> row) & 1) << 5);	// 0-5
 		}
-		if (upd7807_porta & 0x08)
+		if ((upd7807_porta & 0x08) != 0)
 		{
 			/* player 2 (not supported) + dip switches */
 			int row = ((upd7807_porta >> 4) & 0x07);

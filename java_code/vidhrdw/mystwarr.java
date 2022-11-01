@@ -87,7 +87,7 @@ public class mystwarr
 		else
 			*color = sprite_colorbase | (c & 0x1f);
 	
-		if (oinprion & 0xf0)
+		if ((oinprion & 0xf0) != 0)
 			*priority = cbparam;  // use PCU2 internal priority
 		else
 			*priority = c & 0xf0; // use color implied priority
@@ -103,7 +103,7 @@ public class mystwarr
 	
 		tileno = dat3[tile_index] | ((dat2[tile_index]&0x3f)<<8);
 	
-		if (tile_index & 1)
+		if ((tile_index & 1) != 0)
 			colour = (dat1[tile_index>>1]&0xf);
 		else
 			colour = ((dat1[tile_index>>1]>>4)&0xf);
@@ -376,7 +376,7 @@ public class mystwarr
 	
 	WRITE16_HANDLER(ddd_053936_enable_w)
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			roz_enable = data & 0x0100;
 			roz_rombank = (data & 0xc000)>>14;
@@ -391,7 +391,7 @@ public class mystwarr
 	
 		if (offset == 1)
 		{
-	 		if (ACCESSING_MSB) K053936GP_clip_enable(0, data & 0x0100);
+	 		if (ACCESSING_MSB != 0) K053936GP_clip_enable(0, data & 0x0100);
 		}
 		else
 		{
@@ -515,7 +515,7 @@ public class mystwarr
 					dirty = 1;
 				}
 			}
-			if (dirty) K056832_MarkAllTilemapsDirty();
+			if (dirty != 0) K056832_MarkAllTilemapsDirty();
 	
 		}
 	

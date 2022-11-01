@@ -308,7 +308,7 @@ public class lazercmd
 		{
 			case 0: /* audio channels */
 				DAC_data=(data&0x80)^((data&0x40)<<1)^((data&0x20)<<2)^((data&0x10)<<3);
-				if (DAC_data)
+				if (DAC_data != 0)
 				{
 					DAC_data_w(0, 0xff);
 				}
@@ -341,7 +341,7 @@ public class lazercmd
 				/* these could be used to control sound samples */
 				/* at the moment they are routed through the dac */
 				DAC_data=((data&0x20)<<2)^((data&0x10)<<3);
-				if (DAC_data)
+				if (DAC_data != 0)
 				{
 					DAC_data_w(0, 0xff);
 				}
@@ -374,7 +374,7 @@ public class lazercmd
 				/* these could be used to control sound samples */
 				/* at the moment they are routed through the dac */
 				DAC_data=((data&0x20)<<2)^((data&0x10)<<3);
-				if (DAC_data)
+				if (DAC_data != 0)
 				{
 					DAC_data_w(0, 0xff);
 				}

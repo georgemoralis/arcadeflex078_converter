@@ -134,7 +134,7 @@ public class skydiver
 	
 	public static InterruptHandlerPtr skydiver_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (skydiver_nmion)
+		if (skydiver_nmion != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

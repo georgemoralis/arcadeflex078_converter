@@ -70,7 +70,7 @@ public class multi32
 	
 	static WRITE16_HANDLER(irq_ack_w)
 	{
-		if(ACCESSING_MSB) {
+		if (ACCESSING_MSB != 0) {
 			irq_status &= data >> 8;
 			if(!irq_status)
 				cpu_set_irq_line(0, 0, CLEAR_LINE);
@@ -86,12 +86,12 @@ public class multi32
 	
 	static NVRAM_HANDLER( system32 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 		}
 	}
@@ -103,7 +103,7 @@ public class multi32
 	
 	static WRITE16_HANDLER(system32_eeprom_w)
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			EEPROM_write_bit(data & 0x80);
 			EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 			EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
@@ -135,7 +135,7 @@ public class multi32
 		*/
 	
 		if (offset<MAX_COLOURS) {
-			if (monitor) {
+			if (monitor != 0) {
 				data = paletteram16_b[offset];
 			}
 			else data = paletteram16[offset];
@@ -274,7 +274,7 @@ public class multi32
 		COMBINE_DATA(&control[offset]);
 	
 		if (offset<=3) {
-			if (analogSwitch) analogRead[offset*2+1]=readinputport(offset*2+5);
+			if (analogSwitch != 0) analogRead[offset*2+1]=readinputport(offset*2+5);
 			else analogRead[offset*2]=readinputport(offset*2+4);
 		}
 	}
@@ -334,7 +334,7 @@ public class multi32
 	
 		switch(offset) {
 		case 0x03:
-			if(ACCESSING_LSB) {
+			if (ACCESSING_LSB != 0) {
 				EEPROM_write_bit(data & 0x80);
 				EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 				EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
@@ -450,7 +450,7 @@ public class multi32
 			// orunners value=00, 08, 34
 			break;
 		case 0x07:
-			if(ACCESSING_LSB) {
+			if (ACCESSING_LSB != 0) {
 				EEPROM_write_bit(data & 0x80);
 				EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 				EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);

@@ -205,11 +205,11 @@ public class qsound
 	{
 		if (Machine->sample_rate == 0) return;
 	#if LOG_WAVE
-		if (fpRawDataR)
+		if (fpRawDataR != 0)
 		{
 			fclose(fpRawDataR);
 		}
-		if (fpRawDataL)
+		if (fpRawDataL != 0)
 		{
 			fclose(fpRawDataL);
 		}
@@ -408,7 +408,7 @@ public class qsound
 				{
 					count=(pC->offset)>>16;
 					pC->offset &= 0xffff;
-					if (count)
+					if (count != 0)
 					{
 						pC->address += count;
 						if (pC->address >= pC->end)

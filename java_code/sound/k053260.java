@@ -245,7 +245,7 @@ public class k053260
 	void K053260_sh_stop( void ) {
 		int ics;
 	
-		if ( K053260_chip ) {
+		if (K053260_chip != 0) {
 			for( ics = 0; ics < intf->num; ics++ ) {
 				struct K053260_chip_def *ic = &K053260_chip[ics];
 	
@@ -464,7 +464,7 @@ public class k053260
 	
 	WRITE16_HANDLER( K053260_0_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			K053260_0_w (offset, data & 0xff);
 	}
 	
@@ -475,7 +475,7 @@ public class k053260
 	
 	WRITE16_HANDLER( K053260_1_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			K053260_1_w (offset, data & 0xff);
 	}
 	

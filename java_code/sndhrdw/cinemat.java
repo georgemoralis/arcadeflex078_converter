@@ -52,7 +52,7 @@ public class cinemat
 	{
 		if ((cinemat_outputs ^ data) & 0x9f)
 		{
-			if (cinemat_sound_handler)
+			if (cinemat_sound_handler != 0)
 				cinemat_sound_handler (data & 0x9f, (cinemat_outputs ^ data) & 0x9f);
 		}
 	
@@ -86,7 +86,7 @@ public class cinemat
 	    if ((bits_changed & CLK) && (0 == (sound_val & CLK)))
 		{
 			current_shift <<= 1;
-			if (sound_val & A1)
+			if ((sound_val & A1) != 0)
 	            current_shift |= 1;
 		}
 	}
@@ -121,9 +121,9 @@ public class cinemat
 	void sundance_sound_w(UINT8 sound_val, UINT8 bits_changed)
 	{
 		
-	if (bits_changed & 0x01) //Bong
+	if ((bits_changed & 0x01) != 0) //Bong
 		{
-			if (sound_val & 0x01)
+			if ((sound_val & 0x01) != 0)
 			{
 	            
 	                sample_start(0, 0, 0);
@@ -205,25 +205,25 @@ public class cinemat
 			if ((shift_diff & 2) && (0 == (current_shift & 2)))
 				sample_start(5, 5, 0);	// Shield hit
 	
-			if (shift_diff & 0x04)
+			if ((shift_diff & 0x04) != 0)
 			{
-				if (current_shift & 0x04)
+				if ((current_shift & 0x04) != 0)
 					sample_start(6, 6, 1);	// Star sound
 				else
 					sample_stop(6);	// Stop it!
 			}
 	
-			if (shift_diff & 0x08)
+			if ((shift_diff & 0x08) != 0)
 			{
-				if (current_shift & 0x08)
+				if ((current_shift & 0x08) != 0)
 					sample_stop(7);	// Stop it!
 				else
 					sample_start(7, 7, 1);	// Thrust sound
 			}
 	
-			if (shift_diff & 0x10)
+			if ((shift_diff & 0x10) != 0)
 			{
-				if (current_shift & 0x10)
+				if ((current_shift & 0x10) != 0)
 					sample_stop(4);
 				else
 					sample_start(4, 4, 1);	// Drone
@@ -306,7 +306,7 @@ public class cinemat
 		if ((bits_changed & 0x04) && (0 == (sound_val & 0x04)))
 			sample_start(4, 4, 0);			// explosion (kill)
 	
-		if (bits_changed & 0x02)
+		if ((bits_changed & 0x02) != 0)
 		{
 			if ((sound_val & 0x02) == 0)
 				sample_start(2, 2, 1);			// hi level
@@ -314,7 +314,7 @@ public class cinemat
 				sample_stop(2);
 		}
 	
-		if (bits_changed & 0x01)
+		if ((bits_changed & 0x01) != 0)
 		{
 			if ((sound_val & 0x01) == 0)
 				sample_start(1, 1, 1);			// normal level
@@ -381,24 +381,24 @@ public class cinemat
 			last_shift = current_shift;
 		}
 	
-	    if (bits_changed & 0x2)   // Fixed incorrect inverted triggering 10-27-03 Tim C.
+	    if ((bits_changed & 0x2) != 0)   // Fixed incorrect inverted triggering 10-27-03 Tim C.
 	    {                         //Still not totally correct. Should be 2 speeds
-	        if (sound_val & 0x2)
+	        if ((sound_val & 0x2) != 0)
 	           sample_stop(4); 
 	        else
 	           sample_start(4, 4, 1);	// Tank +            
 	
 	    }
-	    if (bits_changed & 0x4)  // Fixed incorrect inverted triggering 10-27-03 Tim C.
+	    if ((bits_changed & 0x4) != 0)  // Fixed incorrect inverted triggering 10-27-03 Tim C.
 	    {
-	        if (sound_val & 0x4)
+	        if ((sound_val & 0x4) != 0)
 	          sample_stop(5);            
 	        else
 	          sample_start(5, 5, 1);	       // Beep +   
 	    }
-	    if (bits_changed & 0x8)  // Fixed incorrect inverted triggering 10-27-03 Tim C.
+	    if ((bits_changed & 0x8) != 0)  // Fixed incorrect inverted triggering 10-27-03 Tim C.
 	    {
-	        if (sound_val & 0x8)
+	        if ((sound_val & 0x8) != 0)
 	           sample_stop(6);
 	        else
 	           sample_start(6, 6, 1);	// Chopper +  
@@ -461,9 +461,9 @@ public class cinemat
 	            last_bg_sound = current_bg_sound;
 	        }
 	
-			if (shift_diff & 0x08)
+			if ((shift_diff & 0x08) != 0)
 			{
-				if (current_shift & 0x08)
+				if ((current_shift & 0x08) != 0)
 					sample_stop(5);
 				else
 	                sample_start(5, 5+last_bg_sound, 1);	// Background
@@ -472,9 +472,9 @@ public class cinemat
 			if ((shift_diff & 0x10) && (0 == (current_shift & 0x10)))
 				sample_start(2, 2, 0);	// Beep
 	
-			if (shift_diff & 0x20)
+			if ((shift_diff & 0x20) != 0)
 			{
-				if (current_shift & 0x20)
+				if ((current_shift & 0x20) != 0)
 					sample_stop(1);	// Stop it!
 				else
 					sample_start(1, 1, 1);	// Motor
@@ -576,9 +576,9 @@ public class cinemat
 			if ((shift_diff & 0x02) && (0 == (current_shift & 0x02)))
 				sample_start(1, 1, 0);	// soft expl.
 	
-			if (shift_diff & 0x04) // thrust
+			if ((shift_diff & 0x04) != 0) // thrust
 			{
-				if (current_shift & 0x04)
+				if ((current_shift & 0x04) != 0)
 					target_volume = 0;
 				else
 	            {
@@ -607,9 +607,9 @@ public class cinemat
 			if ((shift_diff & 0x10) && (0 == (current_shift & 0x10)))
 				sample_start(4, 4, 0);	// Capture
 	
-			if (shift_diff & 0x20)
+			if ((shift_diff & 0x20) != 0)
 			{
-				if (current_shift & 0x20)
+				if ((current_shift & 0x20) != 0)
 					sample_start(6, 6, 1);	// Nuke +
 				else
 					sample_stop(6);
@@ -655,9 +655,9 @@ public class cinemat
 	
 		// Explosion
 	
-		if (bits_changed & 0x01)
+		if ((bits_changed & 0x01) != 0)
 		{
-			if (sound_val & 0x01)
+			if ((sound_val & 0x01) != 0)
 			{
 	            if (rand() & 1)
 	                sample_start(0, 0, 0);
@@ -677,9 +677,9 @@ public class cinemat
 	
 		// Player 1 thrust
 	
-		if (bits_changed & 0x04)
+		if ((bits_changed & 0x04) != 0)
 		{
-			if (sound_val & 0x04)
+			if ((sound_val & 0x04) != 0)
 				sample_stop(3);
 			else
 				sample_start(3, 3, 1);
@@ -687,9 +687,9 @@ public class cinemat
 	
 		// Player 2 thrust
 	
-		if (bits_changed & 0x08)
+		if ((bits_changed & 0x08) != 0)
 		{
-			if (sound_val & 0x08)
+			if ((sound_val & 0x08) != 0)
 				sample_stop(4);
 			else
 				sample_start(4, 4, 1);
@@ -697,11 +697,11 @@ public class cinemat
 	
 		// Sound board shutoff (or enable)
 	
-		if (bits_changed & 0x10)
+		if ((bits_changed & 0x10) != 0)
 		{
 			// This is a toggle bit. If sound is enabled, shut everything off.
 	
-			if (sound_val & 0x10)
+			if ((sound_val & 0x10) != 0)
 			{
 	            int i;
 	

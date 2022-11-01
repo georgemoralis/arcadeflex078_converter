@@ -35,11 +35,11 @@ public class sbrkout
 	{
 	    int game_switch=input_port_7_r(0);
 	
-	    if (game_switch & 0x01)
+	    if ((game_switch & 0x01) != 0)
 	        sbrkout_game_switch=SBRKOUT_PROGRESSIVE;
-	    else if (game_switch & 0x02)
+	    else if ((game_switch & 0x02) != 0)
 	        sbrkout_game_switch=SBRKOUT_DOUBLE;
-	    else if (game_switch & 0x04)
+	    else if ((game_switch & 0x04) != 0)
 	        sbrkout_game_switch=SBRKOUT_CAVITY;
 	
 	    cpu_set_irq_line(0, 0, HOLD_LINE);

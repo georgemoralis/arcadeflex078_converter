@@ -71,7 +71,7 @@ public class spiders
 	
 		crtc6845_mem_size=crtc6845_horiz_disp*crtc6845_vert_disp*8;
 	
-		if(spiders_video_flip)
+		if (spiders_video_flip != 0)
 		{
 			video_addr=crtc6845_start_addr+(crtc6845_mem_size-1);
 			if((video_addr&0xff)==0x80) video_addr-=0x80;	/* Fudge factor!!! */
@@ -87,13 +87,13 @@ public class spiders
 					/* I've no idea how it maps to the hardware but  */
 					/* everything works OK if we do this             */
 	
-		if(crtc6845_page_flip) video_addr+=0x2000;
+		if (crtc6845_page_flip != 0) video_addr+=0x2000;
 	
 		for(loop=0;loop<crtc6845_mem_size;loop++)
 		{
 			int i,x,y,combo;
 	
-			if(spiders_video_flip)
+			if (spiders_video_flip != 0)
 			{
 				data0=bitflip[RAM[0x0000+video_addr]];
 				data1=bitflip[RAM[0x4000+video_addr]];

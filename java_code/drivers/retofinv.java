@@ -45,13 +45,13 @@ public class retofinv
 	
 	public static WriteHandlerPtr reset_cpu2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	     if (data)
+	     if (data != 0)
 		    cpu_set_reset_line(2,PULSE_LINE);
 	} };
 	
 	public static WriteHandlerPtr reset_cpu1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	    if (data)
+	    if (data != 0)
 		    cpu_set_reset_line(1,PULSE_LINE);
 	} };
 	

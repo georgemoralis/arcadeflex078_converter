@@ -26,7 +26,7 @@ void setstat(void)
 
 	for (i=0; i<8; i++)   /* 8 bits to test */
 	{
-		if (a & 1)  /* If current bit is set */
+		if ((a & 1) != 0)  /* If current bit is set */
 			I.STATUS ^= ST_P; /* we change ST_P bit */
 
 		a >>= 1;    /* Next bit. */
@@ -364,7 +364,7 @@ INLINE INT16 setst_add_laeco(int a, int b)
 
 	res = (a & 0xffff) + (b & 0xffff);
 
-	if (res & 0x10000)
+	if ((res & 0x10000) != 0)
 		I.STATUS |= ST_C;
 
 	if ((res ^ b) & (res ^ a) & 0x8000)
@@ -426,7 +426,7 @@ INLINE INT8 setst_addbyte_laecop(int a, int b)
 
 	res = (a & 0xff) + (b & 0xff);
 
-	if (res & 0x100)
+	if ((res & 0x100) != 0)
 		I.STATUS |= ST_C;
 	if ((res ^ b) & (res ^ a) & 0x80)
 		I.STATUS |= ST_O;
@@ -512,7 +512,7 @@ INLINE UINT16 setst_sra_laec(INT16 a, UINT16 c)
 	if (c != 0)
 	{
 		a = arithmetic_right_shift(a, c-1);
-		if (a & 1)  // The carry bit equals the last bit that is shifted out
+		if ((a & 1) != 0)  // The carry bit equals the last bit that is shifted out
 			I.STATUS |= ST_C;
 		a = arithmetic_right_shift(a, 1);
 	}
@@ -538,7 +538,7 @@ INLINE UINT16 setst_srl_laec(UINT16 a,UINT16 c)
 	if (c != 0)
 	{
 		a = logical_right_shift(a, c-1);
-		if (a & 1)
+		if ((a & 1) != 0)
 			I.STATUS |= ST_C;
 		a = logical_right_shift(a, 1);
 	}
@@ -564,7 +564,7 @@ INLINE UINT16 setst_src_laec(UINT16 a,UINT16 c)
 	if (c != 0)
 	{
 		a = logical_right_shift(a, c) | (a << (16-c));
-		if (a & 0x8000) // The carry bit equals the last bit that is shifted out
+		if ((a & 0x8000) != 0) // The carry bit equals the last bit that is shifted out
 			I.STATUS |= ST_C;
 	}
 
@@ -595,13 +595,13 @@ INLINE UINT16 setst_sla_laeco(UINT16 a, UINT16 c)
 			mask = 0xFFFF << (16-c-1);
 			ousted_bits = a & mask;
 
-			if (ousted_bits)        // If ousted_bits is neither all 0s
+			if (ousted_bits != 0)        // If ousted_bits is neither all 0s
 				if (ousted_bits ^ mask)   // nor all 1s,
 					I.STATUS |= ST_O;   // we set overflow
 		}
 
 		a <<= c-1;
-		if (a & 0x8000) // The carry bit equals the last bit that is shifted out
+		if ((a & 0x8000) != 0) // The carry bit equals the last bit that is shifted out
 			I.STATUS |= ST_C;
 
 		a <<= 1;

@@ -77,7 +77,7 @@ public class tceptor
 	
 	static WRITE16_HANDLER( m68k_shared_word_w )
 	{
-		if (ACCESSING_LSB16)
+		if (ACCESSING_LSB16 != 0)
 			m68k_shared_ram[offset] = data & 0xff;
 	}
 	
@@ -97,7 +97,7 @@ public class tceptor
 	
 	public static InterruptHandlerPtr m6809_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (m6809_irq_enable)
+		if (m6809_irq_enable != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else
 			m6809_irq_enable = 1;
@@ -116,7 +116,7 @@ public class tceptor
 	
 	public static InterruptHandlerPtr m68k_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (m68k_irq_enable)
+		if (m68k_irq_enable != 0)
 			cpu_set_irq_line(3, MC68000_IRQ_1, HOLD_LINE);
 	} };
 	
@@ -128,7 +128,7 @@ public class tceptor
 	
 	public static InterruptHandlerPtr mcu_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (mcu_irq_enable)
+		if (mcu_irq_enable != 0)
 			cpu_set_irq_line(4, 0, HOLD_LINE);
 		else
 			mcu_irq_enable = 1;

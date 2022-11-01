@@ -125,7 +125,7 @@ public class volfied
 	
 		UINT16* p = video_ram;
 	
-		if (video_ctrl & 1)
+		if ((video_ctrl & 1) != 0)
 		{
 			p += 0x20000;
 		}

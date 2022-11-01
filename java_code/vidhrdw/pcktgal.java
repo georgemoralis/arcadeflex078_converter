@@ -90,11 +90,11 @@ public class pcktgal
 	
 				flipx = spriteram[offs+1] & 0x04;
 				flipy = spriteram[offs+1] & 0x02;
-				if (flip_screen) {
+				if (flip_screen != 0) {
 					sx=240-sx;
 					sy=240-sy;
-					if (flipx) flipx=0; else flipx=1;
-					if (flipy) flipy=0; else flipy=1;
+					if (flipx != 0) flipx=0; else flipx=1;
+					if (flipy != 0) flipy=0; else flipy=1;
 				}
 	
 				drawgfx(bitmap,Machine->gfx[1],

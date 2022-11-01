@@ -417,17 +417,17 @@ public class convertMame {
                     break;
                 }
                 case 'I':
-                    int j = Convertor.inpos;
+                    i = Convertor.inpos;
                     if (sUtil.getToken("INPUT_PORTS_START")) {
                         if (sUtil.parseChar() != '(') {
-                            Convertor.inpos = j;
+                            Convertor.inpos = i;
                             break;
                         }
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();
                         if (sUtil.parseChar() != ')') {
-                            Convertor.inpos = j;
+                            Convertor.inpos = i;
                             break;
                         }
                         sUtil.putString((new StringBuilder()).append("static InputPortPtr input_ports_").append(Convertor.token[0]).append(" = new InputPortPtr(){ public void handler() { ").toString());
@@ -451,6 +451,32 @@ public class convertMame {
                             Convertor.inpos += 1;
                             continue;
                         }
+                    }
+                    break;
+                case 'i':
+                    i= Convertor.inpos;
+                    if (sUtil.getToken("if")) {
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != '(') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getChar() == '&') {
+                            Convertor.inpos++;
+                            sUtil.skipSpace();
+                            Convertor.token[1] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            Convertor.token[0] = (new StringBuilder()).append("(").append(Convertor.token[0]).append(" & ").append(Convertor.token[1]).append(")").toString();
+                        }
+                        if (sUtil.parseChar() != ')') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        sUtil.putString((new StringBuilder()).append("if (").append(Convertor.token[0]).append(" != 0)").toString());
+                        continue;
                     }
                     break;
                 case '&': {

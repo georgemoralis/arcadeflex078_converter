@@ -69,7 +69,7 @@ public class niyanpai
 			offs_h = (offset / 0x180);
 			offs_l = (offset & 0x7f);
 	
-			if (ACCESSING_MSB16)
+			if (ACCESSING_MSB16 != 0)
 			{
 				r  = ((niyanpai_palette[(0x000 + (offs_h * 0x180) + offs_l)] & 0xff00) >> 8);
 				g  = ((niyanpai_palette[(0x080 + (offs_h * 0x180) + offs_l)] & 0xff00) >> 8);
@@ -78,7 +78,7 @@ public class niyanpai
 				palette_set_color(((offs_h << 8) + (offs_l << 1) + 0), r, g, b);
 			}
 	
-			if (ACCESSING_LSB16)
+			if (ACCESSING_LSB16 != 0)
 			{
 				r  = ((niyanpai_palette[(0x000 + (offs_h * 0x180) + offs_l)] & 0x00ff) >> 0);
 				g  = ((niyanpai_palette[(0x080 + (offs_h * 0x180) + offs_l)] & 0x00ff) >> 0);
@@ -102,7 +102,7 @@ public class niyanpai
 	{
 		niyanpai_scrollx_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			niyanpai_scrollx[vram] = -((((niyanpai_scrollx_tmp[vram][0] + (niyanpai_scrollx_tmp[vram][1] << 8)) & 0x1ff) + 0x4e) << 1);
 		}
@@ -112,7 +112,7 @@ public class niyanpai
 	{
 		niyanpai_scrolly_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			if (niyanpai_flipscreen[vram]) niyanpai_scrolly[vram] = ((niyanpai_scrolly_tmp[vram][0] + (niyanpai_scrolly_tmp[vram][1] << 8)) ^ 0x1ff) & 0x1ff;
 			else niyanpai_scrolly[vram] = (niyanpai_scrolly_tmp[vram][0] + (niyanpai_scrolly_tmp[vram][1] << 8) + 1) & 0x1ff;
@@ -138,9 +138,9 @@ public class niyanpai
 		niyanpai_flipx[vram] = (data & 0x01) ? 1 : 0;
 		niyanpai_flipy[vram] = (data & 0x02) ? 1 : 0;
 		niyanpai_highcolor[vram] = (data & 0x04) ? 1 : 0;
-	//	if (data & 0x08) usrintf_showmessage("Unknown GFX Flag!! (0x08)");
+	//	if ((data & 0x08) != 0) usrintf_showmessage("Unknown GFX Flag!! (0x08)");
 		niyanpai_transparency[vram] = (data & 0x10) ? 1 : 0;
-	//	if (data & 0x20) usrintf_showmessage("Unknown GFX Flag!! (0x20)");
+	//	if ((data & 0x20) != 0) usrintf_showmessage("Unknown GFX Flag!! (0x20)");
 		niyanpai_flipscreen[vram] = (data & 0x40) ? 0 : 1;
 		niyanpai_dispflag[vram] = (data & 0x80) ? 1 : 0;
 	
@@ -166,7 +166,7 @@ public class niyanpai
 	{
 		niyanpai_drawx_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			niyanpai_drawx[vram] = ((niyanpai_drawx_tmp[vram][0] + (niyanpai_drawx_tmp[vram][1] << 8)) ^ 0x3ff) & 0x3ff;
 		}
@@ -176,7 +176,7 @@ public class niyanpai
 	{
 		niyanpai_drawy_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			niyanpai_drawy[vram] = ((niyanpai_drawy_tmp[vram][0] + (niyanpai_drawy_tmp[vram][1] << 8)) ^ 0x1ff) & 0x1ff;
 	
@@ -382,12 +382,12 @@ public class niyanpai
 	
 				if (vram == 0)
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						niyanpai_videoram0[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(niyanpai_tmpbitmap0, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						niyanpai_videoram0[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(niyanpai_tmpbitmap0, dx2, dy, Machine->pens[drawcolor2]);
@@ -395,12 +395,12 @@ public class niyanpai
 				}
 				else if (vram == 1)
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						niyanpai_videoram1[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(niyanpai_tmpbitmap1, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						niyanpai_videoram1[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(niyanpai_tmpbitmap1, dx2, dy, Machine->pens[drawcolor2]);
@@ -408,12 +408,12 @@ public class niyanpai
 				}
 				else
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						niyanpai_videoram2[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(niyanpai_tmpbitmap2, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						niyanpai_videoram2[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(niyanpai_tmpbitmap2, dx2, dy, Machine->pens[drawcolor2]);

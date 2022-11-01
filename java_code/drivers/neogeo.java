@@ -332,11 +332,11 @@ public class neogeo
 		int level = 0;
 	
 		/* determine which interrupt is active */
-		if (vblank_int) level = 1;
-		if (scanline_int) level = 2;
+		if (vblank_int != 0) level = 1;
+		if (scanline_int != 0) level = 2;
 	
 		/* either set or clear the appropriate lines */
-		if (level)
+		if (level != 0)
 			cpu_set_irq_line(0, level, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -344,10 +344,10 @@ public class neogeo
 	
 	static WRITE16_HANDLER( neo_irqack_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
-			if (data & 4) vblank_int = 0;
-			if (data & 2) scanline_int = 0;
+			if ((data & 4) != 0) vblank_int = 0;
+			if ((data & 2) != 0) scanline_int = 0;
 			update_interrupts();
 		}
 	}
@@ -389,7 +389,7 @@ public class neogeo
 				fc++;
 			}
 	
-			if (irq2control & IRQ2CTRL_ENABLE)
+			if ((irq2control & IRQ2CTRL_ENABLE) != 0)
 				usrintf_showmessage("IRQ2 enabled, need raster driver");
 	
 			/* return a standard vblank interrupt */
@@ -419,7 +419,7 @@ public class neogeo
 				current_rastercounter = RASTER_COUNTER_RELOAD + l - RASTER_LINE_RELOAD;
 		}
 	
-		if (busy)
+		if (busy != 0)
 		{
 			if (neogeo_raster_enable && scanline_read)
 			{
@@ -429,18 +429,18 @@ public class neogeo
 			}
 		}
 	
-		if (irq2control & IRQ2CTRL_ENABLE)
+		if ((irq2control & IRQ2CTRL_ENABLE) != 0)
 		{
 			if (line == irq2start)
 			{
 	//logerror("trigger IRQ2 at raster line %d (raster counter %d)\n",line,current_rastercounter);
 				if (!busy)
 				{
-					if (neogeo_raster_enable)
+					if (neogeo_raster_enable != 0)
 						do_refresh = 1;
 				}
 	
-				if (irq2control & IRQ2CTRL_AUTOLOAD_REPEAT)
+				if ((irq2control & IRQ2CTRL_AUTOLOAD_REPEAT) != 0)
 					irq2start += (irq2pos_value + 3) / 0x180;	/* ridhero gives 0x17d */
 	
 				scanline_int = 1;
@@ -457,7 +457,7 @@ public class neogeo
 				usrintf_showmessage("raster effects %sabled",neogeo_raster_enable ? "en" : "dis");
 			}
 	
-			if (irq2control & IRQ2CTRL_AUTOLOAD_VBLANK)
+			if ((irq2control & IRQ2CTRL_AUTOLOAD_VBLANK) != 0)
 				irq2start = (irq2pos_value + 3) / 0x180;	/* ridhero gives 0x17d */
 			else
 				irq2start = 1000;
@@ -482,7 +482,7 @@ public class neogeo
 			vblank_int = 1;	   /* vertical blank */
 		}
 	
-		if (do_refresh)
+		if (do_refresh != 0)
 		{
 			if (line > RASTER_LINE_RELOAD)	/* avoid unnecessary updates after start of vblank */
 				force_partial_update((current_rastercounter - 256) - 1 + SCANLINE_ADJUST);
@@ -520,7 +520,7 @@ public class neogeo
 		if (Machine->sample_rate)
 		{
 			res |= result_code << 8;
-			if (pending_command) res &= 0x7fff;
+			if (pending_command != 0) res &= 0x7fff;
 		}
 		else
 			res |= 0x0100;
@@ -531,7 +531,7 @@ public class neogeo
 	static WRITE16_HANDLER( neo_z80_w )
 	{
 		/* tpgold uses 16-bit writes, this can't be correct */
-	//	if (ACCESSING_LSB)
+	//	if (ACCESSING_LSB != 0)
 	//		return;
 	
 		soundlatch_w(0,(data>>8)&0xff);
@@ -600,7 +600,7 @@ public class neogeo
 	{
 		data16_t res;
 	
-		if (neogeo_has_trackball)
+		if (neogeo_has_trackball != 0)
 			res = (readinputport(ts?7:0) << 8) + readinputport(3);
 		else
 			res = (readinputport(0) << 8) + readinputport(3);
@@ -721,12 +721,12 @@ public class neogeo
 	{
 		logerror("%06x: neo_irq2pos_16_w offset %d %04x\n",activecpu_get_pc(),offset,data);
 	
-		if (offset)
+		if (offset != 0)
 			irq2pos_value = (irq2pos_value & 0xffff0000) | (UINT32)data;
 		else
 			irq2pos_value = (irq2pos_value & 0x0000ffff) | ((UINT32)data << 16);
 	
-		if (irq2control & IRQ2CTRL_LOAD_RELATIVE)
+		if ((irq2control & IRQ2CTRL_LOAD_RELATIVE) != 0)
 		{
 	//		int line = (irq2pos_value + 3) / 0x180;	/* ridhero gives 0x17d */
 			int line = (irq2pos_value + 0x3b) / 0x180;	/* turfmast goes as low as 0x145 */

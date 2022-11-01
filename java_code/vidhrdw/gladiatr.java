@@ -109,12 +109,12 @@ public class gladiatr
 		if( base_scroll < 0xd0 ){
 			scrollx += 256-(0xd0)-64-32;
 	
-			if( video_attributes&0x04 ){
+			if ((video_attributes & 0x04) != 0){
 				scrollx += 256;
 			}
 		}
 		else {
-			if( video_attributes&0x04 ){
+			if ((video_attributes & 0x04) != 0){
 				scrollx += base_scroll;
 			}
 			else {
@@ -124,7 +124,7 @@ public class gladiatr
 	
 		{
 			int old_bank_select = tile_bank_select;
-			if( video_attributes & 0x10 ){
+			if ((video_attributes & 0x10) != 0){
 				tile_bank_select = 256*8;
 			}
 			else {
@@ -176,7 +176,7 @@ public class gladiatr
 	
 		if( base_scroll < 0xd0 ){ /* panning text */
 			dx = 256-(0xd0)-64-32- background_scroll;
-			if( video_attributes&0x04 ){ dx += 256; }
+			if ((video_attributes & 0x04) != 0){ dx += 256; }
 		}
 		else { /* fixed text */
 			dx = 0;
@@ -260,7 +260,7 @@ public class gladiatr
 	
 	public static VideoUpdateHandlerPtr video_update_gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_attributes & 0x20)	/* screen refresh enable? */
+		if ((video_attributes & 0x20) != 0)	/* screen refresh enable? */
 		{
 			render_background( bitmap );
 			render_sprites( bitmap );

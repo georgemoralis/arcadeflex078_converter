@@ -97,7 +97,7 @@ public class cop01
 		 * the screen right at the beginning of mightguy. cop01 doesn't seem to
 		 * use priority at all.
 		 */
-		if (attr & 0x10) pri = 0;
+		if ((attr & 0x10) != 0) pri = 0;
 	
 		SET_TILE_INFO(1,tile + ((attr & 0x03) << 8),(attr & 0x1c) >> 2,TILE_SPLIT(pri));
 	}
@@ -209,7 +209,7 @@ public class cop01
 			sx = (spriteram[offs+3] - 0x80) + 256 * (attr & 0x01);
 			sy = 240 - spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -217,7 +217,7 @@ public class cop01
 				flipy = !flipy;
 			}
 	
-			if (code&0x80)
+			if ((code & 0x80) != 0)
 				code += (mightguy_vreg[0]&0x30)<<3;
 	
 			drawgfx(bitmap,Machine->gfx[2],

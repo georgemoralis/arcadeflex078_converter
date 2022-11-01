@@ -309,14 +309,14 @@ public class tiasound
 	                ((audc0 & 0x01) == 0 && Div31[p5_0]) ||
 	                ((audc0 & 0x01) == 1 && Bit5[p5_0]))
 	            {
-	                if (audc0 & 0x04)       /* pure modified clock selected */
+	                if ((audc0 & 0x04) != 0)       /* pure modified clock selected */
 	                {
-	                    if (outvol_0)       /* if the output was set */
+	                    if (outvol_0 != 0)       /* if the output was set */
 	                        outvol_0 = 0;   /* turn it off */
 	                    else
 	                        outvol_0 = audv0;   /* else turn it on */
 	                }
-	                else if (audc0 & 0x08)  /* check for p5/p9 */
+	                else if ((audc0 & 0x08) != 0)  /* check for p5/p9 */
 	                {
 	                    if (audc0 == POLY9) /* check for poly9 */
 	                    {
@@ -375,14 +375,14 @@ public class tiasound
 	                ((audc1 & 0x01) == 0 && Div31[p5_1]) ||
 	                ((audc1 & 0x01) == 1 && Bit5[p5_1]))
 	            {
-	                if (audc1 & 0x04)       /* pure modified clock selected */
+	                if ((audc1 & 0x04) != 0)       /* pure modified clock selected */
 	                {
-	                    if (outvol_1)       /* if the output was set */
+	                    if (outvol_1 != 0)       /* if the output was set */
 	                        outvol_1 = 0;   /* turn it off */
 	                    else
 	                        outvol_1 = audv1;   /* else turn it on */
 	                }
-	                else if (audc1 & 0x08)  /* check for p5/p9 */
+	                else if ((audc1 & 0x08) != 0)  /* check for p5/p9 */
 	                {
 	                    if (audc1 == POLY9) /* check for poly9 */
 	                    {

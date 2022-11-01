@@ -225,7 +225,7 @@ public class dday
 	
 		if (sl_flipx != flipx)
 		{
-			if (code & 0x80)
+			if ((code & 0x80) != 0)
 			{
 				/* no mirroring, draw dark spot */
 				code = 1;
@@ -322,7 +322,7 @@ public class dday
 	
 	public static WriteHandlerPtr dday_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		//if (data & 0xac)  logerror("Control = %02X\n", data & 0xac);
+		//if ((data & 0xac) != 0)  logerror("Control = %02X\n", data & 0xac);
 	
 		/* bit 0 is coin counter 1 */
 		coin_counter_w(0, data & 0x01);
@@ -358,7 +358,7 @@ public class dday
 		tilemap_draw(main_bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 		tilemap_draw(main_bitmap,cliprect,text_tilemap,0,0);
 	
-		if (sl_enable)
+		if (sl_enable != 0)
 		{
 			/* apply shadow */
 	

@@ -297,7 +297,7 @@ public class battlex
 					int bit, col;
 					bit = (mskd[outcount*8+linecount] & bitmask) >> bitcount;
 	
-					if (bit) col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0x0f) << 4;
+					if (bit != 0) col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0x0f) << 4;
 					else col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0xf0);
 	
 					dest[outcount*32 + linecount*4 + bitcount /2] |= (col >> (4*(bitcount & 1)));

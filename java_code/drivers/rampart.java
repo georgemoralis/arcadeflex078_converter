@@ -41,10 +41,10 @@ public class rampart
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 4;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -90,7 +90,7 @@ public class rampart
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			OKIM6295_data_0_w(offset, (data >> 8) & 0xff);
 	}
 	
@@ -104,9 +104,9 @@ public class rampart
 	
 	static WRITE16_HANDLER( ym2413_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
-			if (offset & 1)
+			if ((offset & 1) != 0)
 				YM2413_data_port_0_w(0, (data >> 8) & 0xff);
 			else
 				YM2413_register_port_0_w(0, (data >> 8) & 0xff);
@@ -138,14 +138,14 @@ public class rampart
 		*/
 	
 		/* upper byte being modified? */
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
-			if (data & 0x1000)
+			if ((data & 0x1000) != 0)
 				logerror("Color bank set to 1!\n");
 		}
 	
 		/* lower byte being modified? */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			atarigen_set_ym2413_vol(((data >> 1) & 7) * 100 / 7);
 			atarigen_set_oki6295_vol((data & 0x0020) ? 100 : 0);

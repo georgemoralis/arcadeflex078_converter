@@ -212,7 +212,7 @@ public class shadfrce
 	
 	static WRITE16_HANDLER ( shadfrce_sound_brt_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			soundlatch_w(1,data >> 8);
 			cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );

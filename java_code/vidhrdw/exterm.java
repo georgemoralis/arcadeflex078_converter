@@ -131,7 +131,7 @@ public class exterm
 					UINT16 fgdata = *fgsrc++;
 					UINT16 bgdata;
 	
-					if (fgdata & 0x00ff)
+					if ((fgdata & 0x00ff) != 0)
 						scanline[x] = fgdata & 0x00ff;
 					else
 					{
@@ -139,7 +139,7 @@ public class exterm
 						scanline[x] = (bgdata & 0x8000) ? (bgdata & 0xfff) : (bgdata + 0x1000);
 					}
 	
-					if (fgdata & 0xff00)
+					if ((fgdata & 0xff00) != 0)
 						scanline[x+1] = fgdata >> 8;
 					else
 					{

@@ -582,7 +582,7 @@ public class kingobox
 	
 	public static InterruptHandlerPtr kingofb_interrupt = new InterruptHandlerPtr() {public void handler() {
 	
-		if ( kingofb_nmi_enable )
+		if (kingofb_nmi_enable != 0)
 			cpu_set_irq_line(cpu_getactivecpu(), IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

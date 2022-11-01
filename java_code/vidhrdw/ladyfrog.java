@@ -57,7 +57,7 @@ public class ladyfrog
 	
 	public static WriteHandlerPtr ladyfrog_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset & 0x100)
+		if ((offset & 0x100) != 0)
 			paletteram_xxxxBBBBGGGGRRRR_split2_w((offset & 0xff) + (palette_bank << 8),data);
 		else
 			paletteram_xxxxBBBBGGGGRRRR_split1_w((offset & 0xff) + (palette_bank << 8),data);
@@ -65,7 +65,7 @@ public class ladyfrog
 	
 	public static ReadHandlerPtr ladyfrog_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (offset & 0x100)
+		if ((offset & 0x100) != 0)
 			return paletteram_2[ (offset & 0xff) + (palette_bank << 8) ];
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];

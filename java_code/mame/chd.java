@@ -271,7 +271,7 @@ public class chd
 	
 	void chd_set_interface(struct chd_interface *new_interface)
 	{
-		if (new_interface)
+		if (new_interface != 0)
 			interface = *new_interface;
 		else
 			memset(&interface, 0, sizeof(interface));
@@ -323,7 +323,7 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 		
 		/* if we have a parent, the sizes come from there */
-		if (parent)
+		if (parent != 0)
 		{
 			logicalbytes = parent->header.logicalbytes;
 			hunkbytes = parent->header.hunkbytes;
@@ -352,7 +352,7 @@ public class chd
 		header.obsolete_hunksize = 0;
 	
 		/* tweaks if there is a parent */
-		if (parent)
+		if (parent != 0)
 		{
 			header.flags |= CHDFLAGS_HAS_PARENT;
 			memcpy(&header.parentmd5[0], &parent->header.md5[0], sizeof(header.parentmd5));
@@ -391,7 +391,7 @@ public class chd
 		for (i = 0; i < fullchunks; i++)
 		{
 			/* parent drives need to be mapped through */
-			if (parent)
+			if (parent != 0)
 				for (j = 0; j < MAP_STACK_ENTRIES; j++)
 				{
 					mapentry.offset = i * MAP_STACK_ENTRIES + j;
@@ -408,10 +408,10 @@ public class chd
 		}
 	
 		/* then write the remainder */
-		if (remainder)
+		if (remainder != 0)
 		{
 			/* parent drives need to be mapped through */
-			if (parent)
+			if (parent != 0)
 				for (j = 0; j < remainder; j++)
 				{
 					mapentry.offset = i * MAP_STACK_ENTRIES + j;
@@ -437,7 +437,7 @@ public class chd
 		multi_close(file);
 		
 		/* if we have a parent, clone the metadata */
-		if (parent)
+		if (parent != 0)
 		{
 			UINT8 metadata[CHD_MAX_METADATA_SIZE];
 			UINT32 metatag, metasize, metaindex;
@@ -466,7 +466,7 @@ public class chd
 		return CHDERR_NONE;
 	
 	cleanup:
-		if (file)
+		if (file != 0)
 			multi_close(file);
 		return last_error;
 	}
@@ -528,7 +528,7 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_REQUIRES_PARENT);
 	
 		/* make sure we have a valid parent */
-		if (parent)
+		if (parent != 0)
 		{
 			/* check MD5 if it isn't empty */
 			if (memcmp(nullmd5, chd.header.parentmd5, sizeof(chd.header.parentmd5)) && 
@@ -642,7 +642,7 @@ public class chd
 		for (prev = NULL, curr = first_file; curr; prev = curr, curr = curr->next)
 			if (curr == chd)
 			{
-				if (prev)
+				if (prev != 0)
 					prev->next = curr->next;
 				else
 					first_file = curr->next;
@@ -1018,7 +1018,7 @@ public class chd
 		return CHDERR_NONE;
 	
 	cleanup:
-		if (file)
+		if (file != 0)
 			multi_close(file);
 		return last_error;
 	}
@@ -1099,7 +1099,7 @@ public class chd
 				else
 					bytestochecksum = chd->header.logicalbytes - sourceoffset;
 			}
-			if (bytestochecksum)
+			if (bytestochecksum != 0)
 			{
 				MD5Update(&md5, chd->cache, bytestochecksum);
 				sha1_update(&sha, bytestochecksum, chd->cache);
@@ -1131,10 +1131,10 @@ public class chd
 			SET_ERROR_AND_CLEANUP(err);
 	
 		/* final progress update */
-		if (progress)
+		if (progress != 0)
 		{
 			UINT64 sourcepos = (UINT64)hunknum * chd->header.hunkbytes;
-			if (sourcepos)
+			if (sourcepos != 0)
 				(*progress)("Compression complete ... final ratio = %d%%            \n", 100 - multi_length(chd->file) * 100 / sourcepos);
 		}
 	
@@ -1143,7 +1143,7 @@ public class chd
 		return CHDERR_NONE;
 	
 	cleanup:
-		if (sourcefile)
+		if (sourcefile != 0)
 			multi_close(sourcefile);
 		return last_error;
 	}
@@ -1190,7 +1190,7 @@ public class chd
 			/* progress */
 			if (curtime - lastupdate > CLOCKS_PER_SEC / 2)
 			{
-				if (progress)
+				if (progress != 0)
 					(*progress)("Verifying hunk %d/%d...\r", hunknum, chd->header.totalhunks);
 				lastupdate = curtime;
 			}
@@ -1209,7 +1209,7 @@ public class chd
 				else
 					bytestochecksum = chd->header.logicalbytes - sourceoffset;
 			}
-			if (bytestochecksum)
+			if (bytestochecksum != 0)
 			{
 				MD5Update(&md5, chd->cache, bytestochecksum);
 				sha1_update(&sha, bytestochecksum, chd->cache);
@@ -1225,7 +1225,7 @@ public class chd
 		sha1_digest(&sha, SHA1_DIGEST_SIZE, actualsha1);
 	
 		/* final progress update */
-		if (progress)
+		if (progress != 0)
 			(*progress)("Verification complete                                  \n");
 		return CHDERR_NONE;
 	
@@ -1771,7 +1771,7 @@ public class chd
 		memset(chd->crctable, 0, CRCMAP_HASH_SIZE * sizeof(chd->crctable[0]));
 		
 		/* if we're to prepopulate, go for it */
-		if (prepopulate)
+		if (prepopulate != 0)
 			for (i = 0; i < chd->header.totalhunks; i++)
 				add_to_crcmap(chd, i);
 	}
@@ -2064,7 +2064,7 @@ public class chd
 				struct zlib_codec_data *data = chd->codecdata;
 	
 				/* deinit the streams */
-				if (data)
+				if (data != 0)
 				{
 					int i;
 	

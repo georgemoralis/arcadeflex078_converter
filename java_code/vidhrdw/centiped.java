@@ -180,8 +180,8 @@ public class centiped
 		{
 			/* when blue component is not 0, decrease it. When blue component is 0, */
 			/* decrease green component. */
-			if (b) b = 0xc0;
-			else if (g) g = 0xc0;
+			if (b != 0) b = 0xc0;
+			else if (g != 0) g = 0xc0;
 		}
 	
 		if (offset >= 4 && offset < 8)
@@ -322,7 +322,7 @@ public class centiped
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
 	
 		/* apply the sprite clip */
-		if (centiped_flipscreen)
+		if (centiped_flipscreen != 0)
 			spriteclip.min_x += 8;
 		else
 			spriteclip.max_x -= 8;
@@ -374,7 +374,7 @@ public class centiped
 			int color = ((y & 0x80) >> 6) | ((x & 0x80) >> 7) | (upright_mode >> 5);
 	
 			/* in upright mode, sprites are flipped */
-			if (upright_mode)
+			if (upright_mode != 0)
 			{
 				x = 248 - x;
 				flipx = !flipx;

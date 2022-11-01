@@ -145,7 +145,7 @@ public class avgdvg
 		base = &vectorbank[offset / BANK_SIZE][offset % BANK_SIZE];
 	
 		/* result is based on flipword */
-		if (flipword)
+		if (flipword != 0)
 			return base[1] | (base[0] << 8);
 		else
 			return base[0] | (base[1] << 8);
@@ -200,7 +200,7 @@ public class avgdvg
 			/* special case for Alpha One -- no idea if this is right */
 			if (vector_engine == USE_AVG_ALPHAONE)
 			{
-				if (z)
+				if (z != 0)
 					z ^= 0x15;
 			}
 	
@@ -293,9 +293,9 @@ public class avgdvg
 					/* compute raw X and Y values */
 		  			y = firstwd & 0x03ff;
 					x = secondwd & 0x3ff;
-					if (firstwd & 0x400)
+					if ((firstwd & 0x400) != 0)
 						y = -y;
-					if (secondwd & 0x400)
+					if ((secondwd & 0x400) != 0)
 						x = -x;
 	
 					/* determine the brightness */
@@ -329,9 +329,9 @@ public class avgdvg
 					/* compute raw X and Y values */
 					y = firstwd & 0x0300;
 					x = (firstwd & 0x03) << 8;
-					if (firstwd & 0x0400)
+					if ((firstwd & 0x0400) != 0)
 						y = -y;
-					if (firstwd & 0x04)
+					if ((firstwd & 0x04) != 0)
 						x = -x;
 	
 					/* determine the brightness */
@@ -393,7 +393,7 @@ public class avgdvg
 					pc = stack[sp];
 	
 					/* debugging */
-					if (firstwd & 0x1fff)
+					if ((firstwd & 0x1fff) != 0)
 						VGLOG(("(%d?)", firstwd & 0x1fff));
 					break;
 	
@@ -402,7 +402,7 @@ public class avgdvg
 					done = 1;
 	
 					/* debugging */
-					if (firstwd & 0x1fff)
+					if ((firstwd & 0x1fff) != 0)
 	      				VGLOG(("(%d?)", firstwd & 0x0fff));
 					break;
 	
@@ -452,24 +452,24 @@ public class avgdvg
 	
 	void avg_set_flip_x(int flip)
 	{
-		if (flip)
+		if (flip != 0)
 			flip_x = 1;
 	}
 	
 	void avg_set_flip_y(int flip)
 	{
-		if (flip)
+		if (flip != 0)
 			flip_y = 1;
 	}
 	
 	void avg_apply_flipping_and_swapping(int *x, int *y)
 	{
-		if (flip_x)
+		if (flip_x != 0)
 			*x += (xcenter-*x)<<1;
-		if (flip_y)
+		if (flip_y != 0)
 			*y += (ycenter-*y)<<1;
 	
-		if (swap_xy)
+		if (swap_xy != 0)
 		{
 			int temp = *x;
 			*x = *y - ycenter + xcenter;
@@ -646,7 +646,7 @@ public class avgdvg
 					/* compute the deltas */
 					deltax = x * scale;
 					deltay = y * scale;
-					if (xflip) deltax = -deltax;
+					if (xflip != 0) deltax = -deltax;
 	
 					/* adjust the current position and compute timing */
 					currentx += deltax;
@@ -654,7 +654,7 @@ public class avgdvg
 					total_length += vector_timer(deltax, deltay);
 	
 					/* add the new point */
-					if (sparkle)
+					if (sparkle != 0)
 						avg_add_point_callback(currentx, currenty, sparkle_callback, z);
 					else
 						avg_add_point(currentx, currenty, colorram[color], z);
@@ -679,7 +679,7 @@ public class avgdvg
 					/* compute the deltas */
 					deltax = x * scale;
 					deltay = y * scale;
-					if (xflip) deltax = -deltax;
+					if (xflip != 0) deltax = -deltax;
 	
 					/* adjust the current position and compute timing */
 					currentx += deltax;
@@ -687,7 +687,7 @@ public class avgdvg
 					total_length += vector_timer(deltax, deltay);
 	
 					/* add the new point */
-					if (sparkle)
+					if (sparkle != 0)
 						avg_add_point_callback(currentx, currenty, sparkle_callback, z);
 					else
 						avg_add_point(currentx, currenty, colorram[color], z);
@@ -745,7 +745,7 @@ public class avgdvg
 	
 					/* Y-Window toggle for Major Havoc */
 					if (vector_engine == USE_AVG_MHAVOC || vector_engine == USE_AVG_ALPHAONE)
-						if (firstwd & 0x0800)
+						if ((firstwd & 0x0800) != 0)
 						{
 							int newymin = ymin;
 							logerror("CLIP %d\n", firstwd & 0x0800);
@@ -754,7 +754,7 @@ public class avgdvg
 							ywindow = !ywindow;
 	
 							/* adjust accordingly */
-							if (ywindow)
+							if (ywindow != 0)
 								newymin = (vector_engine == USE_AVG_MHAVOC) ? 0x0048 : 0x0083;
 							vector_add_clip(xmin << 16, newymin << 16,
 											xmax << 16, ymax << 16);
@@ -799,7 +799,7 @@ public class avgdvg
 					pc = stack[sp];
 	
 					/* debugging */
-					if (firstwd & 0x1fff)
+					if ((firstwd & 0x1fff) != 0)
 						VGLOG(("(%d?)", firstwd & 0x1fff));
 					break;
 	
@@ -808,7 +808,7 @@ public class avgdvg
 					done = 1;
 	
 					/* debugging */
-					if (firstwd & 0x1fff)
+					if ((firstwd & 0x1fff) != 0)
 						VGLOG(("(%d?)", firstwd & 0x1fff));
 					break;
 	
@@ -888,7 +888,7 @@ public class avgdvg
 		int total_length;
 	
 		/* skip if already busy */
-		if (busy)
+		if (busy != 0)
 			return;
 	
 		/* count vector updates and mark ourselves busy */
@@ -1142,7 +1142,7 @@ public class avgdvg
 	
 	WRITE16_HANDLER( quantum_colorram_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			int bit3 = (~data >> 3) & 1;
 			int bit2 = (~data >> 2) & 1;

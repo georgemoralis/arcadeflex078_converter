@@ -27,7 +27,7 @@ public class sshangha
 		int r,g,b;
 	
 		COMBINE_DATA(&paletteram16[offset]);
-		if (offset&1) offset--;
+		if ((offset & 1) != 0) offset--;
 	
 		b = (paletteram16[offset] >> 0) & 0xff;
 		g = (paletteram16[offset+1] >> 8) & 0xff;
@@ -93,16 +93,16 @@ public class sshangha
 	
 			sprite &= ~multi;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				y=240-y;
 				x=304-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=-16;
 			}
 	
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -112,8 +112,8 @@ public class sshangha
 	
 			mult=+16;
 	
-			if (fx) fx=0; else fx=1;
-			if (fy) fy=0; else fy=1;
+			if (fx != 0) fx=0; else fx=1;
+			if (fy != 0) fy=0; else fy=1;
 	
 			while (multi >= 0)
 			{

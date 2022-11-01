@@ -470,7 +470,7 @@ public class namcos2
 		{
 			artwork_show(zip100,i);
 			artwork_show(zip10,i);
-			if( i ) return;
+			if (i != 0) return;
 			sprintf( zip100, "zip100_%d",data>>4);
 			sprintf( zip10,  "zip10_%d", data&0xf);
 			i=1;
@@ -487,7 +487,7 @@ public class namcos2
 		{
 			artwork_show(zip1,i);
 			artwork_show(time10,i);
-			if( i ) return;
+			if (i != 0) return;
 			sprintf( zip1,   "zip1_%d",  data>>4);
 			sprintf( time10, "time10_%d",data&0xf);
 			i=1;
@@ -504,7 +504,7 @@ public class namcos2
 		{
 			artwork_show(time1,i);
 			artwork_show(zap100,i);
-			if( i ) return;
+			if (i != 0) return;
 			sprintf( time1,  "time1_%d", data>>4);
 			sprintf( zap100, "zap100_%d",data&0xf);
 			i=1;
@@ -521,7 +521,7 @@ public class namcos2
 		{
 			artwork_show(zap10,i);
 			artwork_show(zap1,i);
-			if( i ) return;
+			if (i != 0) return;
 			sprintf( zap10,  "zap10_%d", data>>4);
 			sprintf( zap1,   "zap1_%d",  data&0xf);
 			i=1;
@@ -531,7 +531,7 @@ public class namcos2
 	static void
 	GollyGhostUpdateDiorama_c0( int data )
 	{
-		if( data&0x80 )
+		if ((data & 0x80) != 0)
 		{
 			artwork_show("fulldark",0 );
 			artwork_show("dollhouse",1); /* diorama is lit up */
@@ -565,7 +565,7 @@ public class namcos2
 	
 	static WRITE16_HANDLER( namcos2_68k_dpram_word_w )
 	{
-		if( ACCESSING_LSB )
+		if (ACCESSING_LSB != 0)
 		{
 			namcos2_dpram[offset] = data&0xff;
 	
@@ -4392,14 +4392,14 @@ public class namcos2
 		{ /* unscramble gfx mask */
 			int code = pData[i];
 			int out = 0;
-			if( code&0x01 ) out |= 0x80;
-			if( code&0x02 ) out |= 0x40;
-			if( code&0x04 ) out |= 0x20;
-			if( code&0x08 ) out |= 0x10;
-			if( code&0x10 ) out |= 0x08;
-			if( code&0x20 ) out |= 0x04;
-			if( code&0x40 ) out |= 0x02;
-			if( code&0x80 ) out |= 0x01;
+			if ((code & 0x01) != 0) out |= 0x80;
+			if ((code & 0x02) != 0) out |= 0x40;
+			if ((code & 0x04) != 0) out |= 0x20;
+			if ((code & 0x08) != 0) out |= 0x10;
+			if ((code & 0x10) != 0) out |= 0x08;
+			if ((code & 0x20) != 0) out |= 0x04;
+			if ((code & 0x40) != 0) out |= 0x02;
+			if ((code & 0x80) != 0) out |= 0x01;
 			pData[i] = out;
 		}
 		namcos2_gametype=NAMCOS2_LUCKY_AND_WILD;

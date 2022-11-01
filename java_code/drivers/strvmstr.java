@@ -61,7 +61,7 @@ public class strvmstr
 	
 		strvmstr_control = data;
 	
-		if( data & 0x04)
+		if ((data & 0x04) != 0)
 		{
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}

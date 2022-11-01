@@ -266,7 +266,7 @@ public class cischeat
 		switch (offset)
 		{
 	 		case 0x0000/2   :	// leds
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 		 			coin_counter_w(0,new_data & 0x01);
 		 			coin_counter_w(1,new_data & 0x02);
@@ -279,7 +279,7 @@ public class cischeat
 				break;
 	
 	 		case 0x0004/2   :	// motor (seat?)
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					set_led_status(2, (new_data != old_data) ? 1 : 0);
 	 			break;
 	
@@ -360,7 +360,7 @@ public class cischeat
 		switch (offset)
 		{
 	 		case 0x0000/2   :	// leds
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 		 			coin_counter_w(0,new_data & 0x01);
 		 			coin_counter_w(1,new_data & 0x02);
@@ -373,7 +373,7 @@ public class cischeat
 				break;
 	
 	 		case 0x0004/2   :	// motor (seat?)
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					set_led_status(2, (new_data != old_data) ? 1 : 0);
 	 			break;
 	
@@ -426,7 +426,7 @@ public class cischeat
 			case 0x0000/2 :	// DSW 1&2: coinage changes with Country
 			{
 				int val = readinputport(1);
-				if (val & 0x0200)	return readinputport(6) | val; 	// JP, US
+				if ((val & 0x0200) != 0)	return readinputport(6) | val; 	// JP, US
 				else				return readinputport(7) | val; 	// UK, FR
 			}
 	
@@ -478,7 +478,7 @@ public class cischeat
 			// "shudder" motors, leds
 			case 0x0004/2   :
 			case 0x0014/2   :
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 		 			coin_counter_w(0,new_data & 0x01);
 		 			coin_counter_w(1,new_data & 0x02);
@@ -531,7 +531,7 @@ public class cischeat
 		switch (offset)
 		{
 			case 0x0000/2   :
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					cpu_set_irq_line(4,4,(new_data & 4)?ASSERT_LINE:CLEAR_LINE);
 					cpu_set_irq_line(4,2,(new_data & 2)?ASSERT_LINE:CLEAR_LINE);
@@ -841,7 +841,7 @@ public class cischeat
 		for (; source < finish; source += 0x10/2 )
 		{
 			size	=	source[ 0 ];
-			if (size & 0x1000)	continue;
+			if ((size & 0x1000) != 0)	continue;
 	
 			/* number of tiles */
 			xnum	=	( (size & 0x0f) >> 0 ) + 1;
@@ -903,14 +903,14 @@ public class cischeat
 	
 			/* let's approximate to the nearest greater integer value
 			   to avoid holes in between tiles */
-			if (xscale & 0xffff)	xscale += (1<<16)/16;
-			if (yscale & 0xffff)	yscale += (1<<16)/16;
+			if ((xscale & 0xffff) != 0)	xscale += (1<<16)/16;
+			if ((yscale & 0xffff) != 0)	yscale += (1<<16)/16;
 	
 	
-			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 			for (y = ystart; y != yend; y += yinc)
@@ -998,7 +998,7 @@ public class cischeat
 		for (; source < finish; source += 0x10/2 )
 		{
 			size	=	source[ 0 ];
-			if (size & 0x1000)	continue;
+			if ((size & 0x1000) != 0)	continue;
 	
 			/* number of tiles */
 			xnum	=	( (size & 0x0f) >> 0 ) + 1;
@@ -1060,14 +1060,14 @@ public class cischeat
 	
 			/* let's approximate to the nearest greater integer value
 			   to avoid holes in between tiles */
-			if (xscale & 0xffff)	xscale += (1<<16)/16;
-			if (yscale & 0xffff)	yscale += (1<<16)/16;
+			if ((xscale & 0xffff) != 0)	xscale += (1<<16)/16;
+			if ((yscale & 0xffff) != 0)	yscale += (1<<16)/16;
 	
 	
-			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 			for (y = ystart; y != yend; y += yinc)
@@ -1130,7 +1130,7 @@ public class cischeat
 		static int show_unknown; \
 		if ( keyboard_pressed(KEYCODE_Z) && keyboard_pressed_memory(KEYCODE_U) ) \
 			show_unknown ^= 1; \
-		if (show_unknown) \
+		if (show_unknown != 0) \
 			usrintf_showmessage("0:%04X 2:%04X 4:%04X 6:%04X c:%04X", \
 				megasys1_vregs[0],megasys1_vregs[1],megasys1_vregs[2],megasys1_vregs[3],megasys1_vregs[0xc/2] ); \
 	}
@@ -1167,8 +1167,8 @@ public class cischeat
 	
 		for (i = 7; i >= 4; i--)
 		{											/* bitmap, road, min_priority, max_priority, transparency */
-			if (megasys1_active_layers & 0x10)	cischeat_draw_road(bitmap,cliprect,0,i,i,TRANSPARENCY_NONE);
-			if (megasys1_active_layers & 0x20)	cischeat_draw_road(bitmap,cliprect,1,i,i,TRANSPARENCY_PEN);
+			if ((megasys1_active_layers & 0x10) != 0)	cischeat_draw_road(bitmap,cliprect,0,i,i,TRANSPARENCY_NONE);
+			if ((megasys1_active_layers & 0x20) != 0)	cischeat_draw_road(bitmap,cliprect,1,i,i,TRANSPARENCY_PEN);
 		}
 	
 		flag = 0;
@@ -1177,11 +1177,11 @@ public class cischeat
 	
 		for (i = 3; i >= 0; i--)
 		{											/* bitmap, road, min_priority, max_priority, transparency */
-			if (megasys1_active_layers & 0x10)	cischeat_draw_road(bitmap,cliprect,0,i,i,TRANSPARENCY_PEN);
-			if (megasys1_active_layers & 0x20)	cischeat_draw_road(bitmap,cliprect,1,i,i,TRANSPARENCY_PEN);
+			if ((megasys1_active_layers & 0x10) != 0)	cischeat_draw_road(bitmap,cliprect,0,i,i,TRANSPARENCY_PEN);
+			if ((megasys1_active_layers & 0x20) != 0)	cischeat_draw_road(bitmap,cliprect,1,i,i,TRANSPARENCY_PEN);
 		}
 	
-		if (megasys1_active_layers & 0x08)	bigrun_draw_sprites(bitmap,cliprect,15,0);
+		if ((megasys1_active_layers & 0x08) != 0)	bigrun_draw_sprites(bitmap,cliprect,15,0);
 	
 		cischeat_tmap_DRAW(2)
 	
@@ -1218,25 +1218,25 @@ public class cischeat
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
 											/* bitmap, road, priority, transparency */
-		if (megasys1_active_layers & 0x10)	cischeat_draw_road(bitmap,cliprect,0,7,5,TRANSPARENCY_NONE);
-		if (megasys1_active_layers & 0x20)	cischeat_draw_road(bitmap,cliprect,1,7,5,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x10) != 0)	cischeat_draw_road(bitmap,cliprect,0,7,5,TRANSPARENCY_NONE);
+		if ((megasys1_active_layers & 0x20) != 0)	cischeat_draw_road(bitmap,cliprect,1,7,5,TRANSPARENCY_PEN);
 	
 		flag = 0;
 		cischeat_tmap_DRAW(0)
 	//	else fillbitmap(bitmap,Machine->pens[0],cliprect);
 		cischeat_tmap_DRAW(1)
 	
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,15,3);
-		if (megasys1_active_layers & 0x10)	cischeat_draw_road(bitmap,cliprect,0,4,1,TRANSPARENCY_PEN);
-		if (megasys1_active_layers & 0x20)	cischeat_draw_road(bitmap,cliprect,1,4,1,TRANSPARENCY_PEN);
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,2,2);
-		if (megasys1_active_layers & 0x10)	cischeat_draw_road(bitmap,cliprect,0,0,0,TRANSPARENCY_PEN);
-		if (megasys1_active_layers & 0x20)	cischeat_draw_road(bitmap,cliprect,1,0,0,TRANSPARENCY_PEN);
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,1,0);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,15,3);
+		if ((megasys1_active_layers & 0x10) != 0)	cischeat_draw_road(bitmap,cliprect,0,4,1,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x20) != 0)	cischeat_draw_road(bitmap,cliprect,1,4,1,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,2,2);
+		if ((megasys1_active_layers & 0x10) != 0)	cischeat_draw_road(bitmap,cliprect,0,0,0,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x20) != 0)	cischeat_draw_road(bitmap,cliprect,1,0,0,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,1,0);
 		cischeat_tmap_DRAW(2)
 	
 		/* for the map screen */
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,0+16,0+16);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,0+16,0+16);
 	
 	
 		megasys1_active_layers = megasys1_active_layers1;
@@ -1275,8 +1275,8 @@ public class cischeat
 	/*	1: clouds 5, grad 7, road 0		2: clouds 5, grad 7, road 0, tunnel roof 0 */
 	
 		/* road 1!! 0!! */					/* bitmap, road, min_priority, max_priority, transparency */
-		if (megasys1_active_layers & 0x20)	f1gpstar_draw_road(bitmap,cliprect,1,6,7,TRANSPARENCY_PEN);
-		if (megasys1_active_layers & 0x10)	f1gpstar_draw_road(bitmap,cliprect,0,6,7,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x20) != 0)	f1gpstar_draw_road(bitmap,cliprect,1,6,7,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x10) != 0)	f1gpstar_draw_road(bitmap,cliprect,0,6,7,TRANSPARENCY_PEN);
 	
 		flag = 0;
 		cischeat_tmap_DRAW(0)
@@ -1284,18 +1284,18 @@ public class cischeat
 		cischeat_tmap_DRAW(1)
 	
 		/* road 1!! 0!! */					/* bitmap, road, min_priority, max_priority, transparency */
-		if (megasys1_active_layers & 0x20)	f1gpstar_draw_road(bitmap,cliprect,1,1,5,TRANSPARENCY_PEN);
-		if (megasys1_active_layers & 0x10)	f1gpstar_draw_road(bitmap,cliprect,0,1,5,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x20) != 0)	f1gpstar_draw_road(bitmap,cliprect,1,1,5,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x10) != 0)	f1gpstar_draw_road(bitmap,cliprect,0,1,5,TRANSPARENCY_PEN);
 	
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,15,2);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,15,2);
 	
 		/* road 1!! 0!! */					/* bitmap, road, min_priority, max_priority, transparency */
-		if (megasys1_active_layers & 0x20)	f1gpstar_draw_road(bitmap,cliprect,1,0,0,TRANSPARENCY_PEN);
-		if (megasys1_active_layers & 0x10)	f1gpstar_draw_road(bitmap,cliprect,0,0,0,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x20) != 0)	f1gpstar_draw_road(bitmap,cliprect,1,0,0,TRANSPARENCY_PEN);
+		if ((megasys1_active_layers & 0x10) != 0)	f1gpstar_draw_road(bitmap,cliprect,0,0,0,TRANSPARENCY_PEN);
 	
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,1,1);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,1,1);
 		cischeat_tmap_DRAW(2)
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,0,0);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,0,0);
 	
 	
 		megasys1_active_layers = megasys1_active_layers1;
@@ -1353,7 +1353,7 @@ public class cischeat
 		cischeat_tmap_DRAW(0)
 	//	else fillbitmap(bitmap,Machine->pens[0],cliprect);
 	//	cischeat_tmap_DRAW(1)
-		if (megasys1_active_layers & 0x08)	cischeat_draw_sprites(bitmap,cliprect,0,15);
+		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,0,15);
 		cischeat_tmap_DRAW(2)
 	
 		megasys1_active_layers = megasys1_active_layers1;

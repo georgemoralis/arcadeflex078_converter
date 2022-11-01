@@ -88,7 +88,7 @@ public class cchasm
 	{
 	    static int led;
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			data >>= 8;
 			switch (offset & 0xf)
@@ -140,7 +140,7 @@ public class cchasm
 	public static WriteHandlerPtr ctc_timer_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
-	    if (data) /* rising edge */
+	    if (data != 0) /* rising edge */
 	    {
 	        output[0] ^= 0x7f;
 	        channel_active[0] = 1;
@@ -151,7 +151,7 @@ public class cchasm
 	public static WriteHandlerPtr ctc_timer_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
-	    if (data) /* rising edge */
+	    if (data != 0) /* rising edge */
 	    {
 	        output[1] ^= 0x7f;
 	        channel_active[1] = 1;

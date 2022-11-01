@@ -27,7 +27,7 @@ public class truco
 	
 			int dim = ( i & 0x1 );
 	
-			if ( dim ) {
+			if (dim != 0) {
 				r >>= 1;
 				g >>= 1;
 				b >>= 1;
@@ -46,7 +46,7 @@ public class truco
 			for( x = 0; x < 256; x++ ) {
 				int		pixel;
 	
-				if ( x & 1 ) {
+				if ((x & 1) != 0) {
 					pixel = vid[x>>1] & 0x0f;
 				} else {
 					pixel = ( vid[x>>1] >> 4 ) & 0x0f;

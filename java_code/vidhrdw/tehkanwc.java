@@ -193,13 +193,13 @@ public class tehkanwc
 			int sx = spriteram[offs + 2] + ((attr & 0x20) << 3) - 128;
 			int sy = spriteram[offs + 3];
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;

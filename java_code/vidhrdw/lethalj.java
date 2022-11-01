@@ -163,7 +163,7 @@ public class lethalj
 					if (dx >= 0 && dx < BLITTER_DEST_WIDTH)
 					{
 						int pix = source[sx % BLITTER_SOURCE_WIDTH];
-						if (pix)
+						if (pix != 0)
 							dest[dx] = pix;
 					}
 			}
@@ -202,7 +202,7 @@ public class lethalj
 		int beamx, beamy;
 		
 		/* blank palette: fill with white */
-		if (blank_palette)
+		if (blank_palette != 0)
 			fillbitmap(bitmap, 0x7fff, cliprect);
 		
 		/* otherwise, blit from screenram */

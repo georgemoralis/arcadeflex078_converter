@@ -31,7 +31,7 @@ public class cinemat
 		if (fromx != lastx || fromx != lasty)
 			vector_add_point (fromx << 16, fromy << 16, 0, 0);
 	
-	    if (color_display)
+	    if (color_display != 0)
 	        vector_add_point (tox << 16, toy << 16, VECTOR_COLOR111(color & 0x07), color & 0x08 ? 0x80: 0x40);
 	    else
 	        vector_add_point (tox << 16, toy << 16, VECTOR_COLOR111(WHITE), color * 12);

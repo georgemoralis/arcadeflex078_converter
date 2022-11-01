@@ -162,7 +162,7 @@ public class videopin
 	
 		mask = ~data & 0x10;
 	
-		if (mask)
+		if (mask != 0)
 		{
 			cpu_set_nmi_line(0, CLEAR_LINE);
 		}

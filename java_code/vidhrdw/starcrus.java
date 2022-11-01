@@ -149,7 +149,7 @@ public class starcrus
 			}
 		}
 	
-		if (launch1_on)
+		if (launch1_on != 0)
 		{
 			if (starcrus_launch1_sound_playing == 0)
 			{
@@ -186,7 +186,7 @@ public class starcrus
 			}
 		}
 	
-		if (launch2_on)
+		if (launch2_on != 0)
 		{
 			if (starcrus_launch2_sound_playing == 0)
 			{
@@ -284,7 +284,7 @@ public class starcrus
 		org_x = p1_x;
 		org_y = p1_y;
 	
-		if (p1_sprite & 0x08)	/* if p1 is a projectile */
+		if ((p1_sprite & 0x08) != 0)	/* if p1 is a projectile */
 		{
 			/* Draw score/projectile 1 */
 			drawgfx(proj1_vid,
@@ -298,7 +298,7 @@ public class starcrus
 					0);
 		}
 	
-		if (p2_sprite & 0x08)	/* if p2 is a projectile */
+		if ((p2_sprite & 0x08) != 0)	/* if p2 is a projectile */
 		{
 			/* Draw score/projectile 2 */
 			drawgfx(proj2_vid,
@@ -367,7 +367,7 @@ public class starcrus
 	            TRANSPARENCY_NONE,
 	            0);
 	
-		if (p1_sprite & 0x08)	/* if p1 is a projectile */
+		if ((p1_sprite & 0x08) != 0)	/* if p1 is a projectile */
 		{
 			/* Draw projectile 1 */
 			drawgfx(proj1_vid,
@@ -381,7 +381,7 @@ public class starcrus
 					0);
 		}
 	
-		if (p2_sprite & 0x08)	/* if p2 is a projectile */
+		if ((p2_sprite & 0x08) != 0)	/* if p2 is a projectile */
 		{
 			/* Draw projectile 2 */
 			drawgfx(proj2_vid,
@@ -453,7 +453,7 @@ public class starcrus
 	            TRANSPARENCY_NONE,
 	            0);
 	
-		if (p1_sprite & 0x08)	/* if p1 is a projectile */
+		if ((p1_sprite & 0x08) != 0)	/* if p1 is a projectile */
 		{
 			/* Draw projectile 1 */
 			drawgfx(proj1_vid,
@@ -467,7 +467,7 @@ public class starcrus
 					0);
 		}
 	
-		if (p2_sprite & 0x08)	/* if p2 is a projectile */
+		if ((p2_sprite & 0x08) != 0)	/* if p2 is a projectile */
 		{
 			/* Draw projectile 2 */
 			drawgfx(proj2_vid,

@@ -228,20 +228,20 @@ public class scsp
 		}
 		if(!pend)
 			return;
-		if(pend&0x40)
-			if(en&0x40)
+		if ((pend & 0x40) != 0)
+			if ((en & 0x40) != 0)
 			{
 				SCSP[0].Int68kCB(IrqTimA);
 				return;
 			}
-		if(pend&0x80)
-			if(en&0x80)
+		if ((pend & 0x80) != 0)
+			if ((en & 0x80) != 0)
 			{
 				SCSP[0].Int68kCB(IrqTimBC);
 				return;
 			}
-		if(pend&0x100)
-			if(en&0x100)
+		if ((pend & 0x100) != 0)
+			if ((en & 0x100) != 0)
 			{
 				SCSP[0].Int68kCB(IrqTimBC);
 				return;
@@ -339,7 +339,7 @@ public class scsp
 		int octave=OCT(slot);
 		int Fo=44100;
 		int Fn;
-		if(octave&8)
+		if ((octave & 8) != 0)
 			Fo>>=(16-octave);
 		else
 			Fo<<=octave;
@@ -419,22 +419,22 @@ public class scsp
 			float PAN=1.0;
 			float LPAN,RPAN;
 	
-			if(iTL&0x01) SegaDB-=0.4;
-			if(iTL&0x02) SegaDB-=0.8;
-			if(iTL&0x04) SegaDB-=1.5;
-			if(iTL&0x08) SegaDB-=3;
-			if(iTL&0x10) SegaDB-=6;
-			if(iTL&0x20) SegaDB-=12;
-			if(iTL&0x40) SegaDB-=24;
-			if(iTL&0x80) SegaDB-=48;
+			if ((iTL & 0x01) != 0) SegaDB-=0.4;
+			if ((iTL & 0x02) != 0) SegaDB-=0.8;
+			if ((iTL & 0x04) != 0) SegaDB-=1.5;
+			if ((iTL & 0x08) != 0) SegaDB-=3;
+			if ((iTL & 0x10) != 0) SegaDB-=6;
+			if ((iTL & 0x20) != 0) SegaDB-=12;
+			if ((iTL & 0x40) != 0) SegaDB-=24;
+			if ((iTL & 0x80) != 0) SegaDB-=48;
 	
 			TL=pow(10.0,SegaDB/20.0);
 	
 			SegaDB=0;
-			if(iPAN&0x1) SegaDB-=3;
-			if(iPAN&0x2) SegaDB-=6;
-			if(iPAN&0x4) SegaDB-=12;
-			if(iPAN&0x8) SegaDB-=24;
+			if ((iPAN & 0x1) != 0) SegaDB-=3;
+			if ((iPAN & 0x2) != 0) SegaDB-=6;
+			if ((iPAN & 0x4) != 0) SegaDB-=12;
+			if ((iPAN & 0x8) != 0) SegaDB-=24;
 	
 			if(iPAN==0xf) PAN=0.0;
 			else PAN=pow(10.0,SegaDB/20.0);
@@ -450,7 +450,7 @@ public class scsp
 				LPAN=1.0;
 			}
 	
-			if(iSDL)
+			if (iSDL != 0)
 				fSDL=pow(10.0,(SDLT[iSDL])/20.0);
 			else
 				fSDL=0.0;
@@ -738,12 +738,12 @@ public class scsp
 			int step=slot->step;\
 			if(!slot->active)\
 				return;\
-			if(lfo) \
+			if (lfo != 0) \
 			{\
 				step=step*PLFO_Step(&(slot->PLFO));\
 				step>>=SHIFT; \
 			}\
-			if(_8bit)\
+			if (_8bit != 0)\
 			{\
 				signed char *p=(signed char *) (slot->base+(slot->cur_addr>>SHIFT));\
 				int s2;\
@@ -796,7 +796,7 @@ public class scsp
 					slot->step=REVSIGN(slot->step);\
 				}\
 			}\
-			if(alfo)\
+			if (alfo != 0)\
 			{\
 				sample=sample*ALFO_Step(&(slot->ALFO));\
 				sample>>=SHIFT;\
@@ -915,7 +915,7 @@ public class scsp
 			tmp_dma[2] = scsp_regs[0x416/2];
 		}
 	
-		if(scsp_ddir)
+		if (scsp_ddir != 0)
 		{
 			for(;scsp_dtlg > 0;scsp_dtlg-=2)
 			{
@@ -1045,7 +1045,7 @@ public class scsp
 			/*DTLG[11:1]*/
 			/*size of transfer*/
 			scsp_dtlg = scsp_regs[0x416/2] & 0x0ffe;
-			if(scsp_dexe)
+			if (scsp_dexe != 0)
 			{
 				dma_scsp();
 				scsp_regs[0x416/2]^=0x1000;//disable starting bit

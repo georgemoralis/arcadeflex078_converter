@@ -799,7 +799,7 @@ public class namcos22
 		/* 0x860002: write */
 		if( offset==0 )
 		{
-			if( mem_mask&0xffff0000 )
+			if ((mem_mask & 0xffff0000) != 0)
 			{
 				if( mSpotRAM.portW>=SPOTRAM_SIZE ) mSpotRAM.portW = 0;
 				mSpotRAM.RAM[mSpotRAM.portW++] = data;
@@ -2329,7 +2329,7 @@ public class namcos22
 				for( i=3+8; i<3+12+8; i++ )
 				{
 					UINT32 data = GetPolyData(addr+i);
-					if( data&0x800000 ) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
+					if ((data & 0x800000) != 0) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
 					PutPolyData( addr+i, data );
 				}
 				break;
@@ -2338,7 +2338,7 @@ public class namcos22
 				for( i=4+8; i<4+12+8; i++ )
 				{
 					UINT32 data = GetPolyData(addr+i);
-					if( data&0x800000 ) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
+					if ((data & 0x800000) != 0) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
 					PutPolyData( addr+i, data );
 				}
 				break;

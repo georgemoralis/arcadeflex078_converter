@@ -154,7 +154,7 @@ public class kyugo
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
 	
-		if (data & 0x9e)
+		if ((data & 0x9e) != 0)
 			usrintf_showmessage("%02x",data);
 	} };
 	
@@ -202,7 +202,7 @@ public class kyugo
 			if (sx > 320) sx -= 512;
 	
 			sy = 255 - spriteram_area1[offs];
-			if (flipscreen) sy = 240 - sy;
+			if (flipscreen != 0) sy = 240 - sy;
 	
 			color = spriteram_area1[offs+1] & 0x1f;
 	
@@ -218,7 +218,7 @@ public class kyugo
 				flipx =  attr & 0x08;
 				flipy =  attr & 0x04;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -238,7 +238,7 @@ public class kyugo
 	
 	public static VideoUpdateHandlerPtr video_update_kyugo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (flipscreen)
+		if (flipscreen != 0)
 			tilemap_set_scrollx(bg_tilemap,0,-(scroll_x_lo + (scroll_x_hi*256)));
 		else
 			tilemap_set_scrollx(bg_tilemap,0,  scroll_x_lo + (scroll_x_hi*256));

@@ -132,7 +132,7 @@ public class galpanic
 	
 	static WRITE16_HANDLER( galpanic_6295_bankswitch_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			UINT8 *rom = memory_region(REGION_SOUND1);
 	

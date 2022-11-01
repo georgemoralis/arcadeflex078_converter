@@ -107,14 +107,14 @@ public class renegade
 	
 			    if( sx>248 ) sx -= 256;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
 					xflip = !xflip;
 				}
 	
-			    if( attributes&0x80 ){ /* big sprite */
+			    if ((attributes & 0x80) != 0){ /* big sprite */
 			        drawgfx(bitmap,Machine->gfx[sprite_bank],
 			            sprite_number+1,
 			            color,

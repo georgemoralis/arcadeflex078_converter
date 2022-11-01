@@ -189,7 +189,7 @@ public class battlane
 			code += 256 * ((attr >> 6) & 0x02);
 			code += 256 * ((attr >> 5) & 0x01);
 	
-			if (attr & 0x01)
+			if ((attr & 0x01) != 0)
 			{
 				color = (attr >> 3) & 0x01;
 	
@@ -215,7 +215,7 @@ public class battlane
 					&Machine->visible_area,
 					TRANSPARENCY_PEN, 0);
 	
-				if (attr & 0x10)  /* Double Y direction */
+				if ((attr & 0x10) != 0)  /* Double Y direction */
 				{
 					dy = flipy ? 16 : -16;
 	
@@ -241,9 +241,9 @@ public class battlane
 			{
 				data = ((UINT8 *)screen_bitmap->line[y])[x];
 	
-				if (data)
+				if (data != 0)
 				{
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						plot_pixel(bitmap, 255 - x, 255 - y, Machine->pens[data]);
 					}

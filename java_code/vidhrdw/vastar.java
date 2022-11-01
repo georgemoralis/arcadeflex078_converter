@@ -158,7 +158,7 @@ public class vastar
 			flipx = spriteram_3[offs] & 0x02;
 			flipy = spriteram_3[offs] & 0x01;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;

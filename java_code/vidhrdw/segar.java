@@ -128,12 +128,12 @@ public class segar
 			sv.refresh=1;
 		}
 	
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 			sv.color_write_enable=1;
 		else
 			sv.color_write_enable=0;
 	
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 			sv.char_refresh=1;
 	} };
 	
@@ -437,7 +437,7 @@ public class segar
 				int sx,sy;
 	
 				/* Use Vertical Back Scene */
-				if (vert_scene)
+				if (vert_scene != 0)
 				{
 					sx = 8 * (offs % 32);
 					sy = 8 * (offs / 32);
@@ -464,7 +464,7 @@ public class segar
 	
 				charcode = back_charmap[(sv.back_scene*0x1000) + offs];
 	
-				if (vert_scene)
+				if (vert_scene != 0)
 				{
 					drawgfx(sv.vertbackbitmap,Machine->gfx[1 + sv.back_charset],
 						  charcode,0,
@@ -485,7 +485,7 @@ public class segar
 		{
 			int scrollx,scrolly;
 	
-			if (vert_scene)
+			if (vert_scene != 0)
 			{
 				if (sv.bflip)
 					scrolly = sv.backshift;

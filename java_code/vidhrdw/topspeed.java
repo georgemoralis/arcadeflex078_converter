@@ -96,7 +96,7 @@ public class topspeed
 	
 				code = spritemap[map_offset + (py<<3) + px];
 	
-				if (code & 0x8000)
+				if ((code & 0x8000) != 0)
 				{
 					bad_chunks += 1;
 					continue;
@@ -118,7 +118,7 @@ public class topspeed
 						primasks[priority]);
 			}
 	
-			if (bad_chunks)
+			if (bad_chunks != 0)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}

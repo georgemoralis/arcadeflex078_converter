@@ -178,7 +178,7 @@ public class tecmosys
 	
 	static READ16_HANDLER(reg_b80000_r)
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			// Bit 7: 0 = ready to write
 			// Bit 6: 0 = ready to read

@@ -52,7 +52,7 @@ public class toypop
 	
 	WRITE16_HANDLER( toypop_m68000_sharedram_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			toypop_m68000_sharedram[offset] = data & 0xff;
 	}
 	
@@ -88,19 +88,19 @@ public class toypop
 	
 	public static InterruptHandlerPtr toypop_main_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_mainCPU)
+		if (interrupt_enable_mainCPU != 0)
 			irq0_line_hold();
 	} };
 	
 	public static InterruptHandlerPtr toypop_sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_sound)
+		if (interrupt_enable_sound != 0)
 			irq0_line_hold();
 	} };
 	
 	public static InterruptHandlerPtr toypop_m68000_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_68k)
+		if (interrupt_enable_68k != 0)
 			cpu_set_irq_line(2, 6, HOLD_LINE);
 	} };
 	

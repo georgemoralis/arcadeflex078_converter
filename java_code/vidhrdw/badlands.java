@@ -108,7 +108,7 @@ public class badlands
 	
 	WRITE16_HANDLER( badlands_pf_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			if (playfield_tile_bank != (data & 1))
 			{
 				force_partial_update(cpu_getscanline());

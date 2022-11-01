@@ -770,7 +770,7 @@ public class _6522via
 			break;
 	
 		case VIA_IER:
-			if (data & 0x80)
+			if ((data & 0x80) != 0)
 				v->ier |= data & 0x7f;
 			else
 				v->ier &= ~(data & 0x7f);
@@ -800,7 +800,7 @@ public class _6522via
 			break;
 	
 		case VIA_IFR:
-			if (data & INT_ANY)
+			if ((data & INT_ANY) != 0)
 				data = 0x7f;
 			via_clear_int (which, data);
 			break;

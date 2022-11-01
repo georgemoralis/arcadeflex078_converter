@@ -35,8 +35,8 @@ static void blit_none_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -49,8 +49,8 @@ static void blit_none_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -66,8 +66,8 @@ static void blit_none_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -83,8 +83,8 @@ static void blit_none_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -97,8 +97,8 @@ static void blit_none_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -114,8 +114,8 @@ static void blit_none_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -131,8 +131,8 @@ static void blit_none_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -145,8 +145,8 @@ static void blit_none_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -162,8 +162,8 @@ static void blit_none_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -179,7 +179,7 @@ static void blit_none_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -192,7 +192,7 @@ static void blit_none_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -208,7 +208,7 @@ static void blit_none_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -224,7 +224,7 @@ static void blit_none_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -237,7 +237,7 @@ static void blit_none_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -253,7 +253,7 @@ static void blit_none_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -269,7 +269,7 @@ static void blit_none_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -282,7 +282,7 @@ static void blit_none_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -298,7 +298,7 @@ static void blit_none_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -314,8 +314,8 @@ static void blit_none_raw_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -327,8 +327,8 @@ static void blit_none_raw_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -343,8 +343,8 @@ static void blit_none_raw_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -359,8 +359,8 @@ static void blit_none_raw_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -372,8 +372,8 @@ static void blit_none_raw_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -388,8 +388,8 @@ static void blit_none_raw_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -404,8 +404,8 @@ static void blit_none_raw_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -417,8 +417,8 @@ static void blit_none_raw_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -433,8 +433,8 @@ static void blit_none_raw_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
-		if(1){
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -449,7 +449,7 @@ static void blit_none_raw_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -461,7 +461,7 @@ static void blit_none_raw_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -476,7 +476,7 @@ static void blit_none_raw_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -491,7 +491,7 @@ static void blit_none_raw_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -503,7 +503,7 @@ static void blit_none_raw_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -518,7 +518,7 @@ static void blit_none_raw_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -533,7 +533,7 @@ static void blit_none_raw_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -545,7 +545,7 @@ static void blit_none_raw_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -560,7 +560,7 @@ static void blit_none_raw_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -575,7 +575,7 @@ static void blit_pen_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPal
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -589,7 +589,7 @@ static void blit_pen_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -606,7 +606,7 @@ static void blit_pen_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal,
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -623,7 +623,7 @@ static void blit_pen_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -637,7 +637,7 @@ static void blit_pen_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -654,7 +654,7 @@ static void blit_pen_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -671,7 +671,7 @@ static void blit_pen_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -685,7 +685,7 @@ static void blit_pen_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -702,7 +702,7 @@ static void blit_pen_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -854,7 +854,7 @@ static void blit_pen_raw_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] = data;
 		}
@@ -867,7 +867,7 @@ static void blit_pen_raw_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -883,7 +883,7 @@ static void blit_pen_raw_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -899,7 +899,7 @@ static void blit_pen_raw_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] = data;
 		}
@@ -912,7 +912,7 @@ static void blit_pen_raw_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -928,7 +928,7 @@ static void blit_pen_raw_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -944,7 +944,7 @@ static void blit_pen_raw_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] = data;
 		}
@@ -957,7 +957,7 @@ static void blit_pen_raw_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -973,7 +973,7 @@ static void blit_pen_raw_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -1115,7 +1115,7 @@ static void blit_pens_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -1129,7 +1129,7 @@ static void blit_pens_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -1146,7 +1146,7 @@ static void blit_pens_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -1163,7 +1163,7 @@ static void blit_pens_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -1177,7 +1177,7 @@ static void blit_pens_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -1194,7 +1194,7 @@ static void blit_pens_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -1211,7 +1211,7 @@ static void blit_pens_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -1225,7 +1225,7 @@ static void blit_pens_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -1242,7 +1242,7 @@ static void blit_pens_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -1394,7 +1394,7 @@ static void blit_pens_raw_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 				pDst[x] = data;
 		}
@@ -1407,7 +1407,7 @@ static void blit_pens_raw_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -1423,7 +1423,7 @@ static void blit_pens_raw_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -1439,7 +1439,7 @@ static void blit_pens_raw_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 				pDst[x] = data;
 		}
@@ -1452,7 +1452,7 @@ static void blit_pens_raw_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -1468,7 +1468,7 @@ static void blit_pens_raw_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -1484,7 +1484,7 @@ static void blit_pens_raw_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 				pDst[x] = data;
 		}
@@ -1497,7 +1497,7 @@ static void blit_pens_raw_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -1513,7 +1513,7 @@ static void blit_pens_raw_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( ((1<<data)&transp)==0 ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -1656,7 +1656,7 @@ static void blit_color_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -1671,7 +1671,7 @@ static void blit_color_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -1689,7 +1689,7 @@ static void blit_color_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -1707,7 +1707,7 @@ static void blit_color_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -1722,7 +1722,7 @@ static void blit_color_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -1740,7 +1740,7 @@ static void blit_color_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -1758,7 +1758,7 @@ static void blit_color_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 				pDst[x] = data;
@@ -1773,7 +1773,7 @@ static void blit_color_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
@@ -1791,7 +1791,7 @@ static void blit_color_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
@@ -1952,7 +1952,7 @@ static void blit_pen_table_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -1974,7 +1974,7 @@ static void blit_pen_table_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2005,7 +2005,7 @@ static void blit_pen_table_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2027,7 +2027,7 @@ static void blit_pen_table_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2049,7 +2049,7 @@ static void blit_pen_table_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2080,7 +2080,7 @@ static void blit_pen_table_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2102,7 +2102,7 @@ static void blit_pen_table_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2124,7 +2124,7 @@ static void blit_pen_table_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2155,7 +2155,7 @@ static void blit_pen_table_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2393,7 +2393,7 @@ static void blit_pen_table_raw_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2415,7 +2415,7 @@ static void blit_pen_table_raw_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2446,7 +2446,7 @@ static void blit_pen_table_raw_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2468,7 +2468,7 @@ static void blit_pen_table_raw_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc,
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2490,7 +2490,7 @@ static void blit_pen_table_raw_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2521,7 +2521,7 @@ static void blit_pen_table_raw_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2543,7 +2543,7 @@ static void blit_pen_table_raw_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc,
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2565,7 +2565,7 @@ static void blit_pen_table_raw_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2596,7 +2596,7 @@ static void blit_pen_table_raw_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			switch( gfx_drawmode_table[data] )
 			{
@@ -2834,7 +2834,7 @@ static void blit_blend_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] = data;
 		}
@@ -2847,7 +2847,7 @@ static void blit_blend_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -2863,7 +2863,7 @@ static void blit_blend_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -2879,7 +2879,7 @@ static void blit_blend_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] = data;
 		}
@@ -2892,7 +2892,7 @@ static void blit_blend_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -2908,7 +2908,7 @@ static void blit_blend_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -2924,7 +2924,7 @@ static void blit_blend_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] = data;
 		}
@@ -2937,7 +2937,7 @@ static void blit_blend_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -2953,7 +2953,7 @@ static void blit_blend_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3095,7 +3095,7 @@ static void blit_blend_raw_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] |= (data+theColor);
 		}
@@ -3108,7 +3108,7 @@ static void blit_blend_raw_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] |= (data+theColor);
@@ -3124,7 +3124,7 @@ static void blit_blend_raw_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3140,7 +3140,7 @@ static void blit_blend_raw_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] |= (data+theColor);
 		}
@@ -3153,7 +3153,7 @@ static void blit_blend_raw_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] |= (data+theColor);
@@ -3169,7 +3169,7 @@ static void blit_blend_raw_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3185,7 +3185,7 @@ static void blit_blend_raw_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] |= (data+theColor);
 		}
@@ -3198,7 +3198,7 @@ static void blit_blend_raw_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] |= (data+theColor);
@@ -3214,7 +3214,7 @@ static void blit_blend_raw_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3358,7 +3358,7 @@ static void blit_alphaone_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				if( data != alpha_pen )
 				{
@@ -3380,7 +3380,7 @@ static void blit_alphaone_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				if( data != alpha_pen )
@@ -3405,7 +3405,7 @@ static void blit_alphaone_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3430,7 +3430,7 @@ static void blit_alphaone_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				if( data != alpha_pen )
 				{
@@ -3452,7 +3452,7 @@ static void blit_alphaone_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				if( data != alpha_pen )
@@ -3477,7 +3477,7 @@ static void blit_alphaone_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3502,7 +3502,7 @@ static void blit_alphaone_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				if( data != alpha_pen )
 				{
@@ -3524,7 +3524,7 @@ static void blit_alphaone_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				if( data != alpha_pen )
@@ -3549,7 +3549,7 @@ static void blit_alphaone_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3779,7 +3779,7 @@ static void blit_alpha_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pP
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				pDst[x] = data;
 		}
@@ -3792,7 +3792,7 @@ static void blit_alpha_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -3808,7 +3808,7 @@ static void blit_alpha_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3824,7 +3824,7 @@ static void blit_alpha_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 pDst[x] = alpha_blend16(pDst[x], pPal[data]);
 		}
@@ -3837,7 +3837,7 @@ static void blit_alpha_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 pDst[x] = alpha_blend16(pDst[x], pPal[data]);
@@ -3853,7 +3853,7 @@ static void blit_alpha_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -3869,7 +3869,7 @@ static void blit_alpha_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 pDst[x] = alpha_blend32(pDst[x], pPal[data]);
 		}
@@ -3882,7 +3882,7 @@ static void blit_alpha_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 pDst[x] = alpha_blend32(pDst[x], pPal[data]);
@@ -3898,7 +3898,7 @@ static void blit_alpha_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4040,7 +4040,7 @@ static void blit_alpharange_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				if( gfx_alpharange_table[data]==0xff )
 				{
@@ -4060,7 +4060,7 @@ static void blit_alpharange_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				if( gfx_alpharange_table[data]==0xff )
@@ -4083,7 +4083,7 @@ static void blit_alpharange_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4106,7 +4106,7 @@ static void blit_alpharange_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				if( gfx_alpharange_table[data]==0xff )
 				{
@@ -4126,7 +4126,7 @@ static void blit_alpharange_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				if( gfx_alpharange_table[data]==0xff )
@@ -4149,7 +4149,7 @@ static void blit_alpharange_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4172,7 +4172,7 @@ static void blit_alpharange_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 				if( gfx_alpharange_table[data]==0xff )
 				{
@@ -4192,7 +4192,7 @@ static void blit_alpharange_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				if( gfx_alpharange_table[data]==0xff )
@@ -4215,7 +4215,7 @@ static void blit_alpharange_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
-		if( x_index&1 ) data>>=4; else data&=0xf;
+		if ((x_index & 1) != 0) data>>=4; else data&=0xf;
 		if( data!=transp ){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4428,7 +4428,7 @@ static void blitzoom_none_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t 
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -4442,7 +4442,7 @@ static void blitzoom_none_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -4459,7 +4459,7 @@ static void blitzoom_none_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4476,7 +4476,7 @@ static void blitzoom_none_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -4490,7 +4490,7 @@ static void blitzoom_none_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -4507,7 +4507,7 @@ static void blitzoom_none_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4524,7 +4524,7 @@ static void blitzoom_none_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -4538,7 +4538,7 @@ static void blitzoom_none_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -4555,7 +4555,7 @@ static void blitzoom_none_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4571,7 +4571,7 @@ static void blitzoom_none_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -4584,7 +4584,7 @@ static void blitzoom_none_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -4600,7 +4600,7 @@ static void blitzoom_none_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4616,7 +4616,7 @@ static void blitzoom_none_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -4629,7 +4629,7 @@ static void blitzoom_none_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -4645,7 +4645,7 @@ static void blitzoom_none_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4661,7 +4661,7 @@ static void blitzoom_none_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 				pDst[x] = data;
 		}
@@ -4674,7 +4674,7 @@ static void blitzoom_none_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
@@ -4690,7 +4690,7 @@ static void blitzoom_none_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			data = pPal[data];
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
@@ -4707,7 +4707,7 @@ static void blitzoom_none_raw_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pe
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -4720,7 +4720,7 @@ static void blitzoom_none_raw_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, p
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -4736,7 +4736,7 @@ static void blitzoom_none_raw_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -4752,7 +4752,7 @@ static void blitzoom_none_raw_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, 
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -4765,7 +4765,7 @@ static void blitzoom_none_raw_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc,
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -4781,7 +4781,7 @@ static void blitzoom_none_raw_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, p
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -4797,7 +4797,7 @@ static void blitzoom_none_raw_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, 
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -4810,7 +4810,7 @@ static void blitzoom_none_raw_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc,
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -4826,7 +4826,7 @@ static void blitzoom_none_raw_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, p
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
 		if( x_index&(1<<16) ) data>>=4; else data&=0xf;
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -4841,7 +4841,7 @@ static void blitzoom_none_raw_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pe
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -4853,7 +4853,7 @@ static void blitzoom_none_raw_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -4868,7 +4868,7 @@ static void blitzoom_none_raw_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -4883,7 +4883,7 @@ static void blitzoom_none_raw_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -4895,7 +4895,7 @@ static void blitzoom_none_raw_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc,
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -4910,7 +4910,7 @@ static void blitzoom_none_raw_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;
@@ -4925,7 +4925,7 @@ static void blitzoom_none_raw_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, 
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 				pDst[x] = data;
 		}
 		x_index += dx;
@@ -4937,7 +4937,7 @@ static void blitzoom_none_raw_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc,
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			if ((1 << (((UINT8 *)pBuf)[x]) & pri_code) == 0){
 				pDst[x] = data;
 			}
@@ -4952,7 +4952,7 @@ static void blitzoom_none_raw_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, p
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
-		if(1){
+		if (1 != 0){
 			if( pri_code>=((UINT8 *)pBuf)[x]){
 				((UINT8 *)pBuf)[x] = pri_code;
 				pDst[x] = data;

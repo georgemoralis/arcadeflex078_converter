@@ -100,7 +100,7 @@ public class _74123
 	
 	#define CHECK_TRIGGER(COND) 													\
 		{																			\
-			if (COND)																\
+			if (COND != 0)																\
 			{																		\
 				double duration = TIME_IN_SEC(0.68 * c->intf->res * c->intf->cap);	\
 				if (!c->timer_active) set_output(which, 1);							\
@@ -119,7 +119,7 @@ public class _74123
 		struct TTL74123 *c = chip + which;
 	
 		/* trigger_comp=lo and rising edge on trigger (while reset_comp is hi) */
-		if (data)
+		if (data != 0)
 			CHECK_TRIGGER(!c->trigger_comp && !c->trigger && c->reset_comp)
 		else
 			RESET
@@ -147,7 +147,7 @@ public class _74123
 		struct TTL74123 *c = chip + which;
 	
 		/* trigger=hi, trigger_comp=lo and rising edge on reset_comp */
-		if (data)
+		if (data != 0)
 	    	CHECK_TRIGGER(c->trigger && !c->trigger_comp && !c->reset_comp)
 		else
 			RESET

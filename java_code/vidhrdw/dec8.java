@@ -198,7 +198,7 @@ public class dec8
 		scroll2[0]=(data>>5)&1;
 		scroll2[2]=(data>>6)&1;
 	
-		if (data&0x80)
+		if ((data & 0x80) != 0)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
@@ -271,7 +271,7 @@ public class dec8
 			sprite = buffered_spriteram[offs+7]+(buffered_spriteram[offs+6]<<8);
 			sprite &= 0x0fff;
 	
-			if (extra) {y=y+16;sprite&=0xffe;}
+			if (extra != 0) {y=y+16;sprite&=0xffe;}
 	
 			x = x & 0x01ff;
 			y = y & 0x01ff;
@@ -279,12 +279,12 @@ public class dec8
 			y=(y+16)%0x200;
 			x=256 - x;
 			y=256 - y;
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				y=240-y;
 				x=240-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
-				if (extra) y=y-16;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
+				if (extra != 0) y=y-16;
 			}
 	
 			/* Y Flip determines order of multi-sprite */
@@ -301,7 +301,7 @@ public class dec8
 					cliprect,TRANSPARENCY_PEN,0);
 	
 	    	/* 1 more sprite drawn underneath */
-	    	if (extra)
+	    	if (extra != 0)
 	    		drawgfx(bitmap,Machine->gfx[1],
 					sprite2,
 					colour,fx,fy,x,y+16,
@@ -343,7 +343,7 @@ public class dec8
 			y = 240 - y;
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -351,11 +351,11 @@ public class dec8
 				inc = 1;
 			}
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				y=240-y;
 				x=240-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
@@ -397,10 +397,10 @@ public class dec8
 			fx = buffered_spriteram[offs+1] & 0x04;
 			multi = buffered_spriteram[offs+1] & 0x10;
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx) fx=0; else fx=1;
+				if (fx != 0) fx=0; else fx=1;
 				sy2=sy-16;
 			}
 			else sy2=sy+16;
@@ -411,7 +411,7 @@ public class dec8
 					fx,flip_screen,
 					sx,sy,
 					cliprect,TRANSPARENCY_PEN,0);
-	        if (multi)
+	        if (multi != 0)
 	    		drawgfx(bitmap,Machine->gfx[1],
 					code+1,
 					color,

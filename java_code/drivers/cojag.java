@@ -264,7 +264,7 @@ public class cojag
 	
 	static READ32_HANDLER( eeprom_data_r )
 	{
-		if (cojag_is_r3000)
+		if (cojag_is_r3000 != 0)
 			return ((UINT32 *)generic_nvram)[offset] | 0xffffff00;
 		else
 			return ((UINT32 *)generic_nvram)[offset] | 0x00ffffff;
@@ -279,9 +279,9 @@ public class cojag
 	
 	static WRITE32_HANDLER( eeprom_data_w )
 	{
-	//	if (eeprom_enable)
+	//	if (eeprom_enable != 0)
 		{
-			if (cojag_is_r3000)
+			if (cojag_is_r3000 != 0)
 				((UINT32 *)generic_nvram)[offset] = data & 0x000000ff;
 			else
 				((UINT32 *)generic_nvram)[offset] = data & 0xff000000;
@@ -991,7 +991,7 @@ public class cojag
 		cojag_draw_crosshair = crosshair;
 	
 		/* install synchronization hooks for GPU */
-		if (cojag_is_r3000)
+		if (cojag_is_r3000 != 0)
 			install_mem_write32_handler(0, 0x04f0b000 + gpu_jump_offs, 0x04f0b003 + gpu_jump_offs, gpu_jump_w);
 		else
 			install_mem_write32_handler(0, 0xf0b000 + gpu_jump_offs, 0xf0b003 + gpu_jump_offs, gpu_jump_w);

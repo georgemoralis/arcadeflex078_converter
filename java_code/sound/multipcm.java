@@ -187,7 +187,7 @@ public class multipcm
 						}
 					}
 	
-					if (relstage)
+					if (relstage != 0)
 					{
 						relcount++;
 						if (relcount > relamt)
@@ -420,7 +420,7 @@ public class multipcm
 						break;
 	
 					case 4:	// key on/off
-						if (data & 0x80)
+						if ((data & 0x80) != 0)
 						{
 							inum = cptr->registers[vnum][1];
 	

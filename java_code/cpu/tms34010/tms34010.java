@@ -317,12 +317,12 @@ public class tms34010
 		state.f0_write = wfield_functions[FW(0)];
 		state.f1_write = wfield_functions[FW(1)];
 	
-		if (FE0_FLAG)
+		if (FE0_FLAG != 0)
 			state.f0_read  = rfield_functions_s[FW(0)];	/* Sign extend */
 		else
 			state.f0_read  = rfield_functions_z[FW(0)];	/* Zero extend */
 	
-		if (FE1_FLAG)
+		if (FE1_FLAG != 0)
 			state.f1_read  = rfield_functions_s[FW(1)];	/* Sign extend */
 		else
 			state.f1_read  = rfield_functions_z[FW(1)];	/* Zero extend */
@@ -496,7 +496,7 @@ public class tms34010
 	#define WP_T(m1,m2)  																		\
 		/* TODO: plane masking */																\
 		data &= m2;																				\
-		if (data)																				\
+		if (data != 0)																				\
 		{																						\
 			UINT32 a = TOBYTE(offset & 0xfffffff0);												\
 			UINT32 pix = TMS34010_RDMEM_WORD(a);												\
@@ -526,7 +526,7 @@ public class tms34010
 																								\
 		/* TODO: plane masking */																\
 		data = state.raster_op(data & m2, (pix >> shiftcount) & m2) & m2;						\
-		if (data)																				\
+		if (data != 0)																				\
 		{																						\
 			pix = (pix & ~(m2 << shiftcount)) | (data << shiftcount);							\
 			TMS34010_WRMEM_WORD(a, pix);														\
@@ -552,7 +552,7 @@ public class tms34010
 	static void write_pixel_t_16(offs_t offset,data32_t data)
 	{
 		/* TODO: plane masking */
-		if (data)
+		if (data != 0)
 			TMS34010_WRMEM_WORD(TOBYTE(offset & 0xfffffff0), data);
 	}
 	
@@ -579,7 +579,7 @@ public class tms34010
 		UINT32 a = TOBYTE(offset & 0xfffffff0);
 		data = state.raster_op(data, TMS34010_RDMEM_WORD(a));
 	
-		if (data)
+		if (data != 0)
 			TMS34010_WRMEM_WORD(a, data);
 	}
 	
@@ -656,7 +656,7 @@ public class tms34010
 			return;
 	
 		/* check for NMI first */
-		if (irq & TMS34010_NMI)
+		if ((irq & TMS34010_NMI) != 0)
 		{
 			LOG(("TMS34010#%d takes NMI\n", cpu_getactivecpu()));
 	
@@ -683,28 +683,28 @@ public class tms34010
 			return;
 	
 		/* host interrupt */
-		if (irq & TMS34010_HI)
+		if ((irq & TMS34010_HI) != 0)
 		{
 			LOG(("TMS34010#%d takes HI\n", cpu_getactivecpu()));
 			vector = 0xfffffec0;
 		}
 	
 		/* display interrupt */
-		else if (irq & TMS34010_DI)
+		else if ((irq & TMS34010_DI) != 0)
 		{
 			LOG(("TMS34010#%d takes DI\n", cpu_getactivecpu()));
 			vector = 0xfffffea0;
 		}
 	
 		/* window violation interrupt */
-		else if (irq & TMS34010_WV)
+		else if ((irq & TMS34010_WV) != 0)
 		{
 			LOG(("TMS34010#%d takes WV\n", cpu_getactivecpu()));
 			vector = 0xfffffe80;
 		}
 	
 		/* external 1 interrupt */
-		else if (irq & TMS34010_INT1)
+		else if ((irq & TMS34010_INT1) != 0)
 		{
 			LOG(("TMS34010#%d takes INT1\n", cpu_getactivecpu()));
 			vector = 0xffffffc0;
@@ -712,7 +712,7 @@ public class tms34010
 		}
 	
 		/* external 2 interrupt */
-		else if (irq & TMS34010_INT2)
+		else if ((irq & TMS34010_INT2) != 0)
 		{
 			LOG(("TMS34010#%d takes INT2\n", cpu_getactivecpu()));
 			vector = 0xffffffa0;
@@ -720,7 +720,7 @@ public class tms34010
 		}
 	
 		/* if we took something, generate it */
-		if (vector)
+		if (vector != 0)
 		{
 			PUSH(PC);
 			PUSH(GET_ST());
@@ -852,7 +852,7 @@ public class tms34010
 	
 	unsigned tms34010_get_context(void *dst)
 	{
-		if (dst)
+		if (dst != 0)
 		{
 			int i;
 	
@@ -867,7 +867,7 @@ public class tms34010
 	
 	unsigned tms34020_get_context(void *dst)
 	{
-		if (dst)
+		if (dst != 0)
 		{
 			int i;
 	
@@ -888,7 +888,7 @@ public class tms34010
 	
 	void tms34010_set_context(void *src)
 	{
-		if (src)
+		if (src != 0)
 		{
 			int i;
 	
@@ -904,7 +904,7 @@ public class tms34010
 	
 	void tms34020_set_context(void *src)
 	{
-		if (src)
+		if (src != 0)
 		{
 			int i;
 	
@@ -1149,7 +1149,7 @@ public class tms34010
 		do
 		{
 			#ifdef	MAME_DEBUG
-			if (mame_debug) { state.st = GET_ST(); MAME_Debug(); }
+			if (mame_debug != 0) { state.st = GET_ST(); MAME_Debug(); }
 			#endif
 			state.op = ROPCODE();
 			(*opcode_table[state.op >> 4])();
@@ -1551,7 +1551,7 @@ public class tms34010
 				break;
 	
 			case REG_PMASK:
-				if (data) logerror("Plane masking not supported. PC=%08X\n", activecpu_get_pc());
+				if (data != 0) logerror("Plane masking not supported. PC=%08X\n", activecpu_get_pc());
 				break;
 	
 			case REG_DPYCTL:
@@ -1585,7 +1585,7 @@ public class tms34010
 				cpu_set_halt_line(cpunum, (data & 0x8000) ? ASSERT_LINE : CLEAR_LINE);
 	
 				/* NMI issued? */
-				if (data & 0x0100)
+				if ((data & 0x0100) != 0)
 					timer_set(TIME_NOW, cpunum | (TMS34010_NMI << 8), internal_interrupt_callback);
 				break;
 	
@@ -1651,7 +1651,7 @@ public class tms34010
 				break;
 		}
 	
-		if (LOG_CONTROL_REGS)
+		if (LOG_CONTROL_REGS != 0)
 			logerror("CPU#%d@%08X: %s = %04X (%d)\n", cpunum, activecpu_get_pc(), ioreg_name[offset], IOREG(offset), cpu_getscanline());
 	}
 	
@@ -1688,7 +1688,7 @@ public class tms34010
 		oldreg = IOREG(offset);
 		IOREG(offset) = data;
 	
-		if (LOG_CONTROL_REGS)
+		if (LOG_CONTROL_REGS != 0)
 			logerror("CPU#%d@%08X: %s = %04X (%d)\n", cpunum, activecpu_get_pc(), ioreg020_name[offset], IOREG(offset), cpu_getscanline());
 	
 		switch (offset)
@@ -1734,7 +1734,7 @@ public class tms34010
 	
 			case REG020_PMASKL:
 			case REG020_PMASKH:
-				if (data) logerror("Plane masking not supported. PC=%08X\n", activecpu_get_pc());
+				if (data != 0) logerror("Plane masking not supported. PC=%08X\n", activecpu_get_pc());
 				break;
 	
 			case REG020_DPYCTL:
@@ -1750,7 +1750,7 @@ public class tms34010
 				cpu_set_halt_line(cpunum, (data & 0x8000) ? ASSERT_LINE : CLEAR_LINE);
 	
 				/* NMI issued? */
-				if (data & 0x0100)
+				if ((data & 0x0100) != 0)
 					timer_set(TIME_NOW, cpunum | (TMS34010_NMI << 8), internal_interrupt_callback);
 				break;
 	
@@ -1808,9 +1808,9 @@ public class tms34010
 				break;
 	
 			case REG020_CONVSP:
-				if (data & 0x001f)
+				if ((data & 0x001f) != 0)
 				{
-					if (data & 0x1f00)
+					if ((data & 0x1f00) != 0)
 						state.convsp = (1 << (~data & 0x1f)) + (1 << (~(data >> 8) & 0x1f));
 					else
 						state.convsp = 1 << (~data & 0x1f);
@@ -1820,9 +1820,9 @@ public class tms34010
 				break;
 	
 			case REG020_CONVDP:
-				if (data & 0x001f)
+				if ((data & 0x001f) != 0)
 				{
-					if (data & 0x1f00)
+					if ((data & 0x1f00) != 0)
 						state.convdp = (1 << (~data & 0x1f)) + (1 << (~(data >> 8) & 0x1f));
 					else
 						state.convdp = 1 << (~data & 0x1f);
@@ -1832,9 +1832,9 @@ public class tms34010
 				break;
 	
 			case REG020_CONVMP:
-				if (data & 0x001f)
+				if ((data & 0x001f) != 0)
 				{
-					if (data & 0x1f00)
+					if ((data & 0x1f00) != 0)
 						state.convmp = (1 << (~data & 0x1f)) + (1 << (~(data >> 8) & 0x1f));
 					else
 						state.convmp = 1 << (~data & 0x1f);
@@ -1870,7 +1870,7 @@ public class tms34010
 		int cpunum = cpu_getactivecpu();
 		int result, total;
 	
-		if (LOG_CONTROL_REGS)
+		if (LOG_CONTROL_REGS != 0)
 			logerror("CPU#%d@%08X: read %s\n", cpunum, activecpu_get_pc(), ioreg_name[offset]);
 	
 		switch (offset)
@@ -1909,7 +1909,7 @@ public class tms34010
 		int cpunum = cpu_getactivecpu();
 		int result, total;
 	
-		if (LOG_CONTROL_REGS)
+		if (LOG_CONTROL_REGS != 0)
 			logerror("CPU#%d@%08X: read %s\n", cpunum, activecpu_get_pc(), ioreg_name[offset]);
 	
 		switch (offset)

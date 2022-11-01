@@ -237,7 +237,7 @@ public class redclash
 			int sx = 8 * offs + (videoram[offs] & 0x07);	/* ?? */
 			int sy = 0xff - videoram[offs + 0x20];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 			}

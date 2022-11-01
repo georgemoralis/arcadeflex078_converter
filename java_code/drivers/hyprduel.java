@@ -92,7 +92,7 @@ public class hyprduel
 	
 	static WRITE16_HANDLER( hyprduel_irq_cause_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (data == 0x02)
 				requested_int &= ~(0x02 & ~*hypr_irq_enable);
@@ -107,7 +107,7 @@ public class hyprduel
 	{
 		int pc = activecpu_get_pc();
 	
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 		{
 			if (!subcpu_resetline)
 			{
@@ -140,7 +140,7 @@ public class hyprduel
 	{
 		int i;
 	
-		if (offset & 0x01)
+		if ((offset & 0x01) != 0)
 		{
 			for (i = rastersplit; i < RASTER_LINES; i++)
 				hyprduel_scrollx[offset>>1][i] = data;

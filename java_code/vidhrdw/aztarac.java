@@ -34,7 +34,7 @@ public class aztarac
 	    int x, y, c, intensity, xoffset, yoffset, color;
 	    int defaddr, objaddr=0, ndefs;
 	
-	    if (data) /* data is the global intensity (always 0xff in Aztarac). */
+	    if (data != 0) /* data is the global intensity (always 0xff in Aztarac). */
 	    {
 	        vector_clear_list();
 	
@@ -43,7 +43,7 @@ public class aztarac
 	            read_vectorram (objaddr, &xoffset, &yoffset, &c);
 	            objaddr++;
 	
-	            if (c & 0x4000)
+	            if ((c & 0x4000) != 0)
 	                break;
 	
 	            if ((c & 0x2000) == 0)
@@ -54,7 +54,7 @@ public class aztarac
 	                read_vectorram (defaddr, &x, &ndefs, &c);
 					ndefs++;
 	
-	                if (c & 0xff00)
+	                if ((c & 0xff00) != 0)
 	                {
 	                    /* latch color only once */
 	                    intensity = (c >> 8);

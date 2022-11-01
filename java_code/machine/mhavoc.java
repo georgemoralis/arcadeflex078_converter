@@ -41,7 +41,7 @@ public class mhavoc
 	static void cpu_irq_clock(int param)
 	{
 		/* clock the LS161 driving the alpha CPU IRQ */
-		if (alpha_irq_clock_enable)
+		if (alpha_irq_clock_enable != 0)
 		{
 			alpha_irq_clock++;
 			if ((alpha_irq_clock & 0x0c) == 0x0c)
@@ -52,7 +52,7 @@ public class mhavoc
 		}
 	
 		/* clock the LS161 driving the gamma CPU IRQ */
-		if (has_gamma_cpu)
+		if (has_gamma_cpu != 0)
 		{
 			gamma_irq_clock++;
 			cpu_set_irq_line(1, 0, (gamma_irq_clock & 0x08) ? ASSERT_LINE : CLEAR_LINE);
@@ -220,17 +220,17 @@ public class mhavoc
 	
 		/* Bits 7-6 = selected based on Player 1 */
 		/* Bits 5-4 = common */
-		if (player_1)
+		if (player_1 != 0)
 			res = (readinputport(0) & 0x30) | (readinputport(5) & 0xc0);
 		else
 			res = readinputport(0) & 0xf0;
 	
 		/* Bit 3 = Gamma rcvd flag */
-		if (gamma_rcvd)
+		if (gamma_rcvd != 0)
 			res |= 0x08;
 	
 		/* Bit 2 = Gamma xmtd flag */
-		if (gamma_xmtd)
+		if (gamma_xmtd != 0)
 			res |= 0x04;
 	
 		/* Bit 1 = 2.4kHz (divide 2.5MHz by 1024) */

@@ -179,7 +179,7 @@ public class profiler
 			}
 			if (computed || showdelay[i])
 			{
-				if (computed) showdelay[i] = Machine->drv->frames_per_second;
+				if (computed != 0) showdelay[i] = Machine->drv->frames_per_second;
 				showdelay[i]--;
 	
 				if (i < PROFILER_PROFILER)

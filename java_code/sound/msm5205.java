@@ -295,7 +295,7 @@ public class msm5205
 	
 			voice->prescaler = prescaler;
 			/* timer set */
-			if( prescaler )
+			if (prescaler != 0)
 			{
 				double period = TIME_IN_HZ(msm5205_intf->baseclock / prescaler);
 				timer_adjust(voice->timer, period, num, period);

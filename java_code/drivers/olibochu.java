@@ -130,7 +130,7 @@ public class olibochu
 			int sx = spriteram[offs+3];
 			int sy = ((spriteram[offs+2] + 8) & 0xff) - 8;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -158,7 +158,7 @@ public class olibochu
 			int sx = spriteram_2[offs+3];
 			int sy = spriteram_2[offs+2];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;

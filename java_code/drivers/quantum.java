@@ -93,7 +93,7 @@ public class quantum
 	
 	static WRITE16_HANDLER( led_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bits 0 and 1 are coin counters */
 			coin_counter_w(0, data & 2);
@@ -121,7 +121,7 @@ public class quantum
 	
 	static WRITE16_HANDLER( pokey_word_w )
 	{
-		if (offset & 0x10) /* A5 selects chip */
+		if ((offset & 0x10) != 0) /* A5 selects chip */
 			pokey2_w(offset & 0x0f, data);
 		else
 			pokey1_w(offset & 0x0f, data);
@@ -130,7 +130,7 @@ public class quantum
 	
 	static READ16_HANDLER( pokey_word_r )
 	{
-		if (offset & 0x10)
+		if ((offset & 0x10) != 0)
 			return pokey2_r(offset & 0x0f);
 		else
 			return pokey1_r(offset & 0x0f);

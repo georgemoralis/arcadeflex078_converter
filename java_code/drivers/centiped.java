@@ -295,7 +295,7 @@ public class centiped
 	static void generate_interrupt(int scanline)
 	{
 		/* IRQ is clocked on the rising edge of 16V, equal to the previous 32V */
-		if (scanline & 16)
+		if ((scanline & 16) != 0)
 			cpu_set_irq_line(0, 0, ((scanline - 1) & 32) ? ASSERT_LINE : CLEAR_LINE);
 	
 		/* call back again after 16 scanlines */
@@ -353,11 +353,11 @@ public class centiped
 		int newpos;
 	
 		/* adjust idx if we're cocktail flipped */
-		if (centiped_flipscreen)
+		if (centiped_flipscreen != 0)
 			idx += 2;
 	
 		/* if we're to read the dipswitches behind the trackball data, do it now */
-		if (dsw_select)
+		if (dsw_select != 0)
 			return (readinputport(switch_port) & 0x7f) | sign[idx];
 	
 		/* get the new position and adjust the result */

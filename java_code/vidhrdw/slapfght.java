@@ -172,7 +172,7 @@ public class slapfght
 	
 			if ((buffered_spriteram[offs+2] & 0x80) == priority_to_display)
 			{
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 265 - buffered_spriteram[offs+1];
 					sy = 239 - buffered_spriteram[offs+3];
@@ -208,7 +208,7 @@ public class slapfght
 	{
 		tilemap_set_flip( pf1_tilemap, flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 		tilemap_set_scrolly( pf1_tilemap ,0 , 0 );
-		if (flipscreen) {
+		if (flipscreen != 0) {
 			tilemap_set_scrollx( pf1_tilemap ,0 , 264 );
 		}
 		else {
@@ -232,7 +232,7 @@ public class slapfght
 		int offs;
 	
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
-		if (flipscreen) {
+		if (flipscreen != 0) {
 			tilemap_set_scrollx( fix_tilemap,0,296);
 			tilemap_set_scrollx( pf1_tilemap,0,(*slapfight_scrollx_lo + 256 * *slapfight_scrollx_hi)+296 );
 			tilemap_set_scrolly( pf1_tilemap,0, (*slapfight_scrolly)+15 );
@@ -250,7 +250,7 @@ public class slapfght
 		/* Draw the sprites */
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			if (flipscreen)
+			if (flipscreen != 0)
 				drawgfx(bitmap,Machine->gfx[2],
 					buffered_spriteram[offs] + ((buffered_spriteram[offs+2] & 0xc0) << 2),
 					(buffered_spriteram[offs+2] & 0x1e) >> 1,

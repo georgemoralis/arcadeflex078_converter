@@ -187,7 +187,7 @@ public class gaiden
 	
 	WRITE16_HANDLER( gaiden_flip_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			flip_screen_set(data & 1);
 	}
 	
@@ -382,7 +382,7 @@ public class gaiden
 			UINT32 priority_mask;
 			int col,row;
 	
-			if (attributes & 0x04)
+			if ((attributes & 0x04) != 0)
 			{
 				UINT32 priority = (attributes >> 6) & 3;
 				UINT32 flipx = (attributes & 1);
@@ -409,7 +409,7 @@ public class gaiden
 				if (ypos >= 256)
 					ypos -= 512;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -457,7 +457,7 @@ public class gaiden
 				}
 				else
 				{
-					if (blend_support)
+					if (blend_support != 0)
 						bitmap = (priority >= 2) ? bitmap_bg : bitmap_fg;
 	
 					for (row = 0; row < sizey; row++)

@@ -147,7 +147,7 @@ public class vball
 			int flipy = 0;
 			int dy = -16;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

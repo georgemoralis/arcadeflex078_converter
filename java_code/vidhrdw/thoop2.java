@@ -190,7 +190,7 @@ public class thoop2
 	
 			number |= ((number & 0x03) << 16);
 	
-			if (attr & 0x04){
+			if ((attr & 0x04) != 0){
 				spr_size = 1;
 			}
 			else{

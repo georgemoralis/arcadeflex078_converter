@@ -437,7 +437,7 @@ public class pic16c5x
 	static void clrwdt(void)
 	{
 		R.WDT = 0;
-		if (PSA) R.prescaler = 0;
+		if (PSA != 0) R.prescaler = 0;
 		SET(TO_FLAG);
 		SET(PD_FLAG);
 	}
@@ -564,8 +564,8 @@ public class pic16c5x
 	
 	static void sleepic(void)
 	{
-		if (WDTE) R.WDT = 0;
-		if (PSA) R.prescaler = 0;
+		if (WDTE != 0) R.WDT = 0;
+		if (PSA != 0) R.prescaler = 0;
 		SET(TO_FLAG);
 		CLR(PD_FLAG);
 	}
@@ -798,7 +798,7 @@ public class pic16c5x
 	
 			if (((old_WDT != 0) && (old_WDT < R.WDT)) || (R.WDT == 0))
 			{
-				if (PSA) {
+				if (PSA != 0) {
 					R.prescaler++;
 					if (R.prescaler >= (1 << PS)) {	/* Prescale values from 1 to 128 */
 						R.prescaler = 0;
@@ -849,7 +849,7 @@ public class pic16c5x
 			{
 				inst_cycles = (1*CLK);
 				CALL_MAME_DEBUG;
-				if (WDTE) {
+				if (WDTE != 0) {
 					pic16C5x_update_watchdog(1*CLK);
 				}
 			}
@@ -872,29 +872,29 @@ public class pic16c5x
 					(*(opcode_000_other[(R.opcode.b.l & 0x1f)]))();
 				}
 	
-				if (T0CS) {						/* Count mode */
+				if (T0CS != 0) {						/* Count mode */
 					T0_in = S_T0_IN;
-					if (T0SE) {					/* Count rising edge */
-						if (POSITIVE_EDGE_T0) {
+					if (T0SE != 0) {					/* Count rising edge */
+						if (POSITIVE_EDGE_T0 != 0) {
 							pic16C5x_update_timer(1);
 						}
 					}
 					else {						/* Count falling edge */
-						if (NEGATIVE_EDGE_T0) {
+						if (NEGATIVE_EDGE_T0 != 0) {
 							pic16C5x_update_timer(1);
 						}
 					}
 					old_T0 = T0_in;
 				}
 				else {							/* Timer mode */
-					if (delay_timer) {
+					if (delay_timer != 0) {
 						delay_timer--;
 					}
 					else {
 						pic16C5x_update_timer((inst_cycles/CLK));
 					}
 				}
-				if (WDTE) {
+				if (WDTE != 0) {
 					pic16C5x_update_watchdog((inst_cycles/CLK));
 				}
 			}
@@ -913,7 +913,7 @@ public class pic16c5x
 	
 	unsigned pic16C5x_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(pic16C5x_Regs*)dst = R;
 		return sizeof(pic16C5x_Regs);
 	}
@@ -925,7 +925,7 @@ public class pic16c5x
 	
 	void pic16C5x_set_context (void *src)
 	{
-		if (src)
+		if (src != 0)
 			R = *(pic16C5x_Regs*)src;
 	}
 	

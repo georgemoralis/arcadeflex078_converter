@@ -349,9 +349,9 @@ public class jaguar
 	
 	WRITE32_HANDLER( jaguar_jerry_regs32_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			jaguar_jerry_regs_w(offset * 2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			jaguar_jerry_regs_w(offset * 2 + 1, data, mem_mask);
 	}
 	

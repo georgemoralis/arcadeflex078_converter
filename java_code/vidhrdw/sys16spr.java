@@ -62,7 +62,7 @@ public class sys16spr
 			sprite->color = 1024/16 + (attributes&0x3f);
 			sprite->screen_height = bottom-top;
 			sprite->flags = SYS16_SPR_VISIBLE;
-			if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
+			if ((width & 0x100) != 0) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
 			if ((attributes&0x3f)==0x3f) sprite->flags|= SYS16_SPR_SHADOW;
 	#endif
@@ -101,12 +101,12 @@ public class sys16spr
 			sprite->priority = attributes>>14;
 			sprite->color = 1024/16+ ((attributes>>8)&0x3f);
 			/* hack */
-			if( passshot_width) { /* 4 player bootleg version */
+			if (passshot_width != 0) { /* 4 player bootleg version */
 				width = -width;
 				number -= width*(bottom-top-1)-1;
 			}
 			sprite->flags = SYS16_SPR_VISIBLE;
-			if( number & 0x8000 ) sprite->flags |= SYS16_SPR_FLIPX;
+			if ((number & 0x8000) != 0) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
 			if (((attributes>>8)&0x3f)==0x3f)	// shadow sprite
 				sprite->flags|= SYS16_SPR_SHADOW;
@@ -156,7 +156,7 @@ public class sys16spr
 			sprite->screen_height = bottom-top;
 			sprite->pitch = width&0xff;
 			sprite->flags = SYS16_SPR_VISIBLE;
-			if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
+			if ((width & 0x100) != 0) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
 			if ((attributes&0x3f)==0x3f)	// shadow sprite
 				sprite->flags|= SYS16_SPR_SHADOW;
@@ -237,7 +237,7 @@ public class sys16spr
 			UINT16 width;
 			int gfx;
 	
-			if (spr_pri) { /* MASH - ?? */
+			if (spr_pri != 0) { /* MASH - ?? */
 				tsource[2]=source[2];
 				tsource[3]=source[3];
 	#ifndef TRANSPARENT_SHADOWS
@@ -264,7 +264,7 @@ public class sys16spr
 				sprite->screen_height = bottom-top;
 				sprite->pitch = width&0xff;
 				sprite->flags = SYS16_SPR_VISIBLE;
-				if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
+				if ((width & 0x100) != 0) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
 				if( pal==0x3f ) sprite->flags|= SYS16_SPR_SHADOW; // shadow sprite
 	#endif
@@ -318,7 +318,7 @@ public class sys16spr
 			sprite->screen_height = bottom-top;
 			sprite->pitch = width&0xff;
 			sprite->flags = SYS16_SPR_VISIBLE;
-			if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
+			if ((width & 0x100) != 0) sprite->flags |= SYS16_SPR_FLIPX;
 	//			sprite->flags|= SYS16_SPR_PARTIAL_SHADOW;
 	//			sprite->shadow_pen=10;
 			sprite->zoomx = zoomx;

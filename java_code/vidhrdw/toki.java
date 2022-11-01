@@ -247,10 +247,10 @@ public class toki
 				flipy   = 0;
 				tile    = (sprite_word[1] & 0xfff) + ((sprite_word[2] & 0x8000) >> 3);
 	
-				if (flip_screen) {
+				if (flip_screen != 0) {
 					x=240-x;
 					y=240-y;
-					if (flipx) flipx=0; else flipx=1;
+					if (flipx != 0) flipx=0; else flipx=1;
 					flipy=1;
 				}
 	

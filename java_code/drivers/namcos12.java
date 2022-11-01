@@ -151,7 +151,7 @@ public class namcos12
 	
 	static WRITE32_HANDLER( dmaoffset_w )
 	{
-		if( ACCESSING_LSW32 )
+		if (ACCESSING_LSW32 != 0)
 		{
 			m_n_dmaoffset = ( offset * 4 ) + ( data << 16 );
 		}

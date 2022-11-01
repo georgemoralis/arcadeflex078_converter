@@ -27,7 +27,7 @@ public class battlex
 	
 	#if 0
 				/* from Tim's shots, bit 3 seems to have no effect (see e.g. Laser Ship on title screen) */
-				if (i & 8)
+				if ((i & 8) != 0)
 				{
 					r /= 2;
 					g /= 2;
@@ -115,7 +115,7 @@ public class battlex
 			int flipy = source[1] & 0x80;
 			int flipx = source[1] & 0x40;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

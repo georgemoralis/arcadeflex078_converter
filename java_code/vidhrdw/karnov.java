@@ -91,7 +91,7 @@ public class karnov
 		int scrollx=karnov_scroll[0];
 		int scrolly=karnov_scroll[1];
 	
-		if (flipscreen) fx=fy=1; else fx=fy=0;
+		if (flipscreen != 0) fx=fy=1; else fx=fy=0;
 	
 		/* 1st area is stored along X-axis... */
 		mx=-1; my=0;
@@ -104,7 +104,7 @@ public class karnov
 			tile=karnov_pf_data[offs];
 			color = tile >> 12;
 			tile = tile&0x7ff;
-			if (flipscreen)
+			if (flipscreen != 0)
 				drawgfx(bitmap_f,Machine->gfx[1],tile,
 					color, fx, fy, 496-16*mx,496-16*my,
 			 		0,TRANSPARENCY_NONE,0);
@@ -126,7 +126,7 @@ public class karnov
 			color = tile >> 12;
 			tile=tile&0x7ff;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 				drawgfx(bitmap_f,Machine->gfx[1],tile,
 					color, fx, fy, 496-16*mx,496-16*my,
 			 		0,TRANSPARENCY_NONE,0);
@@ -167,19 +167,19 @@ public class karnov
 			fy=fx&0x2;
 			fx=fx&0x4;
 	
-			if (extra) y=y+16;
+			if (extra != 0) y=y+16;
 	
 		    /* Convert the co-ords..*/
 			x=(x+16)%0x200;
 			y=(y+16)%0x200;
 			x=256 - x;
 			y=256 - y;
-			if (flipscreen) {
+			if (flipscreen != 0) {
 				y=240-y;
 				x=240-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
-				if (extra) y=y-16;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
+				if (extra != 0) y=y-16;
 			}
 	
 			/* Y Flip determines order of multi-sprite */
@@ -195,7 +195,7 @@ public class karnov
 					cliprect,TRANSPARENCY_PEN,0);
 	
 	    	/* 1 more sprite drawn underneath */
-	    	if (extra)
+	    	if (extra != 0)
 	    		drawgfx(bitmap,Machine->gfx[2],
 					sprite2,
 					colour,fx,fy,x,y+16,

@@ -185,7 +185,7 @@ public class gyruss
 				sy = offs / 32;
 				flipx = colorram[offs] & 0x40;
 				flipy = colorram[offs] & 0x80;
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -220,7 +220,7 @@ public class gyruss
 			sy = offs / 32;
 			flipx = colorram[offs] & 0x40;
 			flipy = colorram[offs] & 0x80;
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;

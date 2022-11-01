@@ -483,7 +483,7 @@ public class btime
 		int port;
 	
 		port = readinputport(2) & 0xc0;
-		if (active_high) port ^= 0xc0;
+		if (active_high != 0) port ^= 0xc0;
 	
 		if (port != 0xc0)    /* Coin */
 		{

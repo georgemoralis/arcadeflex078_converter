@@ -71,14 +71,14 @@ public class superchs
 	static WRITE16_HANDLER( shared_ram_w )
 	{
 		if ((offset&1)==0) {
-			if (ACCESSING_MSB)
+			if (ACCESSING_MSB != 0)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0x00ffffff)|((data&0xff00)<<16);
-			if (ACCESSING_LSB)
+			if (ACCESSING_LSB != 0)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0xff00ffff)|((data&0x00ff)<<16);
 		} else {
-			if (ACCESSING_MSB)
+			if (ACCESSING_MSB != 0)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0xffff00ff)|((data&0xff00)<< 0);
-			if (ACCESSING_LSB)
+			if (ACCESSING_LSB != 0)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0xffffff00)|((data&0x00ff)<< 0);
 		}
 	}
@@ -94,13 +94,13 @@ public class superchs
 		is there an irq enable in the top nibble?
 		*/
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			cpu_set_reset_line(2,(data &0x200) ? CLEAR_LINE : ASSERT_LINE);
-			if (data&0x8000) cpu_set_irq_line(0,3,HOLD_LINE); /* Guess */
+			if ((data & 0x8000) != 0) cpu_set_irq_line(0,3,HOLD_LINE); /* Guess */
 		}
 	
-		if (ACCESSING_LSB32)
+		if (ACCESSING_LSB32 != 0)
 		{
 			/* Lamp control bits of some sort in the lsb */
 		}
@@ -151,12 +151,12 @@ public class superchs
 		{
 			case 0x00:
 			{
-				if (ACCESSING_MSB32)	/* $300000 is watchdog */
+				if (ACCESSING_MSB32 != 0)	/* $300000 is watchdog */
 				{
 					watchdog_reset_w(0,data >> 24);
 				}
 	
-				if (ACCESSING_LSB32)
+				if (ACCESSING_LSB32 != 0)
 				{
 					EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x40);
@@ -171,7 +171,7 @@ public class superchs
 	
 			case 0x01:
 			{
-				if (ACCESSING_MSB32)
+				if (ACCESSING_MSB32 != 0)
 				{
 					coin_lockout_w(0,~data & 0x01000000);
 					coin_lockout_w(1,~data & 0x02000000);
@@ -196,8 +196,8 @@ public class superchs
 		{
 			int delta;
 			int goal = 0x80;
-			if (fake &0x04) goal = 0xff;		/* pressing left */
-			if (fake &0x08) goal = 0x0;		/* pressing right */
+			if ((fake & 0x04) != 0) goal = 0xff;		/* pressing left */
+			if ((fake & 0x08) != 0) goal = 0x0;		/* pressing right */
 	
 			if (steer!=goal)
 			{
@@ -450,13 +450,13 @@ public class superchs
 	
 	static NVRAM_HANDLER( superchs )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&superchs_eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the wheel setup values */

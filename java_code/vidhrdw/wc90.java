@@ -225,7 +225,7 @@ public class wc90
 	
 	static void drawsprite_16x32( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ( bank & 2 ) {
+		if ((bank & 2) != 0) {
 			WC90_DRAW_SPRITE( code+1, sx, sy+16 );
 			WC90_DRAW_SPRITE( code, sx, sy );
 		} else {
@@ -236,7 +236,7 @@ public class wc90
 	
 	static void drawsprite_16x64( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ( bank & 2 ) {
+		if ((bank & 2) != 0) {
 			WC90_DRAW_SPRITE( code+3, sx, sy+48 );
 			WC90_DRAW_SPRITE( code+2, sx, sy+32 );
 			WC90_DRAW_SPRITE( code+1, sx, sy+16 );
@@ -251,7 +251,7 @@ public class wc90
 	
 	static void drawsprite_32x16( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ( bank & 1 ) {
+		if ((bank & 1) != 0) {
 			WC90_DRAW_SPRITE( code+1, sx+16, sy );
 			WC90_DRAW_SPRITE( code, sx, sy );
 		} else {
@@ -288,7 +288,7 @@ public class wc90
 	
 	static void drawsprite_64x16( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ( bank & 1 ) {
+		if ((bank & 1) != 0) {
 			WC90_DRAW_SPRITE( code+3, sx+48, sy );
 			WC90_DRAW_SPRITE( code+2, sx+32, sy );
 			WC90_DRAW_SPRITE( code+1, sx+16, sy );
@@ -376,7 +376,7 @@ public class wc90
 	
 			if ( ( bank >> 4 ) == priority ) {
 	
-				if ( bank & 4 ) { /* visible */
+				if ((bank & 4) != 0) { /* visible */
 					which = ( spriteram[offs+2] >> 2 ) + ( spriteram[offs+3] << 6 );
 	
 					sx = spriteram[offs + 8] + ( (spriteram[offs + 9] & 1 ) << 8 );

@@ -319,13 +319,13 @@ public class nbmj8688
 	
 		if (gfxtype == GFXTYPE_PURE_12BIT)
 		{
-			if (mjsikaku_gfxflag2 & 0x20) return;
+			if ((mjsikaku_gfxflag2 & 0x20) != 0) return;
 		}
 	
 		startx = blitter_destx + blitter_sizex;
 		starty = blitter_desty + blitter_sizey;
 	
-		if (blitter_direction_x)
+		if (blitter_direction_x != 0)
 		{
 			sizex = blitter_sizex ^ 0xff;
 			skipx = 1;
@@ -336,7 +336,7 @@ public class nbmj8688
 			skipx = -1;
 		}
 	
-		if (blitter_direction_y)
+		if (blitter_direction_y != 0)
 		{
 			sizey = blitter_sizey ^ 0xff;
 			skipy = 1;
@@ -367,7 +367,7 @@ public class nbmj8688
 				dx2 = (2 * x + 1) & 0x1ff;
 				dy = (y + mjsikaku_scrolly) & 0xff;
 	
-				if (mjsikaku_flipscreen)
+				if (mjsikaku_flipscreen != 0)
 				{
 					dx1 ^= 0x1ff;
 					dx2 ^= 0x1ff;
@@ -376,11 +376,11 @@ public class nbmj8688
 	
 				if (gfxtype == GFXTYPE_HYBRID_16BIT)
 				{
-					if (mjsikaku_gfxflag3 & 0x40)
+					if ((mjsikaku_gfxflag3 & 0x40) != 0)
 					{
 						// direct mode
 	
-						if (mjsikaku_gfxflag3 & 0x80)
+						if ((mjsikaku_gfxflag3 & 0x80) != 0)
 						{
 							/* least significant bits */
 							if (color != 0xff)
@@ -405,12 +405,12 @@ public class nbmj8688
 						// lookup table mode
 	
 						// unknown flag (seiha, seiham)
-					//	if (mjsikaku_gfxflag3 & 0x80) return;
+					//	if ((mjsikaku_gfxflag3 & 0x80) != 0) return;
 	
 						// unknown (seiha, seiham, iemoto, ojousan)
 						if (!(mjsikaku_gfxflag2 & 0x20)) return;
 	
-						if (blitter_direction_x)
+						if (blitter_direction_x != 0)
 						{
 							// flip
 							color1 = (color & 0x0f) >> 0;
@@ -447,7 +447,7 @@ public class nbmj8688
 				{
 					/* 12-bit palette with 4-to-12 bit lookup table */
 	
-					if (blitter_direction_x)
+					if (blitter_direction_x != 0)
 					{
 						// flip
 						color1 = (color & 0x0f) >> 0;
@@ -483,7 +483,7 @@ public class nbmj8688
 						   changed as usual.
 						 */
 	
-						if (mjsikaku_gfxflag2 & 0x10)
+						if ((mjsikaku_gfxflag2 & 0x10) != 0)
 						{
 							// 4096 colors low mode (2nd draw upper)
 							color = nbmj8688_color_lookup[((color & 0xf0) >> 4)];
@@ -503,7 +503,7 @@ public class nbmj8688
 					}
 					else
 					{
-						if (mjsikaku_gfxflag2 & 0x04)
+						if ((mjsikaku_gfxflag2 & 0x04) != 0)
 						{
 							// direct mode
 	
@@ -513,7 +513,7 @@ public class nbmj8688
 						{
 							// lookup table mode
 	
-							if (blitter_direction_x)
+							if (blitter_direction_x != 0)
 							{
 								// flip
 								color1 = (color & 0x0f) >> 0;
@@ -701,10 +701,10 @@ public class nbmj8688
 			}
 		}
 	
-		if (mjsikaku_dispflag)
+		if (mjsikaku_dispflag != 0)
 		{
 			int scrolly;
-			if (mjsikaku_flipscreen) scrolly =   mjsikaku_scrolly;
+			if (mjsikaku_flipscreen != 0) scrolly =   mjsikaku_scrolly;
 			else                     scrolly = (-mjsikaku_scrolly) & 0xff;
 	
 			if (cliprect->min_y > 64)	// kludge to compensate for LCD on top of screen

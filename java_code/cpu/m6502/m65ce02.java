@@ -142,14 +142,14 @@ public class m65ce02
 	
 	unsigned m65ce02_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(m65ce02_Regs*)dst = m65ce02;
 		return sizeof(m65ce02_Regs);
 	}
 	
 	void m65ce02_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			m65ce02 = *(m65ce02_Regs*)src;
 			change_pc16(PCD);

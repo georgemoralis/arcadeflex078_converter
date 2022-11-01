@@ -202,7 +202,7 @@ public class balsente
 	
 		/* get a pointer to the source image */
 		src = &sprite_data[(64 * image) & sprite_mask];
-		if (flags & 0x80) src += 4 * 15;
+		if ((flags & 0x80) != 0) src += 4 * 15;
 	
 		/* loop over y */
 		for (y = 0; y < 16; y++, ypos = (ypos + 1) & 255)
@@ -262,7 +262,7 @@ public class balsente
 			}
 			else
 				src += 4;
-			if (flags & 0x80) src -= 2 * 4;
+			if ((flags & 0x80) != 0) src -= 2 * 4;
 		}
 	}
 	
@@ -301,7 +301,7 @@ public class balsente
 			draw_one_sprite(bitmap, cliprect, &spriteram[(0xe0 + i * 4) & 0xff]);
 	
 		/* draw a crosshair */
-		if (balsente_shooter)
+		if (balsente_shooter != 0)
 		{
 			int beamx = balsente_shooter_x;
 			int beamy = balsente_shooter_y - 10;

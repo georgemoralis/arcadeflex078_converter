@@ -232,7 +232,7 @@ public class starwars
 	{
 		port_A |= 0x80;  /* command from main cpu pending */
 		sound_data = data;
-		if (PA7_irq)
+		if (PA7_irq != 0)
 			cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 	} };
 	

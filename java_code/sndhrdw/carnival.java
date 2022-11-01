@@ -142,54 +142,54 @@ public class carnival
 	
 		port1State = data;
 	
-		if ( bitsGoneLow & OUT_PORT_1_RIFLE_SHOT )
+		if ((bitsGoneLow & OUT_PORT_1_RIFLE_SHOT) != 0)
 		{
 			PLAY( SND_RIFLE_SHOT, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_CLANG )
+		if ((bitsGoneLow & OUT_PORT_1_CLANG) != 0)
 		{
 			PLAY( SND_CLANG, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_DUCK_1 )
+		if ((bitsGoneLow & OUT_PORT_1_DUCK_1) != 0)
 		{
 			PLAY( SND_DUCK_1, 1 );
 		}
-		if ( bitsGoneHigh & OUT_PORT_1_DUCK_1 )
+		if ((bitsGoneHigh & OUT_PORT_1_DUCK_1) != 0)
 		{
 			STOP( SND_DUCK_1 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_DUCK_2 )
+		if ((bitsGoneLow & OUT_PORT_1_DUCK_2) != 0)
 		{
 			PLAY( SND_DUCK_2, 1 );
 		}
-		if ( bitsGoneHigh & OUT_PORT_1_DUCK_2 )
+		if ((bitsGoneHigh & OUT_PORT_1_DUCK_2) != 0)
 		{
 			STOP( SND_DUCK_2 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_DUCK_3 )
+		if ((bitsGoneLow & OUT_PORT_1_DUCK_3) != 0)
 		{
 			PLAY( SND_DUCK_3, 1 );
 		}
-		if ( bitsGoneHigh & OUT_PORT_1_DUCK_3 )
+		if ((bitsGoneHigh & OUT_PORT_1_DUCK_3) != 0)
 		{
 			STOP( SND_DUCK_3 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_PIPE_HIT )
+		if ((bitsGoneLow & OUT_PORT_1_PIPE_HIT) != 0)
 		{
 			PLAY( SND_PIPE_HIT, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_BONUS_1 )
+		if ((bitsGoneLow & OUT_PORT_1_BONUS_1) != 0)
 		{
 			PLAY( SND_BONUS_1, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_BONUS_2 )
+		if ((bitsGoneLow & OUT_PORT_1_BONUS_2) != 0)
 		{
 			PLAY( SND_BONUS_2, 0 );
 		}
@@ -219,17 +219,17 @@ public class carnival
 	
 		port2State = data;
 	
-		if ( bitsGoneLow & OUT_PORT_2_BEAR )
+		if ((bitsGoneLow & OUT_PORT_2_BEAR) != 0)
 		{
 			PLAY( SND_BEAR, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_RANKING )
+		if ((bitsGoneLow & OUT_PORT_2_RANKING) != 0)
 		{
 			PLAY( SND_RANKING, 0 );
 		}
 	
-		if ( bitsGoneHigh & OUT_PORT_2_MUSIC_RESET )
+		if ((bitsGoneHigh & OUT_PORT_2_MUSIC_RESET) != 0)
 		{
 			/* reset output is no longer asserted active low */
 			cpu_set_reset_line( CPU_MUSIC_ID, PULSE_LINE );

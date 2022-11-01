@@ -43,10 +43,10 @@ public class wolfpack
 	
 		color = 0x48;
 	
-		if (data & 0x10) color += 0x13;
-		if (data & 0x20) color += 0x22;
-		if (data & 0x40) color += 0x3A;
-		if (data & 0x80) color += 0x48;
+		if ((data & 0x10) != 0) color += 0x13;
+		if ((data & 0x20) != 0) color += 0x22;
+		if ((data & 0x40) != 0) color += 0x3A;
+		if ((data & 0x80) != 0) color += 0x48;
 	
 		palette_set_color(3,
 			color,

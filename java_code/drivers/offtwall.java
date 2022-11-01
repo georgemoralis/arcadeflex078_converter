@@ -38,12 +38,12 @@ public class offtwall
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 4;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 6;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -76,7 +76,7 @@ public class offtwall
 	static READ16_HANDLER( special_port3_r )
 	{
 		int result = readinputport(3);
-		if (atarigen_cpu_to_sound_ready) result ^= 0x0020;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0020;
 		return result;
 	}
 	
@@ -84,7 +84,7 @@ public class offtwall
 	static WRITE16_HANDLER( io_latch_w )
 	{
 		/* lower byte */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 4 resets the sound CPU */
 			cpu_set_reset_line(1, (data & 0x10) ? CLEAR_LINE : ASSERT_LINE);

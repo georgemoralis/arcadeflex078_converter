@@ -59,8 +59,8 @@ public class megazone
 	
 	
 			C = 0;
-			if (data & 1) C +=  10000;	/*  10000pF = 0.01uF */
-			if (data & 2) C += 220000;	/* 220000pF = 0.22uF */
+			if ((data & 1) != 0) C +=  10000;	/*  10000pF = 0.01uF */
+			if ((data & 2) != 0) C += 220000;	/* 220000pF = 0.22uF */
 			data >>= 2;
 			set_RC_filter(i,1000,2200,200,C);
 		}

@@ -122,11 +122,11 @@ public class balsente
 		timer_set(cpu_getscanlineperiod() * 0.9, 0, irq_off);
 	
 		/* if this is Grudge Match, update the steering */
-		if (grudge_steering_result & 0x80)
+		if ((grudge_steering_result & 0x80) != 0)
 			update_grudge_steering();
 	
 		/* if we're a shooter, we do a little more work */
-		if (balsente_shooter)
+		if (balsente_shooter != 0)
 		{
 			UINT8 tempx, tempy;
 	
@@ -239,7 +239,7 @@ public class balsente
 			UINT32 noise_counter = noise_position[chip];
 	
 			/* try to use the poly17 if we can */
-			if (poly17)
+			if (poly17 != 0)
 			{
 				while (count--)
 				{
@@ -313,7 +313,7 @@ public class balsente
 		if (memory_region_length(REGION_CPU1) > 0x40000) bank |= (data >> 4) & 8;
 	
 		/* when they set the AB bank, it appears as though the CD bank is reset */
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 		{
 			cpu_setbank(1, &memory_region(REGION_CPU1)[0x10000 + 0x6000 * bank]);
 			cpu_setbank(2, &memory_region(REGION_CPU1)[0x12000 + 0x6000 * 6]);
@@ -368,7 +368,7 @@ public class balsente
 		if (!(m6850_sound_status & 0x02))
 		{
 			/* set the overrun bit if the data in the destination hasn't been read yet */
-			if (m6850_status & 0x01)
+			if ((m6850_status & 0x01) != 0)
 				m6850_status |= 0x20;
 	
 			/* copy the sound's output to our input */
@@ -382,10 +382,10 @@ public class balsente
 		}
 	
 		/* main -> sound CPU communications */
-		if (m6850_data_ready)
+		if (m6850_data_ready != 0)
 		{
 			/* set the overrun bit if the data in the destination hasn't been read yet */
-			if (m6850_sound_status & 0x01)
+			if ((m6850_sound_status & 0x01) != 0)
 				m6850_sound_status |= 0x20;
 	
 			/* copy the main CPU's output to our input */
@@ -897,7 +897,7 @@ public class balsente
 		int i;
 	
 		/* if there's already a timer, remove it */
-		if (counter_0_timer_active)
+		if (counter_0_timer_active != 0)
 			timer_adjust(counter_0_timer, TIME_NEVER, 0, 0);
 		counter_0_timer_active = 0;
 	
@@ -955,7 +955,7 @@ public class balsente
 		counter_control = data;
 	
 		/* bit D0 enables/disables audio */
-		if (diff_counter_control & 0x01)
+		if ((diff_counter_control & 0x01) != 0)
 		{
 			int ch;
 			for (ch = 0; ch < MIXER_MAX_CHANNELS; ch++)
@@ -1053,7 +1053,7 @@ public class balsente
 			}
 	
 		/* if a timer for counter 0 is running, recompute */
-		if (counter_0_timer_active)
+		if (counter_0_timer_active != 0)
 			update_counter_0_timer();
 	} };
 	
@@ -1062,7 +1062,7 @@ public class balsente
 	public static WriteHandlerPtr balsente_dac_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* LSB or MSB? */
-		if (offset & 1)
+		if ((offset & 1) != 0)
 			dac_value = (dac_value & 0xfc0) | ((data >> 2) & 0x03f);
 		else
 			dac_value = (dac_value & 0x03f) | ((data << 6) & 0xfc0);

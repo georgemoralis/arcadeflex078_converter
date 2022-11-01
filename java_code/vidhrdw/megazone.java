@@ -141,7 +141,7 @@ public class megazone
 				sy = offs / 32;
 				flipx = colorram[offs] & (1<<6);
 				flipy = colorram[offs] & (1<<5);
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -163,7 +163,7 @@ public class megazone
 			int scrollx;
 			int scrolly;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				scrollx = *megazone_scrolly;
 				scrolly = *megazone_scrollx;
@@ -187,9 +187,9 @@ public class megazone
 	
 	
 				sx = spriteram[offs + 3];
-				if (flipscreen) sx-=11; else sx+=4*8;   	  // Sprite y-position correction depending on screen flip
+				if (flipscreen != 0) sx-=11; else sx+=4*8;   	  // Sprite y-position correction depending on screen flip
 				sy = 255-((spriteram[offs + 1]+16)&0xff);
-				if (flipscreen) sy+=2; 			  	  // Sprite x-position correction depending on screen flip
+				if (flipscreen != 0) sy+=2; 			  	  // Sprite x-position correction depending on screen flip
 	
 				flipx = ~spriteram[offs+0] & 0x40;
 				flipy = spriteram[offs+0] & 0x80;
@@ -216,7 +216,7 @@ public class megazone
 				flipx = megazone_colorram2[offs] & (1<<6);
 				flipy = megazone_colorram2[offs] & (1<<5);
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 35 - sx;
 					sy = 31 - sy;

@@ -285,11 +285,11 @@ public class midvunit
 		{
 			int which = (offset >> 4) & 1;
 	//	logerror("%06X:tms32031_control_w(%02X) = %08X\n", activecpu_get_pc(), offset, data);
-			if (data & 0x40)
+			if ((data & 0x40) != 0)
 				timer_adjust(timer[which], TIME_NEVER, 0, TIME_NEVER);
 	
 			/* bit 0x200 selects internal clocking, which is 1/2 the main CPU clock rate */
-			if (data & 0x200)
+			if ((data & 0x200) != 0)
 				timer_rate = (double)Machine->drv->cpu[0].cpu_clock * 0.5;
 			else
 				timer_rate = 10000000.;
@@ -445,7 +445,7 @@ public class midvunit
 				break;
 		}
 	
-		if (logit)
+		if (logit != 0)
 			logerror("%06X:midvplus_misc_w(%d) = %08X\n", activecpu_get_pc(), offset, data);
 	}
 	
@@ -1386,7 +1386,7 @@ public class midvunit
 		install_mem_write32_handler(0, ADDR_RANGE(0x9d0000, 0x9d0000), bit_reset_w);
 	
 		/* speedups */
-		if (speedup)
+		if (speedup != 0)
 			generic_speedup = install_mem_read32_handler(0, ADDR_RANGE(speedup, speedup + 1), generic_speedup_r);
 	}
 	static DRIVER_INIT( crusnwld ) { init_crusnwld_common(0xd4c0); }

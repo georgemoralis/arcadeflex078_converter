@@ -250,12 +250,12 @@ public class exidy440
 	
 	static NVRAM_HANDLER( exidy440 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			/* the EEROM lives in the uppermost 8k of the top bank */
 			mame_fwrite(file, &memory_region(REGION_CPU1)[0x10000 + 15 * 0x4000 + 0x2000], 0x2000);
 		else
 		{
-			if (file)
+			if (file != 0)
 				mame_fread(file, &memory_region(REGION_CPU1)[0x10000 + 15 * 0x4000 + 0x2000], 0x2000);
 			else
 				memset(&memory_region(REGION_CPU1)[0x10000 + 15 * 0x4000 + 0x2000], 0, 0x2000);
@@ -319,14 +319,14 @@ public class exidy440
 		int result = input_port_0_r(offset);
 	
 		/* the FIRQ cause is reflected in the upper 2 bits */
-		if (exidy440_firq_vblank) result ^= 0x80;
-		if (exidy440_firq_beam) result ^= 0x40;
+		if (exidy440_firq_vblank != 0) result ^= 0x80;
+		if (exidy440_firq_beam != 0) result ^= 0x40;
 	
 		/* Whodunit needs the VBLANK bit mirrored to bit 0 */
 		if (mirror_vblank_bit && exidy440_firq_vblank) result ^= 0x01;
 	
 		/* Hit'N Miss needs the trigger bit mirrored to bit 0 */
-		if (mirror_trigger_bit) result = (result & 0xfe) | ((result >> 1) & 1);
+		if (mirror_trigger_bit != 0) result = (result & 0xfe) | ((result >> 1) & 1);
 	
 		/* return with the appropriate XOR */
 		return result ^ port_0_xor;
@@ -399,7 +399,7 @@ public class exidy440
 				result ^= port_3_xor;
 	
 				/* sound command acknowledgements come on bit 3 here */
-				if (exidy440_sound_command_ack)
+				if (exidy440_sound_command_ack != 0)
 					result ^= 0x08;
 				break;
 	

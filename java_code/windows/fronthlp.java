@@ -129,14 +129,14 @@ public class fronthlp
 		strncpy(s2, sp2, 8); s2[8] = 0; if (s2[0] == 0) strcpy(s2, "*");
 	
 		p = strchr(s1, '*');
-		if (p)
+		if (p != 0)
 		{
 			for (i = p - s1; i < 8; i++) s1[i] = '?';
 			s1[8] = 0;
 		}
 	
 		p = strchr(s2, '*');
-		if (p)
+		if (p != 0)
 		{
 			for (i = p - s2; i < 8; i++) s2[i] = '?';
 			s2[8] = 0;
@@ -412,7 +412,7 @@ public class fronthlp
 		}
 	
 		if (S_ISDIR(s.st_mode)) {
-			if (enter_dirs)
+			if (enter_dirs != 0)
 				identify_dir(name);
 		} else {
 			unsigned l = strlen(name);
@@ -460,7 +460,7 @@ public class fronthlp
 		if (!gamename && !help && !list && !ident && !verify)
 			help = 1;
 	
-		if (help)  /* brief help - useful to get current version info */
+		if (help != 0)  /* brief help - useful to get current version info */
 		{
 			#ifndef MESS
 			printf("M.A.M.E. v%s - Multiple Arcade Machine Emulator\n"
@@ -486,7 +486,7 @@ public class fronthlp
 			gamename = all_games;
 	
 		/* sort the list if requested */
-		if (sortby)
+		if (sortby != 0)
 		{
 			int count = 0;
 	
@@ -569,7 +569,7 @@ public class fronthlp
 						printf("\"%s",name);
 	
 						/* print the additional description only if we are listing clones */
-						if (listclones)
+						if (listclones != 0)
 						{
 							if (strchr(drivers[i]->description,'('))
 								printf(" %s",strchr(drivers[i]->description,'('));
@@ -662,7 +662,7 @@ public class fronthlp
 	//					get_rom_sample_path (argc, argv, i, NULL);
 						if (RomsetMissing (i))
 						{
-							if (first_missing)
+							if (first_missing != 0)
 							{
 								first_missing = 0;
 								printf ("game      clone of  description\n");
@@ -821,7 +821,7 @@ public class fronthlp
 						strcat(name_ref," ");
 	
 						/* print the additional description only if we are listing clones */
-						if (listclones)
+						if (listclones != 0)
 						{
 							if (strchr(drivers[i]->description,'('))
 								strcat(name_ref,strchr(drivers[i]->description,'('));
@@ -853,7 +853,7 @@ public class fronthlp
 								j++;
 							}
 	
-							if (foundworking)
+							if (foundworking != 0)
 								printf("| No(1) ");
 							else
 								printf("|   No  ");
@@ -887,14 +887,14 @@ public class fronthlp
 								printf("|   No  ");
 							else if (drivers[i]->flags & GAME_IMPERFECT_SOUND)
 							{
-								if (samplenames)
+								if (samplenames != 0)
 									printf("|Part(2)");
 								else
 									printf("|Partial");
 							}
 							else
 							{
-								if (samplenames)
+								if (samplenames != 0)
 									printf("| Yes(2)");
 								else
 									printf("|  Yes  ");
@@ -931,7 +931,7 @@ public class fronthlp
 						printf("%s",name);
 	
 						/* print the additional description only if we are listing clones */
-						if (listclones)
+						if (listclones != 0)
 						{
 							if (strchr(drivers[i]->description,'('))
 								printf(" %s",strchr(drivers[i]->description,'('));
@@ -1076,7 +1076,7 @@ public class fronthlp
 								}
 							}
 	
-							if (total)
+							if (total != 0)
 							{
 								if (total == 1)							{ numcount[0]++; gamescount[0] += total; }
 								else if (total >= 2 && total <= 3)		{ numcount[1]++; gamescount[1] += total; }
@@ -1152,7 +1152,7 @@ public class fronthlp
 												/* Dump checksum infos only on the first match for a given
 												   ROM. This reduces the output size and makes it more
 												   readable. */
-												if (first_match)
+												if (first_match != 0)
 											{
 													char buf[512];
 	
@@ -1356,7 +1356,7 @@ public class fronthlp
 								}
 							}
 	
-							if (romnum)
+							if (romnum != 0)
 							{
 								if (romnum > MAXCOUNT) romnum = MAXCOUNT;
 								numcount[romnum-1]++;
@@ -1557,7 +1557,7 @@ public class fronthlp
 							i++;
 						}
 	
-						if (count)
+						if (count != 0)
 	//						printf("%s (%d-%d)\t%d\n",soundtype_name(type),minyear,maxyear,count);
 							printf("%s\t%d\n",soundtype_name(type),count);
 					}
@@ -1611,7 +1611,7 @@ public class fronthlp
 				return 0;
 		}
 	
-		if (verify)  /* "verify" utilities */
+		if (verify != 0)  /* "verify" utilities */
 		{
 			int err = 0;
 			int correct = 0;
@@ -1636,7 +1636,7 @@ public class fronthlp
 				/* set rom and sample path correctly */
 	//			get_rom_sample_path (argc, argv, i, NULL);
 	
-				if (verify & VERIFY_ROMS)
+				if ((verify & VERIFY_ROMS) != 0)
 				{
 					res = VerifyRomSet (i,(verify & VERIFY_TERSE) ? terse_printf : (verify_printf_proc)printf);
 	
@@ -1653,7 +1653,7 @@ public class fronthlp
 							printf ("[%s] ", drivers[i]->clone_of->name);
 					}
 				}
-				if (verify & VERIFY_SAMPLES)
+				if ((verify & VERIFY_SAMPLES) != 0)
 				{
 					const char **samplenames = NULL;
 					expand_machine_driver(drivers[i]->drv, &drv);
@@ -1690,7 +1690,7 @@ public class fronthlp
 				}
 				else if (res == CORRECT)
 				{
-					if (verify & VERIFY_VERBOSE)
+					if ((verify & VERIFY_VERBOSE) != 0)
 						printf ("is good\n");
 					correct++;
 				}
@@ -1699,7 +1699,7 @@ public class fronthlp
 					printf ("is best available\n");
 					correct++;
 				}
-				if (res)
+				if (res != 0)
 					err = res;
 	
 	nextloop:
@@ -1727,7 +1727,7 @@ public class fronthlp
 			}
 			return 0;
 		}
-		if (ident)
+		if (ident != 0)
 		{
 			if (ident == 2) silentident = 1;
 			else silentident = 0;

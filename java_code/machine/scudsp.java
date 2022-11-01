@@ -273,8 +273,8 @@ public class scudsp
 	
 	void dsp_prg_ctrl(UINT32 data)
 	{
-		if(LEF) dsp_reg.pc = (data & 0xff);
-		if(EXF) dsp_execute_program();
+		if (LEF != 0) dsp_reg.pc = (data & 0xff);
+		if (EXF != 0) dsp_execute_program();
 		if(EF && (!(stv_scu[40] & 0x0020)))
 			cpu_set_irq_line_and_vector(0, 0xa, HOLD_LINE , 0x45);
 	}
@@ -415,7 +415,7 @@ public class scudsp
 			case 0x9:	/* RR */
 				if ( dsp_reg.acl & 0x1 ) {CF_1;} else {CF_0;}
 				dsp_reg.alu = dsp_reg.acl >> 1;
-				if ( CF ) dsp_reg.alu |= 0x80000000;
+				if (CF != 0) dsp_reg.alu |= 0x80000000;
 				if ( dsp_reg.alu == 0 ) {ZF_1;} else {ZF_0;}
 				if ( dsp_reg.alu & 0x80000000 )
 				{
@@ -438,7 +438,7 @@ public class scudsp
 			case 0xB:	/* RL */
 				if ( dsp_reg.acl & 0x80000000 ) {CF_1;} else {CF_0;}
 				dsp_reg.alu = dsp_reg.acl << 1;
-				if ( CF ) dsp_reg.alu |= 0x1;
+				if (CF != 0) dsp_reg.alu |= 0x1;
 				if ( dsp_reg.alu == 0 ) {ZF_1;} else {ZF_0;}
 				if ( dsp_reg.alu & 0x80000000 )
 				{
@@ -455,7 +455,7 @@ public class scudsp
 			case 0xF:	/* RL8 */
 				if ( dsp_reg.acl & 0x01000000 ) {CF_1;} else {CF_0;}
 				dsp_reg.alu = (dsp_reg.acl >> 24) | (dsp_reg.acl << 8);
-				if ( CF ) dsp_reg.alu |= 0x1;
+				if (CF != 0) dsp_reg.alu |= 0x1;
 				if ( dsp_reg.alu == 0 ) {ZF_1;} else {ZF_0;}
 				if ( dsp_reg.alu & 0x80000000 )
 				{
@@ -467,7 +467,7 @@ public class scudsp
 		}
 	
 		/* X-Bus */
-		if ( opcode & 0x2000000 )
+		if ((opcode & 0x2000000) != 0)
 		{
 			/* MOV [s],X */
 			dsp_reg.rx = dsp_get_source_mem_value( (opcode & 0x700000) >> 20 );
@@ -496,7 +496,7 @@ public class scudsp
 		}
 	
 		/* Y-Bus */
-		if ( opcode & 0x80000 )
+		if ((opcode & 0x80000) != 0)
 		{
 			/* MOV [s],Y */
 			dsp_reg.ry = dsp_get_source_mem_value( (opcode & 0x1C000 ) >> 14 );
@@ -549,19 +549,19 @@ public class scudsp
 	{
 		UINT32 value;
 	
-		if ( opcode & 0x2000000 )
+		if ((opcode & 0x2000000) != 0)
 		{
 			if ( dsp_compute_condition( (opcode & 0x3F80000 ) >> 18 ) )
 			{
 				value = opcode & 0x7ffff;
-				if ( value & 0x40000 ) value |= 0xfff80000;
+				if ((value & 0x40000) != 0) value |= 0xfff80000;
 				dsp_set_dest_mem_reg_2( (opcode & 0x3C000000) >> 26, value );
 			}
 		}
 		else
 		{
 			value = opcode & 0x1ffffff;
-			if ( value & 0x1000000 ) value |= 0xfe000000;
+			if ((value & 0x1000000) != 0) value |= 0xfe000000;
 			dsp_set_dest_mem_reg_2( (opcode & 0x3C000000) >> 26, value );
 		}
 	}
@@ -578,7 +578,7 @@ public class scudsp
 		UINT32 counter = 0;
 		UINT32 data;
 	
-		if ( opcode & 0x2000 )
+		if ((opcode & 0x2000) != 0)
 		{
 			transfer_cnt = dsp_get_source_mem_value( opcode & 0xf );
 			switch ( add & 0x1 )
@@ -648,7 +648,7 @@ public class scudsp
 	
 	static void dsp_jump( void )
 	{
-		if ( opcode & 0x3f80000 )
+		if ((opcode & 0x3f80000) != 0)
 		{
 			if ( dsp_compute_condition( (opcode & 0x3f80000) >> 19 ) )
 			{
@@ -665,23 +665,23 @@ public class scudsp
 	
 	static void dsp_end( void )
 	{
-		if(opcode & 0x08000000)
+		if ((opcode & 0x08000000) != 0)
 		{
 			/*ENDI*/
 			if(!EF) stv_scu[32]^=0x00040000;
-			if(EXF) stv_scu[32]^=0x00100000;
+			if (EXF != 0) stv_scu[32]^=0x00100000;
 		}
 		else
 		{
 			/*END*/
-			if(EXF) stv_scu[32]^=0x00100000;
+			if (EXF != 0) stv_scu[32]^=0x00100000;
 		}
 	
 	};
 	
 	static void dsp_loop( void )
 	{
-		if ( opcode & 0x8000000 )
+		if ((opcode & 0x8000000) != 0)
 		{
 			/* LPS */
 			if ( dsp_reg.lop != 0 )
@@ -1069,7 +1069,7 @@ public class scudsp
 	
 		/* X-Bus */
 		data[0] = (op & 0x700000) >> 20;
-		if ( op & 0x2000000 )
+		if ((op & 0x2000000) != 0)
 		{
 			dsp_dasm_prefix( X_Commands[ 4 ], temp_buffer, data );
 		}
@@ -1086,7 +1086,7 @@ public class scudsp
 		
 		/* Y-Bus */
 		data[0] = (op & 0x1C000 ) >> 14 ;
-		if ( op & 0x80000 )
+		if ((op & 0x80000) != 0)
 		{
 			dsp_dasm_prefix( Y_Commands[4], temp_buffer, data );
 		}
@@ -1138,7 +1138,7 @@ public class scudsp
 	void dsp_dasm_jump( UINT32 op, char *buffer )
 	{
 		UINT32 data[2];
-		if ( op & 0x3F80000 )
+		if ((op & 0x3F80000) != 0)
 		{
 			data[0] = (op & 0x3F80000) >> 19;
 			data[1] = op & 0xff;
@@ -1153,7 +1153,7 @@ public class scudsp
 	
 	void dsp_dasm_loop( UINT32 op, char* buffer )
 	{
-		if ( op & 0x8000000 )
+		if ((op & 0x8000000) != 0)
 		{
 			strcpy( buffer, "LPS" );
 		}
@@ -1165,7 +1165,7 @@ public class scudsp
 	
 	void dsp_dasm_end( UINT32 op, char* buffer )
 	{
-		if ( op & 0x8000000 )
+		if ((op & 0x8000000) != 0)
 		{
 			strcpy( buffer, "ENDI" );
 		}

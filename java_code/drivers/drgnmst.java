@@ -45,7 +45,7 @@ public class drgnmst
 	
 	static WRITE16_HANDLER( drgnmst_snd_command_w )
 	{
-		if (ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			drgnmst_snd_command = (data & 0xff);
 			cpu_yield();
 		}
@@ -54,7 +54,7 @@ public class drgnmst
 	static WRITE16_HANDLER( drgnmst_snd_flag_w )
 	{
 		/* Enables the following 68K write operation to latch through to the PIC */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			drgnmst_snd_flag = 1;
 	}
 	
@@ -82,7 +82,7 @@ public class drgnmst
 	
 	public static ReadHandlerPtr drgnmst_snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (drgnmst_snd_flag) {
+		if (drgnmst_snd_flag != 0) {
 			drgnmst_snd_flag = 0;
 			return 0x40;
 		}
@@ -137,7 +137,7 @@ public class drgnmst
 		oki_new_bank = ((pic16c5x_port0 & 0xc) >> 2) | ((drgnmst_oki_control & 0x80) >> 5);
 		if (oki_new_bank != drgnmst_oki0_bank) {
 			drgnmst_oki0_bank = oki_new_bank;
-			if (drgnmst_oki0_bank) oki_new_bank--;
+			if (drgnmst_oki0_bank != 0) oki_new_bank--;
 			OKIM6295_set_bank_base(0, (oki_new_bank * 0x40000));
 		}
 		oki_new_bank = ((pic16c5x_port0 & 0x3) >> 0) | ((drgnmst_oki_control & 0x20) >> 3);

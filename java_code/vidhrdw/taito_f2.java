@@ -476,7 +476,7 @@ public class taito_f2
 		color = 0;
 	
 		f2_x_offset = f2_hide_pixels;   /* Get rid of 0-3 unwanted pixels on edge of screen. */
-		if (sprites_flipscreen) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
+		if (sprites_flipscreen != 0) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
 	
 		/* safety check to avoid getting stuck in bank 2 for games using only one bank */
 		if (area == 0x8000 &&
@@ -497,7 +497,7 @@ public class taito_f2
 	
 				/* Get rid of 0-3 unwanted pixels on edge of screen. */
 				f2_x_offset = f2_hide_pixels;
-				if (sprites_flipscreen) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
+				if (sprites_flipscreen != 0) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
 	
 				if (f2_game == FOOTCHMP)
 					area = 0x8000 * (spriteram_buffered[(offs+6)/2] & 0x0001);
@@ -526,7 +526,7 @@ public class taito_f2
 				if (scroll1y >= 0x800) scroll1y -= 0x1000;   /* signed value */
 			}
 	
-			if (disabled)
+			if (disabled != 0)
 				continue;
 	
 			spritedata = spriteram_buffered[(offs+8)/2];
@@ -547,7 +547,7 @@ public class taito_f2
 					big_sprite = 1;   /* we have started a new big sprite */
 				}
 			}
-			else if (big_sprite)
+			else if (big_sprite != 0)
 			{
 				last_continuation_tile = 1;   /* don't clear big_sprite until last tile done */
 			}
@@ -569,12 +569,12 @@ public class taito_f2
 	// journey in MjnQuest). You will see they are 1 pixel too far to the right.
 	// Where is this extra pixel offset coming from??
 	
-				if (x & 0x8000)   /* absolute (koshien) */
+				if ((x & 0x8000) != 0)   /* absolute (koshien) */
 				{
 					scrollx = - f2_x_offset - 0x60;
 					scrolly = 0;
 				}
-				else if (x & 0x4000)   /* ignore extra scroll */
+				else if ((x & 0x4000) != 0)   /* ignore extra scroll */
 				{
 					scrollx = master_scrollx - f2_x_offset - 0x60;
 					scrolly = master_scrolly;
@@ -609,7 +609,7 @@ public class taito_f2
 				}
 			}
 	
-			if (big_sprite)
+			if (big_sprite != 0)
 			{
 				zoomx = zoomxlatch;
 				zoomy = zoomylatch;
@@ -643,7 +643,7 @@ public class taito_f2
 				zy = (0x100 - zoomy) / 16;
 			}
 	
-			if (last_continuation_tile)
+			if (last_continuation_tile != 0)
 			{
 				big_sprite=0;
 				last_continuation_tile=0;
@@ -693,7 +693,7 @@ public class taito_f2
 			cury = (y + scrolly) & 0xfff;
 			if (cury >= 0x800)	cury -= 0x1000;   /* treat it as signed */
 	
-			if (sprites_flipscreen)
+			if (sprites_flipscreen != 0)
 			{
 				/* -zx/y is there to fix zoomed sprite coords in screenflip.
 				   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -717,7 +717,7 @@ public class taito_f2
 				sprite_ptr->zoomx = zx << 12;
 				sprite_ptr->zoomy = zy << 12;
 	
-				if (primasks)
+				if (primasks != 0)
 				{
 					sprite_ptr->primask = primasks[(color & 0xc0) >> 6];
 	
@@ -778,7 +778,7 @@ public class taito_f2
 	
 	static void taitof2_handle_sprite_buffering(void)
 	{
-		if (prepare_sprites)	/* no buffering */
+		if (prepare_sprites != 0)	/* no buffering */
 		{
 			memcpy(spriteram_buffered,spriteram16,spriteram_size);
 			prepare_sprites = 0;

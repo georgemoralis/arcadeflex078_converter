@@ -25,7 +25,7 @@ public class boxer
 	
 	static void pot_interrupt(int mask)
 	{
-		if (pot_latch & mask)
+		if ((pot_latch & mask) != 0)
 		{
 			cpu_set_nmi_line(0, ASSERT_LINE);
 		}

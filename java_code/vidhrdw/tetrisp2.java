@@ -95,7 +95,7 @@ public class tetrisp2
 	
 	WRITE16_HANDLER( tetrisp2_priority_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			data |= ((data & 0xff00) >> 8);
 			tetrisp2_priority[offset] = data;
@@ -105,7 +105,7 @@ public class tetrisp2
 	
 	WRITE16_HANDLER( rockn_priority_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			tetrisp2_priority[offset] = data;
 		}
@@ -338,7 +338,7 @@ public class tetrisp2
 			sy		=	(sy & 0x1ff) - (sy & 0x200);
 	
 			/* Flip Screen */
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = max_x + 1 - sx - xsize;	flipx = !flipx;
 				sy = max_y + 1 - sy - ysize;	flipy = !flipy;
@@ -364,10 +364,10 @@ public class tetrisp2
 			if (clip.min_y < min_y)	clip.min_y = min_y;
 			if (clip.max_y > max_y)	clip.max_y = max_y;
 	
-			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1;  sx -= xnum*8 - xsize - (tx & 7); }
+			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1;  sx -= xnum*8 - xsize - (tx & 7); }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1;  sx -= tx & 7; }
 	
-			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1;  sy -= ynum*8 - ysize - (ty & 7); }
+			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1;  sy -= ynum*8 - ysize - (ty & 7); }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1;  sy -= ty & 7; }
 	
 			primask = 0;
@@ -429,7 +429,7 @@ public class tetrisp2
 		}
 	
 		/* Flip Screen */
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			rot_ofsx = 0x053f;
 			rot_ofsy = 0x04df;
@@ -513,7 +513,7 @@ public class tetrisp2
 		}
 	
 		/* Flip Screen */
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			rot_ofsx = 0x053f;
 			rot_ofsy = 0x04df;

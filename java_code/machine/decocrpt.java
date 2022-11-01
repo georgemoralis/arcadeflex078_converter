@@ -619,7 +619,7 @@ public class decocrpt
 		}
 	#endif
 	
-		if (buffer)
+		if (buffer != 0)
 		{
 			memcpy(buffer,rom,len*2);
 	

@@ -76,7 +76,7 @@ public class tetrisp2
 	
 	static WRITE16_HANDLER( tetrisp2_systemregs_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			tetrisp2_systemregs[offset] = data;
 		}
@@ -86,7 +86,7 @@ public class tetrisp2
 	
 	static WRITE16_HANDLER( rockn_systemregs_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			tetrisp2_systemregs[offset] = data;
 			if (offset == 0x0c)
@@ -113,9 +113,9 @@ public class tetrisp2
 	
 	static WRITE16_HANDLER( tetrisp2_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
-			if (offset)	YMZ280B_data_0_w     (offset, data & 0xff);
+			if (offset != 0)	YMZ280B_data_0_w     (offset, data & 0xff);
 			else		YMZ280B_register_0_w (offset, data & 0xff);
 		}
 	}
@@ -181,11 +181,11 @@ public class tetrisp2
 	
 	NVRAM_HANDLER( tetrisp2 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file,tetrisp2_nvram,tetrisp2_nvram_size);
 		else
 		{
-			if (file)
+			if (file != 0)
 				mame_fread(file,tetrisp2_nvram,tetrisp2_nvram_size);
 			else
 			{

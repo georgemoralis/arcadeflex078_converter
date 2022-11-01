@@ -291,7 +291,7 @@ public class tms32031
 					break;
 				}
 	
-			if (whichtrap)
+			if (whichtrap != 0)
 			{
 				if (!tms32031.delayed)
 				{
@@ -339,7 +339,7 @@ public class tms32031
 	unsigned tms32031_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst)
+		if (dst != 0)
 			*(tms32031_regs *)dst = tms32031;
 	
 		/* return the context size */
@@ -350,7 +350,7 @@ public class tms32031
 	void tms32031_set_context(void *src)
 	{
 		/* copy the context */
-		if (src)
+		if (src != 0)
 			tms32031 = *(tms32031_regs *)src;
 		UPDATEPC(tms32031.pc);
 	
@@ -385,7 +385,7 @@ public class tms32031
 		}
 	
 		/* copy in the xf write routines */
-		if (config)
+		if (config != 0)
 		{
 			tms32031.xf0_w = config->xf0_w;
 			tms32031.xf1_w = config->xf1_w;
@@ -779,7 +779,7 @@ public class tms32031
 				offs |= RMEM(boot_rom_addr++) << (bits * i);
 	
 			/* if this is the first block, that's where we boot to */
-			if (first)
+			if (first != 0)
 			{
 				start_offset = offs;
 				first = 0;

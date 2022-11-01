@@ -50,10 +50,10 @@ public class relief
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 4;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -90,7 +90,7 @@ public class relief
 	static READ16_HANDLER( special_port2_r )
 	{
 		int result = readinputport(2);
-		if (atarigen_cpu_to_sound_ready) result ^= 0x0020;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0020;
 		if (!(result & 0x0080) || atarigen_get_hblank()) result ^= 0x0001;
 		return result;
 	}
@@ -105,13 +105,13 @@ public class relief
 	
 	static WRITE16_HANDLER( audio_control_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			ym2413_volume = (data >> 1) & 15;
 			atarigen_set_ym2413_vol((ym2413_volume * overall_volume * 100) / (127 * 15));
 			adpcm_bank_base = (0x040000 * ((data >> 6) & 3)) | (adpcm_bank_base & 0x100000);
 		}
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			adpcm_bank_base = (0x100000 * ((data >> 8) & 1)) | (adpcm_bank_base & 0x0c0000);
 	
 		OKIM6295_set_bank_base(0, adpcm_bank_base);
@@ -120,7 +120,7 @@ public class relief
 	
 	static WRITE16_HANDLER( audio_volume_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			overall_volume = data & 127;
 			atarigen_set_ym2413_vol((ym2413_volume * overall_volume * 100) / (127 * 15));
@@ -144,7 +144,7 @@ public class relief
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_data_0_w(offset, data & 0xff);
 	}
 	
@@ -158,9 +158,9 @@ public class relief
 	
 	static WRITE16_HANDLER( ym2413_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
-			if (offset & 1)
+			if ((offset & 1) != 0)
 				YM2413_data_port_0_w(0, data & 0xff);
 			else
 				YM2413_register_port_0_w(0, data & 0xff);

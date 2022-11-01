@@ -62,11 +62,11 @@ public class trackfld
 	
 	static NVRAM_HANDLER( trackfld )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 		{
 			mame_fwrite(file,nvram,nvram_size);
 	
-			if (we_flipped_the_switch)
+			if (we_flipped_the_switch != 0)
 			{
 				struct InputPort *in;
 	
@@ -93,7 +93,7 @@ public class trackfld
 		}
 		else
 		{
-			if (file)
+			if (file != 0)
 			{
 				mame_fread(file,nvram,nvram_size);
 				we_flipped_the_switch = 0;
@@ -127,11 +127,11 @@ public class trackfld
 	
 	static NVRAM_HANDLER( mastkin )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file,nvram,nvram_size);
 		else
 		{
-			if (file)
+			if (file != 0)
 				mame_fread(file,nvram,nvram_size);
 		}
 	}

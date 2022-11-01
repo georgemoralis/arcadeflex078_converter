@@ -411,7 +411,7 @@ public class xmltok
 	    if (*fromP == fromLim)
 	      break;
 	    c = (unsigned char)**fromP;
-	    if (c & 0x80) {
+	    if ((c & 0x80) != 0) {
 	      if (toLim - *toP < 2)
 	        break;
 	      *(*toP)++ = (char)((c >> 6) | UTF8_cval2);
@@ -1058,16 +1058,16 @@ public class xmltok
 	    }
 	  }
 	  else {
-	    if (versionPtr)
+	    if (versionPtr != 0)
 	      *versionPtr = val;
-	    if (versionEndPtr)
+	    if (versionEndPtr != 0)
 	      *versionEndPtr = ptr;
 	    if (!parsePseudoAttribute(enc, ptr, end, &name, &nameEnd, &val, &ptr)) {
 	      *badPtr = ptr;
 	      return 0;
 	    }
 	    if (!name) {
-	      if (isGeneralTextEntity) {
+	      if (isGeneralTextEntity != 0) {
 	        /* a TextDecl must have an EncodingDecl */
 	        *badPtr = ptr;
 	        return 0;
@@ -1081,9 +1081,9 @@ public class xmltok
 	      *badPtr = val;
 	      return 0;
 	    }
-	    if (encodingName)
+	    if (encodingName != 0)
 	      *encodingName = val;
-	    if (encoding)
+	    if (encoding != 0)
 	      *encoding = encodingFinder(enc, val, ptr - enc->minBytesPerChar);
 	    if (!parsePseudoAttribute(enc, ptr, end, &name, &nameEnd, &val, &ptr)) {
 	      *badPtr = ptr;
@@ -1098,11 +1098,11 @@ public class xmltok
 	    return 0;
 	  }
 	  if (XmlNameMatchesAscii(enc, val, ptr - enc->minBytesPerChar, KW_yes)) {
-	    if (standalone)
+	    if (standalone != 0)
 	      *standalone = 1;
 	  }
 	  else if (XmlNameMatchesAscii(enc, val, ptr - enc->minBytesPerChar, KW_no)) {
-	    if (standalone)
+	    if (standalone != 0)
 	      *standalone = 0;
 	  }
 	  else {
@@ -1353,7 +1353,7 @@ public class xmltok
 	  }
 	  e->userData = userData;
 	  e->convert = convert;
-	  if (convert) {
+	  if (convert != 0) {
 	    e->normal.isName2 = unknown_isName;
 	    e->normal.isName3 = unknown_isName;
 	    e->normal.isName4 = unknown_isName;
@@ -1585,7 +1585,7 @@ public class xmltok
 	                         void *userData)
 	{
 	  ENCODING *enc = XmlInitUnknownEncoding(mem, table, convert, userData);
-	  if (enc)
+	  if (enc != 0)
 	    ((struct normal_encoding *)enc)->type[ASCII_COLON] = BT_COLON;
 	  return enc;
 	}

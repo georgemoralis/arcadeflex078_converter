@@ -2452,7 +2452,7 @@ public class stvvdp2
 	
 					destline[xcnt] = b | g << 5 | r << 10;
 				}
-				if(STV_VDP2_BKCLMD)
+				if (STV_VDP2_BKCLMD != 0)
 					gfxdata+=2;
 			}
 		}
@@ -2661,7 +2661,7 @@ public class stvvdp2
 		}
 	
 	#ifdef MAME_DEBUG
-		if(STV_VDP2_VRAMSZ)
+		if (STV_VDP2_VRAMSZ != 0)
 			usrintf_showmessage("Warning: VRAM Size = 8 MBit!");
 	
 		/*usrintf_showmessage("N0 %02x %04x %02x %04x N1 %02x %04x %02x %04x"
@@ -2722,7 +2722,7 @@ public class stvvdp2
 			FILE *fp;
 	
 			fp=fopen("mamevdp1", "w+b");
-			if (fp)
+			if (fp != 0)
 			{
 				fwrite(stv_vdp1_vram, 0x80000, 1, fp);
 				fclose(fp);
@@ -2734,7 +2734,7 @@ public class stvvdp2
 			FILE *fp;
 	
 			fp=fopen("vdp1_vram.bin", "r+b");
-			if (fp)
+			if (fp != 0)
 			{
 				fread(stv_vdp1_vram, 0x80000, 1, fp);
 				fclose(fp);
@@ -3071,55 +3071,55 @@ public class stvvdp2
 		FILE *fp;
 	
 		fp=fopen("workraml.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_workram_l, 0x00100000, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("workramh.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_workram_h, 0x00100000, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("scu.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_scu, 0xd0, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("stv_a0_vram.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_a0_vram, 0x00020000, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("stv_a1_vram.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_a1_vram, 0x00020000, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("stv_b0_vram.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_b0_vram, 0x00020000, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("stv_b1_vram.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_b1_vram, 0x00020000, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("cram.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(stv_cram, 0x00080000, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("68k.dmp", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(memory_region(REGION_CPU3), 0x100000, 1, fp);
 			fclose(fp);

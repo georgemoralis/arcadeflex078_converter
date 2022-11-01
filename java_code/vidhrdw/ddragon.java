@@ -187,7 +187,7 @@ public class ddragon
 	
 		for( i = 0; i < ( 64 * 5 ); i += 5 ) {
 			int attr = src[i+1];
-			if ( attr & 0x80 ) { /* visible */
+			if ((attr & 0x80) != 0) { /* visible */
 				int sx = 240 - src[i+4] + ( ( attr & 2 ) << 7 );
 				int sy = 240 - src[i+0] + ( ( attr & 1 ) << 8 );
 				int size = ( attr & 0x30 ) >> 4;
@@ -214,7 +214,7 @@ public class ddragon
 					which = src[i+3] + ( ( src[i+2] & 0x0f ) << 8 );
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

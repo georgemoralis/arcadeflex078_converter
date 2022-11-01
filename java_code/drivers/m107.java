@@ -45,7 +45,7 @@ public class m107
 	
 	public static ReadHandlerPtr m107_port_4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (m107_vblank) return readinputport(4) | 0;
+		if (m107_vblank != 0) return readinputport(4) | 0;
 		return readinputport(4) | 0x80;
 	} };
 	
@@ -74,9 +74,9 @@ public class m107
 			case V30_CLEAR:		irqvector &= ~0x1;	break;
 		}
 	
-		if (irqvector & 0x2)		/* YM2151 has precedence */
+		if ((irqvector & 0x2) != 0)		/* YM2151 has precedence */
 			cpu_irq_line_vector_w(1,0,0x18);
-		else if (irqvector & 0x1)	/* V30 */
+		else if ((irqvector & 0x1) != 0)	/* V30 */
 			cpu_irq_line_vector_w(1,0,0x19);
 	
 		if (irqvector == 0)	/* no IRQs pending */
@@ -443,7 +443,7 @@ public class m107
 	
 	static void sound_irq(int state)
 	{
-		if (state)
+		if (state != 0)
 			timer_set(TIME_NOW,YM2151_ASSERT,setvector_callback);
 		else
 			timer_set(TIME_NOW,YM2151_CLEAR,setvector_callback);
@@ -480,7 +480,7 @@ public class m107
 	
 		if (keyboard_pressed_memory(KEYCODE_F1)) {
 			raster_enable ^= 1;
-			if (raster_enable)
+			if (raster_enable != 0)
 				usrintf_showmessage("Raster IRQ enabled");
 			else
 				usrintf_showmessage("Raster IRQ disabled");

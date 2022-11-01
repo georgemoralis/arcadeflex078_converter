@@ -170,7 +170,7 @@ public class thepit
 	{
 		/* Read either the real or the fake input ports depending on the
 		   horizontal flip switch. (This is how the real PCB does it) */
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			return input_port_3_r(offset);
 		}
@@ -239,8 +239,8 @@ public class thepit
 					sy = (sy - thepit_attributesram[2 * sx]) & 0xff;
 				}
 	
-				if (flip_screen_x) sx = 31 - sx;
-				if (flip_screen_y) sy = 248 - sy;
+				if (flip_screen_x != 0) sx = 31 - sx;
+				if (flip_screen_y != 0) sy = 248 - sy;
 	
 				color = colorram[offs] & (Machine->drv->gfxdecodeinfo[bank].total_color_codes - 1);
 	
@@ -264,12 +264,12 @@ public class thepit
 		{
 			int i, scroll[32];
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				for (i = 0;i < 32;i++)
 				{
 					scroll[31-i] = -thepit_attributesram[2 * i];
-					if (flip_screen_y) scroll[31-i] = -scroll[31-i];
+					if (flip_screen_y != 0) scroll[31-i] = -scroll[31-i];
 				}
 			}
 			else
@@ -277,7 +277,7 @@ public class thepit
 				for (i = 0;i < 32;i++)
 				{
 					scroll[i] = -thepit_attributesram[2 * i];
-					if (flip_screen_y) scroll[i] = -scroll[i];
+					if (flip_screen_y != 0) scroll[i] = -scroll[i];
 				}
 			}
 	
@@ -310,13 +310,13 @@ public class thepit
 				flipx = spriteram[offs + 1] & 0x40;
 				flipy = spriteram[offs + 1] & 0x80;
 	
-				if (flip_screen_x)
+				if (flip_screen_x != 0)
 				{
 					sx = 242 - sx;
 					flipx = !flipx;
 				}
 	
-				if (flip_screen_y)
+				if (flip_screen_y != 0)
 				{
 					sy = 240 - sy;
 					flipy = !flipy;

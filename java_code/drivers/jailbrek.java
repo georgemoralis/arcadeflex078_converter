@@ -43,13 +43,13 @@ public class jailbrek
 	
 	public static InterruptHandlerPtr jb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (irq_enable)
+		if (irq_enable != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
 	public static InterruptHandlerPtr jb_interrupt_nmi = new InterruptHandlerPtr() {public void handler()
 	{
-		if (nmi_enable)
+		if (nmi_enable != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

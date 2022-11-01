@@ -115,7 +115,7 @@ public class midyunit
 		int i;
 	
 		/* handle failure */
-		if (result)
+		if (result != 0)
 			return result;
 	
 		/* init for 4-bit */
@@ -133,7 +133,7 @@ public class midyunit
 		int i;
 	
 		/* handle failure */
-		if (result)
+		if (result != 0)
 			return result;
 	
 		/* init for 6-bit */
@@ -151,7 +151,7 @@ public class midyunit
 		int i;
 	
 		/* handle failure */
-		if (result)
+		if (result != 0)
 			return result;
 	
 		/* init for 8-bit */
@@ -191,18 +191,18 @@ public class midyunit
 	WRITE16_HANDLER( midyunit_vram_w )
 	{
 		offset *= 2;
-		if (videobank_select)
+		if (videobank_select != 0)
 		{
-			if (ACCESSING_LSB)
+			if (ACCESSING_LSB != 0)
 				local_videoram[offset] = (data & 0x00ff) | (dma_register[DMA_PALETTE] << 8);
-			if (ACCESSING_MSB)
+			if (ACCESSING_MSB != 0)
 				local_videoram[offset + 1] = (data >> 8) | (dma_register[DMA_PALETTE] & 0xff00);
 		}
 		else
 		{
-			if (ACCESSING_LSB)
+			if (ACCESSING_LSB != 0)
 				local_videoram[offset] = (local_videoram[offset] & 0x00ff) | (data << 8);
-			if (ACCESSING_MSB)
+			if (ACCESSING_MSB != 0)
 				local_videoram[offset + 1] = (local_videoram[offset + 1] & 0x00ff) | (data & 0xff00);
 		}
 	}
@@ -211,7 +211,7 @@ public class midyunit
 	READ16_HANDLER( midyunit_vram_r )
 	{
 		offset *= 2;
-		if (videobank_select)
+		if (videobank_select != 0)
 			return (local_videoram[offset] & 0x00ff) | (local_videoram[offset + 1] << 8);
 		else
 			return (local_videoram[offset] >> 8) | (local_videoram[offset + 1] & 0xff00);
@@ -260,7 +260,7 @@ public class midyunit
 		 *
 		 */
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* CMOS page is bits 6-7 */
 			midyunit_cmos_page = ((data >> 6) & 3) * 0x1000;
@@ -269,9 +269,9 @@ public class midyunit
 			videobank_select = (data >> 5) & 1;
 	
 			/* handle autoerase disable (bit 4) */
-			if (data & 0x10)
+			if ((data & 0x10) != 0)
 			{
-				if (autoerase_enable)
+				if (autoerase_enable != 0)
 				{
 					logerror("autoerase off @ %d\n", cpu_getscanline());
 					update_partial(cpu_getscanline() - 1, 1);
@@ -382,7 +382,7 @@ public class midyunit
 					int pixel = base[o];											\
 																					\
 					/* non-zero pixel case */										\
-					if (pixel)														\
+					if (pixel != 0)														\
 					{																\
 						if (nonzero == PIXEL_COLOR)									\
 							dest[tx] = color;										\
@@ -401,7 +401,7 @@ public class midyunit
 				}																	\
 																					\
 				/* update pointers */												\
-				if (xflip) tx--;													\
+				if (xflip != 0) tx--;													\
 				else tx++;															\
 			}																		\
 		}																			\
@@ -478,7 +478,7 @@ public class midyunit
 	static void dma_callback(int is_in_34010_context)
 	{
 		dma_register[DMA_COMMAND] &= ~0x8000; /* tell the cpu we're done */
-		if (is_in_34010_context)
+		if (is_in_34010_context != 0)
 		{
 			tms34010_set_irq_callback(temp_irq_callback);
 			tms34010_set_irq_line(0, ASSERT_LINE);
@@ -609,7 +609,7 @@ public class midyunit
 	
 		/* determine the offset and adjust the rowbytes */
 		gfxoffset = dma_register[DMA_OFFSETLO] | (dma_register[DMA_OFFSETHI] << 16);
-		if (command & 0x10)
+		if ((command & 0x10) != 0)
 		{
 			gfxoffset -= (dma_state.width - 1) * 8;
 			dma_state.rowbytes = (dma_state.rowbytes - dma_state.width + 3) & ~3;
@@ -667,7 +667,7 @@ public class midyunit
 		}
 	
 		/* signal we're done */
-		if (FAST_DMA)
+		if (FAST_DMA != 0)
 			dma_callback(1);
 		else
 			timer_set(TIME_IN_NSEC(41 * dma_state.width * dma_state.height), 0, dma_callback);
@@ -686,11 +686,11 @@ public class midyunit
 	static void update_partial(int scanline, int render)
 	{
 		/* force a partial refresh */
-		if (render)
+		if (render != 0)
 			force_partial_update(scanline);
 	
 		/* if no autoerase is enabled, quit now */
-		if (autoerase_enable)
+		if (autoerase_enable != 0)
 		{
 			int starty, stopy;
 			int v, width, xoffs;

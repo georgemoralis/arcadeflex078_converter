@@ -220,7 +220,7 @@ public class _6800dasm
 		size = table[code][3];
 		invalid = table[code][4];
 	
-		if ( invalid & invalid_mask )	/* invalid for this cpu type ? */
+		if ((invalid & invalid_mask) != 0)	/* invalid for this cpu type ? */
 		{
 			strcpy(buf, "illegal");
 			return 1;

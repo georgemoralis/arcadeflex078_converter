@@ -60,7 +60,7 @@ public class redbaron
 	
 	public static WriteHandlerPtr redbaron_pokey_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	    if( latch & 0x20 )
+	    if ((latch & 0x20) != 0)
 	        pokey1_w (offset, data);
 	} };
 	
@@ -137,7 +137,7 @@ public class redbaron
 					}
 				}
 	
-				if( squeal_out )
+				if (squeal_out != 0)
 				{
 					/* NE555 setup as pulse position modulator
 					 * C = 0.01u, Ra = 33k, Rb = 47k
@@ -163,7 +163,7 @@ public class redbaron
 			}
 	
 			/* mix sequal sound at 40% */
-	        if( squeal_out )
+	        if (squeal_out != 0)
 				sum += 32767 * 40 / 100;
 	
 			*buffer++ = sum;
@@ -187,22 +187,22 @@ public class redbaron
 	        double r0 = 1.0/(5600 + 680), r1 = 1/6e12;
 	
 			/* R14 */
-	        if( i & 1 )
+	        if ((i & 1) != 0)
 				r1 += 1.0/8200;
 			else
 				r0 += 1.0/8200;
 			/* R15 */
-	        if( i & 2 )
+	        if ((i & 2) != 0)
 				r1 += 1.0/3900;
 			else
 				r0 += 1.0/3900;
 			/* R16 */
-	        if( i & 4 )
+	        if ((i & 4) != 0)
 				r1 += 1.0/2200;
 			else
 				r0 += 1.0/2200;
 			/* R17 */
-	        if( i & 8 )
+	        if ((i & 8) != 0)
 				r1 += 1.0/1000;
 			else
 				r0 += 1.0/1000;

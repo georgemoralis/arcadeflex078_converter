@@ -89,37 +89,37 @@ public class pulsar
 	
 		port1State = data;
 	
-		if ( bitsGoneLow & OUT_PORT_1_CLANG )
+		if ((bitsGoneLow & OUT_PORT_1_CLANG) != 0)
 		{
 			PLAY( SND_CLANG, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_KEY )
+		if ((bitsGoneLow & OUT_PORT_1_KEY) != 0)
 		{
 			PLAY( SND_KEY, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_ALIENHIT )
+		if ((bitsGoneLow & OUT_PORT_1_ALIENHIT) != 0)
 		{
 			PLAY( SND_ALIENHIT, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_PHIT )
+		if ((bitsGoneLow & OUT_PORT_1_PHIT) != 0)
 		{
 			PLAY( SND_PHIT, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_ASHOOT )
+		if ((bitsGoneLow & OUT_PORT_1_ASHOOT) != 0)
 		{
 			PLAY( SND_ASHOOT, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_PSHOOT )
+		if ((bitsGoneLow & OUT_PORT_1_PSHOOT) != 0)
 		{
 			PLAY( SND_PSHOOT, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_1_BONUS )
+		if ((bitsGoneLow & OUT_PORT_1_BONUS) != 0)
 		{
 			PLAY( SND_BONUS, 0 );
 		}
@@ -140,39 +140,39 @@ public class pulsar
 	
 		port2State = data;
 	
-		if ( bitsGoneLow & OUT_PORT_2_SIZZLE )
+		if ((bitsGoneLow & OUT_PORT_2_SIZZLE) != 0)
 		{
 			PLAY( SND_SIZZLE, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_GATE )
+		if ((bitsGoneLow & OUT_PORT_2_GATE) != 0)
 		{
 			sample_start( SND_CLANG, SND_GATE, 0 );
 		}
-		if ( bitsGoneHigh & OUT_PORT_2_GATE )
+		if ((bitsGoneHigh & OUT_PORT_2_GATE) != 0)
 		{
 			STOP( SND_CLANG );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_BIRTH )
+		if ((bitsGoneLow & OUT_PORT_2_BIRTH) != 0)
 		{
 			PLAY( SND_BIRTH, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_HBEAT )
+		if ((bitsGoneLow & OUT_PORT_2_HBEAT) != 0)
 		{
 			PLAY( SND_HBEAT, 1 );
 		}
-		if ( bitsGoneHigh & OUT_PORT_2_HBEAT )
+		if ((bitsGoneHigh & OUT_PORT_2_HBEAT) != 0)
 		{
 			STOP( SND_HBEAT );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_MOVMAZE )
+		if ((bitsGoneLow & OUT_PORT_2_MOVMAZE) != 0)
 		{
 			PLAY( SND_MOVMAZE, 1 );
 		}
-		if ( bitsGoneHigh & OUT_PORT_2_MOVMAZE )
+		if ((bitsGoneHigh & OUT_PORT_2_MOVMAZE) != 0)
 		{
 			STOP( SND_MOVMAZE );
 		}

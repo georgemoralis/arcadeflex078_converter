@@ -42,25 +42,25 @@ public class cyberbal
 		int newstate2 = 0;
 		int temp;
 	
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate1 |= 1;
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate2 |= 1;
 	
-		if (newstate1)
+		if (newstate1 != 0)
 			cpu_set_irq_line(0, newstate1, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	
-		if (newstate2)
+		if (newstate2 != 0)
 			cpu_set_irq_line(2, newstate2, ASSERT_LINE);
 		else
 			cpu_set_irq_line(2, 7, CLEAR_LINE);
 	
 		/* check for screen swapping */
 		temp = readinputport(2);
-		if (temp & 1) cyberbal_set_screen(0);
-		else if (temp & 2) cyberbal_set_screen(1);
+		if ((temp & 1) != 0) cyberbal_set_screen(0);
+		else if ((temp & 2) != 0) cyberbal_set_screen(1);
 	}
 	
 	
@@ -86,12 +86,12 @@ public class cyberbal
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate |= 1;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate |= 3;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -120,7 +120,7 @@ public class cyberbal
 	static READ16_HANDLER( special_port0_r )
 	{
 		int temp = readinputport(0);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x0080;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0080;
 		return temp;
 	}
 	
@@ -128,7 +128,7 @@ public class cyberbal
 	static READ16_HANDLER( special_port2_r )
 	{
 		int temp = readinputport(2);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x2000;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x2000;
 		return temp;
 	}
 	
@@ -136,7 +136,7 @@ public class cyberbal
 	static READ16_HANDLER( sound_state_r )
 	{
 		int temp = 0xffff;
-		if (atarigen_cpu_to_sound_ready) temp ^= 0xffff;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0xffff;
 		return temp;
 	}
 	

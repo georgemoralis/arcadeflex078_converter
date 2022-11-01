@@ -282,7 +282,7 @@ public class lasso
 		const data8_t *finish, *source;
 		int inc;
 	
-		if (reverse)
+		if (reverse != 0)
 		{
 			source = lasso_spriteram;
 			finish = lasso_spriteram + lasso_spriteram_size;
@@ -305,13 +305,13 @@ public class lasso
 			flipx = source[1] & 0x40;
 			flipy = source[1] & 0x80;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				flipy = !flipy;
 			}
@@ -349,24 +349,24 @@ public class lasso
 			{
 				data8_t data = *source++;
 	
-				if (data)
+				if (data != 0)
 				{
 					int bit;
 	
 					for (bit = 0; bit < 8; bit++)
 					{
-						if (data & 0x80)
+						if ((data & 0x80) != 0)
 						{
-							if (flip_screen_x)
+							if (flip_screen_x != 0)
 							{
-								if (flip_screen_y)
+								if (flip_screen_y != 0)
 									plot_pixel(bitmap, 255-x, 255-y, pen);
 								else
 									plot_pixel(bitmap, 255-x,     y, pen);
 							}
 							else
 							{
-								if (flip_screen_y)
+								if (flip_screen_y != 0)
 									plot_pixel(bitmap,     x, 255-y, pen);
 								else
 									plot_pixel(bitmap,     x,     y, pen);
@@ -405,7 +405,7 @@ public class lasso
 		tilemap_set_scrollx(track_tilemap,0,wwjgtin_track_scroll[0] + wwjgtin_track_scroll[1]*256);
 		tilemap_set_scrolly(track_tilemap,0,wwjgtin_track_scroll[2] + wwjgtin_track_scroll[3]*256);
 	
-		if (wwjgtin_track_enable)
+		if (wwjgtin_track_enable != 0)
 			tilemap_draw(bitmap, cliprect, track_tilemap, 0, 0);
 		else
 			fillbitmap(bitmap, Machine->pens[0x40], cliprect);	// black

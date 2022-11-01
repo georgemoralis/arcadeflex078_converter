@@ -469,7 +469,7 @@ public class punchout
 			int zoom;
 	
 			zoom = punchout_bigsprite1[0] + 256 * (punchout_bigsprite1[1] & 0x0f);
-			if (zoom)
+			if (zoom != 0)
 			{
 				int sx,sy;
 				UINT32 startx,starty;
@@ -636,7 +636,7 @@ public class punchout
 			int zoom;
 	
 			zoom = punchout_bigsprite1[0] + 256 * (punchout_bigsprite1[1] & 0x0f);
-			if (zoom)
+			if (zoom != 0)
 			{
 				int sx,sy;
 				UINT32 startx,starty;

@@ -33,11 +33,11 @@ public class bottom9
 	
 	public static ReadHandlerPtr bottom9_bankedram1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (K052109_selected)
+		if (K052109_selected != 0)
 			return K052109_051960_r(offset);
 		else
 		{
-			if (zoomreadroms)
+			if (zoomreadroms != 0)
 				return K051316_rom_0_r(offset);
 			else
 				return K051316_0_r(offset);
@@ -46,19 +46,19 @@ public class bottom9
 	
 	public static WriteHandlerPtr bottom9_bankedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (K052109_selected) K052109_051960_w(offset,data);
+		if (K052109_selected != 0) K052109_051960_w(offset,data);
 		else K051316_0_w(offset,data);
 	} };
 	
 	public static ReadHandlerPtr bottom9_bankedram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (K052109_selected) return K052109_051960_r(offset + 0x2000);
+		if (K052109_selected != 0) return K052109_051960_r(offset + 0x2000);
 		else return paletteram_r(offset);
 	} };
 	
 	public static WriteHandlerPtr bottom9_bankedram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (K052109_selected) K052109_051960_w(offset + 0x2000,data);
+		if (K052109_selected != 0) K052109_051960_w(offset + 0x2000,data);
 		else paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 	} };
 	
@@ -71,7 +71,7 @@ public class bottom9
 	if ((data & 1) == 0) usrintf_showmessage("bankswitch RAM bank 0");
 	
 		/* bit 1-4 = ROM bank */
-		if (data & 0x10) offs = 0x20000 + (data & 0x06) * 0x1000;
+		if ((data & 0x10) != 0) offs = 0x20000 + (data & 0x06) * 0x1000;
 		else offs = 0x10000 + (data & 0x0e) * 0x1000;
 		cpu_setbank(1,&RAM[offs]);
 	} };
@@ -104,7 +104,7 @@ public class bottom9
 	
 	public static InterruptHandlerPtr bottom9_sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (nmienable)
+		if (nmienable != 0)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

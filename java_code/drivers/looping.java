@@ -123,7 +123,7 @@ public class looping
 		if( colorram[offset]!=data )
 		{
 			colorram[offset] = data;
-			if( offset&1 )
+			if ((offset & 1) != 0)
 			{
 				/* odd bytes are column color attribute */
 				offs = (offset/2);
@@ -145,7 +145,7 @@ public class looping
 	public static VideoUpdateHandlerPtr video_update_looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
-		if( tilemap )
+		if (tilemap != 0)
 		{
 			tilemap_set_scroll_cols( tilemap, 0x20 );
 			return 0;
@@ -179,13 +179,13 @@ public class looping
 			code  = source[1] & 0x3f;
 			color = source[2];
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				flipy = !flipy;
 			}
@@ -576,14 +576,14 @@ public class looping
 		{
 			raw = pMem[i];
 			code = 0;
-			if( raw&0x01 ) code |= 0x80;
-			if( raw&0x02 ) code |= 0x40;
-			if( raw&0x04 ) code |= 0x20;
-			if( raw&0x08 ) code |= 0x10;
-			if( raw&0x10 ) code |= 0x08;
-			if( raw&0x20 ) code |= 0x04;
-			if( raw&0x40 ) code |= 0x02;
-			if( raw&0x80 ) code |= 0x01;
+			if ((raw & 0x01) != 0) code |= 0x80;
+			if ((raw & 0x02) != 0) code |= 0x40;
+			if ((raw & 0x04) != 0) code |= 0x20;
+			if ((raw & 0x08) != 0) code |= 0x10;
+			if ((raw & 0x10) != 0) code |= 0x08;
+			if ((raw & 0x20) != 0) code |= 0x04;
+			if ((raw & 0x40) != 0) code |= 0x02;
+			if ((raw & 0x80) != 0) code |= 0x01;
 			pMem[i] = code;
 		}
 	}

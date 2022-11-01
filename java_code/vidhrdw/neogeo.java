@@ -334,53 +334,53 @@ public class neogeo
 	
 		fspr += code*128 + 8*yoffs;
 	
-		if (flipx)	/* X flip */
+		if (flipx != 0)	/* X flip */
 		{
 			if (zx == 0x0f)
 			{
 				mydword = (fspr[4]<<0)|(fspr[5]<<8)|(fspr[6]<<16)|(fspr[7]<<24);
-				col = (mydword>>28)&0xf; if (col) bm[ 0] = paldata[col];
-				col = (mydword>>24)&0xf; if (col) bm[ 1] = paldata[col];
-				col = (mydword>>20)&0xf; if (col) bm[ 2] = paldata[col];
-				col = (mydword>>16)&0xf; if (col) bm[ 3] = paldata[col];
-				col = (mydword>>12)&0xf; if (col) bm[ 4] = paldata[col];
-				col = (mydword>> 8)&0xf; if (col) bm[ 5] = paldata[col];
-				col = (mydword>> 4)&0xf; if (col) bm[ 6] = paldata[col];
-				col = (mydword>> 0)&0xf; if (col) bm[ 7] = paldata[col];
+				col = (mydword>>28)&0xf; if (col != 0) bm[ 0] = paldata[col];
+				col = (mydword>>24)&0xf; if (col != 0) bm[ 1] = paldata[col];
+				col = (mydword>>20)&0xf; if (col != 0) bm[ 2] = paldata[col];
+				col = (mydword>>16)&0xf; if (col != 0) bm[ 3] = paldata[col];
+				col = (mydword>>12)&0xf; if (col != 0) bm[ 4] = paldata[col];
+				col = (mydword>> 8)&0xf; if (col != 0) bm[ 5] = paldata[col];
+				col = (mydword>> 4)&0xf; if (col != 0) bm[ 6] = paldata[col];
+				col = (mydword>> 0)&0xf; if (col != 0) bm[ 7] = paldata[col];
 	
 				mydword = (fspr[0]<<0)|(fspr[1]<<8)|(fspr[2]<<16)|(fspr[3]<<24);
-				col = (mydword>>28)&0xf; if (col) bm[ 8] = paldata[col];
-				col = (mydword>>24)&0xf; if (col) bm[ 9] = paldata[col];
-				col = (mydword>>20)&0xf; if (col) bm[10] = paldata[col];
-				col = (mydword>>16)&0xf; if (col) bm[11] = paldata[col];
-				col = (mydword>>12)&0xf; if (col) bm[12] = paldata[col];
-				col = (mydword>> 8)&0xf; if (col) bm[13] = paldata[col];
-				col = (mydword>> 4)&0xf; if (col) bm[14] = paldata[col];
-				col = (mydword>> 0)&0xf; if (col) bm[15] = paldata[col];
+				col = (mydword>>28)&0xf; if (col != 0) bm[ 8] = paldata[col];
+				col = (mydword>>24)&0xf; if (col != 0) bm[ 9] = paldata[col];
+				col = (mydword>>20)&0xf; if (col != 0) bm[10] = paldata[col];
+				col = (mydword>>16)&0xf; if (col != 0) bm[11] = paldata[col];
+				col = (mydword>>12)&0xf; if (col != 0) bm[12] = paldata[col];
+				col = (mydword>> 8)&0xf; if (col != 0) bm[13] = paldata[col];
+				col = (mydword>> 4)&0xf; if (col != 0) bm[14] = paldata[col];
+				col = (mydword>> 0)&0xf; if (col != 0) bm[15] = paldata[col];
 			}
 			else
 			{
 				char *zoomx_draw = zoomx_draw_tables[zx];
 	
 				mydword = (fspr[4]<<0)|(fspr[5]<<8)|(fspr[6]<<16)|(fspr[7]<<24);
-				if (zoomx_draw[ 0]) { col = (mydword>>28)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 1]) { col = (mydword>>24)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 2]) { col = (mydword>>20)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 3]) { col = (mydword>>16)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 4]) { col = (mydword>>12)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 5]) { col = (mydword>> 8)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 6]) { col = (mydword>> 4)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 7]) { col = (mydword>> 0)&0xf; if (col) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 0]) { col = (mydword>>28)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 1]) { col = (mydword>>24)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 2]) { col = (mydword>>20)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 3]) { col = (mydword>>16)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 4]) { col = (mydword>>12)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 5]) { col = (mydword>> 8)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 6]) { col = (mydword>> 4)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 7]) { col = (mydword>> 0)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
 	
 				mydword = (fspr[0]<<0)|(fspr[1]<<8)|(fspr[2]<<16)|(fspr[3]<<24);
-				if (zoomx_draw[ 8]) { col = (mydword>>28)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 9]) { col = (mydword>>24)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[10]) { col = (mydword>>20)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[11]) { col = (mydword>>16)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[12]) { col = (mydword>>12)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[13]) { col = (mydword>> 8)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[14]) { col = (mydword>> 4)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[15]) { col = (mydword>> 0)&0xf; if (col) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 8]) { col = (mydword>>28)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 9]) { col = (mydword>>24)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[10]) { col = (mydword>>20)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[11]) { col = (mydword>>16)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[12]) { col = (mydword>>12)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[13]) { col = (mydword>> 8)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[14]) { col = (mydword>> 4)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[15]) { col = (mydword>> 0)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
 			}
 		}
 		else		/* normal */
@@ -388,48 +388,48 @@ public class neogeo
 			if (zx == 16)
 			{
 				mydword = (fspr[0]<<0)|(fspr[1]<<8)|(fspr[2]<<16)|(fspr[3]<<24);
-				col = (mydword>> 0)&0xf; if (col) bm[ 0] = paldata[col];
-				col = (mydword>> 4)&0xf; if (col) bm[ 1] = paldata[col];
-				col = (mydword>> 8)&0xf; if (col) bm[ 2] = paldata[col];
-				col = (mydword>>12)&0xf; if (col) bm[ 3] = paldata[col];
-				col = (mydword>>16)&0xf; if (col) bm[ 4] = paldata[col];
-				col = (mydword>>20)&0xf; if (col) bm[ 5] = paldata[col];
-				col = (mydword>>24)&0xf; if (col) bm[ 6] = paldata[col];
-				col = (mydword>>28)&0xf; if (col) bm[ 7] = paldata[col];
+				col = (mydword>> 0)&0xf; if (col != 0) bm[ 0] = paldata[col];
+				col = (mydword>> 4)&0xf; if (col != 0) bm[ 1] = paldata[col];
+				col = (mydword>> 8)&0xf; if (col != 0) bm[ 2] = paldata[col];
+				col = (mydword>>12)&0xf; if (col != 0) bm[ 3] = paldata[col];
+				col = (mydword>>16)&0xf; if (col != 0) bm[ 4] = paldata[col];
+				col = (mydword>>20)&0xf; if (col != 0) bm[ 5] = paldata[col];
+				col = (mydword>>24)&0xf; if (col != 0) bm[ 6] = paldata[col];
+				col = (mydword>>28)&0xf; if (col != 0) bm[ 7] = paldata[col];
 	
 				mydword = (fspr[4]<<0)|(fspr[5]<<8)|(fspr[6]<<16)|(fspr[7]<<24);
-				col = (mydword>> 0)&0xf; if (col) bm[ 8] = paldata[col];
-				col = (mydword>> 4)&0xf; if (col) bm[ 9] = paldata[col];
-				col = (mydword>> 8)&0xf; if (col) bm[10] = paldata[col];
-				col = (mydword>>12)&0xf; if (col) bm[11] = paldata[col];
-				col = (mydword>>16)&0xf; if (col) bm[12] = paldata[col];
-				col = (mydword>>20)&0xf; if (col) bm[13] = paldata[col];
-				col = (mydword>>24)&0xf; if (col) bm[14] = paldata[col];
-				col = (mydword>>28)&0xf; if (col) bm[15] = paldata[col];
+				col = (mydword>> 0)&0xf; if (col != 0) bm[ 8] = paldata[col];
+				col = (mydword>> 4)&0xf; if (col != 0) bm[ 9] = paldata[col];
+				col = (mydword>> 8)&0xf; if (col != 0) bm[10] = paldata[col];
+				col = (mydword>>12)&0xf; if (col != 0) bm[11] = paldata[col];
+				col = (mydword>>16)&0xf; if (col != 0) bm[12] = paldata[col];
+				col = (mydword>>20)&0xf; if (col != 0) bm[13] = paldata[col];
+				col = (mydword>>24)&0xf; if (col != 0) bm[14] = paldata[col];
+				col = (mydword>>28)&0xf; if (col != 0) bm[15] = paldata[col];
 			}
 			else
 			{
 				char *zoomx_draw = zoomx_draw_tables[zx];
 	
 				mydword = (fspr[0]<<0)|(fspr[1]<<8)|(fspr[2]<<16)|(fspr[3]<<24);
-				if (zoomx_draw[ 0]) { col = (mydword>> 0)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 1]) { col = (mydword>> 4)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 2]) { col = (mydword>> 8)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 3]) { col = (mydword>>12)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 4]) { col = (mydword>>16)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 5]) { col = (mydword>>20)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 6]) { col = (mydword>>24)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 7]) { col = (mydword>>28)&0xf; if (col) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 0]) { col = (mydword>> 0)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 1]) { col = (mydword>> 4)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 2]) { col = (mydword>> 8)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 3]) { col = (mydword>>12)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 4]) { col = (mydword>>16)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 5]) { col = (mydword>>20)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 6]) { col = (mydword>>24)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 7]) { col = (mydword>>28)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
 	
 				mydword = (fspr[4]<<0)|(fspr[5]<<8)|(fspr[6]<<16)|(fspr[7]<<24);
-				if (zoomx_draw[ 8]) { col = (mydword>> 0)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[ 9]) { col = (mydword>> 4)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[10]) { col = (mydword>> 8)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[11]) { col = (mydword>>12)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[12]) { col = (mydword>>16)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[13]) { col = (mydword>>20)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[14]) { col = (mydword>>24)&0xf; if (col) *bm = paldata[col]; bm++; }
-				if (zoomx_draw[15]) { col = (mydword>>28)&0xf; if (col) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 8]) { col = (mydword>> 0)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[ 9]) { col = (mydword>> 4)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[10]) { col = (mydword>> 8)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[11]) { col = (mydword>>12)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[12]) { col = (mydword>>16)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[13]) { col = (mydword>>20)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[14]) { col = (mydword>>24)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
+				if (zoomx_draw[15]) { col = (mydword>>28)&0xf; if (col != 0) *bm = paldata[col]; bm++; }
 			}
 		}
 	}
@@ -451,7 +451,7 @@ public class neogeo
 	profiler_mark(PROFILER_VIDEO);
 	
 		/* Palette swap occured after last frame but before this one */
-		if (palette_swap_pending) swap_palettes();
+		if (palette_swap_pending != 0) swap_palettes();
 	
 		fillbitmap(bitmap,Machine->pens[4095],cliprect);
 	
@@ -466,7 +466,7 @@ public class neogeo
 			t2 = neogeo_vidram16[(0x10800 >> 1) + count];
 	
 			/* If this bit is set this new column is placed next to last one */
-			if (t1 & 0x40)
+			if ((t1 & 0x40) != 0)
 			{
 				sx += zx+1;
 				if ( sx >= 0x1F0 )
@@ -529,14 +529,14 @@ public class neogeo
 					int invert=0;
 	
 					zoom_line = drawn_lines & 0xff;
-					if (drawn_lines & 0x100)
+					if ((drawn_lines & 0x100) != 0)
 					{
 						zoom_line ^= 0xff;
 						invert = 1;
 					}
-					if (fullmode)	/* fix for joyjoy, trally... */
+					if (fullmode != 0)	/* fix for joyjoy, trally... */
 					{
-						if (zy)
+						if (zy != 0)
 						{
 							zoom_line %= 2*zy;
 							if (zoom_line >= zy)
@@ -551,7 +551,7 @@ public class neogeo
 	
 					tile = zoomy_rom[zoom_line] >> 4;
 	
-					if (invert)
+					if (invert != 0)
 					{
 						tile ^= 0x1f;
 						yoffs ^= 0x0f;
@@ -564,10 +564,10 @@ public class neogeo
 					if ( vhigh_tile && (tileatr & 0x20)) tileno+=0x20000;
 					if (vvhigh_tile && (tileatr & 0x40)) tileno+=0x40000;
 	
-					if (tileatr & 0x08)      tileno=(tileno&~7)+((tileno+neogeo_frame_counter)&7);
-					else if (tileatr & 0x04) tileno=(tileno&~3)+((tileno+neogeo_frame_counter)&3);
+					if ((tileatr & 0x08) != 0)      tileno=(tileno&~7)+((tileno+neogeo_frame_counter)&7);
+					else if ((tileatr & 0x04) != 0) tileno=(tileno&~3)+((tileno+neogeo_frame_counter)&3);
 	
-					if (tileatr & 0x02) yoffs ^= 0x0f;	/* flip y */
+					if ((tileatr & 0x02) != 0) yoffs ^= 0x0f;	/* flip y */
 	
 					NeoMVSDrawGfxLine((UINT16 **)line,
 						gfx,
@@ -624,7 +624,7 @@ public class neogeo
 					int byte2 = byte1 >> 12;
 					byte1 = byte1 & 0xfff;
 	
-					if (banked)
+					if (banked != 0)
 					{
 						switch (neogeo_fix_bank_type)
 						{

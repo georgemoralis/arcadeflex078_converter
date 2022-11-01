@@ -99,7 +99,7 @@ public class ojankohs
 			return;
 	
 		/* clock the data through */
-		if (ojankohs_vclk_left) {
+		if (ojankohs_vclk_left != 0) {
 			MSM5205_data_w(0, (ojankohs_adpcm_data >> 4));
 			ojankohs_adpcm_data <<= 4;
 			ojankohs_vclk_left--;

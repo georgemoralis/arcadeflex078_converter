@@ -184,14 +184,14 @@ public class psikyosh
 	
 	static NVRAM_HANDLER(93C56)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 		{
 			EEPROM_save(file);
 		}
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C56);
-			if (file)
+			if (file != 0)
 			{
 				EEPROM_load(file);
 			}
@@ -229,7 +229,7 @@ public class psikyosh
 	
 	static WRITE32_HANDLER( psh_eeprom_w )
 	{
-		if (ACCESSING_MSB32)
+		if (ACCESSING_MSB32 != 0)
 		{
 			EEPROM_write_bit((data & 0x20000000) ? 1 : 0);
 			EEPROM_set_cs_line((data & 0x80000000) ? CLEAR_LINE : ASSERT_LINE);
@@ -243,7 +243,7 @@ public class psikyosh
 	
 	static READ32_HANDLER( psh_eeprom_r )
 	{
-		if (ACCESSING_MSB32)
+		if (ACCESSING_MSB32 != 0)
 		{
 			return ((EEPROM_read_bit() << 28) | (readinputport(4) << 24)); /* EEPROM | Region */
 		}
@@ -423,7 +423,7 @@ public class psikyosh
 	
 	static void irqhandler(int linestate)
 	{
-		if (linestate)
+		if (linestate != 0)
 			cpu_set_irq_line(0, 12, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 12, CLEAR_LINE);

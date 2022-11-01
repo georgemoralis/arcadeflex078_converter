@@ -213,9 +213,9 @@ public class atarirle
 		int result = 0;
 	
 		for (testmask = ormask = 1; testmask != 0; testmask <<= 1)
-			if (mask & testmask)
+			if ((mask & testmask) != 0)
 			{
-				if (value & testmask)
+				if ((value & testmask) != 0)
 					result |= ormask;
 				ormask <<= 1;
 			}
@@ -396,7 +396,7 @@ public class atarirle
 		force_partial_update(scanline);
 	
 		/* if the erase flag was set, erase the front map */
-		if (oldbits & ATARIRLE_CONTROL_ERASE)
+		if ((oldbits & ATARIRLE_CONTROL_ERASE) != 0)
 		{
 			struct rectangle cliprect = mo->cliprect;
 	
@@ -665,7 +665,7 @@ public class atarirle
 			int entry_count = *base++;
 	
 			/* if the high bit is set, assume we're inverted */
-			if (entry_count & 0x8000)
+			if ((entry_count & 0x8000) != 0)
 			{
 				entry_count ^= 0xffff;
 	
@@ -728,7 +728,7 @@ public class atarirle
 		else
 		{
 			for (i = 0; i < reqsums; i++)
-				if (i & 1)
+				if ((i & 1) != 0)
 					atarirle_0_spriteram32[i/2] = (atarirle_0_spriteram32[i/2] & 0xffff0000) | mo->checksums[i];
 				else
 					atarirle_0_spriteram32[i/2] = (atarirle_0_spriteram32[i/2] & 0x0000ffff) | (mo->checksums[i] << 16);
@@ -805,7 +805,7 @@ public class atarirle
 				}
 			}
 	
-	if (hilite)
+	if (hilite != 0)
 	{
 		int scale, code, which;
 	
@@ -840,7 +840,7 @@ public class atarirle
 			scaled_yoffs = (scale * info->yoffs) >> 12;
 	
 			/* we're hflipped, account for it */
-			if (hflip)
+			if (hflip != 0)
 				scaled_xoffs = ((scale * info->width) >> 12) - scaled_xoffs;
 	
 			/* adjust for the x and y offsets */
@@ -923,7 +923,7 @@ public class atarirle
 		int scaled_yoffs = (yscale * info->yoffs) >> 12;
 	
 		/* we're hflipped, account for it */
-		if (hflip)
+		if (hflip != 0)
 			scaled_xoffs = ((xscale * info->width) >> 12) - scaled_xoffs;
 	
 	//if (clip->min_y == Machine->visible_area.min_y)
@@ -1045,7 +1045,7 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end)
@@ -1063,7 +1063,7 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end)
@@ -1095,13 +1095,13 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (to_be_skipped)
+					if (to_be_skipped != 0)
 					{
 						while (to_be_skipped && sourcex < rle_end)
 							dest++, sourcex += dx, to_be_skipped--;
-						if (to_be_skipped) goto next3;
+						if (to_be_skipped != 0) goto next3;
 					}
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end && dest <= end)
@@ -1120,13 +1120,13 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (to_be_skipped)
+					if (to_be_skipped != 0)
 					{
 						while (to_be_skipped && sourcex < rle_end)
 							dest++, sourcex += dx, to_be_skipped--;
-						if (to_be_skipped) goto next4;
+						if (to_be_skipped != 0) goto next4;
 					}
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end && dest <= end)
@@ -1234,7 +1234,7 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end)
@@ -1252,7 +1252,7 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end)
@@ -1284,13 +1284,13 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (to_be_skipped)
+					if (to_be_skipped != 0)
 					{
 						while (to_be_skipped && sourcex < rle_end)
 							dest--, sourcex += dx, to_be_skipped--;
-						if (to_be_skipped) goto next3;
+						if (to_be_skipped != 0) goto next3;
 					}
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end && dest >= start)
@@ -1309,13 +1309,13 @@ public class atarirle
 					rle_end += (count & 0xff00) << 8;
 	
 					/* store copies of the value until we pass the end of this chunk */
-					if (to_be_skipped)
+					if (to_be_skipped != 0)
 					{
 						while (to_be_skipped && sourcex < rle_end)
 							dest--, sourcex += dx, to_be_skipped--;
-						if (to_be_skipped) goto next4;
+						if (to_be_skipped != 0) goto next4;
 					}
-					if (value)
+					if (value != 0)
 					{
 						value += palette;
 						while (sourcex < rle_end && dest >= start)
@@ -1382,7 +1382,7 @@ public class atarirle
 					case 7: condition = MOTIMEP;
 				}
 				condition ^= D12;
-				if (condition)
+				if (condition != 0)
 					PC = D8 | D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0;
 			}
 	

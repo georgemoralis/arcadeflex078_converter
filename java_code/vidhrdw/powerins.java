@@ -65,12 +65,12 @@ public class powerins
 	
 	WRITE16_HANDLER( powerins_flipscreen_w )
 	{
-		if (ACCESSING_LSB)	flip_screen_set( data & 1 );
+		if (ACCESSING_LSB != 0)	flip_screen_set( data & 1 );
 	}
 	
 	WRITE16_HANDLER( powerins_tilebank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (data != tile_bank)
 			{
@@ -315,7 +315,7 @@ public class powerins
 	
 			/* Handle flip_screen. Apply a global offset of 32 pixels along x too */
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{	sx = screen_w - sx - dimx*16 - 32;	flipx = !flipx;
 				sy = screen_h - sy - dimy*16;		flipy = !flipy;
 				code += dimx*dimy-1;			inc = -1;	}
@@ -382,9 +382,9 @@ public class powerins
 	}
 	#endif
 	
-		if (layers_ctrl&1)		tilemap_draw(bitmap,cliprect, tilemap_0, 0, 0);
+		if ((layers_ctrl & 1) != 0)		tilemap_draw(bitmap,cliprect, tilemap_0, 0, 0);
 		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
-		if (layers_ctrl&8)		powerins_draw_sprites(bitmap,cliprect);
-		if (layers_ctrl&2)		tilemap_draw(bitmap,cliprect, tilemap_1, 0, 0);
+		if ((layers_ctrl & 8) != 0)		powerins_draw_sprites(bitmap,cliprect);
+		if ((layers_ctrl & 2) != 0)		tilemap_draw(bitmap,cliprect, tilemap_1, 0, 0);
 	} };
 }

@@ -43,7 +43,7 @@ public class rollerg
 	
 	public static ReadHandlerPtr rollerg_K051316_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (readzoomroms) return K051316_rom_0_r(offset);
+		if (readzoomroms != 0) return K051316_rom_0_r(offset);
 		else return K051316_0_r(offset);
 	} };
 	

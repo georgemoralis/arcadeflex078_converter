@@ -141,7 +141,7 @@ public class aeroboto
 			int x = spriteram[offs+3];
 			int y = 240 - spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				x = 248 - x;
 				y = 240 - y;

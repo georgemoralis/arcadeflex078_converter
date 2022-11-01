@@ -183,7 +183,7 @@ public class gridlee
 				int currxor = 0;
 	
 				/* adjust for flip */
-				if (gridlee_cocktail_flip)
+				if (gridlee_cocktail_flip != 0)
 				{
 					ypos = 239 - ypos;
 					currxor = 0xff;
@@ -215,7 +215,7 @@ public class gridlee
 					src += 4;
 	
 				/* de-adjust for flip */
-				if (gridlee_cocktail_flip)
+				if (gridlee_cocktail_flip != 0)
 					ypos = 239 - ypos;
 			}
 		}

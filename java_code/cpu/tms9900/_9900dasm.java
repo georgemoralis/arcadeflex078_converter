@@ -127,7 +127,7 @@ public class _9900dasm
 				break;
 			case 0x2:	/* symbolic|indexed */
 				base = RDWORD(PC); PC+=2;
-				if (arg) 	/* indexed */
+				if (arg != 0) 	/* indexed */
 					sprintf (temp, "@>%04x(R%d)", base, arg);
 				else		/* symbolic (direct) */
 					sprintf (temp, "@>%04x", base);

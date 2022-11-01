@@ -100,7 +100,7 @@ public class dragrace
 	{
 		/* Set/clear individual bit */
 		UINT32 mask = 1 << offset;
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 			dragrace_misc_flags |= mask;
 		else
 			dragrace_misc_flags &= (~mask);
@@ -135,7 +135,7 @@ public class dragrace
 				in &= ~(1 << dragrace_gear[i]);
 			}
 	
-			if (in & maskA)
+			if ((in & maskA) != 0)
 			{
 				val |= 1 << i;
 			}

@@ -44,7 +44,7 @@ public class thunderx
 	
 	public static ReadHandlerPtr scontra_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
@@ -52,7 +52,7 @@ public class thunderx
 	
 	public static WriteHandlerPtr scontra_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
@@ -60,11 +60,11 @@ public class thunderx
 	
 	public static ReadHandlerPtr thunderx_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (rambank & 0x01)
+		if ((rambank & 0x01) != 0)
 			return ram[offset];
-		else if (rambank & 0x10)
+		else if ((rambank & 0x10) != 0)
 		{
-			if (pmcbank)
+			if (pmcbank != 0)
 			{
 	//			logerror("%04x read pmcram %04x\n",activecpu_get_pc(),offset);
 				return pmcram[offset];
@@ -81,12 +81,12 @@ public class thunderx
 	
 	public static WriteHandlerPtr thunderx_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (rambank & 0x01)
+		if ((rambank & 0x01) != 0)
 			ram[offset] = data;
-		else if (rambank & 0x10)
+		else if ((rambank & 0x10) != 0)
 		{
 	//			if (offset == 0x200)	debug_signal_breakpoint(1);
-			if (pmcbank)
+			if (pmcbank != 0)
 			{
 				logerror("%04x pmcram %04x = %02x\n",activecpu_get_pc(),offset,data);
 				pmcram[offset] = data;
@@ -175,7 +175,7 @@ public class thunderx
 	// objects from s1 to e1
 	//
 	// only compare objects with the specified bits (cm) set in their flags
-	// only set object 0's hit bit if (hm & 0x40) is true
+	// only set object 0's hit bit if ((hm & 0x40) != 0) is true
 	//
 	// the data format is:
 	//

@@ -22,7 +22,7 @@ public class system16
 		data16_t *mem = (data16_t *)memory_region(REGION_CPU1+cpu);
 		int old_word = mem[aligned_offset/2];
 	
-		if( offset&1 )
+		if ((offset & 1) != 0)
 			data = (old_word&0xff00)|data;
 		else
 			data = (old_word&0x00ff)|(data<<8);
@@ -98,7 +98,7 @@ public class system16
 	{
 		unsigned char *temp = malloc( bank_size );
 		bank_size/=4;
-		if( temp ){
+		if (temp != 0){
 			unsigned char *base = memory_region(REGION_GFX2);
 			unsigned char *p1 = temp;
 			unsigned char *p2 = temp+bank_size;

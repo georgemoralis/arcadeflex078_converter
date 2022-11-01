@@ -117,7 +117,7 @@ public class namcos86
 	{
 		unsigned char attr = vram[2*tile_index + 1];
 		int tile_offs;
-		if (layer & 2)
+		if ((layer & 2) != 0)
 			tile_offs = ((tile_address_prom[((layer & 1) << 4) + (attr & 0x03)] & 0xe0) >> 5) * 0x100;
 		else
 			tile_offs = ((tile_address_prom[((layer & 1) << 4) + ((attr & 0x03) << 2)] & 0x0e) >> 1) * 0x100 + tilebank * 0x800;
@@ -237,7 +237,7 @@ public class namcos86
 	
 		scrollx = xscroll[layer]+xdisp[layer];
 		scrolly = yscroll[layer]+ydisp;
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			scrollx = -scrollx+256;
 			scrolly = -scrolly;
@@ -328,7 +328,7 @@ public class namcos86
 				{
 					for( col=0; col<=wide; col++ )
 					{
-						if (flipscreen)
+						if (flipscreen != 0)
 						{
 							drawgfx( bitmap, Machine->gfx[GFX_SPRITES+sprite_bank],
 								sprite_number+2*row+col,

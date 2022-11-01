@@ -358,20 +358,20 @@ public class z8000
 	{
 	    UINT16 fcw = FCW;
 	
-	    if (IRQ_REQ & Z8000_NVI)
+	    if ((IRQ_REQ & Z8000_NVI) != 0)
 	    {
 	        int type = (*Z.irq_callback)(0);
 	        set_irq(type);
 	    }
 	
-	    if (IRQ_REQ & Z8000_VI)
+	    if ((IRQ_REQ & Z8000_VI) != 0)
 	    {
 	        int type = (*Z.irq_callback)(1);
 	        set_irq(type);
 	    }
 	
 	   /* trap ? */
-	   if ( IRQ_REQ & Z8000_TRAP )
+	   if ((IRQ_REQ & Z8000_TRAP) != 0)
 	   {
 	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 	        PUSHW( SP, PC );        /* save current PC */
@@ -383,7 +383,7 @@ public class z8000
 	        LOG(("Z8K#%d trap $%04x\n", cpu_getactivecpu(), PC ));
 	   }
 	   else
-	   if ( IRQ_REQ & Z8000_SYSCALL )
+	   if ((IRQ_REQ & Z8000_SYSCALL) != 0)
 	   {
 	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 	        PUSHW( SP, PC );        /* save current PC */
@@ -395,7 +395,7 @@ public class z8000
 	        LOG(("Z8K#%d syscall $%04x\n", cpu_getactivecpu(), PC ));
 	   }
 	   else
-	   if ( IRQ_REQ & Z8000_SEGTRAP )
+	   if ((IRQ_REQ & Z8000_SEGTRAP) != 0)
 	   {
 	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 	        PUSHW( SP, PC );        /* save current PC */
@@ -407,7 +407,7 @@ public class z8000
 	        LOG(("Z8K#%d segtrap $%04x\n", cpu_getactivecpu(), PC ));
 	   }
 	   else
-	   if ( IRQ_REQ & Z8000_NMI )
+	   if ((IRQ_REQ & Z8000_NMI) != 0)
 	   {
 	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 	        PUSHW( SP, PC );        /* save current PC */
@@ -472,12 +472,12 @@ public class z8000
 	    do
 	    {
 	        /* any interrupt request pending? */
-	        if (IRQ_REQ)
+	        if (IRQ_REQ != 0)
 				Interrupt();
 	
 			CALL_MAME_DEBUG;
 	
-			if (IRQ_REQ & Z8000_HALT)
+			if ((IRQ_REQ & Z8000_HALT) != 0)
 	        {
 	            z8000_ICount = 0;
 	        }
@@ -504,14 +504,14 @@ public class z8000
 	
 	unsigned z8000_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(z8000_Regs*)dst = Z;
 	    return sizeof(z8000_Regs);
 	}
 	
 	void z8000_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			Z = *(z8000_Regs*)src;
 			change_pc16bew(PC);
@@ -635,7 +635,7 @@ public class z8000
 				}
 				else
 				{
-					if (FCW & F_NVIE)
+					if ((FCW & F_NVIE) != 0)
 						IRQ_REQ |= Z8000_NVI;
 		        }
 			}
@@ -648,7 +648,7 @@ public class z8000
 				}
 				else
 				{
-					if (FCW & F_VIE)
+					if ((FCW & F_VIE) != 0)
 						IRQ_REQ |= Z8000_VI;
 				}
 			}

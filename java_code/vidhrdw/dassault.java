@@ -53,7 +53,7 @@ public class dassault
 				flash=y&0x1000;
 				if (flash && (cpu_getcurrentframe() & 1)) continue;
 				colour = (x >> 9) &0x1f;
-				if (y&0x8000) colour+=32;
+				if ((y & 0x8000) != 0) colour+=32;
 	
 				fx = y & 0x2000;
 				fy = y & 0x4000;
@@ -69,7 +69,7 @@ public class dassault
 				if (x>320) continue; /* Speedup */
 	
 				sprite &= ~multi;
-				if (fy)
+				if (fy != 0)
 					inc = -1;
 				else
 				{
@@ -77,11 +77,11 @@ public class dassault
 					inc = 1;
 				}
 	
-				if (flip_screen) {
+				if (flip_screen != 0) {
 					y=240-y;
 					x=304-x;
-					if (fx) fx=0; else fx=1;
-					if (fy) fy=0; else fy=1;
+					if (fx != 0) fx=0; else fx=1;
+					if (fy != 0) fy=0; else fy=1;
 					mult=16;
 				}
 				else mult=-16;

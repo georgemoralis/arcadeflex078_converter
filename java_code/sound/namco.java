@@ -307,7 +307,7 @@ public class namco
 					UINT32 c = voice->counter;
 	
 					/* only update if we have non-zero left volume */
-					if (lv)
+					if (lv != 0)
 					{
 						const INT16 *lw = &waveform[lv][voice->waveform_select * 32];
 	
@@ -316,7 +316,7 @@ public class namco
 					}
 	
 					/* only update if we have non-zero right volume */
-					if (rv)
+					if (rv != 0)
 					{
 						const INT16 *rw = &waveform[rv][voice->waveform_select * 32];
 	

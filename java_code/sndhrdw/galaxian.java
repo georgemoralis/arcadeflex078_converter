@@ -143,7 +143,7 @@ public class galaxian
 	public static WriteHandlerPtr galaxian_noise_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#if SAMPLES
-		if (deathsampleloaded)
+		if (deathsampleloaded != 0)
 		{
 			if (data & 1 && !(last_port1 & 1))
 				mixer_play_sample(channelnoise,Machine->samples->sample[1]->data,
@@ -155,7 +155,7 @@ public class galaxian
 		else
 	#endif
 		{
-			if( data & 1 )
+			if ((data & 1) != 0)
 			{
 				timer_adjust(noisetimer, TIME_NEVER, 0, 0);
 				noisevolume = 100;
@@ -175,7 +175,7 @@ public class galaxian
 		if( data & 1 && !(last_port2 & 1) )
 		{
 	#if SAMPLES
-			if( shootsampleloaded )
+			if (shootsampleloaded != 0)
 			{
 				mixer_play_sample(channelshoot,Machine->samples->sample[0]->data,
 						Machine->samples->sample[0]->length,
@@ -418,7 +418,7 @@ public class galaxian
 			/* #0: VOL1=0 and VOL2=0
 			 * only the 33k and the 22k resistors R51 and R50
 			 */
-			if( i & 1 )
+			if ((i & 1) != 0)
 			{
 				r1a += 1.0/33000;
 				r1b += 1.0/33000;
@@ -428,7 +428,7 @@ public class galaxian
 				r0a += 1.0/33000;
 				r0b += 1.0/33000;
 			}
-			if( i & 4 )
+			if ((i & 4) != 0)
 			{
 				r1a += 1.0/22000;
 				r1b += 1.0/22000;
@@ -443,7 +443,7 @@ public class galaxian
 			/* #1: VOL1=1 and VOL2=0
 			 * add the 10k resistor R49 for bit QC
 			 */
-			if( i & 4 )
+			if ((i & 4) != 0)
 				r1a += 1.0/10000;
 			else
 				r0a += 1.0/10000;
@@ -452,7 +452,7 @@ public class galaxian
 			/* #2: VOL1=0 and VOL2=1
 			 * add the 15k resistor R52 for bit QD
 			 */
-			if( i & 8 )
+			if ((i & 8) != 0)
 				r1b += 1.0/15000;
 			else
 				r0b += 1.0/15000;
@@ -461,7 +461,7 @@ public class galaxian
 			/* #3: VOL1=1 and VOL2=1
 			 * add the 10k resistor R49 for QC
 			 */
-			if( i & 4 )
+			if ((i & 4) != 0)
 				r0b += 1.0/10000;
 			else
 				r1b += 1.0/10000;

@@ -374,13 +374,13 @@ public class gstriker
 		ystep *= yfact;
 	
 		// Handle flipping
-		if (flipy)
+		if (flipy != 0)
 		{
 			ypos += (ynum-1) * ystep;
 			ystep = -ystep;
 		}
 	
-		if (flipx)
+		if (flipx != 0)
 		{
 			xpos += (xnum-1) * xstep;
 			xstep = -xstep;
@@ -428,11 +428,11 @@ public class gstriker
 			UINT16 cmd = *splist++;
 	
 			// End of list
-			if (cmd & 0x4000)
+			if ((cmd & 0x4000) != 0)
 				break;
 	
 			// Normal sprite here
-			if (cmd & 0x100)
+			if ((cmd & 0x100) != 0)
 			{
 				// Extract sprite index
 				int num = cmd & 0xFF;

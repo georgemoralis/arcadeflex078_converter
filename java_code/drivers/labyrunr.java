@@ -40,7 +40,7 @@ public class labyrunr
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-	if (data & 0xe0) usrintf_showmessage("bankswitch %02x",data);
+	if ((data & 0xe0) != 0) usrintf_showmessage("bankswitch %02x",data);
 	
 		/* bits 0-2 = bank number */
 		bankaddress = 0x10000 + (data & 0x07) * 0x4000;

@@ -288,7 +288,7 @@ public class magmax
 		}
 	
 		/* copy the background graphics */
-		if (magmax_vreg & 0x40)		/* background disable */
+		if ((magmax_vreg & 0x40) != 0)		/* background disable */
 		{
 			fillbitmap(bitmap, Machine->pens[0], &Machine->visible_area);
 		}
@@ -454,7 +454,7 @@ public class magmax
 					}
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					int i;
 					UINT32 pens_line_tab_flipped[256];
@@ -473,7 +473,7 @@ public class magmax
 			int sx, sy;
 	
 			sy = spriteram16[offs] & 0xff;
-			if (sy)
+			if (sy != 0)
 			{
 				int code = spriteram16[offs + 1] & 0xff;
 				int attr = spriteram16[offs + 2] & 0xff;
@@ -484,7 +484,7 @@ public class magmax
 				sx = (spriteram16[offs + 3] & 0xff) - 0x80 + 0x100 * (attr & 0x01);
 				sy = 239 - sy;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 255-16 - sx;
 					sy = 239 - sy;
@@ -492,7 +492,7 @@ public class magmax
 					flipy = !flipy;
 				}
 	
-				if (code & 0x80)	/* sprite bankswitch */
+				if ((code & 0x80) != 0)	/* sprite bankswitch */
 				{
 					code += (magmax_vreg & 0x30) * 0x8;
 				}
@@ -518,12 +518,12 @@ public class magmax
 			int code;
 	
 			code = videoram16[offs /*+ page*/] & 0xff;
-			if (code)
+			if (code != 0)
 			{
 				int sx = (offs % 32);
 				int sy = (offs / 32);
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

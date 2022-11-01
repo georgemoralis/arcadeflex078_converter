@@ -319,19 +319,19 @@ public class sega
 		data ^= 0xff;
 	
 		/* Play fireball sample */
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 			sample_start (0, 0, 0);
 	
 		/* Play explosion samples */
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 			sample_start (1, 10, 0);
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			sample_start (1, 9, 0);
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			sample_start (1, 8, 0);
 	
 		/* Play bounce sample */
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 	   	{
 			if (sample_playing(2))
 				sample_stop (2);
@@ -339,7 +339,7 @@ public class sega
 		}
 	
 		/* Play lazer sample */
-		if (data & 0xc0)
+		if ((data & 0xc0) != 0)
 	   	{
 			if (sample_playing(3))
 				sample_stop (3);
@@ -352,23 +352,23 @@ public class sega
 		data ^= 0xff;
 	
 		/* Play thrust sample */
-		if (data & 0x0f)
+		if ((data & 0x0f) != 0)
 			sample_start (4, 6, 0);
 		else
 			sample_stop (4);
 	
 		/* Play skitter sample */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			sample_start (5, 2, 0);
 	
 		/* Play eliminator sample */
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 			sample_start (6, 3, 0);
 	
 		/* Play electron samples */
-		if (data & 0x40)
+		if ((data & 0x40) != 0)
 			sample_start (7, 7, 0);
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 			sample_start (7, 4, 0);
 	} };
 	
@@ -378,19 +378,19 @@ public class sega
 		data ^= 0xff;
 	
 		/* Play fireball sample */
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 	                sample_start (0, 0, 0);
 	
 		/* Play explosion samples */
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 	                sample_start (1, 10, 0);
-	 	if (data & 0x08)
+	 	if ((data & 0x08) != 0)
 	                  sample_start (1, 9, 0);
-	 	if (data & 0x10)
+	 	if ((data & 0x10) != 0)
 	                  sample_start (1, 8, 0);
 	
 		/* Play bounce sample */
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 	   	{
 	                if (sample_playing(2))
 	                        sample_stop (2);
@@ -398,7 +398,7 @@ public class sega
 		}
 	
 		/* Play lazer sample */
-		if (data & 0xc0)
+		if ((data & 0xc0) != 0)
 	   	{
 			if (sample_playing(3))
 				sample_stop (3);
@@ -411,23 +411,23 @@ public class sega
 		data ^= 0xff;
 	
 		/* Play thrust sample */
-		if (data & 0x0f)
+		if ((data & 0x0f) != 0)
 	            sample_start (4, 6, 0);
 		else
 			sample_stop (4);
 	
 		/* Play skitter sample */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 	                sample_start (5, 2, 0);
 	
 		/* Play eliminator sample */
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 	                sample_start (6, 3, 0);
 	
 		/* Play electron samples */
-		if (data & 0x40)
+		if ((data & 0x40) != 0)
 	                sample_start (7, 40, 0);
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 	                sample_start (7, 41, 0);
 	} };
 	
@@ -529,11 +529,11 @@ public class sega
 		data ^= 0xff;
 	
 		/* craft growing */
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 			sample_start (1, 0, 0);
 	
 		/* craft moving */
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 	   	{
 			if (!sample_playing(2))
 				sample_start (2, 1, 1);
@@ -542,7 +542,7 @@ public class sega
 			sample_stop (2);
 	
 		/* Thrust */
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 	   	{
 			if (!sample_playing(3))
 				sample_start (3, 4, 1);
@@ -551,11 +551,11 @@ public class sega
 			sample_stop (3);
 	
 		/* star spin */
-		if (data & 0x40)
+		if ((data & 0x40) != 0)
 			sample_start (4, 8, 0);
 	
 		/* partial warship? */
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 			sample_start (4, 9, 0);
 	
 	} };
@@ -567,11 +567,11 @@ public class sega
 		data ^= 0xff;
 	
 		/* craft joining */
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 			sample_start (5, 2, 0);
 	
 		/* ship firing */
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 	   	{
 			if (sample_playing(6))
 				sample_stop(6);
@@ -580,18 +580,18 @@ public class sega
 	        }
 	
 		/* fireball */
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 			sample_start (7, 6, 0);
 	
 		/* small explosion */
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			sample_start (7, 6, 0);
 		/* large explosion */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			sample_start (7, 5, 0);
 	
 		/* docking bang */
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 			sample_start (0, 7, 0);
 	
 	} };

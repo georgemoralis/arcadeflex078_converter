@@ -185,7 +185,7 @@ public class shaolins
 				int sx = 240 - spriteram[offs + 6];
 				int sy = 248 - spriteram[offs + 4];
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 248 - sy;

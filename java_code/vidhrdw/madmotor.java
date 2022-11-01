@@ -240,7 +240,7 @@ public class madmotor
 			sy = 240 - sy;
 	
 			code &= ~(h-1);
-			if (flipy)
+			if (flipy != 0)
 				incy = -1;
 			else
 			{
@@ -248,11 +248,11 @@ public class madmotor
 				incy = 1;
 			}
 	
-			if (flipscreen) {
+			if (flipscreen != 0) {
 				sy=240-sy;
 				sx=240-sx;
-				if (flipx) flipx=0; else flipx=1;
-				if (flipy) flipy=0; else flipy=1;
+				if (flipx != 0) flipx=0; else flipx=1;
+				if (flipy != 0) flipy=0; else flipy=1;
 				mult=16;
 			}
 			else mult=-16;

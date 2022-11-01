@@ -44,8 +44,8 @@ public class unico
 	***************************************************************************/
 	
 	READ16_HANDLER ( YM3812_status_port_0_msb_r )	{	return YM3812_status_port_0_r(0) << 8;	}
-	WRITE16_HANDLER( YM3812_register_port_0_msb_w )	{	if (ACCESSING_MSB)	YM3812_control_port_0_w(0,data >> 8);	}
-	WRITE16_HANDLER( YM3812_data_port_0_msb_w )		{	if (ACCESSING_MSB)	YM3812_write_port_0_w(0,data >> 8);		}
+	WRITE16_HANDLER( YM3812_register_port_0_msb_w )	{	if (ACCESSING_MSB != 0)	YM3812_control_port_0_w(0,data >> 8);	}
+	WRITE16_HANDLER( YM3812_data_port_0_msb_w )		{	if (ACCESSING_MSB != 0)	YM3812_write_port_0_w(0,data >> 8);		}
 	
 	
 	/*
@@ -60,7 +60,7 @@ public class unico
 	
 	static WRITE16_HANDLER( burglarx_sound_bank_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			int bank = (data >> 8 ) & 1;
 			OKIM6295_set_bank_base(0, 0x40000 * bank );
@@ -115,7 +115,7 @@ public class unico
 	
 	static WRITE16_HANDLER( zeropnt_sound_bank_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			/* Banked sound samples. The 3rd quarter of the ROM
 			   contains garbage. Indeed, only banks 0&1 are used */
@@ -241,7 +241,7 @@ public class unico
 	
 	static WRITE32_HANDLER( zeropnt2_sound_bank_w )
 	{
-		if (ACCESSING_MSB32)
+		if (ACCESSING_MSB32 != 0)
 		{
 			int bank = ((data >> 24) & 3) % 4;
 			unsigned char *dst	= memory_region(REGION_SOUND1);
@@ -265,7 +265,7 @@ public class unico
 		if (data & ~0xfe00000)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if ( ACCESSING_MSB32 )
+		if (ACCESSING_MSB32 != 0)
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x04000000);
@@ -698,12 +698,12 @@ public class unico
 	
 	void nvram_handler_zeropnt2(mame_file *file,int read_or_write)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&zeropnt2_eeprom_interface);
-			if (file)	EEPROM_load(file);
+			if (file != 0)	EEPROM_load(file);
 		}
 	}
 	

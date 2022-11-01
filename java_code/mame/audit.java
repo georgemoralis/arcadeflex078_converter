@@ -178,7 +178,7 @@ public class audit
 			memset(gAudits, 0, AUD_MAX_ROMS * sizeof(tAuditRecord));
 		}
 	
-		if (gAudits)
+		if (gAudits != 0)
 			*audit = aud = gAudits;
 		else
 			return 0;
@@ -227,7 +227,7 @@ public class audit
 					for (chunk = rom_first_chunk(rom); chunk; chunk = rom_next_chunk(chunk))
 						aud->explength += ROM_GETLENGTH(chunk);
 	
-					if (err)
+					if (err != 0)
 					{
 						if (hash_data_has_info(aud->exphash, HASH_INFO_NO_DUMP))
 						{
@@ -537,7 +537,7 @@ public class audit
 		if (!gMissingSamples)
 			gMissingSamples = (tMissingSample *)malloc (AUD_MAX_SAMPLES * sizeof (tMissingSample));
 	
-		if (gMissingSamples)
+		if (gMissingSamples != 0)
 			*audit = aud = gMissingSamples;
 		else
 			return 0;
@@ -551,7 +551,7 @@ public class audit
 			if (f == NULL && skipfirst)
 				f = mame_fopen (sharedname, samplenames[j], FILETYPE_SAMPLE, 0);
 	
-			if (f)
+			if (f != 0)
 				mame_fclose(f);
 			else
 			{

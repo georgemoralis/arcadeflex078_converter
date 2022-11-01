@@ -340,7 +340,7 @@ public class renegade
 	{
 		int result = 1;
 	
-		if( mcu_input_size ) mcu_process_command();
+		if (mcu_input_size != 0) mcu_process_command();
 	
 		if( mcu_output_byte<MCU_BUFFER_MAX )
 			result = mcu_buffer[mcu_output_byte++];
@@ -378,7 +378,7 @@ public class renegade
 	
 		static int count;
 		count = !count;
-		if( count )
+		if (count != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);

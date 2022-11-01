@@ -251,7 +251,7 @@ INLINE void g65816i_set_flag_mx(uint value)
 		FLAG_M = MFLAG_CLEAR;
 	}
 #else
-	if(value & FLAGPOS_M)
+	if ((value & FLAGPOS_M) != 0)
 	{
 		REGISTER_B = REGISTER_A & 0xff00;
 		REGISTER_A = MAKE_UINT_8(REGISTER_A);
@@ -264,7 +264,7 @@ INLINE void g65816i_set_flag_mx(uint value)
 		FLAG_X = XFLAG_CLEAR;
 	}
 #else
-	if(value & FLAGPOS_X)
+	if ((value & FLAGPOS_X) != 0)
 	{
 		REGISTER_X = MAKE_UINT_8(REGISTER_X);
 		REGISTER_Y = MAKE_UINT_8(REGISTER_Y);
@@ -284,7 +284,7 @@ INLINE void g65816i_set_flag_e(uint value)
 		g65816i_set_execution_mode(EXECUTION_MODE_M1X1);
 	}
 #else
-	if(value)
+	if (value != 0)
 	{
 #if !FLAG_SET_M
 		REGISTER_B = REGISTER_A & 0xff00;
@@ -368,7 +368,7 @@ INLINE void g65816i_interrupt_hardware(uint vector)
 	g65816i_set_flag_i(IFLAG_SET);
 	REGISTER_PB = 0;
 	g65816i_jump_16(g65816i_read_16_normal(vector));
-	if(INT_ACK) INT_ACK(0);
+	if (INT_ACK != 0) INT_ACK(0);
 #else
 	CLK(8);
 	g65816i_push_8(REGISTER_PB>>16);
@@ -378,7 +378,7 @@ INLINE void g65816i_interrupt_hardware(uint vector)
 	g65816i_set_flag_i(IFLAG_SET);
 	REGISTER_PB = 0;
 	g65816i_jump_16(g65816i_read_16_normal(vector));
-	if(INT_ACK) INT_ACK(0);
+	if (INT_ACK != 0) INT_ACK(0);
 #endif
 }
 
@@ -639,7 +639,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 			CLK(CLK_OP + CLK_R8 + CLK_##MODE);								\
 			SRC    = OPER_8_##MODE();										\
 			FLAG_C = REGISTER_A + SRC + CFLAG_AS_1();						\
-			if(FLAG_D)														\
+			if (FLAG_D != 0)														\
 			{																\
 				if((FLAG_C & 0xf) > 9)										\
 					FLAG_C+=6;												\
@@ -732,7 +732,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 #undef OP_BCC
 #define OP_BCC(COND)														\
 			DST = OPER_8_IMM();												\
-			if(COND)														\
+			if (COND != 0)														\
 			{																\
 				CLK(CLK_OP + CLK_RELATIVE_8 + 1);							\
 				g65816i_branch_8(DST);										\
@@ -2111,9 +2111,9 @@ TABLE_FUNCTION(void, set_line, (int line, int state))
 				case HOLD_LINE:
 					LINE_IRQ = 1;
 			}
-			if(FLAG_I)
+			if (FLAG_I != 0)
 			{
-				if(CPU_STOPPED & STOP_LEVEL_WAI)
+				if ((CPU_STOPPED & STOP_LEVEL_WAI) != 0)
 					CPU_STOPPED &= ~STOP_LEVEL_WAI;
 				return;
 			}

@@ -62,7 +62,7 @@ public class quizpani
 	
 	WRITE16_HANDLER( quizpani_tilesbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if(quizpani_txtbank != (data & 0x30)>>4)
 			{

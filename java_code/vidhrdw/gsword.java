@@ -143,7 +143,7 @@ public class gsword
 	
 	public static WriteHandlerPtr gsword_videoctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x8f)
+		if ((data & 0x8f) != 0)
 		{
 			usrintf_showmessage("videoctrl %02x",data);
 		}
@@ -221,7 +221,7 @@ public class gsword
 					tile -= 128;
 					sy-=16;
 				}
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;

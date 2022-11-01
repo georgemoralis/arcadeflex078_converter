@@ -260,11 +260,11 @@ public class window
 	{
 		// get a DC for the screen
 		HDC dc = GetDC(NULL);
-		if (dc)
+		if (dc != 0)
 		{
 			// determine the pixel depth
 			int bytes_per_pixel = (GetDeviceCaps(dc, BITSPIXEL) + 7) / 8;
-			if (bytes_per_pixel)
+			if (bytes_per_pixel != 0)
 			{
 				// compute the amount necessary to align to 16 byte boundary
 				int pixels_per_16bytes = 16 / bytes_per_pixel;
@@ -293,7 +293,7 @@ public class window
 		bounds->top = bounds->left = 0;
 		bounds->right = 640;
 		bounds->bottom = 480;
-		if (dc)
+		if (dc != 0)
 		{
 			// get the bounds from the DC
 			bounds->right = GetDeviceCaps(dc, HORZRES);
@@ -331,7 +331,7 @@ public class window
 		{
 			clear = *outer;
 			clear.right = inner->left;
-			if (dc)
+			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
 	
@@ -340,7 +340,7 @@ public class window
 		{
 			clear = *outer;
 			clear.left = inner->right;
-			if (dc)
+			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
 	
@@ -349,7 +349,7 @@ public class window
 		{
 			clear = *outer;
 			clear.bottom = inner->top;
-			if (dc)
+			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
 	
@@ -358,7 +358,7 @@ public class window
 		{
 			clear = *outer;
 			clear.top = inner->bottom;
-			if (dc)
+			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
 	}
@@ -533,9 +533,9 @@ public class window
 		win_default_constraints = 0;
 	
 		// Determine which DirectX components to use
-		if (win_use_d3d)
+		if (win_use_d3d != 0)
 			win_use_directx = USE_D3D;
-		else if (win_use_ddraw)
+		else if (win_use_ddraw != 0)
 			win_use_directx = USE_DDRAW;
 	
 		// determine the aspect ratio: hardware stretch case
@@ -581,7 +581,7 @@ public class window
 		}
 	
 		// finish off by trying to initialize DirectX
-		if (win_use_directx)
+		if (win_use_directx != 0)
 		{
 			if (win_use_directx == USE_D3D)
 				result = win_d3d_init(width, height, depth, attributes, aspect_ratio, &effect_table[win_blit_effect]);
@@ -592,7 +592,7 @@ public class window
 		// warn the user if effects for an inactive/possibly inapropriate effects engine are selected
 		if (win_use_directx == USE_D3D)
 		{
-			if (win_blit_effect)
+			if (win_blit_effect != 0)
 				fprintf(stderr, "Warning: non-hardware-accelerated blitting-effects engine enabled\n         use the -d3deffect option to enable hardware acceleration\n");
 		}
 		else
@@ -602,7 +602,7 @@ public class window
 		}
 	
 		// return directx initialisation status
-		if (win_use_directx)
+		if (win_use_directx != 0)
 			return result;
 	
 		return 0;
@@ -617,7 +617,7 @@ public class window
 	void win_destroy_window(void)
 	{
 		// kill directdraw
-		if (win_use_directx)
+		if (win_use_directx != 0)
 		{
 			if (win_use_directx == USE_D3D)
 			{
@@ -630,7 +630,7 @@ public class window
 		}
 	
 		// kill the window if it still exists
-		if (win_video_window)
+		if (win_video_window != 0)
 			DestroyWindow(win_video_window);
 	}
 	
@@ -663,7 +663,7 @@ public class window
 	
 		// add to the system menu
 		menu = GetSystemMenu(win_video_window, FALSE);
-		if (menu)
+		if (menu != 0)
 			AppendMenu(menu, MF_ENABLED | MF_STRING, MENU_FULLSCREEN, "Full Screen\tAlt+Enter");
 	}
 	
@@ -676,7 +676,7 @@ public class window
 	void win_update_video_window(struct mame_bitmap *bitmap, const struct rectangle *bounds, void *vector_dirty_pixels)
 	{
 		// get the client DC and draw to it
-		if (win_video_window)
+		if (win_video_window != 0)
 		{
 			HDC dc = GetDC(win_video_window);
 			draw_video_contents(dc, bitmap, bounds, vector_dirty_pixels, 0);
@@ -726,7 +726,7 @@ public class window
 	
 		// if we have a blit surface, use that
 	
-		if (win_use_directx)
+		if (win_use_directx != 0)
 		{
 			if (win_use_directx == USE_D3D)
 			{
@@ -759,7 +759,7 @@ public class window
 	#if !HAS_WINDOW_MENU
 			// non-client paint: punt if full screen
 			case WM_NCPAINT:
-				if (win_window_mode)
+				if (win_window_mode != 0)
 					return DefWindowProc(wnd, message, wparam, lparam);
 				break;
 	#endif /* !HAS_WINDOW_MENU */
@@ -783,7 +783,7 @@ public class window
 			{
 				PAINTSTRUCT pstruct;
 				HDC hdc = BeginPaint(wnd, &pstruct);
-	 			if (win_video_window)
+	 			if (win_video_window != 0)
 	  				draw_video_contents(hdc, NULL, NULL, NULL, 1);
 	 			if (win_has_menu())
 	 				DrawMenuBar(win_video_window);
@@ -829,7 +829,7 @@ public class window
 	
 			// destroy: close down the app
 			case WM_DESTROY:
-				if (win_use_directx)
+				if (win_use_directx != 0)
 				{
 					if (win_use_directx == USE_D3D)
 					{
@@ -891,7 +891,7 @@ public class window
 		}
 	
 		// determine the maximum rect
-		if (win_window_mode)
+		if (win_window_mode != 0)
 			get_work_area(&maxrect);
 		else
 			get_screen_bounds(&maxrect);
@@ -1076,7 +1076,7 @@ public class window
 		if (!visible_area_set)
 		{
 			// let's also win_start_maximized the window
-			if (win_window_mode)
+			if (win_window_mode != 0)
 			{
 				RECT bounds, work;
 	
@@ -1089,7 +1089,7 @@ public class window
 				non_maximized_bounds.bottom = non_maximized_bounds.top + bounds.bottom - bounds.top;
 	
 				// if maximizing, toggle it
-				if (win_start_maximized)
+				if (win_start_maximized != 0)
 					win_toggle_maximize(0);
 	
 				// otherwise, just enforce the bounds
@@ -1142,17 +1142,17 @@ public class window
 	
 		// get the maximum constrained area
 		constrained = maximum;
-		if (win_default_constraints)
+		if (win_default_constraints != 0)
 		{
 			win_constrain_to_aspect_ratio(&constrained, WMSZ_BOTTOMRIGHT, win_default_constraints);
 		}
 	
-		if (force_maximize)
+		if (force_maximize != 0)
 		{
 			current = constrained;
 			center_window = 1;
 		}
-		else if (win_default_constraints)
+		else if (win_default_constraints != 0)
 		{
 			// toggle between maximised, contrained, and normal sizes
 			if ((current.right - current.left) >= (maximum.right - maximum.left) ||
@@ -1246,7 +1246,7 @@ public class window
 	void win_toggle_full_screen(void)
 	{
 		// rip down DirectDraw
-		if (win_use_directx)
+		if (win_use_directx != 0)
 		{
 			if (win_use_directx == USE_D3D)
 			{
@@ -1267,7 +1267,7 @@ public class window
 		win_window_mode = !win_window_mode;
 	
 		// adjust the window style and z order
-		if (win_window_mode)
+		if (win_window_mode != 0)
 		{
 			// adjust the style
 			SetWindowLong(win_video_window, GWL_STYLE, WINDOW_STYLE);
@@ -1313,7 +1313,7 @@ public class window
 			ShowWindow(win_debug_window, SW_SHOW);
 	
 		// reinit
-		if (win_use_directx)
+		if (win_use_directx != 0)
 		{
 			if (win_use_directx == USE_D3D)
 			{
@@ -1345,7 +1345,7 @@ public class window
 		GetWindowRect(win_video_window, &original);
 	
 		// adjust the window size so the client area is what we want
-		if (win_window_mode)
+		if (win_window_mode != 0)
 		{
 			// constrain the existing size to the aspect ratio
 			window = original;
@@ -1467,7 +1467,7 @@ public class window
 	void win_wait_for_vsync(void)
 	{
 		// if we have DirectDraw, we can use that
-		if (win_use_directx)
+		if (win_use_directx != 0)
 		{
 			if (win_use_directx == USE_D3D)
 			{
@@ -1568,7 +1568,7 @@ public class window
 					converted_bitmap, video_dib_info, DIB_RGB_COLORS, SRCCOPY);
 	
 		// erase the edges if updating
-		if (update)
+		if (update != 0)
 		{
 			RECT inner;
 	
@@ -1735,7 +1735,7 @@ public class window
 	{
 	#ifdef MAME_DEBUG
 		// get the client DC and draw to it
-		if (win_debug_window)
+		if (win_debug_window != 0)
 		{
 			HDC dc = GetDC(win_debug_window);
 			draw_debug_contents(dc, bitmap, palette);

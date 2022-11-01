@@ -73,7 +73,7 @@ public class thief
 	
 	static void tape_set_motor( int bOn )
 	{
-		if( bOn )
+		if (bOn != 0)
 		{
 			sample_start( 0, 0, 1 );
 			sample_start( 1, 1, 1 );

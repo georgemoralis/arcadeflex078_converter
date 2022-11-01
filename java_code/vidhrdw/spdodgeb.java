@@ -191,7 +191,7 @@ public class spdodgeb
 			int dy = -16;
 			int cy;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -210,7 +210,7 @@ public class spdodgeb
 				break;
 	
 				case 1: /* double y */
-				if (flip_screen) { if (sy > 240) sy -= 256; } else { if (sy < 0) sy += 256; }
+				if (flip_screen != 0) { if (sy > 240) sy -= 256; } else { if (sy < 0) sy += 256; }
 				cy = sy + dy;
 				which &= ~1;
 				DRAW_SPRITE(0,sx,cy);
@@ -228,7 +228,7 @@ public class spdodgeb
 		int i;
 	
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			for (i = 0;i < 30;i++)
 				tilemap_set_scrollx(bg_tilemap,i+1,scrollx[29 - i]+5);

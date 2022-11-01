@@ -236,7 +236,7 @@ public class brkthru
 				sy = 240 - spriteram[offs+2];
 				code = spriteram[offs+1] + 128 * (spriteram[offs] & 0x06);
 				color = (spriteram[offs] & 0xe0) >> 5;
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

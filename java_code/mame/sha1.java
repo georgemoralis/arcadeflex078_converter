@@ -364,7 +364,7 @@ public class sha1
 	  for (i = 0; i < words; i++, digest += 4)
 	    WRITE_UINT32(digest, ctx->digest[i]);
 	
-	  if (leftover)
+	  if (leftover != 0)
 	    {
 	      uint32_t word;
 	      unsigned j = leftover;

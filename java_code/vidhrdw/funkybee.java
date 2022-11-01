@@ -130,7 +130,7 @@ public class funkybee
 			int sx = videoram[offs2 + 0x10];
 			int sy = 224 - colorram[offs2];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sy += 32;
 				flipx = !flipx;
@@ -156,7 +156,7 @@ public class funkybee
 			int sx = videoram[0x1f10];
 			int sy = offs * 8;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;
@@ -173,7 +173,7 @@ public class funkybee
 			sx = videoram[0x1f11];
 			sy = offs * 8;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;

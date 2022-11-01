@@ -359,7 +359,7 @@ public class scramble
 		data8_t *RAM = memory_region(REGION_CPU1);
 	
 	
-		if (data)
+		if (data != 0)
 		{
 			/* swap ROM 2 and 3! */
 			cpu_setbank(1,&RAM[0x3000]);
@@ -389,7 +389,7 @@ public class scramble
 	/* Hack? If $b003 is high, we'll check our "fake" speech dipswitch (marked as SLAM) */
 	public static ReadHandlerPtr kingball_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (kingball_speech_dip)
+		if (kingball_speech_dip != 0)
 			return (readinputport(0) & ~0x40) | ((readinputport(3) & 0x01) << 6);
 		else
 			return readinputport(0);
@@ -504,7 +504,7 @@ public class scramble
 	
 		UINT8 *ROM = memory_region(REGION_CPU1);
 	
-		if (cavelon_bank)
+		if (cavelon_bank != 0)
 		{
 			cavelon_bank = 0;
 			cpu_setbank(1, &ROM[0x0000]);
@@ -1149,7 +1149,7 @@ public class scramble
 	
 		scratch = malloc(memory_region_length(REGION_GFX1));
 	
-		if (scratch)
+		if (scratch != 0)
 		{
 			memcpy(scratch, RAM, memory_region_length(REGION_GFX1));
 	
@@ -1188,7 +1188,7 @@ public class scramble
 	
 		scratch = malloc(memory_region_length(REGION_GFX1));
 	
-		if (scratch)
+		if (scratch != 0)
 		{
 			memcpy(scratch, RAM, memory_region_length(REGION_GFX1));
 	
@@ -1226,7 +1226,7 @@ public class scramble
 	
 		scratch = malloc(memory_region_length(REGION_GFX1));
 	
-		if (scratch)
+		if (scratch != 0)
 		{
 			memcpy(scratch, RAM, memory_region_length(REGION_GFX1));
 	
@@ -1266,7 +1266,7 @@ public class scramble
 	
 		scratch = malloc(memory_region_length(REGION_GFX1));
 	
-		if (scratch)
+		if (scratch != 0)
 		{
 			memcpy(scratch, RAM, memory_region_length(REGION_GFX1));
 	

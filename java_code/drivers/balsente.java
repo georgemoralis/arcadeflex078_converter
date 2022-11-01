@@ -2193,7 +2193,7 @@ public class balsente
 		/* ROM region must be 0x40000 total */
 	
 		UINT8 *temp = malloc(0x20000);
-		if (temp)
+		if (temp != 0)
 		{
 			UINT8 *rom = memory_region(REGION_CPU1);
 			UINT32 base;
@@ -2208,7 +2208,7 @@ public class balsente
 	
 				for (dest = 0x00000; dest < 0x20000; dest += 0x02000)
 				{
-					if (cd_rom_mask & SWAP_HALVES)
+					if ((cd_rom_mask & SWAP_HALVES) != 0)
 						memcpy(&temp[dest ^ 0x02000], &rom[base + dest], 0x02000);
 					else
 						memcpy(&temp[dest], &rom[base + dest], 0x02000);

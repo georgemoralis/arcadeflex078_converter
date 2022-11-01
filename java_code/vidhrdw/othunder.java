@@ -164,8 +164,8 @@ public class othunder
 	
 				px = k;
 				py = j;
-				if (flipx)  px = 3-k;	/* pick tiles back to front for x and y flips */
-				if (flipy)  py = 7-j;
+				if (flipx != 0)  px = 3-k;	/* pick tiles back to front for x and y flips */
+				if (flipy != 0)  py = 7-j;
 	
 				code = spritemap[map_offset + px + (py<<2)] &tile_mask;
 	
@@ -181,7 +181,7 @@ public class othunder
 				zx= x + (((k+1)*zoomx)/4) - curx;
 				zy= y + (((j+1)*zoomy)/8) - cury;
 	
-				if (sprites_flipscreen)
+				if (sprites_flipscreen != 0)
 				{
 					/* -zx/y is there to fix zoomed sprite coords in screenflip.
 					   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -202,7 +202,7 @@ public class othunder
 				sprite_ptr->zoomx = zx << 12;
 				sprite_ptr->zoomy = zy << 13;
 	
-				if (primasks)
+				if (primasks != 0)
 				{
 					sprite_ptr->primask = primasks[priority];
 					sprite_ptr++;
@@ -219,7 +219,7 @@ public class othunder
 				}
 			}
 	
-			if (bad_chunks)
+			if (bad_chunks != 0)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	

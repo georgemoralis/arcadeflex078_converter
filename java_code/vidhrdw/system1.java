@@ -77,7 +77,7 @@ public class system1
 	
 		paletteram[offset] = data;
 	
-		if (system1_color_prom)
+		if (system1_color_prom != 0)
 		{
 			int bit0,bit1,bit2,bit3;
 	
@@ -111,7 +111,7 @@ public class system1
 			g = (val << 5) | (val << 2) | (val >> 1);
 	
 			val = (data >> 5) & 0x06;
-			if (val) val++;
+			if (val != 0) val++;
 			b = (val << 5) | (val << 2) | (val >> 1);
 		}
 	
@@ -140,7 +140,7 @@ public class system1
 	
 	public static WriteHandlerPtr system1_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	if (data & 0x6e) logerror("videomode = %02x\n",data);
+	if ((data & 0x6e) != 0) logerror("videomode = %02x\n",data);
 	
 		/* bit 0 is coin counter */
 		coin_counter_w(0, data & 1);
@@ -280,7 +280,7 @@ public class system1
 			x_flipped = x;
 			y = y_flipped = sy+row;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				y_flipped = 258 - sy - height + row;
 				x_flipped = (252*2) - x;
@@ -295,7 +295,7 @@ public class system1
 	
 				data = gfx[src2 & 0x7fff];
 	
-				if (src & 0x8000)
+				if ((src & 0x8000) != 0)
 				{
 					src2--;
 	
@@ -311,13 +311,13 @@ public class system1
 				}
 	
 				if (color1 == 15) break;
-				if (color1)
+				if (color1 != 0)
 					draw_pixel(bitmap,x,y,x_flipped,y_flipped,spr_number,sprite_palette[color1]);
 				x++;
 				x_flipped += flip_screen ? -1 : 1;
 	
 				if (color2 == 15) break;
-				if (color2)
+				if (color2 != 0)
 					draw_pixel(bitmap,x,y,x_flipped,y_flipped,spr_number,sprite_palette[color2]);
 				x++;
 				x_flipped += flip_screen ? -1 : 1;
@@ -374,7 +374,7 @@ public class system1
 				sx = (offs/2) % 32;
 				sy = (offs/2) / 32;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -433,7 +433,7 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 31 - sx;
 						sy = 31 - sy;
@@ -449,7 +449,7 @@ public class system1
 			}
 	
 			/* copy the temporary bitmap to the screen */
-			if (flip_screen)
+			if (flip_screen != 0)
 				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx_flip,1,&background_scrolly_flip,&Machine->visible_area,TRANSPARENCY_NONE,0);
 			else
 				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx,1,&background_scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
@@ -471,7 +471,7 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 8*(31-sx) + background_scrollx_flip;
 						sy = 8*(31-sy) + background_scrolly_flip;
@@ -520,13 +520,13 @@ public class system1
 		system1_draw_bg(bitmap,-1);
 		drawn = system1_draw_fg(bitmap,0);
 		/* redraw low priority bg tiles if necessary */
-		if (drawn) system1_draw_bg(bitmap,0);
+		if (drawn != 0) system1_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
 		system1_draw_bg(bitmap,1);
 		system1_draw_fg(bitmap,1);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if (system1_video_mode & 0x10)  /* screen off */
+		if ((system1_video_mode & 0x10) != 0)  /* screen off */
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 	} };
 	
@@ -574,7 +574,7 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 31 - sx;
 						sy = 31 - sy;
@@ -590,9 +590,9 @@ public class system1
 			}
 	
 			/* copy the temporary bitmap to the screen */
-			if (choplifter_scroll_x_on)
+			if (choplifter_scroll_x_on != 0)
 			{
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					int scrollx_row_flip[32],i;
 	
@@ -624,11 +624,11 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 8*(31-sx);
 	
-						if (choplifter_scroll_x_on)
+						if (choplifter_scroll_x_on != 0)
 							sx = (sx - scrollx_row[sy]) & 0xff;
 	
 						sy = 31 - sy;
@@ -637,7 +637,7 @@ public class system1
 					{
 						sx = 8*sx;
 	
-						if (choplifter_scroll_x_on)
+						if (choplifter_scroll_x_on != 0)
 							sx = (sx + scrollx_row[sy]) & 0xff;
 					}
 	
@@ -660,13 +660,13 @@ public class system1
 		chplft_draw_bg(bitmap,-1);
 		drawn = system1_draw_fg(bitmap,0);
 		/* redraw low priority bg tiles if necessary */
-		if (drawn) chplft_draw_bg(bitmap,0);
+		if (drawn != 0) chplft_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
 		chplft_draw_bg(bitmap,1);
 		system1_draw_fg(bitmap,1);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if (system1_video_mode & 0x10)  /* screen off */
+		if ((system1_video_mode & 0x10) != 0)  /* screen off */
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 	
 	
@@ -727,7 +727,7 @@ public class system1
 					if (x > 256) x -= 512;
 					if (y > 224) y -= 512;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						x = 248 - x;
 						y = 248 - y;
@@ -744,7 +744,7 @@ public class system1
 								flip_screen,flip_screen,
 								x,y,
 								&Machine->visible_area, TRANSPARENCY_NONE, 0);
-					else if (priority)
+					else if (priority != 0)
 						drawgfx(bitmap,Machine->gfx[0],
 								code,
 								((code >> 5) & 0x3f) + 64,
@@ -773,7 +773,7 @@ public class system1
 			code = wbml_paged_videoram[offs] | (wbml_paged_videoram[offs+1] << 8);
 			code = ((code >> 4) & 0x800) | (code & 0x7ff);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
@@ -797,7 +797,7 @@ public class system1
 		wbml_draw_fg(bitmap);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if (system1_video_mode & 0x10)  /* screen off */
+		if ((system1_video_mode & 0x10) != 0)  /* screen off */
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 	} };
 	
@@ -811,13 +811,13 @@ public class system1
 		system1_draw_bg(bitmap,-1);
 		drawn = system1_draw_fg(bitmap,0);
 		/* redraw low priority bg tiles if necessary */
-		if (drawn) system1_draw_bg(bitmap,0);
+		if (drawn != 0) system1_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
 		system1_draw_bg(bitmap,1);
 		system1_draw_fg(bitmap,1);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if (system1_video_mode & 0x10)  /* screen off */
+		if ((system1_video_mode & 0x10) != 0)  /* screen off */
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 	
 		blockgal_kludgeoffset = 0;

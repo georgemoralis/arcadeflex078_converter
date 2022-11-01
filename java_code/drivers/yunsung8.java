@@ -434,7 +434,7 @@ public class yunsung8
 		adpcm<<=4;
 	
 		toggle ^= 1;
-		if (toggle)
+		if (toggle != 0)
 			cpu_set_nmi_line(1,PULSE_LINE);
 	}
 	

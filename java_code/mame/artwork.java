@@ -537,21 +537,21 @@ public class artwork
 			temp1 |= 0xff000000;
 	
 		/* handle carry out of next component */
-		if (temp2 & 0x01000000)
+		if ((temp2 & 0x01000000) != 0)
 		{
 			temp1 -= 0x01000000;
 			temp1 |= 0x00ff0000;
 		}
 	
 		/* handle carry out of next component */
-		if (temp2 & 0x00010000)
+		if ((temp2 & 0x00010000) != 0)
 		{
 			temp1 -= 0x00010000;
 			temp1 |= 0x0000ff00;
 		}
 	
 		/* handle carry out of final component */
-		if (temp2 & 0x00000100)
+		if ((temp2 & 0x00000100) != 0)
 		{
 			temp1 -= 0x00000100;
 			temp1 |= 0x000000ff;
@@ -682,7 +682,7 @@ public class artwork
 	
 		/* allocate the UI overlay */
 		uioverlay = auto_bitmap_alloc_depth(params->width, params->height, Machine->color_depth);
-		if (uioverlay)
+		if (uioverlay != 0)
 			uioverlayhint = auto_malloc(uioverlay->height * MAX_HINTS_PER_SCANLINE * sizeof(uioverlayhint[0]));
 		if (!uioverlay || !uioverlayhint)
 			return 1;
@@ -770,7 +770,7 @@ public class artwork
 			}
 	
 			/* if we have changed pending, mark the artwork dirty */
-			if (ui_changed)
+			if (ui_changed != 0)
 			{
 				union_rect(&underlay_invalid, &ui_changed_bounds);
 				union_rect(&overlay_invalid, &ui_changed_bounds);
@@ -797,15 +797,15 @@ public class artwork
 				/* render to the final bitmap */
 				if (num_underlays && num_overlays)
 					render_game_bitmap_underlay_overlay(display->game_bitmap, palette_lookup, display);
-				else if (num_underlays)
+				else if (num_underlays != 0)
 					render_game_bitmap_underlay(display->game_bitmap, palette_lookup, display);
-				else if (num_overlays)
+				else if (num_overlays != 0)
 					render_game_bitmap_overlay(display->game_bitmap, palette_lookup, display);
 				else
 					render_game_bitmap(display->game_bitmap, palette_lookup, display);
 	
 				/* apply the bezel */
-				if (num_bezels)
+				if (num_bezels != 0)
 				{
 					struct artwork_piece *piece;
 					for (piece = artwork_list; piece; piece = piece->next)
@@ -815,7 +815,7 @@ public class artwork
 			}
 	
 			/* add UI */
-			if (ui_visible)
+			if (ui_visible != 0)
 				render_ui_overlay(uioverlay, uioverlayhint, palette_lookup, display);
 	
 			/* if artwork changed, or there's UI, we can't use dirty pixels */
@@ -883,7 +883,7 @@ public class artwork
 	void artwork_mark_ui_dirty(int minx, int miny, int maxx, int maxy)
 	{
 		/* add to the UI overlay hint if it exists */
-		if (uioverlayhint)
+		if (uioverlayhint != 0)
 		{
 			struct rectangle rect;
 			int y;
@@ -921,7 +921,7 @@ public class artwork
 	
 	void artwork_get_screensize(int *width, int *height)
 	{
-		if (artwork_list)
+		if (artwork_list != 0)
 		{
 			*width = screenrect.max_x - screenrect.min_x + 1;
 			*height = screenrect.max_y - screenrect.min_y + 1;
@@ -1107,7 +1107,7 @@ public class artwork
 		dummy_range[1] = 0;
 	
 		/* adjust the hintlist for the starting offset */
-		if (hintlist)
+		if (hintlist != 0)
 			hintlist -= srcbounds->min_y * MAX_HINTS_PER_SCANLINE;
 	
 		/* loop over rows */
@@ -1233,7 +1233,7 @@ public class artwork
 				UINT32 dyrgb = destyrgb[x];
 	
 				/* handle "non-blending" mode */
-				if (blendflags & OVERLAY_FLAG_NOBLEND)
+				if ((blendflags & OVERLAY_FLAG_NOBLEND) != 0)
 				{
 					if ((spre & nonalpha_mask) && spre >= dpre)
 					{
@@ -1316,13 +1316,13 @@ public class artwork
 		for (i = 0; i < display->game_palette_entries; i += 32)
 		{
 			UINT32 dirtyflags = display->game_palette_dirty[i / 32];
-			if (dirtyflags)
+			if (dirtyflags != 0)
 			{
 				display->game_palette_dirty[i / 32] = 0;
 	
 				/* loop over all 32 bits and update dirty entries */
 				for (j = 0; j < 32; j++, dirtyflags >>= 1)
-					if (dirtyflags & 1)
+					if ((dirtyflags & 1) != 0)
 					{
 						/* extract the RGB values */
 						rgb_t rgbvalue = display->game_palette[i + j];
@@ -1975,7 +1975,7 @@ public class artwork
 			{
 				sprintf(filename, "%s.art", (*driver)->name);
 				artfile = mame_fopen((*driver)->name, filename, FILETYPE_ARTWORK, 0);
-				if (artfile)
+				if (artfile != 0)
 					break;
 			}
 			*driver = (*driver)->clone_of;
@@ -2023,7 +2023,7 @@ public class artwork
 			return 1;
 	
 		/* parse the file into pieces */
-		if (artfile)
+		if (artfile != 0)
 		{
 			result = parse_art_file(artfile);
 			mame_fclose(artfile);
@@ -2056,7 +2056,7 @@ public class artwork
 				num_bezels++;
 	
 			/* load the graphics */
-			if (driver)
+			if (driver != 0)
 				load_bitmap(driver->name, piece);
 		}
 	// debugging
@@ -2474,7 +2474,7 @@ public class artwork
 					prevstate = newstate;
 	
 					/* if starting a new run of non-transparent pixels, remember the start point */
-					if (newstate)
+					if (newstate != 0)
 						statex = x;
 	
 					/* otherwise, add the current run */
@@ -2484,7 +2484,7 @@ public class artwork
 			}
 	
 			/* add the final range */
-			if (prevstate)
+			if (prevstate != 0)
 				add_range_to_hint(piece->scanlinehint, y, statex, x - 1);
 	
 			/* advance pointers */
@@ -2572,7 +2572,7 @@ public class artwork
 			for (x = 0; x < MAX_HINTS_PER_SCANLINE; x++)
 			{
 				UINT32 data = hintsrc[x];
-				if (data)
+				if (data != 0)
 					data -= (left << 16) | left;
 				hintdst[x] = data;
 			}
@@ -3035,7 +3035,7 @@ public class artwork
 		{
 			/* strip off any comments */
 			p = strstr(buffer, "//");
-			if (p)
+			if (p != 0)
 				*p = 0;
 	
 			/* strip off leading/trailing spaces */
@@ -3061,7 +3061,7 @@ public class artwork
 	
 			/* is this a tag/value pair? */
 			value = strchr(tag, '=');
-			if (value)
+			if (value != 0)
 			{
 				/* strip spaces off of both parts */
 				*value++ = 0;

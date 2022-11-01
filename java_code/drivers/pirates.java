@@ -118,17 +118,17 @@ public class pirates
 	
 	static NVRAM_HANDLER( pirates )
 	{
-		if (read_or_write) EEPROM_save(file);
+		if (read_or_write != 0) EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
-			if (file) EEPROM_load(file);
+			if (file != 0) EEPROM_load(file);
 		}
 	}
 	
 	static WRITE16_HANDLER( pirates_out_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bits 0-2 control EEPROM */
 			EEPROM_write_bit(data & 0x04);

@@ -343,7 +343,7 @@ public class namcos1
 			int scrollx = -(namcos1_playfield_control[layer*4+1] + 256*namcos1_playfield_control[layer*4+0]) + scrolloffsX[layer];
 			int scrolly = -(namcos1_playfield_control[layer*4+3] + 256*namcos1_playfield_control[layer*4+2]) + scrolloffsY[layer];
 	
-			if ( flipscreen ) {
+			if (flipscreen != 0) {
 				scrollx = -scrollx;
 				scrolly = -scrolly;
 			}
@@ -385,7 +385,7 @@ public class namcos1
 			sx = ((namcos1_spriteram[offs + 6]&1)<<8) + namcos1_spriteram[offs + 7];
 			sx += sprite_fixed_sx;
 	
-			if(flipscreen) sx = 210 - sx - width;
+			if (flipscreen != 0) sx = 210 - sx - width;
 	
 			if( sx > 480  ) sx -= 512;
 			if( sx < -32  ) sx += 512;
@@ -394,7 +394,7 @@ public class namcos1
 			/* sy */
 			sy = sprite_fixed_sy - namcos1_spriteram[offs + 9];
 	
-			if(flipscreen) sy = 222 - sy;
+			if (flipscreen != 0) sy = 222 - sy;
 			else sy = sy - height;
 	
 			if( sy > 224 ) sy -= 256;
@@ -410,9 +410,9 @@ public class namcos1
 			if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
 			if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
 	
-			if (flipx) sx -= 32-width-left;
+			if (flipx != 0) sx -= 32-width-left;
 			else sx -= left;
-			if (flipy) sy -= 32-height-top;
+			if (flipy != 0) sy -= 32-height-top;
 			else sy -= top;
 	
 			// Doesn't work. Can pdrawgfx handle more than 4 layers?
@@ -455,7 +455,7 @@ public class namcos1
 			sx = ((namcos1_spriteram[offs + 6]&1)<<8) + namcos1_spriteram[offs + 7];
 			sx += sprite_fixed_sx;
 	
-			if(flipscreen) sx = 210 - sx - width;
+			if (flipscreen != 0) sx = 210 - sx - width;
 	
 			if( sx > 480  ) sx -= 512;
 			if( sx < -32  ) sx += 512;
@@ -464,7 +464,7 @@ public class namcos1
 			/* sy */
 			sy = sprite_fixed_sy - namcos1_spriteram[offs + 9];
 	
-			if(flipscreen) sy = 222 - sy;
+			if (flipscreen != 0) sy = 222 - sy;
 			else sy = sy - height;
 	
 			if( sy > 224 ) sy -= 256;
@@ -480,9 +480,9 @@ public class namcos1
 			if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
 			if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
 	
-			if (flipx) sx -= 32-width-left;
+			if (flipx != 0) sx -= 32-width-left;
 			else sx -= left;
-			if (flipy) sy -= 32-height-top;
+			if (flipy != 0) sy -= 32-height-top;
 			else sy -= top;
 	
 			drawgfx(bitmap,gfx,
@@ -524,7 +524,7 @@ public class namcos1
 			scrollx = -( namcos1_playfield_control[j+1] + (namcos1_playfield_control[j+0]<<8) ) + scrolloffsX[i];
 			scrolly = -( namcos1_playfield_control[j+3] + (namcos1_playfield_control[j+2]<<8) ) + scrolloffsY[i];
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				scrollx = -scrollx;
 				scrolly = -scrolly;
@@ -673,7 +673,7 @@ public class namcos1
 			}
 		}
 	
-		if (update_status & USE_SP_BUFFER)
+		if ((update_status & USE_SP_BUFFER) != 0)
 		{
 			sp_updatebuffer = namcos1_videoram + 0x8000;
 			sp_backbuffer = namcos1_videoram + 0x8800;
@@ -692,7 +692,7 @@ public class namcos1
 	{
 		idle_counter = 0;
 	
-		if (update_status & MAIN_COMPLETE) return;
+		if ((update_status & MAIN_COMPLETE) != 0) return;
 		update_status |= MAIN_COMPLETE;
 	
 		if (update_status & UPDATE_TIED && update_status & USE_SP_BUFFER)
@@ -703,7 +703,7 @@ public class namcos1
 	
 	public static WriteHandlerPtr namcos1_sub_update_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (update_status & SUB_COMPLETE) return;
+		if ((update_status & SUB_COMPLETE) != 0) return;
 		update_status |= SUB_COMPLETE;
 	
 		memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0); // take a snapshot of current sprite RAM
@@ -721,7 +721,7 @@ public class namcos1
 		else
 		{
 			// draw screen unconditionally if video goes idle for too long(required unless priority bitmap is used)
-			if (update_status & USE_SP_BUFFER) memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0);
+			if ((update_status & USE_SP_BUFFER) != 0) memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0);
 			namcos1_draw_screen(bitmap, cliprect);
 		}
 	

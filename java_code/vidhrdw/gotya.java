@@ -129,7 +129,7 @@ public class gotya
 	{
 		int row;
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			sx = 35 - sx;
 		}
@@ -138,7 +138,7 @@ public class gotya
 		{
 			int sy;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sy = row;
 			}
@@ -168,7 +168,7 @@ public class gotya
 			int sx = 256 - spriteram[offs + 0x10] + (spriteram[offs + 0x01] & 0x01) * 256;
 			int sy = spriteram[offs + 0x00];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sy = 240 - sy;
 			}

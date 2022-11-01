@@ -63,7 +63,7 @@ public class karnov
 	static void karnov_i8751_w(int data)
 	{
 		/* Pending coin operations may cause protection commands to be queued */
-		if (i8751_needs_ack) {
+		if (i8751_needs_ack != 0) {
 			i8751_command_queue=data;
 			return;
 		}
@@ -93,7 +93,7 @@ public class karnov
 	static void wndrplnt_i8751_w(int data)
 	{
 		/* The last command hasn't been ACK'd (probably a conflict with coin command) */
-		if (i8751_needs_ack) {
+		if (i8751_needs_ack != 0) {
 			i8751_command_queue=data;
 			return;
 		}
@@ -149,7 +149,7 @@ public class karnov
 		static int level;
 	
 		/* Pending coin operations may cause protection commands to be queued */
-		if (i8751_needs_ack) {
+		if (i8751_needs_ack != 0) {
 			i8751_command_queue=data;
 			return;
 		}
@@ -263,14 +263,14 @@ public class karnov
 			case 0: /* SECLR (Interrupt ack for Level 6 i8751 interrupt) */
 				cpu_set_irq_line(0,6,CLEAR_LINE);
 	
-				if (i8751_needs_ack) {
+				if (i8751_needs_ack != 0) {
 					/* If a command and coin insert happen at once, then the i8751 will queue the
 						coin command until the previous command is ACK'd */
-					if (i8751_coin_pending) {
+					if (i8751_coin_pending != 0) {
 						i8751_return=i8751_coin_pending;
 						cpu_set_irq_line(0,6,HOLD_LINE);
 						i8751_coin_pending=0;
-					} else if (i8751_command_queue) {
+					} else if (i8751_command_queue != 0) {
 						/* Pending control command - just write it back as SECREQ */
 						i8751_needs_ack=0;
 						karnov_control_w(3,i8751_command_queue,0xffff);
@@ -692,7 +692,7 @@ public class karnov
 		/* Coin input to the i8751 generates an interrupt to the main cpu */
 		if (readinputport(3) == coin_mask) latch=1;
 		if (readinputport(3) != coin_mask && latch) {
-			if (i8751_needs_ack) {
+			if (i8751_needs_ack != 0) {
 				/* i8751 is busy - queue the command */
 				i8751_coin_pending=readinputport(3) | 0x8000;
 			} else {

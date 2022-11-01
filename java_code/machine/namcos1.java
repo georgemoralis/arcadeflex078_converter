@@ -102,7 +102,7 @@ public class namcos1
 				unsigned short  v1, v2;
 				unsigned long   l=0;
 	
-				if ( divide_32 )
+				if (divide_32 != 0)
 					l = d << 16;
 	
 				d = ( key[2] << 8 ) + key[3];
@@ -111,7 +111,7 @@ public class namcos1
 					v1 = 0xffff;
 					v2 = 0;
 				} else {
-					if ( divide_32 ) {
+					if (divide_32 != 0) {
 						l |= d;
 	
 						v1 = l / divider;
@@ -688,7 +688,7 @@ public class namcos1
 		mem_write_handler handler_w;
 		offs_t offs;
 	
-		if ( offset & 1 ) {
+		if ((offset & 1) != 0) {
 			int bank = (cpu*8) + ( ( offset >> 9 ) & 0x07 );
 	
 			chip &= 0x0300;
@@ -702,7 +702,7 @@ public class namcos1
 	
 			/* read hardware */
 			handler_r = namcos1_bank_element[chip].bank_handler_r;
-			if( handler_r )
+			if (handler_r != 0)
 				/* I/O handler */
 				memory_set_bankhandler_r( bank+1,offs,handler_r);
 			else    /* memory direct */
@@ -710,7 +710,7 @@ public class namcos1
 	
 			/* write hardware */
 			handler_w = namcos1_bank_element[chip].bank_handler_w;
-			if( handler_w )
+			if (handler_w != 0)
 				/* I/O handler */
 				memory_set_bankhandler_w( bank+1,offs,handler_w);
 			else    /* memory direct */
@@ -760,7 +760,7 @@ public class namcos1
 		if( (data&1)^namcos1_reset)
 		{
 			namcos1_reset = data&1;
-			if (namcos1_reset)
+			if (namcos1_reset != 0)
 			{
 				cpu_set_reset_line(1,CLEAR_LINE);
 				cpu_set_reset_line(2,CLEAR_LINE);
@@ -874,7 +874,7 @@ public class namcos1
 			namcos1_bank_element[i].bank_offset    = offset;
 			namcos1_bank_element[i].bank_pointer   = pointer;
 			offset  += 0x2000;
-			if(pointer) pointer += 0x2000;
+			if (pointer != 0) pointer += 0x2000;
 		}
 	}
 	
@@ -1180,18 +1180,18 @@ public class namcos1
 				static int counter[4];
 	
 				res = readinputport(4 + (berabohm_input_counter-1));
-				if (res & 0x80)
+				if ((res & 0x80) != 0)
 				{
 					if (counter[berabohm_input_counter-1] >= 0)
 	//                  res = 0x40 | counter[berabohm_input_counter-1]; I can't get max power with this...
 						res = 0x40 | (counter[berabohm_input_counter-1]>>1);
 					else
 					{
-						if (res & 0x40) res = 0x40;
+						if ((res & 0x40) != 0) res = 0x40;
 						else res = 0x00;
 					}
 				}
-				else if (res & 0x40)
+				else if ((res & 0x40) != 0)
 				{
 					if (counter[berabohm_input_counter-1] < 0x3f)
 					{
@@ -1211,7 +1211,7 @@ public class namcos1
 	
 			res = 0;
 			clk++;
-			if (clk & 1) res |= 0x40;
+			if ((clk & 1) != 0) res |= 0x40;
 			else if (berabohm_input_counter == 4) res |= 0x10;
 	
 			res |= (readinputport(1) & 0x8f);

@@ -386,7 +386,7 @@ public class usrintrf
 		/* free any existing fonts */
 		if (Machine->uifont)
 			freegfx(Machine->uifont);
-		if (uirotfont)
+		if (uirotfont != 0)
 			freegfx(uirotfont);
 	
 		/* first decode a straight on version for games */
@@ -450,7 +450,7 @@ public class usrintrf
 		uirotcharheight = (Machine->ui_orientation & ORIENTATION_SWAP_XY) ? layout.width : layout.height;
 	
 		/* set up the bogus colortable */
-		if (font)
+		if (font != 0)
 		{
 			static pen_t colortable[2*2];
 	
@@ -569,7 +569,7 @@ public class usrintrf
 				if (numchars + word_end - begin > maxchars)
 				{
 					/* if we have at least one character, strip the space */
-					if (numchars)
+					if (numchars != 0)
 					{
 						*pbegin = begin + 1;
 						return numchars;
@@ -928,7 +928,7 @@ public class usrintrf
 		i = selected - topitem;
 		if (subitems && subitems[selected] && arrowize_subitem)
 		{
-			if (arrowize_subitem & 1)
+			if ((arrowize_subitem & 1) != 0)
 			{
 				int sublen;
 	
@@ -945,7 +945,7 @@ public class usrintrf
 				dt[curr_dt].y = topoffs + (3*i+1)*uirotcharheight/2;
 				curr_dt++;
 			}
-			if (arrowize_subitem & 2)
+			if ((arrowize_subitem & 2) != 0)
 			{
 				dt[curr_dt].text = rightarrow;
 				dt[curr_dt].color = UI_COLOR_NORMAL;
@@ -972,7 +972,7 @@ public class usrintrf
 	
 		displaytext(bitmap,dt);
 	
-		if (selected_long)
+		if (selected_long != 0)
 		{
 			int long_dx;
 			int long_dy;
@@ -1150,11 +1150,11 @@ public class usrintrf
 						colortable = 0;
 					}
 	
-					/*if (changed) -- temporary */
+					/*if (changed != 0) -- temporary */
 					{
 						erase_screen(bitmap);
 	
-						if (total_colors)
+						if (total_colors != 0)
 						{
 							int sx,sy,colors;
 							int column_heading_max;
@@ -1213,7 +1213,7 @@ public class usrintrf
 					cpy = (uirotheight - uirotcharheight) / crotheight;
 					if (cpy == 0) cpy = 1;
 					skip_chars = cpx * cpy;
-					/*if (changed) -- temporary */
+					/*if (changed != 0) -- temporary */
 					{
 						int flipx,flipy;
 						int lastdrawn=0;
@@ -1256,7 +1256,7 @@ public class usrintrf
 				}
 				case 2: /* Tilemaps */
 				{
-					/*if (changed) -- temporary */
+					/*if (changed != 0) -- temporary */
 					{
 						UINT32 tilemap_width, tilemap_height;
 						tilemap_nb_size (bank, &tilemap_width, &tilemap_height);
@@ -1395,7 +1395,7 @@ public class usrintrf
 					}
 					case 2:
 					{
-						if (skip_tmap)
+						if (skip_tmap != 0)
 							tilemap_ypos -= skip_tmap;
 						else
 							tilemap_ypos -= bitmap->height/4;
@@ -1427,7 +1427,7 @@ public class usrintrf
 					}
 					case 2:
 					{
-						if (skip_tmap)
+						if (skip_tmap != 0)
 							tilemap_ypos += skip_tmap;
 						else
 							tilemap_ypos += bitmap->height/4;
@@ -1443,7 +1443,7 @@ public class usrintrf
 				{
 					case 2:
 					{
-						if (skip_tmap)
+						if (skip_tmap != 0)
 							tilemap_xpos -= skip_tmap;
 						else
 							tilemap_xpos -= bitmap->width/4;
@@ -1459,7 +1459,7 @@ public class usrintrf
 				{
 					case 2:
 					{
-						if (skip_tmap)
+						if (skip_tmap != 0)
 							tilemap_xpos += skip_tmap;
 						else
 							tilemap_xpos += bitmap->width/4;
@@ -2095,7 +2095,7 @@ public class usrintrf
 						break;
 					case 1:
 						strcat (label[i], ui_getstring (UI_reverse));
-						if (reverse)
+						if (reverse != 0)
 							strcpy(setting[i],ui_getstring (UI_on));
 						else
 							strcpy(setting[i],ui_getstring (UI_off));
@@ -2141,7 +2141,7 @@ public class usrintrf
 				/* reverse */
 				{
 					int reverse = entry[sel/ENTRIES]->type & IPF_REVERSE;
-					if (reverse)
+					if (reverse != 0)
 						reverse=0;
 					else
 						reverse=IPF_REVERSE;
@@ -2177,7 +2177,7 @@ public class usrintrf
 				/* reverse */
 				{
 					int reverse = entry[sel/ENTRIES]->type & IPF_REVERSE;
-					if (reverse)
+					if (reverse != 0)
 						reverse=0;
 					else
 						reverse=IPF_REVERSE;
@@ -2227,7 +2227,7 @@ public class usrintrf
 	
 		buf[0] = 0;
 	
-		if (dispensed_tickets)
+		if (dispensed_tickets != 0)
 		{
 			strcat(buf, ui_getstring (UI_tickets));
 			strcat(buf, ": ");
@@ -2836,7 +2836,7 @@ public class usrintrf
 			/* allocate a buffer for the text */
 			buf = malloc (bufsize);
 	
-			if (buf)
+			if (buf != 0)
 			{
 				/* try to load entry */
 				if (load_driver_history (Machine->gamedrv, buf, bufsize) == 0)
@@ -2860,7 +2860,7 @@ public class usrintrf
 		}
 	
 		{
-			if (buf)
+			if (buf != 0)
 				display_scroll_message (bitmap, &scroll, maxcols, maxrows, buf);
 			else
 			{
@@ -2915,7 +2915,7 @@ public class usrintrf
 			schedule_full_refresh();
 	
 			/* force buffer to be recreated */
-			if (buf)
+			if (buf != 0)
 			{
 				free (buf);
 				buf = 0;
@@ -3460,7 +3460,7 @@ public class usrintrf
 		char buf[20];
 		int attenuation;
 	
-		if (increment)
+		if (increment != 0)
 		{
 			attenuation = osd_get_mastervolume();
 			attenuation += increment;
@@ -3490,9 +3490,9 @@ public class usrintrf
 		if (code_pressed(KEYCODE_LALT) || code_pressed(KEYCODE_RALT))
 			proportional = 1;
 	
-		if (increment)
+		if (increment != 0)
 		{
-			if (proportional)
+			if (proportional != 0)
 			{
 				static int old_vol[MIXER_MAX_CHANNELS];
 				float ratio = 1.0;
@@ -3537,7 +3537,7 @@ public class usrintrf
 				if (volume > 100) volume = 100;
 				if (volume < 0) volume = 0;
 	
-				if (doallchannels)
+				if (doallchannels != 0)
 				{
 					for (ch = 0;ch < MIXER_MAX_CHANNELS;ch++)
 						mixer_set_mixing_level(ch,volume);
@@ -3548,9 +3548,9 @@ public class usrintrf
 		}
 		volume = mixer_get_mixing_level(arg);
 	
-		if (proportional)
+		if (proportional != 0)
 			sprintf(buf,"%s %s %3d%%", ui_getstring (UI_allchannels), ui_getstring (UI_relative), volume);
-		else if (doallchannels)
+		else if (doallchannels != 0)
 			sprintf(buf,"%s %s %3d%%", ui_getstring (UI_allchannels), ui_getstring (UI_volume), volume);
 		else
 			sprintf(buf,"%s %s %3d%%",mixer_get_name(arg), ui_getstring (UI_volume), volume);
@@ -3563,7 +3563,7 @@ public class usrintrf
 		double brightness;
 	
 	
-		if (increment)
+		if (increment != 0)
 		{
 			brightness = palette_get_global_brightness();
 			brightness += 0.05 * increment;
@@ -3582,7 +3582,7 @@ public class usrintrf
 		char buf[20];
 		double gamma_correction;
 	
-		if (increment)
+		if (increment != 0)
 		{
 			gamma_correction = palette_get_global_gamma();
 	
@@ -3606,7 +3606,7 @@ public class usrintrf
 		if (!code_pressed(KEYCODE_LCONTROL) && !code_pressed(KEYCODE_RCONTROL))
 			increment *= 5;
 	
-		if (increment)
+		if (increment != 0)
 		{
 			flicker_correction = vector_get_flicker();
 	
@@ -3627,7 +3627,7 @@ public class usrintrf
 		char buf[30];
 		float intensity_correction;
 	
-		if (increment)
+		if (increment != 0)
 		{
 			intensity_correction = vector_get_intensity();
 	
@@ -3654,13 +3654,13 @@ public class usrintrf
 			doallcpus = 1;
 		if (!code_pressed(KEYCODE_LCONTROL) && !code_pressed(KEYCODE_RCONTROL))
 			increment *= 5;
-		if( increment )
+		if (increment != 0)
 		{
 			overclock = timer_get_overclock(arg);
 			overclock += 0.01 * increment;
 			if (overclock < 0.01) overclock = 0.01;
 			if (overclock > 2.0) overclock = 2.0;
-			if( doallcpus )
+			if (doallcpus != 0)
 				for( cpu = 0; cpu < cpu_gettotalcpu(); cpu++ )
 					timer_set_overclock(cpu, overclock);
 			else
@@ -3669,7 +3669,7 @@ public class usrintrf
 	
 		oc = 100 * timer_get_overclock(arg) + 0.5;
 	
-		if( doallcpus )
+		if (doallcpus != 0)
 			sprintf(buf,"%s %s %3d%%", ui_getstring (UI_allcpus), ui_getstring (UI_overclock), oc);
 		else
 			sprintf(buf,"%s %s%d %3d%%", ui_getstring (UI_overclock), ui_getstring (UI_cpu), arg, oc);
@@ -3917,7 +3917,7 @@ public class usrintrf
 	
 	void ui_show_fps_set(int show)
 	{
-		if (show)
+		if (show != 0)
 		{
 			showfps = 1;
 		}
@@ -3936,7 +3936,7 @@ public class usrintrf
 	
 	void ui_show_profiler_set(int show)
 	{
-		if (show)
+		if (show != 0)
 		{
 			show_profiler = 1;
 			profiler_start();
@@ -3973,7 +3973,7 @@ public class usrintrf
 		{
 			/* find the end of this line and copy it to the text buf */
 			end = strchr(text, '\n');
-			if (end)
+			if (end != 0)
 			{
 				memcpy(textbuf, text, end - text);
 				textbuf[end - text] = 0;
@@ -3991,7 +3991,7 @@ public class usrintrf
 		}
 	
 		/* update the temporary FPS display state */
-		if (showfpstemp)
+		if (showfpstemp != 0)
 		{
 			showfpstemp--;
 			if (!showfps && showfpstemp == 0)
@@ -4107,7 +4107,7 @@ public class usrintrf
 		if (single_step || input_ui_pressed(IPT_UI_PAUSE)) /* pause the game */
 		{
 	#else
-		if (setup_selected)
+		if (setup_selected != 0)
 			mess_pause_for_ui = 1;
 	
 		if (single_step || input_ui_pressed(IPT_UI_PAUSE) || mess_pause_for_ui) /* pause the game */
@@ -4228,7 +4228,7 @@ public class usrintrf
 			ui_show_profiler_set(!ui_show_profiler_get());
 		}
 	
-		if (show_profiler) profiler_show(bitmap);
+		if (show_profiler != 0) profiler_show(bitmap);
 	
 	
 		/* show FPS display? */

@@ -49,11 +49,11 @@ public class firetrk
 	
 	INLINE int arrow_code(int c)
 	{
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			return (c & 0x3F) >= 0x4 && (c & 0x3F) <= 0xB;
 		}
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			return (c & 0x3F) >= 0x8 && (c & 0x3F) <= 0xF;
 		}
@@ -68,7 +68,7 @@ public class firetrk
 	
 		if (GAME_IS_FIRETRUCK || GAME_IS_SUPERBUG)
 		{
-			if (flag)
+			if (flag != 0)
 			{
 				car[0].color = 1;
 				car[1].color = 1;
@@ -116,7 +116,7 @@ public class firetrk
 		{
 			color = 0;
 		}
-		if (flash)
+		if (flash != 0)
 		{
 			color |= 4;
 		}
@@ -133,7 +133,7 @@ public class firetrk
 	
 		/* palette 1 for crash and palette 2 for skid */
 	
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			if ((code & 0x30) != 0x00 || (code & 0x0c) == 0x00)
 			{
@@ -145,7 +145,7 @@ public class firetrk
 			}
 		}
 	
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			if ((code & 0x30) != 0x00)
 			{
@@ -157,7 +157,7 @@ public class firetrk
 			}
 		}
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			if ((code & 0xc0) == 0x40 || (code & 0xc0) == 0x80)
 			{
@@ -209,11 +209,11 @@ public class firetrk
 	
 	public static WriteHandlerPtr firetrk_car_rot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			car[0].number = data & 0x03;
 	
-			if (data & 0x10) /* swap xy */
+			if ((data & 0x10) != 0) /* swap xy */
 			{
 				car[0].layout = 4;
 			}
@@ -226,11 +226,11 @@ public class firetrk
 			car[0].flipy = data & 0x08;
 		}
 	
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			car[0].number = (data & 0x03) ^ 3;
 	
-			if (data & 0x10) /* swap xy */
+			if ((data & 0x10) != 0) /* swap xy */
 			{
 				car[0].layout = 4;
 			}
@@ -243,11 +243,11 @@ public class firetrk
 			car[0].flipy = data & 0x08;
 		}
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			car[0].number = data & 0x07;
 	
-			if (data & 0x80)
+			if ((data & 0x80) != 0)
 			{
 				car[1].color |= 2;
 			}
@@ -266,18 +266,18 @@ public class firetrk
 	{
 		car[1].number = data & 0x07;
 	
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			car[1].flipx = data & 0x08;
 			car[1].flipy = data & 0x10;
 		}
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			car[1].flipx = data & 0x10;
 			car[1].flipy = data & 0x08;
 	
-			if (data & 0x80)
+			if ((data & 0x80) != 0)
 			{
 				car[1].color |= 1;
 			}
@@ -322,17 +322,17 @@ public class firetrk
 		memset(&car[0], 0, sizeof (struct sprite_data));
 		memset(&car[1], 0, sizeof (struct sprite_data));
 	
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			car[0].layout = 3;
 			car[1].layout = 5;
 		}
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			car[0].layout = 3;
 			car[1].layout = 0;
 		}
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			car[0].layout = 3;
 			car[1].layout = 4;
@@ -347,7 +347,7 @@ public class firetrk
 		car[0].x = 144;
 		car[0].y = 104;
 	
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			car[1].x = car[1].flipx ? drone_hpos - 63 : 192 - drone_hpos;
 			car[1].y = car[1].flipy ? drone_vpos - 63 : 192 - drone_vpos;
@@ -355,7 +355,7 @@ public class firetrk
 			car[1].x += 36;
 		}
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			car[1].x = car[1].flipx ? drone_hpos - 31 : 224 - drone_hpos;
 			car[1].y = car[1].flipy ? drone_vpos - 31 : 224 - drone_vpos;
@@ -380,7 +380,7 @@ public class firetrk
 			{
 				x = (i == 0) ? 296 : 8;
 			}
-			if (GAME_IS_MONTECARLO)
+			if (GAME_IS_MONTECARLO != 0)
 			{
 				x = (i == 0) ? 24 : 16;
 			}
@@ -488,7 +488,7 @@ public class firetrk
 			}
 		}
 	
-		if (blink)
+		if (blink != 0)
 		{
 			firetrk_set_blink(0);
 		}

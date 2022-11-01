@@ -59,7 +59,7 @@ public class appoooh
 	
 	static void appoooh_adpcm_int(int num)
 	{
-		if( adpcmptr )
+		if (adpcmptr != 0)
 		{
 			if( appoooh_adpcm_data==-1)
 			{

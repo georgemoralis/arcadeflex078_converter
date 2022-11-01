@@ -38,7 +38,7 @@ public class lastduel
 	
 	static WRITE16_HANDLER( lastduel_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			soundlatch_w(0,data & 0xff);
 	}
 	

@@ -146,7 +146,7 @@ public class decocass
 	
 		sy = 192 - (part_v_shift & 0x7f);
 	
-		if (part_h_shift & 0x80)
+		if ((part_h_shift & 0x80) != 0)
 			sx = (part_h_shift & 0x7f) + 1;
 		else
 			sx = 91 - (part_h_shift & 0x7f);
@@ -162,13 +162,13 @@ public class decocass
 		int sx, sy, x, y, color;
 	
 		color = 0;
-		if (color_center_bot & 0x10)
+		if ((color_center_bot & 0x10) != 0)
 			color |= 4;
-		if (color_center_bot & 0x20)
+		if ((color_center_bot & 0x20) != 0)
 			color |= 2;
-		if (color_center_bot & 0x40)
+		if ((color_center_bot & 0x40) != 0)
 			color |= 1;
-		if (color_center_bot & 0x80)
+		if ((color_center_bot & 0x80) != 0)
 			color = (color & 4) + ((color << 1) & 2) + ((color >> 1) & 1);
 	
 		sy = center_v_shift;
@@ -228,7 +228,7 @@ public class decocass
 	
 	static void mark_bg_tile_dirty(offs_t offset)
 	{
-		if (offset & 0x80)
+		if ((offset & 0x80) != 0)
 			tilemap_mark_tile_dirty( bg_tilemap_r, offset );
 		else
 			tilemap_mark_tile_dirty( bg_tilemap_l, offset );
@@ -458,7 +458,7 @@ public class decocass
 			flipx = sprite_ram[offs + 0] & 0x04;
 			flipy = sprite_ram[offs + 0] & 0x02;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy + sprite_y_adjust_flip_screen;
@@ -503,7 +503,7 @@ public class decocass
 	
 			sy = 255 - missile_ram[offs + 0*interleave];
 			sx = 255 - missile_ram[offs + 2*interleave];
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy + missile_y_adjust_flip_screen;
@@ -515,7 +515,7 @@ public class decocass
 	
 			sy = 255 - missile_ram[offs + 1*interleave];
 			sx = 255 - missile_ram[offs + 3*interleave];
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy + missile_y_adjust_flip_screen;
@@ -592,7 +592,7 @@ public class decocass
 		}
 	
 		/* decode object if it is dirty */
-		if (object_dirty)
+		if (object_dirty != 0)
 		{
 			decodechar(Machine->gfx[3], 0, decocass_objectram, Machine->drv->gfxdecodeinfo[3].gfxlayout);
 			decodechar(Machine->gfx[3], 1, decocass_objectram, Machine->drv->gfxdecodeinfo[3].gfxlayout);
@@ -658,7 +658,7 @@ public class decocass
 			watchdog_reset_w (0,0);
 	
 	#if TAPE_UI_DISPLAY
-		if (tape_timer)
+		if (tape_timer != 0)
 		{
 			double tape_time = tape_time0 + tape_dir * timer_timeelapsed(tape_timer);
 			if (tape_time < 0.0)
@@ -678,7 +678,7 @@ public class decocass
 			static int showmsg;
 			if (code_pressed_memory(KEYCODE_I))
 				showmsg ^= 1;
-			if (showmsg)
+			if (showmsg != 0)
 				usrintf_showmessage_secs(1, "mode:$%02x cm:$%02x ccb:$%02x h:$%02x vl:$%02x vr:$%02x ph:$%02x pv:$%02x ch:$%02x cv:$%02x",
 					mode_set,
 					color_missiles,
@@ -721,9 +721,9 @@ public class decocass
 		tilemap_set_scrollx( bg_tilemap_r, 0, scrollx );
 		tilemap_set_scrolly( bg_tilemap_r, 0, scrolly_r );
 	
-		if (mode_set & 0x20)
+		if ((mode_set & 0x20) != 0)
 		{
-			if (mode_set & 0x08)	/* bkg_ena on ? */
+			if ((mode_set & 0x08) != 0)	/* bkg_ena on ? */
 			{
 				clip = bg_tilemap_l_clip;
 				sect_rect(&clip,cliprect);
@@ -740,7 +740,7 @@ public class decocass
 		{
 			draw_object(bitmap,cliprect);
 			draw_center(bitmap,cliprect);
-			if (mode_set & 0x08)	/* bkg_ena on ? */
+			if ((mode_set & 0x08) != 0)	/* bkg_ena on ? */
 			{
 				clip = bg_tilemap_l_clip;
 				sect_rect(&clip,cliprect);

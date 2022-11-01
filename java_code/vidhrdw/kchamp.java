@@ -103,7 +103,7 @@ public class kchamp
 	        int sx = spriteram[offs + 3] - 8;
 	        int sy = 247 - spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -131,7 +131,7 @@ public class kchamp
 	        int sx = spriteram[offs + 3];
 	        int sy = 240 - spriteram[offs];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

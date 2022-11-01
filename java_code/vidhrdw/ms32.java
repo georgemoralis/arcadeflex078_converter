@@ -228,7 +228,7 @@ public class ms32
 	
 	WRITE32_HANDLER( ms32_gfxctrl_w )
 	{
-		if (ACCESSING_LSB32)
+		if (ACCESSING_LSB32 != 0)
 		{
 			/* bit 1 = flip screen */
 			flipscreen = data & 0x02;
@@ -345,7 +345,7 @@ public class ms32
 	
 			trans = TRANSPARENCY_PEN; // there are surely also shadows (see gametngk) but how they're enabled we don't know
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 320 - ((xsize*xzoom)>>16) - sx;
 				sy = 224 - ((ysize*yzoom)>>16) - sy;
@@ -421,12 +421,12 @@ public class ms32
 				offsy += (ms32_roz_ctrl[0x3c/4] & 1) * 0x400;	// ??? gratia, hayaosi1...
 	
 				/* extend sign */
-				if (start2x & 0x20000) start2x |= ~0x3ffff;
-				if (start2y & 0x20000) start2y |= ~0x3ffff;
-				if (startx & 0x20000) startx |= ~0x3ffff;
-				if (starty & 0x20000) starty |= ~0x3ffff;
-				if (incxx & 0x10000) incxx |= ~0x1ffff;
-				if (incxy & 0x10000) incxy |= ~0x1ffff;
+				if ((start2x & 0x20000) != 0) start2x |= ~0x3ffff;
+				if ((start2y & 0x20000) != 0) start2y |= ~0x3ffff;
+				if ((startx & 0x20000) != 0) startx |= ~0x3ffff;
+				if ((starty & 0x20000) != 0) starty |= ~0x3ffff;
+				if ((incxx & 0x10000) != 0) incxx |= ~0x1ffff;
+				if ((incxy & 0x10000) != 0) incxy |= ~0x1ffff;
 	
 				tilemap_draw_roz(bitmap, &my_clip, ms32_roz_tilemap,
 						(start2x+startx+offsx)<<16, (start2y+starty+offsy)<<16,
@@ -452,12 +452,12 @@ public class ms32
 			offsy += (ms32_roz_ctrl[0x3c/4] & 1) * 0x400;	// ??? gratia, hayaosi1...
 	
 			/* extend sign */
-			if (startx & 0x20000) startx |= ~0x3ffff;
-			if (starty & 0x20000) starty |= ~0x3ffff;
-			if (incxx & 0x10000) incxx |= ~0x1ffff;
-			if (incxy & 0x10000) incxy |= ~0x1ffff;
-			if (incyy & 0x10000) incyy |= ~0x1ffff;
-			if (incyx & 0x10000) incyx |= ~0x1ffff;
+			if ((startx & 0x20000) != 0) startx |= ~0x3ffff;
+			if ((starty & 0x20000) != 0) starty |= ~0x3ffff;
+			if ((incxx & 0x10000) != 0) incxx |= ~0x1ffff;
+			if ((incxy & 0x10000) != 0) incxy |= ~0x1ffff;
+			if ((incyy & 0x10000) != 0) incyy |= ~0x1ffff;
+			if ((incyx & 0x10000) != 0) incyx |= ~0x1ffff;
 	
 			tilemap_draw_roz(bitmap, cliprect, ms32_roz_tilemap,
 					(startx+offsx)<<16, (starty+offsy)<<16,

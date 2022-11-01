@@ -115,7 +115,7 @@ public class psikyo
 		data32_t newlong = psikyo_vram_0[offset];
 		data32_t oldlong = COMBINE_DATA(&psikyo_vram_0[offset]);
 		if (oldlong == newlong)	return;
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			tilemap_mark_tile_dirty(tilemap_0_size0, offset*2);
 			tilemap_mark_tile_dirty(tilemap_0_size1, offset*2);
@@ -123,7 +123,7 @@ public class psikyo
 			tilemap_mark_tile_dirty(tilemap_0_size3, offset*2);
 		}
 	
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 		{
 			tilemap_mark_tile_dirty(tilemap_0_size0, offset*2+1);
 			tilemap_mark_tile_dirty(tilemap_0_size1, offset*2+1);
@@ -137,7 +137,7 @@ public class psikyo
 		data32_t newlong = psikyo_vram_1[offset];
 		data32_t oldlong = COMBINE_DATA(&psikyo_vram_1[offset]);
 		if (oldlong == newlong)	return;
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			tilemap_mark_tile_dirty(tilemap_1_size0, offset*2);
 			tilemap_mark_tile_dirty(tilemap_1_size1, offset*2);
@@ -145,7 +145,7 @@ public class psikyo
 			tilemap_mark_tile_dirty(tilemap_1_size3, offset*2);
 		}
 	
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 		{
 			tilemap_mark_tile_dirty(tilemap_1_size0, offset*2+1);
 			tilemap_mark_tile_dirty(tilemap_1_size1, offset*2+1);
@@ -376,7 +376,7 @@ public class psikyo
 			zoomy = 32 - zoomy;
 	
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				x = width  - x - (nx * zoomx)/2;
 				y = height - y - (ny * zoomy)/2;
@@ -384,10 +384,10 @@ public class psikyo
 				flipy = !flipy;
 			}
 	
-			if (flipx)	{ xstart = nx-1;  xend = -1;  xinc = -1; }
+			if (flipx != 0)	{ xstart = nx-1;  xend = -1;  xinc = -1; }
 			else		{ xstart = 0;     xend = nx;  xinc = +1; }
 	
-			if (flipy)	{ ystart = ny-1;  yend = -1;   yinc = -1; }
+			if (flipy != 0)	{ ystart = ny-1;  yend = -1;   yinc = -1; }
 			else		{ ystart = 0;     yend = ny;   yinc = +1; }
 	
 			for (dy = ystart; dy != yend; dy += yinc)
@@ -473,7 +473,7 @@ public class psikyo
 	*/
 	
 		/* For gfx banking for s1945jo/gunbird/btlkroad */
-		if(psikyo_ka302c_banking)
+		if (psikyo_ka302c_banking != 0)
 		{
 			psikyo_switch_banks(0, (layer0_ctrl&0x400)>>10);
 			psikyo_switch_banks(1, (layer1_ctrl&0x400)>>10);
@@ -563,14 +563,14 @@ public class psikyo
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (layers_ctrl & 1)
+		if ((layers_ctrl & 1) != 0)
 			tilemap_draw(bitmap,cliprect,tmptilemap0, TILEMAP_IGNORE_TRANSPARENCY, 0);
 	
-		if (layers_ctrl & 2)
+		if ((layers_ctrl & 2) != 0)
 			tilemap_draw(bitmap,cliprect,tmptilemap1, 0,                           1);
 	
 		/* Sprites can go below layer 1 (and 0?) */
-		if (layers_ctrl & 4)	psikyo_draw_sprites(bitmap,cliprect,(spr_ctrl & 4 ?0:15));
+		if ((layers_ctrl & 4) != 0)	psikyo_draw_sprites(bitmap,cliprect,(spr_ctrl & 4 ?0:15));
 	
 	} };
 	

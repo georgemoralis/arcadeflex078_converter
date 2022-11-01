@@ -67,8 +67,8 @@ public class alpha68k
 	WRITE16_HANDLER( alpha68k_videoram_w )
 	{
 		/* Doh. */
-		if(ACCESSING_LSB)
-			if(ACCESSING_MSB)
+		if (ACCESSING_LSB != 0)
+			if (ACCESSING_MSB != 0)
 				videoram16[offset] = data;
 			else
 				videoram16[offset] = data & 0xff;
@@ -101,7 +101,7 @@ public class alpha68k
 		{
 			mx = spriteram16[offs+2+(2*j)]<<1;
 			my = spriteram16[offs+3+(2*j)];
-			if (my&0x8000) mx++;
+			if ((my & 0x8000) != 0) mx++;
 	
 			mx=(mx+0x100)&0x1ff;
 			my=(my+0x100)&0x1ff;
@@ -122,7 +122,7 @@ public class alpha68k
 			mx = ((mx + 0x100) & 0x1ff) - 0x100;
 			if (j==0 && s==0x7c0) my++;
 	//ZT
-			if (flipscreen) {
+			if (flipscreen != 0) {
 				mx=240-mx;
 				my=240-my;
 			}
@@ -135,12 +135,12 @@ public class alpha68k
 				fx=tile&0x4000;
 				tile&=0x3fff;
 	
-				if (flipscreen) {
-					if (fx) fx=0; else fx=1;
-					if (fy) fy=0; else fy=1;
+				if (flipscreen != 0) {
+					if (fx != 0) fx=0; else fx=1;
+					if (fy != 0) fy=0; else fy=1;
 				}
 	
-				if (color)
+				if (color != 0)
 					drawgfx(bitmap,Machine->gfx[1],
 						tile,
 						color,
@@ -148,7 +148,7 @@ public class alpha68k
 						mx,my,
 						cliprect,TRANSPARENCY_PEN,0);
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 					my=(my-16)&0x1ff;
 				else
 					my=(my+16)&0x1ff;
@@ -217,8 +217,8 @@ public class alpha68k
 				buffer_28=1;
 				return;
 			case 0x18:
-				if (buffer_68) {if (buffer_60) bank_base=3; else bank_base=2; }
-				if (buffer_28) {if (buffer_60) bank_base=1; else bank_base=0; }
+				if (buffer_68 != 0) {if (buffer_60 != 0) bank_base=3; else bank_base=2; }
+				if (buffer_28 != 0) {if (buffer_60 != 0) bank_base=1; else bank_base=0; }
 				return;
 			case 0x30:
 				bank_base=buffer_28=buffer_68=0;
@@ -228,8 +228,8 @@ public class alpha68k
 				buffer_68=1;
 				return;
 			case 0x38:
-				if (buffer_68) {if (buffer_60) bank_base=7; else bank_base=6; }
-				if (buffer_28) {if (buffer_60) bank_base=5; else bank_base=4; }
+				if (buffer_68 != 0) {if (buffer_60 != 0) bank_base=7; else bank_base=6; }
+				if (buffer_28 != 0) {if (buffer_60 != 0) bank_base=5; else bank_base=4; }
 				return;
 			case 0x08: /* Graphics flags?  Not related to fix chars anyway */
 			case 0x0c:
@@ -264,7 +264,7 @@ public class alpha68k
 	/*
 			mx = spriteram16[offs+2+(2*j)]<<1;
 			my = spriteram16[offs+3+(2*j)];
-			if (my&0x8000) mx++;
+			if ((my & 0x8000) != 0) mx++;
 	
 			mx=(mx+0x100)&0x1ff;
 			my=(my+0x100)&0x1ff;
@@ -279,7 +279,7 @@ public class alpha68k
 			mx = ((mx + 0x100) & 0x1ff) - 0x100;
 			if (j==0 && s==0x7c0) my++;
 	//ZT
-			if (flipscreen) {
+			if (flipscreen != 0) {
 				mx=240-mx;
 				my=240-my;
 			}
@@ -293,12 +293,12 @@ public class alpha68k
 				tile=tile&sprite_mask;
 				if (tile>0x4fff) continue;
 	
-				if (flipscreen) {
-					if (fx) fx=0; else fx=1;
-					if (fy) fy=0; else fy=1;
+				if (flipscreen != 0) {
+					if (fx != 0) fx=0; else fx=1;
+					if (fy != 0) fy=0; else fy=1;
 				}
 	
-				if (color)
+				if (color != 0)
 					drawgfx(bitmap,Machine->gfx[1],
 						tile,
 						color,
@@ -306,7 +306,7 @@ public class alpha68k
 						mx,my,
 						cliprect,TRANSPARENCY_PEN,0);
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 					my=(my-16)&0x1ff;
 				else
 					my=(my+16)&0x1ff;

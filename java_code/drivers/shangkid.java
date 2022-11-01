@@ -137,7 +137,7 @@ public class shangkid
 		switch( bbx_AY8910_control )
 		{
 		case 0x0e:
-			if( bbx_sound_enable )
+			if (bbx_sound_enable != 0)
 			{
 				if( data == 0x01 )
 				{

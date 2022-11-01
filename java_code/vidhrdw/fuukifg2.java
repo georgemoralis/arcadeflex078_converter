@@ -174,7 +174,7 @@ public class fuukifg2
 			int attr		=		spriteram16[offs + 2];
 			int code		=		spriteram16[offs + 3];
 	
-			if (sx & 0x400)		continue;
+			if ((sx & 0x400) != 0)		continue;
 	
 			flipx		=		sx & 0x0800;
 			flipy		=		sy & 0x0800;
@@ -197,14 +197,14 @@ public class fuukifg2
 			sx = (sx & 0x1ff) - (sx & 0x200);
 			sy = (sy & 0x1ff) - (sy & 0x200);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{	flipx = !flipx;		sx = max_x - sx - xnum * 16;
 				flipy = !flipy;		sy = max_y - sy - ynum * 16;	}
 	
-			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 			for (y = ystart; y != yend; y += yinc)
@@ -287,7 +287,7 @@ public class fuukifg2
 	
 		switch( i )
 		{
-			case 2:	if (buffer)	tilemap_draw(bitmap,cliprect,tilemap_3,flag,pri);
+			case 2:	if (buffer != 0)	tilemap_draw(bitmap,cliprect,tilemap_3,flag,pri);
 					else		tilemap_draw(bitmap,cliprect,tilemap_2,flag,pri);
 					return;
 			case 1:	tilemap_draw(bitmap,cliprect,tilemap_1,flag,pri);

@@ -49,7 +49,7 @@ public class redalert
 		c030_data = data & 0x3F;
 	
 		/* Is this some type of sound command? */
-		if (data & 0x80)
+		if ((data & 0x80) != 0)
 			/* Cause an NMI on the voice CPU here? */
 			cpu_set_irq_line(2,I8085_RST75_LINE,HOLD_LINE);
 	} };

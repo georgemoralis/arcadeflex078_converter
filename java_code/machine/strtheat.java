@@ -190,7 +190,7 @@ public class strtheat
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-		if (offset & 0x01)
+		if ((offset & 0x01) != 0)
 		{
 			counter = counter - 1;
 			if (counter < 0)

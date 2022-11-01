@@ -42,7 +42,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( K052109_halfword_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			K052109_w(offset,data & 0xff);
 	
 		/* is this a bug in the game or something else? */
@@ -58,7 +58,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( K051937_halfword_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			K051937_w(offset,data & 0xff);
 	}
 	
@@ -69,7 +69,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( K051960_halfword_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			K051960_w(offset,data & 0xff);
 	}
 	
@@ -100,7 +100,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( cpuA_ctrl_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			data >>= 8;
 	
@@ -124,13 +124,13 @@ public class gradius3
 	
 	static WRITE16_HANDLER( cpuB_irqenable_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			irqBmask = (data >> 8) & 0x07;
 	}
 	
 	public static InterruptHandlerPtr cpuA_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (irqAen)
+		if (irqAen != 0)
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 	} };
 	
@@ -138,19 +138,19 @@ public class gradius3
 	{
 		if (cpu_getiloops() & 1)	/* ??? */
 		{
-			if (irqBmask & 2)
+			if ((irqBmask & 2) != 0)
 				cpu_set_irq_line(1, 2, HOLD_LINE);
 		}
 		else
 		{
-			if (irqBmask & 1)
+			if ((irqBmask & 1) != 0)
 				cpu_set_irq_line(1, 1, HOLD_LINE);
 		}
 	} };
 	
 	static WRITE16_HANDLER( cpuB_irqtrigger_w )
 	{
-		if (irqBmask & 4)
+		if ((irqBmask & 4) != 0)
 		{
 	logerror("%04x trigger cpu B irq 4 %02x\n",activecpu_get_pc(),data);
 			cpu_set_irq_line(1,4,HOLD_LINE);
@@ -161,7 +161,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			soundlatch_w(0,(data >> 8) & 0xff);
 	}
 	

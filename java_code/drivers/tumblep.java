@@ -372,7 +372,7 @@ public class tumblep
 	
 	WRITE16_HANDLER( semicom_soundcmd_w )
 	{
-		if (ACCESSING_LSB) soundlatch_w(0,data & 0xff);
+		if (ACCESSING_LSB != 0) soundlatch_w(0,data & 0xff);
 	}
 	
 	public static Memory_ReadAddress semicom_sound_readmem[]={
@@ -1433,7 +1433,7 @@ public class tumblep
 			FILE *fp;
 	
 			fp=fopen("hcatch", "w+b");
-			if (fp)
+			if (fp != 0)
 			{
 				fwrite(HCROM, 0x40000, 1, fp);
 				fclose(fp);

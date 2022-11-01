@@ -71,13 +71,13 @@ public class rungun
 	
 	static NVRAM_HANDLER( rungun )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -123,11 +123,11 @@ public class rungun
 			break;
 	
 			case 0x06/2:
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					data = readinputport(1) | EEPROM_read_bit();
 	
-					if (init_eeprom_count)
+					if (init_eeprom_count != 0)
 					{
 						init_eeprom_count--;
 						data &= 0xf7;
@@ -155,7 +155,7 @@ public class rungun
 					bit7  : set before massive memory writes
 					bit10 : IRQ5 ACK
 				*/
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					EEPROM_write_bit((data & 0x01) ? 1 : 0);
 					EEPROM_set_cs_line((data & 0x02) ? CLEAR_LINE : ASSERT_LINE);
@@ -180,25 +180,25 @@ public class rungun
 	
 	static WRITE16_HANDLER( sound_cmd1_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			soundlatch_w(0, data>>8);
 	}
 	
 	static WRITE16_HANDLER( sound_cmd2_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			soundlatch2_w(0, data>>8);
 	}
 	
 	static WRITE16_HANDLER( sound_irq_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	}
 	
 	static READ16_HANDLER( sound_status_msb_r )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			return(rng_sound_status<<8);
 	
 		return(0);
@@ -265,13 +265,13 @@ public class rungun
 	
 		cpu_setbank(2, memory_region(REGION_CPU2) + 0x10000 + (data & 0x07) * 0x4000);
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			cpu_set_nmi_line(1, CLEAR_LINE);
 	} };
 	
 	static INTERRUPT_GEN(audio_interrupt)
 	{
-		if (rng_z80_control & 0x80) return;
+		if ((rng_z80_control & 0x80) != 0) return;
 	
 		cpu_set_nmi_line(1, ASSERT_LINE);
 	}

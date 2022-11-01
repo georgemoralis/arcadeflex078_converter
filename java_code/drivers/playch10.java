@@ -358,9 +358,9 @@ public class playch10
 	{
 		UINT8 *mem = memory_region( REGION_CPU2 ) + 0x6000;
 	
-		if ( read_or_write )
+		if (read_or_write != 0)
 			mame_fwrite( file, mem, 0x1000 );
-		else if (file)
+		else if (file != 0)
 			mame_fread( file, mem, 0x1000 );
 		else
 			memset(mem, 0, 0x1000);
@@ -722,7 +722,7 @@ public class playch10
 			cpu_set_reset_line( 0, PULSE_LINE );
 		}
 	
-		else if ( pc10_nmi_enable )
+		else if (pc10_nmi_enable != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

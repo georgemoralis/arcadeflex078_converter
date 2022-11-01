@@ -82,7 +82,7 @@ public class cchasm
 	            currentx = xcenter - (data << 16);
 	            break;
 	        case LENGTH:
-	            if (move)
+	            if (move != 0)
 	            {
 	                vector_add_point (currentx, currenty, 0, 0);
 	                move = 0;
@@ -93,7 +93,7 @@ public class cchasm
 	
 	            total_length += abs(data);
 	
-	            if (color)
+	            if (color != 0)
 	                vector_add_point (currentx, currenty, color, 0xff);
 	            else
 	                move = 1;
@@ -111,7 +111,7 @@ public class cchasm
 	
 	WRITE16_HANDLER( cchasm_refresh_control_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			switch (data >> 8)
 			{

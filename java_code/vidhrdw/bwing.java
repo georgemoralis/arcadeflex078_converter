@@ -110,7 +110,7 @@ public class bwing
 				mapmask = data;
 				srbank = data >> 6;
 	
-				if (srbank) bp_ready |= 1<<(srbank-1) & 7;
+				if (srbank != 0) bp_ready |= 1<<(srbank-1) & 7;
 	
 				if (bp_ready == 7 && !srbank)
 				{
@@ -252,7 +252,7 @@ public class bwing
 			fy = ~attrib & 0x02;
 	
 			// normal/cocktail
-			if (mapmask & 0x20) { fx = !fx; fy = !fy; x = 240 - x; y = 240 - y; }
+			if ((mapmask & 0x20) != 0) { fx = !fx; fy = !fy; x = 240 - x; y = 240 - y; }
 	
 			// single/double
 			if (!(attrib & 0x10))
@@ -267,7 +267,7 @@ public class bwing
 	{
 		unsigned x, y, shiftx;
 	
-		if (mapmask & 0x20)
+		if ((mapmask & 0x20) != 0)
 			{ mapflip = TILEMAP_FLIPX; shiftx = -8; }
 		else
 			{ mapflip = TILEMAP_FLIPY; shiftx = 8; }
@@ -303,7 +303,7 @@ public class bwing
 		bwing_drawsprites(bitmap, cliprect, buffered_spriteram, 1);
 	
 		// draw text layer
-	//	if (mapmask & 4)
+	//	if ((mapmask & 4) != 0)
 		{
 			tilemap_set_flip(charmap, mapflip);
 			tilemap_draw(bitmap, cliprect, charmap, 0, 0);

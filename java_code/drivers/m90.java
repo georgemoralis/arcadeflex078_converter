@@ -58,7 +58,7 @@ public class m90
 			coin_counter_w(0,data & 0x01);
 			coin_counter_w(1,data & 0x02);
 	
-			if (data&0xfe) logerror("Coin counter %02x\n",data);
+			if ((data & 0xfe) != 0) logerror("Coin counter %02x\n",data);
 		}
 	} };
 	

@@ -699,10 +699,10 @@ public class cps1
 				int n = 0;
 				UINT32 mask = (0x80808080 >> j) & src;
 	
-				if (mask & 0x000000ff) n |= 1;
-				if (mask & 0x0000ff00) n |= 2;
-				if (mask & 0x00ff0000) n |= 4;
-				if (mask & 0xff000000) n |= 8;
+				if ((mask & 0x000000ff) != 0) n |= 1;
+				if ((mask & 0x0000ff00) != 0) n |= 2;
+				if ((mask & 0x00ff0000) != 0) n |= 4;
+				if ((mask & 0xff000000) != 0) n |= 8;
 	
 				dwval |= n << (j * 4);
 			}
@@ -782,26 +782,26 @@ public class cps1
 	{
 		FILE *fp;
 		fp=fopen("SCROLL1.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(cps1_scroll1, cps1_scroll_size, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("SCROLL2.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(cps1_scroll2, cps1_scroll_size, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("SCROLL3.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(cps1_scroll3, cps1_scroll_size, 1, fp);
 			fclose(fp);
 		}
 	
 	    fp=fopen("OBJ.DMP", "w+b");
-	    if (fp)
+	    if (fp != 0)
 	    {
 	        fwrite(cps1_obj, cps1_obj_size, 1, fp);
 	        fclose(fp);
@@ -810,14 +810,14 @@ public class cps1
 	    {
 	        /* PSL: CPS2 support */
 	        fp=fopen("OBJCPS2.DMP", "w+b");
-	        if (fp)
+	        if (fp != 0)
 	        {
 	            fwrite(cps2_objram1, cps2_obj_size, 1, fp);
 	            fwrite(cps2_objram2, cps2_obj_size, 1, fp);
 	            fclose(fp);
 	        }
 	        fp=fopen("CPS2OUTP.DMP", "w+b");
-	        if (fp)
+	        if (fp != 0)
 	        {
 	            fwrite(cps2_output, cps2_output_size, 1, fp);
 	            fclose(fp);
@@ -827,27 +827,27 @@ public class cps1
 	
 	
 		fp=fopen("OTHER.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(cps1_other, cps1_other_size, 1, fp);
 			fclose(fp);
 		}
 	
 		fp=fopen("PALETTE.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(cps1_palette, cps1_palette_size, 1, fp);
 			fclose(fp);
 		}
 	
 		fp=fopen("OUTPUT.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(cps1_output, cps1_output_size, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("VIDEO.DMP", "w+b");
-		if (fp)
+		if (fp != 0)
 		{
 			fwrite(cps1_gfxram, cps1_gfxram_size, 1, fp);
 			fclose(fp);
@@ -950,7 +950,7 @@ public class cps1
 			enablemask = cps1_game_config->layer_enable_mask[0];
 		if (cps1_game_config->layer_enable_mask[1] == cps1_game_config->layer_enable_mask[2])
 			enablemask = cps1_game_config->layer_enable_mask[1];
-		if (enablemask)
+		if (enablemask != 0)
 		{
 			if (((layercontrol & enablemask) && (layercontrol & enablemask) != enablemask))
 				usrintf_showmessage("layer %02x",layercontrol&0xc03f);
@@ -1246,7 +1246,7 @@ public class cps1
 				else
 				{
 					bright = (palette>>12);
-					if (bright) bright += 2;
+					if (bright != 0) bright += 2;
 	
 					red   = ((palette>>8)&0x0f) * bright;
 					green = ((palette>>4)&0x0f) * bright;
@@ -1319,7 +1319,7 @@ public class cps1
 	{
 	#define DRAWSPRITE(CODE,COLOR,FLIPX,FLIPY,SX,SY)					\
 	{																	\
-		if (flip_screen)												\
+		if (flip_screen != 0)												\
 			pdrawgfx(bitmap,Machine->gfx[1],							\
 					CODE,												\
 					COLOR,												\
@@ -1376,7 +1376,7 @@ public class cps1
 	
 			if (code < Machine->gfx[1]->total_elements)
 			{
-				if (colour & 0xff00 )
+				if ((colour & 0xff00) != 0)
 				{
 					/* handle blocked sprites */
 					int nx=(colour & 0x0f00) >> 8;
@@ -1385,10 +1385,10 @@ public class cps1
 					nx++;
 					ny++;
 	
-					if (colour & 0x40)
+					if ((colour & 0x40) != 0)
 					{
 						/* Y flip */
-						if (colour &0x20)
+						if ((colour & 0x20) != 0)
 						{
 							for (nys=0; nys<ny; nys++)
 							{
@@ -1425,7 +1425,7 @@ public class cps1
 					}
 					else
 					{
-						if (colour &0x20)
+						if ((colour & 0x20) != 0)
 						{
 							for (nys=0; nys<ny; nys++)
 							{
@@ -1481,7 +1481,7 @@ public class cps1
 	
 	WRITE16_HANDLER( cps2_objram_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			cps2_objram_bank = data & 1;
 		}
@@ -1489,7 +1489,7 @@ public class cps1
 	
 	READ16_HANDLER( cps2_objram1_r )
 	{
-		if (cps2_objram_bank & 1)
+		if ((cps2_objram_bank & 1) != 0)
 			return cps2_objram2[offset];
 		else
 			return cps2_objram1[offset];
@@ -1497,7 +1497,7 @@ public class cps1
 	
 	READ16_HANDLER( cps2_objram2_r )
 	{
-		if (cps2_objram_bank & 1)
+		if ((cps2_objram_bank & 1) != 0)
 			return cps2_objram1[offset];
 		else
 			return cps2_objram2[offset];
@@ -1505,7 +1505,7 @@ public class cps1
 	
 	WRITE16_HANDLER( cps2_objram1_w )
 	{
-		if (cps2_objram_bank & 1)
+		if ((cps2_objram_bank & 1) != 0)
 			COMBINE_DATA(&cps2_objram2[offset]);
 		else
 			COMBINE_DATA(&cps2_objram1[offset]);
@@ -1513,7 +1513,7 @@ public class cps1
 	
 	WRITE16_HANDLER( cps2_objram2_w )
 	{
-		if (cps2_objram_bank & 1)
+		if ((cps2_objram_bank & 1) != 0)
 			COMBINE_DATA(&cps2_objram1[offset]);
 		else
 			COMBINE_DATA(&cps2_objram2[offset]);
@@ -1524,7 +1524,7 @@ public class cps1
 		int baseptr;
 		baseptr = 0x7000;
 	
-		if (cps2_objram_bank & 1) baseptr ^= 0x0080;
+		if ((cps2_objram_bank & 1) != 0) baseptr ^= 0x0080;
 	
 	//usrintf_showmessage("%04x %d",cps2_port(CPS2_OBJ_BASE),cps2_objram_bank&1);
 	
@@ -1562,7 +1562,7 @@ public class cps1
 	{
 	#define DRAWSPRITE(CODE,COLOR,FLIPX,FLIPY,SX,SY)									\
 	{																					\
-		if (flip_screen)																\
+		if (flip_screen != 0)																\
 			pdrawgfx(bitmap,Machine->gfx[1],											\
 					CODE,																\
 					COLOR,																\
@@ -1599,13 +1599,13 @@ public class cps1
 			int colour= base[i+3];
 			int col=colour&0x1f;
 	
-			if(colour & 0x80)
+			if ((colour & 0x80) != 0)
 			{
 				x += cps2_port(CPS2_OBJ_XOFFS);  /* fix the offset of some games */
 				y += cps2_port(CPS2_OBJ_YOFFS);  /* like Marvel vs. Capcom ending credits */
 			}
 	
-			if (colour & 0xff00 )
+			if ((colour & 0xff00) != 0)
 			{
 				/* handle blocked sprites */
 				int nx=(colour & 0x0f00) >> 8;
@@ -1614,10 +1614,10 @@ public class cps1
 				nx++;
 				ny++;
 	
-				if (colour & 0x40)
+				if ((colour & 0x40) != 0)
 				{
 					/* Y flip */
-					if (colour &0x20)
+					if ((colour & 0x20) != 0)
 					{
 						for (nys=0; nys<ny; nys++)
 						{
@@ -1653,7 +1653,7 @@ public class cps1
 				}
 				else
 				{
-					if (colour &0x20)
+					if ((colour & 0x20) != 0)
 					{
 						for (nys=0; nys<ny; nys++)
 						{
@@ -1729,7 +1729,7 @@ public class cps1
 					int sy = (offs % 256);
 					sx = (sx - stars2x + (col & 0x1f)) & 0x1ff;
 					sy = (sy - stars2y) & 0xff;
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 511 - sx;
 						sy = 255 - sy;
@@ -1755,7 +1755,7 @@ public class cps1
 					int sy = (offs % 256);
 					sx = (sx - stars1x + (col & 0x1f)) & 0x1ff;
 					sy = (sy - stars1y) & 0xff;
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						sx = 511 - sx;
 						sy = 255 - sy;
@@ -1835,7 +1835,7 @@ public class cps1
 	
 		tilemap_set_scrollx(tilemap[0],0,scroll1x);
 		tilemap_set_scrolly(tilemap[0],0,scroll1y);
-		if (videocontrol & 0x01)	/* linescroll enable */
+		if ((videocontrol & 0x01) != 0)	/* linescroll enable */
 		{
 			int scrly=-scroll2y;
 			int i;

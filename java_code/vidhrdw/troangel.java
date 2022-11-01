@@ -151,7 +151,7 @@ public class troangel
 				code = videoram[offs+1] + ((attr & 0xc0) << 2);
 				flipx = attr & 0x20;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -170,7 +170,7 @@ public class troangel
 		{
 			int xscroll[256];
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				/* fixed */
 				for (offs = 0;offs < 64;offs++) xscroll[255-offs] = 0;
@@ -215,10 +215,10 @@ public class troangel
 			int tile_number = code & 0x3f;
 	
 			int bank = 0;
-			if( code&0x80 ) bank += 1;
-			if( attributes&0x20 ) bank += 2;
+			if ((code & 0x80) != 0) bank += 1;
+			if ((attributes & 0x20) != 0) bank += 2;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 240 - sx;
 				sy = 224 - sy;

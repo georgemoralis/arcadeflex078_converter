@@ -155,7 +155,7 @@ public class seattle
 	static void clear_vblank(int param)
 	{
 		logerror("Clearing vblank_irq\n");
-		if (vblank_irq)
+		if (vblank_irq != 0)
 			cpu_set_irq_line(0, vblank_irq, CLEAR_LINE);
 		vblank_signalled = 0;
 	}
@@ -179,7 +179,7 @@ public class seattle
 	{
 		logerror("%06X:vblank_config_w = %08X\n", activecpu_get_pc(), data);
 		COMBINE_DATA(vblank_config);
-		if (vblank_irq)
+		if (vblank_irq != 0)
 			cpu_set_irq_line(0, vblank_irq, CLEAR_LINE);
 		vblank_irq = 2 + ((*vblank_config >> 14) & 3);
 	}
@@ -188,7 +188,7 @@ public class seattle
 	static WRITE32_HANDLER( vblank_clear_w )
 	{
 		logerror("%06X:vblank_clear_w = %08X\n", activecpu_get_pc(), data);
-		if (vblank_irq)
+		if (vblank_irq != 0)
 			cpu_set_irq_line(0, vblank_irq, CLEAR_LINE);
 		vblank_signalled = 0;
 	}
@@ -199,7 +199,7 @@ public class seattle
 		logerror("Setting IRQ3\n");
 		if (*vblank_enable & 0x80)
 		{
-			if (vblank_irq)
+			if (vblank_irq != 0)
 				cpu_set_irq_line(0, vblank_irq, ASSERT_LINE);
 			vblank_signalled = 1;
 			timer_set(cpu_getscanlinetime(cpu_getscanline() + 1), 0, clear_vblank);
@@ -307,13 +307,13 @@ public class seattle
 	{
 		if (galileo_regs[0xc18/4] & galileo_regs[0xc1c/4])
 		{
-			if (LOG_GALILEO)
+			if (LOG_GALILEO != 0)
 				logerror("Galileo IRQ asserted\n");
 			cpu_set_irq_line(0, 0, ASSERT_LINE);
 		}
 		else
 		{
-			if (LOG_GALILEO)
+			if (LOG_GALILEO != 0)
 				logerror("Galileo IRQ cleared\n");
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
@@ -322,7 +322,7 @@ public class seattle
 	
 	static void timer_callback(int which)
 	{
-		if (LOG_GALILEO)
+		if (LOG_GALILEO != 0)
 			logerror("timer %d fired\n", which);
 	
 		/* copy the start value from the registers */
@@ -449,7 +449,7 @@ public class seattle
 			case 2:		dstinc = 0;		break;
 		}
 	
-		if (LOG_DMA)
+		if (LOG_DMA != 0)
 			logerror("Performing DMA%d: src=%08X dst=%08X bytes=%04X sinc=%d dinc=%d\n", which, srcaddr, dstaddr, bytesleft, srcinc, dstinc);
 	
 		/* special case: transfer ram to voodoo */
@@ -637,7 +637,7 @@ public class seattle
 				/* eat some time for those which poll this register */
 				activecpu_eat_cycles(100);
 	
-				if (LOG_TIMERS)
+				if (LOG_TIMERS != 0)
 					logerror("%06X:hires_timer_r = %08X\n", activecpu_get_pc(), result);
 				break;
 			}
@@ -648,7 +648,7 @@ public class seattle
 				break;
 	
 			case 0xc18/4:		/* interrupt cause */
-				if (LOG_GALILEO)
+				if (LOG_GALILEO != 0)
 					logerror("%06X:Galileo read from offset %03X = %08X\n", activecpu_get_pc(), offset*4, result);
 				break;
 	
@@ -706,7 +706,7 @@ public class seattle
 				galileo_regs[offset] |= (oldata & 0x4000);
 	
 				/* fetch next record */
-				if (data & 0x2000)
+				if ((data & 0x2000) != 0)
 					dma_fetch_next(which);
 				galileo_regs[offset] &= ~0x2000;
 	
@@ -727,7 +727,7 @@ public class seattle
 					data &= 0xffffff;
 				if (!timer_active[which])
 					timer_count[which] = data;
-				if (LOG_TIMERS)
+				if (LOG_TIMERS != 0)
 					logerror("%06X:timer/counter %d count = %08X [start=%08X]\n", activecpu_get_pc(), offset % 4, data, timer_count[which]);
 				break;
 			}
@@ -736,7 +736,7 @@ public class seattle
 			{
 				int which, mask;
 	
-				if (LOG_TIMERS)
+				if (LOG_TIMERS != 0)
 					logerror("%06X:timer/counter control = %08X\n", activecpu_get_pc(), data);
 				for (which = 0, mask = 0x01; which < 4; which++, mask <<= 2)
 				{
@@ -750,7 +750,7 @@ public class seattle
 								timer_count[which] &= 0xffffff;
 						}
 						timer_adjust(timer[which], TIMER_CLOCK * timer_count[which], which, 0);
-						if (LOG_TIMERS)
+						if (LOG_TIMERS != 0)
 							logerror("Adjusted timer to fire in %f secs\n", TIMER_CLOCK * timer_count[which]);
 					}
 					else if (timer_active[which] && !(data & mask))
@@ -759,7 +759,7 @@ public class seattle
 						timer_active[which] = 0;
 						timer_count[which] = (timer_count[which] > elapsed) ? (timer_count[which] - elapsed) : 0;
 						timer_adjust(timer[which], TIME_NEVER, which, 0);
-						if (LOG_TIMERS)
+						if (LOG_TIMERS != 0)
 							logerror("Disabled timer\n");
 					}
 				}
@@ -767,7 +767,7 @@ public class seattle
 			}
 	
 			case 0xc18/4:		/* IRQ clear */
-				if (LOG_GALILEO)
+				if (LOG_GALILEO != 0)
 					logerror("%06X:Galileo write to IRQ clear = %08X & %08X\n", offset*4, data, ~mem_mask);
 				galileo_regs[offset] = oldata & data;
 				update_galileo_irqs();

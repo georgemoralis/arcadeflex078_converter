@@ -44,13 +44,13 @@ public class cosmic
 	    	sound_enabled = data;
 	    }
 	
-	    if (sound_enabled)
+	    if (sound_enabled != 0)
 	    {
 	        switch (offset)
 	        {
-			case 0:  if (data) sample_start(0, 0, 0); break;  	/* Walk */
-	        case 1:  if (data) sample_start(0, 5, 0); break;  	/* Enemy Die 1 */
-	        case 2:  if (data)								  	/* Drop 1 */
+			case 0:  if (data != 0) sample_start(0, 0, 0); break;  	/* Walk */
+	        case 1:  if (data != 0) sample_start(0, 5, 0); break;  	/* Enemy Die 1 */
+	        case 2:  if (data != 0)								  	/* Drop 1 */
 					 {
 						 if (!sample_playing(1))
 						 {
@@ -67,12 +67,12 @@ public class cosmic
 	                 break;
 	
 	        case 4:  break;										/* Drop 2 */
-	        case 5:  if (data) sample_start(0, 5, 0); break;	/* Enemy Die 2 (use same sample as 1) */
+	        case 5:  if (data != 0) sample_start(0, 5, 0); break;	/* Enemy Die 2 (use same sample as 1) */
 	        case 6:  if (data && !sample_playing(1) && !sample_playing(3))   /* Hang */
 	                 	sample_start(2, 2, 0);
 	                    break;
 	
-			case 7:  if (data) 									/* Escape */
+			case 7:  if (data != 0) 									/* Escape */
 					 {
 						 sample_stop(2);
 						 sample_start(3, 4, 0);
@@ -81,17 +81,17 @@ public class cosmic
 					 	 sample_stop(3);
 	                     break;
 	
-	    	case 8:  if (data) sample_start(0, 1, 0); break;	/* Stairs */
-	    	case 9:  if (data)									/* Extend */
+	    	case 8:  if (data != 0) sample_start(0, 1, 0); break;	/* Stairs */
+	    	case 9:  if (data != 0)									/* Extend */
 					 	sample_start(4, 8, 0);
 					 else
 						sample_stop(4);
 		  			 break;
 	
 	        case 10: DAC_data_w(0, data); break;				/* Bonus */
-			case 15: if (data) sample_start(0, 6, 0); break;	/* Player Die */
-			case 16: if (data) sample_start(5, 7, 0); break;	/* Enemy Laugh */
-	        case 17: if (data) sample_start(0, 10, 0); break;	/* Coin - Not triggered by software */
+			case 15: if (data != 0) sample_start(0, 6, 0); break;	/* Player Die */
+			case 16: if (data != 0) sample_start(5, 7, 0); break;	/* Enemy Laugh */
+	        case 17: if (data != 0) sample_start(0, 10, 0); break;	/* Coin - Not triggered by software */
 	        }
 	    }
 	
@@ -122,7 +122,7 @@ public class cosmic
 	        	for(count=0;count<9;count++) sample_stop(count);
 	    }
 	
-	    if (sound_enabled)
+	    if (sound_enabled != 0)
 	    {
 	        switch (offset)
 	        {
@@ -131,25 +131,25 @@ public class cosmic
 			/* be used for anything. It is implemented for sake of */
 			/* completness. Maybe it plays a tune if you win ?     */
 			case 1:  DAC_data_w(0, -data); break;
-			case 2:  if (data) sample_start (0, march_select, 0); break;	/* March Sound */
+			case 2:  if (data != 0) sample_start (0, march_select, 0); break;	/* March Sound */
 			case 3:  march_select = (march_select & 0xfe) | data; break;
 	        case 4:  march_select = (march_select & 0xfd) | (data << 1); break;
 	        case 5:  march_select = (march_select & 0xfb) | (data << 2); break;
 	
-	        case 6:  if (data)  							/* Killer Attack (crawly thing at bottom of screen) */
+	        case 6:  if (data != 0)  							/* Killer Attack (crawly thing at bottom of screen) */
 						sample_start(1, 8, 1);
 					 else
 						sample_stop(1);
 					 break;
 	
-			case 7:  if (data)								/* Bonus Chance & Got Bonus */
+			case 7:  if (data != 0)								/* Bonus Chance & Got Bonus */
 					 {
 						 sample_stop(4);
 						 sample_start(4, 10, 0);
 					 }
 					 break;
 	
-			case 8:  if (data)
+			case 8:  if (data != 0)
 					 {
 						 if (!sample_playing(4)) sample_start(4, 9, 1);
 					 }
@@ -157,11 +157,11 @@ public class cosmic
 					 	sample_stop(4);
 					 break;
 	
-			case 9:  if (data) sample_start(3, 11, 0); break;	/* Got Ship */
+			case 9:  if (data != 0) sample_start(3, 11, 0); break;	/* Got Ship */
 	//		case 11: watchdog_reset_w(0, 0); break;				/* Watchdog */
-			case 13: if (data) sample_start(8, 13-gun_die_select, 0); break;  /* Got Monster / Gunshot */
+			case 13: if (data != 0) sample_start(8, 13-gun_die_select, 0); break;  /* Got Monster / Gunshot */
 			case 14: gun_die_select = data; break;
-			case 15: if (data) sample_start(5, 14, 0); break;	/* Coin Extend (extra base) */
+			case 15: if (data != 0) sample_start(5, 14, 0); break;	/* Coin Extend (extra base) */
 	        }
 	    }
 	
@@ -270,7 +270,7 @@ public class cosmic
 		int control;
 	    int fire = input_port_3_r(0);
 	
-		if (offset)
+		if (offset != 0)
 			control = input_port_1_r(0);
 	    else
 			control = input_port_0_r(0);

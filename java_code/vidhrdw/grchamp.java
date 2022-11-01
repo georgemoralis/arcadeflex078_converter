@@ -283,7 +283,7 @@ public class grchamp
 	static void draw_rain( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		const struct GfxElement *gfx = Machine->gfx[4];
 		int tile_number = grchamp_tile_number>>4;
-		if( tile_number ){
+		if (tile_number != 0){
 			int scrollx = grchamp_rain_xpos;
 			int scrolly = grchamp_rain_ypos;
 			int sx,sy;
@@ -329,11 +329,11 @@ public class grchamp
 			for( x=0; x<64; x+=8 )
 			{
 				int data = *source++;
-				if( data )
+				if (data != 0)
 				{
 					for( bit=0; bit<8; bit++ )
 					{
-						if( data&0x80 ){
+						if ((data & 0x80) != 0){
 							sx = x0+x+bit;
 							sy = y0+y;
 							if( sx>=cliprect->min_x && sy>=cliprect->min_y && 
@@ -356,12 +356,12 @@ public class grchamp
 		int offs;
 		for( offs=0; offs<0x400; offs++ ){
 			int data = source[offs];
-			if( data ){
+			if (data != 0){
 				int x = (offs%32)*8;
 				int y = (offs/32)+16;
 				int bit;
 				for( bit=0; bit<8; bit++ ){
-					if( data&0x80 ) 
+					if ((data & 0x80) != 0) 
 						if ((x+bit) >= cliprect->min_x && (x+bit) <= cliprect->max_x &&
 							y >= cliprect->min_y && y <= cliprect->max_y)
 							plot_pixel( bitmap, x+bit, y, color );
@@ -424,7 +424,7 @@ public class grchamp
 		}
 	
 		/* fog covered sprites look like black shadows */
-		if( bFog ) draw_sprites( bitmap,cliprect, bFog );
+		if (bFog != 0) draw_sprites( bitmap,cliprect, bFog );
 	
 		/* paint the visible area exposed by headlights shape */
 		if( grchamp_videoreg0&(0x10|0x40) ){
@@ -433,7 +433,7 @@ public class grchamp
 	
 		draw_rain( bitmap,cliprect );
 		draw_text( bitmap,cliprect );
-		if( grchamp_videoreg0&0x80 ) draw_radar( bitmap,cliprect );
+		if ((grchamp_videoreg0 & 0x80) != 0) draw_radar( bitmap,cliprect );
 		draw_tachometer( bitmap,cliprect );
 	} };
 }

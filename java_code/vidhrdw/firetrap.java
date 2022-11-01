@@ -239,7 +239,7 @@ public class firetrap
 			color = ((spriteram[offs + 1] & 0x08) >> 2) | (spriteram[offs + 1] & 0x01);
 			flipx = spriteram[offs + 1] & 0x04;
 			flipy = spriteram[offs + 1] & 0x02;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -249,7 +249,7 @@ public class firetrap
 	
 			if (spriteram[offs + 1] & 0x10)	/* double width */
 			{
-				if (flip_screen) sy -= 16;
+				if (flip_screen != 0) sy -= 16;
 	
 				drawgfx(bitmap,Machine->gfx[3],
 						code & ~1,

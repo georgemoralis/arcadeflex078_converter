@@ -45,8 +45,8 @@ public class contra
 	
 	public static WriteHandlerPtr contra_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x01) coin_counter_w(0,data & 0x01);
-		if (data & 0x02) coin_counter_w(1,(data & 0x02) >> 1);
+		if ((data & 0x01) != 0) coin_counter_w(0,data & 0x01);
+		if ((data & 0x02) != 0) coin_counter_w(1,(data & 0x02) >> 1);
 	} };
 	
 	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)

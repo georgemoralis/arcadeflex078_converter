@@ -148,7 +148,7 @@ public class astrocde
 	
 		/* Gorf Special interrupt */
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 	 	{
 	  		GorfDelay =(CurrentScan + 7) & 0xFF;
 	
@@ -321,7 +321,7 @@ public class astrocde
 		magic_expand_count = 0;	/* reset flip-flop for expand mode on write to this register */
 		magic_shift_leftover = 0;	/* reset shift buffer on write to this register */
 	
-		if (magic_control & 0x04)
+		if ((magic_control & 0x04) != 0)
 			usrintf_showmessage("unsupported MAGIC ROTATE mode");
 	} };
 	
@@ -331,7 +331,7 @@ public class astrocde
 		int shift,data1;
 	
 	
-		if (magic_control & 0x40)	/* copy backwards */
+		if ((magic_control & 0x40) != 0)	/* copy backwards */
 		{
 			int bits,stib,k;
 	
@@ -349,7 +349,7 @@ public class astrocde
 	
 		shift = magic_control & 3;
 		data1 = 0;
-		if (magic_control & 0x40)	/* copy backwards */
+		if ((magic_control & 0x40) != 0)	/* copy backwards */
 		{
 			while (shift > 0)
 			{
@@ -372,7 +372,7 @@ public class astrocde
 		data |= magic_shift_leftover;
 		magic_shift_leftover = data1;
 	
-		if (magic_control & 0x30)
+		if ((magic_control & 0x30) != 0)
 		{
 			/* TODO: the collision detection should be made */
 			/* independently for each of the four pixels    */
@@ -382,25 +382,25 @@ public class astrocde
 			else collision &= 0x0f;
 		}
 	
-		if (magic_control & 0x20) data ^= wow_videoram[offset];	/* draw in XOR mode */
-		else if (magic_control & 0x10) data |= wow_videoram[offset];	/* draw in OR mode */
+		if ((magic_control & 0x20) != 0) data ^= wow_videoram[offset];	/* draw in XOR mode */
+		else if ((magic_control & 0x10) != 0) data |= wow_videoram[offset];	/* draw in OR mode */
 		wow_videoram_w(offset,data);
 	}
 	
 	
 	public static WriteHandlerPtr wow_magicram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (magic_control & 0x08)	/* expand mode */
+		if ((magic_control & 0x08) != 0)	/* expand mode */
 		{
 			int bits,bibits,k;
 	
 			bits = data;
-			if (magic_expand_count) bits <<= 4;
+			if (magic_expand_count != 0) bits <<= 4;
 			bibits = 0;
 			for (k = 0;k < 4;k++)
 			{
 				bibits <<= 2;
-				if (bits & 0x80) bibits |= (magic_expand_color >> 2) & 0x03;
+				if ((bits & 0x80) != 0) bibits |= (magic_expand_color >> 2) & 0x03;
 				else bibits |= magic_expand_color & 0x03;
 				bits <<= 1;
 			}
@@ -473,7 +473,7 @@ public class astrocde
 				{
 					if (!(mode & 0x08) || j < length)
 					{
-						if (mode & 0x01)			/* Direction */
+						if ((mode & 0x01) != 0)			/* Direction */
 							RAM[src]=RAM[dest];
 						else
 							if (dest >= 0) cpu_writemem16(dest,RAM[src]);	/* ASG 971005 */
@@ -483,19 +483,19 @@ public class astrocde
 						if (dest >= 0) cpu_writemem16(dest,0);
 	
 					if ((j & 1) || !(mode & 0x02))  /* Expand Mode - don't increment source on odd loops */
-						if (mode & 0x04) src++;		/* Constant mode - don't increment at all! */
+						if ((mode & 0x04) != 0) src++;		/* Constant mode - don't increment at all! */
 	
-					if (mode & 0x20) dest++;		/* copy forwards */
+					if ((mode & 0x20) != 0) dest++;		/* copy forwards */
 					else dest--;					/* backwards */
 				}
 	
 				if ((j & 1) && (mode & 0x02))		/* always increment source at end of line */
-					if (mode & 0x04) src++;			/* Constant mode - don't increment at all! */
+					if ((mode & 0x04) != 0) src++;			/* Constant mode - don't increment at all! */
 	
 				if ((mode & 0x08) && (mode & 0x04)) /* Correct src if in flush mode */
 					src--;                          /* and NOT in Constant mode */
 	
-				if (mode & 0x20) dest--;			/* copy forwards */
+				if ((mode & 0x20) != 0) dest--;			/* copy forwards */
 				else dest++;						/* backwards */
 	
 				dest += (int)((signed char)skip);	/* extend the sign of the skip register */
@@ -510,7 +510,7 @@ public class astrocde
 					lo = dest & 0x00ff;
 					hi = dest & 0xff00;
 					lo += skip;
-					if (mode & 0x10)
+					if ((mode & 0x10) != 0)
 					{
 						if (lo < 0x100) hi -= 0x100;
 					}

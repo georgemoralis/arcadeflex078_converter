@@ -107,7 +107,7 @@ public class flkatck
 			if (k007121_ram[offset] != data)
 			{
 				k007121_ram[offset] = data;
-				if (offset & 0x800)	/* score */
+				if ((offset & 0x800) != 0)	/* score */
 					tilemap_mark_tile_dirty(k007121_tilemap[1],offset & 0x3ff);
 				else
 					tilemap_mark_tile_dirty(k007121_tilemap[0],offset & 0x3ff);

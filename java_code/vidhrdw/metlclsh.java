@@ -41,7 +41,7 @@ public class metlclsh
 	
 	public static WriteHandlerPtr metlclsh_rambank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 		{
 			metlclsh_write_mask = 0;
 			cpu_setbank(1, metlclsh_bgram);
@@ -94,7 +94,7 @@ public class metlclsh
 	{
 		/*	This ram is banked: it's either the tilemap (e401 = 1)
 			or bit n of another area (e401 = n << 1)? (that I don't understand) */
-		if (metlclsh_write_mask)
+		if (metlclsh_write_mask != 0)
 		{
 			/* unknown area - the following is almost surely wrong */
 	// 405b (e401 = e c a 8 6 4 2 0) writes d400++
@@ -212,17 +212,17 @@ public class metlclsh
 			if (sx < -7) sx += 256;
 			sy	=	240 - spriteram[offs+2];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;	flipx = !flipx;
-				sy = 240 - sy;	flipy = !flipy;		if (sizey)	sy+=16;
+				sy = 240 - sy;	flipy = !flipy;		if (sizey != 0)	sy+=16;
 				if (sy > 240)	sy -= 256;
 			}
 	
 			/* Draw twice, at sy and sy + 256 (wrap around) */
 			for ( wrapy = 0; wrapy <= 256; wrapy += 256 )
 			{
-				if (sizey)
+				if (sizey != 0)
 				{
 					drawgfx(bitmap,gfx, code & ~1, color, flipx,flipy,
 							sx, sy + (flipy ? 0 : -16) + wrapy, &Machine->visible_area,TRANSPARENCY_PEN,0);

@@ -110,7 +110,7 @@ public class shootout
 				------x-	flicker
 				-------x	enable
 			*/
-			if ( attributes & 0x01 ){ /* visible */
+			if ((attributes & 0x01) != 0){ /* visible */
 				if( bFlicker || (attributes&0x02)==0 ){
 					int priority_mask = (attributes&0x08)?0x2:0;
 					int sx = (240 - source[2])&0xff;
@@ -120,18 +120,18 @@ public class shootout
 					int flipx = (attributes & 0x04);
 					int flipy = 0;
 	
-					if (flip_screen) {
+					if (flip_screen != 0) {
 						flipx = !flipx;
 						flipy = !flipy;
 					}
 	
-					if( attributes & 0x10 ){ /* double height */
+					if ((attributes & 0x10) != 0){ /* double height */
 						number = number&(~1);
 						sy -= 16;
 	
 						vx = sx;
 						vy = sy;
-						if (flip_screen) {
+						if (flip_screen != 0) {
 							vx = 240 - vx;
 							vy = 240 - vy;
 						}
@@ -150,7 +150,7 @@ public class shootout
 	
 					vx = sx;
 					vy = sy;
-					if (flip_screen) {
+					if (flip_screen != 0) {
 						vx = 240 - vx;
 						vy = 240 - vy;
 					}

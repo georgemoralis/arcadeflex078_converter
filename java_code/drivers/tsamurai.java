@@ -85,7 +85,7 @@ public class tsamurai
 	} };
 	
 	public static InterruptHandlerPtr samurai_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if (nmi_enabled) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+		if (nmi_enabled != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	public static ReadHandlerPtr unknown_d803_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -401,7 +401,7 @@ public class tsamurai
 	} };
 	
 	public static InterruptHandlerPtr vsgongf_sound_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if (vsgongf_sound_nmi_enabled) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
+		if (vsgongf_sound_nmi_enabled != 0) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	/* what are these, protection of some kind? */

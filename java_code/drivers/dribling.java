@@ -59,7 +59,7 @@ public class dribling
 	
 	public static InterruptHandlerPtr dribling_irq_gen = new InterruptHandlerPtr() {public void handler()
 	{
-		if (di)
+		if (di != 0)
 			cpu_set_irq_line(0, 0, ASSERT_LINE);
 	} };
 	
@@ -145,7 +145,7 @@ public class dribling
 	public static WriteHandlerPtr shr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 3 = watchdog */
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			watchdog_reset_w(0, 0);
 	
 		/* bit 2-0 = SH0-2 */
@@ -162,9 +162,9 @@ public class dribling
 	
 	public static ReadHandlerPtr ioread  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (offset & 0x08)
+		if ((offset & 0x08) != 0)
 			return ppi8255_0_r(offset & 3);
-		else if (offset & 0x10)
+		else if ((offset & 0x10) != 0)
 			return ppi8255_1_r(offset & 3);
 		return 0xff;
 	} };
@@ -172,11 +172,11 @@ public class dribling
 	
 	public static WriteHandlerPtr iowrite = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset & 0x08)
+		if ((offset & 0x08) != 0)
 			ppi8255_0_w(offset & 3, data);
-		else if (offset & 0x10)
+		else if ((offset & 0x10) != 0)
 			ppi8255_1_w(offset & 3, data);
-		else if (offset & 0x40)
+		else if ((offset & 0x40) != 0)
 		{
 			dr = ds;
 			ds = data;

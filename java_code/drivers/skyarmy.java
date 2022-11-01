@@ -151,7 +151,7 @@ public class skyarmy
 	
 	public static InterruptHandlerPtr skyarmy_nmi_source = new InterruptHandlerPtr() {public void handler()
 	{
-		 if(skyarmy_nmi) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
+		 if (skyarmy_nmi != 0) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
 	} };
 	
 	

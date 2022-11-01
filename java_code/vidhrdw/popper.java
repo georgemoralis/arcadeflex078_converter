@@ -92,7 +92,7 @@ public class popper
 	
 		tilemap_clip = Machine->visible_area;
 	
-		if (popper_flipscreen)
+		if (popper_flipscreen != 0)
 			tilemap_clip.min_x=tilemap_clip.max_x-15;
 		else
 			tilemap_clip.max_x=15;
@@ -133,7 +133,7 @@ public class popper
 		tile_number += popper_gfx_bank << 8;
 	
 		//pen 0 only in front if colour set as well
-		if (attr&0x70) flags=TILE_SPLIT((attr & 0x80)>>7);
+		if ((attr & 0x70) != 0) flags=TILE_SPLIT((attr & 0x80)>>7);
 	
 		SET_TILE_INFO(
 				0,
@@ -163,7 +163,7 @@ public class popper
 		tile_number += popper_gfx_bank << 8;
 	
 		//pen 0 only in front if colour set as well
-		if (attr&0x70) flags=TILE_SPLIT((attr & 0x80)>>7);
+		if ((attr & 0x70) != 0) flags=TILE_SPLIT((attr & 0x80)>>7);
 	
 		SET_TILE_INFO(
 				0,
@@ -224,7 +224,7 @@ public class popper
 				flipx = (popper_spriteram[offs+2]&0x40)>>6;
 				flipy = (popper_spriteram[offs+2]&0x80)>>7;
 	
-				if (popper_flipscreen)
+				if (popper_flipscreen != 0)
 				{
 					sx = 248 - sx;
 					sy = 242 - sy;

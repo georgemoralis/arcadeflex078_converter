@@ -166,19 +166,19 @@ public class ultratnk
 		switch( data )
 		{
 		case 0x0a:
-			if( joybits&0x08 ) ultratnk_controls &= ~0x40;
-			if( joybits&0x04 ) ultratnk_controls &= ~0x04;
+			if ((joybits & 0x08) != 0) ultratnk_controls &= ~0x40;
+			if ((joybits & 0x04) != 0) ultratnk_controls &= ~0x04;
 	
-			if( joybits&0x80 ) ultratnk_controls &= ~0x10;
-			if( joybits&0x40 ) ultratnk_controls &= ~0x01;
+			if ((joybits & 0x80) != 0) ultratnk_controls &= ~0x10;
+			if ((joybits & 0x40) != 0) ultratnk_controls &= ~0x01;
 			break;
 	
 		case 0x05:
-			if( joybits&0x02 ) ultratnk_controls &= ~0x40;
-			if( joybits&0x01 ) ultratnk_controls &= ~0x04;
+			if ((joybits & 0x02) != 0) ultratnk_controls &= ~0x40;
+			if ((joybits & 0x01) != 0) ultratnk_controls &= ~0x04;
 	
-			if( joybits&0x20 ) ultratnk_controls &= ~0x10;
-			if( joybits&0x10 ) ultratnk_controls &= ~0x01;
+			if ((joybits & 0x20) != 0) ultratnk_controls &= ~0x10;
+			if ((joybits & 0x10) != 0) ultratnk_controls &= ~0x01;
 			break;
 		}
 	} };

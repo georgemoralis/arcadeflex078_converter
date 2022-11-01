@@ -147,7 +147,7 @@ public class galaga
 			case 0x01:	/* read input */
 				if (offset == 0)
 				{
-					if (mode)	/* switch mode */
+					if (mode != 0)	/* switch mode */
 					{
 						/* bit 7 is the service switch */
 						return readinputport(4);
@@ -243,7 +243,7 @@ public class galaga
 	
 	public static WriteHandlerPtr galaga_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1)
+		if ((data & 1) != 0)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);
@@ -268,7 +268,7 @@ public class galaga
 	{
 		galaga_vh_interrupt();	/* update the background stars position */
 	
-		if (interrupt_enable_1)
+		if (interrupt_enable_1 != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -283,7 +283,7 @@ public class galaga
 	
 	public static InterruptHandlerPtr galaga_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_2)
+		if (interrupt_enable_2 != 0)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
@@ -298,7 +298,7 @@ public class galaga
 	
 	public static InterruptHandlerPtr galaga_interrupt_3 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_3)
+		if (interrupt_enable_3 != 0)
 			cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 }

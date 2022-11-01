@@ -163,7 +163,7 @@
  *	BRA  branch relative
  ***************************************************************/
 #define BRA(cond)												\
-	if (cond)													\
+	if (cond != 0)													\
 	{															\
 		h6280_ICount -= 4;										\
 		tmp = RDOPARG();										\
@@ -336,7 +336,7 @@
  *	ADC Add with carry
  ***************************************************************/
 #define ADC 													\
-	if (P & _fD)												\
+	if ((P & _fD) != 0)												\
 	{															\
 	int c = (P & _fC);											\
 	int lo = (A & 0x0f) + (tmp & 0x0f) + c; 					\
@@ -351,7 +351,7 @@
 			P |= _fV;											\
 		if (hi > 0x90)											\
 			hi += 0x60; 										\
-		if (hi & 0xff00)										\
+		if ((hi & 0xff00) != 0)										\
 			P |= _fC;											\
 		A = (lo & 0x0f) + (hi & 0xf0);							\
 	}															\
@@ -362,7 +362,7 @@
 		P &= ~(_fV | _fC);										\
 		if (~(A^tmp) & (A^sum) & _fN)							\
 			P |= _fV;											\
-		if (sum & 0xff00)										\
+		if ((sum & 0xff00) != 0)										\
 			P |= _fC;											\
 		A = (UINT8) sum;										\
 	}															\
@@ -507,7 +507,7 @@
  *	CLI Clear interrupt flag
  ***************************************************************/
 #define CLI 													\
-	if( P & _fI )												\
+	if ((P & _fI) != 0)												\
 	{															\
 		P &= ~_fI;												\
 		CHECK_IRQ_LINES;										\
@@ -828,7 +828,7 @@
  *	SBC Subtract with carry
  ***************************************************************/
 #define SBC 													\
-	if (P & _fD)												\
+	if ((P & _fD) != 0)												\
 	{															\
 	int c = (P & _fC) ^ _fC;									\
 	int sum = A - tmp - c;										\
@@ -837,11 +837,11 @@
 		P &= ~(_fV | _fC);										\
 		if ((A^tmp) & (A^sum) & _fN)							\
 			P |= _fV;											\
-		if (lo & 0xf0)											\
+		if ((lo & 0xf0) != 0)											\
 			lo -= 6;											\
-		if (lo & 0x80)											\
+		if ((lo & 0x80) != 0)											\
 			hi -= 0x10; 										\
-		if (hi & 0x0f00)										\
+		if ((hi & 0x0f00) != 0)										\
 			hi -= 0x60; 										\
 		if ((sum & 0xff00) == 0)								\
 			P |= _fC;											\
@@ -961,14 +961,14 @@
  *  TAM Transfer accumulator to memory mapper register(s)
  ***************************************************************/
 #define TAM                                                     \
-    if (tmp&0x01) h6280.mmr[0] = A;                             \
-    if (tmp&0x02) h6280.mmr[1] = A;                             \
-    if (tmp&0x04) h6280.mmr[2] = A;                             \
-    if (tmp&0x08) h6280.mmr[3] = A;                             \
-    if (tmp&0x10) h6280.mmr[4] = A;                             \
-    if (tmp&0x20) h6280.mmr[5] = A;                             \
-    if (tmp&0x40) h6280.mmr[6] = A;                             \
-    if (tmp&0x80) h6280.mmr[7] = A
+    if ((tmp & 0x01) != 0) h6280.mmr[0] = A;                             \
+    if ((tmp & 0x02) != 0) h6280.mmr[1] = A;                             \
+    if ((tmp & 0x04) != 0) h6280.mmr[2] = A;                             \
+    if ((tmp & 0x08) != 0) h6280.mmr[3] = A;                             \
+    if ((tmp & 0x10) != 0) h6280.mmr[4] = A;                             \
+    if ((tmp & 0x20) != 0) h6280.mmr[5] = A;                             \
+    if ((tmp & 0x40) != 0) h6280.mmr[6] = A;                             \
+    if ((tmp & 0x80) != 0) h6280.mmr[7] = A
 
 /* 6280 ********************************************************
  *	TAX Transfer accumulator to index X
@@ -1049,14 +1049,14 @@
  *  the highest bit set in tmp is the one that counts
  ***************************************************************/
 #define TMA                                                     \
-    if (tmp&0x01) A = h6280.mmr[0];                             \
-    if (tmp&0x02) A = h6280.mmr[1];                             \
-    if (tmp&0x04) A = h6280.mmr[2];                             \
-    if (tmp&0x08) A = h6280.mmr[3];                             \
-    if (tmp&0x10) A = h6280.mmr[4];                             \
-    if (tmp&0x20) A = h6280.mmr[5];                             \
-    if (tmp&0x40) A = h6280.mmr[6];                             \
-    if (tmp&0x80) A = h6280.mmr[7]
+    if ((tmp & 0x01) != 0) A = h6280.mmr[0];                             \
+    if ((tmp & 0x02) != 0) A = h6280.mmr[1];                             \
+    if ((tmp & 0x04) != 0) A = h6280.mmr[2];                             \
+    if ((tmp & 0x08) != 0) A = h6280.mmr[3];                             \
+    if ((tmp & 0x10) != 0) A = h6280.mmr[4];                             \
+    if ((tmp & 0x20) != 0) A = h6280.mmr[5];                             \
+    if ((tmp & 0x40) != 0) A = h6280.mmr[6];                             \
+    if ((tmp & 0x80) != 0) A = h6280.mmr[7]
 
 /* 6280 ********************************************************
  * TRB  Test and reset bits

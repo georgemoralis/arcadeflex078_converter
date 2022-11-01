@@ -132,7 +132,7 @@ public class psikyo
 	
 	WRITE32_HANDLER( psikyo_soundlatch_w )
 	{
-		if (ACCESSING_LSB32)
+		if (ACCESSING_LSB32 != 0)
 		{
 			if (Machine->sample_rate == 0)		return;
 	
@@ -259,7 +259,7 @@ public class psikyo
 		switch(offset) {
 		case 0: {
 			UINT32 res;
-			if(s1945_mcu_control & 16) {
+			if ((s1945_mcu_control & 16) != 0) {
 				res = s1945_mcu_latching & 4 ? 0x0000ff00 : s1945_mcu_latch1 << 8;
 				s1945_mcu_latching |= 4;
 			} else {
@@ -305,9 +305,9 @@ public class psikyo
 	static WRITE32_HANDLER( paletteram32_xRRRRRGGGGGBBBBB_dword_w )
 	{
 		paletteram16 = (data16_t *)paletteram32;
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2+1, data, mem_mask);
 	}
 	
@@ -1552,7 +1552,7 @@ public class psikyo
 	
 	static void irqhandler(int linestate)
 	{
-		if (linestate)
+		if (linestate != 0)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);

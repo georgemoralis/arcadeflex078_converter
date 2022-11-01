@@ -38,14 +38,14 @@ public class skullxbo
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state)
+		if (atarigen_scanline_int_state != 0)
 			newstate = 1;
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 2;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 4;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -92,7 +92,7 @@ public class skullxbo
 	static READ16_HANDLER( special_port1_r )
 	{
 		int temp = readinputport(1);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x0040;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0040;
 		if (atarigen_get_hblank()) temp ^= 0x0010;
 		return temp;
 	}

@@ -80,7 +80,7 @@ public class missb2
 				if (!(prom_line[yc/2] & 0x04))	/* next column */
 				{
 					sx = bublbobl_objectram[offs + 2];
-					if (gfx_attr & 0x40) sx -= 256;
+					if ((gfx_attr & 0x40) != 0) sx -= 256;
 				}
 	
 				for (xc = 0;xc < 2;xc++)
@@ -96,7 +96,7 @@ public class missb2
 					x = sx + xc * 8;
 					y = (sy + yc * 8) & 0xff;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						x = 248 - x;
 						y = 248 - y;

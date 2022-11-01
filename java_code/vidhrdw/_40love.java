@@ -142,13 +142,13 @@ public class _40love
 		int	i = offset & ~1;
 		int x = ((colorram[i] & 0x80) << 1) | colorram[i+1];	/* 9 bits signed */
 	
-		if (fortyl_flipscreen)
+		if (fortyl_flipscreen != 0)
 			x += 0x51;
 		else
 			x -= 0x50;
 	
 		x &= 0x1ff;
-		if (x&0x100) x -= 0x200;				/* sign extend */
+		if ((x & 0x100) != 0) x -= 0x200;				/* sign extend */
 	
 		tilemap_set_scrollx(background, offset/2, x);
 	}
@@ -173,7 +173,7 @@ public class _40love
 	
 	public static ReadHandlerPtr fortyl_pixram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (pixram_sel)
+		if (pixram_sel != 0)
 			return fortyl_pixram2[offset];
 		else
 			return fortyl_pixram1[offset];
@@ -187,7 +187,7 @@ public class _40love
 		x = (offset & 0x1f)*8;
 		y = (offset >> 5) & 0xff;
 	
-		if (pixram_sel)
+		if (pixram_sel != 0)
 		{
 			d1 = fortyl_pixram2[offset];
 			d2 = fortyl_pixram2[offset + 0x2000];
@@ -201,7 +201,7 @@ public class _40love
 		for (i=0;i<8;i++)
 		{
 			c = ((d2>>i)&1) + ((d1>>i)&1)*2;
-			if (pixram_sel)
+			if (pixram_sel != 0)
 				plot_pixel(pixel_bitmap2, x+i, y, fortyl_pix_color[c]);
 			else
 				plot_pixel(pixel_bitmap1, x+i, y, fortyl_pix_color[c]);
@@ -210,7 +210,7 @@ public class _40love
 	
 	public static WriteHandlerPtr fortyl_pixram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (pixram_sel)
+		if (pixram_sel != 0)
 			fortyl_pixram2[offset] = data;
 		else
 			fortyl_pixram1[offset] = data;
@@ -283,7 +283,7 @@ public class _40love
 			sx = spriteram[offs+3];
 			sy = spriteram[offs+0] +1;
 	
-			if (fortyl_flipscreen)
+			if (fortyl_flipscreen != 0)
 				sx = 240 - sx;
 			else
 				sy = 242 - sy;
@@ -312,7 +312,7 @@ public class _40love
 			sx = spriteram_2[offs+3];
 			sy = spriteram_2[offs+0] +1;
 	
-			if (fortyl_flipscreen)
+			if (fortyl_flipscreen != 0)
 				sx = 240 - sx;
 			else
 				sy = 242 - sy;
@@ -339,7 +339,7 @@ public class _40love
 		int offs;
 		int f = fortyl_flipscreen ^ 1;
 	
-		if (fortyl_pix_redraw)
+		if (fortyl_pix_redraw != 0)
 		{
 			fortyl_pix_redraw = 0;
 	
@@ -347,7 +347,7 @@ public class _40love
 				fortyl_plot_pix(offs);
 		}
 	
-		if (pixram_sel)
+		if (pixram_sel != 0)
 			copybitmap(bitmap,pixel_bitmap1,f,f,fortyl_xoffset,0,cliprect,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,pixel_bitmap2,f,f,fortyl_xoffset,0,cliprect,TRANSPARENCY_NONE,0);

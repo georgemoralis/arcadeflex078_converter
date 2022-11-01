@@ -120,7 +120,7 @@ public class exzisus
 				gfx_offs = ((gfx_num & 0x3f) << 7) + 0x0400;
 				height = 32;
 	
-				if (gfx_num & 0x40)			/* Next column */
+				if ((gfx_num & 0x40) != 0)			/* Next column */
 				{
 					sx += 16;
 				}
@@ -145,7 +145,7 @@ public class exzisus
 					x = (sx + (xc << 3)) & 0xff;
 					y = (sy + (yc << 3)) & 0xff;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						x = 248 - x;
 						y = 248 - y;
@@ -191,7 +191,7 @@ public class exzisus
 				gfx_offs = ((gfx_num & 0x3f) << 7) + 0x0400;	///
 				height = 32;
 	
-				if (gfx_num & 0x40)			/* Next column */
+				if ((gfx_num & 0x40) != 0)			/* Next column */
 				{
 					sx += 16;
 				}
@@ -215,7 +215,7 @@ public class exzisus
 					x = (sx + (xc << 3)) & 0xff;
 					y = (sy + (yc << 3)) & 0xff;
 	
-					if (flip_screen)
+					if (flip_screen != 0)
 					{
 						x = 248 - x;
 						y = 248 - y;

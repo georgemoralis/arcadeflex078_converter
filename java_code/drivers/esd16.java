@@ -72,7 +72,7 @@ public class esd16
 	
 	WRITE16_HANDLER( esd16_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,ASSERT_LINE);		// Generate an IRQ
@@ -133,7 +133,7 @@ public class esd16
 	
 	static READ16_HANDLER( esd_eeprom_r )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			return ((EEPROM_read_bit() & 0x01) << 15);
 		}
@@ -144,7 +144,7 @@ public class esd16
 	
 	static WRITE16_HANDLER( esd_eeprom_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			// data line
 			EEPROM_write_bit((data & 0x0400) >> 6);

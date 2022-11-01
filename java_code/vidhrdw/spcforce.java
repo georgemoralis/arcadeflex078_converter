@@ -52,7 +52,7 @@ public class spcforce
 			code = videoram[offs] + ((colorram[offs] & 0x01) << 8);
 			col  = (~colorram[offs] >> 4) & 0x07;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;

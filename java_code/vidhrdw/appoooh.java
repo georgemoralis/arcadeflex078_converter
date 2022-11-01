@@ -216,7 +216,7 @@ public class appoooh
 	
 			if(sx>=248) sx -= 256;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 239 - sx;
 				sy = 239 - sy;

@@ -276,7 +276,7 @@ public class psx
 		int n_coord;
 		int n_colour;
 	
-		if( m_b_debugclear )
+		if (m_b_debugclear != 0)
 		{
 			fillbitmap( debugmesh, 0x0000, NULL );
 			m_b_debugclear = 0;
@@ -397,7 +397,7 @@ public class psx
 		{
 			m_b_debugmesh = !m_b_debugmesh;
 		}
-		if( m_b_debugmesh )
+		if (m_b_debugmesh != 0)
 		{
 			set_visible_area( 0, 1023, 0, 1023 );
 			copybitmap( bitmap, debugmesh, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0 );
@@ -414,7 +414,7 @@ public class psx
 		{
 			m_b_debugtexture = !m_b_debugtexture;
 		}
-		if( m_b_debugtexture )
+		if (m_b_debugtexture != 0)
 		{
 			if( keyboard_pressed_memory( KEYCODE_I ) )
 			{
@@ -713,7 +713,7 @@ public class psx
 		else
 		{
 			/* todo: clear border */
-			if( m_b_reverseflag )
+			if (m_b_reverseflag != 0)
 			{
 				n_x = ( 1023 - m_n_displaystartx );
 				/* todo: make this flip the screen, in the meantime.. */

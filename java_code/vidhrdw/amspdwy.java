@@ -94,7 +94,7 @@ public class amspdwy
 		tilemap	=	tilemap_create(	get_tile_info,	tilemap_scan_cols_back,
 									TILEMAP_OPAQUE,	8,8,	0x20, 0x20 );
 	
-		if (tilemap)	return 0;
+		if (tilemap != 0)	return 0;
 		else			return 1;
 	} };
 	
@@ -133,7 +133,7 @@ public class amspdwy
 			int flipx	=	attr & 0x80;
 			int flipy	=	attr & 0x40;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				x = max_x - x - 8;	y = max_y - y - 8;
 				flipx = !flipx;	flipy = !flipy;

@@ -165,7 +165,7 @@ public class ymf271
 			case 0:
 				slot->extout = (data>>3)&0xf;
 	
-				if (data & 1)
+				if ((data & 1) != 0)
 				{
 					slot->active = 1;
 	
@@ -184,7 +184,7 @@ public class ymf271
 	//					logerror("oct %d fns %x fs %x srcnote %x srcb %x TL %x\n", slot->block, slot->fns, slot->fs, slot->srcnote, slot->srcb, slot->tl);
 	
 						oct = slot->block;
-						if (oct & 8)
+						if ((oct & 8) != 0)
 						{
 							oct |= -8;
 						}
@@ -398,25 +398,25 @@ public class ymf271
 					break;
 	
 				case 0x13:
-					if (data & 1)
+					if ((data & 1) != 0)
 					{	// timer A load
 						chip->timerAVal = chip->timerA;
 					}
-					if (data & 2)
+					if ((data & 2) != 0)
 					{	// timer B load
 						chip->timerBVal = chip->timerB;
 					}
-					if (data & 4)
+					if ((data & 4) != 0)
 					{
 						// timer A IRQ enable
 						chip->enable |= 4;
 					}
-					if (data & 8)
+					if ((data & 8) != 0)
 					{
 						// timer B IRQ enable
 						chip->enable |= 8;
 					}
-					if (data & 0x10)
+					if ((data & 0x10) != 0)
 					{	// timer A reset
 						chip->irqstate &= ~1;
 						chip->status &= ~1;
@@ -427,7 +427,7 @@ public class ymf271
 	
 						timer_adjust(chip->timA, TIME_IN_SEC(period), chipnum, TIME_IN_SEC(period));
 					}
-					if (data & 0x20)
+					if ((data & 0x20) != 0)
 					{	// timer B reset
 						chip->irqstate &= ~2;
 						chip->status &= ~2;

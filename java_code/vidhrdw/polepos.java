@@ -366,7 +366,7 @@ public class polepos
 			{
 				/* if the 0x200 bit of the xoffset is set, a special pin on the custom */
 				/* chip is set and the /CE and /OE for the road chips is disabled */
-				if (xoffs & 0x200)
+				if ((xoffs & 0x200) != 0)
 				{
 					/* in this case, it looks like we just fill with 0 */
 					for (i = 0; i < 8; i++)
@@ -448,7 +448,7 @@ public class polepos
 		/* Now draw the shift if selected on the fake dipswitch */
 		in = readinputport( 0 );
 	
-		if ( in & 8 ) {
+		if ((in & 8) != 0) {
 			if ( ( in & 2 ) == 0 ) {
 				/* L */
 				drawgfx(bitmap, Machine->gfx[0],

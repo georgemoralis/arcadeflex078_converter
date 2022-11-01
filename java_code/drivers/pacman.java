@@ -256,7 +256,7 @@ public class pacman
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat)
+		if (speedcheat != 0)
 		{
 			if (readinputport(4) & 1)	/* check status of the fake dip switch */
 			{
@@ -281,7 +281,7 @@ public class pacman
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat)
+		if (speedcheat != 0)
 		{
 			if (readinputport(4) & 1)	/* check status of the fake dip switch */
 			{
@@ -306,7 +306,7 @@ public class pacman
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat)
+		if (speedcheat != 0)
 		{
 			if (readinputport(4) & 1)	/* check status of the fake dip switch */
 			{

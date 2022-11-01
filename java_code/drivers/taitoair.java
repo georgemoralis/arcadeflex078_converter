@@ -244,7 +244,7 @@ public class taitoair
 	
 	static WRITE16_HANDLER( dsp_HOLDA_signal_w )
 	{
-		if (offset)
+		if (offset != 0)
 			logerror("TMS32025:%04x Writing %01x level to HOLD-Acknowledge signal\n",activecpu_get_previouspc(),data);
 	}
 	

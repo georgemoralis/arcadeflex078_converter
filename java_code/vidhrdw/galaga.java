@@ -235,7 +235,7 @@ public class galaga
 					sy = my - 2;
 				}
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -276,7 +276,7 @@ public class galaga
 				if (sy <= -16)
 					continue;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;

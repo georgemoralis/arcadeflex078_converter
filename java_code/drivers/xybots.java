@@ -38,12 +38,12 @@ public class xybots
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 1;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 2;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -72,7 +72,7 @@ public class xybots
 	
 		int result = readinputport(1);
 	
-		if (atarigen_cpu_to_sound_ready) result ^= 0x0200;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0200;
 		result ^= h256 ^= 0x0400;
 		return result;
 	}

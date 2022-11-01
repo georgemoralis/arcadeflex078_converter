@@ -198,7 +198,7 @@ public class bankp
 		/* The tilemap has to be shifted to the left in flip screen mode
 			because the visible tilemap data is not centered in video memory */
 	
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			tilemap_set_scrollx(fg_tilemap, 0, -scroll_x - 16);
 			tilemap_set_scrollx(bg_tilemap, 0, -16);

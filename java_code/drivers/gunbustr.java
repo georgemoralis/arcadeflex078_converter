@@ -143,12 +143,12 @@ public class gunbustr
 		{
 			case 0x00:
 			{
-				if (ACCESSING_MSB32)	/* $400000 is watchdog */
+				if (ACCESSING_MSB32 != 0)	/* $400000 is watchdog */
 				{
 					watchdog_reset_w(0,data >> 24);
 				}
 	
-				if (ACCESSING_LSB32)
+				if (ACCESSING_LSB32 != 0)
 				{
 					EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x40);
@@ -160,7 +160,7 @@ public class gunbustr
 	
 			case 0x01:
 			{
-				if (ACCESSING_MSB32)
+				if (ACCESSING_MSB32 != 0)
 				{
 					/* game does not write a separate counter for coin 2!
 					   It should disable both coins when 9 credits reached
@@ -422,11 +422,11 @@ public class gunbustr
 	
 	static NVRAM_HANDLER( gunbustr )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&gunbustr_eeprom_interface);
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */

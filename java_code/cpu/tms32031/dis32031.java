@@ -186,7 +186,7 @@ public class dis32031
 	{
 		char *dst = &buffer[strlen(buffer)];
 	
-		if (is_float)
+		if (is_float != 0)
 		{
 			int exp = ((INT16)data >> 12) + 127;
 			UINT32 expanded_data;
@@ -212,7 +212,7 @@ public class dis32031
 	{
 		sprintf(buffer, "%-6s", opstring);
 	
-		if (flags & SWAPSRCDST)
+		if ((flags & SWAPSRCDST) != 0)
 		{
 			strcat(buffer, regname[(op >> 16) & 31]);
 			strcat(buffer, ",");

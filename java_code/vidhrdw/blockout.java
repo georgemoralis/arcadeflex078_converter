@@ -95,7 +95,7 @@ public class blockout
 		else color = (back>>8) + 256;
 		plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
 	
-		if (front&0xff) color = front&0xff;
+		if ((front & 0xff) != 0) color = front&0xff;
 		else color = (back&0xff) + 256;
 		plot_pixel(tmpbitmap, x+1, y, Machine->pens[color]);
 	}
@@ -134,16 +134,16 @@ public class blockout
 	
 					d = blockout_frontvideoram[y*64+(x/8)];
 	
-					if (d)
+					if (d != 0)
 					{
-						if (d&0x80) plot_pixel(bitmap, x  , y, color);
-						if (d&0x40) plot_pixel(bitmap, x+1, y, color);
-						if (d&0x20) plot_pixel(bitmap, x+2, y, color);
-						if (d&0x10) plot_pixel(bitmap, x+3, y, color);
-						if (d&0x08) plot_pixel(bitmap, x+4, y, color);
-						if (d&0x04) plot_pixel(bitmap, x+5, y, color);
-						if (d&0x02) plot_pixel(bitmap, x+6, y, color);
-						if (d&0x01) plot_pixel(bitmap, x+7, y, color);
+						if ((d & 0x80) != 0) plot_pixel(bitmap, x  , y, color);
+						if ((d & 0x40) != 0) plot_pixel(bitmap, x+1, y, color);
+						if ((d & 0x20) != 0) plot_pixel(bitmap, x+2, y, color);
+						if ((d & 0x10) != 0) plot_pixel(bitmap, x+3, y, color);
+						if ((d & 0x08) != 0) plot_pixel(bitmap, x+4, y, color);
+						if ((d & 0x04) != 0) plot_pixel(bitmap, x+5, y, color);
+						if ((d & 0x02) != 0) plot_pixel(bitmap, x+6, y, color);
+						if ((d & 0x01) != 0) plot_pixel(bitmap, x+7, y, color);
 					}
 				}
 			}

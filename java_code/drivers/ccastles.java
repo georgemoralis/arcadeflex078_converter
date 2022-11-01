@@ -116,7 +116,7 @@ public class ccastles
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 	
-		if (data) { cpu_setbank(1,&RAM[0x10000]); }
+		if (data != 0) { cpu_setbank(1,&RAM[0x10000]); }
 		else { cpu_setbank(1,&RAM[0xa000]); }
 	} };
 	

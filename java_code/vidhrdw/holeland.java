@@ -117,7 +117,7 @@ public class holeland
 	
 	public static WriteHandlerPtr holeland_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset) flip_screen_y_set(data);
+		if (offset != 0) flip_screen_y_set(data);
 		else        flip_screen_x_set(data);
 	} };
 	
@@ -140,13 +140,13 @@ public class holeland
 			flipx = spriteram[offs+3] & 0x04;
 			flipy = spriteram[offs+3] & 0x08;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				flipx = !flipx;
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				flipy = !flipy;
 				sy = 240 - sy;
@@ -178,13 +178,13 @@ public class holeland
 			flipx = spriteram[offs+3] & 0x04;
 			flipy = spriteram[offs+3] & 0x08;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				flipx = !flipx;
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				flipy = !flipy;
 				sy = 240 - sy;

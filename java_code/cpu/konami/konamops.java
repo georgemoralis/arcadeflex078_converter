@@ -239,11 +239,11 @@ INLINE void daa( void )
 {
 	UINT16 t;
 	t = A;
-	if (CC & CC_H) t+=0x06;
+	if ((CC & CC_H) != 0) t+=0x06;
 	if ((t&0x0f)>9) t+=0x06;		/* ASG -- this code is broken! $66+$99=$FF -> DAA should = $65, we get $05! */
-	if (CC & CC_C) t+=0x60;
+	if ((CC & CC_C) != 0) t+=0x60;
 	if ((t&0xf0)>0x90) t+=0x60;
-	if (t&0x100) SEC;
+	if ((t & 0x100) != 0) SEC;
 	A = t;
 }
 #endif
@@ -541,14 +541,14 @@ INLINE void pshs( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x80 ) { PUSHWORD(pPC); konami_ICount -= 2; }
-	if( t&0x40 ) { PUSHWORD(pU);  konami_ICount -= 2; }
-	if( t&0x20 ) { PUSHWORD(pY);  konami_ICount -= 2; }
-	if( t&0x10 ) { PUSHWORD(pX);  konami_ICount -= 2; }
-	if( t&0x08 ) { PUSHBYTE(DP);  konami_ICount -= 1; }
-	if( t&0x04 ) { PUSHBYTE(B);   konami_ICount -= 1; }
-	if( t&0x02 ) { PUSHBYTE(A);   konami_ICount -= 1; }
-	if( t&0x01 ) { PUSHBYTE(CC);  konami_ICount -= 1; }
+	if ((t & 0x80) != 0) { PUSHWORD(pPC); konami_ICount -= 2; }
+	if ((t & 0x40) != 0) { PUSHWORD(pU);  konami_ICount -= 2; }
+	if ((t & 0x20) != 0) { PUSHWORD(pY);  konami_ICount -= 2; }
+	if ((t & 0x10) != 0) { PUSHWORD(pX);  konami_ICount -= 2; }
+	if ((t & 0x08) != 0) { PUSHBYTE(DP);  konami_ICount -= 1; }
+	if ((t & 0x04) != 0) { PUSHBYTE(B);   konami_ICount -= 1; }
+	if ((t & 0x02) != 0) { PUSHBYTE(A);   konami_ICount -= 1; }
+	if ((t & 0x01) != 0) { PUSHBYTE(CC);  konami_ICount -= 1; }
 }
 
 /* 35 PULS inherent ----- */
@@ -556,17 +556,17 @@ INLINE void puls( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x01 ) { PULLBYTE(CC); konami_ICount -= 1; }
-	if( t&0x02 ) { PULLBYTE(A);  konami_ICount -= 1; }
-	if( t&0x04 ) { PULLBYTE(B);  konami_ICount -= 1; }
-	if( t&0x08 ) { PULLBYTE(DP); konami_ICount -= 1; }
-	if( t&0x10 ) { PULLWORD(XD); konami_ICount -= 2; }
-	if( t&0x20 ) { PULLWORD(YD); konami_ICount -= 2; }
-	if( t&0x40 ) { PULLWORD(UD); konami_ICount -= 2; }
-	if( t&0x80 ) { PULLWORD(PCD); change_pc16(PCD); konami_ICount -= 2; }
+	if ((t & 0x01) != 0) { PULLBYTE(CC); konami_ICount -= 1; }
+	if ((t & 0x02) != 0) { PULLBYTE(A);  konami_ICount -= 1; }
+	if ((t & 0x04) != 0) { PULLBYTE(B);  konami_ICount -= 1; }
+	if ((t & 0x08) != 0) { PULLBYTE(DP); konami_ICount -= 1; }
+	if ((t & 0x10) != 0) { PULLWORD(XD); konami_ICount -= 2; }
+	if ((t & 0x20) != 0) { PULLWORD(YD); konami_ICount -= 2; }
+	if ((t & 0x40) != 0) { PULLWORD(UD); konami_ICount -= 2; }
+	if ((t & 0x80) != 0) { PULLWORD(PCD); change_pc16(PCD); konami_ICount -= 2; }
 
 	/* check after all PULLs */
-	if( t&0x01 ) { CHECK_IRQ_LINES; }
+	if ((t & 0x01) != 0) { CHECK_IRQ_LINES; }
 }
 
 /* $36 PSHU inherent ----- */
@@ -574,14 +574,14 @@ INLINE void pshu( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x80 ) { PSHUWORD(pPC); konami_ICount -= 2; }
-	if( t&0x40 ) { PSHUWORD(pS);  konami_ICount -= 2; }
-	if( t&0x20 ) { PSHUWORD(pY);  konami_ICount -= 2; }
-	if( t&0x10 ) { PSHUWORD(pX);  konami_ICount -= 2; }
-	if( t&0x08 ) { PSHUBYTE(DP);  konami_ICount -= 1; }
-	if( t&0x04 ) { PSHUBYTE(B);   konami_ICount -= 1; }
-	if( t&0x02 ) { PSHUBYTE(A);   konami_ICount -= 1; }
-	if( t&0x01 ) { PSHUBYTE(CC);  konami_ICount -= 1; }
+	if ((t & 0x80) != 0) { PSHUWORD(pPC); konami_ICount -= 2; }
+	if ((t & 0x40) != 0) { PSHUWORD(pS);  konami_ICount -= 2; }
+	if ((t & 0x20) != 0) { PSHUWORD(pY);  konami_ICount -= 2; }
+	if ((t & 0x10) != 0) { PSHUWORD(pX);  konami_ICount -= 2; }
+	if ((t & 0x08) != 0) { PSHUBYTE(DP);  konami_ICount -= 1; }
+	if ((t & 0x04) != 0) { PSHUBYTE(B);   konami_ICount -= 1; }
+	if ((t & 0x02) != 0) { PSHUBYTE(A);   konami_ICount -= 1; }
+	if ((t & 0x01) != 0) { PSHUBYTE(CC);  konami_ICount -= 1; }
 }
 
 /* 37 PULU inherent ----- */
@@ -589,17 +589,17 @@ INLINE void pulu( void )
 {
 	UINT8 t;
 	IMMBYTE(t);
-	if( t&0x01 ) { PULUBYTE(CC); konami_ICount -= 1; }
-	if( t&0x02 ) { PULUBYTE(A);  konami_ICount -= 1; }
-	if( t&0x04 ) { PULUBYTE(B);  konami_ICount -= 1; }
-	if( t&0x08 ) { PULUBYTE(DP); konami_ICount -= 1; }
-	if( t&0x10 ) { PULUWORD(XD); konami_ICount -= 2; }
-	if( t&0x20 ) { PULUWORD(YD); konami_ICount -= 2; }
-	if( t&0x40 ) { PULUWORD(SD); konami_ICount -= 2; }
-	if( t&0x80 ) { PULUWORD(PCD); change_pc16(PCD); konami_ICount -= 2; }
+	if ((t & 0x01) != 0) { PULUBYTE(CC); konami_ICount -= 1; }
+	if ((t & 0x02) != 0) { PULUBYTE(A);  konami_ICount -= 1; }
+	if ((t & 0x04) != 0) { PULUBYTE(B);  konami_ICount -= 1; }
+	if ((t & 0x08) != 0) { PULUBYTE(DP); konami_ICount -= 1; }
+	if ((t & 0x10) != 0) { PULUWORD(XD); konami_ICount -= 2; }
+	if ((t & 0x20) != 0) { PULUWORD(YD); konami_ICount -= 2; }
+	if ((t & 0x40) != 0) { PULUWORD(SD); konami_ICount -= 2; }
+	if ((t & 0x80) != 0) { PULUWORD(PCD); change_pc16(PCD); konami_ICount -= 2; }
 
 	/* check after all PULLs */
-	if( t&0x01 ) { CHECK_IRQ_LINES; }
+	if ((t & 0x01) != 0) { CHECK_IRQ_LINES; }
 }
 
 /* $38 ILLEGAL */
@@ -621,7 +621,7 @@ INLINE void abx( void )
 INLINE void rti( void )
 {
 	PULLBYTE(CC);
-	if( CC & CC_E ) /* entire state saved? */
+	if ((CC & CC_E) != 0) /* entire state saved? */
 	{
         konami_ICount -= 9;
 		PULLBYTE(A);
@@ -667,7 +667,7 @@ INLINE void mul( void )
 {
 	UINT16 t;
 	t = A * B;
-	CLR_ZC; SET_Z16(t); if(t&0x80) SEC;
+	CLR_ZC; SET_Z16(t); if ((t & 0x80) != 0) SEC;
 	D = t;
 }
 
@@ -2853,7 +2853,7 @@ INLINE void setline_im( void )
 	UINT8 t;
 	IMMBYTE(t);
 
-	if ( konami_cpu_setlines_callback )
+	if (konami_cpu_setlines_callback != 0)
 		(*konami_cpu_setlines_callback)( t );
 }
 
@@ -2862,7 +2862,7 @@ INLINE void setline_ix( void )
 	UINT8 t;
 	t = RM(EA);
 
-	if ( konami_cpu_setlines_callback )
+	if (konami_cpu_setlines_callback != 0)
 		(*konami_cpu_setlines_callback)( t );
 }
 
@@ -2871,7 +2871,7 @@ INLINE void setline_di( void )
 	UINT8 t;
 	DIRBYTE(t);
 
-	if ( konami_cpu_setlines_callback )
+	if (konami_cpu_setlines_callback != 0)
 		(*konami_cpu_setlines_callback)( t );
 }
 
@@ -2880,7 +2880,7 @@ INLINE void setline_ex( void )
 	UINT8 t;
 	EXTBYTE(t);
 
-	if ( konami_cpu_setlines_callback )
+	if (konami_cpu_setlines_callback != 0)
 		(*konami_cpu_setlines_callback)( t );
 }
 
@@ -3020,7 +3020,7 @@ INLINE void rold( void )
 
 	while ( t-- ) {
 		CLR_NZC;
-		if ( D & 0x8000 ) SEC;
+		if ((D & 0x8000) != 0) SEC;
 		r = CC & CC_C;
 		r |= D << 1;
 		SET_NZ16(r);
@@ -3076,7 +3076,7 @@ INLINE void lmul( void )
 	t = X * Y;
 	X = (t >> 16);
 	Y = (t & 0xffff);
-	CLR_ZC; SET_Z(t); if( t & 0x8000 ) SEC;
+	CLR_ZC; SET_Z(t); if ((t & 0x8000) != 0) SEC;
 }
 
 /* DIVX inherent --*-@ */
@@ -3095,7 +3095,7 @@ INLINE void divx( void )
 		t = 0;
 		r = 0;
 	}
-	CLR_ZC; SET_Z16(t); if ( t & 0x80 ) SEC;
+	CLR_ZC; SET_Z16(t); if ((t & 0x80) != 0) SEC;
 	X = t;
 	B = r;
 }
@@ -3447,7 +3447,7 @@ INLINE void negw_ex( void )
 INLINE void absa( void )
 {
 	UINT16 r;
-	if (A & 0x80)
+	if ((A & 0x80) != 0)
 		r = -A;
 	else
 		r = A;
@@ -3460,7 +3460,7 @@ INLINE void absa( void )
 INLINE void absb( void )
 {
 	UINT16 r;
-	if (B & 0x80)
+	if ((B & 0x80) != 0)
 		r = -B;
 	else
 		r = B;
@@ -3473,7 +3473,7 @@ INLINE void absb( void )
 INLINE void absd( void )
 {
 	UINT32 r;
-	if (D & 0x8000)
+	if ((D & 0x8000) != 0)
 		r = -D;
 	else
 		r = D;
@@ -3556,7 +3556,7 @@ INLINE void rold_di( void )
 
 	while ( t-- ) {
 		CLR_NZC;
-		if ( D & 0x8000 ) SEC;
+		if ((D & 0x8000) != 0) SEC;
 		r = CC & CC_C;
 		r |= D << 1;
 		SET_NZ16(r);
@@ -3638,7 +3638,7 @@ INLINE void rold_ix( void )
 
 	while ( t-- ) {
 		CLR_NZC;
-		if ( D & 0x8000 ) SEC;
+		if ((D & 0x8000) != 0) SEC;
 		r = CC & CC_C;
 		r |= D << 1;
 		SET_NZ16(r);
@@ -3720,7 +3720,7 @@ INLINE void rold_ex( void )
 
 	while ( t-- ) {
 		CLR_NZC;
-		if ( D & 0x8000 ) SEC;
+		if ((D & 0x8000) != 0) SEC;
 		r = CC & CC_C;
 		r |= D << 1;
 		SET_NZ16(r);

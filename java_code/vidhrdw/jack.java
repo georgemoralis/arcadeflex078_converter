@@ -92,7 +92,7 @@ public class jack
 			flipx = (spriteram[offs + 3] & 0x80);
 			flipy = (spriteram[offs + 3] & 0x40);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;

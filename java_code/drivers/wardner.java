@@ -155,7 +155,7 @@ public class wardner
 	
 	public static InterruptHandlerPtr wardner_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (twincobr_intenable) {
+		if (twincobr_intenable != 0) {
 			twincobr_intenable = 0;
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
@@ -181,7 +181,7 @@ public class wardner
 	
 	public static WriteHandlerPtr wardner_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset & 1)
+		if ((offset & 1) != 0)
 			spriteram16[offset/2] = (spriteram16[offset/2] & 0x00ff) | (data << 8);
 		else
 			spriteram16[offset/2] = (spriteram16[offset/2] & 0xff00) | data;

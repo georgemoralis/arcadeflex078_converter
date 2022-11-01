@@ -40,7 +40,7 @@ public class timelimt
 	
 	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if ( data & 1 )
+		if ((data & 1) != 0)
 			cpu_set_reset_line( 1, PULSE_LINE );
 	} };
 	
@@ -262,7 +262,7 @@ public class timelimt
 	};
 	
 	public static InterruptHandlerPtr timelimt_irq = new InterruptHandlerPtr() {public void handler() {
-		if ( nmi_enabled )
+		if (nmi_enabled != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

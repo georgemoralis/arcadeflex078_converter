@@ -837,7 +837,7 @@ public class fmopl
 	
 				signed int lfo_fn_table_index_offset = lfo_pm_table[LFO_PM + 16*fnum_lfo ];
 	
-				if (lfo_fn_table_index_offset)	/* LFO phase modulation active */
+				if (lfo_fn_table_index_offset != 0)	/* LFO phase modulation active */
 				{
 					block_fnum += lfo_fn_table_index_offset;
 					block = (block_fnum&0x1c00) >> 10;
@@ -1071,22 +1071,22 @@ public class fmopl
 	
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | (0xd0>>2); */
-			if (res2)
+			if (res2 != 0)
 				phase = (0x200|(0xd0>>2));
 	
 	
 			/* when phase & 0x200 is set and noise=1 then phase = 0x200|0xd0 */
 			/* when phase & 0x200 is set and noise=0 then phase = 0x200|(0xd0>>2), ie no change */
-			if (phase&0x200)
+			if ((phase & 0x200) != 0)
 			{
-				if (noise)
+				if (noise != 0)
 					phase = 0x200|0xd0;
 			}
 			else
 			/* when phase & 0x200 is clear and noise=1 then phase = 0xd0>>2 */
 			/* when phase & 0x200 is clear and noise=0 then phase = 0xd0, ie no change */
 			{
-				if (noise)
+				if (noise != 0)
 					phase = 0xd0>>2;
 			}
 	
@@ -1108,7 +1108,7 @@ public class fmopl
 			/* when noisebit = 0 pass the phase from calculation above */
 			/* when noisebit = 1 phase ^= 0x100; */
 			/* in other words: phase ^= (noisebit<<8); */
-			if (noise)
+			if (noise != 0)
 				phase ^= 0x100;
 	
 			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2->wavetable) * 2;
@@ -1141,7 +1141,7 @@ public class fmopl
 			unsigned char res2 = (bit3e ^ bit5e);
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | 0x100; */
-			if (res2)
+			if (res2 != 0)
 				phase = 0x300;
 	
 			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2->wavetable) * 2;
@@ -1168,7 +1168,7 @@ public class fmopl
 	
 			n = (int)m;		/* 16 bits here */
 			n >>= 4;		/* 12 bits here */
-			if (n&1)		/* round to nearest */
+			if ((n & 1) != 0)		/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1207,7 +1207,7 @@ public class fmopl
 			o = o / (ENV_STEP/4);
 	
 			n = (int)(2.0*o);
-			if (n&1)						/* round to nearest */
+			if ((n & 1) != 0)						/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1493,7 +1493,7 @@ public class fmopl
 				OPL->T[1] = (256-v)*16;
 				break;
 			case 0x04:	/* IRQ clear / mask and Timer enable */
-				if(v&0x80)
+				if ((v & 0x80) != 0)
 				{	/* IRQ flag clear */
 					OPL_STATUS_RESET(OPL,0x7f-0x08); /* don't reset BFRDY flag or we will have to call deltat module to set the flag */
 				}
@@ -1615,7 +1615,7 @@ public class fmopl
 				if(OPL->rhythm&0x20)
 				{
 					/* BD key on/off */
-					if(v&0x10)
+					if ((v & 0x10) != 0)
 					{
 						FM_KEYON (&OPL->P_CH[6].SLOT[SLOT1], 2);
 						FM_KEYON (&OPL->P_CH[6].SLOT[SLOT2], 2);
@@ -1626,16 +1626,16 @@ public class fmopl
 						FM_KEYOFF(&OPL->P_CH[6].SLOT[SLOT2],~2);
 					}
 					/* HH key on/off */
-					if(v&0x01) FM_KEYON (&OPL->P_CH[7].SLOT[SLOT1], 2);
+					if ((v & 0x01) != 0) FM_KEYON (&OPL->P_CH[7].SLOT[SLOT1], 2);
 					else       FM_KEYOFF(&OPL->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key on/off */
-					if(v&0x08) FM_KEYON (&OPL->P_CH[7].SLOT[SLOT2], 2);
+					if ((v & 0x08) != 0) FM_KEYON (&OPL->P_CH[7].SLOT[SLOT2], 2);
 					else       FM_KEYOFF(&OPL->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key on/off */
-					if(v&0x04) FM_KEYON (&OPL->P_CH[8].SLOT[SLOT1], 2);
+					if ((v & 0x04) != 0) FM_KEYON (&OPL->P_CH[8].SLOT[SLOT1], 2);
 					else       FM_KEYOFF(&OPL->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY key on/off */
-					if(v&0x02) FM_KEYON (&OPL->P_CH[8].SLOT[SLOT2], 2);
+					if ((v & 0x02) != 0) FM_KEYON (&OPL->P_CH[8].SLOT[SLOT2], 2);
 					else       FM_KEYOFF(&OPL->P_CH[8].SLOT[SLOT2],~2);
 				}
 				else
@@ -1665,7 +1665,7 @@ public class fmopl
 			{	/* b0-b8 */
 				block_fnum = ((v&0x1f)<<8) | (CH->block_fnum&0xff);
 	
-				if(v&0x20)
+				if ((v & 0x20) != 0)
 				{
 					FM_KEYON (&CH->SLOT[SLOT1], 1);
 					FM_KEYON (&CH->SLOT[SLOT2], 1);
@@ -1731,7 +1731,7 @@ public class fmopl
 	#ifdef LOG_CYM_FILE
 	static void cymfile_callback (int n)
 	{
-		if (cymfile)
+		if (cymfile != 0)
 		{
 			fputc( (unsigned char)0, cymfile );
 		}
@@ -1756,7 +1756,7 @@ public class fmopl
 	
 	#ifdef LOG_CYM_FILE
 		cymfile = fopen("3812_.cym","wb");
-		if (cymfile)
+		if (cymfile != 0)
 			timer_pulse ( TIME_IN_HZ(110), 0, cymfile_callback); /*110 Hz pulse timer*/
 		else
 			logerror("Could not create file 3812_.cym\n");
@@ -1767,8 +1767,8 @@ public class fmopl
 	
 	static void OPL_UnLockTable(void)
 	{
-		if(num_lock) num_lock--;
-		if(num_lock) return;
+		if (num_lock != 0) num_lock--;
+		if (num_lock != 0) return;
 	
 		/* last time */
 	
@@ -1842,7 +1842,7 @@ public class fmopl
 		state_size  = sizeof(FM_OPL);
 	
 	#if BUILD_Y8950
-		if (type&OPL_TYPE_ADPCM) state_size+= sizeof(YM_DELTAT);
+		if ((type & OPL_TYPE_ADPCM) != 0) state_size+= sizeof(YM_DELTAT);
 	#endif
 	
 		/* allocate memory block */
@@ -1859,7 +1859,7 @@ public class fmopl
 		ptr += sizeof(FM_OPL);
 	
 	#if BUILD_Y8950
-		if (type&OPL_TYPE_ADPCM)
+		if ((type & OPL_TYPE_ADPCM) != 0)
 		{
 			OPL->deltat = (YM_DELTAT *)ptr;
 		}
@@ -1996,7 +1996,7 @@ public class fmopl
 	
 	static int OPLTimerOver(FM_OPL *OPL,int c)
 	{
-		if( c )
+		if (c != 0)
 		{	/* Timer B */
 			OPL_STATUS_SET(OPL,0x20);
 		}
@@ -2030,7 +2030,7 @@ public class fmopl
 	{
 		int i;
 	
-		if (YM3812NumChips)
+		if (YM3812NumChips != 0)
 			return -1;	/* duplicate init. */
 	
 		YM3812NumChips = num;
@@ -2181,7 +2181,7 @@ public class fmopl
 	{
 		int i;
 	
-		if (YM3526NumChips)
+		if (YM3526NumChips != 0)
 			return -1;	/* duplicate init. */
 	
 		YM3526NumChips = num;
@@ -2342,7 +2342,7 @@ public class fmopl
 	{
 		int i;
 	
-		if (Y8950NumChips)
+		if (Y8950NumChips != 0)
 			return -1;	/* duplicate init. */
 	
 		Y8950NumChips = num;

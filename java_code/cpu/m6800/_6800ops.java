@@ -445,7 +445,7 @@ INLINE void mul( void )
 {
 	UINT16 t;
 	t=A*B;
-	CLR_C; if(t&0x80) SEC;
+	CLR_C; if ((t & 0x80) != 0) SEC;
 	D=t;
 }
 

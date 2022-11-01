@@ -47,7 +47,7 @@ public class xain
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-		if (data & 0x08) {cpu_setbank(1,&RAM[0x10000]);}
+		if ((data & 0x08) != 0) {cpu_setbank(1,&RAM[0x10000]);}
 		else {cpu_setbank(1,&RAM[0x4000]);}
 	} };
 	
@@ -55,7 +55,7 @@ public class xain
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
-		if (data & 0x01) {cpu_setbank(2,&RAM[0x10000]);}
+		if ((data & 0x01) != 0) {cpu_setbank(2,&RAM[0x10000]);}
 		else {cpu_setbank(2,&RAM[0x4000]);}
 	} };
 	

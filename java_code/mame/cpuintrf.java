@@ -1013,10 +1013,10 @@ public class cpuintrf
 	static unsigned internal_dasm(int cpunum, char *buffer, unsigned pc)
 	{
 		unsigned result;
-		if (cpu_dasm_override)
+		if (cpu_dasm_override != 0)
 		{
 			result = cpu_dasm_override(cpunum, buffer, pc);
-			if (result)
+			if (result != 0)
 				return result;
 		}
 		return (*cpu[cpunum].intf.cpu_dasm)(buffer, pc);
@@ -1161,7 +1161,7 @@ public class cpuintrf
 		cpuintrf_push_context(cpunum);
 		(*cpu[cpunum].intf.set_op_base)(0);
 		(*cpu[cpunum].intf.reset)(param);
-		if (irqack)
+		if (irqack != 0)
 			(*cpu[cpunum].intf.set_irq_callback)(irqack);
 		cpuintrf_pop_context();
 	}

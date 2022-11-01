@@ -218,7 +218,7 @@ public class polyplay
 	{
 		switch(offset) {
 		case 0x00:
-			if (channel1_const) {
+			if (channel1_const != 0) {
 				if (data <= 1) {
 					set_channel1(0);
 				}
@@ -228,7 +228,7 @@ public class polyplay
 			}
 			else {
 				prescale1 = (data & 0x20) ? 16 : 1;
-				if (data & 0x04) {
+				if ((data & 0x04) != 0) {
 					set_channel1(1);
 					channel1_const = 1;
 				}
@@ -239,7 +239,7 @@ public class polyplay
 			}
 			break;
 		case 0x01:
-			if (channel2_const) {
+			if (channel2_const != 0) {
 				if (data <= 1) {
 					set_channel2(0);
 				}
@@ -249,7 +249,7 @@ public class polyplay
 			}
 			else {
 				prescale2 = (data & 0x20) ? 16 : 1;
-				if (data & 0x04) {
+				if ((data & 0x04) != 0) {
 					set_channel2(1);
 					channel2_const = 1;
 				}

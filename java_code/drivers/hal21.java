@@ -99,14 +99,14 @@ public class hal21
 			break;
 	
 			case 2: // acknowledge
-				if (busy) { busy = 0; hold = 4; }
+				if (busy != 0) { busy = 0; hold = 4; }
 			return;
 	
 			case 3: // release
 				if (!busy)
 				{
-					if (hold) hold--; else
-					if (ffcount)
+					if (hold != 0) hold--; else
+					if (ffcount != 0)
 					{
 						ffcount--;
 						data = hal21_sndfifo[fftail];
@@ -336,7 +336,7 @@ public class hal21
 		bgsy = (int)hal21_vreg[4] + (msbs<<4 & 0x100) - 8;
 		bgsx = (int)hal21_vreg[5] - 16;
 	
-		if (snk_gamegroup)
+		if (snk_gamegroup != 0)
 		{
 			hal21_draw_background(bitmap, bgsx+(msbs<<7 & 0x100), bgsy, attr, Machine->gfx[1]);
 	

@@ -69,7 +69,7 @@ public class midtunit
 	
 	WRITE16_HANDLER( midtunit_cmos_w )
 	{
-		if (1)/*cmos_write_enable)*/
+		if (1 != 0)/*cmos_write_enable)*/
 		{
 			COMBINE_DATA(&((data16_t *)generic_nvram)[offset]);
 			cmos_write_enable = 0;
@@ -137,7 +137,7 @@ public class midtunit
 	
 	static WRITE16_HANDLER( mk_prot_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			int first_val = (data >> 9) & 0x3f;
 			int i;
@@ -651,7 +651,7 @@ public class midtunit
 		if (sound_type == SOUND_DCS && Machine->sample_rate)
 			return dcs_control_r() >> 4;
 	
-		if (fake_sound_state)
+		if (fake_sound_state != 0)
 		{
 			fake_sound_state--;
 			return 0;

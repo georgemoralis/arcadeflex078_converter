@@ -45,7 +45,7 @@ public class tecmo16
 	
 	static WRITE16_HANDLER( tecmo16_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0x00,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);

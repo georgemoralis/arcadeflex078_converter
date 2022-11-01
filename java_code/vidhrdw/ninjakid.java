@@ -231,7 +231,7 @@ public class ninjakid
 			int flipy = attr&0x20;
 			int color = attr&0x0f;
 	
-			if( flipscreen ){
+			if (flipscreen != 0){
 				sx = 240-sx;
 				sy = 240-sy;
 				flipx = !flipx;

@@ -109,7 +109,7 @@ public class tankbatt
 			cpu_set_nmi_line(0, CLEAR_LINE);
 		}
 		/* hack - turn off the engine noise if the normal game nmi's are disabled */
-		if (data) sample_stop (2);
+		if (data != 0) sample_stop (2);
 	//	interrupt_enable_w (offset, !data);
 	} };
 	
@@ -126,15 +126,15 @@ public class tankbatt
 	
 	public static WriteHandlerPtr tankbatt_sh_expl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tankbatt_sound_enable)
+		if (tankbatt_sound_enable != 0)
 			sample_start (1, 3, 0);
 	} };
 	
 	public static WriteHandlerPtr tankbatt_sh_engine_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tankbatt_sound_enable)
+		if (tankbatt_sound_enable != 0)
 		{
-			if (data)
+			if (data != 0)
 				sample_start (2, 2, 1);
 			else
 				sample_start (2, 1, 1);
@@ -144,7 +144,7 @@ public class tankbatt
 	
 	public static WriteHandlerPtr tankbatt_sh_fire_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tankbatt_sound_enable)
+		if (tankbatt_sound_enable != 0)
 			sample_start (0, 0, 0);
 	} };
 	
@@ -180,7 +180,7 @@ public class tankbatt
 	public static InterruptHandlerPtr tankbatt_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if ((readinputport (0) & 0x60) == 0) cpu_set_irq_line(0,0,HOLD_LINE);
-		else if (tankbatt_nmi_enable) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
+		else if (tankbatt_nmi_enable != 0) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
 	static InputPortPtr input_ports_tankbatt = new InputPortPtr(){ public void handler() { 

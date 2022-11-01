@@ -193,7 +193,7 @@ public class retofinv
 				tileofs2 = 2;
 				tileofs3 = 3;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					tileofs0 = 2;
 					tileofs2 = 0;
@@ -215,7 +215,7 @@ public class retofinv
 								sx,sy,
 								&Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
-				if (size & 4)
+				if ((size & 4) != 0)
 				{
 					if ((size & 8) && (flipscreen)) sx-=16;
 					drawgfx(bitmap,Machine->gfx[2],
@@ -232,9 +232,9 @@ public class retofinv
 								sx,sy,
 								&Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
-				if (size & 8)
+				if ((size & 8) != 0)
 				{
-					if (flipscreen) sx+=32;
+					if (flipscreen != 0) sx+=32;
 					drawgfx(bitmap,Machine->gfx[2],
 								tile+tileofs1,
 								palette,
@@ -280,7 +280,7 @@ public class retofinv
 					sx = 31-x;
 					sy = 31-y;
 	
-					if (flipscreen)
+					if (flipscreen != 0)
 					{
 						sx = 31 - sx;
 						sy = 31 - sy;
@@ -320,7 +320,7 @@ public class retofinv
 	
 				flipx = flipy = 0;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 280 - sx;
 					sy = 248 - sy;
@@ -349,7 +349,7 @@ public class retofinv
 	
 				flipx = flipy = 0;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 280 - sx;
 					sy = 248 - sy;
@@ -378,7 +378,7 @@ public class retofinv
 	
 				flipx = flipy = 0;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 280 - sx;
 					sy = 248 - sy;

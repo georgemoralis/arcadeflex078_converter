@@ -249,7 +249,7 @@ public class jedi
 				int br = bgcurr[((x + 1) & 0x1ff) / 2];
 	
 				/* smooth pixels */
-				if (x & 1)
+				if ((x & 1) != 0)
 				{
 					int tl = bglast[(x & 0x1ff) / 2];
 					int bl = bgcurr[(x & 0x1ff) / 2];
@@ -278,7 +278,7 @@ public class jedi
 	
 	
 		/* if no video, clear it all to black */
-		if (video_off)
+		if (video_off != 0)
 		{
 			fillbitmap(bitmap, Machine->pens[1024], &Machine->visible_area);
 			return;
@@ -356,7 +356,7 @@ public class jedi
 			code = spriteram[offs] + (bank * 256);
 	
 			/* adjust for double-height */
-			if (tall)
+			if (tall != 0)
 				code |= 1;
 	
 			/* draw motion object */
@@ -364,7 +364,7 @@ public class jedi
 					0, flipx, flipy, x, y, &Machine->visible_area, TRANSPARENCY_PEN_RAW, 0);
 	
 			/* handle double-height */
-			if (tall)
+			if (tall != 0)
 				drawgfx(mobitmap, Machine->gfx[2], code - 1,
 						0, flipx, flipy, x, y - 16, &Machine->visible_area, TRANSPARENCY_PEN_RAW, 0);
 	    }

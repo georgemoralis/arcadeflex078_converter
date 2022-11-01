@@ -193,8 +193,8 @@ public class cpuexecH
 	void cpu_boost_interleave(double timeslice_time, double boost_duration);
 	
 	/* Backwards compatibility */
-	#define timer_suspendcpu(cpunum, suspend, reason)	do { if (suspend) cpunum_suspend(cpunum, reason, 1); else cpunum_resume(cpunum, reason); } while (0)
-	#define timer_holdcpu(cpunum, suspend, reason)		do { if (suspend) cpunum_suspend(cpunum, reason, 0); else cpunum_resume(cpunum, reason); } while (0)
+	#define timer_suspendcpu(cpunum, suspend, reason)	do { if (suspend != 0) cpunum_suspend(cpunum, reason, 1); else cpunum_resume(cpunum, reason); } while (0)
+	#define timer_holdcpu(cpunum, suspend, reason)		do { if (suspend != 0) cpunum_suspend(cpunum, reason, 0); else cpunum_resume(cpunum, reason); } while (0)
 	#define cpu_getstatus(cpunum)						(!cpunum_is_suspended(cpunum, SUSPEND_REASON_HALT | SUSPEND_REASON_RESET | SUSPEND_REASON_DISABLE))
 	#define timer_get_overclock(cpunum)					cpunum_get_clockscale(cpunum)
 	#define timer_set_overclock(cpunum, overclock)		cpunum_set_clockscale(cpunum, overclock)

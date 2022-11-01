@@ -47,11 +47,11 @@ public class orbit
 	
 		int flags = 0;
 	
-		if (code & 0x40)
+		if ((code & 0x40) != 0)
 		{
 			flags |= TILE_FLIPX;
 		}
-		if (orbit_flip_screen)
+		if (orbit_flip_screen != 0)
 		{
 			flags |= TILE_FLIPY;
 		}
@@ -96,11 +96,11 @@ public class orbit
 	
 			code &= 0x3f;
 	
-			if (flag & 1)
+			if ((flag & 1) != 0)
 			{
 				code |= 0x40;
 			}
-			if (flag & 2)
+			if ((flag & 2) != 0)
 			{
 				zoom_x *= 2;
 			}

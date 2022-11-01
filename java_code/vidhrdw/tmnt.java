@@ -391,7 +391,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( tmnt_0a0000_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static int last;
 	
@@ -417,7 +417,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( punkshot_0a0020_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static int last;
 	
@@ -438,7 +438,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( lgtnfght_0a0018_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			static int last;
 	
@@ -460,7 +460,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( detatwin_700300_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -483,7 +483,7 @@ public class tmnt
 	
 	READ16_HANDLER( glfgreat_rom_r )
 	{
-		if (glfgreat_roz_rom_mode)
+		if (glfgreat_roz_rom_mode != 0)
 			return memory_region(REGION_GFX3)[glfgreat_roz_char_bank * 0x80000 + offset];
 		else if (offset < 0x40000)
 			return memory_region(REGION_USER1)[offset + 0x80000 + glfgreat_roz_rom_bank * 0x40000] +
@@ -494,7 +494,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( glfgreat_122000_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -515,7 +515,7 @@ public class tmnt
 	
 			/* other bits unknown */
 		}
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			/* bit 8 = 53596 char/rom selection for ROM test */
 			glfgreat_roz_rom_mode = data & 0x100;
@@ -525,7 +525,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( ssriders_eeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0 is data */
 			/* bit 1 is cs (active low) */
@@ -546,7 +546,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( ssriders_1c0300_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -562,7 +562,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( prmrsocr_122000_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -583,7 +583,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( tmnt_priority_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 2/3 = priority; other bits unused */
 			/* bit2 = PRI bit3 = PRI2
@@ -780,7 +780,7 @@ public class tmnt
 		if (newdim != lastdim || newen != lasten)
 		{
 			brt = 1.0;
-			if (newen) brt -= (1.0-PALETTE_DEFAULT_SHADOW_FACTOR)*newdim/8;
+			if (newen != 0) brt -= (1.0-PALETTE_DEFAULT_SHADOW_FACTOR)*newdim/8;
 			lastdim = newdim;
 			lasten  = newen;
 	

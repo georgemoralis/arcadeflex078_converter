@@ -75,7 +75,7 @@ public class mcr
 		int dac_index = 0;
 	
 		/* SSIO */
-		if (mcr_sound_config & MCR_SSIO)
+		if ((mcr_sound_config & MCR_SSIO) != 0)
 		{
 			ssio_sound_cpu = sound_cpu++;
 			ssio_reset_w(1);
@@ -83,7 +83,7 @@ public class mcr
 		}
 	
 		/* Turbo Chip Squeak */
-		if (mcr_sound_config & MCR_TURBO_CHIP_SQUEAK)
+		if ((mcr_sound_config & MCR_TURBO_CHIP_SQUEAK) != 0)
 		{
 			pia_config(0, PIA_ALTERNATE_ORDERING, &turbocs_pia_intf);
 			turbocs_dac_index = dac_index++;
@@ -93,7 +93,7 @@ public class mcr
 		}
 	
 		/* Chip Squeak Deluxe */
-		if (mcr_sound_config & MCR_CHIP_SQUEAK_DELUXE)
+		if ((mcr_sound_config & MCR_CHIP_SQUEAK_DELUXE) != 0)
 		{
 			pia_config(0, PIA_ALTERNATE_ORDERING, &csdeluxe_pia_intf);
 			csdeluxe_dac_index = dac_index++;
@@ -103,7 +103,7 @@ public class mcr
 		}
 	
 		/* Sounds Good */
-		if (mcr_sound_config & MCR_SOUNDS_GOOD)
+		if ((mcr_sound_config & MCR_SOUNDS_GOOD) != 0)
 		{
 			/* special case: Spy Hunter 2 has both Turbo CS and Sounds Good, so we use PIA slot 1 */
 			pia_config(1, PIA_ALTERNATE_ORDERING, &soundsgood_pia_intf);
@@ -114,7 +114,7 @@ public class mcr
 		}
 	
 		/* Squawk n Talk */
-		if (mcr_sound_config & MCR_SQUAWK_N_TALK)
+		if ((mcr_sound_config & MCR_SQUAWK_N_TALK) != 0)
 		{
 			pia_config(0, PIA_STANDARD_ORDERING, &squawkntalk_pia0_intf);
 			pia_config(1, PIA_STANDARD_ORDERING, &squawkntalk_pia1_intf);
@@ -124,7 +124,7 @@ public class mcr
 		}
 	
 		/* Advanced Audio */
-		if (mcr_sound_config & MCR_WILLIAMS_SOUND)
+		if ((mcr_sound_config & MCR_WILLIAMS_SOUND) != 0)
 		{
 			williams_cvsd_init(sound_cpu++, 0);
 			dac_index++;
@@ -211,7 +211,7 @@ public class mcr
 	void ssio_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state)
+		if (state != 0)
 		{
 			int i;
 	

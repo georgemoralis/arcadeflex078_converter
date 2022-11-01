@@ -316,7 +316,7 @@ public class m107
 							fx,fy,
 							x,y-i*16,
 							cliprect,TRANSPARENCY_PEN,0);
-					if (fy) s_ptr++; else s_ptr--;
+					if (fy != 0) s_ptr++; else s_ptr--;
 				}
 			}
 			else
@@ -334,8 +334,8 @@ public class m107
 						int ffy=fy^(rom[rom_offs+1]&2);
 						sprite=rom[rom_offs+4]+256*rom[rom_offs+5];
 						y_multi=1<<((rom[rom_offs+3]>>1)&0x3);
-						if (fx) xdisp = -xdisp;
-						if (fy) ydisp = -ydisp - (16*y_multi-1);
+						if (fx != 0) xdisp = -xdisp;
+						if (fy != 0) ydisp = -ydisp - (16*y_multi-1);
 						if (!ffy) sprite+=y_multi-1;
 						for (i=0; i<y_multi; i++)
 						{
@@ -375,7 +375,7 @@ public class m107
 			Playfield 1 rowscroll data is 0xde800 - 0xdebff		??
 		*/
 	
-		if (pf1_rowscroll) {
+		if (pf1_rowscroll != 0) {
 			tilemap_set_scroll_rows(pf1_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf1_layer,i/2, (m107_vram_data[0xe800+i]+(m107_vram_data[0xe801+i]<<8)));
@@ -383,7 +383,7 @@ public class m107
 			tilemap_set_scroll_rows(pf1_layer,1);
 			tilemap_set_scrollx( pf1_layer,0, (m107_control[3]<<8)+m107_control[2]+3 );
 		}
-		if (pf2_rowscroll) {
+		if (pf2_rowscroll != 0) {
 			tilemap_set_scroll_rows(pf2_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf2_layer,i/2, (m107_vram_data[0xf400+i]+(m107_vram_data[0xf401+i]<<8)));
@@ -391,7 +391,7 @@ public class m107
 			tilemap_set_scroll_rows(pf2_layer,1);
 			tilemap_set_scrollx( pf2_layer,0, (m107_control[7]<<8)+m107_control[6]+1 );
 		}
-		if (pf3_rowscroll) {
+		if (pf3_rowscroll != 0) {
 			tilemap_set_scroll_rows(pf3_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf3_layer,i/2, (m107_vram_data[0xf800+i]+(m107_vram_data[0xf801+i]<<8)));
@@ -399,7 +399,7 @@ public class m107
 			tilemap_set_scroll_rows(pf3_layer,1);
 			tilemap_set_scrollx( pf3_layer,0, (m107_control[11]<<8)+m107_control[10]-1 );
 		}
-		if (pf4_rowscroll) {
+		if (pf4_rowscroll != 0) {
 			tilemap_set_scroll_rows(pf4_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf4_layer,i/2, (m107_vram_data[0xfc00+i]+(m107_vram_data[0xfc01+i]<<8)));
@@ -423,7 +423,7 @@ public class m107
 	
 	void m107_screenrefresh(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		if (pf4_enable)
+		if (pf4_enable != 0)
 			tilemap_draw(bitmap,cliprect,pf4_layer,0,0);
 		else
 			fillbitmap(bitmap,Machine->pens[0],cliprect);

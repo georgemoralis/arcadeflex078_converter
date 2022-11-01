@@ -82,7 +82,7 @@ public class mjkjidai
 		coin_counter_w(0,data & 0x20);
 	
 		/* bits 6-7 select ROM bank */
-		if (data & 0xc0)
+		if ((data & 0xc0) != 0)
 		{
 			cpu_setbank(1,rom + 0x10000-0x4000 + ((data & 0xc0) << 8));
 		}
@@ -118,7 +118,7 @@ public class mjkjidai
 	
 			sx += (spriteram_2[offs] & 0x20) >> 5;	// not sure about this
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;

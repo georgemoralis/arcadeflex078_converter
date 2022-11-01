@@ -124,7 +124,7 @@ public class yumefuda
 	public static WriteHandlerPtr custom_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("Custom RAM write at %02x : %02x PC = %x\n",offset+0xaf80,data,activecpu_get_pc());
-		if(prot_lock)	{ cus_ram[offset] = data; }
+		if (prot_lock != 0)	{ cus_ram[offset] = data; }
 	} };
 	
 	/*this might be used as NVRAM commands btw*/

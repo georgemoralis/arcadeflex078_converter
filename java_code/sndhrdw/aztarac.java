@@ -25,12 +25,12 @@ public class aztarac
 	
 	WRITE16_HANDLER( aztarac_sound_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			data &= 0xff;
 			soundlatch_w(offset, data);
 			sound_status ^= 0x21;
-			if (sound_status & 0x20)
+			if ((sound_status & 0x20) != 0)
 				cpu_set_irq_line(1, 0, HOLD_LINE);
 		}
 	}
@@ -56,7 +56,7 @@ public class aztarac
 	{
 	    sound_status ^= 0x10;
 	
-	    if (sound_status & 0x10)
+	    if ((sound_status & 0x10) != 0)
 	        cpu_set_irq_line(1,0,HOLD_LINE);
 	} };
 	

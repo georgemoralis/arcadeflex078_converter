@@ -353,9 +353,9 @@ public class vector
 	
 		/* [2] adjust cords if needed */
 	
-		if (antialias)
+		if (antialias != 0)
 		{
-			if(beam_diameter_is_one)
+			if (beam_diameter_is_one != 0)
 			{
 				x2 = (x2+0x8000)&0xffff0000;
 				y2 = (y2+0x8000)&0xffff0000;
@@ -375,7 +375,7 @@ public class vector
 	
 		/* [4] draw line */
 	
-		if (antialias)
+		if (antialias != 0)
 		{
 			/* draw an anti-aliased line */
 			dx = abs(x1 - x2);
@@ -394,7 +394,7 @@ public class vector
 					yy1 -= width >> 1; /* start back half the diameter */
 				for (;;)
 				{
-					if (color_callback) col = Tinten(intensity, (*color_callback)());
+					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
 					dx = width;    /* init diameter of beam */
 					dy = yy1 >> 16;
 					vector_draw_aa_pixel(x1, dy++, Tinten(Tgammar[0xff & (yy1 >> 8)], col), dirty);
@@ -422,7 +422,7 @@ public class vector
 					x1 -= width >> 1; /* start back half the width */
 				for (;;)
 				{
-					if (color_callback) col = Tinten(intensity, (*color_callback)());
+					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
 					dy = width;    /* calc diameter of beam */
 					dx = x1 >> 16;
 					vector_draw_aa_pixel(dx++, yy1, Tinten(Tgammar[0xff & (x1 >> 8)], col), dirty);
@@ -451,7 +451,7 @@ public class vector
 			{
 				for (;;)
 				{
-					if (color_callback) col = Tinten(intensity, (*color_callback)());
+					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
 					vector_draw_aa_pixel(x1, yy1, col, dirty);
 					if (x1 == x2) break;
 					x1 += sx;
@@ -467,7 +467,7 @@ public class vector
 			{
 				for (;;)
 				{
-					if (color_callback) col = Tinten(intensity, (*color_callback)());
+					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
 					vector_draw_aa_pixel(x1, yy1, col, dirty);
 					if (yy1 == y2) break;
 					yy1 += sy;
@@ -680,7 +680,7 @@ public class vector
 				(new->col == old->col) && (new->intensity == old->intensity) &&
 				(!new->callback && !old->callback))
 			{
-				if (last_match)
+				if (last_match != 0)
 				{
 					new->status = VCLEAN;
 					continue;
@@ -725,7 +725,7 @@ public class vector
 		int rv = 1;
 	
 		/* if there is an auxiliary renderer set, let it run */
-		if (vector_aux_renderer)
+		if (vector_aux_renderer != 0)
 			rv = vector_aux_renderer(new_list, new_index);
 	
 		/* if the aux renderer chooses, it can override the bitmap */

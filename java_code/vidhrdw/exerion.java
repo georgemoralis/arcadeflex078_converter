@@ -168,19 +168,19 @@ public class exerion
 					UINT16 val;
 	
 					val = ((data >> 3) & 2) | ((data >> 0) & 1);
-					if (val) val |= 0x100 >> i;
+					if (val != 0) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 	
 					val = ((data >> 4) & 2) | ((data >> 1) & 1);
-					if (val) val |= 0x100 >> i;
+					if (val != 0) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 	
 					val = ((data >> 5) & 2) | ((data >> 2) & 1);
-					if (val) val |= 0x100 >> i;
+					if (val != 0) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 	
 					val = ((data >> 6) & 2) | ((data >> 3) & 1);
-					if (val) val |= 0x100 >> i;
+					if (val != 0) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 				}
 				for (x = 0; x < 128; x++)
@@ -389,7 +389,7 @@ public class exerion
 		draw_background(bitmap, cliprect);
 	
 	#ifdef DEBUG_SPRITES
-		if (sprite_log)
+		if (sprite_log != 0)
 		{
 			int i;
 	
@@ -420,18 +420,18 @@ public class exerion
 			int color = ((flags >> 1) & 0x03) | ((code >> 5) & 0x04) | (code & 0x08) | (sprite_palette * 16);
 			const struct GfxElement *gfx = doubled ? Machine->gfx[2] : Machine->gfx[1];
 	
-			if (exerion_cocktail_flip)
+			if (exerion_cocktail_flip != 0)
 			{
 				x = 64*8 - gfx->width - x;
 				y = 32*8 - gfx->height - y;
-				if (wide) y -= gfx->height;
+				if (wide != 0) y -= gfx->height;
 				xflip = !xflip;
 				yflip = !yflip;
 			}
 	
-			if (wide)
+			if (wide != 0)
 			{
-				if (yflip)
+				if (yflip != 0)
 					code |= 0x10, code2 &= ~0x10;
 				else
 					code &= ~0x10, code2 |= 0x10;
@@ -443,7 +443,7 @@ public class exerion
 			drawgfx(bitmap, gfx, code, color, xflip, yflip, x, y,
 			        cliprect, TRANSPARENCY_COLOR, 16);
 	
-			if (doubled) i += 4;
+			if (doubled != 0) i += 4;
 		}
 	
 		/* draw the visible text layer */

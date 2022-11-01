@@ -54,12 +54,12 @@ public class atarigx2
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 4;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 5;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -85,8 +85,8 @@ public class atarigx2
 	static READ32_HANDLER( special_port2_r )
 	{
 		int temp = readinputport(2);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x0020;
-		if (atarigen_sound_to_cpu_ready) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0020;
+		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x0010;
 		temp ^= 0x0008;		/* A2D.EOC always high for now */
 		return (temp << 16) | temp;
 	}
@@ -101,9 +101,9 @@ public class atarigx2
 	#if 0
 	static WRITE32_HANDLER( a2d_select_w )
 	{
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			which_input = offset * 2;
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			which_input = offset * 2 + 1;
 	}
 	#endif
@@ -154,7 +154,7 @@ public class atarigx2
 	static WRITE32_HANDLER( mo_command_w )
 	{
 		COMBINE_DATA(mo_command);
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			atarirle_command_w(0, ((data & 0xffff) == 2) ? ATARIRLE_COMMAND_CHECKSUM : ATARIRLE_COMMAND_DRAW);
 	}
 	
@@ -176,7 +176,7 @@ public class atarigx2
 	//		if (pc == 0x11cbe || pc == 0x11c30)
 	//			logerror("%06X:Protection W@%04X = %04X  (result to %06X)\n", pc, offset, data, activecpu_get_reg(M68K_A2));
 	//		else
-			if (ACCESSING_MSW32)
+			if (ACCESSING_MSW32 != 0)
 				logerror("%06X:Protection W@%04X = %04X\n", pc, offset * 4, data >> 16);
 			else
 				logerror("%06X:Protection W@%04X = %04X\n", pc, offset * 4 + 2, data);
@@ -184,12 +184,12 @@ public class atarigx2
 	
 		COMBINE_DATA(&protection_base[offset]);
 	
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 		{
 			last_write = protection_base[offset] >> 16;
 			last_write_offset = offset*2;
 		}
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 		{
 			last_write = protection_base[offset] & 0xffff;
 			last_write_offset = offset*2+1;
@@ -1156,7 +1156,7 @@ public class atarigx2
 			}
 		}
 	
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			logerror("%06X:Protection R@%04X = %04X\n", activecpu_get_previouspc(), offset * 4, result >> 16);
 		else
 			logerror("%06X:Protection R@%04X = %04X\n", activecpu_get_previouspc(), offset * 4 + 2, result);

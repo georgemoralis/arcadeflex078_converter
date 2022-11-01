@@ -168,7 +168,7 @@ public class terracre
 		{
 			data16_t data;
 			data = mpProtData[offset/2];
-			if( offset&1 ) return data&0xff;
+			if ((offset & 1) != 0) return data&0xff;
 			return data>>8;
 		}
 		return 0;
@@ -176,7 +176,7 @@ public class terracre
 	
 	static WRITE16_HANDLER( amazon_protection_w )
 	{
-		if( ACCESSING_LSB )
+		if (ACCESSING_LSB != 0)
 		{
 			if( offset==1 )
 			{

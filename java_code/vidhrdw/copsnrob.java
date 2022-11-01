@@ -154,7 +154,7 @@ public class copsnrob
 	        // Check each bullet
 	        for (bullet = 0; bullet < 4; bullet++)
 	        {
-	            if (val & mask1)
+	            if ((val & mask1) != 0)
 	            {
 	                for (y = 0; y <= Machine->visible_area.max_y; y++)
 	                {

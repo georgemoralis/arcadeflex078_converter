@@ -390,10 +390,10 @@ public class i8039
 		static void jb_5(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x20) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jb_6(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x40) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jb_7(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x80) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
-		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
+		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y != 0) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jf1(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.f1)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
-		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
-		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
+		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
+		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jni(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.irq_state == I8039_EXTERNAL_INT) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jnt_0(void)  	 { UINT8 i=M_RDMEM_OPCODE(); if (!test_r(0)) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jt_0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (test_r(0))  { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
@@ -419,10 +419,10 @@ public class i8039
 		static void jb_5(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x20) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jb_6(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x40) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jb_7(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x80) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
-		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
+		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y != 0) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jf1(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.f1)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
-		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
-		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
+		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
+		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jni(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.irq_state == I8039_EXTERNAL_INT) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jnt_0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (!test_r(0)) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jt_0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (test_r(0))  { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
@@ -531,12 +531,12 @@ public class i8039
 			R.irq_extra_cycles += Timer_IRQ();			/* Service pending Timer/Counter IRQ */
 		}
 	}
-	static void rl_a(void)		 { UINT8 i=R.A & 0x80; R.A <<= 1; if (i) R.A |= 0x01; else R.A &= 0xfe; }
+	static void rl_a(void)		 { UINT8 i=R.A & 0x80; R.A <<= 1; if (i != 0) R.A |= 0x01; else R.A &= 0xfe; }
 	/* NS990113 */
-	static void rlc_a(void) 	 { UINT8 i=M_Cy; if (R.A & 0x80) SET(C_FLAG); else CLR(C_FLAG); R.A <<= 1; if (i) R.A |= 0x01; else R.A &= 0xfe; }
-	static void rr_a(void)		 { UINT8 i=R.A & 1; R.A >>= 1; if (i) R.A |= 0x80; else R.A &= 0x7f; }
+	static void rlc_a(void) 	 { UINT8 i=M_Cy; if (R.A & 0x80) SET(C_FLAG); else CLR(C_FLAG); R.A <<= 1; if (i != 0) R.A |= 0x01; else R.A &= 0xfe; }
+	static void rr_a(void)		 { UINT8 i=R.A & 1; R.A >>= 1; if (i != 0) R.A |= 0x80; else R.A &= 0x7f; }
 	/* NS990113 */
-	static void rrc_a(void)		 { UINT8 i=M_Cy; if (R.A & 1) SET(C_FLAG); else CLR(C_FLAG); R.A >>= 1; if (i) R.A |= 0x80; else R.A &= 0x7f; }
+	static void rrc_a(void)		 { UINT8 i=M_Cy; if (R.A & 1) SET(C_FLAG); else CLR(C_FLAG); R.A >>= 1; if (i != 0) R.A |= 0x80; else R.A &= 0x7f; }
 	static void sel_mb0(void)	{ R.A11 = 0; R.A11ff = 0; }
 	static void sel_mb1(void)	 { R.A11ff = 0x800; if (R.irq_executing == I8039_NO_INT) R.A11 = 0x800; }
 	static void sel_rb0(void)	 { CLR(B_FLAG); regPTR = 0;  }
@@ -769,7 +769,7 @@ public class i8039
 				for ( ; inst_cycles > 0; inst_cycles-- )
 				{
 					T1 = test_r(1);
-					if (POSITIVE_EDGE_T1)
+					if (POSITIVE_EDGE_T1 != 0)
 					{
 						R.timer++;
 						if (R.timer == 0) {
@@ -805,7 +805,7 @@ public class i8039
 	 ****************************************************************************/
 	unsigned i8039_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(I8039_Regs*)dst = R;
 		return sizeof(I8039_Regs);
 	}
@@ -816,7 +816,7 @@ public class i8039
 	 ****************************************************************************/
 	void i8039_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			R = *(I8039_Regs*)src;
 			regPTR = ((M_By) ? 24 : 0);

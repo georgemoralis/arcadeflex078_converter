@@ -232,14 +232,14 @@ public class m4510
 	
 	unsigned m4510_get_context (void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(m4510_Regs*)dst = m4510;
 		return sizeof(m4510_Regs);
 	}
 	
 	void m4510_set_context (void *src)
 	{
-		if( src )
+		if (src != 0)
 		{
 			m4510 = *(m4510_Regs*)src;
 			CHANGE_PC;

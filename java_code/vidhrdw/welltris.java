@@ -167,7 +167,7 @@ public class welltris
 	
 	WRITE16_HANDLER( welltris_palette_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			if (charpalettebank != (data & 0x03))
 			{
@@ -184,7 +184,7 @@ public class welltris
 	
 	WRITE16_HANDLER( welltris_gfxbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			setbank(char_tilemap, 0, (data & 0xf0) >> 4);
 			setbank(char_tilemap, 1, data & 0x0f);

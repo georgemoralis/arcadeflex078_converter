@@ -59,14 +59,14 @@ public class missile
 			bottom = 0;
 	
 		/* cocktail mode */
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			y = tmpbitmap->height - 1 - y;
 		}
 	
 		color = (missile_videoram[offset] >> 5);
 	
-		if (bottom) color &= 0x06;
+		if (bottom != 0) color &= 0x06;
 	
 		plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
 	}
@@ -90,7 +90,7 @@ public class missile
 			missile_blit_w (offset);
 			wbyte = ((offset - 0xf800) >> 2) & 0xfffe;
 			wbit = (offset - 0xf800) % 8;
-			if(data & 0x20)
+			if ((data & 0x20) != 0)
 				RAM[0x401 + wbyte] |= (1 << wbit);
 			else
 				RAM[0x401 + wbyte] &= ((1 << wbit) ^ 0xff);

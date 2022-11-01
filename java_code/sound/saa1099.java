@@ -445,7 +445,7 @@ public class saa1099
 		case 0x1c:
 			saa->all_ch_enable = data & 0x01;
 			saa->sync_state = data & 0x02;
-			if (data & 0x02)
+			if ((data & 0x02) != 0)
 			{
 				int i;
 	
@@ -490,25 +490,25 @@ public class saa1099
 	
 	WRITE16_HANDLER( saa1099_control_port_0_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			saa1099_control_port_w(0, offset, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( saa1099_write_port_0_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			saa1099_write_port_w(0, offset, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( saa1099_control_port_1_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			saa1099_control_port_w(1, offset, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( saa1099_write_port_1_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			saa1099_write_port_w(1, offset, data & 0xff);
 	}
 	

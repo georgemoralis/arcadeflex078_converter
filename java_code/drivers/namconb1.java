@@ -306,7 +306,7 @@ public class namconb1
 	static NVRAM_HANDLER( namconb1 ){
 		int i;
 		data8_t data[4];
-		if( read_or_write )
+		if (read_or_write != 0)
 		{
 			for( i=0; i<NB1_NVMEM_SIZE/4; i++ )
 			{
@@ -320,7 +320,7 @@ public class namconb1
 		}
 		else
 		{
-			if (file)
+			if (file != 0)
 			{
 				for( i=0; i<NB1_NVMEM_SIZE/4; i++ )
 				{

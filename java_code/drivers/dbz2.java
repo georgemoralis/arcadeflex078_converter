@@ -107,7 +107,7 @@ public class dbz2
 	
 		COMBINE_DATA(&dbz2_control);
 	
-		if (data & 0x400)
+		if ((data & 0x400) != 0)
 		{
 			K053246_set_OBJCHA_line(ASSERT_LINE);
 		}
@@ -144,7 +144,7 @@ public class dbz2
 	
 	static void dbz2_sound_irq(int irq)
 	{
-		if (irq)
+		if (irq != 0)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);

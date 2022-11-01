@@ -98,13 +98,13 @@ public class psikyo4
 				tnum = (source[sprnum+1] & 0x0007ffff) >> 00;
 	
 				colr = (source[sprnum+1] & 0x3f000000) >> 24;
-	   			if(scr) colr += 0x40; /* Use second copy of palette which is dimmed appropriately */
+	   			if (scr != 0) colr += 0x40; /* Use second copy of palette which is dimmed appropriately */
 	
 				flipx = (source[sprnum+1] & 0x40000000);
 				flipy = (source[sprnum+1] & 0x80000000); /* Guess */
 	
-				if(ypos & 0x200) ypos -= 0x400;
-				if(xpos & 0x200) xpos -= 0x400;
+				if ((ypos & 0x200) != 0) ypos -= 0x400;
+				if ((xpos & 0x200) != 0) xpos -= 0x400;
 	
 				if((!scr && flipscreen1) || (scr && flipscreen2))
 				{
@@ -115,13 +115,13 @@ public class psikyo4
 				}
 	
 	#if DUAL_SCREEN /* if we are displaying both screens simultaneously */
-				if(scr) xpos += 40*8;
+				if (scr != 0) xpos += 40*8;
 	#endif
 	
-				if (flipx)	{ xstart = wide-1;  xend = -1;    xinc = -1; }
+				if (flipx != 0)	{ xstart = wide-1;  xend = -1;    xinc = -1; }
 				else		{ xstart = 0;       xend = wide;  xinc = +1; }
 	
-				if (flipy)	{ ystart = high-1;  yend = -1;     yinc = -1; }
+				if (flipy != 0)	{ ystart = high-1;  yend = -1;     yinc = -1; }
 				else		{ ystart = 0;       yend = high;   yinc = +1; }
 	
 				for (j = ystart; j != yend; j += yinc) {
@@ -133,7 +133,7 @@ public class psikyo4
 			}
 			/* end drawing */
 			listcntr++;
-			if (listdat & 0x4000) break;
+			if ((listdat & 0x4000) != 0) break;
 		}
 	}
 	

@@ -72,13 +72,13 @@ public class plygonet
 	
 	static NVRAM_HANDLER(nvram_handler)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -90,7 +90,7 @@ public class plygonet
 	
 	static READ32_HANDLER( polygonet_eeprom_r )
 	{
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 		{
 			return 0x0200 | (EEPROM_read_bit()<<8);
 		}
@@ -106,7 +106,7 @@ public class plygonet
 	
 	static WRITE32_HANDLER( polygonet_eeprom_w )
 	{
-		if (ACCESSING_MSB32)
+		if (ACCESSING_MSB32 != 0)
 		{
 			EEPROM_write_bit((data & 0x01000000) ? ASSERT_LINE : CLEAR_LINE);
 			EEPROM_set_cs_line((data & 0x02000000) ? CLEAR_LINE : ASSERT_LINE);
@@ -163,7 +163,7 @@ public class plygonet
 	
 	static WRITE32_HANDLER( sound_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			soundlatch_w(0, (data>>8)&0xff);
 		}

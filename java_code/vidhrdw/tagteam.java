@@ -167,7 +167,7 @@ public class tagteam
 	
 			if (!(videoram[offs] & 0x01)) continue;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

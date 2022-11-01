@@ -467,7 +467,7 @@ public class megasys1
 	/* YM2151 IRQ */
 	static void megasys1_sound_irq(int irq)
 	{
-		if (irq)
+		if (irq != 0)
 			cpu_set_irq_line(1, 4, HOLD_LINE);
 	}
 	
@@ -859,7 +859,7 @@ public class megasys1
 	
 	(World version)
 	interrupts:	1] 10eac:	disabled while b6c4=6 (10fb6 test)
-							if (8b1c)	8b1c<-0
+							if (8b1c != 0)	8b1c<-0
 								color cycle
 								copies 800 bytes 98da->8008
 	
@@ -3466,12 +3466,12 @@ public class megasys1
 	
 	static WRITE16_HANDLER( OKIM6295_data_0_both_w )
 	{
-		if (ACCESSING_LSB)	OKIM6295_data_0_w(0, (data >> 0) & 0xff );
+		if (ACCESSING_LSB != 0)	OKIM6295_data_0_w(0, (data >> 0) & 0xff );
 		else				OKIM6295_data_0_w(0, (data >> 8) & 0xff );
 	}
 	static WRITE16_HANDLER( OKIM6295_data_1_both_w )
 	{
-		if (ACCESSING_LSB)	OKIM6295_data_1_w(0, (data >> 0) & 0xff );
+		if (ACCESSING_LSB != 0)	OKIM6295_data_1_w(0, (data >> 0) & 0xff );
 		else				OKIM6295_data_1_w(0, (data >> 8) & 0xff );
 	}
 	

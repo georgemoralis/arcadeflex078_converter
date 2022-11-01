@@ -435,7 +435,7 @@ public class stv
 							default: logerror("ERROR: invalid drive speed\n");
 						}
 	
-						if(CR1 & 0x01){ 				// software reset
+						if ((CR1 & 0x01) != 0){ 				// software reset
 	
 							// not enough info
 						}
@@ -466,8 +466,8 @@ public class stv
 							if(CD_ecc > 6) CD_ecc = 6;
 					}
 	
-					if(CR4 & 0x80){ CD_repeat_max = 0xfe; }else		// infinite retry
-					if(CR4 & 0x40){ CD_repeat_max = 0xff; }else		// ignore errors
+					if ((CR4 & 0x80) != 0){ CD_repeat_max = 0xfe; }else		// infinite retry
+					if ((CR4 & 0x40) != 0){ CD_repeat_max = 0xff; }else		// ignore errors
 					{
 						switch(CR4 & 15){
 							case 0x0f: break;									// retry no change
@@ -595,7 +595,7 @@ public class stv
 								CD_cur_fid		= 0;
 							}
 	
-							if(CD_cur_ctrl & 0x40){
+							if ((CD_cur_ctrl & 0x40) != 0){
 								logerror("ERROR: play data track\n");
 								exit(1);
 							}
@@ -614,7 +614,7 @@ public class stv
 						}
 	
 					}else
-					if(CR1 & 0x80){
+					if ((CR1 & 0x80) != 0){
 	
 						// play fad
 	
@@ -707,7 +707,7 @@ public class stv
 							CD_status = CDB_STAT_PAUSE;
 							CD_flag = 0;
 	
-							if(CD_cur_ctrl & 0x40){
+							if ((CD_cur_ctrl & 0x40) != 0){
 								logerror("ERROR: seek data track\n");
 								exit(1);
 							}
@@ -717,7 +717,7 @@ public class stv
 						}
 	
 					}else
-					if(CR1 & 0x80){
+					if ((CR1 & 0x80) != 0){
 	
 						// seek fad
 	
@@ -923,7 +923,7 @@ public class stv
 						logerror("ERROR: invalid selector\n");
 					}
 	
-					if(CR1 & 0x80){
+					if ((CR1 & 0x80) != 0){
 	
 						// init filter
 	
@@ -970,8 +970,8 @@ public class stv
 						logerror("ERROR: invalid selector\n");
 					}
 	
-					if(CR1 & 0x01){ CD_filt[fn].true = CR2 >> 8; }
-					if(CR1 & 0x02){ CD_filt[fn].false = CR2 & 0xff; }
+					if ((CR1 & 0x01) != 0){ CD_filt[fn].true = CR2 >> 8; }
+					if ((CR1 & 0x02) != 0){ CD_filt[fn].false = CR2 & 0xff; }
 	
 					CDB_SEND_REPORT();
 	
@@ -1017,13 +1017,13 @@ public class stv
 					// all partitions are reset
 	
 					for(i = 0; i < CDB_SEL_NUM; i++){
-						if(rf & 0x80){ CD_filt[i].false = 0xff; }
-						if(rf & 0x40){ CD_filt[i].true = i; }
-						if(rf & 0x20){
+						if ((rf & 0x80) != 0){ CD_filt[i].false = 0xff; }
+						if ((rf & 0x40) != 0){ CD_filt[i].true = i; }
+						if ((rf & 0x20) != 0){
 							CD_filt_num = 0xff;
 							CD_mpeg_filt_num = 0xff;
 						}
-						if(rf & 0x10){
+						if ((rf & 0x10) != 0){
 							CD_filt[i].mode = 0x00;
 							CD_filt[i].fad = 0;
 							CD_filt[i].range = 0;
@@ -1034,8 +1034,8 @@ public class stv
 							CD_filt[i].cod_val = 0;
 							CD_filt[i].cod_mask = 0;
 						}
-						if(rf & 0x08){ } // ?
-							if(rf & 0x04){
+						if ((rf & 0x08) != 0){ } // ?
+							if ((rf & 0x04) != 0){
 								/*
 								int j;
 								for(j = 0; j < 200; j++){
@@ -1060,10 +1060,10 @@ public class stv
 								//exit(1);
 							}
 	
-							if(rf & 0x80){ CD_filt[pn].false = 0xff; }
-							if(rf & 0x40){ CD_filt[pn].true = pn; }
-							if(rf & 0x20){ }
-							if(rf & 0x10){
+							if ((rf & 0x80) != 0){ CD_filt[pn].false = 0xff; }
+							if ((rf & 0x40) != 0){ CD_filt[pn].true = pn; }
+							if ((rf & 0x20) != 0){ }
+							if ((rf & 0x10) != 0){
 								CD_filt[pn].mode = 0x00;
 								CD_filt[pn].fad = 0;
 								CD_filt[pn].range = 0;
@@ -1074,8 +1074,8 @@ public class stv
 								CD_filt[pn].cod_val = 0;
 								CD_filt[pn].cod_mask = 0;
 							}
-							if(rf & 0x08){ }
-							if(rf & 0x04){
+							if ((rf & 0x08) != 0){ }
+							if ((rf & 0x04) != 0){
 								/*
 								*/
 							}
@@ -1883,11 +1883,11 @@ public class stv
 			EEPROM_set_cs_line((data & 0x04) ? CLEAR_LINE : ASSERT_LINE);
 	
 	
-	//		if (data & 0x01)
+	//		if ((data & 0x01) != 0)
 	//			logerror("bit 0 active\n");
-	//		if (data & 0x02)
+	//		if ((data & 0x02) != 0)
 	//			logerror("bit 1 active\n");
-	//		if (data & 0x10)
+	//		if ((data & 0x10) != 0)
 				//logerror("bit 4 active\n");//LOT
 			PDR1 = (data & 0x60);
 		}
@@ -2316,7 +2316,7 @@ public class stv
 		switch(offset)
 		{
 			case 1:
-				if(LO_WORD_ACCESS)
+				if (LO_WORD_ACCESS != 0)
 				{
 					/*Why does the BIOS tests these as ACTIVE HIGH?A program bug?*/
 					ioga[1] = (data) & 0xff;
@@ -2330,24 +2330,24 @@ public class stv
 				}
 			break;
 			case 2:
-				if(HI_WORD_ACCESS)
+				if (HI_WORD_ACCESS != 0)
 				{
 					ioga[2] = data >> 16;
 					mux_data = ioga[2];
 				}
-				else if(LO_WORD_ACCESS)
+				else if (LO_WORD_ACCESS != 0)
 					ioga[2] = data;
 			break;
 			case 3:
-				if(HI_WORD_ACCESS)
+				if (HI_WORD_ACCESS != 0)
 					ioga[3] = data;
 			break;
 			case 4:
-				if(HI_WORD_ACCESS)
+				if (HI_WORD_ACCESS != 0)
 					port_sel = (data & 0xffff0000) >> 16;
 			break;
 			case 5:
-				if(HI_WORD_ACCESS)
+				if (HI_WORD_ACCESS != 0)
 					ioga[5] = data;
 			break;
 		}
@@ -2476,9 +2476,9 @@ public class stv
 	#define SET_D0MV_FROM_0_TO_1	if(!(DMA_STATUS & 0x10))    DMA_STATUS^=0x10
 	#define SET_D1MV_FROM_0_TO_1	if(!(DMA_STATUS & 0x100))   DMA_STATUS^=0x100
 	#define SET_D2MV_FROM_0_TO_1	if(!(DMA_STATUS & 0x1000))  DMA_STATUS^=0x1000
-	#define SET_D0MV_FROM_1_TO_0	if(DMA_STATUS & 0x10) 	    DMA_STATUS^=0x10
-	#define SET_D1MV_FROM_1_TO_0	if(DMA_STATUS & 0x100) 	    DMA_STATUS^=0x100
-	#define SET_D2MV_FROM_1_TO_0	if(DMA_STATUS & 0x1000)     DMA_STATUS^=0x1000
+	#define SET_D0MV_FROM_1_TO_0	if ((DMA_STATUS & 0x10) != 0) 	    DMA_STATUS^=0x10
+	#define SET_D1MV_FROM_1_TO_0	if ((DMA_STATUS & 0x100) != 0) 	    DMA_STATUS^=0x100
+	#define SET_D2MV_FROM_1_TO_0	if ((DMA_STATUS & 0x1000) != 0)     DMA_STATUS^=0x1000
 	
 	READ32_HANDLER( stv_scu_r32 )
 	{
@@ -2821,7 +2821,7 @@ public class stv
 			scu_dst_0 =  cpu_readmem32bedw_dword(scu_dst_0+4);
 	
 			/*Indirect Mode end factor*/
-			if(scu_src_0 & 0x80000000)
+			if ((scu_src_0 & 0x80000000) != 0)
 				job_done = 1;
 	
 			logerror("DMA lv 0 indirect mode transfer START\n"
@@ -2881,7 +2881,7 @@ public class stv
 			scu_dst_1 =  cpu_readmem32bedw_dword(scu_dst_1+4);
 	
 			/*Indirect Mode end factor*/
-			if(scu_src_1 & 0x80000000)
+			if ((scu_src_1 & 0x80000000) != 0)
 				job_done = 1;
 	
 			logerror("DMA lv 1 indirect mode transfer START\n"
@@ -2943,7 +2943,7 @@ public class stv
 			scu_dst_2 =  cpu_readmem32bedw_dword(scu_dst_2+4);
 	
 			/*Indirect Mode end factor*/
-			if(scu_src_2 & 0x80000000)
+			if ((scu_src_2 & 0x80000000) != 0)
 				job_done = 1;
 	
 			logerror("DMA lv 2 indirect mode transfer START\n"
@@ -3668,7 +3668,7 @@ public class stv
 			return;
 		}
 	
-		if (irq)
+		if (irq != 0)
 		{
 			scsp_last_line = irq;
 			cpu_set_irq_line(2, irq, ASSERT_LINE);

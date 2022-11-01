@@ -169,7 +169,7 @@ public class quizdna
 			int dy = 0x10;
 			col &= 0x1f;
 	
-			if (quizdna_flipscreen)
+			if (quizdna_flipscreen != 0)
 			{
 				x -= 7;
 				y += 1;
@@ -179,7 +179,7 @@ public class quizdna
 			if (x>0x1f0)
 				x -= 0x200;
 	
-			if (fy)
+			if (fy != 0)
 			{
 				dy = -0x10;
 				y += 0x10 * ysize;
@@ -206,7 +206,7 @@ public class quizdna
 	
 	public static VideoUpdateHandlerPtr video_update_quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (quizdna_video_enable)
+		if (quizdna_video_enable != 0)
 		{
 			tilemap_draw(bitmap, cliprect, quizdna_bg_tilemap, 0, 0);
 			quizdna_drawsprites(bitmap, cliprect);

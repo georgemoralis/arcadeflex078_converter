@@ -368,9 +368,9 @@ public class citycon
 			rom[3*i+1] = 0;
 			rom[3*i+2] = 0;
 			mask = rom[i] | (rom[i] << 4) | (rom[i] >> 4);
-			if (i & 0x01) rom[3*i+1] |= mask & 0xf0;
-			if (i & 0x02) rom[3*i+1] |= mask & 0x0f;
-			if (i & 0x04) rom[3*i+2] |= mask & 0xf0;
+			if ((i & 0x01) != 0) rom[3*i+1] |= mask & 0xf0;
+			if ((i & 0x02) != 0) rom[3*i+1] |= mask & 0x0f;
+			if ((i & 0x04) != 0) rom[3*i+2] |= mask & 0xf0;
 		}
 	}
 	

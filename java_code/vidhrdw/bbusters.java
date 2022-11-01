@@ -110,18 +110,18 @@ public class bbusters
 	
 	#define ADJUST_4x4 \
 			if ((dx&0x10) && (dy&0x10)) code+=3;	\
-			else if (dy&0x10) code+=2;				\
-			else if (dx&0x10) code+=1
+			else if ((dy & 0x10) != 0) code+=2;				\
+			else if ((dx & 0x10) != 0) code+=1
 	
 	#define ADJUST_8x8 \
 			if ((dx&0x20) && (dy&0x20)) code+=12;	\
-			else if (dy&0x20) code+=8;				\
-			else if (dx&0x20) code+=4
+			else if ((dy & 0x20) != 0) code+=8;				\
+			else if ((dx & 0x20) != 0) code+=4
 	
 	#define ADJUST_16x16 \
 			if ((dx&0x40) && (dy&0x40)) code+=48;	\
-			else if (dy&0x40) code+=32;				\
-			else if (dx&0x40) code+=16
+			else if ((dy & 0x40) != 0) code+=32;				\
+			else if ((dx & 0x40) != 0) code+=16
 	
 	INLINE const data8_t *get_source_ptr(unsigned int sprite, int dx, int dy, int bank, int block)
 	{
@@ -182,7 +182,7 @@ public class bbusters
 				if (!flipy)
 					srcline=size-srcline-1;
 	
-				if (flipx)
+				if (flipx != 0)
 					x_index=(ex-1)*0x10000;
 				else
 					x_index=0;
@@ -195,7 +195,7 @@ public class bbusters
 					if (x+(x_index>>16)>=0 && x+(x_index>>16)<256 && pixel!=15)
 						destline[x+(x_index>>16)]=pal[pixel];
 	
-					if (flipx)
+					if (flipx != 0)
 						x_index-=xinc;
 					else
 						x_index+=xinc;
@@ -226,7 +226,7 @@ public class bbusters
 		    y=source[offs+3];
 			if (y>254) continue; /* Speedup */
 		    x=source[offs+2];
-			if (x&0x200) x=-(0x100-(x&0xff));
+			if ((x & 0x200) != 0) x=-(0x100-(x&0xff));
 			if (x>256) continue; /* Speedup */
 	
 			/*

@@ -147,7 +147,7 @@ public class seibu
 	
 	public static WriteHandlerPtr seibu_adpcm_adr_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset)
+		if (offset != 0)
 		{
 			end = data<<8;
 		}
@@ -176,7 +176,7 @@ public class seibu
 	
 	public static WriteHandlerPtr seibu_adpcm_adr_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset)
+		if (offset != 0)
 		{
 			end1 = data<<8;
 		}
@@ -356,7 +356,7 @@ public class seibu
 	WRITE16_HANDLER( seibu_main_word_w )
 	{
 		//logerror("%06x: seibu_main_word_w(%x,%02x)\n",activecpu_get_pc(),offset,data);
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			switch (offset)
 			{

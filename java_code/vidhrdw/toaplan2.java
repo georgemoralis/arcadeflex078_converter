@@ -625,7 +625,7 @@ public class toaplan2
 		{
 			if (offset == 0)			/* Wrong ! */
 			{
-				if (data & 0x8000)		/* Flip off */
+				if ((data & 0x8000) != 0)		/* Flip off */
 				{
 					tx_flip = 0;
 					tilemap_set_flip(tx_tilemap, tx_flip);
@@ -725,7 +725,7 @@ public class toaplan2
 	
 	WRITE16_HANDLER( batrider_objectbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			data &= 0xf;
 			if (batrider_object_bank[offset] != data)
@@ -846,10 +846,10 @@ public class toaplan2
 	
 	void toaplan2_scroll_reg_select_w(offs_t offset, data16_t data, UINT32 mem_mask, int controller)
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			toaplan2_scroll_reg[controller] = data & 0x8f;
-			if (data & 0x70)
+			if ((data & 0x70) != 0)
 				logerror("Hmmm, selecting unknown LSB video control register (%04x)  Video controller %01x  \n",toaplan2_scroll_reg[controller],controller);
 		}
 		else
@@ -1271,7 +1271,7 @@ public class toaplan2
 			displog += 1;
 			displog &= 1;
 		}
-		if (displog)
+		if (displog != 0)
 		{
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
 			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
@@ -1334,7 +1334,7 @@ public class toaplan2
 				flipx = attrib & TOAPLAN2_SPRITE_FLIPX;
 				flipy = attrib & TOAPLAN2_SPRITE_FLIPY;
 	
-				if (flipx)
+				if (flipx != 0)
 				{
 					/***** Wrap sprite position around *****/
 					sx_base -= 7;
@@ -1345,7 +1345,7 @@ public class toaplan2
 					if (sx_base >= 0x180) sx_base -= 0x200;
 				}
 	
-				if (flipy)
+				if (flipy != 0)
 				{
 					sy_base -= 7;
 					if (sy_base >= 0x1c0) sy_base -= 0x200;
@@ -1371,11 +1371,11 @@ public class toaplan2
 				/***** Draw the complete sprites using the dimension info *****/
 				for (dim_y = 0; dim_y < sprite_sizey; dim_y += 8)
 				{
-					if (flipy) sy = sy_base - dim_y;
+					if (flipy != 0) sy = sy_base - dim_y;
 					else       sy = sy_base + dim_y;
 					for (dim_x = 0; dim_x < sprite_sizex; dim_x += 8)
 					{
-						if (flipx) sx = sx_base - dim_x;
+						if (flipx != 0) sx = sx_base - dim_x;
 						else       sx = sx_base + dim_x;
 	
 						drawgfx(bitmap,gfx,sprite,
@@ -1568,7 +1568,7 @@ public class toaplan2
 	
 		/* If object bank is changed, all tile must be redrawn to blow off glitches. */
 		/* This causes serious slow down. Is there better algorithm ?                */
-		if (objectbank_dirty)
+		if (objectbank_dirty != 0)
 		{
 			tilemap_mark_all_tiles_dirty(bg_tilemap[0]);
 			tilemap_mark_all_tiles_dirty(fg_tilemap[0]);

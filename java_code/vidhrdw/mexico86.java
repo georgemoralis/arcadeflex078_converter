@@ -75,7 +75,7 @@ public class mexico86
 			else
 			{
 				sx = mexico86_objectram[offs + 2];
-	//          if (gfx_attr & 0x40) sx -= 256;
+	//          if ((gfx_attr & 0x40) != 0) sx -= 256;
 			}
 			sy = 256 - height*8 - (mexico86_objectram[offs + 0]);
 	
@@ -155,7 +155,7 @@ public class mexico86
 			else
 			{
 				sx = mexico86_objectram[offs + 2];
-	//          if (gfx_attr & 0x40) sx -= 256;
+	//          if ((gfx_attr & 0x40) != 0) sx -= 256;
 			}
 			sy = 256 - height*8 - (mexico86_objectram[offs + 0]);
 	
@@ -206,11 +206,11 @@ public class mexico86
 			tx = mexico86_objectram[offs + 2];
 			gfx_attr = mexico86_objectram[offs + 3];
 	
-			if (gfx_num & 0x80)
+			if ((gfx_num & 0x80) != 0)
 			{
 				gfx_offs = ((gfx_num & 0x3f) << 7);
 				height = 32;
-				if (gfx_num & 0x40) sx += 16;
+				if ((gfx_num & 0x40) != 0) sx += 16;
 				else sx = tx;
 			}
 			else

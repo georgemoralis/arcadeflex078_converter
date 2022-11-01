@@ -31,7 +31,7 @@ INLINE void brset (UINT8 bit)
 
 	CLC;
 
-	if (r&bit) {
+	if ((r & bit) != 0) {
 		SEC;
 		PC+=SIGNED(t);
 

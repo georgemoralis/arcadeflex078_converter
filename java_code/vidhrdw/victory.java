@@ -210,32 +210,32 @@ public class victory
 		{
 			case 0:		/* 5XFIQ */
 				result = fgcollx;
-				if (LOG_COLLISION) logerror("%04X:5XFIQ read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION != 0) logerror("%04X:5XFIQ read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 1:		/* 5CLFIQ */
 				result = fgcolly;
-				if (fgcoll)
+				if (fgcoll != 0)
 				{
 					fgcoll = 0;
 					victory_update_irq();
 				}
-				if (LOG_COLLISION) logerror("%04X:5CLFIQ read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION != 0) logerror("%04X:5CLFIQ read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 2:		/* 5BACKX */
 				result = bgcollx & 0xfc;
-				if (LOG_COLLISION) logerror("%04X:5BACKX read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION != 0) logerror("%04X:5BACKX read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 3:		/* 5BACKY */
 				result = bgcolly;
-				if (bgcoll)
+				if (bgcoll != 0)
 				{
 					bgcoll = 0;
 					victory_update_irq();
 				}
-				if (LOG_COLLISION) logerror("%04X:5BACKY read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION != 0) logerror("%04X:5BACKY read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 4:		/* 5STAT */
@@ -250,7 +250,7 @@ public class victory
 				result |= (~vblank_irq & 1) << 5;
 				result |= (~bgcoll & 1) << 4;
 				result |= (cpu_getscanline() & 0x100) >> 5;
-				if (LOG_COLLISION) logerror("%04X:5STAT read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION != 0) logerror("%04X:5STAT read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			default:
@@ -273,22 +273,22 @@ public class victory
 		switch (offset)
 		{
 			case 0:		/* LOAD IL */
-				if (LOG_MICROCODE) logerror("%04X:IL=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:IL=%02X\n", activecpu_get_previouspc(), data);
 				micro.i = (micro.i & 0xff00) | (data & 0x00ff);
 				break;
 	
 			case 1:		/* LOAD IH */
-				if (LOG_MICROCODE) logerror("%04X:IH=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:IH=%02X\n", activecpu_get_previouspc(), data);
 				micro.i = (micro.i & 0x00ff) | ((data << 8) & 0xff00);
 				if (micro.cmdlo == 5)
 				{
-					if (LOG_MICROCODE) logerror("  Command 5 triggered by write to IH\n");
+					if (LOG_MICROCODE != 0) logerror("  Command 5 triggered by write to IH\n");
 					command5();
 				}
 				break;
 	
 			case 2:		/* LOAD CMD */
-				if (LOG_MICROCODE) logerror("%04X:CMD=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:CMD=%02X\n", activecpu_get_previouspc(), data);
 				micro.cmd = data;
 				micro.cmdlo = data & 7;
 				if (micro.cmdlo == 0)
@@ -297,63 +297,63 @@ public class victory
 					logerror("  Command 1 triggered\n");
 				else if (micro.cmdlo == 6)
 				{
-					if (LOG_MICROCODE) logerror("  Command 6 triggered\n");
+					if (LOG_MICROCODE != 0) logerror("  Command 6 triggered\n");
 					command6();
 				}
 				break;
 	
 			case 3:		/* LOAD G */
-				if (LOG_MICROCODE) logerror("%04X:G=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:G=%02X\n", activecpu_get_previouspc(), data);
 				micro.g = data;
 				break;
 	
 			case 4:		/* LOAD X */
-				if (LOG_MICROCODE) logerror("%04X:X=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:X=%02X\n", activecpu_get_previouspc(), data);
 				micro.xp = data;
 				if (micro.cmdlo == 3)
 				{
-					if (LOG_MICROCODE) logerror(" Command 3 triggered by write to X\n");
+					if (LOG_MICROCODE != 0) logerror(" Command 3 triggered by write to X\n");
 					command3();
 				}
 				break;
 	
 			case 5:		/* LOAD Y */
-				if (LOG_MICROCODE) logerror("%04X:Y=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:Y=%02X\n", activecpu_get_previouspc(), data);
 				micro.yp = data;
 				if (micro.cmdlo == 4)
 				{
-					if (LOG_MICROCODE) logerror("  Command 4 triggered by write to Y\n");
+					if (LOG_MICROCODE != 0) logerror("  Command 4 triggered by write to Y\n");
 					command4();
 				}
 				break;
 	
 			case 6:		/* LOAD R */
-				if (LOG_MICROCODE) logerror("%04X:R=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:R=%02X\n", activecpu_get_previouspc(), data);
 				micro.r = data;
 				break;
 	
 			case 7:		/* LOAD B */
-				if (LOG_MICROCODE) logerror("%04X:B=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:B=%02X\n", activecpu_get_previouspc(), data);
 				micro.b = data;
 				if (micro.cmdlo == 2)
 				{
-					if (LOG_MICROCODE) logerror("  Command 2 triggered by write to B\n");
+					if (LOG_MICROCODE != 0) logerror("  Command 2 triggered by write to B\n");
 					command2();
 				}
 				else if (micro.cmdlo == 7)
 				{
-					if (LOG_MICROCODE) logerror("  Command 7 triggered by write to B\n");
+					if (LOG_MICROCODE != 0) logerror("  Command 7 triggered by write to B\n");
 					command7();
 				}
 				break;
 	
 			case 8:		/* SCROLLX */
-				if (LOG_MICROCODE) logerror("%04X:SCROLLX write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:SCROLLX write = %02X\n", activecpu_get_previouspc(), data);
 				scrollx = data;
 				break;
 	
 			case 9:		/* SCROLLY */
-				if (LOG_MICROCODE) logerror("%04X:SCROLLY write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:SCROLLY write = %02X\n", activecpu_get_previouspc(), data);
 				scrolly = data;
 				break;
 	
@@ -365,18 +365,18 @@ public class victory
 				// D3 = SINVERT
 				// D2 = BIR12
 				// D1 = SELOVER
-				if (LOG_MICROCODE) logerror("%04X:CONTROL write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:CONTROL write = %02X\n", activecpu_get_previouspc(), data);
 				video_control = data;
 				break;
 	
 			case 11:	/* CLRVIRQ */
-				if (LOG_MICROCODE) logerror("%04X:CLRVIRQ write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE != 0) logerror("%04X:CLRVIRQ write = %02X\n", activecpu_get_previouspc(), data);
 				vblank_irq = 0;
 				victory_update_irq();
 				break;
 	
 			default:
-				if (LOG_MICROCODE) logerror("%04X:victory_video_control_w(%02X) = %02X\n", activecpu_get_previouspc(), offset, data);
+				if (LOG_MICROCODE != 0) logerror("%04X:victory_video_control_w(%02X) = %02X\n", activecpu_get_previouspc(), offset, data);
 				break;
 		}
 	} };
@@ -650,7 +650,7 @@ public class victory
 			L = (R & 0x1f) << 1
 			Y = Y'
 			state1C:
-				if (H & 8) goto state19
+				if ((H & 8) != 0) goto state19
 				X = X'; L++
 				WRITE
 				I++; Y++
@@ -724,7 +724,7 @@ public class victory
 						rram[dstoffs + 0] ^= src >> shift;
 						rram[dstoffs + 1] ^= src << nshift;
 					}
-					if (fgcoll) victory_update_irq();
+					if (fgcoll != 0) victory_update_irq();
 				}
 			}
 		}
@@ -768,7 +768,7 @@ public class victory
 	*/
 		int keep_going = 0;
 	
-		if (LOG_MICROCODE) logerror("================= EXECUTE BEGIN\n");
+		if (LOG_MICROCODE != 0) logerror("================= EXECUTE BEGIN\n");
 	
 		count_states(4);
 	
@@ -781,7 +781,7 @@ public class victory
 			micro.r = gram[0x2001 + micro.pc];
 			micro.xp = rram[0x2001 + micro.pc];
 			micro.yp = bram[0x2001 + micro.pc];
-			if (LOG_MICROCODE) logerror("PC=%03X  CMD=%02X I=%04X R=%02X X=%02X Y=%02X\n", micro.pc, micro.cmd, micro.i, micro.r, micro.xp, micro.yp);
+			if (LOG_MICROCODE != 0) logerror("PC=%03X  CMD=%02X I=%04X R=%02X X=%02X Y=%02X\n", micro.pc, micro.cmd, micro.i, micro.r, micro.xp, micro.yp);
 			micro.pc = (micro.pc + 2) & 0x1ff;
 	
 			switch (micro.cmdlo)
@@ -797,7 +797,7 @@ public class victory
 			}
 		} while (keep_going);
 	
-		if (LOG_MICROCODE) logerror("================= EXECUTE END\n");
+		if (LOG_MICROCODE != 0) logerror("================= EXECUTE END\n");
 	
 		return micro.cmd & 0x80;
 	}
@@ -882,7 +882,7 @@ public class victory
 				scandirty[y] = 1;
 	
 				acc += i;
-				if (acc & 0x100)
+				if ((acc & 0x100) != 0)
 				{
 					x += xincc;
 					y += yincc;
@@ -919,7 +919,7 @@ public class victory
 				scandirty[y] = 1;
 	
 				acc += i;
-				if (acc & 0x100)
+				if ((acc & 0x100) != 0)
 				{
 					x += xincc;
 					y += yincc;
@@ -931,7 +931,7 @@ public class victory
 				}
 				acc &= 0xff;
 			}
-			if (fgcoll) victory_update_irq();
+			if (fgcoll != 0) victory_update_irq();
 		}
 	
 		micro.xp = x;
@@ -1063,7 +1063,7 @@ public class victory
 				rram[addr + 0] ^= micro.r >> shift;
 				rram[addr + 1] ^= micro.r << nshift;
 			}
-			if (fgcoll) victory_update_irq();
+			if (fgcoll != 0) victory_update_irq();
 		}
 	
 		count_states(4);
@@ -1192,7 +1192,7 @@ public class victory
 		int x, y;
 	
 		/* if we already did it, skip it */
-		if (update_complete)
+		if (update_complete != 0)
 		{
 			update_complete = 0;
 			return;

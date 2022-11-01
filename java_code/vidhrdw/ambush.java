@@ -88,7 +88,7 @@ public class ambush
 	
 			code = videoram[offs] | ((col & 0x60) << 3);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
@@ -168,7 +168,7 @@ public class ambush
 			flipx = spriteram[offs + 1] & 0x40;
 			flipy = spriteram[offs + 1] & 0x80;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;

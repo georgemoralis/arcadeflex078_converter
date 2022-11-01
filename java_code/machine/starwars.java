@@ -87,7 +87,7 @@ public class starwars
 				break;
 	
 			case 4:		/* bank switch */
-				if (data & 0x80)
+				if ((data & 0x80) != 0)
 				{
 					cpu_setbank(1, &RAM[0x10000]);
 					cpu_setbank(2, &RAM[0x1c000]);
@@ -269,41 +269,41 @@ public class starwars
 			 */
 	
 			/* 0x01 - LAC */
-			if (IP15_8 & LAC)
+			if ((IP15_8 & LAC) != 0)
 				ACC = RAMWORD;
 	
 			/* 0x02 - READ_ACC */
-			if (IP15_8 & READ_ACC)
+			if ((IP15_8 & READ_ACC) != 0)
 			{
 				RAM[MA_byte+1] = (ACC & 0x00ff);
 				RAM[MA_byte  ] = (ACC & 0xff00) >> 8;
 			}
 	
 			/* 0x04 - M_HALT */
-			if (IP15_8 & M_HALT)
+			if ((IP15_8 & M_HALT) != 0)
 				M_STOP = 0;
 	
 			/* 0x08 - INC_BIC */
-			if (IP15_8 & INC_BIC)
+			if ((IP15_8 & INC_BIC) != 0)
 				BIC = (BIC + 1) & 0x1ff; /* Restrict to 9 bits */
 	
 			/* 0x10 - CLEAR_ACC */
-			if (IP15_8 & CLEAR_ACC)
+			if ((IP15_8 & CLEAR_ACC) != 0)
 				ACC = 0;
 	
 			/* 0x20 - LDC */
-			if (IP15_8 & LDC)
+			if ((IP15_8 & LDC) != 0)
 			{
 				C = RAMWORD;
 				ACC=ACC+(  ( (long)((A-B)*C) )>>14  );
 			}
 	
 			/* 0x40 - LDB */
-			if (IP15_8 & LDB)
+			if ((IP15_8 & LDB) != 0)
 				B = RAMWORD;
 	
 			/* 0x80 - LDA */
-			if (IP15_8 & LDA)
+			if ((IP15_8 & LDA) != 0)
 				A = RAMWORD;
 	
 			/*

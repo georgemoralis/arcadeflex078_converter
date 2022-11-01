@@ -347,7 +347,7 @@ public class welltris
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			pending_command = 1;
 			soundlatch_w(0, data & 0xff);

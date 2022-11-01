@@ -83,10 +83,10 @@ public class crbaloon
 		interrupt_enable_w(offset,data & 1);
 	
 		/* SOUND STOP high? */
-	    if( data & 0x02 )
+	    if ((data & 0x02) != 0)
 		{
 	
-			if( data & 0x08 )
+			if ((data & 0x08) != 0)
 			{
 				/* enable is connected to EXPLOSION */
 				SN76477_enable_w(0, 1);
@@ -95,7 +95,7 @@ public class crbaloon
 			{
 				SN76477_enable_w(0, 0);
 			}
-			if( data & 0x10 )
+			if ((data & 0x10) != 0)
 			{
 				/* BREATH changes slf_res to 10k (middle of two 10k resistors) */
 				SN76477_set_slf_res(0, RES_K(10));
@@ -107,7 +107,7 @@ public class crbaloon
 				SN76477_set_slf_res(0, RES_K(20));
 			}
 	
-			if( data & 0x20 )
+			if ((data & 0x20) != 0)
 			{
 				/* APPEAR is connected to MIXER B */
 				SN76477_mixer_b_w(0, 1);
@@ -143,7 +143,7 @@ public class crbaloon
 	    }
 	
 		/* the following is needed for the game to boot up */
-		if (val06 & 0x80)
+		if ((val06 & 0x80) != 0)
 		{
 	logerror("PC %04x: %02x high\n",activecpu_get_pc(),offset);
 			return (input_port_2_r(0) & 0xf0) | 0x07;
@@ -157,12 +157,12 @@ public class crbaloon
 	
 	public static ReadHandlerPtr crbaloon_IN3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (val08 & 0x02)
+		if ((val08 & 0x02) != 0)
 			/* enable coin & start input? Wild guess!!! */
 			return input_port_3_r(0);
 	
 		/* the following is needed for the game to boot up */
-		if (val0a & 0x01)
+		if ((val0a & 0x01) != 0)
 		{
 	logerror("PC %04x: 03 high\n",activecpu_get_pc());
 			return (input_port_3_r(0) & 0x0f) | 0x00;

@@ -52,7 +52,7 @@ public class xyonix
 	
 	//	usrintf_showmessage("Coin %d",coin);
 	
-		if (coin & 1)	// Coin 2 !
+		if ((coin & 1) != 0)	// Coin 2 !
 		{
 			tmp = (readinputport(2) & 0xc0) >> 6;
 			coins++;
@@ -65,7 +65,7 @@ public class xyonix
 			coin_counter_w(1,1); coin_counter_w(1,0); /* Count slot B */
 		}
 	
-		if (coin & 2)	// Coin 1 !
+		if ((coin & 2) != 0)	// Coin 1 !
 		{
 			tmp = (readinputport(2) & 0x30) >> 4;
 			coins++;

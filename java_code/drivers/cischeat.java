@@ -524,14 +524,14 @@ public class cischeat
 	*/
 	WRITE16_HANDLER( scudhamm_leds_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 	 		set_led_status(0, data & 0x0100);	// 3 buttons
 			set_led_status(1, data & 0x0200);
 			set_led_status(2, data & 0x0400);
 		}
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 	//		set_led_status(3, data & 0x0010);	// if we had more leds..
 	//		set_led_status(4, data & 0x0020);
@@ -550,7 +550,7 @@ public class cischeat
 	
 	WRITE16_HANDLER( scudhamm_oki_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * ((data >> 0) & 0x3) );
 			OKIM6295_set_bank_base(1, 0x40000 * ((data >> 4) & 0x3) );
@@ -719,7 +719,7 @@ public class cischeat
 	
 	WRITE16_HANDLER( bigrun_soundbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * ((data >> 0) & 1) );
 			OKIM6295_set_bank_base(1, 0x40000 * ((data >> 4) & 1) );
@@ -753,11 +753,11 @@ public class cischeat
 	
 	WRITE16_HANDLER( cischeat_soundbank_0_w )
 	{
-		if (ACCESSING_LSB)	OKIM6295_set_bank_base(0, 0x40000 * (data & 1) );
+		if (ACCESSING_LSB != 0)	OKIM6295_set_bank_base(0, 0x40000 * (data & 1) );
 	}
 	WRITE16_HANDLER( cischeat_soundbank_1_w )
 	{
-		if (ACCESSING_LSB)	OKIM6295_set_bank_base(1, 0x40000 * (data & 1) );
+		if (ACCESSING_LSB != 0)	OKIM6295_set_bank_base(1, 0x40000 * (data & 1) );
 	}
 	
 	static MEMORY_READ16_START( cischeat_sound_readmem )

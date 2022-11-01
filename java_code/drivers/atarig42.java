@@ -55,12 +55,12 @@ public class atarig42
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 4;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 5;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -86,8 +86,8 @@ public class atarig42
 	static READ16_HANDLER( special_port2_r )
 	{
 		int temp = readinputport(2);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x0020;
-		if (atarigen_sound_to_cpu_ready) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0020;
+		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x0010;
 		temp ^= 0x0008;		/* A2D.EOC always high for now */
 		return temp;
 	}
@@ -108,7 +108,7 @@ public class atarig42
 	static WRITE16_HANDLER( io_latch_w )
 	{
 		/* upper byte */
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			/* bit 14 controls the ASIC65 reset line */
 			asic65_reset((~data >> 14) & 1);
@@ -118,7 +118,7 @@ public class atarig42
 		}
 	
 		/* lower byte */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* bit 4 resets the sound CPU */
 			cpu_set_reset_line(1, (data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
@@ -678,11 +678,11 @@ public class atarig42
 		   +!AN.VID7*AN.0*MO.0					or if (mopix == 0) && (!alpha)
 	
 		CRA9=MGEP*!AN.VID7*AN.0*!MO.0			-- if (mopri >= pfpri) && (mopix != 0) && (!alpha)
-		   +!AN.VID7*AN.0*PF.VID9				or if (pfpix & 0x200) && (!alpha)
+		   +!AN.VID7*AN.0*PF.VID9				or if ((pfpix & 0x200) != 0) && (!alpha)
 	
 		CRA8=MGEP*!AN.VID7*AN.0*!MO.0*MVID8		-- if (mopri >= pfpri) && (mopix != 0) && (mopix & 0x100) && (!alpha)
 		   +!MGEP*!AN.VID7*AN.0*PF.VID8			or if (mopri < pfpri) && (pfpix & 0x100) && (!alpha)
-		   +!AN.VID7*AN.0*MO.0*PF.VID8			or if (pfpix & 0x100) && (!alpha)
+		   +!AN.VID7*AN.0*MO.0*PF.VID8			or if ((pfpix & 0x100) != 0) && (!alpha)
 	
 		CRMUXB=!AN.VID7*AN.0					-- if (!alpha)
 	

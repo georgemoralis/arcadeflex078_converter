@@ -35,7 +35,7 @@ public class aliens
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
@@ -43,7 +43,7 @@ public class aliens
 	
 	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (palette_selected)
+		if (palette_selected != 0)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
@@ -450,7 +450,7 @@ public class aliens
 		int offs = 0x18000;
 	
 	
-		if (lines & 0x10) offs -= 0x8000;
+		if ((lines & 0x10) != 0) offs -= 0x8000;
 	
 		offs += (lines & 0x0f)*0x2000;
 		cpu_setbank( 1, &RAM[offs] );

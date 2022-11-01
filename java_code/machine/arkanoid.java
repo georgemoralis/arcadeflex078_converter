@@ -73,7 +73,7 @@ public class arkanoid
 		int res=0;
 	
 		/* bit 0 is high on a write strobe; clear it once we've detected it */
-		if (z80write) res |= 0x01;
+		if (z80write != 0) res |= 0x01;
 	
 		/* bit 1 is high if the previous write has been read */
 		if (!m68705write) res |= 0x02;
@@ -121,7 +121,7 @@ public class arkanoid
 	
 	public static ReadHandlerPtr arkanoid_input_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (arkanoid_paddle_select)
+		if (arkanoid_paddle_select != 0)
 		{
 			return input_port_3_r(offset);
 		}

@@ -320,9 +320,9 @@ public class dynax
 		msm5205next<<=4;
 	
 		toggle = 1 - toggle;
-		if (toggle)
+		if (toggle != 0)
 		{
-			if (resetkludge)	// don't know what's wrong, but NMIs when the 5205 is reset make the game crash
+			if (resetkludge != 0)	// don't know what's wrong, but NMIs when the 5205 is reset make the game crash
 			cpu_set_nmi_line(0,PULSE_LINE);
 		}
 	}

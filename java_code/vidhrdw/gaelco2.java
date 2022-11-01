@@ -400,7 +400,7 @@ public class gaelco2
 		int spr_x_adjust = (Machine->visible_area.max_x - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
 	
 	#ifndef ONE_MONITOR
-		if (dual_monitor){
+		if (dual_monitor != 0){
 			spr_x_adjust = ((Machine->visible_area.max_x/2) - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
 		}
 	#endif

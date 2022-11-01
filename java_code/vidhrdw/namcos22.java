@@ -86,7 +86,7 @@ public class namcos22
 			return -1; /* HACK */
 		}
 		result = (mpPolyH[addr]<<16)|(mpPolyM[addr]<<8)|mpPolyL[addr];
-		if( result&0x00800000 )
+		if ((result & 0x00800000) != 0)
 		{
 			result |= 0xff000000; /* sign extend */
 		}
@@ -158,7 +158,7 @@ public class namcos22
 	{
 		struct rectangle myclip;
 		if (!scalex || !scaley) return;
-		if(clip)
+		if (clip != 0)
 		{
 			myclip.min_x = clip->min_x;
 			myclip.max_x = clip->max_x;
@@ -186,7 +186,7 @@ public class namcos22
 				int ey = sy+sprite_screen_height;
 				int x_index_base;
 				int y_index;
-				if( flipx )
+				if (flipx != 0)
 				{
 					x_index_base = (sprite_screen_width-1)*dx;
 					dx = -dx;
@@ -195,7 +195,7 @@ public class namcos22
 				{
 					x_index_base = 0;
 				}
-				if( flipy )
+				if (flipy != 0)
 				{
 					y_index = (sprite_screen_height-1)*dy;
 					dy = -dy;
@@ -204,7 +204,7 @@ public class namcos22
 				{
 					y_index = 0;
 				}
-				if( clip )
+				if (clip != 0)
 				{
 					if( sx < clip->min_x)
 					{ /* clip left */
@@ -352,7 +352,7 @@ public class namcos22
 			flipy = attrs&0x8;
 			numrows = attrs&0x7;
 			if( numrows==0 ) numrows = 8;
-			if( flipy )
+			if (flipy != 0)
 			{
 				ypos += sizey*(numrows-1);
 				sizey = -sizey;
@@ -363,7 +363,7 @@ public class namcos22
 			flipx = attrs&0x8;
 			numcols = attrs&0x7;
 			if( numcols==0 ) numcols = 8;
-			if( flipx )
+			if (flipx != 0)
 			{
 				xpos += sizex*(numcols-1);
 				sizex = -sizex;
@@ -417,7 +417,7 @@ public class namcos22
 					int g = nthbyte(paletteram32,which+0x08000);
 					int b = nthbyte(paletteram32,which+0x10000);
 	
-					if( fade )
+					if (fade != 0)
 					{ /**
 					   * if flags&0x01 is set, fader affects polygon layer
 					   * flags&0x02 and flags&0x04 are used to fade text/sprite layer
@@ -471,7 +471,7 @@ public class namcos22
 		unsigned i;
 		data32_t data;
 	
-		if( cgsomethingisdirty )
+		if (cgsomethingisdirty != 0)
 		{
 			for( i=0; i<64*64; i+=2 )
 			{
@@ -775,7 +775,7 @@ public class namcos22
 			INT32 dw = (zcode&0x1c0000)>>18; /* window (master)priority bias */
 			INT32 dz = (zcode&0x03ffff); /* bias for representative z coordinate */
 	
-			if( dw&4 )
+			if ((dw & 4) != 0)
 			{
 				dw |= ~0x7; /* sign extend */
 			}
@@ -783,7 +783,7 @@ public class namcos22
 			if( dw<0 ) dw = 0; else if( dw>7 ) dw = 7; /* cap it at min/max */
 			dw <<= 21;
 	
-			if( dz&0x020000 )
+			if ((dz & 0x020000) != 0)
 			{
 				dz |= ~0x03ffff; /* sign extend */
 			}
@@ -896,7 +896,7 @@ public class namcos22
 				break;
 			}
 	
-			if( mbDumpScene )
+			if (mbDumpScene != 0)
 			{
 				int q;
 				logerror( "  %06x", size );
@@ -1048,7 +1048,7 @@ public class namcos22
 	
 		bShowOnly = keyboard_pressed(KEYCODE_B);
 	
-		if( bShowOnly )
+		if (bShowOnly != 0)
 		{
 			drawgfx( bitmap, Machine->uifont, "0123456789abcdef"[(iShowOnly>>4)&0xf],
 				0,0,0,0,0,NULL,TRANSPARENCY_NONE,0 );
@@ -1093,7 +1093,7 @@ public class namcos22
 	
 		mode = 0x8000;
 	
-		if( mbDumpScene )
+		if (mbDumpScene != 0)
 		{
 			for( i=0; i<8*32; i++ )
 			{
@@ -1108,7 +1108,7 @@ public class namcos22
 		pDebug = pSource;
 		for(;;)
 		{
-			if( mbDumpScene )
+			if (mbDumpScene != 0)
 			{
 				logerror( "\n" );
 				while( pDebug<pSource )
@@ -1136,7 +1136,7 @@ public class namcos22
 				}
 				if( iObject == iShowOnly || !bShowOnly )
 				{
-					if( mbDumpScene )
+					if (mbDumpScene != 0)
 					{
 						logerror( "\n#%03x: ", iObject );
 						while( pDebug<pSource )
@@ -1212,7 +1212,7 @@ public class namcos22
 					matrix3d_Multiply( M, mWindowTransform.M );
 					if( iObject == iShowOnly || !bShowOnly )
 					{
-						if( mbDumpScene )
+						if (mbDumpScene != 0)
 						{
 							logerror( "\n#%03x: ", iObject );
 							while( pDebug<pSource )
@@ -1267,7 +1267,7 @@ public class namcos22
 					break;
 	
 				case 0xffff:
-					if( mbDumpScene )
+					if (mbDumpScene != 0)
 					{
 						int namcos22_i;
 						logerror( "[eof %08x]\n", code );
@@ -1407,7 +1407,7 @@ public class namcos22
 	public static VideoUpdateHandlerPtr video_update_namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mpMatrix = auto_malloc(sizeof(struct Matrix)*MAX_CAMERA);
-		if( mpMatrix )
+		if (mpMatrix != 0)
 		{
 			if( namcos3d_Init(
 				NAMCOS22_SCREEN_WIDTH,
@@ -1417,20 +1417,20 @@ public class namcos22
 			) == 0 )
 			{
 				struct GfxElement *pGfx = decodegfx( (UINT8 *)namcos22_cgram,&cg_layout );
-				if( pGfx )
+				if (pGfx != 0)
 				{
 					Machine->gfx[NAMCOS22_ALPHA_GFX] = pGfx;
 					pGfx->colortable = Machine->remapped_colortable;
 					pGfx->total_colors = NAMCOS22_PALETTE_SIZE/16;
 					tilemap = tilemap_create( TextTilemapGetInfo,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64 );
-					if( tilemap )
+					if (tilemap != 0)
 					{
 						tilemap_set_transparent_pen( tilemap, 0xf );
 						dirtypal = auto_malloc(NAMCOS22_PALETTE_SIZE/4);
-						if( dirtypal )
+						if (dirtypal != 0)
 						{
 							cgdirty = auto_malloc( 0x400 );
-							if( cgdirty )
+							if (cgdirty != 0)
 							{
 								int i;
 								mPtRomSize = memory_region_length(REGION_GFX4)/3;

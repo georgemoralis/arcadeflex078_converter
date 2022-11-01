@@ -49,12 +49,12 @@ public class grobda
 	} };
 	
 	public static InterruptHandlerPtr grobda_interrupt_1 = new InterruptHandlerPtr() {public void handler() {
-		if (int_enable_1)
+		if (int_enable_1 != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
 	public static InterruptHandlerPtr grobda_interrupt_2 = new InterruptHandlerPtr() {public void handler(){
-	    if (int_enable_2)
+	    if (int_enable_2 != 0)
 	        cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	

@@ -484,7 +484,7 @@ public class tubep
 	{
 		/* bit 0 of data selects voice frequency on MSM5205 */
 		// 0 -4 KHz; 1- 8KHz
-		if (data&1)
+		if ((data & 1) != 0)
 			MSM5205_playmode_w(0,MSM5205_S48_4B);	/* 8 KHz */
 		else
 			MSM5205_playmode_w(0,MSM5205_S96_4B);	/* 4 KHz */

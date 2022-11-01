@@ -33,13 +33,13 @@ public class simpsons
 	
 	NVRAM_HANDLER( simpsons )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -59,7 +59,7 @@ public class simpsons
 	
 		res |= readinputport( 5 ) & 1; /* test switch */
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xfe;

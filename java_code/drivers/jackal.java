@@ -58,7 +58,7 @@ public class jackal
 	
 	public static InterruptHandlerPtr jackal_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (irq_enable)
+		if (irq_enable != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	

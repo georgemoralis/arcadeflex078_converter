@@ -180,14 +180,14 @@ public class xain
 			sy = 240 - spriteram[offs];
 			if (sy <= -7) sy += 256;
 			flipx = attr & 0x40;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 239 - sx;
 				sy = 240 - sy;
 				flipx = !flipx;
 			}
 	
-			if (attr & 0x80)	/* double height */
+			if ((attr & 0x80) != 0)	/* double height */
 			{
 				drawgfx(bitmap,Machine->gfx[3],
 						numtile,

@@ -75,7 +75,7 @@ public class flstory
 		if ((ddrB & 0x02) && (~data & 0x02) && (portB_out & 0x02))
 		{
 			portA_in = from_main;
-			if (main_sent) cpu_set_irq_line(2,0,CLEAR_LINE);
+			if (main_sent != 0) cpu_set_irq_line(2,0,CLEAR_LINE);
 			main_sent = 0;
 	logerror("read command %02x from main cpu\n",portA_in);
 		}
@@ -100,7 +100,7 @@ public class flstory
 	public static ReadHandlerPtr flstory_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		portC_in = 0;
-		if (main_sent) portC_in |= 0x01;
+		if (main_sent != 0) portC_in |= 0x01;
 		if (!mcu_sent) portC_in |= 0x02;
 	//logerror("%04x: 68705 port C read %02x\n",activecpu_get_pc(),portC_in);
 		return (portC_out & ddrC) | (portC_in & ~ddrC);
@@ -140,7 +140,7 @@ public class flstory
 		/* bit 1 = when 1, mcu has sent data to the main cpu */
 	//logerror("%04x: mcu_status_r\n",activecpu_get_pc());
 		if (!main_sent) res |= 0x01;
-		if (mcu_sent) res |= 0x02;
+		if (mcu_sent != 0) res |= 0x02;
 	
 		return res;
 	} };

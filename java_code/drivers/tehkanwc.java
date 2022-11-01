@@ -106,7 +106,7 @@ public class tehkanwc
 	
 	public static WriteHandlerPtr sub_cpu_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data)
+		if (data != 0)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
@@ -121,8 +121,8 @@ public class tehkanwc
 		int joy;
 	
 		joy = readinputport(10) >> (2*offset);
-		if (joy & 1) return -63;
-		if (joy & 2) return 63;
+		if ((joy & 1) != 0) return -63;
+		if ((joy & 2) != 0) return 63;
 		return readinputport(3 + offset) - track0[offset];
 	} };
 	
@@ -131,8 +131,8 @@ public class tehkanwc
 		int joy;
 	
 		joy = readinputport(10) >> (4+2*offset);
-		if (joy & 1) return -63;
-		if (joy & 2) return 63;
+		if ((joy & 1) != 0) return -63;
+		if ((joy & 2) != 0) return 63;
 		return readinputport(6 + offset) - track1[offset];
 	} };
 	

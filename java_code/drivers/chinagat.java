@@ -175,7 +175,7 @@ public class chinagat
 	
 		data8_t *saiyugb1_adpcm_rom = memory_region(REGION_SOUND1);
 	
-		if (data & 0x80)	/* Reset m5205 and disable ADPCM ROM outputs */
+		if ((data & 0x80) != 0)	/* Reset m5205 and disable ADPCM ROM outputs */
 		{
 			logerror("ADPCM output disabled\n");
 			saiyugb1_pcm_nibble = 0x0f;
@@ -240,7 +240,7 @@ public class chinagat
 	
 	public static ReadHandlerPtr saiyugb1_m5205_irq_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (adpcm_sound_irq)
+		if (adpcm_sound_irq != 0)
 		{
 			adpcm_sound_irq = 0;
 			return 1;

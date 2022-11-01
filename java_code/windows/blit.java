@@ -1028,7 +1028,7 @@ public class blit
 			// handle dimmed scanlines
 			if (blit->dsteffect >= EFFECT_SCANLINE_25 && blit->dsteffect <= EFFECT_SCANLINE_75 && row != 0 && row == blit->dstyscale - 1)
 			{
-				if (has_mmx)
+				if (has_mmx != 0)
 					emit_reduce_brightness_mmx(count, reglist, blit, dest);
 				else
 					emit_reduce_brightness(count, reglist, blit, dest);
@@ -1044,7 +1044,7 @@ public class blit
 		if (update && blit->dstyskip)
 		{
 			// if we have any MMX, generate a PXOR MM7,MM7
-			if (has_mmx)
+			if (has_mmx != 0)
 			{
 				*(*dest)++ = 0x0f, *(*dest)++ = 0xef;
 				*(*dest)++ = 0xc0 | (7 << 3) | 7;
@@ -1079,7 +1079,7 @@ public class blit
 			fprintf(stderr, "SSE supported\n");
 		else if (use_mmx && verbose)
 			fprintf(stderr, "MMX supported\n");
-		else if (verbose)
+		else if (verbose != 0)
 			fprintf(stderr, "MMX not supported\n");
 	}
 	
@@ -1107,7 +1107,7 @@ public class blit
 			case EFFECT_RGB3:
 			case EFFECT_RGB_TINY:
 			case EFFECT_SCANLINE_75V:
-				if (use_mmx)
+				if (use_mmx != 0)
 				{
 					if (blit->dsteffect == EFFECT_RGB16)
 						generate_rgb_masks(&rgb16_desc, blit);
@@ -1439,12 +1439,12 @@ public class blit
 		EMIT_SNIPPET_PAIR(yloop_top);
 	
 			// top of middle (X) loop
-			if (middle)
+			if (middle != 0)
 			{
 				EMIT_SNIPPET_PAIR(middlexloop_header);
 				SET_FIXUPS(1);
 				EMIT_SNIPPET_PAIR(middlexloop_top);
-				if (use_sse)
+				if (use_sse != 0)
 				{
 					// prefetch instructions
 					EMIT_SNIPPET_PAIR(prefetch_sse);
@@ -1456,7 +1456,7 @@ public class blit
 			}
 	
 			// top of last (X) loop
-			if (last)
+			if (last != 0)
 			{
 				EMIT_SNIPPET_PAIR(lastxloop_header);
 				SET_FIXUPS(3);
@@ -1469,7 +1469,7 @@ public class blit
 		EMIT_SNIPPET_PAIR_REVERSE(yloop_bottom);
 	
 		// function footer
-		if (use_mmx)
+		if (use_mmx != 0)
 		{
 			EMIT_SNIPPET_PAIR(footer_mmx);
 		}

@@ -34,7 +34,7 @@ public class mrflea
 	} };
 	
 	public static WriteHandlerPtr mrflea_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-		if( offset&2 ){ /* tile_number */
+		if ((offset & 2) != 0){ /* tile_number */
 			spriteram[offset|1] = offset&1;
 			offset &= ~1;
 		}
@@ -74,8 +74,8 @@ public class mrflea
 		const struct GfxElement *gfx = Machine->gfx[1];
 		int sx,sy;
 		int base = 0;
-		if( mrflea_gfx_bank&0x04 ) base |= 0x400;
-		if( mrflea_gfx_bank&0x10 ) base |= 0x200;
+		if ((mrflea_gfx_bank & 0x04) != 0) base |= 0x400;
+		if ((mrflea_gfx_bank & 0x10) != 0) base |= 0x200;
 		for( sy=0; sy<256; sy+=8 ){
 			for( sx=0; sx<256; sx+=8 ){
 				int tile_number = base+source[0]+source[0x400]*0x100;

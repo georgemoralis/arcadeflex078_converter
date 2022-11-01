@@ -132,7 +132,7 @@ public class mrjong
 	
 			sx = 224 - spriteram[offs + 2];
 			sy = spriteram[offs + 0];
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 208 - sx;
 				sy = 240 - sy;

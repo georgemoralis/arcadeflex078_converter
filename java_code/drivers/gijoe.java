@@ -73,13 +73,13 @@ public class gijoe
 	
 	static NVRAM_HANDLER( gijoe )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -98,7 +98,7 @@ public class gijoe
 		/* bit 11 is service button */
 		res = (EEPROM_read_bit()<<8) | input_port_0_word_r(0,0);
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xf7ff;
@@ -114,7 +114,7 @@ public class gijoe
 	
 	static WRITE16_HANDLER( control2_w )
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			/* bit 0  is data */
 			/* bit 1  is cs (active low) */
 			/* bit 2  is clock (active high) */
@@ -160,7 +160,7 @@ public class gijoe
 	
 	static void dmaend_callback(int data)
 	{
-		if (cur_control2 & 0x0020)
+		if ((cur_control2 & 0x0020) != 0)
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 	}
 	
@@ -178,13 +178,13 @@ public class gijoe
 		}
 	
 		// trigger V-blank interrupt
-		if (cur_control2 & 0x0080)
+		if ((cur_control2 & 0x0080) != 0)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
 	} };
 	
 	static WRITE16_HANDLER( sound_cmd_w )
 	{
-		if(ACCESSING_LSB) {
+		if (ACCESSING_LSB != 0) {
 			data &= 0xff;
 			soundlatch_w(0, data);
 			if(!Machine->sample_rate)

@@ -90,7 +90,7 @@ public class pleiads
 		static int counter, level;
 	
 		/* bit 4 of latch B: charge 10uF (C28/C68) through 10k (R19/R25) */
-		if( sound_latch_b & 0x10 )
+		if ((sound_latch_b & 0x10) != 0)
 		{
 			if( level < VMAX )
 			{
@@ -171,7 +171,7 @@ public class pleiads
 		static int counter, level = PC4_MIN;
 	
 		/* bit 4 of latch C: (part of videoreg_w) hi? */
-		if (sound_latch_c & 0x10)
+		if ((sound_latch_c & 0x10) != 0)
 		{
 			if (level < VMAX)
 			{
@@ -207,7 +207,7 @@ public class pleiads
 		static int counter, level;
 	
 		/* bit 5 of latch C: charge or discharge C52 */
-		if (sound_latch_c & 0x20)
+		if ((sound_latch_c & 0x20) != 0)
 		{
 			if (level < VMAX)
 			{
@@ -243,7 +243,7 @@ public class pleiads
 		static int counter, level;
 	
 		/* bit 5 of latch A: charge or discharge C63 */
-		if (sound_latch_a & 0x20)
+		if ((sound_latch_a & 0x20) != 0)
 		{
 			if (level < VMAX)
 			{
@@ -286,7 +286,7 @@ public class pleiads
 		 * polybit = 0: 0V and level: x * opamp_resistor / (opamp_resistor + polybit_resistor)
 		 * polybit = 1: level and 5V: x * polybit_resistor / (opamp_resistor + polybit_resistor)
 		 */
-		if (polybit)
+		if (polybit != 0)
 			level = level + (VMAX - level) * opamp_resistor / (opamp_resistor + polybit_resistor);
 		else
 			level = level * polybit_resistor / (opamp_resistor + polybit_resistor);
@@ -317,7 +317,7 @@ public class pleiads
 		static int counter, level;
 	
 		/* bit 6 of latch A: charge or discharge C63 */
-		if (sound_latch_a & 0x40)
+		if ((sound_latch_a & 0x40) != 0)
 		{
 			if (level < VMAX)
 			{
@@ -361,7 +361,7 @@ public class pleiads
 		 * bit 4 of latch A: noise counter rate modulation?
 		 * CV2 input of lower 556 is connected via 2k resistor
 		 */
-		if ( sound_latch_a & 0x10 )
+		if ((sound_latch_a & 0x10) != 0)
 			counter -= noise_freq * 2 / 3; /* ????? */
 		else
 			counter -= noise_freq * 1 / 3; /* ????? */
@@ -381,18 +381,18 @@ public class pleiads
 		 * Both outputs are then filtered, bit 7 even twice,
 		 * but it's beyond me what the filters there are doing...
 		 */
-		if (polybit)
+		if (polybit != 0)
 		{
 			sum += c_pa6_level;
 			/* bit 7 is connected directly */
-			if (sound_latch_a & 0x80)
+			if ((sound_latch_a & 0x80) != 0)
 				sum += VMAX;
 		}
 		else
 		{
 			sum -= c_pa6_level;
 			/* bit 7 is connected directly */
-			if (sound_latch_a & 0x80)
+			if ((sound_latch_a & 0x80) != 0)
 				sum -= VMAX;
 		}
 	

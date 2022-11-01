@@ -150,7 +150,7 @@ public class spbactn
 	
 				attr &= ~0x0040;							/* !!! */
 	
-				if (attr & 0x0040)
+				if ((attr & 0x0040) != 0)
 					color |= 0x0180;
 				else
 					color |= 0x0080;
@@ -264,7 +264,7 @@ public class spbactn
 			colour = ((attr & 0x00f0) >> 4);
 	
 			/* blending */
-			if (attr & 0x0008)
+			if ((attr & 0x0008) != 0)
 				colour += 0x00f0;
 			else
 				colour |= 0x0080;

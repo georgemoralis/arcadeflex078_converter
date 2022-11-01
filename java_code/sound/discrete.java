@@ -95,7 +95,7 @@ public class discrete
 	    va_list arg;
 	    va_start(arg,text);
 	
-	    if(disclogfile)
+	    if (disclogfile != 0)
 		{
 			vfprintf(disclogfile, text, arg);
 			fprintf(disclogfile,"\n");
@@ -512,14 +512,14 @@ public class discrete
 			discrete_log("discrete_sh_stop() - Calling stop for %s",module_list[node_list[loop].module].name);
 			if(module_list[node_list[loop].module].kill) (*module_list[node_list[loop].module].kill)(&node_list[loop]);
 		}
-		if(node_list) free(node_list);
-		if(running_order) free(running_order);
+		if (node_list != 0) free(node_list);
+		if (running_order != 0) free(running_order);
 		node_count=0;
 		node_list=NULL;
 		running_order=NULL;
 	
 	#ifdef DISCRETE_DEBUGLOG
-	    if(disclogfile) fclose(disclogfile);
+	    if (disclogfile != 0) fclose(disclogfile);
 		disclogfile=NULL;
 	#endif
 	}

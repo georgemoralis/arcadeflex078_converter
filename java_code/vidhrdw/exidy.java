@@ -138,7 +138,7 @@ public class exidy
 	
 	public static PaletteInitHandlerPtr palette_init_exidy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
-		if (exidy_palette)
+		if (exidy_palette != 0)
 		{
 			int i;
 			

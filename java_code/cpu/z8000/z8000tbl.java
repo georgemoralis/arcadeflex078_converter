@@ -541,7 +541,7 @@ void z8000_init(void)
 	Z8000_init *init;
 
 	/* already initialized? */
-	if( z8000_exec )
+	if (z8000_exec != 0)
 		return;
 
 	/* allocate the opcode execution and disassembler array */

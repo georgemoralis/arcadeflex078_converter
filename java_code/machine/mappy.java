@@ -220,7 +220,7 @@ public class mappy
 	
 		/*logerror("I/O read 1: mode %d offset %d\n", mode, offset);*/
 	
-		if (io_chip_1_enabled)
+		if (io_chip_1_enabled != 0)
 		{
 			/* mode 3 is the standard, and returns actual important values */
 			if (mode == 1 || mode == 3)
@@ -289,7 +289,7 @@ public class mappy
 	
 		/*logerror("I/O read 2: mode %d, offset %d\n", mode, offset);*/
 	
-		if (io_chip_2_enabled)
+		if (io_chip_2_enabled != 0)
 		{
 			/* mode 4 is the standard, and returns actual important values */
 			if (mode == 4)
@@ -450,7 +450,7 @@ public class mappy
 	
 		logerror("%04x: I/O read 1: mode %d offset %d\n", activecpu_get_pc(), mode, offset);
 	
-		if (io_chip_1_enabled)
+		if (io_chip_1_enabled != 0)
 		{
 			/* mode 3 is the standard, and returns actual important values */
 			if (mode == 1 || mode == 3)
@@ -520,7 +520,7 @@ public class mappy
 	
 		logerror("%04x: I/O read 2: mode %d, offset %d\n", activecpu_get_pc(), mode, offset);
 	
-		if (io_chip_1_enabled)
+		if (io_chip_1_enabled != 0)
 		{
 			/* mode 4 is the standard, and returns actual important values */
 			if (mode == 4)
@@ -565,7 +565,7 @@ public class mappy
 	
 	public static InterruptHandlerPtr mappy_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_1)
+		if (interrupt_enable_1 != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -580,7 +580,7 @@ public class mappy
 	
 	public static InterruptHandlerPtr mappy_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
-		if (interrupt_enable_2)
+		if (interrupt_enable_2 != 0)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	

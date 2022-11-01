@@ -156,7 +156,7 @@ public class ddragon3
 		{
 			UINT16 attr = source[1];
 	
-			if (attr & 0x01)	/* enable */
+			if ((attr & 0x01) != 0)	/* enable */
 			{
 				int i;
 				int bank = source[3] & 0xff;
@@ -168,11 +168,11 @@ public class ddragon3
 				int sy = source[0] & 0xff;
 				int height = (attr >> 5) & 0x07;
 	
-				if (attr & 0x04) sx |= 0x100;
-				if (attr & 0x02) sy = 239 + (0x100 - sy); else sy = 240 - sy;
+				if ((attr & 0x04) != 0) sx |= 0x100;
+				if ((attr & 0x02) != 0) sy = 239 + (0x100 - sy); else sy = 240 - sy;
 				if (sx > 0x17f) sx = 0 - (0x200 - sx);
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 304 - sx;
 					sy = 224 - sy;
@@ -199,7 +199,7 @@ public class ddragon3
 		tilemap_set_scrollx(fg_tilemap, 0, ddragon3_fg_scrollx);
 		tilemap_set_scrolly(fg_tilemap, 0, ddragon3_fg_scrolly);
 	
-		if (ddragon3_vreg & 0x40)
+		if ((ddragon3_vreg & 0x40) != 0)
 		{
 			tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);

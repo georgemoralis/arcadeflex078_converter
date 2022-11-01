@@ -266,7 +266,7 @@ public class royalmah
 	
 	static public static ReadHandlerPtr suzume_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (suzume_bank & 0x40)
+		if ((suzume_bank & 0x40) != 0)
 		{
 			return suzume_bank;
 		}

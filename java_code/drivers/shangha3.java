@@ -75,7 +75,7 @@ public class shangha3
 	
 	static WRITE16_HANDLER( shangha3_coinctrl_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			coin_lockout_w(0,~data & 0x0400);
 			coin_lockout_w(1,~data & 0x0400);
@@ -86,7 +86,7 @@ public class shangha3
 	
 	static WRITE16_HANDLER( heberpop_coinctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* the sound ROM bank is selected by the main CPU! */
 			OKIM6295_set_bank_base(0,(data & 0x08) ? 0x40000 : 0x00000);
@@ -101,7 +101,7 @@ public class shangha3
 	
 	static WRITE16_HANDLER( heberpop_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);	/* RST 38h */

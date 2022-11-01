@@ -27,11 +27,11 @@ public class pingpong
 	{
 		if (cpu_getiloops() == 0)
 		{
-			if (intenable & 0x04) cpu_set_irq_line(0, 0, HOLD_LINE);
+			if ((intenable & 0x04) != 0) cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 		else if (cpu_getiloops() % 2)
 		{
-			if (intenable & 0x08) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if ((intenable & 0x08) != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };
 	

@@ -124,13 +124,13 @@ public class vendetta
 	
 	static NVRAM_HANDLER( vendetta )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file)
+			if (file != 0)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -150,7 +150,7 @@ public class vendetta
 	
 		res |= readinputport( 3 ) & 0x0c; /* test switch */
 	
-		if (init_eeprom_count)
+		if (init_eeprom_count != 0)
 		{
 			init_eeprom_count--;
 			res &= 0xfb;
@@ -199,7 +199,7 @@ public class vendetta
 	
 	static void vendetta_video_banking( int select )
 	{
-		if ( select & 1 )
+		if ((select & 1) != 0)
 		{
 			memory_set_bankhandler_r( 2, 0, paletteram_r );
 			memory_set_bankhandler_w( 2, 0, paletteram_xBBBBBGGGGGRRRRR_swap_w );
@@ -564,7 +564,7 @@ public class vendetta
 	
 	public static InterruptHandlerPtr vendetta_irq = new InterruptHandlerPtr() {public void handler()
 	{
-		if (irq_enabled)
+		if (irq_enabled != 0)
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	

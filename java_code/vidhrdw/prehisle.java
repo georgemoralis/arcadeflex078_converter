@@ -145,9 +145,9 @@ public class prehisle
 			int sx = spriteram16[offs + 1];
 			int sy = spriteram16[offs];
 	
-			if (sx & 0x200) sx = -(0xff - (sx & 0xff));	// wraparound
+			if ((sx & 0x200) != 0) sx = -(0xff - (sx & 0xff));	// wraparound
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

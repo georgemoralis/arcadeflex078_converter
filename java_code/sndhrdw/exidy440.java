@@ -203,7 +203,7 @@ public class exidy440
 			return 1;
 		mixer_buffer_right = mixer_buffer_left + SAMPLE_RATE_FAST;
 	
-		if (SOUND_LOG)
+		if (SOUND_LOG != 0)
 			debuglog = fopen("sound.log", "w");
 	
 		return 0;
@@ -250,7 +250,7 @@ public class exidy440
 		int i;
 	
 		/* channels 2 and 3 are half-rate samples */
-		if (ch & 2)
+		if ((ch & 2) != 0)
 		{
 			srcdata = &channel->base[channel->offset >> 1];
 	
@@ -338,12 +338,12 @@ public class exidy440
 	
 			/* get a pointer to the sample data and copy to the left */
 			volume = exidy440_sound_volume[2 * ch + 0];
-			if (volume)
+			if (volume != 0)
 				add_and_scale_samples(ch, mixer_buffer_left, samples, volume);
 	
 			/* get a pointer to the sample data and copy to the left */
 			volume = exidy440_sound_volume[2 * ch + 1];
-			if (volume)
+			if (volume != 0)
 				add_and_scale_samples(ch, mixer_buffer_right, samples, volume);
 	
 			/* update our counters */
@@ -739,7 +739,7 @@ public class exidy440
 		channel->remaining = length * 8;
 	
 		/* channels 2 and 3 play twice as slow, so we need to count twice as many samples */
-		if (ch & 2) channel->remaining *= 2;
+		if ((ch & 2) != 0) channel->remaining *= 2;
 	}
 	
 	
@@ -930,7 +930,7 @@ public class exidy440
 	#endif
 	
 		/* make sure the volume goes smoothly to 0 over the last 512 samples */
-		if (FADE_TO_ZERO)
+		if (FADE_TO_ZERO != 0)
 		{
 			INT16 *data;
 	

@@ -245,7 +245,7 @@ public class config
 			else
 				match = 0;
 	
-			if (match)
+			if (match != 0)
 				s++;
 	
 			if (match != last)
@@ -322,12 +322,12 @@ public class config
 	
 		if (!readconfig) return 0;
 	
-		if (gamedrv)
+		if (gamedrv != 0)
 		{
 			if (gamedrv->clone_of && strlen(gamedrv->clone_of->name))
 			{
 				retval = parse_config (NULL, gamedrv->clone_of);
-				if (retval)
+				if (retval != 0)
 					return retval;
 			}
 			sprintf(buffer, "%s.ini", gamedrv->name);
@@ -337,31 +337,31 @@ public class config
 			sprintf(buffer, "%s", filename);
 		}
 	
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "parsing %s...", buffer);
 	
 		f = mame_fopen (buffer, NULL, FILETYPE_INI, 0);
-		if (f)
+		if (f != 0)
 		{
 			if(osd_rc_read(rc, f, buffer, 1, 1))
 			{
-				if (verbose)
+				if (verbose != 0)
 					fprintf (stderr, "problem parsing %s\n", buffer);
 				retval = 1;
 			}
 			else
 			{
-				if (verbose)
+				if (verbose != 0)
 					fprintf (stderr, "OK.\n");
 			}
 		}
 		else
 		{
-			if (verbose)
+			if (verbose != 0)
 				fprintf (stderr, "N/A\n");
 		}
 	
-		if (f)
+		if (f != 0)
 			mame_fclose (f);
 	
 		return retval;
@@ -448,20 +448,20 @@ public class config
 	#endif
 	
 		/* if requested, write out cmd_name.ini (normally "mame.ini") */
-		if (createconfig)
+		if (createconfig != 0)
 		{
 			rc_save(rc, buffer, 0);
 			exit(0);
 		}
 	
-		if (showconfig)
+		if (showconfig != 0)
 		{
 			sprintf (buffer, " %s running parameters", cmd_name);
 			rc_write(rc, stdout, buffer);
 			exit(0);
 		}
 	
-		if (showusage)
+		if (showusage != 0)
 		{
 			fprintf(stdout, "Usage: %s [" GAMENOUN "] [options]\n" "Options:\n", cmd_name);
 	
@@ -596,7 +596,7 @@ public class config
 			exit(1);
 	
 		/* handle record option */
-		if (recordname)
+		if (recordname != 0)
 		{
 			options.record = mame_fopen(recordname,0,FILETYPE_INPUTLOG,1);
 			if (!options.record)
@@ -660,11 +660,11 @@ public class config
 		}
 	
 		/* override if no rotation requested */
-		if (video_norotate)
+		if (video_norotate != 0)
 			orientation = options.ui_orientation = ROT0;
 	
 		/* rotate right */
-		if (video_ror)
+		if (video_ror != 0)
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -675,7 +675,7 @@ public class config
 		}
 	
 		/* rotate left */
-		if (video_rol)
+		if (video_rol != 0)
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -708,9 +708,9 @@ public class config
 		}
 	
 		/* flip X/Y */
-		if (video_flipx)
+		if (video_flipx != 0)
 			orientation ^= ORIENTATION_FLIP_X;
-		if (video_flipy)
+		if (video_flipy != 0)
 			orientation ^= ORIENTATION_FLIP_Y;
 	
 		blit_flipx = ((orientation & ORIENTATION_FLIP_X) != 0);
@@ -722,7 +722,7 @@ public class config
 			options.vector_width = 640;
 			options.vector_height = 480;
 		}
-		if( blit_swapxy )
+		if (blit_swapxy != 0)
 		{
 			int temp;
 			temp = options.vector_width;
@@ -737,14 +737,14 @@ public class config
 	void cli_frontend_exit(void)
 	{
 		/* close open files */
-		if (logfile) fclose(logfile);
+		if (logfile != 0) fclose(logfile);
 	
 		if (options.playback) mame_fclose(options.playback);
 		if (options.record)   mame_fclose(options.record);
 		if (options.language_file) mame_fclose(options.language_file);
 	
 	#ifdef MESS
-		if (win_write_config)
+		if (win_write_config != 0)
 			write_config(NULL, Machine->gamedrv);
 	#endif /* MESS */
 	}
@@ -754,7 +754,7 @@ public class config
 		static int got_gamename = 0;
 	
 		/* notice: for MESS game means system */
-		if (got_gamename)
+		if (got_gamename != 0)
 		{
 			fprintf(stderr,"error: duplicate gamename: %s\n", arg);
 			return -1;
@@ -798,7 +798,7 @@ public class config
 			}
 		}
 	
-		if (erroroslog)
+		if (erroroslog != 0)
 		{
 			//		char buffer[2048];
 			_vsnprintf(buffer, sizeof(buffer) / sizeof(buffer[0]), text, arg);

@@ -56,7 +56,7 @@ public class flstory
 	
 	public static WriteHandlerPtr flstory_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset & 0x100)
+		if ((offset & 0x100) != 0)
 			paletteram_xxxxBBBBGGGGRRRR_split2_w((offset & 0xff) + (palette_bank << 8),data);
 		else
 			paletteram_xxxxBBBBGGGGRRRR_split1_w((offset & 0xff) + (palette_bank << 8),data);
@@ -64,7 +64,7 @@ public class flstory
 	
 	public static ReadHandlerPtr flstory_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (offset & 0x100)
+		if ((offset & 0x100) != 0)
 			return paletteram_2[ (offset & 0xff) + (palette_bank << 8) ];
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];
@@ -122,7 +122,7 @@ public class flstory
 				sx = spriteram[offs+3];
 				sy = spriteram[offs+0];
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = (240 - sx) & 0xff ;
 					sy = sy - 1 ;
@@ -172,7 +172,7 @@ public class flstory
 				sy = sy*8 - flstory_scrlram[sx];
 				sx = sx * 8;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 248-sx;
 					sy = 248-sy;

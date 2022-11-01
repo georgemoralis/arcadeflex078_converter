@@ -245,7 +245,7 @@ public class pd4990a
 	static void pd4990a_nextbit(void)
 	{
 		++bitno;
-		if(reading)
+		if (reading != 0)
 			pd4990a_readbit();
 		if(reading && bitno==0x34)
 		{
@@ -282,7 +282,7 @@ public class pd4990a
 		{
 			case 0x1:	//load output register
 				bitno=0;
-				if(reading)
+				if (reading != 0)
 					pd4990a_readbit();	//prepare first bit
 				shiftlo=0;
 				shifthi=0;

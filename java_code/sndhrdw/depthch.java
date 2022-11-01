@@ -60,26 +60,26 @@ public class depthch
 	
 		port1State = data;
 	
-		if ( bitsGoneHigh & OUT_PORT_1_LONGEXPL )
+		if ((bitsGoneHigh & OUT_PORT_1_LONGEXPL) != 0)
 		{
 			PLAY( SND_LONGEXPL, 0 );
 		}
 	
-		if ( bitsGoneHigh & OUT_PORT_1_SHRTEXPL )
+		if ((bitsGoneHigh & OUT_PORT_1_SHRTEXPL) != 0)
 		{
 			PLAY( SND_SHRTEXPL, 0 );
 		}
 	
-		if ( bitsGoneHigh & OUT_PORT_1_SPRAY )
+		if ((bitsGoneHigh & OUT_PORT_1_SPRAY) != 0)
 		{
 			PLAY( SND_SPRAY, 0 );
 		}
 	
-		if ( bitsGoneHigh & OUT_PORT_1_SONAR )
+		if ((bitsGoneHigh & OUT_PORT_1_SONAR) != 0)
 		{
 			PLAY( SND_SONAR, 1 );
 		}
-		if ( bitsGoneLow & OUT_PORT_1_SONAR )
+		if ((bitsGoneLow & OUT_PORT_1_SONAR) != 0)
 		{
 			STOP( SND_SONAR );
 		}

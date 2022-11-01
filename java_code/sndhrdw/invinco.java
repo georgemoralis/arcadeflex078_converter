@@ -68,32 +68,32 @@ public class invinco
 	
 		port2State = data;
 	
-		if ( bitsGoneLow & OUT_PORT_2_SAUCER )
+		if ((bitsGoneLow & OUT_PORT_2_SAUCER) != 0)
 		{
 			PLAY( SND_SAUCER, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_MOVE1 )
+		if ((bitsGoneLow & OUT_PORT_2_MOVE1) != 0)
 		{
 			PLAY( SND_MOVE1, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_MOVE2 )
+		if ((bitsGoneLow & OUT_PORT_2_MOVE2) != 0)
 		{
 			PLAY( SND_MOVE2, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_FIRE )
+		if ((bitsGoneLow & OUT_PORT_2_FIRE) != 0)
 		{
 			PLAY( SND_FIRE, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_INVHIT )
+		if ((bitsGoneLow & OUT_PORT_2_INVHIT) != 0)
 		{
 			PLAY( SND_INVHIT, 0 );
 		}
 	
-		if ( bitsGoneLow & OUT_PORT_2_SHIPHIT )
+		if ((bitsGoneLow & OUT_PORT_2_SHIPHIT) != 0)
 		{
 			PLAY( SND_SHIPHIT, 0 );
 		}

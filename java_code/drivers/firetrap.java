@@ -582,7 +582,7 @@ public class firetrap
 	
 	public static InterruptHandlerPtr bootleg = new InterruptHandlerPtr() {public void handler()
 	{
-		if (firetrap_nmi_enable)
+		if (firetrap_nmi_enable != 0)
 			cpu_set_irq_line (0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

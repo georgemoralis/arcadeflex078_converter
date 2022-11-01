@@ -277,7 +277,7 @@ public class m68kdasm
 	
 		if(val == 0x80)
 			sprintf(str, "-$80");
-		else if(val & 0x80)
+		else if ((val & 0x80) != 0)
 			sprintf(str, "-$%x", (0-val) & 0x7f);
 		else
 			sprintf(str, "$%x", val & 0x7f);
@@ -293,7 +293,7 @@ public class m68kdasm
 	
 		if(val == 0x8000)
 			sprintf(str, "-$8000");
-		else if(val & 0x8000)
+		else if ((val & 0x8000) != 0)
 			sprintf(str, "-$%x", (0-val) & 0x7fff);
 		else
 			sprintf(str, "$%x", val & 0x7fff);
@@ -309,7 +309,7 @@ public class m68kdasm
 	
 		if(val == 0x80000000)
 			sprintf(str, "-$80000000");
-		else if(val & 0x80000000)
+		else if ((val & 0x80000000) != 0)
 			sprintf(str, "-$%x", (0-val) & 0x7fffffff);
 		else
 			sprintf(str, "$%x", val & 0x7fffffff);
@@ -419,38 +419,38 @@ public class m68kdasm
 					strcpy(mode, "(");
 					if(preindex || postindex)
 						strcat(mode, "[");
-					if(base)
+					if (base != 0)
 					{
 						strcat(mode, make_signed_hex_str_16(base));
 						comma = 1;
 					}
 					if(*base_reg)
 					{
-						if(comma)
+						if (comma != 0)
 							strcat(mode, ",");
 						strcat(mode, base_reg);
 						comma = 1;
 					}
-					if(postindex)
+					if (postindex != 0)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
 					if(*index_reg)
 					{
-						if(comma)
+						if (comma != 0)
 							strcat(mode, ",");
 						strcat(mode, index_reg);
 						comma = 1;
 					}
-					if(preindex)
+					if (preindex != 0)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
-					if(outer)
+					if (outer != 0)
 					{
-						if(comma)
+						if (comma != 0)
 							strcat(mode, ",");
 						strcat(mode, make_signed_hex_str_16(outer));
 					}
@@ -511,38 +511,38 @@ public class m68kdasm
 					strcpy(mode, "(");
 					if(preindex || postindex)
 						strcat(mode, "[");
-					if(base)
+					if (base != 0)
 					{
 						strcat(mode, make_signed_hex_str_16(base));
 						comma = 1;
 					}
 					if(*base_reg)
 					{
-						if(comma)
+						if (comma != 0)
 							strcat(mode, ",");
 						strcat(mode, base_reg);
 						comma = 1;
 					}
-					if(postindex)
+					if (postindex != 0)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
 					if(*index_reg)
 					{
-						if(comma)
+						if (comma != 0)
 							strcat(mode, ",");
 						strcat(mode, index_reg);
 						comma = 1;
 					}
-					if(preindex)
+					if (preindex != 0)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
-					if(outer)
+					if (outer != 0)
 					{
-						if(comma)
+						if (comma != 0)
 							strcat(mode, ",");
 						strcat(mode, make_signed_hex_str_16(outer));
 					}

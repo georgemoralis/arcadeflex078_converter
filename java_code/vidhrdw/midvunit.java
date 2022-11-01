@@ -198,7 +198,7 @@ public class midvunit
 		for (y = sy; y <= ey; y++)
 		{
 			UINT16 *d = dest + y * 512 + sx;
-			if (pixdata)
+			if (pixdata != 0)
 				for (x = sx; x <= ex; x++)
 					*d++ = pixdata;
 			else
@@ -384,7 +384,7 @@ public class midvunit
 			for (x = sx; x <= ex; x++)
 			{
 				int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-				if (pix) d[x] = pixdata | pix;
+				if (pix != 0) d[x] = pixdata | pix;
 				u += dudx;
 				v += dvdx;
 			}
@@ -456,7 +456,7 @@ public class midvunit
 			for (x = sx; x <= ex; x++)
 			{
 				int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-				if (pix) d[x] = pixdata;
+				if (pix != 0) d[x] = pixdata;
 				u += dudx;
 				v += dvdx;
 			}
@@ -644,7 +644,7 @@ public class midvunit
 				for (x = 0; x < width; x++)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix) d[x] = pixdata | pix;
+					if (pix != 0) d[x] = pixdata | pix;
 					u += dudx;
 					v += dvdx;
 				}
@@ -697,7 +697,7 @@ public class midvunit
 				for (x = 0; x < width; x++)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix) d[x] = pixdata;
+					if (pix != 0) d[x] = pixdata;
 					u += dudx;
 					v += dvdx;
 				}
@@ -831,7 +831,7 @@ public class midvunit
 				for (x = tsx; x <= curscan->ex; x += 2)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix) d[x] = pixdata | pix;
+					if (pix != 0) d[x] = pixdata | pix;
 					u += dudx;
 					v += dvdx;
 				}
@@ -895,7 +895,7 @@ public class midvunit
 				for (x = tsx; x <= curscan->ex; x += 2)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix) d[x] = pixdata;
+					if (pix != 0) d[x] = pixdata;
 					u += dudx;
 					v += dvdx;
 				}
@@ -938,7 +938,7 @@ public class midvunit
 		if (!textured)
 		{
 			/* two cases: straight on and arbitrary */
-			if (straight)
+			if (straight != 0)
 			{
 				if (!dithered)
 					render_straight_flat_quad();
@@ -1041,7 +1041,7 @@ public class midvunit
 	
 	READ32_HANDLER( midvunit_dma_trigger_r )
 	{
-		if (offset)
+		if (offset != 0)
 		{
 	if (keyboard_pressed(KEYCODE_L))
 		logerror("%06X:trigger\n", activecpu_get_pc());

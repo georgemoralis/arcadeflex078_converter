@@ -492,7 +492,7 @@ public class exidy440
 	
 		/* if we're Top Secret, do our refresh here; others are done in the update function above */
 		/* unless we're doing a full refresh (eg. when the driver is paused) */
-		if (exidy440_topsecret)
+		if (exidy440_topsecret != 0)
 		{
 			/* if the scroll changed, mark everything dirty */
 			if (topsecex_yscroll != topsecex_last_yscroll)

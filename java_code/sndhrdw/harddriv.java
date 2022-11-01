@@ -72,10 +72,10 @@ public class harddriv
 	{
 		int irqline = 0;
 	
-		if (mainflag) irqline = 1;
-		if (irq68k) irqline = 3;
+		if (mainflag != 0) irqline = 1;
+		if (irq68k != 0) irqline = 3;
 	
-		if (irqline)
+		if (irqline != 0)
 			cpu_set_irq_line(hdcpu_sound, irqline, ASSERT_LINE);
 		else
 			cpu_set_irq_line(hdcpu_sound, 7, CLEAR_LINE);
@@ -285,7 +285,7 @@ public class harddriv
 	
 	READ16_HANDLER( hdsnd68k_320com_r )
 	{
-		if (cramen)
+		if (cramen != 0)
 			return comram[offset & 0x1ff];
 	
 		logerror("%06X:hdsnd68k_320com_r(%04X) -- not allowed\n", activecpu_get_previouspc(), offset);
@@ -295,7 +295,7 @@ public class harddriv
 	
 	WRITE16_HANDLER( hdsnd68k_320com_w )
 	{
-		if (cramen)
+		if (cramen != 0)
 			COMBINE_DATA(&comram[offset & 0x1ff]);
 		else
 			logerror("%06X:hdsnd68k_320com_w(%04X)=%04X -- not allowed\n", activecpu_get_previouspc(), offset, data);

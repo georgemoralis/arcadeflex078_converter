@@ -157,7 +157,7 @@ public class hyprduel
 		tile			=	(hyprduel_tiletable[table_index + 0] << 16 ) +
 							 hyprduel_tiletable[table_index + 1];
 	
-		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
@@ -195,7 +195,7 @@ public class hyprduel
 		tile			=	(hyprduel_tiletable[table_index + 0] << 16 ) +
 							 hyprduel_tiletable[table_index + 1];
 	
-		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
@@ -238,7 +238,7 @@ public class hyprduel
 		tile			=	(hyprduel_tiletable[table_index + 0] << 16 ) +
 							 hyprduel_tiletable[table_index + 1];
 	
-		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
@@ -468,7 +468,7 @@ public class hyprduel
 	
 			gfxdata		=	base_gfx + (8*8*4/8) * (((attr & 0x000f) << 16) + code);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;		x = max_x - x - width;
 				flipy = !flipy;		y = max_y - y - height;
@@ -612,7 +612,7 @@ public class hyprduel
 		data16_t screenctrl = *hyprduel_screenctrl;
 	
 		dirtyindex = malloc(hyprduel_tiletable_size/4);
-		if (dirtyindex)
+		if (dirtyindex != 0)
 		{
 			int dirty = 0;
 	
@@ -630,7 +630,7 @@ public class hyprduel
 			}
 			memcpy(hypr_tiletable_old,hyprduel_tiletable,hyprduel_tiletable_size);
 	
-			if (dirty)
+			if (dirty != 0)
 			{
 				dirty_tiles(0,hyprduel_vram_0,dirtyindex);
 				dirty_tiles(1,hyprduel_vram_1,dirtyindex);
@@ -656,7 +656,7 @@ public class hyprduel
 			---- ---- ---4 32--
 			---- ---- ---- --1-		? Blank Screen
 			---- ---- ---- ---0		Flip  Screen	*/
-		if (screenctrl & 2)	return;
+		if ((screenctrl & 2) != 0)	return;
 		flip_screen_set(screenctrl & 1);
 	
 		/* If the game supports 16x16 tiles, make sure that the

@@ -32,10 +32,10 @@ public class _88games
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (videobank) return ram[offset];
+		if (videobank != 0) return ram[offset];
 		else
 		{
-			if (zoomreadroms)
+			if (zoomreadroms != 0)
 				return K051316_rom_0_r(offset);
 			else
 				return K051316_0_r(offset);
@@ -44,7 +44,7 @@ public class _88games
 	
 	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videobank) ram[offset] = data;
+		if (videobank != 0) ram[offset] = data;
 		else K051316_0_w(offset,data);
 	} };
 	
@@ -58,7 +58,7 @@ public class _88games
 		/* also 5fce == 2 read roms, == 3 read ram */
 		zoomreadroms = data & 0x04;
 	
-		if (data & 0xf8)
+		if ((data & 0xf8) != 0)
 			usrintf_showmessage("5f84 = %02x",data);
 	} };
 	
@@ -515,7 +515,7 @@ public class _88games
 		/* bit 4: when 0, 051316 RAM at 3800-3fff; when 1, work RAM at 2000-3fff (NVRAM 3370-37ff) */
 		offs = 0x10000 + (lines & 0x07) * 0x2000;
 		memcpy(RAM,&RAM[offs],0x1000);
-		if (lines & 0x08)
+		if ((lines & 0x08) != 0)
 		{
 			if (paletteram != &RAM[0x1000])
 			{

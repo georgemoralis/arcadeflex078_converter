@@ -123,10 +123,10 @@ public class mermaid
 	
 			code = mermaid_background_videoram[offs];
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 				sx = 248 - sx;
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 				sy = 248 - sy;
 	
 			drawgfx(tmpbitmap,Machine->gfx[2],
@@ -173,13 +173,13 @@ public class mermaid
 			flipx = mermaid_foreground_colorram[offs] & 0x40;
 			flipy = mermaid_foreground_colorram[offs] & 0x80;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 31 - sx;
 				flipx = !flipx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 248 - sy;
 				flipy = !flipy;
@@ -227,12 +227,12 @@ public class mermaid
 	
 			code = (spriteram[offs + 0] & 0x3f) | (bank << 6);
 	
-			if (flip_screen_x) {
+			if (flip_screen_x != 0) {
 				flipx = !flipx;
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y) {
+			if (flip_screen_y != 0) {
 				flipy = !flipy;
 				sy = spriteram[offs + 1];
 			}

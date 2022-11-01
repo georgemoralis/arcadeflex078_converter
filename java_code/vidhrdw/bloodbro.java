@@ -169,7 +169,7 @@ public class bloodbro
 			int sx,sy,x,y,width,height,attributes,tile_number,color,flipx,flipy,pri_mask;
 	
 			attributes = spriteram16[offs+0];
-			if (attributes & 0x8000) continue;	/* disabled */
+			if ((attributes & 0x8000) != 0) continue;	/* disabled */
 	
 			width = ((attributes>>7)&7);
 			height = ((attributes>>4)&7);
@@ -227,7 +227,7 @@ public class bloodbro
 	
 			if (sx >= 256) sx -= 512;
 	
-			if (data0 & 0x8000) continue;	/* disabled */
+			if ((data0 & 0x8000) != 0) continue;	/* disabled */
 	
 			/* Remap code 0x800 <-> 0x1000 */
 			code = (code&0x7ff) | ((code&0x800)<<1) | ((code&0x1000)>>1);

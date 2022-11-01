@@ -211,14 +211,14 @@ public class snk
 	
 			tile_number = spriteram[offs+1];
 			attributes  = spriteram[offs+3]; /* YBBX.CCCC */
-			if(attributes & 0x40) tile_number |= 256;
-			if(attributes & 0x20) tile_number |= 512;
+			if ((attributes & 0x40) != 0) tile_number |= 256;
+			if ((attributes & 0x20) != 0) tile_number |= 512;
 	
 			color = attributes & 0xf;
 			sx =  xscroll - spriteram[offs+2];
 			if(!(attributes & 0x80)) sx += 256;
 			sy = -yscroll + spriteram[offs];
-			if(attributes & 0x10) sy += 256;
+			if ((attributes & 0x10) != 0) sy += 256;
 			sx &= 0x1ff;
 			sy &= 0x1ff;
 			if (sx > 512-16) sx -= 512;
@@ -249,16 +249,16 @@ public class snk
 		{
 			int bg_scrollx = -ram[0xcc00] + 15;
 			int bg_scrolly = -ram[0xcb00] + 8;
-			if(attributes & 0x02) bg_scrollx += 256;
-			if(attributes & 0x10) bg_scrolly += 256;
+			if ((attributes & 0x02) != 0) bg_scrollx += 256;
+			if ((attributes & 0x10) != 0) bg_scrolly += 256;
 			tnk3_draw_background( bitmap, bg_scrollx, bg_scrolly, 64, 64, 0 );
 		}
 	
 		{
 			int sp_scrollx = ram[0xca00] + 29;
 			int sp_scrolly = ram[0xc900] + 9;
-			if(attributes & 0x01) sp_scrollx += 256;
-			if(attributes & 0x08) sp_scrolly += 256;
+			if ((attributes & 0x01) != 0) sp_scrollx += 256;
+			if ((attributes & 0x08) != 0) sp_scrolly += 256;
 			tnk3_draw_sprites( bitmap, sp_scrollx, sp_scrolly );
 		}
 	
@@ -355,14 +355,14 @@ public class snk
 					tile_number |= (attributes & 0x60) << 3;
 					break;
 				case 3:
-					if(attributes & 0x40) tile_number |= 256;
+					if ((attributes & 0x40) != 0) tile_number |= 256;
 					break;
 			}
 			color = attributes & 0xf;
 			sx =  xscroll - source[which+2];
 			if(!(attributes & 0x80)) sx += 256;
 			sy = -yscroll + source[which];
-			if(attributes & 0x10) sy += 256;
+			if ((attributes & 0x10) != 0) sy += 256;
 			sx = (sx - 16) & 0x1ff;
 			sy = (sy - 16) & 0x1ff;
 			if (sx > 512-16) sx -= 512;
@@ -639,7 +639,7 @@ public class snk
 				sp32_y += (spp_attribute & 0x08) ? 256:0;
 			}
 	
-			if(sp_attribute & 0xf8) // improves priority
+			if ((sp_attribute & 0xf8) != 0) // improves priority
 			{
 				tdfever_draw_sp( bitmap, sp16_x, sp16_y, 2 );
 				tdfever_draw_sp( bitmap, sp32_x, sp32_y, 1 );

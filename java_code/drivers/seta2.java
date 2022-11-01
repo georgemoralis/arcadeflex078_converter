@@ -204,7 +204,7 @@ public class seta2
 	
 	static WRITE16_HANDLER( grdians_lockout_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			// initially 0, then either $25 (coin 1) or $2a (coin 2)
 			coin_counter_w(0,data & 0x01);	// or 0x04
@@ -298,7 +298,7 @@ public class seta2
 	
 	static WRITE16_HANDLER( mj4simai_keyboard_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			keyboard_row = data & 0xff;
 	}
 	
@@ -414,7 +414,7 @@ public class seta2
 	
 	WRITE16_HANDLER( pzlbowl_coin_counter_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_counter_w(0,data & 0x10);
 			coin_counter_w(1,data & 0x20);

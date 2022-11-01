@@ -548,7 +548,7 @@ public class mame
 					{
 						mame_file *nvram_file = mame_fopen(Machine->gamedrv->name, 0, FILETYPE_NVRAM, 0);
 						(*Machine->drv->nvram_handler)(nvram_file, 0);
-						if (nvram_file)
+						if (nvram_file != 0)
 							mame_fclose(nvram_file);
 					}
 	
@@ -735,7 +735,7 @@ public class mame
 	
 	#ifdef MAME_DEBUG
 		/* if the debugger is enabled, initialize its bitmap and font */
-		if (mame_debug)
+		if (mame_debug != 0)
 		{
 			int depth = options.debug_depth ? options.debug_depth : Machine->color_depth;
 	
@@ -1023,7 +1023,7 @@ public class mame
 		state_save_register_UINT8("generic_video", 0, "buffered_spriteram", buffered_spriteram, spriteram_size);
 	
 		/* do the same for the secon back buffer, if present */
-		if (spriteram_2_size)
+		if (spriteram_2_size != 0)
 		{
 			/* allocate memory */
 			buffered_spriteram_2 = auto_malloc(spriteram_2_size);
@@ -1172,7 +1172,7 @@ public class mame
 	{
 		/* finish updating the screen */
 		force_partial_update(Machine->visible_area.max_y);
-		if( gbPriorityBitmapIsDirty )
+		if (gbPriorityBitmapIsDirty != 0)
 		{
 			fillbitmap( priority_bitmap, 0x00, NULL );
 			gbPriorityBitmapIsDirty = 0;
@@ -1204,7 +1204,7 @@ public class mame
 	
 		/* set the visible area */
 		current_display.game_visible_area = Machine->absolute_visible_area;
-		if (visible_area_changed)
+		if (visible_area_changed != 0)
 			current_display.changed_flags |= GAME_VISIBLE_AREA_CHANGED;
 	
 		/* set the vector dirty list */
@@ -1218,7 +1218,7 @@ public class mame
 	#ifdef MAME_DEBUG
 		/* set the debugger bitmap */
 		current_display.debug_bitmap = Machine->debug_bitmap;
-		if (debugger_bitmap_changed)
+		if (debugger_bitmap_changed != 0)
 			current_display.changed_flags |= DEBUG_BITMAP_CHANGED;
 		debugger_bitmap_changed = 0;
 	
@@ -1248,7 +1248,7 @@ public class mame
 	
 		/* reset dirty flags */
 		visible_area_changed = 0;
-		if (ui_dirty) ui_dirty--;
+		if (ui_dirty != 0) ui_dirty--;
 	}
 	
 	
@@ -1382,7 +1382,7 @@ public class mame
 	
 	void set_led_status(int num, int on)
 	{
-		if (on)
+		if (on != 0)
 			leds_status |=	(1 << num);
 		else
 			leds_status &= ~(1 << num);
@@ -1741,7 +1741,7 @@ public class mame
 	
 			romp = drivers[i]->rom;
 	
-			if (romp)
+			if (romp != 0)
 			{
 				int region_type_used[REGION_MAX];
 				int region_length[REGION_MAX];
@@ -2090,7 +2090,7 @@ public class mame
 	
 			inp = drivers[i]->input_ports;
 	
-			if (inp)
+			if (inp != 0)
 			{
 				while (inp->type != IPT_END)
 				{

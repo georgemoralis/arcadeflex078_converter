@@ -39,7 +39,7 @@ public class fitfight
 			xpos -=48;
 			ypos -=16;
 	
-			if (end) break;
+			if (end != 0) break;
 	
 			 drawgfx(bitmap,gfx,number,colr,xflip,yflip,xpos,ypos,cliprect,TRANSPARENCY_PEN,0);
 	

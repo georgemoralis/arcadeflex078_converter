@@ -198,7 +198,7 @@ public class armedf
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			soundlatch_w(0,((data & 0x7f) << 1) | 1);
 	}
 	

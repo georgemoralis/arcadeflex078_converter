@@ -68,7 +68,7 @@ public class sprcros2
 	
 	public static WriteHandlerPtr sprcros2_bgscrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(sprcros2_m_port7&0x02)
+		if ((sprcros2_m_port7 & 0x02) != 0)
 			tilemap_set_scrollx(sprcros2_bgtilemap,0,0x100-data);
 		else
 			tilemap_set_scrollx(sprcros2_bgtilemap,0,data);
@@ -159,7 +159,7 @@ public class sprcros2
 				flipx = sprcros2_spriteram[offs+1]&0x02;
 				flipy = 0;
 	
-				if (sprcros2_m_port7&0x02)
+				if ((sprcros2_m_port7 & 0x02) != 0)
 				{
 					sx = 224-sx;
 					sy = 224-sy;

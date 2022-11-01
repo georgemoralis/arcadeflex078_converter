@@ -102,7 +102,7 @@ public class m62
 	
 	public static ReadHandlerPtr ldrun2_bankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (ldrun2_bankswap)
+		if (ldrun2_bankswap != 0)
 		{
 			unsigned char *RAM = memory_region(REGION_CPU1);
 	

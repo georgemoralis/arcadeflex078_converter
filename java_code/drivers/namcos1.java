@@ -320,7 +320,7 @@ public class namcos1
 	public static ReadHandlerPtr dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = readinputport(2);
-		if(offset&2) ret>>=4;
+		if ((offset & 2) != 0) ret>>=4;
 		return 0xf0 | ret;
 	} };
 	
@@ -410,7 +410,7 @@ public class namcos1
 	{
 		int ret;
 	
-		if (strobe)
+		if (strobe != 0)
 		{
 			if (!num)
 				ret = (readinputport(1)&0x80) | strobe | ((readinputport(7)&0x07)<<3);

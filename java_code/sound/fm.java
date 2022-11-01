@@ -747,13 +747,13 @@ public class fm
 		ST->mode = v;
 	
 		/* reset Timer b flag */
-		if( v & 0x20 )
+		if ((v & 0x20) != 0)
 			FM_STATUS_RESET(ST,0x02);
 		/* reset Timer a flag */
-		if( v & 0x10 )
+		if ((v & 0x10) != 0)
 			FM_STATUS_RESET(ST,0x01);
 		/* load b */
-		if( v & 0x02 )
+		if ((v & 0x02) != 0)
 		{
 			if( ST->TBC == 0 )
 			{
@@ -771,7 +771,7 @@ public class fm
 			}
 		}
 		/* load a */
-		if( v & 0x01 )
+		if ((v & 0x01) != 0)
 		{
 			if( ST->TAC == 0 )
 			{
@@ -1321,7 +1321,7 @@ public class fm
 			UINT32 fnum_lfo   = ((block_fnum & 0x7f0) >> 4) * 32 * 8;
 			INT32  lfo_fn_table_index_offset = lfo_pm_table[ fnum_lfo + CH->pms + LFO_PM ];
 	
-			if (lfo_fn_table_index_offset)	/* LFO phase modulation active */
+			if (lfo_fn_table_index_offset != 0)	/* LFO phase modulation active */
 			{
 				UINT8  blk;
 				UINT32 fn;
@@ -1475,7 +1475,7 @@ public class fm
 	
 			n = (int)m;		/* 16 bits here */
 			n >>= 4;		/* 12 bits here */
-			if (n&1)		/* round to nearest */
+			if ((n & 1) != 0)		/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1515,7 +1515,7 @@ public class fm
 			o = o / (ENV_STEP/4);
 	
 			n = (int)(2.0*o);
-			if (n&1)						/* round to nearest */
+			if ((n & 1) != 0)						/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1669,7 +1669,7 @@ public class fm
 		OPN->ST.TimerBase = 1.0/((double)OPN->ST.clock / (double)TimerPres);
 	
 		/* SSG part  prescaler set */
-		if( SSGpres ) SSGClk( OPN->ST.index, OPN->ST.clock * 2 / SSGpres );
+		if (SSGpres != 0) SSGClk( OPN->ST.index, OPN->ST.clock * 2 / SSGpres );
 	
 		/* make time tables */
 		init_timetables( &OPN->ST, dt_tab );
@@ -1715,7 +1715,7 @@ public class fm
 		case 0x22:	/* LFO FREQ (YM2608/YM2610/YM2610B/YM2612) */
 			if( OPN->type & TYPE_LFOPAN )
 			{
-				if (v&0x08) /* LFO enabled ? */
+				if ((v & 0x08) != 0) /* LFO enabled ? */
 				{
 					OPN->lfo_inc = OPN->lfo_freq[v&7];
 				}
@@ -1743,10 +1743,10 @@ public class fm
 			if( (v&0x04) && (OPN->type & TYPE_6CH) ) c+=3;
 			CH = OPN->P_CH;
 			CH = &CH[c];
-			if(v&0x10) FM_KEYON(CH,SLOT1); else FM_KEYOFF(CH,SLOT1);
-			if(v&0x20) FM_KEYON(CH,SLOT2); else FM_KEYOFF(CH,SLOT2);
-			if(v&0x40) FM_KEYON(CH,SLOT3); else FM_KEYOFF(CH,SLOT3);
-			if(v&0x80) FM_KEYON(CH,SLOT4); else FM_KEYOFF(CH,SLOT4);
+			if ((v & 0x10) != 0) FM_KEYON(CH,SLOT1); else FM_KEYOFF(CH,SLOT1);
+			if ((v & 0x20) != 0) FM_KEYON(CH,SLOT2); else FM_KEYOFF(CH,SLOT2);
+			if ((v & 0x40) != 0) FM_KEYON(CH,SLOT3); else FM_KEYOFF(CH,SLOT3);
+			if ((v & 0x80) != 0) FM_KEYON(CH,SLOT4); else FM_KEYOFF(CH,SLOT4);
 			break;
 		}
 	}
@@ -2191,7 +2191,7 @@ public class fm
 	{
 		int i;
 	
-		if (FM2203) return (-1);	/* duplicate init. */
+		if (FM2203 != 0) return (-1);	/* duplicate init. */
 		cur_chip = NULL;	/* hiro-shi!! */
 	
 		YM2203NumChips = num;
@@ -2298,7 +2298,7 @@ public class fm
 	{
 		YM2203 *F2203 = &(FM2203[n]);
 	
-		if( c )
+		if (c != 0)
 		{	/* Timer B */
 			TimerBOver( &(F2203->OPN.ST) );
 		}
@@ -3183,7 +3183,7 @@ public class fm
 	{
 		YM2608 *F2608 = &(FM2608[n]);
 	
-		if( v & 0x80 )
+		if ((v & 0x80) != 0)
 		{	/* Reset IRQ flag */
 			FM_STATUS_RESET(&OPN->ST, 0xf7); /* don't touch BUFRDY flag otherwise we'd have to call ymdeltat module to set the flag back */
 		}
@@ -3201,7 +3201,7 @@ public class fm
 		/* SCH,xx,xxx,EN_ZERO,EN_BRDY,EN_EOS,EN_TB,EN_TA */
 	
 		/* extend 3ch. enable/disable */
-		if(v&0x80)
+		if ((v & 0x80) != 0)
 			OPN->type |= TYPE_6CH;	/* OPNA mode - 6 FM channels */
 		else
 			OPN->type &= ~TYPE_6CH;	/* OPN mode - 3 FM channels */
@@ -3445,7 +3445,7 @@ public class fm
 	{
 		int i;
 	
-		if (FM2608) return (-1);	/* duplicate init. */
+		if (FM2608 != 0) return (-1);	/* duplicate init. */
 		cur_chip = NULL;
 	
 		YM2608NumChips = num;
@@ -4159,7 +4159,7 @@ public class fm
 	{
 		int i;
 	
-		if (FM2610) return (-1);	/* duplicate init. */
+		if (FM2610 != 0) return (-1);	/* duplicate init. */
 		cur_chip = NULL;	/* hiro-shi!! */
 	
 		YM2610NumChips = num;
@@ -4445,7 +4445,7 @@ public class fm
 	{
 		YM2610 *F2610 = &(FM2610[n]);
 	
-		if( c )
+		if (c != 0)
 		{	/* Timer B */
 			TimerBOver( &(F2610->OPN.ST) );
 		}
@@ -4571,7 +4571,7 @@ public class fm
 			chan_calc(OPN, cch[2] );
 			chan_calc(OPN, cch[3] );
 			chan_calc(OPN, cch[4] );
-			if( dacen )
+			if (dacen != 0)
 				*cch[5]->connect4 += dacout;
 			else
 				chan_calc(OPN, cch[5] );
@@ -4673,7 +4673,7 @@ public class fm
 	{
 		int i;
 	
-		if (FM2612) return (-1);	/* duplicate init. */
+		if (FM2612 != 0) return (-1);	/* duplicate init. */
 		cur_chip = NULL;	/* hiro-shi!! */
 	
 		YM2612NumChips = num;
@@ -4845,7 +4845,7 @@ public class fm
 	{
 		YM2612 *F2612 = &(FM2612[n]);
 	
-		if( c )
+		if (c != 0)
 		{	/* Timer B */
 			TimerBOver( &(F2612->OPN.ST) );
 		}
@@ -4977,7 +4977,7 @@ public class fm
 	
 		/* Phase Generator */
 		INT32 pms = lfo_pmd * CH->pms / LFO_RATE;
-		if(pms)
+		if (pms != 0)
 		{
 			pg_in1 = (CH->SLOT[SLOT1].Cnt += CH->SLOT[SLOT1].Incr + (INT32)(pms * CH->SLOT[SLOT1].Incr) / PMS_RATE);
 			pg_in2 = (CH->SLOT[SLOT2].Cnt += CH->SLOT[SLOT2].Incr + (INT32)(pms * CH->SLOT[SLOT2].Incr) / PMS_RATE);
@@ -5023,7 +5023,7 @@ public class fm
 		if( eg_out3 < ENV_QUIET )	/* SLOT 3 */
 			*CH->connect3 += OP_OUT(pg_in3,eg_out3);
 		/* SLOT 4 */
-		if(NoiseIncr)
+		if (NoiseIncr != 0)
 		{
 			NoiseCnt += NoiseIncr;
 			if( eg_out4 < ENV_QUIET )
@@ -5117,10 +5117,10 @@ public class fm
 				/* CSM mode */
 				if( OPM->ST.mode & 0x80 ) break;
 				CH = &OPM->CH[c];
-				if(v&0x08) FM_KEYON(CH,SLOT1); else FM_KEYOFF(CH,SLOT1);
-				if(v&0x10) FM_KEYON(CH,SLOT2); else FM_KEYOFF(CH,SLOT2);
-				if(v&0x20) FM_KEYON(CH,SLOT3); else FM_KEYOFF(CH,SLOT3);
-				if(v&0x40) FM_KEYON(CH,SLOT4); else FM_KEYOFF(CH,SLOT4);
+				if ((v & 0x08) != 0) FM_KEYON(CH,SLOT1); else FM_KEYOFF(CH,SLOT1);
+				if ((v & 0x10) != 0) FM_KEYON(CH,SLOT2); else FM_KEYOFF(CH,SLOT2);
+				if ((v & 0x20) != 0) FM_KEYON(CH,SLOT3); else FM_KEYOFF(CH,SLOT3);
+				if ((v & 0x40) != 0) FM_KEYON(CH,SLOT4); else FM_KEYOFF(CH,SLOT4);
 				break;
 			case 0x0f:	/* Noise freq (ch7.op4) */
 				/* b7 = Noise enable */
@@ -5130,7 +5130,7 @@ public class fm
 					(UINT32)((1<<FREQ_BITS) / 65536 * (v&0x1f) * OPM->ST.freqbase);
 				cur_chip = NULL;
 	#if 1
-				if( v & 0x80 ){
+				if ((v & 0x80) != 0){
 					LOG(LOG_WAR,("OPM Noise mode selelted\n"));
 				}
 	#endif
@@ -5162,7 +5162,7 @@ public class fm
 				}
 				break;
 			case 0x19:	/* PMD/AMD */
-				if( v & 0x80 ) OPM->pmd = v & 0x7f;
+				if ((v & 0x80) != 0) OPM->pmd = v & 0x7f;
 				else           OPM->amd = v & 0x7f;
 				break;
 	
@@ -5350,7 +5350,7 @@ public class fm
 	{
 	    int i;
 	
-	    if (FMOPM) return (-1);	/* duplicate init. */
+	    if (FMOPM != 0) return (-1);	/* duplicate init. */
 	    cur_chip = NULL;	/* hiro-shi!! */
 	
 		YM2151NumChips = num;
@@ -5459,7 +5459,7 @@ public class fm
 		for( i=0; i < length ; i++ )
 		{
 			/* LFO */
-			if( LFOIncr )
+			if (LFOIncr != 0)
 			{
 				INT32 depth = OPM_LFO_wave[(LFOCnt+=LFOIncr)>>LFO_SH];
 				lfo_amd = depth * amd;
@@ -5490,7 +5490,7 @@ public class fm
 	{
 		YM2151 *F2151 = &(FMOPM[n]);
 	
-		if( c )
+		if (c != 0)
 		{	/* Timer B */
 			TimerBOver( &(F2151->ST) );
 		}

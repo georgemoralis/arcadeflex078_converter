@@ -190,7 +190,7 @@ public class suprloco
 	
 	INLINE void draw_pixel(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int x,int y,int color)
 	{
-		if (flip_screen)
+		if (flip_screen != 0)
 		{
 			x = bitmap->width - x - 1;
 			y = bitmap->height - y - 1;
@@ -251,7 +251,7 @@ public class suprloco
 	
 			while (1)
 			{
-				if (flipx)	/* flip x */
+				if (flipx != 0)	/* flip x */
 				{
 					data = *gfx--;
 					color1 = data & 0x0f;
@@ -265,11 +265,11 @@ public class suprloco
 				}
 	
 				if (color1 == 15) break;
-				if (color1)
+				if (color1 != 0)
 					draw_pixel(bitmap,cliprect,sx+col,  adjy,spr_palette[color1]);
 	
 				if (color2 == 15) break;
-				if (color2)
+				if (color2 != 0)
 					draw_pixel(bitmap,cliprect,sx+col+1,adjy,spr_palette[color2]);
 	
 				col += 2;

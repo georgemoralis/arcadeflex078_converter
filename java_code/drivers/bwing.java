@@ -61,7 +61,7 @@ public class bwing
 		switch (cpu_getiloops())
 		{
 			case 0:
-				if (ffcount)
+				if (ffcount != 0)
 				{
 					ffcount--;
 					latch_data = sound_fifo[fftail];

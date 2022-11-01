@@ -91,7 +91,7 @@ public class avengrgs
 	{
 		if (mem_mask==0xffff00ff) {
 			data8_t ebyte=(data>>8)&0xff;
-			if (ebyte&0x80) {
+			if ((ebyte & 0x80) != 0) {
 				EEPROM_set_clock_line((ebyte & 0x2) ? ASSERT_LINE : CLEAR_LINE);
 				EEPROM_write_bit(ebyte & 0x1);
 				EEPROM_set_cs_line((ebyte & 0x4) ? CLEAR_LINE : ASSERT_LINE);
@@ -132,7 +132,7 @@ public class avengrgs
 	static WRITE32_HANDLER( avengrs_sound_w )
 	{
 		if (mem_mask==0x00ffffff) {
-			if (offset)
+			if (offset != 0)
 				YMZ280B_data_0_w(0,data>>24);
 			else
 				YMZ280B_register_0_w(0,data>>24);

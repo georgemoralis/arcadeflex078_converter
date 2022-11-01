@@ -251,7 +251,7 @@ public class tlc34076
 	
 	WRITE16_HANDLER( tlc34076_lsb_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			tlc34076_w(offset, data);
 	}
 	
@@ -262,7 +262,7 @@ public class tlc34076
 	
 	WRITE16_HANDLER( tlc34076_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			tlc34076_w(offset, data >> 8);
 	}
 	

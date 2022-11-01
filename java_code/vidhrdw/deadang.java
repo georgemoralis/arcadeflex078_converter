@@ -112,17 +112,17 @@ public class deadang
 			fy= spriteram[offs+1]&0x40;
 			y = spriteram[offs+0];
 			x = spriteram[offs+4];
-			if (fy) fy=0; else fy=1;
+			if (fy != 0) fy=0; else fy=1;
 			if (spriteram[offs+5]&1) x=0-(0xff-x);
 	
 			color = (spriteram[offs+3]>>4)&0xf;
 			sprite = (spriteram[offs+2]+(spriteram[offs+3]<<8))&0xfff;
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				x=240-x;
 				y=240-y;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 			}
 	
 			pdrawgfx(bitmap,Machine->gfx[1],

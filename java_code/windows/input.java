@@ -543,7 +543,7 @@ public class input
 			goto cant_set_format;
 	
 		// set the cooperative level
-		if (use_lightgun)
+		if (use_lightgun != 0)
 			result = IDirectInputDevice_SetCooperativeLevel(mouse_device[mouse_count], win_video_window,
 						DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 		else
@@ -554,7 +554,7 @@ public class input
 			goto cant_set_coop_level;
 	
 		// increment the count
-		if (use_lightgun)
+		if (use_lightgun != 0)
 			lightgun_count++;
 		mouse_count++;
 		return DIENUM_CONTINUE;
@@ -665,7 +665,7 @@ public class input
 			if (result != DI_OK)
 				goto cant_create_dinput;
 		}
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Using DirectInput %d\n", dinput_version >> 8);
 	
 		// initialize keyboard devices
@@ -696,7 +696,7 @@ public class input
 		init_joylist();
 	
 		// print the results
-		if (verbose)
+		if (verbose != 0)
 			fprintf(stderr, "Keyboards=%d  Mice=%d  Joysticks=%d Lightguns=%d\n", keyboard_count, mouse_count, joystick_count, lightgun_count);
 		return 0;
 	
@@ -745,7 +745,7 @@ public class input
 		}
 	
 		// release DirectInput
-		if (dinput)
+		if (dinput != 0)
 			IDirectInput_Release(dinput);
 		dinput = NULL;
 	}
@@ -761,7 +761,7 @@ public class input
 		int i;
 	
 		// if paused, unacquire all devices
-		if (paused)
+		if (paused != 0)
 		{
 			// unacquire all keyboards
 			for (i = 0; i < keyboard_count; i++)
@@ -848,7 +848,7 @@ public class input
 				int vk = VKCODE(keylist[i].code);
 	
 				// if we have a non-zero VK, query it
-				if (vk)
+				if (vk != 0)
 					keyboard_state[0][dik] = (GetAsyncKeyState(vk) >> 15) & 1;
 			}
 	
@@ -982,13 +982,13 @@ public class input
 			// keyboard events before the system is initialized, they are all of the
 			// "press any key" to continue variety
 			int result = _kbhit();
-			if (result)
+			if (result != 0)
 				_getch();
 			return result;
 		}
 	
 		// otherwise, just return the current keystate
-		if (steadykey)
+		if (steadykey != 0)
 			return currkey[dik];
 		else
 			return keyboard_state[0][dik];
@@ -1003,7 +1003,7 @@ public class input
 	int osd_readkey_unicode(int flush)
 	{
 	#if 0
-		if (flush) clear_keybuf();
+		if (flush != 0) clear_keybuf();
 		if (keypressed())
 			return ureadkey(NULL);
 		else
@@ -1038,7 +1038,7 @@ public class input
 	
 				// copy the name
 				char *namecopy = malloc(strlen(instance.tszName) + 1);
-				if (namecopy)
+				if (namecopy != 0)
 				{
 					unsigned code, standardcode;
 					int entry;
@@ -1070,7 +1070,7 @@ public class input
 						temp = realloc (osd_input_keywords, (size_osd_ik + 16)*sizeof (struct ik));
 	
 						// if the realloc was successful
-						if (temp)
+						if (temp != 0)
 						{
 							// point to the new buffer and increase the size indicator
 							osd_input_keywords =  temp;
@@ -1132,7 +1132,7 @@ public class input
 	
 		// copy the name
 		char *namecopy = malloc(strlen(name) + 1);
-		if (namecopy)
+		if (namecopy != 0)
 		{
 			int entry;
 	
@@ -1156,7 +1156,7 @@ public class input
 				temp = realloc (osd_input_keywords, (size_osd_ik + 16)*sizeof (struct ik));
 	
 				// if the realloc was successful
-				if (temp)
+				if (temp != 0)
 				{
 					// point to the new buffer and increase the size indicator
 					osd_input_keywords =  temp;
@@ -1355,7 +1355,7 @@ public class input
 					return lightgun_dual_player_state[joyindex];
 				}
 							
-				if (use_lightgun) {
+				if (use_lightgun != 0) {
 					if (use_lightgun_reload && joynum==0) {
 						if (joyindex==0 && (mouse_state[0].rgbButtons[1]&0x80))
 							return 1;
@@ -1511,16 +1511,16 @@ public class input
 		}
 	
 		// Warning message to users - design wise this probably isn't the best function to put this in...
-		if (win_window_mode)
+		if (win_window_mode != 0)
 			usrintf_showmessage("Lightgun not supported in windowed mode");
 	
 		// Hack - if button 2 is pressed on lightgun, then return 0,0 (off-screen) to simulate reload
-		if (use_lightgun_reload)
+		if (use_lightgun_reload != 0)
 		{
 			int return_offscreen=0;
 	
 			// In dualmode we need to use the buttons returned from Windows messages
-			if (use_lightgun_dual)
+			if (use_lightgun_dual != 0)
 			{
 				if (player==0 && lightgun_dual_player_state[1])
 					return_offscreen=1;
@@ -1534,7 +1534,7 @@ public class input
 					return_offscreen=1;
 			}
 	
-			if (return_offscreen)
+			if (return_offscreen != 0)
 			{
 				*deltax = -128;
 				*deltay = -128;
@@ -1543,7 +1543,7 @@ public class input
 		}
 	
 		// Act-Labs dual lightgun - _only_ works with Windows messages for input location
-		if (use_lightgun_dual)
+		if (use_lightgun_dual != 0)
 		{
 			if (player==0)
 			{
@@ -1671,11 +1671,11 @@ public class input
 		// open the specified controller type/filename
 		f = mame_fopen (ctype, filename, FILETYPE_CTRLR, 0);
 	
-		if (f)
+		if (f != 0)
 		{
-			if (verbose)
+			if (verbose != 0)
 			{
-				if (ctype)
+				if (ctype != 0)
 					fprintf (stderr, "trying to parse ctrlr file %s/%s.ini\n", ctype, filename);
 				else
 					fprintf (stderr, "trying to parse ctrlr file %s.ini\n", filename);
@@ -1684,9 +1684,9 @@ public class input
 			// process this file
 			if(osd_rc_read(iptrc, f, filename, 1, 1))
 			{
-				if (verbose)
+				if (verbose != 0)
 				{
-					if (ctype)
+					if (ctype != 0)
 						fprintf (stderr, "problem parsing ctrlr file %s/%s.ini\n", ctype, filename);
 					else
 						fprintf (stderr, "problem parsing ctrlr file %s.ini\n", filename);
@@ -1695,7 +1695,7 @@ public class input
 		}
 	
 		// close the file
-		if (f)
+		if (f != 0)
 			mame_fclose (f);
 	}
 	
@@ -1739,7 +1739,7 @@ public class input
 	
 		// only process the default definitions if the input port definitions
 		// pointer has been defined
-		if (idef)
+		if (idef != 0)
 		{
 			// if a keycode was re-assigned
 			if (pinput_keywords->type == IKT_STD)
@@ -1883,10 +1883,10 @@ public class input
 		if (ctrlrtype == NULL || *ctrlrtype == 0 || (stricmp(ctrlrtype,"Standard") == 0))
 		{
 			// default to the legacy controller types if selected
-			if (hotrod)
+			if (hotrod != 0)
 				ctrlrtype = "hotrod";
 	
-			if (hotrodse)
+			if (hotrodse != 0)
 				ctrlrtype = "hotrodse";
 		}
 	#endif
@@ -2029,9 +2029,9 @@ public class input
 		}
 	
 		// print the results
-		if (verbose)
+		if (verbose != 0)
 		{
-			if (ctrlrname)
+			if (ctrlrname != 0)
 				fprintf (stderr,"\"%s\" controller support enabled\n",ctrlrname);
 	
 			fprintf(stderr, "Mouse support %sabled\n",use_mouse ? "en" : "dis");
@@ -2127,9 +2127,9 @@ public class input
 			UINT				LedFlags=0;
 	
 			// Demangle lights to match 95/98
-			if (state & 0x1) LedFlags |= KEYBOARD_NUM_LOCK_ON;
-			if (state & 0x2) LedFlags |= KEYBOARD_CAPS_LOCK_ON;
-			if (state & 0x4) LedFlags |= KEYBOARD_SCROLL_LOCK_ON;
+			if ((state & 0x1) != 0) LedFlags |= KEYBOARD_NUM_LOCK_ON;
+			if ((state & 0x2) != 0) LedFlags |= KEYBOARD_CAPS_LOCK_ON;
+			if ((state & 0x4) != 0) LedFlags |= KEYBOARD_SCROLL_LOCK_ON;
 	
 			// Address first keyboard
 			InputBuffer.UnitId = 0;

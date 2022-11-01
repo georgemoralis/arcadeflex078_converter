@@ -166,7 +166,7 @@ public class ttmahjng
 		x = ((offset & 0x3f) << 2);
 		y = (offset & 0xffc0) >> 6;
 	
-		if (video_flip)
+		if (video_flip != 0)
 		{
 			x = 255 - x;
 			y = 255 - y;
@@ -177,7 +177,7 @@ public class ttmahjng
 		color2 = ((data & 0x20) >> 4) | ((data & 0x02) >> 1);
 		color1 = ((data & 0x10) >> 3) | ((data & 0x01)     );
 	
-		if (video_flip)
+		if (video_flip != 0)
 		{
 			plot_pixel(bitmap, x  , y, Machine->pens[color1 | coloroffset]);
 			plot_pixel(bitmap, x-1, y, Machine->pens[color2 | coloroffset]);
@@ -202,7 +202,7 @@ public class ttmahjng
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_ttmahjng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_remap_1)
+		if (video_remap_1 != 0)
 		{
 			modify_pen(0, video_color_select_1 + 0);
 			modify_pen(1, video_color_select_1 + 1);
@@ -210,7 +210,7 @@ public class ttmahjng
 			modify_pen(3, video_color_select_1 + 3);
 		}
 	
-		if (video_remap_2)
+		if (video_remap_2 != 0)
 		{
 			modify_pen(4, video_color_select_2 + 0);
 			modify_pen(5, video_color_select_2 + 1);

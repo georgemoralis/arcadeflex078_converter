@@ -703,13 +703,13 @@ public class spdbuggy
 	
 	
 		/* Draw the background */
-		if (layers_ctrl & 1)	tilemap_draw(bitmap, cliprect, bg_tilemap,  0, 0);
+		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap, cliprect, bg_tilemap,  0, 0);
 		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
 		/* Draw the sprites */
-		if (layers_ctrl & 8)	draw_sprites(bitmap, cliprect);
+		if ((layers_ctrl & 8) != 0)	draw_sprites(bitmap, cliprect);
 	
 		/* Draw the foreground (text) */
-		if (layers_ctrl & 4)	tilemap_draw(bitmap, cliprect, fg_tilemap,  0, 0);
+		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap, cliprect, fg_tilemap,  0, 0);
 	} };
 }

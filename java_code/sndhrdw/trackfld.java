@@ -78,10 +78,10 @@ public class trackfld
 	        /* A9 = RST pin 1=reset                                */
 	
 	        /* A8 VLM5030 ST pin */
-	        if( changes & 0x100 )
+	        if ((changes & 0x100) != 0)
 	            VLM5030_ST( offset&0x100 );
 	        /* A9 VLM5030 RST pin */
-	        if( changes & 0x200 )
+	        if ((changes & 0x200) != 0)
 	            VLM5030_RST( offset&0x200 );
 	    }
 	    last_addr = offset;
@@ -105,10 +105,10 @@ public class trackfld
 	    /* A8 = SN76489    output disable (don't care ) */
 	
 	    /* A4 VLM5030 ST pin */
-	    if( changes & 0x10 )
+	    if ((changes & 0x10) != 0)
 	        VLM5030_ST( offset&0x10 );
 	    /* A5 VLM5030 RST pin */
-	    if( changes & 0x20 )
+	    if ((changes & 0x20) != 0)
 	        VLM5030_RST( offset&0x20 );
 	
 	    last_addr = offset;

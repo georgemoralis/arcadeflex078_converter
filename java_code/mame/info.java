@@ -72,7 +72,7 @@ public class info
 		if (!OUTPUT_XML)
 		{
 			fprintf(out, "\"");
-			if (s)
+			if (s != 0)
 			{
 				while (*s)
 				{
@@ -100,7 +100,7 @@ public class info
 		}
 		else
 		{
-			if (s)
+			if (s != 0)
 			{
 				while (*s)
 				{
@@ -125,12 +125,12 @@ public class info
 	/* Print a statement string */
 	static void print_statement_string(int OUTPUT_XML, FILE* out, const char* s)
 	{
-		if (OUTPUT_XML)
+		if (OUTPUT_XML != 0)
 		{
 			print_free_string(OUTPUT_XML, out, s);
 			return;
 		}
-		if (s)
+		if (s != 0)
 		{
 			while (*s)
 			{
@@ -187,7 +187,7 @@ public class info
 					fprintf(out, "%s", SELECT(L2N, "\""));
 					if (def == input->default_value)
 					{
-						if (OUTPUT_XML)
+						if (OUTPUT_XML != 0)
 						{
 							fprintf(out, " default=\"yes\"");
 						}
@@ -366,15 +366,15 @@ public class info
 	
 		fprintf(out, SELECT(L1P "input" L2B, "\t\t<input"));
 		fprintf(out, SELECT(L2P "players %d" L2N, " players=\"%d\""), nplayer );
-		if (control)
+		if (control != 0)
 			fprintf(out, SELECT(L2P "control %s" L2N, " control=\"%s\""), control );
-		if (nbutton)
+		if (nbutton != 0)
 			fprintf(out, SELECT(L2P "buttons %d" L2N, " buttons=\"%d\""), nbutton );
-		if (ncoin)
+		if (ncoin != 0)
 			fprintf(out, SELECT(L2P "coins %d" L2N, " coins=\"%d\""), ncoin );
-		if (service)
+		if (service != 0)
 			fprintf(out, SELECT(L2P "service %s" L2N, " service=\"%s\""), service );
-		if (tilt)
+		if (tilt != 0)
 			fprintf(out, SELECT(L2P "tilt %s" L2N, " tilt=\"%s\""), tilt );
 		fprintf(out, SELECT(L2E L1N, "/>\n"));
 	}
@@ -533,7 +533,7 @@ public class info
 	
 			if (!is_disk)
 			{
-				if (OUTPUT_XML)
+				if (OUTPUT_XML != 0)
 				{
 					if (hash_data_has_info(ROM_GETHASHDATA(rom), HASH_INFO_NO_DUMP))
 						fprintf(out, " status=\"nodump\"");
@@ -735,7 +735,7 @@ public class info
 		}
 	
 		fprintf(out, SELECT(L2P "orientation %s" L2N, " orientation=\"%s\""), orientation ? "vertical" : "horizontal" );
-		if (showxy)
+		if (showxy != 0)
 		{
 			fprintf(out, SELECT(L2P "x %d" L2N, " width=\"%d\""), dx);
 			fprintf(out, SELECT(L2P "y %d" L2N, " height=\"%d\""), dy);
@@ -780,7 +780,7 @@ public class info
 		fprintf(out, SELECT(L1P "sound" L2B, "\t\t<sound"));
 	
 		/* sound channel */
-		if (has_sound)
+		if (has_sound != 0)
 		{
 			if (driver.sound_attributes & SOUND_SUPPORTS_STEREO)
 				fprintf(out, SELECT(L2P "channels 2" L2N, " channels=\"2\""));

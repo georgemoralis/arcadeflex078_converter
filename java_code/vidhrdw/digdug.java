@@ -218,14 +218,14 @@ public class digdug
 					sy = my - 2;
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
 				}
 	
 				vrval = videoram[offs];
-				if (pf)
+				if (pf != 0)
 				{
 					/* first draw the playfield */
 					pfval = pf[offs];
@@ -274,7 +274,7 @@ public class digdug
 				int flipx = spriteram_3[offs] & 1;
 				int flipy = spriteram_3[offs] & 2;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -304,7 +304,7 @@ public class digdug
 						digdug_draw_sprite(bitmap,3+sprite,color,flipx,flipy,x,y-16);
 						digdug_draw_sprite(bitmap,2+sprite,color,flipx,flipy,x+16,y-16);
 					}
-					else if (flipy)
+					else if (flipy != 0)
 					{
 						digdug_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y);
 						digdug_draw_sprite(bitmap,1+sprite,color,flipx,flipy,x+16,y);

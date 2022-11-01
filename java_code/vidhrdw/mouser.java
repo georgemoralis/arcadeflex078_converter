@@ -101,12 +101,12 @@ public class mouser
 				sx = offs % 32;
 				sy = offs / 32;
 	
-				if (flip_screen_x)
+				if (flip_screen_x != 0)
 				{
 					sx = 31 - sx;
 				}
 	
-				if (flip_screen_y)
+				if (flip_screen_y != 0)
 				{
 					sy = 31 - sy;
 				}
@@ -142,13 +142,13 @@ public class mouser
 			flipx = (spriteram[offs]&0x40)>>6;
 			flipy = (spriteram[offs]&0x80)>>7;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				flipx = !flipx;
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				flipy = !flipy;
 				sy = 238 - sy;
@@ -172,13 +172,13 @@ public class mouser
 			flipx = (spriteram[offs]&0x40)>>6;
 			flipy = (spriteram[offs]&0x80)>>7;
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				flipx = !flipx;
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				flipy = !flipy;
 				sy = 238 - sy;

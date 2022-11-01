@@ -158,7 +158,7 @@ public class dassault
 	static WRITE16_HANDLER( dassault_control_w )
 	{
 		coin_counter_w(0,data&1);
-		if (data&0xfffe)
+		if ((data & 0xfffe) != 0)
 			logerror("Coin cointrol %04x\n",data);
 	}
 	

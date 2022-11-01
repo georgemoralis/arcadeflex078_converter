@@ -55,12 +55,12 @@ public class atarig1
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 1;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 2;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -86,7 +86,7 @@ public class atarig1
 	
 	static WRITE16_HANDLER( mo_control_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			atarirle_control_w(0, data & 7);
 	}
 	
@@ -108,7 +108,7 @@ public class atarig1
 	static READ16_HANDLER( special_port0_r )
 	{
 		int temp = readinputport(0);
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x1000;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x1000;
 		temp ^= 0x2000;		/* A2DOK always high for now */
 		return temp;
 	}
@@ -123,7 +123,7 @@ public class atarig1
 	static READ16_HANDLER( a2d_data_r )
 	{
 		/* Pit Fighter has no A2D, just another input port */
-		if (atarig1_pitfight)
+		if (atarig1_pitfight != 0)
 			return readinputport(1);
 	
 		/* otherwise, assume it's hydra */
@@ -170,7 +170,7 @@ public class atarig1
 			bslapstic_primed = 1;
 	
 		/* one of 4 bankswitchers produces the result */
-		else if (bslapstic_primed)
+		else if (bslapstic_primed != 0)
 		{
 			if (offset == 0x42)
 				update_bank(0), bslapstic_primed = 0;
@@ -192,7 +192,7 @@ public class atarig1
 	
 		/* allocate memory for a copy of bank 0 */
 		bslapstic_bank0 = auto_malloc(0x2000);
-		if (bslapstic_bank0)
+		if (bslapstic_bank0 != 0)
 			memcpy(bslapstic_bank0, bslapstic_base, 0x2000);
 	
 		/* not primed by default */

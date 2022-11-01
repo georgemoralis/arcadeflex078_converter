@@ -121,7 +121,7 @@ public class berzerk
 	
 	
 		/* Bit 3 is the flip bit */
-		if (magicram_control & 0x08)
+		if ((magicram_control & 0x08) != 0)
 		{
 			data3 = BITSWAP8(data3,0,1,2,3,4,5,6,7);
 		}

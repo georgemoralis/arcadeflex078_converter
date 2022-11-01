@@ -75,18 +75,18 @@ public class skychut
 			if (x >= cliprect->min_x && x+7 <= cliprect->max_x
 					&& y >= cliprect->min_y && y <= cliprect->max_y)
 			{
-				if (mask&0x80) plot_pixel(bitmap,x+0,y,col);
-				if (mask&0x40) plot_pixel(bitmap,x+1,y,col);
-				if (mask&0x20) plot_pixel(bitmap,x+2,y,col);
-				if (mask&0x10) plot_pixel(bitmap,x+3,y,col);
-				if (mask&0x08) plot_pixel(bitmap,x+4,y,col);
-				if (mask&0x04) plot_pixel(bitmap,x+5,y,col);
-				if (mask&0x02) plot_pixel(bitmap,x+6,y,col);
-				if (mask&0x01) plot_pixel(bitmap,x+7,y,col);
+				if ((mask & 0x80) != 0) plot_pixel(bitmap,x+0,y,col);
+				if ((mask & 0x40) != 0) plot_pixel(bitmap,x+1,y,col);
+				if ((mask & 0x20) != 0) plot_pixel(bitmap,x+2,y,col);
+				if ((mask & 0x10) != 0) plot_pixel(bitmap,x+3,y,col);
+				if ((mask & 0x08) != 0) plot_pixel(bitmap,x+4,y,col);
+				if ((mask & 0x04) != 0) plot_pixel(bitmap,x+5,y,col);
+				if ((mask & 0x02) != 0) plot_pixel(bitmap,x+6,y,col);
+				if ((mask & 0x01) != 0) plot_pixel(bitmap,x+7,y,col);
 			}
 		}
 	
-		if (bottomline)
+		if (bottomline != 0)
 		{
 			int y;
 	

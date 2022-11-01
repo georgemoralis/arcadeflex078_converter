@@ -138,7 +138,7 @@ public class malzak
 	public static WriteHandlerPtr port40_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	usrintf_showmessage("S2650 [0x%04x]: port 0x40 write: 0x%02x",cpunum_get_pc_byte(0),data);
-	//	if(data & 0x01)
+	//	if ((data & 0x01) != 0)
 	//		irqenable = 1;
 	//	else
 	//		irqenable = 0;

@@ -749,7 +749,7 @@ public class unzip
 		const char* s1 = file;
 		/* start comparison after last / */
 		const char* s2 = strrchr(zipfile,'/');
-		if (s2)
+		if (s2 != 0)
 			++s2;
 		else
 			s2 = zipfile;

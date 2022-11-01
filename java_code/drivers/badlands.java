@@ -126,12 +126,12 @@ public class badlands
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state)
+		if (atarigen_video_int_state != 0)
 			newstate = 1;
-		if (atarigen_sound_int_state)
+		if (atarigen_sound_int_state != 0)
 			newstate = 2;
 	
-		if (newstate)
+		if (newstate != 0)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -141,7 +141,7 @@ public class badlands
 	static void scanline_update(int scanline)
 	{
 		/* sound IRQ is on 32V */
-		if (scanline & 32)
+		if ((scanline & 32) != 0)
 			atarigen_6502_irq_ack_r(0);
 		else if (!(readinputport(0) & 0x40))
 			atarigen_6502_irq_gen();
@@ -195,7 +195,7 @@ public class badlands
 	static READ16_HANDLER( sound_busy_r )
 	{
 		int temp = 0xfeff;
-		if (atarigen_cpu_to_sound_ready) temp ^= 0x0100;
+		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0100;
 		return temp;
 	}
 	
@@ -246,8 +246,8 @@ public class badlands
 				*/
 				result = readinputport(3);
 				if (!(readinputport(0) & 0x0080)) result ^= 0x90;
-				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
 				result ^= 0x10;
 				break;
 	

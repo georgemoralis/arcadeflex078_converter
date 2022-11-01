@@ -27,7 +27,7 @@ static void i286_trap2(int number)
 
 static int i286_selector_okay(UINT16 selector)
 {
-	if (selector&4) {
+	if ((selector & 4) != 0) {
 		return (selector&~7)<I.ldtr.limit;
 	} else {
 		return (selector&~7)<I.gdtr.limit;
@@ -36,7 +36,7 @@ static int i286_selector_okay(UINT16 selector)
 
 static offs_t i286_selector_to_address(UINT16 selector)
 {
-	if (selector&4) {
+	if ((selector & 4) != 0) {
 		return I.ldtr.base+(selector&~7);
 	} else {
 		return I.gdtr.base+(selector&~7);
@@ -45,14 +45,14 @@ static offs_t i286_selector_to_address(UINT16 selector)
 
 static void i286_data_descriptor(int reg, UINT16 selector)
 {
-	if (PM) {
+	if (PM != 0) {
 		UINT16 help;
 		/* selector format
 		   15..3 number/address in descriptor table
 		   2: 0 global, 1 local descriptor table
 		   1,0: requested privileg level
 		   must be higher or same as current privileg level in code selector */
-		if (selector&4) { /* local descriptor table */
+		if ((selector & 4) != 0) { /* local descriptor table */
 			if (selector>I.ldtr.limit) i286_trap2(GENERAL_PROTECTION_FAULT);
 			I.sregs[reg]=selector;
 			I.limit[reg]=ReadWord(I.ldtr.base+(selector&~7));
@@ -78,13 +78,13 @@ static void i286_data_descriptor(int reg, UINT16 selector)
 static void i286_code_descriptor(UINT16 selector, UINT16 offset)
 {
 	UINT16 word1, word2, word3;
-	if (PM) {
+	if (PM != 0) {
 		/* selector format
 		   15..3 number/address in descriptor table
 		   2: 0 global, 1 local descriptor table
 		   1,0: requested privileg level
 		   must be higher or same as current privileg level in code selector */
-		if (selector&4) { /* local descriptor table */
+		if ((selector & 4) != 0) { /* local descriptor table */
 			if (selector>I.ldtr.limit) i286_trap2(GENERAL_PROTECTION_FAULT);
 			word1=ReadWord(I.ldtr.base+(selector&~7));
 			word2=ReadWord(I.ldtr.base+(selector&~7)+2);
@@ -95,7 +95,7 @@ static void i286_code_descriptor(UINT16 selector, UINT16 offset)
 			word2=ReadWord(I.gdtr.base+(selector&~7)+2);
 			word3=ReadWord(I.gdtr.base+(selector&~7)+4);
 		}
-		if (word3&0x1000) {
+		if ((word3 & 0x1000) != 0) {
 			I.sregs[CS]=selector;
 			I.limit[CS]=word1;
 			I.base[CS]=word2|((word3&0xff)<<16);
@@ -204,7 +204,7 @@ static void PREFIX286(_0fpre)(void)
 		case 0x20: /* verr */
 			if (!PM) i286_trap2(ILLEGAL_INSTRUCTION);
 			tmp=GetRMWord(ModRM);
-			if (tmp&4) {
+			if ((tmp & 4) != 0) {
 				I.ZeroVal=( ((tmp&~7)<I.ldtr.limit)
 							&& READABLE( ReadByte(I.ldtr.base+(tmp&~7)+5)) );
 			} else {
@@ -215,7 +215,7 @@ static void PREFIX286(_0fpre)(void)
 		case 0x28: /* verw */
 			if (!PM) i286_trap2(ILLEGAL_INSTRUCTION);
 			tmp=GetRMWord(ModRM);
-			if (tmp&4) {
+			if ((tmp & 4) != 0) {
 				I.ZeroVal=( ((tmp&~7)<I.ldtr.limit)
 							&& WRITEABLE( ReadByte(I.ldtr.base+(tmp&~7)+5)) );
 			} else {
@@ -295,7 +295,7 @@ static void PREFIX286(_0fpre)(void)
 
 static void PREFIX286(_arpl)(void) /* 0x63 */
 {
-	if (PM) {
+	if (PM != 0) {
 		UINT16 ModRM=FETCHOP, tmp=GetRMWord(ModRM);
 
 		I.ZeroVal=i286_selector_okay(RegWord(ModRM))

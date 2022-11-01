@@ -27,7 +27,7 @@ public class sharrier
 	{
 		/* preprocess road data, expanding it into a form more easily rendered */
 		UINT8 *buf = malloc( source_size );
-		if( buf ){
+		if (buf != 0){
 			UINT8 *buf0 = buf; /* remember so we can free and not leak memory */
 			UINT8 *gr = memory_region(REGION_GFX3); /* road gfx data */
 			UINT8 *grr = NULL;
@@ -123,12 +123,12 @@ public class sharrier
 	}
 	
 	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if(sys16_custom_irq) sys16_custom_irq();
+		if (sys16_custom_irq != 0) sys16_custom_irq();
 		cpu_set_irq_line(cpu_getactivecpu(), 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
 	} };
 	
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
 		}
@@ -138,7 +138,7 @@ public class sharrier
 	
 	static WRITE16_HANDLER( sys16_3d_coinctrl_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x10;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -159,7 +159,7 @@ public class sharrier
 	#if 0
 	static WRITE16_HANDLER( sys16_coinctrl_w )
 	{
-		if( ACCESSING_LSB ){
+		if (ACCESSING_LSB != 0){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x20;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -178,10 +178,10 @@ public class sharrier
 	
 	static READ16_HANDLER( ho_io_highscoreentry_r ){
 		int mode= sys16_extraram4[0x3000/2];
-		if( mode&4 ){	// brake
+		if ((mode & 4) != 0){	// brake
 			if(ho_io_y_r(0,0) & 0x00ff) return 0xffff;
 		}
-		else if( mode&8 ){ // button
+		else if ((mode & 8) != 0){ // button
 			if(ho_io_y_r(0,0) & 0xff00) return 0xffff;
 		}
 		return 0;

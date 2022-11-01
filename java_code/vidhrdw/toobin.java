@@ -135,9 +135,9 @@ public class toobin
 			int green = (((newword >>  5) & 31) * 224) >> 5;
 			int blue =  (((newword      ) & 31) * 224) >> 5;
 	
-			if (red) red += 38;
-			if (green) green += 38;
-			if (blue) blue += 38;
+			if (red != 0) red += 38;
+			if (green != 0) green += 38;
+			if (blue != 0) blue += 38;
 	
 			palette_set_color(offset & 0x3ff, red, green, blue);
 			if (!(newword & 0x8000))
@@ -152,7 +152,7 @@ public class toobin
 	{
 		int i;
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			brightness = (double)(~data & 0x1f) / 31.0;
 	

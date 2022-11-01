@@ -166,7 +166,7 @@ public class policetr
 		}
 	
 		/* log any unknown bits */
-		if (data & 0x4f1fffff)
+		if ((data & 0x4f1fffff) != 0)
 			logerror("%08X: control_w = %08X & %08X\n", activecpu_get_previouspc(), data, ~mem_mask);
 	}
 	
@@ -180,7 +180,7 @@ public class policetr
 	
 	static WRITE32_HANDLER( bsmt2000_reg_w )
 	{
-		if (control_data & 0x80000000)
+		if ((control_data & 0x80000000) != 0)
 			BSMT2000_data_0_w(bsmt_reg, data & 0xffff, mem_mask | 0xffff0000);
 		else
 			COMBINE_DATA(&bsmt_data_offset);
@@ -189,7 +189,7 @@ public class policetr
 	
 	static WRITE32_HANDLER( bsmt2000_data_w )
 	{
-		if (control_data & 0x80000000)
+		if ((control_data & 0x80000000) != 0)
 			COMBINE_DATA(&bsmt_reg);
 		else
 			COMBINE_DATA(&bsmt_data_bank);
@@ -256,12 +256,12 @@ public class policetr
 	
 	static NVRAM_HANDLER( policetr )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_policetr);
-			if (file)	EEPROM_load(file);
+			if (file != 0)	EEPROM_load(file);
 		}
 	}
 	

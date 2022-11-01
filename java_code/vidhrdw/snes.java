@@ -261,7 +261,7 @@ public class snes
 		plane[0] = snes_vram[tileaddr];
 		plane[1] = snes_vram[tileaddr + 1];
 	
-		if( flip )
+		if (flip != 0)
 			mask = 0x1;
 		else
 			mask = 0x80;
@@ -269,7 +269,7 @@ public class snes
 		for( ii = x; ii < (x + 8); ii++ )
 		{
 			register UINT8 colour;
-			if( flip )
+			if (flip != 0)
 			{
 				colour = (plane[0] & mask ? 1 : 0) | (plane[1] & mask ? 2 : 0);
 				mask <<= 1;
@@ -288,7 +288,7 @@ public class snes
 				colour &= snes_ppu.clipmasks[layer][ii];
 	
 			/* Only draw if we have a colour (0 == transparent) */
-			if( colour )
+			if (colour != 0)
 			{
 				if( (scanlines[screen].zbuf[ii] <= priority) && (ii >= 0) )
 				{
@@ -309,7 +309,7 @@ public class snes
 	 *****************************************/
 	INLINE void snes_draw_tile_2x2( UINT8 screen, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT16 pal )
 	{
-		if( flip )
+		if (flip != 0)
 		{
 			snes_draw_tile_2( screen, layer, tileaddr + 16, x, priority, flip, pal );
 			snes_draw_tile_2( screen, layer, tileaddr, x + 8, priority, flip, pal );
@@ -337,7 +337,7 @@ public class snes
 		plane[2] = snes_vram[tileaddr + 16];
 		plane[3] = snes_vram[tileaddr + 17];
 	
-		if( flip )
+		if (flip != 0)
 			mask = 0x1;
 		else
 			mask = 0x80;
@@ -345,7 +345,7 @@ public class snes
 		for( ii = x; ii < (x + 8); ii++ )
 		{
 			register UINT8 colour;
-			if( flip )
+			if (flip != 0)
 			{
 				colour = (plane[0] & mask ? 1 : 0) | (plane[1] & mask ? 2 : 0) |
 						 (plane[2] & mask ? 4 : 0) | (plane[3] & mask ? 8 : 0);
@@ -366,7 +366,7 @@ public class snes
 				colour &= snes_ppu.clipmasks[layer][ii];
 	
 			/* Only draw if we have a colour (0 == transparent) */
-			if( colour )
+			if (colour != 0)
 			{
 				if( (scanlines[screen].zbuf[ii] <= priority) && (ii >= 0) )
 				{
@@ -387,7 +387,7 @@ public class snes
 	 *****************************************/
 	INLINE void snes_draw_tile_4x2( UINT8 screen, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT16 pal )
 	{
-		if( flip )
+		if (flip != 0)
 		{
 			snes_draw_tile_4( screen, layer, tileaddr + 32, x, priority, flip, pal );
 			snes_draw_tile_4( screen, layer, tileaddr, x + 8, priority, flip, pal );
@@ -419,7 +419,7 @@ public class snes
 		plane[6] = snes_vram[tileaddr + 48];
 		plane[7] = snes_vram[tileaddr + 49];
 	
-		if( flip )
+		if (flip != 0)
 			mask = 0x1;
 		else
 			mask = 0x80;
@@ -427,7 +427,7 @@ public class snes
 		for( ii = x; ii < (x + 8); ii++ )
 		{
 			register UINT8 colour;
-			if( flip )
+			if (flip != 0)
 			{
 				colour = (plane[0] & mask ? 1 : 0)  | (plane[1] & mask ? 2 : 0)  |
 						 (plane[2] & mask ? 4 : 0)  | (plane[3] & mask ? 8 : 0)  |
@@ -452,7 +452,7 @@ public class snes
 				colour &= snes_ppu.clipmasks[layer][ii];
 	
 			/* Only draw if we have a colour (0 == transparent) */
-			if( colour )
+			if (colour != 0)
 			{
 				if( (scanlines[screen].zbuf[ii] <= priority) && (ii >= 0) )
 				{
@@ -473,7 +473,7 @@ public class snes
 	 *****************************************/
 	INLINE void snes_draw_tile_8x2( UINT8 screen, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip )
 	{
-		if( flip )
+		if (flip != 0)
 		{
 			snes_draw_tile_8( screen, layer, tileaddr + 64, x, priority, flip );
 			snes_draw_tile_8( screen, layer, tileaddr, x + 8, priority, flip );
@@ -503,7 +503,7 @@ public class snes
 		plane[2] = snes_vram[tileaddr + 16];
 		plane[3] = snes_vram[tileaddr + 17];
 	
-		if( flip )
+		if (flip != 0)
 			mask = 0x1;
 		else
 			mask = 0x80;
@@ -511,7 +511,7 @@ public class snes
 		for( ii = x; ii < (x + 8); ii++ )
 		{
 			register UINT8 colour;
-			if( flip )
+			if (flip != 0)
 			{
 				colour = (plane[0] & mask ? 1 : 0) | (plane[1] & mask ? 2 : 0) |
 						 (plane[2] & mask ? 4 : 0) | (plane[3] & mask ? 8 : 0);
@@ -532,7 +532,7 @@ public class snes
 				colour &= snes_ppu.clipmasks[4][ii];
 	
 			/* Only draw if we have a colour (0 == transparent) */
-			if( colour )
+			if (colour != 0)
 			{
 				if( ii >= 0 )
 				{
@@ -566,7 +566,7 @@ public class snes
 		plane[2] = snes_vram[tileaddr + 16];
 		plane[3] = snes_vram[tileaddr + 17];
 	
-		if( flip )
+		if (flip != 0)
 			mask = 0x1;
 		else
 			mask = 0x80;
@@ -575,7 +575,7 @@ public class snes
 		for( ii = x; ii < (x + 16); ii += 2 )
 		{
 			register UINT8 colour;
-			if( flip )
+			if (flip != 0)
 			{
 				colour = (plane[0] & mask ? 1 : 0) | (plane[1] & mask ? 2 : 0) |
 						 (plane[2] & mask ? 4 : 0) | (plane[3] & mask ? 8 : 0);
@@ -596,7 +596,7 @@ public class snes
 				colour &= snes_ppu.clipmasks[4][ii];
 	
 			/* Only draw if we have a colour (0 == transparent) */
-			if( colour )
+			if (colour != 0)
 			{
 				if( ii >= 0 )
 				{
@@ -703,9 +703,9 @@ public class snes
 			}
 	
 			tile_line = line;
-			if( vflip )
+			if (vflip != 0)
 			{
-				if( tile_size )
+				if (tile_size != 0)
 				{
 					if( line > 7 )
 					{
@@ -732,7 +732,7 @@ public class snes
 			if( layer == 2 && bg3_pty && (snes_vram[tilemap + ii + 1] & 0x20) )
 				priority = table_obj_pty[3] + 1;		/* We want to have the highest priority here */
 	
-			if( tile_size )
+			if (tile_size != 0)
 			{
 				snes_draw_tile_2x2( screen, layer, snes_ppu.layer[layer].data + (tile << 4) + tile_line, ((ii >> 1) * (8 << tile_size)) - hshift, priority, hflip, pal );
 			}
@@ -834,9 +834,9 @@ public class snes
 			}
 	
 			tile_line = line;
-			if( vflip )
+			if (vflip != 0)
 			{
-				if( tile_size )
+				if (tile_size != 0)
 				{
 					if( line > 7 )
 					{
@@ -863,9 +863,9 @@ public class snes
 			if( layer == 2 && bg3_pty && (snes_vram[tilemap + ii + 1] & 0x20) )
 				priority = table_obj_pty[3] + 1;		/* We want to have the highest priority here */
 	
-			if( tile_size )
+			if (tile_size != 0)
 			{
-				if( hflip )
+				if (hflip != 0)
 				{
 					snes_draw_tile_2x2( screen, layer, snes_ppu.layer[layer].data + (tile << 4) + tile_line, ((ii >> 1) * (8 << (tile_size + 1))) - (hshift << 1) + 16, priority, hflip, pal );
 					snes_draw_tile_2x2( screen, layer, snes_ppu.layer[layer].data + ((tile + 2) << 4) + tile_line, ((ii >> 1) * (8 << (tile_size + 1))) - (hshift << 1), priority, hflip, pal );
@@ -963,9 +963,9 @@ public class snes
 			tile |= snes_vram[tilemap + ii];
 	
 			tile_line = line;
-			if( vflip )
+			if (vflip != 0)
 			{
-				if( tile_size )
+				if (tile_size != 0)
 				{
 					if( line > 7 )
 					{
@@ -988,7 +988,7 @@ public class snes
 			}
 			tile_line <<= 1;
 	
-			if( tile_size )
+			if (tile_size != 0)
 			{
 				snes_draw_tile_4x2( screen, layer, snes_ppu.layer[layer].data + (tile << 5) + tile_line, ((ii >> 1) * (8 << tile_size)) - hshift, priority, hflip, pal );
 			}
@@ -1079,9 +1079,9 @@ public class snes
 			tile |= snes_vram[tilemap + ii];
 	
 			tile_line = line;
-			if( vflip )
+			if (vflip != 0)
 			{
-				if( tile_size )
+				if (tile_size != 0)
 				{
 					if( line > 7 )
 					{
@@ -1105,9 +1105,9 @@ public class snes
 			tile_line <<= 1;
 	
 			/* Does hi-res support the tile-size option? */
-			if( tile_size )
+			if (tile_size != 0)
 			{
-				if( hflip )
+				if (hflip != 0)
 				{
 					snes_draw_tile_4x2( screen, layer, snes_ppu.layer[layer].data + (tile << 5) + tile_line, ((ii >> 1) * (8 << (tile_size + 1))) - (hshift << 1) + 16, priority, hflip, pal );
 					snes_draw_tile_4x2( screen, layer, snes_ppu.layer[layer].data + ((tile + 2) << 5) + tile_line, ((ii >> 1) * (8 << (tile_size + 1))) - (hshift << 1), priority, hflip, pal );
@@ -1204,9 +1204,9 @@ public class snes
 			tile |= snes_vram[tilemap + ii];
 	
 			tile_line = line;
-			if( vflip )
+			if (vflip != 0)
 			{
-				if( tile_size )
+				if (tile_size != 0)
 				{
 					if( line > 7 )
 					{
@@ -1229,7 +1229,7 @@ public class snes
 			}
 			tile_line <<= 1;
 	
-			if( tile_size )
+			if (tile_size != 0)
 			{
 				snes_draw_tile_8x2( screen, layer, snes_ppu.layer[layer].data + (tile << 6) + tile_line, ((ii >> 1) * (8 << tile_size)) - hshift, priority, hflip );
 			}
@@ -1425,21 +1425,21 @@ public class snes
 	
 				ys = (curline - y) >> 3;
 				line = (curline - y) % 8;
-				if( vflip )
+				if (vflip != 0)
 				{
 					ys = snes_ppu.oam.size[size] - ys - 1;
 					line = (-1 * line) + 7;
 				}
 				line <<= 1;
 				tile <<= 5;
-				if( hflip )
+				if (hflip != 0)
 				{
 					UINT8 count = 0;
 					for( xs = (snes_ppu.oam.size[size] - 1); xs >= 0; xs-- )
 					{
 						if( (x + (count << 3) < SNES_SCR_WIDTH + 8) )
 						{
-							if( widemode )
+							if (widemode != 0)
 								snes_draw_tile_object_w( screen, snes_ppu.layer[4].data + name_sel + tile + table_obj_offset[ys][xs] + line, x + (count++ << 3), priority, hflip, pal, blend );
 							else
 								snes_draw_tile_object( screen, snes_ppu.layer[4].data + name_sel + tile + table_obj_offset[ys][xs] + line, x + (count++ << 3), priority, hflip, pal, blend );
@@ -1453,7 +1453,7 @@ public class snes
 					{
 						if( (x + (xs << 3) < SNES_SCR_WIDTH + 8) )
 						{
-							if( widemode )
+							if (widemode != 0)
 								snes_draw_tile_object_w( screen, snes_ppu.layer[4].data + name_sel + tile + table_obj_offset[ys][xs] + line, x + (xs << 3), priority, hflip, pal, blend );
 							else
 								snes_draw_tile_object( screen, snes_ppu.layer[4].data + name_sel + tile + table_obj_offset[ys][xs] + line, x + (xs << 3), priority, hflip, pal, blend );
@@ -1940,7 +1940,7 @@ public class snes
 			tile = (snes_vram[tilemap + ii + 1] & 0x3) << 8;
 			tile |= snes_vram[tilemap + ii];
 			line = curline % 8;
-			if( vflip )
+			if (vflip != 0)
 				line = -line + 7;
 	
 			if( tile != 0 )
@@ -2020,24 +2020,24 @@ public class snes
 			if( !debug_options.input_count-- )
 			{
 				UINT8 toggles = readinputport( 10 );
-				if( toggles & 0x1 )
+				if ((toggles & 0x1) != 0)
 					debug_options.bg_disabled[0] = !debug_options.bg_disabled[0];
-				if( toggles & 0x2 )
+				if ((toggles & 0x2) != 0)
 					debug_options.bg_disabled[1] = !debug_options.bg_disabled[1];
-				if( toggles & 0x4 )
+				if ((toggles & 0x4) != 0)
 					debug_options.bg_disabled[2] = !debug_options.bg_disabled[2];
-				if( toggles & 0x8 )
+				if ((toggles & 0x8) != 0)
 					debug_options.bg_disabled[3] = !debug_options.bg_disabled[3];
-				if( toggles & 0x10 )
+				if ((toggles & 0x10) != 0)
 					debug_options.bg_disabled[4] = !debug_options.bg_disabled[4];
-				if( toggles & 0x20 )
+				if ((toggles & 0x20) != 0)
 					debug_options.draw_subscreen = !debug_options.draw_subscreen;
-				if( toggles & 0x40 )
+				if ((toggles & 0x40) != 0)
 					debug_options.bg_disabled[5] = !debug_options.bg_disabled[5];
-				if( toggles & 0x80 )
+				if ((toggles & 0x80) != 0)
 					debug_options.windows_disabled = !debug_options.windows_disabled;
 				toggles = readinputport( 11 );
-				if( toggles & 0x4 )
+				if ((toggles & 0x4) != 0)
 					debug_options.transparency_disabled = !debug_options.transparency_disabled;
 				debug_options.input_count = 5;
 			}
@@ -2151,18 +2151,18 @@ public class snes
 			UINT8 inp = readinputport( 11 );
 			UINT8 dt = 1 << ((dip & 0x3) - 1);
 			UINT8 dm = 1 << (((dip & 0xc) >> 2) - 1);
-			if( dt )
+			if (dt != 0)
 			{
 				static INT16 pal = 0;
 				static UINT32 addr = 0;
 				if( curline == 0 )
 				{
-					if( adjust & 0x1 ) addr += (dt * 16);
-					if( adjust & 0x2 ) addr -= (dt * 16);
-					if( adjust & 0x4 ) addr += (dt * 16 * 32);
-					if( adjust & 0x8 ) addr -= (dt * 16 * 32);
-					if( inp & 0x1 ) pal -= 1;
-					if( inp & 0x2 ) pal += 1;
+					if ((adjust & 0x1) != 0) addr += (dt * 16);
+					if ((adjust & 0x2) != 0) addr -= (dt * 16);
+					if ((adjust & 0x4) != 0) addr += (dt * 16 * 32);
+					if ((adjust & 0x8) != 0) addr -= (dt * 16 * 32);
+					if ((inp & 0x1) != 0) pal -= 1;
+					if ((inp & 0x2) != 0) pal += 1;
 					if( pal < 0 ) pal = 0;
 					if( pal > 8 ) pal = 8;
 					for( ii = 0; ii < SNES_SCR_WIDTH; ii++ )
@@ -2173,18 +2173,18 @@ public class snes
 				}
 				return 1;
 			}
-			if( dm )
+			if (dm != 0)
 			{
 				static UINT32 tmaddr = 0;
 				static INT8 tmbg = 0;
 				if( curline == 0 )
 				{
-					if( adjust & 0x1 ) tmaddr += 2;
-					if( adjust & 0x2 ) tmaddr -= 2;
-					if( adjust & 0x4 ) tmaddr += 64;
-					if( adjust & 0x8 ) tmaddr -= 64;
-					if( inp & 0x1 ) tmbg -= 1;
-					if( inp & 0x2 ) tmbg += 1;
+					if ((adjust & 0x1) != 0) tmaddr += 2;
+					if ((adjust & 0x2) != 0) tmaddr -= 2;
+					if ((adjust & 0x4) != 0) tmaddr += 64;
+					if ((adjust & 0x8) != 0) tmaddr -= 64;
+					if ((inp & 0x1) != 0) tmbg -= 1;
+					if ((inp & 0x2) != 0) tmbg += 1;
 					if( tmbg < 0 ) tmbg = 0;
 					if( tmbg > 3 ) tmbg = 3;
 				}

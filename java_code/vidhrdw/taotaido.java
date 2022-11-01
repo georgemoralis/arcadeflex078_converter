@@ -28,9 +28,9 @@ public class taotaido
 	/* sprite tile codes 0x4000 - 0x7fff get remapped according to the content of these registers */
 	WRITE16_HANDLER( taotaido_sprite_character_bank_select_w )
 	{
-		if(ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			taotaido_sprite_character_bank_select[offset*2] = data >> 8;
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			taotaido_sprite_character_bank_select[offset*2+1] = data &0xff;
 	}
 	
@@ -82,7 +82,7 @@ public class taotaido
 		{
 			int sx,sy;
 	
-			if (yflip) sy = ((ypos + yzoom * (ysize - y)/2 + 16) & 0x1ff) - 16;
+			if (yflip != 0) sy = ((ypos + yzoom * (ysize - y)/2 + 16) & 0x1ff) - 16;
 				else sy = ((ypos + yzoom * y / 2 + 16) & 0x1ff) - 16;
 	
 			for (x = 0;x <= xsize;x++)
@@ -103,7 +103,7 @@ public class taotaido
 					realtile |= taotaido_sprite_character_bank_select[block] * 0x800;
 				}
 	
-				if (xflip) sx = ((xpos + xzoom * (xsize - x) / 2 + 16) & 0x1ff) - 16;
+				if (xflip != 0) sx = ((xpos + xzoom * (xsize - x) / 2 + 16) & 0x1ff) - 16;
 					else sx = ((xpos + xzoom * x / 2 + 16) & 0x1ff) - 16;
 	
 	
@@ -158,9 +158,9 @@ public class taotaido
 			case 5:
 			case 6:
 			case 7:
-				if(ACCESSING_MSB)
+				if (ACCESSING_MSB != 0)
 					taotaido_video_bank_select[(offset-4)*2] = data >> 8;
-				if(ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 					taotaido_video_bank_select[(offset-4)*2+1] = data &0xff;
 					tilemap_mark_all_tiles_dirty(bg_tilemap);
 				break;

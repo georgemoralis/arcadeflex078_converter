@@ -389,7 +389,7 @@ public class m6800
 	
 	/* Macros for branch instructions */
 	#define CHANGE_PC() change_pc16(PCD)
-	#define BRANCH(f) {IMMBYTE(t);if(f){PC+=SIGNED(t);CHANGE_PC();}}
+	#define BRANCH(f) {IMMBYTE(t);if (f != 0){PC+=SIGNED(t);CHANGE_PC();}}
 	#define NXORV  ((CC&0x08)^((CC&0x02)<<2))
 	
 	static const UINT8 cycles_6800[] =
@@ -608,7 +608,7 @@ public class m6800
 	 ****************************************************************************/
 	unsigned m6800_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(m6800_Regs*)dst = m6800;
 		return sizeof(m6800_Regs);
 	}
@@ -619,7 +619,7 @@ public class m6800
 	 ****************************************************************************/
 	void m6800_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 			m6800 = *(m6800_Regs*)src;
 		CHANGE_PC();
 		CHECK_IRQ_LINES(); /* HJB 990417 */

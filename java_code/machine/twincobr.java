@@ -81,7 +81,7 @@ public class twincobr
 	
 	public static InterruptHandlerPtr twincobr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (twincobr_intenable) {
+		if (twincobr_intenable != 0) {
 			twincobr_intenable = 0;
 			cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);
 		}
@@ -181,11 +181,11 @@ public class twincobr
 	#if LOG_DSP_CALLS
 			logerror("DSP PC:%04x IO write %04x at port 3\n",activecpu_get_previouspc(),data);
 	#endif
-			if (data & 0x8000) {
+			if ((data & 0x8000) != 0) {
 				twincobr_dsp_BIO = CLEAR_LINE;
 			}
 			if (data == 0) {
-				if (dsp_execute) {
+				if (dsp_execute != 0) {
 	#if LOG_DSP_CALLS
 					logerror("Turning %s on\n",toaplan_cpu_type[toaplan_main_cpu]);
 	#endif
@@ -253,7 +253,7 @@ public class twincobr
 			case 0x000b: twincobr_fg_rom_bank = 0x1000; break;
 			case 0x000e: twincobr_display_on  = 0x0000; break; /* Turn display off */
 			case 0x000f: twincobr_display_on  = 0x0001; break; /* Turn display on */
-			case 0x000c: if (twincobr_display_on) {
+			case 0x000c: if (twincobr_display_on != 0) {
 							/* This means assert the INT line to the DSP */
 	#if LOG_DSP_CALLS
 							logerror("Turning DSP on and %s off\n",toaplan_cpu_type[toaplan_main_cpu]);
@@ -262,7 +262,7 @@ public class twincobr
 							cpu_set_irq_line(2, 0, ASSERT_LINE); /* TMS32010 INT */
 							timer_suspendcpu(0, ASSERT, SUSPEND_REASON_HALT);
 						} break;
-			case 0x000d: if (twincobr_display_on) {
+			case 0x000d: if (twincobr_display_on != 0) {
 							/* This means inhibit the INT line to the DSP */
 	#if LOG_DSP_CALLS
 							logerror("Turning DSP off\n");
@@ -274,7 +274,7 @@ public class twincobr
 	}
 	WRITE16_HANDLER( twincobr_control_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			toaplan0_control_w(offset, data & 0xff);
 		}
@@ -292,7 +292,7 @@ public class twincobr
 	
 	WRITE16_HANDLER( twincobr_sharedram_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			twincobr_sharedram[offset] = data & 0xff;
 		}
@@ -333,7 +333,7 @@ public class twincobr
 	}
 	WRITE16_HANDLER( fshark_coin_dsp_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			toaplan0_coin_dsp_w(offset, data & 0xff);
 		}

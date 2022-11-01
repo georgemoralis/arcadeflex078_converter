@@ -82,7 +82,7 @@ public class sprint4
 			UINT8 vrt = sprint4_video_ram[0x398 + 2 * i + 0];
 			UINT8 rot = sprint4_video_ram[0x398 + 2 * i + 1];
 	
-			if (i & 1)
+			if ((i & 1) != 0)
 			{
 				bank = 32;
 			}
@@ -134,7 +134,7 @@ public class sprint4
 	
 			tilemap_draw(helper, &rect, tilemap, 0, 0);
 	
-			if (i & 1)
+			if ((i & 1) != 0)
 			{
 				bank = 32;
 			}

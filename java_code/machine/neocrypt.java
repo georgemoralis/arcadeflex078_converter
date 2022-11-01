@@ -467,7 +467,7 @@ public class neocrypt
 		xor0 = (table0hi[(base >> 8) & 0xff] & 0xfe) | (tmp & 0x01);
 		xor1 = (tmp & 0xfe) | (table0lo[(base >> 8) & 0xff] & 0x01);
 	
-		if (invert)
+		if (invert != 0)
 		{
 			*r0 = c1 ^ xor0;
 			*r1 = c0 ^ xor1;

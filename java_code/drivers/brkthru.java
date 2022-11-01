@@ -170,7 +170,7 @@ public class brkthru
 	{
 		if (cpu_getiloops() == 0)
 		{
-			if (nmi_enable)
+			if (nmi_enable != 0)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else

@@ -249,7 +249,7 @@ public class namcos21
 		ApplyRotation( &pDSPRAM[6], M );
 		matrix3d_Translate( M,pDSPRAM[3],pDSPRAM[4],pDSPRAM[5] );
 	
-		if( pCamera )
+		if (pCamera != 0)
 		{
 			ApplyCameraTransformation( pCamera, M );
 		}
@@ -301,7 +301,7 @@ public class namcos21
 	
 		/* press "U" to dump camera attributes and formatted object list */
 		bDebug = keyboard_pressed( KEYCODE_U );
-		if( bDebug )
+		if (bDebug != 0)
 		{
 			while( keyboard_pressed( KEYCODE_U ) ){}
 			logerror( "\nDSPRAM:\n" );
@@ -363,7 +363,7 @@ public class namcos21
 	
 			case 0x100: /* special end-marker for CyberSled? */
 			case (INT16)0xffff: /* end-of-list marker */
-				if( bDebug )
+				if (bDebug != 0)
 				{
 					logerror( "\n\n" );
 				}
@@ -376,8 +376,8 @@ public class namcos21
 					(UINT16)pDSPRAM[0],(UINT16)pDSPRAM[0],(UINT16)pDSPRAM[0],(UINT16)pDSPRAM[0]);
 				return;
 			}
-			if( mbDspError ) return;
-			if( bDebug )
+			if (mbDspError != 0) return;
+			if (bDebug != 0)
 			{
 				logerror( "obj: ");
 				for( i=0; i<size; i++ )

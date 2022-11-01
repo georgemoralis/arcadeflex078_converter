@@ -74,7 +74,7 @@ public class nbmj9195
 	
 		sailorws_palette[offset] = data;
 	
-		if (offset & 1)
+		if ((offset & 1) != 0)
 		{
 			offset &= 0x1fe;
 	
@@ -128,7 +128,7 @@ public class nbmj9195
 	
 		sailorws_scrollx_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			sailorws_scrollx[vram] = -((((sailorws_scrollx_tmp[vram][0] + (sailorws_scrollx_tmp[vram][1] << 8)) & 0x1ff) + 0x4e) << 1);
 	
@@ -158,7 +158,7 @@ public class nbmj9195
 	#else
 		sailorws_scrollx_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			sailorws_scrollx[vram] = -((((sailorws_scrollx_tmp[vram][0] + (sailorws_scrollx_tmp[vram][1] << 8)) & 0x1ff) + 0x4e) << 1);
 		}
@@ -169,7 +169,7 @@ public class nbmj9195
 	{
 		sailorws_scrolly_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			if (sailorws_flipscreen[vram]) sailorws_scrolly[vram] = ((sailorws_scrolly_tmp[vram][0] + (sailorws_scrolly_tmp[vram][1] << 8)) ^ 0x1ff) & 0x1ff;
 			else sailorws_scrolly[vram] = (sailorws_scrolly_tmp[vram][0] + (sailorws_scrolly_tmp[vram][1] << 8) + 1) & 0x1ff;
@@ -195,9 +195,9 @@ public class nbmj9195
 		sailorws_flipx[vram] = (data & 0x01) ? 1 : 0;
 		sailorws_flipy[vram] = (data & 0x02) ? 1 : 0;
 		sailorws_highcolor[vram] = (data & 0x04) ? 1 : 0;
-	//	if (data & 0x08) usrintf_showmessage("Unknown GFX Flag!! (0x08)");
+	//	if ((data & 0x08) != 0) usrintf_showmessage("Unknown GFX Flag!! (0x08)");
 		sailorws_transparency[vram] = (data & 0x10) ? 1 : 0;
-	//	if (data & 0x20) usrintf_showmessage("Unknown GFX Flag!! (0x20)");
+	//	if ((data & 0x20) != 0) usrintf_showmessage("Unknown GFX Flag!! (0x20)");
 		sailorws_flipscreen[vram] = (data & 0x40) ? 0 : 1;
 		sailorws_dispflag[vram] = (data & 0x80) ? 1 : 0;
 	
@@ -223,7 +223,7 @@ public class nbmj9195
 	{
 		sailorws_drawx_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			sailorws_drawx[vram] = ((sailorws_drawx_tmp[vram][0] + (sailorws_drawx_tmp[vram][1] << 8)) ^ 0x3ff) & 0x3ff;
 		}
@@ -233,7 +233,7 @@ public class nbmj9195
 	{
 		sailorws_drawy_tmp[vram][offset] = data;
 	
-		if (offset)
+		if (offset != 0)
 		{
 			sailorws_drawy[vram] = ((sailorws_drawy_tmp[vram][0] + (sailorws_drawy_tmp[vram][1] << 8)) ^ 0x1ff) & 0x1ff;
 	
@@ -422,12 +422,12 @@ public class nbmj9195
 	
 				if (!vram)
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(sailorws_tmpbitmap0, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(sailorws_tmpbitmap0, dx2, dy, Machine->pens[drawcolor2]);
@@ -435,12 +435,12 @@ public class nbmj9195
 				}
 				else
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(sailorws_tmpbitmap1, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(sailorws_tmpbitmap1, dx2, dy, Machine->pens[drawcolor2]);
@@ -551,7 +551,7 @@ public class nbmj9195
 				{
 					// high color mode
 	
-					if (sailorws_gfxflag2 & 0xc0)
+					if ((sailorws_gfxflag2 & 0xc0) != 0)
 					{
 						// high color mode 1st draw
 	
@@ -627,12 +627,12 @@ public class nbmj9195
 	
 				if (!vram)
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(sailorws_tmpbitmap0, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(sailorws_tmpbitmap0, dx2, dy, Machine->pens[drawcolor2]);
@@ -640,12 +640,12 @@ public class nbmj9195
 				}
 				else
 				{
-					if (tflag1)
+					if (tflag1 != 0)
 					{
 						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
 						plot_pixel(sailorws_tmpbitmap1, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2)
+					if (tflag2 != 0)
 					{
 						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						plot_pixel(sailorws_tmpbitmap1, dx2, dy, Machine->pens[drawcolor2]);
@@ -766,7 +766,7 @@ public class nbmj9195
 					plot_pixel(sailorws_tmpbitmap0, x, y, Machine->pens[color]);
 				}
 			}
-			if (gfxdraw_mode)
+			if (gfxdraw_mode != 0)
 			{
 				for (y = 0; y < Machine->drv->screen_height; y++)
 				{
@@ -818,7 +818,7 @@ public class nbmj9195
 			fillbitmap(bitmap, Machine->pens[0x0ff], 0);
 		}
 	
-		if (gfxdraw_mode)
+		if (gfxdraw_mode != 0)
 		{
 			if (sailorws_dispflag[1])
 			{
@@ -851,7 +851,7 @@ public class nbmj9195
 					plot_pixel(sailorws_tmpbitmap0, x, y, Machine->pens[color]);
 				}
 			}
-			if (gfxdraw_mode)
+			if (gfxdraw_mode != 0)
 			{
 				for (y = 0; y < Machine->drv->screen_height; y++)
 				{
@@ -873,7 +873,7 @@ public class nbmj9195
 			fillbitmap(bitmap, Machine->pens[0x0ff], 0);
 		}
 	
-		if (gfxdraw_mode)
+		if (gfxdraw_mode != 0)
 		{
 			if (sailorws_dispflag[1])
 			{

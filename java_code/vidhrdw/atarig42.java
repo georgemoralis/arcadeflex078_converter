@@ -185,7 +185,7 @@ public class atarig42
 			data16_t word;
 	
 			word = *base++;
-			if (word & 0x8000)
+			if ((word & 0x8000) != 0)
 			{
 				int newscroll = (word >> 5) & 0x3ff;
 				int newbank = word & 0x1f;
@@ -204,7 +204,7 @@ public class atarig42
 			}
 	
 			word = *base++;
-			if (word & 0x8000)
+			if ((word & 0x8000) != 0)
 			{
 				int newscroll = ((word >> 6) - (scanline + i)) & 0x1ff;
 				int newbank = word & 7;

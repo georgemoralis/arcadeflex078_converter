@@ -203,7 +203,7 @@ public class gstriker
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -275,7 +275,7 @@ public class gstriker
 	
 	static void gs_ym2610_irq(int irq)
 	{
-		if (irq)
+		if (irq != 0)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);

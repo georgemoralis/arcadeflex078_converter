@@ -683,7 +683,7 @@ public class turbo
 			src = RAM[offs];
 			i = findtable[offs >> 10];
 			j = src >> 2;
-			if (src & 0x80) j ^= 0x3f;
+			if ((src & 0x80) != 0) j ^= 0x3f;
 			RAM[offs] = src ^ xortable[i][j];
 		}
 	}

@@ -37,7 +37,7 @@ public class glass
 	
 	public static InterruptHandlerPtr glass_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cause_interrupt){
+		if (cause_interrupt != 0){
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 			cause_interrupt = 0;
 		}
@@ -87,7 +87,7 @@ public class glass
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB){
+		if (ACCESSING_LSB != 0){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}

@@ -251,7 +251,7 @@ public class irobot
 	
 		logerror("Starting Polygon Generator, Clear=%d\n",irvg_clear);
 	
-		if (irobot_bufsel)
+		if (irobot_bufsel != 0)
 			polybitmap = polybitmap2;
 		else
 			polybitmap = polybitmap1;

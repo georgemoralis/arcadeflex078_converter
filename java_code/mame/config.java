@@ -253,7 +253,7 @@ public class config
 		cfg->is_default = name ? 0 : 1;
 		cfg->is_write = save ? 1 : 0;
 	
-		if (save)
+		if (save != 0)
 		{
 			/* save */
 			cfg->format = &formats[0];
@@ -286,7 +286,7 @@ public class config
 		return cfg;
 	
 	error:
-		if (cfg)
+		if (cfg != 0)
 			config_close(cfg);
 		return NULL;
 	}

@@ -95,9 +95,9 @@ public class _6532riot
 	
 	static void r6532_write(int n, offs_t offset, UINT8 data)
 	{
-		if (offset & 4)
+		if ((offset & 4) != 0)
 		{
-			if (offset & 16)
+			if ((offset & 16) != 0)
 			{
 				r6532[n]->cleared = 0;
 	

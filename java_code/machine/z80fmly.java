@@ -528,7 +528,7 @@ public class z80fmly
 			else if( pio->rdy[ch] == 0 ) irq = 1;
 		}
 		old_state = pio->int_state[ch];
-		if( irq ) pio->int_state[ch] |=  Z80_INT_REQ;
+		if (irq != 0) pio->int_state[ch] |=  Z80_INT_REQ;
 		else      pio->int_state[ch] &= ~Z80_INT_REQ;
 	
 		if( old_state != pio->int_state[ch] )
@@ -557,7 +557,7 @@ public class z80fmly
 	void z80pio_d_w( int which , int ch , int data )
 	{
 		z80pio *pio = pios + which;
-		if( ch ) ch = 1;
+		if (ch != 0) ch = 1;
 	
 		pio->out[ch] = data;	/* latch out data */
 		switch( pio->mode[ch] ){
@@ -578,7 +578,7 @@ public class z80fmly
 	void z80pio_c_w( int which , int ch , int data )
 	{
 		z80pio *pio = pios + which;
-		if( ch ) ch = 1;
+		if (ch != 0) ch = 1;
 	
 		/* load direction phase ? */
 		if( pio->mode[ch] == 0x13 ){
@@ -625,7 +625,7 @@ public class z80fmly
 	/* pio controll register read */
 	int z80pio_c_r( int which , int ch )
 	{
-		if( ch ) ch = 1;
+		if (ch != 0) ch = 1;
 	
 		logerror("PIO-%c controll read\n",'A'+ch );
 		return 0;
@@ -635,7 +635,7 @@ public class z80fmly
 	int z80pio_d_r( int which , int ch )
 	{
 		z80pio *pio = pios + which;
-		if( ch ) ch = 1;
+		if (ch != 0) ch = 1;
 	
 		switch( pio->mode[ch] ){
 		case PIO_MODE0:			/* mode 0 output */
@@ -645,7 +645,7 @@ public class z80fmly
 			z80pio_check_irq( pio , ch );
 			return pio->in[ch];
 		case PIO_MODE2:			/* mode 2 i/o */
-			if( ch ) logerror("PIO-B mode 2 \n");
+			if (ch != 0) logerror("PIO-B mode 2 \n");
 			z80pio_set_rdy(pio, 1, 1); /* brdy = H */
 			z80pio_check_irq( pio , ch );
 			return pio->in[ch];
@@ -703,7 +703,7 @@ public class z80fmly
 	{
 		z80pio *pio = pios + which;
 	
-		if( ch ) ch = 1;
+		if (ch != 0) ch = 1;
 	
 		pio->in[ch]  = data;
 		switch( pio->mode[ch] ){
@@ -728,7 +728,7 @@ public class z80fmly
 	{
 		z80pio *pio = pios + which;
 	
-		if( ch ) ch = 1;
+		if (ch != 0) ch = 1;
 	
 		switch( pio->mode[ch] ){
 		case PIO_MODE2:		/* port A only */
@@ -752,7 +752,7 @@ public class z80fmly
 	
 	public static WriteHandlerPtr z80pio_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(offset&1) z80pio_c_w(0,(offset/2)&1,data);
+		if ((offset & 1) != 0) z80pio_c_w(0,(offset/2)&1,data);
 		else         z80pio_d_w(0,(offset/2)&1,data);
 	} };
 	
@@ -770,7 +770,7 @@ public class z80fmly
 	{
 		z80pio *pio = pios + which;
 	
-		if (ch) ch=1;
+		if (ch != 0) ch=1;
 	
 		switch (pio->mode[ch])
 		{

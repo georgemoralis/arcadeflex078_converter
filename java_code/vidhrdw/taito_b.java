@@ -84,7 +84,7 @@ public class taito_b
 	
 		video_control = data;
 	
-		if (video_control & 0x80)
+		if ((video_control & 0x80) != 0)
 			framebuffer_page = (~video_control & 0x40) >> 6;
 	
 		tilemap_set_flip(ALL_TILEMAPS, (video_control & 0x10) ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0 );
@@ -102,7 +102,7 @@ public class taito_b
 	
 		COMBINE_DATA (&TC0180VCU_ctrl[offset]);
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			switch(offset)
 			{
@@ -298,9 +298,9 @@ public class taito_b
 	  int sy = offset >> 8;
 	  int sx = 2*(offset & 0xff);
 	
-	  if (ACCESSING_MSB)
+	  if (ACCESSING_MSB != 0)
 	    plot_pixel(framebuffer[sy >> 8],sx,  sy & 0xff,data >> 8);
-	  if (ACCESSING_LSB)
+	  if (ACCESSING_LSB != 0)
 	    plot_pixel(framebuffer[sy >> 8],sx+1,sy & 0xff,data & 0xff);
 	}
 	
@@ -312,7 +312,7 @@ public class taito_b
 	
 	  COMBINE_DATA(&taitob_pixelram[offset]);
 	
-	  if (ACCESSING_LSB)
+	  if (ACCESSING_LSB != 0)
 	  {
 	    /* bit 15 of pixel_scroll[0] is probably flip screen */
 	
@@ -374,7 +374,7 @@ public class taito_b
 	    flipy = color & 0x8000;
 	#if 0
 	/*check the unknown bits*/
-	    if (color & 0x3fc0){
+	    if ((color & 0x3fc0) != 0){
 	      logerror("sprite color (taitob)=%4x ofs=%4x\n",color,offs);
 	      color = rand()&0x3f;
 	    }
@@ -387,7 +387,7 @@ public class taito_b
 	    if (y >= 0x200)  y -= 0x400;
 	
 	    data = taitob_spriteram[offs+5];
-	    if (data)
+	    if (data != 0)
 	    {
 	      if (!big_sprite)
 	      {
@@ -410,7 +410,7 @@ public class taito_b
 	    zx = (0x100 - zoomx) / 16;
 	    zy = (0x100 - zoomy) / 16;
 	
-	    if (big_sprite)
+	    if (big_sprite != 0)
 	    {
 	      zoomx = zoomxlatch;
 	      zoomy = zoomylatch;
@@ -477,7 +477,7 @@ public class taito_b
 	
 	    my_clip.min_y = i*lines_per_block;
 	    my_clip.max_y = (i+1)*lines_per_block -1;
-		if (video_control&0x10)   /*flip screen*/
+		if ((video_control & 0x10) != 0)   /*flip screen*/
 		{
 			if (!(Machine->orientation & ORIENTATION_FLIP_Y))	/*only for ROT_0 games*/
 			{
@@ -530,11 +530,11 @@ public class taito_b
 	  }
 	
 	
-		if (video_control & 0x08)
+		if ((video_control & 0x08) != 0)
 		{
-			if (priority) return;
+			if (priority != 0) return;
 	
-			if (video_control & 0x10)   /*flip screen*/
+			if ((video_control & 0x10) != 0)   /*flip screen*/
 			{
 				/*usrintf_showmessage("1. X[%3i;%3i] Y[%3i;%3i]", myclip.min_x, myclip.max_x, myclip.min_y, myclip.max_y);*/
 				for (y = myclip.min_y;y <= myclip.max_y;y++)
@@ -583,7 +583,7 @@ public class taito_b
 		}
 		else
 		{
-			if (video_control & 0x10)   /*flip screen*/
+			if ((video_control & 0x10) != 0)   /*flip screen*/
 			{
 				/*usrintf_showmessage("3. X[%3i;%3i] Y[%3i;%3i]", myclip.min_x, myclip.max_x, myclip.min_y, myclip.max_y);*/
 				for (y = myclip.min_y;y <= myclip.max_y;y++)
@@ -648,13 +648,13 @@ public class taito_b
 	
 	  TC0180VCU_tilemap_draw(bitmap,cliprect,fg_tilemap,0);
 	
-	  if (pixel_bitmap)  /* hitice only */
+	  if (pixel_bitmap != 0)  /* hitice only */
 	  {
 	    int scrollx = -2*pixel_scroll[0]; //+320;
 	    int scrolly = -pixel_scroll[1]; //+240;
 	    /* bit 15 of pixel_scroll[0] is probably flip screen */
 	
-	    if (pixel_init)
+	    if (pixel_init != 0)
 	    {
 	      int i;
 	

@@ -315,7 +315,7 @@ public class halleys
 	
 	
 	#if HALLEYS_DEBUG
-	if (0) {
+	if (0 != 0) {
 		logerror("%04x:[%04x]", activecpu_get_pc(), offset);
 		for (ecx=0; ecx<16; ecx++) logerror(" %02x", param[ecx]);
 		logerror("\n"); }
@@ -340,12 +340,12 @@ public class halleys
 		{
 			if (!layer) flags |= PPCD_ON;
 			if (offset >= HALLEYS_SPLIT) flags |= AD_HIGH; else
-			if (offset & 1) memcpy(param-0x10, param, 0x10); else group = param[0x15] & GROUP;
+			if ((offset & 1) != 0) memcpy(param-0x10, param, 0x10); else group = param[0x15] & GROUP;
 	
 			// HACK: force engine flame in group zero to increase collision accuracy
 			if (offset == 0x1a || offset == 0x1b) group = 0;
 		}
-		else if (offset & 1) memcpy(param-0x10, param, 0x10);
+		else if ((offset & 1) != 0) memcpy(param-0x10, param, 0x10);
 	
 	
 		// init draw parameters
@@ -372,8 +372,8 @@ public class halleys
 	
 	
 		// reject off-screen objects
-		if (flags & MIRROR_Y) { flags |= FLIP_Y; y -= (h - 1); }
-		if (flags & MIRROR_X) { flags |= FLIP_X; x -= (w - 1); }
+		if ((flags & MIRROR_Y) != 0) { flags |= FLIP_Y; y -= (h - 1); }
+		if ((flags & MIRROR_X) != 0) { flags |= FLIP_X; x -= (w - 1); }
 		if (y > VIS_MAXY || (y + h) <= VIS_MINY) return;
 		if (x > VIS_MAXX || (x + w) <= VIS_MINX) return;
 	
@@ -392,7 +392,7 @@ public class halleys
 		eax = 0;
 		if (flags & (S1_REV | S2_REV)) { flags ^= FLIP_Y | FLIP_X; eax -= w * h - 8; }
 	
-		if (flags & FLIP_Y)
+		if ((flags & FLIP_Y) != 0)
 		{
 			eax += w * (h - 1);
 			src_yskip = -src_yskip;
@@ -401,7 +401,7 @@ public class halleys
 		}
 		else src_dy = (flags & FLIP_X) ? w + wclip : w - wclip;
 	
-		if (flags & FLIP_X)
+		if ((flags & FLIP_X) != 0)
 		{
 			eax += w - 1;
 			src_xskip = -src_xskip;
@@ -433,9 +433,9 @@ public class halleys
 		{
 			flags |= SINGLE_PEN;
 			eax = (DWORD)penxlat[color & PENCOLOR];
-			if (eax) pen1 = pen0 + eax;
+			if (eax != 0) pen1 = pen0 + eax;
 		}
-		else if (color & PENCOLOR) flags |= RGB_MASK;
+		else if ((color & PENCOLOR) != 0) flags |= RGB_MASK;
 	
 	
 	//--------------------------------------------------------------------------
@@ -457,7 +457,7 @@ public class halleys
 			ecx = wclip = -wclip;
 			edx = src_dx;
 	
-			if (flags & PPCD_ON) goto COLLISION_MODE;
+			if ((flags & PPCD_ON) != 0) goto COLLISION_MODE;
 	
 			al = ah = (BYTE)pen0;
 	
@@ -469,7 +469,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if (al & 0xf) { dst_ptr[ecx] = (WORD)al;  al = ah;}
+						if ((al & 0xf) != 0) { dst_ptr[ecx] = (WORD)al;  al = ah;}
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -484,7 +484,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if (al & 0xf) { dst_ptr[ecx] = (WORD)al | SP_2BACK;  al = ah; }
+						if ((al & 0xf) != 0) { dst_ptr[ecx] = (WORD)al | SP_2BACK;  al = ah; }
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -497,7 +497,7 @@ public class halleys
 			COLLISION_MODE:
 	
 			ax = 0;
-			if (group)
+			if (group != 0)
 			{
 				do {
 					do {
@@ -505,7 +505,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if (al & 0xf) { dst_ptr[ecx] = (WORD)al | SP_COLLD; } // set collision flag on group one pixels
+						if ((al & 0xf) != 0) { dst_ptr[ecx] = (WORD)al | SP_COLLD; } // set collision flag on group one pixels
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -520,7 +520,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if (al & 0xf) { ax |= dst_ptr[ecx]; dst_ptr[ecx] = (WORD)al; } // combine collision flags in ax
+						if ((al & 0xf) != 0) { ax |= dst_ptr[ecx]; dst_ptr[ecx] = (WORD)al; } // combine collision flags in ax
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -559,7 +559,7 @@ public class halleys
 					src1_ptr += src_dx;
 					al |= *src2_ptr;
 					src2_ptr += src_dx;
-					if (al & 0xf) { edx = (DWORD)al;  al = ah;  dst_ptr[ecx] = pal_ptr[edx] & ebx; }
+					if ((al & 0xf) != 0) { edx = (DWORD)al;  al = ah;  dst_ptr[ecx] = pal_ptr[edx] & ebx; }
 				}
 				while (++ecx);
 				ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -667,7 +667,7 @@ public class halleys
 	
 	
 		// reject illegal blits and adjust parameters
-		if (command)
+		if (command != 0)
 		{
 			if (h > 8) return;
 			if (y >= 0xf8) { y -= 0xf8; flags |= SY_HIGH; } else
@@ -677,8 +677,8 @@ public class halleys
 	
 	
 		// calculate entry points and loop constants
-		if (flags & S1_IDLE) src_dx = 0; else src_dx = 1;
-		if (flags & S1_REV ) src_dx = -src_dx;
+		if ((flags & S1_IDLE) != 0) src_dx = 0; else src_dx = 1;
+		if ((flags & S1_REV) != 0) src_dx = -src_dx;
 	
 		src_base = gfx1_base + bank;
 	
@@ -751,19 +751,19 @@ public class halleys
 			{
 				edx = (DWORD)*src2_ptr;
 				src2_ptr++;
-				if (edx)
+				if (edx != 0)
 				{
 					ax = (WORD)*(src2_ptr-0x100 -1);
 					ebx = (DWORD)ax;
 					ax |= BG_MONO;
-					if (edx & 0x01) {                    dst_base[C2S(x,y,ebx)] = ax; }
-					if (edx & 0x02) { ecx = RORB(ebx,1); dst_base[C2S(x,y,ecx)] = ax; }
-					if (edx & 0x04) { ecx = RORB(ebx,2); dst_base[C2S(x,y,ecx)] = ax; }
-					if (edx & 0x08) { ecx = RORB(ebx,3); dst_base[C2S(x,y,ecx)] = ax; }
-					if (edx & 0x10) { ecx = RORB(ebx,4); dst_base[C2S(x,y,ecx)] = ax; }
-					if (edx & 0x20) { ecx = RORB(ebx,5); dst_base[C2S(x,y,ecx)] = ax; }
-					if (edx & 0x40) { ecx = RORB(ebx,6); dst_base[C2S(x,y,ecx)] = ax; }
-					if (edx & 0x80) { ecx = RORB(ebx,7); dst_base[C2S(x,y,ecx)] = ax; }
+					if ((edx & 0x01) != 0) {                    dst_base[C2S(x,y,ebx)] = ax; }
+					if ((edx & 0x02) != 0) { ecx = RORB(ebx,1); dst_base[C2S(x,y,ecx)] = ax; }
+					if ((edx & 0x04) != 0) { ecx = RORB(ebx,2); dst_base[C2S(x,y,ecx)] = ax; }
+					if ((edx & 0x08) != 0) { ecx = RORB(ebx,3); dst_base[C2S(x,y,ecx)] = ax; }
+					if ((edx & 0x10) != 0) { ecx = RORB(ebx,4); dst_base[C2S(x,y,ecx)] = ax; }
+					if ((edx & 0x20) != 0) { ecx = RORB(ebx,5); dst_base[C2S(x,y,ecx)] = ax; }
+					if ((edx & 0x40) != 0) { ecx = RORB(ebx,6); dst_base[C2S(x,y,ecx)] = ax; }
+					if ((edx & 0x80) != 0) { ecx = RORB(ebx,7); dst_base[C2S(x,y,ecx)] = ax; }
 				}
 			}
 	
@@ -823,16 +823,16 @@ public class halleys
 				patterns but I don't know if there are supposed to be lookup tables
 				in ROM or hard-wired to the blitter chips.
 			*/
-			if (y & 1) x -= 8;
+			if ((y & 1) != 0) x -= 8;
 			y = tyremap[y] << 3;
 	
-			if (flags & SY_HIGH) y += 8;
+			if ((flags & SY_HIGH) != 0) y += 8;
 			if (y > 0xf8) return;
 	
-			if (code & PLANE) return; /* WARNING: UNEMULATED */
+			if ((code & PLANE) != 0) return; /* WARNING: UNEMULATED */
 	
 	
-			if (flags & IGNORE_0) { w=8; h=8; WARP_WIPE_COMMON }
+			if ((flags & IGNORE_0) != 0) { w=8; h=8; WARP_WIPE_COMMON }
 	
 			src1_ptr = src_base + src1;
 			dst_ptr = render_layer[2] + (y << SCREEN_WIDTH_L2);
@@ -846,14 +846,14 @@ public class halleys
 					ax = (WORD)src1_ptr[edx];
 					al = src1_ptr[edx+0x10000];
 					ax |= BG_RGB;
-					if (al & 0x01) *dst_ptr   = ax;
-					if (al & 0x02) dst_ptr[1] = ax;
-					if (al & 0x04) dst_ptr[2] = ax;
-					if (al & 0x08) dst_ptr[3] = ax;
-					if (al & 0x10) dst_ptr[4] = ax;
-					if (al & 0x20) dst_ptr[5] = ax;
-					if (al & 0x40) dst_ptr[6] = ax;
-					if (al & 0x80) dst_ptr[7] = ax;
+					if ((al & 0x01) != 0) *dst_ptr   = ax;
+					if ((al & 0x02) != 0) dst_ptr[1] = ax;
+					if ((al & 0x04) != 0) dst_ptr[2] = ax;
+					if ((al & 0x08) != 0) dst_ptr[3] = ax;
+					if ((al & 0x10) != 0) dst_ptr[4] = ax;
+					if ((al & 0x20) != 0) dst_ptr[5] = ax;
+					if ((al & 0x40) != 0) dst_ptr[6] = ax;
+					if ((al & 0x80) != 0) dst_ptr[7] = ax;
 					dst_ptr += SCREEN_WIDTH;
 				} while (++edx);
 			}
@@ -865,14 +865,14 @@ public class halleys
 					ax = (WORD)src1_ptr[edx];
 					al = src1_ptr[edx+0x10000];
 					ax |= BG_RGB;
-					if (al & 0x01) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if (al & 0x02) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if (al & 0x04) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if (al & 0x08) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if (al & 0x10) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if (al & 0x20) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if (al & 0x40) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if (al & 0x80) dst_ptr[ecx] = ax;
+					if ((al & 0x01) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if ((al & 0x02) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if ((al & 0x04) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if ((al & 0x08) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if ((al & 0x10) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if ((al & 0x20) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if ((al & 0x40) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if ((al & 0x80) != 0) dst_ptr[ecx] = ax;
 					dst_ptr += SCREEN_WIDTH;
 				} while (++edx);
 				#undef WARPMASK
@@ -886,7 +886,7 @@ public class halleys
 		if (command == HORIZBAR && flags & COLOR_ON && !(layer & 1))
 		{
 			#define WARP_LINE_COMMON { \
-				if (ecx & 1) { ecx--; *dst_ptr = (WORD)eax; dst_ptr++; } \
+				if ((ecx & 1) != 0) { ecx--; *dst_ptr = (WORD)eax; dst_ptr++; } \
 				dst_ptr += ecx; ecx = -ecx; \
 				while (ecx) { *(DWORD*)(dst_ptr+ecx) = eax; ecx += 2; } }
 	
@@ -904,7 +904,7 @@ public class halleys
 			else
 			{
 				// single source mode
-				if (color & 4) src1_ptr += GFX_HI;
+				if ((color & 4) != 0) src1_ptr += GFX_HI;
 				wclip = 32;
 			}
 	
@@ -1008,7 +1008,7 @@ public class halleys
 			if (i==0 || (i==4 && !data))
 			{
 				blitter_busy = 0;
-				if (firq_level) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); // make up delayed FIRQ's
+				if (firq_level != 0) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); // make up delayed FIRQ's
 			}
 			else
 			{
@@ -1045,7 +1045,7 @@ public class halleys
 	
 		if (game_id==GAME_HALLEYS && activecpu_get_pc()==0xb114) // HACK: collision detection bypass
 		{
-			if (collision_count) { collision_count--; return(collision_list[collision_count]); }
+			if (collision_count != 0) { collision_count--; return(collision_list[collision_count]); }
 	
 			return(0);
 		}
@@ -1260,14 +1260,14 @@ public class halleys
 	//--------------------------------------------------------------------------
 	
 	#define XCOPY_COMMON \
-		if (ecx) { \
-			if (ecx & 1) { ecx--; ax = *esi; esi++; if (ax) *edi = ax; edi++; } \
+		if (ecx != 0) { \
+			if ((ecx & 1) != 0) { ecx--; ax = *esi; esi++; if (ax != 0) *edi = ax; edi++; } \
 			esi += ecx; edi += ecx; ecx = -ecx; \
 			while (ecx) { \
 				ax = esi[ecx]; \
 				bx = esi[ecx+1]; \
-				if (ax) edi[ecx] = ax; \
-				if (bx) edi[ecx+1] = bx; \
+				if (ax != 0) edi[ecx] = ax; \
+				if (bx != 0) edi[ecx+1] = bx; \
 				ecx += 2; } }
 	
 	//--------------------------------------------------------------------------
@@ -1339,14 +1339,14 @@ public class halleys
 			do {
 				ax = esi[ecx];
 				bx = esi[ecx+1];
-				if (ax) edi[ecx  ] = ax; ax = esi[ecx+2];
-				if (bx) edi[ecx+1] = bx; bx = esi[ecx+3];
-				if (ax) edi[ecx+2] = ax; ax = esi[ecx+4];
-				if (bx) edi[ecx+3] = bx; bx = esi[ecx+5];
-				if (ax) edi[ecx+4] = ax; ax = esi[ecx+6];
-				if (bx) edi[ecx+5] = bx; bx = esi[ecx+7];
-				if (ax) edi[ecx+6] = ax;
-				if (bx) edi[ecx+7] = bx;
+				if (ax != 0) edi[ecx  ] = ax; ax = esi[ecx+2];
+				if (bx != 0) edi[ecx+1] = bx; bx = esi[ecx+3];
+				if (ax != 0) edi[ecx+2] = ax; ax = esi[ecx+4];
+				if (bx != 0) edi[ecx+3] = bx; bx = esi[ecx+5];
+				if (ax != 0) edi[ecx+4] = ax; ax = esi[ecx+6];
+				if (bx != 0) edi[ecx+5] = bx; bx = esi[ecx+7];
+				if (ax != 0) edi[ecx+6] = ax;
+				if (bx != 0) edi[ecx+7] = bx;
 			}
 			while (ecx += 8);
 	
@@ -1380,9 +1380,9 @@ public class halleys
 		do {
 			do {
 				eax = (DWORD)esi[ecx];
-				if (eax)
+				if (eax != 0)
 				{
-					if (eax & SP_ALPHA)
+					if ((eax & SP_ALPHA) != 0)
 					{
 						edx = (DWORD)edi[ecx];
 						eax = pal_ptr[eax];
@@ -1469,7 +1469,7 @@ public class halleys
 		do {
 			do {
 				eax = edi[ecx];
-				if (eax & 0x00ff00ff)
+				if ((eax & 0x00ff00ff) != 0)
 				{
 					ebx = eax;
 					eax >>= 16;
@@ -1496,7 +1496,7 @@ public class halleys
 	{
 		int i, j;
 	
-		if (stars_enabled)
+		if (stars_enabled != 0)
 		{
 			copy_scroll_op(bitmap, render_layer[5], *scrollx0, *scrolly0);
 			copy_scroll_xp(bitmap, render_layer[4], *scrollx1, *scrolly1);
@@ -1564,8 +1564,8 @@ public class halleys
 	
 					Current implementation is quite safe although not 100% foul-proof.
 				*/
-				if (latch_delay) latch_delay--; else
-				if (ffcount)
+				if (latch_delay != 0) latch_delay--; else
+				if (ffcount != 0)
 				{
 					ffcount--;
 					latch_data = sound_fifo[fftail];
@@ -1604,8 +1604,8 @@ public class halleys
 		switch (cpu_getiloops())
 		{
 			case 0:
-				if (latch_delay) latch_delay--; else
-				if (ffcount)
+				if (latch_delay != 0) latch_delay--; else
+				if (ffcount != 0)
 				{
 					ffcount--;
 					latch_data = sound_fifo[fftail];
@@ -1639,7 +1639,7 @@ public class halleys
 	{
 		io_ram[0x9c] = data;
 	
-		if (firq_level) firq_level--;
+		if (firq_level != 0) firq_level--;
 		cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
 	} };
 	
@@ -1668,8 +1668,8 @@ public class halleys
 		int inp = readinputport(3);
 		int result = 0x01; // dual coin slots
 	
-		if (inp & 0x80) result |= 0x02;
-		if (inp & 0x40) result |= 0x04;
+		if ((inp & 0x80) != 0) result |= 0x02;
+		if ((inp & 0x40) != 0) result |= 0x04;
 	
 		return(result);
 	} };

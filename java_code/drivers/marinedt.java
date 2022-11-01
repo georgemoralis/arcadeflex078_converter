@@ -243,7 +243,7 @@ public class marinedt
 	
 		marinedt_pf = data;
 	
-	//if(data&0xf0)
+	//if ((data & 0xf0) != 0)
 	//	logerror("pf:%02x %d\n",marinedt_pf);
 	//logerror("pd:%02x %d\n",marinedt_pd, cpu_getcurrentframe());
 	
@@ -464,17 +464,17 @@ public class marinedt
 	// 	ui_text(bitmap, "02 03 04 05 06 08 09 0a 0d 0f", 20, 234);
 	// 	ui_text(bitmap, buf, 20, 244);
 	
-	//  	if (marinedt_sound&0x02) ui_text(bitmap, "dot", 10, 4+36);
-	//  	if (marinedt_sound&0x04) ui_text(bitmap, "col", 50, 4+36);
-	//  	if (marinedt_sound&0x08) ui_text(bitmap, "ink", 90, 4+36);
-	//  	if (marinedt_sound&0x10) ui_text(bitmap, "foam", 130, 4+36);
-	//  	if (marinedt_sound&0x20) ui_text(bitmap, "jet", 180, 4+36);
+	//  	if ((marinedt_sound & 0x02) != 0) ui_text(bitmap, "dot", 10, 4+36);
+	//  	if ((marinedt_sound & 0x04) != 0) ui_text(bitmap, "col", 50, 4+36);
+	//  	if ((marinedt_sound & 0x08) != 0) ui_text(bitmap, "ink", 90, 4+36);
+	//  	if ((marinedt_sound & 0x10) != 0) ui_text(bitmap, "foam", 130, 4+36);
+	//  	if ((marinedt_sound & 0x20) != 0) ui_text(bitmap, "jet", 180, 4+36);
 	
 	//obj to obj coll
 	collh=0;cxh=0;cyrh=0;cyqh=0;
 	
 	#if 0
-	if (marinedt_pd&0x03)
+	if ((marinedt_pd & 0x03) != 0)
 	{
 		int o1x=256-32-marinedt_obj1_x;
 		int o1y=256-marinedt_obj1_y-1;
@@ -497,7 +497,7 @@ public class marinedt
 	//pf collision?
 	
 	#if 0
-	if (marinedt_pd&0x01)
+	if ((marinedt_pd & 0x01) != 0)
 	{
 	
 		drawgfx(bitmap,Machine->gfx[1],
@@ -514,7 +514,7 @@ public class marinedt
 				    (read_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1) != Machine->pens[0]))
 					coll=0x08;
 	
-	if(coll)
+	if (coll != 0)
 	{
 	--i;--j;
 	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine->pens[2]);
@@ -558,7 +558,7 @@ public class marinedt
 	//			256,32,
 	//			cliprect,TRANSPARENCY_PEN,0);
 	
-	//if(coll)
+	//if (coll != 0)
 	//	drawgfx(bitmap,Machine->gfx[1],
 	//			1,
 	//			marinedt_obj1_a&0x03,
@@ -582,7 +582,7 @@ public class marinedt
 	// ------xx colour
 	
 	//note the 22 mod in the code, possibly for flipped
-	if (marinedt_pd&0x02)
+	if ((marinedt_pd & 0x02) != 0)
 			drawgfx(bitmap,Machine->gfx[2],
 					((marinedt_obj2_a&0x04)<<1)+((marinedt_obj2_a&0x38)>>3),
 					marinedt_obj2_a&0x03,
@@ -594,7 +594,7 @@ public class marinedt
 	//at y+6 2 off flush with the left, y-6 flush with the right
 	//at y-1 overlap is equal at 5 pixels on left and right
 	//at x overlap is 6 on left and 5 on right, x+1 may be correct
-	if (marinedt_pd&0x01)
+	if ((marinedt_pd & 0x01) != 0)
 			drawgfx(bitmap,Machine->gfx[1],
 					((marinedt_obj1_a&0x04)<<1)+((marinedt_obj1_a&0x38)>>3),
 					marinedt_obj1_a&0x03,
@@ -604,7 +604,7 @@ public class marinedt
 	}
 	
 	
-	//if(coll)
+	//if (coll != 0)
 	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine->pens[1]);
 	} };
 	

@@ -80,13 +80,13 @@ public class marineb
 				flipx = colorram[offs] & 0x20;
 				flipy = colorram[offs] & 0x10;
 	
-				if (flip_screen_y)
+				if (flip_screen_y != 0)
 				{
 					sy = 31 - sy;
 					flipy = !flipy;
 				}
 	
-				if (flip_screen_x)
+				if (flip_screen_x != 0)
 				{
 					sx = 31 - sx;
 					flipx = !flipx;
@@ -107,7 +107,7 @@ public class marineb
 			int scroll[32];
 	
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				for (offs = 0;offs < 32 - scroll_cols;offs++)
 					scroll[offs] = 0;
@@ -181,7 +181,7 @@ public class marineb
 				flipy = !flipy;
 			}
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx++;
 			}
@@ -225,7 +225,7 @@ public class marineb
 				flipy = !flipy;
 			}
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx++;
 			}
@@ -253,7 +253,7 @@ public class marineb
 			flipy = !flipy;
 		}
 	
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			sx++;
 		}
@@ -370,7 +370,7 @@ public class marineb
 				flipy = !flipy;
 			}
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 256 - Machine->gfx[1]->width - sx;
 				flipx = !flipx;

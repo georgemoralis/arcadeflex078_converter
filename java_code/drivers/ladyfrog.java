@@ -82,7 +82,7 @@ public class ladyfrog
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable != 0) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
@@ -100,7 +100,7 @@ public class ladyfrog
 	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 1;
-		if (pending_nmi)
+		if (pending_nmi != 0)
 		{
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;

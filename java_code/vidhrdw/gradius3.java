@@ -165,7 +165,7 @@ public class gradius3
 		K052109_w(0x1d80,0x10);
 		K052109_w(0x1f00,0x32);
 	
-		if (dirtygfx)
+		if (dirtygfx != 0)
 		{
 			int i;
 	

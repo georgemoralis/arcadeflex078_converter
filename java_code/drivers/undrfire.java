@@ -207,11 +207,11 @@ public class undrfire
 	
 	static NVRAM_HANDLER( undrfire )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&undrfire_eeprom_interface);
-			if (file)
+			if (file != 0)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
@@ -248,12 +248,12 @@ public class undrfire
 		{
 			case 0x00:
 			{
-				if (ACCESSING_MSB32)	/* $500000 is watchdog */
+				if (ACCESSING_MSB32 != 0)	/* $500000 is watchdog */
 				{
 					watchdog_reset_w(0,data >> 24);
 				}
 	
-				if (ACCESSING_LSB32)
+				if (ACCESSING_LSB32 != 0)
 				{
 					EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x40);
@@ -266,7 +266,7 @@ public class undrfire
 	
 			case 0x01:
 			{
-				if (ACCESSING_MSB32)
+				if (ACCESSING_MSB32 != 0)
 				{
 					coin_lockout_w(0,~data & 0x01000000);
 					coin_lockout_w(1,~data & 0x02000000);
@@ -345,13 +345,13 @@ public class undrfire
 	
 	static WRITE32_HANDLER( rotate_control_w )	/* only a guess that it's rotation */
 	{
-			if (ACCESSING_LSW32)
+			if (ACCESSING_LSW32 != 0)
 			{
 				undrfire_rotate_ctrl[port_sel] = data;
 				return;
 			}
 	
-			if (ACCESSING_MSW32)
+			if (ACCESSING_MSW32 != 0)
 			{
 				port_sel = (data &0x70000) >> 16;
 			}

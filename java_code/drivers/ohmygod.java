@@ -48,7 +48,7 @@ public class ohmygod
 	
 	WRITE16_HANDLER( ohmygod_ctrl_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			unsigned char *rom = memory_region(REGION_SOUND1);
 	
@@ -59,7 +59,7 @@ public class ohmygod
 				memcpy(rom + 0x20000,rom + 0x40000 + 0x20000 * sndbank,0x20000);
 			}
 		}
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			coin_counter_w(0,data & 0x1000);
 			coin_counter_w(1,data & 0x2000);

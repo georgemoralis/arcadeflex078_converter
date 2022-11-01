@@ -157,7 +157,7 @@ public class sega
 		static int sign;
 		static int spinner;
 	
-		if (ioSwitch & 1) /* ioSwitch = 0x01 or 0xff */
+		if ((ioSwitch & 1) != 0) /* ioSwitch = 0x01 or 0xff */
 			return readinputport (4);
 	
 		/* else ioSwitch = 0xfe */
@@ -167,7 +167,7 @@ public class sega
 		if (delta != 0)
 		{
 			sign = delta >> 7;
-			if (sign)
+			if (sign != 0)
 				delta = 0x80-delta;
 			spinner += delta;
 		}

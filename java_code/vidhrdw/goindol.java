@@ -118,7 +118,7 @@ public class goindol
 			sx = sprite_ram[offs];
 			sy = 240-sprite_ram[offs+1];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;

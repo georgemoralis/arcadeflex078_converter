@@ -49,7 +49,7 @@ public class mainevt
 	
 	public static InterruptHandlerPtr dv_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (nmi_enable)
+		if (nmi_enable != 0)
 			nmi_line_pulse();
 	} };
 	

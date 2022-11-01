@@ -57,11 +57,11 @@ public class kickgoal
 	
 	static NVRAM_HANDLER( kickgoal )
 	{
-		if (read_or_write) EEPROM_save(file);
+		if (read_or_write != 0) EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
-			if (file) EEPROM_load(file);
+			if (file != 0) EEPROM_load(file);
 		}
 	}
 	
@@ -74,7 +74,7 @@ public class kickgoal
 	
 	static WRITE16_HANDLER( kickgoal_eeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			switch (offset)
 			{

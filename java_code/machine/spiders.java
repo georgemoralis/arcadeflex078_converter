@@ -158,7 +158,7 @@ public class spiders
 		int retval;
 		unsigned char *RAM = memory_region(REGION_GFX1);
 	
-		if(vrom_ctrl_mode)
+		if (vrom_ctrl_mode != 0)
 		{
 			retval=RAM[vrom_address];
 	//	        logerror("VIDEO : Read data %02x from Port address %04x\n",retval,vrom_address);

@@ -90,7 +90,7 @@ public class freekick
 	public static WriteHandlerPtr flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* flip Y/X could be the other way round... */
-		if (offset)
+		if (offset != 0)
 			flip_screen_y_set(~data & 1);
 		else
 			flip_screen_x_set(~data & 1);
@@ -136,7 +136,7 @@ public class freekick
 	
 	public static InterruptHandlerPtr freekick_irqgen = new InterruptHandlerPtr() {public void handler()
 	{
-		if (nmi_en) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
+		if (nmi_en != 0) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
 	public static Memory_ReadAddress gigas_readmem[]={

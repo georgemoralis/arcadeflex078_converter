@@ -112,7 +112,7 @@ public class fileio
 	#ifndef MESS
 			case FILETYPE_INI:
 	#endif
-				if (openforwrite)
+				if (openforwrite != 0)
 				{
 					logerror("mame_fopen: type %02x write not supported\n", filetype);
 					return NULL;
@@ -176,7 +176,7 @@ public class fileio
 			/* NVRAM files */
 			case FILETYPE_NVRAM:
 	#ifdef MESS
-				if (filename)
+				if (filename != 0)
 					return generic_fopen(filetype, gamename, filename, 0, openforwrite ? FILEFLAG_OPENWRITE | FILEFLAG_CREATE_GAMEDIR : FILEFLAG_OPENREAD);
 	#endif
 				return generic_fopen(filetype, NULL, gamename, 0, openforwrite ? FILEFLAG_OPENWRITE : FILEFLAG_OPENREAD);
@@ -310,10 +310,10 @@ public class fileio
 	
 		/* copy the filename and add an extension */
 		strcpy(modified_filename, filename);
-		if (extension)
+		if (extension != 0)
 		{
 			char *p = strchr(modified_filename, '.');
-			if (p)
+			if (p != 0)
 				strcpy(p, extension);
 			else
 			{
@@ -747,10 +747,10 @@ public class fileio
 	#endif
 	
 		/* if there's a gamename, add that; only add a '/' if there is a filename as well */
-		if (gamename)
+		if (gamename != 0)
 		{
 			strcat(output, gamename);
-			if (filename)
+			if (filename != 0)
 			{
 				strcat(output, "/");
 				filename_base = &output[strlen(output)];
@@ -758,7 +758,7 @@ public class fileio
 		}
 	
 		/* if there's a filename, add that */
-		if (filename)
+		if (filename != 0)
 			strcat(output, filename);
 	
 		/* if there's no extension in the filename, add the extension */
@@ -869,7 +869,7 @@ public class fileio
 	
 	#ifdef MESS
 		int is_absolute_path = osd_is_absolute_path(filename);
-		if (is_absolute_path)
+		if (is_absolute_path != 0)
 		{
 			if ((flags & FILEFLAG_ALLOW_ABSOLUTE) == 0)
 				return NULL;
@@ -912,11 +912,11 @@ public class fileio
 			LOG(("Trying %s\n", name));
 	
 	#ifdef MESS
-			if (is_absolute_path)
+			if (is_absolute_path != 0)
 			{
 				*name = 0;
 			}
-			else if (flags & FILEFLAG_CREATE_GAMEDIR)
+			else if ((flags & FILEFLAG_CREATE_GAMEDIR) != 0)
 			{
 				if (osd_get_path_info(pathtype, pathindex, name) == PATH_NOT_FOUND)
 					osd_create_directory(pathtype, pathindex, name);
@@ -930,7 +930,7 @@ public class fileio
 				compose_path(name, gamename, filename, extension);
 	
 				/* if we need checksums, load it into RAM and compute it along the way */
-				if (flags & FILEFLAG_HASH)
+				if ((flags & FILEFLAG_HASH) != 0)
 				{
 					if (checksum_file(pathtype, pathindex, name, &file.data, &file.length, file.hash) == 0)
 					{
@@ -958,7 +958,7 @@ public class fileio
 				}
 	
 	#ifdef MESS
-				if (flags & FILEFLAG_ZIP_PATHS)
+				if ((flags & FILEFLAG_ZIP_PATHS) != 0)
 				{
 					int path_info = PATH_NOT_FOUND;
 					const char *oldname = name;
@@ -977,7 +977,7 @@ public class fileio
 						if (newname && !strcmp(oldname, newname))
 							newname = NULL;
 	
-						if (oldnewname)
+						if (oldnewname != 0)
 							free(oldnewname);
 						oldname = oldnewname = newname;
 						if (!newname)
@@ -988,7 +988,7 @@ public class fileio
 							*s = '\0';
 					}
 	
-					if (newname)
+					if (newname != 0)
 					{
 						if ((oldname[0]) &&(path_info == PATH_IS_FILE))
 						{
@@ -1010,7 +1010,7 @@ public class fileio
 						free(newname);
 					}
 				}
-				if (is_absolute_path)
+				if (is_absolute_path != 0)
 					continue;
 	#endif
 			}
@@ -1033,7 +1033,7 @@ public class fileio
 					compose_path(tempname, NULL, filename, extension);
 	
 					/* verify-only case */
-					if (flags & FILEFLAG_VERIFY_ONLY)
+					if ((flags & FILEFLAG_VERIFY_ONLY) != 0)
 					{
 						UINT8 crcs[4];
 						UINT32 crc = 0;
@@ -1119,7 +1119,7 @@ public class fileio
 	
 		/* otherwise, duplicate the file */
 		newfile = malloc(sizeof(file));
-		if (newfile)
+		if (newfile != 0)
 		{
 			*newfile = file;
 	#ifdef DEBUG_COOKIE
@@ -1197,7 +1197,7 @@ public class fileio
 		hash_compute(hash, data, length, functions);
 	
 		/* if the caller wants the data, give it away, otherwise free it */
-		if (p)
+		if (p != 0)
 			*p = data;
 		else
 			free(data);

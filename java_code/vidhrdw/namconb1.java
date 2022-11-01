@@ -23,7 +23,7 @@ public class namconb1
 	INLINE data16_t nth_word32( const data32_t *source, int which )
 	{
 		source += which/2;
-		if( which&1 )
+		if ((which & 1) != 0)
 		{
 			return (*source)&0xffff;
 		}
@@ -153,7 +153,7 @@ public class namconb1
 		unsigned p3;
 		unsigned p4;
 		toggle = !toggle;
-		if( toggle ) dsw &= ~(0x80<<16);
+		if (toggle != 0) dsw &= ~(0x80<<16);
 		if( namcos2_gametype == NAMCONB2_MACH_BREAKERS )
 		{
 			p3 = readinputport(4);
@@ -218,7 +218,7 @@ public class namconb1
 	
 		for( pri=0; pri<8; pri++ )
 		{
-			if( bROZ )
+			if (bROZ != 0)
 			{
 				namco_roz_draw( bitmap,cliprect,pri );
 			}
@@ -312,8 +312,8 @@ public class namconb1
 		{
 			/* the pixmap index is mangled, the transparency bitmask index is not */
 			mangle = tile&~(0x140);
-			if( tile&0x100 ) mangle |= 0x040;
-			if( tile&0x040 ) mangle |= 0x100;
+			if ((tile & 0x100) != 0) mangle |= 0x040;
+			if ((tile & 0x040) != 0) mangle |= 0x100;
 		}
 		SET_TILE_INFO( NAMCONB1_TILEGFX,mangle,tilemap_palette_bank[which],0)
 		tile_info.mask_data = 8*tile + mpMaskData;
@@ -338,21 +338,21 @@ public class namconb1
 		code &= 0x7ff;
 		if( namcos2_gametype == NAMCONB2_MACH_BREAKERS )
 		{
-			if( bank&0x01 ) code |= 0x01*0x800;
-			if( bank&0x02 ) code |= 0x02*0x800;
-			if( bank&0x04 ) code |= 0x04*0x800;
-			if( bank&0x08 ) code |= 0x08*0x800;
-			if( bank&0x10 ) code |= 0x10*0x800;
-			if( bank&0x40 ) code |= 0x20*0x800;
+			if ((bank & 0x01) != 0) code |= 0x01*0x800;
+			if ((bank & 0x02) != 0) code |= 0x02*0x800;
+			if ((bank & 0x04) != 0) code |= 0x04*0x800;
+			if ((bank & 0x08) != 0) code |= 0x08*0x800;
+			if ((bank & 0x10) != 0) code |= 0x10*0x800;
+			if ((bank & 0x40) != 0) code |= 0x20*0x800;
 		}
 		else
 		{
-			if( bank&0x01 ) code |= 0x01*0x800;
-			if( bank&0x02 ) code |= 0x04*0x800;
-			if( bank&0x04 ) code |= 0x02*0x800;
-			if( bank&0x08 ) code |= 0x08*0x800;
-			if( bank&0x10 ) code |= 0x10*0x800;
-			if( bank&0x40 ) code |= 0x20*0x800;
+			if ((bank & 0x01) != 0) code |= 0x01*0x800;
+			if ((bank & 0x02) != 0) code |= 0x04*0x800;
+			if ((bank & 0x04) != 0) code |= 0x02*0x800;
+			if ((bank & 0x08) != 0) code |= 0x08*0x800;
+			if ((bank & 0x10) != 0) code |= 0x10*0x800;
+			if ((bank & 0x40) != 0) code |= 0x20*0x800;
 		}
 		return code;
 	}

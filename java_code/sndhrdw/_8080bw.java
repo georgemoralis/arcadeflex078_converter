@@ -1163,15 +1163,15 @@ public class _8080bw
 	
 	public static WriteHandlerPtr seawolf_sh_port5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 			sample_start (0, 0, 0);  /* Ship Hit */
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 			sample_start (1, 1, 0);  /* Torpedo */
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 			sample_start (2, 2, 0);  /* Dive */
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			sample_start (3, 3, 0);  /* Sonar */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			sample_start (4, 4, 0);  /* Mine Hit */
 	
 		coin_counter_w(0, (data & 0x20) >> 5);    /* Coin Counter */
@@ -1281,7 +1281,7 @@ public class _8080bw
 		   bit 4 - Effect Sound C (SX4)
 		   bit 5 - Explosion (SX5) */
 	
-		if (channel_dot)
+		if (channel_dot != 0)
 		{
 			int freq;
 	
@@ -1292,7 +1292,7 @@ public class _8080bw
 		}
 	
 		explosion = (data >> 5) & 0x01;
-		if (explosion)
+		if (explosion != 0)
 		{
 			SN76477_set_amplitude_res(0, RES_K(200));
 			SN76477_set_oneshot_cap(0, CAP_U(0.1));		/* ???? */
@@ -1352,19 +1352,19 @@ public class _8080bw
 	/* A new sample set needs to be made with 3 different balloon sounds,
 	   and the code modified to suit. */
 	
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 			sample_start (0, 0, 0);  /* Bottom Balloon Pop */
 	
-		if (data & 0x02)
+		if ((data & 0x02) != 0)
 			sample_start (0, 0, 0);  /* Middle Balloon Pop */
 	
-		if (data & 0x04)
+		if ((data & 0x04) != 0)
 			sample_start (0, 0, 0);  /* Top Balloon Pop */
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			sample_start (2, 2, 0);  /* Bounce */
 	
-		if (data & 0x20)
+		if ((data & 0x20) != 0)
 			sample_start (1, 1, 0);  /* Splat */
 	} };
 	

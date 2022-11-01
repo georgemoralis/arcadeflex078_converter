@@ -52,7 +52,7 @@ public class konamigx
 	
 		tileno = map[1]<<8 | map[0];
 	
-	//	if (tileno) printf("1a map: %x\n", tileno);
+	//	if (tileno != 0) printf("1a map: %x\n", tileno);
 	
 		colour = (psac_colorbase << 4);
 	
@@ -70,7 +70,7 @@ public class konamigx
 	
 		tileno = map[5]<<8 | map[4];
 	
-	//	if (tileno) printf("1b map: %x\n", tileno);
+	//	if (tileno != 0) printf("1b map: %x\n", tileno);
 	
 		colour = (psac_colorbase << 4);
 	
@@ -449,7 +449,7 @@ public class konamigx
 				{
 					layer_colorbase[i] = newbase;
 	
-					if (unchained)
+					if (unchained != 0)
 						K056832_mark_plane_dirty(i);
 					else
 						dirty = 1;
@@ -462,7 +462,7 @@ public class konamigx
 		}
 	
 		// sub2 is PSAC colorbase on GX
-		if (gx_rozenable)
+		if (gx_rozenable != 0)
 		{
 			last_psac_colorbase = psac_colorbase;
 			psac_colorbase = K055555_get_palette_index(6);
@@ -477,7 +477,7 @@ public class konamigx
 			}
 		}
 	
-		if (dirty) K056832_MarkAllTilemapsDirty();
+		if (dirty != 0) K056832_MarkAllTilemapsDirty();
 	
 		if (konamigx_cfgport >= 0)
 		{
@@ -509,12 +509,12 @@ public class konamigx
 		}
 		else blendmode = 0;
 	
-		if (gx_rozenable)
+		if (gx_rozenable != 0)
 			konamigx_mixer(bitmap, cliprect, 0, 0, gx_psac_tilemap, GXSUB_8BPP, blendmode);
 		else
 			konamigx_mixer(bitmap, cliprect, 0, 0, 0, 0, blendmode);
 	
-		if( gx_invertlayersBC )
+		if (gx_invertlayersBC != 0)
 		{
 			draw_crosshair( bitmap, readinputport( 9)*287/0xff+24, readinputport(10)*223/0xff+16, cliprect );
 			draw_crosshair( bitmap, readinputport(11)*287/0xff+24, readinputport(12)*223/0xff+16, cliprect );
@@ -558,9 +558,9 @@ public class konamigx
 		COMBINE_DATA(&paletteram32[offset]);
 	
 		paletteram16 = (data16_t *)paletteram32;
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2+1, data, mem_mask);
 	}
 	
@@ -574,9 +574,9 @@ public class konamigx
 		COMBINE_DATA(&paletteram32[offset]);
 		
 		paletteram16 = (data16_t *)paletteram32;
-		if (ACCESSING_MSW32)
+		if (ACCESSING_MSW32 != 0)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32)
+		if (ACCESSING_LSW32 != 0)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2+1, data, mem_mask);
 	}
 	

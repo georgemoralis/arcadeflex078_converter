@@ -274,7 +274,7 @@ public class common
 			if (samplenames[i+skipfirst][0])
 			{
 				if ((f = mame_fopen(basename,samplenames[i+skipfirst],FILETYPE_SAMPLE,0)) == 0)
-					if (skipfirst)
+					if (skipfirst != 0)
 						f = mame_fopen(samplenames[0]+1,samplenames[i+skipfirst],FILETYPE_SAMPLE,0);
 				if (f != 0)
 				{
@@ -470,9 +470,9 @@ public class common
 	
 	void nvram_handler_generic_0fill(mame_file *file, int read_or_write)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, generic_nvram, generic_nvram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, generic_nvram, generic_nvram_size);
 		else
 			memset(generic_nvram, 0, generic_nvram_size);
@@ -486,9 +486,9 @@ public class common
 	
 	void nvram_handler_generic_1fill(mame_file *file, int read_or_write)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, generic_nvram, generic_nvram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, generic_nvram, generic_nvram_size);
 		else
 			memset(generic_nvram, 0xff, generic_nvram_size);
@@ -640,7 +640,7 @@ public class common
 	void *auto_malloc(size_t size)
 	{
 		void *result = malloc(size);
-		if (result)
+		if (result != 0)
 		{
 			struct malloc_info *info;
 	
@@ -769,7 +769,7 @@ public class common
 	
 		/* allow the OSD system to muck with the screenshot */
 		osdcopy = osd_override_snapshot(bitmap, &bounds);
-		if (osdcopy)
+		if (osdcopy != 0)
 			bitmap = osdcopy;
 	
 		/* now do the actual work */
@@ -796,7 +796,7 @@ public class common
 			}
 	
 			copy = bitmap_alloc_depth(sizex * scalex,sizey * scaley,bitmap->depth);
-			if (copy)
+			if (copy != 0)
 			{
 				int x,y,sx,sy;
 	
@@ -844,7 +844,7 @@ public class common
 		memcpy(direct_rgb_components, saved_rgb_components, sizeof(saved_rgb_components));
 	
 		/* if the OSD system allocated a bitmap; free it */
-		if (osdcopy)
+		if (osdcopy != 0)
 			bitmap_free(osdcopy);
 	}
 	
@@ -987,7 +987,7 @@ public class common
 		FILE *f;
 	
 		f = fopen("romload.log", opened++ ? "a" : "w");
-		if (f)
+		if (f != 0)
 		{
 			va_start(arg, string);
 			vfprintf(f, string, arg);
@@ -1142,7 +1142,7 @@ public class common
 			if (hash_data_extract_printable_checksum(hash, 1<<i, chksum) == 2)
 				wrong_functions |= 1<<i;
 	
-		if (wrong_functions)
+		if (wrong_functions != 0)
 		{
 			for (i=0;i<HASH_NUM_FUNCTIONS;i++)
 				if (wrong_functions & (1<<i))
@@ -1637,7 +1637,7 @@ public class common
 						while (ROMENTRY_ISCONTINUE(romp));
 	
 						/* if this was the first use of this file, verify the length and CRC */
-						if (baserom)
+						if (baserom != 0)
 						{
 							debugload("Verifying length (%X) and checksums\n", explength);
 							verify_length_and_hash(romdata, ROM_GETNAME(baserom), explength, ROM_GETHASHDATA(baserom));
@@ -1700,7 +1700,7 @@ public class common
 				/* make the filename of the source */
 				strcpy(filename, ROM_GETNAME(romp));
 				c = strrchr(filename, '.');
-				if (c)
+				if (c != 0)
 					strcpy(c, ".chd");
 				else
 					strcat(filename, ".chd");
@@ -1739,7 +1739,7 @@ public class common
 					/* make the filename of the diff */
 					strcpy(filename, ROM_GETNAME(romp));
 					c = strrchr(filename, '.');
-					if (c)
+					if (c != 0)
 						strcpy(c, ".dif");
 					else
 						strcat(filename, ".dif");

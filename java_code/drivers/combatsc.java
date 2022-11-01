@@ -229,12 +229,12 @@ public class combatsc
 	
 		if (activecpu_get_pc() == 0x334)
 		{
-			if (boost)
+			if (boost != 0)
 			{
 				boost = 0;
 				timer_adjust(combasc_interleave_timer, TIME_NOW, 0, TIME_IN_CYCLES(80,1));
 			}
-			else if (status & 2)
+			else if ((status & 2) != 0)
 			{
 				boost = 1;
 				timer_adjust(combasc_interleave_timer, TIME_NOW, 0, TIME_NEVER);

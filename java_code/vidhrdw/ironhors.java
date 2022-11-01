@@ -140,7 +140,7 @@ public class ironhors
 	
 		/* bit 6 unknown - set after game over */
 	
-		if (data & 0x88) usrintf_showmessage("ironhors_palettebank_w %02x",data);
+		if ((data & 0x88) != 0) usrintf_showmessage("ironhors_palettebank_w %02x",data);
 	} };
 	
 	public static WriteHandlerPtr ironhors_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -198,7 +198,7 @@ public class ironhors
 			int color = ((sr[offs+1] & 0xf0)>>4) + 16 * palettebank;
 		//	int mod = flip_screen ? -8 : 8;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -219,7 +219,7 @@ public class ironhors
 	
 				case 0x04:	/* 16x8 */
 					{
-						if (flip_screen) sy += 8; // this fixes the train wheels' position
+						if (flip_screen != 0) sy += 8; // this fixes the train wheels' position
 	
 						drawgfx(bitmap,Machine->gfx[2],
 								code & ~1,

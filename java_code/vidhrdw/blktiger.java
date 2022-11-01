@@ -218,7 +218,7 @@ public class blktiger
 			int color = attr & 0x07;
 			int flipx = attr & 0x08;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -238,16 +238,16 @@ public class blktiger
 	{
 		fillbitmap(bitmap,Machine->pens[1023],cliprect);
 	
-		if (bgon)
+		if (bgon != 0)
 			tilemap_draw(bitmap,cliprect,screen_layout ? bg_tilemap8x4 : bg_tilemap4x8,TILEMAP_BACK,0);
 	
-		if (objon)
+		if (objon != 0)
 			draw_sprites(bitmap,cliprect);
 	
-		if (bgon)
+		if (bgon != 0)
 			tilemap_draw(bitmap,cliprect,screen_layout ? bg_tilemap8x4 : bg_tilemap4x8,TILEMAP_FRONT,0);
 	
-		if (chon)
+		if (chon != 0)
 			tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	

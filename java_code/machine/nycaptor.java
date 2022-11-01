@@ -62,7 +62,7 @@ public class nycaptor
 		if ((ddrB & 0x02) && (~data & 0x02) && (portB_out & 0x02))
 		{
 			portA_in = from_main;
-			if (main_sent) cpu_set_irq_line(3,0,CLEAR_LINE);
+			if (main_sent != 0) cpu_set_irq_line(3,0,CLEAR_LINE);
 			main_sent = 0;
 	
 		}
@@ -87,7 +87,7 @@ public class nycaptor
 	public static ReadHandlerPtr nycaptor_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		portC_in = 0;
-		if (main_sent) portC_in |= 0x01;
+		if (main_sent != 0) portC_in |= 0x01;
 		if (!mcu_sent) portC_in |= 0x02;
 	
 		return (portC_out & ddrC) | (portC_in & ~ddrC);

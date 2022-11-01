@@ -108,7 +108,7 @@ public class gridlee
 				break;
 			
 			case 0x08+0x08:
-				if (data)
+				if (data != 0)
 					tone_step = freq_to_step * (double)(data * 5);
 				else
 					tone_step = 0;
@@ -127,7 +127,7 @@ public class gridlee
 				break;
 				
 			case 0x0d+0x08:
-	//			if (data)
+	//			if (data != 0)
 	//				tone_step = freq_to_step * (double)(data * 11);
 	//			else
 	//				tone_step = 0;

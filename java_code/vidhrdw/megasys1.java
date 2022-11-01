@@ -464,7 +464,7 @@ public class megasys1
 			case 0x100/2   :	megasys1_sprite_flag = new_data;		break;
 	
 			case 0x300/2   :	megasys1_screen_flag = new_data;
-								if (new_data & 0x10)
+								if ((new_data & 0x10) != 0)
 									cpu_set_reset_line(1,ASSERT_LINE);
 								else
 									cpu_set_reset_line(1,CLEAR_LINE);
@@ -515,7 +515,7 @@ public class megasys1
 			case 0x2208/2   :	megasys1_active_layers = new_data;	break;
 	
 			case 0x2308/2   :	megasys1_screen_flag = new_data;
-								if (new_data & 0x10)
+								if ((new_data & 0x10) != 0)
 									cpu_set_reset_line(1,ASSERT_LINE);
 								else
 									cpu_set_reset_line(1,CLEAR_LINE);
@@ -619,7 +619,7 @@ public class megasys1
 					flipx = attr & 0x40;
 					flipy = attr & 0x80;
 	
-					if (megasys1_screen_flag & 1)
+					if ((megasys1_screen_flag & 1) != 0)
 					{
 						flipx = !flipx;		flipy = !flipy;
 						sx = 240-sx;		sy = 240-sy;
@@ -663,7 +663,7 @@ public class megasys1
 				flipx = attr & 0x40;
 				flipy = attr & 0x80;
 	
-				if (megasys1_screen_flag & 1)
+				if ((megasys1_screen_flag & 1) != 0)
 				{
 					flipx = !flipx;		flipy = !flipy;
 					sx = 240-sx;		sy = 240-sy;
@@ -831,9 +831,9 @@ public class megasys1
 						int opacity	=	i & enable_mask;	// only consider active layers
 						int layer	=	color_prom[pri_code * 0x20 + offset + opacity * 2];
 	
-						if (opacity)
+						if (opacity != 0)
 						{
-							if (opacity & top_mask)
+							if ((opacity & top_mask) != 0)
 							{
 								if (layer != top )	result |= 1; 	// error: opaque pens aren't always opaque!
 							}
@@ -851,7 +851,7 @@ public class megasys1
 					layers_order[offset] = ( (layers_order[offset] << 4) | top ) & 0xfffff;
 					enable_mask &= ~top_mask;
 	
-					if (result & 1)
+					if ((result & 1) != 0)
 					{
 						logerror("WARNING, pri $%X split %d - layer %d's opaque pens not totally opaque\n",pri_code,offset,top);
 	
@@ -957,7 +957,7 @@ public class megasys1
 		int i,flag,pri,primask;
 		int active_layers;
 	
-		if (hardware_type_z)
+		if (hardware_type_z != 0)
 		{
 			/* no layer 2 and fixed layers order? */
 			active_layers = 0x000b;
@@ -1029,7 +1029,7 @@ public class megasys1
 						fillbitmap(bitmap,Machine->pens[0],cliprect);
 					}
 	
-					if (megasys1_sprite_flag & 0x100)	/* sprites are split */
+					if ((megasys1_sprite_flag & 0x100) != 0)	/* sprites are split */
 					{
 						/* following tilemaps will obscure this sprites layer */
 						primask |= 1 << (layer-3);
@@ -1042,7 +1042,7 @@ public class megasys1
 			}
 		}
 	
-		if (active_layers & 0x08)
+		if ((active_layers & 0x08) != 0)
 			draw_sprites(bitmap,cliprect);
 	} };
 }

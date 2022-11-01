@@ -190,7 +190,7 @@ public class ddrible
 			int color = (source[1] & 0xf0) >> 4;				/* color */
 			int width,height;
 	
-			if (flipscreen){
+			if (flipscreen != 0){
 					flipx = !flipx;
 					flipy = !flipy;
 					sx = 240 - sx;

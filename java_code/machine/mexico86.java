@@ -137,9 +137,9 @@ public class mexico86
 		}
 		if ((ddrB & 0x08) && (~data & 0x08) && (portB_out & 0x08))
 		{
-			if (data & 0x10)    /* read */
+			if ((data & 0x10) != 0)    /* read */
 			{
-				if (data & 0x04)
+				if ((data & 0x04) != 0)
 				{
 	//logerror("%04x: 68705 read %02x from address %04x\n",activecpu_get_pc(),shared[0x800+address],address);
 					latch = mexico86_protection_ram[address];

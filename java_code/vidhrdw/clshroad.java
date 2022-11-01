@@ -164,7 +164,7 @@ public class clshroad
 			int tile_index = offset / 2;
 			int tile = (tile_index & 0x1f) + (tile_index & ~0x3f)/2;
 			clshroad_vram_0[offset] = data;
-			if (tile_index & 0x20)	tilemap_mark_tile_dirty(tilemap_0a, tile);
+			if ((tile_index & 0x20) != 0)	tilemap_mark_tile_dirty(tilemap_0a, tile);
 			else					tilemap_mark_tile_dirty(tilemap_0b, tile);
 		}
 	} };
@@ -339,7 +339,7 @@ public class clshroad
 			int flipy	=	0;
 	
 			x -= 0x4a/2;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				y = 240 - y;
 				flipx = !flipx;

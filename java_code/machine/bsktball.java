@@ -38,7 +38,7 @@ public class bsktball
 	
 		if (i256V==0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-		else if (NMION)
+		else if (NMION != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -146,7 +146,7 @@ public class bsktball
 			return ((p1_horiz & 0x0F) | ((p1_vert << 4) & 0xF0));
 		}
 		/* D0-D3 = Plyr 2 Horiz, D4-D7 = Plyr 2 Vert */
-		else if (LD2)
+		else if (LD2 != 0)
 		{
 			return ((p2_horiz & 0x0F) | ((p2_vert << 4) & 0xF0));
 		}

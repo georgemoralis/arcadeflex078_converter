@@ -653,7 +653,7 @@ public class afega
 		size_t  size = memory_region_length( REGION_CPU1 );
 		data8_t *buffer = malloc( size );
 	
-		if( buffer )
+		if (buffer != 0)
 		{
 			memcpy( buffer, RAM, size );
 			for( i = 0; i < size; i++ )

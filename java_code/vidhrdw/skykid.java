@@ -141,7 +141,7 @@ public class skykid
 	
 	public static WriteHandlerPtr skykid_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (flipscreen)
+		if (flipscreen != 0)
 			tilemap_set_scrollx(background, 0, (189 - (offset ^ 1)) & 0x1ff);
 		else
 			tilemap_set_scrollx(background, 0, ((offset) + 35) & 0x1ff);
@@ -149,7 +149,7 @@ public class skykid
 	
 	public static WriteHandlerPtr skykid_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (flipscreen)
+		if (flipscreen != 0)
 			tilemap_set_scrolly(background, 0, (261 - offset) & 0xff);
 		else
 			tilemap_set_scrolly(background, 0, (offset + 27) & 0xff);
@@ -181,7 +181,7 @@ public class skykid
 			int flipx = spriteram_3[offs] & 0x01;
 			int width, height;
 	
-			if (flipscreen){
+			if (flipscreen != 0){
 					flipx = !flipx;
 					flipy = !flipy;
 			}
@@ -251,7 +251,7 @@ public class skykid
 					sx = mx + 2;
 					sy = my - 2;
 				}
-				if (flipscreen){
+				if (flipscreen != 0){
 					sx = 35 - sx;
 					sy = 27 - sy;
 				}

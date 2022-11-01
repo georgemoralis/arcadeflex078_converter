@@ -246,7 +246,7 @@ public class beathead
 	
 	static WRITE32_HANDLER( eeprom_data_w )
 	{
-		if (eeprom_enabled)
+		if (eeprom_enabled != 0)
 		{
 			mem_mask |= 0xffffff00;
 			COMBINE_DATA(&((data32_t *)generic_nvram)[offset]);
@@ -283,8 +283,8 @@ public class beathead
 	static READ32_HANDLER( input_2_r )
 	{
 		int result = readinputport(2);
-		if (atarigen_sound_to_cpu_ready) result ^= 0x10;
-		if (atarigen_cpu_to_sound_ready) result ^= 0x20;
+		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x10;
+		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x20;
 		return result;
 	}
 	
@@ -310,7 +310,7 @@ public class beathead
 	
 	static WRITE32_HANDLER( sound_data_w )
 	{
-		if (ACCESSING_LSB32)
+		if (ACCESSING_LSB32 != 0)
 			atarigen_sound_w(offset, data, mem_mask);
 	}
 	

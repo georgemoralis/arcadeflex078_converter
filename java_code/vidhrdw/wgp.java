@@ -394,7 +394,7 @@ public class wgp
 		{
 			code = (spriteram16[0xe00+offs]);
 	
-			if (code)	/* do we have an active sprite ? */
+			if (code != 0)	/* do we have an active sprite ? */
 			{
 				i = (code << 3) &0xfff;	/* yes, so we look up its sprite entry */
 	
@@ -427,8 +427,8 @@ public class wgp
 		/****** end zoom kludge *******/
 	
 				/* Treat coords as signed */
-				if (x & 0x8000)  x -= 0x10000;
-				if (y & 0x8000)  y -= 0x10000;
+				if ((x & 0x8000) != 0)  x -= 0x10000;
+				if ((y & 0x8000) != 0)  y -= 0x10000;
 	
 				map_index = bigsprite << 1;	/* now we access sprite tilemap */
 	
@@ -439,7 +439,7 @@ public class wgp
 				j = wgp_spritemap[map_index + 0xc];
 				small_sprite = ((i > 0) & (i <=8) & (j > 0) & (j <=8));
 	
-				if (small_sprite)
+				if (small_sprite != 0)
 				{
 					for (i=0;i<4;i++)
 					{
@@ -507,7 +507,7 @@ public class wgp
 	
 		}
 	#if 0
-		if (rotate)
+		if (rotate != 0)
 		{
 			char buf[80];
 			sprintf(buf,"sprite rotate offs %04x ?",rotate);
@@ -528,7 +528,7 @@ public class wgp
 		type *dsti = &((type *)bitmapi->line[y])[x];							\
 		UINT8 *dstp = &((UINT8 *)bitmapp->line[y])[x];							\
 		int xadv = 1;															\
-		if (orientation)														\
+		if (orientation != 0)														\
 		{																		\
 			int dy = (type *)bitmap->line[1] - (type *)bitmap->line[0];			\
 			int tx = x, ty = y, temp;											\
@@ -557,7 +557,7 @@ public class wgp
 			const UINT16 *src,int transparent,UINT32 orient,int pri)
 	{
 		ADJUST_FOR_ORIENTATION(UINT16, Machine->orientation ^ orient, bitmap, priority_bitmap, x, y);
-		if (transparent) {
+		if (transparent != 0) {
 			while (length--) {
 				UINT32 spixel = *src++;
 				if (spixel<0x7fff) {
@@ -668,7 +668,7 @@ public class wgp
 			tsrc  = (UINT8 *)transbitmap->line[src_y_index];
 			dst16 = scanline;
 	
-			if (flags & TILEMAP_IGNORE_TRANSPARENCY)
+			if ((flags & TILEMAP_IGNORE_TRANSPARENCY) != 0)
 			{
 				for (i=0; i<screen_width; i++)
 				{
@@ -688,7 +688,7 @@ public class wgp
 				}
 			}
 	
-			if (flags & TILEMAP_IGNORE_TRANSPARENCY)
+			if ((flags & TILEMAP_IGNORE_TRANSPARENCY) != 0)
 				bryan2_drawscanline(bitmap,0,y,screen_width,scanline,0,rot,priority);
 			else
 				bryan2_drawscanline(bitmap,0,y,screen_width,scanline,1,rot,priority);

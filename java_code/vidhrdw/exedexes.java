@@ -244,7 +244,7 @@ public class exedexes
 	
 	public static VideoUpdateHandlerPtr video_update_exedexes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (sc2on)
+		if (sc2on != 0)
 		{
 			tilemap_set_scrollx(bg_tilemap, 0, ((exedexes_bg_scroll[1]) << 8) + exedexes_bg_scroll[0]);
 			tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
@@ -256,7 +256,7 @@ public class exedexes
 	
 		exedexes_draw_sprites(bitmap, 1);
 	
-		if (sc1on)
+		if (sc1on != 0)
 		{
 			tilemap_set_scrollx(fg_tilemap, 0, ((exedexes_nbg_yscroll[1]) << 8) + exedexes_nbg_yscroll[0]);
 			tilemap_set_scrolly(fg_tilemap, 0, ((exedexes_nbg_xscroll[1]) << 8) + exedexes_nbg_xscroll[0]);
@@ -265,7 +265,7 @@ public class exedexes
 		
 		exedexes_draw_sprites(bitmap, 0);
 	
-		if (chon)
+		if (chon != 0)
 		{
 			tilemap_draw(bitmap, &Machine->visible_area, tx_tilemap, 0, 0);
 		}

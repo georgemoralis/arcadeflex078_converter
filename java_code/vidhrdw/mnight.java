@@ -66,7 +66,7 @@ public class mnight
 		{
 			mnight_bgenable_ram[offset] = data;
 			bg_enable = data;
-			if (bg_enable)
+			if (bg_enable != 0)
 				memset(bg_dirtybuffer, 1, mnight_backgroundram_size / 2);
 			else
 				fillbitmap(bitmap_bg, Machine->pens[0],0);
@@ -168,7 +168,7 @@ public class mnight
 				if (spriteram[offs+2] & 1) sx-=256;
 				tile = spriteram[offs+3]+((spriteram[offs+2] & 0xc0)<<2) + ((spriteram[offs+2] & 0x08)<<7);
 				big  = spriteram[offs+2] & 4;
-				if (big) tile /= 4;
+				if (big != 0) tile /= 4;
 				flipx = spriteram[offs+2] & 0x10;
 				flipy = spriteram[offs+2] & 0x20;
 				palette = spriteram[offs+4] & 0x0f;
@@ -200,13 +200,13 @@ public class mnight
 		int scrollx,scrolly;
 	
 	
-		if (bg_enable)
+		if (bg_enable != 0)
 			mnight_draw_background(bitmap_bg);
 	
 		scrollx = -((mnight_scrollx_ram[0]+mnight_scrollx_ram[1]*256) & 0x1FF);
 		scrolly = -((mnight_scrolly_ram[0]+mnight_scrolly_ram[1]*256) & 0x1FF);
 	
-		if (sp_overdraw)	/* overdraw sprite mode */
+		if (sp_overdraw != 0)	/* overdraw sprite mode */
 		{
 			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
 			mnight_draw_sprites(bitmap_sp);

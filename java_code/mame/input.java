@@ -137,7 +137,7 @@ public class input
 	{
 		struct code_info* new_code_map;
 		new_code_map = realloc( code_map, (code_mac+1) * sizeof(struct code_info) );
-		if (new_code_map)
+		if (new_code_map != 0)
 		{
 			code_map = new_code_map;
 			code_map[code_mac].memory = 0;
@@ -216,12 +216,12 @@ public class input
 			{
 				case CODE_TYPE_KEYBOARD :
 					keyinfo = internal_code_find_keyboard(code);
-					if (keyinfo)
+					if (keyinfo != 0)
 						return osd_is_key_pressed(keyinfo->code);
 					break;
 				case CODE_TYPE_JOYSTICK :
 					joyinfo = internal_code_find_joystick(code);
-					if (joyinfo)
+					if (joyinfo != 0)
 						return osd_is_joy_pressed(joyinfo->code);
 					break;
 			}
@@ -249,12 +249,12 @@ public class input
 		{
 			case CODE_TYPE_KEYBOARD :
 				keyinfo = internal_code_find_keyboard(code);
-				if (keyinfo)
+				if (keyinfo != 0)
 					return keyinfo->name;
 				break;
 			case CODE_TYPE_JOYSTICK :
 				joyinfo = internal_code_find_joystick(code);
-				if (joyinfo)
+				if (joyinfo != 0)
 					return joyinfo->name;
 				break;
 		}
@@ -416,7 +416,7 @@ public class input
 	
 		pressed = internal_code_pressed(code);
 	
-		if (pressed)
+		if (pressed != 0)
 		{
 			if (code_map[code].memory == 0)
 				code_map[code].memory = 1;
@@ -440,7 +440,7 @@ public class input
 	
 		pressed = internal_code_pressed(code);
 	
-		if (pressed)
+		if (pressed != 0)
 		{
 			if (code_map[code].memory != 0)
 				pressed = 0;
@@ -462,7 +462,7 @@ public class input
 	
 		pressed = internal_code_pressed(code);
 	
-		if (pressed)
+		if (pressed != 0)
 		{
 			if (code_map[code].memory == 0)
 			{
@@ -670,7 +670,7 @@ public class input
 					invert = !invert;
 					break;
 				default:
-					if (res)
+					if (res != 0)
 					{
 						int pressed = code_pressed_not_memorized((*code)[j]);
 						if ((pressed != 0) == invert)
@@ -724,7 +724,7 @@ public class input
 					operand = 0;
 					break;
 				case CODE_NOT :
-					if (pred_not)
+					if (pred_not != 0)
 						return 0;
 					pred_not = !pred_not;
 					operand = 0;
@@ -821,7 +821,7 @@ public class input
 	
 		pressed = seq_pressed(input_port_type_seq(code));
 	
-		if (pressed)
+		if (pressed != 0)
 		{
 			if (ui_map[code].memory == 0)
 			{
@@ -845,7 +845,7 @@ public class input
 	
 		pressed = seq_pressed(input_port_type_seq(code));
 	
-		if (pressed)
+		if (pressed != 0)
 		{
 			if (ui_map[code].memory == 0)
 			{
@@ -878,7 +878,7 @@ public class input
 			if (code < __code_max)
 			{
 				joyinfo = internal_code_find_joystick(code);
-				if (joyinfo)
+				if (joyinfo != 0)
 					return osd_is_joystick_axis_code(joyinfo->code);
 			}
 			else
@@ -901,7 +901,7 @@ public class input
 			if (code_map[code].type == CODE_TYPE_JOYSTICK)
 			{
 				joyinfo = internal_code_find_joystick(code);
-				if (joyinfo)
+				if (joyinfo != 0)
 					return joyinfo->code;
 			}
 		} else {

@@ -488,7 +488,7 @@ public class ymz280b
 			}
 	
 			/* if there are leftovers, ramp back to 0 */
-			if (samples_left)
+			if (samples_left != 0)
 			{
 				int base = new_samples - samples_left;
 				int i, t = (base == 0) ? curr : scratch[base - 1];
@@ -686,11 +686,11 @@ public class ymz280b
 	void YMZ280B_sh_stop(void)
 	{
 		/* free memory */
-		if (accumulator)
+		if (accumulator != 0)
 			free(accumulator);
 		accumulator = NULL;
 	
-		if (scratch)
+		if (scratch != 0)
 			free(scratch);
 		scratch = NULL;
 	
@@ -932,22 +932,22 @@ public class ymz280b
 	
 	WRITE16_HANDLER( YMZ280B_register_0_lsb_w )
 	{
-		if (ACCESSING_LSB)	ymz280b[0].current_register = data & 0xff;
+		if (ACCESSING_LSB != 0)	ymz280b[0].current_register = data & 0xff;
 	}
 	
 	WRITE16_HANDLER( YMZ280B_register_0_msb_w )
 	{
-		if (ACCESSING_MSB)	ymz280b[0].current_register = (data >> 8) & 0xff;
+		if (ACCESSING_MSB != 0)	ymz280b[0].current_register = (data >> 8) & 0xff;
 	}
 	
 	WRITE16_HANDLER( YMZ280B_register_1_lsb_w )
 	{
-		if (ACCESSING_LSB)	ymz280b[1].current_register = data & 0xff;
+		if (ACCESSING_LSB != 0)	ymz280b[1].current_register = data & 0xff;
 	}
 	
 	WRITE16_HANDLER( YMZ280B_register_1_msb_w )
 	{
-		if (ACCESSING_MSB)	ymz280b[1].current_register = (data >> 8) & 0xff;
+		if (ACCESSING_MSB != 0)	ymz280b[1].current_register = (data >> 8) & 0xff;
 	}
 	
 	/**********************************************************************************************
@@ -968,22 +968,22 @@ public class ymz280b
 	
 	WRITE16_HANDLER( YMZ280B_data_0_lsb_w )
 	{
-		if (ACCESSING_LSB)	write_to_register(&ymz280b[0], data & 0xff);
+		if (ACCESSING_LSB != 0)	write_to_register(&ymz280b[0], data & 0xff);
 	}
 	
 	WRITE16_HANDLER( YMZ280B_data_0_msb_w )
 	{
-		if (ACCESSING_MSB)	write_to_register(&ymz280b[0], (data >> 8) & 0xff);
+		if (ACCESSING_MSB != 0)	write_to_register(&ymz280b[0], (data >> 8) & 0xff);
 	}
 	
 	WRITE16_HANDLER( YMZ280B_data_1_lsb_w )
 	{
-		if (ACCESSING_LSB)	write_to_register(&ymz280b[1], data & 0xff);
+		if (ACCESSING_LSB != 0)	write_to_register(&ymz280b[1], data & 0xff);
 	}
 	
 	WRITE16_HANDLER( YMZ280B_data_1_msb_w )
 	{
-		if (ACCESSING_MSB)	write_to_register(&ymz280b[1], (data >> 8) & 0xff);
+		if (ACCESSING_MSB != 0)	write_to_register(&ymz280b[1], (data >> 8) & 0xff);
 	}
 	
 }

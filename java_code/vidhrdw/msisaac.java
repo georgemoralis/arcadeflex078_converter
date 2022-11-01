@@ -193,13 +193,13 @@ public class msisaac
 	
 			struct GfxElement *gfx = Machine->gfx[2];
 	
-			if (attributes&4)
+			if ((attributes & 4) != 0)
 			{
 				//color = rand()&15;
 				gfx = Machine->gfx[3];
 			}
 	
-			if (attributes&8)	/* double size sprite */
+			if ((attributes & 8) != 0)	/* double size sprite */
 			{
 				switch(attributes&3)
 				{

@@ -117,7 +117,7 @@ public class fromance
 	
 	public static ReadHandlerPtr fromance_busycheck_sub_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (fromance_directionflag) return 0xff;		// standby
+		if (fromance_directionflag != 0) return 0xff;		// standby
 		else return 0x00;								// busy
 	} };
 	
@@ -173,7 +173,7 @@ public class fromance
 			return;
 	
 		/* clock the data through */
-		if (fromance_vclk_left)
+		if (fromance_vclk_left != 0)
 		{
 			MSM5205_data_w(0, (fromance_adpcm_data >> 4));
 			fromance_adpcm_data <<= 4;
@@ -203,15 +203,15 @@ public class fromance
 	{
 		int ret = 0xff;
 	
-		if (fromance_portselect & 0x01)
+		if ((fromance_portselect & 0x01) != 0)
 			ret &= readinputport(4);
-		if (fromance_portselect & 0x02)
+		if ((fromance_portselect & 0x02) != 0)
 			ret &= readinputport(5);
-		if (fromance_portselect & 0x04)
+		if ((fromance_portselect & 0x04) != 0)
 			ret &= readinputport(6);
-		if (fromance_portselect & 0x08)
+		if ((fromance_portselect & 0x08) != 0)
 			ret &= readinputport(7);
-		if (fromance_portselect & 0x10)
+		if ((fromance_portselect & 0x10) != 0)
 			ret &= readinputport(8);
 	
 		return ret;

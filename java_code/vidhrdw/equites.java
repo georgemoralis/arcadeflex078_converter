@@ -359,7 +359,7 @@ public class equites
 		for (; sptr<eptr; sptr+=2)
 		{
 			encode = *(sptr + 1);
-			if (encode)
+			if (encode != 0)
 			{
 				bank = (encode>>8 & 0x01) + SPRITE_BANKBASE;
 				gfx = Machine->gfx[bank];
@@ -628,8 +628,8 @@ public class equites
 	
 	WRITE16_HANDLER(equites_scrollreg_w)
 	{
-		if (ACCESSING_LSB) scrolly = data & 0xff;
-		if (ACCESSING_MSB) scrollx = data >> 8;
+		if (ACCESSING_LSB != 0) scrolly = data & 0xff;
+		if (ACCESSING_MSB != 0) scrollx = data >> 8;
 	}
 	
 	// Splendor Blast Hardware

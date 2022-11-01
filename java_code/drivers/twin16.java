@@ -954,12 +954,12 @@ public class twin16
 	
 	public static InterruptHandlerPtr CPUA_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (CPUA_IRQ_ENABLE) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
+		if (CPUA_IRQ_ENABLE != 0) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
 	} };
 	
 	public static InterruptHandlerPtr CPUB_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (CPUB_IRQ_ENABLE) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
+		if (CPUB_IRQ_ENABLE != 0) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
 	} };
 	
 	/* Machine Drivers */
@@ -1452,7 +1452,7 @@ public class twin16
 		int i;
 		UINT16 *temp = malloc(0x200000);
 	
-		if ( temp )
+		if (temp != 0)
 		{
 			twin16_gfx_rom = (UINT16 *)memory_region(REGION_GFX2);
 			memcpy( temp, twin16_gfx_rom, 0x200000 );

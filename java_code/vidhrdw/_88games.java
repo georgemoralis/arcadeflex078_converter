@@ -89,7 +89,7 @@ public class _88games
 	{
 		K052109_tilemap_update();
 	
-		if (k88games_priority)
+		if (k88games_priority != 0)
 		{
 			tilemap_draw(bitmap,cliprect,K052109_tilemap[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 			K051960_sprites_draw(bitmap,cliprect,1,1);

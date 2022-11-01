@@ -37,7 +37,7 @@ public class namcona1
 		int data = tilemap_videoram[tile_index];
 		int tile = data&0xfff;
 	
-		if( data&0x8000 )
+		if ((data & 0x8000) != 0)
 		{
 			SET_TILE_INFO( 0,tile,tilemap_color,TILE_IGNORE_TRANSPARENCY );
 		}
@@ -205,7 +205,7 @@ public class namcona1
 		int page;
 		int i;
 	
-		if( dirtygfx )
+		if (dirtygfx != 0)
 		{
 			for( page = 0; page<4; page++ )
 			{
@@ -338,7 +338,7 @@ public class namcona1
 					int ypos = sy+(flipy?7-y:y);
 					data8_t *pri = (data8_t *)priority_bitmap->line[ypos];
 					UINT16 *dest = (UINT16 *)bitmap->line[ypos];
-					if( flipx )
+					if (flipx != 0)
 					{
 						dest += sx+7;
 						pri += sx+7;
@@ -380,7 +380,7 @@ public class namcona1
 					int ypos = sy+(flipy?7-y:y);
 					data8_t *pri = (data8_t *)priority_bitmap->line[ypos];
 					UINT16 *dest = (UINT16 *)bitmap->line[ypos];
-					if( flipx )
+					if (flipx != 0)
 					{
 						dest += sx+7;
 						pri += sx+7;
@@ -470,7 +470,7 @@ public class namcona1
 				ypos = sy+(flipy?7-y:y);
 				pri = (data8_t *)priority_bitmap->line[ypos];
 				dest = (UINT16 *)bitmap->line[ypos];
-				if( flipx )
+				if (flipx != 0)
 				{
 					dest += sx+7;
 					pri += sx+7;
@@ -524,7 +524,7 @@ public class namcona1
 		int sx,sy;
 	
 		sprite_control = namcona1_vreg[0x22/2];
-		if( sprite_control&1 ) source += 0x400; /* alternate spriteram bank */
+		if ((sprite_control & 1) != 0) source += 0x400; /* alternate spriteram bank */
 	
 		for( which=0; which<0x100; which++ )
 		{ /* max 256 sprites */
@@ -550,7 +550,7 @@ public class namcona1
 			for( row=0; row<height; row++ )
 			{
 				sy = (ypos&0x1ff)-30+32;
-				if( flipy )
+				if (flipy != 0)
 				{
 					sy += (height-1-row)*8;
 				}
@@ -561,7 +561,7 @@ public class namcona1
 				for( col=0; col<width; col++ )
 				{
 					sx = (xpos&0x1ff)-10;
-					if( flipx )
+					if (flipx != 0)
 					{
 						sx += (width-1-col)*8;
 					}
@@ -628,13 +628,13 @@ public class namcona1
 			clip.min_y = line;
 			clip.max_y = line;
 			xdata = scroll[line];
-			if( xdata )
+			if (xdata != 0)
 			{
 				/* screenwise linescroll */
 				scrollx = xadjust+xdata;
 			}
 			ydata = scroll[line+0x100];
-			if( ydata&0x4000 )
+			if ((ydata & 0x4000) != 0)
 			{
 				/* line select: dword offset from 0xff000 or tilemap source line */
 				scrolly = (ydata - line)&0x1ff;
@@ -671,7 +671,7 @@ public class namcona1
 	
 		if( namcona1_vreg[0x8e/2] )
 		{ /* gfx enabled */
-			if( palette_is_dirty )
+			if (palette_is_dirty != 0)
 			{
 				/* palette updates are delayed when graphics are disabled */
 				for( which=0; which<0x1000; which++ )

@@ -39,7 +39,7 @@
 #define ANC 													\
 	P &= ~F_C;													\
 	A = (UINT8)(A & tmp);										\
-	if (A & 0x80)												\
+	if ((A & 0x80) != 0)												\
 		P |= F_C;												\
 	SET_NZ(A)
 
@@ -64,14 +64,14 @@
  *	ARR logical and, rotate right
  ***************************************************************/
 #define ARR 													\
-	if( P & F_D )												\
+	if ((P & F_D) != 0)												\
 	{															\
 		int lo, hi, t;											\
 		tmp &= A;												\
 		t = tmp;												\
 		hi = tmp &0xf0; 										\
 		lo = tmp &0x0f; 										\
-		if( P & F_C )											\
+		if ((P & F_C) != 0)											\
 		{														\
 			tmp = (tmp >> 1) | 0x80;							\
 			P |= F_N;											\
@@ -81,7 +81,7 @@
 			tmp >>= 1;											\
 			P &= ~F_N;											\
 		}														\
-		if( tmp )												\
+		if (tmp != 0)												\
 			P &= ~F_Z;											\
 		else													\
             P |= F_Z;                                           \
@@ -104,7 +104,7 @@
 		tmp &= A;												\
 		ROR;													\
 		P &=~(F_V|F_C); 										\
-		if( tmp & 0x40 )										\
+		if ((tmp & 0x40) != 0)										\
 			P|=F_C; 											\
 		if( (tmp & 0x60) == 0x20 || (tmp & 0x60) == 0x40 )		\
 			P|=F_V; 											\

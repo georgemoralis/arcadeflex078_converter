@@ -159,7 +159,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if (color&0x80) pri = 1;
+		else if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -177,7 +177,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if (color&0x80) pri = 1;
+		else if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -197,7 +197,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if (color&0x80) pri = 1;
+		else if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -215,7 +215,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if (color&0x80) pri = 1;
+		else if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -232,7 +232,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 	
-		if (color&0x80) pri = 1;
+		if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -250,7 +250,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if (color&0x80) pri = 1;
+		else if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -268,7 +268,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 	
-		if (color&0x80) pri = 1;
+		if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -296,7 +296,7 @@ public class m92
 		wide=offset&0x7fff;
 		offset&=0x3fff;
 	
-		if (RYPELEO_SPEEDUP) {
+		if (RYPELEO_SPEEDUP != 0) {
 			if (a==0xc000) {
 				tilemap_mark_tile_dirty(pf1_hlayer,offset/4);
 				return;
@@ -348,8 +348,8 @@ public class m92
 				pf1_vram_ptr=(pf4_control[0]&3)*0x4000;
 				pf1_shape=(pf4_control[0]&4)>>2;
 	
-				if (RYPELEO_SPEEDUP) tilemap_set_enable(pf1_hlayer,pf1_enable);
-				if (pf1_shape) {
+				if (RYPELEO_SPEEDUP != 0) tilemap_set_enable(pf1_hlayer,pf1_enable);
+				if (pf1_shape != 0) {
 					tilemap_set_enable(pf1_layer,0);
 					tilemap_set_enable(pf1_wide_layer,pf1_enable);
 				}
@@ -379,7 +379,7 @@ public class m92
 				if ((pf4_control[4]&0x40)==0x40) pf3_rowscroll=1; else pf3_rowscroll=0;
 				pf3_shape=(pf4_control[4]&4)>>2;
 	
-				if (pf3_shape) {
+				if (pf3_shape != 0) {
 					tilemap_set_enable(pf3_layer,0);
 					tilemap_set_enable(pf3_wide_layer,pf3_enable);
 				}
@@ -396,7 +396,7 @@ public class m92
 				break;
 			case 6:
 			case 7:
-	//			if (flip_screen)
+	//			if (flip_screen != 0)
 	//				m92_raster_irq_position=256-(((pf4_control[7]<<8) | pf4_control[6])-128);
 	//			else
 					m92_raster_irq_position=((pf4_control[7]<<8) | pf4_control[6])-128;
@@ -410,7 +410,7 @@ public class m92
 	
 	public static VideoUpdateHandlerPtr video_update_m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (RYPELEO_SPEEDUP) {
+		if (RYPELEO_SPEEDUP != 0) {
 			pf1_hlayer = tilemap_create(
 				get_pf1_htile_info,tilemap_scan_rows,
 				TILEMAP_SPLIT,
@@ -564,10 +564,10 @@ public class m92
 	
 				for (i=0; i<y_multi; i++)
 				{
-					if (flip_screen) {
+					if (flip_screen != 0) {
 						int ffx=fx,ffy=fy;
-						if (ffx) ffx=0; else ffx=1;
-						if (ffy) ffy=0; else ffy=1;
+						if (ffx != 0) ffx=0; else ffx=1;
+						if (ffy != 0) ffy=0; else ffy=1;
 						pdrawgfx(bitmap,Machine->gfx[1],
 								sprite + s_ptr,
 								colour,
@@ -582,9 +582,9 @@ public class m92
 								x,y-i*16,
 								cliprect,TRANSPARENCY_PEN,0,pri);
 					}
-					if (fy) s_ptr++; else s_ptr--;
+					if (fy != 0) s_ptr++; else s_ptr--;
 				}
-				if (fx) x-=16; else x+=16;
+				if (fx != 0) x-=16; else x+=16;
 				offs+=8;
 			}
 		}
@@ -598,7 +598,7 @@ public class m92
 			we just check the keyboard */
 		if (keyboard_pressed_memory(KEYCODE_F1)) {
 			m92_raster_enable ^= 1;
-			if (m92_raster_enable)
+			if (m92_raster_enable != 0)
 				usrintf_showmessage("Raster IRQ enabled");
 			else
 				usrintf_showmessage("Raster IRQ disabled");
@@ -626,7 +626,7 @@ public class m92
 	
 		*/
 	
-		if (flip_screen) {
+		if (flip_screen != 0) {
 			pf1_off=-25;
 			pf2_off=-27;
 			pf3_off=-29;
@@ -636,7 +636,7 @@ public class m92
 			pf3_off=4;
 		}
 	
-		if (pf1_rowscroll) {
+		if (pf1_rowscroll != 0) {
 			tilemap_set_scroll_rows(pf1_layer,512);
 			tilemap_set_scroll_rows(pf1_wide_layer,512);
 			for (i=0; i<1024; i+=2)
@@ -650,7 +650,7 @@ public class m92
 			tilemap_set_scrollx( pf1_wide_layer,0, (pf1_control[5]<<8)+pf1_control[4]+256-pf1_off );
 		}
 	
-		if (pf2_rowscroll) {
+		if (pf2_rowscroll != 0) {
 			tilemap_set_scroll_rows(pf2_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf2_layer,i/2, (m92_vram_data[0xf800+i]+(m92_vram_data[0xf801+i]<<8))-pf2_off);
@@ -659,7 +659,7 @@ public class m92
 			tilemap_set_scrollx( pf2_layer,0, (pf2_control[5]<<8)+pf2_control[4]-pf2_off );
 		}
 	
-		if (pf3_rowscroll) {
+		if (pf3_rowscroll != 0) {
 			tilemap_set_scroll_rows(pf3_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf3_layer,i/2, (m92_vram_data[0xfc00+i]+(m92_vram_data[0xfc01+i]<<8))-pf3_off);
@@ -679,7 +679,7 @@ public class m92
 		tilemap_set_scrolly( pf1_wide_layer,0, (pf1_control[1]<<8)+pf1_control[0] );
 		tilemap_set_scrolly( pf3_wide_layer,0, (pf3_control[1]<<8)+pf3_control[0] );
 	
-		if (RYPELEO_SPEEDUP) {
+		if (RYPELEO_SPEEDUP != 0) {
 			tilemap_set_scroll_rows(pf1_hlayer,1);
 			tilemap_set_scrollx( pf1_hlayer,0, (pf1_control[5]<<8)+pf1_control[4] );
 			tilemap_set_scrolly( pf1_hlayer,0, (pf1_control[1]<<8)+pf1_control[0] );
@@ -692,7 +692,7 @@ public class m92
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (pf3_enable) {
+		if (pf3_enable != 0) {
 			tilemap_draw(bitmap,cliprect,pf3_wide_layer,TILEMAP_BACK,0);
 			tilemap_draw(bitmap,cliprect,pf3_layer,TILEMAP_BACK,0);
 		}

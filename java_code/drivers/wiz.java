@@ -1073,7 +1073,7 @@ public class wiz
 			unsigned char src;
 	
 	
-			if (A & 0x2040)
+			if ((A & 0x2040) != 0)
 			{
 				/* not encrypted */
 				rom[A+diff] = rom[A];

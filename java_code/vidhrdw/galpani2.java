@@ -186,7 +186,7 @@ public class galpani2
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (layers_ctrl & 0x1)
+		if ((layers_ctrl & 0x1) != 0)
 		{
 			int x = 0;
 			int y = 0;
@@ -201,7 +201,7 @@ public class galpani2
 		16c0/40 = 5b		200/40 = 8
 		scrollx = f5, on screen x should be 0 (f5+5b = 150)	*/
 	
-		if (layers_ctrl & 0x2)
+		if ((layers_ctrl & 0x2) != 0)
 		{
 			int x = - ( *galpani2_bg8_0_scrollx + 0x200 - 0x0f5 );
 			int y = - ( *galpani2_bg8_0_scrolly + 0x200 - 0x1be );
@@ -210,7 +210,7 @@ public class galpani2
 								cliprect,TRANSPARENCY_PEN,Machine->pens[0x4000 + 0]);
 		}
 	
-		if (layers_ctrl & 0x4)
+		if ((layers_ctrl & 0x4) != 0)
 		{
 			int x = - ( *galpani2_bg8_1_scrollx + 0x200 - 0x0f5 );
 			int y = - ( *galpani2_bg8_1_scrolly + 0x200 - 0x1be );
@@ -219,6 +219,6 @@ public class galpani2
 								cliprect,TRANSPARENCY_PEN,Machine->pens[0x4000 + 0]);
 		}
 	
-		if (layers_ctrl & 0x8)	kaneko16_draw_sprites(bitmap, cliprect, 0xf);
+		if ((layers_ctrl & 0x8) != 0)	kaneko16_draw_sprites(bitmap, cliprect, 0xf);
 	} };
 }

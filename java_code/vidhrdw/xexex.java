@@ -136,7 +136,7 @@ public class xexex
 	
 		K053247_sprites_draw(bitmap, cliprect);
 	
-		if (cur_alpha)
+		if (cur_alpha != 0)
 		{
 			alpha = K054338_set_alpha_level(1);
 	

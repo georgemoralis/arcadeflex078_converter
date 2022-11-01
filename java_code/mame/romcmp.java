@@ -192,7 +192,7 @@ public class romcmp
 			for (i = 0;i < bits;i++)
 			{
 				if (~mask0 & 0x8000) printf("0");
-				else if (mask1 & 0x8000) printf("1");
+				else if ((mask1 & 0x8000) != 0) printf("1");
 				else printf("x");
 	
 				mask0 <<= 1;
@@ -222,7 +222,7 @@ public class romcmp
 			addrbit <<= 1;
 		}
 	
-		if (mask0)
+		if (mask0 != 0)
 		{
 			if (mask0 == file->size/2)
 				printf("%-23s %-23s 1ST AND 2ND HALF IDENTICAL\n",side ? "" : file->name,side ? file->name : "");
@@ -232,7 +232,7 @@ public class romcmp
 				for (i = 0;i < 24;i++)
 				{
 					if (file->size <= (1<<(23-i))) printf(" ");
-					else if (mask0 & 0x800000) printf("-");
+					else if ((mask0 & 0x800000) != 0) printf("-");
 					else printf("x");
 					mask0 <<= 1;
 				}
@@ -260,7 +260,7 @@ public class romcmp
 			{
 				if (file->size <= (1<<(23-i))) printf(" ");
 				else if (~mask0 & 0x800000) printf("1");
-				else if (mask1 & 0x800000) printf("0");
+				else if ((mask1 & 0x800000) != 0) printf("0");
 				else printf("x");
 				mask0 <<= 1;
 				mask1 <<= 1;
@@ -290,7 +290,7 @@ public class romcmp
 			{
 				if (file->size <= (1<<(23-i))) printf(" ");
 				else if ((mask0 & 0x800000) == 0) printf("1");
-				else if (mask1 & 0x800000) printf("0");
+				else if ((mask1 & 0x800000) != 0) printf("0");
 				else printf("x");
 				mask0 <<= 1;
 				mask1 <<= 1;
@@ -314,14 +314,14 @@ public class romcmp
 			if (file->buf[file->size/2 + 2*i+1] != 0xff) mask0 &= ~0x80;
 		}
 	
-		if (mask0 & 0x01) printf("%-23s %-23s 1ST HALF = 00xx\n",side ? "" : file->name,side ? file->name : "");
-		if (mask0 & 0x02) printf("%-23s %-23s 1ST HALF = FFxx\n",side ? "" : file->name,side ? file->name : "");
-		if (mask0 & 0x04) printf("%-23s %-23s 1ST HALF = xx00\n",side ? "" : file->name,side ? file->name : "");
-		if (mask0 & 0x08) printf("%-23s %-23s 1ST HALF = xxFF\n",side ? "" : file->name,side ? file->name : "");
-		if (mask0 & 0x10) printf("%-23s %-23s 2ND HALF = 00xx\n",side ? "" : file->name,side ? file->name : "");
-		if (mask0 & 0x20) printf("%-23s %-23s 2ND HALF = FFxx\n",side ? "" : file->name,side ? file->name : "");
-		if (mask0 & 0x40) printf("%-23s %-23s 2ND HALF = xx00\n",side ? "" : file->name,side ? file->name : "");
-		if (mask0 & 0x80) printf("%-23s %-23s 2ND HALF = xxFF\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x01) != 0) printf("%-23s %-23s 1ST HALF = 00xx\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x02) != 0) printf("%-23s %-23s 1ST HALF = FFxx\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x04) != 0) printf("%-23s %-23s 1ST HALF = xx00\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x08) != 0) printf("%-23s %-23s 1ST HALF = xxFF\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x10) != 0) printf("%-23s %-23s 2ND HALF = 00xx\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x20) != 0) printf("%-23s %-23s 2ND HALF = FFxx\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x40) != 0) printf("%-23s %-23s 2ND HALF = xx00\n",side ? "" : file->name,side ? file->name : "");
+		if ((mask0 & 0x80) != 0) printf("%-23s %-23s 2ND HALF = xxFF\n",side ? "" : file->name,side ? file->name : "");
 	}
 	
 	
@@ -440,7 +440,7 @@ public class romcmp
 		FILE *f = 0;
 	
 	
-		if (path)
+		if (path != 0)
 		{
 			char delim[2] = { PATH_DELIM, '\0' };
 			strcpy(fullname,path);
@@ -508,7 +508,7 @@ public class romcmp
 	
 			/* load all files in directory */
 			dir = opendir(path);
-			if (dir)
+			if (dir != 0)
 			{
 				while((d = readdir(dir)) != NULL)
 				{
@@ -567,7 +567,7 @@ public class romcmp
 					struct fileinfo *file = &files[i][found[i]];
 					const char *delim = strrchr(zipent->name,'/');
 	
-					if (delim)
+					if (delim != 0)
 						strcpy (file->name,delim+1);
 					else
 						strcpy(file->name,zipent->name);

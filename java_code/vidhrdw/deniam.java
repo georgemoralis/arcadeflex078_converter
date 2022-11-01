@@ -241,7 +241,7 @@ public class deniam
 	
 			width = spriteram16[offs+2] & 0x007f;
 			flipx = spriteram16[offs+2] & 0x0100;
-			if (flipx) sx++;
+			if (flipx != 0) sx++;
 	
 			color = 0x40 + (spriteram16[offs+4] & 0x3f);
 	
@@ -267,7 +267,7 @@ public class deniam
 				x = 0;
 				while (i < 512)	/* safety check */
 				{
-					if (flipx)
+					if (flipx != 0)
 					{
 						if ((rom[i] & 0x0f) == 0x0f)
 						{

@@ -189,7 +189,7 @@ public class cage
 		
 		buffer_in = buffer_out = 0;
 		
-		if (speedup)
+		if (speedup != 0)
 			speedup_ram = install_mem_write32_handler(cage_cpu, ADDR_RANGE(speedup, speedup), speedup_w);
 	}
 	
@@ -202,7 +202,7 @@ public class cage
 	
 	void cage_reset_w(int state)
 	{
-		if (state)
+		if (state != 0)
 			cage_control_w(0);
 		cpunum_set_reset_line(cage_cpu, state ? ASSERT_LINE : CLEAR_LINE);
 	}
@@ -458,7 +458,7 @@ public class cage
 				break;
 		}
 	
-		if (LOG_32031_IOPORTS)
+		if (LOG_32031_IOPORTS != 0)
 			logerror("CAGE:%06X:%s read -> %08X\n", activecpu_get_pc(), register_names[offset & 0x7f], result);
 		return result;
 	}
@@ -468,7 +468,7 @@ public class cage
 	{
 		COMBINE_DATA(&tms32031_io_regs[offset]);
 	
-		if (LOG_32031_IOPORTS)
+		if (LOG_32031_IOPORTS != 0)
 			logerror("CAGE:%06X:%s write = %08X\n", activecpu_get_pc(), register_names[offset & 0x7f], tms32031_io_regs[offset]);
 		
 		switch (offset)
@@ -526,7 +526,7 @@ public class cage
 		int val;
 		
 		/* set the IRQ to the main CPU */
-		if (cage_irqhandler)
+		if (cage_irqhandler != 0)
 		{
 			int reason = 0;
 			
@@ -542,8 +542,8 @@ public class cage
 		cpuintrf_push_context(cage_cpu);
 		val = activecpu_get_reg(TMS32031_IOF);
 		val &= ~0x88;
-		if (cpu_to_cage_ready) val |= 0x08;
-		if (cage_to_cpu_ready) val |= 0x80;
+		if (cpu_to_cage_ready != 0) val |= 0x08;
+		if (cage_to_cpu_ready != 0) val |= 0x80;
 		activecpu_set_reg(TMS32031_IOF, val);
 		cpuintrf_pop_context();
 	}
@@ -551,7 +551,7 @@ public class cage
 	
 	static READ32_HANDLER( cage_from_main_r )
 	{
-		if (LOG_COMM)
+		if (LOG_COMM != 0)
 			logerror("%06X:CAGE read command = %04X\n", activecpu_get_pc(), cage_from_main);
 		cpu_to_cage_ready = 0;
 		update_control_lines();
@@ -561,14 +561,14 @@ public class cage
 	
 	static WRITE32_HANDLER( cage_from_main_ack_w )
 	{
-		if (LOG_COMM)
+		if (LOG_COMM != 0)
 			logerror("%06X:CAGE ack command = %04X\n", activecpu_get_pc(), cage_from_main);
 	}
 	
 	
 	static WRITE32_HANDLER( cage_to_main_w )
 	{
-		if (LOG_COMM)
+		if (LOG_COMM != 0)
 			logerror("%06X:Data from CAGE = %04X\n", activecpu_get_pc(), data);
 		soundlatch_word_w(0, data, mem_mask);
 		cage_to_cpu_ready = 1;
@@ -579,7 +579,7 @@ public class cage
 	static READ32_HANDLER( cage_io_status_r )
 	{
 		int result = 0;
-		if (cpu_to_cage_ready)
+		if (cpu_to_cage_ready != 0)
 			result |= 0x80;
 		if (!cage_to_cpu_ready)
 			result |= 0x40;
@@ -589,7 +589,7 @@ public class cage
 	
 	UINT16 main_from_cage_r(void)
 	{
-		if (LOG_COMM)
+		if (LOG_COMM != 0)
 			logerror("%06X:main read data = %04X\n", activecpu_get_pc(), soundlatch_word_r(0, 0));
 		cage_to_cpu_ready = 0;
 		update_control_lines();
@@ -608,7 +608,7 @@ public class cage
 	
 	void main_to_cage_w(UINT16 data)
 	{
-		if (LOG_COMM)
+		if (LOG_COMM != 0)
 			logerror("%06X:Command to CAGE = %04X\n", activecpu_get_pc(), data);
 		timer_set(TIME_NOW, data, deferred_cage_w);
 	}
@@ -618,9 +618,9 @@ public class cage
 	{
 		UINT16 result = 0;
 		
-		if (cpu_to_cage_ready)
+		if (cpu_to_cage_ready != 0)
 			result |= 2;
-		if (cage_to_cpu_ready)
+		if (cage_to_cpu_ready != 0)
 			result |= 1;
 		
 		return result;

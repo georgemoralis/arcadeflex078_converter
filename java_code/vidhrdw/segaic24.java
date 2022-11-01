@@ -36,7 +36,7 @@ public class segaic24
 	{
 		palette_set_color (color, r, g, b);
 	
-		if(highlight) {
+		if (highlight != 0) {
 			r = 255-0.6*(255-r);
 			g = 255-0.6*(255-g);
 			b = 255-0.6*(255-b);
@@ -56,15 +56,15 @@ public class segaic24
 		data = paletteram16[offset];
 	
 		r = (data & 0x00f) << 4;
-		if(data & 0x1000)
+		if ((data & 0x1000) != 0)
 			r |= 8;
 	
 		g = data & 0x0f0;
-		if(data & 0x2000)
+		if ((data & 0x2000) != 0)
 			g |= 8;
 	
 		b = (data & 0xf00) >> 4;
-		if(data & 0x4000)
+		if ((data & 0x4000) != 0)
 			b |= 8;
 	
 		r |= r >> 5;
@@ -216,7 +216,7 @@ public class segaic24
 	
 	void sys24_tile_update(void)
 	{
-		if(sys24_char_dirty) {
+		if (sys24_char_dirty != 0) {
 			int i;
 			for(i=0; i<SYS24_TILES; i++) {
 				if(sys24_char_dirtymap[i]) {
@@ -266,7 +266,7 @@ public class segaic24
 			while(llx > 0) {
 				UINT16 m = *mask1++;
 	
-				if(win)
+				if (win != 0)
 					m = ~m;
 	
 				if(!cur_x && llx>=128) {
@@ -398,7 +398,7 @@ public class segaic24
 			while(llx > 0) {
 				UINT16 m = *mask1++;
 	
-				if(win)
+				if (win != 0)
 					m = ~m;
 	
 				if(!cur_x && llx>=128) {
@@ -490,18 +490,18 @@ public class segaic24
 		layer >>= 1;
 	
 		// Layer disable
-		if(vscr & 0x8000)
+		if ((vscr & 0x8000) != 0)
 			return;
 	
-		if(ctrl & 0x6000) {
+		if ((ctrl & 0x6000) != 0) {
 			// Special window/scroll modes
-			if(layer & 1)
+			if ((layer & 1) != 0)
 				return;
 	
 			tilemap_set_scrolly(sys24_tile_layer[layer],   0, +(vscr & 0x1ff));
 			tilemap_set_scrolly(sys24_tile_layer[layer|1], 0, +(vscr & 0x1ff));
 	
-			if(hscr & 0x8000) {
+			if ((hscr & 0x8000) != 0) {
 				//#ifdef MAME_DEBUG
 				usrintf_showmessage("Linescroll with special mode %04x", ctrl);
 				//			return;
@@ -565,7 +565,7 @@ public class segaic24
 			bm = tilemap_get_pixmap(sys24_tile_layer[layer]);
 			tm = tilemap_get_transparency_bitmap(sys24_tile_layer[layer]);
 	
-			if(hscr & 0x8000) {
+			if ((hscr & 0x8000) != 0) {
 				int y;
 				UINT16 *hscrtb = sys24_tile_ram + 0x4000 + 0x200*layer;
 				vscr &= 0x1ff;
@@ -738,7 +738,7 @@ public class segaic24
 			source = sprd[countspr];
 			cclip = clip[countspr];
 	
-			if(cclip) {
+			if (cclip != 0) {
 				min_y = (cclip[2] & 511);
 				min_x = (cclip[3] & 511) - 8;
 				max_y = (cclip[4] & 511);
@@ -776,14 +776,14 @@ public class segaic24
 	
 			x = source[5] & 0xfff;
 			flipx = source[5] & 0x8000;
-			if(x & 0x800)
+			if ((x & 0x800) != 0)
 				x -= 0x1000;
 			sx = 1 << ((source[5] & 0x7000) >> 12);
 	
 			x -= 8;
 	
 			y = source[4] & 0xfff;
-			if(y & 0x800)
+			if ((y & 0x800) != 0)
 				y -= 0x1000;
 			flipy = source[4] & 0x8000;
 			sy = 1 << ((source[4] & 0x7000) >> 12);
@@ -836,7 +836,7 @@ public class segaic24
 											UINT8 *pri = ((UINT8 *)priority_bitmap->line[ypos1]) + xpos2;
 											if(!(*pri & pm[c])) {
 												c = colors[c];
-												if(c) {
+												if (c != 0) {
 													UINT16 *dst = ((UINT16 *)bitmap->line[ypos1]) + xpos2;
 													if(c==1)
 														*dst = (*dst) | 0x2000;
@@ -854,7 +854,7 @@ public class segaic24
 							ymod1 -= 0x40;
 							ypos1++;
 						}
-						if(flipy)
+						if (flipy != 0)
 							pix1 -= 2;
 						else
 							pix1 += 2;

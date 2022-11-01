@@ -85,7 +85,7 @@ public class chaknpop
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
-		if (gfxmode & GFX_VRAM_BANK)
+		if ((gfxmode & GFX_VRAM_BANK) != 0)
 			bankaddress = 0x14000;
 		else
 			bankaddress = 0x10000;
@@ -126,7 +126,7 @@ public class chaknpop
 				all_dirty = 1;
 			}
 	
-			if (all_dirty)
+			if (all_dirty != 0)
 				tx_tilemap_mark_all_dirty();
 		}
 	} };
@@ -238,12 +238,12 @@ public class chaknpop
 			int color = (chaknpop_sprram[offs + 2] & 7);
 			int tile = (chaknpop_sprram[offs + 1] & 0x3f) | ((chaknpop_sprram[offs + 2] & 0x38) << 3);
 	
-			if (flip_x)
+			if (flip_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
-			if (flip_y)
+			if (flip_y != 0)
 			{
 				sy = 242 - sy;
 				flipy = !flipy;
@@ -288,7 +288,7 @@ public class chaknpop
 				if (vram4[offs] & i)
 					color |= 0x040;	// tx mask
 	
-				if (color)
+				if (color != 0)
 				{
 					pen_t pen = read_pixel(bitmap, x, y);
 					pen |= color;

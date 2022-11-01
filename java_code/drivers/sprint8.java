@@ -46,7 +46,7 @@ public class sprint8
 	
 			signed char delta = (val - dial[i]) & 15;
 	
-			if (delta & 8)
+			if ((delta & 8) != 0)
 			{
 				delta |= 0xf0; /* extend sign to 8 bits */
 			}
@@ -73,7 +73,7 @@ public class sprint8
 	
 		for (i = 0; i < 16; i += 8)
 		{
-			if (team)
+			if (team != 0)
 			{
 				palette_set_color(i + 0, 0xff, 0x00, 0x00); /* red     */
 				palette_set_color(i + 1, 0x00, 0x00, 0xff); /* blue    */
@@ -169,7 +169,7 @@ public class sprint8
 	{
 		collision_reset = !(data & 1);
 	
-		if (collision_reset)
+		if (collision_reset != 0)
 		{
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}

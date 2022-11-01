@@ -77,13 +77,13 @@ public class berzerk
 	{
 		int_count++;
 	
-		if (int_count & 0x03)
+		if ((int_count & 0x03) != 0)
 		{
-			if (nmi_enabled) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if (nmi_enabled != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else
 		{
-			if (irq_enabled) cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xfc);
+			if (irq_enabled != 0) cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xfc);
 		}
 	} };
 	

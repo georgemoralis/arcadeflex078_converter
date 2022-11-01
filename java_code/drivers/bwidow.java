@@ -259,30 +259,30 @@ public class bwidow
 		switch (offset & 0x07)
 		{
 			case 0:
-				if (res1 & IN_SHIELD) res |= 0x80;
-				if (res1 & IN_FIRE) res |= 0x40;
+				if ((res1 & IN_SHIELD) != 0) res |= 0x80;
+				if ((res1 & IN_FIRE) != 0) res |= 0x40;
 				break;
 			case 1: /* Player 2 */
-				if (res2 & IN_SHIELD) res |= 0x80;
-				if (res2 & IN_FIRE) res |= 0x40;
+				if ((res2 & IN_SHIELD) != 0) res |= 0x80;
+				if ((res2 & IN_FIRE) != 0) res |= 0x40;
 				break;
 			case 2:
-				if (res1 & IN_LEFT) res |= 0x80;
-				if (res1 & IN_RIGHT) res |= 0x40;
+				if ((res1 & IN_LEFT) != 0) res |= 0x80;
+				if ((res1 & IN_RIGHT) != 0) res |= 0x40;
 				break;
 			case 3: /* Player 2 */
-				if (res2 & IN_LEFT) res |= 0x80;
-				if (res2 & IN_RIGHT) res |= 0x40;
+				if ((res2 & IN_LEFT) != 0) res |= 0x80;
+				if ((res2 & IN_RIGHT) != 0) res |= 0x40;
 				break;
 			case 4:
-				if (res1 & IN_THRUST) res |= 0x80;
-				if (res1 & IN_P1) res |= 0x40;
+				if ((res1 & IN_THRUST) != 0) res |= 0x80;
+				if ((res1 & IN_P1) != 0) res |= 0x40;
 				break;
 			case 5:  /* Player 2 */
-				if (res2 & IN_THRUST) res |= 0x80;
+				if ((res2 & IN_THRUST) != 0) res |= 0x80;
 				break;
 			case 6:
-				if (res1 & IN_P2) res |= 0x80;
+				if ((res1 & IN_P2) != 0) res |= 0x80;
 				break;
 			case 7:
 				res = (0x00 /* upright */ | (0 & 0x40));

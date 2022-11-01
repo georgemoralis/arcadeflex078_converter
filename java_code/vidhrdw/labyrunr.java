@@ -18,7 +18,7 @@ public class labyrunr
 	
 		for (pal = 0;pal < 8;pal++)
 		{
-			if (pal & 1)	/* chars, no lookup table */
+			if ((pal & 1) != 0)	/* chars, no lookup table */
 			{
 				for (i = 0;i < 256;i++)
 					*(colortable++) = 16 * pal + (i & 0x0f);

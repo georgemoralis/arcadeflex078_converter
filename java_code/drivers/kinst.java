@@ -137,7 +137,7 @@ public class kinst
 				result = 0xffff0000 | readinputport(offset);
 				temp = dcs_control_r();
 				result &= ~0x0002;
-				if (temp & 0x800)
+				if ((temp & 0x800) != 0)
 					result |= 0x0002;
 				break;
 	

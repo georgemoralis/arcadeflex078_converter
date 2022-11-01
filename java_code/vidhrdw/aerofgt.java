@@ -214,7 +214,7 @@ public class aerofgt
 	
 	WRITE16_HANDLER( pspikes_gfxbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			setbank(bg1_tilemap,0,(data & 0xf0) >> 4);
 			setbank(bg1_tilemap,1,data & 0x0f);
@@ -223,7 +223,7 @@ public class aerofgt
 	
 	WRITE16_HANDLER( karatblz_gfxbank_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			setbank(bg1_tilemap,0,(data & 0x0100) >> 8);
 			setbank(bg2_tilemap,1,(data & 0x0800) >> 11);
@@ -232,7 +232,7 @@ public class aerofgt
 	
 	WRITE16_HANDLER( spinlbrk_gfxbank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			setbank(bg1_tilemap,0,(data & 0x07));
 			setbank(bg2_tilemap,1,(data & 0x38) >> 3);
@@ -285,7 +285,7 @@ public class aerofgt
 	
 	WRITE16_HANDLER( pspikes_palette_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			spritepalettebank = data & 0x03;
 			if (charpalettebank != (data & 0x1c) >> 2)
@@ -345,14 +345,14 @@ public class aerofgt
 				{
 					int sx,sy;
 	
-					if (flipy) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
+					if (flipy != 0) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
 					else sy = ((oy + zoomy * y / 2 + 16) & 0x1ff) - 16;
 	
 					for (x = 0;x <= xsize;x++)
 					{
 						int code;
 	
-						if (flipx) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
+						if (flipx != 0) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
 						else sx = ((ox + zoomx * x / 2 + 16) & 0x1ff) - 16;
 	
 						if (map_start < 0x2000)
@@ -416,14 +416,14 @@ public class aerofgt
 			{
 				int sx,sy;
 	
-				if (flipy) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
+				if (flipy != 0) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
 				else sy = ((oy + zoomy * y / 2 + 16) & 0x1ff) - 16;
 	
 				for (x = 0;x <= xsize;x++)
 				{
 					int code;
 	
-					if (flipx) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
+					if (flipx != 0) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
 					else sx = ((ox + zoomx * x / 2 + 16) & 0x1ff) - 16;
 	
 					if (chip == 0)

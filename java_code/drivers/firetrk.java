@@ -39,17 +39,17 @@ public class firetrk
 	{
 		/* interrupts are disabled during service mode */
 	
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			if (readinputport(4) & 0x80)
 				return;
 		}
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			if (readinputport(6) & 0x04)
 				return;
 		}
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			discrete_sound_w(7, 0);	/* ASR */
 		}
@@ -102,7 +102,7 @@ public class firetrk
 		}
 	
 	
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			/* watchdog is disabled during service mode */
 			if (readinputport(4) & 0x80)
@@ -131,7 +131,7 @@ public class firetrk
 	
 	static void write_output(UINT8 flags)
 	{
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			/* BIT0 => START1 LAMP */
 			/* BIT1 => START2 LAMP */
@@ -158,7 +158,7 @@ public class firetrk
 			firetrk_set_flash(flags & 0x04);
 		}
 	
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			/* BIT0 => START LAMP */
 			/* BIT1 => ATTRACT    */
@@ -178,7 +178,7 @@ public class firetrk
 			firetrk_set_flash(flags & 0x04);
 		}
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			/* BIT0 => START LAMP    */
 			/* BIT1 => TRACK LAMP    */
@@ -205,7 +205,7 @@ public class firetrk
 	{
 		timer_pulse(1. / 60, 0, frame_callback);
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			write_output(0);
 		}
@@ -344,7 +344,7 @@ public class firetrk
 			if (val1 & (1 << (2 * offset + 0))) val0 |= 1;
 			if (val1 & (1 << (2 * offset + 1))) val0 |= 2;
 		}
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			if (val1 & (1 << (3 - offset))) val0 |= 1;
 			if (val1 & (1 << (7 - offset))) val0 |= 2;
@@ -362,7 +362,7 @@ public class firetrk
 		UINT8 bit6 = readinputport(5);
 		UINT8 bit7 = readinputport(6);
 	
-		if (GAME_IS_FIRETRUCK)
+		if (GAME_IS_FIRETRUCK != 0)
 		{
 			if (!steer_dir[0])
 				bit0 |= 0x04;
@@ -378,7 +378,7 @@ public class firetrk
 				bit7 |= 0x08;
 		}
 	
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			if (!steer_dir[0])
 				bit0 |= 0x04;
@@ -396,7 +396,7 @@ public class firetrk
 				bit7 |= 0x01;
 		}
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			if (!steer_dir[0])
 				bit6 |= 0x40;
@@ -515,7 +515,7 @@ public class firetrk
 		{
 			write_output(data);
 		}
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			write_output(offset);
 		}
@@ -526,7 +526,7 @@ public class firetrk
 	{
 		firetrk_set_flash(data & 0x80);
 	
-		if (GAME_IS_MONTECARLO)
+		if (GAME_IS_MONTECARLO != 0)
 		{
 			discrete_sound_w(7, !(data & 0x10));	/* Beep */
 			discrete_sound_w(5, data & 0x0f);	/* Drone Motor Volume */
@@ -536,7 +536,7 @@ public class firetrk
 	
 	public static WriteHandlerPtr firetrk_asr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (GAME_IS_SUPERBUG)
+		if (GAME_IS_SUPERBUG != 0)
 		{
 			discrete_sound_w(7, 1);	/* ASR */
 		}

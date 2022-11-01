@@ -207,7 +207,7 @@ public class espial
 			flipx = espial_spriteram_3[offs] & 0x04;
 			flipy = espial_spriteram_3[offs] & 0x08;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				flipx = !flipx;
 				flipy = !flipy;
@@ -219,7 +219,7 @@ public class espial
 	
 			if (espial_spriteram_1[offs] & 1)	/* double height */
 			{
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					drawgfx(bitmap,Machine->gfx[1],
 							code,color,

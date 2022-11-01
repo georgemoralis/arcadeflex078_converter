@@ -36,7 +36,7 @@ public class geebee
 		int data = readinputport(offset & 3);
 		if ((offset & 3) == 2)	/* combine with Bonus Life settings ? */
 		{
-			if (data & 0x02)	/* 5 lives? */
+			if ((data & 0x02) != 0)	/* 5 lives? */
 				data |= readinputport(5);
 			else				/* 3 lives */
 				data |= readinputport(4);
@@ -52,8 +52,8 @@ public class geebee
 		{
 			int joy = readinputport(4);
 			/* map digital two-way joystick to two fixed VOLIN values */
-			if( joy & 1 ) data = 0xa0;
-			if( joy & 2 ) data = 0x10;
+			if ((joy & 1) != 0) data = 0xa0;
+			if ((joy & 2) != 0) data = 0x10;
 		}
 	    logerror("in_r %d $%02X\n", offset & 3, data);
 	    return data;

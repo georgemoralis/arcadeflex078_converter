@@ -74,7 +74,7 @@ public class nb1413m3
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 	
-		else if (nb1413m3_nmi_enable)
+		else if (nb1413m3_nmi_enable != 0)
 		{
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
@@ -82,11 +82,11 @@ public class nb1413m3
 	
 	NVRAM_HANDLER( nb1413m3 )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, nb1413m3_nvram, nb1413m3_nvram_size);
 		else
 		{
-			if (file)
+			if (file != 0)
 				mame_fread(file, nb1413m3_nvram, nb1413m3_nvram_size);
 			else
 				memset(nb1413m3_nvram, 0, nb1413m3_nvram_size);
@@ -173,7 +173,7 @@ public class nb1413m3
 	
 	public static WriteHandlerPtr nb1413m3_sndrombank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		// if (data & 0x02) coin counter ?
+		// if ((data & 0x02) != 0) coin counter ?
 		nb1413m3_nmi_enable = ((data & 0x20) >> 5);
 		nb1413m3_sndrombank1 = (((data & 0xc0) >> 5) | ((data & 0x10) >> 4));
 	} };
@@ -477,7 +477,7 @@ public class nb1413m3
 			case	NB1413M3_FINALBNY:
 	case	NB1413M3_KORINAI:	// verify
 	case	NB1413M3_PAIRSTEN:	// verify
-				if (data & 0x04) nb1413m3_outcoin_flag ^= 1;
+				if ((data & 0x04) != 0) nb1413m3_outcoin_flag ^= 1;
 				else nb1413m3_outcoin_flag = 1;
 				break;
 			default:
@@ -491,7 +491,7 @@ public class nb1413m3
 	
 	void nb1413m3_vcrctrl_w(int data)
 	{
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 		{
 			usrintf_showmessage(" ** VCR CONTROL ** ");
 			set_led_status(2, 1);

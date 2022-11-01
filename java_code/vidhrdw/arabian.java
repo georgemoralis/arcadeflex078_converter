@@ -255,7 +255,7 @@ public class arabian
 				base = &main_bitmap[((y + j) & 0xff) * BITMAP_WIDTH + (x & 0xff)];
 	
 				/* bit 0 means write to upper plane (upper 4 bits of our bitmap) */
-				if (plane & 0x01)
+				if ((plane & 0x01) != 0)
 				{
 					if (p4 != 8) base[0] = (base[0] & ~0xf0) | (p4 << 4);
 					if (p3 != 8) base[1] = (base[1] & ~0xf0) | (p3 << 4);
@@ -264,7 +264,7 @@ public class arabian
 				}
 	
 				/* bit 2 means write to lower plane (lower 4 bits of our bitmap) */
-				if (plane & 0x04)
+				if ((plane & 0x04) != 0)
 				{
 					if (p4 != 8) base[0] = (base[0] & ~0x0f) | p4;
 					if (p3 != 8) base[1] = (base[1] & ~0x0f) | p3;

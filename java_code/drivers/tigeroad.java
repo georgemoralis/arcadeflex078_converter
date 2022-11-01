@@ -155,7 +155,7 @@ public class tigeroad
 	
 	static WRITE16_HANDLER( tigeroad_soundcmd_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			soundlatch_w(offset,data >> 8);
 	}
 	

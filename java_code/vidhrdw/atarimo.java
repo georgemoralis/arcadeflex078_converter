@@ -418,7 +418,7 @@ public class atarimo
 	{
 		struct atarimo_data *mo = &atarimo[map];
 	
-		if (size)
+		if (size != 0)
 			*size = round_to_powerof2(mo->codemask.mask);
 		return mo->codelookup;
 	}
@@ -433,7 +433,7 @@ public class atarimo
 	{
 		struct atarimo_data *mo = &atarimo[map];
 	
-		if (size)
+		if (size != 0)
 			*size = round_to_powerof2(mo->colormask.mask);
 		return mo->colorlookup;
 	}
@@ -449,7 +449,7 @@ public class atarimo
 		struct atarimo_data *mo = &atarimo[map];
 	
 		mo->gfxchanged = 1;
-		if (size)
+		if (size != 0)
 			*size = round_to_powerof2(mo->gfxmask.mask);
 		return mo->gfxlookup;
 	}
@@ -780,7 +780,7 @@ public class atarimo
 	
 		/* adjust for h flip */
 		xadv = mo->tilewidth;
-		if (hflip)
+		if (hflip != 0)
 		{
 			xpos += (width - 1) << mo->tilexshift;
 			xadv = -xadv;
@@ -788,7 +788,7 @@ public class atarimo
 	
 		/* adjust for v flip */
 		yadv = mo->tileheight;
-		if (vflip)
+		if (vflip != 0)
 		{
 			ypos += (height - 1) << mo->tileyshift;
 			yadv = -yadv;

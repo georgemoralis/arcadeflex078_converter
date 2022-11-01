@@ -179,13 +179,13 @@ public class nmk16
 	WRITE16_HANDLER ( ssmissin_sound_w )
 	{
 		/* maybe .. */
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0, ASSERT_LINE);
 		}
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			if ((data >> 8) & 0x80)
 				cpu_set_irq_line(1,0, CLEAR_LINE);
 	}
@@ -223,7 +223,7 @@ public class nmk16
 		   That's not quite right so I'm leaving it disabled */
 	#if 0
 		if (!strcmp(Machine->gamedrv->name,"gunnail")) {
-			if (ACCESSING_LSB) {
+			if (ACCESSING_LSB != 0) {
 				if ((data & 0xff) == 0x00) { /* unknown */
 					/* ?? */
 				} else if ((data & 0xff) == 0xcc) { /* unknown */
@@ -257,7 +257,7 @@ public class nmk16
 	
 	
 		if (!strcmp(Machine->gamedrv->name,"macross")) {
-			if (ACCESSING_LSB) {
+			if (ACCESSING_LSB != 0) {
 				if ((data & 0xff) == 0xc4) { /* unknown */
 					/* ?? */
 				} else if ((data & 0xff) == 0xc5) { /* with bomb? */
@@ -359,7 +359,7 @@ public class nmk16
 	
 	static WRITE16_HANDLER( macross2_sound_command_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			soundlatch_w(0,data & 0xff);
 	}
 	
@@ -398,7 +398,7 @@ public class nmk16
 	
 	static WRITE16_HANDLER( bjtwin_oki6295_bankswitch_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			macross2_oki6295_bankswitch_w(offset,data & 0xff);
 	}
 	

@@ -283,7 +283,7 @@ public class taito_f2
 	
 	static WRITE16_HANDLER( growl_coin_word_w )	/* what about coins 3&4 ?? */
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_lockout_w(0, ~data & 0x01);
 			coin_lockout_w(1, ~data & 0x02);
@@ -294,7 +294,7 @@ public class taito_f2
 	
 	static WRITE16_HANDLER( taitof2_4p_coin_word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			coin_lockout_w(0, ~data & 0x01);
 			coin_lockout_w(1, ~data & 0x02);
@@ -309,7 +309,7 @@ public class taito_f2
 	
 	static WRITE16_HANDLER( ninjak_coin_word_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			coin_lockout_w(0, ~data & 0x0100);
 			coin_lockout_w(1, ~data & 0x0200);
@@ -614,7 +614,7 @@ public class taito_f2
 	
 		yesnoj_dsw = 1 - yesnoj_dsw;   /* game reads same word twice to get DSW A then B so we toggle */
 	
-		if (yesnoj_dsw)
+		if (yesnoj_dsw != 0)
 		{
 			return input_port_2_word_r(0,mem_mask);
 		}
@@ -845,7 +845,7 @@ public class taito_f2
 	{
 		static int nibble = 0;
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			data >>= 8;
 			if (offset==0)

@@ -32,12 +32,12 @@ public class pandoras
 	/* from vidhrdw */
 	
 	public static InterruptHandlerPtr pandoras_interrupt_a = new InterruptHandlerPtr() {public void handler(){
-		if (irq_enable_a)
+		if (irq_enable_a != 0)
 			cpu_set_irq_line(0, M6809_IRQ_LINE, HOLD_LINE);
 	} };
 	
 	public static InterruptHandlerPtr pandoras_interrupt_b = new InterruptHandlerPtr() {public void handler(){
-		if (irq_enable_b)
+		if (irq_enable_b != 0)
 			cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 	} };
 	

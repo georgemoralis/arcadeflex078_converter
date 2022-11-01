@@ -117,7 +117,7 @@ public class battlera
 		msm5205next<<=4;
 	
 		toggle = 1 - toggle;
-		if (toggle)
+		if (toggle != 0)
 			cpu_set_irq_line(1, 1, HOLD_LINE);
 	}
 	

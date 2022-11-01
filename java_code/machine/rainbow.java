@@ -678,7 +678,7 @@ public class rainbow
 	
 		/* the extra version has the world data swapped around */
 	
-		if (extra_version)
+		if (extra_version != 0)
 		{
 			static const UINT8 world_swap[] =
 			{
@@ -696,7 +696,7 @@ public class rainbow
 	
 		/* banks 5 and 6 are different in the extra version */
 	
-		if (extra_version)
+		if (extra_version != 0)
 		{
 			int i;
 	

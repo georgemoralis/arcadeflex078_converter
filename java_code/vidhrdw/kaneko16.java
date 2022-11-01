@@ -423,7 +423,7 @@ public class kaneko16
 		s->yoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 1];
 		s->xoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 0];
 	
-	if (kaneko16_sprite_flipy)
+	if (kaneko16_sprite_flipy != 0)
 	{
 		s->yoffs		-=		kaneko16_sprites_regs[0x2/2];
 		s->yoffs		-=		Machine->visible_area.min_y<<6;
@@ -515,12 +515,12 @@ public class kaneko16
 			if (flags == -1)	// End of Sprites
 				break;
 	
-			if (flags & USE_LATCHED_CODE)
+			if ((flags & USE_LATCHED_CODE) != 0)
 				s->code = ++code;	// Use the latched code + 1 ..
 			else
 				code = s->code;		// .. or latch this value
 	
-			if (flags & USE_LATCHED_COLOR)
+			if ((flags & USE_LATCHED_COLOR) != 0)
 			{
 				s->color		=	color;
 				s->priority		=	priority;
@@ -539,7 +539,7 @@ public class kaneko16
 				flipy		=	s->flipy;
 			}
 	
-			if (flags & USE_LATCHED_XY)
+			if ((flags & USE_LATCHED_XY) != 0)
 			{
 				s->x += x;
 				s->y += y;
@@ -556,8 +556,8 @@ public class kaneko16
 			s->x	+=	kaneko16_sprite_xoffs;
 			s->y	+=	kaneko16_sprite_yoffs;
 	
-			if (kaneko16_sprite_flipx)	{ s->x = max - s->x - (16<<6);	s->flipx = !s->flipx;	}
-			if (kaneko16_sprite_flipy)	{ s->y = max - s->y - (16<<6);	s->flipy = !s->flipy;	}
+			if (kaneko16_sprite_flipx != 0)	{ s->x = max - s->x - (16<<6);	s->flipx = !s->flipx;	}
+			if (kaneko16_sprite_flipy != 0)	{ s->y = max - s->y - (16<<6);	s->flipy = !s->flipy;	}
 	
 			s->x		=		( (s->x & 0x7fc0) - (s->x & 0x8000) ) / 0x40;
 			s->y		=		( (s->y & 0x7fc0) - (s->y & 0x8000) ) / 0x40;
@@ -685,7 +685,7 @@ public class kaneko16
 		switch (offset)
 		{
 			case 0:
-				if (ACCESSING_LSB)
+				if (ACCESSING_LSB != 0)
 				{
 					kaneko16_sprite_flipx = new_data & 2;
 					kaneko16_sprite_flipy = new_data & 1;
@@ -804,7 +804,7 @@ public class kaneko16
 		data16_t layer1_scrollx, layer1_scrolly;
 	
 		layers_flip_0 = kaneko16_layers_0_regs[ 4 ];
-		if (kaneko16_tmap_2)
+		if (kaneko16_tmap_2 != 0)
 		{
 		layers_flip_1 = kaneko16_layers_1_regs[ 4 ];
 		}
@@ -812,7 +812,7 @@ public class kaneko16
 		/* Enable layers */
 		tilemap_set_enable(kaneko16_tmap_0, ~layers_flip_0 & 0x1000);
 		tilemap_set_enable(kaneko16_tmap_1, ~layers_flip_0 & 0x0010);
-		if (kaneko16_tmap_2)
+		if (kaneko16_tmap_2 != 0)
 		{
 		tilemap_set_enable(kaneko16_tmap_2, ~layers_flip_1 & 0x1000);
 		tilemap_set_enable(kaneko16_tmap_3, ~layers_flip_1 & 0x0010);
@@ -823,7 +823,7 @@ public class kaneko16
 									 		((layers_flip_0 & 0x0200) ? TILEMAP_FLIPX : 0) );
 		tilemap_set_flip(kaneko16_tmap_1,	((layers_flip_0 & 0x0100) ? TILEMAP_FLIPY : 0) |
 									 		((layers_flip_0 & 0x0200) ? TILEMAP_FLIPX : 0) );
-		if (kaneko16_tmap_2)
+		if (kaneko16_tmap_2 != 0)
 		{
 		tilemap_set_flip(kaneko16_tmap_2,	((layers_flip_1 & 0x0100) ? TILEMAP_FLIPY : 0) |
 									 		((layers_flip_1 & 0x0200) ? TILEMAP_FLIPX : 0) );
@@ -849,7 +849,7 @@ public class kaneko16
 			tilemap_set_scrollx(kaneko16_tmap_1,i,(layer1_scrollx + scroll) >> 6 );
 		}
 	
-		if (kaneko16_tmap_2)
+		if (kaneko16_tmap_2 != 0)
 		{
 		layer0_scrollx		=	kaneko16_layers_1_regs[ 2 ];
 		layer0_scrolly		=	kaneko16_layers_1_regs[ 3 ] >> 6;
@@ -909,14 +909,14 @@ public class kaneko16
 	
 		/* Draw the high colour bg layer first, if any */
 	
-		if (kaneko16_bg15_bitmap)
+		if (kaneko16_bg15_bitmap != 0)
 		{
 			int select	=	kaneko16_bg15_select[ 0 ];
 	//		int reg		=	kaneko16_bg15_reg[ 0 ];
 			int flip	=	select & 0x20;
 			int sx, sy;
 	
-			if (flip)	select ^= 0x1f;
+			if (flip != 0)	select ^= 0x1f;
 	
 			sx		=	(select & 0x1f) * 256;
 			sy		=	0;
@@ -938,7 +938,7 @@ public class kaneko16
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (kaneko16_tmap_2)
+		if (kaneko16_tmap_2 != 0)
 		{
 		/*
 			The only working game using a 2nd VIEW2 chip is mgcrystl, where

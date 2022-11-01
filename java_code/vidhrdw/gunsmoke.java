@@ -172,12 +172,12 @@ public class gunsmoke
 			memset (bgmap, 0xff, sizeof (bgmap));
 	
 	
-		if (bgon)
+		if (bgon != 0)
 		{
 			bg_scrolly = gunsmoke_bg_scrolly[0] + 256 * gunsmoke_bg_scrolly[1];
 			bg_scrollx = gunsmoke_bg_scrollx[0];
 			offs = 16 * ((bg_scrolly>>5)+8)+2*(bg_scrollx>>5) ;
-			if (bg_scrollx & 0x80) offs -= 0x10;
+			if ((bg_scrollx & 0x80) != 0) offs -= 0x10;
 	
 			top = 8 - (bg_scrolly>>5) % 9;
 			left = (bg_scrollx>>5) % 9;
@@ -210,7 +210,7 @@ public class gunsmoke
 						flipx = p[offset+1] & 0x40;
 						flipy = p[offset+1] & 0x80;
 	
-						if (flip_screen)
+						if (flip_screen != 0)
 						{
 							tx = 8 - tx;
 							ty = 8 - ty;
@@ -234,7 +234,7 @@ public class gunsmoke
 				xscroll = (top*32-bg_scrolly);
 				yscroll = -(left*32+bg_scrollx);
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					xscroll = 256 - xscroll;
 					yscroll = 256 - yscroll;
@@ -248,7 +248,7 @@ public class gunsmoke
 	
 	
 	
-		if (objon)
+		if (objon != 0)
 		{
 			/* Draw the sprites. */
 			for (offs = spriteram_size - 32;offs >= 0;offs -= 32)
@@ -263,7 +263,7 @@ public class gunsmoke
 	 			sy = spriteram[offs + 2];
 				flipx = 0;
 				flipy = spriteram[offs + 1] & 0x10;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -281,14 +281,14 @@ public class gunsmoke
 		}
 	
 	
-		if (chon)
+		if (chon != 0)
 		{
 			/* draw the frontmost playfield. They are characters, but draw them as sprites */
 			for (offs = videoram_size - 1;offs >= 0;offs--)
 			{
 				sx = offs % 32;
 				sy = offs / 32;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

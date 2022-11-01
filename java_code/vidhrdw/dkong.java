@@ -204,7 +204,7 @@ public class dkong
 	
 		newbank = palette_bank;
 	
-		if (data & 1)
+		if ((data & 1) != 0)
 			newbank |= 1 << offset;
 		else
 			newbank &= ~(1 << offset);
@@ -265,7 +265,7 @@ public class dkong
 				x = spriteram[offs + 3] - 8;
 				y = 240 - spriteram[offs] + 7;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					x = 240 - x;
 					y = 240 - y;
@@ -326,7 +326,7 @@ public class dkong
 					if (rand() & 1)	/* noise coming from sound board */
 						plot_pixel(bitmap,x,y,Machine->pens[256]);
 				}
-				else if (grid_on)			/* radar */
+				else if (grid_on != 0)			/* radar */
 					plot_pixel(bitmap,x,y,Machine->pens[257]);
 			}
 	

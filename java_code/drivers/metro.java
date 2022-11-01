@@ -185,17 +185,17 @@ public class metro
 	{
 	//if (data & ~0x15)	logerror("CPU #0 PC %06X : unknown bits of irqcause written: %04X\n",activecpu_get_pc(),data);
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			data &= ~*metro_irq_enable;
-			if (data & 0x01)	requested_int[0] = 0;
-			if (data & 0x02)	requested_int[1] = 0;	// DAITORIDE, BALCUBE, KARATOUR, MOUJA
-			if (data & 0x04)	requested_int[2] = 0;
-			if (data & 0x08)	requested_int[3] = 0;	// KARATOUR
-			if (data & 0x10)	requested_int[4] = 0;
-			if (data & 0x20)	requested_int[5] = 0;	// KARATOUR, BLZNTRND
-			if (data & 0x40)	requested_int[6] = 0;
-			if (data & 0x80)	requested_int[7] = 0;
+			if ((data & 0x01) != 0)	requested_int[0] = 0;
+			if ((data & 0x02) != 0)	requested_int[1] = 0;	// DAITORIDE, BALCUBE, KARATOUR, MOUJA
+			if ((data & 0x04) != 0)	requested_int[2] = 0;
+			if ((data & 0x08) != 0)	requested_int[3] = 0;	// KARATOUR
+			if ((data & 0x10) != 0)	requested_int[4] = 0;
+			if ((data & 0x20) != 0)	requested_int[5] = 0;	// KARATOUR, BLZNTRND
+			if ((data & 0x40) != 0)	requested_int[6] = 0;
+			if ((data & 0x80) != 0)	requested_int[7] = 0;
 		}
 	
 		update_irq_state();
@@ -340,7 +340,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_soundstatus_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			metro_soundstatus = (~data) & 1;
 		}
@@ -509,7 +509,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_soundstatus_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			metro_soundstatus = (~data) & 1;
 		}
@@ -539,7 +539,7 @@ public class metro
 	
 	static WRITE16_HANDLER( ymf278b_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			switch(offset)
 			{
 				case 0:
@@ -613,7 +613,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_coin_lockout_1word_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 	//		coin_lockout_w(0, data & 1);
 	//		coin_lockout_w(1, data & 2);
@@ -1283,7 +1283,7 @@ public class metro
 	
 	static WRITE16_HANDLER( gakusai_oki_bank_hi_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			gakusai_oki_bank_hi = data & 0xff;
 			gakusai_oki_bank_set();
@@ -1292,7 +1292,7 @@ public class metro
 	
 	static WRITE16_HANDLER( gakusai_oki_bank_lo_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			gakusai_oki_bank_lo = data & 0xff;
 			gakusai_oki_bank_set();
@@ -1305,11 +1305,11 @@ public class metro
 	{
 		data16_t input_sel = (*gakusai_input_sel) ^ 0x3e;
 		// Bit 0 ??
-		if (input_sel & 0x0002)	return readinputport(0);
-		if (input_sel & 0x0004)	return readinputport(1);
-		if (input_sel & 0x0008)	return readinputport(2);
-		if (input_sel & 0x0010)	return readinputport(3);
-		if (input_sel & 0x0020)	return readinputport(4);
+		if ((input_sel & 0x0002) != 0)	return readinputport(0);
+		if ((input_sel & 0x0004) != 0)	return readinputport(1);
+		if ((input_sel & 0x0008) != 0)	return readinputport(2);
+		if ((input_sel & 0x0010) != 0)	return readinputport(3);
+		if ((input_sel & 0x0020) != 0)	return readinputport(4);
 		return 0xffff;
 	}
 	
@@ -1320,7 +1320,7 @@ public class metro
 	
 	WRITE16_HANDLER( gakusai_eeprom_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x01);
@@ -1452,7 +1452,7 @@ public class metro
 	
 	WRITE16_HANDLER( dokyusp_eeprom_bit_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x01);
@@ -1465,7 +1465,7 @@ public class metro
 	
 	WRITE16_HANDLER( dokyusp_eeprom_reset_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			// reset line asserted: reset.
 			EEPROM_set_cs_line((data & 0x01) ? CLEAR_LINE : ASSERT_LINE);
@@ -3786,12 +3786,12 @@ public class metro
 	{
 		data8_t def_data[] = {0x00,0xe0};
 	
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
-			if (file)	EEPROM_load(file);
+			if (file != 0)	EEPROM_load(file);
 			else		EEPROM_set_data(def_data,sizeof(def_data)/sizeof(def_data[0]));
 		}
 	}

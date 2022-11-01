@@ -150,7 +150,7 @@ public class commando
 			flipy = attr & 0x08;
 			bank = (attr & 0xc0) >> 6;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

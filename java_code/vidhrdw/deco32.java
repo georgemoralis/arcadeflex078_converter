@@ -182,22 +182,22 @@ public class deco32
 				if (sx>0x180) sx=-(0x200 - sx);
 				if (sy>0x180) sy=-(0x200 - sy);
 	
-				if (fx) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
-				if (fy) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
+				if (fx != 0) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
+				if (fy != 0) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
 			} else {
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 	
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
-				if (sx&0x100) sx=-(0x100 - (sx&0xff));
-				if (sy&0x100) sy=-(0x100 - (sy&0xff));
+				if ((sx & 0x100) != 0) sx=-(0x100 - (sx&0xff));
+				if ((sy & 0x100) != 0) sy=-(0x100 - (sy&0xff));
 				sx = 304 - sx;
 				sy = 240 - sy;
 				if (sx >= 432) sx -= 512;
 				if (sy >= 384) sy -= 512;
-				if (fx) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
-				if (fy) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
+				if (fx != 0) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
+				if (fy != 0) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
 			}
 	
 			for (x=0; x<w; x++) {
@@ -236,16 +236,16 @@ public class deco32
 				if ((y&0x8000)!=mask) /* Defer alpha until last (seperate pass) */
 					continue;
 	
-				if (y&0x8000)
+				if ((y & 0x8000) != 0)
 					trans=TRANSPARENCY_ALPHA;
 	
-				if (x&0x4000)
+				if ((x & 0x4000) != 0)
 					pri=32; /* Behind other sprites, above all playfields */
 				else
 					pri=128; /* Above other sprites, above all playfields */
 			}
 			else {
-				if (x&0x4000)
+				if ((x & 0x4000) != 0)
 					pri=64; /* Above top playfield */
 				else
 					pri=8; /* Behind top playfield */
@@ -261,7 +261,7 @@ public class deco32
 			if (y >= 256) y -= 512;
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -271,8 +271,8 @@ public class deco32
 	
 			mult=+16;//todo
 	
-			if (fx) fx=0; else fx=1;
-			if (fy) fy=0; else fy=1;
+			if (fx != 0) fx=0; else fx=1;
+			if (fy != 0) fy=0; else fy=1;
 	
 			while (multi >= 0)
 			{
@@ -305,7 +305,7 @@ public class deco32
 		*/
 	
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
-		if(clip)
+		if (clip != 0)
 		{
 			myclip.min_x = clip->min_x;
 			myclip.max_x = clip->max_x;
@@ -341,7 +341,7 @@ public class deco32
 					int x_index_base;
 					int y_index;
 	
-					if( flipx )
+					if (flipx != 0)
 					{
 						x_index_base = (sprite_screen_width-1)*dx;
 						dx = -dx;
@@ -351,7 +351,7 @@ public class deco32
 						x_index_base = 0;
 					}
 	
-					if( flipy )
+					if (flipy != 0)
 					{
 						y_index = (sprite_screen_height-1)*dy;
 						dy = -dy;
@@ -361,7 +361,7 @@ public class deco32
 						y_index = 0;
 					}
 	
-					if( clip )
+					if (clip != 0)
 					{
 						if( sx < clip->min_x)
 						{ /* clip left */
@@ -395,7 +395,7 @@ public class deco32
 						/* case 1: TRANSPARENCY_PEN */
 						if (transparency == TRANSPARENCY_PEN)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -442,7 +442,7 @@ public class deco32
 						/* case 6: TRANSPARENCY_ALPHA */
 						if (transparency == TRANSPARENCY_ALPHA)
 						{
-							if (pri_buffer)
+							if (pri_buffer != 0)
 							{
 								for( y=sy; y<ey; y++ )
 								{
@@ -543,7 +543,7 @@ public class deco32
 		*/
 	
 		/* Sprite global disable bit */
-		if (dragngun_sprite_ctrl&0x40000000)
+		if ((dragngun_sprite_ctrl & 0x40000000) != 0)
 			return;
 	
 		for (offs = 0;offs < 0x800;offs += 8)
@@ -570,8 +570,8 @@ public class deco32
 			sy = spritedata[offs+3] & 0x3ff;
 			bx = layout_ram[2] & 0x1ff;
 			by = layout_ram[3] & 0x1ff;
-			if (bx&0x100) bx=1-(bx&0xff);
-			if (by&0x100) by=1-(by&0xff); /* '1 - ' is strange, but correct for Dragongun 'Winners' screen. */
+			if ((bx & 0x100) != 0) bx=1-(bx&0xff);
+			if ((by & 0x100) != 0) by=1-(by&0xff); /* '1 - ' is strange, but correct for Dragongun 'Winners' screen. */
 			if (sx >= 512) sx -= 1024;
 			if (sy >= 512) sy -= 1024;
 	
@@ -633,7 +633,7 @@ public class deco32
 					case 0xf000: sprite=0x3000 | (sprite&0xfff); break;
 					}
 	
-					if (sprite&0x8000) bank=4; else bank=3;
+					if ((sprite & 0x8000) != 0) bank=4; else bank=3;
 					sprite&=0x7fff;
 	
 					if (zoomx!=0x10000 || zoomy!=0x10000)
@@ -652,12 +652,12 @@ public class deco32
 							xpos>>16,ypos>>16,
 							&Machine->visible_area,trans,15);
 	
-					if (fx)
+					if (fx != 0)
 						xpos-=zoomx<<4;
 					else
 						xpos+=zoomx<<4;
 				}
-				if (fy)
+				if (fy != 0)
 					ypos-=zoomy<<4;
 				else
 					ypos+=zoomy<<4;
@@ -692,7 +692,7 @@ public class deco32
 		data8_t	colour=(tile>>12)&0xf;
 		data8_t flags=0;
 	
-		if (tile&0x8000) {
+		if ((tile & 0x8000) != 0) {
 			if ((deco32_pf12_control[6]>>8)&0x01) {
 				flags|=TILE_FLIPX;
 				colour&=0x7;
@@ -712,7 +712,7 @@ public class deco32
 		data8_t	colour=(tile>>12)&0xf;
 		data8_t flags=0;
 	
-		if (tile&0x8000) {
+		if ((tile & 0x8000) != 0) {
 			if ((deco32_pf34_control[6]>>0)&0x01) {
 				flags|=TILE_FLIPX;
 				colour&=0x7;
@@ -732,7 +732,7 @@ public class deco32
 		data8_t	colour=(tile>>12)&0xf;
 		data8_t flags=0;
 	
-		if (tile&0x8000) {
+		if ((tile & 0x8000) != 0) {
 			if ((deco32_pf34_control[6]>>8)&0x01) {
 				flags|=TILE_FLIPX;
 				colour&=0x7;
@@ -758,7 +758,7 @@ public class deco32
 		data32_t tile=deco32_pf3_data[tile_index];
 		data8_t flags=0;
 	
-		if (tile&0x8000) {
+		if ((tile & 0x8000) != 0) {
 			if ((deco32_pf34_control[6]>>0)&0x01)
 				flags|=TILE_FLIPX;
 			if ((deco32_pf34_control[6]>>0)&0x02)
@@ -773,7 +773,7 @@ public class deco32
 		data32_t tile=deco32_pf4_data[tile_index];
 		data8_t flags=0;
 	
-		if (tile&0x8000) {
+		if ((tile & 0x8000) != 0) {
 			if ((deco32_pf34_control[6]>>8)&0x01)
 				flags|=TILE_FLIPX;
 			if ((deco32_pf34_control[6]>>8)&0x02)
@@ -1096,18 +1096,18 @@ public class deco32
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 		if ((deco32_pri&1)==0) {
-			if (pf3_enable)
+			if (pf3_enable != 0)
 				tilemap_draw(bitmap,cliprect,pf3_tilemap,TILEMAP_IGNORE_TRANSPARENCY,0);
 			else
 				fillbitmap(bitmap,get_black_pen(),cliprect);
 	
-			if (deco32_raster_display_position)
+			if (deco32_raster_display_position != 0)
 				tilemap_raster_draw(bitmap,cliprect,0,1);
 			else
 				tilemap_draw(bitmap,cliprect,pf2_tilemap,0,1);
 		} else {
-			if (pf2_enable) {
-				if (deco32_raster_display_position)
+			if (pf2_enable != 0) {
+				if (deco32_raster_display_position != 0)
 					tilemap_raster_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);
 				else
 					tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
@@ -1169,7 +1169,7 @@ public class deco32
 		tilemap_draw(bitmap,cliprect,pf3_tilemap,0,0);
 	
 		/* Raster update */
-		if (deco32_raster_display_position) {
+		if (deco32_raster_display_position != 0) {
 			int ptr=0,start,end=0;
 			struct rectangle clip;
 			int overflow=deco32_raster_display_position;
@@ -1248,7 +1248,7 @@ public class deco32
 			fillbitmap(bitmap,Machine->pens[0x200],cliprect);
 	
 		/* Draw playfields & sprites */
-		if (deco32_pri&2) {
+		if ((deco32_pri & 2) != 0) {
 			combined_tilemap_draw(bitmap);
 		} else {
 			tilemap_draw(bitmap,cliprect,pf4_tilemap,0,0);

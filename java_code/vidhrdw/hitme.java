@@ -41,7 +41,7 @@ public class hitme
 			charcode = videoram[offs] & 0x3F;
 	
 			if (videoram[offs] & 0x80) hitme_invert_count = 4;
-			if (hitme_invert_count) {
+			if (hitme_invert_count != 0) {
 				invert = 1;
 				hitme_invert_count--;
 			}

@@ -196,7 +196,7 @@ public class ladybug
 			int sx = offs % 4;
 			int sy = offs / 4;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 				tilemap_set_scrollx(bg_tilemap, offs, -videoram[32 * sx + sy]);
 			else
 				tilemap_set_scrollx(bg_tilemap, offs, videoram[32 * sx + sy]);

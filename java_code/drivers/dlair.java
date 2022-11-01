@@ -81,7 +81,7 @@ public class dlair
 		/* copy the character mapped graphics */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
-	if (led0 & 128)
+	if ((led0 & 128) != 0)
 	{
 	if ((led0 & 1) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
 		8,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
@@ -98,7 +98,7 @@ public class dlair
 	if ((led0 & 64) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
 		8,16,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	}
-	if (led1 & 128)
+	if ((led1 & 128) != 0)
 	{
 	if ((led1 & 1) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
 		32+8,0,&Machine->visible_area,TRANSPARENCY_NONE,0);

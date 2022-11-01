@@ -142,9 +142,9 @@ public class statriv2
 	
 	static NVRAM_HANDLER (statriv2)
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			mame_fwrite(file, generic_nvram, generic_nvram_size);
-		else if (file)
+		else if (file != 0)
 			mame_fread(file, generic_nvram, generic_nvram_size);
 		else
 			memcpy ( generic_nvram, statriv2_default_eeprom, 0x100 );

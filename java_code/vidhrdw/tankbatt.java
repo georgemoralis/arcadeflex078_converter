@@ -51,15 +51,15 @@ public class tankbatt
 	
 			/* red component */
 			r = RES_1 * bit1;
-			if (bit1) r += RES_2 * bit0;
+			if (bit1 != 0) r += RES_2 * bit0;
 	
 			/* green component */
 			g = RES_1 * bit2;
-			if (bit2) g += RES_2 * bit0;
+			if (bit2 != 0) g += RES_2 * bit0;
 	
 			/* blue component */
 			b = RES_1 * bit3;
-			if (bit3) b += RES_2 * bit0;
+			if (bit3 != 0) b += RES_2 * bit0;
 	
 			palette_set_color(i,r,g,b);
 			color_prom += 4;

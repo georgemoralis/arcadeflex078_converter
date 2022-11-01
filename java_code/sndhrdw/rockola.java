@@ -84,7 +84,7 @@ public class rockola
 	
 		/* only update every second call (30 Hz update) */
 		count++;
-		if (count & 1) return;
+		if ((count & 1) != 0) return;
 	
 	
 		/* play musical tones according to tunes stored in ROM */
@@ -154,7 +154,7 @@ public class rockola
 			}
 		}
 	
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 		{
 			NoSound0=1;
 			Sound0Offset = 0;
@@ -176,10 +176,10 @@ public class rockola
 		Sound1Base = 0x0800 + ((data & 0x60) << 4);
 		Sound1Mask = 0x1ff;
 	
-		if (data & 0x01)
+		if ((data & 0x01) != 0)
 			NoSound0=0;
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			NoSound1=0;
 		else
 		{
@@ -227,12 +227,12 @@ public class rockola
 			}
 		}
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 		{
 			NoSound0=0;
 		}
 	
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 		{
 			NoSound0=1;
 			Sound0Offset = 0;
@@ -247,7 +247,7 @@ public class rockola
 		Sound1Base = 0x0800 + ((data & 0x07) << 8);
 		Sound1Mask = 0xff;
 	
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			NoSound1=0;
 		else
 		{
@@ -277,7 +277,7 @@ public class rockola
 			}
 		}
 	
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			NoSound0=0;
 		else
 		{
@@ -285,7 +285,7 @@ public class rockola
 			NoSound0=1;
 		}
 	
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			NoSound2=0;
 		else
 		{
@@ -302,7 +302,7 @@ public class rockola
 		Sound1Base = 0x0800 + ((data & 0x07) << 8);
 		Sound1Mask = 0xff;
 	
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			NoSound1=0;
 		else
 		{

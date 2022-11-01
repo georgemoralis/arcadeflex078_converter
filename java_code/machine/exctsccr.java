@@ -132,7 +132,7 @@ public class exctsccr
 			exctsccr_mcu_ram[0x02fb] = 0x7e;
 			exctsccr_mcu_ram[0x02fd] = 0x7e;
 	
-			if ( mcu_code_latch ) {
+			if (mcu_code_latch != 0) {
 				exctsccr_mcu_ram[0x02f9] = 0x7f;
 				exctsccr_mcu_ram[0x02fa] = 0x0d;
 				exctsccr_mcu_ram[0x02fc] = 0x05;

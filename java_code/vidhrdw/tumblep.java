@@ -59,7 +59,7 @@ public class tumblep
 	        x = 304 - x;
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -67,12 +67,12 @@ public class tumblep
 				inc = 1;
 			}
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				y=240-y;
 				x=304-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
@@ -121,7 +121,7 @@ public class tumblep
 	        x = 304 - x;
 	
 		//	sprite &= ~multi; /* Todo:  I bet TumblePop bootleg doesn't do this either */
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -129,12 +129,12 @@ public class tumblep
 				inc = 1;
 			}
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				y=240-y;
 				x=304-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
@@ -183,7 +183,7 @@ public class tumblep
 	        x = 304 - x;
 	
 		//	sprite &= ~multi; /* Todo:  I bet TumblePop bootleg doesn't do this either */
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -191,12 +191,12 @@ public class tumblep
 				inc = 1;
 			}
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				y=240-y;
 				x=304-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
@@ -361,7 +361,7 @@ public class tumblep
 	
 		flipscreen=tumblep_control_0[0]&0x80;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
-		if (flipscreen) offs=1; else offs=-1;
+		if (flipscreen != 0) offs=1; else offs=-1;
 	
 		tilemap_set_scrollx( pf1_tilemap,0, tumblep_control_0[1]+offs );
 		tilemap_set_scrolly( pf1_tilemap,0, tumblep_control_0[2] );
@@ -384,8 +384,8 @@ public class tumblep
 	
 		flipscreen=tumblep_control_0[0]&0x80;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
-		if (flipscreen) offs=1; else offs=-1;
-		if (flipscreen) offs2=-3; else offs2=-5;
+		if (flipscreen != 0) offs=1; else offs=-1;
+		if (flipscreen != 0) offs2=-3; else offs2=-5;
 	
 		tilemap_set_scrollx( pf1_tilemap,0, tumblep_control_0[1]+offs2 );
 		tilemap_set_scrolly( pf1_tilemap,0, tumblep_control_0[2] );
@@ -408,8 +408,8 @@ public class tumblep
 	
 		flipscreen=tumblep_control_0[0]&0x80;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
-		if (flipscreen) offs=1; else offs=-1;
-		if (flipscreen) offs2=-3; else offs2=-5;
+		if (flipscreen != 0) offs=1; else offs=-1;
+		if (flipscreen != 0) offs2=-3; else offs2=-5;
 	
 		tilemap_set_scrollx( pf1_tilemap,0, tumblep_control_0[1]+offs2 );
 		tilemap_set_scrolly( pf1_tilemap,0, tumblep_control_0[2] );
@@ -432,8 +432,8 @@ public class tumblep
 	
 		flipscreen=tumblep_control_0[0]&0x80;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
-		if (flipscreen) offs=1; else offs=-1;
-		if (flipscreen) offs2=-3; else offs2=-5;
+		if (flipscreen != 0) offs=1; else offs=-1;
+		if (flipscreen != 0) offs2=-3; else offs2=-5;
 	
 		tilemap_set_scrollx( pf1_tilemap,0, tumblep_control_0[1]+offs2 );
 		tilemap_set_scrolly( pf1_tilemap,0, tumblep_control_0[2] );

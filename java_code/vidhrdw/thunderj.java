@@ -256,7 +256,7 @@ public class thunderj
 						int pfm = 0;
 	
 						/* upper bit of MO priority signals special rendering and doesn't draw anything */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 							continue;
 	
 						/* determine pf/m signal */
@@ -295,7 +295,7 @@ public class thunderj
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority might mean palette kludges */
-						if (mopriority & 4)
+						if ((mopriority & 4) != 0)
 						{
 							/* if bit 2 is set, start setting high palette bits */
 							if (mo[x] & 2)

@@ -113,13 +113,13 @@ public class sspeedr
 	
 			int flag = 0;
 	
-			if (track_ice & 2)
+			if ((track_ice & 2) != 0)
 			{
 				flag = 1;
 			}
-			else if (track_ice & 4)
+			else if ((track_ice & 4) != 0)
 			{
-				if (track_ice & 1)
+				if ((track_ice & 1) != 0)
 				{
 					flag = (counter_x <= 0x1ff);
 				}
@@ -147,7 +147,7 @@ public class sspeedr
 					((counter_x & 0x1c) >> 2) |
 					((counter_x & 0xe0) << 3);
 	
-				if (counter_x & 2)
+				if ((counter_x & 2) != 0)
 				{
 					plot_pixel(bitmap, x, y, p[offset] / 16);
 				}
@@ -175,7 +175,7 @@ public class sspeedr
 					((counter_x & 0x1c) >> 2) |
 					((counter_x & 0xe0) << 3);
 	
-				if (counter_x & 2)
+				if ((counter_x & 2) != 0)
 				{
 					plot_pixel(bitmap, x, y, p[offset] / 16);
 				}

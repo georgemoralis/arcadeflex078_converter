@@ -61,7 +61,7 @@ public class lemmings
 			if (x>320 || x<-16) continue;
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = 1;
 			else
 			{
@@ -118,15 +118,15 @@ public class lemmings
 	
 	public static VideoUpdateHandlerPtr video_update_lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (bitmap0)
+		if (bitmap0 != 0)
 			bitmap_free(bitmap0);
-		if (vram_buffer)
+		if (vram_buffer != 0)
 			free(vram_buffer);
-		if (vram_dirty)
+		if (vram_dirty != 0)
 			free(vram_dirty);
-		if (sprite_triple_buffer_0)
+		if (sprite_triple_buffer_0 != 0)
 			free(sprite_triple_buffer_0);
-		if (sprite_triple_buffer_1)
+		if (sprite_triple_buffer_1 != 0)
 			free(sprite_triple_buffer_1);
 	} };
 	

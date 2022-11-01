@@ -64,7 +64,7 @@ public class network
 		/* if we're the client we can do the version checking now
 		   server checks in net_add_player
 		*/
-		if ( is_client )
+		if (is_client != 0)
 		{
 			if ( net_vers_check( 0 ) )
 	        {
@@ -116,7 +116,7 @@ public class network
 	    }
 	
 	    /* we can do the game checking now */
-		if ( is_client )
+		if (is_client != 0)
 		{
 			if ( net_game_check( 0 ) )
 	        {
@@ -168,7 +168,7 @@ public class network
 	    dprintf(("net_vers_check()\n"))
 	
 		/* do comparisons */
-		if ( is_client )
+		if (is_client != 0)
 		{
 			net_send( 0, NET_INIT_VERS, szVerSelf, NET_MAX_DATA );
 			net_recv( 0, NET_INIT_VERS, &cAck, 1 );
@@ -248,7 +248,7 @@ public class network
 	
 	    for (i = 0; i < len; i++, ptr++)
 	    {
-	        if (i)
+	        if (i != 0)
 	            strcat(str,",");
 	        sprintf(temp,"%02x,'%c'", *ptr & 0xFF, (isalnum(*ptr)) ? *ptr : '.');
 	        strcat(str, temp);
@@ -273,7 +273,7 @@ public class network
 		/* TODO: strcpy checksum info? */
 	
 		/* do comparisons */
-		if ( is_client )
+		if (is_client != 0)
 		{
 			net_send( 0, NET_INIT_GAME, szVerSelf, strlen(szVerSelf));
 			net_recv( 0, NET_INIT_GAME, &cAck, 1 );
@@ -335,9 +335,9 @@ public class network
 	        (is_client) ? "Client" : "Server",
 	        (first)     ? "TRUE"   : "FALSE"))
 	
-		if ( is_client )
+		if (is_client != 0)
 		{
-			if ( first )
+			if (first != 0)
 			{
 				net_send( 0, type, szMsg, size );
 				net_recv( 0, type, szMsg, NET_MAX_DATA );
@@ -352,7 +352,7 @@ public class network
 		else
 		{
 			int i;
-			if ( first )
+			if (first != 0)
 			{
 				for ( i=0; i < num_clients; i++)
 				{
@@ -381,7 +381,7 @@ public class network
 		unsigned char junk[MAX_INPUT_PORTS]; /* used just for synchronizing - values don't matter */
 	
 	    dprintf(("net_analog_sync() called\n"))
-		if ( is_client )
+		if (is_client != 0)
 		{
 			if ( analog_player_port[port] == default_player ) /* we control this port */
 			{
@@ -422,7 +422,7 @@ public class network
 		int port;
 	
 	    dprintf(("net_input_sync() called\n"))
-		if ( is_client )
+		if (is_client != 0)
 		{
 			/* mark default bits */
 			for(port=0; port < num_ports; port++)
@@ -462,7 +462,7 @@ public class network
 			}
 	
 			/* now check if clients still exist */
-			if ( is_active )
+			if (is_active != 0)
 			{
 				for (client=0; client < num_clients; client++)  /* send final input to client */
 					net_send( client, NET_SYNC_INPT, input_port_value, num_ports );
@@ -636,7 +636,7 @@ public class network
 	    dprintf(("net_remove_player(%d)\n", player ))
 	
 		/* TODO: need to shift player info around (currently just sockets - eventually input assignments too ) */
-		if ( is_client )
+		if (is_client != 0)
 		{
 			net_exit( NET_QUIT_OKAY );
 			return 0;

@@ -131,7 +131,7 @@ public class exterm
 		trackball_old[which] = trackball_pos;
 	
 		/* Move the sign bit to the high bit of the 6-bit trackball count. */
-		if (trackball_diff & 0x80)
+		if ((trackball_diff & 0x80) != 0)
 			trackball_diff |= 0x20;
 	
 		/* Keep adding the changes.  The counters will be reset later by a hardware write. */
@@ -168,7 +168,7 @@ public class exterm
 	
 		static data16_t last = 0;
 	
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			/* Bit 0-1= Resets analog controls */
 			if ((data & 0x0001) && !(last & 0x0001))
@@ -178,7 +178,7 @@ public class exterm
 				aimpos[1] = 0;
 		}
 	
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			/* Bit 13 = Resets the slave CPU */
 			if ((data & 0x2000) && !(last & 0x2000))

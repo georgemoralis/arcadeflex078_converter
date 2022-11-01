@@ -149,7 +149,7 @@ public class baraduke
 	
 		scrollx = xscroll[layer] + xdisp[layer];
 		scrolly = yscroll[layer] + 25;
-		if (flipscreen)
+		if (flipscreen != 0)
 		{
 			scrollx = -scrollx + 227;
 			scrolly = -scrolly + 32;
@@ -225,7 +225,7 @@ public class baraduke
 					{
 						for( col=0; col<=wide; col++ )
 						{
-							if (flipscreen)
+							if (flipscreen != 0)
 							{
 								drawgfx( bitmap, Machine->gfx[5],
 									sprite_number+2*row+col,
@@ -289,7 +289,7 @@ public class baraduke
 			{
 				sx = mx + 2; sy = my - 2;
 			}
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 					sx = 35 - sx; sy = 27 - sy;
 			}
@@ -334,7 +334,7 @@ public class baraduke
 			{
 				sx = mx + 2; sy = my - 2;
 			}
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 					sx = 35 - sx; sy = 27 - sy;
 			}

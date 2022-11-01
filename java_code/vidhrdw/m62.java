@@ -249,7 +249,7 @@ public class m62
 		data ^= ~readinputport(4) & 1;
 	
 		flipscreen = data & 0x01;
-		if (flipscreen)
+		if (flipscreen != 0)
 			tilemap_set_flip(ALL_TILEMAPS, TILEMAP_FLIPX | TILEMAP_FLIPY);
 		else
 			tilemap_set_flip(ALL_TILEMAPS, 0);
@@ -327,7 +327,7 @@ public class m62
 					sy -= 3*16;
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 496 - sx;
 					sy = 242 - i*16 - sy;	/* sprites are slightly misplaced by the hardware */
@@ -335,7 +335,7 @@ public class m62
 					flipy = !flipy;
 				}
 	
-				if (flipy)
+				if (flipy != 0)
 				{
 					incr = -1;
 					code += i;

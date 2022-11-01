@@ -82,8 +82,8 @@ public class m72
 		attr  = vram[tile_index+1];
 		color = vram[tile_index+2];
 	
-		if (color & 0x80) pri = 2;
-		else if (color & 0x40) pri = 1;
+		if ((color & 0x80) != 0) pri = 2;
+		else if ((color & 0x40) != 0) pri = 1;
 		else pri = 0;
 	/* color & 0x10 is used in bchopper and hharry, more priority? */
 	
@@ -104,8 +104,8 @@ public class m72
 		color = vram[tile_index+2];
 		attr  = vram[tile_index+3];
 	
-		if (attr & 0x01) pri = 2;
-		else if (color & 0x80) pri = 1;
+		if ((attr & 0x01) != 0) pri = 2;
+		else if ((color & 0x80) != 0) pri = 1;
 		else pri = 0;
 	
 	/* (vram[tile_index+2] & 0x10) is used by majtitle on the green, but it's not clear for what */
@@ -310,7 +310,7 @@ public class m72
 	public static ReadHandlerPtr m72_palette1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* only D0-D4 are connected */
-		if (offset & 1) return 0xff;
+		if ((offset & 1) != 0) return 0xff;
 	
 		/* A9 isn't connected, so 0x200-0x3ff mirrors 0x000-0x1ff etc. */
 		offset &= ~0x200;
@@ -321,7 +321,7 @@ public class m72
 	public static ReadHandlerPtr m72_palette2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* only D0-D4 are connected */
-		if (offset & 1) return 0xff;
+		if ((offset & 1) != 0) return 0xff;
 	
 		/* A9 isn't connected, so 0x200-0x3ff mirrors 0x000-0x1ff etc. */
 		offset &= ~0x200;
@@ -341,7 +341,7 @@ public class m72
 	public static WriteHandlerPtr m72_palette1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* only D0-D4 are connected */
-		if (offset & 1) return;
+		if ((offset & 1) != 0) return;
 	
 		/* A9 isn't connected, so 0x200-0x3ff mirrors 0x000-0x1ff etc. */
 		offset &= ~0x200;
@@ -357,7 +357,7 @@ public class m72
 	public static WriteHandlerPtr m72_palette2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* only D0-D4 are connected */
-		if (offset & 1) return;
+		if ((offset & 1) != 0) return;
 	
 		/* A9 isn't connected, so 0x200-0x3ff mirrors 0x000-0x1ff etc. */
 		offset &= ~0x200;
@@ -461,10 +461,10 @@ public class m72
 	{
 		if (offset != 0)
 		{
-			if (data) logerror("write %02x to port 03\n",data);
+			if (data != 0) logerror("write %02x to port 03\n",data);
 			return;
 		}
-		if (data & 0xe0) logerror("write %02x to port 02\n",data);
+		if ((data & 0xe0) != 0) logerror("write %02x to port 02\n",data);
 	
 		/* bits 0/1 are coin counters */
 		coin_counter_w(0,data & 0x01);
@@ -477,7 +477,7 @@ public class m72
 		video_off = data & 0x08;
 	
 		/* bit 4 resets sound CPU (active low) */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
@@ -489,10 +489,10 @@ public class m72
 	{
 		if (offset != 0)
 		{
-			if (data) logerror("write %02x to port 03\n",data);
+			if (data != 0) logerror("write %02x to port 03\n",data);
 			return;
 		}
-		if (data & 0xe0) logerror("write %02x to port 02\n",data);
+		if ((data & 0xe0) != 0) logerror("write %02x to port 02\n",data);
 	
 		/* bits 0/1 are coin counters */
 		coin_counter_w(0,data & 0x01);
@@ -515,7 +515,7 @@ public class m72
 	{
 		if (offset == 1)
 		{
-			if (data) majtitle_rowscroll = 1;
+			if (data != 0) majtitle_rowscroll = 1;
 			else majtitle_rowscroll = 0;
 		}
 	} };
@@ -548,7 +548,7 @@ public class m72
 			h = 1 << ((m72_spriteram[offs+5] & 0x30) >> 4);
 			sy -= 16 * h;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 512 - 16*w - sx;
 				sy = 512 - 16*h - sy;
@@ -562,9 +562,9 @@ public class m72
 				{
 					int c = code;
 	
-					if (flipx) c += 8*(w-1-x);
+					if (flipx != 0) c += 8*(w-1-x);
 					else c += 8*x;
-					if (flipy) c += h-1-y;
+					if (flipy != 0) c += h-1-y;
 					else c += y;
 	
 					drawgfx(bitmap,Machine->gfx[0],
@@ -600,7 +600,7 @@ public class m72
 			h = 1 << ((spriteram_2[offs+5] & 0x30) >> 4);
 			sy -= 16 * h;
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 512 - 16*w - sx;
 				sy = 512 - 16*h - sy;
@@ -614,9 +614,9 @@ public class m72
 				{
 					int c = code;
 	
-					if (flipx) c += 8*(w-1-x);
+					if (flipx != 0) c += 8*(w-1-x);
 					else c += 8*x;
-					if (flipy) c += h-1-y;
+					if (flipy != 0) c += h-1-y;
 					else c += y;
 	
 					drawgfx(bitmap,Machine->gfx[2],
@@ -671,7 +671,7 @@ public class m72
 	
 	public static VideoUpdateHandlerPtr video_update_m72  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_off)
+		if (video_off != 0)
 		{
 			fillbitmap(bitmap,Machine->pens[0],cliprect);
 			return;
@@ -689,13 +689,13 @@ public class m72
 		int i;
 	
 	
-		if (video_off)
+		if (video_off != 0)
 		{
 			fillbitmap(bitmap,Machine->pens[0],cliprect);
 			return;
 		}
 	
-		if (majtitle_rowscroll)
+		if (majtitle_rowscroll != 0)
 		{
 			tilemap_set_scroll_rows(bg_tilemap,512);
 			for (i = 0;i < 512;i++)

@@ -40,8 +40,8 @@ public class munchmo
 	{
 		static int which;
 		which = !which;
-		if( which ) cpu_set_irq_line(0, 0, HOLD_LINE);
-		else if( mnchmobl_nmi_enable ) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+		if (which != 0) cpu_set_irq_line(0, 0, HOLD_LINE);
+		else if (mnchmobl_nmi_enable != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	public static WriteHandlerPtr mnchmobl_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)

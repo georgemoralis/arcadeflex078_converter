@@ -82,7 +82,7 @@ public class zaccaria
 		// bits 0-2 go to a weird kind of DAC ??
 		// bits 3-4 control the analog drum emulation on 8910 #0 ch. A
 	
-		if (data & 1)	/* DAC enable */
+		if ((data & 1) != 0)	/* DAC enable */
 		{
 			/* TODO: is this right? it sound awful */
 			static int table[4] = { 0x05, 0x1b, 0x0b, 0x55 };
@@ -120,7 +120,7 @@ public class zaccaria
 		if ((last & 0x02) == 0x02 && (data & 0x02) == 0x00)
 		{
 			/* bit 0 goes to the 8910 #0 BC1 pin */
-			if (last & 0x01)
+			if ((last & 0x01) != 0)
 				AY8910_control_port_0_w(0,port0a);
 			else
 				AY8910_write_port_0_w(0,port0a);
@@ -128,14 +128,14 @@ public class zaccaria
 		else if ((last & 0x02) == 0x00 && (data & 0x02) == 0x02)
 		{
 			/* bit 0 goes to the 8910 #0 BC1 pin */
-			if (last & 0x01)
+			if ((last & 0x01) != 0)
 				active_8910 = 0;
 		}
 		/* bit 3 goes to 8910 #1 BDIR pin  */
 		if ((last & 0x08) == 0x08 && (data & 0x08) == 0x00)
 		{
 			/* bit 2 goes to the 8910 #1 BC1 pin */
-			if (last & 0x04)
+			if ((last & 0x04) != 0)
 				AY8910_control_port_1_w(0,port0a);
 			else
 				AY8910_write_port_1_w(0,port0a);
@@ -143,7 +143,7 @@ public class zaccaria
 		else if ((last & 0x08) == 0x00 && (data & 0x08) == 0x08)
 		{
 			/* bit 2 goes to the 8910 #1 BC1 pin */
-			if (last & 0x04)
+			if ((last & 0x04) != 0)
 				active_8910 = 1;
 		}
 	

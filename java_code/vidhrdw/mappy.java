@@ -224,7 +224,7 @@ public class mappy
 					sy = my;
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 35 - sx;
 					sy = 59 - sy;
@@ -249,7 +249,7 @@ public class mappy
 			for (offs = 34;offs < 36;offs++)
 				scroll[offs] = 0;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				for (offs = 0;offs < 36;offs++)
 					scroll[offs] = 224 - scroll[offs];
@@ -271,7 +271,7 @@ public class mappy
 				int flipx = spriteram_3[offs] & 1;
 				int flipy = spriteram_3[offs] & 2;
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					flipx = !flipx;
 					flipy = !flipy;
@@ -327,7 +327,7 @@ public class mappy
 							mappy_draw_sprite(bitmap,3+sprite,color,flipx,flipy,x,y-16);
 							mappy_draw_sprite(bitmap,2+sprite,color,flipx,flipy,x+16,y-16);
 						}
-						else if (flipy)
+						else if (flipy != 0)
 						{
 							mappy_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y);
 							mappy_draw_sprite(bitmap,1+sprite,color,flipx,flipy,x+16,y);
@@ -387,7 +387,7 @@ public class mappy
 						sy = (8*sy-mappy_scroll);
 					}
 	
-					if (flipscreen)
+					if (flipscreen != 0)
 					{
 						sx = 35 - sx;
 						sy = 216 - sy;

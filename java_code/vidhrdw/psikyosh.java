@@ -134,9 +134,9 @@ public class psikyosh
 		size = BG_LARGE(layer) ? 32 : 16;
 		width = BG_LARGE(layer) ? 0x200 : 0x100;
 	
-		if(alphamap) { /* alpha values are per-pen */
+		if (alphamap != 0) { /* alpha values are per-pen */
 			trans = TRANSPARENCY_ALPHARANGE;
-		} else if(alpha) {
+		} else if (alpha != 0) {
 			trans = TRANSPARENCY_ALPHA;
 			alpha = ((0x3f-alpha)*0xff)/0x3f; /* 0x3f-0x00 maps to 0x00-0xff */
 			alpha_set_level(alpha);
@@ -156,9 +156,9 @@ public class psikyosh
 					colour = (psikyosh_bgram[(bank*0x800)/4 + offs - 0x4000/4] & 0xff000000) >> 24;
 	
 					drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1)),cliprect,trans,0); /* normal */
-					if(scrollx)
+					if (scrollx != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1)),cliprect,trans,0); /* wrap x */
-					if(scrolly)
+					if (scrolly != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1))-width,cliprect,trans,0); /* wrap y */
 					if(scrollx && scrolly)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1))-width,cliprect,trans,0); /* wrap xy */
@@ -198,9 +198,9 @@ public class psikyosh
 					colour = (psikyosh_bgram[(bank*0x800)/4 + offs - 0x4000/4] & 0xff000000) >> 24;
 	
 					drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1)),cliprect,TRANSPARENCY_PEN,0); /* normal */
-					if(scrollx)
+					if (scrollx != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1)),cliprect,TRANSPARENCY_PEN,0); /* wrap x */
-					if(scrolly)
+					if (scrolly != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1))-width,cliprect,TRANSPARENCY_PEN,0); /* wrap y */
 					if(scrollx && scrolly)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1))-width,cliprect,TRANSPARENCY_PEN,0); /* wrap xy */
@@ -223,9 +223,9 @@ public class psikyosh
 					colour = (psikyosh_bgram[(bank*0x800)/4 + offs - 0x4000/4] & 0xff000000) >> 24;
 	
 					drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1)),cliprect,TRANSPARENCY_PEN,0); /* normal */
-					if(scrollx)
+					if (scrollx != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1)),cliprect,TRANSPARENCY_PEN,0); /* wrap x */
-					if(scrolly)
+					if (scrolly != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1))-width,cliprect,TRANSPARENCY_PEN,0); /* wrap y */
 					if(scrollx && scrolly)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1))-width,cliprect,TRANSPARENCY_PEN,0); /* wrap xy */
@@ -259,9 +259,9 @@ public class psikyosh
 		size = BG_LARGE(layer) ? 32 : 16;
 		width = BG_LARGE(layer) ? 0x200 : 0x100;
 	
-		if(alphamap) { /* alpha values are per-pen */
+		if (alphamap != 0) { /* alpha values are per-pen */
 			trans = TRANSPARENCY_ALPHARANGE;
-		} else if(alpha) {
+		} else if (alpha != 0) {
 			trans = TRANSPARENCY_ALPHA;
 			alpha = ((0x3f-alpha)*0xff)/0x3f; /* 0x3f-0x00 maps to 0x00-0xff */
 			alpha_set_level(alpha);
@@ -296,9 +296,9 @@ public class psikyosh
 	//				drawgfx(zoom_bitmap,gfx,tileno,colour,0,0,(16*sx)&0x1ff,((16*sy)&(width-1)),NULL,TRANSPARENCY_PEN,0);
 	
 					drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1)),cliprect,trans,0); /* normal */
-					if(scrollx)
+					if (scrollx != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1)),cliprect,trans,0); /* wrap x */
-					if(scrolly)
+					if (scrolly != 0)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,(16*sx+scrollx)&0x1ff,((16*sy+scrolly)&(width-1))-width,cliprect,trans,0); /* wrap y */
 					if(scrollx && scrolly)
 						drawgfx(bitmap,gfx,tileno,colour,0,0,((16*sx+scrollx)&0x1ff)-0x200,((16*sy+scrolly)&(width-1))-width,cliprect,trans,0); /* wrap xy */
@@ -409,7 +409,7 @@ public class psikyosh
 		}
 	
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
-		if(clip)
+		if (clip != 0)
 		{
 			myclip.min_x = clip->min_x;
 			myclip.max_x = clip->max_x;
@@ -429,10 +429,10 @@ public class psikyosh
 		{
 			int xstart, ystart, xend, yend, xinc, yinc;
 	
-			if (flipx)	{ xstart = wide-1; xend = -1;   xinc = -1; }
+			if (flipx != 0)	{ xstart = wide-1; xend = -1;   xinc = -1; }
 			else		{ xstart = 0;      xend = wide; xinc = +1; }
 	
-			if (flipy)	{ ystart = high-1; yend = -1;   yinc = -1; }
+			if (flipy != 0)	{ ystart = high-1; yend = -1;   yinc = -1; }
 			else		{ ystart = 0;      yend = high; yinc = +1; }
 	
 			/* Start drawing */
@@ -447,10 +447,10 @@ public class psikyosh
 	
 						int x_index_base, y_index, sx, sy, ex, ey;
 	
-						if (flipx)	{ x_index_base = gfx->width-1; }
+						if (flipx != 0)	{ x_index_base = gfx->width-1; }
 						else		{ x_index_base = 0; }
 	
-						if (flipy)	{ y_index = gfx->height-1; }
+						if (flipy != 0)	{ y_index = gfx->height-1; }
 						else		{ y_index = 0; }
 	
 						/* start coordinates */
@@ -461,7 +461,7 @@ public class psikyosh
 						ex = sx + gfx->width;
 						ey = sy + gfx->height;
 	
-						if( clip )
+						if (clip != 0)
 						{
 							if( sx < clip->min_x)
 							{ /* clip left */
@@ -726,13 +726,13 @@ public class psikyosh
 	
 					int dx, dy;
 	
-					if( flipx )	{ x_index_base = (sprite_screen_width-1)*zoomx; dx = -zoomx; }
+					if (flipx != 0)	{ x_index_base = (sprite_screen_width-1)*zoomx; dx = -zoomx; }
 					else		{ x_index_base = 0; dx = zoomx; }
 	
-					if( flipy )	{ y_index = (sprite_screen_height-1)*zoomy; dy = -zoomy; }
+					if (flipy != 0)	{ y_index = (sprite_screen_height-1)*zoomy; dy = -zoomy; }
 					else		{ y_index = 0; dy = zoomy; }
 	
-					if( clip )
+					if (clip != 0)
 					{
 						if( sx < clip->min_x)
 						{ /* clip left */
@@ -984,8 +984,8 @@ public class psikyosh
 				ypos = (src[sprnum+0] & 0x03ff0000) >> 16;
 				xpos = (src[sprnum+0] & 0x000003ff) >> 00;
 	
-				if(ypos & 0x200) ypos -= 0x400;
-				if(xpos & 0x200) xpos -= 0x400;
+				if ((ypos & 0x200) != 0) ypos -= 0x400;
+				if ((xpos & 0x200) != 0) xpos -= 0x400;
 	
 				high  = ((src[sprnum+1] & 0x0f000000) >> 24) + 1;
 				wide  = ((src[sprnum+1] & 0x00000f00) >> 8) + 1;
@@ -1007,9 +1007,9 @@ public class psikyosh
 	
 				gfx = dpth ? Machine->gfx[1] : Machine->gfx[0];
 	
-				if(alphamap) { /* alpha values are per-pen */
+				if (alphamap != 0) { /* alpha values are per-pen */
 					trans = TRANSPARENCY_ALPHARANGE;
-				} else if(alpha) {
+				} else if (alpha != 0) {
 					alpha = ((0x3f-alpha)*0xff)/0x3f; /* 0x3f-0x00 maps to 0x00-0xff */
 					trans = TRANSPARENCY_ALPHA;
 					alpha_set_level(alpha);
@@ -1050,7 +1050,7 @@ public class psikyosh
 				/* end drawing */
 			}
 			listcntr++;
-			if (listdat & 0x4000) break;
+			if ((listdat & 0x4000) != 0) break;
 		}
 	}
 	
@@ -1115,7 +1115,7 @@ public class psikyosh
 			return;
 		}
 	
-		if (alpha_active)
+		if (alpha_active != 0)
 		{
 		/* There are 224 values for post-lineblending. Using one for every row currently */
 		UINT32 *dstline;

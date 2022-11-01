@@ -55,7 +55,7 @@ public class deniam
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			soundlatch_w(offset,(data >> 8) & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -69,7 +69,7 @@ public class deniam
 	
 	static WRITE16_HANDLER( deniam16c_oki_rom_bank_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 			OKIM6295_set_bank_base(0,(data & 0x01) ? 0x40000 : 0x00000);
 	}
 	
@@ -81,13 +81,13 @@ public class deniam
 	
 	static WRITE16_HANDLER( YM3812_control_port_0_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			YM3812_control_port_0_w(0,(data >> 8) & 0xff);
 	}
 	
 	static WRITE16_HANDLER( YM3812_write_port_0_msb_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 			YM3812_write_port_0_w(0,(data >> 8) & 0xff);
 	}
 	

@@ -354,7 +354,7 @@ public class taito_b
 	
 	static WRITE16_HANDLER( gain_control_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			if (offset==0)
 			{
@@ -388,12 +388,12 @@ public class taito_b
 	
 	static NVRAM_HANDLER( taito_b )
 	{
-		if (read_or_write)
+		if (read_or_write != 0)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
-			if (file)
+			if (file != 0)
 			{
 				EEPROM_load(file);
 			}
@@ -421,7 +421,7 @@ public class taito_b
 	{
 		COMBINE_DATA(&eep_latch);
 	
-	    if (ACCESSING_MSB)
+	    if (ACCESSING_MSB != 0)
 	    {
 			data >>= 8; /*M68k byte write*/
 	

@@ -18,13 +18,13 @@ public class makedab
 		int i, result;
 	
 		for (i = 0; i < DF; i++) {
-			if (i & CF) {
+			if ((i & CF) != 0) {
 				if (i & 0x0f < 0x0a)
 					dab[i] = CF | ((i + 0x60) & 0xff);
 				else
 					dab[i] = CF | ((i + 0x66) & 0xff);
 			} else {
-				if (i & HF) {
+				if ((i & HF) != 0) {
 					if (i & 0xf0 < 0xa0)
 						dab[i] = ((i + 0x06) & 0xff);
 					else
@@ -46,14 +46,14 @@ public class makedab
 	            }
 	        }
 	
-	        if (i & CF) {
-				if (i & HF) {
+	        if ((i & CF) != 0) {
+				if ((i & HF) != 0) {
 					dab[DF+i] = CF | ((i + 0x9a) & 0xff);
 				} else {
 					dab[DF+i] = CF | ((i + 0xa0) & 0xff);
 	            }
 			} else {
-				if (i & HF) {
+				if ((i & HF) != 0) {
 					dab[DF+i] = CF | ((i + 0xfa) & 0xff);
 	            } else {
 					dab[DF+i] = (i & 0xff);
@@ -79,7 +79,7 @@ public class makedab
 	    printf("static UINT16 Z8000_dab[0x800] = {\n");
 	    for (i = 0; i < 0x800; i++) {
 			if ((i & 0x3ff) == 0) {
-				if (i & 0x400)
+				if ((i & 0x400) != 0)
 					printf("\t/* sub/sbc results */\n");
 				else
 					printf("\t/* add/adc results */\n");

@@ -77,7 +77,7 @@ public class artmagic
 	void artmagic_to_shiftreg(offs_t address, data16_t *data)
 	{
 		UINT16 *vram = address_to_vram(&address);
-		if (vram)
+		if (vram != 0)
 			memcpy(data, &vram[address], TOBYTE(0x2000));
 	}
 	
@@ -85,7 +85,7 @@ public class artmagic
 	void artmagic_from_shiftreg(offs_t address, data16_t *data)
 	{
 		UINT16 *vram = address_to_vram(&address);
-		if (vram)
+		if (vram != 0)
 			memcpy(&vram[address], data, TOBYTE(0x2000));
 	}
 	
@@ -157,7 +157,7 @@ public class artmagic
 				{
 					/* ultennis, stonebal */
 					last ^= (blitter_data[7] & 0x0001);
-					if (artmagic_is_stoneball)
+					if (artmagic_is_stoneball != 0)
 						last ^= ((blitter_data[0] & 0x0020) >> 3);
 					else	/* ultennis */
 						last ^= ((blitter_data[0] & 0x0040) >> 4);
@@ -226,7 +226,7 @@ public class artmagic
 					{
 						/* ultennis, stonebal */
 						last ^= (blitter_data[7] & 0x0001);
-						if (artmagic_is_stoneball)
+						if (artmagic_is_stoneball != 0)
 							last ^= ((blitter_data[0] & 0x0020) >> 3);
 						else	/* ultennis */
 							last ^= (((blitter_data[0] + 1) & 0x0040) >> 4);

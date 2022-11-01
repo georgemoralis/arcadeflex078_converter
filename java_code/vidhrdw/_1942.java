@@ -223,7 +223,7 @@ public class _1942
 			sx = spriteram[offs + 3] - 0x10 * (spriteram[offs + 1] & 0x10);
 			sy = spriteram[offs + 2];
 			dir = 1;
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

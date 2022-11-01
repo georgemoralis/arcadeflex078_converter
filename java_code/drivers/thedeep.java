@@ -359,20 +359,20 @@ public class thedeep
 			if (protection_command != 0x59)
 			{
 				int coins = readinputport(4);
-				if		(coins & 1)	protection_data = 1;
-				else if	(coins & 2)	protection_data = 2;
-				else if	(coins & 4)	protection_data = 3;
+				if ((coins & 1) != 0)	protection_data = 1;
+				else if ((coins & 2) != 0)	protection_data = 2;
+				else if ((coins & 4) != 0)	protection_data = 3;
 				else				protection_data = 0;
 	
-				if (protection_data)
+				if (protection_data != 0)
 					protection_irq = 1;
 			}
-			if (protection_irq)
+			if (protection_irq != 0)
 				cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 		else
 		{
-			if (nmi_enable)
+			if (nmi_enable != 0)
 			{
 				cpu_set_nmi_line(0, ASSERT_LINE);
 				cpu_set_nmi_line(0, CLEAR_LINE);

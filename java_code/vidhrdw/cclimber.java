@@ -322,7 +322,7 @@ public class cclimber
 		oy = 128 - cclimber_bigspriteram[2];
 		flipx = cclimber_bigspriteram[1] & 0x10;
 		flipy = cclimber_bigspriteram[1] & 0x20;
-		if (flip_screen_y)      /* only the Y direction has to be flipped */
+		if (flip_screen_y != 0)      /* only the Y direction has to be flipped */
 		{
 			oy = 128 - oy;
 			flipy = !flipy;
@@ -334,8 +334,8 @@ public class cclimber
 		{
 			sx = offs % 16;
 			sy = offs / 16;
-			if (flipx) sx = 15 - sx;
-			if (flipy) sy = 15 - sy;
+			if (flipx != 0) sx = 15 - sx;
+			if (flipy != 0) sy = 15 - sy;
 	
 			drawgfx(bitmap,Machine->gfx[2],
 	//				cclimber_bsvideoram[offs],	/* cclimber */
@@ -383,14 +383,14 @@ public class cclimber
 				flipx = colorram[offs] & 0x40;
 				flipy = colorram[offs] & 0x80;
 				/* vertical flipping flips two adjacent characters */
-				if (flipy) sy ^= 1;
+				if (flipy != 0) sy ^= 1;
 	
-				if (flip_screen_x)
+				if (flip_screen_x != 0)
 				{
 					sx = 31 - sx;
 					flipx = !flipx;
 				}
-				if (flip_screen_y)
+				if (flip_screen_y != 0)
 				{
 					sy = 31 - sy;
 					flipy = !flipy;
@@ -411,12 +411,12 @@ public class cclimber
 			int scroll[32];
 	
 	
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				for (offs = 0;offs < 32;offs++)
 				{
 					scroll[offs] = -cclimber_column_scroll[31 - offs];
-					if (flip_screen_y) scroll[offs] = -scroll[offs];
+					if (flip_screen_y != 0) scroll[offs] = -scroll[offs];
 				}
 			}
 			else
@@ -424,7 +424,7 @@ public class cclimber
 				for (offs = 0;offs < 32;offs++)
 				{
 					scroll[offs] = -cclimber_column_scroll[offs];
-					if (flip_screen_y) scroll[offs] = -scroll[offs];
+					if (flip_screen_y != 0) scroll[offs] = -scroll[offs];
 				}
 			}
 	
@@ -448,12 +448,12 @@ public class cclimber
 			sy = 240 - spriteram[offs + 2];
 			flipx = spriteram[offs] & 0x40;
 			flipy = spriteram[offs] & 0x80;
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;
@@ -501,7 +501,7 @@ public class cclimber
 				flipx = colorram[offs] & 0x40;
 				flipy = colorram[offs] & 0x80;
 				/* vertical flipping flips two adjacent characters */
-				if (flipy) sy ^= 1;
+				if (flipy != 0) sy ^= 1;
 	
 				color = (colorram[offs] & 0x0f) + 0x10 * palettebank;
 				if (sx >= 24 && sidepanel_enabled)
@@ -509,12 +509,12 @@ public class cclimber
 				    color += 32;
 				}
 	
-				if (flip_screen_x)
+				if (flip_screen_x != 0)
 				{
 					sx = 31 - sx;
 					flipx = !flipx;
 				}
-				if (flip_screen_y)
+				if (flip_screen_y != 0)
 				{
 					sy = 31 - sy;
 					flipy = !flipy;
@@ -535,7 +535,7 @@ public class cclimber
 			int scroll[32];
 	
 	
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				for (offs = 0;offs < 32;offs++)
 					scroll[offs] = cclimber_column_scroll[31 - offs];
@@ -566,12 +566,12 @@ public class cclimber
 			sy = 240 - spriteram[offs + 2];
 			flipx = spriteram[offs] & 0x40;
 			flipy = spriteram[offs] & 0x80;
-			if (flip_screen_x)
+			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
 				flipx = !flipx;
 			}
-			if (flip_screen_y)
+			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
 				flipy = !flipy;

@@ -217,7 +217,7 @@ public class hd6309
 	#define CHANGE_PC change_pc16(PCD)
 	#if 0
 	#define CHANGE_PC	{			\
-		if( hd6309_slapstic )		\
+		if (hd6309_slapstic != 0)		\
 			cpu_setOPbase16(PCD);	\
 		else						\
 			change_pc16(PCD);		\
@@ -338,7 +338,7 @@ public class hd6309
 	#define BRANCH(f) { 					\
 		UINT8 t;							\
 		IMMBYTE(t); 						\
-		if( f ) 							\
+		if (f != 0) 							\
 		{									\
 			PC += SIGNED(t);				\
 			CHANGE_PC;						\
@@ -348,7 +348,7 @@ public class hd6309
 	#define LBRANCH(f) {					\
 		PAIR t; 							\
 		IMMWORD(t); 						\
-		if( f ) 							\
+		if (f != 0) 							\
 		{									\
 			if( !(MD & MD_EM) )				\
 				hd6309_ICount -= 1;			\
@@ -425,7 +425,7 @@ public class hd6309
 			}
 			else
 			{
-				if ( MD & MD_FM )
+				if ((MD & MD_FM) != 0)
 				{
 					CC |= CC_E; 				/* save entire state */
 					PUSHWORD(pPC);
@@ -433,7 +433,7 @@ public class hd6309
 					PUSHWORD(pY);
 					PUSHWORD(pX);
 					PUSHBYTE(DP);
-					if ( MD & MD_EM )
+					if ((MD & MD_EM) != 0)
 					{
 						PUSHBYTE(F);
 						PUSHBYTE(E);
@@ -475,7 +475,7 @@ public class hd6309
 				PUSHWORD(pY);
 				PUSHWORD(pX);
 				PUSHBYTE(DP);
-				if ( MD & MD_EM )
+				if ((MD & MD_EM) != 0)
 				{
 					PUSHBYTE(F);
 					PUSHBYTE(E);
@@ -498,7 +498,7 @@ public class hd6309
 	 ****************************************************************************/
 	unsigned hd6309_get_context(void *dst)
 	{
-		if( dst )
+		if (dst != 0)
 			*(hd6309_Regs*)dst = hd6309;
 		return sizeof(hd6309_Regs);
 	}
@@ -508,7 +508,7 @@ public class hd6309
 	 ****************************************************************************/
 	void hd6309_set_context(void *src)
 	{
-		if( src )
+		if (src != 0)
 			hd6309 = *(hd6309_Regs*)src;
 		CHANGE_PC;
 	
@@ -669,7 +669,7 @@ public class hd6309
 				PUSHWORD(pY);
 				PUSHWORD(pX);
 				PUSHBYTE(DP);
-				if ( MD & MD_EM )
+				if ((MD & MD_EM) != 0)
 				{
 					PUSHBYTE(F);
 					PUSHBYTE(E);

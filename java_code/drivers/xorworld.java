@@ -49,12 +49,12 @@ public class xorworld
 	****************************************************************/
 	static NVRAM_HANDLER( xorworld )
 	{
-		if (read_or_write){
+		if (read_or_write != 0){
 			EEPROM_save(file);
 		} else {
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file) {
+			if (file != 0) {
 				EEPROM_load(file);
 			}
 		}

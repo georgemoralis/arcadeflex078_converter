@@ -191,7 +191,7 @@ public class _8255ppi
 				break;
 	
 			case 3: /* Control word */
-				if (data & 0x80)
+				if ((data & 0x80) != 0)
 				{
 					set_mode(which, data & 0x7f, 1);
 				}
@@ -202,7 +202,7 @@ public class _8255ppi
 	
 					bit = (data >> 1) & 0x07;
 	
-					if (data & 1)
+					if ((data & 1) != 0)
 						chip->latch[2] |= (1<<bit);		/* set bit */
 					else
 						chip->latch[2] &= ~(1<<bit);	/* reset bit */
@@ -291,13 +291,13 @@ public class _8255ppi
 		if (chip->groupA_mode == 0)
 		{
 			/* Port A direction */
-			if (data & 0x10)
+			if ((data & 0x10) != 0)
 				chip->in_mask[0] = 0xff, chip->out_mask[0] = 0x00;	/* input */
 			else
 				chip->in_mask[0] = 0x00, chip->out_mask[0] = 0xff; 	/* output */
 	
 			/* Port C upper direction */
-			if (data & 0x08)
+			if ((data & 0x08) != 0)
 				chip->in_mask[2] |= 0xf0, chip->out_mask[2] &= ~0xf0;	/* input */
 			else
 				chip->in_mask[2] &= ~0xf0, chip->out_mask[2] |= 0xf0;	/* output */
@@ -316,13 +316,13 @@ public class _8255ppi
 		/* Group B mode 0 */
 		{
 			/* Port B direction */
-			if (data & 0x02)
+			if ((data & 0x02) != 0)
 				chip->in_mask[1] = 0xff, chip->out_mask[1] = 0x00;	/* input */
 			else
 				chip->in_mask[1] = 0x00, chip->out_mask[1] = 0xff; 	/* output */
 	
 			/* Port C lower direction */
-			if (data & 0x01)
+			if ((data & 0x01) != 0)
 				chip->in_mask[2] |= 0x0f, chip->out_mask[2] &= ~0x0f;	/* input */
 			else
 				chip->in_mask[2] &= ~0x0f, chip->out_mask[2] |= 0x0f;	/* output */
@@ -331,7 +331,7 @@ public class _8255ppi
 		/* KT: 25-Dec-99 - 8255 resets latches when mode set */
 		chip->latch[0] = chip->latch[1] = chip->latch[2] = 0;
 	
-		if (call_handlers)
+		if (call_handlers != 0)
 		{
 			if (chip->portAwrite) PPI8255_PORT_A_WRITE();
 			if (chip->portBwrite) PPI8255_PORT_B_WRITE();

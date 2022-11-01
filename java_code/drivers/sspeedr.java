@@ -31,7 +31,7 @@ public class sspeedr
 			int g = (i & 2) ? 0xb0 : 0x20;
 			int b = (i & 4) ? 0xb0 : 0x20;
 	
-			if (i & 8)
+			if ((i & 8) != 0)
 			{
 				r += 0x4f;
 				g += 0x4f;

@@ -117,8 +117,8 @@ public class metro
 	
 		val = (row&0x3f)*(256*2) + (col*2);
 	
-		if (row&0x40) val+=1;
-		if (row&0x80) val+=256;
+		if ((row & 0x40) != 0) val+=1;
+		if ((row & 0x80) != 0) val+=256;
 	
 		return val;
 	}
@@ -212,7 +212,7 @@ public class metro
 		tile			=	(metro_tiletable[table_index + 0] << 16 ) +
 							 metro_tiletable[table_index + 1];
 	
-		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
@@ -250,7 +250,7 @@ public class metro
 		tile			=	(metro_tiletable[table_index + 0] << 16 ) +
 							 metro_tiletable[table_index + 1];
 	
-		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
@@ -293,7 +293,7 @@ public class metro
 		tile			=	(metro_tiletable[table_index + 0] << 16 ) +
 							 metro_tiletable[table_index + 1];
 	
-		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
@@ -656,7 +656,7 @@ public class metro
 	
 			gfxdata		=	base_gfx + (8*8*4/8) * (((attr & 0x000f) << 16) + code);
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				flipx = !flipx;		x = max_x - x - width;
 				flipy = !flipy;		y = max_y - y - height;
@@ -857,7 +857,7 @@ public class metro
 		data16_t screenctrl = *metro_screenctrl;
 	
 		dirtyindex = malloc(metro_tiletable_size/4);
-		if (dirtyindex)
+		if (dirtyindex != 0)
 		{
 			int dirty = 0;
 	
@@ -875,7 +875,7 @@ public class metro
 			}
 			memcpy(metro_tiletable_old,metro_tiletable,metro_tiletable_size);
 	
-			if (dirty)
+			if (dirty != 0)
 			{
 				dirty_tiles(0,metro_vram_0,dirtyindex);
 				dirty_tiles(1,metro_vram_1,dirtyindex);
@@ -901,13 +901,13 @@ public class metro
 			---- ---- ---4 32--
 			---- ---- ---- --1-		? Blank Screen
 			---- ---- ---- ---0		Flip  Screen	*/
-		if (screenctrl & 2)	return;
+		if ((screenctrl & 2) != 0)	return;
 		flip_screen_set(screenctrl & 1);
 	
 		/* If the game supports 16x16 tiles, make sure that the
 		   16x16 and 8x8 tilemaps of a given layer are not simultaneously
 		   enabled! */
-		if (support_16x16)
+		if (support_16x16 != 0)
 		{
 			int layer;
 	
@@ -938,7 +938,7 @@ public class metro
 					*metro_screenctrl);					}
 	#endif
 	
-		if (has_zoom) K053936_0_zoom_draw(bitmap,cliprect,metro_K053936_tilemap,0,0);
+		if (has_zoom != 0) K053936_0_zoom_draw(bitmap,cliprect,metro_K053936_tilemap,0,0);
 	
 		/* Sprites priority wrt layers: 3..0 (low..high) */
 		sprites_pri	=	(metro_videoregs[0x02/2] & 0x0300) >> 8;

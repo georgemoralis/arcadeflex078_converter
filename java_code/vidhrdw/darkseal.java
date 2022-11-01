@@ -203,7 +203,7 @@ public class darkseal
 			if (x>256) continue; /* Speedup */
 	
 			sprite &= ~multi;
-			if (fy)
+			if (fy != 0)
 				inc = -1;
 			else
 			{
@@ -211,12 +211,12 @@ public class darkseal
 				inc = 1;
 			}
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				y=240-y;
 				x=240-x;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;

@@ -91,7 +91,7 @@ public class ashnojoe
 	
 	static WRITE16_HANDLER( ashnojoe_soundlatch_w )
 	{
-		if(ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			soundlatch_w(0,data & 0xff);
 			//needed?

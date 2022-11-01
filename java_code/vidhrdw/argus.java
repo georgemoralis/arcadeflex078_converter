@@ -435,7 +435,7 @@ public class argus
 		g = (g - ig > 0) ? g - ig : 0;
 		b = (b - ib > 0) ? b - ib : 0;
 	
-		if (argus_bg_status & 2)			/* Gray / purple scale */
+		if ((argus_bg_status & 2) != 0)			/* Gray / purple scale */
 		{
 			r = (r + g + b) / 3;
 			g = b = r;
@@ -611,7 +611,7 @@ public class argus
 			tilemap_set_enable(bg1_tilemap, argus_bg_status & 1);
 	
 			/* Gray / purple scale */
-			if (argus_bg_status & 2)
+			if ((argus_bg_status & 2) != 0)
 			{
 				int offs;
 	
@@ -634,7 +634,7 @@ public class argus
 			tilemap_set_enable(bg1_tilemap, argus_bg_status & 1);
 	
 			/* Gray / purple scale */
-			if (argus_bg_status & 2)
+			if ((argus_bg_status & 2) != 0)
 			{
 				int offs;
 	
@@ -718,7 +718,7 @@ public class argus
 		{
 			if (offset >= 0x0000 && offset <= 0x00ff)				/* sprite color */
 			{
-				if (offset & 0x80)
+				if ((offset & 0x80) != 0)
 					offset -= 0x80;
 	
 				argus_change_palette( offset,
@@ -999,7 +999,7 @@ public class argus
 				sx = spriteram[offs + 1];
 				sy = spriteram[offs];
 	
-				if (argus_flipscreen)
+				if (argus_flipscreen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -1022,7 +1022,7 @@ public class argus
 				color	 = spriteram[offs+4] & 0x07;
 				pri      = (spriteram[offs+4] & 0x08) >> 3;
 	
-				if (argus_flipscreen)
+				if (argus_flipscreen != 0)
 				{
 					flipx ^= 0x10;
 					flipy ^= 0x20;
@@ -1055,7 +1055,7 @@ public class argus
 				sx = spriteram[offs + 1];
 				sy = spriteram[offs];
 	
-				if (argus_flipscreen)
+				if (argus_flipscreen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -1077,7 +1077,7 @@ public class argus
 				flipy	 = spriteram[offs+2] & 0x20;
 				color	 = spriteram[offs+4] & 0x0f;
 	
-				if (argus_flipscreen)
+				if (argus_flipscreen != 0)
 				{
 					flipx ^= 0x10;
 					flipy ^= 0x20;

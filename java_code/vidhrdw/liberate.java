@@ -58,13 +58,13 @@ public class liberate
 		int tile,bank;
 	
 		/* Convert tile index of 512x512 to paged format */
-		if (tile_index&0x100) {
-			if (tile_index&0x200)
+		if ((tile_index & 0x100) != 0) {
+			if ((tile_index & 0x200) != 0)
 				tile_index=(tile_index&0xff)+(deco16_io_ram[5]<<8); /* Bottom right */
 			else
 				tile_index=(tile_index&0xff)+(deco16_io_ram[4]<<8); /* Bottom left */
 		} else {
-				if (tile_index&0x200)
+				if ((tile_index & 0x200) != 0)
 				tile_index=(tile_index&0xff)+(deco16_io_ram[3]<<8); /* Top right */
 			else
 				tile_index=(tile_index&0xff)+(deco16_io_ram[2]<<8); /* Top left */
@@ -82,9 +82,9 @@ public class liberate
 		tile=videoram[tile_index+0x400]+((videoram[tile_index]&0x7)<<8);
 		color=(videoram[tile_index]&0x70)>>4;
 	
-	//if (tile&0x300) tile-=0x000;
-	//else if(tile&0x200) tile-=0x100;
-	//else if (tile&0x100) tile-=0x100;
+	//if ((tile & 0x300) != 0) tile-=0x000;
+	//else if ((tile & 0x200) != 0) tile-=0x100;
+	//else if ((tile & 0x100) != 0) tile-=0x100;
 	//else tile+=0x200;
 	
 		SET_TILE_INFO(0,tile,color,0)
@@ -229,16 +229,16 @@ public class liberate
 	
 			fx = spriteram[offs+0] & 0x04;
 			fy = spriteram[offs+0] & 0x08;//2;//8;
-	//if (fy) fy=0; else fy=1;
+	//if (fy != 0) fy=0; else fy=1;
 			multi = spriteram[offs+0] & 0x10;
 	
 	
-			if (multi) sy-=16;
+			if (multi != 0) sy-=16;
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx) fx=0; else fx=1;
+				if (fx != 0) fx=0; else fx=1;
 				sy2=sy-16;
 			}
 			else sy2=sy+16;
@@ -249,7 +249,7 @@ public class liberate
 					fx,fy,
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
-	        if (multi)
+	        if (multi != 0)
 	    		drawgfx(bitmap,Machine->gfx[1],
 					code+1,
 					color,
@@ -273,7 +273,7 @@ public class liberate
 			multi = spriteram[offs+0] & 0x10;
 	
 			sy=spriteram[offs+2];
-			if (multi) sy+=16;
+			if (multi != 0) sy+=16;
 			sx = (240 - spriteram[offs+3]);
 	//		sy = (240-spriteram[offs+2]);//-16;
 			sy = 240-sy;
@@ -284,14 +284,14 @@ public class liberate
 			fy = spriteram[offs+0] & 0x04;
 			multi = 0;// spriteram[offs+0] & 0x10;
 	
-	//		if (multi) sy-=16;
+	//		if (multi != 0) sy-=16;
 			if (fy && multi) { code2=code; code++; }
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				sy2=sy-16;
 			}
 			else {
@@ -304,7 +304,7 @@ public class liberate
 					fx,fy,
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
-	        if (multi)
+	        if (multi != 0)
 	    		drawgfx(bitmap,Machine->gfx[1],
 					code2,
 					color,
@@ -329,7 +329,7 @@ public class liberate
 			multi = spriteram[offs+0] & 0x10;
 	
 			sy=spriteram[offs+2];
-			if (multi) sy+=16;
+			if (multi != 0) sy+=16;
 			sx = (240 - spriteram[offs+3]);
 	//		sy = (240-spriteram[offs+2]);//-16;
 			sy = 240-sy;
@@ -340,14 +340,14 @@ public class liberate
 			fy = spriteram[offs+0] & 0x02;
 			multi = spriteram[offs+0] & 0x10;
 	
-	//		if (multi) sy-=16;
+	//		if (multi != 0) sy-=16;
 			if (fy && multi) { code2=code; code++; }
 	
-			if (flip_screen) {
+			if (flip_screen != 0) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx) fx=0; else fx=1;
-				if (fy) fy=0; else fy=1;
+				if (fx != 0) fx=0; else fx=1;
+				if (fy != 0) fy=0; else fy=1;
 				sy2=sy-16;
 			}
 			else {
@@ -360,7 +360,7 @@ public class liberate
 					fx,fy,
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
-	        if (multi)
+	        if (multi != 0)
 	    		drawgfx(bitmap,Machine->gfx[1],
 					code2,
 					color,
@@ -377,7 +377,7 @@ public class liberate
 		tilemap_set_scrolly(background_tilemap,0,deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
-		if (background_disable)
+		if (background_disable != 0)
 			fillbitmap(bitmap,Machine->pens[32],&Machine->visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,0,0);
@@ -415,7 +415,7 @@ public class liberate
 		tilemap_set_scrolly(background_tilemap,0, deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
-		if (background_disable)
+		if (background_disable != 0)
 			fillbitmap(bitmap,Machine->pens[32],&Machine->visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,TILEMAP_BACK,0);
@@ -432,7 +432,7 @@ public class liberate
 		tilemap_set_scrolly(background_tilemap,0, deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
-		if (background_disable)
+		if (background_disable != 0)
 			fillbitmap(bitmap,Machine->pens[32],&Machine->visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,0,0);

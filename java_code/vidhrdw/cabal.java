@@ -65,7 +65,7 @@ public class cabal
 	
 	WRITE16_HANDLER( cabal_flipscreen_w )
 	{
-		if (ACCESSING_LSB)
+		if (ACCESSING_LSB != 0)
 		{
 			int flip = (data & 0x20) ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0;
 			tilemap_set_flip(background_layer,flip);
@@ -123,7 +123,7 @@ public class cabal
 			data1 = spriteram16[offs+1];
 			data2 = spriteram16[offs+2];
 	
-			if( data0 & 0x100 )
+			if ((data0 & 0x100) != 0)
 			{
 				int tile_number = data1 & 0xfff;
 				int color   = ( data2 & 0x7800 ) >> 11;
@@ -134,7 +134,7 @@ public class cabal
 	
 				if ( sx>256 )   sx -= 512;
 	
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

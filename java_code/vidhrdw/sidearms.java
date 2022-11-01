@@ -63,7 +63,7 @@ public class sidearms
 		}
 	
 		/* bit 4 resets the sound CPU */
-		if (data & 0x10)
+		if ((data & 0x10) != 0)
 		{
 			cpuint_reset_cpu(1);
 		}
@@ -231,7 +231,7 @@ public class sidearms
 			code = buffered_spriteram[offs] + ((attr << 3) & 0x700);
 			x = buffered_spriteram[offs + 3] + ((attr << 4) & 0x100);
 	
-			if (flipon)
+			if (flipon != 0)
 			{
 				x = (62 * 8) - x;
 				y = (30 * 8) - y;
@@ -389,13 +389,13 @@ public class sidearms
 		tilemap_set_scrollx(bg_tilemap, 0, sidearms_bg_scrollx[0] + (sidearms_bg_scrollx[1] << 8 & 0xf00));
 		tilemap_set_scrolly(bg_tilemap, 0, sidearms_bg_scrolly[0] + (sidearms_bg_scrolly[1] << 8 & 0xf00));
 	
-		if (bgon)
+		if (bgon != 0)
 			tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	
-		if (objon)
+		if (objon != 0)
 			sidearms_draw_sprites(bitmap);
 	
-		if (charon)
+		if (charon != 0)
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 	} };
 	

@@ -108,7 +108,7 @@ public class solomon
 			int sx = spriteram[offs + 3];
 			int sy = 241 - spriteram[offs + 2];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 242 - sy;

@@ -88,6 +88,6 @@ public class pbillian
 	{
 		tilemap_draw(bitmap,cliprect,pb_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-		if(is_pbillian)usrintf_showmessage	("Power %d%%", ((input_port_3_r(0)&0x3f)*100)/0x3f);
+		if (is_pbillian != 0)usrintf_showmessage	("Power %d%%", ((input_port_3_r(0)&0x3f)*100)/0x3f);
 	}
 }

@@ -331,7 +331,7 @@ public class circus
 			{
 				eax = *src_pixptr;
 				src_pixptr ++;
-				if (eax)
+				if (eax != 0)
 				{
 					eax = pal_ptr[eax];
 					collision |= dst_lineptr[dst_pixoffs];

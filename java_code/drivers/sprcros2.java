@@ -292,19 +292,19 @@ public class sprcros2
 	{
 		if (cpu_getiloops() == 0)
 		{
-			if(sprcros2_m_port7&0x01)
+			if ((sprcros2_m_port7 & 0x01) != 0)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else
 		{
-			if(sprcros2_m_port7&0x08)
+			if ((sprcros2_m_port7 & 0x08) != 0)
 				cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 	} };
 	
 	public static InterruptHandlerPtr sprcros2_s_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if(sprcros2_s_port3&0x01)
+		if ((sprcros2_s_port3 & 0x01) != 0)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

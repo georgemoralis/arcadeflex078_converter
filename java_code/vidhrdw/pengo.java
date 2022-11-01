@@ -243,7 +243,7 @@ public class pengo
 					sy = my - 2;
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -260,7 +260,7 @@ public class pengo
 	
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
 	
-		if( spriteram_size )
+		if (spriteram_size != 0)
 		{
 			/* Draw the sprites. Note that it is important to draw them exactly in this */
 			/* order, to have the correct priorities. */
@@ -318,7 +318,7 @@ public class pengo
 	
 	public static WriteHandlerPtr vanvan_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data & 1) palette_set_color(0,0xaa,0xaa,0xaa);
+		if ((data & 1) != 0) palette_set_color(0,0xaa,0xaa,0xaa);
 		else          palette_set_color(0,0x00,0x00,0x00);
 	} };
 	
@@ -358,7 +358,7 @@ public class pengo
 					sy = my - 2;
 				}
 	
-				if (flipscreen)
+				if (flipscreen != 0)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;

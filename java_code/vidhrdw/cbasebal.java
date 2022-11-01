@@ -178,7 +178,7 @@ public class cbasebal
 			code += (attr & 0xe0) << 3;
 			code += spritebank * 0x800;
 	
-			if (flipscreen)
+			if (flipscreen != 0)
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
@@ -196,15 +196,15 @@ public class cbasebal
 	
 	public static VideoUpdateHandlerPtr video_update_cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (bg_on)
+		if (bg_on != 0)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		else
 			fillbitmap(bitmap,Machine->pens[768],cliprect);
 	
-		if (obj_on)
+		if (obj_on != 0)
 			draw_sprites(bitmap,cliprect);
 	
-		if (text_on)
+		if (text_on != 0)
 			tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 }

@@ -218,7 +218,7 @@ public class ninjaw
 			taitosound_comm_w (0, data & 0xff);
 	
 	#ifdef MAME_DEBUG
-		if (data & 0xff00)
+		if ((data & 0xff00) != 0)
 			usrintf_showmessage("ninjaw_sound_w to high byte: %04x",data);
 	#endif
 	}

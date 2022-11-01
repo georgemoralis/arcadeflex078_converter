@@ -556,10 +556,10 @@ public class ssv
 				gfx	=	((mode & 0x0100) ? 0 : 1);
 	
 				/* Force 16x16 tiles ? */
-				if (flipx)	{ xstart = 1-1;  xend = -1; xinc = -1; }
+				if (flipx != 0)	{ xstart = 1-1;  xend = -1; xinc = -1; }
 				else		{ xstart = 0;    xend = 1;  xinc = +1; }
 	
-				if (flipy)	{ ystart = 2-1;  yend = -1; yinc = -1; }
+				if (flipy != 0)	{ ystart = 2-1;  yend = -1; yinc = -1; }
 				else		{ ystart = 0;    yend = 2;  yinc = +1; }
 	
 				transparency = shadow ? TRANSPARENCY_ALPHA : TRANSPARENCY_PEN;
@@ -617,7 +617,7 @@ public class ssv
 			yoffs	=		s1[ 3 ];
 	
 			/* Last sprite */
-			if (sprite & 0x8000) break;
+			if ((sprite & 0x8000) != 0) break;
 	
 			/* Single-sprite address */
 			s2		=		&spriteram16[ (sprite & 0x7fff) * 4 ];
@@ -706,10 +706,10 @@ public class ssv
 					xnum = 1 << (xnum >> 10);	// 1, 2, 4 or 8 tiles
 					ynum = 1 << (ynum >> 10);	// 1, 2, 4 tiles (8 means tilemap sprite?)
 	
-					if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+					if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 					else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-					if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+					if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 					else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 					/* Apply global offsets */

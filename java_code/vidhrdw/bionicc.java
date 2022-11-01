@@ -176,7 +176,7 @@ public class bionicc
 	
 	WRITE16_HANDLER( bionicc_gfxctrl_w )
 	{
-		if (ACCESSING_MSB)
+		if (ACCESSING_MSB != 0)
 		{
 			flip_screen_set(data & 0x0100);
 	
@@ -212,7 +212,7 @@ public class bionicc
 				int sx = (INT16)buffered_spriteram16[offs+3];	/* signed */
 				int sy = (INT16)buffered_spriteram16[offs+2];	/* signed */
 				if(sy>512-16) sy-=512;
-				if (flip_screen)
+				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;

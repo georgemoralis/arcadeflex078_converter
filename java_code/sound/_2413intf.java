@@ -92,7 +92,7 @@ public class _2413intf
 		num = intf->num;
 	
 		tst = YM3812_sh_start (msound);
-		if (tst)
+		if (tst != 0)
 			return 1;
 	
 		for (i=0;i<num;i++)
@@ -158,13 +158,13 @@ public class _2413intf
 	public static WriteHandlerPtr YM2413_data_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (2, 1, data); } }; /* 3rd chip */
 	public static WriteHandlerPtr YM2413_data_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (3, 1, data); } }; /* 4th chip */
 	
-	WRITE16_HANDLER( YM2413_register_port_0_lsb_w ) { if (ACCESSING_LSB) YM2413_register_port_0_w(offset,data & 0xff); }
-	WRITE16_HANDLER( YM2413_register_port_1_lsb_w ) { if (ACCESSING_LSB) YM2413_register_port_1_w(offset,data & 0xff); }
-	WRITE16_HANDLER( YM2413_register_port_2_lsb_w ) { if (ACCESSING_LSB) YM2413_register_port_2_w(offset,data & 0xff); }
-	WRITE16_HANDLER( YM2413_register_port_3_lsb_w ) { if (ACCESSING_LSB) YM2413_register_port_3_w(offset,data & 0xff); }
-	WRITE16_HANDLER( YM2413_data_port_0_lsb_w ) { if (ACCESSING_LSB) YM2413_data_port_0_w(offset,data & 0xff); }
-	WRITE16_HANDLER( YM2413_data_port_1_lsb_w ) { if (ACCESSING_LSB) YM2413_data_port_1_w(offset,data & 0xff); }
-	WRITE16_HANDLER( YM2413_data_port_2_lsb_w ) { if (ACCESSING_LSB) YM2413_data_port_2_w(offset,data & 0xff); }
-	WRITE16_HANDLER( YM2413_data_port_3_lsb_w ) { if (ACCESSING_LSB) YM2413_data_port_3_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_register_port_0_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_register_port_0_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_register_port_1_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_register_port_1_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_register_port_2_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_register_port_2_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_register_port_3_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_register_port_3_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_data_port_0_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_data_port_0_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_data_port_1_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_data_port_1_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_data_port_2_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_data_port_2_w(offset,data & 0xff); }
+	WRITE16_HANDLER( YM2413_data_port_3_lsb_w ) { if (ACCESSING_LSB != 0) YM2413_data_port_3_w(offset,data & 0xff); }
 	
 }

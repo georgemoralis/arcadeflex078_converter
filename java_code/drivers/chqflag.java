@@ -50,10 +50,10 @@ public class chqflag
 		cpu_setbank(4,&RAM[bankaddress]);
 	
 		/* bit 5 = memory bank select */
-		if (data & 0x20){
+		if ((data & 0x20) != 0){
 			memory_set_bankhandler_r (2, 0, paletteram_r);							/* palette */
 			memory_set_bankhandler_w (2, 0, paletteram_xBBBBBGGGGGRRRRR_swap_w);	/* palette */
-			if (K051316_readroms){
+			if (K051316_readroms != 0){
 				memory_set_bankhandler_r (1, 0, K051316_rom_0_r);	/* 051316 #1 (ROM test) */
 				memory_set_bankhandler_w (1, 0, K051316_0_w);		/* 051316 #1 */
 			}
@@ -93,7 +93,7 @@ public class chqflag
 		/* Bits 3 and 7 are set in night stages, where the background should get darker and */
 		/* the headlight (which have the shadow bit set) become highlights */
 		/* Maybe one of the bits inverts the SHAD line while the other darkens the background. */
-		if (data & 0x08)
+		if ((data & 0x08) != 0)
 			palette_set_shadow_factor(1/PALETTE_DEFAULT_SHADOW_FACTOR);
 		else
 			palette_set_shadow_factor(PALETTE_DEFAULT_SHADOW_FACTOR);

@@ -271,7 +271,7 @@ public class generic
 		min_y = Machine->drv->default_visible_area.min_y;
 		max_y = Machine->drv->default_visible_area.max_y;
 	
-		if (flip_screen_x)
+		if (flip_screen_x != 0)
 		{
 			int temp;
 	
@@ -279,7 +279,7 @@ public class generic
 			min_x = Machine->drv->screen_width - max_x - 1;
 			max_x = temp;
 		}
-		if (flip_screen_y)
+		if (flip_screen_y != 0)
 		{
 			int temp;
 	
@@ -309,7 +309,7 @@ public class generic
 	
 	void flip_screen_x_set(int on)
 	{
-		if (on) on = ~0;
+		if (on != 0) on = ~0;
 		if (flip_screen_x != on)
 		{
 			set_vh_global_attribute(&flip_screen_x,on);
@@ -324,7 +324,7 @@ public class generic
 	
 	void flip_screen_y_set(int on)
 	{
-		if (on) on = ~0;
+		if (on != 0) on = ~0;
 		if (flip_screen_y != on)
 		{
 			set_vh_global_attribute(&flip_screen_y,on);
@@ -343,7 +343,7 @@ public class generic
 		if (!addr || *addr != data)
 		{
 			global_attribute_changed = 1;
-			if (addr)
+			if (addr != 0)
 				*addr = data;
 		}
 	}

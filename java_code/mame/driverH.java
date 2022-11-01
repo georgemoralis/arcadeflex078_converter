@@ -112,7 +112,7 @@ public class driverH
 	
 	#define MDRV_CPU_REPLACE(tag, type, clock)								\
 		cpu = machine_find_cpu(machine, tag);								\
-		if (cpu)															\
+		if (cpu != 0)															\
 		{																	\
 			cpu->cpu_type = (CPU_##type);									\
 			cpu->cpu_clock = (clock);										\
@@ -121,36 +121,36 @@ public class driverH
 	
 	/* CPU parameters */
 	#define MDRV_CPU_FLAGS(flags)											\
-		if (cpu)															\
+		if (cpu != 0)															\
 			cpu->cpu_flags = (flags);										\
 	
 	#define MDRV_CPU_CONFIG(config)											\
-		if (cpu)															\
+		if (cpu != 0)															\
 			cpu->reset_param = &(config);									\
 	
 	#define MDRV_CPU_MEMORY(readmem, writemem)								\
-		if (cpu)															\
+		if (cpu != 0)															\
 		{																	\
 			cpu->memory_read = (readmem);									\
 			cpu->memory_write = (writemem);									\
 		}																	\
 	
 	#define MDRV_CPU_PORTS(readport, writeport)								\
-		if (cpu)															\
+		if (cpu != 0)															\
 		{																	\
 			cpu->port_read = (readport);									\
 			cpu->port_write = (writeport);									\
 		}																	\
 	
 	#define MDRV_CPU_VBLANK_INT(func, rate)									\
-		if (cpu)															\
+		if (cpu != 0)															\
 		{																	\
 			cpu->vblank_interrupt = func;									\
 			cpu->vblank_interrupts_per_frame = (rate);						\
 		}																	\
 	
 	#define MDRV_CPU_PERIODIC_INT(func, rate)								\
-		if (cpu)															\
+		if (cpu != 0)															\
 		{																	\
 			cpu->timed_interrupt = func;									\
 			cpu->timed_interrupts_per_second = (rate);						\
@@ -242,7 +242,7 @@ public class driverH
 	#define MDRV_SOUND_REPLACE(tag, type, interface)						\
 		{																	\
 			struct MachineSound *sound = machine_find_sound(machine, tag);	\
-			if (sound)														\
+			if (sound != 0)														\
 			{																\
 				sound->sound_type = SOUND_##type;							\
 				sound->sound_interface = &(interface);						\

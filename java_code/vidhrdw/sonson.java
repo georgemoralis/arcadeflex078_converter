@@ -164,7 +164,7 @@ public class sonson
 			int sx = spriteram[offs + 3]; 
 			int sy = spriteram[offs + 0];
 	
-			if (flip_screen)
+			if (flip_screen != 0)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;

@@ -243,7 +243,7 @@ public class rc
 	      /* get complete rest of line */
 	      arg = strtok(NULL, "\r\n");
 	
-	      if (arg)
+	      if (arg != 0)
 	      {
 	      /* ignore white space */
 	      for (; (*arg == '\t' || *arg == ' '); arg++) {}
@@ -277,7 +277,7 @@ public class rc
 	      else if (!rc_set_option3(option, arg, priority))
 	         continue;
 	
-	      if (continue_on_errors)
+	      if (continue_on_errors != 0)
 	         fprintf(stderr, "   ignoring line\n");
 	      else
 	         return -1;
@@ -344,7 +344,7 @@ public class rc
 	      else if (!rc_set_option3(option, arg, priority))
 	         continue;
 	
-	      if (continue_on_errors)
+	      if (continue_on_errors != 0)
 	         fprintf(stderr, "   ignoring line\n");
 	      else
 	         return -1;
@@ -356,7 +356,7 @@ public class rc
 	{
 		int i;
 	
-		if (description)
+		if (description != 0)
 			mame_fprintf(f, "### %s ###\n", description);
 	
 		for(i=0; option[i].type; i++)
@@ -400,7 +400,7 @@ public class rc
 					break;
 			}
 		}
-		if (description)
+		if (description != 0)
 			mame_fprintf(f, "\n");
 		return 0;
 	}
@@ -416,7 +416,7 @@ public class rc
 	{
 	   int i;
 	
-	   if (description)
+	   if (description != 0)
 	      fprintf(f, "### %s ###\n", description);
 	
 	   for(i=0; option[i].type; i++)
@@ -456,7 +456,7 @@ public class rc
 	            break;
 	      }
 	   }
-	   if (description)
+	   if (description != 0)
 	      fprintf(f, "\n");
 	   return 0;
 	}
