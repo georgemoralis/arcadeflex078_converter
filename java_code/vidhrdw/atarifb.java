@@ -56,7 +56,7 @@ public class atarifb
 		if (video_start_generic() != 0)
 			return 1;
 	
-		memset(dirtybuffer, 1, videoram_size);
+		memset(dirtybuffer, 1, videoram_size[0]);
 	
 		return 0;
 	} };
@@ -75,7 +75,7 @@ public class atarifb
 		int sprite_bank;
 	
 		if (get_vh_global_attribute_changed() != 0)
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 	
 		/* Soccer uses a different graphics set for sprites */
 		if (atarifb_game == 4)
@@ -135,7 +135,7 @@ public class atarifb
 	
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer[offs])
 			{

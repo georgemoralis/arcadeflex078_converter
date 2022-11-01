@@ -76,7 +76,7 @@ public class rollrace
 		fillbitmap(bitmap,Machine.pens[ra_bkgpen],&Machine.visible_area);
 	
 		/* draw road */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 			{
 				if(!(ra_bkgflip))
 					{
@@ -146,7 +146,7 @@ public class rollrace
 	
 	
 		/* draw foreground characters */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 	
 			sx =  offs % 32;

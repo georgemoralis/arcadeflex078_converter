@@ -313,6 +313,12 @@ public class convertMame {
                 }
                 case 'v':
                     int j = Convertor.inpos;
+                    if (type == VIDEO_UPDATE) {
+                        if (sUtil.getToken("videoram_size")) {
+                            sUtil.putString((new StringBuilder()).append("videoram_size[0]").toString());
+                            continue;
+                        }
+                    }
                     if (sUtil.getToken("videoram")) {
                         if (sUtil.parseChar() != '[') {
                             Convertor.inpos = j;

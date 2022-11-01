@@ -333,7 +333,7 @@ public class vigilant
 		int offs;
 	
 	
-		for (offs = 0; offs<videoram_size; offs+=2 )
+		for (offs = 0; offs<videoram_size[0]; offs+=2 )
 		{
 			int sy = 8 * ((offs/2) / 64);
 			int sx = 8 * ((offs/2) % 64);

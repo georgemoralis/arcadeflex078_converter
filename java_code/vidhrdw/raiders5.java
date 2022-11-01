@@ -92,7 +92,7 @@ public class raiders5
 		int x,y,px,py,fx,fy,sx,sy;
 		int b1,b2;
 	
-		int size = videoram_size/2;
+		int size = videoram_size[0]/2;
 	
 	/* draw BG layer */
 	

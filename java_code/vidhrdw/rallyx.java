@@ -165,9 +165,9 @@ public class rallyx
 		if (video_start_generic() != 0)
 			return 1;
 	
-		if ((dirtybuffer2 = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer2 = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer2,1,videoram_size);
+		memset(dirtybuffer2,1,videoram_size[0]);
 	
 		if ((tmpbitmap1 = auto_bitmap_alloc(32*8,32*8)) == 0)
 			return 1;
@@ -240,7 +240,7 @@ public class rallyx
 	
 	
 		/* draw the below sprite priority characters */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (rallyx_colorram2[offs] & 0x20)  continue;
 	
@@ -273,7 +273,7 @@ public class rallyx
 		}
 	
 		/* update radar */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer[offs])
 			{
@@ -324,7 +324,7 @@ public class rallyx
 	
 	
 		/* draw the above sprite priority characters */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			int flipx,flipy;
 	
@@ -404,7 +404,7 @@ public class rallyx
 		}
 	
 	
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer2[offs])
 			{
@@ -435,7 +435,7 @@ public class rallyx
 		}
 	
 		/* update radar */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer[offs])
 			{
@@ -519,7 +519,7 @@ public class rallyx
 	
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer2[offs])
 			{
@@ -551,7 +551,7 @@ public class rallyx
 		}
 	
 		/* update radar */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer[offs])
 			{
@@ -658,7 +658,7 @@ public class rallyx
 	
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer2[offs])
 			{
@@ -690,7 +690,7 @@ public class rallyx
 		}
 	
 		/* update radar */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer[offs])
 			{

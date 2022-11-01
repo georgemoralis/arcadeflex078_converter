@@ -86,7 +86,7 @@ public class astrof
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_astrof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((colorram = auto_malloc(videoram_size)) == 0)
+		if ((colorram = auto_malloc(videoram_size[0])) == 0)
 			return 1;
 		if (video_start_generic() != 0)
 			return 1;
@@ -245,7 +245,7 @@ public class astrof
 			int offs;
 	
 			/* redraw bitmap */
-			for (offs = 0; offs < videoram_size; offs++)
+			for (offs = 0; offs < videoram_size[0]; offs++)
 			{
 				common_videoram_w(offs, videoram.read(offs), colorram[offs]);
 			}

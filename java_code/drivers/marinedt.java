@@ -415,7 +415,7 @@ public class marinedt
 		int i=0,j=0;
 	#endif
 	fillbitmap(bitmap, Machine.pens[0], cliprect);
-		for (offs = 0;offs < videoram_size;offs++)
+		for (offs = 0;offs < videoram_size[0];offs++)
 		{
 			sx = offs%32;
 			sy = offs/32;

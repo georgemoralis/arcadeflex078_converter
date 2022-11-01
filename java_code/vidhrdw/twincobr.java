@@ -65,13 +65,13 @@ public class twincobr
 	public static VideoUpdateHandlerPtr video_update_toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* the video RAM is accessed via ports, it's not memory mapped */
-		videoram_size = 0x800;
+		videoram_size[0] = 0x800;
 		twincobr_bgvideoram_size = 0x2000;	/* banked two times 0x1000 */
 		twincobr_fgvideoram_size = 0x1000;
 	
-		if ((videoram16 = auto_malloc(videoram_size*2)) == 0)
+		if ((videoram16 = auto_malloc(videoram_size[0]*2)) == 0)
 			return 1;
-		memset(videoram16,0,videoram_size*2);
+		memset(videoram16,0,videoram_size[0]*2);
 	
 		if ((twincobr_fgvideoram16 = auto_malloc(twincobr_fgvideoram_size*2)) == 0)
 			return 1;
@@ -88,7 +88,7 @@ public class twincobr
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,2*Machine.drv.screen_height)) == 0)
 			return 1;
 	
-		state_save_register_UINT16("toaplan0", 0, "Text_Field", videoram16, videoram_size);
+		state_save_register_UINT16("toaplan0", 0, "Text_Field", videoram16, videoram_size[0]);
 		state_save_register_UINT16("toaplan0", 0, "FG_PlayField", twincobr_fgvideoram16, twincobr_fgvideoram_size);
 		state_save_register_UINT16("toaplan0", 0, "BG_PlayField", twincobr_bgvideoram16, twincobr_bgvideoram_size);
 		state_save_register_int("toaplan0", 0, "txoffs", &txoffs);

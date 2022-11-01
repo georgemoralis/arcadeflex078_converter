@@ -315,7 +315,7 @@ public class gomoku
 		fp=fopen("TILE_VID.DMP", "w+b");
 		if (fp != 0)
 		{
-			fwrite(&videoram.read(0), videoram_size, 1, fp);
+			fwrite(&videoram.read(0), videoram_size[0], 1, fp);
 			usrintf_showmessage("saved");
 			fclose(fp);
 		}

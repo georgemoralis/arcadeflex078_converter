@@ -215,7 +215,7 @@ public class pengo
 		
 		sect_rect(&spriteclip, cliprect);
 	
-		for (offs = videoram_size - 1; offs > 0; offs--)
+		for (offs = videoram_size[0] - 1; offs > 0; offs--)
 		{
 			if (dirtybuffer[offs])
 			{
@@ -330,7 +330,7 @@ public class pengo
 		
 		sect_rect(&spriteclip, cliprect);
 	
-		for (offs = videoram_size - 1; offs > 0; offs--)
+		for (offs = videoram_size[0] - 1; offs > 0; offs--)
 		{
 			if (dirtybuffer[offs])
 			{

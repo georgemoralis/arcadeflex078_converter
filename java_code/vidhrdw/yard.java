@@ -179,9 +179,9 @@ public class yard
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_yard  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size);
+		memset(dirtybuffer,1,videoram_size[0]);
 	
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width*2,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -244,13 +244,13 @@ public class yard
 	
 		if (get_vh_global_attribute_changed() != 0)
 		{
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	
 	
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = videoram_size-2;offs >= 0;offs -= 2)
+		for (offs = videoram_size[0]-2;offs >= 0;offs -= 2)
 		{
 			if (dirtybuffer[offs] || dirtybuffer[offs+1])
 			{

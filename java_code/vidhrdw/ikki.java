@@ -80,7 +80,7 @@ public class ikki
 	
 		/* draw bg layer */
 	
-		for (offs=0; offs<(videoram_size/2); offs++)
+		for (offs=0; offs<(videoram_size[0]/2); offs++)
 		{
 			int sx,sy;
 	
@@ -177,7 +177,7 @@ public class ikki
 	
 		/* mask sprites */
 	
-		for (offs=0; offs<(videoram_size/2); offs++)
+		for (offs=0; offs<(videoram_size[0]/2); offs++)
 		{
 			int sx,sy;
 	

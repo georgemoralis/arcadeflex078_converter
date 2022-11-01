@@ -207,13 +207,13 @@ public class taitosj
 		if (video_start_generic() != 0)
 			return 1;
 	
-		if ((dirtybuffer2 = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer2 = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer2,1,videoram_size);
+		memset(dirtybuffer2,1,videoram_size[0]);
 	
-		if ((dirtybuffer3 = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer3 = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer3,1,videoram_size);
+		memset(dirtybuffer3,1,videoram_size[0]);
 	
 		if ((sprite_plane_collbitmap1 = auto_bitmap_alloc(16,16)) == 0)
 			return 1;
@@ -786,9 +786,9 @@ public class taitosj
 		/* if characters changed, redraw everything */
 		if (alldirty != 0)
 		{
-			memset(dirtybuffer, 1,videoram_size);
-			memset(dirtybuffer2,1,videoram_size);
-			memset(dirtybuffer3,1,videoram_size);
+			memset(dirtybuffer, 1,videoram_size[0]);
+			memset(dirtybuffer2,1,videoram_size[0]);
+			memset(dirtybuffer3,1,videoram_size[0]);
 		}
 	
 		/* decode modified sprites */
@@ -809,7 +809,7 @@ public class taitosj
 	
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer[offs])
 			{

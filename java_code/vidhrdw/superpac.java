@@ -207,11 +207,11 @@ public class superpac
 		int offs;
 	
 		if (get_vh_global_attribute_changed() != 0)
-			memset(dirtybuffer, 1, videoram_size);
+			memset(dirtybuffer, 1, videoram_size[0]);
 	
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = videoram_size - 1; offs >= 0; offs--)
+		for (offs = videoram_size[0] - 1; offs >= 0; offs--)
 			if (dirtybuffer[offs])
 			{
 				int sx, sy, mx, my;
@@ -261,7 +261,7 @@ public class superpac
 		draw_sprites(bitmap, &Machine.visible_area, TRANSPARENCY_COLOR);
 	
 		/* Draw the high priority characters */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 			if (colorram[offs] & 0x40)
 			{
 				int sx, sy, mx, my;

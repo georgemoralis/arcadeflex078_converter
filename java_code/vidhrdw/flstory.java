@@ -161,7 +161,7 @@ public class flstory
 		flstory_draw_sprites(bitmap,cliprect,0x80);
 	
 	
-		for (offs = videoram_size - 2;offs >= 0;offs -= 2)
+		for (offs = videoram_size[0] - 2;offs >= 0;offs -= 2)
 		{
 			if (videoram.read(offs + 1)& 0x20)
 			{

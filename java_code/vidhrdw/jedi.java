@@ -39,10 +39,10 @@ public class jedi
 	public static VideoUpdateHandlerPtr video_update_jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate dirty buffer for the foreground characters */
-		fgdirty = dirtybuffer = auto_malloc(videoram_size);
+		fgdirty = dirtybuffer = auto_malloc(videoram_size[0]);
 		if (!fgdirty)
 			return 1;
-		memset(fgdirty, 1, videoram_size);
+		memset(fgdirty, 1, videoram_size[0]);
 	
 		/* allocate an 8bpp bitmap for the raw foreground characters */
 		fgbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
@@ -292,7 +292,7 @@ public class jedi
 		/* colors (see the palette test in service mode) */
 	
 	    /* update foreground bitmap as a raw bitmap*/
-	    for (offs = videoram_size - 1; offs >= 0; offs--)
+	    for (offs = videoram_size[0] - 1; offs >= 0; offs--)
 			if (fgdirty[offs])
 			{
 				int sx = offs % 64;

@@ -89,7 +89,7 @@ public class xxmissio
 		int chr,col;
 		int x,y,px,py,fx,fy,sx,sy;
 	
-		int size = videoram_size/2;
+		int size = videoram_size[0]/2;
 	
 		if (xxmissio_bg_redraw==1)
 			memset(dirtybuffer,1,size);

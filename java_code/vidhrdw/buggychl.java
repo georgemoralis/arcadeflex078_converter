@@ -34,7 +34,7 @@ public class buggychl
 	
 	public static VideoUpdateHandlerPtr video_update_buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		dirtybuffer = auto_malloc(videoram_size);
+		dirtybuffer = auto_malloc(videoram_size[0]);
 		dirtychar = auto_malloc(256 * sizeof(*dirtychar));
 		tmpbitmap1 = auto_bitmap_alloc(256,256);
 		tmpbitmap2 = auto_bitmap_alloc(256,256);
@@ -42,7 +42,7 @@ public class buggychl
 		if (!dirtybuffer || !dirtychar || !tmpbitmap1 || !tmpbitmap2)
 			return 1;
 	
-		memset(dirtybuffer,1,videoram_size);
+		memset(dirtybuffer,1,videoram_size[0]);
 		memset(dirtychar,0xff,256 * sizeof(*dirtychar));
 	
 		return 0;

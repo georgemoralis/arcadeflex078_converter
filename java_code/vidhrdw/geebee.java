@@ -131,9 +131,9 @@ public class geebee
 	#endif
 	
 		if (get_vh_global_attribute_changed() != 0)
-	        memset(dirtybuffer, 1, videoram_size);
+	        memset(dirtybuffer, 1, videoram_size[0]);
 	
-		for( offs = 0; offs < videoram_size; offs++ )
+		for( offs = 0; offs < videoram_size[0]; offs++ )
 		{
 			if( dirtybuffer[offs] )
 			{

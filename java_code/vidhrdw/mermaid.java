@@ -113,7 +113,7 @@ public class mermaid
 	
 		/* for every character in the backround RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = 0; offs < videoram_size; offs ++)
+		for (offs = 0; offs < videoram_size[0]; offs ++)
 		{
 			int code,sx,sy;
 	
@@ -158,7 +158,7 @@ public class mermaid
 	
 	
 		/* draw the front layer. They are characters, but draw them as sprites */
-		for (offs = 0; offs < videoram_size; offs ++)
+		for (offs = 0; offs < videoram_size[0]; offs ++)
 		{
 			int code,sx,sy,flipx,flipy;
 	

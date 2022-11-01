@@ -104,9 +104,9 @@ public class megazone
 		dirtybuffer = 0;
 		tmpbitmap = 0;
 	
-		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size);
+		memset(dirtybuffer,1,videoram_size[0]);
 	
 		if ((tmpbitmap = auto_bitmap_alloc(256,256)) == 0)
 			return 1;
@@ -129,7 +129,7 @@ public class megazone
 	
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
-		for (offs = videoram_size - 1;offs >= 0;offs--)
+		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
 			if (dirtybuffer[offs])
 			{

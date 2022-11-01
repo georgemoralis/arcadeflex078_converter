@@ -137,7 +137,7 @@ public class astinvad
 		{
 			int offset;
 	
-			for (offset = 0; offset < videoram_size; offset++)
+			for (offset = 0; offset < videoram_size[0]; offset++)
 			{
 				spaceint_refresh(offset);
 			}
@@ -159,7 +159,7 @@ public class astinvad
 			{
 				int offset;
 	
-				for (offset = 0; offset < videoram_size; offset++)
+				for (offset = 0; offset < videoram_size[0]; offset++)
 				{
 					astinvad_refresh(offset);
 				}

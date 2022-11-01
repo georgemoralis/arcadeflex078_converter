@@ -91,7 +91,7 @@ public class wiping
 	{
 		int offs;
 	
-		for (offs = videoram_size - 1; offs > 0; offs--)
+		for (offs = videoram_size[0] - 1; offs > 0; offs--)
 		{
 			if (dirtybuffer[offs])
 			{
@@ -163,7 +163,7 @@ public class wiping
 		}
 	
 		/* redraw high priority chars */
-		for (offs = videoram_size - 1; offs > 0; offs--)
+		for (offs = videoram_size[0] - 1; offs > 0; offs--)
 		{
 			if (colorram[offs] & 0x80)
 			{
