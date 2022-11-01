@@ -21,3 +21,4 @@ Misc
 lines that start with "extern" removed
 Removed forward functions ( WRITE_HANDLER , READ_HANDLER,VIDEO_START,VIDEO_UPDATE,VIDEO_EOF,PALETTE_INIT)
 enum's conversion (partial)
+if(something) will be become if(something!=0)
