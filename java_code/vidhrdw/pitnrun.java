@@ -39,7 +39,7 @@ public class pitnrun
 	static void get_tile_info1(int tile_index)
 	{
 		int code;
-		code = videoram[tile_index];
+		code = videoram.read(tile_index);
 		SET_TILE_INFO(
 			0,
 			code,
@@ -60,7 +60,7 @@ public class pitnrun
 	
 	public static WriteHandlerPtr pitnrun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_all_tiles_dirty( fg );
 	} };
 	
@@ -73,7 +73,7 @@ public class pitnrun
 	
 	public static ReadHandlerPtr pitnrun_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return videoram[offset];
+		return videoram.read(offset);
 	} };
 	
 	public static ReadHandlerPtr pitnrun_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)

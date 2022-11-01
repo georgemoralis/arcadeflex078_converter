@@ -31,8 +31,8 @@ public class tryout
 	{
 		int code, attr;
 	
-		code = videoram[tile_index];
-		attr = videoram[tile_index + 0x400];
+		code = videoram.read(tile_index);
+		attr = videoram.read(tile_index + 0x400);
 	
 		code |= ((attr & 0x03) << 8);
 	
@@ -43,9 +43,9 @@ public class tryout
 	
 	public static WriteHandlerPtr tryout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( videoram[offset] != data )
+		if( videoram.read(offset)!= data )
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset & 0x3ff);
 		}
 	} };

@@ -60,7 +60,7 @@ public class astinvad
 	
 		int col = memory_region(REGION_PROMS)[n];
 	
-		plot_byte(8 * (offset / 256), 255 - offset % 256, videoram[offset], col & 7);
+		plot_byte(8 * (offset / 256), 255 - offset % 256, videoram.read(offset), col & 7);
 	}
 	
 	
@@ -79,13 +79,13 @@ public class astinvad
 			col = memory_region(REGION_PROMS)[n] >> 4;
 		}
 	
-		plot_byte(8 * (offset % 32), offset / 32, videoram[offset], col & 7);
+		plot_byte(8 * (offset % 32), offset / 32, videoram.read(offset), col & 7);
 	}
 	
 	
 	public static WriteHandlerPtr spaceint_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		colorram[offset] = spaceint_color;
 	
 		spaceint_refresh(offset);
@@ -94,7 +94,7 @@ public class astinvad
 	
 	public static WriteHandlerPtr astinvad_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	
 		astinvad_refresh(offset);
 	} };

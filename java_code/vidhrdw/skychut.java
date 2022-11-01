@@ -107,7 +107,7 @@ public class skychut
 			sy = offs % 32;
 	
 			drawgfx(bitmap,Machine->gfx[0],
-					videoram[offs],
+					videoram.read(offs),
 					colorram[offs],
 					0,0,
 					8*sx,8*sy,
@@ -161,7 +161,7 @@ public class skychut
 				sy = offs % 32;
 	
 				iremm15_drawgfx(tmpbitmap,
-								videoram[offs],
+								videoram.read(offs),
 								Machine->pens[colorram[offs] & 7],
 								Machine->pens[7], // space beam not color 0
 								8*sx,8*sy);

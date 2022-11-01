@@ -77,16 +77,16 @@ public class mystston
 	
 	public static WriteHandlerPtr mystston_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset & 0x3ff);
 		}
 	} };
 	
 	public static WriteHandlerPtr mystston_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
 			mystston_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset & 0x1ff);
@@ -128,7 +128,7 @@ public class mystston
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] + ((videoram[tile_index + 0x400] & 0x07) << 8);
+		int code = videoram.read(tile_index)+ ((videoram.read(tile_index + 0x400)& 0x07) << 8);
 		int color = mystston_fgcolor;
 		
 		SET_TILE_INFO(0, code, color, 0)

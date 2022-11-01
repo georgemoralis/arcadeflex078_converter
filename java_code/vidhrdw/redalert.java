@@ -188,7 +188,7 @@ public class redalert
 			int stat_transparent;
 	
 	
-			charcode = videoram[offs];
+			charcode = videoram.read(offs);
 	
 			if (dirtybuffer[offs] || redalert_dirtycharacter[charcode] || redalert_dirtycharacter2[charcode])
 			{

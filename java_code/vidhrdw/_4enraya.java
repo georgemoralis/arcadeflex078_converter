@@ -19,14 +19,14 @@ public class _4enraya
 	
 	public static WriteHandlerPtr fenraya_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[(offset&0x3ff)*2]=data;
-		videoram[(offset&0x3ff)*2+1]=(offset&0xc00)>>10;
+		videoram.write((offset&0x3ff)*2,data);
+		videoram.write((offset&0x3ff)*2+1,(offset&0xc00)>>10);
 		tilemap_mark_tile_dirty(tilemap,offset&0x3ff);
 	} };
 	
 	static void get_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index*2]+(videoram[tile_index*2+1]<<8);
+		int code = videoram.read(tile_index*2)+(videoram.read(tile_index*2+1)<<8);
 		SET_TILE_INFO(
 			0,
 			code,

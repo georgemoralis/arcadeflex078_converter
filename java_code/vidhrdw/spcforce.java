@@ -49,7 +49,7 @@ public class spcforce
 			sy = 8 * (offs / 32) -  (spcforce_scrollram[offs]       & 0x0f);
 			sx = 8 * (offs % 32) + ((spcforce_scrollram[offs] >> 4) & 0x0f);
 	
-			code = videoram[offs] + ((colorram[offs] & 0x01) << 8);
+			code = videoram.read(offs)+ ((colorram[offs] & 0x01) << 8);
 			col  = (~colorram[offs] >> 4) & 0x07;
 	
 			if (flip_screen != 0)

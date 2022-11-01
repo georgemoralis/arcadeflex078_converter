@@ -96,18 +96,18 @@ public class brkthru
 			---- --xx xxxx xxxx = Code
 		*/
 	
-		int code = (videoram[tile_index*2] | ((videoram[tile_index*2+1]) << 8)) & 0x3ff;
+		int code = (videoram.read(tile_index*2)| ((videoram.read(tile_index*2+1)) << 8)) & 0x3ff;
 		int region = 1 + (code >> 7);
-		int colour = bgbasecolor + ((videoram[tile_index*2+1] & 0x04) >> 2);
+		int colour = bgbasecolor + ((videoram.read(tile_index*2+1)& 0x04) >> 2);
 	
 		SET_TILE_INFO(region, code & 0x7f,colour,0)
 	}
 	
 	public static WriteHandlerPtr brkthru_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 		}
 	} };

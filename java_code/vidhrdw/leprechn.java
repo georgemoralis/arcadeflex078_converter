@@ -72,7 +72,7 @@ public class leprechn
 		if (pending != 0)
 		{
 			plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
-	        videoram[y * Machine->drv->screen_width + x] = color;
+	        videoram.write(y * Machine->drv->screen_width + x,color);
 	
 	        pending = 0;
 	   	}
@@ -142,6 +142,6 @@ public class leprechn
 	
 	public static ReadHandlerPtr leprechn_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return videoram[y * Machine->drv->screen_width + x];
+	    return videoram.read(y * Machine->drv->screen_width + x);
 	} };
 }

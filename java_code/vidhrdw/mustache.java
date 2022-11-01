@@ -53,9 +53,9 @@ public class mustache
 	
 	public static WriteHandlerPtr mustache_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
 	} };
@@ -87,8 +87,8 @@ public class mustache
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int attr = videoram[2 * tile_index + 1];
-		int code = videoram[2 * tile_index] + ((attr & 0xe0) << 3) + ((control_byte & 0x08) << 7);
+		int attr = videoram.read(2 * tile_index + 1);
+		int code = videoram.read(2 * tile_index)+ ((attr & 0xe0) << 3) + ((control_byte & 0x08) << 7);
 		int color = attr & 0x0f;
 	
 		SET_TILE_INFO(0, code, color, 0)

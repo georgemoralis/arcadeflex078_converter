@@ -69,9 +69,9 @@ public class mrjong
 	***************************************************************************/
 	public static WriteHandlerPtr mrjong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -96,7 +96,7 @@ public class mrjong
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] | ((colorram[tile_index] & 0x20) << 3);
+		int code = videoram.read(tile_index)| ((colorram[tile_index] & 0x20) << 3);
 		int color = colorram[tile_index] & 0x1f;
 		int flags = ((colorram[tile_index] & 0x40) ? TILE_FLIPX : 0) | ((colorram[tile_index] & 0x80) ? TILE_FLIPY : 0);
 	

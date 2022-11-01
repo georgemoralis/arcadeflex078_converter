@@ -108,8 +108,8 @@ public class snk
 		for(x=0; x<x_size; x++) for(y=0; y<y_size; y++)
 		{
 			offs = (x*y_size + y) << 1;
-			tile_number = videoram[offs];
-			attributes  = videoram[offs+1];
+			tile_number = videoram.read(offs);
+			attributes  = videoram.read(offs+1);
 	
 			if(tile_number != dirtybuffer[offs] || attributes != dirtybuffer[offs+1])
 			{
@@ -293,7 +293,7 @@ public class snk
 		for(x = 0; x < 64; x++) for(y = 0; y < 32; y++)
 		{
 			offs = (x<<5)+y;
-			tile_number = videoram[offs];
+			tile_number = videoram.read(offs);
 	
 			if(tile_number != dirtybuffer[offs])
 			{

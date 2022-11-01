@@ -163,7 +163,7 @@ public class rollrace
 			if (ra_flipx != 0) sx = 31 - sx;
 	
 			drawgfx(bitmap,Machine->gfx[RA_FGCHAR_BASE + ra_chrbank]  ,
-				videoram[ offs ]  ,
+				videoram.read( offs ),
 				col,
 				ra_flipx,ra_flipy,
 				8*sx,scroll,

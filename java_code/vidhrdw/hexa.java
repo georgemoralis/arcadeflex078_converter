@@ -20,9 +20,9 @@ public class hexa
 	
 	public static WriteHandlerPtr hexa_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
 	} };
@@ -65,8 +65,8 @@ public class hexa
 	static void get_bg_tile_info(int tile_index)
 	{
 		int offs = tile_index * 2;
-		int tile = videoram[offs + 1] + ((videoram[offs] & 0x07) << 8) + (charbank << 11);
-		int color = (videoram[offs] & 0xf8) >> 3;
+		int tile = videoram.read(offs + 1)+ ((videoram.read(offs)& 0x07) << 8) + (charbank << 11);
+		int color = (videoram.read(offs)& 0xf8) >> 3;
 	
 		SET_TILE_INFO(0, tile, color, 0)
 	}

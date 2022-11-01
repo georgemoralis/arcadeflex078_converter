@@ -155,7 +155,7 @@ public class vicdual
 			int charcode;
 	
 	
-			charcode = videoram[offs];
+			charcode = videoram.read(offs);
 	
 			if (dirtybuffer[offs] || dirtycharacter[charcode])
 			{

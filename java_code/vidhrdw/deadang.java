@@ -21,7 +21,7 @@ public class deadang
 	
 	public static WriteHandlerPtr deadang_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset]=data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( text_layer, offset/2 );
 	} };
 	
@@ -68,8 +68,8 @@ public class deadang
 	static void get_text_tile_info( int tile_index )
 	{
 		int offs=tile_index*2;
-		int tile=videoram[offs]+((videoram[offs+1]&0xc0)<<2);
-		int color=videoram[offs+1]&0xf;
+		int tile=videoram.read(offs)+((videoram.read(offs+1)&0xc0)<<2);
+		int color=videoram.read(offs+1)&0xf;
 	
 		SET_TILE_INFO(0,tile,color,0)
 	}

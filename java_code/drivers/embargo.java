@@ -38,7 +38,7 @@ public class embargo
 			plot_pixel(tmpbitmap, 8 * col + i, row, (data >> i) & 1);
 		}
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	} };
 	
 	

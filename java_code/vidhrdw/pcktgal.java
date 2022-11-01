@@ -39,9 +39,9 @@ public class pcktgal
 	
 	public static WriteHandlerPtr pcktgal_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
 	} };
@@ -57,8 +57,8 @@ public class pcktgal
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index*2+1] + ((videoram[tile_index*2] & 0x0f) << 8);
-		int color = videoram[tile_index*2] >> 4;
+		int code = videoram.read(tile_index*2+1)+ ((videoram.read(tile_index*2)& 0x0f) << 8);
+		int color = videoram.read(tile_index*2)>> 4;
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}

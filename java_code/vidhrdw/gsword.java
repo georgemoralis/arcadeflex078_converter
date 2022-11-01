@@ -125,9 +125,9 @@ public class gsword
 	
 	public static WriteHandlerPtr gsword_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -176,7 +176,7 @@ public class gsword
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] + ((charbank & 0x03) << 8);
+		int code = videoram.read(tile_index)+ ((charbank & 0x03) << 8);
 		int color = ((code & 0x3c0) >> 6) + 16 * charpalbank;
 		int flags = flipscreen ? (TILE_FLIPX | TILE_FLIPY) : 0;
 	

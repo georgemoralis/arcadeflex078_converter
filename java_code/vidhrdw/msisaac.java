@@ -30,7 +30,7 @@ public class msisaac
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int tile_number = videoram[tile_index];
+		int tile_number = videoram.read(tile_index);
 		SET_TILE_INFO(	0,
 				tile_number,
 				0x10,
@@ -162,9 +162,9 @@ public class msisaac
 	
 	public static WriteHandlerPtr msisaac_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( videoram[offset]!=data )
+		if( videoram.read(offset)!=data )
 		{
-			videoram[offset]=data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(foreground,offset);
 		}
 	} };

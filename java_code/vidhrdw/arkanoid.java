@@ -21,9 +21,9 @@ public class arkanoid
 	
 	public static WriteHandlerPtr arkanoid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
 	} };
@@ -74,8 +74,8 @@ public class arkanoid
 	static void get_bg_tile_info(int tile_index)
 	{
 		int offs = tile_index * 2;
-		int code = videoram[offs + 1] + ((videoram[offs] & 0x07) << 8) + 2048 * gfxbank;
-		int color = ((videoram[offs] & 0xf8) >> 3) + 32 * palettebank;
+		int code = videoram.read(offs + 1)+ ((videoram.read(offs)& 0x07) << 8) + 2048 * gfxbank;
+		int color = ((videoram.read(offs)& 0xf8) >> 3) + 32 * palettebank;
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}

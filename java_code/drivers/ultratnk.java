@@ -115,16 +115,16 @@ public class ultratnk
 	
 	public static WriteHandlerPtr ultratnk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int attr = videoram[tile_index];
+		int attr = videoram.read(tile_index);
 		int code = attr & 0x3f;
 		int color = attr >> 6;
 	

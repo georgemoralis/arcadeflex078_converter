@@ -33,19 +33,19 @@ public class djboy
 	static void get_bg_tile_info(int tile_index)
 	{
 		unsigned char attr;
-		attr = videoram[tile_index + 0x400];
+		attr = videoram.read(tile_index + 0x400);
 		SET_TILE_INFO(
 				2,
-				videoram[tile_index] + ((attr & 0x0f) << 8),
+				videoram.read(tile_index)+ ((attr & 0x0f) << 8),
 				(attr >> 4),
 				0)
 	}
 	
 	public static WriteHandlerPtr djboy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( videoram[offset] != data)
+		if( videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty( background, offset & 0x7ff);
 		}
 	} };

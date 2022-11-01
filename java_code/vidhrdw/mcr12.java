@@ -37,13 +37,13 @@ public class mcr12
 	
 	static void mcr1_get_bg_tile_info(int tile_index)
 	{
-		SET_TILE_INFO(0, videoram[tile_index], 0, 0);
+		SET_TILE_INFO(0, videoram.read(tile_index), 0, 0);
 	}
 	
 	
 	static void mcr2_get_bg_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index * 2] | (videoram[tile_index * 2 + 1] << 8);
+		int data = videoram.read(tile_index * 2)| (videoram.read(tile_index * 2 + 1)<< 8);
 		int code = data & 0x1ff;
 		int color = (data >> 11) & 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 9) & 3));
@@ -52,7 +52,7 @@ public class mcr12
 	
 	static void twotigra_get_bg_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index] | (videoram[tile_index + 0x400] << 8);
+		int data = videoram.read(tile_index)| (videoram.read(tile_index + 0x400)<< 8);
 		int code = data & 0x1ff;
 		int color = (data >> 11) & 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 9) & 3));
@@ -164,14 +164,14 @@ public class mcr12
 	
 	public static WriteHandlerPtr mcr1_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset);
 	} };
 	
 	
 	public static WriteHandlerPtr mcr2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 	
 		/* palette RAM is mapped into the upper 0x80 bytes here */
@@ -195,7 +195,7 @@ public class mcr12
 	
 	public static WriteHandlerPtr twotigra_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset & 0x3ff);
 	
 		/* palette RAM is mapped into the upper 0x40 bytes of each bank */
@@ -415,7 +415,7 @@ public class mcr12
 				}
 	
 				/* lookup the attributes for the tile underneath to get the color */
-				attr = videoram[(ty * 32 + tx) * 2 + 1];
+				attr = videoram.read((ty * 32 + tx) * 2 + 1);
 				render_sprite_tile(bitmap, &Machine->pens[(attr & 0xc0) >> 2], offs);
 				dirtybuffer[offs] = 0;
 			}

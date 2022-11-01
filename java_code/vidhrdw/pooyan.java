@@ -80,9 +80,9 @@ public class pooyan
 	
 	public static WriteHandlerPtr pooyan_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -108,7 +108,7 @@ public class pooyan
 	static void get_bg_tile_info(int tile_index)
 	{
 		int attr = colorram[tile_index];
-		int code = videoram[tile_index] + 8 * (attr & 0x20);
+		int code = videoram.read(tile_index)+ 8 * (attr & 0x20);
 		int color = attr & 0x0f;
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	

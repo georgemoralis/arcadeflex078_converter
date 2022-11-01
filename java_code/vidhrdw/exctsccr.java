@@ -110,9 +110,9 @@ public class exctsccr
 	
 	public static WriteHandlerPtr exctsccr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -146,7 +146,7 @@ public class exctsccr
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index];
+		int code = videoram.read(tile_index);
 		int color = colorram[tile_index] & 0x1f;
 	
 		SET_TILE_INFO(gfx_bank, code, color, 0)

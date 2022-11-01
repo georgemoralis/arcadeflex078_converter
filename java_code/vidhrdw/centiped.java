@@ -27,14 +27,14 @@ public class centiped
 	
 	static void centiped_get_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index];
+		int data = videoram.read(tile_index);
 		SET_TILE_INFO(0, (data & 0x3f) + 0x40, 0, TILE_FLIPYX(data >> 6));
 	}
 	
 	
 	static void warlords_get_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index];
+		int data = videoram.read(tile_index);
 		int color = ((tile_index & 0x10) >> 4) | ((tile_index & 0x200) >> 8) | (centiped_flipscreen >> 5);
 		SET_TILE_INFO(0, data & 0x3f, color, TILE_FLIPYX(data >> 6));
 	}
@@ -42,7 +42,7 @@ public class centiped
 	
 	static void milliped_get_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index];
+		int data = videoram.read(tile_index);
 		int bank = (data >> 6) & 1;
 		int color = (data >> 6) & 3;
 		SET_TILE_INFO(0, (data & 0x3f) + 0x40 + (bank * 0x80), color, 0);
@@ -98,7 +98,7 @@ public class centiped
 	
 	public static WriteHandlerPtr centiped_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap, offset);
 	} };
 	

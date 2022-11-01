@@ -123,12 +123,12 @@ public class ikki
 				py = 248-py;
 			}
 	
-			col = videoram[offs*2];
+			col = videoram.read(offs*2);
 			bank = (col & 0xe0) << 3;
 			col = ((col & 0x1f)<<0) | ((col & 0x80) >> 2);
 	
 			drawgfx(bitmap,Machine->gfx[0],
-				videoram[offs*2+1] + bank,
+				videoram.read(offs*2+1)+ bank,
 				col,
 				f,f,
 				px,py,
@@ -197,12 +197,12 @@ public class ikki
 					py = 248-py;
 				}
 	
-				col = videoram[offs*2];
+				col = videoram.read(offs*2);
 				bank = (col & 0xe0) << 3;
 				col = ((col & 0x1f)<<0) | ((col & 0x80) >> 2);
 	
 				drawgfx(bitmap,Machine->gfx[0],
-					videoram[offs*2+1] + bank,
+					videoram.read(offs*2+1)+ bank,
 					col,
 					f,f,
 					px,py,

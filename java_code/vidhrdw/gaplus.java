@@ -396,7 +396,7 @@ public class gaplus
 			bank = ( colorram[offs] & 0x80 ) ? 1 : 0;
 	
 	        drawgfx(bitmap,Machine->gfx[bank],
-	                videoram[offs],
+	                videoram.read(offs),
 	                colorram[offs] & 0x3f,
 	                flip_screen,flip_screen,8*sy,8*sx,
 	                &Machine->visible_area,TRANSPARENCY_PEN,0);

@@ -422,10 +422,10 @@ public class marinedt
 			flipx = 1;
 			flipy = 0;
 	
-	//logerror("%x\n",videoram[offs]);
+	//logerror("%x\n",videoram.read(offs));
 	
 			drawgfx(bitmap,Machine->gfx[0],
-					videoram[offs],
+					videoram.read(offs),
 					0,
 					flipx,flipy,
 					8*sx,8*sy,
@@ -445,7 +445,7 @@ public class marinedt
 	//		flipx = 1;
 	//		flipy = 0;
 	
-	//logerror("%x\n",videoram[offs]);
+	//logerror("%x\n",videoram.read(offs));
 	
 	//		drawgfx(bitmap,Machine->gfx[0],
 	//				0,
@@ -533,7 +533,7 @@ public class marinedt
 			flipx = 1;
 			flipy = 0;
 	
-	//logerror("%x\n",videoram[offs]);
+	//logerror("%x\n",videoram.read(offs));
 	
 			drawgfx(bitmap,Machine->gfx[0],
 					0,

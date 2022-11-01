@@ -56,9 +56,9 @@ public class tunhunt
 	
 	public static WriteHandlerPtr tunhunt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -74,7 +74,7 @@ public class tunhunt
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int attr = videoram[tile_index];
+		int attr = videoram.read(tile_index);
 		int code = attr & 0x3f;
 		int color = attr >> 6;
 		int flags = color ? TILE_IGNORE_TRANSPARENCY : 0;

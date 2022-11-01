@@ -249,7 +249,7 @@ public class superpac
 					sy = 27 - sy;
 				}
 	
-				drawgfx(tmpbitmap, Machine->gfx[0], videoram[offs], colorram[offs],
+				drawgfx(tmpbitmap, Machine->gfx[0], videoram.read(offs), colorram[offs],
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
 						&Machine->visible_area, TRANSPARENCY_NONE, 0);
 			}
@@ -291,7 +291,7 @@ public class superpac
 					sy = 27 - sy;
 				}
 	
-				drawgfx(bitmap, Machine->gfx[0], videoram[offs], colorram[offs],
+				drawgfx(bitmap, Machine->gfx[0], videoram.read(offs), colorram[offs],
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
 						&Machine->visible_area, TRANSPARENCY_COLOR, 31);
 			}

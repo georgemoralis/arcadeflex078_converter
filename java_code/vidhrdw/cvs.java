@@ -226,7 +226,7 @@ public class cvs
 	    {
 	    	// Data
 	
-	        return videoram[offset];
+	        return videoram.read(offset);
 	    }
 	} };
 	
@@ -473,7 +473,7 @@ public class cvs
 	
 		for (offs = videoram_size - 1;offs >= 0;offs--)
 		{
-	        character = videoram[offs];
+	        character = videoram.read(offs);
 	
 			if(dirtybuffer[offs] || dirty_character[character])
 			{

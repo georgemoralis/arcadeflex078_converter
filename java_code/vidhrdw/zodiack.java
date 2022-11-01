@@ -25,9 +25,9 @@ public class zodiack
 	
 	public static WriteHandlerPtr zodiack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -137,7 +137,7 @@ public class zodiack
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index];
+		int code = videoram.read(tile_index);
 		int color = zodiack_attributesram[2 * (tile_index % 32) + 1] & 0x07;
 	
 		SET_TILE_INFO(3, code, color, 0)

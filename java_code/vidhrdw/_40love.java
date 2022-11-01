@@ -87,7 +87,7 @@ public class _40love
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int tile_number = videoram[tile_index];
+		int tile_number = videoram.read(tile_index);
 		int tile_attrib = colorram[(tile_index/64)*2];
 		int tile_h_bank = (tile_attrib&0x40)<<3;	/* 0x40->0x200 */
 		int tile_l_bank = (tile_attrib&0x18)<<3;	/* 0x10->0x80, 0x08->0x40 */
@@ -221,15 +221,15 @@ public class _40love
 	
 	public static WriteHandlerPtr fortyl_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( videoram[offset]!=data )
+		if( videoram.read(offset)!=data )
 		{
-			videoram[offset]=data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(background,offset);
 		}
 	} };
 	public static ReadHandlerPtr fortyl_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return videoram[offset];
+		return videoram.read(offset);
 	} };
 	
 	public static WriteHandlerPtr fortyl_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

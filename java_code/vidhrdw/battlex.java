@@ -61,9 +61,9 @@ public class battlex
 	
 	public static WriteHandlerPtr battlex_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
 	} };
@@ -83,8 +83,8 @@ public class battlex
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int tile = videoram[tile_index*2] | (((videoram[tile_index*2+1] & 0x01)) << 8);
-		int color = (videoram[tile_index*2+1] & 0x0e) >> 1;
+		int tile = videoram.read(tile_index*2)| (((videoram.read(tile_index*2+1)& 0x01)) << 8);
+		int color = (videoram.read(tile_index*2+1)& 0x0e) >> 1;
 	
 		SET_TILE_INFO(0,tile,color,0)
 	}

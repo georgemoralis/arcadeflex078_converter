@@ -123,7 +123,7 @@ public class lazercmd
 				sy *= VERT_CHR;
 	
 				drawgfx(tmpbitmap, Machine->gfx[0],
-						videoram[i], video_inverted ? 1 : 0,
+						videoram.read(i), video_inverted ? 1 : 0,
 						0,0,
 						sx,sy,
 						&Machine->visible_area,TRANSPARENCY_NONE,0);

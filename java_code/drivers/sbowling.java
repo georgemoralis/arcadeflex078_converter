@@ -77,15 +77,15 @@ public class sbowling
 	{
 		int x,y,i,v1,v2;
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	
 		offset &= 0x1fff;
 	
 		y = offset / 32;
 		x = (offset % 32) * 8;
 	
-		v1 = videoram[offset];
-		v2 = videoram[offset+0x2000];
+		v1 = videoram.read(offset);
+		v2 = videoram.read(offset+0x2000);
 		
 		for(i = 0; i < 8; i++)
 		{
@@ -156,7 +156,7 @@ public class sbowling
 		{
 			int offs;
 			for (offs = 0;offs < videoram_size; offs++)
-				sbw_videoram_w(offs, videoram[offs]);
+				sbw_videoram_w(offs, videoram.read(offs));
 		}
 		sbw_system = data;
 	}

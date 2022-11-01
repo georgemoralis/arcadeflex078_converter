@@ -11,9 +11,9 @@ public class higemaru
 	
 	public static WriteHandlerPtr higemaru_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -94,7 +94,7 @@ public class higemaru
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] + ((colorram[tile_index] & 0x80) << 1);
+		int code = videoram.read(tile_index)+ ((colorram[tile_index] & 0x80) << 1);
 		int color = colorram[tile_index] & 0x1f;
 	
 		SET_TILE_INFO(0, code, color, 0)

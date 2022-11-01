@@ -38,9 +38,9 @@ public class hitme
 	
 		for (offs = 0; offs < videoram_size; offs++)
 		{
-			charcode = videoram[offs] & 0x3F;
+			charcode = videoram.read(offs)& 0x3F;
 	
-			if (videoram[offs] & 0x80) hitme_invert_count = 4;
+			if (videoram.read(offs)& 0x80) hitme_invert_count = 4;
 			if (hitme_invert_count != 0) {
 				invert = 1;
 				hitme_invert_count--;

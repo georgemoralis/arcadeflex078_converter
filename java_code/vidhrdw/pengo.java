@@ -250,7 +250,7 @@ public class pengo
 				}
 	
 				drawgfx(tmpbitmap,Machine->gfx[gfx_bank*2],
-						videoram[offs],
+						videoram.read(offs),
 						colorram[offs] & 0x1f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
@@ -365,7 +365,7 @@ public class pengo
 				}
 	
 				drawgfx(tmpbitmap,Machine->gfx[gfx_bank*2],
-						videoram[offs],
+						videoram.read(offs),
 						colorram[offs] & 0x1f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
@@ -409,7 +409,7 @@ public class pengo
 		colbank = tiles_bankram[tile_index & 0x1f] & 0x3;
 	
 	
-		code = videoram[tile_index] + (colbank << 8);
+		code = videoram.read(tile_index)+ (colbank << 8);
 		attr = colorram[tile_index & 0x1f];
 	
 		/* remove when we have proms dumps for it */
@@ -423,7 +423,7 @@ public class pengo
 	
 	public static WriteHandlerPtr s2650games_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap,offset);
 	} };
 	

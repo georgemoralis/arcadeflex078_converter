@@ -144,7 +144,7 @@ public class paradise
 	{
 		int x,y;
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	
 		x = (offset & 0x7f) << 1;
 		y = (offset >> 7);

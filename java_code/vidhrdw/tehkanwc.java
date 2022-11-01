@@ -28,9 +28,9 @@ public class tehkanwc
 	
 	public static WriteHandlerPtr tehkanwc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -96,7 +96,7 @@ public class tehkanwc
 	static void get_fg_tile_info(int tile_index)
 	{
 		int attr = colorram[tile_index];
-		int code = videoram[tile_index] + ((attr & 0x10) << 4);
+		int code = videoram.read(tile_index)+ ((attr & 0x10) << 4);
 		int color = attr & 0x0f;
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	

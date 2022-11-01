@@ -144,13 +144,13 @@ public class dec8
 	
 	public static WriteHandlerPtr dec8_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset]=data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( dec8_fix_tilemap,offset/2 );
 	} };
 	
 	public static WriteHandlerPtr srdarwin_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset]=data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( dec8_fix_tilemap,offset );
 	} };
 	
@@ -428,11 +428,11 @@ public class dec8
 		int mx,my,tile,color,offs;
 	
 		for (offs = 0x800 - 2;offs >= 0;offs -= 2) {
-			tile=videoram[offs+1]+((videoram[offs]&0xf)<<8);
+			tile=videoram.read(offs+1)+((videoram.read(offs)&0xf)<<8);
 	
 			if (!tile) continue;
 	
-			color=(videoram[offs]&mask)>>shift;
+			color=(videoram.read(offs)&mask)>>shift;
 			mx = (offs/2) % 32;
 			my = (offs/2) / 32;
 	
@@ -501,7 +501,7 @@ public class dec8
 	static void get_cobracom_fix_tile_info( int tile_index )
 	{
 		int offs=tile_index<<1;
-		int tile=videoram[offs+1]+(videoram[offs]<<8);
+		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
 		int color=(tile&0xe000) >> 13;
 	
 		SET_TILE_INFO(
@@ -553,7 +553,7 @@ public class dec8
 	static void get_ghostb_fix_tile_info( int tile_index )
 	{
 		int offs=tile_index<<1;
-		int tile=videoram[offs+1]+(videoram[offs]<<8);
+		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
 		int color=(tile&0xc00) >> 10;
 	
 		SET_TILE_INFO(
@@ -597,7 +597,7 @@ public class dec8
 	static void get_oscar_fix_tile_info( int tile_index )
 	{
 		int offs=tile_index<<1;
-		int tile=videoram[offs+1]+(videoram[offs]<<8);
+		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
 		int color=(tile&0xf000) >> 14;
 	
 		SET_TILE_INFO(
@@ -673,7 +673,7 @@ public class dec8
 	static void get_lastmiss_fix_tile_info( int tile_index )
 	{
 		int offs=tile_index<<1;
-		int tile=videoram[offs+1]+(videoram[offs]<<8);
+		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
 		int color=(tile&0xc000) >> 14;
 	
 		SET_TILE_INFO(
@@ -727,7 +727,7 @@ public class dec8
 	
 	static void get_srdarwin_fix_tile_info( int tile_index )
 	{
-		int tile=videoram[tile_index];
+		int tile=videoram.read(tile_index);
 		int color=0; /* ? */
 	
 		if (color>1) tile_info.priority=1; else tile_info.priority=0;
@@ -802,7 +802,7 @@ public class dec8
 	static void get_gondo_fix_tile_info( int tile_index )
 	{
 		int offs=tile_index*2;
-		int tile=videoram[offs+1]+(videoram[offs]<<8);
+		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
 		int color=(tile&0x7000) >> 12;
 	
 		SET_TILE_INFO(

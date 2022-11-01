@@ -35,8 +35,8 @@ public class ladyfrog
 	static void get_tile_info(int tile_index)
 	{
 		int pal,tile;
-		pal=videoram[tile_index*2+1]&0x0f;
-		tile=videoram[tile_index*2] + ((videoram[tile_index*2+1] & 0xc0) << 2)+ ((videoram[tile_index*2+1] & 0x30) <<6 );
+		pal=videoram.read(tile_index*2+1)&0x0f;
+		tile=videoram.read(tile_index*2)+ ((videoram.read(tile_index*2+1)& 0xc0) << 2)+ ((videoram.read(tile_index*2+1)& 0x30) <<6 );
 		SET_TILE_INFO(
 				0,
 				tile +0x1000 * tilebank,
@@ -46,13 +46,13 @@ public class ladyfrog
 	
 	public static WriteHandlerPtr ladyfrog_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap,offset>>1);
 	} };
 	
 	public static ReadHandlerPtr ladyfrog_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return videoram[offset];
+		return videoram.read(offset);
 	} };
 	
 	public static WriteHandlerPtr ladyfrog_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)

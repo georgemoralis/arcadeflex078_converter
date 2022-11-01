@@ -94,9 +94,9 @@ public class mario
 	
 	public static WriteHandlerPtr mario_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -126,8 +126,8 @@ public class mario
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] + 256 * gfx_bank;
-		int color = (videoram[tile_index] >> 5) + 8 * palette_bank;
+		int code = videoram.read(tile_index)+ 256 * gfx_bank;
+		int color = (videoram.read(tile_index)>> 5) + 8 * palette_bank;
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}

@@ -270,7 +270,7 @@ public class cosmic
 	
 		for (offs = 0; offs < videoram_size; offs++)
 		{
-			data8_t data = videoram[offs];
+			data8_t data = videoram.read(offs);
 	
 			if (data != 0)	/* optimization, not absolutely neccessary */
 			{

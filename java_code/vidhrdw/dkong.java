@@ -24,9 +24,9 @@ public class dkong
 	
 	public static WriteHandlerPtr dkong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -159,7 +159,7 @@ public class dkong
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] + 256 * gfx_bank;
+		int code = videoram.read(tile_index)+ 256 * gfx_bank;
 		int color = (color_codes[tile_index % 32 + 32 * (tile_index / 32 / 4)] & 0x0f) + 0x10 * palette_bank;
 	
 		SET_TILE_INFO(0, code, color, 0)

@@ -124,8 +124,8 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	public static ReadHandlerPtr hal21_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){ return videoram[offset]; } };
-	public static WriteHandlerPtr hal21_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ videoram[offset] = data; } };
+	public static ReadHandlerPtr hal21_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){ return videoram.read(offset); } };
+	public static WriteHandlerPtr hal21_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ videoram.write(offset,data); } };
 	public static ReadHandlerPtr hal21_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){ return spriteram[offset]; } };
 	public static WriteHandlerPtr hal21_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ spriteram[offset] = data; } };
 	
@@ -218,7 +218,7 @@ public class hal21
 				offs = (((offsx+x)&0x3f)<<6) + ((offsy+y)&0x3f);
 				sx = (x<<3) + dx;
 				sy = (y<<3) + dy;
-				tile_number = bankbase + videoram[offs];
+				tile_number = bankbase + videoram.read(offs);
 				c = (tile_number & ~0x3f) ? color[0] : color[1];
 	
 				drawgfx(bitmap, gfx,
@@ -283,7 +283,7 @@ public class hal21
 				offs = (((offsx+x)&0x3f)<<6) + ((offsy+y)&0x3f);
 				sx = (x<<3) + dx;
 				sy = (y<<3) + dy;
-				tile_number = bankbase + videoram[offs];
+				tile_number = bankbase + videoram.read(offs);
 	
 				drawgfx(bitmap, gfx,
 					tile_number, c,

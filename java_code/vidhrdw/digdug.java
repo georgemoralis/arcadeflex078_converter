@@ -224,7 +224,7 @@ public class digdug
 					sy = 27 - sy;
 				}
 	
-				vrval = videoram[offs];
+				vrval = videoram.read(offs);
 				if (pf != 0)
 				{
 					/* first draw the playfield */

@@ -94,9 +94,9 @@ public class pacland
 	
 	public static WriteHandlerPtr pacland_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset / 2);
 		}
 	} };
@@ -190,8 +190,8 @@ public class pacland
 	static void get_fg_tile_info(int tile_index)
 	{
 		int offs = tile_index * 2;
-		int attr = videoram[offs + 1];
-		int code = videoram[offs] + ((attr & 0x01) << 8);
+		int attr = videoram.read(offs + 1);
+		int code = videoram.read(offs)+ ((attr & 0x01) << 8);
 		int color = ((attr & 0x1e) >> 1) + ((code & 0x1e0) >> 1);
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	

@@ -80,7 +80,7 @@ public class dribling
 				int b6 = dribling_abca;
 				int b5 = (x >> 3) & 1;
 				int b4 = (gfxbase[(x >> 3) | (y << 5)] >> (x & 7)) & 1;
-				int b3 = (videoram[(x >> 3) | (y << 5)] >> (x & 7)) & 1;
+				int b3 = (videoram.read((x >> 3) | (y << 5))>> (x & 7)) & 1;
 				int b2_0 = colorram[(x >> 3) | ((y >> 2) << 7)] & 7;
 	
 				/* assemble the various bits into a palette PROM index */

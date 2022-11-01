@@ -374,9 +374,9 @@ public class punchout
 				sy = offs/2 / 32;
 	
 				drawgfx(tmpbitmap,Machine->gfx[0],
-						videoram[offs] + 256 * (videoram[offs + 1] & 0x03),
-						((videoram[offs + 1] & 0x7c) >> 2) + 64 * top_palette_bank,
-						videoram[offs + 1] & 0x80,0,
+						videoram.read(offs)+ 256 * (videoram.read(offs + 1)& 0x03),
+						((videoram.read(offs + 1)& 0x7c) >> 2) + 64 * top_palette_bank,
+						videoram.read(offs + 1)& 0x80,0,
 						8*sx,8*sy - 16,
 						&topvisiblearea,TRANSPARENCY_NONE,0);
 			}
@@ -711,9 +711,9 @@ public class punchout
 			sy = offs/2 / 32;
 	
 			drawgfx(bitmap,Machine->gfx[1],
-					videoram[offs] + 256 * (videoram[offs + 1] & 0x07),
-					((videoram[offs + 1] & 0xf8) >> 3) + 32 * bottom_palette_bank,
-					videoram[offs + 1] & 0x80,0,
+					videoram.read(offs)+ 256 * (videoram.read(offs + 1)& 0x07),
+					((videoram.read(offs + 1)& 0xf8) >> 3) + 32 * bottom_palette_bank,
+					videoram.read(offs + 1)& 0x80,0,
 					8*sx,8*sy + 8*TOP_MONITOR_ROWS - 16,
 					&backgroundvisiblearea,TRANSPARENCY_PEN,7);
 		}

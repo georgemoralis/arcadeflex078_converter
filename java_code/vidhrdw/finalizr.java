@@ -132,7 +132,7 @@ public class finalizr
 				sy = offs / 32;
 	
 				drawgfx(tmpbitmap,Machine->gfx[0],
-						videoram[offs] + ((colorram[offs] & 0xc0) << 2) + (charbank<<10),
+						videoram.read(offs)+ ((colorram[offs] & 0xc0) << 2) + (charbank<<10),
 						(colorram[offs] & 0x0f),
 						colorram[offs] & 0x10,colorram[offs] & 0x20,
 						8*sx,8*sy,

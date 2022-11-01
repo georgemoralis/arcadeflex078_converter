@@ -281,6 +281,42 @@ public class convertMame {
                     Convertor.inpos = i;
                     break;
                 }
+                case 'v':
+                    int j = Convertor.inpos;
+                    if(sUtil.getToken("videoram"))
+                    {
+                        if (sUtil.parseChar() != '[') {
+                            Convertor.inpos = j;
+                            break;
+                        }
+                        Convertor.token[0] = sUtil.parseToken(']');
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != ']') {
+                            Convertor.inpos = j;
+                            break;
+                        }
+                        else {
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() == '=') {
+                                int g=Convertor.inpos;
+                                if (sUtil.parseChar() == '=') {
+                                    Convertor.inpos = j;
+                                    break;
+                                }
+                                Convertor.inpos=g;
+                                sUtil.skipSpace();
+                                Convertor.token[1] = sUtil.parseToken(';');
+                                sUtil.putString((new StringBuilder()).append("videoram.write(").append(Convertor.token[0]).append(",").append(Convertor.token[1]).append(");").toString());
+                                Convertor.inpos +=1;
+                                break;
+                            }
+                            sUtil.putString((new StringBuilder()).append("videoram.read(").append(Convertor.token[0]).append(")").toString());
+                            Convertor.inpos -= 1;
+                            continue;
+                        }
+                    }
+                    Convertor.inpos=j;
+                    break;
                 case '{': {
                     if (type == MEMORY_READ8) {
                         i3++;

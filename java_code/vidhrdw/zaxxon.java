@@ -99,9 +99,9 @@ public class zaxxon
 	
 	public static WriteHandlerPtr zaxxon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -219,7 +219,7 @@ public class zaxxon
 	{
 		int sy = tile_index / 32;
 		int sx = tile_index % 32;
-		int code = videoram[tile_index];
+		int code = videoram.read(tile_index);
 		int color = (color_codes[sx + 32 * (sy / 4)] & 0x0f) + 16 * (*zaxxon_char_color_bank & 1);
 		// not sure about the color code calculation - char_color_bank is used only in test mode
 	
@@ -377,7 +377,7 @@ public class zaxxon
 	
 	static void razmataz_get_fg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index];
+		int code = videoram.read(tile_index);
 		int color = (color_codes[code] & 0x0f) + 16 * (*zaxxon_char_color_bank & 0x01);
 	
 		SET_TILE_INFO(0, code, color, 0)
@@ -456,7 +456,7 @@ public class zaxxon
 	
 	static void congo_get_fg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index];
+		int code = videoram.read(tile_index);
 		int color = colorram[tile_index];
 	
 		SET_TILE_INFO(0, code, color, 0)

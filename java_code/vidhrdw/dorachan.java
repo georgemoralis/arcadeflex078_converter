@@ -47,10 +47,10 @@ public class dorachan
 	
 	public static WriteHandlerPtr dorachan_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
 			int i,x,y,col;
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			x=((offset>>3)&31)<<3;
 			y=((offset>>8)<<3)^0xff;
 			col=(dorachan_ctrl&0x40)?fakecols[((31-(y>>3))<<5)+31-(x>>3)]:fakecols[((y>>3)<<5)+(x>>3)];

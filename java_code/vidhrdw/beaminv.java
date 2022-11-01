@@ -26,7 +26,7 @@ public class beaminv
 		int i;
 	
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	
 		y = ~(offset >> 8 << 3);
 		x = offset;

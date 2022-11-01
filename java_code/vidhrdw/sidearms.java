@@ -28,9 +28,9 @@ public class sidearms
 	
 	public static WriteHandlerPtr sidearms_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -158,7 +158,7 @@ public class sidearms
 	INLINE void get_fg_tile_info(int tile_index)
 	{
 		int attr = colorram[tile_index];
-		int code = videoram[tile_index] + (attr<<2 & 0x300);
+		int code = videoram.read(tile_index)+ (attr<<2 & 0x300);
 		int color = attr & 0x3f;
 	
 		SET_TILE_INFO(0, code, color, 0)

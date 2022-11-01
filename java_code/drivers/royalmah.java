@@ -143,10 +143,10 @@ public class royalmah
 		UINT8 col1, col2;
 	
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	
-		col1 = videoram[offset & 0x3fff];
-		col2 = videoram[offset | 0x4000];
+		col1 = videoram.read(offset & 0x3fff);
+		col2 = videoram.read(offset | 0x4000);
 	
 		y = (offset >> 6);
 		x = (offset & 0x3f) << 2;
@@ -198,7 +198,7 @@ public class royalmah
 	
 			for (offs = 0; offs < videoram_size; offs++)
 			{
-				royalmah_videoram_w(offs, videoram[offs]);
+				royalmah_videoram_w(offs, videoram.read(offs));
 			}
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);

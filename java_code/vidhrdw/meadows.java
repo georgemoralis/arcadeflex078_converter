@@ -29,7 +29,7 @@ public class meadows
 	
 	static void get_tile_info(int tile_index)
 	{
-		SET_TILE_INFO(0, videoram[tile_index] & 0x7f, 0, 0);
+		SET_TILE_INFO(0, videoram.read(tile_index)& 0x7f, 0, 0);
 	}
 	
 	
@@ -58,7 +58,7 @@ public class meadows
 	
 	public static WriteHandlerPtr meadows_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset);
 	} };
 	

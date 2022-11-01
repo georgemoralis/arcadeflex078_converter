@@ -127,13 +127,13 @@ public class marvins
 	
 	public static ReadHandlerPtr marvins_text_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return videoram[offset];
+		return videoram.read(offset);
 	} };
 	public static WriteHandlerPtr marvins_text_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset < 0x400 && videoram[offset] != data) tilemap_mark_tile_dirty(tx_tilemap,offset);
+		if (offset < 0x400 && videoram.read(offset)!= data) tilemap_mark_tile_dirty(tx_tilemap,offset);
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	} };
 	
 	/***************************************************************************
@@ -162,7 +162,7 @@ public class marvins
 	
 	static void get_tx_tilemap_info(int tile_index)
 	{
-		int tile_number = videoram[tile_index];
+		int tile_number = videoram.read(tile_index);
 		SET_TILE_INFO(
 				0,
 				tile_number,

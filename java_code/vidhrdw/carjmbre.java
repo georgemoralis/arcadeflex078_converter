@@ -68,8 +68,8 @@ public class carjmbre
 	} };
 	
 	static void get_carjmbre_tile_info(int tile_index){
-		unsigned int tile_number = videoram[tile_index] & 0xFF;
-		unsigned char attr  = videoram[tile_index+0x400];
+		unsigned int tile_number = videoram.read(tile_index)& 0xFF;
+		unsigned char attr  = videoram.read(tile_index+0x400);
 		tile_number += (attr & 0x80) << 1; /* bank */
 		SET_TILE_INFO(
 				0,
@@ -79,7 +79,7 @@ public class carjmbre
 	}
 	
 	public static WriteHandlerPtr carjmbre_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(carjmbre_tilemap,offset&0x3ff);
 	} };
 	

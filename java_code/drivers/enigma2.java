@@ -31,11 +31,11 @@ public class enigma2
 	
 	public static WriteHandlerPtr enigma2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
 			int i,x,y,col;
 	
-			videoram[offset] = data;
+			videoram.write(offset,data);
 	
 			y = offset / 32;
 			col = 8 * (offset % 32);

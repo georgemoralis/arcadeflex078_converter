@@ -183,7 +183,7 @@ public class wiz
 			}
 			else
 			{
-				col = (wiz_attributesram[2 * (offs % 32) + 1] & 0x04) + (videoram[offs] & 3);
+				col = (wiz_attributesram[2 * (offs % 32) + 1] & 0x04) + (videoram.read(offs)& 3);
 			}
 	
 			scroll = (8*sy + 256 - wiz_attributesram[2 * sx]) % 256;
@@ -195,7 +195,7 @@ public class wiz
 	
 	
 			drawgfx(bitmap,Machine->gfx[bank],
-				videoram[offs],
+				videoram.read(offs),
 				col + 8 * palette_bank,
 				flipx,flipy,
 				8*sx,scroll,

@@ -79,8 +79,8 @@ public class liberate
 	{
 		int tile,color;
 	
-		tile=videoram[tile_index+0x400]+((videoram[tile_index]&0x7)<<8);
-		color=(videoram[tile_index]&0x70)>>4;
+		tile=videoram.read(tile_index+0x400)+((videoram.read(tile_index)&0x7)<<8);
+		color=(videoram.read(tile_index)&0x70)>>4;
 	
 	//if ((tile & 0x300) != 0) tile-=0x000;
 	//else if ((tile & 0x200) != 0) tile-=0x100;
@@ -122,7 +122,7 @@ public class liberate
 	
 	public static WriteHandlerPtr liberate_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset]=data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(fix_tilemap,offset&0x3ff);
 	} };
 	
@@ -394,13 +394,13 @@ public class liberate
 		prosport_drawsprites(bitmap);
 	
 		for (offs = 0;offs < 0x400;offs++) {
-			tile=videoram[offs+0x400]+((videoram[offs]&0x3)<<8);
+			tile=videoram.read(offs+0x400)+((videoram.read(offs)&0x3)<<8);
 	
 			tile+=((deco16_io_ram[0]&0x30)<<6);
 	
 			if (!tile) continue;
 	
-			color=1;//(videoram[offs]&0x70)>>4;
+			color=1;//(videoram.read(offs)&0x70)>>4;
 			my = (offs) % 32;
 			mx = (offs) / 32;
 	

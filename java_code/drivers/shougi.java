@@ -179,8 +179,8 @@ public class shougi
 		//		if (flipscreen[0]) sx = 31 - sx;
 		//		if (flipscreen[1]) sy = 31 - sy;
 	
-				data1 = videoram[offs];				/* color */
-				data2 = videoram[0x4000 + offs];	/* pixel data */
+				data1 = videoram.read(offs);				/* color */
+				data2 = videoram.read(0x4000 + offs);	/* pixel data */
 	
 				for (x=0; x<4; x++) /*4 pixels per byte (2 bitplanes in 2 nibbles: 1st=bits 7-4, 2nd=bits 3-0)*/
 				{

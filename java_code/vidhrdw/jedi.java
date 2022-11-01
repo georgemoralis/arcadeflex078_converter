@@ -300,7 +300,7 @@ public class jedi
 	
 				fgdirty[offs] = 0;
 	
-				drawgfx(fgbitmap, Machine->gfx[0], videoram[offs] + jedi_alpha_bank,
+				drawgfx(fgbitmap, Machine->gfx[0], videoram.read(offs)+ jedi_alpha_bank,
 						0, 0, 0, 8*sx, 8*sy, &Machine->visible_area, TRANSPARENCY_NONE_RAW, 0);
 			}
 	

@@ -23,8 +23,8 @@ public class flstory
 	
 	static void get_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index*2];
-		int attr = videoram[tile_index*2+1];
+		int code = videoram.read(tile_index*2);
+		int attr = videoram.read(tile_index*2+1);
 		int tile_number = code + ((attr & 0xc0) << 2) + 0x400 + 0x800 * char_bank;
 		int flags = ((attr & 0x08) ? TILE_FLIPX : 0) | ((attr & 0x10) ? TILE_FLIPY : 0);
 	//	tile_info.priority = (attr & 0x20) >> 5;
@@ -50,7 +50,7 @@ public class flstory
 	
 	public static WriteHandlerPtr flstory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap,offset/2);
 	} };
 	
@@ -163,7 +163,7 @@ public class flstory
 	
 		for (offs = videoram_size - 2;offs >= 0;offs -= 2)
 		{
-			if (videoram[offs + 1] & 0x20)
+			if (videoram.read(offs + 1)& 0x20)
 			{
 				int sx,sy,code;
 	
@@ -177,13 +177,13 @@ public class flstory
 					sx = 248-sx;
 					sy = 248-sy;
 				}
-				code = videoram[offs] + ((videoram[offs + 1] & 0xc0) << 2) + 0x400 + 0x800 * char_bank;
+				code = videoram.read(offs)+ ((videoram.read(offs + 1)& 0xc0) << 2) + 0x400 + 0x800 * char_bank;
 	
 				drawgfx(bitmap,Machine->gfx[0],
 					code,
-					(videoram[offs + 1] & 0x0f),
-					( ( videoram[offs + 1] & 0x08 ) >> 3 ) ^ flipscreen,
-					( ( videoram[offs + 1] & 0x10 ) >> 4 ) ^ flipscreen,
+					(videoram.read(offs + 1)& 0x0f),
+					( ( videoram.read(offs + 1)& 0x08 ) >> 3 ) ^ flipscreen,
+					( ( videoram.read(offs + 1)& 0x10 ) >> 4 ) ^ flipscreen,
 					sx,sy & 0xff,
 					cliprect,TRANSPARENCY_PEN,15);
 			}

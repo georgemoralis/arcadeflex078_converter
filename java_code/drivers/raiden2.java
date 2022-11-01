@@ -84,7 +84,7 @@ public class raiden2
 	
 	public static WriteHandlerPtr raiden2_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset]=data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( text_layer,offset/2 );
 	} };
 	
@@ -126,7 +126,7 @@ public class raiden2
 	static void get_text_tile_info( int tile_index )
 	{
 		int offs=tile_index*2;
-		int tile=videoram[offs]+(videoram[offs+1]<<8);
+		int tile=videoram.read(offs)+(videoram.read(offs+1)<<8);
 		int color=(tile>>12)&0xf;
 	
 		tile&=0xfff;

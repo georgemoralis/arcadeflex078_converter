@@ -68,7 +68,7 @@ public class berzerk
 		UINT8 x, y;
 	
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	
 		/* Get location of color RAM for this offset */
 		coloroffset = ((offset & 0xff80) >> 2) | (offset & 0x1f);
@@ -95,7 +95,7 @@ public class berzerk
 	
 		for (i = 0; i < 4; i++, y++)
 		{
-			data8_t byte = videoram[(y << 5) | (x >> 3)];
+			data8_t byte = videoram.read((y << 5) | (x >> 3));
 	
 			copy_byte(x, y, byte, data);
 		}
@@ -131,26 +131,26 @@ public class berzerk
 	
 	
 		/* Check for collision */
-		collision |= ((data3 & videoram[offset]) ? 0x80 : 0);
+		collision |= ((data3 & videoram.read(offset)) ? 0x80 : 0);
 	
 	
 		switch (magicram_control & 0xf0)
 		{
 		case 0x00: 										 break;	/* No change */
-		case 0x10: data3 |=  videoram[offset]; 			 break;
-		case 0x20: data3 |= ~videoram[offset]; 			 break;
+		case 0x10: data3 |=  videoram.read(offset); 			 break;
+		case 0x20: data3 |= ~videoram.read(offset); 			 break;
 		case 0x30: data3  = 0xff;  						 break;
-		case 0x40: data3 &=  videoram[offset]; 			 break;
-		case 0x50: data3  =  videoram[offset]; 			 break;
-		case 0x60: data3  = ~(data3 ^ videoram[offset]); break;
-		case 0x70: data3  = ~data3 | videoram[offset]; 	 break;
-		case 0x80: data3 &= ~videoram[offset];			 break;
-		case 0x90: data3 ^=  videoram[offset];			 break;
-		case 0xa0: data3  = ~videoram[offset];			 break;
-		case 0xb0: data3  = ~(data3 & videoram[offset]); break;
+		case 0x40: data3 &=  videoram.read(offset); 			 break;
+		case 0x50: data3  =  videoram.read(offset); 			 break;
+		case 0x60: data3  = ~(data3 ^ videoram.read(offset)); break;
+		case 0x70: data3  = ~data3 | videoram.read(offset); 	 break;
+		case 0x80: data3 &= ~videoram.read(offset);			 break;
+		case 0x90: data3 ^=  videoram.read(offset);			 break;
+		case 0xa0: data3  = ~videoram.read(offset);			 break;
+		case 0xb0: data3  = ~(data3 & videoram.read(offset)); break;
 		case 0xc0: data3  = 0x00; 						 break;
-		case 0xd0: data3  = ~data3 & videoram[offset]; 	 break;
-		case 0xe0: data3  = ~(data3 | videoram[offset]); break;
+		case 0xd0: data3  = ~data3 & videoram.read(offset); 	 break;
+		case 0xe0: data3  = ~(data3 | videoram.read(offset)); break;
 		case 0xf0: data3  = ~data3; 					 break;
 		}
 	

@@ -51,9 +51,9 @@ public class tagteam
 	
 	public static WriteHandlerPtr tagteam_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -134,7 +134,7 @@ public class tagteam
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] + 256 * colorram[tile_index];
+		int code = videoram.read(tile_index)+ 256 * colorram[tile_index];
 		int color = palettebank * 2; // GUESS
 	
 		SET_TILE_INFO(0, code, color, 0)
@@ -157,15 +157,15 @@ public class tagteam
 	
 		for (offs = 0; offs < 0x20; offs += 4)
 		{
-			int spritebank = (videoram[offs] & 0x30) << 4;
-			int code = videoram[offs + 1] + 256 * spritebank;
+			int spritebank = (videoram.read(offs)& 0x30) << 4;
+			int code = videoram.read(offs + 1)+ 256 * spritebank;
 			int color = 1 + 2 * palettebank; // GUESS
-			int flipx = videoram[offs] & 0x04;
-			int flipy = videoram[offs] & 0x02;
-			int sx = 240 - videoram[offs + 3];
-			int sy = 240 - videoram[offs + 2];
+			int flipx = videoram.read(offs)& 0x04;
+			int flipy = videoram.read(offs)& 0x02;
+			int sx = 240 - videoram.read(offs + 3);
+			int sy = 240 - videoram.read(offs + 2);
 	
-			if (!(videoram[offs] & 0x01)) continue;
+			if (!(videoram.read(offs)& 0x01)) continue;
 	
 			if (flip_screen != 0)
 			{
@@ -184,7 +184,7 @@ public class tagteam
 	
 			/* Wrap around */
 	
-			code = videoram[offs + 0x20] + 256 * spritebank;
+			code = videoram.read(offs + 0x20)+ 256 * spritebank;
 			color = palettebank;
 			sy += (flip_screen ? -256 : 256);
 	

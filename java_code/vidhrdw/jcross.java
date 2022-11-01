@@ -73,11 +73,11 @@ public class jcross
 	
 	public static ReadHandlerPtr jcross_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return videoram[offset];
+		return videoram.read(offset);
 	} };
 	public static WriteHandlerPtr jcross_background_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset]=data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap,offset);
 	} };
 	
@@ -97,7 +97,7 @@ public class jcross
 	{
 		SET_TILE_INFO(
 				1,
-				videoram[tile_index],
+				videoram.read(tile_index),
 				0,
 				0)
 	}

@@ -50,7 +50,7 @@ public class mcr3
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index * 2] | (videoram[tile_index * 2 + 1] << 8);
+		int data = videoram.read(tile_index * 2)| (videoram.read(tile_index * 2 + 1)<< 8);
 		int code = (data & 0x3ff) | ((data >> 4) & 0x400);
 		int color = (data >> 12) & 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 10) & 3));
@@ -59,7 +59,7 @@ public class mcr3
 	
 	static void mcrmono_get_bg_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index * 2] | (videoram[tile_index * 2 + 1] << 8);
+		int data = videoram.read(tile_index * 2)| (videoram.read(tile_index * 2 + 1)<< 8);
 		int code = (data & 0x3ff) | ((data >> 4) & 0x400);
 		int color = ((data >> 12) & 3) ^ 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 10) & 3));
@@ -75,7 +75,7 @@ public class mcr3
 	
 	static void spyhunt_get_bg_tile_info(int tile_index)
 	{
-		int data = videoram[tile_index];
+		int data = videoram.read(tile_index);
 		int code = (data & 0x3f) | ((data >> 1) & 0x40);
 		SET_TILE_INFO(0, code, 0, (data & 0x40) ? TILE_FLIPY : 0);
 	}
@@ -168,14 +168,14 @@ public class mcr3
 	
 	public static WriteHandlerPtr mcr3_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 	} };
 	
 	
 	public static WriteHandlerPtr spyhunt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		videoram[offset] = data;
+		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset);
 	} };
 	

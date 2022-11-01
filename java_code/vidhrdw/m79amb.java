@@ -32,11 +32,11 @@ public class m79amb
 	{
 		data = data & ~mask;
 	
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
 			int i,x,y;
 	
-			videoram[offset] = data;
+			videoram.write(offset,data);
 	
 			y = offset / 32;
 			x = 8 * (offset % 32);

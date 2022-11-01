@@ -70,9 +70,9 @@ public class yiear
 	
 	public static WriteHandlerPtr yiear_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
 	} };
@@ -104,8 +104,8 @@ public class yiear
 	static void get_bg_tile_info(int tile_index)
 	{
 		int offs = tile_index * 2;
-		int attr = videoram[offs];
-		int code = videoram[offs + 1] | ((attr & 0x10) << 4);
+		int attr = videoram.read(offs);
+		int code = videoram.read(offs + 1)| ((attr & 0x10) << 4);
 	//	int color = (attr & 0xf0) >> 4;
 		int flags = ((attr & 0x80) ? TILE_FLIPX : 0) | ((attr & 0x40) ? TILE_FLIPY : 0);
 	

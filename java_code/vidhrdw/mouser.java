@@ -121,7 +121,7 @@ public class mouser
 				color_offs = offs%32 + ((256 + 8*(offs/32) - spriteram[offs%32])%256)/8*32;
 	
 				drawgfx(tmpbitmap,Machine->gfx[0],
-						videoram[offs] | (colorram[color_offs]>>5)*256 | ((colorram[color_offs]>>4)&1)*512,
+						videoram.read(offs)| (colorram[color_offs]>>5)*256 | ((colorram[color_offs]>>4)&1)*512,
 						colorram[color_offs]%16,
 						flip_screen_x,flip_screen_y,
 						8*sx,scrolled_y_position,

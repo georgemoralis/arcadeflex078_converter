@@ -74,17 +74,17 @@ public class tankbatt
 	
 	public static WriteHandlerPtr tankbatt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index];
-		int color = videoram[tile_index] >> 2;
+		int code = videoram.read(tile_index);
+		int color = videoram.read(tile_index)>> 2;
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}

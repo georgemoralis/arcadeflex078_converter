@@ -104,11 +104,11 @@ public class jrpacman
 	
 	public static WriteHandlerPtr jrpacman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
 	
-			videoram[offset] = data;
+			videoram.write(offset,data);
 	
 			if (offset < 32)	/* line color - mark whole line as dirty */
 			{
@@ -212,9 +212,9 @@ public class jrpacman
 						}
 	
 						drawgfx(tmpbitmap,Machine->gfx[0],
-								videoram[offs] + 256 * *jrpacman_charbank,
+								videoram.read(offs)+ 256 * *jrpacman_charbank,
 							/* color is set line by line */
-								(videoram[mx] & 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
+								(videoram.read(mx)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 										+ 0x40 * (*jrpacman_palettebank & 1),
 								flipscreen,flipscreen,
 								8*sx,8*sy,
@@ -233,8 +233,8 @@ public class jrpacman
 							}
 	
 							drawgfx(tmpbitmap,Machine->gfx[0],
-									videoram[offs],
-									(videoram[offs + 4*32] & 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
+									videoram.read(offs),
+									(videoram.read(offs + 4*32)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 											+ 0x40 * (*jrpacman_palettebank & 1),
 									flipscreen,flipscreen,
 									8*sx,8*sy,
@@ -251,8 +251,8 @@ public class jrpacman
 							}
 	
 							drawgfx(tmpbitmap,Machine->gfx[0],
-									videoram[offs] + 0x100 * (*jrpacman_charbank & 1),
-									(videoram[offs + 4*32] & 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
+									videoram.read(offs)+ 0x100 * (*jrpacman_charbank & 1),
+									(videoram.read(offs + 4*32)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 											+ 0x40 * (*jrpacman_palettebank & 1),
 									flipscreen,flipscreen,
 									8*sx,8*sy,

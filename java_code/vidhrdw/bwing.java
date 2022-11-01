@@ -69,7 +69,7 @@ public class bwing
 	
 	
 	public static WriteHandlerPtr bwing_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data) { buffered_spriteram[offset] = data; } };
-	public static WriteHandlerPtr bwing_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)  { videoram[offset] = data; tilemap_mark_tile_dirty(charmap, offset); } };
+	public static WriteHandlerPtr bwing_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)  { videoram.write(offset,data); tilemap_mark_tile_dirty(charmap, offset); } };
 	
 	
 	public static ReadHandlerPtr bwing_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -190,7 +190,7 @@ public class bwing
 	
 	INLINE void get_charinfo(int i)
 	{
-		SET_TILE_INFO(0, videoram[i], 0, 0)
+		SET_TILE_INFO(0, videoram.read(i), 0, 0)
 	}
 	
 	INLINE UINT32 bwing_scan_cols(UINT32 col, UINT32 row, UINT32 nc, UINT32 nr)

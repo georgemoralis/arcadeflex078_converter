@@ -58,7 +58,7 @@ public class xxmissio
 		int x = (offset + (xxmissio_xscroll >> 3) ) & 0x1f;
 		offs |= x;
 	
-		videoram[offs] = data;
+		videoram.write(offs,data);
 		dirtybuffer[offs & 0x3ff] = 1;
 	} };
 	public static ReadHandlerPtr xxmissio_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -67,7 +67,7 @@ public class xxmissio
 		int x = (offset + (xxmissio_xscroll >> 3) ) & 0x1f;
 		offs |= x;
 	
-		return videoram[offs];
+		return videoram.read(offs);
 	} };
 	
 	public static WriteHandlerPtr xxmissio_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -112,8 +112,8 @@ public class xxmissio
 					px = x*16;
 					py = y*8;
 	
-					chr = videoram[ offs ] ;
-					col = videoram[ offs + size];
+					chr = videoram.read( offs );
+					col = videoram.read( offs + size);
 					chr = chr + ((col & 0xc0) << 2 );
 					col = col & 0x0f;
 	

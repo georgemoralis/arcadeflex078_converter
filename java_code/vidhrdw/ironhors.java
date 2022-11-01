@@ -98,9 +98,9 @@ public class ironhors
 	
 	public static WriteHandlerPtr ironhors_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (videoram[offset] != data)
+		if (videoram.read(offset)!= data)
 		{
-			videoram[offset] = data;
+			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -156,7 +156,7 @@ public class ironhors
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram[tile_index] + ((colorram[tile_index] & 0x40) << 2) +
+		int code = videoram.read(tile_index)+ ((colorram[tile_index] & 0x40) << 2) +
 			((colorram[tile_index] & 0x20) << 4) + (charbank << 10);
 		int color = (colorram[tile_index] & 0x0f) + 16 * palettebank;
 		int flags = ((colorram[tile_index] & 0x10) ? TILE_FLIPX : 0) |

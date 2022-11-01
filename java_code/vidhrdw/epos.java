@@ -68,7 +68,7 @@ public class epos
 	{
 		int x,y;
 	
-		videoram[offset] = data;
+		videoram.write(offset,data);
 	
 		x = (offset % 136) * 2;
 		y = (offset / 136);
@@ -117,7 +117,7 @@ public class epos
 	
 			for (offs = 0; offs < videoram_size; offs++)
 			{
-				epos_videoram_w(offs, videoram[offs]);
+				epos_videoram_w(offs, videoram.read(offs));
 			}
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
