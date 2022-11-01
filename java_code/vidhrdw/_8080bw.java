@@ -550,13 +550,13 @@ public class _8080bw
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( 8080bw )
+	public static VideoUpdateHandlerPtr 8080bw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_update_p(bitmap, cliprect);
-	}
+	} };
 	
 	
-	static VIDEO_UPDATE( 8080bw_common )
+	static public static VideoUpdateHandlerPtr 8080bw_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -567,7 +567,7 @@ public class _8080bw
 		}
 	
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
-	}
+	} };
 	
 	
 	
@@ -681,7 +681,7 @@ public class _8080bw
 	}
 	
 	
-	static VIDEO_UPDATE( helifire )
+	static public static VideoUpdateHandlerPtr helifire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		int sun_brightness = readinputport(4);
@@ -773,7 +773,7 @@ public class _8080bw
 	
 		/* foreground */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_PEN,8);
-	}
+	} };
 	
 	static void draw_sight(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int x_center, int y_center)
 	{
@@ -841,23 +841,23 @@ public class _8080bw
 	}
 	
 	
-	static VIDEO_UPDATE( seawolf )
+	static public static VideoUpdateHandlerPtr seawolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
 	
 	    draw_sight(bitmap,cliprect,((input_port_0_r(0) & 0x1f) * 8) + 4, 63);
-	}
+	} };
 	
-	static VIDEO_UPDATE( blueshrk )
+	static public static VideoUpdateHandlerPtr blueshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
 	
 	    draw_sight(bitmap,cliprect,((input_port_0_r(0) & 0x7f) * 2) - 12, 63);
-	}
+	} };
 	
-	static VIDEO_UPDATE( desertgu )
+	static public static VideoUpdateHandlerPtr desertgu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
@@ -865,7 +865,7 @@ public class _8080bw
 		draw_sight(bitmap,cliprect,
 				   ((input_port_0_r(0) & 0x7f) * 2) - 30,
 				   ((input_port_2_r(0) & 0x7f) * 2) + 2);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr bowler_bonus_display_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -878,7 +878,7 @@ public class _8080bw
 	} };
 	
 	
-	static VIDEO_UPDATE( bowler )
+	static public static VideoUpdateHandlerPtr bowler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x,y,i;
 	
@@ -928,7 +928,7 @@ public class _8080bw
 	
 			y -= Machine->uifontwidth;
 		}
-	}
+	} };
 	
 	
 	public static PaletteInitHandlerPtr invadpt2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)

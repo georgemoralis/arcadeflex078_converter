@@ -76,7 +76,7 @@ public class ms32
 	static data32_t brt[4];
 	static int brt_r,brt_g,brt_b;
 	
-	VIDEO_START( ms32 )
+	public static VideoUpdateHandlerPtr ms32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		ms32_tx_tilemap = tilemap_create(get_ms32_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		ms32_bg_tilemap = tilemap_create(get_ms32_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
@@ -101,7 +101,7 @@ public class ms32
 		brt[0] = brt[1] = 0xffff;
 	
 		return 0;
-	}
+	} };
 	
 	/********** PALETTE WRITES **********/
 	
@@ -469,7 +469,7 @@ public class ms32
 	
 	
 	
-	VIDEO_UPDATE( ms32 )
+	public static VideoUpdateHandlerPtr ms32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx,scrolly;
 	
@@ -517,5 +517,5 @@ public class ms32
 	if (!keyboard_pressed(KEYCODE_R))
 	#endif
 		ms32_draw_sprites(bitmap,cliprect, ms32_spram, 0x40000);
-	}
+	} };
 }

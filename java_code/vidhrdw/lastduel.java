@@ -90,7 +90,7 @@ public class lastduel
 	
 	***************************************************************************/
 	
-	VIDEO_START( lastduel )
+	public static VideoUpdateHandlerPtr lastduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(ld_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,64);
 		fg_tilemap = tilemap_create(ld_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,64,64);
@@ -107,9 +107,9 @@ public class lastduel
 		sprite_pri_mask = 0x00;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( madgear )
+	public static VideoUpdateHandlerPtr madgear  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,16,16,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,16,16,64,32);
@@ -126,7 +126,7 @@ public class lastduel
 		sprite_pri_mask = 0x10;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -257,7 +257,7 @@ public class lastduel
 		}
 	}
 	
-	VIDEO_UPDATE( lastduel )
+	public static VideoUpdateHandlerPtr lastduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,TILEMAP_BACK,0);
@@ -265,14 +265,14 @@ public class lastduel
 		tilemap_draw(bitmap,cliprect,fg_tilemap,TILEMAP_FRONT,0);
 		draw_sprites(bitmap,cliprect,1);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
 	
-	VIDEO_EOF( lastduel )
+	public static VideoUpdateHandlerPtr lastduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Spriteram is always 1 frame ahead, suggesting buffering.  I can't find
 			a register to control this so I assume it happens automatically
 			every frame at the end of vblank */
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

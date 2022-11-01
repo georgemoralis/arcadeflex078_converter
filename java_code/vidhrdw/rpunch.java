@@ -90,7 +90,7 @@ public class rpunch
 	}
 	
 	
-	VIDEO_START( rpunch )
+	public static VideoUpdateHandlerPtr rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -117,7 +117,7 @@ public class rpunch
 		/* reset the timer */
 		crtc_timer = timer_alloc(crtc_interrupt_gen);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -330,7 +330,7 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( rpunch )
+	public static VideoUpdateHandlerPtr rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int effbins;
 	
@@ -343,5 +343,5 @@ public class rpunch
 		draw_sprites(bitmap,cliprect, effbins, gins);
 		if (rpunch_bitmapram)
 			draw_bitmap(bitmap,cliprect);
-	}
+	} };
 }

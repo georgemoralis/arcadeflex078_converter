@@ -51,7 +51,7 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	VIDEO_START( iqblock )
+	public static VideoUpdateHandlerPtr iqblock  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8, 8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,32,64, 8);
@@ -63,7 +63,7 @@ public class iqblock
 		tilemap_set_scroll_cols(fg_tilemap,64);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -103,12 +103,12 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( iqblock )
+	public static VideoUpdateHandlerPtr iqblock  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (!iqblock_videoenable) return;
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 	
 }

@@ -80,7 +80,7 @@ public class slapfght
 	
 	***************************************************************************/
 	
-	VIDEO_START( perfrman )
+	public static VideoUpdateHandlerPtr perfrman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_pf_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -90,9 +90,9 @@ public class slapfght
 		tilemap_set_transparent_pen(pf1_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( slapfight )
+	public static VideoUpdateHandlerPtr slapfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -103,7 +103,7 @@ public class slapfght
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -204,7 +204,7 @@ public class slapfght
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( perfrman )
+	public static VideoUpdateHandlerPtr perfrman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_flip( pf1_tilemap, flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 		tilemap_set_scrolly( pf1_tilemap ,0 , 0 );
@@ -224,10 +224,10 @@ public class slapfght
 	#ifdef MAME_DEBUG
 		slapfght_log_vram();
 	#endif
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( slapfight )
+	public static VideoUpdateHandlerPtr slapfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -271,5 +271,5 @@ public class slapfght
 	#ifdef MAME_DEBUG
 		slapfght_log_vram();
 	#endif
-	}
+	} };
 }

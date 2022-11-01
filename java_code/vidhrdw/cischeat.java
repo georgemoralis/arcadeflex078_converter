@@ -149,7 +149,7 @@ public class cischeat
 	**************************************************************************/
 	
 	/* 32 colour codes for the tiles */
-	VIDEO_START( cischeat )
+	public static VideoUpdateHandlerPtr cischeat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_megasys1())	return 1;
 	
@@ -158,26 +158,26 @@ public class cischeat
 		prepare_shadows();
 	
 	 	return 0;
-	}
+	} };
 	
 	/**************************************************************************
 								F1 GrandPrix Star
 	**************************************************************************/
 	
 	/* 16 colour codes for the tiles */
-	VIDEO_START( f1gpstar )
+	public static VideoUpdateHandlerPtr f1gpstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_cischeat())	return 1;
 	
 	 	megasys1_bits_per_color_code = 4;
 	
 	 	return 0;
-	}
+	} };
 	
-	VIDEO_START( bigrun )
+	public static VideoUpdateHandlerPtr bigrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return video_start_f1gpstar();
-	}
+	} };
 	
 	
 	
@@ -1140,7 +1140,7 @@ public class cischeat
 									Big Run
 	**************************************************************************/
 	
-	VIDEO_UPDATE( bigrun )
+	public static VideoUpdateHandlerPtr bigrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		int megasys1_active_layers1, flag;
@@ -1186,14 +1186,14 @@ public class cischeat
 		cischeat_tmap_DRAW(2)
 	
 		megasys1_active_layers = megasys1_active_layers1;
-	}
+	} };
 	
 	
 	/**************************************************************************
 									Cisco Heat
 	**************************************************************************/
 	
-	VIDEO_UPDATE( cischeat )
+	public static VideoUpdateHandlerPtr cischeat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int megasys1_active_layers1, flag;
 	
@@ -1240,7 +1240,7 @@ public class cischeat
 	
 	
 		megasys1_active_layers = megasys1_active_layers1;
-	}
+	} };
 	
 	
 	
@@ -1248,7 +1248,7 @@ public class cischeat
 								F1 GrandPrix Star
 	**************************************************************************/
 	
-	VIDEO_UPDATE( f1gpstar )
+	public static VideoUpdateHandlerPtr f1gpstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int megasys1_active_layers1, flag;
 	
@@ -1299,7 +1299,7 @@ public class cischeat
 	
 	
 		megasys1_active_layers = megasys1_active_layers1;
-	}
+	} };
 	
 	
 	
@@ -1312,7 +1312,7 @@ public class cischeat
 		READ16_HANDLER( scudhamm_motor_status_r );
 		READ16_HANDLER( scudhamm_analog_r );
 	
-	VIDEO_UPDATE( scudhamm )
+	public static VideoUpdateHandlerPtr scudhamm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int megasys1_active_layers1, flag;
 		megasys1_active_layers = 0x0d;
@@ -1357,6 +1357,6 @@ public class cischeat
 		cischeat_tmap_DRAW(2)
 	
 		megasys1_active_layers = megasys1_active_layers1;
-	}
+	} };
 	
 }

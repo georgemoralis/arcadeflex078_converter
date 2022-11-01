@@ -297,7 +297,7 @@ public class psychic5
 		SET_TILE_INFO(2, code, color, flags)
 	}
 	
-	VIDEO_START( psychic5 )
+	public static VideoUpdateHandlerPtr psychic5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((psychic5_bg_videoram = auto_malloc(0x1000)) == 0)
 			return 1;
@@ -335,7 +335,7 @@ public class psychic5
 		tilemap_set_transparent_pen(fg_tilemap, 15);
 	
 	    return 0;
-	}
+	} };
 	
 	#define DRAW_SPRITE(code, sx, sy) drawgfx(bitmap, Machine->gfx[0], code, color, flipx, flipy, sx, sy, cliprect, TRANSPARENCY_PEN, 15);
 	
@@ -504,10 +504,10 @@ public class psychic5
 			fillbitmap(bitmap, get_black_pen(), cliprect);
 	}
 	
-	VIDEO_UPDATE( psychic5 )
+	public static VideoUpdateHandlerPtr psychic5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		psychic5_draw_background(bitmap, cliprect);
 		psychic5_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 }

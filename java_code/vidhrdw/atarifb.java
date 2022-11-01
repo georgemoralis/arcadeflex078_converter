@@ -51,7 +51,7 @@ public class atarifb
 	/***************************************************************************
 	***************************************************************************/
 	
-	VIDEO_START( atarifb )
+	public static VideoUpdateHandlerPtr atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic())
 			return 1;
@@ -59,7 +59,7 @@ public class atarifb
 		memset(dirtybuffer, 1, videoram_size);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -69,7 +69,7 @@ public class atarifb
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( atarifb )
+	public static VideoUpdateHandlerPtr atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,obj;
 		int sprite_bank;
@@ -366,5 +366,5 @@ public class atarifb
 		for (x = 0;x < 20;x++)
 				drawgfx(bitmap,Machine->uifont,buf2[x],UI_COLOR_NORMAL,0,0,6*x,0,0,TRANSPARENCY_NONE,0);
 	}
-	}
+	} };
 }

@@ -91,14 +91,14 @@ public class tickee
 	 *
 	 *************************************/
 	
-	VIDEO_START( tickee )
+	public static VideoUpdateHandlerPtr tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* start a timer going on the first scanline of every frame */
 		setup_gun_timer = timer_alloc(setup_gun_interrupts);
 		timer_adjust(setup_gun_timer, cpu_getscanlinetime(0), 0, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -108,7 +108,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( tickee )
+	public static VideoUpdateHandlerPtr tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int v, h, width, xoffs, beamx, beamy;
 		UINT8 *base1 = (UINT8 *)tickee_vram;
@@ -149,6 +149,6 @@ public class tickee
 		/* draw player 2's crosshair */
 		get_crosshair_xy(1, &beamx, &beamy);
 		draw_crosshair(bitmap, beamx, beamy, cliprect);
-	}
+	} };
 	
 }

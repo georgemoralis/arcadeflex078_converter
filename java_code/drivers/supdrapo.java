@@ -265,7 +265,7 @@ public class supdrapo
 		SET_TILE_INFO( 0, code, 0, 0)
 	}
 	
-	VIDEO_START( supdrapo )
+	public static VideoUpdateHandlerPtr supdrapo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -273,13 +273,13 @@ public class supdrapo
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( supdrapo )
+	public static VideoUpdateHandlerPtr supdrapo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	
-	}
+	} };
 	
 	static struct AY8910interface ay8910_interface =
 	{

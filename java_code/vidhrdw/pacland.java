@@ -200,7 +200,7 @@ public class pacland
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( pacland )
+	public static VideoUpdateHandlerPtr pacland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -222,7 +222,7 @@ public class pacland
 		palette_bank = -1;
 	
 		return 0;
-	}
+	} };
 	
 	#define DRAW_SPRITE( code, sx, sy ) \
 			{ drawgfx( bitmap, Machine->gfx[ 2+gfx ], code, color, flipx, flipy, sx, sy, \
@@ -308,7 +308,7 @@ public class pacland
 		}
 	}
 	
-	VIDEO_UPDATE( pacland )
+	public static VideoUpdateHandlerPtr pacland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
@@ -317,5 +317,5 @@ public class pacland
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 1, 0);
 		pacland_draw_sprites(bitmap, 2);
 		pacland_draw_sprites(bitmap, 1);
-	}
+	} };
 }

@@ -101,7 +101,7 @@ public class skykid
 	
 	***************************************************************************/
 	
-	VIDEO_START( skykid )
+	public static VideoUpdateHandlerPtr skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create(get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
@@ -118,7 +118,7 @@ public class skykid
 	
 			return 0;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -222,7 +222,7 @@ public class skykid
 		}
 	}
 	
-	VIDEO_UPDATE( skykid )
+	public static VideoUpdateHandlerPtr skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -264,5 +264,5 @@ public class skykid
 		}
 		if ((priority & 0xf0) == 0x50)
 			skykid_draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

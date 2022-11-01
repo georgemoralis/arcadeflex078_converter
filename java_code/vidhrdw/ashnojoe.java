@@ -190,7 +190,7 @@ public class ashnojoe
 		}
 	}
 	
-	VIDEO_START( ashnojoe )
+	public static VideoUpdateHandlerPtr ashnojoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		joetilemap  =  tilemap_create(get_joe_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		joetilemap2 =  tilemap_create(get_joe_tile_info_2,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -210,9 +210,9 @@ public class ashnojoe
 		tilemap_set_transparent_pen(joetilemap5,15);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( ashnojoe )
+	public static VideoUpdateHandlerPtr ashnojoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 	//	ashnojoe_tilemap_reg[0] & 0x10 // ?? on coin insertion
@@ -230,5 +230,5 @@ public class ashnojoe
 		tilemap_draw(bitmap,cliprect,joetilemap3,0,0);
 		tilemap_draw(bitmap,cliprect,joetilemap, 0,0);
 	
-	}
+	} };
 }

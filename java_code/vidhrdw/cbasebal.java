@@ -50,7 +50,7 @@ public class cbasebal
 	
 	***************************************************************************/
 	
-	VIDEO_START( cbasebal )
+	public static VideoUpdateHandlerPtr cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		cbasebal_textram = auto_malloc(0x1000);
 		cbasebal_scrollram = auto_malloc(0x1000);
@@ -69,7 +69,7 @@ public class cbasebal
 	#define GFX_ELEM_COLORS(gfxn) Machine->gfx[gfxn]->color_granularity
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -194,7 +194,7 @@ public class cbasebal
 		}
 	}
 	
-	VIDEO_UPDATE( cbasebal )
+	public static VideoUpdateHandlerPtr cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (bg_on)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
@@ -206,5 +206,5 @@ public class cbasebal
 	
 		if (text_on)
 			tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 }

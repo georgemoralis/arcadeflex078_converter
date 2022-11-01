@@ -136,7 +136,7 @@ public class _1942
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( 1942 )
+	public static VideoUpdateHandlerPtr 1942  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,16);
@@ -147,7 +147,7 @@ public class _1942
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -249,10 +249,10 @@ public class _1942
 	
 	}
 	
-	VIDEO_UPDATE( 1942 )
+	public static VideoUpdateHandlerPtr 1942  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 }

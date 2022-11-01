@@ -177,7 +177,7 @@ public class yard
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( yard )
+	public static VideoUpdateHandlerPtr yard  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
@@ -190,7 +190,7 @@ public class yard
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -237,7 +237,7 @@ public class yard
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( yard )
+	public static VideoUpdateHandlerPtr yard  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -370,5 +370,5 @@ public class yard
 			           xpos,0,
 					   flip_screen ? &panelvisibleareaflip : &panelvisiblearea,TRANSPARENCY_NONE,0);
 		}
-	}
+	} };
 }

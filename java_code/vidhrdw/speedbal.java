@@ -82,7 +82,7 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	VIDEO_START( speedbal )
+	public static VideoUpdateHandlerPtr speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((bg_dirtybuffer = auto_malloc (speedbal_background_videoram_size)) == 0)
 			return 1;
@@ -102,7 +102,7 @@ public class speedbal
 		memset (bg_dirtybuffer,1,speedbal_background_videoram_size / 2);
 		return 0;
 	
-	}
+	} };
 	
 	
 	
@@ -265,7 +265,7 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	VIDEO_UPDATE( speedbal )
+	public static VideoUpdateHandlerPtr speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		// first background
 		speedbal_draw_background (bitmap);
@@ -275,5 +275,5 @@ public class speedbal
 	
 		// thirth sprites
 		speedbal_draw_sprites (bitmap);
-	}
+	} };
 }

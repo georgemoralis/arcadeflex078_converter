@@ -173,7 +173,7 @@ public class bankp
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( bankp )
+	public static VideoUpdateHandlerPtr bankp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT_COLOR, 8, 8, 32, 32);
@@ -191,9 +191,9 @@ public class bankp
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( bankp )
+	public static VideoUpdateHandlerPtr bankp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* The tilemap has to be shifted to the left in flip screen mode
 			because the visible tilemap data is not centered in video memory */
@@ -226,5 +226,5 @@ public class bankp
 			tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0); // just a guess
 			break;
 		}
-	}
+	} };
 }

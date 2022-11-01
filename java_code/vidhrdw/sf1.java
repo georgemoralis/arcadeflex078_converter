@@ -65,7 +65,7 @@ public class sf1
 	
 	***************************************************************************/
 	
-	VIDEO_START( sf1 )
+	public static VideoUpdateHandlerPtr sf1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,2048,16);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,2048,16);
@@ -78,7 +78,7 @@ public class sf1
 		tilemap_set_transparent_pen(tx_tilemap,3);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -237,7 +237,7 @@ public class sf1
 	}
 	
 	
-	VIDEO_UPDATE( sf1 )
+	public static VideoUpdateHandlerPtr sf1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (sf1_active & 0x20)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
@@ -250,5 +250,5 @@ public class sf1
 			draw_sprites(bitmap,cliprect);
 	
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 }

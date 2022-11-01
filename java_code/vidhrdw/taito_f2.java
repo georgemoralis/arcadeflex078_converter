@@ -155,75 +155,75 @@ public class taito_f2
 	/*    ( spritetype, hide, hideflip, xoffs, yoffs, flipx, flipy, textflipx, textflipy) */
 	/**************************************************************************************/
 	
-	VIDEO_START( taitof2_default )
+	public static VideoUpdateHandlerPtr taitof2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_megab )   /* Megab, Liquidk */
+	public static VideoUpdateHandlerPtr taitof2_megab  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)   /* Megab, Liquidk */
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_quiz )   /* Quiz Crayons, Quiz Jinsei */
+	public static VideoUpdateHandlerPtr taitof2_quiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)   /* Quiz Crayons, Quiz Jinsei */
 	{
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_finalb )
+	public static VideoUpdateHandlerPtr taitof2_finalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,1,1,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_ssi )
+	public static VideoUpdateHandlerPtr taitof2_ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_growl )
+	public static VideoUpdateHandlerPtr taitof2_growl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_ninjak )
+	public static VideoUpdateHandlerPtr taitof2_ninjak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,1,2));
-	}
+	} };
 	
-	VIDEO_START( taitof2_qzchikyu )
+	public static VideoUpdateHandlerPtr taitof2_qzchikyu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,0,4,0,0,-4,0,-11,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_solfigtr )
+	public static VideoUpdateHandlerPtr taitof2_solfigtr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,-3,0,0,6,0,6,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_koshien )
+	public static VideoUpdateHandlerPtr taitof2_koshien  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,1,-1,0,0,2,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_gunfront )
+	public static VideoUpdateHandlerPtr taitof2_gunfront  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_thundfox )
+	public static VideoUpdateHandlerPtr taitof2_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,-3,0,0,5,0,4,1));
-	}
+	} };
 	
-	VIDEO_START( taitof2_mjnquest )
+	public static VideoUpdateHandlerPtr taitof2_mjnquest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int failed = (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));	/* non-zero = failure */
 		if (!failed)  TC0100SCN_set_bg_tilemask(0x7fff);
 	
 		return failed;
-	}
+	} };
 	
-	VIDEO_START( taitof2_footchmp )
+	public static VideoUpdateHandlerPtr taitof2_footchmp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int failed;
 		f2_tilemap_xoffs = 0x1d;
@@ -234,9 +234,9 @@ public class taito_f2
 	
 		f2_game = FOOTCHMP;
 		return failed;
-	}
+	} };
 	
-	VIDEO_START( taitof2_hthero )
+	public static VideoUpdateHandlerPtr taitof2_hthero  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int failed;
 		f2_tilemap_xoffs = 0x33;
@@ -247,70 +247,70 @@ public class taito_f2
 	
 		f2_game = FOOTCHMP;
 		return failed;
-	}
+	} };
 	
-	VIDEO_START( taitof2_deadconx )
+	public static VideoUpdateHandlerPtr taitof2_deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_tilemap_xoffs = 0x1e;
 		f2_tilemap_yoffs = 0x08;
 		f2_text_xoffs = -1;
 		f2_tilemap_col_base = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_deadconj )
+	public static VideoUpdateHandlerPtr taitof2_deadconj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_tilemap_xoffs = 0x34;
 		f2_tilemap_yoffs = - 0x05;
 		f2_text_xoffs = -1;
 		f2_tilemap_col_base = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_metalb )
+	public static VideoUpdateHandlerPtr taitof2_metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_tilemap_xoffs = 0x32;
 		f2_tilemap_yoffs = - 0x04;
 		f2_text_xoffs = 1;	/* not the usual -1 */
 		f2_tilemap_col_base = 256;   /* separate palette area for tilemaps */
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_yuyugogo )
+	public static VideoUpdateHandlerPtr taitof2_yuyugogo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(1,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_yesnoj )
+	public static VideoUpdateHandlerPtr taitof2_yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_dinorex )
+	public static VideoUpdateHandlerPtr taitof2_dinorex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_dondokod )	/* dondokod, cameltry */
+	public static VideoUpdateHandlerPtr taitof2_dondokod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	/* dondokod, cameltry */
 	{
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_pulirula )
+	public static VideoUpdateHandlerPtr taitof2_pulirula  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_pivot_xdisp = -10;	/* alignment seems correct (see level 2, falling */
 		f2_pivot_ydisp = 16;	/* block of ice after armour man) */
 		return (taitof2_core_vh_start(2,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_driftout )
+	public static VideoUpdateHandlerPtr taitof2_driftout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 16;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
 	
 	/********************************************************
@@ -829,14 +829,14 @@ public class taito_f2
 		}
 	}
 	
-	VIDEO_EOF( taitof2_no_buffer )
+	public static VideoUpdateHandlerPtr taitof2_no_buffer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_update_sprites_active_area();
 	
 		prepare_sprites = 1;
-	}
+	} };
 	
-	VIDEO_EOF( taitof2_full_buffer_delayed )
+	public static VideoUpdateHandlerPtr taitof2_full_buffer_delayed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -847,9 +847,9 @@ public class taito_f2
 		for (i = 0;i < spriteram_size/2;i++)
 			spriteram_buffered[i] = spriteram16[i];
 		memcpy(spriteram_delayed,spriteram16,spriteram_size);
-	}
+	} };
 	
-	VIDEO_EOF( taitof2_partial_buffer_delayed )
+	public static VideoUpdateHandlerPtr taitof2_partial_buffer_delayed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -860,9 +860,9 @@ public class taito_f2
 		for (i = 0;i < spriteram_size/2;i += 4)
 			spriteram_buffered[i] = spriteram16[i];
 		memcpy(spriteram_delayed,spriteram16,spriteram_size);
-	}
+	} };
 	
-	VIDEO_EOF( taitof2_partial_buffer_delayed_thundfox )
+	public static VideoUpdateHandlerPtr taitof2_partial_buffer_delayed_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -877,9 +877,9 @@ public class taito_f2
 			spriteram_buffered[i+4] = spriteram16[i+4];
 		}
 		memcpy(spriteram_delayed,spriteram16,spriteram_size);
-	}
+	} };
 	
-	VIDEO_EOF( taitof2_partial_buffer_delayed_qzchikyu )
+	public static VideoUpdateHandlerPtr taitof2_partial_buffer_delayed_qzchikyu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* spriteram[2] and [3] are 1 frame behind...
 		   probably thundfox_eof_callback would work fine */
@@ -900,11 +900,11 @@ public class taito_f2
 			spriteram_buffered[i+7] = spriteram16[i+7];	// not needed?
 		}
 		memcpy(spriteram_delayed,spriteram16,spriteram_size);
-	}
+	} };
 	
 	
 	/* SSI */
-	VIDEO_UPDATE( ssi )
+	public static VideoUpdateHandlerPtr ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_handle_sprite_buffering();
 	
@@ -913,10 +913,10 @@ public class taito_f2
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		draw_sprites(bitmap,cliprect,NULL);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( yesnoj )
+	public static VideoUpdateHandlerPtr yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_handle_sprite_buffering();
 	
@@ -928,10 +928,10 @@ public class taito_f2
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,TC0100SCN_bottomlayer(0),0,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,TC0100SCN_bottomlayer(0)^1,0,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,2,0,0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( taitof2 )
+	public static VideoUpdateHandlerPtr taitof2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_handle_sprite_buffering();
 	
@@ -943,10 +943,10 @@ public class taito_f2
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,TC0100SCN_bottomlayer(0)^1,0,0);
 		draw_sprites(bitmap,cliprect,NULL);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,2,0,0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( taitof2_pri )
+	public static VideoUpdateHandlerPtr taitof2_pri  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int tilepri[3];
 		int spritepri[4];
@@ -998,7 +998,7 @@ public class taito_f2
 			usrintf_showmessage(buf);
 		}
 	#endif
-	}
+	} };
 	
 	
 	
@@ -1012,7 +1012,7 @@ public class taito_f2
 	}
 	
 	
-	VIDEO_UPDATE( taitof2_pri_roz )
+	public static VideoUpdateHandlerPtr taitof2_pri_roz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int tilepri[3];
 		int spritepri[4];
@@ -1081,12 +1081,12 @@ public class taito_f2
 	
 			draw_sprites(bitmap,cliprect,primasks);
 		}
-	}
+	} };
 	
 	
 	
 	/* Thunderfox */
-	VIDEO_UPDATE( thundfox )
+	public static VideoUpdateHandlerPtr thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int tilepri[2][3];
 		int spritepri[4];
@@ -1183,7 +1183,7 @@ public class taito_f2
 			TC0100SCN_tilemap_draw(bitmap,cliprect,1,layer[1][2],0,0);
 			TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0][2],0,0);
 		}
-	}
+	} };
 	
 	
 	
@@ -1215,7 +1215,7 @@ public class taito_f2
 	
 	********************************************************************/
 	
-	VIDEO_UPDATE( metalb )
+	public static VideoUpdateHandlerPtr metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 tilepri[5];
@@ -1277,11 +1277,11 @@ public class taito_f2
 		*/
 	
 		TC0480SCP_tilemap_draw(bitmap,cliprect,layer[4],0,0);
-	}
+	} };
 	
 	
 	/* Deadconx, Footchmp */
-	VIDEO_UPDATE( deadconx )
+	public static VideoUpdateHandlerPtr deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 tilepri[5];
@@ -1343,5 +1343,5 @@ public class taito_f2
 		*/
 	
 		TC0480SCP_tilemap_draw(bitmap,cliprect,layer[4],0,0);
-	}
+	} };
 }

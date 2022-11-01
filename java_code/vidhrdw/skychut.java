@@ -49,7 +49,7 @@ public class skychut
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( skychut )
+	public static VideoUpdateHandlerPtr skychut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		if (get_vh_global_attribute_changed())
@@ -113,7 +113,7 @@ public class skychut
 					8*sx,8*sy,
 					cliprect,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
 	
 	static void iremm15_drawgfx(struct mame_bitmap *bitmap, int ch,
@@ -142,7 +142,7 @@ public class skychut
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( iremm15 )
+	public static VideoUpdateHandlerPtr iremm15  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		if (get_vh_global_attribute_changed())
@@ -169,6 +169,6 @@ public class skychut
 		}
 	
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 	
 }

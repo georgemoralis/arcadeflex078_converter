@@ -87,7 +87,7 @@ public class wiping
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( wiping )
+	public static VideoUpdateHandlerPtr wiping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -229,5 +229,5 @@ public class wiping
 		}
 	}
 	#endif
-	}
+	} };
 }

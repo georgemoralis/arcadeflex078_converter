@@ -186,7 +186,7 @@ public class vector
 	 * Initializes vector game video emulation
 	 */
 	
-	VIDEO_START( vector )
+	public static VideoUpdateHandlerPtr vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -244,7 +244,7 @@ public class vector
 		vector_set_gamma (gamma_correction);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*
@@ -717,7 +717,7 @@ public class vector
 		}
 	}
 	
-	VIDEO_UPDATE( vector )
+	public static VideoUpdateHandlerPtr vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		point *curpoint;
@@ -784,7 +784,7 @@ public class vector
 		}
 	
 		vector_dirty_list[dirty_index] = VECTOR_PIXEL_END;
-	}
+	} };
 	
 	#endif /* if !(defined xgl) */
 }

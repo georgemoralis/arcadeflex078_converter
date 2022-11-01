@@ -28,7 +28,7 @@ public class mnight
 	static int       bg_enable = 1;
 	static int       sp_overdraw = 0;
 	
-	VIDEO_START( mnight )
+	public static VideoUpdateHandlerPtr mnight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((bg_dirtybuffer = auto_malloc(1024)) == 0)
 			return 1;
@@ -42,7 +42,7 @@ public class mnight
 		memset(bg_dirtybuffer,1,1024);
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr mnight_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -195,7 +195,7 @@ public class mnight
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( mnight )
+	public static VideoUpdateHandlerPtr mnight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx,scrolly;
 	
@@ -220,5 +220,5 @@ public class mnight
 			mnight_draw_foreground(bitmap);
 		}
 	
-	}
+	} };
 }

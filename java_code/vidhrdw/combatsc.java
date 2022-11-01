@@ -227,7 +227,7 @@ public class combatsc
 	
 	***************************************************************************/
 	
-	VIDEO_START( combasc )
+	public static VideoUpdateHandlerPtr combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		combasc_vreg = -1;
 	
@@ -252,9 +252,9 @@ public class combatsc
 		}
 	
 		return 1;
-	}
+	} };
 	
-	VIDEO_START( combascb )
+	public static VideoUpdateHandlerPtr combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		combasc_vreg = -1;
 	
@@ -280,7 +280,7 @@ public class combatsc
 		}
 	
 		return 1;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -489,7 +489,7 @@ public class combatsc
 	}
 	
 	
-	VIDEO_UPDATE( combasc )
+	public static VideoUpdateHandlerPtr combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -572,7 +572,7 @@ public class combatsc
 			clip.min_x = clip.max_x - 7;
 			fillbitmap(bitmap,Machine->pens[0],&clip);
 		}
-	}
+	} };
 	
 	
 	
@@ -648,7 +648,7 @@ public class combatsc
 		}
 	}
 	
-	VIDEO_UPDATE( combascb )
+	public static VideoUpdateHandlerPtr combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -676,5 +676,5 @@ public class combatsc
 		}
 	
 		tilemap_draw( bitmap,cliprect,textlayer,0,0);
-	}
+	} };
 }

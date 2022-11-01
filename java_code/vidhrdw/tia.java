@@ -204,7 +204,7 @@ public class tia
 	} };
 	
 	
-	VIDEO_START( tia )
+	public static VideoUpdateHandlerPtr tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int cx = Machine->drv->screen_width;
 		int cy = Machine->drv->screen_height;
@@ -218,14 +218,14 @@ public class tia
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( tia )
+	public static VideoUpdateHandlerPtr tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap, helper[1 - current_bitmap], 0, 0, 0, 0,
 			cliprect, TRANSPARENCY_NONE, 0);
-	}
+	} };
 	
 	
 	static void draw_sprite_helper(UINT8* p, int horz,

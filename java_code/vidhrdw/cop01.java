@@ -116,7 +116,7 @@ public class cop01
 	
 	***************************************************************************/
 	
-	VIDEO_START( cop01 )
+	public static VideoUpdateHandlerPtr cop01  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,      8,8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -131,7 +131,7 @@ public class cop01
 		tilemap_set_transmask(bg_tilemap,1,0x0fff,0xf000); /* split type 1 has pens 0-11 transparent in front half */
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -230,7 +230,7 @@ public class cop01
 	}
 	
 	
-	VIDEO_UPDATE( cop01 )
+	public static VideoUpdateHandlerPtr cop01  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap,0,mightguy_vreg[1] + 256 * (mightguy_vreg[2] & 1));
 		tilemap_set_scrolly(bg_tilemap,0,mightguy_vreg[3]);
@@ -239,5 +239,5 @@ public class cop01
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0 );
-	}
+	} };
 }

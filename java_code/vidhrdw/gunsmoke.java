@@ -99,7 +99,7 @@ public class gunsmoke
 	
 	
 	
-	VIDEO_START( gunsmoke )
+	public static VideoUpdateHandlerPtr gunsmoke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((bgbitmap = auto_bitmap_alloc(9*32,9*32)) == 0)
 			return 1;
@@ -110,7 +110,7 @@ public class gunsmoke
 		memset (bgmap, 0xff, sizeof (bgmap));
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -160,7 +160,7 @@ public class gunsmoke
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( gunsmoke )
+	public static VideoUpdateHandlerPtr gunsmoke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy;
 		int bg_scrolly, bg_scrollx;
@@ -302,5 +302,5 @@ public class gunsmoke
 						&Machine->visible_area,TRANSPARENCY_COLOR,79);
 			}
 		}
-	}
+	} };
 }

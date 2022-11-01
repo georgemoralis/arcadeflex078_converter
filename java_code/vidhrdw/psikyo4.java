@@ -137,7 +137,7 @@ public class psikyo4
 		}
 	}
 	
-	VIDEO_UPDATE( psikyo4 )
+	public static VideoUpdateHandlerPtr psikyo4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#if DUAL_SCREEN
 		{
@@ -181,12 +181,12 @@ public class psikyo4
 		}
 	#endif
 	#endif
-	}
+	} };
 	
-	VIDEO_START( psikyo4 )
+	public static VideoUpdateHandlerPtr psikyo4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		Machine->gfx[0]->color_granularity=32; /* 256 colour sprites with palette selectable on 32 colour boundaries */
 		screen = 0;
 		return 0;
-	}
+	} };
 }

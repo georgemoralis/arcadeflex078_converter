@@ -128,7 +128,7 @@ public class brkthru
 		}
 	} };
 	
-	VIDEO_START( brkthru )
+	public static VideoUpdateHandlerPtr brkthru  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,16);
@@ -143,7 +143,7 @@ public class brkthru
 		tilemap_set_transparent_pen( bg_tilemap, 0 );
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -294,7 +294,7 @@ public class brkthru
 			}
 		}
 	
-	VIDEO_UPDATE( brkthru )
+	public static VideoUpdateHandlerPtr brkthru  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 		{
 		tilemap_set_scrollx(bg_tilemap,0, bgscroll);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY,0);
@@ -313,5 +313,5 @@ public class brkthru
 	
 	/*	show_register(bitmap,8,8,(unsigned long)flipscreen); */
 	
-	}
+	} };
 }

@@ -97,7 +97,7 @@ public class lemmings
 				0)
 	}
 	
-	VIDEO_START( lemmings )
+	public static VideoUpdateHandlerPtr lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bitmap0 = bitmap_alloc(2048,256);
 		vram_tilemap = tilemap_create(get_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -114,9 +114,9 @@ public class lemmings
 		fillbitmap(bitmap0,0x100,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_STOP( lemmings )
+	public static VideoUpdateHandlerPtr lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (bitmap0)
 			bitmap_free(bitmap0);
@@ -128,13 +128,13 @@ public class lemmings
 			free(sprite_triple_buffer_0);
 		if (sprite_triple_buffer_1)
 			free(sprite_triple_buffer_1);
-	}
+	} };
 	
-	VIDEO_EOF( lemmings )
+	public static VideoUpdateHandlerPtr lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		memcpy(sprite_triple_buffer_0,buffered_spriteram16,0x800);
 		memcpy(sprite_triple_buffer_1,buffered_spriteram16_2,0x800);
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -186,7 +186,7 @@ public class lemmings
 		tilemap_mark_tile_dirty(vram_tilemap,offset);
 	}
 	
-	VIDEO_UPDATE( lemmings )
+	public static VideoUpdateHandlerPtr lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x1=-lemmings_control_data[0],x0=-lemmings_control_data[2],i,y=0;
 		struct rectangle rect;
@@ -220,5 +220,5 @@ public class lemmings
 		lemmings_drawsprites(bitmap,sprite_triple_buffer_1,1,0x2000);
 		tilemap_draw(bitmap,cliprect,vram_tilemap,0,0);
 		lemmings_drawsprites(bitmap,sprite_triple_buffer_0,0,0x2000);
-	}
+	} };
 }

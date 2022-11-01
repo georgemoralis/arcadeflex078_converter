@@ -93,7 +93,7 @@ public class exprraid
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( exprraid )
+	public static VideoUpdateHandlerPtr exprraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
@@ -111,7 +111,7 @@ public class exprraid
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void exprraid_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -154,11 +154,11 @@ public class exprraid
 		}
 	}
 	
-	VIDEO_UPDATE( exprraid )
+	public static VideoUpdateHandlerPtr exprraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		exprraid_draw_sprites(bitmap);
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 1, 0);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
-	}
+	} };
 }

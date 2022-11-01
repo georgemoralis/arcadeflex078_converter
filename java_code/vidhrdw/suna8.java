@@ -188,9 +188,9 @@ public class suna8
 		return 0;
 	}
 	
-	VIDEO_START( suna8_textdim0 )	{ return suna8_vh_start_common(0);  }
-	VIDEO_START( suna8_textdim8 )	{ return suna8_vh_start_common(8);  }
-	VIDEO_START( suna8_textdim12 )	{ return suna8_vh_start_common(12); }
+	public static VideoUpdateHandlerPtr suna8_textdim0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(0);  } };
+	public static VideoUpdateHandlerPtr suna8_textdim8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(8);  } };
+	public static VideoUpdateHandlerPtr suna8_textdim12  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(12); } };
 	
 	/***************************************************************************
 	
@@ -413,7 +413,7 @@ public class suna8
 	*/
 	#define TILEMAPS 0
 	
-	VIDEO_UPDATE( suna8 )
+	public static VideoUpdateHandlerPtr suna8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#ifdef MAME_DEBUG
 	#if TILEMAPS
@@ -461,5 +461,5 @@ public class suna8
 			suna8_draw_normal_sprites(bitmap,cliprect);
 			suna8_draw_text_sprites(bitmap,cliprect);
 		}
-	}
+	} };
 }

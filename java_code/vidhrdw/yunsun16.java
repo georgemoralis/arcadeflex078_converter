@@ -108,7 +108,7 @@ public class yunsun16
 	
 	static int sprites_scrolldx, sprites_scrolldy;
 	
-	VIDEO_START( yunsun16 )
+	public static VideoUpdateHandlerPtr yunsun16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0,yunsun16_tilemap_scan_pages,
 									TILEMAP_TRANSPARENT,
@@ -133,7 +133,7 @@ public class yunsun16
 		tilemap_set_transparent_pen(tilemap_0,0xff);
 		tilemap_set_transparent_pen(tilemap_1,0xff);
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -213,7 +213,7 @@ public class yunsun16
 	***************************************************************************/
 	
 	
-	VIDEO_UPDATE( yunsun16 )
+	public static VideoUpdateHandlerPtr yunsun16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(tilemap_0, 0, yunsun16_scroll_0[ 0 ]);
 		tilemap_set_scrolly(tilemap_0, 0, yunsun16_scroll_0[ 1 ]);
@@ -245,5 +245,5 @@ public class yunsun16
 			sect_rect(&clip,cliprect);
 			fillbitmap(bitmap,Machine->pens[0],&clip);
 		}
-	}
+	} };
 }

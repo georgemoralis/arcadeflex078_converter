@@ -90,7 +90,7 @@ public class gaelco
 	
 	***************************************************************************/
 	
-	VIDEO_START( bigkarnk )
+	public static VideoUpdateHandlerPtr bigkarnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -111,9 +111,9 @@ public class gaelco
 		}
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( maniacsq )
+	public static VideoUpdateHandlerPtr maniacsq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -134,7 +134,7 @@ public class gaelco
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -237,7 +237,7 @@ public class gaelco
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( maniacsq )
+	public static VideoUpdateHandlerPtr maniacsq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, gaelco_vregs[0]);
@@ -265,9 +265,9 @@ public class gaelco
 		tilemap_draw(bitmap,cliprect,pant[1],0,0);
 		tilemap_draw(bitmap,cliprect,pant[0],0,0);
 		gaelco_draw_sprites(bitmap,cliprect,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( bigkarnk )
+	public static VideoUpdateHandlerPtr bigkarnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, gaelco_vregs[0]);
@@ -305,5 +305,5 @@ public class gaelco
 		tilemap_draw(bitmap,cliprect,pant[0],TILEMAP_FRONT | 0,0);
 	
 		gaelco_draw_sprites(bitmap,cliprect,4);
-	}
+	} };
 }

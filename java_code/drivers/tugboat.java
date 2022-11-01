@@ -117,7 +117,7 @@ public class tugboat
 		}
 	}
 	
-	VIDEO_UPDATE( tugboat )
+	public static VideoUpdateHandlerPtr tugboat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int startaddr0 = hd46505_0_reg[0x0c]*256 + hd46505_0_reg[0x0d];
 		int startaddr1 = hd46505_1_reg[0x0c]*256 + hd46505_1_reg[0x0d];
@@ -125,7 +125,7 @@ public class tugboat
 	
 		draw_tilemap(bitmap,cliprect,startaddr0,0,1,TRANSPARENCY_NONE);
 		draw_tilemap(bitmap,cliprect,startaddr1,2,3,TRANSPARENCY_PEN);
-	}
+	} };
 	
 	
 	

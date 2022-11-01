@@ -98,7 +98,7 @@ public class seicross
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( seicross )
+	public static VideoUpdateHandlerPtr seicross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -109,7 +109,7 @@ public class seicross
 		tilemap_set_scroll_cols(bg_tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
 	static void seicross_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -152,7 +152,7 @@ public class seicross
 		}
 	}
 	
-	VIDEO_UPDATE( seicross )
+	public static VideoUpdateHandlerPtr seicross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int col;
 	
@@ -163,5 +163,5 @@ public class seicross
 	
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		seicross_draw_sprites(bitmap);
-	}
+	} };
 }

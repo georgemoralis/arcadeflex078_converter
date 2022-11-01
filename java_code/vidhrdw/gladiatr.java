@@ -85,7 +85,7 @@ public class gladiatr
 	} };
 	
 	
-	VIDEO_START( gladiatr ){
+	public static VideoUpdateHandlerPtr gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sprite_bank = 2;
 	
 		dirtybuffer = auto_malloc(64*32);
@@ -96,7 +96,7 @@ public class gladiatr
 			return 1;
 		memset(dirtybuffer,1,64*32);
 		return 0;
-	}
+	} };
 	
 	
 	static void render_background( struct mame_bitmap *bitmap );
@@ -258,7 +258,7 @@ public class gladiatr
 	
 	
 	
-	VIDEO_UPDATE( gladiatr )
+	public static VideoUpdateHandlerPtr gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_attributes & 0x20)	/* screen refresh enable? */
 		{
@@ -266,5 +266,5 @@ public class gladiatr
 			render_sprites( bitmap );
 			render_text( bitmap );
 		}
-	}
+	} };
 }

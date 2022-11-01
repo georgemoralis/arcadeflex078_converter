@@ -336,7 +336,7 @@ public class thepit
 	}
 	
 	
-	VIDEO_UPDATE( thepit )
+	public static VideoUpdateHandlerPtr thepit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -355,5 +355,5 @@ public class thepit
 	
 		/* high priority sprites */
 		drawsprites(bitmap,1);
-	}
+	} };
 }

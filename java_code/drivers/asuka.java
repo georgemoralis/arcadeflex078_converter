@@ -991,10 +991,10 @@ public class asuka
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	VIDEO_EOF( asuka )
+	public static VideoUpdateHandlerPtr asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		PC090OJ_eof_callback();
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( bonzeadv )

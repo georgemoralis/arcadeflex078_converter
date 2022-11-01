@@ -68,7 +68,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	VIDEO_START( gridlee )
+	public static VideoUpdateHandlerPtr gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate a local copy of video RAM */
 		local_videoram = auto_malloc(256 * 256);
@@ -78,7 +78,7 @@ public class gridlee
 		/* reset the palette */
 		palettebank_vis = 0;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -140,7 +140,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( gridlee )
+	public static VideoUpdateHandlerPtr gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pen_t *pens = &Machine->pens[palettebank_vis * 32];
 		int x, y, i;
@@ -219,5 +219,5 @@ public class gridlee
 					ypos = 239 - ypos;
 			}
 		}
-	}
+	} };
 }

@@ -208,7 +208,7 @@ public class docastle
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( docastle )
+	public static VideoUpdateHandlerPtr docastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -225,7 +225,7 @@ public class docastle
 		tilemap_set_transparent_pen(fg_tilemap, 256);
 	
 		return 0;
-	}
+	} };
 	
 	static void docastle_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -318,10 +318,10 @@ public class docastle
 		}
 	}
 	
-	VIDEO_UPDATE( docastle )
+	public static VideoUpdateHandlerPtr docastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		docastle_draw_sprites(bitmap);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
-	}
+	} };
 }

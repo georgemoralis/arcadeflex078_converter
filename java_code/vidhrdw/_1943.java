@@ -116,7 +116,7 @@ public class _1943
 	
 	
 	
-	VIDEO_START( 1943 )
+	public static VideoUpdateHandlerPtr 1943  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sc2bitmap = auto_bitmap_alloc(9*32,8*32)) == 0)
 			return 1;
@@ -131,7 +131,7 @@ public class _1943
 		memset (sc1map, 0xff, sizeof (sc1map));
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -185,7 +185,7 @@ public class _1943
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( 1943 )
+	public static VideoUpdateHandlerPtr 1943  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy;
 		int bg_scrolly, bg_scrollx;
@@ -386,5 +386,5 @@ public class _1943
 						cliprect,TRANSPARENCY_COLOR,79);
 			}
 		}
-	}
+	} };
 }

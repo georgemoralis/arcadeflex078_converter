@@ -38,7 +38,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	VIDEO_START( shuuz )
+	public static VideoUpdateHandlerPtr shuuz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -86,7 +86,7 @@ public class shuuz
 		if (!atarimo_init(0, &modesc))
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -96,7 +96,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( shuuz )
+	public static VideoUpdateHandlerPtr shuuz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -145,5 +145,5 @@ public class shuuz
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

@@ -55,7 +55,7 @@ public class srumbler
 	
 	***************************************************************************/
 	
-	VIDEO_START( srumbler )
+	public static VideoUpdateHandlerPtr srumbler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,    16,16,64,64);
@@ -69,7 +69,7 @@ public class srumbler
 		tilemap_set_transmask(bg_tilemap,1,0x07ff,0xf800); /* split type 1 has pens 0-10 transparent in front half */
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -176,16 +176,16 @@ public class srumbler
 	}
 	
 	
-	VIDEO_UPDATE( srumbler )
+	public static VideoUpdateHandlerPtr srumbler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( srumbler )
+	public static VideoUpdateHandlerPtr srumbler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

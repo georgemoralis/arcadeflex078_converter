@@ -134,7 +134,7 @@ public class mystston
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( mystston )
+	public static VideoUpdateHandlerPtr mystston  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_x, 
 			TILEMAP_OPAQUE, 16, 16, 16, 32);
@@ -151,7 +151,7 @@ public class mystston
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -184,10 +184,10 @@ public class mystston
 		}
 	}
 	
-	VIDEO_UPDATE( mystston )
+	public static VideoUpdateHandlerPtr mystston  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 }

@@ -103,7 +103,7 @@ public class compgolf
 		}
 	} };
 	
-	VIDEO_START( compgolf )
+	public static VideoUpdateHandlerPtr compgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_tilemap = tilemap_create(get_back_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 		text_tilemap = tilemap_create(get_text_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -114,7 +114,7 @@ public class compgolf
 		tilemap_set_transparent_pen(text_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/*
 	preliminary sprite list:
@@ -163,12 +163,12 @@ public class compgolf
 		}
 	}
 	
-	VIDEO_UPDATE( compgolf )
+	public static VideoUpdateHandlerPtr compgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, background_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, text_tilemap, 0, 0);
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
 	public static WriteHandlerPtr compgolf_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

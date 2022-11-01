@@ -35,7 +35,7 @@ public class pkunwar
 	
 	
 	
-	VIDEO_UPDATE( pkunwar )
+	public static VideoUpdateHandlerPtr pkunwar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -120,5 +120,5 @@ public class pkunwar
 						&Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
-	}
+	} };
 }

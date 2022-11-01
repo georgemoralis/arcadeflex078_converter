@@ -236,7 +236,7 @@ public class namconb1
 	
 	/************************************************************************************************/
 	
-	VIDEO_UPDATE( namconb1 )
+	public static VideoUpdateHandlerPtr namconb1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int beamx,beamy;
 	
@@ -252,7 +252,7 @@ public class namconb1
 			beamy = ((readinputport(7))*224)/256;
 			draw_crosshair( bitmap, beamx, beamy, cliprect );
 		}
-	}
+	} };
 	
 	static int NB1objcode2tile( int code )
 	{
@@ -261,7 +261,7 @@ public class namconb1
 		return (code&0x7ff) + bank*0x800;
 	}
 	
-	VIDEO_START( namconb1 )
+	public static VideoUpdateHandlerPtr namconb1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		static void (*get_info[6])(int tile_index) =
@@ -294,7 +294,7 @@ public class namconb1
 			tilemap_palette_bank[i] = -1;
 		}
 		return 0; /* no error */
-	}
+	} };
 	
 	/****************************************************************************************************/
 	
@@ -326,10 +326,10 @@ public class namconb1
 	static void tilemapNB2_get_info4(int tile_index) { tilemapNB2_get_info(tile_index,4,&videoram32[NAMCONB1_FG1BASE/2]); }
 	static void tilemapNB2_get_info5(int tile_index) { tilemapNB2_get_info(tile_index,5,&videoram32[NAMCONB1_FG2BASE/2]); }
 	
-	VIDEO_UPDATE( namconb2 )
+	public static VideoUpdateHandlerPtr namconb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_update_common( bitmap, cliprect, 1 );
-	} /* namconb2_vh_screenrefresh */
+	} }; /* namconb2_vh_screenrefresh */
 	
 	static int NB2objcode2tile( int code )
 	{
@@ -357,7 +357,7 @@ public class namconb1
 		return code;
 	}
 	
-	VIDEO_START( namconb2 )
+	public static VideoUpdateHandlerPtr namconb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		static void (*get_info[6])(int tile_index) =
@@ -390,5 +390,5 @@ public class namconb1
 		}
 	
 		return 0;
-	} /* namconb2_vh_start */
+	} }; /* namconb2_vh_start */
 }

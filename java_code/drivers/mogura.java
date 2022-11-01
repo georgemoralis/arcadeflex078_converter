@@ -59,13 +59,13 @@ public class mogura
 	}
 	
 	
-	VIDEO_START( mogura )
+	public static VideoUpdateHandlerPtr mogura  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mogura_tilemap = tilemap_create(get_mogura_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64, 32);
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( mogura )
+	public static VideoUpdateHandlerPtr mogura  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* tilemap layout is a bit strange ... */
 		struct rectangle clip;
@@ -83,7 +83,7 @@ public class mogura
 		tilemap_set_scrollx(mogura_tilemap,0, -128);
 		tilemap_draw(bitmap,&clip,mogura_tilemap,0,0);
 	
-	}
+	} };
 	
 	public static WriteHandlerPtr mogura_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

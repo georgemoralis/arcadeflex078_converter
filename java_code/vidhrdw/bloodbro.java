@@ -64,7 +64,7 @@ public class bloodbro
 	
 	***************************************************************************/
 	
-	VIDEO_START( bloodbro )
+	public static VideoUpdateHandlerPtr bloodbro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,32,16);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,16);
@@ -77,7 +77,7 @@ public class bloodbro
 		tilemap_set_transparent_pen(tx_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -244,7 +244,7 @@ public class bloodbro
 	
 	
 	
-	VIDEO_UPDATE( bloodbro )
+	public static VideoUpdateHandlerPtr bloodbro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap,0,bloodbro_scroll[0x10]);	/* ? */
 		tilemap_set_scrolly(bg_tilemap,0,bloodbro_scroll[0x11]);	/* ? */
@@ -257,9 +257,9 @@ public class bloodbro
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,1);
 		bloodbro_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( weststry )
+	public static VideoUpdateHandlerPtr weststry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	//	tilemap_set_scrollx(bg_tilemap,0,bloodbro_scroll[0x10]);	/* ? */
 	//	tilemap_set_scrolly(bg_tilemap,0,bloodbro_scroll[0x11]);	/* ? */
@@ -272,10 +272,10 @@ public class bloodbro
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,1);
 		weststry_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( skysmash )
+	public static VideoUpdateHandlerPtr skysmash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap,0,bloodbro_scroll[0x08]);
 		tilemap_set_scrolly(bg_tilemap,0,bloodbro_scroll[0x09]);	/* ? */
@@ -288,7 +288,7 @@ public class bloodbro
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,1);
 		bloodbro_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
 	
 }

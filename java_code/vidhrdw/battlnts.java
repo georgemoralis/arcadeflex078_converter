@@ -47,7 +47,7 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	VIDEO_START( battlnts )
+	public static VideoUpdateHandlerPtr battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 0;
@@ -59,7 +59,7 @@ public class battlnts
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -67,12 +67,12 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( battlnts ){
+	public static VideoUpdateHandlerPtr battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 		K007342_tilemap_update();
 	
 		K007342_tilemap_draw( bitmap, cliprect, 0, TILEMAP_IGNORE_TRANSPARENCY ,0);
 		K007420_sprites_draw( bitmap, cliprect );
 		K007342_tilemap_draw( bitmap, cliprect, 0, 1 | TILEMAP_IGNORE_TRANSPARENCY ,0);
-	}
+	} };
 }

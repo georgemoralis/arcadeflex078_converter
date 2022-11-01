@@ -103,17 +103,17 @@ public class skyarmy
 		}
 	} };
 	
-	VIDEO_START( skyarmy )
+	public static VideoUpdateHandlerPtr skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	        skyarmy_tilemap = tilemap_create(get_skyarmy_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	        tilemap_set_scroll_cols(skyarmy_tilemap,32);
 	        if(!skyarmy_tilemap)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( skyarmy )
+	public static VideoUpdateHandlerPtr skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	        int sx, sy, flipx, flipy, offs,pal;
 	        int i;
@@ -145,7 +145,7 @@ public class skyarmy
 			sx,sy,
 			cliprect,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
 	static int skyarmy_nmi=0;
 	

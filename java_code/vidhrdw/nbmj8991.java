@@ -367,16 +367,16 @@ public class nbmj8991
 	
 	
 	******************************************************************************/
-	VIDEO_START( pstadium )
+	public static VideoUpdateHandlerPtr pstadium  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((pstadium_tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
 		if ((pstadium_videoram = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char))) == 0) return 1;
 		if ((pstadium_paltbl = auto_malloc(0x800 * sizeof(char))) == 0) return 1;
 		memset(pstadium_videoram, 0x00, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char)));
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( pstadium )
+	public static VideoUpdateHandlerPtr pstadium  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		int color;
@@ -406,9 +406,9 @@ public class nbmj8991
 		{
 			fillbitmap(bitmap, Machine->pens[0x00], 0);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( galkoku )
+	public static VideoUpdateHandlerPtr galkoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		int color;
@@ -438,5 +438,5 @@ public class nbmj8991
 		{
 			fillbitmap(bitmap, Machine->pens[0x00], 0);
 		}
-	}
+	} };
 }

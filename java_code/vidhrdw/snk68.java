@@ -84,7 +84,7 @@ public class snk68
 	
 	***************************************************************************/
 	
-	VIDEO_START( pow )
+	public static VideoUpdateHandlerPtr pow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_pow_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -94,9 +94,9 @@ public class snk68
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( searchar )
+	public static VideoUpdateHandlerPtr searchar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_sar_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -106,9 +106,9 @@ public class snk68
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( ikari3 )
+	public static VideoUpdateHandlerPtr ikari3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_ikari3_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -118,7 +118,7 @@ public class snk68
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -225,7 +225,7 @@ public class snk68
 	}
 	
 	
-	VIDEO_UPDATE( pow )
+	public static VideoUpdateHandlerPtr pow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[2047],cliprect);
 	
@@ -238,7 +238,7 @@ public class snk68
 		draw_sprites(bitmap,cliprect,0,0x800);
 	
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
-	}
+	} };
 	
 	
 	static void draw_sprites2(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int j, int z, int pos)
@@ -306,7 +306,7 @@ public class snk68
 	}
 	
 	
-	VIDEO_UPDATE( searchar )
+	public static VideoUpdateHandlerPtr searchar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[2047],cliprect);
 	
@@ -319,6 +319,6 @@ public class snk68
 		draw_sprites2(bitmap,cliprect,4,0x1000,0x800);
 	
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
-	}
+	} };
 	
 }

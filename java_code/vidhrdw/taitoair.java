@@ -79,13 +79,13 @@ public class taitoair
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	VIDEO_START( taitoair )
+	public static VideoUpdateHandlerPtr taitoair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -366,7 +366,7 @@ public class taitoair
 		}
 	}
 	
-	VIDEO_UPDATE( taitoair )
+	public static VideoUpdateHandlerPtr taitoair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		TC0080VCO_tilemap_update();
 	
@@ -418,5 +418,5 @@ public class taitoair
 				fill_poly(bitmap, &q);
 			}
 		}
-	}
+	} };
 }

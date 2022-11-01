@@ -85,7 +85,7 @@ public class lkage
 				0)
 	}
 	
-	VIDEO_START( lkage )
+	public static VideoUpdateHandlerPtr lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tile_bank = fg_tile_bank = 0;
 	
@@ -104,7 +104,7 @@ public class lkage
 		tilemap_set_scrolldx(bg_tilemap,-13,19);
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int priority )
 	{
@@ -183,7 +183,7 @@ public class lkage
 		}
 	}
 	
-	VIDEO_UPDATE( lkage )
+	public static VideoUpdateHandlerPtr lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_x_set(~lkage_vreg[2] & 0x01);
 		flip_screen_y_set(~lkage_vreg[2] & 0x02);
@@ -226,5 +226,5 @@ public class lkage
 		{
 			tilemap_draw( bitmap,cliprect,tx_tilemap,TILEMAP_IGNORE_TRANSPARENCY ,0);
 		}
-	}
+	} };
 }

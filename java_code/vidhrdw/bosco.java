@@ -133,7 +133,7 @@ public class bosco
 		}
 	} };
 	
-	VIDEO_START( bosco )
+	public static VideoUpdateHandlerPtr bosco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int generator;
 		int x,y;
@@ -194,7 +194,7 @@ public class bosco
 		displacement = 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr bosco_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -253,7 +253,7 @@ public class bosco
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( bosco )
+	public static VideoUpdateHandlerPtr bosco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy;
 	
@@ -418,7 +418,7 @@ public class bosco
 				}
 			}
 		}
-	}
+	} };
 	
 	void bosco_vh_interrupt(void)
 	{

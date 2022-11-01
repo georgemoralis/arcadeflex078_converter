@@ -63,7 +63,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	VIDEO_START( fstarfrc )
+	public static VideoUpdateHandlerPtr fstarfrc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(fg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		bg_tilemap = tilemap_create(bg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -79,9 +79,9 @@ public class tecmo16
 		tilemap_set_scrolly(tx_tilemap,0,-16);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( ginkun )
+	public static VideoUpdateHandlerPtr ginkun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(fg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		bg_tilemap = tilemap_create(bg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -95,7 +95,7 @@ public class tecmo16
 		tilemap_set_transparent_pen(tx_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -257,7 +257,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( tecmo16 )
+	public static VideoUpdateHandlerPtr tecmo16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine->pens[0x300],cliprect);
@@ -266,5 +266,5 @@ public class tecmo16
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,4);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

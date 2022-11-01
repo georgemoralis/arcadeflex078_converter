@@ -50,7 +50,7 @@ public class djboy
 		}
 	} };
 	
-	VIDEO_START( djboy )
+	public static VideoUpdateHandlerPtr djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,32);
 		if( background )
@@ -58,7 +58,7 @@ public class djboy
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	static void
 	draw_sprites( struct mame_bitmap *bitmap,const struct rectangle *cliprect )
@@ -120,7 +120,7 @@ public class djboy
 			(b * 0xff) / 0xf );
 	} };
 	
-	VIDEO_UPDATE( djboy )
+	public static VideoUpdateHandlerPtr djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/**
 		 * xx------ msb x
@@ -141,5 +141,5 @@ public class djboy
 	
 		tilemap_draw( bitmap, cliprect,background,0,0 );
 		draw_sprites( bitmap, cliprect );
-	}
+	} };
 }

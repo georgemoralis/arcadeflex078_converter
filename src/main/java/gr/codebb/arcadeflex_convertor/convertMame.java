@@ -20,6 +20,7 @@ public class convertMame {
     static final int INPUTPORTS = 7;
     static final int INTERRUPT = 8;
     static final int PALETTE_INIT=9;
+    static final int VIDEO_UPDATE=10;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -241,6 +242,14 @@ public class convertMame {
                             sUtil.skipLine();
                             continue;
                         }
+                        else
+                        {
+                            sUtil.putString("public static VideoUpdateHandlerPtr " + Convertor.token[0] + "  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)");
+                            type = VIDEO_UPDATE;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
                     }
                     Convertor.inpos = i;
                     break;
@@ -282,7 +291,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT || type==VIDEO_UPDATE) {
                         i3++;
                     }
                 }
@@ -298,7 +307,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT || type==VIDEO_UPDATE) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");

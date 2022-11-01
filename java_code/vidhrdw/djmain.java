@@ -140,7 +140,7 @@ public class djmain
 	{
 	}
 	
-	VIDEO_START( djmain )
+	public static VideoUpdateHandlerPtr djmain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int scrolld[NUM_LAYERS][4][2] = {
 		 	{{ 0, 0}, {0, 0}, {0, 0}, {0, 0}},
@@ -157,9 +157,9 @@ public class djmain
 		K056832_set_LayerOffset(1, -88, -27);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( djmain )
+	public static VideoUpdateHandlerPtr djmain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int enables = K055555_read_register(K55_INPUT_ENABLES);
 		int pri[NUM_LAYERS + 1];
@@ -200,5 +200,5 @@ public class djmain
 					K056832_tilemap_draw_dj(bitmap, cliprect, layer, 0, 1 << i);
 			}
 		}
-	}
+	} };
 }

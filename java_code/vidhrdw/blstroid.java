@@ -47,7 +47,7 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	VIDEO_START( blstroid )
+	public static VideoUpdateHandlerPtr blstroid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -95,7 +95,7 @@ public class blstroid
 		if (!atarimo_init(0, &modesc))
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -148,7 +148,7 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( blstroid )
+	public static VideoUpdateHandlerPtr blstroid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -179,5 +179,5 @@ public class blstroid
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

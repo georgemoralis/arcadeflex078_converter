@@ -78,7 +78,7 @@ public class shadfrce
 	
 	
 	
-	VIDEO_START( shadfrce )
+	public static VideoUpdateHandlerPtr shadfrce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		shadfrce_fgtilemap = tilemap_create(get_shadfrce_fgtile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 			tilemap_set_transparent_pen(shadfrce_fgtilemap,0);
@@ -91,7 +91,7 @@ public class shadfrce
 		shadfrce_spvideoram_old = auto_malloc(spriteram_size);
 	
 		return 0;
-	}
+	} };
 	
 	WRITE16_HANDLER ( shadfrce_bg0scrollx_w )
 	{
@@ -164,7 +164,7 @@ public class shadfrce
 		}
 	}
 	
-	VIDEO_UPDATE( shadfrce )
+	public static VideoUpdateHandlerPtr shadfrce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 	
@@ -186,11 +186,11 @@ public class shadfrce
 		shadfrce_videoregs[6]);
 	*/
 	
-	}
+	} };
 	
-	VIDEO_EOF( shadfrce )
+	public static VideoUpdateHandlerPtr shadfrce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* looks like sprites are *two* frames ahead */
 		memcpy(shadfrce_spvideoram_old,shadfrce_spvideoram,spriteram_size);
-	}
+	} };
 }

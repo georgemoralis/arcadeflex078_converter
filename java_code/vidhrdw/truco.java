@@ -37,7 +37,7 @@ public class truco
 		}
 	} };
 	
-	VIDEO_UPDATE( truco )
+	public static VideoUpdateHandlerPtr truco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data8_t		*vid = memory_region( REGION_CPU1 ) + 0x1800;
 		int x, y;
@@ -57,5 +57,5 @@ public class truco
 	
 			vid += 0x80;
 		}
-	}
+	} };
 }

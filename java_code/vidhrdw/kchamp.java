@@ -67,7 +67,7 @@ public class kchamp
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( kchamp )
+	public static VideoUpdateHandlerPtr kchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -76,7 +76,7 @@ public class kchamp
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/*
 	        Sprites
@@ -145,15 +145,15 @@ public class kchamp
 	}
 	
 	
-	VIDEO_UPDATE( kchamp )
+	public static VideoUpdateHandlerPtr kchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		kchamp_draw_sprites(bitmap);
-	}
+	} };
 	
-	VIDEO_UPDATE( kchampvs )
+	public static VideoUpdateHandlerPtr kchampvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		kchampvs_draw_sprites(bitmap);
-	}
+	} };
 }

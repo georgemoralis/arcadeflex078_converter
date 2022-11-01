@@ -106,7 +106,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	VIDEO_START( itech8 )
+	public static VideoUpdateHandlerPtr itech8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize TMS34061 emulation */
 	    if (tms34061_start(&tms34061intf))
@@ -123,14 +123,14 @@ public class itech8
 		grom_size = memory_region_length(REGION_GFX1);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( slikshot )
+	public static VideoUpdateHandlerPtr slikshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_itech8();
 		slikshot = 1;
 		return result;
-	}
+	} };
 	
 	
 	
@@ -742,7 +742,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( itech8 )
+	public static VideoUpdateHandlerPtr itech8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int y, ty;
 	
@@ -809,5 +809,5 @@ public class itech8
 		/* extra rendering for slikshot */
 		if (slikshot)
 			slikshot_extra_draw(bitmap, cliprect);
-	}
+	} };
 }

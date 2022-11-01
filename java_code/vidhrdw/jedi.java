@@ -36,7 +36,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	VIDEO_START( jedi )
+	public static VideoUpdateHandlerPtr jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate dirty buffer for the foreground characters */
 		fgdirty = dirtybuffer = auto_malloc(videoram_size);
@@ -74,7 +74,7 @@ public class jedi
 		/* reserve color 1024 for black (disabled display) */
 		palette_set_color(1024, 0, 0, 0);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -271,7 +271,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( jedi )
+	public static VideoUpdateHandlerPtr jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int bgexdirty[32][2];
 		int offs;
@@ -394,5 +394,5 @@ public class jedi
 			bounds.max_y = y + (tall ? 31 : 15);
 			fillbitmap(mobitmap, 0, &bounds);
 	    }
-	}
+	} };
 }

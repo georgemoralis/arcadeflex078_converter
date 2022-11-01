@@ -53,10 +53,10 @@ public class coolpool
 	static data16_t dpyadr;
 	static int dpyadrscan;
 	
-	VIDEO_START( coolpool )
+	public static VideoUpdateHandlerPtr coolpool  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return 0;
-	}
+	} };
 	
 	void coolpool_to_shiftreg(unsigned int address, UINT16* shiftreg)
 	{
@@ -100,7 +100,7 @@ public class coolpool
 	}
 	
 	
-	VIDEO_UPDATE( amerdart )
+	public static VideoUpdateHandlerPtr amerdart  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data16_t *base = &ram_base[TOWORD(0x800)];
 		int x, y;
@@ -121,7 +121,7 @@ public class coolpool
 			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, scanline, NULL, -1);
 			base += TOWORD(0x800);
 		}
-	}
+	} };
 	
 	public static InterruptHandlerPtr coolpool_vblank_start = new InterruptHandlerPtr() {public void handler()
 	{
@@ -137,7 +137,7 @@ public class coolpool
 		cpuintrf_pop_context();
 	} };
 	
-	VIDEO_UPDATE( coolpool )
+	public static VideoUpdateHandlerPtr coolpool  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data16_t dpytap, dudate, dumask;
 		int x, y, offset;
@@ -186,7 +186,7 @@ public class coolpool
 			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, scanline, NULL, -1);
 			offset += dudate;
 		}
-	}
+	} };
 	
 	
 	

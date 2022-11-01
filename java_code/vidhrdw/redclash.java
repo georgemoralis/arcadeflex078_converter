@@ -127,7 +127,7 @@ public class redclash
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( redclash )
+	public static VideoUpdateHandlerPtr redclash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
@@ -138,7 +138,7 @@ public class redclash
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void redclash_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -248,11 +248,11 @@ public class redclash
 		}
 	}
 	
-	VIDEO_UPDATE( redclash )
+	public static VideoUpdateHandlerPtr redclash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
 		redclash_draw_sprites(bitmap);
 		redclash_draw_bullets(bitmap);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
-	}
+	} };
 }

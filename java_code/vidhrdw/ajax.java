@@ -74,7 +74,7 @@ public class ajax
 	
 	***************************************************************************/
 	
-	VIDEO_START( ajax )
+	public static VideoUpdateHandlerPtr ajax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 64;
 		layer_colorbase[1] = 0;
@@ -89,7 +89,7 @@ public class ajax
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -99,7 +99,7 @@ public class ajax
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( ajax )
+	public static VideoUpdateHandlerPtr ajax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -122,5 +122,5 @@ public class ajax
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,8);
 	
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
-	}
+	} };
 }

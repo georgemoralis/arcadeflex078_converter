@@ -150,7 +150,7 @@ public class battlane
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( battlane )
+	public static VideoUpdateHandlerPtr battlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info_bg, battlane_tilemap_scan_rows_2x2,
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
@@ -164,7 +164,7 @@ public class battlane
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void battlane_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -256,12 +256,12 @@ public class battlane
 		}
 	}
 	
-	VIDEO_UPDATE( battlane )
+	public static VideoUpdateHandlerPtr battlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_mark_all_tiles_dirty(bg_tilemap); // HACK
 	
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		battlane_draw_sprites(bitmap);
 		battlane_draw_fg_bitmap(bitmap);
-	}
+	} };
 }

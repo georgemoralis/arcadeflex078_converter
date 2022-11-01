@@ -63,7 +63,7 @@ public class pcktgal
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( pcktgal )
+	public static VideoUpdateHandlerPtr pcktgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -72,7 +72,7 @@ public class pcktgal
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void pcktgal_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -107,9 +107,9 @@ public class pcktgal
 		}
 	}
 	
-	VIDEO_UPDATE( pcktgal )
+	public static VideoUpdateHandlerPtr pcktgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		pcktgal_draw_sprites(bitmap);
-	}
+	} };
 }

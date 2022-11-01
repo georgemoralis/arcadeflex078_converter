@@ -47,7 +47,7 @@ public class aeroboto
 	
 	***************************************************************************/
 	
-	VIDEO_START( aeroboto )
+	public static VideoUpdateHandlerPtr aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,64);
 	
@@ -75,7 +75,7 @@ public class aeroboto
 		#endif
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -157,7 +157,7 @@ public class aeroboto
 	}
 	
 	
-	VIDEO_UPDATE( aeroboto )
+	public static VideoUpdateHandlerPtr aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static struct rectangle splitrect1 = { 0, 255, 0, 39 };
 		static struct rectangle splitrect2 = { 0, 255, 40, 255 };
@@ -221,5 +221,5 @@ public class aeroboto
 		// the status display behaves more closely to a 40-line splitscreen than an overlay
 		tilemap_set_scrolly(bg_tilemap,0,0);
 		tilemap_draw(bitmap,&splitrect1,bg_tilemap,0,0);
-	}
+	} };
 }

@@ -94,7 +94,7 @@ public class playch10
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( playch10 )
+	public static VideoUpdateHandlerPtr playch10  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -106,7 +106,7 @@ public class playch10
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -114,7 +114,7 @@ public class playch10
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( playch10 )
+	public static VideoUpdateHandlerPtr playch10  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle top_monitor = Machine->visible_area;
 		struct rectangle bottom_monitor = Machine->visible_area;
@@ -149,5 +149,5 @@ public class playch10
 		{
 			tilemap_draw(bitmap, &top_monitor, bg_tilemap, 0, 0);
 		}
-	}
+	} };
 }

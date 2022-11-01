@@ -108,7 +108,7 @@ public class wolfpack
 	} };
 	
 	
-	VIDEO_START( wolfpack )
+	public static VideoUpdateHandlerPtr wolfpack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT16 val = 0;
 	
@@ -138,7 +138,7 @@ public class wolfpack
 		current_index = 0x80;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void draw_ship(struct mame_bitmap* bitmap, const struct rectangle* cliprect)
@@ -274,7 +274,7 @@ public class wolfpack
 	}
 	
 	
-	VIDEO_UPDATE( wolfpack )
+	public static VideoUpdateHandlerPtr wolfpack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		int j;
@@ -302,10 +302,10 @@ public class wolfpack
 		draw_ship(bitmap, cliprect);
 		draw_torpedo(bitmap, cliprect);
 		draw_water(bitmap, cliprect);
-	}
+	} };
 	
 	
-	VIDEO_EOF( wolfpack )
+	public static VideoUpdateHandlerPtr wolfpack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle rect;
 	
@@ -341,5 +341,5 @@ public class wolfpack
 		}
 	
 		current_index += 0x300 * 262;
-	}
+	} };
 }

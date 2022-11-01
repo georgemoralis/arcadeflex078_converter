@@ -114,7 +114,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	VIDEO_START( exerion )
+	public static VideoUpdateHandlerPtr exerion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT16 *dst;
 		UINT8 *src;
@@ -189,7 +189,7 @@ public class exerion
 		}
 	
 		return video_start_generic();
-	}
+	} };
 	
 	
 	
@@ -378,7 +378,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( exerion )
+	public static VideoUpdateHandlerPtr exerion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sx, sy, offs, i;
 	
@@ -460,5 +460,5 @@ public class exerion
 					exerion_cocktail_flip, exerion_cocktail_flip, x, y,
 					cliprect, TRANSPARENCY_PEN, 0);
 			}
-	}
+	} };
 }

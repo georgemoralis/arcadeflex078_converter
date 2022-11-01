@@ -69,7 +69,7 @@ public class xain
 	
 	***************************************************************************/
 	
-	VIDEO_START( xain )
+	public static VideoUpdateHandlerPtr xain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bgram0_tilemap = tilemap_create(get_bgram0_tile_info,back_scan,    TILEMAP_OPAQUE,     16,16,32,32);
 		bgram1_tilemap = tilemap_create(get_bgram1_tile_info,back_scan,    TILEMAP_TRANSPARENT,16,16,32,32);
@@ -82,7 +82,7 @@ public class xain
 		tilemap_set_transparent_pen(char_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -214,11 +214,11 @@ public class xain
 		}
 	}
 	
-	VIDEO_UPDATE( xain )
+	public static VideoUpdateHandlerPtr xain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bgram0_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,bgram1_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,char_tilemap,0,0);
-	}
+	} };
 }

@@ -83,7 +83,7 @@ public class xxmissio
 	
 	/****************************************************************************/
 	
-	VIDEO_UPDATE( xxmissio )
+	public static VideoUpdateHandlerPtr xxmissio  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int chr,col;
@@ -217,5 +217,5 @@ public class xxmissio
 			}
 		}
 	
-	}
+	} };
 }

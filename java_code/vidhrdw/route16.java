@@ -51,7 +51,7 @@ public class route16
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( route16 )
+	public static VideoUpdateHandlerPtr route16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
 			return 1;
@@ -68,7 +68,7 @@ public class route16
 		video_remap_2 = 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -273,7 +273,7 @@ public class route16
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( route16 )
+	public static VideoUpdateHandlerPtr route16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (video_remap_1)
 		{
@@ -320,7 +320,7 @@ public class route16
 			else
 				copybitmap(bitmap,tmpbitmap1,0,0,0,0,&Machine->visible_area,TRANSPARENCY_COLOR,0);
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	  mofify_pen

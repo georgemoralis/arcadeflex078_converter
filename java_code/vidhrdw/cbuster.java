@@ -68,7 +68,7 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	VIDEO_START( twocrude )
+	public static VideoUpdateHandlerPtr twocrude  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf2_tilemap = tilemap_create(get_back_tile_info2,back_scan,        TILEMAP_OPAQUE,16,16,64,32);
 		pf3_tilemap = tilemap_create(get_back_tile_info3,back_scan,        TILEMAP_TRANSPARENT,16,16,64,32);
@@ -83,7 +83,7 @@ public class cbuster
 		tilemap_set_transparent_pen(pf4_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -231,7 +231,7 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( twocrude )
+	public static VideoUpdateHandlerPtr twocrude  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int pf23_control,pf14_control;
@@ -403,5 +403,5 @@ public class cbuster
 	
 		twocrude_drawsprites(bitmap,cliprect,1);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
-	}
+	} };
 }

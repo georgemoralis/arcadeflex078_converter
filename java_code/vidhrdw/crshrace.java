@@ -44,7 +44,7 @@ public class crshrace
 	
 	***************************************************************************/
 	
-	VIDEO_START( crshrace )
+	public static VideoUpdateHandlerPtr crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		tilemap2 = tilemap_create(get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
@@ -59,7 +59,7 @@ public class crshrace
 		tilemap_set_transparent_pen(tilemap2,0xff);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -197,7 +197,7 @@ public class crshrace
 	}
 	
 	
-	VIDEO_UPDATE( crshrace )
+	public static VideoUpdateHandlerPtr crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (gfxctrl & 0x04)	/* display disable? */
 		{
@@ -224,11 +224,11 @@ public class crshrace
 	usrintf_showmessage("gfxctrl = %02x",gfxctrl);
 				break;
 		}
-	}
+	} };
 	
-	VIDEO_EOF( crshrace )
+	public static VideoUpdateHandlerPtr crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
-	}
+	} };
 }

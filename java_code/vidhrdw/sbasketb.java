@@ -135,7 +135,7 @@ public class sbasketb
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( sbasketb )
+	public static VideoUpdateHandlerPtr sbasketb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -146,7 +146,7 @@ public class sbasketb
 		tilemap_set_scroll_cols(bg_tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
 	static void sbasketb_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -183,9 +183,9 @@ public class sbasketb
 		}
 	}
 	
-	VIDEO_UPDATE( sbasketb )
+	public static VideoUpdateHandlerPtr sbasketb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		sbasketb_draw_sprites(bitmap);
-	}
+	} };
 }

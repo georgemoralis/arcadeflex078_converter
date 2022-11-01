@@ -19,7 +19,7 @@ public class beezer
 			cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
 	} };
 	
-	VIDEO_UPDATE( beezer )
+	public static VideoUpdateHandlerPtr beezer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	
@@ -34,7 +34,7 @@ public class beezer
 			}
 		
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 	
 	public static WriteHandlerPtr beezer_map_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

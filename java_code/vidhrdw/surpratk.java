@@ -48,7 +48,7 @@ public class surpratk
 	
 	***************************************************************************/
 	
-	VIDEO_START( surpratk )
+	public static VideoUpdateHandlerPtr surpratk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -58,7 +58,7 @@ public class surpratk
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/* useful function to sort the three tile layers by priority order */
 	static void sortlayers(int *layer,int *pri)
@@ -76,7 +76,7 @@ public class surpratk
 		SWAP(1,2)
 	}
 	
-	VIDEO_UPDATE( surpratk )
+	public static VideoUpdateHandlerPtr surpratk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	
@@ -105,5 +105,5 @@ public class surpratk
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[layer[2]],0,4);
 	
 		K053245_sprites_draw(bitmap,cliprect);
-	}
+	} };
 }

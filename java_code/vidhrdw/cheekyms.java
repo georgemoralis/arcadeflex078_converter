@@ -125,7 +125,7 @@ public class cheekyms
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( cheekyms )
+	public static VideoUpdateHandlerPtr cheekyms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -226,5 +226,5 @@ public class cheekyms
 	
 		/* copy the temporary bitmap to the screen over the sprites */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN,Machine->pens[4*char_palette]);
-	}
+	} };
 }

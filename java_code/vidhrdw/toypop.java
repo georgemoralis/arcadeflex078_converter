@@ -166,7 +166,7 @@ public class toypop
 		}
 	}
 	
-	VIDEO_UPDATE( toypop )
+	public static VideoUpdateHandlerPtr toypop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		register int offs, x, y;
 	
@@ -240,5 +240,5 @@ public class toypop
 				}
 			}
 		}
-	}
+	} };
 }

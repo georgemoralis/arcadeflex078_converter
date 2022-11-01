@@ -125,7 +125,7 @@ public class galspnbl
 	}
 	
 	
-	VIDEO_UPDATE( galspnbl )
+	public static VideoUpdateHandlerPtr galspnbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -158,5 +158,5 @@ public class galspnbl
 		}
 	
 		draw_sprites(bitmap,1);
-	}
+	} };
 }

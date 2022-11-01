@@ -84,7 +84,7 @@ public class astrof
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( astrof )
+	public static VideoUpdateHandlerPtr astrof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((colorram = auto_malloc(videoram_size)) == 0)
 			return 1;
@@ -96,7 +96,7 @@ public class astrof
 		red_on = -1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -231,7 +231,7 @@ public class astrof
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( astrof )
+	public static VideoUpdateHandlerPtr astrof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (do_modify_palette)
 		{
@@ -252,5 +252,5 @@ public class astrof
 		}
 		
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 }

@@ -86,7 +86,7 @@ public class digdug
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( digdug )
+	public static VideoUpdateHandlerPtr digdug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic() != 0)
 			return 1;
@@ -95,7 +95,7 @@ public class digdug
 		pflastcolor = -1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr digdug_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -154,7 +154,7 @@ public class digdug
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( digdug )
+	public static VideoUpdateHandlerPtr digdug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,pfindex,pfcolor;
 		unsigned char *pf;
@@ -321,5 +321,5 @@ public class digdug
 				}
 			}
 		}
-	}
+	} };
 }

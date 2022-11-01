@@ -62,7 +62,7 @@ public class commando
 	
 	***************************************************************************/
 	
-	VIDEO_START( commando )
+	public static VideoUpdateHandlerPtr commando  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
@@ -73,7 +73,7 @@ public class commando
 		tilemap_set_transparent_pen(fg_tilemap,3);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -168,15 +168,15 @@ public class commando
 		}
 	}
 	
-	VIDEO_UPDATE( commando )
+	public static VideoUpdateHandlerPtr commando  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( commando )
+	public static VideoUpdateHandlerPtr commando  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

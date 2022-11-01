@@ -94,7 +94,7 @@ public class pandoras
 	
 	***************************************************************************/
 	
-	VIDEO_START( pandoras )
+	public static VideoUpdateHandlerPtr pandoras  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -102,7 +102,7 @@ public class pandoras
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -175,10 +175,10 @@ public class pandoras
 		}
 	}
 	
-	VIDEO_UPDATE( pandoras )
+	public static VideoUpdateHandlerPtr pandoras  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw( bitmap,cliprect, layer0, 1 ,0);
 		draw_sprites( bitmap,cliprect, &pandoras_sharedram[0x800] );
 		tilemap_draw( bitmap,cliprect, layer0, 0 ,0);
-	}
+	} };
 }

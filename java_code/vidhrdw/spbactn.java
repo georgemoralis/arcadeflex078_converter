@@ -180,7 +180,7 @@ public class spbactn
 	}
 	
 	
-	VIDEO_START( spbactn )
+	public static VideoUpdateHandlerPtr spbactn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate bitmaps */
 		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine->drv->screen_width, Machine->drv->screen_height, 16);
@@ -190,9 +190,9 @@ public class spbactn
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( spbactn )
+	public static VideoUpdateHandlerPtr spbactn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs, sx, sy;
 	
@@ -288,5 +288,5 @@ public class spbactn
 	
 		/* mix & blend the tilemaps and sprites into a 32-bit bitmap */
 		blendbitmaps(bitmap, tile_bitmap_bg, tile_bitmap_fg, 0, 0, cliprect);
-	}
+	} };
 }

@@ -59,7 +59,7 @@ public class starcrus
 	public static WriteHandlerPtr starcrus_p2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p2_x = data^0xff; } };
 	public static WriteHandlerPtr starcrus_p2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p2_y = data^0xff; } };
 	
-	VIDEO_START( starcrus )
+	public static VideoUpdateHandlerPtr starcrus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((ship1_vid = auto_bitmap_alloc(16,16)) == 0)
 			return 1;
@@ -74,7 +74,7 @@ public class starcrus
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr starcrus_ship_parm_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -501,7 +501,7 @@ public class starcrus
 	    return 0;
 	}
 	
-	VIDEO_UPDATE( starcrus )
+	public static VideoUpdateHandlerPtr starcrus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 	
@@ -575,7 +575,7 @@ public class starcrus
 	        collision_reg |= 0x04;
 	    }
 	
-	}
+	} };
 	
 	public static ReadHandlerPtr starcrus_coll_det_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

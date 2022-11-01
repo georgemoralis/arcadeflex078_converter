@@ -139,7 +139,7 @@ public class glass
 	
 	***************************************************************************/
 	
-	VIDEO_START( glass )
+	public static VideoUpdateHandlerPtr glass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pant[0] = tilemap_create(get_tile_info_glass_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		pant[1] = tilemap_create(get_tile_info_glass_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -152,7 +152,7 @@ public class glass
 		tilemap_set_transparent_pen(pant[1],0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -208,7 +208,7 @@ public class glass
 	
 	****************************************************************************/
 	
-	VIDEO_UPDATE( glass )
+	public static VideoUpdateHandlerPtr glass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, glass_vregs[0]);
@@ -222,5 +222,5 @@ public class glass
 		tilemap_draw(bitmap,cliprect,pant[1],0,0);
 		tilemap_draw(bitmap,cliprect,pant[0],0,0);
 		glass_draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

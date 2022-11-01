@@ -127,7 +127,7 @@ public class champbas
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}
 	
-	VIDEO_START( champbas )
+	public static VideoUpdateHandlerPtr champbas  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -136,7 +136,7 @@ public class champbas
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void champbas_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -161,9 +161,9 @@ public class champbas
 		}
 	}
 	
-	VIDEO_UPDATE( champbas )
+	public static VideoUpdateHandlerPtr champbas  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		champbas_draw_sprites(bitmap);
-	}
+	} };
 }

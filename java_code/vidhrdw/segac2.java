@@ -198,7 +198,7 @@ public class segac2
 	};
 	#endif
 	
-	VIDEO_START( segac2 )
+	public static VideoUpdateHandlerPtr segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const UINT8 vdp_init[24] =
 		{
@@ -307,9 +307,9 @@ public class segac2
 	
 		return 0;
 	
-	}
+	} };
 	
-	VIDEO_START( puckpkmn )
+	public static VideoUpdateHandlerPtr puckpkmn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -322,11 +322,11 @@ public class segac2
 		scanbase = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
-	VIDEO_START( megatech )
+	public static VideoUpdateHandlerPtr megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -342,9 +342,9 @@ public class segac2
 		scanbase = 192;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( megaplay )
+	public static VideoUpdateHandlerPtr megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -360,7 +360,7 @@ public class segac2
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************
 		VBLANK routines
@@ -381,7 +381,7 @@ public class segac2
 	
 	
 	/* end-of-frame callback to mark the start of VBLANK */
-	VIDEO_EOF( segac2 )
+	public static VideoUpdateHandlerPtr segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set VBLANK flag */
 		internal_vblank = 1;
@@ -398,7 +398,7 @@ public class segac2
 		}
 	#endif
 	
-	}
+	} };
 	
 	
 	
@@ -425,7 +425,7 @@ public class segac2
 	
 	
 	/* core refresh: computes the final screen */
-	VIDEO_UPDATE( segac2 )
+	public static VideoUpdateHandlerPtr segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
@@ -458,12 +458,12 @@ public class segac2
 	
 		segac2_bg_palbase = old_bg;
 		segac2_sp_palbase = old_sp;
-	}
+	} };
 	
 	/* megatech, same but drawing the sms display too */
 	
 	/* core refresh: computes the final screen */
-	VIDEO_UPDATE( megatech )
+	public static VideoUpdateHandlerPtr megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
@@ -502,12 +502,12 @@ public class segac2
 		/*if (readinputport(5)&0x01)*/	
 			update_megatech_video_normal(bitmap, cliprect);
 	
-	}
+	} };
 	
 	/* megaplay, draws either Genesis or SMS (single screen display) */
 	
 	/* core refresh: computes the final screen */
-	VIDEO_UPDATE( megaplay )
+	public static VideoUpdateHandlerPtr megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
@@ -546,7 +546,7 @@ public class segac2
 		segac2_bg_palbase = old_bg;
 		segac2_sp_palbase = old_sp;
 	
-	}
+	} };
 	
 	/******************************************************************************
 		VDP Read & Write Handlers

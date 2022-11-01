@@ -156,7 +156,7 @@ public class zaccaria
 	
 	***************************************************************************/
 	
-	VIDEO_START( zaccaria )
+	public static VideoUpdateHandlerPtr zaccaria  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -166,7 +166,7 @@ public class zaccaria
 		tilemap_set_scroll_cols(bg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -299,10 +299,10 @@ public class zaccaria
 	}
 	
 	
-	VIDEO_UPDATE( zaccaria )
+	public static VideoUpdateHandlerPtr zaccaria  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

@@ -40,7 +40,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	VIDEO_START( foodf )
+	public static VideoUpdateHandlerPtr foodf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 32,32);
@@ -51,7 +51,7 @@ public class foodf
 		tilemap_set_scrollx(atarigen_playfield_tilemap, 0, -8);
 		playfield_flip = 0;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -113,7 +113,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( foodf )
+	public static VideoUpdateHandlerPtr foodf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -140,5 +140,5 @@ public class foodf
 			drawgfx(bitmap, Machine->gfx[1], pict, color, hflip, vflip,
 					xpos - 256, ypos, cliprect, TRANSPARENCY_PEN, 0);
 		}
-	}
+	} };
 }

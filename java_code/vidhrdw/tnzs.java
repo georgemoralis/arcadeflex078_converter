@@ -181,7 +181,7 @@ public class tnzs
 		}
 	}
 	
-	VIDEO_UPDATE( tnzs )
+	public static VideoUpdateHandlerPtr tnzs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* If the byte at f300 has bit 6 set, flip the screen
 		   (I'm not 100% sure about this) */
@@ -201,5 +201,5 @@ public class tnzs
 								tnzs_vdcram + 0x0000, /*	  y : f000 */
 								tnzs_objram + 0x1000, /*   ctrl : d000 */
 								tnzs_objram + 0x1200); /* color : d200 */
-	}
+	} };
 }

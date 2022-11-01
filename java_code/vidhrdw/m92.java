@@ -408,7 +408,7 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	VIDEO_START( m92 )
+	public static VideoUpdateHandlerPtr m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (RYPELEO_SPEEDUP) {
 			pf1_hlayer = tilemap_create(
@@ -526,7 +526,7 @@ public class m92
 		state_save_register_UINT8("video", 0, "paletteram",              paletteram, 0x1000);
 	
 		return 0;
-	}
+	} };
 	
 	/*****************************************************************************/
 	
@@ -592,7 +592,7 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	VIDEO_UPDATE( m92 )
+	public static VideoUpdateHandlerPtr m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Screen refresh is handled by raster interrupt routine, here
 			we just check the keyboard */
@@ -609,7 +609,7 @@ public class m92
 			flip_screen_set(0);
 		else
 			flip_screen_set(1);
-	}
+	} };
 	
 	static void m92_update_scroll_positions(void)
 	{

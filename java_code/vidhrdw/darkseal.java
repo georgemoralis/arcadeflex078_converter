@@ -278,7 +278,7 @@ public class darkseal
 	
 	/******************************************************************************/
 	
-	VIDEO_START( darkseal )
+	public static VideoUpdateHandlerPtr darkseal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		pf2_tilemap = tilemap_create(get_bg_tile_info2,darkseal_scan,    TILEMAP_TRANSPARENT,16,16,64,64);
@@ -291,11 +291,11 @@ public class darkseal
 		tilemap_set_transparent_pen(pf2_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( darkseal )
+	public static VideoUpdateHandlerPtr darkseal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flipscreen=!(darkseal_control_0[0]&0x80);
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
@@ -323,7 +323,7 @@ public class darkseal
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
 		darkseal_drawsprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 }

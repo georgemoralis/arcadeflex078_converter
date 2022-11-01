@@ -99,7 +99,7 @@ public class megazone
 		}
 	} };
 	
-	VIDEO_START( megazone )
+	public static VideoUpdateHandlerPtr megazone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dirtybuffer = 0;
 		tmpbitmap = 0;
@@ -112,7 +112,7 @@ public class megazone
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -122,7 +122,7 @@ public class megazone
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( megazone )
+	public static VideoUpdateHandlerPtr megazone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int x,y;
@@ -236,5 +236,5 @@ public class megazone
 				offs++;
 			}
 		}
-	}
+	} };
 }

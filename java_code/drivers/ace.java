@@ -66,7 +66,7 @@ public class ace
 	} };
 	#endif
 	
-	VIDEO_UPDATE( ace )
+	public static VideoUpdateHandlerPtr ace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -113,7 +113,7 @@ public class ace
 					10*8+offs*16,256-16, /* ?? */
 					&Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
-	}
+	} };
 	
 	
 	static public static PaletteInitHandlerPtr ace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)

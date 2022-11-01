@@ -53,7 +53,7 @@ public class vball
 	}
 	
 	
-	VIDEO_START( vb )
+	public static VideoUpdateHandlerPtr vb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,TILEMAP_OPAQUE, 8, 8,64,64);
 		if( !bg_tilemap )
@@ -62,7 +62,7 @@ public class vball
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr vb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -172,7 +172,7 @@ public class vball
 	
 	#undef DRAW_SPRITE
 	
-	VIDEO_UPDATE( vb )
+	public static VideoUpdateHandlerPtr vb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -185,7 +185,7 @@ public class vball
 		}
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
 	
 	/*I don't really understand what the proper timing of this should be,

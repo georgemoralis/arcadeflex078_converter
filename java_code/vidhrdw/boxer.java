@@ -67,7 +67,7 @@ public class boxer
 	}
 	
 	
-	VIDEO_UPDATE( boxer )
+	public static VideoUpdateHandlerPtr boxer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		int j;
@@ -92,5 +92,5 @@ public class boxer
 		}
 	
 		draw_boxer(bitmap, cliprect);
-	}
+	} };
 }

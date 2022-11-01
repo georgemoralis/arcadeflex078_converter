@@ -26,20 +26,20 @@ public class asuka
 		return 0;
 	}
 	
-	VIDEO_START( asuka )
+	public static VideoUpdateHandlerPtr asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (asuka_core_video_start(0,0));
-	}
+	} };
 	
-	VIDEO_START( galmedes )
+	public static VideoUpdateHandlerPtr galmedes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (asuka_core_video_start(1,0));
-	}
+	} };
 	
-	VIDEO_START( cadash )
+	public static VideoUpdateHandlerPtr cadash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (asuka_core_video_start(1,1));
-	}
+	} };
 	
 	/**************************************************************
 	                 SPRITE READ AND WRITE HANDLERS
@@ -56,7 +56,7 @@ public class asuka
 	                        SCREEN REFRESH
 	**************************************************************/
 	
-	VIDEO_UPDATE( asuka )
+	public static VideoUpdateHandlerPtr asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -77,10 +77,10 @@ public class asuka
 	
 		/* Sprites may be over or under top bg layer */
 		PC090OJ_draw_sprites(bitmap,cliprect,2);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( bonzeadv )
+	public static VideoUpdateHandlerPtr bonzeadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -101,5 +101,5 @@ public class asuka
 	
 		/* Sprites are always over both bg layers */
 		PC090OJ_draw_sprites(bitmap,cliprect,0);
-	}
+	} };
 }

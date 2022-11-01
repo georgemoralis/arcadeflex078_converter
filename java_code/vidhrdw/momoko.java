@@ -108,7 +108,7 @@ public class momoko
 	
 	/****************************************************************************/
 	
-	VIDEO_UPDATE( momoko )
+	public static VideoUpdateHandlerPtr momoko  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y, dx, dy, rx, ry, radr, chr, sy, fx, fy, px, py, offs, col, pri, flip ;
 	
@@ -327,5 +327,5 @@ public class momoko
 				}
 			}
 		}
-	}
+	} };
 }

@@ -112,7 +112,7 @@ public class gberet
 	
 	***************************************************************************/
 	
-	VIDEO_START( gberet )
+	public static VideoUpdateHandlerPtr gberet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,64,32);
 	
@@ -123,7 +123,7 @@ public class gberet
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -282,19 +282,19 @@ public class gberet
 	}
 	
 	
-	VIDEO_UPDATE( gberet )
+	public static VideoUpdateHandlerPtr gberet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0,0);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( gberetb )
+	public static VideoUpdateHandlerPtr gberetb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0,0);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1,0);
 		draw_sprites_bootleg(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
-	}
+	} };
 }

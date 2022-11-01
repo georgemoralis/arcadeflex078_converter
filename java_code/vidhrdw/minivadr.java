@@ -63,7 +63,7 @@ public class minivadr
 	} };
 	
 	
-	VIDEO_UPDATE( minivadr )
+	public static VideoUpdateHandlerPtr minivadr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -75,5 +75,5 @@ public class minivadr
 				minivadr_videoram_w(offs,videoram[offs]);
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 }

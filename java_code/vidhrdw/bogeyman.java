@@ -106,7 +106,7 @@ public class bogeyman
 		SET_TILE_INFO(gfxbank, code, 0, 0)
 	}
 	
-	VIDEO_START( bogeyman )
+	public static VideoUpdateHandlerPtr bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -123,7 +123,7 @@ public class bogeyman
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void bogeyman_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -173,10 +173,10 @@ public class bogeyman
 		}
 	}
 	
-	VIDEO_UPDATE( bogeyman )
+	public static VideoUpdateHandlerPtr bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		bogeyman_draw_sprites(bitmap);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
-	}
+	} };
 }

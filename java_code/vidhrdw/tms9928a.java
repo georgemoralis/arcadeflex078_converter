@@ -468,7 +468,7 @@ public class tms9928a
 	/*
 	** Updates the screen (the dMem memory area).
 	*/
-	VIDEO_UPDATE( tms9928a )
+	public static VideoUpdateHandlerPtr tms9928a  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int c;
 	
@@ -520,7 +520,7 @@ public class tms9928a
 	    tms.oldStatusReg = tms.StatusReg;
 	    tms.Change = 0;
 		return;
-	}
+	} };
 	
 	int TMS9928A_interrupt () {
 	    int b;

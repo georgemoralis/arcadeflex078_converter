@@ -165,7 +165,7 @@ public class dkong
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( dkong )
+	public static VideoUpdateHandlerPtr dkong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gfx_bank = 0;
 		palette_bank = 0;
@@ -177,7 +177,7 @@ public class dkong
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr dkongjr_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -337,22 +337,22 @@ public class dkong
 		}
 	}
 	
-	VIDEO_UPDATE( radarscp )
+	public static VideoUpdateHandlerPtr radarscp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		palette_set_color(256,0xff,0x00,0x00);	/* stars */
 	
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		draw_grid(bitmap);
 		draw_sprites(bitmap, 0x40, 1);
-	}
+	} };
 	
-	VIDEO_UPDATE( dkong )
+	public static VideoUpdateHandlerPtr dkong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, 0x40, 1);
-	}
+	} };
 	
-	VIDEO_UPDATE( pestplce )
+	public static VideoUpdateHandlerPtr pestplce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -371,13 +371,13 @@ public class dkong
 						&Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( spclforc )
+	public static VideoUpdateHandlerPtr spclforc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	
 		/* it uses spriteram[offs + 2] & 0x10 for sprite bank */
 		draw_sprites(bitmap, 0x10, 3);
-	}
+	} };
 }

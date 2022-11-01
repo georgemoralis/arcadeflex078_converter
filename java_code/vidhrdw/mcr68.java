@@ -66,7 +66,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	VIDEO_START( mcr68 )
+	public static VideoUpdateHandlerPtr mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,16, 32,32);
@@ -74,10 +74,10 @@ public class mcr68
 			return 1;
 		tilemap_set_transparent_pen(bg_tilemap, 0);
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( zwackery )
+	public static VideoUpdateHandlerPtr zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(zwackery_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,32);
@@ -91,7 +91,7 @@ public class mcr68
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -346,7 +346,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( mcr68 )
+	public static VideoUpdateHandlerPtr mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY | 0, 0);
@@ -360,10 +360,10 @@ public class mcr68
 	
 		/* draw the high-priority sprites */
 		mcr68_update_sprites(bitmap, cliprect, 1);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( zwackery )
+	public static VideoUpdateHandlerPtr zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
@@ -376,5 +376,5 @@ public class mcr68
 	
 		/* draw the high-priority sprites */
 		zwackery_update_sprites(bitmap, cliprect, 1);
-	}
+	} };
 }

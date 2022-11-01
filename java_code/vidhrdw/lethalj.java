@@ -103,7 +103,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	VIDEO_START( lethalj )
+	public static VideoUpdateHandlerPtr lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate video RAM for screen */
 		screenram = auto_malloc(BLITTER_DEST_WIDTH * BLITTER_DEST_HEIGHT * sizeof(screenram[0]));
@@ -114,7 +114,7 @@ public class lethalj
 		blitter_base = (UINT16 *)memory_region(REGION_GFX1);
 		blitter_rows = memory_region_length(REGION_GFX1) / (2*BLITTER_SOURCE_WIDTH);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -197,7 +197,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( lethalj )
+	public static VideoUpdateHandlerPtr lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int beamx, beamy;
 		
@@ -228,5 +228,5 @@ public class lethalj
 	
 		if (cliprect->max_y == Machine->visible_area.max_y)
 			blank_palette = 0;
-	}
+	} };
 }

@@ -85,7 +85,7 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	VIDEO_START( dogfgt )
+	public static VideoUpdateHandlerPtr dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 	
@@ -97,7 +97,7 @@ public class dogfgt
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -229,7 +229,7 @@ public class dogfgt
 	}
 	
 	
-	VIDEO_UPDATE( dogfgt )
+	public static VideoUpdateHandlerPtr dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int lastflip,lastpixcolor;
 		int offs;
@@ -250,5 +250,5 @@ public class dogfgt
 		draw_sprites(bitmap,cliprect);
 	
 		copybitmap(bitmap,pixbitmap,0,0,0,0,cliprect,TRANSPARENCY_COLOR,PIXMAP_COLOR_BASE + 8*pixcolor);
-	}
+	} };
 }

@@ -54,7 +54,7 @@ public class darius
 	
 	/***************************************************************************/
 	
-	VIDEO_START( darius )
+	public static VideoUpdateHandlerPtr darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(darius_fg_get_tile_info[0],tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,128,64);
 		if (!fg_tilemap)
@@ -74,7 +74,7 @@ public class darius
 		state_save_register_func_postload(dirty_fg_tilemap);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -153,7 +153,7 @@ public class darius
 	
 	
 	
-	VIDEO_UPDATE( darius )
+	public static VideoUpdateHandlerPtr darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		PC080SN_tilemap_update();
 	
@@ -172,5 +172,5 @@ public class darius
 		tilemap_set_scrollx(fg_tilemap,0,0);
 		tilemap_set_scrolly(fg_tilemap,0,-8);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 }

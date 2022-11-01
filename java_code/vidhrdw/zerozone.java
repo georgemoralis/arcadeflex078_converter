@@ -46,17 +46,17 @@ public class zerozone
 		SET_TILE_INFO(0,tileno,colour>>12,0)
 	}
 	
-	VIDEO_START( zerozone )
+	public static VideoUpdateHandlerPtr zerozone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		// i'm not 100% sure it should be opaque, pink title screen looks strange in las vegas girls
 		// but if its transparent other things look incorrect
 		zerozone_tilemap = tilemap_create(get_zerozone_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,      8, 8, 64,32);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( zerozone )
+	public static VideoUpdateHandlerPtr zerozone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,zerozone_tilemap,0,0);
-	}
+	} };
 }

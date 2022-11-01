@@ -158,7 +158,7 @@ public class mrdo
 	
 	***************************************************************************/
 	
-	VIDEO_START( mrdo )
+	public static VideoUpdateHandlerPtr mrdo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -170,7 +170,7 @@ public class mrdo
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -248,11 +248,11 @@ public class mrdo
 		}
 	}
 	
-	VIDEO_UPDATE( mrdo )
+	public static VideoUpdateHandlerPtr mrdo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

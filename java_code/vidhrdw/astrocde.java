@@ -694,7 +694,7 @@ public class astrocde
 	
 	/****************************************************************************/
 	
-	VIDEO_START( astrocde )
+	public static VideoUpdateHandlerPtr astrocde  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		rng = auto_malloc(RNG_PERIOD * sizeof(rng[0]));
 		star = auto_malloc(SCREEN_WIDTH * MAX_LINES * sizeof(star[0]));
@@ -706,9 +706,9 @@ public class astrocde
 		CurrentScan = 0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( astrocde_stars )
+	public static VideoUpdateHandlerPtr astrocde_stars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int res;
 	
@@ -718,7 +718,7 @@ public class astrocde
 		init_star_field();
 	
 		return res;
-	}
+	} };
 	
 	
 	
@@ -791,15 +791,15 @@ public class astrocde
 	
 	
 	
-	VIDEO_UPDATE( astrocde )
+	public static VideoUpdateHandlerPtr astrocde  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
 		for (i = 0;i < MAX_LINES;i++)
 			wow_update_line(bitmap,i);
-	}
+	} };
 	
-	VIDEO_UPDATE( seawolf2 )
+	public static VideoUpdateHandlerPtr seawolf2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int centre;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -833,5 +833,5 @@ public class astrocde
 				draw_crosshair(bitmap,centre,33,&Machine->visible_area);
 			}
 		}
-	}
+	} };
 }

@@ -88,7 +88,7 @@ public class tecmo
 	
 	***************************************************************************/
 	
-	VIDEO_START( tecmo )
+	public static VideoUpdateHandlerPtr tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (tecmo_video_type == 2)	/* gemini */
 		{
@@ -113,7 +113,7 @@ public class tecmo
 		tilemap_set_scrolldx(fg_tilemap,-48,256+48);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -260,7 +260,7 @@ public class tecmo
 	}
 	
 	
-	VIDEO_UPDATE( tecmo )
+	public static VideoUpdateHandlerPtr tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine->pens[0x100],cliprect);
@@ -269,5 +269,5 @@ public class tecmo
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,4);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

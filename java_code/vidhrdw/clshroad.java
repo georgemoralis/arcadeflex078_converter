@@ -236,7 +236,7 @@ public class clshroad
 	} };
 	
 	
-	VIDEO_START( firebatl )
+	public static VideoUpdateHandlerPtr firebatl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
@@ -263,9 +263,9 @@ public class clshroad
 		tilemap_set_transparent_pen( tilemap_1,  0x0f );
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( clshroad )
+	public static VideoUpdateHandlerPtr clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
@@ -292,7 +292,7 @@ public class clshroad
 		tilemap_set_transparent_pen( tilemap_1,  0x0f );
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -364,7 +364,7 @@ public class clshroad
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( clshroad )
+	public static VideoUpdateHandlerPtr clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx  = clshroad_vregs[ 0 ] + (clshroad_vregs[ 1 ] << 8);
 	//	int priority = clshroad_vregs[ 2 ];
@@ -377,5 +377,5 @@ public class clshroad
 		tilemap_draw(bitmap,cliprect,tilemap_0b,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
-	}
+	} };
 }

@@ -70,7 +70,7 @@ public class ikki
 		ikki_flipscreen = (data >> 2) & 1;
 	} };
 	
-	VIDEO_UPDATE( ikki )
+	public static VideoUpdateHandlerPtr ikki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		int offs,chr,col,px,py,f,bank,d;
@@ -210,5 +210,5 @@ public class ikki
 			}
 		}
 	
-	}
+	} };
 }

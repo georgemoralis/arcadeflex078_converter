@@ -82,7 +82,7 @@ public class targeth
 	
 	***************************************************************************/
 	
-	VIDEO_START( targeth )
+	public static VideoUpdateHandlerPtr targeth  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pant[0] = tilemap_create(get_tile_info_targeth_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pant[1] = tilemap_create(get_tile_info_targeth_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -93,7 +93,7 @@ public class targeth
 		tilemap_set_transparent_pen(pant[0],0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -147,7 +147,7 @@ public class targeth
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( targeth )
+	public static VideoUpdateHandlerPtr targeth  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, targeth_vregs[0]);
@@ -173,5 +173,5 @@ public class targeth
 			posy = readinputport(3) & 0x0ff;
 			draw_crosshair(bitmap, posx - 0x17, posy + 1, cliprect);
 		}
-	}
+	} };
 }

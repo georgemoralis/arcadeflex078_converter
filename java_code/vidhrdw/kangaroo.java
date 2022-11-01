@@ -64,7 +64,7 @@ public class kangaroo
 	
 	***************************************************************************/
 	
-	VIDEO_START( kangaroo )
+	public static VideoUpdateHandlerPtr kangaroo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
 			return 1;
@@ -76,7 +76,7 @@ public class kangaroo
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -293,7 +293,7 @@ public class kangaroo
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( kangaroo )
+	public static VideoUpdateHandlerPtr kangaroo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx, scrolly;
 	
@@ -329,5 +329,5 @@ public class kangaroo
 			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
 			copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine->visible_area,TRANSPARENCY_COLOR,16);
 		}
-	}
+	} };
 }

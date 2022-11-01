@@ -40,7 +40,7 @@ public class ohmygod
 	
 	***************************************************************************/
 	
-	VIDEO_START( ohmygod )
+	public static VideoUpdateHandlerPtr ohmygod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,64);
 	
@@ -48,7 +48,7 @@ public class ohmygod
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -120,9 +120,9 @@ public class ohmygod
 		}
 	}
 	
-	VIDEO_UPDATE( ohmygod )
+	public static VideoUpdateHandlerPtr ohmygod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

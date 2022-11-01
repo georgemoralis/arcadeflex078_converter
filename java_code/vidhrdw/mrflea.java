@@ -91,13 +91,13 @@ public class mrflea
 		}
 	}
 	
-	VIDEO_START( mrflea ){
+	public static VideoUpdateHandlerPtr mrflea  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( mrflea )
+	public static VideoUpdateHandlerPtr mrflea  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_background( bitmap );
 		draw_sprites( bitmap );
-	}
+	} };
 }

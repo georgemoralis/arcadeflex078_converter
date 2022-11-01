@@ -74,7 +74,7 @@ public class deadang
 		SET_TILE_INFO(0,tile,color,0)
 	}
 	
-	VIDEO_START( deadang )
+	public static VideoUpdateHandlerPtr deadang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf3_layer = tilemap_create(get_pf3_tile_info,bg_scan,          TILEMAP_OPAQUE,     16,16,128,256);
 		pf2_layer = tilemap_create(get_pf2_tile_info,bg_scan,          TILEMAP_TRANSPARENT,16,16,128,256);
@@ -89,7 +89,7 @@ public class deadang
 		tilemap_set_transparent_pen(text_layer, 15);
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap)
 	{
@@ -132,7 +132,7 @@ public class deadang
 		}
 	}
 	
-	VIDEO_UPDATE( deadang )
+	public static VideoUpdateHandlerPtr deadang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Setup the tilemaps */
 		tilemap_set_scrolly( pf3_layer,0, ((deadang_scroll_ram[0x02]&0xf0)<<4)+((deadang_scroll_ram[0x04]&0x7f)<<1)+((deadang_scroll_ram[0x04]&0x80)>>7) );
@@ -164,5 +164,5 @@ public class deadang
 		tilemap_draw(bitmap,cliprect,pf2_layer,0,4);
 		if (!(deadang_scroll_ram[0x68]&0x10)) draw_sprites(bitmap);
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
-	}
+	} };
 }

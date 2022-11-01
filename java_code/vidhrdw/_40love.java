@@ -109,7 +109,7 @@ public class _40love
 	
 	***************************************************************************/
 	
-	VIDEO_START( fortyl )
+	public static VideoUpdateHandlerPtr fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fortyl_pixram1 = auto_malloc(0x4000);
 		fortyl_pixram2 = auto_malloc(0x4000);
@@ -126,7 +126,7 @@ public class _40love
 		tilemap_set_transparent_pen(background,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -353,7 +353,7 @@ public class _40love
 			copybitmap(bitmap,pixel_bitmap2,f,f,fortyl_xoffset,0,cliprect,TRANSPARENCY_NONE,0);
 	}
 	
-	VIDEO_UPDATE( fortyl )
+	public static VideoUpdateHandlerPtr fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_pixram(bitmap,cliprect);
 	
@@ -361,5 +361,5 @@ public class _40love
 		tilemap_draw(bitmap,cliprect,background,0,0);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

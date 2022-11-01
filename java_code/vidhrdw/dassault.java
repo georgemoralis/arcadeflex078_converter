@@ -154,7 +154,7 @@ public class dassault
 		return ((bank>>4)&0xf)<<12;
 	}
 	
-	VIDEO_START( dassault )
+	public static VideoUpdateHandlerPtr dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -167,11 +167,11 @@ public class dassault
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( dassault )
+	public static VideoUpdateHandlerPtr dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Update tilemaps */
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
@@ -201,5 +201,5 @@ public class dassault
 		/* Draw sprites - two sprite generators, with selectable priority */
 		dassault_drawsprites(bitmap,deco16_priority);
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 }

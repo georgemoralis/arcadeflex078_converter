@@ -144,7 +144,7 @@ public class grchamp
 		return offset;
 	}
 	
-	VIDEO_START( grchamp )
+	public static VideoUpdateHandlerPtr grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		headlight_bitmap = auto_bitmap_alloc( 64,128 );
 		if( !headlight_bitmap )
@@ -163,7 +163,7 @@ public class grchamp
 			return 0;
 		}
 		return 1;
-	}
+	} };
 	
 	static void draw_text( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -408,7 +408,7 @@ public class grchamp
 		}
 	}
 	
-	VIDEO_UPDATE( grchamp ){
+	public static VideoUpdateHandlerPtr grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int bFog = grchamp_videoreg0&0x40;
 	
 		draw_background( bitmap,cliprect ); /* 3 layers */
@@ -435,5 +435,5 @@ public class grchamp
 		draw_text( bitmap,cliprect );
 		if( grchamp_videoreg0&0x80 ) draw_radar( bitmap,cliprect );
 		draw_tachometer( bitmap,cliprect );
-	}
+	} };
 }

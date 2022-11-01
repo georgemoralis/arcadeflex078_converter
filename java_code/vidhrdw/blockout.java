@@ -65,14 +65,14 @@ public class blockout
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( blockout )
+	public static VideoUpdateHandlerPtr blockout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Allocate temporary bitmaps */
 		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -115,7 +115,7 @@ public class blockout
 	
 	
 	
-	VIDEO_UPDATE( blockout )
+	public static VideoUpdateHandlerPtr blockout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
@@ -148,5 +148,5 @@ public class blockout
 				}
 			}
 		}
-	}
+	} };
 }

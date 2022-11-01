@@ -28,7 +28,7 @@ public class ninjakd2
 	static int 		 bg_enable = 1;
 	static int 		 sp_overdraw = 0;
 	
-	VIDEO_START( ninjakd2 )
+	public static VideoUpdateHandlerPtr ninjakd2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((bg_dirtybuffer = auto_malloc(1024)) == 0)
 			return 1;
@@ -42,7 +42,7 @@ public class ninjakd2
 		memset(bg_dirtybuffer,1,1024);
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr ninjakd2_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -189,7 +189,7 @@ public class ninjakd2
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( ninjakd2 )
+	public static VideoUpdateHandlerPtr ninjakd2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx,scrolly;
 	
@@ -213,5 +213,5 @@ public class ninjakd2
 			ninjakd2_draw_foreground(bitmap);
 		}
 	
-	}
+	} };
 }

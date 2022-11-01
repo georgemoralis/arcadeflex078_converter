@@ -37,7 +37,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	VIDEO_START( qix )
+	public static VideoUpdateHandlerPtr qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate memory for the full video RAM */
 		videoram = auto_malloc(256 * 256);
@@ -47,7 +47,7 @@ public class qix
 		/* initialize the mask for games that don't use it */
 		vram_mask = 0xff;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -239,7 +239,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( qix )
+	public static VideoUpdateHandlerPtr qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pen_t *pens = &Machine->pens[qix_palettebank * 256];
 		int y;
@@ -247,5 +247,5 @@ public class qix
 		/* draw the bitmap */
 		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
 			draw_scanline8(bitmap, 0, y, 256, &videoram[y * 256], pens, -1);
-	}
+	} };
 }

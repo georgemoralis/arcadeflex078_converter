@@ -112,7 +112,7 @@ public class jcross
 				0)
 	}
 	
-	VIDEO_START( jcross )
+	public static VideoUpdateHandlerPtr jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flipscreen = -1;  old_fg_color = -1;
 	
@@ -130,7 +130,7 @@ public class jcross
 		tilemap_set_scrolldx( bg_tilemap,   16, 22 );
 		return 0;
 	
-	}
+	} };
 	
 	/***************************************************************************
 	**
@@ -197,7 +197,7 @@ public class jcross
 	}
 	
 	
-	VIDEO_UPDATE( jcross )
+	public static VideoUpdateHandlerPtr jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scroll_attributes = jcross_vregs[0];
 		int sprite_scrolly = jcross_vregs[1];
@@ -219,5 +219,5 @@ public class jcross
 		draw_sprites( bitmap,cliprect, sprite_scrollx+23, sprite_scrolly+1 );
 		tilemap_draw( bitmap,cliprect,tx_tilemap,0 ,0);
 		draw_status( bitmap,cliprect );
-	}
+	} };
 }

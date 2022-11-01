@@ -237,7 +237,7 @@ public class ssrj
 	
 	};
 	
-	VIDEO_START( ssrj )
+	public static VideoUpdateHandlerPtr ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap1 = tilemap_create( get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		tilemap2 = tilemap_create( get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
@@ -245,7 +245,7 @@ public class ssrj
 		tilemap_set_transparent_pen(tilemap2,0);
 		tilemap_set_transparent_pen(tilemap4,0);
 		return 0;
-	}
+	} };
 	
 	
 	static void draw_objects( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
@@ -286,7 +286,7 @@ public class ssrj
 		  palette_set_color(i*8+j,fakecols[i][j][0],fakecols[i][j][1],fakecols[i][j][2]);	
 	} };
 	
-	VIDEO_UPDATE( ssrj )
+	public static VideoUpdateHandlerPtr ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(tilemap1 , 0, 0xff-ssrj_scrollram[2] );
 		tilemap_set_scrollx(tilemap1 , 0, ssrj_scrollram[0] );
@@ -295,7 +295,7 @@ public class ssrj
 		tilemap_draw(bitmap,cliprect,tilemap2, 0,0);
 	
 		if(ssrj_scrollram[0x101]==0xb)tilemap_draw(bitmap,cliprect,tilemap4, 0,0);/* hack to display 4th tilemap */
-	}
+	} };
 	
 	
 }

@@ -78,7 +78,7 @@ public class shangha3
 	
 	
 	
-	VIDEO_START( shangha3 )
+	public static VideoUpdateHandlerPtr shangha3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((rawbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
 			return 1;
@@ -97,7 +97,7 @@ public class shangha3
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -270,8 +270,8 @@ public class shangha3
 	}
 	
 	
-	VIDEO_UPDATE( shangha3 )
+	public static VideoUpdateHandlerPtr shangha3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap,rawbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 }

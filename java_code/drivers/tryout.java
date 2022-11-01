@@ -164,19 +164,19 @@ public class tryout
 		return (row ^ 0x1f) + (col << 5);
 	}
 	
-	VIDEO_START( tryout )
+	public static VideoUpdateHandlerPtr tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{	
 		fg_tilemap = tilemap_create(get_tile_info,get_fg_memory_offset_tryout,TILEMAP_OPAQUE,8,8,32,32);
 	
 	//	tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( tryout )
+	public static VideoUpdateHandlerPtr tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 	
 	static void tryout_snd_irq(int linestate)
 	{

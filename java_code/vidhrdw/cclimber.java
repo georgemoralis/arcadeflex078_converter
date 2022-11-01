@@ -357,7 +357,7 @@ public class cclimber
 	}
 	
 	
-	VIDEO_UPDATE( cclimber )
+	public static VideoUpdateHandlerPtr cclimber  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -471,11 +471,11 @@ public class cclimber
 		if ((cclimber_bigspriteram[0] & 1) == 0)
 			/* draw the "big sprite" over sprites */
 			drawbigsprite(bitmap);
-	}
+	} };
 	
 	
 	
-	VIDEO_UPDATE( swimmer )
+	public static VideoUpdateHandlerPtr swimmer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -589,5 +589,5 @@ public class cclimber
 		if ((cclimber_bigspriteram[0] & 1) == 0)
 			/* draw the "big sprite" over sprites */
 			drawbigsprite(bitmap);
-	}
+	} };
 }

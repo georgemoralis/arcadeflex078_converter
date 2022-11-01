@@ -20,7 +20,7 @@ public class superchs
 	};
 	static struct tempsprite *spritelist;
 	
-	VIDEO_START( superchs )
+	public static VideoUpdateHandlerPtr superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
 		if (!spritelist)
@@ -30,7 +30,7 @@ public class superchs
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/************************************************************
 				SPRITE DRAW ROUTINES
@@ -223,7 +223,7 @@ public class superchs
 					SCREEN REFRESH
 	**************************************************************/
 	
-	VIDEO_UPDATE( superchs )
+	public static VideoUpdateHandlerPtr superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT16 priority;
@@ -258,5 +258,5 @@ public class superchs
 		TC0480SCP_tilemap_draw(bitmap,cliprect,layer[4],0,8);	/* text layer */
 		superchs_draw_sprites_16x16(bitmap,cliprect,primasks,48,-116);
 	#endif
-	}
+	} };
 }

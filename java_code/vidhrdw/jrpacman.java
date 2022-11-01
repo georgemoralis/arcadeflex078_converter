@@ -86,7 +86,7 @@ public class jrpacman
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( jrpacman )
+	public static VideoUpdateHandlerPtr jrpacman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
@@ -97,7 +97,7 @@ public class jrpacman
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -176,7 +176,7 @@ public class jrpacman
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( jrpacman )
+	public static VideoUpdateHandlerPtr jrpacman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,offs;
 		int scrolly[36];
@@ -311,5 +311,5 @@ public class jrpacman
 	
 		if (*jrpacman_bgpriority & 1)
 			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine->visible_area,TRANSPARENCY_COLOR,0);
-	}
+	} };
 }

@@ -64,7 +64,7 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	VIDEO_START( kyugo )
+	public static VideoUpdateHandlerPtr kyugo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		color_codes = memory_region(REGION_PROMS) + 0x300;
 	
@@ -81,7 +81,7 @@ public class kyugo
 		tilemap_set_scrolldx(bg_tilemap, -32, 32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*************************************
@@ -236,7 +236,7 @@ public class kyugo
 	}
 	
 	
-	VIDEO_UPDATE( kyugo )
+	public static VideoUpdateHandlerPtr kyugo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (flipscreen)
 			tilemap_set_scrollx(bg_tilemap,0,-(scroll_x_lo + (scroll_x_hi*256)));
@@ -248,5 +248,5 @@ public class kyugo
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 }

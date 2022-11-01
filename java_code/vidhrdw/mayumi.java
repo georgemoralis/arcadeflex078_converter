@@ -27,7 +27,7 @@ public class mayumi
 		SET_TILE_INFO(0, code, col, 0)
 	}
 	
-	VIDEO_START( mayumi )
+	public static VideoUpdateHandlerPtr mayumi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mayumi_videoram = auto_malloc(0x1800);
 	
@@ -37,7 +37,7 @@ public class mayumi
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr mayumi_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -51,9 +51,9 @@ public class mayumi
 		return mayumi_videoram[offset];
 	} };
 	
-	VIDEO_UPDATE( mayumi )
+	public static VideoUpdateHandlerPtr mayumi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, mayumi_tilemap, 0, 0);
-	}
+	} };
 	
 }

@@ -91,7 +91,7 @@ public class blueprnt
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( blueprnt )
+	public static VideoUpdateHandlerPtr blueprnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int scroll[32];
@@ -201,5 +201,5 @@ public class blueprnt
 						&Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
-	}
+	} };
 }

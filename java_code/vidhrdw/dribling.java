@@ -62,7 +62,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( dribling )
+	public static VideoUpdateHandlerPtr dribling  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *prombase = memory_region(REGION_PROMS);
 		UINT8 *gfxbase = memory_region(REGION_GFX1);
@@ -87,5 +87,5 @@ public class dribling
 				dst[x] = (b7 << 7) | (b6 << 6) | (b5 << 5) | (b4 << 4) | (b3 << 3) | b2_0;
 			}
 		}
-	}
+	} };
 }

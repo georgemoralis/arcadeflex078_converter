@@ -80,13 +80,13 @@ public class kinst
 	 *
 	 *************************************/
 	
-	VIDEO_START( kinst )
+	public static VideoUpdateHandlerPtr kinst  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		vram_buffer = auto_malloc(320 * 240 * sizeof(UINT16));
 		if (!vram_buffer)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -96,12 +96,12 @@ public class kinst
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( kinst )
+	public static VideoUpdateHandlerPtr kinst  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int y;
 	
 		/* loop over rows and copy to the destination */
 		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
 			memcpy(bitmap->line[y], &vram_buffer[y * 320], 320 * sizeof(UINT16));
-	}
+	} };
 }

@@ -94,27 +94,27 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	VIDEO_START( mcr3 )
+	public static VideoUpdateHandlerPtr mcr3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
 		if (!bg_tilemap)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( mcrmono )
+	public static VideoUpdateHandlerPtr mcrmono  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcrmono_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
 		if (!bg_tilemap)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( spyhunt )
+	public static VideoUpdateHandlerPtr spyhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(spyhunt_get_bg_tile_info, spyhunt_bg_scan, TILEMAP_OPAQUE, 64,32, 64,32);
@@ -128,7 +128,7 @@ public class mcr3
 		tilemap_set_transparent_pen(alpha_tilemap, 0);
 		tilemap_set_scrollx(alpha_tilemap, 0, 16);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -256,7 +256,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( mcr3 )
+	public static VideoUpdateHandlerPtr mcr3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update the flip state */
 		tilemap_set_flip(bg_tilemap, mcr_cocktail_flip ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0);
@@ -266,10 +266,10 @@ public class mcr3
 	
 		/* draw the sprites */
 		mcr3_update_sprites(bitmap, cliprect, 0x03, 0, 0, 0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( spyhunt )
+	public static VideoUpdateHandlerPtr spyhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
@@ -282,7 +282,7 @@ public class mcr3
 	
 		/* render any characters on top */
 		tilemap_draw(bitmap, cliprect, alpha_tilemap, 0, 0);
-	}
+	} };
 	
 	
 	

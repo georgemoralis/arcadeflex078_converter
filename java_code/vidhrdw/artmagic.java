@@ -59,12 +59,12 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	VIDEO_START( artmagic )
+	public static VideoUpdateHandlerPtr artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		blitter_base = (UINT16 *)memory_region(REGION_GFX1);
 		blitter_mask = memory_region_length(REGION_GFX1)/2 - 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -349,7 +349,7 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( artmagic )
+	public static VideoUpdateHandlerPtr artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 offset, dpytap;
 		UINT16 *vram;
@@ -379,5 +379,5 @@ public class artmagic
 				dest[x] = vram[(offset + x) & TOWORD(0x1fffff)] & 0xff;
 			offset += TOWORD(0x2000);
 		}
-	}
+	} };
 }

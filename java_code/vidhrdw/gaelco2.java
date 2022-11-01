@@ -277,7 +277,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	VIDEO_START( gaelco2 )
+	public static VideoUpdateHandlerPtr gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -299,11 +299,11 @@ public class gaelco2
 		dual_monitor = 0;
 	
 		return 0;
-	}
+	} };
 	
 	#ifdef ONE_MONITOR
 	
-	VIDEO_START( gaelco2_dual )
+	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -322,11 +322,11 @@ public class gaelco2
 		dual_monitor = 1;
 	
 		return 0;
-	}
+	} };
 	
 	#else
 	
-	VIDEO_START( gaelco2_dual )
+	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -348,7 +348,7 @@ public class gaelco2
 		dual_monitor = 1;
 	
 		return 0;
-	}
+	} };
 	
 	#endif
 	/***************************************************************************
@@ -489,7 +489,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( gaelco2 )
+	public static VideoUpdateHandlerPtr gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -515,9 +515,9 @@ public class gaelco2
 		tilemap_draw(bitmap, cliprect, pant[1], 0, 0);
 		tilemap_draw(bitmap, cliprect, pant[0], 0, 0);
 		gaelco2_draw_sprites(bitmap, cliprect, 0, 0);
-	}
+	} };
 	
-	VIDEO_UPDATE( bang )
+	public static VideoUpdateHandlerPtr bang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    /* standard rendering on this hardware */
 	    video_update_gaelco2(bitmap, cliprect);
@@ -536,12 +536,12 @@ public class gaelco2
 	        posy = readinputport(6)*240/256;
 	        draw_crosshair(bitmap, posx, posy + 0x0c, cliprect);
 	    }
-	}
+	} };
 	
 	
 	#ifdef ONE_MONITOR
 	
-	VIDEO_UPDATE( gaelco2_dual )
+	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -570,11 +570,11 @@ public class gaelco2
 			tilemap_draw(bitmap,cliprect,pant[0], 0, 0);
 			gaelco2_draw_sprites(bitmap,cliprect, 0x0000, 0);
 		}
-	}
+	} };
 	
 	#else
 	
-	VIDEO_UPDATE( gaelco2_dual )
+	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -616,13 +616,13 @@ public class gaelco2
 			tilemap_draw(bitmap,&cliprect1,pant[0], 0, 0);
 			gaelco2_draw_sprites(bitmap,&cliprect1, 0x0000, 0);
 		}
-	}
+	} };
 	
 	#endif
 	
-	VIDEO_EOF( gaelco2 )
+	public static VideoUpdateHandlerPtr gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* sprites are one frame ahead */
 		buffer_spriteram16_w(0, 0, 0);
-	}
+	} };
 }

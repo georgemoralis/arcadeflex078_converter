@@ -38,7 +38,7 @@ public class nyny
 	
 	***************************************************************************/
 	
-	VIDEO_START( nyny )
+	public static VideoUpdateHandlerPtr nyny  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
 			return 1;
@@ -50,7 +50,7 @@ public class nyny
 		nyny_colourram = auto_malloc(0x4000);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	  Stop the video hardware emulation.
@@ -152,9 +152,9 @@ public class nyny
 		}
 	} };
 	
-	VIDEO_UPDATE( nyny )
+	public static VideoUpdateHandlerPtr nyny  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap,tmpbitmap2,flip_screen,flip_screen,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 		copybitmap(bitmap,tmpbitmap1,flip_screen,flip_screen,0,0,&Machine->visible_area,TRANSPARENCY_COLOR,0);
-	}
+	} };
 }

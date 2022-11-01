@@ -61,7 +61,7 @@ public class quizdna
 	}
 	
 	
-	VIDEO_START( quizdna )
+	public static VideoUpdateHandlerPtr quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		quizdna_bg_ram = auto_malloc(0x2000);
 		quizdna_fg_ram = auto_malloc(0x1000);
@@ -75,7 +75,7 @@ public class quizdna
 		tilemap_set_transparent_pen( quizdna_fg_tilemap,0 );
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr quizdna_bg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -204,7 +204,7 @@ public class quizdna
 		}
 	}
 	
-	VIDEO_UPDATE( quizdna )
+	public static VideoUpdateHandlerPtr quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (quizdna_video_enable)
 		{
@@ -214,5 +214,5 @@ public class quizdna
 		}
 		else
 			fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
-	}
+	} };
 }

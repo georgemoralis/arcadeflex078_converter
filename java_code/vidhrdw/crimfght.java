@@ -58,7 +58,7 @@ public class crimfght
 	
 	***************************************************************************/
 	
-	VIDEO_START( crimfght )
+	public static VideoUpdateHandlerPtr crimfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram = auto_malloc(0x400);
 		if (!paletteram) return 1;
@@ -73,7 +73,7 @@ public class crimfght
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -83,7 +83,7 @@ public class crimfght
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( crimfght )
+	public static VideoUpdateHandlerPtr crimfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -93,5 +93,5 @@ public class crimfght
 		K051960_sprites_draw(bitmap,cliprect,1,1);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
 		K051960_sprites_draw(bitmap,cliprect,0,0);
-	}
+	} };
 }

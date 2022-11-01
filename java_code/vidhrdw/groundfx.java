@@ -26,7 +26,7 @@ public class groundfx
 	
 	/******************************************************************/
 	
-	VIDEO_START( groundfx )
+	public static VideoUpdateHandlerPtr groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
 		if (!spritelist)
@@ -45,7 +45,7 @@ public class groundfx
 		hack_cliprect.max_y=24 + 44;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************
 				SPRITE DRAW ROUTINES
@@ -231,7 +231,7 @@ public class groundfx
 					SCREEN REFRESH
 	**************************************************************/
 	
-	VIDEO_UPDATE( groundfx )
+	public static VideoUpdateHandlerPtr groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 pivlayer[3];
@@ -292,5 +292,5 @@ public class groundfx
 		}
 	
 		TC0480SCP_tilemap_draw(bitmap,cliprect,layer[4],0,0);	/* TC0480SCP text layer */
-	}
+	} };
 }

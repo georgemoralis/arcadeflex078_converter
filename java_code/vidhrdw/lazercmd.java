@@ -82,7 +82,7 @@ public class lazercmd
 	}
 	
 	
-	VIDEO_START( lazercmd )
+	public static VideoUpdateHandlerPtr lazercmd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( video_start_generic() )
 			return 1;
@@ -91,10 +91,10 @@ public class lazercmd
 		artwork_show(OVERLAY_TAG, (input_port_2_r(0) & 0x80) >> 7);
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( lazercmd )
+	public static VideoUpdateHandlerPtr lazercmd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,x,y;
 	
@@ -134,5 +134,5 @@ public class lazercmd
 		x = marker_x - 1;             /* normal video lags marker by 1 pixel */
 		y = vert_scale(marker_y) - VERT_CHR; /* first line used as scratch pad */
 		plot_pattern(bitmap,x,y);
-	}
+	} };
 }

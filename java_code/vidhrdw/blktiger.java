@@ -75,7 +75,7 @@ public class blktiger
 	
 	***************************************************************************/
 	
-	VIDEO_START( blktiger )
+	public static VideoUpdateHandlerPtr blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		scroll_ram = auto_malloc(BGRAM_BANK_SIZE * BGRAM_BANKS);
 	
@@ -98,7 +98,7 @@ public class blktiger
 		tilemap_set_transmask(bg_tilemap4x8,3,0xf000,0x8fff);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -234,7 +234,7 @@ public class blktiger
 		}
 	}
 	
-	VIDEO_UPDATE( blktiger )
+	public static VideoUpdateHandlerPtr blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[1023],cliprect);
 	
@@ -249,10 +249,10 @@ public class blktiger
 	
 		if (chon)
 			tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( blktiger )
+	public static VideoUpdateHandlerPtr blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

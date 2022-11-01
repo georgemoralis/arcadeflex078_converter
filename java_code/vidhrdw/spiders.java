@@ -27,7 +27,7 @@ public class spiders
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( spiders )
+	public static VideoUpdateHandlerPtr spiders  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int loop;
 	
@@ -49,7 +49,7 @@ public class spiders
 		memset(screenbuffer,1,SCREENBUFFER_SIZE*sizeof(int));
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -59,7 +59,7 @@ public class spiders
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( spiders )
+	public static VideoUpdateHandlerPtr spiders  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int loop,data0,data1,data2,col;
 	
@@ -132,5 +132,5 @@ public class spiders
 	
 		/* Now copy the temp bitmap to the screen */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 }

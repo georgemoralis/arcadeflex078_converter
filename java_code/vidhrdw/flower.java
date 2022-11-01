@@ -129,7 +129,7 @@ public class flower
 	
 	}
 	
-	VIDEO_UPDATE( flower )
+	public static VideoUpdateHandlerPtr flower  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
@@ -143,7 +143,7 @@ public class flower
 		flower_drawsprites(bitmap,cliprect);
 	
 		flower_drawtextlayer(bitmap,cliprect);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr flower_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset) { return flower_sharedram[offset]; } };

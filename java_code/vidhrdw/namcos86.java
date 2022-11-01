@@ -141,7 +141,7 @@ public class namcos86
 	
 	***************************************************************************/
 	
-	VIDEO_START( namcos86 )
+	public static VideoUpdateHandlerPtr namcos86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -157,7 +157,7 @@ public class namcos86
 		tilemap_set_transparent_pen(tilemap[3],7);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -359,7 +359,7 @@ public class namcos86
 	
 	
 	
-	VIDEO_UPDATE( namcos86 )
+	public static VideoUpdateHandlerPtr namcos86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer;
 	
@@ -398,5 +398,5 @@ public class namcos86
 		usrintf_showmessage(buf);
 	}
 	#endif
-	}
+	} };
 }

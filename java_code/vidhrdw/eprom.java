@@ -48,7 +48,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	VIDEO_START( eprom )
+	public static VideoUpdateHandlerPtr eprom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -103,7 +103,7 @@ public class eprom
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -135,7 +135,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( eprom )
+	public static VideoUpdateHandlerPtr eprom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -277,5 +277,5 @@ public class eprom
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

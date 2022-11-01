@@ -188,7 +188,7 @@ public class royalmah
 	} };
 	
 	
-	VIDEO_UPDATE( royalmah )
+	public static VideoUpdateHandlerPtr royalmah  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -202,7 +202,7 @@ public class royalmah
 			}
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 	
 	
 	

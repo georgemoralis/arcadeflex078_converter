@@ -48,7 +48,7 @@ public class ttmahjng
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( ttmahjng )
+	public static VideoUpdateHandlerPtr ttmahjng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
 			return 1;
@@ -63,7 +63,7 @@ public class ttmahjng
 		video_remap_2 = 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	  ttmahjng_out0_w
@@ -200,7 +200,7 @@ public class ttmahjng
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( ttmahjng )
+	public static VideoUpdateHandlerPtr ttmahjng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_remap_1)
 		{
@@ -237,7 +237,7 @@ public class ttmahjng
 	
 		copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 		copybitmap(bitmap,tmpbitmap1,0,0,0,0,&Machine->visible_area,TRANSPARENCY_COLOR,0);
-	}
+	} };
 	
 	/***************************************************************************
 	  mofify_pen

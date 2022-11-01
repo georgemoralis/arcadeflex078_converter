@@ -103,7 +103,7 @@ public class mrjong
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( mrjong )
+	public static VideoUpdateHandlerPtr mrjong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_xy,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -112,7 +112,7 @@ public class mrjong
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void mrjong_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -149,9 +149,9 @@ public class mrjong
 		}
 	}
 	
-	VIDEO_UPDATE( mrjong )
+	public static VideoUpdateHandlerPtr mrjong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		mrjong_draw_sprites(bitmap);
-	}
+	} };
 }

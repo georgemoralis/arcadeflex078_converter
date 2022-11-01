@@ -41,7 +41,7 @@ public class triplhnt
 	}
 	
 	
-	VIDEO_START( triplhnt )
+	public static VideoUpdateHandlerPtr triplhnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		helper = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
 	
@@ -54,7 +54,7 @@ public class triplhnt
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void triplhnt_draw_sprites(struct mame_bitmap* bitmap, const struct rectangle* cliprect)
@@ -148,7 +148,7 @@ public class triplhnt
 	}
 	
 	
-	VIDEO_UPDATE( triplhnt )
+	public static VideoUpdateHandlerPtr triplhnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int cross_x = readinputport(8);
 		int cross_y = readinputport(9);
@@ -160,5 +160,5 @@ public class triplhnt
 		triplhnt_draw_sprites(bitmap, cliprect);
 	
 		draw_crosshair(bitmap, cross_x, cross_y, cliprect);
-	}
+	} };
 }

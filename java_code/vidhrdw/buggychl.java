@@ -32,7 +32,7 @@ public class buggychl
 	
 	
 	
-	VIDEO_START( buggychl )
+	public static VideoUpdateHandlerPtr buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dirtybuffer = auto_malloc(videoram_size);
 		dirtychar = auto_malloc(256 * sizeof(*dirtychar));
@@ -46,7 +46,7 @@ public class buggychl
 		memset(dirtychar,0xff,256 * sizeof(*dirtychar));
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -256,7 +256,7 @@ public class buggychl
 	}
 	
 	
-	VIDEO_UPDATE( buggychl )
+	public static VideoUpdateHandlerPtr buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int code;
 	
@@ -282,5 +282,5 @@ public class buggychl
 	
 		for (code = 0;code < 256;code++)
 			dirtychar[code] = 0;
-	}
+	} };
 }

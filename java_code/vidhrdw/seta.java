@@ -409,7 +409,7 @@ public class seta
 	}
 	
 	/* 2 layers */
-	VIDEO_START( seta_2_layers )
+	public static VideoUpdateHandlerPtr seta_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -444,11 +444,11 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	/* 1 layer */
-	VIDEO_START( seta_1_layer )
+	public static VideoUpdateHandlerPtr seta_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -478,9 +478,9 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
-	VIDEO_START( twineagl_1_layer )
+	public static VideoUpdateHandlerPtr twineagl_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -510,11 +510,11 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	/* NO layers, only sprites */
-	VIDEO_START( seta_no_layers )
+	public static VideoUpdateHandlerPtr seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = 0;
 		tilemap_1 = 0;
@@ -523,15 +523,15 @@ public class seta
 		find_offsets();
 		seta_samples_bank = -1;	// set the samples bank to an out of range value at start-up
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( oisipuzl_2_layers )
+	public static VideoUpdateHandlerPtr oisipuzl_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_seta_2_layers())
 			return 1;
 		tilemaps_flip = 1;
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -807,15 +807,15 @@ public class seta
 	
 	
 	/* For games without tilemaps */
-	VIDEO_UPDATE( seta_no_layers )
+	public static VideoUpdateHandlerPtr seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		seta_draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
 	
 	/* For games with 1 or 2 tilemaps */
-	VIDEO_UPDATE( seta )
+	public static VideoUpdateHandlerPtr seta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 		int enab_0, enab_1, x_0, x_1, y_0, y_1;
@@ -951,5 +951,5 @@ public class seta
 		{
 			zombraid_drawcrosshairs(bitmap,cliprect);
 		}
-	}
+	} };
 }

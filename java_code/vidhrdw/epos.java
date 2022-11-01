@@ -107,7 +107,7 @@ public class epos
 	  To be used by bitmapped games not using sprites.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( epos )
+	public static VideoUpdateHandlerPtr epos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -121,5 +121,5 @@ public class epos
 			}
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 }

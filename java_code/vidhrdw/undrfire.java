@@ -26,7 +26,7 @@ public class undrfire
 	
 	/******************************************************************/
 	
-	VIDEO_START( undrfire )
+	public static VideoUpdateHandlerPtr undrfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -43,7 +43,7 @@ public class undrfire
 		for (i=0; i<16384; i++) /* Fix later - some weird colours in places */
 			palette_set_color(i,0,0,0);
 		return 0;
-	}
+	} };
 	
 	/***************************************************************
 				SPRITE DRAW ROUTINES
@@ -239,7 +239,7 @@ public class undrfire
 					SCREEN REFRESH
 	**************************************************************/
 	
-	VIDEO_UPDATE( undrfire )
+	public static VideoUpdateHandlerPtr undrfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 pivlayer[3];
@@ -379,5 +379,5 @@ public class undrfire
 			}
 		}
 	#endif
-	}
+	} };
 }

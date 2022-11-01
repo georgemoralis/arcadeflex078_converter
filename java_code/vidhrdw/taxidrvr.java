@@ -22,7 +22,7 @@ public class taxidrvr
 	
 	
 	
-	VIDEO_UPDATE( taxidrvr )
+	public static VideoUpdateHandlerPtr taxidrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int sx,sy;
@@ -159,5 +159,5 @@ public class taxidrvr
 					sx*8,sy*8,
 					cliprect,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 }

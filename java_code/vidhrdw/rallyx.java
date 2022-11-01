@@ -160,7 +160,7 @@ public class rallyx
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( rallyx )
+	public static VideoUpdateHandlerPtr rallyx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic() != 0)
 			return 1;
@@ -173,7 +173,7 @@ public class rallyx
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -220,7 +220,7 @@ public class rallyx
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( rallyx )
+	public static VideoUpdateHandlerPtr rallyx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy;
 		int scrollx,scrolly;
@@ -381,11 +381,11 @@ public class rallyx
 					x,y,
 					&Machine->visible_area,TRANSPARENCY_PEN,3);
 		}
-	}
+	} };
 	
 	
 	
-	VIDEO_UPDATE( jungler )
+	public static VideoUpdateHandlerPtr jungler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy;
 		int scrollx,scrolly;
@@ -507,11 +507,11 @@ public class rallyx
 					x,y,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
 	
 	
-	VIDEO_UPDATE( locomotn )
+	public static VideoUpdateHandlerPtr locomotn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy;
 	const int displacement = 0;
@@ -647,11 +647,11 @@ public class rallyx
 					x,y,
 					&Machine->visible_area,TRANSPARENCY_PEN,3);
 		}
-	}
+	} };
 	
 	
 	
-	VIDEO_UPDATE( commsega )
+	public static VideoUpdateHandlerPtr commsega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy;
 	
@@ -801,5 +801,5 @@ public class rallyx
 					x,y,
 					&Machine->visible_area,TRANSPARENCY_PEN,3);
 		}
-	}
+	} };
 }

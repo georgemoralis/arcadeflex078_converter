@@ -65,7 +65,7 @@ public class msisaac
 	
 	***************************************************************************/
 	
-	VIDEO_START( msisaac )
+	public static VideoUpdateHandlerPtr msisaac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background  = tilemap_create(get_bg_tile_info, tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
 		background2 = tilemap_create(get_bg2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -78,7 +78,7 @@ public class msisaac
 		tilemap_set_transparent_pen(foreground,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -258,12 +258,12 @@ public class msisaac
 		}
 	}
 	
-	VIDEO_UPDATE( msisaac )
+	public static VideoUpdateHandlerPtr msisaac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,background, 0,0);
 		tilemap_draw(bitmap,cliprect,background2,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,foreground, 0,0);
-	}
+	} };
 	
 }

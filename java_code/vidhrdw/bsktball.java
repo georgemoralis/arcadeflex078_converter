@@ -36,7 +36,7 @@ public class bsktball
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( bsktball )
+	public static VideoUpdateHandlerPtr bsktball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -45,7 +45,7 @@ public class bsktball
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void bsktball_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -69,9 +69,9 @@ public class bsktball
 		}
 	}
 	
-	VIDEO_UPDATE( bsktball )
+	public static VideoUpdateHandlerPtr bsktball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		bsktball_draw_sprites(bitmap);
-	}
+	} };
 }

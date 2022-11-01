@@ -291,10 +291,10 @@ public class skyfox
 	***************************************************************************/
 	
 	
-	VIDEO_UPDATE( skyfox )
+	public static VideoUpdateHandlerPtr skyfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[255],&Machine->visible_area);	// the bg is black
 		skyfox_draw_background(bitmap);
 		skyfox_draw_sprites(bitmap);
-	}
+	} };
 }

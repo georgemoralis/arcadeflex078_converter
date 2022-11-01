@@ -95,7 +95,7 @@ public class baraduke
 	
 	***************************************************************************/
 	
-	VIDEO_START( baraduke )
+	public static VideoUpdateHandlerPtr baraduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -107,7 +107,7 @@ public class baraduke
 		tilemap_set_transparent_pen(tilemap[1],7);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -255,7 +255,7 @@ public class baraduke
 		}
 	}
 	
-	VIDEO_UPDATE( baraduke )
+	public static VideoUpdateHandlerPtr baraduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -299,9 +299,9 @@ public class baraduke
 					flipscreen,flipscreen,sx*8,sy*8,
 					cliprect,TRANSPARENCY_PEN,3);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( metrocrs )
+	public static VideoUpdateHandlerPtr metrocrs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -343,5 +343,5 @@ public class baraduke
 					flipscreen,flipscreen,sx*8,sy*8,
 					cliprect,TRANSPARENCY_PEN,3);
 		}
-	}
+	} };
 }

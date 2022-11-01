@@ -58,7 +58,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	VIDEO_START( toobin )
+	public static VideoUpdateHandlerPtr toobin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -113,7 +113,7 @@ public class toobin
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -237,7 +237,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( toobin )
+	public static VideoUpdateHandlerPtr toobin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -278,5 +278,5 @@ public class toobin
 	
 		/* add the alpha on top */
 		tilemap_draw(bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
-	}
+	} };
 }

@@ -85,24 +85,24 @@ public class runaway
 	
 	
 	
-	VIDEO_START( runaway )
+	public static VideoUpdateHandlerPtr runaway  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(runaway_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 8, 32, 30);
 	
 		return tilemap == NULL;
-	}
+	} };
 	
 	
-	VIDEO_START( qwak )
+	public static VideoUpdateHandlerPtr qwak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(qwak_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 8, 32, 30);
 	
 		return tilemap == NULL;
-	}
+	} };
 	
 	
 	
-	VIDEO_UPDATE( runaway )
+	public static VideoUpdateHandlerPtr runaway  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -134,10 +134,10 @@ public class runaway
 				x - 256, 240 - y,
 				cliprect, TRANSPARENCY_PEN, 0);
 		}
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( qwak )
+	public static VideoUpdateHandlerPtr qwak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -169,5 +169,5 @@ public class runaway
 				x - 256, 240 - y,
 				cliprect, TRANSPARENCY_PEN, 0);
 		}
-	}
+	} };
 }

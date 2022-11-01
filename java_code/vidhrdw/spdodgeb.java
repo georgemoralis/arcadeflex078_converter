@@ -83,7 +83,7 @@ public class spdodgeb
 	
 	***************************************************************************/
 	
-	VIDEO_START( spdodgeb )
+	public static VideoUpdateHandlerPtr spdodgeb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,TILEMAP_OPAQUE,8,8,64,32);
 	
@@ -93,7 +93,7 @@ public class spdodgeb
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -223,7 +223,7 @@ public class spdodgeb
 	#undef DRAW_SPRITE
 	
 	
-	VIDEO_UPDATE( spdodgeb )
+	public static VideoUpdateHandlerPtr spdodgeb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -241,5 +241,5 @@ public class spdodgeb
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

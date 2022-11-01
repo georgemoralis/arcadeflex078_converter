@@ -226,7 +226,7 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( zaxxon )
+	public static VideoUpdateHandlerPtr zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( zaxxon_create_background() )
 			return 1;
@@ -240,7 +240,7 @@ public class zaxxon
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void zaxxon_draw_background( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -366,12 +366,12 @@ public class zaxxon
 		}
 	}
 	
-	VIDEO_UPDATE( zaxxon )
+	public static VideoUpdateHandlerPtr zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		zaxxon_draw_background(bitmap, cliprect);
 		zaxxon_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 	
 	/* Razzmatazz */
 	
@@ -383,7 +383,7 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( razmataz )
+	public static VideoUpdateHandlerPtr razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -426,7 +426,7 @@ public class zaxxon
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void razmataz_draw_background( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -445,12 +445,12 @@ public class zaxxon
 		}
 	}
 	
-	VIDEO_UPDATE( razmataz )
+	public static VideoUpdateHandlerPtr razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		razmataz_draw_background(bitmap, cliprect);
 		zaxxon_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 	
 	/* Congo Bongo */
 	
@@ -462,7 +462,7 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( congo )
+	public static VideoUpdateHandlerPtr congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( zaxxon_create_background() )
 			return 1;
@@ -476,7 +476,7 @@ public class zaxxon
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void congo_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -521,12 +521,12 @@ public class zaxxon
 		}
 	}
 	
-	VIDEO_UPDATE( congo )
+	public static VideoUpdateHandlerPtr congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		zaxxon_draw_background(bitmap, cliprect);
 		congo_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 	
 	/* Future Spy */
 	
@@ -559,10 +559,10 @@ public class zaxxon
 		}
 	}
 	
-	VIDEO_UPDATE( futspy )
+	public static VideoUpdateHandlerPtr futspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		zaxxon_draw_background(bitmap, cliprect);
 		futspy_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 }

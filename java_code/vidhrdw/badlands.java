@@ -47,7 +47,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	VIDEO_START( badlands )
+	public static VideoUpdateHandlerPtr badlands  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -96,7 +96,7 @@ public class badlands
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -125,7 +125,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( badlands )
+	public static VideoUpdateHandlerPtr badlands  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -153,5 +153,5 @@ public class badlands
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

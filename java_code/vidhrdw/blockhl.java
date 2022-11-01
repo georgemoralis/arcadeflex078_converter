@@ -42,7 +42,7 @@ public class blockhl
 	
 	***************************************************************************/
 	
-	VIDEO_START( blockhl )
+	public static VideoUpdateHandlerPtr blockhl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 16;
@@ -55,10 +55,10 @@ public class blockhl
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( blockhl )
+	public static VideoUpdateHandlerPtr blockhl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -67,5 +67,5 @@ public class blockhl
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[1],0,0);
 		K051960_sprites_draw(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
-	}
+	} };
 }

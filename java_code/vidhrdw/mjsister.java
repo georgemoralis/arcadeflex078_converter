@@ -28,7 +28,7 @@ public class mjsister
 	
 	/****************************************************************************/
 	
-	VIDEO_START( mjsister )
+	public static VideoUpdateHandlerPtr mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((mjsister_tmpbitmap0 = bitmap_alloc(256,256)) == 0)
 			return 1;
@@ -40,7 +40,7 @@ public class mjsister
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	void mjsister_plot0(int offset,unsigned char data)
 	{
@@ -89,7 +89,7 @@ public class mjsister
 		}
 	} };
 	
-	VIDEO_UPDATE( mjsister )
+	public static VideoUpdateHandlerPtr mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int f = mjsister_flip_screen;
 		int i,j;
@@ -120,5 +120,5 @@ public class mjsister
 		}
 		else
 			fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
-	}
+	} };
 }

@@ -21,10 +21,10 @@ WRITE16_HANDLER( seta_vram_2_w );
 WRITE16_HANDLER( seta_vregs_w );
 
 
-VIDEO_START( seta_no_layers);
-VIDEO_START( twineagl_1_layer);
-VIDEO_START( seta_1_layer);
-VIDEO_START( seta_2_layers);
+public static VideoUpdateHandlerPtr seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect);
+public static VideoUpdateHandlerPtr twineagl_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect);
+public static VideoUpdateHandlerPtr seta_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect);
+public static VideoUpdateHandlerPtr seta_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect);
 
 
 

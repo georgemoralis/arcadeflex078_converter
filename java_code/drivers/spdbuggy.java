@@ -615,7 +615,7 @@ public class spdbuggy
 							[ Video Hardware Start ]
 	------------------------------------------------------------------------*/
 	
-	VIDEO_START( spdbuggy )
+	public static VideoUpdateHandlerPtr spdbuggy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(spdbuggy_get_bg_tile_info,
 									tilemap_scan_rows,
@@ -642,7 +642,7 @@ public class spdbuggy
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -664,7 +664,7 @@ public class spdbuggy
 	
 	
 	
-	VIDEO_UPDATE( spdbuggy )
+	public static VideoUpdateHandlerPtr spdbuggy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = 0xFFFF;
 	
@@ -711,5 +711,5 @@ public class spdbuggy
 	
 		/* Draw the foreground (text) */
 		if (layers_ctrl & 4)	tilemap_draw(bitmap, cliprect, fg_tilemap,  0, 0);
-	}
+	} };
 }

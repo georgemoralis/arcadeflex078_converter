@@ -133,7 +133,7 @@ public class matmania
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( matmania )
+	public static VideoUpdateHandlerPtr matmania  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
@@ -152,7 +152,7 @@ public class matmania
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -179,7 +179,7 @@ public class matmania
 	} };
 	
 	
-	VIDEO_UPDATE( matmania )
+	public static VideoUpdateHandlerPtr matmania  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -273,9 +273,9 @@ public class matmania
 					8*sx,8*sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( maniach )
+	public static VideoUpdateHandlerPtr maniach  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -369,5 +369,5 @@ public class matmania
 					8*sx,8*sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 }

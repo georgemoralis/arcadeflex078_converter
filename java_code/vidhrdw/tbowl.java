@@ -223,7 +223,7 @@ public class tbowl
 	
 	/*** Video Start / Update ***/
 	
-	VIDEO_START( tbowl )
+	public static VideoUpdateHandlerPtr tbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,128,32);
@@ -237,15 +237,15 @@ public class tbowl
 		tilemap_set_transparent_pen(bg2_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( tbowl )
+	public static VideoUpdateHandlerPtr tbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,0x100,cliprect); /* is there a register controling the colour? looks odd when screen is blank */
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg2_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 }

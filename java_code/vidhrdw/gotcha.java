@@ -44,7 +44,7 @@ public class gotcha
 	
 	***************************************************************************/
 	
-	VIDEO_START( gotcha )
+	public static VideoUpdateHandlerPtr gotcha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(fg_get_tile_info,gotcha_tilemap_scan,TILEMAP_TRANSPARENT,16,16,64,32);
 		bg_tilemap = tilemap_create(bg_get_tile_info,gotcha_tilemap_scan,TILEMAP_OPAQUE,     16,16,64,32);
@@ -58,7 +58,7 @@ public class gotcha
 		tilemap_set_scrolldx(bg_tilemap,-5,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( gotcha_fgvideoram_w )
@@ -141,11 +141,11 @@ public class gotcha
 	}
 	
 	
-	VIDEO_UPDATE( gotcha )
+	public static VideoUpdateHandlerPtr gotcha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

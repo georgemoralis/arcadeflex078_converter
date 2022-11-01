@@ -185,7 +185,7 @@ public class exedexes
 		return ((col * 16 & 0xf0) >> 4) + (row * 16 & 0xf0) + (col * 16 & 0x700) + ((row * 16 & 0x700) << 3);
 	}
 	
-	VIDEO_START( exedexes )
+	public static VideoUpdateHandlerPtr exedexes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, exedexes_bg_tilemap_scan, 
 			TILEMAP_OPAQUE, 32, 32, 64, 64);
@@ -209,7 +209,7 @@ public class exedexes
 		tilemap_set_transparent_pen(tx_tilemap, 207);
 	
 		return 0;
-	}
+	} };
 	
 	static void exedexes_draw_sprites(struct mame_bitmap *bitmap, int priority)
 	{
@@ -242,7 +242,7 @@ public class exedexes
 		}
 	}
 	
-	VIDEO_UPDATE( exedexes )
+	public static VideoUpdateHandlerPtr exedexes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (sc2on)
 		{
@@ -269,10 +269,10 @@ public class exedexes
 		{
 			tilemap_draw(bitmap, &Machine->visible_area, tx_tilemap, 0, 0);
 		}
-	}
+	} };
 	
-	VIDEO_EOF( exedexes )
+	public static VideoUpdateHandlerPtr exedexes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

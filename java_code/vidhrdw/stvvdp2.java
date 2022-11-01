@@ -2596,13 +2596,13 @@ public class stvvdp2
 	}
 	
 	/* maybe we should move this to vidhrdw/stv.c */
-	VIDEO_START( stv_vdp2 )
+	public static VideoUpdateHandlerPtr stv_vdp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		stv_vdp2_start();
 		stv_vdp1_start();
 	
 		return 0;
-	}
+	} };
 	
 	static void stv_vdp2_dynamic_res_change()
 	{
@@ -2640,7 +2640,7 @@ public class stvvdp2
 	}
 	
 	
-	VIDEO_UPDATE( stv_vdp2 )
+	public static VideoUpdateHandlerPtr stv_vdp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static UINT8 pri;
 	
@@ -2745,7 +2745,7 @@ public class stvvdp2
 	
 	
 	
-	}
+	} };
 	
 	/* below is some old code we might use .. */
 	

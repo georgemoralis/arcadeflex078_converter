@@ -23,7 +23,7 @@ public class missb2
 	/* machine/bublbobl.c */
 	
 	
-	VIDEO_UPDATE( missb2 )
+	public static VideoUpdateHandlerPtr missb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int sx,sy,xc,yc;
@@ -115,7 +115,7 @@ public class missb2
 	
 			sx += 16;
 		}
-	}
+	} };
 	
 	INLINE void bg_changecolor_RRRRGGGGBBBBxxxx(pen_t color,int data)
 	{

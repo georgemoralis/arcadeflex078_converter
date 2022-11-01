@@ -138,14 +138,14 @@ package vidhrdw;
 public class ssv
 {
 	
-	VIDEO_START( ssv )
+	public static VideoUpdateHandlerPtr ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		Machine->gfx[0]->color_granularity = 64; /* 256 colour sprites with palette selectable on 64 colour boundaries */
 	
 		alpha_set_level(0x80);	// until proper shadows are implemented
 	
 		return 0;
-	}
+	} };
 	
 	/* Scroll values + CRT controller registers */
 	data16_t *ssv_scroll;
@@ -780,7 +780,7 @@ public class ssv
 		enable_video = enable;
 	}
 	
-	VIDEO_UPDATE( ssv )
+	public static VideoUpdateHandlerPtr ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* The background color is the first one in the palette */
 		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
@@ -789,5 +789,5 @@ public class ssv
 	
 		ssv_draw_layer(bitmap);		// "background layer"
 		ssv_draw_sprites(bitmap);	// sprites list
-	}
+	} };
 }

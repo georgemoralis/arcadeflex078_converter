@@ -1401,7 +1401,7 @@ public class seta
 	 Sprites Buffering
 	
 	*/
-	VIDEO_EOF( seta_buffer_sprites )
+	public static VideoUpdateHandlerPtr seta_buffer_sprites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ctrl2	=	spriteram16[ 0x602/2 ];
 		if (~ctrl2 & 0x20)
@@ -1411,7 +1411,7 @@ public class seta
 			else
 				memcpy(&spriteram16_2[0x2000/2],&spriteram16_2[0x0000/2],0x2000/2);
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -100,23 +100,23 @@ public class astinvad
 	} };
 	
 	
-	VIDEO_START( astinvad )
+	public static VideoUpdateHandlerPtr astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		astinvad_adjust = 0x80;
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
-	VIDEO_START( spcking2 )
+	public static VideoUpdateHandlerPtr spcking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		astinvad_adjust = 0;
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
-	VIDEO_START( spaceint )
+	public static VideoUpdateHandlerPtr spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		colorram = auto_malloc(0x2000);
 	
@@ -128,10 +128,10 @@ public class astinvad
 		memset(colorram, 0, 0x2000);
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( spaceint )
+	public static VideoUpdateHandlerPtr spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -144,10 +144,10 @@ public class astinvad
 		}
 	
 		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( astinvad )
+	public static VideoUpdateHandlerPtr astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (astinvad_flash)
 		{
@@ -167,5 +167,5 @@ public class astinvad
 	
 			copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
 		}
-	}
+	} };
 }

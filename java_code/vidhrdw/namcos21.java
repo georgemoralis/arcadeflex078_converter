@@ -395,7 +395,7 @@ public class namcos21
 		return code;
 	}
 	
-	VIDEO_START( namcos21 )
+	public static VideoUpdateHandlerPtr namcos21  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		namcos3d_Init( kScreenWidth, kScreenHeight, NULL, NULL );
 	
@@ -405,7 +405,7 @@ public class namcos21
 			objcode2tile );
 	
 		return 0;
-	}
+	} };
 	
 	static void
 	update_palette( void )
@@ -441,7 +441,7 @@ public class namcos21
 		}
 	} /* update_palette */
 	
-	VIDEO_UPDATE( namcos21_default )
+	public static VideoUpdateHandlerPtr namcos21_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri;
 	
@@ -513,5 +513,5 @@ public class namcos21
 				namcos21_dspram16[0x10e/2] = 0; /* ack */
 			}
 		}
-	} /* namcos21_default */
+	} }; /* namcos21_default */
 }

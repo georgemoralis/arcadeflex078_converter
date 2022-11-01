@@ -175,7 +175,7 @@ public class yunsung8
 	
 	***************************************************************************/
 	
-	VIDEO_START( yunsung8 )
+	public static VideoUpdateHandlerPtr yunsung8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_OPAQUE, 8,8, DIM_NX_0, DIM_NY_0 );
@@ -189,7 +189,7 @@ public class yunsung8
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	
@@ -201,7 +201,7 @@ public class yunsung8
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( yunsung8 )
+	public static VideoUpdateHandlerPtr yunsung8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = (~yunsung8_layers_ctrl) >> 4;
 	
@@ -219,5 +219,5 @@ public class yunsung8
 		else				fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
 		if (layers_ctrl&2)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
-	}
+	} };
 }

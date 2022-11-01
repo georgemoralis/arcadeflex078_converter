@@ -288,20 +288,20 @@ public class pastelgl
 	
 	
 	******************************************************************************/
-	VIDEO_START( pastelgl )
+	public static VideoUpdateHandlerPtr pastelgl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((pastelgl_tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
 		if ((pastelgl_videoram = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char))) == 0) return 1;
 		if ((pastelgl_paltbl = auto_malloc(0x10 * sizeof(char))) == 0) return 1;
 		memset(pastelgl_videoram, 0x00, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char)));
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************
 	
 	
 	******************************************************************************/
-	VIDEO_UPDATE( pastelgl )
+	public static VideoUpdateHandlerPtr pastelgl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		unsigned char color;
@@ -328,5 +328,5 @@ public class pastelgl
 		{
 			fillbitmap(bitmap, Machine->pens[0x00], 0);
 		}
-	}
+	} };
 }

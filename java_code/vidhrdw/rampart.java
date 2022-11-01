@@ -43,7 +43,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	VIDEO_START( rampart )
+	public static VideoUpdateHandlerPtr rampart  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -93,7 +93,7 @@ public class rampart
 		/* set the intial scroll offset */
 		atarimo_set_xscroll(0, -4);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -103,7 +103,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( rampart )
+	public static VideoUpdateHandlerPtr rampart  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -130,7 +130,7 @@ public class rampart
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 	
 	
 	

@@ -58,7 +58,7 @@ public class toki
 	}
 	
 	/* At EOF clear the previous frames scroll registers */
-	VIDEO_EOF( toki )
+	public static VideoUpdateHandlerPtr toki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -73,12 +73,12 @@ public class toki
 			toki_background_xscroll[i]=toki_foreground_xscroll[i]=0xffff;
 	
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( tokib )
+	public static VideoUpdateHandlerPtr tokib  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 	
 	static void get_text_tile_info(int tile_index)
 	{
@@ -129,7 +129,7 @@ public class toki
 	 *
 	 *************************************/
 	
-	VIDEO_START( toki )
+	public static VideoUpdateHandlerPtr toki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		text_layer       = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,32,32);
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -144,7 +144,7 @@ public class toki
 		tilemap_set_scroll_rows(background_layer,512);
 	
 		return 0;
-	}
+	} };
 	
 	/*************************************/
 	
@@ -309,7 +309,7 @@ public class toki
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( toki )
+	public static VideoUpdateHandlerPtr toki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,background_y_scroll,foreground_y_scroll,latch1,latch2;
 	
@@ -341,9 +341,9 @@ public class toki
 		}
 		toki_draw_sprites (bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( tokib )
+	public static VideoUpdateHandlerPtr tokib  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scroll_rows(foreground_layer,1);
 		tilemap_set_scroll_rows(background_layer,1);
@@ -362,5 +362,5 @@ public class toki
 	
 		tokib_draw_sprites (bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
-	}
+	} };
 }

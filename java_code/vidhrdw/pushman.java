@@ -54,7 +54,7 @@ public class pushman
 	
 	***************************************************************************/
 	
-	VIDEO_START( pushman )
+	public static VideoUpdateHandlerPtr pushman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_back_tile_info,background_scan_rows,TILEMAP_OPAQUE,     32,32,128,64);
 		tx_tilemap = tilemap_create(get_text_tile_info,tilemap_scan_rows,   TILEMAP_TRANSPARENT, 8, 8, 32,32);
@@ -65,7 +65,7 @@ public class pushman
 		tilemap_set_transparent_pen(tx_tilemap,3);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -121,7 +121,7 @@ public class pushman
 		}
 	}
 	
-	VIDEO_UPDATE( pushman )
+	public static VideoUpdateHandlerPtr pushman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Setup the tilemaps */
 		tilemap_set_scrollx( bg_tilemap,0, control[0] );
@@ -130,5 +130,5 @@ public class pushman
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 }

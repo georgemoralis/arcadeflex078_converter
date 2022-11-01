@@ -40,7 +40,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	VIDEO_START( balsente )
+	public static VideoUpdateHandlerPtr balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* reset the system */
 		palettebank_vis = 0;
@@ -77,7 +77,7 @@ public class balsente
 		sprite_mask = memory_region_length(REGION_GFX1) - 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -274,7 +274,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( balsente )
+	public static VideoUpdateHandlerPtr balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int update_all = get_vh_global_attribute_changed();
 		int y, i;
@@ -308,5 +308,5 @@ public class balsente
 	
 			draw_crosshair(bitmap,beamx,beamy,cliprect);
 		}
-	}
+	} };
 }

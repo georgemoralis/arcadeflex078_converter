@@ -80,7 +80,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	static VIDEO_START( common )
+	static public static VideoUpdateHandlerPtr common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate memory */
 		midyunit_cmos_ram = auto_malloc(0x2000 * 4);
@@ -106,10 +106,10 @@ public class midyunit
 		/* set up scanline 0 timer */
 		timer_set(cpu_getscanlinetime(0), 0, scanline0_callback);
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midyunit_4bit )
+	public static VideoUpdateHandlerPtr midyunit_4bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_common();
 		int i;
@@ -124,10 +124,10 @@ public class midyunit
 		palette_mask = 0x00ff;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midyunit_6bit )
+	public static VideoUpdateHandlerPtr midyunit_6bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_common();
 		int i;
@@ -142,10 +142,10 @@ public class midyunit
 		palette_mask = 0x0fff;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midzunit )
+	public static VideoUpdateHandlerPtr midzunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_common();
 		int i;
@@ -160,7 +160,7 @@ public class midyunit
 		palette_mask = 0x1fff;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -776,11 +776,11 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	VIDEO_EOF( midyunit )
+	public static VideoUpdateHandlerPtr midyunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* finish updating/autoerasing, even if we skipped a frame */
 		update_partial(Machine->visible_area.max_y, 0);
-	}
+	} };
 	
 	
 	static void scanline0_callback(int param)
@@ -797,7 +797,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( midyunit )
+	public static VideoUpdateHandlerPtr midyunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int hsblnk, heblnk, leftscroll;
 		int v, width, xoffs;
@@ -839,5 +839,5 @@ public class midyunit
 			erase.max_x = leftscroll - 1;
 			fillbitmap(bitmap, get_black_pen(), &erase);
 		}
-	}
+	} };
 }

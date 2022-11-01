@@ -105,7 +105,7 @@ public class tehkanwc
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( tehkanwc )
+	public static VideoUpdateHandlerPtr tehkanwc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 16, 8, 32, 32);
@@ -122,7 +122,7 @@ public class tehkanwc
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	/*
 	   Gridiron Fight has a LED display on the control panel, to let each player
@@ -211,7 +211,7 @@ public class tehkanwc
 		}
 	}
 	
-	VIDEO_UPDATE( tehkanwc )
+	public static VideoUpdateHandlerPtr tehkanwc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, scroll_x[0] + 256 * scroll_x[1]);
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
@@ -220,5 +220,5 @@ public class tehkanwc
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 1, 0);
 		gridiron_drawled(bitmap, led0, 0);
 		gridiron_drawled(bitmap, led1, 1);
-	}
+	} };
 }

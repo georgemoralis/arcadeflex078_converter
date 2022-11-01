@@ -148,7 +148,7 @@ public class galpani2
 		}
 	} };
 	
-	VIDEO_START( galpani2 )
+	public static VideoUpdateHandlerPtr galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((galpani2_bg15_bitmap  = auto_bitmap_alloc_depth(256*8, 256, 16)) == 0)	return 1;
 	
@@ -156,7 +156,7 @@ public class galpani2
 		if ((galpani2_bg8_bitmap_1 = auto_bitmap_alloc_depth(512, 256, 16)) == 0)	return 1;
 	
 		return video_start_kaneko16_sprites();
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -167,7 +167,7 @@ public class galpani2
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( galpani2 )
+	public static VideoUpdateHandlerPtr galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -220,5 +220,5 @@ public class galpani2
 		}
 	
 		if (layers_ctrl & 0x8)	kaneko16_draw_sprites(bitmap, cliprect, 0xf);
-	}
+	} };
 }

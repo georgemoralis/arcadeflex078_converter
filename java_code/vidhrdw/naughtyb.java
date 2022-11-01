@@ -154,7 +154,7 @@ public class naughtyb
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( naughtyb )
+	public static VideoUpdateHandlerPtr naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		videoreg = palreg = bankreg = 0;
 	
@@ -167,7 +167,7 @@ public class naughtyb
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -266,7 +266,7 @@ public class naughtyb
 	
 	
 	***************************************************************************/
-	VIDEO_UPDATE( naughtyb )
+	public static VideoUpdateHandlerPtr naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -321,5 +321,5 @@ public class naughtyb
 			scrollx = -*naughtyb_scrollreg + 16;
 			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,0,0,&scrollvisiblearea,TRANSPARENCY_NONE,0);
 		}
-	}
+	} };
 }

@@ -48,7 +48,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	VIDEO_START( skullxbo )
+	public static VideoUpdateHandlerPtr skullxbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -103,7 +103,7 @@ public class skullxbo
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -245,7 +245,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( skullxbo )
+	public static VideoUpdateHandlerPtr skullxbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -317,5 +317,5 @@ public class skullxbo
 	
 		/* add the alpha on top */
 		tilemap_draw(bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
-	}
+	} };
 }

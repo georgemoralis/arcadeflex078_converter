@@ -173,7 +173,7 @@ public class sidearms
 		return ((offset & 0xf801) | ((offset & 0x0700) >> 7) | ((offset & 0x00fe) << 3)) & 0x7fff;
 	}
 	
-	VIDEO_START( sidearms )
+	public static VideoUpdateHandlerPtr sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilerom = memory_region(REGION_GFX4);
 	
@@ -211,7 +211,7 @@ public class sidearms
 		flipon = charon = staron = objon = bgon = 0;
 	
 		return 0;
-	}
+	} };
 	
 	void sidearms_draw_sprites_region( struct mame_bitmap *bitmap, int start_offset, int end_offset )
 	{
@@ -382,7 +382,7 @@ public class sidearms
 		}
 	}
 	
-	VIDEO_UPDATE( sidearms )
+	public static VideoUpdateHandlerPtr sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sidearms_draw_starfield(bitmap);
 	
@@ -397,10 +397,10 @@ public class sidearms
 	
 		if (charon)
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 	
-	VIDEO_EOF( sidearms )
+	public static VideoUpdateHandlerPtr sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0, 0);
-	}
+	} };
 }

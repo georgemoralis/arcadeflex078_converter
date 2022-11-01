@@ -143,7 +143,7 @@ public class zodiack
 		SET_TILE_INFO(3, code, color, 0)
 	}
 	
-	VIDEO_START( zodiack )
+	public static VideoUpdateHandlerPtr zodiack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -163,7 +163,7 @@ public class zodiack
 		flip_screen = 0;
 	
 		return 0;
-	}
+	} };
 	
 	static void zodiack_draw_bullets( struct mame_bitmap *bitmap )
 	{
@@ -223,7 +223,7 @@ public class zodiack
 		}
 	}
 	
-	VIDEO_UPDATE( zodiack )
+	public static VideoUpdateHandlerPtr zodiack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -236,5 +236,5 @@ public class zodiack
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
 		zodiack_draw_bullets(bitmap);
 		zodiack_draw_sprites(bitmap);
-	}
+	} };
 }

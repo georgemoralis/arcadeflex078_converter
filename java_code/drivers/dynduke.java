@@ -248,10 +248,10 @@ public class dynduke
 		cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc8/4);	/* VBL */
 	} };
 	
-	VIDEO_EOF( dynduke )
+	public static VideoUpdateHandlerPtr dynduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0); /* Could be a memory location instead */
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( dynduke )
 	

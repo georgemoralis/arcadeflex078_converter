@@ -451,7 +451,7 @@ public class fromanc2
 	
 	******************************************************************************/
 	
-	VIDEO_START( fromanc2 )
+	public static VideoUpdateHandlerPtr fromanc2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fromanc2_tilemap[0][0] = tilemap_create(fromanc2_get_v0_l0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64, 64);
 		fromanc2_tilemap[0][1] = tilemap_create(fromanc2_get_v0_l1_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -505,9 +505,9 @@ public class fromanc2
 		fromanc2_dispvram = 0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( fromancr )
+	public static VideoUpdateHandlerPtr fromancr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fromanc2_tilemap[0][0] = tilemap_create(fromancr_get_v0_l0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64, 64);
 		fromanc2_tilemap[0][1] = tilemap_create(fromancr_get_v0_l1_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -553,10 +553,10 @@ public class fromanc2
 		fromanc2_dispvram = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( fromanc4 )
+	public static VideoUpdateHandlerPtr fromanc4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fromanc2_tilemap[0][0] = tilemap_create(fromancr_get_v0_l0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 256, 64);
 		fromanc2_tilemap[0][1] = tilemap_create(fromancr_get_v0_l1_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 256, 64);
@@ -602,7 +602,7 @@ public class fromanc2
 		fromanc2_dispvram = 0;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************
 	
@@ -610,7 +610,7 @@ public class fromanc2
 	
 	******************************************************************************/
 	
-	VIDEO_UPDATE( fromanc2 )
+	public static VideoUpdateHandlerPtr fromanc2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (fromanc2_tilemap[fromanc2_dispvram][0]) {
 			tilemap_set_scrollx(fromanc2_tilemap[fromanc2_dispvram][0], 0, -fromanc2_scrollx[fromanc2_dispvram][0]);
@@ -632,5 +632,5 @@ public class fromanc2
 			tilemap_set_scrolly(fromanc2_tilemap[fromanc2_dispvram][3], 0, -fromanc2_scrolly[fromanc2_dispvram][3]);
 		 	tilemap_draw(bitmap,cliprect, fromanc2_tilemap[fromanc2_dispvram][3], 0, 0);
 		}
-	}
+	} };
 }

@@ -229,7 +229,7 @@ public class pitnrun
 		}
 	}
 	
-	VIDEO_UPDATE( pitnrun )
+	public static VideoUpdateHandlerPtr pitnrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int dx=0,dy=0;
 		struct rectangle myclip=*cliprect; 
@@ -290,7 +290,7 @@ public class pitnrun
 		if(pitnrun_ha&4)
 			copybitmap(bitmap,tmp_bitmap[pitnrun_ha&3],flip_screen_x,flip_screen_y,dx,dy,&myclip,TRANSPARENCY_PEN, 1);
 		tilemap_draw(bitmap,cliprect,fg, 0,0);
-	}	
+	} };	
 	
 	
 	

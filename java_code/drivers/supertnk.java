@@ -128,7 +128,7 @@ public class supertnk
 	
 	
 	
-	VIDEO_START( supertnk )
+	public static VideoUpdateHandlerPtr supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		supertnk_videoram = auto_malloc(0x6000);	/* allocate physical video RAM */
 	
@@ -140,7 +140,7 @@ public class supertnk
 		memset(supertnk_videoram, 0, 0x6000);
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
 	
@@ -183,10 +183,10 @@ public class supertnk
 	} };
 	
 	
-	VIDEO_UPDATE( supertnk )
+	public static VideoUpdateHandlerPtr supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 	
 	
 	

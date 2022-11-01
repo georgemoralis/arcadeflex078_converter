@@ -67,7 +67,7 @@ public class segasyse
 	 vhstart, vhstop and vhrefresh functions
 	*******************************************************************************/
 	
-	VIDEO_START( segae )
+	public static VideoUpdateHandlerPtr segae  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 temp;
 	
@@ -81,9 +81,9 @@ public class segasyse
 		if (!cache_bitmap) return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( segae )
+	public static VideoUpdateHandlerPtr segae  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -91,7 +91,7 @@ public class segasyse
 	
 		for (i = 0;i < 192;i++)
 			draw_scanline8(bitmap,0,i,256,&cache_bitmap[i * (16+256+16) +16],&Machine->pens[segasyse_palettebase],-1);
-	}
+	} };
 	
 	/* these are used by megatech */
 	

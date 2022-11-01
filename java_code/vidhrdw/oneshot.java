@@ -74,7 +74,7 @@ public class oneshot
 		}
 	}
 	
-	VIDEO_START( oneshot )
+	public static VideoUpdateHandlerPtr oneshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		oneshot_bg_tilemap = tilemap_create(get_oneshot_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		oneshot_mid_tilemap = tilemap_create(get_oneshot_mid_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
@@ -85,7 +85,7 @@ public class oneshot
 		tilemap_set_transparent_pen(oneshot_fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	static void oneshot_drawcrosshairs( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -183,7 +183,7 @@ public class oneshot
 	
 	}
 	
-	VIDEO_UPDATE( oneshot )
+	public static VideoUpdateHandlerPtr oneshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
@@ -195,9 +195,9 @@ public class oneshot
 		oneshot_drawsprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,oneshot_fg_tilemap,0,0);
 		oneshot_drawcrosshairs(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( maddonna )
+	public static VideoUpdateHandlerPtr maddonna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
@@ -210,5 +210,5 @@ public class oneshot
 	//	oneshot_drawcrosshairs(bitmap,cliprect); // not a gun game
 	
 	//	usrintf_showmessage	("%04x %04x %04x %04x %04x %04x %04x %04x", oneshot_scroll[0],oneshot_scroll[1],oneshot_scroll[2],oneshot_scroll[3],oneshot_scroll[4],oneshot_scroll[5],oneshot_scroll[6],oneshot_scroll[7]);
-	}
+	} };
 }

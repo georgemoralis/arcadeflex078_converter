@@ -102,7 +102,7 @@ public class suprloco
 	
 	***************************************************************************/
 	
-	VIDEO_START( suprloco )
+	public static VideoUpdateHandlerPtr suprloco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -112,7 +112,7 @@ public class suprloco
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -291,10 +291,10 @@ public class suprloco
 		}
 	}
 	
-	VIDEO_UPDATE( suprloco )
+	public static VideoUpdateHandlerPtr suprloco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,1,0);
-	}
+	} };
 }

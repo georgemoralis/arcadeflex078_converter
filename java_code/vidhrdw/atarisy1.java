@@ -132,7 +132,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	VIDEO_START( atarisy1 )
+	public static VideoUpdateHandlerPtr atarisy1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -216,7 +216,7 @@ public class atarisy1
 		int3off_timer = timer_alloc(int3off_callback);
 		yscroll_reset_timer = timer_alloc(reset_yscroll_callback);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -500,7 +500,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( atarisy1 )
+	public static VideoUpdateHandlerPtr atarisy1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -542,7 +542,7 @@ public class atarisy1
 	
 		/* add the alpha on top */
 		tilemap_draw(bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
-	}
+	} };
 	
 	
 	

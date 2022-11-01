@@ -50,7 +50,7 @@ public class subs
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( subs )
+	public static VideoUpdateHandlerPtr subs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int updateall = get_vh_global_attribute_changed();
 		int offs;
@@ -168,5 +168,5 @@ public class subs
 		/* Update sound */
 		discrete_sound_w(2, spriteram[5] & 0x0f);		// Launch data
 		discrete_sound_w(3, (spriteram[5] >> 4) & 0x0f);	// Crash/explode data
-	}
+	} };
 }

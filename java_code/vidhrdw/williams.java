@@ -183,7 +183,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	VIDEO_START( williams )
+	public static VideoUpdateHandlerPtr williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate space for video RAM and dirty scanlines */
 		williams_videoram = auto_malloc(VIDEORAM_SIZE);
@@ -203,7 +203,7 @@ public class williams
 		sinistar_clip = 0xffff;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -213,11 +213,11 @@ public class williams
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( williams )
+	public static VideoUpdateHandlerPtr williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* copy the pixels into the final result */
 		copy_pixels(bitmap, cliprect, -1);
-	}
+	} };
 	
 	
 	
@@ -246,7 +246,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	VIDEO_START( williams2 )
+	public static VideoUpdateHandlerPtr williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* standard initialization */
 		if (video_start_williams())
@@ -268,7 +268,7 @@ public class williams
 		williams2_bg_color = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -278,7 +278,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( williams2 )
+	public static VideoUpdateHandlerPtr williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *tileram = &memory_region(REGION_CPU1)[0xc000];
 		int xpixeloffset, xtileoffset;
@@ -310,7 +310,7 @@ public class williams
 	
 		/* copy the bitmap data on top of that */
 		copy_pixels(bitmap, cliprect, 0);
-	}
+	} };
 	
 	
 	
@@ -464,7 +464,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	VIDEO_START( blaster )
+	public static VideoUpdateHandlerPtr blaster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i, j;
 	
@@ -483,7 +483,7 @@ public class williams
 			}
 	
 		return 0;
-	}
+	} };
 	
 	
 	

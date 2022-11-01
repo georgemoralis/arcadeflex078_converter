@@ -118,7 +118,7 @@ public class madmotor
 	
 	/******************************************************************************/
 	
-	VIDEO_START( madmotor )
+	public static VideoUpdateHandlerPtr madmotor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		madmotor_pf1_tilemap = tilemap_create(get_pf1_tile_info, pf1_scan, TILEMAP_TRANSPARENT, 8, 8, 64,64);
 		madmotor_pf2_tilemap = tilemap_create(get_pf2_tile_info, pf2_scan, TILEMAP_TRANSPARENT,16,16, 32,32);
@@ -133,7 +133,7 @@ public class madmotor
 		tilemap_set_scroll_rows(madmotor_pf1_tilemap,512);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -282,7 +282,7 @@ public class madmotor
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( madmotor )
+	public static VideoUpdateHandlerPtr madmotor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -312,5 +312,5 @@ public class madmotor
 		tilemap_draw(bitmap,cliprect,madmotor_pf2_tilemap,0,0);
 		madmotor_drawsprites(bitmap,cliprect,0x00,0x00);
 		tilemap_draw(bitmap,cliprect,madmotor_pf1_tilemap,0,0);
-	}
+	} };
 }

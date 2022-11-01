@@ -444,7 +444,7 @@ public class tceptor
 		tilemap_mark_all_tiles_dirty(bg2_tilemap);
 	}
 	
-	VIDEO_START( tceptor )
+	public static VideoUpdateHandlerPtr tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int gfx_index;
 	
@@ -501,7 +501,7 @@ public class tceptor
 		state_save_register_func_postload(mark_all_tiles_dirty);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*******************************************************************/
@@ -612,7 +612,7 @@ public class tceptor
 	}
 	
 	
-	VIDEO_UPDATE( tceptor )
+	public static VideoUpdateHandlerPtr tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle rect;
 		int pri;
@@ -640,5 +640,5 @@ public class tceptor
 		}
 	
 		tilemap_draw(bitmap, cliprect, tx_tilemap, 0, 0);
-	}
+	} };
 }

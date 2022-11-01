@@ -76,7 +76,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	VIDEO_START( bbuster )
+	public static VideoUpdateHandlerPtr bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,128,32);
@@ -89,9 +89,9 @@ public class bbusters
 		tilemap_set_transparent_pen(fix_tilemap, 15);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( mechatt )
+	public static VideoUpdateHandlerPtr mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,256,32);
@@ -104,7 +104,7 @@ public class bbusters
 		tilemap_set_transparent_pen(fix_tilemap, 15);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -285,7 +285,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( bbuster )
+	public static VideoUpdateHandlerPtr bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( pf1_tilemap,0, bbuster_pf1_scroll_data[0] );
 		tilemap_set_scrolly( pf1_tilemap,0, bbuster_pf1_scroll_data[1] );
@@ -302,9 +302,9 @@ public class bbusters
 		draw_crosshair(bitmap,readinputport(6),readinputport(5),cliprect);
 		draw_crosshair(bitmap,readinputport(8),readinputport(7),cliprect);
 		draw_crosshair(bitmap,readinputport(10),readinputport(9),cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( mechatt )
+	public static VideoUpdateHandlerPtr mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( pf1_tilemap,0, bbuster_pf1_scroll_data[0] );
 		tilemap_set_scrolly( pf1_tilemap,0, bbuster_pf1_scroll_data[1] );
@@ -318,5 +318,5 @@ public class bbusters
 	
 		draw_crosshair(bitmap,readinputport(2),readinputport(3),cliprect);
 		draw_crosshair(bitmap,readinputport(4),readinputport(5),cliprect);
-	}
+	} };
 }

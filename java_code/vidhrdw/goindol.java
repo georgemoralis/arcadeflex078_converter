@@ -63,7 +63,7 @@ public class goindol
 	
 	***************************************************************************/
 	
-	VIDEO_START( goindol )
+	public static VideoUpdateHandlerPtr goindol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,      8,8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -74,7 +74,7 @@ public class goindol
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -148,7 +148,7 @@ public class goindol
 		}
 	}
 	
-	VIDEO_UPDATE( goindol )
+	public static VideoUpdateHandlerPtr goindol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(fg_tilemap,0,*goindol_fg_scrollx);
 		tilemap_set_scrolly(fg_tilemap,0,*goindol_fg_scrolly);
@@ -157,5 +157,5 @@ public class goindol
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,1,spriteram);
 		draw_sprites(bitmap,cliprect,0,spriteram_2);
-	}
+	} };
 }

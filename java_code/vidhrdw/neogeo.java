@@ -157,7 +157,7 @@ public class neogeo
 	
 	/******************************************************************************/
 	
-	VIDEO_START( neogeo_mvs )
+	public static VideoUpdateHandlerPtr neogeo_mvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		no_of_tiles=Machine->gfx[2]->total_elements;
 		if (no_of_tiles>0x10000) high_tile=1; else high_tile=0;
@@ -192,7 +192,7 @@ public class neogeo
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -438,7 +438,7 @@ public class neogeo
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( neogeo )
+	public static VideoUpdateHandlerPtr neogeo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sx =0,sy =0,my =0,zx = 0x0f, zy = 0xff;
 		int offs,count;
@@ -651,5 +651,5 @@ public class neogeo
 		}
 	
 	profiler_mark(PROFILER_END);
-	}
+	} };
 }

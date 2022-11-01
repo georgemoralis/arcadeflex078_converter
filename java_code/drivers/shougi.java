@@ -99,10 +99,10 @@ package drivers;
 public class shougi
 {
 	
-	//VIDEO_START( shougi )
+	//public static VideoUpdateHandlerPtr shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	//{
 	//	generic_vh_start();
-	//}
+	//} };
 	
 	/***************************************************************************
 	
@@ -162,7 +162,7 @@ public class shougi
 	
 	
 	
-	VIDEO_UPDATE( shougi )
+	public static VideoUpdateHandlerPtr shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	int offs;
 	
@@ -193,7 +193,7 @@ public class shougi
 		}
 		/* copy the character mapped graphics */
 		//copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 	
 	
 	

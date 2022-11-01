@@ -87,7 +87,7 @@ public class tankbust
 	
 	***************************************************************************/
 	
-	VIDEO_START( tankbust )
+	public static VideoUpdateHandlerPtr tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* not scrollable */
 		txt_tilemap = tilemap_create(get_txt_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -102,7 +102,7 @@ public class tankbust
 		tilemap_set_transparent_pen(txt_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -249,7 +249,7 @@ public class tankbust
 	}
 	
 	
-	VIDEO_UPDATE( tankbust )
+	public static VideoUpdateHandlerPtr tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#if 0
 		int i;
@@ -270,5 +270,5 @@ public class tankbust
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 1, 0);
 	
 		tilemap_draw(bitmap, cliprect, txt_tilemap, 0,0);
-	}
+	} };
 }

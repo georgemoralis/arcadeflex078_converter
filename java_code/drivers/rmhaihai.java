@@ -67,7 +67,7 @@ public class rmhaihai
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( rmhaihai )
+	public static VideoUpdateHandlerPtr rmhaihai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -76,12 +76,12 @@ public class rmhaihai
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( rmhaihai )
+	public static VideoUpdateHandlerPtr rmhaihai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-	}
+	} };
 	
 	
 	

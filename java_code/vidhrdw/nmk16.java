@@ -90,7 +90,7 @@ public class nmk16
 	
 	***************************************************************************/
 	
-	VIDEO_START( bioship )
+	public static VideoUpdateHandlerPtr bioship  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(macross_get_bg_tile_info,bg_scan,TILEMAP_TRANSPARENT,16,16,256,32);
 		tx_tilemap = tilemap_create(macross_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -112,9 +112,9 @@ public class nmk16
 		videoshift =  0;	/* 256x224 screen, no shift */
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( strahl )
+	public static VideoUpdateHandlerPtr strahl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(macross_get_bg_tile_info,bg_scan,TILEMAP_OPAQUE,16,16,256,32);
 		fg_tilemap = tilemap_create(strahl_get_fg_tile_info, bg_scan,TILEMAP_TRANSPARENT,16,16,256,32);
@@ -134,9 +134,9 @@ public class nmk16
 		videoshift =  0;	/* 256x224 screen, no shift */
 		background_bitmap = NULL;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( macross )
+	public static VideoUpdateHandlerPtr macross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(macross_get_bg_tile_info,bg_scan,TILEMAP_OPAQUE,16,16,256,32);
 		tx_tilemap = tilemap_create(macross_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -155,9 +155,9 @@ public class nmk16
 		background_bitmap = NULL;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( gunnail )
+	public static VideoUpdateHandlerPtr gunnail  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(macross_get_bg_tile_info,bg_scan,TILEMAP_OPAQUE,16,16,256,32);
 		tx_tilemap = tilemap_create(macross_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -178,9 +178,9 @@ public class nmk16
 		background_bitmap = NULL;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( macross2 )
+	public static VideoUpdateHandlerPtr macross2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(macross_get_bg_tile_info,bg_scan,TILEMAP_OPAQUE,16,16,256,128);
 		tx_tilemap = tilemap_create(macross_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -199,9 +199,9 @@ public class nmk16
 							/* from the other side of the tilemap (!) */
 		background_bitmap = NULL;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( tdragon2 )
+	public static VideoUpdateHandlerPtr tdragon2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(macross_get_bg_tile_info,bg_scan_td2,TILEMAP_OPAQUE,16,16,1024,32);
 		tx_tilemap = tilemap_create(macross_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -220,9 +220,9 @@ public class nmk16
 							/* from the other side of the tilemap (!) */
 		background_bitmap = NULL;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( bjtwin )
+	public static VideoUpdateHandlerPtr bjtwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(bjtwin_get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,8,8,64,32);
 		spriteram_old = auto_malloc(spriteram_size);
@@ -238,7 +238,7 @@ public class nmk16
 							/* from the other side of the tilemap (!) */
 		background_bitmap = NULL;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -534,25 +534,25 @@ public class nmk16
 		}
 	}
 	
-	VIDEO_UPDATE( macross )
+	public static VideoUpdateHandlerPtr macross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(tx_tilemap,0,-videoshift);
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( manybloc )
+	public static VideoUpdateHandlerPtr manybloc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(tx_tilemap,0,-videoshift);
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		manybloc_draw_sprites(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( gunnail )
+	public static VideoUpdateHandlerPtr gunnail  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -561,9 +561,9 @@ public class nmk16
 		tilemap_set_scrolly(bg_tilemap,0,gunnail_scrolly);
 	
 		video_update_macross(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( bioship )
+	public static VideoUpdateHandlerPtr bioship  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data16_t *tilerom = (data16_t *)memory_region(REGION_GFX5);
 		int scrollx=-(bioship_scroll[1] + bioship_scroll[0]*256);
@@ -610,9 +610,9 @@ public class nmk16
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( strahl )
+	public static VideoUpdateHandlerPtr strahl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(tx_tilemap,0,-videoshift);
 	
@@ -620,20 +620,20 @@ public class nmk16
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( bjtwin )
+	public static VideoUpdateHandlerPtr bjtwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap,0,-videoshift);
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( nmk )
+	public static VideoUpdateHandlerPtr nmk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* looks like sprites are *two* frames ahead */
 		memcpy(spriteram_old2,spriteram_old,spriteram_size);
 		memcpy(spriteram_old,spriteram16,spriteram_size);
-	}
+	} };
 }

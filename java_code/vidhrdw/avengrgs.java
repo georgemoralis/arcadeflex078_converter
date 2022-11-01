@@ -11,10 +11,10 @@ public class avengrgs
 	
 	/******************************************************************************/
 	
-	VIDEO_START( avengrgs )
+	public static VideoUpdateHandlerPtr avengrgs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
@@ -108,7 +108,7 @@ public class avengrgs
 	
 	*/
 	
-	VIDEO_UPDATE( avengrgs )
+	public static VideoUpdateHandlerPtr avengrgs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int mx,my;
 		data32_t *vram_ptr=avengrgs_ram1 + (0x1dc00/4);
@@ -160,7 +160,7 @@ public class avengrgs
 		}
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
 	VIDEO_STOP(avengrgs)
 	{

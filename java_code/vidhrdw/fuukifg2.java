@@ -100,7 +100,7 @@ public class fuukifg2
 			palette_set_color(pen,0,0,0);
 	} };
 	
-	VIDEO_START( fuuki16 )
+	public static VideoUpdateHandlerPtr fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 16, 16, 64,32);
@@ -125,7 +125,7 @@ public class fuukifg2
 		Machine->gfx[2]->color_granularity=16; /* 256 colour tiles with palette selectable on 16 colour boundaries */
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -297,7 +297,7 @@ public class fuukifg2
 		}
 	}
 	
-	VIDEO_UPDATE( fuuki16 )
+	public static VideoUpdateHandlerPtr fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data16_t layer0_scrollx, layer0_scrolly;
 		data16_t layer1_scrollx, layer1_scrolly;
@@ -363,5 +363,5 @@ public class fuukifg2
 		// don't do the rasters on the sprites . its very slow and the hw might not anyway.
 		if (cliprect->max_y == Machine->visible_area.max_y)
 			fuuki16_draw_sprites(bitmap,&Machine->visible_area);
-	}
+	} };
 }

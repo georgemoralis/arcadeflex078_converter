@@ -692,7 +692,7 @@ public class nbmj9195
 	
 	
 	******************************************************************************/
-	VIDEO_START( sailorws )
+	public static VideoUpdateHandlerPtr sailorws  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
 		if ((sailorws_tmpbitmap1 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
@@ -708,9 +708,9 @@ public class nbmj9195
 	#endif
 		gfxdraw_mode = 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( mjkoiura )
+	public static VideoUpdateHandlerPtr mjkoiura  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
 		if ((sailorws_videoram0 = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short))) == 0) return 1;
@@ -722,9 +722,9 @@ public class nbmj9195
 	#endif
 		gfxdraw_mode = 0;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( mscoutm )
+	public static VideoUpdateHandlerPtr mscoutm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
 		if ((sailorws_tmpbitmap1 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
@@ -741,13 +741,13 @@ public class nbmj9195
 		memset(sailorws_videoworkram1, 0x0000, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short)));
 		gfxdraw_mode = 2;
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************
 	
 	
 	******************************************************************************/
-	VIDEO_UPDATE( sailorws )
+	public static VideoUpdateHandlerPtr sailorws  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		unsigned short color;
@@ -829,9 +829,9 @@ public class nbmj9195
 	#endif
 			}
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( mscoutm )
+	public static VideoUpdateHandlerPtr mscoutm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		unsigned short color;
@@ -880,5 +880,5 @@ public class nbmj9195
 				copyscrollbitmap(bitmap, sailorws_tmpbitmap1, 1, &sailorws_scrollx[1], 1, &sailorws_scrolly[1], &Machine->visible_area, TRANSPARENCY_PEN, Machine->pens[0x1ff]);
 			}
 		}
-	}
+	} };
 }

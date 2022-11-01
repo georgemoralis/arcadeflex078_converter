@@ -81,7 +81,7 @@ public class gaiden
 	
 	***************************************************************************/
 	
-	VIDEO_START( gaiden )
+	public static VideoUpdateHandlerPtr gaiden  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set up tile layers */
 		background = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 64, 32);
@@ -96,9 +96,9 @@ public class gaiden
 		tilemap_set_transparent_pen(text_layer, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( raiga )
+	public static VideoUpdateHandlerPtr raiga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set up tile layers */
 		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine->drv->screen_width, Machine->drv->screen_height, 16);
@@ -125,7 +125,7 @@ public class gaiden
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -483,7 +483,7 @@ public class gaiden
 		}
 	}
 	
-	VIDEO_UPDATE( gaiden )
+	public static VideoUpdateHandlerPtr gaiden  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,                    0, cliprect);
 		fillbitmap(bitmap,          Machine->pens[0x200], cliprect);
@@ -493,9 +493,9 @@ public class gaiden
 		tilemap_draw(bitmap, cliprect, text_layer, 0, 4);
 	
 		draw_sprites(bitmap, NULL, NULL, cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( raiga )
+	public static VideoUpdateHandlerPtr raiga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,    0, cliprect);
 	
@@ -516,5 +516,5 @@ public class gaiden
 	
 		/* mix & blend the tilemaps and sprites into a 32-bit bitmap */
 		blendbitmaps(bitmap, tile_bitmap_bg, tile_bitmap_fg, sprite_bitmap, 0, 0, cliprect);
-	}
+	} };
 }

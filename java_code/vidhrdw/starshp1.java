@@ -58,7 +58,7 @@ public class starshp1
 	}
 	
 	
-	VIDEO_START( starshp1 )
+	public static VideoUpdateHandlerPtr starshp1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT16 val = 0;
 	
@@ -97,7 +97,7 @@ public class starshp1
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr starshp1_rng_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -391,7 +391,7 @@ public class starshp1
 	}
 	
 	
-	VIDEO_UPDATE( starshp1 )
+	public static VideoUpdateHandlerPtr starshp1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -413,10 +413,10 @@ public class starshp1
 	
 		if (starshp1_phasor != 0)
 			draw_phasor(bitmap);
-	}
+	} };
 	
 	
-	VIDEO_EOF( starshp1 )
+	public static VideoUpdateHandlerPtr starshp1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle rect;
 	
@@ -455,5 +455,5 @@ public class starshp1
 		{
 			starshp1_collision_latch |= 8;
 		}
-	}
+	} };
 }

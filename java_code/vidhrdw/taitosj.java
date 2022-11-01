@@ -192,7 +192,7 @@ public class taitosj
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( taitosj )
+	public static VideoUpdateHandlerPtr taitosj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -236,7 +236,7 @@ public class taitosj
 		flipscreen[0] = flipscreen[1] = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -761,7 +761,7 @@ public class taitosj
 	}
 	
 	
-	VIDEO_UPDATE( taitosj )
+	public static VideoUpdateHandlerPtr taitosj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,i,alldirty = 0;
 	
@@ -890,5 +890,5 @@ public class taitosj
 		check_sprite_plane_collision();
 	
 		/*check_plane_plane_collision();*/	/*not implemented !!!*/
-	}
+	} };
 }

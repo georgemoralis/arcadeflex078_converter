@@ -128,7 +128,7 @@ public class marineb
 	}
 	
 	
-	VIDEO_UPDATE( marineb )
+	public static VideoUpdateHandlerPtr marineb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -193,10 +193,10 @@ public class marineb
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( changes )
+	public static VideoUpdateHandlerPtr changes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy,code,col,flipx,flipy;
 	
@@ -275,10 +275,10 @@ public class marineb
 				flipx,flipy,
 				sx-256,sy,
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( springer )
+	public static VideoUpdateHandlerPtr springer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -337,10 +337,10 @@ public class marineb
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( hoccer )
+	public static VideoUpdateHandlerPtr hoccer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -383,10 +383,10 @@ public class marineb
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( hopprobo )
+	public static VideoUpdateHandlerPtr hopprobo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -444,5 +444,5 @@ public class marineb
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 }

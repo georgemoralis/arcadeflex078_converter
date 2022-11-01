@@ -195,7 +195,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	VIDEO_START( crgolf )
+	public static VideoUpdateHandlerPtr crgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate temporary bitmaps */
 		screena = auto_bitmap_alloc(256, 256);
@@ -210,7 +210,7 @@ public class crgolf
 		fillbitmap(highbit, 16, NULL);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -220,7 +220,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( crgolf )
+	public static VideoUpdateHandlerPtr crgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int flip = *crgolf_screen_flip & 1;
 	
@@ -237,5 +237,5 @@ public class crgolf
 		/* apply the color select bit */
 		if (*crgolf_color_select)
 			copybitmap(bitmap, highbit, 0, 0, 0, 0, cliprect, TRANSPARENCY_BLEND, 0);
-	}
+	} };
 }

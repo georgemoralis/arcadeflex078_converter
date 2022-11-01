@@ -211,7 +211,7 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	VIDEO_START( mia )
+	public static VideoUpdateHandlerPtr mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -222,9 +222,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,mia_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( cuebrckj )
+	public static VideoUpdateHandlerPtr cuebrckj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -235,9 +235,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,mia_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( tmnt )
+	public static VideoUpdateHandlerPtr tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -248,9 +248,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,tmnt_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( punkshot )
+	public static VideoUpdateHandlerPtr punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -259,9 +259,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,punkshot_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( lgtnfght )	/* also tmnt2, ssriders */
+	public static VideoUpdateHandlerPtr lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	/* also tmnt2, ssriders */
 	{
 		K053251_vh_start();
 	
@@ -280,9 +280,9 @@ public class tmnt
 		state_save_register_int  ("TMNT2", 0, "lasten",  &lasten);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( sunsetbl )
+	public static VideoUpdateHandlerPtr sunsetbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -291,9 +291,9 @@ public class tmnt
 		if (K053245_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,lgtnfght_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( detatwin )
+	public static VideoUpdateHandlerPtr detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -302,9 +302,9 @@ public class tmnt
 		if (K053245_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,detatwin_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( glfgreat )
+	public static VideoUpdateHandlerPtr glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -324,9 +324,9 @@ public class tmnt
 		K053936_set_offset(0, 85, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( thndrx2 )
+	public static VideoUpdateHandlerPtr thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -335,9 +335,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,thndrx2_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( prmrsocr )
+	public static VideoUpdateHandlerPtr prmrsocr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -357,7 +357,7 @@ public class tmnt
 		K053936_set_offset(0, 85, 1);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -631,7 +631,7 @@ public class tmnt
 		SWAP(1,2)
 	}
 	
-	VIDEO_UPDATE( mia )
+	public static VideoUpdateHandlerPtr mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -640,9 +640,9 @@ public class tmnt
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[1],0,0);
 		if ((priorityflag & 1) == 0) K051960_sprites_draw(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( tmnt )
+	public static VideoUpdateHandlerPtr tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -651,10 +651,10 @@ public class tmnt
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[1],0,0);
 		if ((priorityflag & 1) == 0) K051960_sprites_draw(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( punkshot )
+	public static VideoUpdateHandlerPtr punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
@@ -679,10 +679,10 @@ public class tmnt
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[2]],0,4);
 	
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( lgtnfght )
+	public static VideoUpdateHandlerPtr lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
@@ -708,7 +708,7 @@ public class tmnt
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[2]],0,4);
 	
 		K053245_sprites_draw(bitmap,cliprect);
-	}
+	} };
 	
 	static int glfgreat_pixel;
 	
@@ -722,7 +722,7 @@ public class tmnt
 		else return glfgreat_pixel & 0xff;
 	}
 	
-	VIDEO_UPDATE( glfgreat )
+	public static VideoUpdateHandlerPtr glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_set_tilemaps(NULL,NULL,K052109_tilemap[0],K052109_tilemap[1],K052109_tilemap[2]);
 	
@@ -767,9 +767,9 @@ public class tmnt
 		}
 	
 		K053245_sprites_draw(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( tmnt2 )
+	public static VideoUpdateHandlerPtr tmnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		double brt;
 		int i, newdim, newen, cb, ce;
@@ -816,10 +816,10 @@ public class tmnt
 		}
 	
 		video_update_lgtnfght(bitmap,cliprect);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( thndrx2 )
+	public static VideoUpdateHandlerPtr thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
@@ -845,7 +845,7 @@ public class tmnt
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[2]],0,4);
 	
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
-	}
+	} };
 	
 	
 	
@@ -855,8 +855,8 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	VIDEO_EOF( detatwin )
+	public static VideoUpdateHandlerPtr detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053245_clear_buffer();
-	}
+	} };
 }

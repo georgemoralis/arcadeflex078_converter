@@ -172,7 +172,7 @@ public class popper
 				flags)
 	}
 	
-	VIDEO_START( popper )
+	public static VideoUpdateHandlerPtr popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		popper_p123_tilemap    = tilemap_create( get_popper_p123_tile_info,   tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
 		popper_p0_tilemap      = tilemap_create( get_popper_p0_tile_info,     tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
@@ -198,7 +198,7 @@ public class popper
 		state_save_register_int ("video", 0, "gfx_bank",   &popper_gfx_bank);
 	
 		return 0;
-	}
+	} };
 	
 	static void popper_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
@@ -242,7 +242,7 @@ public class popper
 		}
 	}
 	
-	VIDEO_UPDATE( popper )
+	public static VideoUpdateHandlerPtr popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle finalclip = tilemap_clip;
 		sect_rect(&finalclip, cliprect);
@@ -264,5 +264,5 @@ public class popper
 		tilemap_draw( bitmap,cliprect,popper_p0_tilemap,       TILEMAP_FRONT,0 );
 		tilemap_draw( bitmap,&finalclip,popper_ol_p123_tilemap,TILEMAP_FRONT,0 );
 		tilemap_draw( bitmap,&finalclip,popper_ol_p0_tilemap,  TILEMAP_FRONT,0 );
-	}
+	} };
 }

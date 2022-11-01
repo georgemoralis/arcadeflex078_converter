@@ -78,7 +78,7 @@ public class quizpani
 		}
 	}
 	
-	VIDEO_START( quizpani )
+	public static VideoUpdateHandlerPtr quizpani  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap  = tilemap_create(bg_tile_info, bg_scan,TILEMAP_OPAQUE,16,16,256,32);
 		txt_tilemap = tilemap_create(txt_tile_info,bg_scan,TILEMAP_TRANSPARENT,16,16,256,32);
@@ -88,9 +88,9 @@ public class quizpani
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( quizpani )
+	public static VideoUpdateHandlerPtr quizpani  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, quizpani_scrollreg[0] - 64);
 		tilemap_set_scrolly(bg_tilemap, 0, quizpani_scrollreg[1] + 16);
@@ -99,5 +99,5 @@ public class quizpani
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,txt_tilemap,0,0);
-	}
+	} };
 }

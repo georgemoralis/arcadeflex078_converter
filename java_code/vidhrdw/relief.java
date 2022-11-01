@@ -48,7 +48,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	VIDEO_START( relief )
+	public static VideoUpdateHandlerPtr relief  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -106,7 +106,7 @@ public class relief
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -116,7 +116,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( relief )
+	public static VideoUpdateHandlerPtr relief  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -181,5 +181,5 @@ public class relief
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

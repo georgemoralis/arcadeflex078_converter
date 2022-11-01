@@ -275,7 +275,7 @@ public class omegaf
 		return 0;
 	}
 	
-	VIDEO_START( omegaf )
+	public static VideoUpdateHandlerPtr omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		scrollx_mask = 0x07ff;
 		bank_mask = 7;
@@ -298,9 +298,9 @@ public class omegaf
 		tilemap_set_transparent_pen( bg2_tilemap, 15 );
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( robokid )
+	public static VideoUpdateHandlerPtr robokid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		scrollx_mask = 0x01ff;
 		bank_mask = 1;
@@ -323,7 +323,7 @@ public class omegaf
 		tilemap_set_transparent_pen( bg2_tilemap, 15 );
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -599,7 +599,7 @@ public class omegaf
 		}
 	}
 	
-	VIDEO_UPDATE( omegaf )
+	public static VideoUpdateHandlerPtr omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[15],cliprect);	// ??
 	
@@ -615,5 +615,5 @@ public class omegaf
 		else										/* normal sprite mode */
 			draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 }

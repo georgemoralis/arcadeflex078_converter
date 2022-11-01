@@ -57,7 +57,7 @@ public class f1gp
 	
 	***************************************************************************/
 	
-	VIDEO_START( f1gp )
+	public static VideoUpdateHandlerPtr f1gp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		roz_tilemap = tilemap_create(f1gp_get_roz_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,64);
 		fg_tilemap =  tilemap_create(get_fg_tile_info,      tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -77,9 +77,9 @@ public class f1gp
 		zoomdata = (data16_t *)memory_region(REGION_GFX4);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( f1gp2 )
+	public static VideoUpdateHandlerPtr f1gp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		roz_tilemap = tilemap_create(f1gp2_get_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		fg_tilemap =  tilemap_create(get_fg_tile_info,       tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -103,7 +103,7 @@ public class f1gp
 		zoomdata = (data16_t *)memory_region(REGION_GFX4);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -269,7 +269,7 @@ public class f1gp
 	}
 	
 	
-	VIDEO_UPDATE( f1gp )
+	public static VideoUpdateHandlerPtr f1gp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static struct GfxLayout tilelayout =
 		{
@@ -327,7 +327,7 @@ public class f1gp
 			f1gp_drawsprites(bitmap,cliprect,0,0x00);
 			f1gp_drawsprites(bitmap,cliprect,1,0x02);
 		}
-	}
+	} };
 	
 	
 	
@@ -404,7 +404,7 @@ public class f1gp
 	}
 	
 	
-	VIDEO_UPDATE( f1gp2 )
+	public static VideoUpdateHandlerPtr f1gp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (gfxctrl & 4)	/* blank screen */
 		{
@@ -435,5 +435,5 @@ public class f1gp
 	#endif
 			}
 		}
-	}
+	} };
 }

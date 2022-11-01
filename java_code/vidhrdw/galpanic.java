@@ -161,7 +161,7 @@ public class galpanic
 		}
 	}
 	
-	VIDEO_UPDATE( galpanic )
+	public static VideoUpdateHandlerPtr galpanic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* copy the temporary bitmap to the screen */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
@@ -169,9 +169,9 @@ public class galpanic
 		draw_fgbitmap(bitmap);
 	
 		galpanic_draw_sprites(bitmap);
-	}
+	} };
 	
-	VIDEO_UPDATE( comad )
+	public static VideoUpdateHandlerPtr comad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* copy the temporary bitmap to the screen */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
@@ -179,5 +179,5 @@ public class galpanic
 		draw_fgbitmap(bitmap);
 	
 		comad_draw_sprites(bitmap);
-	}
+	} };
 }

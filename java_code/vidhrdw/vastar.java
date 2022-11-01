@@ -77,7 +77,7 @@ public class vastar
 	
 	***************************************************************************/
 	
-	VIDEO_START( vastar )
+	public static VideoUpdateHandlerPtr vastar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap  = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg1_tilemap = tilemap_create(get_bg1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -94,7 +94,7 @@ public class vastar
 		tilemap_set_scroll_cols(bg2_tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -198,7 +198,7 @@ public class vastar
 		}
 	}
 	
-	VIDEO_UPDATE( vastar )
+	public static VideoUpdateHandlerPtr vastar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -237,5 +237,5 @@ public class vastar
 			logerror("Unimplemented priority %X\n", *vastar_sprite_priority);
 			break;
 		}
-	}
+	} };
 }

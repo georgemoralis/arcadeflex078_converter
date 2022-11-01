@@ -607,25 +607,25 @@ public class cosmic
 	}
 	
 	
-	VIDEO_UPDATE( cosmicg )
+	public static VideoUpdateHandlerPtr cosmicg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
 		draw_bitmap(bitmap);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( panic )
+	public static VideoUpdateHandlerPtr panic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
 		draw_bitmap(bitmap);
 	
 		draw_sprites(bitmap, 0x07, 1);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( cosmica )
+	public static VideoUpdateHandlerPtr cosmica  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -634,20 +634,20 @@ public class cosmic
 		draw_bitmap(bitmap);
 	
 		draw_sprites(bitmap, 0x0f, 0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( magspot2 )
+	public static VideoUpdateHandlerPtr magspot2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
 		draw_bitmap(bitmap);
 	
 		draw_sprites(bitmap, 0x07, 0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( devzone )
+	public static VideoUpdateHandlerPtr devzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -659,10 +659,10 @@ public class cosmic
 		draw_bitmap(bitmap);
 	
 		draw_sprites(bitmap, 0x07, 0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( nomnlnd )
+	public static VideoUpdateHandlerPtr nomnlnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* according to the video summation logic on pg4, the trees and river
 		   have the highest priority */
@@ -677,5 +677,5 @@ public class cosmic
 	    {
 	    	nomnlnd_draw_background(bitmap);
 		}
-	}
+	} };
 }

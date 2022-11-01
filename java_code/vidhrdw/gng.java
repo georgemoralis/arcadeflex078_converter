@@ -57,7 +57,7 @@ public class gng
 	
 	***************************************************************************/
 	
-	VIDEO_START( gng )
+	public static VideoUpdateHandlerPtr gng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,    16,16,32,32);
@@ -71,7 +71,7 @@ public class gng
 		tilemap_set_transmask(bg_tilemap,1,0x41,0xbe); /* split type 1 has pens 0 and 6 transparent in front half */
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -152,16 +152,16 @@ public class gng
 		}
 	}
 	
-	VIDEO_UPDATE( gng )
+	public static VideoUpdateHandlerPtr gng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( gng )
+	public static VideoUpdateHandlerPtr gng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

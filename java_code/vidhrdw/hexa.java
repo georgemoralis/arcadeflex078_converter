@@ -71,7 +71,7 @@ public class hexa
 		SET_TILE_INFO(0, tile, color, 0)
 	}
 	
-	VIDEO_START( hexa )
+	public static VideoUpdateHandlerPtr hexa  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -80,7 +80,7 @@ public class hexa
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -89,8 +89,8 @@ public class hexa
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( hexa )
+	public static VideoUpdateHandlerPtr hexa  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-	}
+	} };
 }

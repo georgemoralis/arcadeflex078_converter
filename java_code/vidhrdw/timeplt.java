@@ -120,7 +120,7 @@ public class timeplt
 	
 	***************************************************************************/
 	
-	VIDEO_START( timeplt )
+	public static VideoUpdateHandlerPtr timeplt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -131,7 +131,7 @@ public class timeplt
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -222,12 +222,12 @@ public class timeplt
 		}
 	}
 	
-	VIDEO_UPDATE( timeplt )
+	public static VideoUpdateHandlerPtr timeplt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,1,0);
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr timeplt_interrupt = new InterruptHandlerPtr() {public void handler()

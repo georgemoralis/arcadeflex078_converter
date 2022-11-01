@@ -42,7 +42,7 @@ public class wiz
 	static int palette_bank;
 	
 	
-	VIDEO_START( wiz )
+	public static VideoUpdateHandlerPtr wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic())
 			return 1;
@@ -54,7 +54,7 @@ public class wiz
 		state_save_register_int  ("wiz", 0, "bgpen",       &bgpen);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -277,16 +277,16 @@ public class wiz
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( kungfut )
+	public static VideoUpdateHandlerPtr kungfut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[bgpen],&Machine->visible_area);
 		draw_background(bitmap, 2 + char_bank[0] , 0);
 		draw_foreground(bitmap, 0);
 		draw_sprites(bitmap, spriteram_2, 4, &Machine->visible_area);
 		draw_sprites(bitmap, spriteram  , 5, &Machine->visible_area);
-	}
+	} };
 	
-	VIDEO_UPDATE( wiz )
+	public static VideoUpdateHandlerPtr wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int bank;
 		const struct rectangle* visible_area;
@@ -301,15 +301,15 @@ public class wiz
 	
 		draw_sprites(bitmap, spriteram_2, 6,    visible_area);
 		draw_sprites(bitmap, spriteram  , bank, visible_area);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( stinger )
+	public static VideoUpdateHandlerPtr stinger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[bgpen],&Machine->visible_area);
 		draw_background(bitmap, 2 + char_bank[0], 1);
 		draw_foreground(bitmap, 1);
 		draw_sprites(bitmap, spriteram_2, 4, &Machine->visible_area);
 		draw_sprites(bitmap, spriteram  , 5, &Machine->visible_area);
-	}
+	} };
 }

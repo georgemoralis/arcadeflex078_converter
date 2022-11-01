@@ -89,7 +89,7 @@ public class gyruss
 	
 	
 	
-	VIDEO_START( gyruss )
+	public static VideoUpdateHandlerPtr gyruss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sprite_mux_buffer = auto_malloc(256 * spriteram_size);
 	
@@ -97,7 +97,7 @@ public class gyruss
 			return 1;
 	
 		return video_start_generic();
-	}
+	} };
 	
 	
 	
@@ -165,7 +165,7 @@ public class gyruss
 	}
 	
 	
-	VIDEO_UPDATE( gyruss )
+	public static VideoUpdateHandlerPtr gyruss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -236,7 +236,7 @@ public class gyruss
 						8*sx,8*sy,
 						&Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr gyruss_6809_interrupt = new InterruptHandlerPtr() {public void handler()

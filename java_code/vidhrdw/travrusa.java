@@ -213,7 +213,7 @@ public class travrusa
 	
 	***************************************************************************/
 	
-	VIDEO_START( travrusa )
+	public static VideoUpdateHandlerPtr travrusa  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,32);
 	
@@ -226,7 +226,7 @@ public class travrusa
 		tilemap_set_scroll_rows(bg_tilemap,4);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -336,10 +336,10 @@ public class travrusa
 	}
 	
 	
-	VIDEO_UPDATE( travrusa )
+	public static VideoUpdateHandlerPtr travrusa  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
-	}
+	} };
 }

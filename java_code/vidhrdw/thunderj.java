@@ -70,7 +70,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	VIDEO_START( thunderj )
+	public static VideoUpdateHandlerPtr thunderj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -131,7 +131,7 @@ public class thunderj
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -166,7 +166,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( thunderj )
+	public static VideoUpdateHandlerPtr thunderj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -306,5 +306,5 @@ public class thunderj
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

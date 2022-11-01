@@ -26,7 +26,7 @@ public class ninjaw
 	
 	/**********************************************************/
 	
-	static VIDEO_START( ninjaw_core )
+	static public static VideoUpdateHandlerPtr ninjaw_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int chips;
 	
@@ -58,13 +58,13 @@ public class ninjaw
 		TC0100SCN_set_chip_colbanks(0x0,0x100,0x200);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( ninjaw )
+	public static VideoUpdateHandlerPtr ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taito_hide_pixels = 22;
 		return video_start_ninjaw_core();
-	}
+	} };
 	
 	/************************************************************
 				SPRITE DRAW ROUTINE
@@ -150,7 +150,7 @@ public class ninjaw
 					SCREEN REFRESH
 	**************************************************************/
 	
-	VIDEO_UPDATE( ninjaw )
+	public static VideoUpdateHandlerPtr ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3], nodraw;
 	
@@ -183,5 +183,5 @@ public class ninjaw
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[2],0,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,1,layer[2],0,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,2,layer[2],0,0);
-	}
+	} };
 }

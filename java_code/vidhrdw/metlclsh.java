@@ -153,7 +153,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	VIDEO_START( metlclsh )
+	public static VideoUpdateHandlerPtr metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		metlclsh_otherram = auto_malloc(0x800);	// banked ram
 	
@@ -167,7 +167,7 @@ public class metlclsh
 		tilemap_set_transparent_pen( fg_tilemap, 0 );
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -253,7 +253,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( metlclsh )
+	public static VideoUpdateHandlerPtr metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0x10],cliprect);
 	
@@ -269,6 +269,6 @@ public class metlclsh
 		tilemap_draw(bitmap,cliprect,fg_tilemap,2,0);	// high priority tiles of foreground
 	
 	//	usrintf_showmessage("%02X",metlclsh_scrollx[0]);
-	}
+	} };
 	
 }

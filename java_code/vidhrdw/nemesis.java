@@ -261,7 +261,7 @@ public class nemesis
 	
 	
 	/* claim a palette dirty array */
-	VIDEO_START( nemesis )
+	public static VideoUpdateHandlerPtr nemesis  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#ifdef LSB_FIRST
 		nemesis_lsbify_gfx();
@@ -337,7 +337,7 @@ public class nemesis
 		tilemap_flip = 0;
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
@@ -605,7 +605,7 @@ public class nemesis
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( nemesis )
+	public static VideoUpdateHandlerPtr nemesis  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -630,9 +630,9 @@ public class nemesis
 		tilemap_draw(bitmap,cliprect,foreground,1,8);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( salamand )
+	public static VideoUpdateHandlerPtr salamand  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		struct rectangle clip;
@@ -673,5 +673,5 @@ public class nemesis
 		}
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

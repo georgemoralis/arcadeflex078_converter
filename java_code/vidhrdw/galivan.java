@@ -197,7 +197,7 @@ public class galivan
 	
 	***************************************************************************/
 	
-	VIDEO_START( galivan )
+	public static VideoUpdateHandlerPtr galivan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,   16,16,128,128);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -208,9 +208,9 @@ public class galivan
 		tilemap_set_transparent_pen(tx_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( ninjemak )
+	public static VideoUpdateHandlerPtr ninjemak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(ninjemak_get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,   16,16,512,32);
 		tx_tilemap = tilemap_create(ninjemak_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -221,7 +221,7 @@ public class galivan
 		tilemap_set_transparent_pen(tx_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -408,7 +408,7 @@ public class galivan
 	}
 	
 	
-	VIDEO_UPDATE( galivan )
+	public static VideoUpdateHandlerPtr galivan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap,0,scrollx[0] + 256 * (scrollx[1] & 0x07));
 		tilemap_set_scrolly(bg_tilemap,0,scrolly[0] + 256 * (scrolly[1] & 0x07));
@@ -423,9 +423,9 @@ public class galivan
 		draw_sprites(bitmap,cliprect);
 	
 		tilemap_draw(bitmap,cliprect,tx_tilemap,1,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( ninjemak )
+	public static VideoUpdateHandlerPtr ninjemak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* (scrollx[1] & 0x40) does something */
 		tilemap_set_scrollx(bg_tilemap,0,scrollx[0] + 256 * (scrollx[1] & 0x1f));
@@ -439,5 +439,5 @@ public class galivan
 		draw_sprites(bitmap,cliprect);
 	
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 }

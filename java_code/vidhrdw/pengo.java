@@ -157,15 +157,15 @@ public class pengo
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( pengo )
+	public static VideoUpdateHandlerPtr pengo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gfx_bank = 0;
 		xoffsethack = 0;
 	
 	    return video_start_generic();
-	}
+	} };
 	
-	VIDEO_START( pacman )
+	public static VideoUpdateHandlerPtr pacman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gfx_bank = 0;
 		/* In the Pac Man based games (NOT Pengo) the first two sprites must be offset */
@@ -173,7 +173,7 @@ public class pengo
 		xoffsethack = 1;
 	
 		return video_start_generic();
-	}
+	} };
 	
 	
 	
@@ -208,7 +208,7 @@ public class pengo
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( pengo )
+	public static VideoUpdateHandlerPtr pengo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle spriteclip = spritevisiblearea;
 		int offs;
@@ -313,7 +313,7 @@ public class pengo
 						&spriteclip,TRANSPARENCY_COLOR,0);
 			}
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr vanvan_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -323,7 +323,7 @@ public class pengo
 	} };
 	
 	
-	VIDEO_UPDATE( vanvan )
+	public static VideoUpdateHandlerPtr vanvan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle spriteclip = spritevisiblearea;
 		int offs;
@@ -400,7 +400,7 @@ public class pengo
 					sx - 256,sy,
 					&spriteclip,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
 	static void get_tile_info(int tile_index)
 	{
@@ -451,7 +451,7 @@ public class pengo
 		flip_screen_set(data);
 	} };
 	
-	VIDEO_START( s2650games )
+	public static VideoUpdateHandlerPtr s2650games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		xoffsethack = 1;
 	
@@ -465,9 +465,9 @@ public class pengo
 		tilemap_set_scroll_cols(tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( s2650games )
+	public static VideoUpdateHandlerPtr s2650games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -505,5 +505,5 @@ public class pengo
 					sx,sy + xoffsethack,
 					cliprect,TRANSPARENCY_COLOR,0);
 		}
-	}
+	} };
 }

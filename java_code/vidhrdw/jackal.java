@@ -49,7 +49,7 @@ public class jackal
 	
 	
 	
-	VIDEO_START( jackal )
+	public static VideoUpdateHandlerPtr jackal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		videoram_size = 0x400;
 	
@@ -64,7 +64,7 @@ public class jackal
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -193,7 +193,7 @@ public class jackal
 	}
 	
 	
-	VIDEO_UPDATE( jackal )
+	public static VideoUpdateHandlerPtr jackal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *sr, *ss;
 		int offs,i;
@@ -276,5 +276,5 @@ public class jackal
 		/* Draw the sprites. */
 		jackal_draw_sprites(bitmap,ss,0x0f5,3);
 		jackal_draw_sprites(bitmap,sr,0x500,1);
-	}
+	} };
 }

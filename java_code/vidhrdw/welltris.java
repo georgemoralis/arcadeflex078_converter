@@ -219,7 +219,7 @@ public class welltris
 			tilemap_mark_tile_dirty(char_tilemap, offset);
 	}
 	
-	VIDEO_START( welltris )
+	public static VideoUpdateHandlerPtr welltris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		char_tilemap = tilemap_create(get_welltris_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 32);
 		if (!char_tilemap) return 1;
@@ -227,7 +227,7 @@ public class welltris
 		tilemap_set_transparent_pen(char_tilemap, 15);
 	
 		return 0;
-	}
+	} };
 	
 	static void welltris_drawbackground(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
@@ -244,7 +244,7 @@ public class welltris
 		}
 	}
 	
-	VIDEO_UPDATE( welltris )
+	public static VideoUpdateHandlerPtr welltris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(char_tilemap, 0, welltris_scrollx);
 		tilemap_set_scrolly(char_tilemap, 0, welltris_scrolly);
@@ -252,5 +252,5 @@ public class welltris
 		welltris_drawbackground(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, char_tilemap, 0, 0);
 		welltris_draw_sprites(bitmap, cliprect);
-	}
+	} };
 }

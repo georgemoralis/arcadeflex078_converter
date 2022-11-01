@@ -40,13 +40,13 @@ public class meadows
 	 *
 	 *************************************/
 	
-	VIDEO_START( meadows )
+	public static VideoUpdateHandlerPtr meadows  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,30);
 		if (!bg_tilemap)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -110,7 +110,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( meadows )
+	public static VideoUpdateHandlerPtr meadows  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
@@ -118,5 +118,5 @@ public class meadows
 		/* draw the sprites */
 		if (Machine->gfx[1])
 			draw_sprites(bitmap, cliprect);
-	}
+	} };
 }

@@ -55,7 +55,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	VIDEO_START( centiped )
+	public static VideoUpdateHandlerPtr centiped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(centiped_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 		if (!tilemap)
@@ -63,10 +63,10 @@ public class centiped
 	
 		centiped_flipscreen = 0;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( warlords )
+	public static VideoUpdateHandlerPtr warlords  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(warlords_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 		if (!tilemap)
@@ -75,10 +75,10 @@ public class centiped
 		/* we overload centiped_flipscreen here to track the cocktail/upright state */
 		centiped_flipscreen = readinputport(0) & 0x80;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( milliped )
+	public static VideoUpdateHandlerPtr milliped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(milliped_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 		if (!tilemap)
@@ -86,7 +86,7 @@ public class centiped
 	
 		centiped_flipscreen = 0;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -313,7 +313,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( centiped )
+	public static VideoUpdateHandlerPtr centiped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle spriteclip = *cliprect;
 		int offs;
@@ -339,10 +339,10 @@ public class centiped
 			drawgfx(bitmap, Machine->gfx[1], code, color & 0x3f, centiped_flipscreen, flipy, x, y,
 					&spriteclip, TRANSPARENCY_PEN, 0);
 		}
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( warlords )
+	public static VideoUpdateHandlerPtr warlords  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int upright_mode = input_port_0_r(0) & 0x80;
 		int offs;
@@ -383,5 +383,5 @@ public class centiped
 			drawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
 					cliprect, TRANSPARENCY_PEN, 0);
 		}
-	}
+	} };
 }

@@ -51,13 +51,13 @@ public class beathead
 	 *
 	 *************************************/
 	
-	VIDEO_START( beathead )
+	public static VideoUpdateHandlerPtr beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		hsyncram = auto_malloc(0x800);
 		if (!hsyncram)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -220,7 +220,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( beathead )
+	public static VideoUpdateHandlerPtr beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	
@@ -237,5 +237,5 @@ public class beathead
 			/* then draw it */
 			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], &Machine->pens[scanline_palette[y] * 256], -1);
 		}
-	}
+	} };
 }

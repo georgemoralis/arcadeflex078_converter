@@ -70,7 +70,7 @@ public class batman
 	 *
 	 *************************************/
 	
-	VIDEO_START( batman )
+	public static VideoUpdateHandlerPtr batman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -131,7 +131,7 @@ public class batman
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -206,7 +206,7 @@ public class batman
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( batman )
+	public static VideoUpdateHandlerPtr batman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -320,5 +320,5 @@ public class batman
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

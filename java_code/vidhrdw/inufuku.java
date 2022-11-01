@@ -225,7 +225,7 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	VIDEO_START( inufuku )
+	public static VideoUpdateHandlerPtr inufuku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		inufuku_bg_tilemap = tilemap_create(get_inufuku_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 		inufuku_text_tilemap = tilemap_create(get_inufuku_text_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -236,7 +236,7 @@ public class inufuku
 		tilemap_set_transparent_pen(inufuku_text_tilemap, 255);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/******************************************************************************
@@ -245,7 +245,7 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	VIDEO_UPDATE( inufuku )
+	public static VideoUpdateHandlerPtr inufuku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -268,5 +268,5 @@ public class inufuku
 		tilemap_draw(bitmap, cliprect, inufuku_text_tilemap, 0, 4);
 	
 		inufuku_draw_sprites(bitmap, cliprect);
-	}
+	} };
 }

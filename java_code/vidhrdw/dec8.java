@@ -445,7 +445,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( cobracom )
+	public static VideoUpdateHandlerPtr cobracom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, (dec8_pf0_control[0x10]<<8)+dec8_pf0_control[0x11] );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, (dec8_pf0_control[0x12]<<8)+dec8_pf0_control[0x13] );
@@ -458,7 +458,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_pf1_tilemap,0,0);
 		draw_sprites2(bitmap,cliprect,2);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -511,7 +511,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( cobracom )
+	public static VideoUpdateHandlerPtr cobracom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
 		dec8_pf1_tilemap = tilemap_create(get_bac1_tile_info,bac0_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -527,11 +527,11 @@ public class dec8
 		gfx_mask=0x3;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( ghostb )
+	public static VideoUpdateHandlerPtr ghostb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	   if (dec8_pf0_control[0]&0x4) { /* Rowscroll */
 	 		int offs;
@@ -548,7 +548,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,0,0);
 		draw_sprites1(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
 	static void get_ghostb_fix_tile_info( int tile_index )
 	{
@@ -563,7 +563,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( ghostb )
+	public static VideoUpdateHandlerPtr ghostb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_ghostb_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -576,11 +576,11 @@ public class dec8
 		gfx_mask=0xf;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( oscar )
+	public static VideoUpdateHandlerPtr oscar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, (dec8_pf0_control[0x10]<<8)+dec8_pf0_control[0x11] );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, (dec8_pf0_control[0x12]<<8)+dec8_pf0_control[0x13] );
@@ -592,7 +592,7 @@ public class dec8
 		draw_sprites2(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,TILEMAP_FRONT | 1,0);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
 	static void get_oscar_fix_tile_info( int tile_index )
 	{
@@ -607,7 +607,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( oscar )
+	public static VideoUpdateHandlerPtr oscar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_oscar_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -622,11 +622,11 @@ public class dec8
 		gfx_mask=0x7;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( lastmiss )
+	public static VideoUpdateHandlerPtr lastmiss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
@@ -634,9 +634,9 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,0,0);
 		draw_sprites1(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( shackled )
+	public static VideoUpdateHandlerPtr shackled  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
@@ -647,7 +647,7 @@ public class dec8
 		draw_sprites1(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,TILEMAP_FRONT | 1,0);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
 	static UINT32 lastmiss_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
@@ -683,7 +683,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( lastmiss )
+	public static VideoUpdateHandlerPtr lastmiss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_pf0_tilemap = tilemap_create(get_lastmiss_tile_info,lastmiss_scan_rows,0,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_lastmiss_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -695,9 +695,9 @@ public class dec8
 		game_uses_priority=0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( shackled )
+	public static VideoUpdateHandlerPtr shackled  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_pf0_tilemap = tilemap_create(get_lastmiss_tile_info,lastmiss_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_lastmiss_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -710,11 +710,11 @@ public class dec8
 		game_uses_priority=1;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( srdarwin )
+	public static VideoUpdateHandlerPtr srdarwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, (scroll2[0]<<8)+scroll2[1] );
 	
@@ -723,7 +723,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,TILEMAP_FRONT,0);
 		srdarwin_drawsprites(bitmap,cliprect,1);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
 	static void get_srdarwin_fix_tile_info( int tile_index )
 	{
@@ -757,7 +757,7 @@ public class dec8
 				flag)
 	}
 	
-	VIDEO_START( srdarwin )
+	public static VideoUpdateHandlerPtr srdarwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_pf0_tilemap = tilemap_create(get_srdarwin_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,16);
 		dec8_fix_tilemap = tilemap_create(get_srdarwin_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -772,11 +772,11 @@ public class dec8
 		tilemap_set_transmask(dec8_pf0_tilemap,3,0x0000,0xffff); //* draw as foreground only
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( gondo )
+	public static VideoUpdateHandlerPtr gondo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
@@ -786,9 +786,9 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,TILEMAP_FRONT,0);
 		draw_sprites1(bitmap,cliprect,1);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( garyoret )
+	public static VideoUpdateHandlerPtr garyoret  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
@@ -797,7 +797,7 @@ public class dec8
 		draw_sprites1(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,1,0);
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
-	}
+	} };
 	
 	static void get_gondo_fix_tile_info( int tile_index )
 	{
@@ -827,7 +827,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( gondo )
+	public static VideoUpdateHandlerPtr gondo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_fix_tilemap=tilemap_create(get_gondo_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		dec8_pf0_tilemap=tilemap_create(get_gondo_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
@@ -840,9 +840,9 @@ public class dec8
 		game_uses_priority=0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( garyoret )
+	public static VideoUpdateHandlerPtr garyoret  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec8_fix_tilemap=tilemap_create(get_gondo_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		dec8_pf0_tilemap=tilemap_create(get_gondo_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
@@ -854,7 +854,7 @@ public class dec8
 		game_uses_priority=1;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 }

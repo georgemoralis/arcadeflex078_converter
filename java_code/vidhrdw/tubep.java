@@ -428,7 +428,7 @@ public class tubep
 	
 	
 	
-	VIDEO_START( tubep )
+	public static VideoUpdateHandlerPtr tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuff = auto_malloc(0x800/2)) == 0)
 			return 1;
@@ -443,7 +443,7 @@ public class tubep
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr tubep_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -653,15 +653,15 @@ public class tubep
 		}
 	} };
 	
-	VIDEO_EOF( tubep_eof )
+	public static VideoUpdateHandlerPtr tubep_eof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* clear displayed frame */
 		memset(spritemap+DISP*256*256, 0x0f, 256*256);
 		DISP = DISP ^ 1;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( tubep )
+	public static VideoUpdateHandlerPtr tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -760,7 +760,7 @@ public class tubep
 	
 		/* copy the character mapped graphics */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[0] );
-	}
+	} };
 	
 	
 	
@@ -782,7 +782,7 @@ public class tubep
 	} };
 	
 	
-	VIDEO_UPDATE( rjammer )
+	public static VideoUpdateHandlerPtr rjammer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -932,6 +932,6 @@ public class tubep
 		/* copy the character mapped graphics */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[0] );
 	
-	}
+	} };
 	
 }

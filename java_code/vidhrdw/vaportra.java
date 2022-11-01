@@ -67,7 +67,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	VIDEO_START( vaportra )
+	public static VideoUpdateHandlerPtr vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		pf2_tilemap = tilemap_create(get_bg2_tile_info,vaportra_scan,    TILEMAP_TRANSPARENT,16,16,64,32);
@@ -83,7 +83,7 @@ public class vaportra
 		tilemap_set_transparent_pen(pf4_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -230,7 +230,7 @@ public class vaportra
 	}
 	
 	
-	VIDEO_UPDATE( vaportra )
+	public static VideoUpdateHandlerPtr vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri=vaportra_control_2[0];
 	
@@ -282,5 +282,5 @@ public class vaportra
 	
 		vaportra_drawsprites(bitmap,cliprect,1);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
-	}
+	} };
 }

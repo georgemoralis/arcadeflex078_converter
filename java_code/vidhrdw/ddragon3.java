@@ -103,7 +103,7 @@ public class ddragon3
 		SET_TILE_INFO(0, code, color, flags);
 	}
 	
-	VIDEO_START( ddragon3 )
+	public static VideoUpdateHandlerPtr ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
@@ -120,7 +120,7 @@ public class ddragon3
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	/*
 	 * Sprite Format
@@ -192,7 +192,7 @@ public class ddragon3
 		}
 	}
 	
-	VIDEO_UPDATE( ddragon3 )
+	public static VideoUpdateHandlerPtr ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, ddragon3_bg_scrollx);
 		tilemap_set_scrolly(bg_tilemap, 0, ddragon3_bg_scrolly);
@@ -211,9 +211,9 @@ public class ddragon3
 			ddragon3_draw_sprites(bitmap, cliprect);
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( ctribe )
+	public static VideoUpdateHandlerPtr ctribe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( bg_tilemap, 0, ddragon3_bg_scrollx );
 		tilemap_set_scrolly( bg_tilemap, 0, ddragon3_bg_scrolly );
@@ -223,5 +223,5 @@ public class ddragon3
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 		ddragon3_draw_sprites(bitmap, cliprect);
-	}
+	} };
 }

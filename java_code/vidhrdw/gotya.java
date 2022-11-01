@@ -114,7 +114,7 @@ public class gotya
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( gotya )
+	public static VideoUpdateHandlerPtr gotya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_xy,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -123,7 +123,7 @@ public class gotya
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void gotya_draw_status_row( struct mame_bitmap *bitmap, int sx, int col )
 	{
@@ -192,11 +192,11 @@ public class gotya
 		gotya_draw_status_row(bitmap, 34, 15);
 	}
 	
-	VIDEO_UPDATE( gotya )
+	public static VideoUpdateHandlerPtr gotya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, -(*gotya_scroll + (scroll_bit_8 * 256)) - 2 * 8);
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		gotya_draw_sprites(bitmap);
 		gotya_draw_status(bitmap);
-	}
+	} };
 }

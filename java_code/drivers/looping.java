@@ -142,7 +142,7 @@ public class looping
 		}
 	} };
 	
-	VIDEO_START( looping )
+	public static VideoUpdateHandlerPtr looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		if( tilemap )
@@ -151,7 +151,7 @@ public class looping
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	public static WriteHandlerPtr looping_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -205,11 +205,11 @@ public class looping
 		}
 	}
 	
-	VIDEO_UPDATE( looping )
+	public static VideoUpdateHandlerPtr looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw( bitmap,cliprect,tilemap,0,0 );
 		draw_sprites( bitmap,cliprect );
-	}
+	} };
 	
 	public static WriteHandlerPtr looping_intack = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

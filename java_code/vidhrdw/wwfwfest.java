@@ -233,7 +233,7 @@ public class wwfwfest
 	 Draw Order / Priority seems to affect where the scroll values are used also.
 	*******************************************************************************/
 	
-	VIDEO_START( wwfwfest )
+	public static VideoUpdateHandlerPtr wwfwfest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg0_tilemap = tilemap_create(get_fg0_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		bg1_tilemap = tilemap_create(get_bg1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
@@ -247,9 +247,9 @@ public class wwfwfest
 		tilemap_set_transparent_pen(bg0_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( wwfwfest )
+	public static VideoUpdateHandlerPtr wwfwfest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (wwfwfest_pri == 0x0078) {
 			tilemap_set_scrolly( bg0_tilemap, 0, wwfwfest_bg0_scrolly  );
@@ -285,5 +285,5 @@ public class wwfwfest
 			wwfwfest_drawsprites(bitmap,cliprect);
 			tilemap_draw(bitmap,cliprect,fg0_tilemap,0,0);
 		}
-	}
+	} };
 }

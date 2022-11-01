@@ -31,7 +31,7 @@ public class blockade
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( blockade )
+	public static VideoUpdateHandlerPtr blockade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -40,10 +40,10 @@ public class blockade
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( blockade )
+	public static VideoUpdateHandlerPtr blockade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-	}
+	} };
 }

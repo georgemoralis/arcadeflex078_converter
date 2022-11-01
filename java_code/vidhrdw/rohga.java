@@ -20,7 +20,7 @@ public class rohga
 		return ((bank>>4)&0x3)<<12;
 	}
 	
-	VIDEO_START( rohga )
+	public static VideoUpdateHandlerPtr rohga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -31,9 +31,9 @@ public class rohga
 		deco16_set_tilemap_bank_callback(3,wizdfire_bank_callback);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( wizdfire )
+	public static VideoUpdateHandlerPtr wizdfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -48,9 +48,9 @@ public class rohga
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( nitrobal )
+	public static VideoUpdateHandlerPtr nitrobal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -68,7 +68,7 @@ public class rohga
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -427,7 +427,7 @@ public class rohga
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( rohga )
+	public static VideoUpdateHandlerPtr rohga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Update playfields */
 	//	flip_screen_set( deco16_pf12_control[0]&0x80 );
@@ -449,9 +449,9 @@ public class rohga
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	
 	//	deco16_print_debug_info();
-	}
+	} };
 	
-	VIDEO_UPDATE( wizdfire )
+	public static VideoUpdateHandlerPtr wizdfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Update playfields */
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
@@ -477,9 +477,9 @@ public class rohga
 		wizdfire_drawsprites(bitmap,buffered_spriteram16_2,1,4);
 	
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( nitrobal )
+	public static VideoUpdateHandlerPtr nitrobal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Update playfields */
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
@@ -501,5 +501,5 @@ public class rohga
 		nitrobal_drawsprites(bitmap,cliprect,buffered_spriteram16_2,4);
 	
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 }

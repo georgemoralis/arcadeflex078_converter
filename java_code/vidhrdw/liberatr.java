@@ -306,7 +306,7 @@ public class liberatr
 	
 	***************************************************************************/
 	
-	VIDEO_START( liberatr )
+	public static VideoUpdateHandlerPtr liberatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    liberatr_videoram = 0;
 	    liberatr_planet_segs[0] = 0;
@@ -332,7 +332,7 @@ public class liberatr
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -388,7 +388,7 @@ public class liberatr
 	}
 	
 	
-	VIDEO_UPDATE( liberatr )
+	public static VideoUpdateHandlerPtr liberatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -411,5 +411,5 @@ public class liberatr
 	
 		/* draw the planet */
 		liberatr_draw_planet(bitmap);
-	}
+	} };
 }

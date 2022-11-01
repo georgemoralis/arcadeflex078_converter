@@ -108,7 +108,7 @@ public class speedatk
 		SET_TILE_INFO(region, code, color, 0)
 	}
 	
-	VIDEO_START( speedatk )
+	public static VideoUpdateHandlerPtr speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,34,32);
 	
@@ -116,10 +116,10 @@ public class speedatk
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( speedatk )
+	public static VideoUpdateHandlerPtr speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);
-	}
+	} };
 }

@@ -223,14 +223,14 @@ public class konamigq
 	
 	/* Video */
 	
-	static VIDEO_UPDATE( konamigq )
+	static public static VideoUpdateHandlerPtr konamigq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_update_psx( bitmap, cliprect );
 	
 		draw_crosshair( bitmap, GUNX( 5 ), GUNY( 6 ), cliprect );
 		draw_crosshair( bitmap, GUNX( 7 ), GUNY( 8 ), cliprect );
 		draw_crosshair( bitmap, GUNX( 9 ), GUNY( 10 ), cliprect );
-	}
+	} };
 	
 	static MEMORY_WRITE32_START( konamigq_writemem )
 		{ 0x00000000, 0x003fffff, MWA32_RAM },    /* ram */

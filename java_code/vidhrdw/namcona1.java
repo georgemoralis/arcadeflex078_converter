@@ -230,7 +230,7 @@ public class namcona1
 		}
 	} /* update_gfx */
 	
-	VIDEO_START( namcona1 )
+	public static VideoUpdateHandlerPtr namcona1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		struct GfxElement *gfx0,*gfx1;
@@ -270,7 +270,7 @@ public class namcona1
 			}
 		}
 		return -1; /* error */
-	} /* namcona1_vh_start */
+	} }; /* namcona1_vh_start */
 	
 	/*************************************************************************/
 	
@@ -663,7 +663,7 @@ public class namcona1
 		}
 	} /* draw_background */
 	
-	VIDEO_UPDATE( namcona1 )
+	public static VideoUpdateHandlerPtr namcona1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int which;
 		int priority;
@@ -705,5 +705,5 @@ public class namcona1
 			} /* next priority level */
 			draw_sprites( bitmap );
 		} /* gfx enabled */
-	} /* namcona1_vh_screenrefresh */
+	} }; /* namcona1_vh_screenrefresh */
 }

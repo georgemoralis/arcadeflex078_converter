@@ -92,7 +92,7 @@ public class stadhero
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( stadhero )
+	public static VideoUpdateHandlerPtr stadhero  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flipscreen=stadhero_pf2_control_0[0]&0x80;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
@@ -102,7 +102,7 @@ public class stadhero
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
 		stadhero_drawsprites(bitmap,cliprect,0x00,0x00);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -168,7 +168,7 @@ public class stadhero
 				0)
 	}
 	
-	VIDEO_START( stadhero )
+	public static VideoUpdateHandlerPtr stadhero  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap =     tilemap_create(get_pf1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		pf2_tilemap =     tilemap_create(get_pf2_tile_info,stadhero_scan,TILEMAP_OPAQUE,     16,16,64,64);
@@ -179,7 +179,7 @@ public class stadhero
 		tilemap_set_transparent_pen(pf1_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 }

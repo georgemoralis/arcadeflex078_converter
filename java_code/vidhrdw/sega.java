@@ -121,7 +121,7 @@ public class sega
 	
 	***************************************************************************/
 	
-	VIDEO_START( sega )
+	public static VideoUpdateHandlerPtr sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -164,7 +164,7 @@ public class sega
 		}
 	
 		return video_start_vector();
-	}
+	} };
 	
 	
 	
@@ -176,9 +176,9 @@ public class sega
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( sega )
+	public static VideoUpdateHandlerPtr sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sega_generate_vector_list();
 		video_update_vector(bitmap,0);
-	}
+	} };
 }

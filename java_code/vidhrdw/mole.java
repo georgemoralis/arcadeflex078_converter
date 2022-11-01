@@ -43,7 +43,7 @@ public class mole
 		SET_TILE_INFO((code & 0x200) ? 1 : 0, code & 0x1ff, 0, 0)
 	}
 	
-	VIDEO_START( moleattack )
+	public static VideoUpdateHandlerPtr moleattack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tile_data = (UINT16 *)auto_malloc(NUM_TILES * sizeof(UINT16));
 	
@@ -57,7 +57,7 @@ public class mole
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr moleattack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -80,8 +80,8 @@ public class mole
 		flip_screen_set(data);
 	} };
 	
-	VIDEO_UPDATE( moleattack )
+	public static VideoUpdateHandlerPtr moleattack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-	}
+	} };
 }

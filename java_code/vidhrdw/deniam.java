@@ -102,7 +102,7 @@ public class deniam
 	
 	***************************************************************************/
 	
-	VIDEO_START( deniam )
+	public static VideoUpdateHandlerPtr deniam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,scan_pages,       TILEMAP_OPAQUE,     8,8,128,64);
 		fg_tilemap = tilemap_create(get_fg_tile_info,scan_pages,       TILEMAP_TRANSPARENT,8,8,128,64);
@@ -115,7 +115,7 @@ public class deniam
 		tilemap_set_transparent_pen(tx_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -384,7 +384,7 @@ public class deniam
 		}
 	}
 	
-	VIDEO_UPDATE( deniam )
+	public static VideoUpdateHandlerPtr deniam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int bg_scrollx,bg_scrolly,fg_scrollx,fg_scrolly;
 		int page;
@@ -420,5 +420,5 @@ public class deniam
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,4);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

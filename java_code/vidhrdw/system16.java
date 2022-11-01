@@ -813,7 +813,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	VIDEO_START( system16 ){
+	public static VideoUpdateHandlerPtr system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int bank_default[16] = {
 			0x0,0x1,0x2,0x3,
 			0x4,0x5,0x6,0x7,
@@ -921,9 +921,9 @@ public class system16
 			return 0;
 		}
 		return 1;
-	}
+	} };
 	
-	VIDEO_START( hangon ){
+	public static VideoUpdateHandlerPtr hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
@@ -938,9 +938,9 @@ public class system16
 		sys16_bg_priority_value=0x1800;
 		sys16_fg_priority_value=0x2000;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( system18 ){
+	public static VideoUpdateHandlerPtr system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sys16_bg1_trans=1;
 	
 		background2 = tilemap_create(
@@ -985,7 +985,7 @@ public class system16
 			}
 		}
 		return 1;
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -1141,7 +1141,7 @@ public class system16
 		tilemap_set_enable( foreground2, sys18_fg2_active );
 	}
 	
-	VIDEO_UPDATE( system16 ){
+	public static VideoUpdateHandlerPtr system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
 	
 		if( sys16_update_proc ) sys16_update_proc();
@@ -1164,9 +1164,9 @@ public class system16
 		tilemap_draw( bitmap,cliprect, text_layer, 0, 0xf );
 	
 		draw_sprites( bitmap,cliprect,0 );
-	}
+	} };
 	
-	VIDEO_UPDATE( system18 ){
+	public static VideoUpdateHandlerPtr system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
 		if( sys16_update_proc ) sys16_update_proc();
 		update_page();
@@ -1198,7 +1198,7 @@ public class system16
 		tilemap_draw( bitmap,cliprect, text_layer, 0, 0xf );
 	
 		draw_sprites( bitmap,cliprect, 0 );
-	}
+	} };
 	
 	
 	static void render_gr(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int priority){
@@ -1377,7 +1377,7 @@ public class system16
 		}
 	}
 	
-	VIDEO_UPDATE( hangon ){
+	public static VideoUpdateHandlerPtr hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
 		if( sys16_update_proc ) sys16_update_proc();
 		update_page();
@@ -1396,7 +1396,7 @@ public class system16
 		tilemap_draw( bitmap,cliprect, text_layer, 0, 0xf );
 	
 		draw_sprites( bitmap,cliprect, 0 );
-	}
+	} };
 	
 	static void render_grv2(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int priority)
 	{
@@ -1559,7 +1559,7 @@ public class system16
 	}
 	
 	
-	VIDEO_START( outrun ){
+	public static VideoUpdateHandlerPtr outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
@@ -1574,9 +1574,9 @@ public class system16
 		sys16_bg_priority_value=0x1800;
 		sys16_fg_priority_value=0x2000;
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( outrun ){
+	public static VideoUpdateHandlerPtr outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if( sys16_refreshenable ){
 			if( sys16_update_proc ) sys16_update_proc();
 			update_page();
@@ -1596,7 +1596,7 @@ public class system16
 	
 			tilemap_draw( bitmap,cliprect, text_layer, 0, 0 );
 		}
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -1641,7 +1641,7 @@ public class system16
 		return result;
 	}
 	
-	VIDEO_START( aburner ){
+	public static VideoUpdateHandlerPtr aburner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int ret;
 	
 		aburner_backdrop = aburner_unpack_backdrop( memory_region(REGION_GFX3) );
@@ -1678,7 +1678,7 @@ public class system16
 			return 0;
 		}
 		return 1;
-	}
+	} };
 	
 	static void aburner_draw_road( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		/*
@@ -1885,7 +1885,7 @@ public class system16
 		tilemap_set_scrolly( foreground2, 0, -256+sys16_fg2_scrolly );
 	}
 	
-	VIDEO_UPDATE( aburner ){
+	public static VideoUpdateHandlerPtr aburner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sys16_aburner_vh_screenrefresh_helper();
 		update_page();
 	
@@ -1912,5 +1912,5 @@ public class system16
 		draw_sprites( bitmap,cliprect, 2 );
 	
 	//	debug_draw( bitmap,cliprect, 8,8,sys16_roadram[0x1000] );
-	}
+	} };
 }

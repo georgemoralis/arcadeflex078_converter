@@ -58,10 +58,10 @@ public class dec8
 	/******************************************************************************/
 	
 	/* Only used by ghostb, gondo, garyoret, other games can control buffering */
-	static VIDEO_EOF( dec8 )
+	static public static VideoUpdateHandlerPtr dec8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 	
 	public static ReadHandlerPtr i8751_h_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

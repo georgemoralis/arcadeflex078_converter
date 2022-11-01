@@ -74,7 +74,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	VIDEO_START( harddriv )
+	public static VideoUpdateHandlerPtr harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 *destmask, mask;
 		int i;
@@ -146,7 +146,7 @@ public class harddriv
 		vram_mask = hdgsp_vram_size - 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -466,11 +466,11 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	VIDEO_EOF( harddriv )
+	public static VideoUpdateHandlerPtr harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* reset the display offset */
 		gfx_offsetscan = 0;
-	}
+	} };
 	
 	
 	
@@ -480,7 +480,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( harddriv )
+	public static VideoUpdateHandlerPtr harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pen_t *pens = &Machine->pens[gfx_palettebank * 256];
 		pen_t black = get_black_pen();
@@ -554,5 +554,5 @@ public class harddriv
 		ui_text(bitmap, temp, 0, 20);
 	}
 	#endif
-	}
+	} };
 }

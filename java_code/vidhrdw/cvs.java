@@ -370,7 +370,7 @@ public class cvs
 	    }
 	} };
 	
-	VIDEO_START( cvs )
+	public static VideoUpdateHandlerPtr cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int generator = 0;
 	    int x,y;
@@ -433,7 +433,7 @@ public class cvs
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static InterruptHandlerPtr cvs_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
@@ -460,7 +460,7 @@ public class cvs
 		}
 	}
 	
-	VIDEO_UPDATE( cvs )
+	public static VideoUpdateHandlerPtr cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,character;
 		int sx,sy;
@@ -724,5 +724,5 @@ public class cvs
 			}
 	
 	    }
-	}
+	} };
 }

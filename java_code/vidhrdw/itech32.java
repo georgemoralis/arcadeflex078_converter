@@ -193,7 +193,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	VIDEO_START( itech32 )
+	public static VideoUpdateHandlerPtr itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -232,7 +232,7 @@ public class itech32
 		enable_latch[1] = (itech32_planes > 1) ? 1 : 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -1106,7 +1106,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( itech32 )
+	public static VideoUpdateHandlerPtr itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int y;
 	
@@ -1139,5 +1139,5 @@ public class itech32
 			else
 				draw_scanline16(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &src1[cliprect->min_x], Machine->pens, -1);
 		}
-	}
+	} };
 }

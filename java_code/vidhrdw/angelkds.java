@@ -283,7 +283,7 @@ public class angelkds
 	
 	*/
 	
-	VIDEO_START( angelkds )
+	public static VideoUpdateHandlerPtr angelkds  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -296,11 +296,11 @@ public class angelkds
 		tilemap_set_transparent_pen(bgtop_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
 	/* enable bits are uncertain */
 	
-	VIDEO_UPDATE( angelkds )
+	public static VideoUpdateHandlerPtr angelkds  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle clip;
 	
@@ -323,5 +323,5 @@ public class angelkds
 		if ((angelkds_layer_ctrl & 0x40) == 0x00) tilemap_draw(bitmap,&clip,bgbot_tilemap,0,0);
 		draw_sprites(bitmap,&clip, 0x40);
 		if ((angelkds_layer_ctrl & 0x20) == 0x00) tilemap_draw(bitmap,&clip,tx_tilemap,0,0);
-	}
+	} };
 }

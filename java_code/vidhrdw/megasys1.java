@@ -252,7 +252,7 @@ public class megasys1
 	
 	
 	
-	VIDEO_START( megasys1 )
+	public static VideoUpdateHandlerPtr megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -301,7 +301,7 @@ public class megasys1
 			hardware_type_z = 1;
 	
 	 	return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -952,7 +952,7 @@ public class megasys1
 	***************************************************************************/
 	
 	
-	VIDEO_UPDATE( megasys1 )
+	public static VideoUpdateHandlerPtr megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,flag,pri,primask;
 		int active_layers;
@@ -1044,5 +1044,5 @@ public class megasys1
 	
 		if (active_layers & 0x08)
 			draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

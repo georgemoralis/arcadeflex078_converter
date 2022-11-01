@@ -10,7 +10,7 @@ Change Log
 AT08XX03:
 
 [Common]
- - cleaned and consolidated VIDEO_UPDATE()
+ - cleaned and consolidated public static VideoUpdateHandlerPtr   = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
  - added shadows and highlights
 
  * A.S.O and HAL21 do a lot of palette cycling therefore
@@ -181,12 +181,12 @@ public class hal21
 		gfx_drawmode_table[7] = DRAWMODE_NONE;
 	} };
 	
-	VIDEO_START( aso )
+	public static VideoUpdateHandlerPtr aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		snk_blink_parity = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void hal21_draw_background( struct mame_bitmap *bitmap, int scrollx, int scrolly, int attrs,
@@ -324,7 +324,7 @@ public class hal21
 		}
 	}
 	
-	VIDEO_UPDATE( aso )
+	public static VideoUpdateHandlerPtr aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *ram = memory_region(REGION_CPU1);
 		int attr, msbs, spsy, spsx, bgsy, bgsx, bank, i;
@@ -355,7 +355,7 @@ public class hal21
 		bank = msbs>>6 & 1;
 		tnk3_draw_text(bitmap, bank, &ram[0xf800]);
 		tnk3_draw_status(bitmap, bank, &ram[0xfc00]);
-	}
+	} };
 	
 	
 	static InputPortPtr input_ports_hal21 = new InputPortPtr(){ public void handler() { 

@@ -297,7 +297,7 @@ public class argus
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	VIDEO_START( argus )
+	public static VideoUpdateHandlerPtr argus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		lowbitscroll = 0;
 		/*                           info                      offset             type                  w   h  col  row */
@@ -321,9 +321,9 @@ public class argus
 		tilemap_set_transparent_pen( tx_tilemap,  15 );
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( valtric )
+	public static VideoUpdateHandlerPtr valtric  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*                           info                       offset             type                 w   h  col  row */
 		bg1_tilemap = tilemap_create(valtric_get_bg_tile_info,  tilemap_scan_cols, TILEMAP_OPAQUE,      16, 16, 32, 32);
@@ -335,9 +335,9 @@ public class argus
 		tilemap_set_transparent_pen( bg1_tilemap, 15 );
 		tilemap_set_transparent_pen( tx_tilemap,  15 );
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( butasan )
+	public static VideoUpdateHandlerPtr butasan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*                           info                       offset             type                 w   h  col  row */
 		bg0_tilemap = tilemap_create(butasan_get_bg0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32);
@@ -371,7 +371,7 @@ public class argus
 		tilemap_set_transparent_pen( tx_tilemap,  15 );
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -1339,7 +1339,7 @@ public class argus
 	}
 	#endif
 	
-	VIDEO_UPDATE( argus )
+	public static VideoUpdateHandlerPtr argus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* scroll BG0 and render tile at proper position */
 		argus_bg0_scroll_handle();
@@ -1351,18 +1351,18 @@ public class argus
 		tilemap_draw(bitmap, cliprect, bg1_tilemap, 0, 0);
 		argus_draw_sprites(bitmap, cliprect, 1);
 		tilemap_draw(bitmap, cliprect, tx_tilemap,  0, 0);
-	}
+	} };
 	
-	VIDEO_UPDATE( valtric )
+	public static VideoUpdateHandlerPtr valtric  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
 		tilemap_draw(bitmap, cliprect, bg1_tilemap, 0, 0);
 		valtric_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, tx_tilemap,  0, 0);
-	}
+	} };
 	
-	VIDEO_UPDATE( butasan )
+	public static VideoUpdateHandlerPtr butasan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -1374,5 +1374,5 @@ public class argus
 	#ifdef MAME_DEBUG
 		butasan_log_vram();
 	#endif
-	}
+	} };
 }

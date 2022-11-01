@@ -229,7 +229,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	VIDEO_START( stactics )
+	public static VideoUpdateHandlerPtr stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int i,j;
 	    const unsigned char *firebeam_data;
@@ -331,7 +331,7 @@ public class stactics
 	    *stactics_motor_on = 0;
 	
 	    return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr stactics_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -512,7 +512,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( stactics )
+	public static VideoUpdateHandlerPtr stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int offs, sx, sy, i;
 	    int char_number;
@@ -893,5 +893,5 @@ public class stactics
 	        dirty_chardata_f[i] &= 0x01;
 	    }
 	
-	}
+	} };
 }

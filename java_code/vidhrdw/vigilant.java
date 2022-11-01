@@ -45,7 +45,7 @@ public class vigilant
 	static struct mame_bitmap *bg_bitmap;
 	
 	
-	VIDEO_START( vigilant )
+	public static VideoUpdateHandlerPtr vigilant  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_start_generic();
 	
@@ -53,7 +53,7 @@ public class vigilant
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -289,7 +289,7 @@ public class vigilant
 		}
 	}
 	
-	VIDEO_UPDATE( vigilant )
+	public static VideoUpdateHandlerPtr vigilant  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -326,9 +326,9 @@ public class vigilant
 			draw_sprites(bitmap,&bottomvisiblearea);
 			draw_foreground(bitmap,1,0); // priority tiles
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( kikcubic )
+	public static VideoUpdateHandlerPtr kikcubic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -357,5 +357,5 @@ public class vigilant
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
 		draw_sprites(bitmap,&Machine->visible_area);
-	}
+	} };
 }

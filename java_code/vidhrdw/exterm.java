@@ -83,10 +83,10 @@ public class exterm
 	 *
 	 *************************************/
 	
-	VIDEO_START( exterm )
+	public static VideoUpdateHandlerPtr exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -96,7 +96,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( exterm )
+	public static VideoUpdateHandlerPtr exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	
@@ -154,5 +154,5 @@ public class exterm
 			/* draw the scanline */
 			draw_scanline16(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x, &scanline[cliprect->min_x], Machine->pens, -1);
 		}
-	}
+	} };
 }

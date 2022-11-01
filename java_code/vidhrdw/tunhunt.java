@@ -82,7 +82,7 @@ public class tunhunt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( tunhunt )
+	public static VideoUpdateHandlerPtr tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*
 		Motion Object RAM contains 64 lines of run-length encoded data.
@@ -108,7 +108,7 @@ public class tunhunt
 		tilemap_set_scrollx(fg_tilemap, 0, 64);
 	
 		return 0;
-	}
+	} };
 	
 	public static PaletteInitHandlerPtr tunhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
@@ -406,7 +406,7 @@ public class tunhunt
 				TRANSPARENCY_PEN,0 );
 	}
 	
-	VIDEO_UPDATE( tunhunt )
+	public static VideoUpdateHandlerPtr tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const UINT8 *pMem = memory_region( REGION_CPU1 );
 	
@@ -433,5 +433,5 @@ public class tunhunt
 			tunhunt_control&0x10 ); /* hstretch */
 	
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 }

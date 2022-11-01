@@ -509,20 +509,20 @@ public class toaplan2
 		return error_level;
 	}
 	
-	VIDEO_START( toaplan2_0 )
+	public static VideoUpdateHandlerPtr toaplan2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return toaplan2_vh_start(0);
-	}
+	} };
 	
-	VIDEO_START( toaplan2_1 )
+	public static VideoUpdateHandlerPtr toaplan2_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int error_level = 0;
 		error_level |= toaplan2_vh_start(0);
 		error_level |= toaplan2_vh_start(1);
 		return error_level;
-	}
+	} };
 	
-	VIDEO_START( truxton2_0 )
+	public static VideoUpdateHandlerPtr truxton2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (toaplan2_vram_alloc(0))
 		{
@@ -534,9 +534,9 @@ public class toaplan2
 		}
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4 +1, 0x2a);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( battleg_0 )
+	public static VideoUpdateHandlerPtr battleg_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (toaplan2_vram_alloc(0))
 		{
@@ -548,9 +548,9 @@ public class toaplan2
 		}
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4, 0x2a);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( batrider_0 )
+	public static VideoUpdateHandlerPtr batrider_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((raizing_tx_gfxram16 = (data16_t *)auto_malloc(RAIZING_TX_GFXRAM_SIZE)) == 0)
 			return 1;
@@ -565,7 +565,7 @@ public class toaplan2
 	
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4, 0x2a);
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -1452,7 +1452,7 @@ public class toaplan2
 		Draw the game screen in the given mame_bitmap.
 	***************************************************************************/
 	
-	VIDEO_UPDATE( toaplan2_0 )
+	public static VideoUpdateHandlerPtr toaplan2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority;
 	
@@ -1474,9 +1474,9 @@ public class toaplan2
 			if (sprite_priority[0][priority])
 				draw_sprites(bitmap,cliprect,0,priority,0);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( dogyuun_1 )
+	public static VideoUpdateHandlerPtr dogyuun_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority;
 	
@@ -1508,9 +1508,9 @@ public class toaplan2
 			if (sprite_priority[0][priority])
 				draw_sprites(bitmap,cliprect,0,priority,0);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( batsugun_1 )
+	public static VideoUpdateHandlerPtr batsugun_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority;
 	
@@ -1544,15 +1544,15 @@ public class toaplan2
 				draw_sprites(bitmap,cliprect,1,priority,0);
 		}
 	
-	}
+	} };
 	
-	VIDEO_UPDATE( truxton2_0 )
+	public static VideoUpdateHandlerPtr truxton2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_update_toaplan2_0(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( batrider_0 )
+	public static VideoUpdateHandlerPtr batrider_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority;
 	
@@ -1598,10 +1598,10 @@ public class toaplan2
 			tilemap_set_scrolly(tx_tilemap,0,toaplan2_txvideoram16_offs[line&0xff]-line);
 			tilemap_draw(bitmap,&clip,tx_tilemap,0,0);
 		}
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( mahoudai_0 )
+	public static VideoUpdateHandlerPtr mahoudai_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority;
 	
@@ -1629,24 +1629,24 @@ public class toaplan2
 		if (sprite_priority[0][15])
 			draw_sprites(bitmap,cliprect,0,15,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
 	
-	VIDEO_EOF( toaplan2_0 )
+	public static VideoUpdateHandlerPtr toaplan2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/** Shift sprite RAM buffers  ***  Used to fix sprite lag **/
 		memcpy(spriteram16_now[0],spriteram16_new[0],TOAPLAN2_SPRITERAM_SIZE);
-	}
+	} };
 	
-	VIDEO_EOF( toaplan2_1 )
+	public static VideoUpdateHandlerPtr toaplan2_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/** Shift sprite RAM buffers  ***  Used to fix sprite lag **/
 		memcpy(spriteram16_now[0],spriteram16_new[0],TOAPLAN2_SPRITERAM_SIZE);
 		memcpy(spriteram16_now[1],spriteram16_new[1],TOAPLAN2_SPRITERAM_SIZE);
-	}
+	} };
 	
-	VIDEO_EOF( batrider_0 )
+	public static VideoUpdateHandlerPtr batrider_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);  /* Frame done */
-	}
+	} };
 }

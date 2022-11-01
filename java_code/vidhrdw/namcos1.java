@@ -570,7 +570,7 @@ public class namcos1
 	}
 	
 	
-	VIDEO_START( namcos1 )
+	public static VideoUpdateHandlerPtr namcos1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -686,7 +686,7 @@ public class namcos1
 	#endif
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr namcos1_main_update_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -709,7 +709,7 @@ public class namcos1
 		memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0); // take a snapshot of current sprite RAM
 	} };
 	
-	VIDEO_UPDATE( namcos1 )
+	public static VideoUpdateHandlerPtr namcos1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data8_t *temp;
 	
@@ -726,5 +726,5 @@ public class namcos1
 		}
 	
 		temp = sp_backbuffer; sp_backbuffer = sp_updatebuffer; sp_updatebuffer = temp; // mature backbuffer
-	}
+	} };
 }

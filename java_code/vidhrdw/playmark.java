@@ -89,7 +89,7 @@ public class playmark
 	
 	***************************************************************************/
 	
-	VIDEO_START( bigtwin )
+	public static VideoUpdateHandlerPtr bigtwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bgbitmap = auto_bitmap_alloc(512,512);
 	
@@ -103,10 +103,10 @@ public class playmark
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( wbeachvl )
+	public static VideoUpdateHandlerPtr wbeachvl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tx_tilemap = tilemap_create(wbeachvl_get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		fg_tilemap = tilemap_create(wbeachvl_get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -119,7 +119,7 @@ public class playmark
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -266,7 +266,7 @@ public class playmark
 	}
 	
 	
-	VIDEO_UPDATE( bigtwin )
+	public static VideoUpdateHandlerPtr bigtwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		palette_set_color(256,0,0,0);	/* keep the background black */
 	
@@ -274,13 +274,13 @@ public class playmark
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,4);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( wbeachvl )
+	public static VideoUpdateHandlerPtr wbeachvl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 }

@@ -496,7 +496,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( hbarrel )
+	public static VideoUpdateHandlerPtr hbarrel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -512,11 +512,11 @@ public class dec0
 	
 		dec0_drawsprites(bitmap,cliprect,0x08,0x00);
 		dec0_pf1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( baddudes )
+	public static VideoUpdateHandlerPtr baddudes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* WARNING: priority inverted wrt all the other games */
 		dec0_pf1_update();
@@ -562,11 +562,11 @@ public class dec0
 		}
 	
 		dec0_pf1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( robocop )
+	public static VideoUpdateHandlerPtr robocop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int trans;
 	
@@ -612,11 +612,11 @@ public class dec0
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
 		dec0_pf1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( birdtry )
+	public static VideoUpdateHandlerPtr birdtry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* This game doesn't have the extra playfield chip on the game board */
 		dec0_pf1_update();
@@ -625,11 +625,11 @@ public class dec0
 		dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 		dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 		dec0_pf1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( hippodrm )
+	public static VideoUpdateHandlerPtr hippodrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -652,11 +652,11 @@ public class dec0
 	
 		dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 		dec0_pf1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( slyspy )
+	public static VideoUpdateHandlerPtr slyspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -674,11 +674,11 @@ public class dec0
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
 		dec0_pf1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( midres )
+	public static VideoUpdateHandlerPtr midres  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int trans;
 	
@@ -719,7 +719,7 @@ public class dec0
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
 		dec0_pf1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -883,7 +883,7 @@ public class dec0
 		SET_TILE_INFO(2,tile&0xfff,tile>>12,TILE_SPLIT(pri))
 	}
 	
-	VIDEO_START( dec0_nodma )
+	public static VideoUpdateHandlerPtr dec0_nodma  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap_0 = tilemap_create(get_pf1_tile_info,tile_shape0_8x8_scan,TILEMAP_TRANSPARENT, 8, 8,128, 32);
 		pf1_tilemap_1 = tilemap_create(get_pf1_tile_info,tile_shape1_8x8_scan,TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -925,15 +925,15 @@ public class dec0
 		dec0_spriteram=spriteram16;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( dec0 )
+	public static VideoUpdateHandlerPtr dec0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_start_dec0_nodma();
 		dec0_spriteram=auto_malloc(0x800);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 }

@@ -359,7 +359,7 @@ public class seta2
 	
 	***************************************************************************/
 	
-	VIDEO_START( seta2 )
+	public static VideoUpdateHandlerPtr seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		Machine->gfx[2]->color_granularity = 16;
 		Machine->gfx[3]->color_granularity = 16;
@@ -370,17 +370,17 @@ public class seta2
 	
 		yoffset = 0;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( seta2_offset )
+	public static VideoUpdateHandlerPtr seta2_offset  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_start_seta2();
 	
 		yoffset = 0x10;
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( seta2 )
+	public static VideoUpdateHandlerPtr seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Black or pens[0]? */
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
@@ -388,11 +388,11 @@ public class seta2
 		if (seta2_vregs[0x30/2] & 1)	return;		// BLANK SCREEN
 	
 		seta2_draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_EOF( seta2 )
+	public static VideoUpdateHandlerPtr seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Buffer sprites by 1 frame */
 		memcpy(buffered_spriteram16,spriteram16,spriteram_size);
-	}
+	} };
 }

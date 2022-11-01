@@ -205,7 +205,7 @@ public class powerins
 	
 	***************************************************************************/
 	
-	VIDEO_START( powerins )
+	public static VideoUpdateHandlerPtr powerins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0,
 									powerins_get_memory_offset_0,
@@ -232,7 +232,7 @@ public class powerins
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	
@@ -356,7 +356,7 @@ public class powerins
 	***************************************************************************/
 	
 	
-	VIDEO_UPDATE( powerins )
+	public static VideoUpdateHandlerPtr powerins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -386,5 +386,5 @@ public class powerins
 		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
 		if (layers_ctrl&8)		powerins_draw_sprites(bitmap,cliprect);
 		if (layers_ctrl&2)		tilemap_draw(bitmap,cliprect, tilemap_1, 0, 0);
-	}
+	} };
 }

@@ -70,7 +70,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	VIDEO_START( rockrage )
+	public static VideoUpdateHandlerPtr rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0x00;
 		layer_colorbase[1] = 0x10;
@@ -84,7 +84,7 @@ public class rockrage
 		K007420_set_banklimit(0x3ff); // bladestl and battlnts may also need this
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -93,7 +93,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( rockrage )
+	public static VideoUpdateHandlerPtr rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K007342_tilemap_update();
 	
@@ -102,5 +102,5 @@ public class rockrage
 		K007342_tilemap_draw( bitmap,cliprect, 0, 1 | TILEMAP_IGNORE_TRANSPARENCY ,0);
 		K007342_tilemap_draw( bitmap,cliprect, 1, 0 ,0);
 		K007342_tilemap_draw( bitmap,cliprect, 1, 1 ,0);
-	}
+	} };
 }

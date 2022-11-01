@@ -146,7 +146,7 @@ public class goal92
 	}
 	
 	
-	VIDEO_START( goal92 )
+	public static VideoUpdateHandlerPtr goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -160,9 +160,9 @@ public class goal92
 		tilemap_set_transparent_pen(text_layer,15);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( goal92 )
+	public static VideoUpdateHandlerPtr goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( background_layer, 0, goal92_scrollram16[0] + 60);
 		tilemap_set_scrolly( background_layer, 0, goal92_scrollram16[1] + 8);
@@ -194,5 +194,5 @@ public class goal92
 		draw_sprites(bitmap,cliprect,0);
 		draw_sprites(bitmap,cliprect,3);
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
-	}
+	} };
 }

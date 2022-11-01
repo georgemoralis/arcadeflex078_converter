@@ -119,7 +119,7 @@ public class kncljoe
 	
 	***************************************************************************/
 	
-	VIDEO_START( kncljoe )
+	public static VideoUpdateHandlerPtr kncljoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
@@ -131,7 +131,7 @@ public class kncljoe
 		tile_bank = sprite_bank = flipscreen = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -268,9 +268,9 @@ public class kncljoe
 		}
 	}
 	
-	VIDEO_UPDATE( kncljoe )
+	public static VideoUpdateHandlerPtr kncljoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

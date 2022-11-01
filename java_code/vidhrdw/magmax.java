@@ -252,7 +252,7 @@ public class magmax
 	
 	} };
 	
-	VIDEO_START( magmax )
+	public static VideoUpdateHandlerPtr magmax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,v;
 		unsigned char * prom14D = memory_region(REGION_USER2);
@@ -273,11 +273,11 @@ public class magmax
 		set_custom_blit();
 	
 		return 0;
-	}
+	} };
 	
 	
 	
-	VIDEO_UPDATE( magmax )
+	public static VideoUpdateHandlerPtr magmax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -537,5 +537,5 @@ public class magmax
 						&Machine->visible_area, TRANSPARENCY_PEN, 15);
 			}
 		}
-	}
+	} };
 }

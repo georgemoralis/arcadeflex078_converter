@@ -31,7 +31,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	VIDEO_START( starfire )
+	public static VideoUpdateHandlerPtr starfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* make a temporary bitmap */
 		tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
@@ -49,7 +49,7 @@ public class starfire
 		memset(scanline_dirty, 1, 256);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -287,11 +287,11 @@ public class starfire
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( starfire )
+	public static VideoUpdateHandlerPtr starfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* copy the bitmap, remapping the colors */
 		copybitmap_remap(bitmap, tmpbitmap, 0, 0, 0, 0, &Machine->visible_area, TRANSPARENCY_NONE, 0);
-	}
+	} };
 	
 	
 }

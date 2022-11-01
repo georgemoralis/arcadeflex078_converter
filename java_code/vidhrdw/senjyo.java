@@ -124,7 +124,7 @@ public class senjyo
 	
 	***************************************************************************/
 	
-	VIDEO_START( senjyo )
+	public static VideoUpdateHandlerPtr senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bgbitmap = auto_bitmap_alloc(256,256);
 		if (!bgbitmap)
@@ -157,7 +157,7 @@ public class senjyo
 		set_vh_global_attribute(NULL,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -353,7 +353,7 @@ public class senjyo
 		}
 	}
 	
-	VIDEO_UPDATE( senjyo )
+	public static VideoUpdateHandlerPtr senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -452,5 +452,5 @@ public class senjyo
 		ui_text(baf,0,30);
 	}
 	#endif
-	}
+	} };
 }

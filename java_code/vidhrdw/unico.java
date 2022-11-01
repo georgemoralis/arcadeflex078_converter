@@ -149,7 +149,7 @@ public class unico
 	
 	static int sprites_scrolldx, sprites_scrolldy;
 	
-	VIDEO_START( unico )
+	public static VideoUpdateHandlerPtr unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
@@ -177,9 +177,9 @@ public class unico
 		tilemap_set_transparent_pen(tilemap_1,0x00);
 		tilemap_set_transparent_pen(tilemap_2,0x00);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( zeropnt2 )
+	public static VideoUpdateHandlerPtr zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info32_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
@@ -207,7 +207,7 @@ public class unico
 		tilemap_set_transparent_pen(tilemap_1,0x00);
 		tilemap_set_transparent_pen(tilemap_2,0x00);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -349,7 +349,7 @@ public class unico
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( unico )
+	public static VideoUpdateHandlerPtr unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -397,9 +397,9 @@ public class unico
 				readinputport(3)*224/256,
 				cliprect);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( zeropnt2 )
+	public static VideoUpdateHandlerPtr zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -447,6 +447,6 @@ public class unico
 				readinputport(3)*224/256,
 				cliprect);
 		}
-	}
+	} };
 	
 }

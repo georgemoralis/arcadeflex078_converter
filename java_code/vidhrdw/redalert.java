@@ -176,7 +176,7 @@ public class redalert
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( redalert )
+	public static VideoUpdateHandlerPtr redalert  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,i;
 	
@@ -314,5 +314,5 @@ public class redalert
 		/* copy the character mapped graphics */
 		copybitmap(bitmap,tmpbitmap,flip,flip,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
-	}
+	} };
 }

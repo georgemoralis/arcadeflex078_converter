@@ -193,7 +193,7 @@ public class tetrisp2
 	}
 	
 	
-	VIDEO_START( tetrisp2 )
+	public static VideoUpdateHandlerPtr tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
@@ -214,9 +214,9 @@ public class tetrisp2
 		tilemap_set_transparent_pen(tilemap_rot,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( rockntread )
+	public static VideoUpdateHandlerPtr rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
@@ -237,7 +237,7 @@ public class tetrisp2
 		tilemap_set_transparent_pen(tilemap_rot, 0);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -406,7 +406,7 @@ public class tetrisp2
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( tetrisp2 )
+	public static VideoUpdateHandlerPtr tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int flipscreen_old = -1;
 		int flipscreen;
@@ -488,9 +488,9 @@ public class tetrisp2
 			tilemap_draw(bitmap,cliprect, tilemap_fg,  0, 1 << 2);
 	
 		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size, 0);
-	}
+	} };
 	
-	VIDEO_UPDATE( rockntread )
+	public static VideoUpdateHandlerPtr rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int flipscreen_old = -1;
 		int flipscreen;
@@ -572,5 +572,5 @@ public class tetrisp2
 			tilemap_draw(bitmap,cliprect, tilemap_fg,  0, 1 << 2);
 	
 		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size, 0);
-	}
+	} };
 }

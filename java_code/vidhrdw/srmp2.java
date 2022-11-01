@@ -462,23 +462,23 @@ public class srmp2
 	}
 	
 	
-	VIDEO_UPDATE( srmp2 )
+	public static VideoUpdateHandlerPtr srmp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0x1f0], &Machine->visible_area);
 		srmp2_draw_sprites(bitmap);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( srmp3 )
+	public static VideoUpdateHandlerPtr srmp3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0x1f0], &Machine->visible_area);
 		srmp3_draw_sprites(bitmap);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( mjyuugi )
+	public static VideoUpdateHandlerPtr mjyuugi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0x1f0], &Machine->visible_area);
 		mjyuugi_draw_sprites(bitmap);
-	}
+	} };
 }

@@ -1179,7 +1179,7 @@ public class halleys
 	} };
 	
 	
-	static VIDEO_START( halleys )
+	static public static VideoUpdateHandlerPtr halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#define HALLEYS_Y0  0x8e
 	#define HALLEYS_X0  0x9a
@@ -1213,7 +1213,7 @@ public class halleys
 		}
 	
 		return(0);
-	}
+	} };
 	
 	
 	static void copy_scroll_op(struct mame_bitmap *bitmap, WORD *source, int sx, int sy)
@@ -1492,7 +1492,7 @@ public class halleys
 	}
 	
 	
-	static VIDEO_UPDATE( halleys )
+	static public static VideoUpdateHandlerPtr halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i, j;
 	
@@ -1513,10 +1513,10 @@ public class halleys
 		i = io_ram[0xa0];
 		j = io_ram[0xa1];
 		if (io_ram[0x2b] && (i>0xc6 && i<0xfe) && (j==0xc0 || j==0xed)) filter_bitmap(bitmap, i);
-	}
+	} };
 	
 	
-	static VIDEO_UPDATE( benberob )
+	static public static VideoUpdateHandlerPtr benberob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (io_ram[0xa0] & 0x80)
 			copy_scroll_op(bitmap, render_layer[2], *scrollx1, *scrolly1);
@@ -1525,7 +1525,7 @@ public class halleys
 	
 		copy_fixed_xp (bitmap, render_layer[1]);
 		copy_fixed_xp (bitmap, render_layer[0]);
-	}
+	} };
 	
 	
 	//**************************************************************************

@@ -61,11 +61,11 @@ public class midvunit
 	}
 	
 	
-	VIDEO_START( midvunit )
+	public static VideoUpdateHandlerPtr midvunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		scanline_timer = timer_alloc(scanline_timer_cb);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -1180,7 +1180,7 @@ public class midvunit
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( midvunit )
+	public static VideoUpdateHandlerPtr midvunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y, width, xoffs;
 		UINT32 offset;
@@ -1217,5 +1217,5 @@ public class midvunit
 				*dest++ = midvunit_videoram[offset + x] & 0x7fff;
 			offset += 512;
 		}
-	}
+	} };
 }

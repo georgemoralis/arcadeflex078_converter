@@ -38,7 +38,7 @@ public class xexex
 		*color = layer_colorbase[layer] | (*color>>2 & 0x0f);
 	}
 	
-	VIDEO_START( xexex )
+	public static VideoUpdateHandlerPtr xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int region = REGION_GFX3;
 	
@@ -64,7 +64,7 @@ public class xexex
 		K054338_invert_alpha(0);
 	
 		return 0;
-	}
+	} };
 	
 	/* useful function to sort the four tile layers by priority order */
 	/* suboptimal, but for such a size who cares ? */
@@ -86,7 +86,7 @@ public class xexex
 		SWAP(2, 3)
 	}
 	
-	VIDEO_UPDATE( xexex )
+	public static VideoUpdateHandlerPtr xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const int K053251_CI[4] = { K053251_CI1, K053251_CI2, K053251_CI3, K053251_CI4 };
 		int layer[4];
@@ -147,5 +147,5 @@ public class xexex
 		}
 	
 		K056832_tilemap_draw(bitmap, cliprect, 0, 0, 0);
-	}
+	} };
 }

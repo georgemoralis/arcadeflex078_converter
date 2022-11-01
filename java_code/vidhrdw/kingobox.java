@@ -220,7 +220,7 @@ public class kingobox
 		SET_TILE_INFO(bank, code, color, 0)
 	}
 	
-	VIDEO_START( kingofb )
+	public static VideoUpdateHandlerPtr kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -237,7 +237,7 @@ public class kingobox
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void kingofb_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -269,13 +269,13 @@ public class kingobox
 		}
 	}
 	
-	VIDEO_UPDATE( kingofb )
+	public static VideoUpdateHandlerPtr kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		kingofb_draw_sprites(bitmap);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
-	}
+	} };
 	
 	/* Ring King */
 	
@@ -287,7 +287,7 @@ public class kingobox
 		SET_TILE_INFO(4, code, color, 0)
 	}
 	
-	VIDEO_START( ringking )
+	public static VideoUpdateHandlerPtr ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(ringking_get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -304,7 +304,7 @@ public class kingobox
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void ringking_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -336,11 +336,11 @@ public class kingobox
 		}
 	}
 	
-	VIDEO_UPDATE( ringking )
+	public static VideoUpdateHandlerPtr ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		ringking_draw_sprites(bitmap);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
-	}
+	} };
 }

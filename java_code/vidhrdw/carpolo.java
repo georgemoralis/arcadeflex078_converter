@@ -178,7 +178,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	VIDEO_START( carpolo )
+	public static VideoUpdateHandlerPtr carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sprite_sprite_collision_bitmap1 = auto_bitmap_alloc(SPRITE_WIDTH*2,SPRITE_HEIGHT*2)) == 0)
 			return 1;
@@ -196,7 +196,7 @@ public class carpolo
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*************************************
@@ -266,7 +266,7 @@ public class carpolo
 	}
 	
 	
-	VIDEO_UPDATE( carpolo )
+	public static VideoUpdateHandlerPtr carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the playfield elements, in the correct priority order */
 	
@@ -353,7 +353,7 @@ public class carpolo
 		draw_alpha_line(bitmap, cliprect, 5, (1*4+2)*2+1);
 		draw_alpha_line(bitmap, cliprect, 6, (0*4+3)*2  );
 		draw_alpha_line(bitmap, cliprect, 7, (0*4+3)*2+1);
-	}
+	} };
 	
 	
 	/*************************************
@@ -628,7 +628,7 @@ public class carpolo
 	}
 	
 	
-	VIDEO_EOF( carpolo )
+	public static VideoUpdateHandlerPtr carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int col_x, col_y;
 		int car1_x, car2_x, car3_x, car4_x, ball_x;
@@ -833,5 +833,5 @@ public class carpolo
 			}
 		}
 		}
-	}
+	} };
 }

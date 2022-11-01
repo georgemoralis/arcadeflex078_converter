@@ -232,7 +232,7 @@ public class punchout
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( punchout )
+	public static VideoUpdateHandlerPtr punchout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
@@ -260,9 +260,9 @@ public class punchout
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( armwrest )
+	public static VideoUpdateHandlerPtr armwrest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
@@ -290,7 +290,7 @@ public class punchout
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -353,7 +353,7 @@ public class punchout
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( punchout )
+	public static VideoUpdateHandlerPtr punchout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -529,10 +529,10 @@ public class punchout
 					sx,sy + 8*TOP_MONITOR_ROWS - 16,
 					&bottomvisiblearea,TRANSPARENCY_COLOR,1024);
 		}
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( armwrest )
+	public static VideoUpdateHandlerPtr armwrest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -717,5 +717,5 @@ public class punchout
 					8*sx,8*sy + 8*TOP_MONITOR_ROWS - 16,
 					&backgroundvisiblearea,TRANSPARENCY_PEN,7);
 		}
-	}
+	} };
 }

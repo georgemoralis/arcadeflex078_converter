@@ -63,7 +63,7 @@ public class portrait
 		get_tile_info( portrait_fgvideoram, tile_index );
 	}
 	
-	VIDEO_START( portrait )
+	public static VideoUpdateHandlerPtr portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create( get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32 );
 		foreground = tilemap_create( get_fg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 32, 32 );
@@ -73,7 +73,7 @@ public class portrait
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	
 	public static PaletteInitHandlerPtr portrait  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
@@ -116,7 +116,7 @@ public class portrait
 		}
 	}
 	
-	VIDEO_UPDATE( portrait )
+	public static VideoUpdateHandlerPtr portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly( background, 0, portrait_scrollx_hi );
 		tilemap_set_scrolly( foreground, 0, portrait_scrollx_hi );
@@ -124,5 +124,5 @@ public class portrait
 		tilemap_draw( bitmap, cliprect, background, 0, 0 );
 		draw_sprites(bitmap);
 		tilemap_draw( bitmap, cliprect, foreground, 0, 0 );
-	}
+	} };
 }

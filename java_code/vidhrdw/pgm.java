@@ -279,7 +279,7 @@ public class pgm
 	
 	/*** Video - Start / Update ****************************************************/
 	
-	VIDEO_START( pgm )
+	public static VideoUpdateHandlerPtr pgm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pgm_tx_tilemap= tilemap_create(get_pgm_tx_tilemap_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		tilemap_set_transparent_pen(pgm_tx_tilemap,15);
@@ -297,9 +297,9 @@ public class pgm
 	
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( pgm )
+	public static VideoUpdateHandlerPtr pgm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int y;
 	
@@ -327,11 +327,11 @@ public class pgm
 		tilemap_set_scrolly(pgm_tx_tilemap,0, pgm_videoregs[0x5000/2]);
 		tilemap_set_scrollx(pgm_tx_tilemap,0, pgm_videoregs[0x6000/2]); // Check
 		tilemap_draw(bitmap,cliprect,pgm_tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( pgm )
+	public static VideoUpdateHandlerPtr pgm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* first 0xa00 of main ram = sprites, seems to be buffered, DMA? */
 		memcpy(pgm_spritebufferram,pgm_mainram,0xa00);
-	}
+	} };
 }

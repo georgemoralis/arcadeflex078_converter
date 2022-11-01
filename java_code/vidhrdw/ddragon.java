@@ -110,7 +110,7 @@ public class ddragon
 	
 	***************************************************************************/
 	
-	VIDEO_START( ddragon )
+	public static VideoUpdateHandlerPtr ddragon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,  TILEMAP_OPAQUE,     16,16,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -121,9 +121,9 @@ public class ddragon
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( chinagat )
+	public static VideoUpdateHandlerPtr chinagat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,  TILEMAP_OPAQUE,     16,16,32,32);
 		fg_tilemap = tilemap_create(get_fg_16color_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -134,7 +134,7 @@ public class ddragon
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -253,7 +253,7 @@ public class ddragon
 	#undef DRAW_SPRITE
 	
 	
-	VIDEO_UPDATE( ddragon )
+	public static VideoUpdateHandlerPtr ddragon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx = ddragon_scrollx_hi + *ddragon_scrollx_lo;
 		int scrolly = ddragon_scrolly_hi + *ddragon_scrolly_lo;
@@ -264,5 +264,5 @@ public class ddragon
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
-	}
+	} };
 }

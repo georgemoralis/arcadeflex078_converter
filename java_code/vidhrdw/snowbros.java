@@ -22,7 +22,7 @@ public class snowbros
 	}
 	
 	
-	VIDEO_UPDATE( snowbros )
+	public static VideoUpdateHandlerPtr snowbros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sx=0, sy=0, x=0, y=0, offs;
 	
@@ -99,9 +99,9 @@ public class snowbros
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( wintbob )
+	public static VideoUpdateHandlerPtr wintbob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -140,5 +140,5 @@ public class snowbros
 						&Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
-	}
+	} };
 }

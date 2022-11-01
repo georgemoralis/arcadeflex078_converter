@@ -332,7 +332,7 @@ public class hyprduel
 				empty_tiles[16*16*code + i] = code ^ 0x0f;
 	}
 	
-	VIDEO_START( hyprduel_14220 )
+	public static VideoUpdateHandlerPtr hyprduel_14220  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		alloc_empty_tiles();
 		hypr_tiletable_old = auto_malloc(hyprduel_tiletable_size);
@@ -353,7 +353,7 @@ public class hyprduel
 		tilemap_set_scrolldx(tilemap[2], 0, 0);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -605,7 +605,7 @@ public class hyprduel
 	}
 	
 	
-	VIDEO_UPDATE( hyprduel )
+	public static VideoUpdateHandlerPtr hyprduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,pri,sprites_pri,layers_ctrl = -1;
 		data8_t *dirtyindex;
@@ -674,5 +674,5 @@ public class hyprduel
 				for (i = 0; i < 0x20; i++)
 					hypr_draw_sprites(bitmap,cliprect, i);
 		}
-	}
+	} };
 }

@@ -22,13 +22,13 @@ public class skyraid
 	static struct mame_bitmap *helper;
 	
 	
-	VIDEO_START( skyraid )
+	public static VideoUpdateHandlerPtr skyraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((helper = auto_bitmap_alloc(128, 240)) == NULL)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void draw_text(struct mame_bitmap* bitmap, const struct rectangle* cliprect)
@@ -156,7 +156,7 @@ public class skyraid
 	}
 	
 	
-	VIDEO_UPDATE( skyraid )
+	public static VideoUpdateHandlerPtr skyraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -165,5 +165,5 @@ public class skyraid
 		draw_missiles(helper, cliprect);
 		draw_trapezoid(bitmap, helper);
 		draw_text(bitmap, cliprect);
-	}
+	} };
 }

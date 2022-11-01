@@ -1123,7 +1123,7 @@ public class cps1
 		}
 	}
 	
-	VIDEO_START( cps )
+	public static VideoUpdateHandlerPtr cps  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -1198,22 +1198,22 @@ public class cps1
 		palette_basecolor[5] = 5*32;	/* stars2 */
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( cps1 )
+	public static VideoUpdateHandlerPtr cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    cps_version=1;
 	    return video_start_cps();
-	}
+	} };
 	
-	VIDEO_START( cps2 )
+	public static VideoUpdateHandlerPtr cps2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (cps_version != 99)
 	    {
 	        cps_version=2;
 	    }
 	    return video_start_cps();
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -1809,7 +1809,7 @@ public class cps1
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( cps1 )
+	public static VideoUpdateHandlerPtr cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int layercontrol,l0,l1,l2,l3;
 		int videocontrol=cps1_port(0x22);
@@ -1941,9 +1941,9 @@ public class cps1
 			cps1_dump_video();
 		}
 	#endif
-	}
+	} };
 	
-	VIDEO_EOF( cps1 )
+	public static VideoUpdateHandlerPtr cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Get video memory base registers */
 		cps1_get_video_base();
@@ -1953,7 +1953,7 @@ public class cps1
 			/* CPS1 sprites have to be delayed one frame */
 			memcpy(cps1_buffered_obj, cps1_obj, cps1_obj_size);
 		}
-	}
+	} };
 	
 	void cps2_set_sprite_priorities(void)
 	{

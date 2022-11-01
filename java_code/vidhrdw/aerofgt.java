@@ -99,7 +99,7 @@ public class aerofgt
 	
 	***************************************************************************/
 	
-	VIDEO_START( pspikes )
+	public static VideoUpdateHandlerPtr pspikes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg1_tilemap = tilemap_create(get_pspikes_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 		/* no bg2 in this game */
@@ -110,9 +110,9 @@ public class aerofgt
 		sprite_gfx = 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( karatblz )
+	public static VideoUpdateHandlerPtr karatblz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg1_tilemap = tilemap_create(karatblz_bg1_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,64,64);
 		bg2_tilemap = tilemap_create(karatblz_bg2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
@@ -127,9 +127,9 @@ public class aerofgt
 		sprite_gfx = 2;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( spinlbrk )
+	public static VideoUpdateHandlerPtr spinlbrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -159,9 +159,9 @@ public class aerofgt
 			aerofgt_spriteram1[i] = i;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( turbofrc )
+	public static VideoUpdateHandlerPtr turbofrc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg1_tilemap = tilemap_create(get_bg1_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,64,64);
 		bg2_tilemap = tilemap_create(get_bg2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
@@ -176,7 +176,7 @@ public class aerofgt
 		sprite_gfx = 2;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -451,7 +451,7 @@ public class aerofgt
 	}
 	
 	
-	VIDEO_UPDATE( pspikes )
+	public static VideoUpdateHandlerPtr pspikes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,scrolly;
 	
@@ -465,9 +465,9 @@ public class aerofgt
 	
 		tilemap_draw(bitmap,cliprect,bg1_tilemap,0,0);
 		turbofrc_drawsprites(bitmap,cliprect,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( karatblz )
+	public static VideoUpdateHandlerPtr karatblz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg1_tilemap,0,bg1scrollx-8);
 		tilemap_set_scrolly(bg1_tilemap,0,bg1scrolly);
@@ -482,9 +482,9 @@ public class aerofgt
 		/* we use the priority buffer so sprites are drawn front to back */
 		turbofrc_drawsprites(bitmap,cliprect,1);
 		turbofrc_drawsprites(bitmap,cliprect,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( spinlbrk )
+	public static VideoUpdateHandlerPtr spinlbrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,scrolly;
 	
@@ -504,9 +504,9 @@ public class aerofgt
 		/* we use the priority buffer so sprites are drawn front to back */
 		turbofrc_drawsprites(bitmap,cliprect,0);
 		turbofrc_drawsprites(bitmap,cliprect,1);
-	}
+	} };
 	
-	VIDEO_UPDATE( turbofrc )
+	public static VideoUpdateHandlerPtr turbofrc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,scrolly;
 	
@@ -527,9 +527,9 @@ public class aerofgt
 		/* we use the priority buffer so sprites are drawn front to back */
 		turbofrc_drawsprites(bitmap,cliprect,1);
 		turbofrc_drawsprites(bitmap,cliprect,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( aerofgt )
+	public static VideoUpdateHandlerPtr aerofgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg1_tilemap,0,aerofgt_rasterram[0x0000]-18);
 		tilemap_set_scrolly(bg1_tilemap,0,bg1scrolly);
@@ -547,5 +547,5 @@ public class aerofgt
 	
 		aerofgt_drawsprites(bitmap,cliprect,2);
 		aerofgt_drawsprites(bitmap,cliprect,3);
-	}
+	} };
 }

@@ -98,7 +98,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	VIDEO_START( labyrunr )
+	public static VideoUpdateHandlerPtr labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		layer1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
@@ -114,7 +114,7 @@ public class labyrunr
 		clip1.min_x = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -150,7 +150,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( labyrunr )
+	public static VideoUpdateHandlerPtr labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle finalclip0 = clip0, finalclip1 = clip1;
 	
@@ -163,5 +163,5 @@ public class labyrunr
 		tilemap_draw(bitmap,&finalclip0,layer0,0,0);
 		K007121_sprites_draw(0,bitmap,cliprect,spriteram,(K007121_ctrlram[0][6]&0x30)*2,40,0,-1);
 		tilemap_draw(bitmap,&finalclip1,layer1,0,0);
-	}
+	} };
 }

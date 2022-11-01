@@ -123,7 +123,7 @@ public class ladybug
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( ladybug )
+	public static VideoUpdateHandlerPtr ladybug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -134,7 +134,7 @@ public class ladybug
 		tilemap_set_scroll_rows(bg_tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
 	static void ladybug_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -187,7 +187,7 @@ public class ladybug
 		}
 	}
 	
-	VIDEO_UPDATE( ladybug )
+	public static VideoUpdateHandlerPtr ladybug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -204,5 +204,5 @@ public class ladybug
 	
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		ladybug_draw_sprites(bitmap);
-	}
+	} };
 }

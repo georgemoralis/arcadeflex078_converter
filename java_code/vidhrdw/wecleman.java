@@ -1129,7 +1129,7 @@ public class wecleman
 								Initializations
 	***************************************************************************/
 	
-	VIDEO_START( wecleman )
+	public static VideoUpdateHandlerPtr wecleman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
@@ -1220,7 +1220,7 @@ public class wecleman
 		*(Machine->gfx[0]->gfxdata + (Machine->gfx[0]->char_modulo*0xaca+7)) = 0;
 	
 		return 0;
-	}
+	} };
 	
 	//  Callbacks for the K051316
 	#define ZOOMROM0_MEM_REGION REGION_GFX2
@@ -1238,7 +1238,7 @@ public class wecleman
 		*color = ((*color & 0x3f) << 1) | ((*code & 0x80) >> 7);
 	}
 	
-	VIDEO_START( hotchase )
+	public static VideoUpdateHandlerPtr hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
@@ -1277,7 +1277,7 @@ public class wecleman
 		K051316_set_offset(1, -0xB0/2, -16);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -1373,7 +1373,7 @@ public class wecleman
 									Hot Chase
 	***************************************************************************/
 	
-	VIDEO_UPDATE( hotchase )
+	public static VideoUpdateHandlerPtr hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int video_on;
 	
@@ -1396,5 +1396,5 @@ public class wecleman
 	
 		/* Draw the foreground (text) */
 		if (video_on) K051316_zoom_draw_1(bitmap,cliprect, 0, 0);
-	}
+	} };
 }

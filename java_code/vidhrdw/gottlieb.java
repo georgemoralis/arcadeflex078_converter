@@ -162,7 +162,7 @@ public class gottlieb
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( gottlieb )
+	public static VideoUpdateHandlerPtr gottlieb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
@@ -173,7 +173,7 @@ public class gottlieb
 		tilemap_set_transparent_pen(bg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void gottlieb_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -200,7 +200,7 @@ public class gottlieb
 		}
 	}
 	
-	VIDEO_UPDATE( gottlieb )
+	public static VideoUpdateHandlerPtr gottlieb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (!background_priority)
 		{
@@ -217,5 +217,5 @@ public class gottlieb
 		{
 			tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		}
-	}
+	} };
 }

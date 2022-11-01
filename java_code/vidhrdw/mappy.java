@@ -76,7 +76,7 @@ public class mappy
 	} };
 	
 	
-	static VIDEO_START( common )
+	static public static VideoUpdateHandlerPtr common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
@@ -86,25 +86,25 @@ public class mappy
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( mappy )
+	public static VideoUpdateHandlerPtr mappy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		special_display = 0;
 		return video_start_common();
-	}
+	} };
 	
-	VIDEO_START( motos )
+	public static VideoUpdateHandlerPtr motos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		special_display = 1;
 		return video_start_common();
-	}
+	} };
 	
-	VIDEO_START( todruaga )
+	public static VideoUpdateHandlerPtr todruaga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		special_display = 2;
 		return video_start_common();
-	}
+	} };
 	
 	
 	
@@ -160,7 +160,7 @@ public class mappy
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( mappy )
+	public static VideoUpdateHandlerPtr mappy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -400,5 +400,5 @@ public class mappy
 							0,TRANSPARENCY_COLOR,31);
 			}
 		}
-	}
+	} };
 }

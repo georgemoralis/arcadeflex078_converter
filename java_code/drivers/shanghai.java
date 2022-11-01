@@ -714,17 +714,17 @@ public class shanghai
 		}
 	} };
 	
-	VIDEO_START( shanghai )
+	public static VideoUpdateHandlerPtr shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return HD63484_start();
-	}
+	} };
 	
-	VIDEO_STOP( shanghai )
+	public static VideoUpdateHandlerPtr shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		HD63484_stop();
-	}
+	} };
 	
-	VIDEO_UPDATE( shanghai )
+	public static VideoUpdateHandlerPtr shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x,y,b;
 	
@@ -760,7 +760,7 @@ public class shanghai
 				}
 			}
 		}
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr shanghai_interrupt = new InterruptHandlerPtr() {public void handler()

@@ -76,7 +76,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	VIDEO_START( fromance )
+	public static VideoUpdateHandlerPtr fromance  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate tilemaps */
 		bg_tilemap = tilemap_create(get_fromance_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8,4, 64,64);
@@ -99,9 +99,9 @@ public class fromance
 		/* reset the timer */
 		crtc_timer = timer_alloc(crtc_interrupt_gen);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( nekkyoku )
+	public static VideoUpdateHandlerPtr nekkyoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate tilemaps */
 		bg_tilemap = tilemap_create(get_nekkyoku_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8,4, 64,64);
@@ -124,7 +124,7 @@ public class fromance
 		/* reset the timer */
 		crtc_timer = timer_alloc(crtc_interrupt_gen);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -408,7 +408,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( fromance )
+	public static VideoUpdateHandlerPtr fromance  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, scrollx[0]);
 		tilemap_set_scrolly(bg_tilemap, 0, scrolly[0]);
@@ -417,10 +417,10 @@ public class fromance
 	
 		tilemap_draw(bitmap,cliprect, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap,cliprect, fg_tilemap, 0, 0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( pipedrm )
+	public static VideoUpdateHandlerPtr pipedrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* there seems to be no logical mapping for the X scroll register -- maybe it's gone */
 		tilemap_set_scrolly(bg_tilemap, 0, scrolly[1]);
@@ -431,5 +431,5 @@ public class fromance
 	
 		draw_sprites(bitmap,cliprect, 0);
 		draw_sprites(bitmap,cliprect, 1);
-	}
+	} };
 }

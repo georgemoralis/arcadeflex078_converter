@@ -73,7 +73,7 @@ public class finalizr
 		}
 	} };
 	
-	VIDEO_START( finalizr )
+	public static VideoUpdateHandlerPtr finalizr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dirtybuffer = 0;
 		tmpbitmap = 0;
@@ -86,7 +86,7 @@ public class finalizr
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -112,7 +112,7 @@ public class finalizr
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( finalizr )
+	public static VideoUpdateHandlerPtr finalizr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -280,5 +280,5 @@ public class finalizr
 						&Machine->visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
-	}
+	} };
 }

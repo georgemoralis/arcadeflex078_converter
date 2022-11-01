@@ -48,22 +48,22 @@ public class vsnes
 		{ ppu_irq, ppu_irq }					/* irq */
 	};
 	
-	VIDEO_START( vsnes )
+	public static VideoUpdateHandlerPtr vsnes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return ppu2c03b_init( &ppu_interface );
-	}
+	} };
 	
-	VIDEO_START( vsdual )
+	public static VideoUpdateHandlerPtr vsdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return ppu2c03b_init( &ppu_dual_interface );
-	}
+	} };
 	
 	/***************************************************************************
 	
 	  Display refresh
 	
 	***************************************************************************/
-	VIDEO_UPDATE( vsnes )
+	public static VideoUpdateHandlerPtr vsnes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* render the ppu */
 		ppu2c03b_render( 0, bitmap, 0, 0, 0, 0 );
@@ -78,13 +78,13 @@ public class vsnes
 	
 			}
 	
-		}
+		} };
 	
 	
-	VIDEO_UPDATE( vsdual )
+	public static VideoUpdateHandlerPtr vsdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* render the ppu's */
 		ppu2c03b_render( 0, bitmap, 0, 0, 0, 0 );
 		ppu2c03b_render( 1, bitmap, 0, 0, 32*8, 0 );
-	}
+	} };
 }

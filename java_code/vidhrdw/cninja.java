@@ -44,7 +44,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	VIDEO_START( cninja )
+	public static VideoUpdateHandlerPtr cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -54,9 +54,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( stoneage )
+	public static VideoUpdateHandlerPtr stoneage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -71,9 +71,9 @@ public class cninja
 		tilemap_set_scrolldx(deco16_get_tilemap(0,1),2,2);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( edrandy )
+	public static VideoUpdateHandlerPtr edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -83,9 +83,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( robocop2 )
+	public static VideoUpdateHandlerPtr robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -96,9 +96,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( mutantf )
+	public static VideoUpdateHandlerPtr mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -115,14 +115,14 @@ public class cninja
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_EOF( cninja )
+	public static VideoUpdateHandlerPtr cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		deco16_raster_display_position=0;
-	}
+	} };
 	
 	static void raster_pf3_draw(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int flags, int pri)
 	{
@@ -415,7 +415,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( cninja )
+	public static VideoUpdateHandlerPtr cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
@@ -430,9 +430,9 @@ public class cninja
 		deco16_tilemap_2_draw(bitmap,cliprect,TILEMAP_FRONT,4);
 		cninja_drawsprites(bitmap,cliprect);
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( edrandy )
+	public static VideoUpdateHandlerPtr edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
@@ -448,9 +448,9 @@ public class cninja
 		deco16_tilemap_2_draw(bitmap,cliprect,0,4);
 		cninja_drawsprites(bitmap,cliprect);
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( robocop2 )
+	public static VideoUpdateHandlerPtr robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* One of the tilemap chips can switch between 2 tilemaps at 4bpp, or 1 at 8bpp */
 		if (deco16_priority&4) {
@@ -495,9 +495,9 @@ public class cninja
 	
 		robocop2_drawsprites(bitmap,cliprect);
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( mutantf )
+	public static VideoUpdateHandlerPtr mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
@@ -539,5 +539,5 @@ public class cninja
 			mutantf_drawsprites(bitmap,cliprect,buffered_spriteram16,3);
 		}
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
-	}
+	} };
 }

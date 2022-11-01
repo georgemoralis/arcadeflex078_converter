@@ -96,7 +96,7 @@ public class armedf
 	
 	***************************************************************************/
 	
-	VIDEO_START( armedf )
+	public static VideoUpdateHandlerPtr armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( scroll_type == 4 || /* cclimbr2 */
 			scroll_type == 3 )  /* legion */
@@ -124,7 +124,7 @@ public class armedf
 		}
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -260,7 +260,7 @@ public class armedf
 	
 	
 	
-	VIDEO_UPDATE( armedf )
+	public static VideoUpdateHandlerPtr armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sprite_enable = armedf_vreg & 0x200;
 	
@@ -320,10 +320,10 @@ public class armedf
 			}
 			tilemap_mark_all_tiles_dirty( tx_tilemap );
 		}
-	}
+	} };
 	
-	VIDEO_EOF( armedf )
+	public static VideoUpdateHandlerPtr armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

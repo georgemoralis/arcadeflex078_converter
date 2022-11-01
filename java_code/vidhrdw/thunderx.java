@@ -54,7 +54,7 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	VIDEO_START( scontra )
+	public static VideoUpdateHandlerPtr scontra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
@@ -67,7 +67,7 @@ public class thunderx
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -76,7 +76,7 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( scontra )
+	public static VideoUpdateHandlerPtr scontra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -97,5 +97,5 @@ public class thunderx
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,4);
 	
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
-	}
+	} };
 }

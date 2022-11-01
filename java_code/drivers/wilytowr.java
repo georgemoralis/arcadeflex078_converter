@@ -154,7 +154,7 @@ public class wilytowr
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( wilytowr )
+	public static VideoUpdateHandlerPtr wilytowr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -172,7 +172,7 @@ public class wilytowr
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void wilytowr_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -204,7 +204,7 @@ public class wilytowr
 		}
 	}
 	
-	VIDEO_UPDATE( wilytowr )
+	public static VideoUpdateHandlerPtr wilytowr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int col;
 	
@@ -214,7 +214,7 @@ public class wilytowr
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		wilytowr_draw_sprites(bitmap);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -295,7 +295,7 @@ public class ojankohs
 	
 	******************************************************************************/
 	
-	VIDEO_START( ojankohs )
+	public static VideoUpdateHandlerPtr ojankohs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		ojankohs_tilemap = tilemap_create(ojankohs_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 4, 64, 64);
 		ojankohs_videoram = auto_malloc(0x2000);
@@ -305,9 +305,9 @@ public class ojankohs
 		if (!ojankohs_tilemap || !ojankohs_videoram || !ojankohs_colorram || !ojankohs_paletteram) return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( ojankoy )
+	public static VideoUpdateHandlerPtr ojankoy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		ojankohs_tilemap = tilemap_create(ojankoy_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 4, 64, 64);
 		ojankohs_videoram = auto_malloc(0x2000);
@@ -317,9 +317,9 @@ public class ojankohs
 		if (!ojankohs_tilemap || !ojankohs_videoram || !ojankohs_colorram || !ojankohs_paletteram) return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( ojankoc )
+	public static VideoUpdateHandlerPtr ojankoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		ojankoc_tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
 		ojankohs_videoram = auto_malloc(0x8000);
@@ -328,7 +328,7 @@ public class ojankohs
 		if (!ojankoc_tmpbitmap || !ojankohs_videoram || !ojankohs_paletteram) return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/******************************************************************************
@@ -337,15 +337,15 @@ public class ojankohs
 	
 	******************************************************************************/
 	
-	VIDEO_UPDATE( ojankohs )
+	public static VideoUpdateHandlerPtr ojankohs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(ojankohs_tilemap, 0, ojankohs_scrollx);
 		tilemap_set_scrolly(ojankohs_tilemap, 0, ojankohs_scrolly);
 	
 		tilemap_draw(bitmap, cliprect, ojankohs_tilemap, 0, 0);
-	}
+	} };
 	
-	VIDEO_UPDATE( ojankoc )
+	public static VideoUpdateHandlerPtr ojankoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -359,5 +359,5 @@ public class ojankohs
 		}
 	
 		copybitmap(bitmap, ojankoc_tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
-	}
+	} };
 }

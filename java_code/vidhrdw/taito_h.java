@@ -79,29 +79,29 @@ public class taito_h
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	VIDEO_START( syvalion )
+	public static VideoUpdateHandlerPtr syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( TC0080VCO_vh_start(0,1,1,1,-2))
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( recordbr )
+	public static VideoUpdateHandlerPtr recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( dleague )
+	public static VideoUpdateHandlerPtr dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -430,7 +430,7 @@ public class taito_h
 	
 	/**************************************************************************/
 	
-	VIDEO_UPDATE( syvalion )
+	public static VideoUpdateHandlerPtr syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		TC0080VCO_tilemap_update();
 	
@@ -444,10 +444,10 @@ public class taito_h
 		TC0080VCO_tilemap_draw(bitmap,cliprect,1,0,0);
 		syvalion_draw_sprites (bitmap,cliprect);
 		TC0080VCO_tilemap_draw(bitmap,cliprect,2,0,0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( recordbr )
+	public static VideoUpdateHandlerPtr recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		TC0080VCO_tilemap_update();
 	
@@ -474,10 +474,10 @@ public class taito_h
 	#endif
 	
 		TC0080VCO_tilemap_draw(bitmap,cliprect,2,0,0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( dleague )
+	public static VideoUpdateHandlerPtr dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		TC0080VCO_tilemap_update();
 	
@@ -504,6 +504,6 @@ public class taito_h
 	#endif
 	
 		TC0080VCO_tilemap_draw(bitmap,cliprect,2,0,0);
-	}
+	} };
 	
 }

@@ -96,7 +96,7 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	VIDEO_START( fuuki32 )
+	public static VideoUpdateHandlerPtr fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffered_spriteram32   = auto_malloc(spriteram_size);
 		buffered_spriteram32_2 = auto_malloc(spriteram_size);
@@ -125,7 +125,7 @@ public class fuukifg3
 		Machine->gfx[2]->color_granularity=16;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -315,7 +315,7 @@ public class fuukifg3
 		}
 	}
 	
-	VIDEO_UPDATE( fuuki32 )
+	public static VideoUpdateHandlerPtr fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data16_t layer0_scrollx, layer0_scrolly;
 		data16_t layer1_scrollx, layer1_scrolly;
@@ -375,9 +375,9 @@ public class fuukifg3
 		// don't do the rasters on the sprites . its very slow and the hw might not anyway.
 		if (cliprect->max_y == Machine->visible_area.max_y)
 			fuuki32_draw_sprites(bitmap,&Machine->visible_area);
-	}
+	} };
 	
-	VIDEO_EOF( fuuki32 )
+	public static VideoUpdateHandlerPtr fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Buffer sprites and tilebank by 2 frames */
 	
@@ -385,5 +385,5 @@ public class fuukifg3
 		spr_buffered_tilebank[0] = fuuki32_tilebank[0];
 		memcpy(buffered_spriteram32_2,buffered_spriteram32,spriteram_size);
 		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
-	}
+	} };
 }

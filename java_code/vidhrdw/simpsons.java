@@ -49,7 +49,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	VIDEO_START( simpsons )
+	public static VideoUpdateHandlerPtr simpsons  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -59,7 +59,7 @@ public class simpsons
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -158,7 +158,7 @@ public class simpsons
 		SWAP(1,2)
 	}
 	
-	VIDEO_UPDATE( simpsons )
+	public static VideoUpdateHandlerPtr simpsons  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	
@@ -187,5 +187,5 @@ public class simpsons
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[layer[2]],0,4);
 	
 		K053247_sprites_draw(bitmap,cliprect);
-	}
+	} };
 }

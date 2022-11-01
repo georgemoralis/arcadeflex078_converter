@@ -120,7 +120,7 @@ public class system1
 	
 	
 	
-	VIDEO_START( system1 )
+	public static VideoUpdateHandlerPtr system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sprite_onscreen_map = auto_malloc(256*256)) == 0)
 			return 1;
@@ -136,7 +136,7 @@ public class system1
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr system1_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -512,7 +512,7 @@ public class system1
 		}
 	}
 	
-	VIDEO_UPDATE( system1 )
+	public static VideoUpdateHandlerPtr system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int drawn;
 	
@@ -528,7 +528,7 @@ public class system1
 		/* even if screen is off, sprites must still be drawn to update the collision table */
 		if (system1_video_mode & 0x10)  /* screen off */
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
-	}
+	} };
 	
 	
 	
@@ -652,7 +652,7 @@ public class system1
 		}
 	}
 	
-	VIDEO_UPDATE( choplifter )
+	public static VideoUpdateHandlerPtr choplifter  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int drawn;
 	
@@ -676,7 +676,7 @@ public class system1
 			memory_region(REGION_CPU1)[0xC085]=33;
 		}
 	#endif
-	}
+	} };
 	
 	
 	
@@ -789,7 +789,7 @@ public class system1
 	}
 	
 	
-	VIDEO_UPDATE( wbml )
+	public static VideoUpdateHandlerPtr wbml  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		wbml_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
@@ -799,9 +799,9 @@ public class system1
 		/* even if screen is off, sprites must still be drawn to update the collision table */
 		if (system1_video_mode & 0x10)  /* screen off */
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
-	}
+	} };
 	
-	VIDEO_UPDATE( blockgal )
+	public static VideoUpdateHandlerPtr blockgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int drawn;
 	
@@ -821,5 +821,5 @@ public class system1
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 	
 		blockgal_kludgeoffset = 0;
-	}
+	} };
 }

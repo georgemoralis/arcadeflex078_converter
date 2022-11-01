@@ -413,63 +413,63 @@ public class dooyong
 	}
 	
 	
-	VIDEO_UPDATE( lastday )
+	public static VideoUpdateHandlerPtr lastday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_layer(bitmap,2,lastday_bgscroll,memory_region(REGION_GFX5),TRANSPARENCY_NONE);
 		draw_layer(bitmap,3,lastday_fgscroll,memory_region(REGION_GFX6),TRANSPARENCY_PEN);
 		draw_sprites(bitmap,0);
 		draw_tx(bitmap,-1);
-	}
+	} };
 	
-	VIDEO_UPDATE( gulfstrm )
+	public static VideoUpdateHandlerPtr gulfstrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_layer(bitmap,2,lastday_bgscroll,memory_region(REGION_GFX5),TRANSPARENCY_NONE);
 		draw_layer(bitmap,3,lastday_fgscroll,memory_region(REGION_GFX6),TRANSPARENCY_PEN);
 		draw_sprites(bitmap,1);
 		draw_tx(bitmap,-1);
-	}
+	} };
 	
-	VIDEO_UPDATE( pollux )
+	public static VideoUpdateHandlerPtr pollux  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_layer(bitmap,2,lastday_bgscroll,memory_region(REGION_GFX5),TRANSPARENCY_NONE);
 		draw_layer(bitmap,3,lastday_fgscroll,memory_region(REGION_GFX6),TRANSPARENCY_PEN);
 		draw_sprites(bitmap,2);
 		draw_tx(bitmap,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( bluehawk )
+	public static VideoUpdateHandlerPtr bluehawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bluehawk_draw_layer(bitmap,2,lastday_bgscroll,memory_region(REGION_GFX3)+0x78000,TRANSPARENCY_NONE);
 		bluehawk_draw_layer(bitmap,3,lastday_fgscroll,memory_region(REGION_GFX4)+0x78000,TRANSPARENCY_PEN);
 		draw_sprites(bitmap,3);
 		bluehawk_draw_layer2(bitmap,4,bluehawk_fg2scroll,memory_region(REGION_GFX5)+0x38000,TRANSPARENCY_PEN);
 		bluehawk_draw_tx(bitmap);
-	}
+	} };
 	
-	VIDEO_UPDATE( primella )
+	public static VideoUpdateHandlerPtr primella  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bluehawk_draw_layer(bitmap,1,lastday_bgscroll,memory_region(REGION_GFX2)+memory_region_length(REGION_GFX2)-0x8000,TRANSPARENCY_NONE);
 		if (tx_pri) bluehawk_draw_tx(bitmap);
 		bluehawk_draw_layer(bitmap,2,lastday_fgscroll,memory_region(REGION_GFX3)+memory_region_length(REGION_GFX3)-0x8000,TRANSPARENCY_PEN);
 		if (!tx_pri) bluehawk_draw_tx(bitmap);
-	}
+	} };
 	
-	VIDEO_UPDATE( rshark )
+	public static VideoUpdateHandlerPtr rshark  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		rshark_draw_layer(bitmap,4,rshark_scroll4,memory_region(REGION_GFX5),memory_region(REGION_GFX6)+0x60000,TRANSPARENCY_NONE);
 		rshark_draw_layer(bitmap,3,rshark_scroll3,memory_region(REGION_GFX4),memory_region(REGION_GFX6)+0x40000,TRANSPARENCY_PEN);
 		rshark_draw_layer(bitmap,2,rshark_scroll2,memory_region(REGION_GFX3),memory_region(REGION_GFX6)+0x20000,TRANSPARENCY_PEN);
 		rshark_draw_layer(bitmap,1,rshark_scroll1,memory_region(REGION_GFX2),memory_region(REGION_GFX6)+0x00000,TRANSPARENCY_PEN);
 		rshark_draw_sprites(bitmap);
-	}
+	} };
 	
-	VIDEO_EOF( dooyong )
+	public static VideoUpdateHandlerPtr dooyong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 	
-	VIDEO_EOF( rshark )
+	public static VideoUpdateHandlerPtr rshark  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

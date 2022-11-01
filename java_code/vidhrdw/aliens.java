@@ -57,7 +57,7 @@ public class aliens
 	
 	***************************************************************************/
 	
-	VIDEO_START( aliens )
+	public static VideoUpdateHandlerPtr aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram = auto_malloc(0x400);
 		if (!paletteram)
@@ -73,7 +73,7 @@ public class aliens
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -83,7 +83,7 @@ public class aliens
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( aliens )
+	public static VideoUpdateHandlerPtr aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -94,5 +94,5 @@ public class aliens
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,4);
 	
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
-	}
+	} };
 }

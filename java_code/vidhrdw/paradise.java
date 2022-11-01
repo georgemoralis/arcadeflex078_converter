@@ -160,7 +160,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	VIDEO_START( paradise )
+	public static VideoUpdateHandlerPtr paradise  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 8,8, 0x20,0x20 );
@@ -186,7 +186,7 @@ public class paradise
 		tilemap_set_transparent_pen(tilemap_1,0xff);
 		tilemap_set_transparent_pen(tilemap_2,0xff);
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -233,7 +233,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( paradise )
+	public static VideoUpdateHandlerPtr paradise  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -274,5 +274,5 @@ public class paradise
 			if (!(paradise_priority & 1))
 				if (layers_ctrl&16)	draw_sprites(bitmap,cliprect);
 		}
-	}
+	} };
 }

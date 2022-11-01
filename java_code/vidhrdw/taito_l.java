@@ -77,7 +77,7 @@ public class taito_l
 	
 	***************************************************************************/
 	
-	VIDEO_START( taitol )
+	public static VideoUpdateHandlerPtr taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -103,7 +103,7 @@ public class taito_l
 		tilemap_set_scrolldx(bg19_tilemap,38,-21);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -314,7 +314,7 @@ public class taito_l
 	}
 	
 	
-	VIDEO_UPDATE( taitol )
+	public static VideoUpdateHandlerPtr taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int dx,dy;
 	
@@ -350,14 +350,14 @@ public class taito_l
 		}
 		else
 			fillbitmap(bitmap,Machine->pens[0],cliprect);
-	}
+	} };
 	
 	
 	
-	VIDEO_EOF( taitol )
+	public static VideoUpdateHandlerPtr taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *spriteram = taitol_rambanks + 0x7000;
 	
 		memcpy(buffered_spriteram,spriteram,SPRITERAM_SIZE);
-	}
+	} };
 }

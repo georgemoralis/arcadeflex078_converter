@@ -43,7 +43,7 @@ public class gijoe
 		*color = (*color>>2 & 0x0f) | layer_colorbase[layer];
 	}
 	
-	VIDEO_START( gijoe )
+	public static VideoUpdateHandlerPtr gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -59,7 +59,7 @@ public class gijoe
 		AVAC_vrc = 0xffff;
 	
 		return 0;
-	}
+	} };
 	
 	/* useful function to sort the four tile layers by priority order */
 	static void sortlayers(int *layer, int *pri)
@@ -80,7 +80,7 @@ public class gijoe
 		SWAP(2, 3)
 	}
 	
-	VIDEO_UPDATE( gijoe )
+	public static VideoUpdateHandlerPtr gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const int K053251_CI[4] = { K053251_CI1, K053251_CI2, K053251_CI3, K053251_CI4 };
 		int layer[4];
@@ -161,5 +161,5 @@ public class gijoe
 		K056832_tilemap_draw(bitmap,cliprect, layer[3], 0, 8);
 	
 		K053247_sprites_draw(bitmap, cliprect);
-	}
+	} };
 }

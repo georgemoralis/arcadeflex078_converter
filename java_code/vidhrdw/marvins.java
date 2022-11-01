@@ -176,7 +176,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	VIDEO_START( marvins )
+	public static VideoUpdateHandlerPtr marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flipscreen = -1; old_bg_color = old_fg_color = -1;
 	
@@ -249,7 +249,7 @@ public class marvins
 	
 			return 0;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	**
@@ -347,7 +347,7 @@ public class marvins
 		}
 	}
 	
-	VIDEO_UPDATE( marvins )
+	public static VideoUpdateHandlerPtr marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *mem = memory_region(REGION_CPU1);
 		unsigned char sprite_partition = mem[0xfe00];
@@ -391,9 +391,9 @@ public class marvins
 		draw_sprites( bitmap,cliprect, sprite_scrollx+29+1, sprite_scrolly+16, 1, sprite_partition );
 		tilemap_draw( bitmap,&finalclip,tx_tilemap,0 ,0);
 		draw_status( bitmap,cliprect );
-	}
+	} };
 	
-	VIDEO_UPDATE( madcrash )
+	public static VideoUpdateHandlerPtr madcrash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	/***************************************************************************
 	**
@@ -450,5 +450,5 @@ public class marvins
 		draw_sprites( bitmap,cliprect, sprite_scrollx+29, sprite_scrolly+17, 1, sprite_partition );
 		tilemap_draw( bitmap,&finalclip,tx_tilemap,0 ,0);
 		draw_status( bitmap,cliprect );
-	}
+	} };
 }

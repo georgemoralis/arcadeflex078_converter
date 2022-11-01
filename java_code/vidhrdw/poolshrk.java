@@ -32,7 +32,7 @@ public class poolshrk
 	}
 	
 	
-	VIDEO_START( poolshrk )
+	public static VideoUpdateHandlerPtr poolshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(get_tile_info, get_memory_offset,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
@@ -43,10 +43,10 @@ public class poolshrk
 		tilemap_set_transparent_pen(tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( poolshrk )
+	public static VideoUpdateHandlerPtr poolshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -68,5 +68,5 @@ public class poolshrk
 		/* draw playfield */
 	
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
-	}
+	} };
 }

@@ -242,7 +242,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	VIDEO_START( dday )
+	public static VideoUpdateHandlerPtr dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap   = tilemap_create(get_bg_tile_info,  tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32);
 		fg_tilemap   = tilemap_create(get_fg_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -267,7 +267,7 @@ public class dday
 		start_countdown_timer();
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr dday_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -351,7 +351,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( dday )
+	public static VideoUpdateHandlerPtr dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(main_bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		tilemap_draw(main_bitmap,cliprect,fg_tilemap,0,0);
@@ -390,5 +390,5 @@ public class dday
 		{
 			copybitmap(bitmap,main_bitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
 		}
-	}
+	} };
 }

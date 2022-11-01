@@ -94,7 +94,7 @@ public class mustache
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( mustache )
+	public static VideoUpdateHandlerPtr mustache  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_x,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -102,7 +102,7 @@ public class mustache
 		tilemap_set_scroll_rows(bg_tilemap, 4);
 	
 		return 0;
-	}
+	} };
 	
 	static void mustache_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -145,9 +145,9 @@ public class mustache
 		}
 	}
 	
-	VIDEO_UPDATE( mustache )
+	public static VideoUpdateHandlerPtr mustache  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		mustache_draw_sprites(bitmap, cliprect);
-	}
+	} };
 }

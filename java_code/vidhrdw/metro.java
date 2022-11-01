@@ -404,7 +404,7 @@ public class metro
 				empty_tiles[16*16*code + i] = code ^ 0x0f;
 	}
 	
-	VIDEO_START( metro_14100 )
+	public static VideoUpdateHandlerPtr metro_14100  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		support_8bpp = 0;
 		support_16x16 = 0;
@@ -429,9 +429,9 @@ public class metro
 		tilemap_set_transparent_pen(tilemap[2],0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( metro_14220 )
+	public static VideoUpdateHandlerPtr metro_14220  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		support_8bpp = 1;
 		support_16x16 = 0;
@@ -460,9 +460,9 @@ public class metro
 		tilemap_set_scrolldx(tilemap[2], -2, 2);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( metro_14300 )
+	public static VideoUpdateHandlerPtr metro_14300  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		support_8bpp = 1;
 		support_16x16 = 1;
@@ -492,9 +492,9 @@ public class metro
 		tilemap_set_transparent_pen(tilemap_16x16[2],0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( blzntrnd )
+	public static VideoUpdateHandlerPtr blzntrnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_metro_14220())
 			return 1;
@@ -515,9 +515,9 @@ public class metro
 		tilemap_set_scrolldx(tilemap[2], 8, -8);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( gstrik2 )
+	public static VideoUpdateHandlerPtr gstrik2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_metro_14220())
 			return 1;
@@ -538,7 +538,7 @@ public class metro
 		tilemap_set_scrolldx(tilemap[2], 8, -8);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -850,7 +850,7 @@ public class metro
 	}
 	
 	
-	VIDEO_UPDATE( metro )
+	public static VideoUpdateHandlerPtr metro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,pri,sprites_pri,layers_ctrl = -1;
 		data8_t *dirtyindex;
@@ -951,5 +951,5 @@ public class metro
 				for (i = 0; i < 0x20; i++)
 					metro_draw_sprites(bitmap,cliprect, i);
 		}
-	}
+	} };
 }

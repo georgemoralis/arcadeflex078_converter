@@ -53,7 +53,7 @@ public class geebee
 	};
 	
 	
-	VIDEO_START( geebee )
+	public static VideoUpdateHandlerPtr geebee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( video_start_generic() )
 			return 1;
@@ -62,9 +62,9 @@ public class geebee
 		artwork_show(OVERLAY_TAG, (readinputport(2) & 0x01) == 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( navalone )
+	public static VideoUpdateHandlerPtr navalone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( video_start_generic() )
 			return 1;
@@ -72,9 +72,9 @@ public class geebee
 	    /* overlay? */
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( sos )
+	public static VideoUpdateHandlerPtr sos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( video_start_generic() )
 			return 1;
@@ -82,9 +82,9 @@ public class geebee
 	    /* overlay? */
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( kaitei )
+	public static VideoUpdateHandlerPtr kaitei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( video_start_generic() )
 		return 1;
@@ -92,7 +92,7 @@ public class geebee
 	    /* overlay? */
 	
 		return 0;
-	}
+	} };
 	
 	/* Initialise the palette */
 	public static PaletteInitHandlerPtr geebee  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
@@ -119,7 +119,7 @@ public class geebee
 			plot_pixel(bitmap,x,y,Machine->pens[1]);
 	}
 	
-	VIDEO_UPDATE( geebee )
+	public static VideoUpdateHandlerPtr geebee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -184,5 +184,5 @@ public class geebee
 				for( x = 0; x < 4; x++ )
 					geebee_plot(bitmap,cliprect,geebee_ball_h+x+5,geebee_ball_v+y-2);
 		}
-	}
+	} };
 }

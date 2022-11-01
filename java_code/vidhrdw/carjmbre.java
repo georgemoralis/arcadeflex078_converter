@@ -85,7 +85,7 @@ public class carjmbre
 	
 	
 	
-	VIDEO_START( carjmbre )
+	public static VideoUpdateHandlerPtr carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		carjmbre_tilemap = tilemap_create( get_carjmbre_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
@@ -94,9 +94,9 @@ public class carjmbre
 		state_save_register_int ("video", 0, "bgcolor",    &carjmbre_bgcolor);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( carjmbre )
+	public static VideoUpdateHandlerPtr carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,troffs,sx,sy,flipx,flipy;
 	
@@ -152,5 +152,5 @@ public class carjmbre
 				}
 			}
 		}
-	}
+	} };
 }

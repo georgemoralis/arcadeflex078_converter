@@ -90,7 +90,7 @@ public class warpwarp
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( warpwarp )
+	public static VideoUpdateHandlerPtr warpwarp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -163,7 +163,7 @@ public class warpwarp
 				}
 			}
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr warpwarp_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -96,7 +96,7 @@ public class bionicc
 	
 	***************************************************************************/
 	
-	VIDEO_START( bionicc )
+	public static VideoUpdateHandlerPtr bionicc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,      16,16,64,64);
@@ -111,7 +111,7 @@ public class bionicc
 		tilemap_set_transparent_pen(bg_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -230,7 +230,7 @@ public class bionicc
 		}
 	}
 	
-	VIDEO_UPDATE( bionicc )
+	public static VideoUpdateHandlerPtr bionicc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,1|TILEMAP_BACK,0);	/* nothing in FRONT */
@@ -239,10 +239,10 @@ public class bionicc
 		bionicc_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0|TILEMAP_FRONT,0);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( bionicc )
+	public static VideoUpdateHandlerPtr bionicc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

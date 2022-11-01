@@ -37,13 +37,13 @@ public class canyon
 	}
 	
 	
-	VIDEO_START( canyon )
+	public static VideoUpdateHandlerPtr canyon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
 		return (tilemap == NULL) ? 1 : 0;
-	}
+	} };
 	
 	
 	static void canyon_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle* cliprect)
@@ -94,12 +94,12 @@ public class canyon
 	}
 	
 	
-	VIDEO_UPDATE( canyon )
+	public static VideoUpdateHandlerPtr canyon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
 	
 		canyon_draw_sprites(bitmap, cliprect);
 	
 		canyon_draw_bombs(bitmap, cliprect);
-	}
+	} };
 }

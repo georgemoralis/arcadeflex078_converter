@@ -131,7 +131,7 @@ public class grobda
 		}
 	}
 	
-	VIDEO_UPDATE( grobda )
+	public static VideoUpdateHandlerPtr grobda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -186,5 +186,5 @@ public class grobda
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
 		grobda_draw_sprites(bitmap);
-	}
+	} };
 }

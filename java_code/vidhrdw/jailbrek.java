@@ -81,7 +81,7 @@ public class jailbrek
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( jailbrek )
+	public static VideoUpdateHandlerPtr jailbrek  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -90,7 +90,7 @@ public class jailbrek
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void jailbrek_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -119,7 +119,7 @@ public class jailbrek
 		}
 	}
 	
-	VIDEO_UPDATE( jailbrek )
+	public static VideoUpdateHandlerPtr jailbrek  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -150,5 +150,5 @@ public class jailbrek
 	
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		jailbrek_draw_sprites(bitmap, cliprect);
-	}
+	} };
 }

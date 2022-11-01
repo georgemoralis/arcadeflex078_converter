@@ -59,7 +59,7 @@ public class generic
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( generic )
+	public static VideoUpdateHandlerPtr generic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dirtybuffer = 0;
 		tmpbitmap = 0;
@@ -80,16 +80,16 @@ public class generic
 		state_save_register_func_postload(video_generic_postload);
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( generic_bitmapped )
+	public static VideoUpdateHandlerPtr generic_bitmapped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -98,10 +98,10 @@ public class generic
 	  To be used by bitmapped games not using sprites.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( generic_bitmapped )
+	public static VideoUpdateHandlerPtr generic_bitmapped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr videoram_r  = new ReadHandlerPtr() { public int handler(int offset)

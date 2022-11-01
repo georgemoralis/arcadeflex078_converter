@@ -36,7 +36,7 @@ public class flstory
 	}
 	
 	
-	VIDEO_START( flstory )
+	public static VideoUpdateHandlerPtr flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32 );
 	//	tilemap_set_transparent_pen( tilemap,15 );
@@ -46,7 +46,7 @@ public class flstory
 		paletteram = auto_malloc(0x200);
 		paletteram_2 = auto_malloc(0x200);
 		return video_start_generic();
-	}
+	} };
 	
 	public static WriteHandlerPtr flstory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -151,7 +151,7 @@ public class flstory
 		}
 	}
 	
-	VIDEO_UPDATE( flstory )
+	public static VideoUpdateHandlerPtr flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -189,5 +189,5 @@ public class flstory
 			}
 		}
 	
-	}
+	} };
 }

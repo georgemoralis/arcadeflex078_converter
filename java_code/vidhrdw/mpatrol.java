@@ -203,7 +203,7 @@ public class mpatrol
 	  Stop the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( mpatrol )
+	public static VideoUpdateHandlerPtr mpatrol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,j;
 	
@@ -235,7 +235,7 @@ public class mpatrol
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -356,7 +356,7 @@ public class mpatrol
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( mpatrol )
+	public static VideoUpdateHandlerPtr mpatrol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,i;
 	
@@ -501,5 +501,5 @@ public class mpatrol
 					sx,sy,
 					&Machine->visible_area,TRANSPARENCY_COLOR,128+32);
 		}
-	}
+	} };
 }

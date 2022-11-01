@@ -97,10 +97,10 @@ public class gcpinbal
 		return 0;
 	}
 	
-	VIDEO_START( gcpinbal )
+	public static VideoUpdateHandlerPtr gcpinbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (gcpinbal_core_vh_start());
-	}
+	} };
 	
 	VIDEO_STOP (void)
 	{
@@ -289,7 +289,7 @@ public class gcpinbal
 	                        SCREEN REFRESH
 	**************************************************************/
 	
-	VIDEO_UPDATE( gcpinbal )
+	public static VideoUpdateHandlerPtr gcpinbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static UINT16 tile_sets = 0;
 		int i;
@@ -370,6 +370,6 @@ public class gcpinbal
 		}
 	#endif
 	
-	}
+	} };
 	
 }

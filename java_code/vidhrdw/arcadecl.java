@@ -35,7 +35,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	VIDEO_START( arcadecl )
+	public static VideoUpdateHandlerPtr arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -87,7 +87,7 @@ public class arcadecl
 		atarimo_set_yscroll(0, 0x110);
 		has_mo = (Machine->gfx[0]->total_elements > 10);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -97,7 +97,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( arcadecl )
+	public static VideoUpdateHandlerPtr arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the playfield */
 		rampart_bitmap_render(bitmap, cliprect);
@@ -127,5 +127,5 @@ public class arcadecl
 						}
 				}
 		}
-	}
+	} };
 }

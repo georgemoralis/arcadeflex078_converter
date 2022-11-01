@@ -38,7 +38,7 @@ public class offtwall
 	 *
 	 *************************************/
 	
-	VIDEO_START( offtwall )
+	public static VideoUpdateHandlerPtr offtwall  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -86,7 +86,7 @@ public class offtwall
 		if (!atarimo_init(0, &modesc))
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -96,7 +96,7 @@ public class offtwall
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( offtwall )
+	public static VideoUpdateHandlerPtr offtwall  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
@@ -123,5 +123,5 @@ public class offtwall
 						mo[x] = 0;
 					}
 			}
-	}
+	} };
 }

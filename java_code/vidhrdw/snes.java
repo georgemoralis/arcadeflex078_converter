@@ -159,9 +159,9 @@ public class snes
 	/*7*/	{ {snes_update_line_mode7, NULL, NULL, NULL}, 1 }					/* Supports direct colour */
 	};
 	
-	VIDEO_UPDATE( snes )
+	public static VideoUpdateHandlerPtr snes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	}
+	} };
 	
 	/*****************************************
 	 * snes_draw_blend()

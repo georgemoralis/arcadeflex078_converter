@@ -96,7 +96,7 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	VIDEO_START( atarigx2 )
+	public static VideoUpdateHandlerPtr atarigx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarirle_desc modesc =
 		{
@@ -149,7 +149,7 @@ public class atarigx2
 		playfield_xscroll = 0;
 		playfield_yscroll = 0;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -230,7 +230,7 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( atarigx2 )
+	public static VideoUpdateHandlerPtr atarigx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the playfield */
 		fillbitmap(priority_bitmap, 0, cliprect);
@@ -285,5 +285,5 @@ public class atarigx2
 		
 		/* add the alpha on top */
 		tilemap_draw(bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
-	}
+	} };
 }

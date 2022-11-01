@@ -66,7 +66,7 @@ public class tutankhm
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( tutankhm )
+	public static VideoUpdateHandlerPtr tutankhm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -104,7 +104,7 @@ public class tutankhm
 	
 			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
-	}
+	} };
 	
 	
 	

@@ -37,14 +37,14 @@ public class mjkjidai
 	
 	***************************************************************************/
 	
-	VIDEO_START( mjkjidai )
+	public static VideoUpdateHandlerPtr mjkjidai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
 		if (!bg_tilemap) return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -140,7 +140,7 @@ public class mjkjidai
 	
 	
 	
-	VIDEO_UPDATE( mjkjidai )
+	public static VideoUpdateHandlerPtr mjkjidai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (!display_enable)
 		{
@@ -151,5 +151,5 @@ public class mjkjidai
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 			draw_sprites(bitmap,cliprect);
 		}
-	}
+	} };
 }

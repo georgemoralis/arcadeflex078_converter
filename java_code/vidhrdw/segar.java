@@ -211,7 +211,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	VIDEO_START( segar )
+	public static VideoUpdateHandlerPtr segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic()!=0)
 			return 1;
@@ -220,7 +220,7 @@ public class segar
 		memset(&sv, 0, sizeof(SEGAR_VID_STRUCT));
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	This is the refresh code that is common across all the G80 games.  This
@@ -288,13 +288,13 @@ public class segar
 	"Standard" refresh for games without special background boards.
 	***************************************************************************/
 	
-	VIDEO_UPDATE( segar )
+	public static VideoUpdateHandlerPtr segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 			sv.refresh = 1;
 	
 		segar_common_screenrefresh(bitmap, TRANSPARENCY_NONE, TRANSPARENCY_NONE);
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -311,7 +311,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	VIDEO_START( spaceod )
+	public static VideoUpdateHandlerPtr spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_segar())
 			return 1;
@@ -323,7 +323,7 @@ public class segar
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -410,7 +410,7 @@ public class segar
 	Special refresh for Space Odyssey, this code refreshes the static background.
 	***************************************************************************/
 	
-	VIDEO_UPDATE( spaceod )
+	public static VideoUpdateHandlerPtr spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int charcode;
@@ -514,7 +514,7 @@ public class segar
 	
 		/* Refresh the "standard" graphics */
 		segar_common_screenrefresh(bitmap, TRANSPARENCY_NONE, TRANSPARENCY_PEN);
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -523,14 +523,14 @@ public class segar
 	 ---------------------------------------------------------------------------
 	***************************************************************************/
 	
-	VIDEO_START( monsterb )
+	public static VideoUpdateHandlerPtr monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_segar())
 			return 1;
 	
 		sv.has_bcolorRAM = 1;
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	This port controls which background to draw for Monster Bash.  The tempscene
@@ -573,7 +573,7 @@ public class segar
 	Special refresh for Monster Bash, this code refreshes the static background.
 	***************************************************************************/
 	
-	VIDEO_UPDATE( monsterb )
+	public static VideoUpdateHandlerPtr monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int charcode;
@@ -623,7 +623,7 @@ public class segar
 	
 		/* Refresh the "standard" graphics */
 		segar_common_screenrefresh(bitmap, sprite_transparency, TRANSPARENCY_NONE);
-	}
+	} };
 	
 	/***************************************************************************
 	 ---------------------------------------------------------------------------
@@ -748,7 +748,7 @@ public class segar
 	Special refresh for Sinbad Mystery, this code refreshes the static background.
 	***************************************************************************/
 	
-	VIDEO_UPDATE( sindbadm )
+	public static VideoUpdateHandlerPtr sindbadm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int charcode;
@@ -806,6 +806,6 @@ public class segar
 		/* Refresh the "standard" graphics */
 		segar_common_screenrefresh(bitmap, sprite_transparency, TRANSPARENCY_NONE);
 	
-	}
+	} };
 	
 }

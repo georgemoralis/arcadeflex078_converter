@@ -12,14 +12,14 @@ public class topspeed
 	
 	/****************************************************************************/
 	
-	VIDEO_START( topspeed )
+	public static VideoUpdateHandlerPtr topspeed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(2,1,0,8,0,0,0))
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/********************************************************************************
@@ -126,7 +126,7 @@ public class topspeed
 	
 	/***************************************************************************/
 	
-	VIDEO_UPDATE( topspeed )
+	public static VideoUpdateHandlerPtr topspeed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[4];
 	
@@ -202,7 +202,7 @@ public class topspeed
 	#endif
 	
 		topspeed_draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
 	
 }

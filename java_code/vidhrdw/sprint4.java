@@ -36,7 +36,7 @@ public class sprint4
 	}
 	
 	
-	VIDEO_START( sprint4 )
+	public static VideoUpdateHandlerPtr sprint4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		helper = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
 	
@@ -53,7 +53,7 @@ public class sprint4
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr sprint4_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -67,7 +67,7 @@ public class sprint4
 	} };
 	
 	
-	VIDEO_UPDATE( sprint4 )
+	public static VideoUpdateHandlerPtr sprint4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -96,10 +96,10 @@ public class sprint4
 				cliprect, TRANSPARENCY_PEN, 0);
 		}
 	
-	}
+	} };
 	
 	
-	VIDEO_EOF( sprint4 )
+	public static VideoUpdateHandlerPtr sprint4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -158,5 +158,5 @@ public class sprint4
 				}
 			}
 		}
-	}
+	} };
 }

@@ -150,7 +150,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	VIDEO_START( afega )
+	public static VideoUpdateHandlerPtr afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, afega_tilemap_scan_pages,
 									TILEMAP_OPAQUE,
@@ -168,7 +168,7 @@ public class afega
 		tilemap_set_transparent_pen(tilemap_0,0x0);
 		tilemap_set_transparent_pen(tilemap_1,0xf);
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -283,7 +283,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( afega )
+	public static VideoUpdateHandlerPtr afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -312,10 +312,10 @@ public class afega
 		if (layers_ctrl & 2) 	afega_draw_sprites(bitmap,cliprect);
 	
 		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
-	}
+	} };
 	
 	/* Same as 'afega', but no screen flip support */
-	VIDEO_UPDATE( bubl2000 )
+	public static VideoUpdateHandlerPtr bubl2000  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -347,6 +347,6 @@ public class afega
 		if (layers_ctrl & 2) 	afega_draw_sprites(bitmap,cliprect);
 	
 		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
-	}
+	} };
 	
 }

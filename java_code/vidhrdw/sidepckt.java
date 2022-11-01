@@ -69,7 +69,7 @@ public class sidepckt
 	
 	***************************************************************************/
 	
-	VIDEO_START( sidepckt )
+	public static VideoUpdateHandlerPtr sidepckt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32);
 	
@@ -82,7 +82,7 @@ public class sidepckt
 		tilemap_set_flip(ALL_TILEMAPS,TILEMAP_FLIPX);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -157,10 +157,10 @@ public class sidepckt
 	}
 	
 	
-	VIDEO_UPDATE( sidepckt )
+	public static VideoUpdateHandlerPtr sidepckt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
-	}
+	} };
 }

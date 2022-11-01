@@ -37,7 +37,7 @@ public class slapshot
 	
 	/**********************************************************/
 	
-	VIDEO_START( slapshot_core )
+	public static VideoUpdateHandlerPtr slapshot_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -76,14 +76,14 @@ public class slapshot
 		state_save_register_UINT16("main8", 0, "memory", spriteram_buffered, spriteram_size/2);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( slapshot )
+	public static VideoUpdateHandlerPtr slapshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taito_hide_pixels = 3;
 		taito_sprite_type = 2;
 		return video_start_slapshot_core();
-	}
+	} };
 	
 	
 	/************************************************************
@@ -504,12 +504,12 @@ public class slapshot
 		}
 	}
 	
-	VIDEO_EOF( taito_no_buffer )
+	public static VideoUpdateHandlerPtr taito_no_buffer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taito_update_sprites_active_area();
 	
 		prepare_sprites = 1;
-	}
+	} };
 	
 	
 	/**************************************************************
@@ -528,7 +528,7 @@ public class slapshot
 	a bg layer given priority over some sprites.
 	********************************************************************/
 	
-	VIDEO_UPDATE( slapshot )
+	public static VideoUpdateHandlerPtr slapshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 tilepri[5];
@@ -644,6 +644,6 @@ public class slapshot
 		if (dislayer[layer[4]]==0)
 	#endif
 		TC0480SCP_tilemap_draw(bitmap,cliprect,layer[4],0,0);
-	}
+	} };
 	
 }

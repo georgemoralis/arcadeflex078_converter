@@ -396,7 +396,7 @@ public class nbmj8891
 	
 	
 	******************************************************************************/
-	VIDEO_START( gionbana )
+	public static VideoUpdateHandlerPtr gionbana  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((gionbana_tmpbitmap0 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
 		if ((gionbana_tmpbitmap1 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
@@ -408,9 +408,9 @@ public class nbmj8891
 		memset(gionbana_videoram1, 0x00, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char)));
 		gfxdraw_mode = 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( hanamomo )
+	public static VideoUpdateHandlerPtr hanamomo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((gionbana_tmpbitmap0 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
 		if ((gionbana_videoram0 = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char))) == 0) return 1;
@@ -419,13 +419,13 @@ public class nbmj8891
 		memset(gionbana_videoram0, 0x00, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char)));
 		gfxdraw_mode = 0;
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************
 	
 	
 	******************************************************************************/
-	VIDEO_UPDATE( gionbana )
+	public static VideoUpdateHandlerPtr gionbana  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		unsigned char color;
@@ -473,5 +473,5 @@ public class nbmj8891
 		{
 			fillbitmap(bitmap, Machine->pens[0xff], 0);
 		}
-	}
+	} };
 }

@@ -359,7 +359,7 @@ public class toaplan1
 	}
 	
 	
-	VIDEO_START( rallybik )
+	public static VideoUpdateHandlerPtr rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (toaplan1_create_tilemaps())  return 1;
 		if (toaplan1_paletteram_alloc()) return 1;
@@ -402,9 +402,9 @@ public class toaplan1
 		state_save_register_func_postload(rallybik_flipscreen);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( toaplan1 )
+	public static VideoUpdateHandlerPtr toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (toaplan1_create_tilemaps())  return 1;
 		if (toaplan1_paletteram_alloc()) return 1;
@@ -454,7 +454,7 @@ public class toaplan1
 		state_save_register_func_postload(toaplan1_flipscreen);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -1156,7 +1156,7 @@ public class toaplan1
 		Draw the game screen in the given mame_bitmap.
 	***************************************************************************/
 	
-	VIDEO_UPDATE( rallybik )
+	public static VideoUpdateHandlerPtr rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority;
 	
@@ -1180,9 +1180,9 @@ public class toaplan1
 			if (sprite_priority[priority])
 				draw_rallybik_sprites(bitmap,cliprect,priority << 8);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( toaplan1 )
+	public static VideoUpdateHandlerPtr toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority = 0;
 	
@@ -1207,14 +1207,14 @@ public class toaplan1
 			tilemap_draw(bitmap,cliprect,pf2_tilemap,priority,0);
 			tilemap_draw(bitmap,cliprect,pf1_tilemap,priority,0);
 		}
-	}
+	} };
 	
-	VIDEO_UPDATE( zerowing )
+	public static VideoUpdateHandlerPtr zerowing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_update_toaplan1(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( demonwld )
+	public static VideoUpdateHandlerPtr demonwld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int priority = 0;
 	
@@ -1238,7 +1238,7 @@ public class toaplan1
 			tilemap_draw(bitmap,cliprect,pf2_tilemap,priority,0);
 			tilemap_draw(bitmap,cliprect,pf1_tilemap,priority,0);
 		}
-	}
+	} };
 	
 	
 	/****************************************************************************
@@ -1247,21 +1247,21 @@ public class toaplan1
 		assume it happens automatically every frame, at the end of vblank
 	****************************************************************************/
 	
-	VIDEO_EOF( rallybik )
+	public static VideoUpdateHandlerPtr rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0, 0, 0);
-	}
+	} };
 	
-	VIDEO_EOF( toaplan1 )
+	public static VideoUpdateHandlerPtr toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
-	}
+	} };
 	
-	VIDEO_EOF( samesame )
+	public static VideoUpdateHandlerPtr samesame  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
 		cpu_set_irq_line(0, MC68000_IRQ_2, HOLD_LINE);	/* Frame done */
-	}
+	} };
 }

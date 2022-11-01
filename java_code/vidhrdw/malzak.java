@@ -63,7 +63,7 @@ public class malzak
 	unsigned char s2636_1_dirty[4];
 	unsigned char s2636_2_dirty[4];
 	
-	VIDEO_START( malzak )
+	public static VideoUpdateHandlerPtr malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_start_generic();
 	
@@ -75,9 +75,9 @@ public class malzak
 		s2636_2_ram = auto_malloc(0x100);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE( malzak )
+	public static VideoUpdateHandlerPtr malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int code, colour;
 		int sx, sy;
@@ -222,7 +222,7 @@ public class malzak
 	
 		Update_Bitmap(bitmap,s2636_1_ram,s2636_1_dirty,1,collision_bitmap);
 		Update_Bitmap(bitmap,s2636_2_ram,s2636_2_dirty,2,collision_bitmap);
-	}
+	} };
 	
 	public static WriteHandlerPtr playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -202,7 +202,7 @@ public class ninjakid
 	 vh_start / vh_refresh
 	*******************************************************************************/
 	
-	VIDEO_START( ninjakid ){
+	public static VideoUpdateHandlerPtr ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    fg_tilemap = tilemap_create( get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
 		bg_tilemap = tilemap_create( get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		tilemap_set_transparent_pen( fg_tilemap,0 );
@@ -214,7 +214,7 @@ public class ninjakid
 	//	state_save_register_UINT8 ("NK_Video", 0, "old_scroll", &old_scroll, 1);
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		const UINT8 *source = spriteram;
@@ -264,7 +264,7 @@ public class ninjakid
 		}
 	}
 	
-	VIDEO_UPDATE( ninjakid )
+	public static VideoUpdateHandlerPtr ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,chr,col,px,py,x,y;
 	
@@ -306,5 +306,5 @@ public class ninjakid
 		}
 	
 	
-	}
+	} };
 }

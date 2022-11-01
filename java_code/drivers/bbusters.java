@@ -706,16 +706,16 @@ public class bbusters
 			cpu_set_irq_line(0, 2, HOLD_LINE); /* at least 6 interrupts per frame to read gun controls */
 	} };
 	
-	static VIDEO_EOF( bbuster )
+	static public static VideoUpdateHandlerPtr bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
-	}
+	} };
 	
-	static VIDEO_EOF( mechatt )
+	static public static VideoUpdateHandlerPtr mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( bbusters )
 	

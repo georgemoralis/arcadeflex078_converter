@@ -85,7 +85,7 @@ public class raiders5
 	
 	/****************************************************************************/
 	
-	VIDEO_UPDATE( raiders5 )
+	public static VideoUpdateHandlerPtr raiders5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int chr,col;
@@ -215,5 +215,5 @@ public class raiders5
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
-	}
+	} };
 }

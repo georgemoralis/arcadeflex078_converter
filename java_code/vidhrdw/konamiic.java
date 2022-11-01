@@ -7351,7 +7351,7 @@ public class konamiic
 		K053250_info.chip[chip].offsy = offsy;
 	}
 	
-	// The DMA process should be instantaneous but since rendering in MAME is performed at VIDEO_UPDATE()
+	// The DMA process should be instantaneous but since rendering in MAME is performed at public static VideoUpdateHandlerPtr   = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	// the K053250 memory must be buffered to maintain visual integrity.
 	void K053250_dma(int chip, int limiter)
 	{
@@ -7368,7 +7368,7 @@ public class konamiic
 		chip_ptr->frame = current_frame;
 		memcpy(chip_ptr->buffer[chip_ptr->page[chip]], chip_ptr->ram, 0x1000);
 		chip_ptr->page[chip] ^= 1;
-	}
+	} };
 	
 	// Pixel data of the K053250 is nibble packed. It's preferable to be unpacked into byte format.
 	void K053250_unpack_pixels(int region)

@@ -389,10 +389,10 @@ public class gcpinbal
 	                        MACHINE DRIVERS
 	***********************************************************/
 	
-	VIDEO_EOF( gcpinbal )
+	public static VideoUpdateHandlerPtr gcpinbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	//	buffer_spriteram16_w(0,0,0);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( gcpinbal )
 	

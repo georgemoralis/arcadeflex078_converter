@@ -65,7 +65,7 @@ public class citycon
 	
 	***************************************************************************/
 	
-	VIDEO_START( citycon )
+	public static VideoUpdateHandlerPtr citycon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,citycon_scan,TILEMAP_TRANSPARENT,8,8,128,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,citycon_scan,TILEMAP_OPAQUE,     8,8,128,32);
@@ -77,7 +77,7 @@ public class citycon
 		tilemap_set_scroll_rows(fg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -175,7 +175,7 @@ public class citycon
 		palette_set_color(color,r,g,b);
 	}
 	
-	VIDEO_UPDATE( citycon )
+	public static VideoUpdateHandlerPtr citycon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,scroll;
 	
@@ -199,5 +199,5 @@ public class citycon
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

@@ -62,7 +62,7 @@ public class ultraman
 	
 	***************************************************************************/
 	
-	VIDEO_START( ultraman )
+	public static VideoUpdateHandlerPtr ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sprite_colorbase = 192;
 		zoom_colorbase[0] = 0;
@@ -86,7 +86,7 @@ public class ultraman
 		K051316_set_offset(2, 8, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -139,12 +139,12 @@ public class ultraman
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( ultraman )
+	public static VideoUpdateHandlerPtr ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K051316_zoom_draw_2(bitmap,cliprect,0,0);
 		K051316_zoom_draw_1(bitmap,cliprect,0,0);
 		K051960_sprites_draw(bitmap,cliprect,0,0);
 		K051316_zoom_draw_0(bitmap,cliprect,0,0);
 		K051960_sprites_draw(bitmap,cliprect,1,1);
-	}
+	} };
 }

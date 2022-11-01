@@ -125,7 +125,7 @@ public class cchasm
 		}
 	}
 	
-	VIDEO_START( cchasm )
+	public static VideoUpdateHandlerPtr cchasm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int xmin, xmax, ymin, ymax;
 	
@@ -138,5 +138,5 @@ public class cchasm
 		ycenter=((ymax+ymin)/2) << 16;
 	
 		return video_start_vector();
-	}
+	} };
 }

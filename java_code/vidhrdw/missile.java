@@ -22,7 +22,7 @@ public class missile
 	
 	***************************************************************************/
 	
-	VIDEO_START( missile )
+	public static VideoUpdateHandlerPtr missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* force video ram to be $0000-$FFFF even though only $1900-$FFFF is used */
 		if ((missile_videoram = auto_malloc (256 * 256)) == 0)
@@ -33,7 +33,7 @@ public class missile
 	
 		memset (missile_videoram, 0, 256 * 256);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -157,7 +157,7 @@ public class missile
 	
 	
 	/********************************************************************************************/
-	VIDEO_UPDATE( missile )
+	public static VideoUpdateHandlerPtr missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -167,5 +167,5 @@ public class missile
 				missile_blit_w (offs);
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	}
+	} };
 }

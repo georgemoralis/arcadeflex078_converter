@@ -60,14 +60,14 @@ public class pass
 	
 	/* video update / start */
 	
-	VIDEO_UPDATE( pass )
+	public static VideoUpdateHandlerPtr pass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,pass_bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,pass_fg_tilemap,0,0);
 	
-	}
+	} };
 	
-	VIDEO_START( pass )
+	public static VideoUpdateHandlerPtr pass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		pass_bg_tilemap = tilemap_create(get_pass_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,64,32);
@@ -79,5 +79,5 @@ public class pass
 		tilemap_set_transparent_pen(pass_fg_tilemap,255);
 	
 		return 0;
-	}
+	} };
 }

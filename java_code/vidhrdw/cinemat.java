@@ -58,20 +58,20 @@ public class cinemat
 	
 	***************************************************************************/
 	
-	VIDEO_START( cinemat )
+	public static VideoUpdateHandlerPtr cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		cinemat_screenh = Machine->visible_area.max_y - Machine->visible_area.min_y;
 		return video_start_vector();
-	}
+	} };
 	
 	
-	VIDEO_EOF( cinemat )
+	public static VideoUpdateHandlerPtr cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		vector_clear_list();
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( spacewar )
+	public static VideoUpdateHandlerPtr spacewar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sw_option = readinputport(1);
 	
@@ -88,6 +88,6 @@ public class cinemat
 		artwork_show("pressed7", (~sw_option >> 7) & 1);
 		artwork_show("pressed5", (~sw_option >> 10) & 1);
 		artwork_show("pressed0", (~sw_option >> 11) & 1);
-	}
+	} };
 	
 }

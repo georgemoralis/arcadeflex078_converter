@@ -323,7 +323,7 @@ public class tumblep
 	
 	
 	
-	VIDEO_START( tumblep )
+	public static VideoUpdateHandlerPtr tumblep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap =     tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1_alt_tilemap = tilemap_create(get_bg1_tile_info,tumblep_scan,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -336,9 +336,9 @@ public class tumblep
 		tilemap_set_transparent_pen(pf1_alt_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( fncywld )
+	public static VideoUpdateHandlerPtr fncywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap =     tilemap_create(get_fncywld_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1_alt_tilemap = tilemap_create(get_fncywld_bg1_tile_info,tumblep_scan,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -351,11 +351,11 @@ public class tumblep
 		tilemap_set_transparent_pen(pf1_alt_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( tumblep )
+	public static VideoUpdateHandlerPtr tumblep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -376,9 +376,9 @@ public class tumblep
 		else
 			tilemap_draw(bitmap,cliprect,pf1_alt_tilemap,0,0);
 		tumblep_drawsprites(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( tumblepb )
+	public static VideoUpdateHandlerPtr tumblepb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,offs2;
 	
@@ -400,9 +400,9 @@ public class tumblep
 		else
 			tilemap_draw(bitmap,cliprect,pf1_alt_tilemap,0,0);
 		tumblep_drawsprites(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( jumpkids )
+	public static VideoUpdateHandlerPtr jumpkids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,offs2;
 	
@@ -424,9 +424,9 @@ public class tumblep
 		else
 			tilemap_draw(bitmap,cliprect,pf1_alt_tilemap,0,0);
 		jumpkids_drawsprites(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE( fncywld )
+	public static VideoUpdateHandlerPtr fncywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,offs2;
 	
@@ -448,5 +448,5 @@ public class tumblep
 		else
 			tilemap_draw(bitmap,cliprect,pf1_alt_tilemap,0,0);
 		fncywld_drawsprites(bitmap,cliprect);
-	}
+	} };
 }

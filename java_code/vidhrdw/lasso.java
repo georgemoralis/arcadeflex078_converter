@@ -150,7 +150,7 @@ public class lasso
 	 *
 	 *************************************/
 	
-	VIDEO_START( lasso )
+	public static VideoUpdateHandlerPtr lasso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(lasso_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
@@ -158,9 +158,9 @@ public class lasso
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( wwjgtin )
+	public static VideoUpdateHandlerPtr wwjgtin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap =    tilemap_create(lasso_get_bg_tile_info,      tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8,  32,  32);
 		track_tilemap = tilemap_create(wwjgtin_get_track_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16,16, 0x80,0x40);
@@ -170,9 +170,9 @@ public class lasso
 	
 		tilemap_set_transparent_pen(bg_tilemap,0);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( pinbo )
+	public static VideoUpdateHandlerPtr pinbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(pinbo_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
@@ -180,7 +180,7 @@ public class lasso
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*************************************
@@ -386,21 +386,21 @@ public class lasso
 	}
 	
 	
-	VIDEO_UPDATE( lasso )
+	public static VideoUpdateHandlerPtr lasso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		draw_lasso  (bitmap);
 		draw_sprites(bitmap, cliprect, 0);
-	}
+	} };
 	
-	VIDEO_UPDATE( chameleo )
+	public static VideoUpdateHandlerPtr chameleo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, cliprect, 0);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( wwjgtin )
+	public static VideoUpdateHandlerPtr wwjgtin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(track_tilemap,0,wwjgtin_track_scroll[0] + wwjgtin_track_scroll[1]*256);
 		tilemap_set_scrolly(track_tilemap,0,wwjgtin_track_scroll[2] + wwjgtin_track_scroll[3]*256);
@@ -412,5 +412,5 @@ public class lasso
 	
 		draw_sprites(bitmap, cliprect, 1);	// reverse order
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
-	}
+	} };
 }

@@ -113,7 +113,7 @@ public class bagman
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}
 	
-	VIDEO_START( bagman )
+	public static VideoUpdateHandlerPtr bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -122,7 +122,7 @@ public class bagman
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void bagman_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -165,12 +165,12 @@ public class bagman
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( bagman )
+	public static VideoUpdateHandlerPtr bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (*bagman_video_enable == 0)
 			return;
 	
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		bagman_draw_sprites(bitmap);
-	}
+	} };
 }

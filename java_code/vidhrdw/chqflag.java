@@ -59,7 +59,7 @@ public class chqflag
 	
 	***************************************************************************/
 	
-	VIDEO_START( chqflag )
+	public static VideoUpdateHandlerPtr chqflag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sprite_colorbase = 0;
 		zoom_colorbase[0] = 0x10;
@@ -78,7 +78,7 @@ public class chqflag
 		K051316_wraparound_enable(1,1);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -86,7 +86,7 @@ public class chqflag
 	
 	***************************************************************************/
 	
-	VIDEO_UPDATE( chqflag )
+	public static VideoUpdateHandlerPtr chqflag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
@@ -95,5 +95,5 @@ public class chqflag
 		K051316_zoom_draw_1(bitmap,cliprect,TILEMAP_FRONT,0);
 		K051960_sprites_draw(bitmap,cliprect,1,1);
 		K051316_zoom_draw_0(bitmap,cliprect,0,0);
-	}
+	} };
 }

@@ -152,7 +152,7 @@ public class exctsccr
 		SET_TILE_INFO(gfx_bank, code, color, 0)
 	}
 	
-	VIDEO_START( exctsccr )
+	public static VideoUpdateHandlerPtr exctsccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -163,7 +163,7 @@ public class exctsccr
 		timer_pulse( TIME_IN_HZ( 75.0 ), 0, exctsccr_fm_callback ); /* updates fm */
 	
 		return 0;
-	}
+	} };
 	
 	static void exctsccr_draw_sprites( struct mame_bitmap *bitmap ) {
 		int offs;
@@ -257,9 +257,9 @@ public class exctsccr
 		}
 	}
 	
-	VIDEO_UPDATE( exctsccr )
+	public static VideoUpdateHandlerPtr exctsccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		exctsccr_draw_sprites( bitmap );
-	}
+	} };
 }

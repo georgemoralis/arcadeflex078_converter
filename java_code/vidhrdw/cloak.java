@@ -173,7 +173,7 @@ public class cloak
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( cloak )
+	public static VideoUpdateHandlerPtr cloak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -194,7 +194,7 @@ public class cloak
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	#if 0
 	static void refresh_bitmaps(void)
@@ -237,10 +237,10 @@ public class cloak
 		}
 	}
 	
-	VIDEO_UPDATE( cloak )
+	public static VideoUpdateHandlerPtr cloak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		copybitmap(bitmap, (bmap ? tmpbitmap2 : tmpbitmap),flip_screen,flip_screen,0,0,cliprect,TRANSPARENCY_COLOR,16);
 		cloak_draw_sprites(bitmap, cliprect);
-	}
+	} };
 }

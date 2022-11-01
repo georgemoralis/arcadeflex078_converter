@@ -52,7 +52,7 @@ public class xmen
 	
 	***************************************************************************/
 	
-	VIDEO_START( xmen )
+	public static VideoUpdateHandlerPtr xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -61,7 +61,7 @@ public class xmen
 		if (K053247_vh_start(REGION_GFX2,53,-2,NORMAL_PLANE_ORDER,xmen_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -88,7 +88,7 @@ public class xmen
 	}
 	
 	
-	VIDEO_UPDATE( xmen )
+	public static VideoUpdateHandlerPtr xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	
@@ -119,5 +119,5 @@ public class xmen
 	
 		pdrawgfx_shadow_lowpri = 1;	/* fix shadows of boulders in front of feet */
 		K053247_sprites_draw(bitmap,cliprect);
-	}
+	} };
 }

@@ -140,7 +140,7 @@ public class btime
 	Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( bnj )
+	public static VideoUpdateHandlerPtr bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (video_start_generic() != 0)
 	        return 1;
@@ -157,15 +157,15 @@ public class btime
 	    bnj_scroll2 = 0;
 	
 	    return 0;
-	}
+	} };
 	
-	VIDEO_START( btime )
+	public static VideoUpdateHandlerPtr btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    bnj_scroll1 = 0;
 	    bnj_scroll2 = 0;
 	
 	    return video_start_generic();
-	}
+	} };
 	
 	
 	
@@ -534,7 +534,7 @@ public class btime
 	}
 	
 	
-	VIDEO_UPDATE( btime )
+	public static VideoUpdateHandlerPtr btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -570,10 +570,10 @@ public class btime
 	    }
 	
 	    drawsprites(bitmap, 0, 1, 0, videoram, 0x20);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( eggs )
+	public static VideoUpdateHandlerPtr eggs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -584,10 +584,10 @@ public class btime
 	    copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
 	    drawsprites(bitmap, 0, 0, 0, videoram, 0x20);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( lnc )
+	public static VideoUpdateHandlerPtr lnc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -598,10 +598,10 @@ public class btime
 	    copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
 	    drawsprites(bitmap, 0, 1, 2, videoram, 0x20);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( zoar )
+	public static VideoUpdateHandlerPtr zoar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -623,10 +623,10 @@ public class btime
 	    /* The order is important for correct priorities */
 	    drawsprites(bitmap, btime_palette + 1, 1, 2, videoram + 0x1f, 0x20);
 	    drawsprites(bitmap, btime_palette + 1, 1, 2, videoram,        0x20);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( bnj )
+	public static VideoUpdateHandlerPtr bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	    {
@@ -689,10 +689,10 @@ public class btime
 	
 	        drawsprites(bitmap, 0, 0, 0, videoram, 0x20);
 	    }
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( cookrace )
+	public static VideoUpdateHandlerPtr cookrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int offs;
 	
@@ -728,10 +728,10 @@ public class btime
 	    drawchars(bitmap, TRANSPARENCY_PEN, 0, -1);
 	
 	    drawsprites(bitmap, 0, 1, 0, videoram, 0x20);
-	}
+	} };
 	
 	
-	VIDEO_UPDATE( disco )
+	public static VideoUpdateHandlerPtr disco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -744,5 +744,5 @@ public class btime
 	    copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	
 	    drawsprites(bitmap, btime_palette, 0, 0, spriteram, 1);
-	}
+	} };
 }

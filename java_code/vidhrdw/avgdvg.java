@@ -1026,58 +1026,58 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	VIDEO_START( dvg )
+	public static VideoUpdateHandlerPtr dvg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_DVG);
-	}
+	} };
 	
 	
-	VIDEO_START( avg )
+	public static VideoUpdateHandlerPtr avg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_starwars )
+	public static VideoUpdateHandlerPtr avg_starwars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_SWARS);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_tempest )
+	public static VideoUpdateHandlerPtr avg_tempest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_TEMPEST);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_mhavoc )
+	public static VideoUpdateHandlerPtr avg_mhavoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_MHAVOC);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_alphaone )
+	public static VideoUpdateHandlerPtr avg_alphaone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_ALPHAONE);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_bzone )
+	public static VideoUpdateHandlerPtr avg_bzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_BZONE);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_quantum )
+	public static VideoUpdateHandlerPtr avg_quantum  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_QUANTUM);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_redbaron )
+	public static VideoUpdateHandlerPtr avg_redbaron  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_RBARON);
-	}
+	} };
 	
 	
 	

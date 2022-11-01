@@ -91,7 +91,7 @@ public class actfancr
 		state_save_register_UINT8("video", 0, "control_2", actfancr_control_2, 0x20);
 	}
 	
-	VIDEO_START( actfancr )
+	public static VideoUpdateHandlerPtr actfancr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_tile_info,actfancr_scan,TILEMAP_OPAQUE,16,16,256,16);
 		pf1_alt_tilemap = tilemap_create(get_tile_info,actfancr_scan2,TILEMAP_OPAQUE,16,16,128,32);
@@ -105,9 +105,9 @@ public class actfancr
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( triothep )
+	public static VideoUpdateHandlerPtr triothep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_trio_tile_info,triothep_scan,TILEMAP_OPAQUE,16,16,32,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -122,7 +122,7 @@ public class actfancr
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -161,7 +161,7 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	VIDEO_UPDATE( actfancr )
+	public static VideoUpdateHandlerPtr actfancr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,mult;
 		int scrollx=(actfancr_control_1[0x10]+(actfancr_control_1[0x11]<<8));
@@ -239,9 +239,9 @@ public class actfancr
 		}
 	
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
-	}
+	} };
 	
-	VIDEO_UPDATE( triothep )
+	public static VideoUpdateHandlerPtr triothep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,i,mult;
 		int scrollx=(actfancr_control_1[0x10]+(actfancr_control_1[0x11]<<8));
@@ -323,5 +323,5 @@ public class actfancr
 		}
 	
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
-	}
+	} };
 }

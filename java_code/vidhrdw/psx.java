@@ -618,29 +618,29 @@ public class psx
 		return 0;
 	}
 	
-	VIDEO_START( psx_type1_1024x1024 )
+	public static VideoUpdateHandlerPtr psx_type1_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		m_n_gputype = 1;
 		return psx_gpu_init( 1024, 1024 );
-	}
+	} };
 	
-	VIDEO_START( psx_type2_1024x512 )
+	public static VideoUpdateHandlerPtr psx_type2_1024x512  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 512 );
-	}
+	} };
 	
-	VIDEO_START( psx_type2_1024x1024 )
+	public static VideoUpdateHandlerPtr psx_type2_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 1024 );
-	}
+	} };
 	
-	VIDEO_STOP( psx )
+	public static VideoUpdateHandlerPtr psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	}
+	} };
 	
-	VIDEO_UPDATE( psx )
+	public static VideoUpdateHandlerPtr psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 n_x;
 		UINT32 n_y;
@@ -729,7 +729,7 @@ public class psx
 				draw_scanline16( bitmap, 0, n_y, m_n_screenwidth, m_p_p_vram[ n_y + m_n_displaystarty ] + n_x, Machine->pens, -1 );
 			}
 		}
-	}
+	} };
 	
 	/*
 	type 1

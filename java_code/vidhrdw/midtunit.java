@@ -101,7 +101,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	VIDEO_START( midtunit )
+	public static VideoUpdateHandlerPtr midtunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -126,25 +126,25 @@ public class midtunit
 	
 		midtunit_using_34020 = 0;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midwunit )
+	public static VideoUpdateHandlerPtr midwunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
 		return result;
-	}
+	} };
 	
 	
-	VIDEO_START( midxunit )
+	public static VideoUpdateHandlerPtr midxunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
 		midtunit_using_34020 = 1;
 		videobank_select = 1;
 		return result;
-	}
+	} };
 	
 	
 	
@@ -874,7 +874,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	VIDEO_UPDATE( midtunit )
+	public static VideoUpdateHandlerPtr midtunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int v, width, xoffs, dpytap;
 		UINT32 offset;
@@ -911,5 +911,5 @@ public class midtunit
 			draw_scanline16(bitmap, xoffs, v, width, &local_videoram[offset], pen_map, -1);
 			offset = (offset + 512) & 0x3ffff;
 		}
-	}
+	} };
 }

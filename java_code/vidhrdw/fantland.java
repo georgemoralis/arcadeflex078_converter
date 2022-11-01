@@ -92,10 +92,10 @@ public class fantland
 		}
 	}
 	
-	VIDEO_UPDATE( fantland )
+	public static VideoUpdateHandlerPtr fantland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		fantland_draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
 }

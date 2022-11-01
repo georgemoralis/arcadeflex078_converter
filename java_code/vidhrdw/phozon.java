@@ -70,7 +70,7 @@ public class phozon
 			COLOR(2,i) = (*(color_prom++) & 0x0f) + 0x10;
 	} };
 	
-	VIDEO_START( phozon ) {
+	public static VideoUpdateHandlerPtr phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
 		/* set up spriteram area */
 		spriteram_size = 0x80;
 		spriteram = &phozon_spriteram[0x780];
@@ -78,7 +78,7 @@ public class phozon
 		spriteram_3 = &phozon_spriteram[0x780+0x800+0x800];
 	
 		return video_start_generic();
-	}
+	} };
 	
 	void phozon_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
@@ -101,7 +101,7 @@ public class phozon
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( phozon )
+	public static VideoUpdateHandlerPtr phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -255,5 +255,5 @@ public class phozon
 						&Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 		}
-	}
+	} };
 }

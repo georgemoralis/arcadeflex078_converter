@@ -138,7 +138,7 @@ public class vicdual
 	  the main emulation engine.
 	
 	***************************************************************************/
-	VIDEO_UPDATE( vicdual )
+	public static VideoUpdateHandlerPtr vicdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -191,5 +191,5 @@ public class vicdual
 		{
 			if (dirtycharacter[offs] == 2) dirtycharacter[offs] = 0;
 		}
-	}
+	} };
 }

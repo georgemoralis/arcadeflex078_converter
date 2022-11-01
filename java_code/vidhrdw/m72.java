@@ -176,7 +176,7 @@ public class m72
 	}
 	
 	
-	VIDEO_START( m72 )
+	public static VideoUpdateHandlerPtr m72  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(m72_get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 		fg_tilemap = tilemap_create(m72_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
@@ -201,9 +201,9 @@ public class m72
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( rtype2 )
+	public static VideoUpdateHandlerPtr rtype2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(rtype2_get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 		fg_tilemap = tilemap_create(rtype2_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
@@ -228,9 +228,9 @@ public class m72
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( poundfor )
+	public static VideoUpdateHandlerPtr poundfor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int res = video_start_rtype2();
 	
@@ -239,11 +239,11 @@ public class m72
 		register_savestate();
 	
 		return res;
-	}
+	} };
 	
 	
 	/* Major Title has a larger background RAM, and rowscroll */
-	VIDEO_START( majtitle )
+	public static VideoUpdateHandlerPtr majtitle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	// The tilemap can be 256x64, but seems to be used at 128x64 (scroll wraparound).
 	// The layout ramains 256x64, the right half is just not displayed.
@@ -271,9 +271,9 @@ public class m72
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( hharry )
+	public static VideoUpdateHandlerPtr hharry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(hharry_get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 		fg_tilemap = tilemap_create(hharry_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
@@ -298,7 +298,7 @@ public class m72
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -669,7 +669,7 @@ public class m72
 	}
 	
 	
-	VIDEO_UPDATE( m72 )
+	public static VideoUpdateHandlerPtr m72  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_off)
 		{
@@ -682,9 +682,9 @@ public class m72
 		draw_sprites(bitmap,cliprect);
 		draw_bg(bitmap,cliprect,TILEMAP_FRONT);
 		draw_fg(bitmap,cliprect,TILEMAP_FRONT);
-	}
+	} };
 	
-	VIDEO_UPDATE( majtitle )
+	public static VideoUpdateHandlerPtr majtitle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -715,10 +715,10 @@ public class m72
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 		draw_fg(bitmap,cliprect,TILEMAP_FRONT);
-	}
+	} };
 	
 	
-	VIDEO_EOF( m72 )
+	public static VideoUpdateHandlerPtr m72  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -729,5 +729,5 @@ public class m72
 			scrollx2[i] = scrollx2[255];
 			scrolly2[i] = scrolly2[255];
 		}
-	}
+	} };
 }

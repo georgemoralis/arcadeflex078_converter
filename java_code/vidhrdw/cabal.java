@@ -47,7 +47,7 @@ public class cabal
 	}
 	
 	
-	VIDEO_START( cabal )
+	public static VideoUpdateHandlerPtr cabal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16,16);
 		text_layer       = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,32,32);
@@ -58,7 +58,7 @@ public class cabal
 		tilemap_set_transparent_pen(background_layer,15);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/**************************************************************************/
@@ -153,12 +153,12 @@ public class cabal
 	}
 	
 	
-	VIDEO_UPDATE( cabal )
+	public static VideoUpdateHandlerPtr cabal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,background_layer,TILEMAP_IGNORE_TRANSPARENCY,0);
 		cabal_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
-	}
+	} };
 	
 	
 }

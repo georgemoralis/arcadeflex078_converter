@@ -141,7 +141,7 @@ public class contra
 	
 	***************************************************************************/
 	
-	VIDEO_START( contra )
+	public static VideoUpdateHandlerPtr contra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -164,7 +164,7 @@ public class contra
 		
 		tilemap_set_transparent_pen(fg_tilemap,0);
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -285,7 +285,7 @@ public class contra
 		K007121_sprites_draw(bank,bitmap,cliprect,source,base_color,40,0,-1);
 	}
 	
-	VIDEO_UPDATE( contra )
+	public static VideoUpdateHandlerPtr contra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle bg_finalclip = bg_clip;
 		struct rectangle fg_finalclip = fg_clip;
@@ -305,5 +305,5 @@ public class contra
 		draw_sprites( bitmap,cliprect, 0 );
 		draw_sprites( bitmap,cliprect, 1 );
 		tilemap_draw( bitmap,&tx_finalclip, tx_tilemap, 0 ,0);
-	}
+	} };
 }
