@@ -420,7 +420,7 @@ public class alpha68k
 				data = spriteram16[offs+d+i];
 				tile = data & 0x3fff;
 				fy = data & 0x4000;
-				color = color_prom[tile<<1|data>>15];
+				color = color_prom.read(tile<<1|data>>15);
 	
 				drawgfx(bitmap, gfx, tile, color, 0, fy, mx, my,
 						cliprect, TRANSPARENCY_PEN, 0);
@@ -469,22 +469,22 @@ public class alpha68k
 	
 		for (i = 0;i < 256;i++)
 		{
-			bit0 = (color_prom[0] >> 0) & 0x01;
-			bit1 = (color_prom[0] >> 1) & 0x01;
-			bit2 = (color_prom[0] >> 2) & 0x01;
-			bit3 = (color_prom[0] >> 3) & 0x01;
+			bit0 = (color_prom.read(0)>> 0) & 0x01;
+			bit1 = (color_prom.read(0)>> 1) & 0x01;
+			bit2 = (color_prom.read(0)>> 2) & 0x01;
+			bit3 = (color_prom.read(0)>> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-			bit0 = (color_prom[0x100] >> 0) & 0x01;
-			bit1 = (color_prom[0x100] >> 1) & 0x01;
-			bit2 = (color_prom[0x100] >> 2) & 0x01;
-			bit3 = (color_prom[0x100] >> 3) & 0x01;
+			bit0 = (color_prom.read(0x100)>> 0) & 0x01;
+			bit1 = (color_prom.read(0x100)>> 1) & 0x01;
+			bit2 = (color_prom.read(0x100)>> 2) & 0x01;
+			bit3 = (color_prom.read(0x100)>> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-			bit0 = (color_prom[0x200] >> 0) & 0x01;
-			bit1 = (color_prom[0x200] >> 1) & 0x01;
-			bit2 = (color_prom[0x200] >> 2) & 0x01;
-			bit3 = (color_prom[0x200] >> 3) & 0x01;
+			bit0 = (color_prom.read(0x200)>> 0) & 0x01;
+			bit1 = (color_prom.read(0x200)>> 1) & 0x01;
+			bit2 = (color_prom.read(0x200)>> 2) & 0x01;
+			bit3 = (color_prom.read(0x200)>> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -499,7 +499,7 @@ public class alpha68k
 	//ZT
 		for (i = 0;i < 256;i++)
 		{
-			*colortable++ = ((color_prom[0] & 0x0f) << 4) | (color_prom[0x100] & 0x0f);
+			*colortable++ = ((color_prom.read(0)& 0x0f) << 4) | (color_prom.read(0x100)& 0x0f);
 			color_prom++;
 		}
 	} };
@@ -510,22 +510,22 @@ public class alpha68k
 	
 		for (i = 0;i < 256;i++)
 		{
-			bit0 = (color_prom[0] >> 0) & 0x01;
-			bit1 = (color_prom[0] >> 1) & 0x01;
-			bit2 = (color_prom[0] >> 2) & 0x01;
-			bit3 = (color_prom[0] >> 3) & 0x01;
+			bit0 = (color_prom.read(0)>> 0) & 0x01;
+			bit1 = (color_prom.read(0)>> 1) & 0x01;
+			bit2 = (color_prom.read(0)>> 2) & 0x01;
+			bit3 = (color_prom.read(0)>> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-			bit0 = (color_prom[0x100] >> 0) & 0x01;
-			bit1 = (color_prom[0x100] >> 1) & 0x01;
-			bit2 = (color_prom[0x100] >> 2) & 0x01;
-			bit3 = (color_prom[0x100] >> 3) & 0x01;
+			bit0 = (color_prom.read(0x100)>> 0) & 0x01;
+			bit1 = (color_prom.read(0x100)>> 1) & 0x01;
+			bit2 = (color_prom.read(0x100)>> 2) & 0x01;
+			bit3 = (color_prom.read(0x100)>> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-			bit0 = (color_prom[0x200] >> 0) & 0x01;
-			bit1 = (color_prom[0x200] >> 1) & 0x01;
-			bit2 = (color_prom[0x200] >> 2) & 0x01;
-			bit3 = (color_prom[0x200] >> 3) & 0x01;
+			bit0 = (color_prom.read(0x200)>> 0) & 0x01;
+			bit1 = (color_prom.read(0x200)>> 1) & 0x01;
+			bit2 = (color_prom.read(0x200)>> 2) & 0x01;
+			bit3 = (color_prom.read(0x200)>> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -534,7 +534,7 @@ public class alpha68k
 	
 		/* Fill in clut */
 		color_prom += 0x200;
-		for (i=0; i<1024; i++) colortable[i] = color_prom[i]|(color_prom[i+0x400]<<4);
+		for (i=0; i<1024; i++) colortable[i] = color_prom.read(i)|(color_prom.read(i+0x400)<<4);
 	} };
 	
 	static void kyros_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int c,int d)
@@ -576,7 +576,7 @@ public class alpha68k
 				data = spriteram16[offs+d+i];
 				if (data!=0x20)
 				{
-					color = color_prom[(data>>1&0x1000)|(data&0xffc)|(data>>14&3)];
+					color = color_prom.read((data>>1&0x1000)|(data&0xffc)|(data>>14&3));
 					if (color!=0xff)
 					{
 						fy = data & 0x1000;

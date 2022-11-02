@@ -110,9 +110,9 @@ public class thedeep
 		int i;
 		for (i = 0;i < 512;i++)
 		{
-			int b = ((color_prom[0x200 + i] >> 0) & 0xf) * 0x11;
-			int g = ((color_prom[0x400 + i] >> 4) & 0xf) * 0x11;
-			int r = ((color_prom[0x400 + i] >> 0) & 0xf) * 0x11;
+			int b = ((color_prom.read(0x200 + i)>> 0) & 0xf) * 0x11;
+			int g = ((color_prom.read(0x400 + i)>> 4) & 0xf) * 0x11;
+			int r = ((color_prom.read(0x400 + i)>> 0) & 0xf) * 0x11;
 			palette_set_color(i,r,g,b);
 		}
 	} };

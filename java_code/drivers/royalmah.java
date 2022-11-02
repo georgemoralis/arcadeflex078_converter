@@ -123,7 +123,7 @@ public class royalmah
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
-			int x =	(color_prom[i]<<8) + color_prom[0x200+i];
+			int x =	(color_prom.read(i)<<8) + color_prom.read(0x200+i);
 			/* The bits are in reverse order! */
 			int r = BITSWAP8((x >>  0) & 0x1f, 7,6,5, 0,1,2,3,4 );
 			int g = BITSWAP8((x >>  5) & 0x1f, 7,6,5, 0,1,2,3,4 );

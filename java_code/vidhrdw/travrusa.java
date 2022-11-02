@@ -65,18 +65,18 @@ public class travrusa
 	
 			/* red component */
 			bit0 = 0;
-			bit1 = (color_prom[i] >> 6) & 0x01;
-			bit2 = (color_prom[i] >> 7) & 0x01;
+			bit1 = (color_prom.read(i)>> 6) & 0x01;
+			bit2 = (color_prom.read(i)>> 7) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i,r,g,b);
@@ -92,18 +92,18 @@ public class travrusa
 	
 			/* red component */
 			bit0 = 0;
-			bit1 = (color_prom[i] >> 6) & 0x01;
-			bit2 = (color_prom[i] >> 7) & 0x01;
+			bit1 = (color_prom.read(i)>> 6) & 0x01;
+			bit2 = (color_prom.read(i)>> 7) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i+128,r,g,b);
@@ -115,7 +115,7 @@ public class travrusa
 	
 		/* sprite lookup table */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
-			COLOR(1,i) = (color_prom[i] & 0x0f) + 128;
+			COLOR(1,i) = (color_prom.read(i)& 0x0f) + 128;
 	} };
 	
 	public static PaletteInitHandlerPtr palette_init_shtrider  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
@@ -133,18 +133,18 @@ public class travrusa
 	
 			/* red component */
 			bit0 = 0;
-			bit1 = (color_prom[i] >> 2) & 0x01;
-			bit2 = (color_prom[i] >> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 2) & 0x01;
+			bit2 = (color_prom.read(i)>> 3) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (color_prom[i+256] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 0) & 0x01;
-			bit2 = (color_prom[i] >> 1) & 0x01;
+			bit0 = (color_prom.read(i+256)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 0) & 0x01;
+			bit2 = (color_prom.read(i)>> 1) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = (color_prom[i+256] >> 0) & 0x01;
-			bit1 = (color_prom[i+256] >> 1) & 0x01;
-			bit2 = (color_prom[i+256] >> 2) & 0x01;
+			bit0 = (color_prom.read(i+256)>> 0) & 0x01;
+			bit1 = (color_prom.read(i+256)>> 1) & 0x01;
+			bit2 = (color_prom.read(i+256)>> 2) & 0x01;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i,r,g,b);
@@ -161,18 +161,18 @@ public class travrusa
 	
 			/* red component */
 			bit0 = 0;
-			bit1 = (color_prom[i] >> 6) & 0x01;
-			bit2 = (color_prom[i] >> 7) & 0x01;
+			bit1 = (color_prom.read(i)>> 6) & 0x01;
+			bit2 = (color_prom.read(i)>> 7) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i+128,r,g,b);
@@ -183,7 +183,7 @@ public class travrusa
 	
 		/* sprite lookup table */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
-			COLOR(1,i) = (color_prom[i] & 0x0f) + 128;
+			COLOR(1,i) = (color_prom.read(i)& 0x0f) + 128;
 	} };
 	
 	

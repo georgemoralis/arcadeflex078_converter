@@ -23,18 +23,18 @@ public class sprcros2
 		for (i = 0;i < Machine.drv.total_colors; i++)
 		{
 			/* red component */
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit1 = (color_prom[i] >> 6) & 0x01;
-			bit2 = (color_prom[i] >> 7) & 0x01;
+			bit1 = (color_prom.read(i)>> 6) & 0x01;
+			bit2 = (color_prom.read(i)>> 7) & 0x01;
 			b = 0x47 * bit1 + 0xb8 * bit2;
 			palette_set_color(i,r,g,b);
 		}
@@ -42,9 +42,9 @@ public class sprcros2
 		//cluts
 		for (i = 0;i < 0x100; i++)
 		{
-			colortable[i]=color_prom[i+0x20]+(color_prom[i+0x120]<<4);		//bg
-			colortable[i+0x100]=color_prom[i+0x220];						//sprites
-			colortable[i+0x200]=color_prom[i+0x320];						//fg
+			colortable[i]=color_prom.read(i+0x20)+(color_prom.read(i+0x120)<<4);		//bg
+			colortable[i+0x100]=color_prom.read(i+0x220);						//sprites
+			colortable[i+0x200]=color_prom.read(i+0x320);						//fg
 		}
 	} };
 	

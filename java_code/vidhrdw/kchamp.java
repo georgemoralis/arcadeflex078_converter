@@ -26,9 +26,9 @@ public class kchamp
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
-			red = color_prom[i];
-			green = color_prom[Machine.drv.total_colors+i];
-			blue = color_prom[2*Machine.drv.total_colors+i];
+			red = color_prom.read(i);
+			green = color_prom.read(Machine.drv.total_colors+i);
+			blue = color_prom.read(2*Machine.drv.total_colors+i);
 	
 			palette_set_color(i,red*0x11,green*0x11,blue*0x11);
 	

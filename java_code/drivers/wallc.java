@@ -100,19 +100,19 @@ public class wallc
 			int bit0,bit1,bit7,r,g,b;
 	
 			/* red component */
-			bit0 = (color_prom[i] >> 5) & 0x01;
-			bit1 = (color_prom[i] >> 6) & 0x01;
+			bit0 = (color_prom.read(i)>> 5) & 0x01;
+			bit1 = (color_prom.read(i)>> 6) & 0x01;
 			r = combine_2_weights(weights_r, bit1, bit0);
 	
 			/* green component */
-			bit0 = (color_prom[i] >> 2) & 0x01;
-			bit1 = (color_prom[i] >> 3) & 0x01;
+			bit0 = (color_prom.read(i)>> 2) & 0x01;
+			bit1 = (color_prom.read(i)>> 3) & 0x01;
 			g = combine_2_weights(weights_g, bit1, bit0);
 	
 			/* blue component */
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit7 = (color_prom[i] >> 7) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit7 = (color_prom.read(i)>> 7) & 0x01;
 			b = combine_3_weights(weights_b, bit7, bit1, bit0);
 	
 			palette_set_color(i,r,g,b);

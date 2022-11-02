@@ -52,7 +52,7 @@ public class chaknpop
 			int col, r, g, b;
 			int bit0, bit1, bit2;
 	
-			col = (color_prom[i]&0x0f)+((color_prom[i+1024]&0x0f)<<4);
+			col = (color_prom.read(i)&0x0f)+((color_prom.read(i+1024)&0x0f)<<4);
 	
 			/* red component */
 			bit0 = (col >> 0) & 0x01;

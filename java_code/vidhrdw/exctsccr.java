@@ -34,17 +34,17 @@ public class exctsccr
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			bit0 = 0;
-			bit1 = (color_prom[i] >> 6) & 0x01;
-			bit2 = (color_prom[i] >> 7) & 0x01;
+			bit1 = (color_prom.read(i)>> 6) & 0x01;
+			bit2 = (color_prom.read(i)>> 7) & 0x01;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i,r,g,b);
@@ -56,14 +56,14 @@ public class exctsccr
 		idx = 0;
 		for (i = 0;i < 32;i++)
 		{
-			COLOR(0,idx++) = color_prom[256+0+(i*4)];
-			COLOR(0,idx++) = color_prom[256+1+(i*4)];
-			COLOR(0,idx++) = color_prom[256+2+(i*4)];
-			COLOR(0,idx++) = color_prom[256+3+(i*4)];
-			COLOR(0,idx++) = color_prom[256+128+0+(i*4)];
-			COLOR(0,idx++) = color_prom[256+128+1+(i*4)];
-			COLOR(0,idx++) = color_prom[256+128+2+(i*4)];
-			COLOR(0,idx++) = color_prom[256+128+3+(i*4)];
+			COLOR(0,idx++) = color_prom.read(256+0+(i*4));
+			COLOR(0,idx++) = color_prom.read(256+1+(i*4));
+			COLOR(0,idx++) = color_prom.read(256+2+(i*4));
+			COLOR(0,idx++) = color_prom.read(256+3+(i*4));
+			COLOR(0,idx++) = color_prom.read(256+128+0+(i*4));
+			COLOR(0,idx++) = color_prom.read(256+128+1+(i*4));
+			COLOR(0,idx++) = color_prom.read(256+128+2+(i*4));
+			COLOR(0,idx++) = color_prom.read(256+128+3+(i*4));
 		}
 	
 		/* sprites */
@@ -74,7 +74,7 @@ public class exctsccr
 		{
 			if ( (i%16) < 8 )
 			{
-				COLOR(2,idx) = color_prom[i]+16;
+				COLOR(2,idx) = color_prom.read(i)+16;
 				idx++;
 			}
 		}
@@ -82,20 +82,20 @@ public class exctsccr
 		{
 			if ( (i%16) > 7 )
 			{
-				COLOR(2,idx) = color_prom[i]+16;
+				COLOR(2,idx) = color_prom.read(i)+16;
 				idx++;
 			}
 		}
 		for (i = 16;i < 32;i++)
 		{
-			COLOR(2,idx++) = color_prom[256+0+(i*4)]+16;
-			COLOR(2,idx++) = color_prom[256+1+(i*4)]+16;
-			COLOR(2,idx++) = color_prom[256+2+(i*4)]+16;
-			COLOR(2,idx++) = color_prom[256+3+(i*4)]+16;
-			COLOR(2,idx++) = color_prom[256+128+0+(i*4)]+16;
-			COLOR(2,idx++) = color_prom[256+128+1+(i*4)]+16;
-			COLOR(2,idx++) = color_prom[256+128+2+(i*4)]+16;
-			COLOR(2,idx++) = color_prom[256+128+3+(i*4)]+16;
+			COLOR(2,idx++) = color_prom.read(256+0+(i*4))+16;
+			COLOR(2,idx++) = color_prom.read(256+1+(i*4))+16;
+			COLOR(2,idx++) = color_prom.read(256+2+(i*4))+16;
+			COLOR(2,idx++) = color_prom.read(256+3+(i*4))+16;
+			COLOR(2,idx++) = color_prom.read(256+128+0+(i*4))+16;
+			COLOR(2,idx++) = color_prom.read(256+128+1+(i*4))+16;
+			COLOR(2,idx++) = color_prom.read(256+128+2+(i*4))+16;
+			COLOR(2,idx++) = color_prom.read(256+128+3+(i*4))+16;
 		}
 	
 		/* Patch for goalkeeper */

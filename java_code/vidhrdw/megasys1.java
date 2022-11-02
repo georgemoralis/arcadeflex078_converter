@@ -821,7 +821,7 @@ public class megasys1
 	
 				do
 				{
-					int top = color_prom[pri_code * 0x20 + offset + enable_mask * 2] & 3;	// this must be the top layer
+					int top = color_prom.read(pri_code * 0x20 + offset + enable_mask * 2)& 3;	// this must be the top layer
 					int top_mask = 1 << top;
 	
 					int	result = 0;		// result of the feasibility check for this layer
@@ -829,7 +829,7 @@ public class megasys1
 					for (i = 0; i < 0x10 ; i++)	// every combination of opaque and transparent pens
 					{
 						int opacity	=	i & enable_mask;	// only consider active layers
-						int layer	=	color_prom[pri_code * 0x20 + offset + opacity * 2];
+						int layer	=	color_prom.read(pri_code * 0x20 + offset + opacity * 2);
 	
 						if (opacity != 0)
 						{

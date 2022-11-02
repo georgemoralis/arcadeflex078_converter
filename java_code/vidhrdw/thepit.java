@@ -68,17 +68,17 @@ public class thepit
 			int bit0,bit1,bit2,r,g,b;
 	
 	
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			bit0 = 0;
-			bit1 = (color_prom[i] >> 6) & 0x01;
-			bit2 = (color_prom[i] >> 7) & 0x01;
+			bit1 = (color_prom.read(i)>> 6) & 0x01;
+			bit2 = (color_prom.read(i)>> 7) & 0x01;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			palette_set_color(i+8,r,g,b);
 		}
@@ -117,23 +117,23 @@ public class thepit
 			int bit0,bit1,bit2,bit3,bit4,r,g,b;
 	
 	
-			bit0 = (color_prom[i+0x20] >> 6) & 0x01;
-			bit1 = (color_prom[i+0x20] >> 7) & 0x01;
-			bit2 = (color_prom[i] >> 0) & 0x01;
-			bit3 = (color_prom[i] >> 1) & 0x01;
-			bit4 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i+0x20)>> 6) & 0x01;
+			bit1 = (color_prom.read(i+0x20)>> 7) & 0x01;
+			bit2 = (color_prom.read(i)>> 0) & 0x01;
+			bit3 = (color_prom.read(i)>> 1) & 0x01;
+			bit4 = (color_prom.read(i)>> 2) & 0x01;
 			r = 0x10 * bit0 + 0x20 * bit1 + 0x30 * bit2 + 0x40 * bit3 + 0x50 * bit4;
-			bit0 = (color_prom[i+0x20] >> 1) & 0x01;
-			bit1 = (color_prom[i+0x20] >> 2) & 0x01;
-			bit2 = (color_prom[i+0x20] >> 3) & 0x01;
-			bit3 = (color_prom[i+0x20] >> 4) & 0x01;
-			bit4 = (color_prom[i+0x20] >> 5) & 0x01;
+			bit0 = (color_prom.read(i+0x20)>> 1) & 0x01;
+			bit1 = (color_prom.read(i+0x20)>> 2) & 0x01;
+			bit2 = (color_prom.read(i+0x20)>> 3) & 0x01;
+			bit3 = (color_prom.read(i+0x20)>> 4) & 0x01;
+			bit4 = (color_prom.read(i+0x20)>> 5) & 0x01;
 			g = 0x50 * bit0 + 0x40 * bit1 + 0x30 * bit2 + 0x20 * bit3 + 0x10 * bit4;
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
-			bit3 = (color_prom[i] >> 6) & 0x01;
-			bit4 = (color_prom[i] >> 7) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
+			bit3 = (color_prom.read(i)>> 6) & 0x01;
+			bit4 = (color_prom.read(i)>> 7) & 0x01;
 			b = 0x50 * bit0 + 0x40 * bit1 + 0x30 * bit2 + 0x20 * bit3 + 0x10 * bit4;
 			palette_set_color(i+8,r,g,b);
 		}

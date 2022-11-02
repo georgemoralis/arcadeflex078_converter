@@ -94,20 +94,20 @@ public class naughtyb
 			int bit0,bit1,r,g,b;
 	
 	
-			bit0 = (color_prom[0] >> 0) & 0x01;
-			bit1 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit0 = (color_prom.read(0)>> 0) & 0x01;
+			bit1 = (color_prom.read(Machine.drv.total_colors)>> 0) & 0x01;
 	
 			/*r = 0x55 * bit0 + 0xaa * bit1;*/
 			r = combine_2_weights(weights_r, bit0, bit1);
 	
-			bit0 = (color_prom[0] >> 2) & 0x01;
-			bit1 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit0 = (color_prom.read(0)>> 2) & 0x01;
+			bit1 = (color_prom.read(Machine.drv.total_colors)>> 2) & 0x01;
 	
 			/*g = 0x55 * bit0 + 0xaa * bit1;*/
 			g = combine_2_weights(weights_g, bit0, bit1);
 	
-			bit0 = (color_prom[0] >> 1) & 0x01;
-			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit0 = (color_prom.read(0)>> 1) & 0x01;
+			bit1 = (color_prom.read(Machine.drv.total_colors)>> 1) & 0x01;
 	
 			/*b = 0x55 * bit0 + 0xaa * bit1;*/
 			b = combine_2_weights(weights_b, bit0, bit1);

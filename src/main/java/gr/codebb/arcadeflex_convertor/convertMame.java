@@ -778,14 +778,7 @@ public class convertMame {
 
                     }
                     break;
-                case '-':
-                    char c3 = sUtil.getNextChar();
-                    if (c3 != '>') {
-                        break;
-                    }
-                    Convertor.outbuf[Convertor.outpos++] = '.';
-                    Convertor.inpos += 2;
-                    break;
+
                 case 'c':
                     i = Convertor.inpos;
                     if (sUtil.getToken("colorram")) {
@@ -819,7 +812,46 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (sUtil.getToken("color_prom")) {
+                        if (sUtil.parseChar() != '[') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        Convertor.token[0] = sUtil.parseToken(']');
+                        Convertor.token[0] = Convertor.token[0].replace("->", ".");
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != ']') {
+                            Convertor.inpos = i;
+                            break;
+                        } else {
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() == '=') {
+                                int g = Convertor.inpos;
+                                if (sUtil.parseChar() == '=') {
+                                    Convertor.inpos = i;
+                                    break;
+                                }
+                                //Convertor.inpos = g;
+                                sUtil.skipSpace();
+                                Convertor.token[1] = sUtil.parseToken(';');
+                                sUtil.putString((new StringBuilder()).append("color_prom.write(").append(Convertor.token[0]).append(",").append(Convertor.token[1]).append(");").toString());
+                                Convertor.inpos += 1;
+                                break;
+                            }
+                            sUtil.putString((new StringBuilder()).append("color_prom.read(").append(Convertor.token[0]).append(")").toString());
+                            Convertor.inpos -= 1;
+                            continue;
+                        }
+                    }
                     Convertor.inpos = i;
+                    break;
+                case '-':
+                    char c3 = sUtil.getNextChar();
+                    if (c3 != '>') {
+                        break;
+                    }
+                    Convertor.outbuf[Convertor.outpos++] = '.';
+                    Convertor.inpos += 2;
                     break;
             }
 

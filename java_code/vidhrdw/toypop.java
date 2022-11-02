@@ -37,22 +37,22 @@ public class toypop
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
 			// red component
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
-			bit3 = (color_prom[i] >> 3) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
+			bit3 = (color_prom.read(i)>> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			// green component
-			bit0 = (color_prom[i+0x100] >> 0) & 0x01;
-			bit1 = (color_prom[i+0x100] >> 1) & 0x01;
-			bit2 = (color_prom[i+0x100] >> 2) & 0x01;
-			bit3 = (color_prom[i+0x100] >> 3) & 0x01;
+			bit0 = (color_prom.read(i+0x100)>> 0) & 0x01;
+			bit1 = (color_prom.read(i+0x100)>> 1) & 0x01;
+			bit2 = (color_prom.read(i+0x100)>> 2) & 0x01;
+			bit3 = (color_prom.read(i+0x100)>> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			// blue component
-			bit0 = (color_prom[i+0x200] >> 0) & 0x01;
-			bit1 = (color_prom[i+0x200] >> 1) & 0x01;
-			bit2 = (color_prom[i+0x200] >> 2) & 0x01;
-			bit3 = (color_prom[i+0x200] >> 3) & 0x01;
+			bit0 = (color_prom.read(i+0x200)>> 0) & 0x01;
+			bit1 = (color_prom.read(i+0x200)>> 1) & 0x01;
+			bit2 = (color_prom.read(i+0x200)>> 2) & 0x01;
+			bit3 = (color_prom.read(i+0x200)>> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			palette_set_color(i,r,g,b);
 		}
@@ -60,10 +60,10 @@ public class toypop
 		for (i = 0;i < 256;i++)
 		{
 			// characters
-			colortable[i]     = color_prom[i + 0x300] | 0x70;
-			colortable[i+256] = color_prom[i + 0x300] | 0xf0;
+			colortable[i]     = color_prom.read(i + 0x300)| 0x70;
+			colortable[i+256] = color_prom.read(i + 0x300)| 0xf0;
 			// sprites
-			colortable[i+512] = color_prom[i + 0x500];
+			colortable[i+512] = color_prom.read(i + 0x500);
 		}
 	} };
 	

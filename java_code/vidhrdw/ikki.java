@@ -27,9 +27,9 @@ public class ikki
 		{
 			int r,g,b;
 	
-			r = color_prom[0]*0x11;
-			g = color_prom[256]*0x11;
-			b = color_prom[2*256]*0x11;
+			r = color_prom.read(0)*0x11;
+			g = color_prom.read(256)*0x11;
+			b = color_prom.read(2*256)*0x11;
 	
 			palette_set_color(i,r,g,b);
 	

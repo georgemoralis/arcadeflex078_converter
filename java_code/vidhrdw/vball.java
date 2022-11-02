@@ -95,8 +95,8 @@ public class vball
 	
 		color_prom = memory_region(REGION_PROMS) + bank*0x80;
 		for (i=0;i<128;i++, color_prom++) {
-			palette_set_color(i,(color_prom[0] & 0x0f) << 4,(color_prom[0] & 0xf0) >> 0,
-					       (color_prom[0x800] & 0x0f) << 4);
+			palette_set_color(i,(color_prom.read(0)& 0x0f) << 4,(color_prom.read(0)& 0xf0) >> 0,
+					       (color_prom.read(0x800)& 0x0f) << 4);
 		}
 		vb_bgprombank=bank;
 	}
@@ -111,8 +111,8 @@ public class vball
 	
 		color_prom = memory_region(REGION_PROMS)+0x400 + bank*0x80;
 		for (i=128;i<256;i++,color_prom++)	{
-			palette_set_color(i,(color_prom[0] & 0x0f) << 4,(color_prom[0] & 0xf0) >> 0,
-					       (color_prom[0x800] & 0x0f) << 4);
+			palette_set_color(i,(color_prom.read(0)& 0x0f) << 4,(color_prom.read(0)& 0xf0) >> 0,
+					       (color_prom.read(0x800)& 0x0f) << 4);
 		}
 		vb_spprombank=bank;
 	}

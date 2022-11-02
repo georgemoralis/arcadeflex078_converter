@@ -33,9 +33,9 @@ public class hanaroku
 	
 		for (i = 0; i < 0x200; i++)
 		{
-			b = (color_prom[i*2+1] & 0x1f);
-			g = ((color_prom[i*2+1] & 0xe0) | ( (color_prom[i*2+0]& 0x03) <<8)  ) >> 5;
-			r = (color_prom[i*2+0]&0x7c) >> 2;
+			b = (color_prom.read(i*2+1)& 0x1f);
+			g = ((color_prom.read(i*2+1)& 0xe0) | ( (color_prom.read(i*2+0)& 0x03) <<8)  ) >> 5;
+			r = (color_prom.read(i*2+0)&0x7c) >> 2;
 	
 			palette_set_color(i,r<<3,g<<3,b<<3);
 		}

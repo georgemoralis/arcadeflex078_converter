@@ -345,7 +345,7 @@ public class homedata
 		for (i = 0; i < 0x8000; i++)
 		{
 			int r,g,b;
-			int color = color_prom[i*2] * 256 + color_prom[i*2+1];
+			int color = color_prom.read(i*2)* 256 + color_prom.read(i*2+1);
 			/* xxxx--------x--- red
 			 * ----xxxx-----x-- green
 			 * --------xxxx--x- blue
@@ -371,7 +371,7 @@ public class homedata
 		for (i = 0; i < 0x8000; i++)
 		{
 			int r,g,b;
-			int color = color_prom[i*2] * 256 + color_prom[i*2+1];
+			int color = color_prom.read(i*2)* 256 + color_prom.read(i*2+1);
 			/* xxxx--------x--- green
 			 * ----xxxx-----x-- red
 			 * --------xxxx--x- blue
@@ -397,7 +397,7 @@ public class homedata
 		for (i = 0; i < 0x8000; i++)
 		{
 			int r,g,b;
-			int color = color_prom[i*2] * 256 + color_prom[i*2+1];
+			int color = color_prom.read(i*2)* 256 + color_prom.read(i*2+1);
 			/* xxxxx----------- green
 			 * -----xxxxx------ red
 			 * ----------xxxxx- blue

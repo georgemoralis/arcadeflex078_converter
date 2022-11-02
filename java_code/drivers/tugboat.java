@@ -49,11 +49,11 @@ public class tugboat
 			int r,g,b,brt;
 	
 	
-			brt = ((color_prom[i] >> 3) & 0x01) ? 0xff : 0x80;
+			brt = ((color_prom.read(i)>> 3) & 0x01) ? 0xff : 0x80;
 	
-			r = brt * ((color_prom[i] >> 0) & 0x01);
-			g = brt * ((color_prom[i] >> 1) & 0x01);
-			b = brt * ((color_prom[i] >> 2) & 0x01);
+			r = brt * ((color_prom.read(i)>> 0) & 0x01);
+			g = brt * ((color_prom.read(i)>> 1) & 0x01);
+			b = brt * ((color_prom.read(i)>> 2) & 0x01);
 	
 			palette_set_color(i,r,g,b);
 		}

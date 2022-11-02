@@ -194,7 +194,7 @@ public class shangkid
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
-			int data = color_prom[i] + 256 * color_prom[i+32];
+			int data = color_prom.read(i)+ 256 * color_prom.read(i+32);
 			int r = (data >>  1) & 0x1f;
 			int g = (data >>  6) & 0x1f;
 			int b = (data >> 11) & 0x1f;
@@ -210,12 +210,12 @@ public class shangkid
 	
 		/* sprites */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
-			COLOR(1,i) = (color_prom[i] & 0x0f) + 0x10;
+			COLOR(1,i) = (color_prom.read(i)& 0x0f) + 0x10;
 		color_prom += 0x100;
 	
 		/* characters */
 		for (i = 0;i < TOTAL_COLORS(0);i++)
-			COLOR(0,i) = (color_prom[i] & 0x0f);
+			COLOR(0,i) = (color_prom.read(i)& 0x0f);
 	} };
 	
 	

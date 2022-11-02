@@ -47,22 +47,22 @@ public class wilytowr
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
 			/* red component */
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
-			bit3 = (color_prom[i] >> 3) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
+			bit3 = (color_prom.read(i)>> 3) & 0x01;
 			r =  0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[i + 256] >> 0) & 0x01;
-			bit1 = (color_prom[i + 256] >> 1) & 0x01;
-			bit2 = (color_prom[i + 256] >> 2) & 0x01;
-			bit3 = (color_prom[i + 256] >> 3) & 0x01;
+			bit0 = (color_prom.read(i + 256)>> 0) & 0x01;
+			bit1 = (color_prom.read(i + 256)>> 1) & 0x01;
+			bit2 = (color_prom.read(i + 256)>> 2) & 0x01;
+			bit3 = (color_prom.read(i + 256)>> 3) & 0x01;
 			g =  0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[i + 2*256] >> 0) & 0x01;
-			bit1 = (color_prom[i + 2*256] >> 1) & 0x01;
-			bit2 = (color_prom[i + 2*256] >> 2) & 0x01;
-			bit3 = (color_prom[i + 2*256] >> 3) & 0x01;
+			bit0 = (color_prom.read(i + 2*256)>> 0) & 0x01;
+			bit1 = (color_prom.read(i + 2*256)>> 1) & 0x01;
+			bit2 = (color_prom.read(i + 2*256)>> 2) & 0x01;
+			bit3 = (color_prom.read(i + 2*256)>> 3) & 0x01;
 			b =  0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -75,18 +75,18 @@ public class wilytowr
 			int bit0,bit1,bit2,r,g,b;
 	
 			/* red component */
-			bit0 = (color_prom[i] >> 0) & 0x01;
-			bit1 = (color_prom[i] >> 1) & 0x01;
-			bit2 = (color_prom[i] >> 2) & 0x01;
+			bit0 = (color_prom.read(i)>> 0) & 0x01;
+			bit1 = (color_prom.read(i)>> 1) & 0x01;
+			bit2 = (color_prom.read(i)>> 2) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i] >> 4) & 0x01;
-			bit2 = (color_prom[i] >> 5) & 0x01;
+			bit0 = (color_prom.read(i)>> 3) & 0x01;
+			bit1 = (color_prom.read(i)>> 4) & 0x01;
+			bit2 = (color_prom.read(i)>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = (color_prom[i] >> 6) & 0x01;
-			bit1 = (color_prom[i] >> 7) & 0x01;
+			bit0 = (color_prom.read(i)>> 6) & 0x01;
+			bit1 = (color_prom.read(i)>> 7) & 0x01;
 			b = 0x4f * bit0 + 0xa8 * bit1;
 	
 			palette_set_color(i+256,r,g,b);

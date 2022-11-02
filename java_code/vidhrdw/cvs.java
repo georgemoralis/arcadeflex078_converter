@@ -95,7 +95,7 @@ public class cvs
 	    {
 	    	for(col = 0; col < 8; col++)
 	        {
-	          	map = color_prom[(col * 256) + attr];
+	          	map = color_prom.read((col * 256) + attr);
 	
 	            /* bits 1 and 3 are swopped over */
 	

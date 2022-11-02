@@ -35,3 +35,4 @@ paletteram,paletteram_2 read/write conversion
 colorram read/write conversion
 spriteram_size to spriteram_size[0]
 video_start_generic to video_start_generic.handler
+colorprom read/write conversion

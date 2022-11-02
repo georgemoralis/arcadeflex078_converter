@@ -29,7 +29,7 @@ public class labyrunr
 					if (color_prom[i] == 0)
 						*(colortable++) = 0;
 					else
-						*(colortable++) = 16 * pal + color_prom[i];
+						*(colortable++) = 16 * pal + color_prom.read(i);
 			}
 		}
 	} };

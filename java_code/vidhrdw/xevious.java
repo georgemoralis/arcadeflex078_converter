@@ -52,22 +52,22 @@ public class xevious
 	
 	
 			/* red component */
-			bit0 = (color_prom[0] >> 0) & 0x01;
-			bit1 = (color_prom[0] >> 1) & 0x01;
-			bit2 = (color_prom[0] >> 2) & 0x01;
-			bit3 = (color_prom[0] >> 3) & 0x01;
+			bit0 = (color_prom.read(0)>> 0) & 0x01;
+			bit1 = (color_prom.read(0)>> 1) & 0x01;
+			bit2 = (color_prom.read(0)>> 2) & 0x01;
+			bit3 = (color_prom.read(0)>> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[256] >> 0) & 0x01;
-			bit1 = (color_prom[256] >> 1) & 0x01;
-			bit2 = (color_prom[256] >> 2) & 0x01;
-			bit3 = (color_prom[256] >> 3) & 0x01;
+			bit0 = (color_prom.read(256)>> 0) & 0x01;
+			bit1 = (color_prom.read(256)>> 1) & 0x01;
+			bit2 = (color_prom.read(256)>> 2) & 0x01;
+			bit3 = (color_prom.read(256)>> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[2*256] >> 0) & 0x01;
-			bit1 = (color_prom[2*256] >> 1) & 0x01;
-			bit2 = (color_prom[2*256] >> 2) & 0x01;
-			bit3 = (color_prom[2*256] >> 3) & 0x01;
+			bit0 = (color_prom.read(2*256)>> 0) & 0x01;
+			bit1 = (color_prom.read(2*256)>> 1) & 0x01;
+			bit2 = (color_prom.read(2*256)>> 2) & 0x01;
+			bit3 = (color_prom.read(2*256)>> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -84,7 +84,7 @@ public class xevious
 		/* background tiles */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			COLOR(1,i) = (color_prom[0] & 0x0f) | ((color_prom[TOTAL_COLORS(1)] & 0x0f) << 4);
+			COLOR(1,i) = (color_prom.read(0)& 0x0f) | ((color_prom.read(TOTAL_COLORS(1))& 0x0f) << 4);
 	
 			color_prom++;
 		}
@@ -93,7 +93,7 @@ public class xevious
 		/* sprites */
 		for (i = 0;i < TOTAL_COLORS(2);i++)
 		{
-			int c = (color_prom[0] & 0x0f) | ((color_prom[TOTAL_COLORS(2)] & 0x0f) << 4);
+			int c = (color_prom.read(0)& 0x0f) | ((color_prom.read(TOTAL_COLORS(2))& 0x0f) << 4);
 	
 			if ((c & 0x80) != 0) COLOR(2,i) = c & 0x7f;
 			else COLOR(2,i) = 0x80; /* transparent */
@@ -125,22 +125,22 @@ public class xevious
 	
 	
 			/* red component */
-			bit0 = (color_prom[0] >> 0) & 0x01;
-			bit1 = (color_prom[0] >> 1) & 0x01;
-			bit2 = (color_prom[0] >> 2) & 0x01;
-			bit3 = (color_prom[0] >> 3) & 0x01;
+			bit0 = (color_prom.read(0)>> 0) & 0x01;
+			bit1 = (color_prom.read(0)>> 1) & 0x01;
+			bit2 = (color_prom.read(0)>> 2) & 0x01;
+			bit3 = (color_prom.read(0)>> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[256] >> 0) & 0x01;
-			bit1 = (color_prom[256] >> 1) & 0x01;
-			bit2 = (color_prom[256] >> 2) & 0x01;
-			bit3 = (color_prom[256] >> 3) & 0x01;
+			bit0 = (color_prom.read(256)>> 0) & 0x01;
+			bit1 = (color_prom.read(256)>> 1) & 0x01;
+			bit2 = (color_prom.read(256)>> 2) & 0x01;
+			bit3 = (color_prom.read(256)>> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[2*256] >> 0) & 0x01;
-			bit1 = (color_prom[2*256] >> 1) & 0x01;
-			bit2 = (color_prom[2*256] >> 2) & 0x01;
-			bit3 = (color_prom[2*256] >> 3) & 0x01;
+			bit0 = (color_prom.read(2*256)>> 0) & 0x01;
+			bit1 = (color_prom.read(2*256)>> 1) & 0x01;
+			bit2 = (color_prom.read(2*256)>> 2) & 0x01;
+			bit3 = (color_prom.read(2*256)>> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -157,7 +157,7 @@ public class xevious
 		/* background tiles */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			COLOR(1,i) = (color_prom[0] & 0x0f) | ((color_prom[0x400] & 0x0f) << 4);
+			COLOR(1,i) = (color_prom.read(0)& 0x0f) | ((color_prom.read(0x400)& 0x0f) << 4);
 	
 			color_prom++;
 		}
@@ -166,7 +166,7 @@ public class xevious
 		/* sprites */
 		for (i = 0;i < TOTAL_COLORS(2);i++)
 		{
-			int c = (color_prom[0] & 0x0f) | ((color_prom[0x400] & 0x0f) << 4);
+			int c = (color_prom.read(0)& 0x0f) | ((color_prom.read(0x400)& 0x0f) << 4);
 	
 			if ((c & 0x80) != 0) COLOR(2,i) = c & 0x7f;
 			else COLOR(2,i) = 0x80; /* transparent */
