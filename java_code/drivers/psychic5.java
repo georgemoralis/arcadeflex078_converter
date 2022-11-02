@@ -600,7 +600,7 @@ public class psychic5
 	
 	***************************************************************************/
 	
-	ROM_START( psychic5 )
+	static RomLoadPtr rom_psychic5 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 ) 				/* 2*64K for main CPU, Z80 */
 		ROM_LOAD( "p5d",          0x00000, 0x08000, CRC(90259249) SHA1(ac2d8dd95f6c04b6ad726136931e37dcd537e977) )
 		ROM_LOAD( "p5e",          0x10000, 0x10000, CRC(72298f34) SHA1(725be2fbf5f3622f646c0fb8e6677cbddf0b1fc2) )
@@ -618,7 +618,7 @@ public class psychic5
 	
 		ROM_REGION( 0x08000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "p5f",          0x00000, 0x08000, CRC(04d7e21c) SHA1(6046c506bdedc233e3730f90c7897e847bec8758) )	/* foreground tiles */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

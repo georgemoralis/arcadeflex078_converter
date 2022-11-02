@@ -274,7 +274,7 @@ public class portrait
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( portrait )
+	static RomLoadPtr rom_portrait = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for the cpu */
 		ROM_LOAD( "prt-p0.bin",  0x0000, 0x2000, CRC(a21874fa) SHA1(3db863f465a35d7d14dd71b47aa7dfe7b39fccf0) )
 		ROM_LOAD( "prt-p1.bin",  0x2000, 0x2000, CRC(4d4d7793) SHA1(f828950ebbf285fc92c65f24421a20ceacef1cb9) )
@@ -297,7 +297,7 @@ public class portrait
 		ROM_LOAD( "prt-15.bin",    0x1a000, 0x2000, CRC(ab20b438) SHA1(ea5d60f6a9f06397bd0c6ee028b463c684090c01) )	/*bit plane 3*/
 	
 		/* proms? */
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1983, portrait,  0,    portrait, portrait,  0, ROT270, "Olympia", "Portraits", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS | GAME_NOT_WORKING )
 	

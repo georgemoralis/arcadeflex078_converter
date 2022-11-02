@@ -426,7 +426,7 @@ public class gcpinbal
 	                                  DRIVERS
 	***************************************************************************/
 	
-	ROM_START( gcpinbal )
+	static RomLoadPtr rom_gcpinbal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )     /* 512k for 68000 program */
 		ROM_LOAD16_WORD_SWAP( "u43.2",  0x000000, 0x80000, CRC(d174bd7f) SHA1(0e6c17265e1400de941e3e2ca3be835aaaff6695) )
 		ROM_FILL            ( 0x80000,  0x080000, 0x0 )
@@ -448,7 +448,7 @@ public class gcpinbal
 	
 		ROM_REGION( 0x200000, REGION_SOUND2, 0 )	/* M6585 acc to Raine */
 		ROM_LOAD( "u56",   0x000000, 0x200000, CRC(092b2c0f) SHA1(2ec1904e473ddddb50dbeaa0b561642064d45336) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

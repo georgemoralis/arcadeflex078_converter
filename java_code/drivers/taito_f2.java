@@ -5273,7 +5273,7 @@ public class taito_f2
 	                                  DRIVERS
 	***************************************************************************/
 	
-	ROM_START( finalb )
+	static RomLoadPtr rom_finalb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "b82_09.10",  0x00000, 0x20000, CRC(632f1ecd) SHA1(aa3d1c2059b0dd619d1f6e3e0705b65b4f4be74e) )
 		ROM_LOAD16_BYTE( "b82_17.11",  0x00001, 0x20000, CRC(e91b2ec9) SHA1(c854104b8d48d20ab9278ecd122c987c3d886a26) )
@@ -5302,9 +5302,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "b82-01.2",    0x00000, 0x80000, CRC(f0eb6846) SHA1(4697c3fd61ac0d55c0d2a4354ff74719947397c5) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( finalbj )
+	static RomLoadPtr rom_finalbj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "b82_09.10",  0x00000, 0x20000, CRC(632f1ecd) SHA1(aa3d1c2059b0dd619d1f6e3e0705b65b4f4be74e) )
 		ROM_LOAD16_BYTE( "b82_08.11",  0x00001, 0x20000, CRC(07154fe5) SHA1(4772362375c8c2984a305c3bb0320ea80a2e9a40) )
@@ -5333,9 +5333,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "b82-01.2",    0x00000, 0x80000, CRC(f0eb6846) SHA1(4697c3fd61ac0d55c0d2a4354ff74719947397c5) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dondokod )
+	static RomLoadPtr rom_dondokod = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "b95-12.bin",   0x00000, 0x20000, CRC(d0fce87a) SHA1(7b346d3b7cbaf0b5447d66a71e815202d796f140) )
 		ROM_LOAD16_BYTE( "b95-11-1.bin", 0x00001, 0x20000, CRC(dad40cd3) SHA1(6c07ed3dd609a8743f5851caa4d205bce8db595e) )
@@ -5359,9 +5359,9 @@ public class taito_f2
 		ROM_LOAD( "b95-04.bin",  0x00000, 0x80000, CRC(ac4c1716) SHA1(06a9def7fa3bd739438f4a1d7b55f70eb904bf54) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dondokdu )
+	static RomLoadPtr rom_dondokdu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "b95-12.bin",   0x00000, 0x20000, CRC(d0fce87a) SHA1(7b346d3b7cbaf0b5447d66a71e815202d796f140) )
 		ROM_LOAD16_BYTE( "b95-11-1.bin", 0x00001, 0x20000, CRC(dad40cd3) SHA1(6c07ed3dd609a8743f5851caa4d205bce8db595e) )
@@ -5385,9 +5385,9 @@ public class taito_f2
 		ROM_LOAD( "b95-04.bin",  0x00000, 0x80000, CRC(ac4c1716) SHA1(06a9def7fa3bd739438f4a1d7b55f70eb904bf54) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dondokdj )
+	static RomLoadPtr rom_dondokdj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "b95-12.bin",   0x00000, 0x20000, CRC(d0fce87a) SHA1(7b346d3b7cbaf0b5447d66a71e815202d796f140) )
 		ROM_LOAD16_BYTE( "b95-11-1.bin", 0x00001, 0x20000, CRC(dad40cd3) SHA1(6c07ed3dd609a8743f5851caa4d205bce8db595e) )
@@ -5411,9 +5411,9 @@ public class taito_f2
 		ROM_LOAD( "b95-04.bin",  0x00000, 0x80000, CRC(ac4c1716) SHA1(06a9def7fa3bd739438f4a1d7b55f70eb904bf54) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( megab )
+	static RomLoadPtr rom_megab = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c11-07.55",  0x00000, 0x20000, CRC(11d228b6) SHA1(5f658a4a0ece3ad4e02ccad6e2852e16dd338dfd) )
 		ROM_LOAD16_BYTE( "c11-08.39",  0x00001, 0x20000, CRC(a79d4dca) SHA1(72a97577981a303230374c5f5e201066f71d9cc5) )
@@ -5438,9 +5438,9 @@ public class taito_f2
 		ROM_LOAD( "c11-02.30", 0x00000, 0x80000, CRC(451cc187) SHA1(a682f70bbe6cba2fe2c0a6791e8d33db34eb2cee) )
 	
 	//Pals  b89-01.8  b89-02.28  b89-04.27  c11-13.13  c11-14.23
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( megabj )
+	static RomLoadPtr rom_megabj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c11-07.55",  0x00000, 0x20000, CRC(11d228b6) SHA1(5f658a4a0ece3ad4e02ccad6e2852e16dd338dfd) )	// c11-07.17
 		ROM_LOAD16_BYTE( "c11-08.39",  0x00001, 0x20000, CRC(a79d4dca) SHA1(72a97577981a303230374c5f5e201066f71d9cc5) )	// c11-08.19
@@ -5463,9 +5463,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c11-02.30", 0x00000, 0x80000, CRC(451cc187) SHA1(a682f70bbe6cba2fe2c0a6791e8d33db34eb2cee) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( thundfox )		/* Thunder Fox */
+	static RomLoadPtr rom_thundfox = new RomLoadPtr(){ public void handler(){ 		/* Thunder Fox */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c28-13-1.51",  0x00000, 0x20000, CRC(acb07013) SHA1(5043d1859ae908c00f0c00c7b8e377362d908423) )
 		ROM_LOAD16_BYTE( "c28-16-1.40",  0x00001, 0x20000, CRC(1e43d55b) SHA1(e5a389926ee95f19fc9f5d5bde97436d6f52124a) )
@@ -5493,9 +5493,9 @@ public class taito_f2
 		ROM_LOAD( "c28-05.42", 0x00000, 0x80000, CRC(d3b238fa) SHA1(b4a0cdd7174e60527e7a47018d6117adc5518da1) )
 	
 	// Pals: c28-09.25  c28-10.26  c28-11.35  b89-01.19  b89-03.37  b89-04.33
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( thndfoxu )		/* Thunder Fox */
+	static RomLoadPtr rom_thndfoxu = new RomLoadPtr(){ public void handler(){ 		/* Thunder Fox */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c28-13-1.51",  0x00000, 0x20000, CRC(acb07013) SHA1(5043d1859ae908c00f0c00c7b8e377362d908423) )
 		ROM_LOAD16_BYTE( "c28-15-1.40",  0x00001, 0x20000, CRC(874a84e1) SHA1(f2688030faf526bc64bbb06225d3938f423f0f8b) )
@@ -5523,9 +5523,9 @@ public class taito_f2
 		ROM_LOAD( "c28-05.42", 0x00000, 0x80000, CRC(d3b238fa) SHA1(b4a0cdd7174e60527e7a47018d6117adc5518da1) )
 	
 	// Pals: c28-09.25  c28-10.26  c28-11.35  b89-01.19  b89-03.37  b89-04.33
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( thndfoxj )		/* Thunder Fox */
+	static RomLoadPtr rom_thndfoxj = new RomLoadPtr(){ public void handler(){ 		/* Thunder Fox */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c28-13-1.51",  0x00000, 0x20000, CRC(acb07013) SHA1(5043d1859ae908c00f0c00c7b8e377362d908423) )
 		ROM_LOAD16_BYTE( "c28-12-1.40",  0x00001, 0x20000, CRC(f04db477) SHA1(da66895b8cc79f1776f30d9c204c6907cab935db) )
@@ -5551,9 +5551,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c28-05.42", 0x00000, 0x80000, CRC(d3b238fa) SHA1(b4a0cdd7174e60527e7a47018d6117adc5518da1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cameltry )
+	static RomLoadPtr rom_cameltry = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c38-11", 0x00000, 0x20000, CRC(be172da0) SHA1(e4915bf25832175591a014aa1abac5edae09380d) )
 		ROM_LOAD16_BYTE( "c38-14", 0x00001, 0x20000, CRC(ffa430de) SHA1(a3cdb35151a92ddfa2090c1f8710500925e7ad0c) )
@@ -5575,9 +5575,9 @@ public class taito_f2
 		ROM_LOAD( "c38-03.bin", 0x000000, 0x020000, CRC(59fa59a7) SHA1(161f11b96a47c8431c33e300f6a509bf804309af) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( camltrua )
+	static RomLoadPtr rom_camltrua = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c38-11", 0x00000, 0x20000, CRC(be172da0) SHA1(e4915bf25832175591a014aa1abac5edae09380d) )
 		ROM_LOAD16_BYTE( "c38-14", 0x00001, 0x20000, CRC(ffa430de) SHA1(a3cdb35151a92ddfa2090c1f8710500925e7ad0c) )
@@ -5598,9 +5598,9 @@ public class taito_f2
 		ROM_LOAD( "c38-03.bin", 0x000000, 0x020000, CRC(59fa59a7) SHA1(161f11b96a47c8431c33e300f6a509bf804309af) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cameltrj )
+	static RomLoadPtr rom_cameltrj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c38-09.bin", 0x00000, 0x20000, CRC(2ae01120) SHA1(6da4155fde0edd76976264f929c5da3c79db5017) )
 		ROM_LOAD16_BYTE( "c38-10.bin", 0x00001, 0x20000, CRC(48d8ff56) SHA1(73da47b0f9e67defcd0072b71a3661f2c3534f55) )
@@ -5622,9 +5622,9 @@ public class taito_f2
 		ROM_LOAD( "c38-03.bin", 0x000000, 0x020000, CRC(59fa59a7) SHA1(161f11b96a47c8431c33e300f6a509bf804309af) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qtorimon )	/* Quiz Torimonochou */
+	static RomLoadPtr rom_qtorimon = new RomLoadPtr(){ public void handler(){ 	/* Quiz Torimonochou */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c41-04.bin",  0x00000, 0x20000, CRC(0fbf5223) SHA1(2aa8b3dd20ae922a3ff880db7b46e2bbb708698d) )
 		ROM_LOAD16_BYTE( "c41-05.bin",  0x00001, 0x20000, CRC(174bd5db) SHA1(f7a4b2ac91b3bcd886e2a1e1d0415a95f14c9de7) )
@@ -5646,9 +5646,9 @@ public class taito_f2
 		ROM_LOAD( "c41-03.bin",  0x000000, 0x020000, CRC(b2c18e89) SHA1(32eca1721cd8f47e9a6dcb553208ddd0daa67f83) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( liquidk )
+	static RomLoadPtr rom_liquidk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c49_09.12",  0x00000, 0x20000, CRC(6ae09eb9) SHA1(0f2527a1b231ecf8c6a937bf56d1245fdd270695) )
 		ROM_LOAD16_BYTE( "c49_11.14",  0x00001, 0x20000, CRC(42d2be6e) SHA1(c7953af2a561159d739d05dc06a4c905b6c40e64) )
@@ -5670,9 +5670,9 @@ public class taito_f2
 		ROM_LOAD( "lk_snd.bin",  0x00000, 0x80000, CRC(474d45a4) SHA1(20cb818d753a185973098007e645f1aa75c5528d) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( liquidku )
+	static RomLoadPtr rom_liquidku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c49_09.12",  0x00000, 0x20000, CRC(6ae09eb9) SHA1(0f2527a1b231ecf8c6a937bf56d1245fdd270695) )
 		ROM_LOAD16_BYTE( "c49_11.14",  0x00001, 0x20000, CRC(42d2be6e) SHA1(c7953af2a561159d739d05dc06a4c905b6c40e64) )
@@ -5694,9 +5694,9 @@ public class taito_f2
 		ROM_LOAD( "lk_snd.bin",  0x00000, 0x80000, CRC(474d45a4) SHA1(20cb818d753a185973098007e645f1aa75c5528d) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mizubaku )
+	static RomLoadPtr rom_mizubaku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c49_09.12",  0x00000, 0x20000, CRC(6ae09eb9) SHA1(0f2527a1b231ecf8c6a937bf56d1245fdd270695) )
 		ROM_LOAD16_BYTE( "c49_11.14",  0x00001, 0x20000, CRC(42d2be6e) SHA1(c7953af2a561159d739d05dc06a4c905b6c40e64) )
@@ -5718,9 +5718,9 @@ public class taito_f2
 		ROM_LOAD( "lk_snd.bin",  0x00000, 0x80000, CRC(474d45a4) SHA1(20cb818d753a185973098007e645f1aa75c5528d) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quizhq )	/* Quiz HQ */
+	static RomLoadPtr rom_quizhq = new RomLoadPtr(){ public void handler(){ 	/* Quiz HQ */
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c53-05.bin",  0x00000, 0x20000, CRC(c798fc20) SHA1(4467dde3620102f87cffb2f81f71d856c0df12f8) )
 		ROM_LOAD16_BYTE( "c53-01.bin",  0x00001, 0x20000, CRC(bf44c93e) SHA1(6fd871f50da4a668767b3096660689905663f697) )
@@ -5744,9 +5744,9 @@ public class taito_f2
 		ROM_LOAD( "c53-04.bin",  0x000000, 0x020000, CRC(99890ad4) SHA1(c9be9d21dc72059c39de81e1b73849cc77d6b95d) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ssi )
+	static RomLoadPtr rom_ssi = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c64_15-1.bin", 0x00000, 0x40000, CRC(ce9308a6) SHA1(02653218fe949803742e574eeed01dd421b0a671) )
 		ROM_LOAD16_BYTE( "c64_16-1.bin", 0x00001, 0x40000, CRC(470a483a) SHA1(880d43aec8c3bbae1d58e7d6d7719eb6fe67cc56) )
@@ -5765,9 +5765,9 @@ public class taito_f2
 		ROM_LOAD( "c64-02.2",     0x00000, 0x20000, CRC(3cb0b907) SHA1(7cbe437fe584575a2f26a582095fd49665c7003e) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( majest12 )
+	static RomLoadPtr rom_majest12 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c64_07.10", 0x00000, 0x20000, CRC(f29ed5c9) SHA1(62283af1c08457db54057ee59a95fb7a3797b897) )
 		ROM_LOAD16_BYTE( "c64_06.4",  0x40000, 0x20000, CRC(18dc71ac) SHA1(cb9c0b330ae98e20269f18cdb543feb294647245) )
@@ -5788,9 +5788,9 @@ public class taito_f2
 		ROM_LOAD( "c64-02.2",     0x00000, 0x20000, CRC(3cb0b907) SHA1(7cbe437fe584575a2f26a582095fd49665c7003e) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunfront )
+	static RomLoadPtr rom_gunfront = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 768k for 68000 code */
 		ROM_LOAD16_BYTE( "c71-09.42",  0x00000, 0x20000, CRC(10a544a2) SHA1(3b46bbd494b432d36aed3fd4b429cef074050c1d) )
 		ROM_LOAD16_BYTE( "c71-08.41",  0x00001, 0x20000, CRC(c17dc0a0) SHA1(f84e0d1afb403bb06480e8687558cd320d60099e) )
@@ -5815,9 +5815,9 @@ public class taito_f2
 		/* no Delta-T samples */
 	
 	// Pals c71-16.28  c71-07.27
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunfronj )
+	static RomLoadPtr rom_gunfronj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 768k for 68000 code */
 		ROM_LOAD16_BYTE( "c71-09.42",  0x00000, 0x20000, CRC(10a544a2) SHA1(3b46bbd494b432d36aed3fd4b429cef074050c1d) )	// c71-09.9
 		ROM_LOAD16_BYTE( "c71-08.41",  0x00001, 0x20000, CRC(c17dc0a0) SHA1(f84e0d1afb403bb06480e8687558cd320d60099e) )	// c71-08.2
@@ -5840,9 +5840,9 @@ public class taito_f2
 		ROM_LOAD( "c71-01.29", 0x000000, 0x100000, CRC(0e73105a) SHA1(c5c9743f68a43273e16f5e5179557f2392505a1e) )	// c71-01.1
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( growl )
+	static RomLoadPtr rom_growl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 1024k for 68000 code */
 		ROM_LOAD16_BYTE( "c74-10.59",  0x00000, 0x40000, CRC(ca81a20b) SHA1(75d665f3e3cf1ab389f5390d4a4d2c9e49543c56) )
 		ROM_LOAD16_BYTE( "c74-08.61",  0x00001, 0x40000, CRC(aa35dd9e) SHA1(97229746f70c486bcf172ec09f7f9c9eede16006) )
@@ -5867,9 +5867,9 @@ public class taito_f2
 		ROM_LOAD( "c74-05.29",   0x000000, 0x080000, CRC(e29c0828) SHA1(f541d724f118130bb7a8f9e790582c68779cc6b6) )
 	
 	//Pals c74-06.48  c74-07.47
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( growlu )
+	static RomLoadPtr rom_growlu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 1024k for 68000 code */
 		ROM_LOAD16_BYTE( "c74-10.59",  0x00000, 0x40000, CRC(ca81a20b) SHA1(75d665f3e3cf1ab389f5390d4a4d2c9e49543c56) )
 		ROM_LOAD16_BYTE( "c74-08.61",  0x00001, 0x40000, CRC(aa35dd9e) SHA1(97229746f70c486bcf172ec09f7f9c9eede16006) )
@@ -5892,9 +5892,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c74-05.29",   0x000000, 0x080000, CRC(e29c0828) SHA1(f541d724f118130bb7a8f9e790582c68779cc6b6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( runark )
+	static RomLoadPtr rom_runark = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 1024k for 68000 code */
 		ROM_LOAD16_BYTE( "c74-10.59",  0x00000, 0x40000, CRC(ca81a20b) SHA1(75d665f3e3cf1ab389f5390d4a4d2c9e49543c56) )	// c74-10.15
 		ROM_LOAD16_BYTE( "c74-08.61",  0x00001, 0x40000, CRC(aa35dd9e) SHA1(97229746f70c486bcf172ec09f7f9c9eede16006) )	// c74-08.13
@@ -5917,9 +5917,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c74-05.29",   0x000000, 0x080000, CRC(e29c0828) SHA1(f541d724f118130bb7a8f9e790582c68779cc6b6) )	// c74-05.2
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjnquest )	/* Mahjong Quest */
+	static RomLoadPtr rom_mjnquest = new RomLoadPtr(){ public void handler(){ 	/* Mahjong Quest */
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c77-09",  0x000000, 0x020000, CRC(0a005d01) SHA1(caf44fcdeca9f7f1bfdb0c29503bb82ce17f945c) )
 		ROM_LOAD16_BYTE( "c77-08",  0x000001, 0x020000, CRC(4244f775) SHA1(801045d7433684195876e172676b2345827de7cc) )
@@ -5940,9 +5940,9 @@ public class taito_f2
 		ROM_LOAD( "c77-03",  0x000000, 0x080000, CRC(312f17b1) SHA1(3b45eeb6c6721c532451cb113e6a38da4d8a8cbf) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjnquesb )	/* Mahjong Quest (No Nudity) */
+	static RomLoadPtr rom_mjnquesb = new RomLoadPtr(){ public void handler(){ 	/* Mahjong Quest (No Nudity) */
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c77-09a", 0x000000, 0x020000, CRC(fc17f1c2) SHA1(438b0a780560940b2d3dab42b34dc2bc94a15f80) )
 		ROM_LOAD16_BYTE( "c77-08",  0x000001, 0x020000, CRC(4244f775) SHA1(801045d7433684195876e172676b2345827de7cc) )
@@ -5963,9 +5963,9 @@ public class taito_f2
 		ROM_LOAD( "c77-03",  0x000000, 0x080000, CRC(312f17b1) SHA1(3b45eeb6c6721c532451cb113e6a38da4d8a8cbf) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( footchmp )
+	static RomLoadPtr rom_footchmp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c80-11.6",     0x00000, 0x20000, CRC(f78630fb) SHA1(37da34401f664caaf5113a9abad78e447f4f4651) )
 		ROM_LOAD16_BYTE( "c80-10.4",     0x00001, 0x20000, CRC(32c109cb) SHA1(46a116127bcea18cc15ddf297e5e0d5cdcac9842) )
@@ -5990,9 +5990,9 @@ public class taito_f2
 		/* no Delta-T samples */
 	
 	// Pals c80-08.45  c80-09.46
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hthero )
+	static RomLoadPtr rom_hthero = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c80-16.6",  0x00000, 0x20000, CRC(4e795b52) SHA1(90a32133a68de4d0410935e5039d4dec37836a13) )
 		ROM_LOAD16_BYTE( "c80-17.4",  0x00001, 0x20000, CRC(42c0a838) SHA1(4ba96a7248715562668994a4bf974e8ce4c44fd3) )
@@ -6015,9 +6015,9 @@ public class taito_f2
 		ROM_LOAD( "c80-03.57", 0x000000, 0x100000, CRC(609938d5) SHA1(54c7a7265dee5cb031fd402f4c74858d73bec652) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( euroch92 )
+	static RomLoadPtr rom_euroch92 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "ec92_25.rom", 0x00000, 0x20000, CRC(98482202) SHA1(4fc03fb2a2c21f302d95047535f66d26421dcda2) )
 		ROM_LOAD16_BYTE( "ec92_23.rom", 0x00001, 0x20000, CRC(ae5e75e9) SHA1(82d935684182bfb42367232a3b71d4664b170ffe) )
@@ -6040,9 +6040,9 @@ public class taito_f2
 		ROM_LOAD( "c80-03.57", 0x000000, 0x100000, CRC(609938d5) SHA1(54c7a7265dee5cb031fd402f4c74858d73bec652) )	// ec92_03.rom
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( koshien )	/* Ah Eikou no Koshien */
+	static RomLoadPtr rom_koshien = new RomLoadPtr(){ public void handler(){ 	/* Ah Eikou no Koshien */
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c81-11.bin", 0x000000, 0x020000, CRC(b44ea8c9) SHA1(f1d19f531b7a653f1c4244d612a339d95ce8cc7c) )
 		ROM_LOAD16_BYTE( "c81-10.bin", 0x000001, 0x020000, CRC(8f98c40a) SHA1(f9471306c47ced10a56c09794954e55fdb6f6b85) )
@@ -6064,9 +6064,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c81-06.bin",  0x00000, 0x80000, CRC(927833b4) SHA1(c09240e4885d2eace1c64fa6425faeeea0296d98) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( yuyugogo )	/* Yuuyu no QUIZ de GO!GO! */
+	static RomLoadPtr rom_yuyugogo = new RomLoadPtr(){ public void handler(){ 	/* Yuuyu no QUIZ de GO!GO! */
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c83_10.3",  0x00000,  0x20000, CRC(4d185d03) SHA1(ab494c777a0acfe088d3db7c1a0488d40884ea0a) )
 		ROM_LOAD16_BYTE( "c83_09.2",  0x00001,  0x20000, CRC(f9892792) SHA1(310d02833c821a34baa0ce537019b8cade6402b7) )
@@ -6090,9 +6090,9 @@ public class taito_f2
 		ROM_LOAD( "c83-04.5",  0x000000, 0x100000, CRC(2600093a) SHA1(824fde078e0ded58037bd06f888eac4e7487ac82) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ninjak )
+	static RomLoadPtr rom_ninjak = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c85_10x.19",  0x00000, 0x20000, CRC(ba7e6e74) SHA1(d6fc7529f1df348fedc6f32edd7691a6da35423d) )
 		ROM_LOAD16_BYTE( "c85_xx.5",    0x00001, 0x20000, CRC(0ac2cba2) SHA1(18e1b458995051c8d4a0077a41fa24dbaa318afc) )
@@ -6115,9 +6115,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c85-05.11",    0x00000, 0x80000, CRC(3c1b0ed0) SHA1(08920dc55d695debae3eea5a8ff1d17bb11afd45) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ninjakj )
+	static RomLoadPtr rom_ninjakj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c85_10x.19",  0x00000, 0x20000, CRC(ba7e6e74) SHA1(d6fc7529f1df348fedc6f32edd7691a6da35423d) )
 		ROM_LOAD16_BYTE( "c85-11x.5",   0x00001, 0x20000, CRC(e4ccaa8e) SHA1(6e1b9dade70e3d91071a3ea590537232bb1215fe) )
@@ -6140,9 +6140,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c85-05.11",    0x00000, 0x80000, CRC(3c1b0ed0) SHA1(08920dc55d695debae3eea5a8ff1d17bb11afd45) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( solfigtr )	/* Solitary Fighter */
+	static RomLoadPtr rom_solfigtr = new RomLoadPtr(){ public void handler(){ 	/* Solitary Fighter */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "c91-05.59",  0x00000, 0x40000, CRC(c1260e7c) SHA1(406663b8f92380f37955061765d77a92dc51c17a) )
 		ROM_LOAD16_BYTE( "c91-09.61",  0x00001, 0x40000, CRC(d82b5266) SHA1(670dc91067dd856b5d36b71e5ddf67e82220d83b) )
@@ -6164,9 +6164,9 @@ public class taito_f2
 		/* no Delta-T samples */
 	
 	//Pals c74-06.48
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qzquest )	/* Quiz Quest */
+	static RomLoadPtr rom_qzquest = new RomLoadPtr(){ public void handler(){ 	/* Quiz Quest */
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "c92_06.8", 0x000000, 0x020000, CRC(424be722) SHA1(ec064028bd68e8e2ec37705cab1c79c963188944) )
 		ROM_LOAD16_BYTE( "c92_05.7", 0x000001, 0x020000, CRC(da470f93) SHA1(dc6d2142fc5662f4b3ffbe4cc9adb5b394d958ed) )
@@ -6186,9 +6186,9 @@ public class taito_f2
 		ROM_LOAD( "c92-04.9",  0x000000, 0x080000, CRC(e421bb43) SHA1(a89157e65b537b31f5837435dae848adde8a86d1) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pulirula )
+	static RomLoadPtr rom_pulirula = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 768k for 68000 code */
 		ROM_LOAD16_BYTE( "c98-12.rom", 0x00000, 0x40000, CRC(816d6cde) SHA1(cac583440cca9aa57373f4a6c9a68c5442a5258b) )
 		ROM_LOAD16_BYTE( "c98-16.rom", 0x00001, 0x40000, CRC(59df5c77) SHA1(e6f222589dd8d046fb92dcf5f68ab0f6cd1b725b) )
@@ -6213,9 +6213,9 @@ public class taito_f2
 		ROM_LOAD( "c98-01.rom", 0x000000, 0x100000, CRC(197f66f5) SHA1(cc5d104033f9ab7d614afd47eeb61a22ef5714ea) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pulirulj )
+	static RomLoadPtr rom_pulirulj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 768k for 68000 code */
 		ROM_LOAD16_BYTE( "c98-12.rom", 0x00000, 0x40000, CRC(816d6cde) SHA1(cac583440cca9aa57373f4a6c9a68c5442a5258b) )
 		ROM_LOAD16_BYTE( "c98-13",     0x00001, 0x40000, CRC(b7d13d5b) SHA1(f2cac6931c5984d68c2d5303b53c54b5781b3aed) )
@@ -6240,9 +6240,9 @@ public class taito_f2
 		ROM_LOAD( "c98-01.rom", 0x000000, 0x100000, CRC(197f66f5) SHA1(cc5d104033f9ab7d614afd47eeb61a22ef5714ea) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( metalb )
+	static RomLoadPtr rom_metalb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 768k for 68000 code */
 		ROM_LOAD16_BYTE( "d16-16.8",   0x00000, 0x40000, CRC(3150be61) SHA1(63e0e6c6dc3a64da77bc83a160bbcd0f7d98ca52) )
 		ROM_LOAD16_BYTE( "d16-18.7",   0x00001, 0x40000, CRC(5216d092) SHA1(d5a237112f0e76fa68f26a4a4e804818dc49a2fa) )
@@ -6265,9 +6265,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )   /* Delta-T samples */
 		ROM_LOAD( "d12-05.16", 0x000000, 0x080000, CRC(7fd036c5) SHA1(f412c6302cfba73df110943d7d6679dc908479f7) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( metalbj )
+	static RomLoadPtr rom_metalbj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 768k for 68000 code */
 		ROM_LOAD16_BYTE( "d12-12.8",   0x00000, 0x40000, CRC(556f82b2) SHA1(fbce771eda99fd8b778f64fdc314ada4b6fdffde) )
 		ROM_LOAD16_BYTE( "d12-11.7",   0x00001, 0x40000, CRC(af9ee28d) SHA1(2c2ced0240e929da6ebec0ea7aac641531833583) )
@@ -6290,9 +6290,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )   /* Delta-T samples */
 		ROM_LOAD( "d12-05.16", 0x000000, 0x080000, CRC(7fd036c5) SHA1(f412c6302cfba73df110943d7d6679dc908479f7) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qzchikyu )
+	static RomLoadPtr rom_qzchikyu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "d19_06.8",	0x000000, 0x020000, CRC(de8c8e55) SHA1(ffe177231193ff32da575a4f72fc655b88f08aa8) )
 		ROM_LOAD16_BYTE( "d19_05.7",	0x000001, 0x020000, CRC(c6d099d0) SHA1(a291177e1ddbe993ffa91fbe41fc04a57a568fd0) )
@@ -6312,9 +6312,9 @@ public class taito_f2
 		ROM_LOAD( "d19-04.9",	0x000000, 0x080000, CRC(d3c44905) SHA1(d00bd4f11523b2123383dd852ee5484d907ff904) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( yesnoj )	/* Yes/No Sinri Tokimeki Chart */
+	static RomLoadPtr rom_yesnoj = new RomLoadPtr(){ public void handler(){ 	/* Yes/No Sinri Tokimeki Chart */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "d20-05-2.2",  0x00000, 0x40000, CRC(68adb929) SHA1(5238409708d67f03d251338883de536bdf76c6c1) )
 		ROM_LOAD16_BYTE( "d20-04-2.4",  0x00001, 0x40000, CRC(a84762f8) SHA1(2950419fc6dca35a43a565575cec21de8efb9df1) )
@@ -6333,9 +6333,9 @@ public class taito_f2
 		/* no ADPCM samples */
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( deadconx )
+	static RomLoadPtr rom_deadconx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 1024k for 68000 code */
 		ROM_LOAD16_BYTE( "d28_06.3",  0x00000, 0x40000, CRC(5b4bff51) SHA1(a589cbc8425add9ed5f2add26f17bb18fe53ca8a) )
 		ROM_LOAD16_BYTE( "d28_12.5",  0x00001, 0x40000, CRC(9b74e631) SHA1(6a3ec317492fdf44dcee66ef8323611c55cd8843) )
@@ -6358,9 +6358,9 @@ public class taito_f2
 		ROM_LOAD( "d28_03.10", 0x000000, 0x100000, CRC(a1804b52) SHA1(f252c473a71a4cf80d9f984fec08e5ae7524a620) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( deadconj )
+	static RomLoadPtr rom_deadconj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 1024k for 68000 code */
 		ROM_LOAD16_BYTE( "d28_06.3",  0x00000, 0x40000, CRC(5b4bff51) SHA1(a589cbc8425add9ed5f2add26f17bb18fe53ca8a) )
 		ROM_LOAD16_BYTE( "d28_07.5",  0x00001, 0x40000, CRC(3fb8954c) SHA1(3104c1537f5fda7e5619aacfb48b02e969399a89) )
@@ -6383,9 +6383,9 @@ public class taito_f2
 		ROM_LOAD( "d28_03.10", 0x000000, 0x100000, CRC(a1804b52) SHA1(f252c473a71a4cf80d9f984fec08e5ae7524a620) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dinorex )
+	static RomLoadPtr rom_dinorex = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )     /* 1Mb for 68000 code */
 		ROM_LOAD16_BYTE( "d39_14.9",	0x000000, 0x080000, CRC(e6aafdac) SHA1(083c6f27b9f7b983e93c7f5d30a9a286b925c10c) )
 		ROM_LOAD16_BYTE( "d39_16.8",	0x000001, 0x080000, CRC(cedc8537) SHA1(b2063c2405a3d244157ae07d60a077fdd984dbb6) )
@@ -6409,9 +6409,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "d39-08.4",	0x000000, 0x080000, CRC(377b8b7b) SHA1(4905ac3b9b52c70afe5f451f860fb9acd81a1dbb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dinorexj )
+	static RomLoadPtr rom_dinorexj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )     /* 1Mb for 68000 code */
 		ROM_LOAD16_BYTE( "d39_14.9",	0x000000, 0x080000, CRC(e6aafdac) SHA1(083c6f27b9f7b983e93c7f5d30a9a286b925c10c) )
 		ROM_LOAD16_BYTE( "d39_13.8",	0x000001, 0x080000, CRC(ae496b2f) SHA1(0e2ed2b77287590343820841d413ce6cb05b616d) )
@@ -6435,9 +6435,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "d39-08.4",	0x000000, 0x080000, CRC(377b8b7b) SHA1(4905ac3b9b52c70afe5f451f860fb9acd81a1dbb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dinorexu )
+	static RomLoadPtr rom_dinorexu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )	/* 1Mb for 68000 code */
 		ROM_LOAD16_BYTE( "d39_14.9",	0x000000, 0x080000, CRC(e6aafdac) SHA1(083c6f27b9f7b983e93c7f5d30a9a286b925c10c) )
 		ROM_LOAD16_BYTE( "d39_15.8",	0x000001, 0x080000, CRC(fe96723b) SHA1(e68b2149cc935ff36efa501b086d5ffb1e0f5887) )
@@ -6461,9 +6461,9 @@ public class taito_f2
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "d39-08.4",	0x000000, 0x080000, CRC(377b8b7b) SHA1(4905ac3b9b52c70afe5f451f860fb9acd81a1dbb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qjinsei )	/* Quiz Jinsei Gekijoh */
+	static RomLoadPtr rom_qjinsei = new RomLoadPtr(){ public void handler(){ 	/* Quiz Jinsei Gekijoh */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "d48-09",  0x000000, 0x040000, CRC(a573b68d) SHA1(fc12c7fb577c919cdb8e16e6d0ddba5603813a13) )
 		ROM_LOAD16_BYTE( "d48-10",  0x000001, 0x040000, CRC(37143a5b) SHA1(8a06031618b60a0c8f38789027d0ed042e540c4d) )
@@ -6484,9 +6484,9 @@ public class taito_f2
 		ROM_LOAD( "d48-05",  0x000000, 0x080000, CRC(3fefd058) SHA1(338c35c3a086041d28708d4b17e208b590c926d5) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qcrayon )	/* Quiz Crayon */
+	static RomLoadPtr rom_qcrayon = new RomLoadPtr(){ public void handler(){ 	/* Quiz Crayon */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "d55-13",  0x00000, 0x40000, CRC(16afbfc7) SHA1(daf948603c78312aa8fb8e239097939ec89ecc64) )
 		ROM_LOAD16_BYTE( "d55-14",  0x00001, 0x40000, CRC(2fb3057f) SHA1(3b107dc69c01ca1b90c78a122336896b89509a3e) )
@@ -6510,9 +6510,9 @@ public class taito_f2
 		ROM_LOAD( "d55-01",  0x000000, 0x100000, CRC(a8309af4) SHA1(dc30b2e019003c58aecaf899668b36dea6e1274e) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qcrayon2 )	/* Quiz Crayon 2 */
+	static RomLoadPtr rom_qcrayon2 = new RomLoadPtr(){ public void handler(){ 	/* Quiz Crayon 2 */
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )     /* 512k for 68000 code */
 		ROM_LOAD16_BYTE( "d63-12",  0x00000, 0x40000, CRC(0f445a38) SHA1(cb9212c6c61d7dec7cfa039ebbbabd368dad52c3) )
 		ROM_LOAD16_BYTE( "d63-13",  0x00001, 0x40000, CRC(74455752) SHA1(9835eb5ebad8df96abe8f7d5f8e4ff663b38015a) )
@@ -6535,9 +6535,9 @@ public class taito_f2
 		ROM_LOAD( "d63-02",  0x000000, 0x100000, CRC(162ae165) SHA1(8b503d096640ec91cf55e05374b293937965c672) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( driftout )
+	static RomLoadPtr rom_driftout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 1024k for 68000 code */
 		ROM_LOAD16_BYTE( "do_46.rom",  0x00000, 0x80000, CRC(f960363e) SHA1(3f64fd606d4e19198de460cf2d99331a2d2e7434) )
 		ROM_LOAD16_BYTE( "do_45.rom",  0x00001, 0x80000, CRC(e3fe66b9) SHA1(6b197061be0c296af08a86dace08ba75c9574e19) )
@@ -6559,9 +6559,9 @@ public class taito_f2
 		ROM_LOAD( "do_snd.rom", 0x00000, 0x80000, CRC(f2deb82b) SHA1(55e39173a475f5ab0b5f573a678a493fb6eefe64) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( driveout )
+	static RomLoadPtr rom_driveout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )     /* 1024k for 68000 code */
 		ROM_LOAD16_BYTE( "driveout.003", 0x00000, 0x80000, CRC(dc431e4e) SHA1(6002cb7a2bd05e28a2413942998a5c7e11fc1432) )
 		ROM_LOAD16_BYTE( "driveout.002", 0x00001, 0x80000, CRC(6f9063f4) SHA1(7ea55126a2f6391322740432d835cd06450909ae) )
@@ -6588,7 +6588,7 @@ public class taito_f2
 		ROM_RELOAD(                0x60000, 0x20000 )
 		ROM_RELOAD(                0xa0000, 0x20000 )
 		ROM_RELOAD(                0xe0000, 0x20000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( f2 )

@@ -440,7 +440,7 @@ public class cshooter
 	*/
 	
 	
-	ROM_START( cshooter )
+	static RomLoadPtr rom_cshooter = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Main CPU?
 		ROM_LOAD( "r1",  0x00000, 0x08000, CRC(fbe8c518) SHA1(bff8319f4892e6d06f1c7a679f67dc8407279cfa) )
 	
@@ -460,7 +460,7 @@ public class cshooter
 		ROM_LOAD( "0.bpr", 0x0000, 0x0020, CRC(93e2d292) SHA1(af8edd0cfe85f28ede9604cfaf4516d54e5277c9) )	/* priority? (not used) */
 		ROM_LOAD( "1.bpr", 0x0020, 0x0100, CRC(cf14ba30) SHA1(3284b6809075756b3c8e07d9705fc7eacb7556f1) )	/* timing? (not used) */
 		ROM_LOAD( "2.bpr", 0x0120, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -493,7 +493,7 @@ public class cshooter
 	
 	*/
 	
-	ROM_START( cshootre )
+	static RomLoadPtr rom_cshootre = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	// Main CPU?
 		ROM_LOAD( "1.k19",  0x00000, 0x08000, CRC(71418952) SHA1(9745ca006576381c9e9595d8e42ab276bab80a41) )
 	
@@ -508,7 +508,7 @@ public class cshooter
 	
 		ROM_REGION( 0x08000, REGION_GFX3, 0 )	// ?? sound ?? unknown rom
 		ROM_LOAD( "4.7f",  0x00000, 0x08000, CRC(3cd715b4) SHA1(da735fb5d262908ddf7ed7dacdea68899f1723ff) )	// 4.g8
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -532,7 +532,7 @@ public class cshooter
 	
 	*/
 	
-	ROM_START( airraid )
+	static RomLoadPtr rom_airraid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	// Main CPU?
 		ROM_LOAD( "1.16j",  0x00000, 0x08000, CRC(7ac2cedf) SHA1(272831f51a2731e067b5aec6dba6bddd3c5350c9) )
 	
@@ -547,7 +547,7 @@ public class cshooter
 	
 		ROM_REGION( 0x08000, REGION_GFX3, 0 )	// ?? sound ?? unknown rom
 		ROM_LOAD( "4.7f",  0x00000, 0x08000, CRC(3cd715b4) SHA1(da735fb5d262908ddf7ed7dacdea68899f1723ff) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( cshooter )

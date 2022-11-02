@@ -308,7 +308,7 @@ public class chaknpop
 	
 	***************************************************************************/
 	
-	ROM_START( chaknpop )
+	static RomLoadPtr rom_chaknpop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )			/* Main CPU */
 		ROM_LOAD( "a04-01.28",    0x00000, 0x2000, CRC(386fe1c8) SHA1(cca24abfb8a7f439251e7936036475c694002561) )
 		ROM_LOAD( "a04-02.27",    0x02000, 0x2000, CRC(5562a6a7) SHA1(0c5d81f9aaf858f88007a6bca7f83dc3ef59c5b5) )
@@ -332,7 +332,7 @@ public class chaknpop
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )			/* Palette */
 		ROM_LOAD( "a04-11.bin",    0x0000, 0x0400, CRC(9bf0e85f) SHA1(44f0a4712c99a715dec54060afb0b27dc48998b4) )
 		ROM_LOAD( "a04-12.bin",    0x0400, 0x0400, CRC(954ce8fc) SHA1(e187f9e2cb754264d149c2896ca949dea3bcf2eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR  COMPANY              FULLNAME ) */

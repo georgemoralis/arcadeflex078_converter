@@ -808,7 +808,7 @@ public class macrossp
 	
 	/*** ROM LOADING *************************************************************/
 	
-	ROM_START( macrossp )
+	static RomLoadPtr rom_macrossp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD32_BYTE( "bp964a-c.u1", 0x000003, 0x080000, CRC(e37904e4) SHA1(e51e446f3699632c53c40e4c16d0ffb76ed1123f) )
 		ROM_LOAD32_BYTE( "bp964a-c.u2", 0x000002, 0x080000, CRC(86d0ca6a) SHA1(8cc1b4a83cbba8b07e1343c5c20e2590d3ce471a) )
@@ -848,9 +848,9 @@ public class macrossp
 	
 		ROM_REGION16_BE( 0x400000, REGION_SOUND2, 0 )
 		/* Filled in below in init routine */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quizmoon )
+	static RomLoadPtr rom_quizmoon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD32_BYTE( "u1.bin",  0x000003, 0x020000, CRC(ea404553) SHA1(123bb8e399a5b54c43f4eb41d3e5f52c6947900f) )
 		ROM_LOAD32_BYTE( "u2.bin",  0x000002, 0x020000, CRC(024eedff) SHA1(cbaa2b71980a2686e582331616dc36e34ecd9e67) )
@@ -899,7 +899,7 @@ public class macrossp
 	
 		ROM_REGION16_BE( 0x400000, REGION_SOUND4, 0 )
 		/* Filled in below in init routine */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -367,7 +367,7 @@ public class xmen
 	
 	***************************************************************************/
 	
-	ROM_START( xmen )
+	static RomLoadPtr rom_xmen = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "065ubb04.10d",  0x00000, 0x20000, CRC(f896c93b) SHA1(0bee89fe4d36a9b2ded864770198eb2df6903580) )
 		ROM_LOAD16_BYTE( "065ubb05.10f",  0x00001, 0x20000, CRC(e02e5d64) SHA1(9838c1cf9862db3ca70a23ef5f3c5883729c4e0c) )
@@ -390,9 +390,9 @@ public class xmen
 	
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )	/* samples for the 054539 */
 		ROM_LOAD( "xmenc25.bin",  0x000000, 0x200000, CRC(5adbcee0) SHA1(435feda697193bc51db80eba46be474cbbc1de4b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( xmen6p )
+	static RomLoadPtr rom_xmen6p = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "065ucb04.10d",  0x00000, 0x20000, CRC(0f09b8e0) SHA1(79f4d86d8ec45b39e34ddf45860bea0c74dae183) )
 		ROM_LOAD16_BYTE( "065ucb05.10f",  0x00001, 0x20000, CRC(867becbf) SHA1(3f81f4dbd289f98b78d7821a8925598c771f01ef) )
@@ -415,9 +415,9 @@ public class xmen
 	
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )	/* samples for the 054539 */
 		ROM_LOAD( "xmenc25.bin",  0x000000, 0x200000, CRC(5adbcee0) SHA1(435feda697193bc51db80eba46be474cbbc1de4b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( xmen2p )
+	static RomLoadPtr rom_xmen2p = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "065aaa04.10d",  0x00000, 0x20000, CRC(7f8b27c2) SHA1(052db1f47671564a440544a41fc397a19d1aff3a) )
 		ROM_LOAD16_BYTE( "065aaa04.10f",  0x00001, 0x20000, CRC(841ed636) SHA1(33f96022ce3dae9b49eb51fd4e8f7387a1777002) )
@@ -440,9 +440,9 @@ public class xmen
 	
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )	/* samples for the 054539 */
 		ROM_LOAD( "xmenc25.bin",  0x000000, 0x200000, CRC(5adbcee0) SHA1(435feda697193bc51db80eba46be474cbbc1de4b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( xmen2pj )
+	static RomLoadPtr rom_xmen2pj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "065jaa04.10d",  0x00000, 0x20000, CRC(66746339) SHA1(8cc5f5deb4178b0444ffc5974940a30cb003114e) )
 		ROM_LOAD16_BYTE( "065jaa05.10f",  0x00001, 0x20000, CRC(1215b706) SHA1(b746dedab9c509b5cd941f0f4ddd3709e8a58cce) )
@@ -465,7 +465,7 @@ public class xmen
 	
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )	/* samples for the 054539 */
 		ROM_LOAD( "xmenc25.bin",  0x000000, 0x200000, CRC(5adbcee0) SHA1(435feda697193bc51db80eba46be474cbbc1de4b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

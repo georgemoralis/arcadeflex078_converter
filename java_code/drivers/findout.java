@@ -290,7 +290,7 @@ public class findout
 	
 	***************************************************************************/
 	
-	ROM_START( findout )
+	static RomLoadPtr rom_findout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x38000, REGION_CPU1, 0 )
 		ROM_LOAD( "12.bin",       0x00000, 0x4000, CRC(21132d4c) SHA1(e3562ee2f46b3f022a852a0e0b1c8fb8164f64a3) )
 		ROM_LOAD( "11.bin",       0x08000, 0x2000, CRC(0014282c) SHA1(c6792f2ff712ba3759ff009950d78750df844d01) )	/* banked */
@@ -302,7 +302,7 @@ public class findout
 	
 		ROM_REGION( 0x0200, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "82s147.bin",   0x0000, 0x0200, CRC(f3b663bb) SHA1(5a683951c8d3a2baac4b49e379d6e10e35465c8a) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

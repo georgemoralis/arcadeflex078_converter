@@ -218,7 +218,7 @@ public class ninjakid
 	 Rom Definitions
 	*******************************************************************************/
 	
-	ROM_START( ninjakun ) /* Original Board? */
+	static RomLoadPtr rom_ninjakun = new RomLoadPtr(){ public void handler(){  /* Original Board? */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Main CPU */
 		ROM_LOAD( "ninja-1.7a",  0x0000, 0x02000, CRC(1c1dc141) SHA1(423d3ed35e73a8d5bfce075a889b0322b207bd0d) )
 		ROM_LOAD( "ninja-2.7b",  0x2000, 0x02000, CRC(39cc7d37) SHA1(7f0d0e1e92cb6a57f15eb7fc51a67112f1c5fc8e) )
@@ -239,7 +239,7 @@ public class ninjakid
 		ROM_LOAD16_BYTE( "ninja-11.2d", 0x0001, 0x02000, CRC(12ff9597) SHA1(10b572844ab32e3ae54abe3600fecc1a811ac713) )
 		ROM_LOAD16_BYTE( "ninja-12.4c", 0x4000, 0x02000, CRC(e9b75807) SHA1(cf4c8ac962f785e9de5502df58eab9b3725aaa28) )
 		ROM_LOAD16_BYTE( "ninja-13.4d", 0x4001, 0x02000, CRC(1760ed2c) SHA1(ee4c8efcce483c8051873714856824a1a1e14b61) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*******************************************************************************
 	 Input Ports

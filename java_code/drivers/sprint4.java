@@ -390,7 +390,7 @@ public class sprint4
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( sprint4 )
+	static RomLoadPtr rom_sprint4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD         ( "30031.c1",    0x2800, 0x0800, CRC(017ee7c4) SHA1(9386cacc619669c18af31f66691a45af6dafef64) ) 
 		ROM_RELOAD       (                0xe800, 0x0800 )
@@ -411,10 +411,10 @@ public class sprint4
 	
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "30024-01.p8", 0x0000, 0x0200, CRC(e71d2e22) SHA1(434c3a8237468604cce7feb40e6061d2670013b3) )	/* SYNC */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( sprint4a )
+	static RomLoadPtr rom_sprint4a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD         ( "30031.c1",    0x2800, 0x0800, CRC(017ee7c4) SHA1(9386cacc619669c18af31f66691a45af6dafef64) ) 
 		ROM_RELOAD       (                0xe800, 0x0800 )
@@ -435,7 +435,7 @@ public class sprint4
 	
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "30024-01.p8", 0x0000, 0x0200, CRC(e71d2e22) SHA1(434c3a8237468604cce7feb40e6061d2670013b3) )	/* SYNC */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1977, sprint4,  0,       sprint4, sprint4, 0, ROT0, "Atari", "Sprint 4 (set 1)", GAME_NO_SOUND )

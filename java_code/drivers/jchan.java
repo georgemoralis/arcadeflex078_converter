@@ -354,7 +354,7 @@ public class jchan
 	
 	/* rom loading */
 	
-	ROM_START( jchan )
+	static RomLoadPtr rom_jchan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "jm01x3.u67", 0x000001, 0x080000, CRC(c0adb141) SHA1(de265e1da06e723492e0c2465cd04e25ce1c237f) )
 		ROM_LOAD16_BYTE( "jm00x3.u68", 0x000000, 0x080000, CRC(b1aadc5a) SHA1(0a93693088c0a4b8a79159fb0ebac47d5556d800) )
@@ -394,7 +394,7 @@ public class jchan
 		ROM_REGION( 0x080000, REGION_GFX4, 0 ) /* Unknown, More GFX? */
 		ROM_LOAD( "jcs0x3.164", 0x000000, 0x040000, CRC(9a012cbc) SHA1(b3e7390220c90d55dccfb96397f0af73925e36f9) )
 		ROM_LOAD( "jcs1x3.165", 0x040000, 0x040000, CRC(57ae7c8d) SHA1(4086f638c2aabcee84e838243f0fd15cec5c040d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/* the program code of gurus set is the same, the graphic roms were split up, and might be bad but they should be the same since

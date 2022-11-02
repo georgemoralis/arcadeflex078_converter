@@ -464,7 +464,7 @@ public class kangaroo
 	 *
 	 *************************************/
 	
-	ROM_START( fnkyfish )
+	static RomLoadPtr rom_fnkyfish = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )
 		ROM_LOAD( "tvg_64.0",    0x0000,  0x1000, CRC(af728803) SHA1(1cbbf863f0eb4c759d6037ef9d9d0f4586b7b570) )
 		ROM_LOAD( "tvg_65.1",    0x1000,  0x1000, CRC(71959e6b) SHA1(7336cbf3eefd081cd657a56fb6a8fbdac1b51c2c) )
@@ -479,10 +479,10 @@ public class kangaroo
 		ROM_LOAD( "tvg_71.v2",   0x1000, 0x1000, CRC(a59c9713) SHA1(60dafa3d5a70b7e727b7c4688f8f3125735c31ec) )
 		ROM_LOAD( "tvg_70.v1",   0x2000, 0x1000, CRC(fd308ef1) SHA1(d07f964cab875b0e47f3469fa5211684a5725dfe) )
 		ROM_LOAD( "tvg_72.v3",   0x3000, 0x1000, CRC(6ae9b584) SHA1(408d26f4cdcd2abf0667fdc9c6eae58c9052981d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( kangaroo )
+	static RomLoadPtr rom_kangaroo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )
 		ROM_LOAD( "tvg_75.0",    0x0000, 0x1000, CRC(0d18c581) SHA1(0e0f89d644b79e887c53e5294783843ca7e875ba) )
 		ROM_LOAD( "tvg_76.1",    0x1000, 0x1000, CRC(5978d37a) SHA1(684c1092de4a0927a03752903c86c3bbe99e868a) )
@@ -502,10 +502,10 @@ public class kangaroo
 		ROM_LOAD( "tvg_85.v2",   0x1000, 0x1000, CRC(72c52695) SHA1(87f4715fbb7d509bd9cc4e71e2afb0d475bbac13) )
 		ROM_LOAD( "tvg_84.v1",   0x2000, 0x1000, CRC(e4cb26c2) SHA1(5016db9d48fdcfb757618659d063b90862eb0e90) )
 		ROM_LOAD( "tvg_86.v3",   0x3000, 0x1000, CRC(9e6a599f) SHA1(76b4eddb4efcd8189d8cc5962d8497e82885f212) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( kangaroa )
+	static RomLoadPtr rom_kangaroa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "tvg_75.0",    0x0000, 0x1000, CRC(0d18c581) SHA1(0e0f89d644b79e887c53e5294783843ca7e875ba) )
 		ROM_LOAD( "tvg_76.1",    0x1000, 0x1000, CRC(5978d37a) SHA1(684c1092de4a0927a03752903c86c3bbe99e868a) )
@@ -525,10 +525,10 @@ public class kangaroo
 		ROM_LOAD( "tvg_85.v2",   0x1000, 0x1000, CRC(72c52695) SHA1(87f4715fbb7d509bd9cc4e71e2afb0d475bbac13) )
 		ROM_LOAD( "tvg_84.v1",   0x2000, 0x1000, CRC(e4cb26c2) SHA1(5016db9d48fdcfb757618659d063b90862eb0e90) )
 		ROM_LOAD( "tvg_86.v3",   0x3000, 0x1000, CRC(9e6a599f) SHA1(76b4eddb4efcd8189d8cc5962d8497e82885f212) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( kangarob )
+	static RomLoadPtr rom_kangarob = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )
 		ROM_LOAD( "tvg_75.0",    0x0000, 0x1000, CRC(0d18c581) SHA1(0e0f89d644b79e887c53e5294783843ca7e875ba) )
 		ROM_LOAD( "tvg_76.1",    0x1000, 0x1000, CRC(5978d37a) SHA1(684c1092de4a0927a03752903c86c3bbe99e868a) )
@@ -545,7 +545,7 @@ public class kangaroo
 		ROM_LOAD( "tvg_85.v2",   0x1000, 0x1000, CRC(72c52695) SHA1(87f4715fbb7d509bd9cc4e71e2afb0d475bbac13) )
 		ROM_LOAD( "tvg_84.v1",   0x2000, 0x1000, CRC(e4cb26c2) SHA1(5016db9d48fdcfb757618659d063b90862eb0e90) )
 		ROM_LOAD( "tvg_86.v3",   0x3000, 0x1000, CRC(9e6a599f) SHA1(76b4eddb4efcd8189d8cc5962d8497e82885f212) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

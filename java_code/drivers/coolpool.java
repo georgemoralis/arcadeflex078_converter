@@ -692,7 +692,7 @@ public class coolpool
 	 *
 	 *************************************/
 	
-	ROM_START( amerdart )
+	static RomLoadPtr rom_amerdart = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( TOBYTE(0x100000), REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION16_LE( 0x0a0000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -728,9 +728,9 @@ public class coolpool
 		ROM_LOAD16_WORD( "u21",  0x0d0000, 0x10000, CRC(9b0b8978) SHA1(b31d0451ecd7085c191d20b2b41d0e8fe551996c) )
 		ROM_LOAD16_WORD( "u22",  0x0e0000, 0x10000, CRC(4b92588a) SHA1(eea262c1a122015364a0046ff2bc7816f5f6821d) )
 		ROM_LOAD16_WORD( "u23",  0x0f0000, 0x10000, CRC(d7c2b13b) SHA1(3561e08011f649e4d0c47792745b2a014167e816) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( coolpool )
+	static RomLoadPtr rom_coolpool = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )		/* dummy region for TMS34010 */
 	
 		ROM_REGION16_LE( 0x40000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -768,9 +768,9 @@ public class coolpool
 		ROM_LOAD( "u12c",         0x140000, 0x40000, CRC(4f246958) SHA1(ee4446159635b6c44d88d8f6aac52787a89403c1) )
 		ROM_LOAD( "u11c",         0x180000, 0x40000, CRC(92cd2b03) SHA1(e80df65f8ec5ed2178f623bdd975e2b01a12a184) )
 		ROM_LOAD( "u10c",         0x1c0000, 0x40000, CRC(a3dbcae3) SHA1(af997f3f56f406d5eb9fa415e1672b2d129815b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 9ballsht )
+	static RomLoadPtr rom_9ballsht = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )		/* dummy region for TMS34010 */
 	
 		ROM_REGION16_LE( 0x80000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -788,13 +788,13 @@ public class coolpool
 		ROM_REGION( 0x100000, REGION_USER2, 0 )	/* TMS32026 data */
 		ROM_LOAD( "u54",          0x00000, 0x80000, CRC(1be5819c) SHA1(308b5b1fe05634419d03956ae1b2e5a61206900f) )
 		ROM_LOAD( "u53",          0x80000, 0x80000, CRC(d401805d) SHA1(f4bcb2bdc45c3bc5ca423e518cdea8b3a7e8d60e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	  all ROMs for this set were missing except for the main program,
 	  I assume the others are the same.
 	 */
-	ROM_START( 9ballsh2 )
+	static RomLoadPtr rom_9ballsh2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )		/* dummy region for TMS34010 */
 	
 		ROM_REGION16_LE( 0x80000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -812,9 +812,9 @@ public class coolpool
 		ROM_REGION( 0x100000, REGION_USER2, 0 )	/* TMS32026 data */
 		ROM_LOAD( "u54",          0x00000, 0x80000, CRC(1be5819c) SHA1(308b5b1fe05634419d03956ae1b2e5a61206900f) )
 		ROM_LOAD( "u53",          0x80000, 0x80000, CRC(d401805d) SHA1(f4bcb2bdc45c3bc5ca423e518cdea8b3a7e8d60e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 9ballsh3 )
+	static RomLoadPtr rom_9ballsh3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )		/* dummy region for TMS34010 */
 	
 		ROM_REGION16_LE( 0x80000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -832,7 +832,7 @@ public class coolpool
 		ROM_REGION( 0x100000, REGION_USER2, 0 )	/* TMS32026 data */
 		ROM_LOAD( "u54",          0x00000, 0x80000, CRC(1be5819c) SHA1(308b5b1fe05634419d03956ae1b2e5a61206900f) )
 		ROM_LOAD( "u53",          0x80000, 0x80000, CRC(d401805d) SHA1(f4bcb2bdc45c3bc5ca423e518cdea8b3a7e8d60e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*************************************

@@ -360,7 +360,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	ROM_START( vaportra )
+	static RomLoadPtr rom_vaportra = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 	  	ROM_LOAD16_BYTE( "fl_02-1.bin", 0x00000, 0x20000, CRC(9ae36095) SHA1(c8d11a6033a44277a267915b4ca471c43acd1143) )
 	  	ROM_LOAD16_BYTE( "fl_00-1.bin", 0x00001, 0x20000, CRC(c08cc048) SHA1(b28f95856817b8a8cb6cc588d48e95196cbf52fd) )
@@ -386,9 +386,9 @@ public class vaportra
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )	/* ADPCM samples */
 		ROM_LOAD( "fj05",    0x00000, 0x20000, CRC(39cda2b5) SHA1(f5c5a305025d451ab48f84cd63e36a3bbdefda96) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vaportru )
+	static RomLoadPtr rom_vaportru = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 	  	ROM_LOAD16_BYTE( "fj02",   0x00000, 0x20000, CRC(a2affb73) SHA1(0d49397cc9891047a0b92e92e2e3d0e7fcaf8db9) )
 	  	ROM_LOAD16_BYTE( "fj00",   0x00001, 0x20000, CRC(ef05e07b) SHA1(0e505709fa251e6b30f019c0c28ee9ba2b29a50a) )
@@ -414,9 +414,9 @@ public class vaportra
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )	/* ADPCM samples */
 		ROM_LOAD( "fj05",    0x00000, 0x20000, CRC(39cda2b5) SHA1(f5c5a305025d451ab48f84cd63e36a3bbdefda96) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kuhga )
+	static RomLoadPtr rom_kuhga = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 	  	ROM_LOAD16_BYTE( "fp02-3.bin", 0x00000, 0x20000, CRC(d0705ef4) SHA1(781efbf36d9dda543895e0a59cd4d72667439a93) )
 	  	ROM_LOAD16_BYTE( "fp00-3.bin", 0x00001, 0x20000, CRC(1da92e48) SHA1(6507bd9bbc31ee03e38b82cc135aebf090902761) )
@@ -442,7 +442,7 @@ public class vaportra
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )	/* ADPCM samples */
 		ROM_LOAD( "fj05",    0x00000, 0x20000, CRC(39cda2b5) SHA1(f5c5a305025d451ab48f84cd63e36a3bbdefda96) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

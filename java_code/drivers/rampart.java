@@ -442,7 +442,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	ROM_START( rampart )
+	static RomLoadPtr rom_rampart = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x148000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "082-1033.13l", 0x00000, 0x80000, CRC(5c36795f) SHA1(2f3dcdfd6b04d851aa1082848624687ac0cec9e2) )
 		ROM_LOAD16_BYTE( "082-1032.13j", 0x00001, 0x80000, CRC(ec7bc38c) SHA1(72d4dbb11e92c69cb560bbb39d7bbd5e845b1e4d) )
@@ -455,10 +455,10 @@ public class rampart
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "082-1007.2d", 0x00000, 0x20000, CRC(c96a0fc3) SHA1(6e7e242d0afa4714ca31d77ccbf8ee487bbdb1e4) )
 		ROM_LOAD( "082-1008.1d", 0x20000, 0x20000, CRC(518218d9) SHA1(edf1b11579dcfa9a872fa4bd866dc2f95fac767d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ramprt2p )
+	static RomLoadPtr rom_ramprt2p = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x148000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "082-1033.13l", 0x00000, 0x80000, CRC(5c36795f) SHA1(2f3dcdfd6b04d851aa1082848624687ac0cec9e2) )
 		ROM_LOAD16_BYTE( "082-1032.13j", 0x00001, 0x80000, CRC(ec7bc38c) SHA1(72d4dbb11e92c69cb560bbb39d7bbd5e845b1e4d) )
@@ -471,10 +471,10 @@ public class rampart
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "082-1007.2d", 0x00000, 0x20000, CRC(c96a0fc3) SHA1(6e7e242d0afa4714ca31d77ccbf8ee487bbdb1e4) )
 		ROM_LOAD( "082-1008.1d", 0x20000, 0x20000, CRC(518218d9) SHA1(edf1b11579dcfa9a872fa4bd866dc2f95fac767d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rampartj )
+	static RomLoadPtr rom_rampartj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x148000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "3451.bin",  0x00000, 0x20000, CRC(c6596d32) SHA1(3e3e0cbb3b5fc6dd9685bbc4b18c22e0858d9282) )
 		ROM_LOAD16_BYTE( "3450.bin",  0x00001, 0x20000, CRC(563b33cc) SHA1(8b454bc19644f1d3d76e4a13f08071cf5eab36e2) )
@@ -491,7 +491,7 @@ public class rampart
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "082-1007.2d", 0x00000, 0x20000, CRC(c96a0fc3) SHA1(6e7e242d0afa4714ca31d77ccbf8ee487bbdb1e4) )
 		ROM_LOAD( "082-1008.1d", 0x20000, 0x20000, CRC(518218d9) SHA1(edf1b11579dcfa9a872fa4bd866dc2f95fac767d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -764,7 +764,7 @@ public class twincobr
 	
 	***************************************************************************/
 	
-	ROM_START( twincobr )
+	static RomLoadPtr rom_twincobr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "tc16",		0x00000, 0x10000, CRC(07f64d13) SHA1(864ce0f9369c40c3ae792fc4ab2444a168214749) )
 		ROM_LOAD16_BYTE( "tc14",		0x00001, 0x10000, CRC(41be6978) SHA1(4784804b738a332c7f24a43bcbb7a1e607365735) )
@@ -812,9 +812,9 @@ public class twincobr
 		ROM_LOAD( "82s123.d2",	0x200, 0x020, CRC(f72482db) SHA1(b0cb911f9c81f6088a5aa8760916ddae1f8534d7) )	/* sprite control ?? */
 		ROM_LOAD( "82s123.e18",	0x220, 0x020, CRC(bc88cced) SHA1(5055362710c0f58823c05fb4c0e0eec638b91e3d) )	/* sprite attribute (flip/position) ?? */
 		ROM_LOAD( "82s123.b24",	0x240, 0x020, CRC(4fb5df2a) SHA1(506ef2c8e4cf45c256d6831a0a5760732f2de422) )	/* tile to sprite priority ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( twincobu )
+	static RomLoadPtr rom_twincobu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "tc16",			0x00000, 0x10000, CRC(07f64d13) SHA1(864ce0f9369c40c3ae792fc4ab2444a168214749) )
 		ROM_LOAD16_BYTE( "tc14",			0x00001, 0x10000, CRC(41be6978) SHA1(4784804b738a332c7f24a43bcbb7a1e607365735) )
@@ -857,9 +857,9 @@ public class twincobr
 		ROM_LOAD( "82s123.d2",	0x200, 0x020, CRC(f72482db) SHA1(b0cb911f9c81f6088a5aa8760916ddae1f8534d7) )	/* sprite control ?? */
 		ROM_LOAD( "82s123.e18",	0x220, 0x020, CRC(bc88cced) SHA1(5055362710c0f58823c05fb4c0e0eec638b91e3d) )	/* sprite attribute (flip/position) ?? */
 		ROM_LOAD( "82s123.b24",	0x240, 0x020, CRC(4fb5df2a) SHA1(506ef2c8e4cf45c256d6831a0a5760732f2de422) )	/* tile to sprite priority ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ktiger )
+	static RomLoadPtr rom_ktiger = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "tc16",		0x00000, 0x10000, CRC(07f64d13) SHA1(864ce0f9369c40c3ae792fc4ab2444a168214749) )
 		ROM_LOAD16_BYTE( "tc14",		0x00001, 0x10000, CRC(41be6978) SHA1(4784804b738a332c7f24a43bcbb7a1e607365735) )
@@ -902,9 +902,9 @@ public class twincobr
 		ROM_LOAD( "82s123.d2",	0x200, 0x020, CRC(f72482db) SHA1(b0cb911f9c81f6088a5aa8760916ddae1f8534d7) )	/* sprite control ?? */
 		ROM_LOAD( "82s123.e18",	0x220, 0x020, CRC(bc88cced) SHA1(5055362710c0f58823c05fb4c0e0eec638b91e3d) )	/* sprite attribute (flip/position) ?? */
 		ROM_LOAD( "82s123.b24",	0x240, 0x020, CRC(4fb5df2a) SHA1(506ef2c8e4cf45c256d6831a0a5760732f2de422) )	/* tile to sprite priority ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fshark )
+	static RomLoadPtr rom_fshark = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "b02_18-1.rom",	0x00000, 0x10000, CRC(04739e02) SHA1(8a14284adb0f0f33adf9affdec081c90de85d594) )
 		ROM_LOAD16_BYTE( "b02_17-1.rom",	0x00001, 0x10000, CRC(fd6ef7a8) SHA1(ddbc05ce694ab4d929f5f621d95800b612bc5f66) )
@@ -951,9 +951,9 @@ public class twincobr
 		ROM_LOAD( "clr2.bpr",	0x000, 0x100, CRC(24e7d62f) SHA1(1c06a1ef1b6a722794ca1d5ee2c476ecaa5178a3) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr1.bpr",	0x100, 0x100, CRC(a50cef09) SHA1(55cafb5b2551b80ae708e9b966cf37c70a16d310) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr3.bpr",	0x200, 0x100, CRC(016fe2f7) SHA1(909f815a61e759fdf998674ee383512ecd8fee65) )	/* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skyshark )
+	static RomLoadPtr rom_skyshark = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "18-2",		0x00000, 0x10000, CRC(888e90f3) SHA1(3a40d7e7653cc929af8186e48f272989fb332e14) )
 		ROM_LOAD16_BYTE( "17-2",		0x00001, 0x10000, CRC(066d67be) SHA1(a66be35b956da2c2ddf97cae66d79c0efd228621) )
@@ -1000,9 +1000,9 @@ public class twincobr
 		ROM_LOAD( "clr2.bpr",	0x000, 0x100, CRC(24e7d62f) SHA1(1c06a1ef1b6a722794ca1d5ee2c476ecaa5178a3) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr1.bpr",	0x100, 0x100, CRC(a50cef09) SHA1(55cafb5b2551b80ae708e9b966cf37c70a16d310) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr3.bpr",	0x200, 0x100, CRC(016fe2f7) SHA1(909f815a61e759fdf998674ee383512ecd8fee65) )	/* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hishouza )
+	static RomLoadPtr rom_hishouza = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "b02-18.rom",	0x00000, 0x10000, CRC(4444bb94) SHA1(5ff955a5190d1b356187de105cfb8ea181fc1282) )
 		ROM_LOAD16_BYTE( "b02-17.rom",	0x00001, 0x10000, CRC(cdac7228) SHA1(6b0d67e4b0661a858653d2eabb8936af9148167e) )
@@ -1049,9 +1049,9 @@ public class twincobr
 		ROM_LOAD( "clr2.bpr",	0x000, 0x100, CRC(24e7d62f) SHA1(1c06a1ef1b6a722794ca1d5ee2c476ecaa5178a3) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr1.bpr",	0x100, 0x100, CRC(a50cef09) SHA1(55cafb5b2551b80ae708e9b966cf37c70a16d310) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr3.bpr",	0x200, 0x100, CRC(016fe2f7) SHA1(909f815a61e759fdf998674ee383512ecd8fee65) )	/* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fsharkbt )
+	static RomLoadPtr rom_fsharkbt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "r18",		0x00000, 0x10000, CRC(ef30f563) SHA1(755d6ce4c1e631d7c11d3fab99dae300b6a3452e) )
 		ROM_LOAD16_BYTE( "r17",		0x00001, 0x10000, CRC(0e18d25f) SHA1(82fc94830b3087c826d07cff699af9a3638e8087) )
@@ -1098,9 +1098,9 @@ public class twincobr
 		ROM_LOAD( "clr2.bpr",	0x000, 0x100, CRC(24e7d62f) SHA1(1c06a1ef1b6a722794ca1d5ee2c476ecaa5178a3) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr1.bpr",	0x100, 0x100, CRC(a50cef09) SHA1(55cafb5b2551b80ae708e9b966cf37c70a16d310) )	/* sprite priority control ?? */
 		ROM_LOAD( "clr3.bpr",	0x200, 0x100, CRC(016fe2f7) SHA1(909f815a61e759fdf998674ee383512ecd8fee65) )	/* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gulfwar2 )
+	static RomLoadPtr rom_gulfwar2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* Main 68K code */
 		ROM_LOAD16_BYTE( "07-u92.bin",  0x00001, 0x20000, CRC(b73e6b25) SHA1(53cde41e5a2e8f721c3f43abf1fff46479f658d8) )
 		ROM_LOAD16_BYTE( "08-u119.bin", 0x00000, 0x20000, CRC(41ebf9c0) SHA1(85207dda76abded727ed95717024a2ea2bd85dac) )
@@ -1141,7 +1141,7 @@ public class twincobr
 		ROM_LOAD( "82s123.d2",	0x200, 0x020, CRC(f72482db) SHA1(b0cb911f9c81f6088a5aa8760916ddae1f8534d7) )	/* sprite control ?? */
 		ROM_LOAD( "82s123.e18",	0x220, 0x020, CRC(bc88cced) SHA1(5055362710c0f58823c05fb4c0e0eec638b91e3d) )	/* sprite attribute (flip/position) ?? */
 		ROM_LOAD( "82s123.b24",	0x240, 0x020, CRC(4fb5df2a) SHA1(506ef2c8e4cf45c256d6831a0a5760732f2de422) )	/* tile to sprite priority ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( fshark )
 	{

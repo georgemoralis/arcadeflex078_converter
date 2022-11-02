@@ -232,7 +232,7 @@ public class xybots
 	 *
 	 *************************************/
 	
-	ROM_START( xybots )
+	static RomLoadPtr rom_xybots = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "211217cd.054", 0x000000, 0x010000, CRC(16d64748) SHA1(3c2ba8ec3185b69c4e1947ac842f2250ee35216e) )
 		ROM_LOAD16_BYTE( "211319cd.054", 0x000001, 0x010000, CRC(2677d44a) SHA1(23a3538df13a47f2fd78d4842b9f8b81e38c802e) )
@@ -260,10 +260,10 @@ public class xybots
 	
 		ROM_REGION( 0x02000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1101-5c.054",  0x000000, 0x002000, CRC(59c028a2) SHA1(27dcde0da88f949a5e4a7632d4b403b937c8c6e0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( xybotsg )
+	static RomLoadPtr rom_xybotsg = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "321217cd.054", 0x000000, 0x010000, CRC(4cac5d7c) SHA1(79cdd754fb6055249dace31fe9f8939f13aae8ca) )
 		ROM_LOAD16_BYTE( "321319cd.054", 0x000001, 0x010000, CRC(bfcb0b00) SHA1(3e45f72051ea74b544c8578c6fc1284f925caa3d) )
@@ -291,10 +291,10 @@ public class xybots
 	
 		ROM_REGION( 0x02000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1101-5c.054",  0x000000, 0x002000, CRC(59c028a2) SHA1(27dcde0da88f949a5e4a7632d4b403b937c8c6e0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( xybotsf )
+	static RomLoadPtr rom_xybotsf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "361217cd.054", 0x000000, 0x010000, CRC(b03a3f3c) SHA1(c88ad0ba5381562095f5b5a13d338d10fa0597f5) )
 		ROM_LOAD16_BYTE( "361319cd.054", 0x000001, 0x010000, CRC(ab33eb1f) SHA1(926c32f07c0bcc5832db3a1adf0357e55cae707a) )
@@ -322,10 +322,10 @@ public class xybots
 	
 		ROM_REGION( 0x02000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1101-5c.054",  0x000000, 0x002000, CRC(59c028a2) SHA1(27dcde0da88f949a5e4a7632d4b403b937c8c6e0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( xybots1 )
+	static RomLoadPtr rom_xybots1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "111217cd.054", 0x000000, 0x010000, CRC(2dbab363) SHA1(1473bf1246c6fb3e6b8b1f86a345b532ccf18e8d) )
 		ROM_LOAD16_BYTE( "111319cd.054", 0x000001, 0x010000, CRC(847b056e) SHA1(cc4b90f19d7eaee09569ba228c2654f64cec3200) )
@@ -353,10 +353,10 @@ public class xybots
 	
 		ROM_REGION( 0x02000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1101-5c.054",  0x000000, 0x002000, CRC(59c028a2) SHA1(27dcde0da88f949a5e4a7632d4b403b937c8c6e0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( xybots0 )
+	static RomLoadPtr rom_xybots0 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "011217cd.054", 0x000000, 0x010000, CRC(4b830ac4) SHA1(1f6dc0c6648f74c4775b52e3f502e835a8741182) )
 		ROM_LOAD16_BYTE( "011319cd.054", 0x000001, 0x010000, CRC(dcfbf8a7) SHA1(0106cd7be55147f4b59e17391e5bb339aaf80535) )
@@ -384,7 +384,7 @@ public class xybots
 	
 		ROM_REGION( 0x02000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1101-5c.054",  0x000000, 0x002000, CRC(59c028a2) SHA1(27dcde0da88f949a5e4a7632d4b403b937c8c6e0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

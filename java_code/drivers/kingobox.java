@@ -679,7 +679,7 @@ public class kingobox
 	
 	***************************************************************************/
 	
-	ROM_START( kingofb )
+	static RomLoadPtr rom_kingofb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "d09_22.bin",   0x00000, 0x4000, CRC(6220bfa2) SHA1(cb329406ed07b71f9d2c40fc6c2c196daaa56fc8) )
 		ROM_LOAD( "e09_23.bin",   0x04000, 0x4000, CRC(5782fdd8) SHA1(6c8c1114ce7863f9e8331796e2c5fb4928904b55) )
@@ -718,10 +718,10 @@ public class kingobox
 		ROM_LOAD( "vb14_col.bin", 0x0000, 0x0100, CRC(c58e5121) SHA1(2e6658e24c183d8dacf4ff84a38060e57d11f265) )	/* red component */
 		ROM_LOAD( "vb15_col.bin", 0x0100, 0x0100, CRC(5ab06f25) SHA1(f5e0aabf40ce6d11771e0678fea248abd5b95b3c) )	/* green component */
 		ROM_LOAD( "vb16_col.bin", 0x0200, 0x0100, CRC(1171743f) SHA1(ddfce0ff213381a2fc94337681e599cb28db840c) )	/* blue component */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Ring King */
-	ROM_START( ringking )
+	static RomLoadPtr rom_ringking = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "cx13.9f",      0x00000, 0x8000, CRC(93e38c02) SHA1(8f96f16f2904ef83101448fdf201b98b8e75e1d6) )
 		ROM_LOAD( "cx14.11f",     0x08000, 0x4000, CRC(a435acb0) SHA1(2c9d4e8471d87ce148f9c2180769350401914fc0) )
@@ -756,9 +756,9 @@ public class kingobox
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "82s135.2a",    0x0000, 0x0100, CRC(0e723a83) SHA1(51d2274be70506308b3bfa9c2d23606290f8b3b5) )	/* red and green component */
 		ROM_LOAD( "82s129.1a",    0x0100, 0x0100, CRC(d345cbb3) SHA1(6318022ebbbe59d4c0a207801fffed1167b98a66) )	/* blue component */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ringkin2 )
+	static RomLoadPtr rom_ringkin2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "rkngm1.bin",   0x00000, 0x8000, CRC(086921ea) SHA1(c5a594be0738a80c5f912dc819332ff61aa6fc4b) )
 		ROM_LOAD( "rkngm2.bin",   0x08000, 0x4000, CRC(c0b636a4) SHA1(c3640a5597242e735673e1dbf8bf866e9122a20f) )
@@ -793,9 +793,9 @@ public class kingobox
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "82s135.2a",    0x0000, 0x0100, CRC(0e723a83) SHA1(51d2274be70506308b3bfa9c2d23606290f8b3b5) )	/* red and green component */
 		ROM_LOAD( "82s129.1a",    0x0100, 0x0100, CRC(d345cbb3) SHA1(6318022ebbbe59d4c0a207801fffed1167b98a66) )	/* blue component */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ringkin3 )
+	static RomLoadPtr rom_ringkin3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "14.9d",        0x00000, 0x4000, CRC(63627b8b) SHA1(eea736c8eec59fa561b9d1b5aa43df5410d8dde7) )
 		ROM_LOAD( "15.9e",        0x04000, 0x4000, CRC(e7557489) SHA1(49dce8f6ce26283fbdca17d75699de4d636a900a) )
@@ -835,7 +835,7 @@ public class kingobox
 		/* we load the ringking PROMs and then expand the first to look like the kingofb ones... */
 		ROM_LOAD( "82s135.2a",    0x0100, 0x0100, CRC(0e723a83) SHA1(51d2274be70506308b3bfa9c2d23606290f8b3b5) )	/* red and green component */
 		ROM_LOAD( "82s129.1a",    0x0200, 0x0100, CRC(d345cbb3) SHA1(6318022ebbbe59d4c0a207801fffed1167b98a66) )	/* blue component */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( ringkin3 )

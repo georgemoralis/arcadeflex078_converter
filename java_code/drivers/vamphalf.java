@@ -120,7 +120,7 @@ public class vamphalf
 	
 	/* f2 systems hardware */
 	
-	ROM_START( vamphalf )
+	static RomLoadPtr rom_vamphalf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 	
 		ROM_REGION32_BE( 0x80000, REGION_USER1, 0 ) /* Hyperstone CPU Code */
@@ -134,7 +134,7 @@ public class vamphalf
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 ) /* Oki Samples */
 		ROM_LOAD( "vrom1",        0x000000, 0x040000, CRC(ee9e371e) SHA1(3ead5333121a77d76e4e40a0e0bf0dbc75f261eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* eolith hardware */
 	
@@ -157,7 +157,7 @@ public class vamphalf
 	hc_u111.bin    32768  0x79012474  AMIC 275308 dumped as 27256
 	*/
 	
-	ROM_START( hidnctch )
+	static RomLoadPtr rom_hidnctch = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 	
 		ROM_REGION32_BE( 0x80000, REGION_USER1, 0 ) /* Hyperstone CPU Code */
@@ -182,7 +182,7 @@ public class vamphalf
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 ) /* ? */
 		ROM_LOAD("hc_u97.bin", 0x000000,    0x080000, CRC(ebf9f77b) SHA1(5d472aeb84fc011e19b9e61d34aeddfe7d6ac216) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -207,7 +207,7 @@ public class vamphalf
 	
 	*/
 	
-	ROM_START( landbrk )
+	static RomLoadPtr rom_landbrk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 	
 		ROM_REGION32_BE( 0x80000, REGION_USER1, 0 ) /* Hyperstone CPU Code */
@@ -234,7 +234,7 @@ public class vamphalf
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 ) /* ? */
 		ROM_LOAD("lb_3.u97", 0x000000,    0x080000,  CRC(5b34dff0) SHA1(1668763e977e272781ddcc74beba97b53477cc9d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -262,7 +262,7 @@ public class vamphalf
 	
 	*/
 	
-	ROM_START( racoon )
+	static RomLoadPtr rom_racoon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 	
 		ROM_REGION32_BE( 0x80000, REGION_USER1, 0 ) /* Hyperstone CPU Code */
@@ -287,7 +287,7 @@ public class vamphalf
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 ) /* ? */
 		ROM_LOAD("racoon-u.97", 0x000000,    0x080000,  CRC(fef828b1) SHA1(38352b67d18300db40113df9426c2aceec12a29b))
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* ?? dfpix hardware */
 	
@@ -345,7 +345,7 @@ public class vamphalf
 	
 	*/
 	
-	ROM_START( xfiles )
+	static RomLoadPtr rom_xfiles = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 	
 		ROM_REGION32_BE( 0x400000, REGION_USER1, 0 ) /* Hyperstone CPU Code */
@@ -358,7 +358,7 @@ public class vamphalf
 	
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD16_WORD_SWAP("u10.bin", 0x00000000,    0x400000,   CRC(f2ef1eb9) SHA1(d033d140fce6716d7d78509aa5387829f0a1404c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	DRIVER_INIT( vamphalf )
 	{

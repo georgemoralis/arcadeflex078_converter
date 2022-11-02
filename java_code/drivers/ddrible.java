@@ -379,7 +379,7 @@ public class ddrible
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( ddribble )
+	static RomLoadPtr rom_ddribble = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1a000, REGION_CPU1, 0 ) /* 64K CPU #0 + 40K for Banked ROMS */
 		ROM_LOAD( "690c03.bin",	0x10000, 0x0a000, CRC(07975a58) SHA1(96fd1b2348bbdf560067d8ee3cd4c0514e263d7a) )
 		ROM_CONTINUE(			0x0a000, 0x06000 )
@@ -405,7 +405,7 @@ public class ddrible
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* 128k for the VLM5030 data */
 		ROM_LOAD( "690a04.bin", 0x00000, 0x20000, CRC(1bfeb763) SHA1(f3e9acb2a7a9b4c8dee6838c1344a7a65c27ff77) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

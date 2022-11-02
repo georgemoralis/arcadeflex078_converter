@@ -329,7 +329,7 @@ public class asterix
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( asterix )
+	static RomLoadPtr rom_asterix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0c0000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "aster8c.bin", 0x000000,  0x20000, CRC(61d6621d) SHA1(908a344e9bbce0c7544bd049494258d1d3ad073b) )
 		ROM_LOAD16_BYTE( "aster8d.bin", 0x000001,  0x20000, CRC(53aac057) SHA1(7401ca5b70f384688c3353fc1ac9ef0b27814c66) )
@@ -349,9 +349,9 @@ public class asterix
 	
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		ROM_LOAD( "aster1e.bin", 0x000000, 0x200000, CRC(6df9ec0e) SHA1(cee60312e9813bd6579f3ac7c3c2521a8e633eca) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( astrxeac )
+	static RomLoadPtr rom_astrxeac = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0c0000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "asterix.8c",  0x000000,  0x20000, CRC(0ccd1feb) SHA1(016d642e3a745f0564aa93f0f66d5c0f37962990) )
 		ROM_LOAD16_BYTE( "asterix.8d",  0x000001,  0x20000, CRC(b0805f47) SHA1(b58306164e8fec69002656993ae80abbc8f136cd) )
@@ -371,9 +371,9 @@ public class asterix
 	
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		ROM_LOAD( "aster1e.bin", 0x000000, 0x200000, CRC(6df9ec0e) SHA1(cee60312e9813bd6579f3ac7c3c2521a8e633eca) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( astrxeaa )
+	static RomLoadPtr rom_astrxeaa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0c0000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "068eaa01.8c", 0x000000,  0x20000, CRC(85b41d8e) SHA1(e1326f6d61b8097f5201d5bd37e4d2a357d17b47) )
 		ROM_LOAD16_BYTE( "068eaa02.8d", 0x000001,  0x20000, CRC(8e886305) SHA1(41a9de2cdad8c1185b4d13ea5b4a9309716947c5) )
@@ -393,7 +393,7 @@ public class asterix
 	
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		ROM_LOAD( "aster1e.bin", 0x000000, 0x200000, CRC(6df9ec0e) SHA1(cee60312e9813bd6579f3ac7c3c2521a8e633eca) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( asterix )

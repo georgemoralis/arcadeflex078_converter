@@ -353,7 +353,7 @@ public class raiden
 	
 	/***************************************************************************/
 	
-	ROM_START( raiden )
+	static RomLoadPtr rom_raiden = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* v30 main cpu */
 		ROM_LOAD16_BYTE( "rai1.bin",   0x0a0000, 0x10000, CRC(a4b12785) SHA1(446314e82ce01315cb3e3d1f323eaa2ad6fb48dd) )
 		ROM_LOAD16_BYTE( "rai2.bin",   0x0a0001, 0x10000, CRC(17640bd5) SHA1(5bbc99900426b1a072b52537ae9a50220c378a0d) )
@@ -384,9 +384,9 @@ public class raiden
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	 /* ADPCM samples */
 		ROM_LOAD( "rai7.bin", 0x00000, 0x10000, CRC(8f927822) SHA1(592f2719f2c448c3b4b239eeaec078b411e12dbb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( raidena )
+	static RomLoadPtr rom_raidena = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* v30 main cpu */
 		ROM_LOAD16_BYTE( "rai1.bin",     0x0a0000, 0x10000, CRC(a4b12785) SHA1(446314e82ce01315cb3e3d1f323eaa2ad6fb48dd) )
 		ROM_LOAD16_BYTE( "rai2.bin",     0x0a0001, 0x10000, CRC(17640bd5) SHA1(5bbc99900426b1a072b52537ae9a50220c378a0d) )
@@ -417,9 +417,9 @@ public class raiden
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	 /* ADPCM samples */
 		ROM_LOAD( "rai7.bin", 0x00000, 0x10000, CRC(8f927822) SHA1(592f2719f2c448c3b4b239eeaec078b411e12dbb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( raidenk )
+	static RomLoadPtr rom_raidenk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* v30 main cpu */
 		ROM_LOAD16_BYTE( "rai1.bin",     0x0a0000, 0x10000, CRC(a4b12785) SHA1(446314e82ce01315cb3e3d1f323eaa2ad6fb48dd) )
 		ROM_LOAD16_BYTE( "rai2.bin",     0x0a0001, 0x10000, CRC(17640bd5) SHA1(5bbc99900426b1a072b52537ae9a50220c378a0d) )
@@ -450,9 +450,9 @@ public class raiden
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	 /* ADPCM samples */
 		ROM_LOAD( "rai7.bin", 0x00000, 0x10000, CRC(8f927822) SHA1(592f2719f2c448c3b4b239eeaec078b411e12dbb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( raident )
+	static RomLoadPtr rom_raident = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* v30 main cpu */
 		ROM_LOAD16_BYTE( "rai1.bin",     0x0a0000, 0x10000, CRC(a4b12785) SHA1(446314e82ce01315cb3e3d1f323eaa2ad6fb48dd) )
 		ROM_LOAD16_BYTE( "rai2.bin",     0x0a0001, 0x10000, CRC(17640bd5) SHA1(5bbc99900426b1a072b52537ae9a50220c378a0d) )
@@ -483,7 +483,7 @@ public class raiden
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	 /* ADPCM samples */
 		ROM_LOAD( "rai7.bin", 0x00000, 0x10000, CRC(8f927822) SHA1(592f2719f2c448c3b4b239eeaec078b411e12dbb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	

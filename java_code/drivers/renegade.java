@@ -697,7 +697,7 @@ public class renegade
 	
 	
 	
-	ROM_START( renegade )
+	static RomLoadPtr rom_renegade = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code + bank switched ROM */
 		ROM_LOAD( "nb-5.bin",     0x08000, 0x8000, CRC(ba683ddf) SHA1(7516fac1c4fd14cbf43481e94c0c26c662c4cd28) )
 		ROM_LOAD( "na-5.bin",     0x04000, 0x4000, CRC(de7e7df4) SHA1(7d26ac29e0b5858d9a0c0cdc86c864e464145260) )
@@ -738,9 +738,9 @@ public class renegade
 		ROM_LOAD( "n5-5.bin",     0x00000, 0x8000, CRC(7ee43a3c) SHA1(36b14b886096177cdd0bd0c99cbcfcc362b2bc30) )
 		ROM_LOAD( "n4-5.bin",     0x10000, 0x8000, CRC(6557564c) SHA1(b3142be9d48eacb43786079a7ae012010f6afabb) )
 		ROM_LOAD( "n3-5.bin",     0x18000, 0x8000, CRC(78fd6190) SHA1(995df0e88f5c34946e0634b50bda8c1cc621afaa) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kuniokun )
+	static RomLoadPtr rom_kuniokun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code + bank switched ROM */
 		ROM_LOAD( "nb-01.bin",    0x08000, 0x8000, CRC(93fcfdf5) SHA1(51cdb9377544ae17895e427f21d150ce195ab8e7) ) // original
 		ROM_LOAD( "ta18-11.bin",  0x04000, 0x4000, CRC(f240f5cd) SHA1(ed6875e8ad2988e88389d4f63ff448d0823c195f) )
@@ -781,9 +781,9 @@ public class renegade
 		ROM_LOAD( "ta18-07.bin",  0x00000, 0x8000, CRC(02e3f3ed) SHA1(ab09b3af2c4ab9a36eb1273bcc7c788350048554) )
 		ROM_LOAD( "ta18-08.bin",  0x10000, 0x8000, CRC(c9312613) SHA1(fbbdf7c56c34cbee42984e41fcf2a21da2b87a31) )
 		ROM_LOAD( "ta18-09.bin",  0x18000, 0x8000, CRC(07ed4705) SHA1(6fd4b78ca846fa602504f06f3105b2da03bcd00c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kuniokub )
+	static RomLoadPtr rom_kuniokub = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code + bank switched ROM */
 		ROM_LOAD( "ta18-10.bin",  0x08000, 0x8000, CRC(a90cf44a) SHA1(6d63d9c29da7b8c5bc391e074b6b8fe6ae3892ae) ) // bootleg
 		ROM_LOAD( "ta18-11.bin",  0x04000, 0x4000, CRC(f240f5cd) SHA1(ed6875e8ad2988e88389d4f63ff448d0823c195f) )
@@ -821,7 +821,7 @@ public class renegade
 		ROM_LOAD( "ta18-07.bin",  0x00000, 0x8000, CRC(02e3f3ed) SHA1(ab09b3af2c4ab9a36eb1273bcc7c788350048554) )
 		ROM_LOAD( "ta18-08.bin",  0x10000, 0x8000, CRC(c9312613) SHA1(fbbdf7c56c34cbee42984e41fcf2a21da2b87a31) )
 		ROM_LOAD( "ta18-09.bin",  0x18000, 0x8000, CRC(07ed4705) SHA1(6fd4b78ca846fa602504f06f3105b2da03bcd00c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

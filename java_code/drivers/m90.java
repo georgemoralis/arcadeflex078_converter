@@ -698,7 +698,7 @@ public class m90
 	
 	#define CODE_SIZE 0x100000
 	
-	ROM_START( hasamu )
+	static RomLoadPtr rom_hasamu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "hasc-p1.bin",  0x00001, 0x20000, CRC(53df9834) SHA1(2e7e38157a497e3def69c4abcae5803f71a098da) )
 		ROM_LOAD16_BYTE( "hasc-p0.bin",  0x00000, 0x20000, CRC(dff0ba6e) SHA1(83e20b3ae10b57c1e58d3d44bfca2ffd5f142056) )
@@ -715,9 +715,9 @@ public class m90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* samples */
 		/* No samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bombrman )
+	static RomLoadPtr rom_bombrman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bbm-p1.bin",   0x00001, 0x20000, CRC(982bd166) SHA1(ed67393ec319127616bff5fa3b7f84e8ac8e1d93) )
 		ROM_LOAD16_BYTE( "bbm-p0.bin",   0x00000, 0x20000, CRC(0a20afcc) SHA1(a42b7458938300b0c84c820c1ea627aed9080f1b) )
@@ -734,10 +734,10 @@ public class m90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "bbm-v0.bin",    0x0000, 0x20000, CRC(0fa803fe) SHA1(d2ac1e624de38bed385442ceae09a76f203fa084) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( dynablst )
+	static RomLoadPtr rom_dynablst = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bbm-cp1e.d10",   0x00001, 0x20000, CRC(27667681) SHA1(7d5f762026ea01817a65ea13b4b5793640e3e8fd) )
 		ROM_LOAD16_BYTE( "bbm-cp0e.bin",   0x00000, 0x20000, CRC(95db7a67) SHA1(1a224d73615a60530cbcc54fdbb526e8d5a6c555) )
@@ -754,9 +754,9 @@ public class m90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "bbm-v0.bin",    0x0000, 0x20000, CRC(0fa803fe) SHA1(d2ac1e624de38bed385442ceae09a76f203fa084) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dynablsb )
+	static RomLoadPtr rom_dynablsb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "db2-26.bin",   0x00001, 0x20000, CRC(a78c72f8) SHA1(e3ed1bce0278bada6357b5d0823511fa0241f3cd) )
 		ROM_LOAD16_BYTE( "db3-25.bin",   0x00000, 0x20000, CRC(bf3137c3) SHA1(64bbca4b3a509b552ee8a19b3b50fe6638fd90e2) )
@@ -773,9 +773,9 @@ public class m90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* samples */
 		/* Does this have a sample rom? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bbmanw )
+	static RomLoadPtr rom_bbmanw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "db_h0-b.rom",  0x00001, 0x40000, CRC(567d3709) SHA1(1447fc68798589a8757ee2d133d053b80f052113) )
 		ROM_LOAD16_BYTE( "db_l0-b.rom",  0x00000, 0x40000, CRC(e762c22b) SHA1(b389a65adf1348e6529a992d9b68178d7503238e) )
@@ -792,9 +792,9 @@ public class m90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "db_w04m.rom",    0x0000, 0x20000, CRC(4ad889ed) SHA1(b685892a2348f17f89c6d6ce91216f6cf1e33751) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bbmanwj )
+	static RomLoadPtr rom_bbmanwj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bbm2_h0.bin",  0x00001, 0x40000, CRC(e1407b91) SHA1(6c94afc6b1d2a469295890ee5dd9d9d5a02ae5c4) )
 		ROM_LOAD16_BYTE( "bbm2_l0.bin",  0x00000, 0x40000, CRC(20873b49) SHA1(30ae595f7961cd56f2506608ae76973b2d0e73ca) )
@@ -811,9 +811,9 @@ public class m90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "bbm2_vo.bin",  0x0000, 0x20000, CRC(0ae655ff) SHA1(78752182662fd8f5b55bbbc2787c9f2b04096ea1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( atompunk )
+	static RomLoadPtr rom_atompunk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bm2-ho-a.9f",  0x00001, 0x40000, CRC(7d858682) SHA1(03580e2903becb69766023585c6ecffbb8e0b9c5) )
 		ROM_LOAD16_BYTE( "bm2-lo-a.9k",  0x00000, 0x40000, CRC(c7568031) SHA1(ff4d0809260a088f530098a0173eec16fa6396f1) )
@@ -830,9 +830,9 @@ public class m90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "db_w04m.rom",           0x0000, 0x20000, CRC(4ad889ed) SHA1(b685892a2348f17f89c6d6ce91216f6cf1e33751) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quizf1 )
+	static RomLoadPtr rom_quizf1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "qf1-h0-.77",   0x000001, 0x40000, CRC(280e3049) SHA1(3b1f303d803f844fd260ed93e4d12a72876e4dbe) )
 		ROM_LOAD16_BYTE( "qf1-l0-.79",   0x000000, 0x40000, CRC(94588a6f) SHA1(ee912739c7719fc2b099da0c63f7473eedcfc718) )
@@ -853,9 +853,9 @@ public class m90
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "qf1-v0-.30",   0x0000, 0x40000, CRC(b8d16e7c) SHA1(28a20afb171dc68848f9fe793f53571d4c7502dd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( riskchal )
+	static RomLoadPtr rom_riskchal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "rc_h0.rom",    0x00001, 0x40000, CRC(4c9b5344) SHA1(61e26950a672c6404e2386acdd098536b61b9933) )
 		ROM_LOAD16_BYTE( "rc_l0.rom",    0x00000, 0x40000, CRC(0455895a) SHA1(1072b8d280f7ccc48cd8fbd81323e1f8c8d0db95) )
@@ -872,9 +872,9 @@ public class m90
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "rc_v0.rom",    0x0000, 0x40000, CRC(cddac360) SHA1(a3b18325991473c6d54b778a02bed86180aad37c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gussun )
+	static RomLoadPtr rom_gussun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "l4_h0.rom",    0x00001, 0x40000, CRC(9d585e61) SHA1(e108a9dc2dc1b75c1439271a2391f943c3a53fe1) )
 		ROM_LOAD16_BYTE( "l4_l0.rom",    0x00000, 0x40000, CRC(c7b4c519) SHA1(44887ccf54f5e507d2db4f09a7c2b7b9ea217058) )
@@ -891,9 +891,9 @@ public class m90
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "rc_v0.rom",    0x0000, 0x40000, CRC(cddac360) SHA1(a3b18325991473c6d54b778a02bed86180aad37c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( shisen2 )
+	static RomLoadPtr rom_shisen2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE * 2, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "sis2-ho-.rom", 0x00001, 0x40000, CRC(6fae0aea) SHA1(7ebecbfdb17e15b8c0ebd293cd42a618c596782e) )
 		ROM_LOAD16_BYTE( "sis2-lo-.rom", 0x00000, 0x40000, CRC(2af25182) SHA1(ec6dcc3913e1b7e7a3958b78610e83f51c404e07) )
@@ -907,7 +907,7 @@ public class m90
 		ROM_LOAD( "ic82.rom",     0x080000, 0x80000, CRC(54a7852c) SHA1(887e7543f09d00323ce1986e72c5613dde1dc6cc) )
 		ROM_LOAD( "ic83.rom",     0x100000, 0x80000, CRC(2bd65dc6) SHA1(b50dec707ea5a71972df0a8dc47141d75e8f874e) )
 		ROM_LOAD( "ic84.rom",     0x180000, 0x80000, CRC(876d5fdb) SHA1(723c58268be60f4973e914df238b264708d3f1e3) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

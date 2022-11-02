@@ -418,7 +418,7 @@ public class taxidrvr
 	
 	***************************************************************************/
 	
-	ROM_START( taxidrvr )
+	static RomLoadPtr rom_taxidrvr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "1",            0x0000, 0x2000, CRC(6b2424e9) SHA1(a65bb01da8f3b0649d945981cc4f1324b7fac5c7) )
 		ROM_LOAD( "2",            0x2000, 0x2000, CRC(15111229) SHA1(0350918f9504b0e470684ebc94a823bb2513a54d) )
@@ -449,7 +449,7 @@ public class taxidrvr
 		ROM_REGION( 0x4000, REGION_GFX5, ROMREGION_DISPOSE )	/* not used?? */
 		ROM_LOAD( "12",           0x0000, 0x2000, CRC(684b7bb0) SHA1(d83c45ff3adf94c649340227794020482231399f) )
 		ROM_LOAD( "13",           0x2000, 0x2000, CRC(d1ef110e) SHA1(e34b6b4b70c783a8cf1296a05d3cec6af5820d0c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

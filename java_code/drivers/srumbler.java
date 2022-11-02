@@ -315,7 +315,7 @@ public class srumbler
 	
 	***************************************************************************/
 	
-	ROM_START( srumbler )
+	static RomLoadPtr rom_srumbler = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )  /* 64k for code */
 		/* empty, will be filled later */
 	
@@ -359,9 +359,9 @@ public class srumbler
 		ROM_LOAD( "63s141.12a",   0x0000, 0x0100, CRC(8421786f) SHA1(7ffe9f3cd081842d9ee38bd67421cb8836e3f7ed) )	/* ROM banking */
 		ROM_LOAD( "63s141.13a",   0x0100, 0x0100, CRC(6048583f) SHA1(a0b0f560e7f52978a1bf59417da13cc852617eff) )	/* ROM banking */
 		ROM_LOAD( "63s141.8j",    0x0200, 0x0100, CRC(1a89a7ff) SHA1(437160ad5d61a257b7deaf5f5e8b3d4cf56a9663) )	/* priority (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( srumblr2 )
+	static RomLoadPtr rom_srumblr2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )  /* 64k for code */
 		/* empty, will be filled later */
 	
@@ -405,9 +405,9 @@ public class srumbler
 		ROM_LOAD( "63s141.12a",   0x0000, 0x0100, CRC(8421786f) SHA1(7ffe9f3cd081842d9ee38bd67421cb8836e3f7ed) )	/* ROM banking */
 		ROM_LOAD( "63s141.13a",   0x0100, 0x0100, CRC(6048583f) SHA1(a0b0f560e7f52978a1bf59417da13cc852617eff) )	/* ROM banking */
 		ROM_LOAD( "63s141.8j",    0x0200, 0x0100, CRC(1a89a7ff) SHA1(437160ad5d61a257b7deaf5f5e8b3d4cf56a9663) )	/* priority (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rushcrsh )
+	static RomLoadPtr rom_rushcrsh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )  /* 64k for code */
 		/* empty, will be filled later */
 	
@@ -451,7 +451,7 @@ public class srumbler
 		ROM_LOAD( "63s141.12a",   0x0000, 0x0100, CRC(8421786f) SHA1(7ffe9f3cd081842d9ee38bd67421cb8836e3f7ed) )	/* ROM banking */
 		ROM_LOAD( "63s141.13a",   0x0100, 0x0100, CRC(6048583f) SHA1(a0b0f560e7f52978a1bf59417da13cc852617eff) )	/* ROM banking */
 		ROM_LOAD( "63s141.8j",    0x0200, 0x0100, CRC(1a89a7ff) SHA1(437160ad5d61a257b7deaf5f5e8b3d4cf56a9663) )	/* priority (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

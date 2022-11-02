@@ -372,7 +372,7 @@ public class commando
 	
 	***************************************************************************/
 	
-	ROM_START( commando )
+	static RomLoadPtr rom_commando = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "m09_cm04.bin", 0x0000, 0x8000, CRC(8438b694) SHA1(e154478d8f1b635355bd777370acabe49cb9d309) )
 		ROM_LOAD( "m08_cm03.bin", 0x8000, 0x4000, CRC(35486542) SHA1(531a85c9e03970ce037be84f2240c2df6f6e3ec1) )
@@ -406,9 +406,9 @@ public class commando
 		ROM_LOAD( "01h_vtb4.bin", 0x0300, 0x0100, CRC(b388c246) SHA1(038f9851699331ad887b6281a9df053dca3db8fd) )	/* palette selector (not used) */
 		ROM_LOAD( "06l_vtb5.bin", 0x0400, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "06e_vtb6.bin", 0x0500, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( commandu )
+	static RomLoadPtr rom_commandu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "u4-f",         0x0000, 0x8000, CRC(a6118935) SHA1(d5811968b23d61e344e151747bcc3c0ed2b9497b) )
 		ROM_LOAD( "u3-f",         0x8000, 0x4000, CRC(24f49684) SHA1(d38a7bd9f3b506747a03f6b94c3f8a2d9fc59166) )
@@ -442,9 +442,9 @@ public class commando
 		ROM_LOAD( "01h_vtb4.bin", 0x0300, 0x0100, CRC(b388c246) SHA1(038f9851699331ad887b6281a9df053dca3db8fd) )	/* palette selector (not used) */
 		ROM_LOAD( "06l_vtb5.bin", 0x0400, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "06e_vtb6.bin", 0x0500, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( commandj )
+	static RomLoadPtr rom_commandj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "09m_so04.bin", 0x0000, 0x8000, CRC(d3f2bfb3) SHA1(738a5673ac6a907cb04cfb125e8aab3f7437b9d2) )
 		ROM_LOAD( "08m_so03.bin", 0x8000, 0x4000, CRC(ed01f472) SHA1(fa181293ae8f0fee78d412259eb81f6de1e1307a) )
@@ -478,9 +478,9 @@ public class commando
 		ROM_LOAD( "01h_vtb4.bin", 0x0300, 0x0100, CRC(b388c246) SHA1(038f9851699331ad887b6281a9df053dca3db8fd) )	/* palette selector (not used) */
 		ROM_LOAD( "06l_vtb5.bin", 0x0400, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "06e_vtb6.bin", 0x0500, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sinvasn )
+	static RomLoadPtr rom_sinvasn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "sp04",           0x0000, 0x8000, CRC(33f9601e) SHA1(71182227b77fccbbc1d89b5828aa86dcc64ca05e) )
 		ROM_LOAD( "sp03",           0x8000, 0x4000, CRC(c7fb43b3) SHA1(36d0dffdacc36a6b6a77101d942c0821846f3275) )
@@ -514,9 +514,9 @@ public class commando
 		ROM_LOAD( "01h_vtb4.bin", 0x0300, 0x0100, CRC(b388c246) SHA1(038f9851699331ad887b6281a9df053dca3db8fd) )	/* palette selector (not used) */
 		ROM_LOAD( "06l_vtb5.bin", 0x0400, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "06e_vtb6.bin", 0x0500, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sinvasnb )
+	static RomLoadPtr rom_sinvasnb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "u4",           0x0000, 0x8000, CRC(834ba0de) SHA1(85f40559e6a436f3f752b6e862a419a5b9481fa8) )
 		ROM_LOAD( "u3",           0x8000, 0x4000, CRC(07e4ee3a) SHA1(6d7665b3072f075893ef37e55147b10271d069ef) )
@@ -550,7 +550,7 @@ public class commando
 		ROM_LOAD( "01h_vtb4.bin", 0x0300, 0x0100, CRC(b388c246) SHA1(038f9851699331ad887b6281a9df053dca3db8fd) )	/* palette selector (not used) */
 		ROM_LOAD( "06l_vtb5.bin", 0x0400, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "06e_vtb6.bin", 0x0500, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( commando )

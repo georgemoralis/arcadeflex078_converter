@@ -551,7 +551,7 @@ public class namcos21
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( aircombu )
+	static RomLoadPtr rom_aircombu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* Master */
 		ROM_LOAD16_BYTE( "mpr-u.ac2",  0x000000, 0x80000, CRC(a7133f85) SHA1(9f1c99dd503f1fc81096170fd272e33ae8a7de2f) )
 		ROM_LOAD16_BYTE( "mpr-l.ac2",  0x000001, 0x80000, CRC(520a52e6) SHA1(74306e02abfe08aa1afbf325b74dbc0840c3ad3a) )
@@ -595,9 +595,9 @@ public class namcos21
 		ROM_LOAD("voi1.ac1",0x080000,0x80000,CRC(c9490667) SHA1(4b6fbe635c32469870a8e6f82742be6a9d4918c9) )
 		ROM_LOAD("voi2.ac1",0x100000,0x80000,CRC(1fcb51ba) SHA1(80fc815e5fad76d20c3795ab1d89b57d9abc3efd) )
 		ROM_LOAD("voi3.ac1",0x180000,0x80000,CRC(cd202e06) SHA1(72a18f5ba402caefef14b8d1304f337eaaa3eb1d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aircombj )
+	static RomLoadPtr rom_aircombj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* Master */
 		ROM_LOAD16_BYTE( "mpr-u.ac1",  0x000000, 0x80000, CRC(a4dec813) SHA1(2ee8b3492d30db4c841f695151880925a5e205e0) )
 		ROM_LOAD16_BYTE( "mpr-l.ac1",  0x000001, 0x80000, CRC(8577b6a2) SHA1(32194e392fbd051754be88eb8c90688c65c65d85) )
@@ -641,9 +641,9 @@ public class namcos21
 		ROM_LOAD("voi1.ac1",0x080000,0x80000,CRC(c9490667) SHA1(4b6fbe635c32469870a8e6f82742be6a9d4918c9) )
 		ROM_LOAD("voi2.ac1",0x100000,0x80000,CRC(1fcb51ba) SHA1(80fc815e5fad76d20c3795ab1d89b57d9abc3efd) )
 		ROM_LOAD("voi3.ac1",0x180000,0x80000,CRC(cd202e06) SHA1(72a18f5ba402caefef14b8d1304f337eaaa3eb1d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cybsled )
+	static RomLoadPtr rom_cybsled = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* Master */
 		ROM_LOAD16_BYTE( "mpru.3j",  0x000000, 0x80000, CRC(cc5a2e83) SHA1(b794051b2c351e9ca43351603845e4e563f6740f) )
 		ROM_LOAD16_BYTE( "mprl.1j",  0x000001, 0x80000, CRC(f7ee8b48) SHA1(6d36eb3dba9cf7f5f5e1a26c156e77a2dad3f257) )
@@ -690,9 +690,9 @@ public class namcos21
 		ROM_LOAD("voi1.12c",0x080000,0x80000,CRC(2b335f06) SHA1(2b2cd407c34388b56496f84a414daa153780b098) )
 		ROM_LOAD("voi2.12d",0x100000,0x80000,CRC(10cd15f0) SHA1(9b721654ed97a13287373c1b2854ac9aeddc271f) )
 		ROM_LOAD("voi3.12e",0x180000,0x80000,CRC(c902b4a4) SHA1(816357ec1a02a7ebf817ac1182e9c50ce5ca71f6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( starblad )
+	static RomLoadPtr rom_starblad = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* Master */
 		ROM_LOAD16_BYTE( "st1_mpu.bin",  0x000000, 0x80000, CRC(483a311c) SHA1(dd9416b8d4b0f8b361630e312eac71c113064eae) )
 		ROM_LOAD16_BYTE( "st1_mpl.bin",  0x000001, 0x80000, CRC(0a4dd661) SHA1(fc2b71a255a8613693c4d1c79ddd57a6d396165a) )
@@ -734,9 +734,9 @@ public class namcos21
 		ROM_LOAD("st1voi1.bin",0x080000,0x80000,CRC(413e6181) SHA1(e827ec11f5755606affd2635718512aeac9354da) )
 		ROM_LOAD("st1voi2.bin",0x100000,0x80000,CRC(067d0720) SHA1(a853b2d43027a46c5e707fc677afdaae00f450c7) )
 		ROM_LOAD("st1voi3.bin",0x180000,0x80000,CRC(8b5aa45f) SHA1(e1214e639200758ad2045bde0368a2d500c1b84a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( solvalou )
+	static RomLoadPtr rom_solvalou = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* Master */
 		ROM_LOAD16_BYTE( "sv1mpu.bin",  0x000000, 0x20000, CRC(b6f92762) SHA1(d177328b3da2ab0580e101478142bc8c373d6140) )
 		ROM_LOAD16_BYTE( "sv1mpl.bin",  0x000001, 0x20000, CRC(28c54c42) SHA1(32fcca2eb4bb8ba8c2587b03d3cf59f072f7fac5) )
@@ -778,9 +778,9 @@ public class namcos21
 		ROM_LOAD("sv1voi1.bin",0x080000,0x80000,CRC(c732e66c) SHA1(14e75dd9bea4055f85eb2bcbf69cf6695a3f7ec4) )
 		ROM_LOAD("sv1voi2.bin",0x100000,0x80000,CRC(51076298) SHA1(ec52c9ae3029118f3ea3732948d6de28f5fba561) )
 		ROM_LOAD("sv1voi3.bin",0x180000,0x80000,CRC(33085ff3) SHA1(0a30b91618c250a5e7bd896a8ceeb3d16da178a9) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( winrun91 )
+	static RomLoadPtr rom_winrun91 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* Master */
 		ROM_LOAD16_BYTE( "mpu.3k",  0x000000, 0x20000, CRC(80a0e5be) SHA1(6613b95e164c2032ea9043e4161130c6b3262492) )
 		ROM_LOAD16_BYTE( "mpl.1k",  0x000001, 0x20000, CRC(942172d8) SHA1(21d8dfd2165b5ceb0399fdb53d9d0f51f1255803) )
@@ -825,7 +825,7 @@ public class namcos21
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 ) /* sound samples */
 		ROM_LOAD("avo1.11c",0x000000,0x80000,CRC(9fb33af3) SHA1(666630a8e5766ca4c3275961963c3e713dfdda2d) )
 		ROM_LOAD("avo3.11e",0x080000,0x80000,CRC(76e22f92) SHA1(0e1b8d35a5b9c20cc3192d935f0c9da1e69679d2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static void namcos21_init( int game_type )
 	{

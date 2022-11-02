@@ -326,7 +326,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	ROM_START( shuuz )
+	static RomLoadPtr rom_shuuz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "4010.23p",     0x00000, 0x20000, CRC(1c2459f8) SHA1(4b8daf196e3ba17cf958a3c1af4e4dacfb79b9e7) )
 		ROM_LOAD16_BYTE( "4011.13p",     0x00001, 0x20000, CRC(6db53a85) SHA1(7f9b3ea78fa65221931bfdab1aa5f1913ffed753) )
@@ -350,10 +350,10 @@ public class shuuz
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "1040.75b", 0x00000, 0x20000, CRC(0896702b) SHA1(d826bb4812d393889584c7c656c317fd5745a05f) )
 		ROM_LOAD( "1041.65b", 0x20000, 0x20000, CRC(b3b07ce9) SHA1(f1128a143b72867c16b9803b0beb0188420cbfb5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( shuuz2 )
+	static RomLoadPtr rom_shuuz2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "23p.rom",     0x00000, 0x20000, CRC(98aec4e7) SHA1(8cbe6e7835ecf0ef74a2de723ef970a63d3bddd1) )
 		ROM_LOAD16_BYTE( "13p.rom",     0x00001, 0x20000, CRC(dd9d5d5c) SHA1(0bde6be55532c232b1d27824c2ce61f33501cbb0) )
@@ -377,7 +377,7 @@ public class shuuz
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "1040.75b", 0x00000, 0x20000, CRC(0896702b) SHA1(d826bb4812d393889584c7c656c317fd5745a05f) )
 		ROM_LOAD( "1041.65b", 0x20000, 0x20000, CRC(b3b07ce9) SHA1(f1128a143b72867c16b9803b0beb0188420cbfb5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

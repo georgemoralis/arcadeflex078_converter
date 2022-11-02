@@ -402,7 +402,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	ROM_START( victory )
+	static RomLoadPtr rom_victory = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "vic3.j2",  0x0000, 0x1000, CRC(4b614440) SHA1(3a91d273c0c936af955c491e1faadf17e4469ed5) )
 		ROM_LOAD( "vic3.k2",  0x1000, 0x1000, CRC(9f9eb12b) SHA1(8833cc6b862ccecdac65c6f2f7e56c74a83c7d58) )
@@ -432,10 +432,10 @@ public class victory
 		ROM_LOAD( "hsc19d",   0x0180, 0x0020, CRC(09c4dbf6) SHA1(d5aa347d51d22b83dff3280b761a7ec8be34c3f8) )
 		ROM_LOAD( "hsc19e",   0x01a0, 0x0020, CRC(ce1464f4) SHA1(2d185471bd9d12af7075670a7d994b74921dc539) )
 		ROM_LOAD( "3j",       0x01c0, 0x0020, CRC(5fb6b158) SHA1(0fdb235ea00546117018fe998e7de247dd018a31) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( victorba )
+	static RomLoadPtr rom_victorba = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "j2.rom",  0x0000, 0x1000, CRC(dd788e93) SHA1(5912488a3631afd522f5336c297752bad2e0f7b6) )
 		ROM_LOAD( "k2.rom",  0x1000, 0x1000, CRC(f47bf046) SHA1(9e15eeee2729a8466e2c70d61cfa7c86e0ceeaf8) )
@@ -465,7 +465,7 @@ public class victory
 		ROM_LOAD( "hsc19d",   0x0180, 0x0020, CRC(09c4dbf6) SHA1(d5aa347d51d22b83dff3280b761a7ec8be34c3f8) )
 		ROM_LOAD( "hsc19e",   0x01a0, 0x0020, CRC(ce1464f4) SHA1(2d185471bd9d12af7075670a7d994b74921dc539) )
 		ROM_LOAD( "3j",       0x01c0, 0x0020, CRC(5fb6b158) SHA1(0fdb235ea00546117018fe998e7de247dd018a31) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

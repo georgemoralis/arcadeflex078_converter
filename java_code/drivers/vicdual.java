@@ -1351,7 +1351,7 @@ public class vicdual
 	
 	***************************************************************************/
 	
-	ROM_START( depthch )
+	static RomLoadPtr rom_depthch = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "50a",          0x0000, 0x0400, CRC(56c5ffed) SHA1(f1e6cc322da93615d59850b3225a50f06fe58259) )
 		ROM_LOAD( "51a",          0x0400, 0x0400, CRC(695eb81f) SHA1(f2491b8b9ce2dbb6d2606dcfaeb8658671f25400) )
@@ -1363,9 +1363,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs, but no color so don't use REGION_PROMS! */
 		ROM_LOAD( "316-0043.u87", 0x0000, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "316-0042.u88", 0x0020, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( depthv1 )
+	static RomLoadPtr rom_depthv1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD_NIB_LOW ( "316025.u63",  0x0000, 0x0400, CRC(bec75b9c) SHA1(8abe8b63be892e6abb7a886222b9eab40c5fcda0) )
 		ROM_LOAD_NIB_HIGH( "316022.u51",  0x0000, 0x0400, CRC(977b7889) SHA1(dc1e874c2fd44709117474c5b210d67130ac361f) )
@@ -1383,9 +1383,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs, but no color so don't use REGION_PROMS! */
 		ROM_LOAD( "316013.u27", 0x0000, 0x0020, CRC(690ef530) SHA1(6c0de3fa87a341cd378fefb8e06bf7918db9a074) )	/* control PROM */
 		ROM_LOAD( "316014.u28", 0x0020, 0x0020, CRC(7b7a8492) SHA1(6ba8d891cc6eb0dd80051377b6b832e8894655e7) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( subhunt )
+	static RomLoadPtr rom_subhunt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD_NIB_LOW ( "dp04",       0x0000, 0x0400, CRC(0ace1aef) SHA1(071256dd63e2e449093a65a4c9b006be5e17b786) )
 		ROM_LOAD_NIB_HIGH( "dp01",       0x0000, 0x0400, CRC(da9e835b) SHA1(505c969b479aeab11bb6a21ef06837280846d90a) )
@@ -1403,10 +1403,10 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )
 		ROM_LOAD( "dp13", 0x0000, 0x0020, CRC(690ef530) SHA1(6c0de3fa87a341cd378fefb8e06bf7918db9a074) )
 		ROM_LOAD( "dp14", 0x0020, 0x0020, CRC(7b7a8492) SHA1(6ba8d891cc6eb0dd80051377b6b832e8894655e7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( safari )
+	static RomLoadPtr rom_safari = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "3160066.u48",  0x0000, 0x0400, CRC(2a26b098) SHA1(a16b04110fb142cec01c10460b14ec0c4e8d99af) )
 		ROM_LOAD( "3160065.u47",  0x0400, 0x0400, CRC(b776f7db) SHA1(7332d1b18e1b199d87367182f185abafd9ad0bb1) )
@@ -1422,9 +1422,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs, but no color so don't use REGION_PROMS! */
 		ROM_LOAD( "316-0043.u87", 0x0000, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "316-0042.u88", 0x0020, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( frogs )
+	static RomLoadPtr rom_frogs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "119a.u48",     0x0000, 0x0400, CRC(b1d1fce4) SHA1(572015bede39b14526e93919b63b6d01ae38a09a) )
 		ROM_LOAD( "118a.u47",     0x0400, 0x0400, CRC(12fdcc05) SHA1(06c6d17edec9fb03f46514c1f6c5d8c420ef4d05) )
@@ -1434,9 +1434,9 @@ public class vicdual
 		ROM_LOAD( "114a.u43",     0x1400, 0x0400, CRC(04a21853) SHA1(1e84eb84d5770f54925055b748ab9ca2aa72c1cc) )
 		ROM_LOAD( "113a.u42",     0x1800, 0x0400, CRC(02786692) SHA1(8a8937fd92beecf1119fe3f6b41a700725412aa1) )
 		ROM_LOAD( "112a.u41",     0x1c00, 0x0400, CRC(0be2a058) SHA1(271f3b60cba422fff7e782fda198c3897c275b46) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sspaceat )
+	static RomLoadPtr rom_sspaceat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "155.u27",      0x0000, 0x0400, CRC(ba7bb86f) SHA1(030e6f69d3ae00456fc02d1dc0fb915a81689df4) )
 		ROM_LOAD( "156.u26",      0x0400, 0x0400, CRC(0b3a491c) SHA1(19cef304bb91f745797f27adbb9d334876d4fb78) )
@@ -1449,9 +1449,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "316-0138.u44", 0x0000, 0x0020, CRC(67104ea9) SHA1(26b6bd2a1973b83bb9af4e3385d8cb14cb3f62f2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sspacat2 )
+	static RomLoadPtr rom_sspacat2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "81.u48",       0x0000, 0x0400, CRC(3e4b29f6) SHA1(ec99b7e156bad1f9f900fdebb289f0c9abf08647) )
 		ROM_LOAD( "58.u47",       0x0400, 0x0400, CRC(176adb80) SHA1(9798d3b2d59fe4b7d26927b444746f135f0f0d8e) )
@@ -1464,9 +1464,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "316-0138.u44", 0x0000, 0x0020, CRC(67104ea9) SHA1(26b6bd2a1973b83bb9af4e3385d8cb14cb3f62f2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sspacatc )
+	static RomLoadPtr rom_sspacatc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "139.u27",      0x0000, 0x0400, CRC(9f2112fc) SHA1(89c129ef1a95c5934a7c775994aafc91911b0051) )
 		ROM_LOAD( "140.u26",      0x0400, 0x0400, CRC(ddbeed35) SHA1(48b33d7b35457675b545ca42c8afd79b86ce6035) )
@@ -1479,9 +1479,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "316-0138.u44", 0x0000, 0x0020, CRC(67104ea9) SHA1(26b6bd2a1973b83bb9af4e3385d8cb14cb3f62f2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( headon )
+	static RomLoadPtr rom_headon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "163a",         0x0000, 0x0400, CRC(4bb51259) SHA1(43411ffda3fe03b1d694f70791b0bab5786759c0) )
 		ROM_LOAD( "164a",         0x0400, 0x0400, CRC(aeac8c5f) SHA1(ef9ad63d13076a559ba12c6421ad61de21dd4c90) )
@@ -1493,9 +1493,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "316-0138.u44", 0x0000, 0x0020, CRC(67104ea9) SHA1(26b6bd2a1973b83bb9af4e3385d8cb14cb3f62f2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( headonb )
+	static RomLoadPtr rom_headonb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "163a",         0x0000, 0x0400, CRC(4bb51259) SHA1(43411ffda3fe03b1d694f70791b0bab5786759c0) )
 		ROM_LOAD( "164a",         0x0400, 0x0400, CRC(aeac8c5f) SHA1(ef9ad63d13076a559ba12c6421ad61de21dd4c90) )
@@ -1507,9 +1507,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "316-0138.u44", 0x0000, 0x0020, CRC(67104ea9) SHA1(26b6bd2a1973b83bb9af4e3385d8cb14cb3f62f2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( headon2 )
+	static RomLoadPtr rom_headon2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "u27.bin",      0x0000, 0x0400, CRC(fa47d2fb) SHA1(b3208f5bce228c453bdafbc9c1f2c8e1bd920d32) )
 		ROM_LOAD( "u26.bin",      0x0400, 0x0400, CRC(61c47b15) SHA1(47619bd51fcaf47dd72e940c474f310c9287f2f4) )
@@ -1524,9 +1524,9 @@ public class vicdual
 		ROM_LOAD( "316-0138.u44", 0x0000, 0x0020, CRC(67104ea9) SHA1(26b6bd2a1973b83bb9af4e3385d8cb14cb3f62f2) )
 		ROM_LOAD( "u65.bin",      0x0020, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "u66.bin",      0x0040, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( invho2 )
+	static RomLoadPtr rom_invho2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "271b.u33",     0x0000, 0x0400, CRC(44356a73) SHA1(6ff1050d84b6b7a006762c35e0b3d2befb0f90d6) )
 		ROM_LOAD( "272b.u32",     0x0400, 0x0400, CRC(bd251265) SHA1(134f081c62173fab80b46918e4a073cf5f72df77) )
@@ -1547,9 +1547,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "316-0287.u49", 0x0000, 0x0020, CRC(d4374b01) SHA1(85ea0915f23571358e2e0c2b66b968e7b93f4bd6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sspacaho )
+	static RomLoadPtr rom_sspacaho = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "epr00001.bin", 0x0000, 0x0800, CRC(ba62f57a) SHA1(7cfc079c6afe317b6c389c06802fdf1f83858510) )
 		ROM_LOAD( "epr00002.bin", 0x0800, 0x0800, CRC(94b3c59c) SHA1(e6ee1c25fb45d03d514421c231d794f9da05f47f) )
@@ -1564,9 +1564,9 @@ public class vicdual
 		ROM_LOAD( "316-0138.u44", 0x0000, 0x0020, CRC(67104ea9) SHA1(26b6bd2a1973b83bb9af4e3385d8cb14cb3f62f2) )
 		ROM_LOAD( "316-0043.u87", 0x0020, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )
 		ROM_LOAD( "316-0042.u88", 0x0040, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( samurai )
+	static RomLoadPtr rom_samurai = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "epr289.u33",   0x0000, 0x0400, CRC(a1a9cb03) SHA1(1875a86ad5938295dd5db6bb045be46eba8638ba) )
 		ROM_LOAD( "epr290.u32",   0x0400, 0x0400, CRC(49fede51) SHA1(58ab1779d555281ec436ae90dcdf4ada42625892) )
@@ -1589,9 +1589,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs */
 		ROM_LOAD( "316-0043.u87", 0x0000, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "316-0042.u88", 0x0020, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( invinco )
+	static RomLoadPtr rom_invinco = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "310a.u27",     0x0000, 0x0400, CRC(e3931365) SHA1(e34083004515ad45ddbf9ab89c34473b6c5d46fb) )
 		ROM_LOAD( "311a.u26",     0x0400, 0x0400, CRC(de1a6c4a) SHA1(ca7ab7b4c77319f7923d56ad8b60d16211af19bc) )
@@ -1605,9 +1605,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "316-246.u44",  0x0000, 0x0020, CRC(fe4406cb) SHA1(92e2459420a7f7412f02cfaf68604fc233b0a245) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( invds )
+	static RomLoadPtr rom_invds = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "367.u33",      0x0000, 0x0400, CRC(e6a33eae) SHA1(16de70e8fcd093964a448a86bc89b1c607152ead) )
 		ROM_LOAD( "368.u32",      0x0400, 0x0400, CRC(421554a8) SHA1(efb6759998e36322258c172aa7e8ba6416b3235f) )
@@ -1631,9 +1631,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_USER1, 0 )	/* misc PROM */
 		ROM_LOAD( "316-0206.u14", 0x0000, 0x0020, CRC(9617d796) SHA1(7cff2741866095ff42eadd8022bea349ec8d2f39) )	/* control PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tranqgun )
+	static RomLoadPtr rom_tranqgun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "u33.bin",      0x0000, 0x0400, CRC(6d50e902) SHA1(1d14c0b28cb3650bb57b9ef61265fe94c453d648) )
 		ROM_LOAD( "u32.bin",      0x0400, 0x0400, CRC(f0ba0e60) SHA1(fcdd4355ccc1893a8a0450403f466bee916793dc) )
@@ -1658,9 +1658,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs */
 		ROM_LOAD( "316-0043.u87", 0x0000, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "316-0042.u88", 0x0020, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spacetrk )
+	static RomLoadPtr rom_spacetrk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "u33.bin",      0x0000, 0x0400, CRC(9033fe50) SHA1(0a9b86af03956575403d8b494963f55887fc4dc3) )
 		ROM_LOAD( "u32.bin",      0x0400, 0x0400, CRC(08f61f0d) SHA1(f206b18959e2cb6d4f6962415695eca0412da739) )
@@ -1685,9 +1685,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs */
 		ROM_LOAD( "316-0043.u87", 0x0000, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "316-0042.u88", 0x0020, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sptrekct )
+	static RomLoadPtr rom_sptrekct = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "u33c.bin",     0x0000, 0x0400, CRC(b056b928) SHA1(1bbf5c30b226c5ca3c09fcff36a1b21132a524b6) )
 		ROM_LOAD( "u32c.bin",     0x0400, 0x0400, CRC(dffb11d9) SHA1(5c95b7e493ac9e8714d91d19b6f01967559ce55c) )
@@ -1712,9 +1712,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs */
 		ROM_LOAD( "316-0043.u87", 0x0000, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "316-0042.u88", 0x0020, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( carnival )
+	static RomLoadPtr rom_carnival = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "651u33.cpu",   0x0000, 0x0400, CRC(9f2736e6) SHA1(c3fb9197b5e83dc7d5335de2268e0acb30cf8328) )
 		ROM_LOAD( "652u32.cpu",   0x0400, 0x0400, CRC(a1f58beb) SHA1(e027beca7bf3ef5ef67e2195f909332fd194b5dc) )
@@ -1738,9 +1738,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0800, REGION_CPU2, 0 )	/* sound ROM */
 		ROM_LOAD( "crvl.snd",     0x0000, 0x0400, CRC(0dbaa2b0) SHA1(eae7fc362a0ff8f908c42e093c7dbb603659373c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( carnvckt )
+	static RomLoadPtr rom_carnvckt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "epr501",       0x0000, 0x0400, CRC(688503d2) SHA1(a1fe03c23276d458ba74f7473524918eb9b7c7e5) )
 		ROM_LOAD( "652u32.cpu",   0x0400, 0x0400, CRC(a1f58beb) SHA1(e027beca7bf3ef5ef67e2195f909332fd194b5dc) )
@@ -1764,9 +1764,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0800, REGION_CPU2, 0 )	/* sound ROM */
 		ROM_LOAD( "crvl.snd",     0x0000, 0x0400, CRC(0dbaa2b0) SHA1(eae7fc362a0ff8f908c42e093c7dbb603659373c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( brdrlinb )
+	static RomLoadPtr rom_brdrlinb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "border1.33",   0x0000, 0x0800, CRC(48387706) SHA1(b4db2f05e722812370b0b24cd15061d6fc578560) ) // karateco
 		ROM_LOAD( "border2.30",   0x0800, 0x0800, CRC(1d669b60) SHA1(47ef5141591e177419fa352968be26ecc6fafd89) )
@@ -1787,9 +1787,9 @@ public class vicdual
 		ROM_LOAD( "border.32", 0x0000, 0x0020, CRC(c128d0ba) SHA1(0ce9febbb7e2f5388ed999a479e3d385dba0b342) )
 		ROM_LOAD( "bordera.15",0x0000, 0x0020, CRC(6449e678) SHA1(421c45c8fba3c2bc2a7ebbea2c837c8fa1a5a2f3) )
 		ROM_LOAD( "borderb.14",0x0000, 0x0020, CRC(55dcdef1) SHA1(6fbd041edc258b7e1b99bbe9526612cfb1b541f8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( digger )
+	static RomLoadPtr rom_digger = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "684.u27",      0x0000, 0x0400, CRC(bba0d7c2) SHA1(1e55dd95b07b562dcc1e52ecf9460d302b14ee60) )
 		ROM_LOAD( "685.u26",      0x0400, 0x0400, CRC(85210d8b) SHA1(8260ca809a3a20a52b146d357253aa958d08887e) )
@@ -1805,9 +1805,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_USER1, 0 )	/* misc PROM */
 		ROM_LOAD( "316-0206.u14", 0x0000, 0x0020, CRC(9617d796) SHA1(7cff2741866095ff42eadd8022bea349ec8d2f39) )	/* control PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pulsar )
+	static RomLoadPtr rom_pulsar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "790.u33",      0x0000, 0x0400, CRC(5e3816da) SHA1(83f019fa3598e383310b4c21441e4f8ef0c9d4fb) )
 		ROM_LOAD( "791.u32",      0x0400, 0x0400, CRC(ce0aee83) SHA1(f3755592a9aaa2d493d017c8da19354fd5598860) )
@@ -1831,9 +1831,9 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_USER1, 0 )	/* misc PROM */
 		ROM_LOAD( "316-0206.u14", 0x0000, 0x0020, CRC(9617d796) SHA1(7cff2741866095ff42eadd8022bea349ec8d2f39) )	/* control PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( heiankyo )
+	static RomLoadPtr rom_heiankyo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "ha16.u33",     0x0000, 0x0400, CRC(1eec8b36) SHA1(55644cfeb7a9d64e52f11611c91c6186038772a3) )
 		ROM_LOAD( "ha15.u32",     0x0400, 0x0400, CRC(c1b9a1a5) SHA1(068ad2da4852a50c948c4f9b3e1b1aa5c5bf5ca5) )
@@ -1857,9 +1857,9 @@ public class vicdual
 		ROM_REGION( 0x0040, REGION_USER1, 0 )	/* misc PROMs */
 		ROM_LOAD( "316-0043.u87", 0x0000, 0x0020, CRC(e60a7960) SHA1(b8b8716e859c57c35310efc4594262afedb84823) )	/* control PROM */
 		ROM_LOAD( "316-0042.u88", 0x0020, 0x0020, CRC(a1506b9d) SHA1(037c3db2ea40eca459e8acba9d1506dd28d72d10) )	/* sequence PROM */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( alphaho )
+	static RomLoadPtr rom_alphaho = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "c0.bin",       0x0000, 0x0400, CRC(db774c23) SHA1(c5042872110ae8d0c5c7629892a16b87e8f19d96) )
 		ROM_LOAD( "c1.bin",       0x0400, 0x0400, CRC(b63f4695) SHA1(95b3ca96ca48f2c525eaf2b49956248e46686688) )
@@ -1880,7 +1880,7 @@ public class vicdual
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 )
 		ROM_LOAD( "alphaho.col",  0x0000, 0x0020, NO_DUMP )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -467,7 +467,7 @@ public class gunbustr
 	
 	/***************************************************************************/
 	
-	ROM_START( gunbustr )
+	static RomLoadPtr rom_gunbustr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 1024K for 68020 code (CPU A) */
 		ROM_LOAD32_BYTE( "d27-23.bin", 0x00000, 0x40000, CRC(cd1037cc) SHA1(8005a6a84081ce609e7a605ec8e00e740bfc6846) )
 		ROM_LOAD32_BYTE( "d27-22.bin", 0x00001, 0x40000, CRC(475949fc) SHA1(3d5aa3411d2618004902f9d05dff61d9af01ff35) )
@@ -496,7 +496,7 @@ public class gunbustr
 		/* 0x200000 Empty bank? */
 		ROM_LOAD16_BYTE( "d27-09.bin", 0x400000, 0x100000, CRC(3e060304) SHA1(c4da4a94c168c3a454409d758c3ed45babbab170) )
 		ROM_LOAD16_BYTE( "d27-10.bin", 0x600000, 0x100000, CRC(ed894fe1) SHA1(5bf2fb6abdcf25bc525a2c3b29dbf7aca0b18fea) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static READ32_HANDLER( main_cycle_r )
 	{

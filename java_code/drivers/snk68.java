@@ -942,7 +942,7 @@ public class snk68
 	
 	/******************************************************************************/
 	
-	ROM_START( pow )
+	static RomLoadPtr rom_pow = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "dg1",   0x000000, 0x20000, CRC(8e71a8af) SHA1(72c2eb2316c2684491331e8adabcb2be084aa6a2) )
 		ROM_LOAD16_BYTE( "dg2",   0x000001, 0x20000, CRC(4287affc) SHA1(59dfb37296edd3b42231319a9f4df819d384db38) )
@@ -974,9 +974,9 @@ public class snk68
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* UPD7759 samples */
 		ROM_LOAD( "dg7",        0x000000, 0x10000, CRC(aba9a9d3) SHA1(5098cd3a064b8ede24797de8879a277d79e79d75) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( powj )
+	static RomLoadPtr rom_powj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "1-2",   0x000000, 0x20000, CRC(2f17bfb0) SHA1(8be18990829eb2586c00b9e8b35e8779bc48296a) )
 		ROM_LOAD16_BYTE( "2-2",   0x000001, 0x20000, CRC(baa32354) SHA1(a235b82527dc025e699ba2e8e9797dac15ea9440) )
@@ -1008,9 +1008,9 @@ public class snk68
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* UPD7759 samples */
 		ROM_LOAD( "dg7",        0x000000, 0x10000, CRC(aba9a9d3) SHA1(5098cd3a064b8ede24797de8879a277d79e79d75) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( searchar )
+	static RomLoadPtr rom_searchar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bhw.2", 0x000000, 0x20000, CRC(e1430138) SHA1(eddc192524a13b2c09bd2bddcd5f8e8b771ceb21) )
 		ROM_LOAD16_BYTE( "bhw.3", 0x000001, 0x20000, CRC(ee1f9374) SHA1(fd41c74fd69d65713d8e1a9b8078328381119379) )
@@ -1036,9 +1036,9 @@ public class snk68
 		ROM_REGION16_BE( 0x40000, REGION_USER1, 0 ) /* Extra code bank */
 		ROM_LOAD16_BYTE( "bhw.1", 0x000000, 0x20000, CRC(62b60066) SHA1(f7e7985c8f5f8191c580e777e1b7ed29d944d23f) )
 		ROM_LOAD16_BYTE( "bhw.4", 0x000001, 0x20000, CRC(16d8525c) SHA1(0098b0a7fcb23de2661bbec9a05254aa46579bb2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sercharu )
+	static RomLoadPtr rom_sercharu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bh.2",  0x000000, 0x20000, CRC(c852e2e2) SHA1(c4b1b366f452122549046a3dec9b6b375bc273af) )
 		ROM_LOAD16_BYTE( "bh.3",  0x000001, 0x20000, CRC(bc04a4a1) SHA1(aa91583b987248a3e99813ab5e8ee03c02dac9b9) )
@@ -1064,9 +1064,9 @@ public class snk68
 		ROM_REGION16_BE( 0x40000, REGION_USER1, 0 ) /* Extra code bank */
 		ROM_LOAD16_BYTE( "bh.1",  0x000000, 0x20000, CRC(ba9ca70b) SHA1(c46727473673554cbe4bbbc0288d66357f99a80e) )
 		ROM_LOAD16_BYTE( "bh.4",  0x000001, 0x20000, CRC(eabc5ddf) SHA1(08a2a8fcdf6a08a2694e00f4232a5bfbec98fd27) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( streetsm )
+	static RomLoadPtr rom_streetsm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "s2-1ver2.14h", 0x00000, 0x20000, CRC(655f4773) SHA1(5374a6cf0b895c5ff839b0f52402df4cc53241cf) )
 		ROM_LOAD16_BYTE( "s2-2ver2.14k", 0x00001, 0x20000, CRC(efae4823) SHA1(f3be25b76cf13feeaaaf0e9640c30a6a7371f108) )
@@ -1088,9 +1088,9 @@ public class snk68
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* UPD7759 samples */
 		ROM_LOAD( "s2-6.18d",    0x000000, 0x20000, CRC(47db1605) SHA1(ae00e633eb98567f04ff97e3d63e04e049d955ec) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( streets1 )
+	static RomLoadPtr rom_streets1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "s2-1ver1.9c",  0x00000, 0x20000, CRC(b59354c5) SHA1(086c87541d422f90bdaad8d63b14d0d520c12564) )
 		ROM_LOAD16_BYTE( "s2-2ver1.10c", 0x00001, 0x20000, CRC(e448b68b) SHA1(08d674ab3d9bd3d3b1d50967a56fa6a002ce0b8d) )
@@ -1112,9 +1112,9 @@ public class snk68
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* UPD7759 samples */
 		ROM_LOAD( "s2-6.18d",    0x000000, 0x20000, CRC(47db1605) SHA1(ae00e633eb98567f04ff97e3d63e04e049d955ec) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( streetsw )
+	static RomLoadPtr rom_streetsw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "s-smart1.bin", 0x00000, 0x20000, CRC(a1f5ceab) SHA1(74f5a4288618fbce6ed3dc75b6ccfa695396193c) )
 		ROM_LOAD16_BYTE( "s-smart2.bin", 0x00001, 0x20000, CRC(263f615d) SHA1(4576f9d2abb31ecf747a5075716579e75613d57c) )
@@ -1136,9 +1136,9 @@ public class snk68
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* UPD7759 samples */
 		ROM_LOAD( "s2-6.18d",    0x000000, 0x20000, CRC(47db1605) SHA1(ae00e633eb98567f04ff97e3d63e04e049d955ec) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( streetsj )
+	static RomLoadPtr rom_streetsj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "s2v1j_01.bin", 0x00000, 0x20000, CRC(f031413c) SHA1(5d7dfeac03f786736914f047c28a7a0488175176) )
 		ROM_LOAD16_BYTE( "s2v1j_02.bin", 0x00001, 0x20000, CRC(e403a40b) SHA1(e740848d716586737eff6e3c201fb3e3da048a09) )
@@ -1160,9 +1160,9 @@ public class snk68
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* UPD7759 samples */
 		ROM_LOAD( "s2-6.18d",    0x000000, 0x20000, CRC(47db1605) SHA1(ae00e633eb98567f04ff97e3d63e04e049d955ec) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ikari3 )
+	static RomLoadPtr rom_ikari3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ik3-2.bin", 0x000000, 0x20000, CRC(a7b34dcd) SHA1(7c2f20ae4f7dbebd3dfa3ec5408ed714e6535b6a) )
 		ROM_LOAD16_BYTE( "ik3-3.bin", 0x000001, 0x20000, CRC(50f2b83d) SHA1(b1f0c554b262614dd2cff7a3857cb974d361937f) )
@@ -1202,7 +1202,7 @@ public class snk68
 		ROM_REGION16_BE( 0x40000, REGION_USER1, 0 ) /* Extra code bank */
 		ROM_LOAD16_BYTE( "ik3-1.bin",  0x000000, 0x10000, CRC(47e4d256) SHA1(7c6921cf2f1b8c3dae867eb1fc14e3da218cc1e0) )
 		ROM_LOAD16_BYTE( "ik3-4.bin",  0x000001, 0x10000, CRC(a43af6b5) SHA1(1ad3acadbadd21642932028ecd7c282f7fd02856) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

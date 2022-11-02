@@ -183,7 +183,7 @@ public class cheekyms
 	
 	***************************************************************************/
 	
-	ROM_START( cheekyms )
+	static RomLoadPtr rom_cheekyms = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "cm03.c5",       0x0000, 0x0800, CRC(1ad0cb40) SHA1(2a751395ac19a3218c22cfd3597f9a17b8e31527) )
 		ROM_LOAD( "cm04.c6",       0x0800, 0x0800, CRC(2238f607) SHA1(35df9eb49f6e3c6351fae220d773442cf8536f90) )
@@ -202,7 +202,7 @@ public class cheekyms
 		ROM_LOAD( "cm.m8",         0x0000, 0x0020, CRC(2386bc68) SHA1(6676082860cd8678a71339a352d2c6286e78ba44) )	 /* Character colors \ Selected by Bit 6 of Port 0x80 */
 		ROM_LOAD( "cm.m9",         0x0020, 0x0020, CRC(db9c59a5) SHA1(357ed5ac8e954a4c8b4d78d36e57bf2de36c1d57) )	 /* Character colors /                                */
 		ROM_LOAD( "cm.p3",         0x0040, 0x0020, CRC(6ac41516) SHA1(05bf40790a0de1e859362df892f7f158c183e247) )  /* Sprite colors */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

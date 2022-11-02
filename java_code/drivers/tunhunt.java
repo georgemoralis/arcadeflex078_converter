@@ -379,7 +379,7 @@ public class tunhunt
 	
 	*/
 	
-	ROM_START( tunhunt )
+	static RomLoadPtr rom_tunhunt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "001.lm1",	0x5000, 0x800, CRC(2601a3a4) SHA1(939bafc54576fdaccf688b49cc9d201b03feec3a) )
 		ROM_LOAD( "002.k1",		0x5800, 0x800, CRC(29bbf3df) SHA1(4a0ec4cfab362a976d3962b347f687db45095cfd) )
@@ -401,9 +401,9 @@ public class tunhunt
 		ROM_LOAD( "014.c11",	0x020, 0x020, CRC(662444b2) SHA1(2e510c1d9b7e34a3045048a46045e61fabaf918e) )	/* hue: RRRR----? */
 		ROM_LOAD( "015.n4",		0x040, 0x100, CRC(00e224a0) SHA1(1a384ef488791c62566c91b18d6a1fb4a5def2ba) )	/* timing? */
 		ROM_LOAD( "018.h9",		0x140, 0x400, CRC(6547c208) SHA1(f19c334f9b4a1cfcbc913c0920688db2730dded0) )	/* color lookup table? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tunhuntc )
+	static RomLoadPtr rom_tunhuntc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "001.lm1",	0x5000, 0x800, CRC(2601a3a4) SHA1(939bafc54576fdaccf688b49cc9d201b03feec3a) )
 		ROM_LOAD( "002.k1",		0x5800, 0x800, CRC(29bbf3df) SHA1(4a0ec4cfab362a976d3962b347f687db45095cfd) )
@@ -426,7 +426,7 @@ public class tunhunt
 		ROM_LOAD( "014.c11",	0x020, 0x020, CRC(662444b2) SHA1(2e510c1d9b7e34a3045048a46045e61fabaf918e) )	/* hue: RRRR----? */
 		ROM_LOAD( "015.n4",		0x040, 0x100, CRC(00e224a0) SHA1(1a384ef488791c62566c91b18d6a1fb4a5def2ba) )	/* timing? */
 		ROM_LOAD( "018.h9",		0x140, 0x400, CRC(6547c208) SHA1(f19c334f9b4a1cfcbc913c0920688db2730dded0) )	/* color lookup table? */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

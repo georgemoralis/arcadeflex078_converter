@@ -402,7 +402,7 @@ public class toypop
 	 *
 	 *************************************/
 	
-	ROM_START( liblrabl )
+	static RomLoadPtr rom_liblrabl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for the first CPU */
 		ROM_LOAD( "5b.rom",   0x8000, 0x4000, CRC(da7a93c2) SHA1(fe4a02cdab66722eb7b8cf58825f899b1949a6a2) )
 		ROM_LOAD( "5c.rom",   0xc000, 0x4000, CRC(6cae25dc) SHA1(de74317a7d5de1865d096c377923a764be5e6879) )
@@ -430,10 +430,10 @@ public class toypop
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "lr1-4.3d", 0x0000, 0x0100, CRC(16a9166a) SHA1(847cbaf7c88616576c410177e066ae1d792ac0ba) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toypop )
+	static RomLoadPtr rom_toypop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for the first CPU */
 		ROM_LOAD( "tp1-2.5b", 0x8000, 0x4000, CRC(87469620) SHA1(2ee257486c9c044386ac7d0cd4a90583eaeb3e97) )
 		ROM_LOAD( "tp1-1.5c", 0xc000, 0x4000, CRC(dee2fd6e) SHA1(b2c12008d6d3e7544ba3c12a52a6abf9181842c8) )
@@ -461,7 +461,7 @@ public class toypop
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "lr1-4.3d", 0x0000, 0x0100, CRC(16a9166a) SHA1(847cbaf7c88616576c410177e066ae1d792ac0ba) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

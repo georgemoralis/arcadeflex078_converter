@@ -380,7 +380,7 @@ public class naughtyb
 	
 	***************************************************************************/
 	
-	ROM_START( naughtyb )
+	static RomLoadPtr rom_naughtyb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )		/* 64k for code */
 		ROM_LOAD( "1.30",	   0x0000, 0x0800, CRC(f6e1178e) SHA1(5cd428e1f085ff82d7237b3e261b33ff876fd4cb) )
 		ROM_LOAD( "2.29",	   0x0800, 0x0800, CRC(b803eb8c) SHA1(c21b781eb329195e36e6fd1d7467bd9b0d9cbc5b) )
@@ -406,9 +406,9 @@ public class naughtyb
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "6301-1.63", 0x0000, 0x0100, CRC(98ad89a1) SHA1(ddee7dcb003b66fbc7d6d6e90d499ed090c59227) ) /* palette low bits */
 		ROM_LOAD( "6301-1.64", 0x0100, 0x0100, CRC(909107d4) SHA1(138ace7845424bc3ca86b0889be634943c8c2d19) ) /* palette high bits */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( naughtya )
+	static RomLoadPtr rom_naughtya = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )		/* 64k for code */
 		ROM_LOAD( "91", 	   0x0000, 0x0800, CRC(42b14bc7) SHA1(a5890834105b83f6761a5ea819e94533473f0e44) )
 		ROM_LOAD( "92", 	   0x0800, 0x0800, CRC(a24674b4) SHA1(2d93981c2f0dea190745cbc3926b012cfd561ec3) )
@@ -434,9 +434,9 @@ public class naughtyb
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "6301-1.63", 0x0000, 0x0100, CRC(98ad89a1) SHA1(ddee7dcb003b66fbc7d6d6e90d499ed090c59227) ) /* palette low bits */
 		ROM_LOAD( "6301-1.64", 0x0100, 0x0100, CRC(909107d4) SHA1(138ace7845424bc3ca86b0889be634943c8c2d19) ) /* palette high bits */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( naughtyc )
+	static RomLoadPtr rom_naughtyc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )		/* 64k for code */
 		ROM_LOAD( "nb1ic30",   0x0000, 0x0800, CRC(3f482fa3) SHA1(5c670ad37be5bed12a65b8b02330525cfe5ae303) )
 		ROM_LOAD( "nb2ic29",   0x0800, 0x0800, CRC(7ddea141) SHA1(8a725614b156f1fdb249c2767ddb3f04681e7a3f) )
@@ -462,9 +462,9 @@ public class naughtyb
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "6301-1.63", 0x0000, 0x0100, CRC(98ad89a1) SHA1(ddee7dcb003b66fbc7d6d6e90d499ed090c59227) ) /* palette low bits */
 		ROM_LOAD( "6301-1.64", 0x0100, 0x0100, CRC(909107d4) SHA1(138ace7845424bc3ca86b0889be634943c8c2d19) ) /* palette high bits */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( popflame )
+	static RomLoadPtr rom_popflame = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )		/* 64k for code */
 		ROM_LOAD( "ic86.bin",	  0x0000, 0x1000, CRC(06397a4b) SHA1(12ef8aa60033161479ba2239b61a318cbf15b3cf) )
 		ROM_LOAD( "ic80.pop",	  0x1000, 0x1000, CRC(b77abf3d) SHA1(8626af8fe7d10c52bea7570dd6237de60607bab6) )
@@ -482,9 +482,9 @@ public class naughtyb
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "ic53",		  0x0000, 0x0100, CRC(6e66057f) SHA1(084d630f5e2f23e28a1f7839337ef608e086e8c4) ) /* palette low bits */
 		ROM_LOAD( "ic54",		  0x0100, 0x0100, CRC(236bc771) SHA1(5c078eecdd9df2fbc791e440f96bc4c79476b211) ) /* palette high bits */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( popflama )
+	static RomLoadPtr rom_popflama = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "ic86.pop",	  0x0000, 0x1000, CRC(5e32bbdf) SHA1(b75e3125301d05f5fb6bcef85d0028de2ee75fab) )
 		ROM_LOAD( "ic80.pop",	  0x1000, 0x1000, CRC(b77abf3d) SHA1(8626af8fe7d10c52bea7570dd6237de60607bab6) )
@@ -502,9 +502,9 @@ public class naughtyb
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "ic53",		  0x0000, 0x0100, CRC(6e66057f) SHA1(084d630f5e2f23e28a1f7839337ef608e086e8c4) ) /* palette low bits */
 		ROM_LOAD( "ic54",		  0x0100, 0x0100, CRC(236bc771) SHA1(5c078eecdd9df2fbc791e440f96bc4c79476b211) ) /* palette high bits */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( popflamb )
+	static RomLoadPtr rom_popflamb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "popflama.30",	 0x0000, 0x1000, CRC(a9bb0e8a) SHA1(1948be9545401b8163e0f2fa8e962ea66c26d9e0) )
 		ROM_LOAD( "popflama.28",	 0x1000, 0x1000, CRC(debe6d03) SHA1(2365c57a0a08563bea31ab150934dcfc1e6eba58) )
@@ -522,7 +522,7 @@ public class naughtyb
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "ic53",		  0x0000, 0x0100, CRC(6e66057f) SHA1(084d630f5e2f23e28a1f7839337ef608e086e8c4) ) /* palette low bits */
 		ROM_LOAD( "ic54",		  0x0100, 0x0100, CRC(236bc771) SHA1(5c078eecdd9df2fbc791e440f96bc4c79476b211) ) /* palette high bits */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

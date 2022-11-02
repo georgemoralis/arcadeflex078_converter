@@ -434,7 +434,7 @@ public class gradius3
 	
 	***************************************************************************/
 	
-	ROM_START( gradius3 )
+	static RomLoadPtr rom_gradius3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "945_s13.f15",		0x00000, 0x20000, CRC(70c240a2) SHA1(82dc391572e1f61b0182cb031654d71adcdd5f6e) )
 		ROM_LOAD16_BYTE( "945_s12.e15",		0x00001, 0x20000, CRC(bbc300d4) SHA1(e1ca98bc591575285d7bd2d4fefdf35fed10dcb6) )
@@ -474,9 +474,9 @@ public class gradius3
 		ROM_LOAD( "945_a10.b15",			0x00000, 0x40000, CRC(1d083e10) SHA1(b116f133a7647ef7a6c373aff00e9622d9954b61) )
 		ROM_LOAD( "945_l11a.c18",			0x40000, 0x20000, CRC(6043f4eb) SHA1(1c2e9ace1cfdde504b7b6158e3c3f54dc5ae33d4) )
 		ROM_LOAD( "945_l11b.c20",			0x60000, 0x20000, CRC(89ea3baf) SHA1(8edcbaa7969185cfac48c02559826d1b8b081f3f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( grdius3a )
+	static RomLoadPtr rom_grdius3a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "945_13.f15",		0x00000, 0x20000, CRC(9974fe6b) SHA1(c18ad8d7c93bf58d886715d8e210177cf49f220b) )
 		ROM_LOAD16_BYTE( "945_12.e15",		0x00001, 0x20000, CRC(e9771b91) SHA1(c9f4610b897c13742b44b546e2bed8ee21945f61) )
@@ -516,9 +516,9 @@ public class gradius3
 		ROM_LOAD( "945_a10.b15",			0x00000, 0x40000, CRC(1d083e10) SHA1(b116f133a7647ef7a6c373aff00e9622d9954b61) )
 		ROM_LOAD( "945_l11a.c18",			0x40000, 0x20000, CRC(6043f4eb) SHA1(1c2e9ace1cfdde504b7b6158e3c3f54dc5ae33d4) )
 		ROM_LOAD( "945_l11b.c20",			0x60000, 0x20000, CRC(89ea3baf) SHA1(8edcbaa7969185cfac48c02559826d1b8b081f3f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( grdius3e )
+	static RomLoadPtr rom_grdius3e = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "945_r13.f15",		0x00000, 0x20000, CRC(cffd103f) SHA1(6bd15e8c2e6e5223d7de9b0b375f36f3e81f60ba) )
 		ROM_LOAD16_BYTE( "945_r12.e15",		0x00001, 0x20000, CRC(0b968ef6) SHA1(ba28d16d94b13aac791b11d3d91df26f78e2e477) )
@@ -558,7 +558,7 @@ public class gradius3
 		ROM_LOAD( "945_a10.b15",			0x00000, 0x40000, CRC(1d083e10) SHA1(b116f133a7647ef7a6c373aff00e9622d9954b61) )
 		ROM_LOAD( "945_l11a.c18",			0x40000, 0x20000, CRC(6043f4eb) SHA1(1c2e9ace1cfdde504b7b6158e3c3f54dc5ae33d4) )
 		ROM_LOAD( "945_l11b.c20",			0x60000, 0x20000, CRC(89ea3baf) SHA1(8edcbaa7969185cfac48c02559826d1b8b081f3f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( gradius3 )

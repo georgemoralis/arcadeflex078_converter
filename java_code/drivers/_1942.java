@@ -327,7 +327,7 @@ public class _1942
 	
 	***************************************************************************/
 	
-	ROM_START( 1942 )
+	static RomLoadPtr rom_1942 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )	/* 64k for code + 3*16k for the banked ROMs images */
 		ROM_LOAD( "1-n3a.bin",    0x00000, 0x4000, CRC(40201bab) SHA1(4886c07a4602223c21419118e10aadce9c99fa5a) )
 		ROM_LOAD( "1-n4.bin",     0x04000, 0x4000, CRC(a60ac644) SHA1(f37862db3cf5e6cc9ab3276f3bc45fd629fd70dd) )
@@ -366,9 +366,9 @@ public class _1942
 		ROM_LOAD( "02d_sb-3.bin", 0x0700, 0x0100, CRC(3b0c99af) SHA1(38f30ac1e48632634e409f328ee3051b987de7ad) )	/* tile palette selector? (not used) */
 		ROM_LOAD( "k06_sb-1.bin", 0x0800, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "01m_sb-9.bin", 0x0900, 0x0100, CRC(4921635c) SHA1(aee37d6cdc36acf0f11ff5f93e7b16e4b12f6c39) )	/* video timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 1942a )
+	static RomLoadPtr rom_1942a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )	/* 64k for code + 3*16k for the banked ROMs images */
 		ROM_LOAD( "1-n3.bin",     0x00000, 0x4000, CRC(612975f2) SHA1(f3744335862dd4c53925cc32792badd4a378c837) )
 		ROM_LOAD( "1-n4.bin",     0x04000, 0x4000, CRC(a60ac644) SHA1(f37862db3cf5e6cc9ab3276f3bc45fd629fd70dd) )
@@ -407,9 +407,9 @@ public class _1942
 		ROM_LOAD( "02d_sb-3.bin", 0x0700, 0x0100, CRC(3b0c99af) SHA1(38f30ac1e48632634e409f328ee3051b987de7ad) )	/* tile palette selector? (not used) */
 		ROM_LOAD( "k06_sb-1.bin", 0x0800, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "01m_sb-9.bin", 0x0900, 0x0100, CRC(4921635c) SHA1(aee37d6cdc36acf0f11ff5f93e7b16e4b12f6c39) )	/* video timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 1942b )
+	static RomLoadPtr rom_1942b = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )	/* 64k for code + 3*16k for the banked ROMs images */
 		ROM_LOAD( "srb-03.n3",    0x00000, 0x4000, CRC(d9dafcc3) SHA1(a089a9bc55fb7d6d0ac53f91b258396d5d62677a) )
 		ROM_LOAD( "srb-04.n4",    0x04000, 0x4000, CRC(da0cf924) SHA1(856fbb302c9a4ec7850a26ab23dab8467f79bba4) )
@@ -448,7 +448,7 @@ public class _1942
 		ROM_LOAD( "02d_sb-3.bin", 0x0700, 0x0100, CRC(3b0c99af) SHA1(38f30ac1e48632634e409f328ee3051b987de7ad) )	/* tile palette selector? (not used) */
 		ROM_LOAD( "k06_sb-1.bin", 0x0800, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "01m_sb-9.bin", 0x0900, 0x0100, CRC(4921635c) SHA1(aee37d6cdc36acf0f11ff5f93e7b16e4b12f6c39) )	/* video timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

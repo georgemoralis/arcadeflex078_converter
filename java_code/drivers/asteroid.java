@@ -746,7 +746,7 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	ROM_START( asteroid )
+	static RomLoadPtr rom_asteroid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "035145.02",    0x6800, 0x0800, CRC(0cc75459) SHA1(2af85c9689b878155004da47fedbde5853a18723) )
 		ROM_LOAD( "035144.02",    0x7000, 0x0800, CRC(096ed35c) SHA1(064d680ded7f30c543f93ae5ca85f90d550f73e5) )
@@ -754,10 +754,10 @@ public class asteroid
 		ROM_RELOAD( 		   0xf800, 0x0800 ) /* for reset/interrupt vectors */
 		/* Vector ROM */
 		ROM_LOAD( "035127.02",    0x5000, 0x0800, CRC(8b71fd9e) SHA1(8cd5005e531eafa361d6b7e9eed159d164776c70) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( asteroi1 )
+	static RomLoadPtr rom_asteroi1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "035145.01",    0x6800, 0x0800, CRC(e9bfda64) SHA1(291dc567ebb31b35df83d9fb87f4080f251ff9c8) )
 		ROM_LOAD( "035144.01",    0x7000, 0x0800, CRC(e53c28a9) SHA1(d9f081e73511ec43377f0c6457747f15a470d4dc) )
@@ -765,10 +765,10 @@ public class asteroid
 		ROM_RELOAD( 		   0xf800, 0x0800 ) /* for reset/interrupt vectors */
 		/* Vector ROM */
 		ROM_LOAD( "035127.01",    0x5000, 0x0800, CRC(99699366) SHA1(9b2828fc1cef7727f65fa65e1e11e309b7c98792) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( asteroib )
+	static RomLoadPtr rom_asteroib = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "035145ll.bin", 0x6800, 0x0800, CRC(605fc0f2) SHA1(8d897a3b75bd1f2537470f0a34a97a8c0853ee08) )
 		ROM_LOAD( "035144ll.bin", 0x7000, 0x0800, CRC(e106de77) SHA1(003e99d095bd4df6fae243ea1dd5b12f3eb974f1) )
@@ -776,10 +776,10 @@ public class asteroid
 		ROM_RELOAD( 		   0xf800, 0x0800 ) /* for reset/interrupt vectors */
 		/* Vector ROM */
 		ROM_LOAD( "035127.02",    0x5000, 0x0800, CRC(8b71fd9e) SHA1(8cd5005e531eafa361d6b7e9eed159d164776c70) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( asterock )
+	static RomLoadPtr rom_asterock = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "sidamas.2",    0x6800, 0x0400, CRC(cdf720c6) SHA1(85fe748096478e28a06bd98ff3aad73ab21b22a4) )
 		ROM_LOAD( "sidamas.3",    0x6c00, 0x0400, CRC(ee58bdf0) SHA1(80094cb5dafd327aff6658ede33106f0493a809d) )
@@ -791,10 +791,10 @@ public class asteroid
 		/* Vector ROM */
 		ROM_LOAD( "sidamas.0",    0x5000, 0x0400, CRC(6bd2053f) SHA1(790f2858f44bbb1854e2d9d549e29f4815c4665b) )
 		ROM_LOAD( "sidamas.1",    0x5400, 0x0400, CRC(231ce201) SHA1(710f4c19864d725ba1c9ea447a97e84001a679f7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( astdelux )
+	static RomLoadPtr rom_astdelux = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "036430.02",    0x6000, 0x0800, CRC(a4d7a525) SHA1(abe262193ec8e1981be36928e9a89a8ac95cd0ad) )
 		ROM_LOAD( "036431.02",    0x6800, 0x0800, CRC(d4004aae) SHA1(aa2099b8fc62a79879efeea70ea1e9ed77e3e6f0) )
@@ -804,10 +804,10 @@ public class asteroid
 		/* Vector ROM */
 		ROM_LOAD( "036800.02",    0x4800, 0x0800, CRC(bb8cabe1) SHA1(cebaa1b91b96e8b80f2b2c17c6fd31fa9f156386) )
 		ROM_LOAD( "036799.01",    0x5000, 0x0800, CRC(7d511572) SHA1(1956a12bccb5d3a84ce0c1cc10c6ad7f64e30b40) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( astdelu1 )
+	static RomLoadPtr rom_astdelu1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "036430.01",    0x6000, 0x0800, CRC(8f5dabc6) SHA1(5d7543e19acab99ddb63c0ffd60f54d7a0f267f5) )
 		ROM_LOAD( "036431.01",    0x6800, 0x0800, CRC(157a8516) SHA1(9041d8c2369d004f198681e02b59a923fa8f70c9) )
@@ -817,10 +817,10 @@ public class asteroid
 		/* Vector ROM */
 		ROM_LOAD( "036800.01",    0x4800, 0x0800, CRC(3b597407) SHA1(344fea2e5d84acce365d76daed61e96b9b6b37cc) )
 		ROM_LOAD( "036799.01",    0x5000, 0x0800, CRC(7d511572) SHA1(1956a12bccb5d3a84ce0c1cc10c6ad7f64e30b40) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( llander )
+	static RomLoadPtr rom_llander = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "034572.02",    0x6000, 0x0800, CRC(b8763eea) SHA1(5a15eaeaf825ccdf9ce013a6789cf51da20f785c) )
 		ROM_LOAD( "034571.02",    0x6800, 0x0800, CRC(77da4b2f) SHA1(4be6cef5af38734d580cbfb7e4070fe7981ddfd6) )
@@ -833,10 +833,10 @@ public class asteroid
 		/* This _should_ be the rom for international versions. */
 		/* Unfortunately, is it not currently available. */
 		ROM_LOAD( "034597.01",    0x5800, 0x0800, NO_DUMP )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( llander1 )
+	static RomLoadPtr rom_llander1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "034572.01",    0x6000, 0x0800, CRC(2aff3140) SHA1(4fc8aae640ce655417c11d9a3121aae9a1238e7c) )
 		ROM_LOAD( "034571.01",    0x6800, 0x0800, CRC(493e24b7) SHA1(125a2c335338ccabababef12fd7096ef4b605a31) )
@@ -849,7 +849,7 @@ public class asteroid
 		/* This _should_ be the rom for international versions. */
 		/* Unfortunately, is it not currently available. */
 		ROM_LOAD( "034597.01",    0x5800, 0x0800, NO_DUMP )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

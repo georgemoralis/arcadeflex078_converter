@@ -350,7 +350,7 @@ public class gbusters
 	
 	***************************************************************************/
 	
-	ROM_START( gbusters )
+	static RomLoadPtr rom_gbusters = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30800, REGION_CPU1, 0 ) /* code + banked roms + space for banked RAM */
 		ROM_LOAD( "878n02.rom", 0x10000, 0x08000, CRC(51697aaa) SHA1(1e6461e2e5e871d44085623a890158a4c1c4c404) )	/* ROM K13 */
 		ROM_CONTINUE(           0x08000, 0x08000 )
@@ -372,9 +372,9 @@ public class gbusters
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 ) /* samples for 007232 */
 		ROM_LOAD( "878c04.rom",  0x00000, 0x40000, CRC(9e982d1c) SHA1(a5b611c67b0f2ac50c679707931ee12ebbf72ebe) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( crazycop )
+	static RomLoadPtr rom_crazycop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30800, REGION_CPU1, 0 ) /* code + banked roms + space for banked RAM */
 		ROM_LOAD( "878m02.bin", 0x10000, 0x08000, CRC(9c1c9f52) SHA1(7a60ad20aac92da8258b43b04f8c7f27bb71f1df) )	/* ROM K13 */
 		ROM_CONTINUE(           0x08000, 0x08000 )
@@ -396,7 +396,7 @@ public class gbusters
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 ) /* samples for 007232 */
 		ROM_LOAD( "878c04.rom",  0x00000, 0x40000, CRC(9e982d1c) SHA1(a5b611c67b0f2ac50c679707931ee12ebbf72ebe) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static void gbusters_banking( int lines )

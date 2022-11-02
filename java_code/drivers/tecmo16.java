@@ -419,7 +419,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	ROM_START( fstarfrc )
+	static RomLoadPtr rom_fstarfrc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "fstarf01.rom",      0x00000, 0x40000, CRC(94c71de6) SHA1(7637aee89034d60ef74d0015db6fcbcc8689b88b) )
 		ROM_LOAD16_BYTE( "fstarf02.rom",      0x00001, 0x40000, CRC(b1a07761) SHA1(efd580e06a134a8b6ed6e836eec3203c41ed03c5) )
@@ -440,9 +440,9 @@ public class tecmo16
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "fstarf08.rom",           0x00000, 0x20000, CRC(f0ad5693) SHA1(a0202801bb9f9c86175ca7989fbc9efa47183188) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ginkun )
+	static RomLoadPtr rom_ginkun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ginkun01.i01",      0x00000, 0x40000, CRC(98946fd5) SHA1(e0b496d1fa5201d94a2a22243fe4b37d9ff7bc90) )
 		ROM_LOAD16_BYTE( "ginkun02.i02",      0x00001, 0x40000, CRC(e98757f6) SHA1(2310b5f00b9522d5a983c8686f7d5bcf2d885964) )
@@ -463,7 +463,7 @@ public class tecmo16
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "ginkun08.i18",           0x00000, 0x20000, CRC(8b7583c7) SHA1(be7ce721504afb45e16eda146f12031d818fc94c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

@@ -853,7 +853,7 @@ public class freekick
 	
 	/* roms */
 	
-	ROM_START( pbillrd )
+	static RomLoadPtr rom_pbillrd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 ) /* Z80 Code */
 		ROM_LOAD( "pb.18",       0x00000, 0x4000, CRC(9e6275ac) SHA1(482e845e7fb4190da483155bd908ad470373cd5c) )
 		ROM_LOAD( "pb.7",        0x04000, 0x4000, CRC(dd438431) SHA1(07a950e38b3f627ecf95e5831e5480abb337a010) )
@@ -877,9 +877,9 @@ public class freekick
 		ROM_LOAD( "82s129.3d", 0x0300, 0x0100, CRC(43d24e17) SHA1(de5c9391574781dcd8f244794010e8eddffa1c1e) )
 		ROM_LOAD( "82s129.3b", 0x0400, 0x0100, CRC(7fdc872c) SHA1(98572560aa524490489d4202dba292a5af9f15e7) )
 		ROM_LOAD( "82s129.3c", 0x0500, 0x0100, CRC(cc1657e5) SHA1(358f20dce376c2389009f9673ce38b297af863f6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pbillrds )
+	static RomLoadPtr rom_pbillrds = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 ) /* Z80 Code */
 		ROM_LOAD( "10627.10n",   0x00000, 0x4000, CRC(2335e6dd) SHA1(82352b6f4abea88aad3a96ca63cccccb6e278f48) )	/* encrypted */
 		ROM_LOAD( "10625.8r",    0x04000, 0x4000, CRC(8977c724) SHA1(f00835a04dc6fa7d8c1e382dace515f2aa7d6f44) )	/* encrypted */
@@ -903,7 +903,7 @@ public class freekick
 		ROM_LOAD( "82s129.3d", 0x0300, 0x0100, CRC(43d24e17) SHA1(de5c9391574781dcd8f244794010e8eddffa1c1e) )
 		ROM_LOAD( "82s129.3b", 0x0400, 0x0100, CRC(7fdc872c) SHA1(98572560aa524490489d4202dba292a5af9f15e7) )
 		ROM_LOAD( "82s129.3c", 0x0500, 0x0100, CRC(cc1657e5) SHA1(358f20dce376c2389009f9673ce38b297af863f6) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -913,7 +913,7 @@ public class freekick
 	
 	*/
 	
-	ROM_START( freekick )
+	static RomLoadPtr rom_freekick = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 Code */
 		// Custom (NS6201-A 1987.9)
 		ROM_LOAD( "freekck.cpu", 0x00000, 0x10000, NO_DUMP ) // missing, might be the same as the bootleg but not confirmed
@@ -938,9 +938,9 @@ public class freekick
 		ROM_LOAD( "7k.bpr",    0x0300, 0x0100, CRC(bc21797a) SHA1(4d6cf05e51b7ef9147eeff051c3728764021cfdb) )
 		ROM_LOAD( "8h.bpr",    0x0400, 0x0100, CRC(8aac5fd0) SHA1(07a179603c0167c1f998b2337d66be95db9911cc) )
 		ROM_LOAD( "7h.bpr",    0x0500, 0x0100, CRC(a507f941) SHA1(97619959ee4c366cb010525636ab5eefe5a3127a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( freekckb )
+	static RomLoadPtr rom_freekckb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 Code */
 		ROM_LOAD( "freekbl8.q7", 0x00000, 0x10000, CRC(4208cfe5) SHA1(21628cbe8a217fbae30a6c24c9cc4c790fe45d65) ) // this was on the bootleg, would normally be battery backed inside cpu?
 	
@@ -964,9 +964,9 @@ public class freekick
 		ROM_LOAD( "7k.bpr",    0x0300, 0x0100, CRC(bc21797a) SHA1(4d6cf05e51b7ef9147eeff051c3728764021cfdb) )
 		ROM_LOAD( "8h.bpr",    0x0400, 0x0100, CRC(8aac5fd0) SHA1(07a179603c0167c1f998b2337d66be95db9911cc) )
 		ROM_LOAD( "7h.bpr",    0x0500, 0x0100, CRC(a507f941) SHA1(97619959ee4c366cb010525636ab5eefe5a3127a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( countrun )
+	static RomLoadPtr rom_countrun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 Code */
 		//  Custom CPU (pack) No. NS6201-A 1988.3 COUNTER RUN
 		ROM_LOAD( "countrun.cpu", 0x00000, 0x10000, NO_DUMP ) // missing
@@ -991,9 +991,9 @@ public class freekick
 		ROM_LOAD( "prom1.bpr",    0x0300, 0x0100, CRC(8d983949) SHA1(d7331900d18a53ceb133f8a8848d3c108e03323a) )
 		ROM_LOAD( "prom6.bpr",    0x0400, 0x0100, CRC(33e87550) SHA1(951ce0dc975b799c1056ce8eb005256cbb43a112) )
 		ROM_LOAD( "prom3.bpr",    0x0500, 0x0100, CRC(c77d0077) SHA1(4cbbf625ad5e45d00ca6aebe9566538ff0a3348d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( countrnb )
+	static RomLoadPtr rom_countrnb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 Code */
 		ROM_LOAD( "crunbl.8", 0x00000, 0x10000, CRC(318f95d9) SHA1(f2386b9d26d1bc98728aad9e257363b381043dc9) ) // encrypted? bad? its strange anyway
 	
@@ -1020,10 +1020,10 @@ public class freekick
 		ROM_LOAD( "prom1.bpr",    0x0300, 0x0100, CRC(8d983949) SHA1(d7331900d18a53ceb133f8a8848d3c108e03323a) )
 		ROM_LOAD( "prom6.bpr",    0x0400, 0x0100, CRC(33e87550) SHA1(951ce0dc975b799c1056ce8eb005256cbb43a112) )
 		ROM_LOAD( "prom3.bpr",    0x0500, 0x0100, CRC(c77d0077) SHA1(4cbbf625ad5e45d00ca6aebe9566538ff0a3348d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gigasm2b )
+	static RomLoadPtr rom_gigasm2b = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000*2, REGION_CPU1, 0 )
 		ROM_LOAD( "8.rom", 0x10000, 0x4000, CRC(c00a4a6c) SHA1(0d1bb849c9bfe4e92ad70e4ef19da494c0bd7ba8) )
 		ROM_CONTINUE(      0x00000, 0x4000 )
@@ -1049,9 +1049,9 @@ public class freekick
 		ROM_LOAD( "4.pr",    0x0300, 0x0100, CRC(fe201a4e) SHA1(15f8ecfcf6c63ffbf9777bec9b203c319ba1b96c) )
 		ROM_LOAD( "2.pr",    0x0400, 0x0100, CRC(5796cc4a) SHA1(39576c4e48fd7ac52fc652a1ae0573db3d878878) )
 		ROM_LOAD( "3.pr",    0x0500, 0x0100, CRC(28b5ee4c) SHA1(e21b9c38f433dca1e8894619b1d9f0389a81b48a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gigasb )
+	static RomLoadPtr rom_gigasb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000*2, REGION_CPU1, 0 )
 		ROM_LOAD( "g-7",   0x10000, 0x4000, CRC(daf4e88d) SHA1(391dff914ce8e9b7975fc8827c066d7db16c4171) )
 		ROM_CONTINUE(      0x00000, 0x4000 )
@@ -1075,9 +1075,9 @@ public class freekick
 		ROM_LOAD( "4.pr",    0x0300, 0x0100, CRC(fe201a4e) SHA1(15f8ecfcf6c63ffbf9777bec9b203c319ba1b96c) )
 		ROM_LOAD( "2.pr",    0x0400, 0x0100, CRC(5796cc4a) SHA1(39576c4e48fd7ac52fc652a1ae0573db3d878878) )
 		ROM_LOAD( "3.pr",    0x0500, 0x0100, CRC(28b5ee4c) SHA1(e21b9c38f433dca1e8894619b1d9f0389a81b48a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( oigas )
+	static RomLoadPtr rom_oigas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000*2, REGION_CPU1, 0 )
 		ROM_LOAD( "rom.7",   0x10000, 0x4000, CRC(e5bc04cc) SHA1(ffbd416313a9e49d2f9a7268d5ef48a8b641e480) )
 		ROM_CONTINUE(        0x00000, 0x4000)
@@ -1103,7 +1103,7 @@ public class freekick
 		ROM_LOAD( "4.pr",    0x0300, 0x0100, CRC(fe201a4e) SHA1(15f8ecfcf6c63ffbf9777bec9b203c319ba1b96c) )
 		ROM_LOAD( "2.pr",    0x0400, 0x0100, CRC(5796cc4a) SHA1(39576c4e48fd7ac52fc652a1ae0573db3d878878) )
 		ROM_LOAD( "3.pr",    0x0500, 0x0100, CRC(28b5ee4c) SHA1(e21b9c38f433dca1e8894619b1d9f0389a81b48a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT(gigas)
 	{

@@ -603,7 +603,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	ROM_START( jedi )
+	static RomLoadPtr rom_jedi = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1C000, REGION_CPU1, 0 )	/* 64k for code + 48k for banked ROMs */
 		ROM_LOAD( "14f_221.bin",  0x08000, 0x4000, CRC(414d05e3) SHA1(e5f5f8d85433467a13d6ca9e3889e07a62b00e52) )
 		ROM_LOAD( "13f_222.bin",  0x0c000, 0x4000, CRC(7b3f21be) SHA1(8fe62401f9b78c7a3e62b544c4b705b1bfa9b8f3) )
@@ -631,7 +631,7 @@ public class jedi
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )	/* background smoothing */
 		ROM_LOAD( "136030.117",   0x0000, 0x0400, CRC(9831bd55) SHA1(12945ef2d1582914125b9ee591567034d71d6573) )
 		ROM_LOAD( "136030.118",   0x0400, 0x0400, CRC(261fbfe7) SHA1(efc65a74a3718563a07b718e34d8a7aa23339a69) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

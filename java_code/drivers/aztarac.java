@@ -229,7 +229,7 @@ public class aztarac
 	 *
 	 *************************************/
 	
-	ROM_START( aztarac )
+	static RomLoadPtr rom_aztarac = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "l8_6.bin", 0x000000, 0x001000, CRC(25f8da18) SHA1(e8179ba3683e39c8225b549ead74c8af2d0a0b3e) )
 		ROM_LOAD16_BYTE( "n8_0.bin", 0x000001, 0x001000, CRC(04e20626) SHA1(2b6a04992037257830df2c01a6da748fb4449f79) )
@@ -247,7 +247,7 @@ public class aztarac
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )
 		ROM_LOAD( "j4_c.bin", 0x0000, 0x1000, CRC(e897dfcd) SHA1(750df3d08512d8098a13ec62677831efa164c126) )
 		ROM_LOAD( "j3_d.bin", 0x1000, 0x1000, CRC(4016de77) SHA1(7232ec003f1b9d3623d762f3270108a1d1837846) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

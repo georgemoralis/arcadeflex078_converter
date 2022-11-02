@@ -1796,7 +1796,7 @@ public class deco32
 	
 	/**********************************************************************************/
 	
-	ROM_START( captaven )
+	static RomLoadPtr rom_captaven = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "hn_00-4.1e",	0x000000, 0x20000, CRC(147fb094) SHA1(6bd759c42f4b7f9e1c3f2d3ece0b3ec72de1a982) )
 		ROM_LOAD32_BYTE( "hn_01-4.1h",	0x000001, 0x20000, CRC(11ecdb95) SHA1(832b56f05ae7e15e67fbdd321da8c1cc5e7629a0) )
@@ -1846,9 +1846,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "man-11.16k",	0x000000,  0x80000,  CRC(0dc60a4c) SHA1(4d0daa6a0272852a37f341a0cdc48baee0ad9dd8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( captavna )
+	static RomLoadPtr rom_captavna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "hn_00.e1",	0x000000, 0x20000, CRC(12dd0c71) SHA1(77bd0e5f1b105ec70de5e76cb9c8138f02a496be) )
 		ROM_LOAD32_BYTE( "hn_01.h1",	0x000001, 0x20000, CRC(ac5ea492) SHA1(e08fa2b3e3a40cba6dcdf07049d67056d59ed72a) )
@@ -1898,9 +1898,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "man-11.16k",	0x000000,  0x80000,  CRC(0dc60a4c) SHA1(4d0daa6a0272852a37f341a0cdc48baee0ad9dd8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( captavne )
+	static RomLoadPtr rom_captavne = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "hg_00-4.1e",	0x000000, 0x20000, CRC(7008d43c) SHA1(a39143e13075ebc58ecc576391f04d2649675dfb) )
 		ROM_LOAD32_BYTE( "hg_01-4.1h",	0x000001, 0x20000, CRC(53dc1042) SHA1(4547ad20e5bc3b9cedae53f73f1628fa3493aafa) )
@@ -1950,9 +1950,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "man-11.16k",	0x000000,  0x80000,  CRC(0dc60a4c) SHA1(4d0daa6a0272852a37f341a0cdc48baee0ad9dd8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( captavnu )
+	static RomLoadPtr rom_captavnu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "hh_00-19.1e",	0x000000, 0x20000, CRC(08b870e0) SHA1(44c837e3c5dfc9764d89b0ebb3e9b7a40fe4d76f) )
 		ROM_LOAD32_BYTE( "hh_01-19.1h",	0x000001, 0x20000, CRC(0dc0feca) SHA1(cb1c97aac59dabcf6c37bc1562cf2f62bca951f1) )
@@ -2002,9 +2002,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "man-11.16k",	0x000000,  0x80000,  CRC(0dc60a4c) SHA1(4d0daa6a0272852a37f341a0cdc48baee0ad9dd8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( captavuu )
+	static RomLoadPtr rom_captavuu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "hh-00.1e",	0x000000, 0x20000, CRC(c34da654) SHA1(a1988a6a45991db6dee10b484049f6703b4671c9) )
 		ROM_LOAD32_BYTE( "hh-01.1h",	0x000001, 0x20000, CRC(55abe63f) SHA1(98772eff3ebb5a4f243c7a77d398eb142d1505cb) )
@@ -2054,9 +2054,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "man-11.16k",	0x000000,  0x80000,  CRC(0dc60a4c) SHA1(4d0daa6a0272852a37f341a0cdc48baee0ad9dd8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( captavnj )
+	static RomLoadPtr rom_captavnj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "hj_00-2.1e",	0x000000, 0x20000, CRC(10b1faaf) SHA1(9d76885200a846b4751c8d44ff591e2aff7c4148) )
 		ROM_LOAD32_BYTE( "hj_01-2.1h",	0x000001, 0x20000, CRC(62c59f27) SHA1(20bbb7f3ff63a8c795686c1d56d51e90305daa77) )
@@ -2106,9 +2106,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "man-11.16k",	0x000000,  0x80000,  CRC(0dc60a4c) SHA1(4d0daa6a0272852a37f341a0cdc48baee0ad9dd8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dragngun )
+	static RomLoadPtr rom_dragngun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x400000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "kb02.bin", 0x000000, 0x40000, CRC(4fb9cfea) SHA1(e20fbae32682fc5fdc82070d2d6c73b5b7ac13f8) )
 		ROM_LOAD32_BYTE( "kb06.bin", 0x000001, 0x40000, CRC(2395efec) SHA1(3c08299a6cdeebf9d3d5d367ab435eec76986194) )
@@ -2180,9 +2180,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND3, 0 )
 		ROM_LOAD( "mar-07.bin", 0x000000, 0x80000,  CRC(40287d62) SHA1(c00cb08bcdae55bcddc14c38e88b0484b1bc9e3e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fghthist )
+	static RomLoadPtr rom_fghthist = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_WORD( "kz00-1.1f", 0x000000, 0x80000, CRC(3a3dd15c) SHA1(689b51adf73402b12191a75061b8e709468c91bc) )
 		ROM_LOAD32_WORD( "kz01-1.2f", 0x000002, 0x80000, CRC(86796cd6) SHA1(c397c07d7a1d03ba96ccb2fe7a0ad25b8331e945) )
@@ -2210,9 +2210,9 @@ public class deco32
 	
 		ROM_REGION(512, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7124h.8j",  0,  512,  CRC(7294354b) SHA1(14fe42ad5d26d022c0fe9a46a4a9017af2296f40) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fghthstw )
+	static RomLoadPtr rom_fghthstw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_WORD( "fhist00.bin", 0x000000, 0x80000, CRC(fe5eaba1) SHA1(c8a3784af487a1bbd2150abf4b1c8f3ad33da8a4) ) /* Rom kx */
 		ROM_LOAD32_WORD( "fhist01.bin", 0x000002, 0x80000, CRC(3fb8d738) SHA1(2fca7a3ea483f01c97fb28a0adfa6d7980d8236c) )
@@ -2240,9 +2240,9 @@ public class deco32
 	
 		ROM_REGION(512, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7124h.8j",  0,  512,  CRC(7294354b) SHA1(14fe42ad5d26d022c0fe9a46a4a9017af2296f40) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fghthsta )
+	static RomLoadPtr rom_fghthsta = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_WORD( "le-00.1f", 0x000000, 0x80000, CRC(a5c410eb) SHA1(e2b0cb2351782e1155ecc4029010beb7326fd874) )
 		ROM_LOAD32_WORD( "le-01.2f", 0x000002, 0x80000, CRC(7e148aa2) SHA1(b21e16604c4d29611f91d629deb9f041eaf41e9b) )
@@ -2272,9 +2272,9 @@ public class deco32
 	
 		ROM_REGION(512, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7124h.8j",  0,  512,  CRC(7294354b) SHA1(14fe42ad5d26d022c0fe9a46a4a9017af2296f40) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lockload )
+	static RomLoadPtr rom_lockload = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x400000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_BYTE( "nh-00-0.b5", 0x000002, 0x80000, CRC(b8a57164) SHA1(b700a08db2ad1aa1bf0a32635ffbd5d3f08713ee) )
 		ROM_LOAD32_BYTE( "nh-01-0.b8", 0x000000, 0x80000, CRC(e371ac50) SHA1(c448b54bc8962844b490994607b21b0c806d7714) )
@@ -2358,9 +2358,9 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND3, 0 )
 		ROM_LOAD( "mar-07.n19",  0x00000, 0x80000,  CRC(40287d62) SHA1(c00cb08bcdae55bcddc14c38e88b0484b1bc9e3e) )	// same as dragngun, unused?
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tattass )
+	static RomLoadPtr rom_tattass = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_WORD( "pp44.cpu", 0x000000, 0x80000, CRC(c3ca5b49) SHA1(c6420b0c20df1ae166b279504880ade65b1d8048) )
 		ROM_LOAD32_WORD( "pp45.cpu", 0x000002, 0x80000, CRC(d3f30de0) SHA1(5a0aa0f96d29299b3b337b4b51bc84e447eb74d0) )
@@ -2428,9 +2428,9 @@ public class deco32
 		ROM_LOAD( "u21.snd",  0x080000, 0x80000,  CRC(10b2110c) SHA1(83e5938ed22da2874022e1dc8df76c72d95c448d) )
 		ROM_LOAD( "u36.snd",  0x100000, 0x80000,  CRC(3b73abe2) SHA1(195096e2302e84123b23b4ccd982fb3ab9afe42c) )
 		ROM_LOAD( "u37.snd",  0x180000, 0x80000,  CRC(986066b5) SHA1(9dd1a14de81733617cf51293674a8e26fc5cec68) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tattassa )
+	static RomLoadPtr rom_tattassa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* ARM 32 bit code */
 		ROM_LOAD32_WORD( "rev232a.000", 0x000000, 0x80000, CRC(1a357112) SHA1(d7f78f90970fd56ca1452a4c138168568b06d868) )
 		ROM_LOAD32_WORD( "rev232a.001", 0x000002, 0x80000, CRC(550245d4) SHA1(c1b2b31768da9becebd907a8622d05aa68ecaa29) )
@@ -2498,9 +2498,9 @@ public class deco32
 		ROM_LOAD( "u21.snd",  0x080000, 0x80000,  CRC(10b2110c) SHA1(83e5938ed22da2874022e1dc8df76c72d95c448d) )
 		ROM_LOAD( "u36.snd",  0x100000, 0x80000,  CRC(3b73abe2) SHA1(195096e2302e84123b23b4ccd982fb3ab9afe42c) )
 		ROM_LOAD( "u37.snd",  0x180000, 0x80000,  CRC(986066b5) SHA1(9dd1a14de81733617cf51293674a8e26fc5cec68) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nslasher )
+	static RomLoadPtr rom_nslasher = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x100000, REGION_CPU1, 0 ) /* Encrypted ARM 32 bit code */
 		ROM_LOAD32_WORD( "mainprg.1f", 0x000000, 0x80000, CRC(507acbae) SHA1(329a2bb244f2f3adb8d75cab5aa2dcb129d70712) )
 		ROM_LOAD32_WORD( "mainprg.2f", 0x000002, 0x80000, CRC(931fc7ee) SHA1(54eb12abfa3f332ce9b43a45ec424aaee88641a6) )
@@ -2531,7 +2531,7 @@ public class deco32
 	
 		ROM_REGION(0x80000, REGION_SOUND2, 0 )
 		ROM_LOAD( "mbh-11.16l", 0x000000,  0x80000,  CRC(0ec40b6b) SHA1(9fef44149608ae2a00f6a75a6f77f2efcab6e78e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/**********************************************************************************/
 	

@@ -707,7 +707,7 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	ROM_START( gyrodine )
+	static RomLoadPtr rom_gyrodine = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "a21.02", 0x0000, 0x2000, CRC(c5ec4a50) SHA1(4d012aabdc248143a4d3bab190ecb6e335c93427) )
 		ROM_LOAD( "a21.03", 0x2000, 0x2000, CRC(4e9323bd) SHA1(86ae4c6a29898fdb0e559ec2aac99fc874910fea) )
@@ -745,9 +745,9 @@ public class kyugo
 		ROM_LOAD( "a21.18", 0x0200, 0x0100, CRC(23c0c449) SHA1(4a37821a6a16ae0cfdcfb0fa64733c03ba9e4815) ) /* blue */
 		ROM_LOAD( "a21.20", 0x0300, 0x0020, CRC(efc4985e) SHA1(b2fa02e388fbbe1077e79699efccb2d47cb83ba5) ) /* char lookup table */
 		ROM_LOAD( "m1.2c",  0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sonofphx )
+	static RomLoadPtr rom_sonofphx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "5.f4",   0x0000, 0x2000, CRC(e0d2c6cf) SHA1(87befaefa3e4f07523e9c4db19f13ff9309a7dcc) )
 		ROM_LOAD( "6.h4",   0x2000, 0x2000, CRC(3a0d0336) SHA1(8e538d45d27ad881fb2ed71647353c6535646047) )
@@ -781,9 +781,9 @@ public class kyugo
 		ROM_LOAD( "r.1f",   0x0200, 0x0100, CRC(b7f48b41) SHA1(2d84dc29c0ab43729014129e6392207db0f56e9e) ) /* red */
 		/* 0x0300-0x031f empty - looks like there isn't a lookup table PROM */
 		ROM_LOAD( "m1.2c",  0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( repulse )
+	static RomLoadPtr rom_repulse = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "repulse.b5",   0x0000, 0x2000, CRC(fb2b7c9d) SHA1(7a6867a9deda7eb399bf5b01c5422400d443faea) )
 		ROM_LOAD( "repulse.b6",   0x2000, 0x2000, CRC(99129918) SHA1(9beba6ef62102d6a28cf7a52ce5ce2a2113f8dfc) )
@@ -817,9 +817,9 @@ public class kyugo
 		ROM_LOAD( "r.1f",         0x0200, 0x0100, CRC(b7f48b41) SHA1(2d84dc29c0ab43729014129e6392207db0f56e9e) ) /* red */
 		/* 0x0300-0x031f empty - looks like there isn't a lookup table PROM */
 		ROM_LOAD( "m1.2c",        0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 99lstwar )
+	static RomLoadPtr rom_99lstwar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "1999.4f",      0x0000, 0x2000, CRC(e3cfc09f) SHA1(e48905726c6308194c596117dd30444dcb748908) )
 		ROM_LOAD( "1999.4h",      0x2000, 0x2000, CRC(fd58c6e1) SHA1(005f3114425fd2bfb9452c790d40653661b3d1d9) )
@@ -853,9 +853,9 @@ public class kyugo
 		ROM_LOAD( "r.1f",         0x0200, 0x0100, CRC(b7f48b41) SHA1(2d84dc29c0ab43729014129e6392207db0f56e9e) ) /* red */
 		/* 0x0300-0x031f empty - looks like there isn't a lookup table PROM */
 		ROM_LOAD( "m1.2c",        0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 99lstwra )
+	static RomLoadPtr rom_99lstwra = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "4f.bin",       0x0000, 0x2000, CRC(efe2908d) SHA1(4de8661f523f002c6a9368f81d865c7cc98926dd) )
 		ROM_LOAD( "4h.bin",       0x2000, 0x2000, CRC(5b79c342) SHA1(293990dab3360139727a5c90aad0826d4a3746b7) )
@@ -889,9 +889,9 @@ public class kyugo
 		ROM_LOAD( "r.1f",         0x0200, 0x0100, CRC(b7f48b41) SHA1(2d84dc29c0ab43729014129e6392207db0f56e9e) ) /* red */
 		/* 0x0300-0x031f empty - looks like there isn't a lookup table PROM */
 		ROM_LOAD( "m1.2c",        0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( flashgal )
+	static RomLoadPtr rom_flashgal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "15.4f",        0x0000, 0x2000, CRC(cf5ad733) SHA1(24561db9a3d72c7a69a7ce5a85aaa78254788675) )
 		ROM_LOAD( "16.4h",        0x2000, 0x2000, CRC(00c4851f) SHA1(f29ef123702bb3506ac3740b2779ae2757d884c2) )
@@ -926,9 +926,9 @@ public class kyugo
 		ROM_LOAD( "flashgal.prb", 0x0200, 0x0100, CRC(1e0a1cd3) SHA1(cc120d8fba3e4fb5e18d789981ece77e589ee5a2) ) /* blue */
 		ROM_LOAD( "flashgal.pr2", 0x0300, 0x0020, CRC(cce2e29f) SHA1(787c65b7d69bcd224b45138fdbbf3fdae296dda6) ) /* char lookup table */
 		ROM_LOAD( "m1.2c",        0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( srdmissn )
+	static RomLoadPtr rom_srdmissn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "5.t2",   0x0000, 0x4000, CRC(a682b48c) SHA1(c7348cbe42e45cd336e0d03052e839781d1481d1) )
 		ROM_LOAD( "7.t3",   0x4000, 0x4000, CRC(1719c58c) SHA1(32faae584d0ada0a39b96655b1a9d7c449af4996) )
@@ -959,9 +959,9 @@ public class kyugo
 		ROM_LOAD( "mb.1f",  0x0200, 0x0100, CRC(a342890c) SHA1(6f2223ed68392b15a8751dba9bb28b85fd1d8dc0) ) /* blue */
 		ROM_LOAD( "m2.5j",  0x0300, 0x0020, CRC(190a55ad) SHA1(de8a847bff8c343d69b853a215e6ee775ef2ef96) ) /* char lookup table */
 		ROM_LOAD( "m1.2c",  0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? not used */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( airwolf )
+	static RomLoadPtr rom_airwolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "b.2s",        0x0000, 0x8000, CRC(8c993cce) SHA1(925a5a9a2ee382556e2c2e928fd483344eba72c3) )
 	
@@ -996,9 +996,9 @@ public class kyugo
 		ROM_LOAD( "01f.bin",     0x0200, 0x0100, CRC(ade97052) SHA1(cc1b4cd57d7bc55ce44de6b89a322ff08eabb1a0) ) /* blue */
 		/* 0x0300-0x031f empty - looks like there isn't a lookup table PROM */
 		ROM_LOAD( "m1.2c",       0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? not used */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skywolf )
+	static RomLoadPtr rom_skywolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "02s_03.bin",  0x0000, 0x4000, CRC(a0891798) SHA1(c1b1e1fce529509fb1dd921a0022d5367c3c495c) )
 		ROM_LOAD( "03s_04.bin",  0x4000, 0x4000, CRC(5f515d46) SHA1(ec12bddf72e98aeef5cd17d00f0fa6f2df59cf00) )
@@ -1029,9 +1029,9 @@ public class kyugo
 		ROM_LOAD( "01f.bin",     0x0200, 0x0100, CRC(ade97052) SHA1(cc1b4cd57d7bc55ce44de6b89a322ff08eabb1a0) ) /* blue */
 		/* 0x0300-0x031f empty - looks like there isn't a lookup table PROM */
 		ROM_LOAD( "m1.2c",       0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? not used */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skywolf2 )
+	static RomLoadPtr rom_skywolf2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "z80_2.bin",   0x0000, 0x8000, CRC(34db7bda) SHA1(1a98d5cf97063453a0351f7dbe339c32d59a3d20) )
 	
@@ -1061,9 +1061,9 @@ public class kyugo
 		ROM_LOAD( "01f.bin",     0x0200, 0x0100, CRC(ade97052) SHA1(cc1b4cd57d7bc55ce44de6b89a322ff08eabb1a0) ) /* blue */
 		/* 0x0300-0x031f empty - looks like there isn't a lookup table PROM */
 		ROM_LOAD( "m1.2c",       0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? not used */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( legend )
+	static RomLoadPtr rom_legend = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "a_r2.rom",    0x0000, 0x4000, CRC(0cc1c4f4) SHA1(33f6a1b31eed75a92e06cb29f912321fe75c31e6) )
 		ROM_LOAD( "a_r3.rom",    0x4000, 0x4000, CRC(4b270c6b) SHA1(95ad79a9de037b6aaca325da75c8aef9a72dbfed) )
@@ -1096,7 +1096,7 @@ public class kyugo
 		ROM_LOAD( "82s129.1f",   0x0200, 0x0100, CRC(75536fc8) SHA1(e713efafcdc7f2a595444af75d2083eb3e38a480) ) /* blue */
 		ROM_LOAD( "82s123.5j",   0x0300, 0x0020, CRC(c98f0651) SHA1(4f1b95213c28ad017c8d6542e8d522e4d69f91e3) ) /* char lookup table */
 		ROM_LOAD( "m1.2c",       0x0320, 0x0020, CRC(83a39201) SHA1(4fdc722c9e20ee152c890342ef0dce18e35e2ef8) ) /* timing? not used */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*************************************

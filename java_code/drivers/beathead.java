@@ -471,7 +471,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	ROM_START( beathead )
+	static RomLoadPtr rom_beathead = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )			/* dummy ASAP region */
 	
 		ROM_REGION( 0x14000, REGION_CPU2, 0 )			/* 64k + 16k for 6502 code */
@@ -493,7 +493,7 @@ public class beathead
 		ROM_LOAD( "bhpcm1.bin",  0xa0000, 0x20000, CRC(35511509) SHA1(41294b81e253db5d2f30f8589dd59729a31bb2bb) )
 		ROM_LOAD( "bhpcm2.bin",  0xc0000, 0x20000, CRC(f71a840a) SHA1(09d045552704cd1434307f9a36ce03c5c06a8ff6) )
 		ROM_LOAD( "bhpcm3.bin",  0xe0000, 0x20000, CRC(fedd4936) SHA1(430ed894fa4bfcd56ee5a8a8ef5e161246530e2d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

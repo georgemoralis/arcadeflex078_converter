@@ -404,7 +404,7 @@ public class chqflag
 	
 	
 	
-	ROM_START( chqflag )
+	static RomLoadPtr rom_chqflag = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x58800, REGION_CPU1, 0 )	/* 052001 code */
 		ROM_LOAD( "717h02",		0x050000, 0x008000, CRC(f5bd4e78) SHA1(7bab02152d055a6c3a322c88e7ee0b85a39d8ef2) )	/* banked ROM */
 		ROM_CONTINUE(			0x008000, 0x008000 )				/* fixed ROM */
@@ -432,9 +432,9 @@ public class chqflag
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* 007232 data (chip 2) */
 		ROM_LOAD( "717e09",		0x000000, 0x080000, CRC(d74e857d) SHA1(00c851c857650d67fc4caccea4461d99be4acb3c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chqflagj )
+	static RomLoadPtr rom_chqflagj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x58800, REGION_CPU1, 0 )	/* 052001 code */
 		ROM_LOAD( "717j02.bin",	0x050000, 0x008000, CRC(05355daa) SHA1(130ddbc289c077565e44f33c63a63963e6417e19) )	/* banked ROM */
 		ROM_CONTINUE(			0x008000, 0x008000 )				/* fixed ROM */
@@ -462,7 +462,7 @@ public class chqflag
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* 007232 data (chip 2) */
 		ROM_LOAD( "717e09",		0x000000, 0x080000, CRC(d74e857d) SHA1(00c851c857650d67fc4caccea4461d99be4acb3c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

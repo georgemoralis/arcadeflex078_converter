@@ -348,7 +348,7 @@ public class tugboat
 	
 	
 	
-	ROM_START( tugboat )
+	static RomLoadPtr rom_tugboat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "u7.bin", 0x5000, 0x1000, CRC(e81d7581) SHA1(c76327e3b027a5a2af69f8cfafa1f828ad0ebdb1) )
 		ROM_LOAD( "u8.bin", 0x6000, 0x1000, CRC(7525de06) SHA1(0722c7a0b89c55162227173679ffbe398ca350a2) )
@@ -377,7 +377,7 @@ public class tugboat
 	
 		ROM_REGION( 0x0100, REGION_PROMS, ROMREGION_DISPOSE )
 		ROM_LOAD( "nt2_u128.clr", 0x0000, 0x0100, CRC(236672bf) SHA1(57482d0a23223ef7b211045ad28d3e41e90f961e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

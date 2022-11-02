@@ -387,7 +387,7 @@ public class mnight
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( mnight )
+	static RomLoadPtr rom_mnight = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "mn6-j19.bin",  0x00000, 0x8000, CRC(56678d14) SHA1(acf3a97ca29db8ab9cad69599c5567464af3ae44) )
 		ROM_LOAD( "mn5-j17.bin",  0x10000, 0x8000, CRC(2a73f88e) SHA1(0a7b769174f2b976650453d808cb23668dff0260) )
@@ -431,9 +431,9 @@ public class mnight
 		ROM_CONTINUE(             0x04000, 0x2000 )
 		ROM_CONTINUE(             0x02000, 0x2000 )
 		ROM_CONTINUE(             0x06000, 0x2000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( arkarea )
+	static RomLoadPtr rom_arkarea = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "arkarea.008",  0x00000, 0x8000, CRC(1ce1b5b9) SHA1(ab7755523d58736b124deb59779dedee870fd7d2) )
 		ROM_LOAD( "arkarea.009",  0x10000, 0x8000, CRC(db1c81d1) SHA1(64a2f51c218d84c4eaeb8c5a5a3f0f4cdf5d174c) )
@@ -477,7 +477,7 @@ public class mnight
 		ROM_CONTINUE(             0x04000, 0x2000 )
 		ROM_CONTINUE(             0x02000, 0x2000 )
 		ROM_CONTINUE(             0x06000, 0x2000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

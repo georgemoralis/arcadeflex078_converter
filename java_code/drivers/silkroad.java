@@ -456,7 +456,7 @@ public class silkroad
 		}
 	}
 	
-	ROM_START( silkroad )
+	static RomLoadPtr rom_silkroad = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD32_WORD_SWAP( "rom02.bin", 0x000000, 0x100000, CRC(4e5200fc) SHA1(4d4cab03a6ec4ad825001e1e92193940646141e5) )
 		ROM_LOAD32_WORD_SWAP( "rom03.bin", 0x000002, 0x100000, CRC(73ccc78c) SHA1(2ac17aa8d7dac8636d29a4e4228a556334b51f1a) )
@@ -483,7 +483,7 @@ public class silkroad
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )
 		ROM_LOAD( "rom01.bin", 0x000000, 0x040000, CRC(db8cb455) SHA1(6723b4018208d554bd1bf1e0640b72d2f4f47302) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1999, silkroad, 0, silkroad, silkroad, silkroad, ROT0, "Unico", "The Legend of Silkroad" )

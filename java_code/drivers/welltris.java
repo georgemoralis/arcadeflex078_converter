@@ -805,7 +805,7 @@ public class welltris
 	
 	
 	
-	ROM_START( welltris )
+	static RomLoadPtr rom_welltris = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "j2.8", 0x000000, 0x20000, CRC(68ec5691) SHA1(8615415c5c98aa9caa0878a8251da7985f050f94) )
 		ROM_LOAD16_BYTE( "j1.7", 0x000001, 0x20000, CRC(1598ea2c) SHA1(e9150c3ab9b5c0eb9a5fee3e071358f92a005078) )
@@ -830,9 +830,9 @@ public class welltris
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "lh534j09.123", 0x00000, 0x80000, CRC(6c2ce9a5) SHA1(a4011ecfb505191c9934ba374933cd11b331d55a) )
 		ROM_LOAD( "lh534j10.124", 0x80000, 0x80000, CRC(e3682221) SHA1(3e1cda07cf451955dc473eabe007854e5148ae27) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quiz18k )
+	static RomLoadPtr rom_quiz18k = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "1-ic8.bin", 0x000000, 0x20000, CRC(10a64336) SHA1(d63c0752385e1d66b09a7197e267dcd0e5e93be8) )
 		ROM_LOAD16_BYTE( "2-ic7.bin", 0x000001, 0x20000, CRC(8b21b431) SHA1(278238ab4a5d11577c5ab3c7462b429f510a1d50) )
@@ -859,7 +859,7 @@ public class welltris
 		ROM_REGION( 0x140000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "ic123.bin", 0x00000, 0x80000, CRC(ee4995cf) SHA1(1b47938ddc87709f8d118b86fe62602972c77ced) )
 		ROM_LOAD( "ic124.bin", 0x80000, 0x40000, CRC(076f58c3) SHA1(bd78f39b85b2697e733896705355e21b8d2a141d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

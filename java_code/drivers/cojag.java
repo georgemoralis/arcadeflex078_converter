@@ -892,7 +892,7 @@ public class cojag
 	 *
 	 *************************************/
 	
-	ROM_START( area51 ) /* 68020 based, Area51 v?? Date: Oct 25, 1995 */
+	static RomLoadPtr rom_area51 = new RomLoadPtr(){ public void handler(){  /* 68020 based, Area51 v?? Date: Oct 25, 1995 */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* 4MB for RAM at 0 */
 	
 		ROM_REGION32_BE( 0x200000, REGION_USER1, ROMREGION_DISPOSE )	/* 2MB for 68020 code */
@@ -903,10 +903,10 @@ public class cojag
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "area51.chd", 0, MD5(130b330eff59403f8fc3433ff501852b) SHA1(9ea749404c9a5d44f407cdb8803293ec0d61410d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( maxforce ) /* R3000 based, labeled as "Maximum Force 5-23-97 v1.05" */
+	static RomLoadPtr rom_maxforce = new RomLoadPtr(){ public void handler(){  /* R3000 based, labeled as "Maximum Force 5-23-97 v1.05" */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* 4MB for RAM at 0 */
 	
 		ROM_REGION32_BE( 0x200000, REGION_USER1, ROMREGION_DISPOSE )	/* 2MB for IDT 79R3041 code */
@@ -917,10 +917,10 @@ public class cojag
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "maxforce.chd", 0, MD5(b0a214c7b3f8ba9d592396332fc974c9) SHA1(59d77280afdb2d1f801ee81786aa7d3166ec2695) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( maxf_102 ) /* R3000 based, labeled as "Maximum Force 2-27-97 v1.02" */
+	static RomLoadPtr rom_maxf_102 = new RomLoadPtr(){ public void handler(){  /* R3000 based, labeled as "Maximum Force 2-27-97 v1.02" */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* 4MB for RAM at 0 */
 	
 		ROM_REGION32_BE( 0x200000, REGION_USER1, ROMREGION_DISPOSE )	/* 2MB for IDT 79R3041 code */
@@ -931,10 +931,10 @@ public class cojag
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "maxforce.chd", 0, MD5(b0a214c7b3f8ba9d592396332fc974c9) SHA1(59d77280afdb2d1f801ee81786aa7d3166ec2695) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( area51mx )	/* 68020 based, Labeled as "68020 MAX/A51 KIT 2.0" Date: Apr 22, 1998 */
+	static RomLoadPtr rom_area51mx = new RomLoadPtr(){ public void handler(){ 	/* 68020 based, Labeled as "68020 MAX/A51 KIT 2.0" Date: Apr 22, 1998 */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )  /* 4MB for RAM at 0 */
 	
 		ROM_REGION32_BE( 0x200000, REGION_USER1, ROMREGION_DISPOSE ) /* 2MB for 68020 code */
@@ -945,10 +945,10 @@ public class cojag
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "area51mx.chd", 0, MD5(fce1a0954759fa22e50747959716823d) SHA1(7e629045eb5baa8cd522273befffbf8520828938) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( a51mxr3k ) /* R3000 based, Labeled as "R3K Max/A51 Kit Ver 1.0" */
+	static RomLoadPtr rom_a51mxr3k = new RomLoadPtr(){ public void handler(){  /* R3000 based, Labeled as "R3K Max/A51 Kit Ver 1.0" */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* 4MB for RAM at 0 */
 	
 		ROM_REGION32_BE( 0x200000, REGION_USER1, ROMREGION_DISPOSE )	/* 2MB for IDT 79R3041 code */
@@ -959,10 +959,10 @@ public class cojag
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "area51mx.chd", 0, MD5(fce1a0954759fa22e50747959716823d) SHA1(7e629045eb5baa8cd522273befffbf8520828938) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vcircle )
+	static RomLoadPtr rom_vcircle = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* dummy region for R3000 */
 	
 		ROM_REGION32_BE( 0x200000, REGION_USER1, ROMREGION_DISPOSE )	/* 2MB for R3000 code */
@@ -973,7 +973,7 @@ public class cojag
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "vcircle.chd", 0, MD5(fc316bd92363573d60083514223c6816) SHA1(f1d3e3d081d10ec42d07cd695d52b44812264983) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

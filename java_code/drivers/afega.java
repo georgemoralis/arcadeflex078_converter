@@ -678,7 +678,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	ROM_START( stagger1 )
+	static RomLoadPtr rom_stagger1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "2.bin", 0x000000, 0x020000, CRC(8555929b) SHA1(b405d81c2a45191111b1a4458ac6b5c0a129b8f1) )
 		ROM_LOAD16_BYTE( "3.bin", 0x000001, 0x020000, CRC(5b0b63ac) SHA1(239f793b6845a88d1630da790a2762da730a450d) )
@@ -698,7 +698,7 @@ public class afega
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "5", 0x00000, 0x40000, CRC(e911ce33) SHA1(a29c4dea98a22235122303325c63c15fadd3431d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -724,7 +724,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	ROM_START( redhawk )
+	static RomLoadPtr rom_redhawk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "2", 0x000000, 0x020000, CRC(3ef5f326) SHA1(e89c7c24a05886a14995d7c399958dc00ad35d63) )
 		ROM_LOAD16_BYTE( "3", 0x000001, 0x020000, CRC(9b3a10ef) SHA1(d03480329b23474e5a9e42a75b09d2140eed4443) )
@@ -744,7 +744,7 @@ public class afega
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "5", 0x00000, 0x40000, CRC(e911ce33) SHA1(a29c4dea98a22235122303325c63c15fadd3431d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( redhawk )
 	{
@@ -781,7 +781,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	ROM_START( grdnstrm )
+	static RomLoadPtr rom_grdnstrm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "gst-04.112", 0x000000, 0x040000, CRC(922c931a) SHA1(1d1511033c8c424535a73f5c5bf58560a8b1842e) )
 		ROM_LOAD16_BYTE( "gst-05.107", 0x000001, 0x040000, CRC(d22ca2dc) SHA1(fa21c8ec804570d64f4b167b7f65fd5811435e46) )
@@ -801,7 +801,7 @@ public class afega
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "gst-02.u95", 0x00000, 0x40000, CRC(e911ce33) SHA1(a29c4dea98a22235122303325c63c15fadd3431d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( grdnstrm )
 	{
@@ -849,7 +849,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	ROM_START( bubl2000 )
+	static RomLoadPtr rom_bubl2000 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "rom10.112", 0x00000, 0x20000, CRC(87f960d7) SHA1(d22fe1740217ac20963bd9003245850598ccecf2) )
 		ROM_LOAD16_BYTE( "rom11.107", 0x00001, 0x20000, CRC(b386041a) SHA1(cac36e22a39b5be0c5cd54dce5c912ff811edb28) )
@@ -874,7 +874,7 @@ public class afega
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "rom02.95", 0x00000, 0x40000, CRC(859a86e5) SHA1(7b51964227411a40aac54b9cd9ff64f091bdf2b0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( bubl2000 )
 	{

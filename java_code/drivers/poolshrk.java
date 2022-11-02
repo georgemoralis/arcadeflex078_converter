@@ -244,7 +244,7 @@ public class poolshrk
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( poolshrk )
+	static RomLoadPtr rom_poolshrk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "7329.k1", 0x7000, 0x800, CRC(88152245) SHA1(c7c5e43ea488a197e92a1dc2231578f8ed86c98d) )
 		ROM_LOAD( "7330.l1", 0x7800, 0x800, CRC(fb41d3e9) SHA1(c17994179362da13acfcd36a28f45e328428c031) )
@@ -259,7 +259,7 @@ public class poolshrk
 	
 		ROM_REGION( 0x20, REGION_PROMS, 0 )                   /* sprite offsets */
 		ROM_LOAD( "7327.k6", 0x0000, 0x020, CRC(f74cef5b) SHA1(f470bf5b193dae4b44e89bc4c4476cf8d98e7cfd) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1977, poolshrk, 0, poolshrk, poolshrk, poolshrk, 0, "Atari", "Poolshark", GAME_NO_SOUND )

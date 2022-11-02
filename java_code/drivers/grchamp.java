@@ -494,7 +494,7 @@ public class grchamp
 		//mask,default,type,sensitivity,delta,min,max
 	INPUT_PORTS_END(); }}; 
 	
-	ROM_START( grchamp )
+	static RomLoadPtr rom_grchamp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "gm03",   0x0000, 0x1000, CRC(47fda76e) SHA1(fd5f1a651481669d64e5e0799369c22472265535) )
 		ROM_LOAD( "gm04",   0x1000, 0x1000, CRC(07a623dc) SHA1(bb8a6531d95e996148c06fd336db4054eb1d28dd) )
@@ -533,7 +533,7 @@ public class grchamp
 		ROM_REGION( 0x0040, REGION_PROMS, 0 )
 		ROM_LOAD( "gr23.bpr", 0x00, 0x20, CRC(41c6c48d) SHA1(8bd14b5f02f9da0a68e3125955be18462b57401d) ) /* background colors */
 		ROM_LOAD( "gr09.bpr", 0x20, 0x20, CRC(260fb2b9) SHA1(db0bf49f12a944613d113317d7dfea25bd7469fc) ) /* sprite/text colors */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	

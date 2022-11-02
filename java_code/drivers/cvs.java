@@ -463,17 +463,17 @@ public class cvs
 	
 	***************************************************************************/
 	
-	ROM_START( cvs )
+	static RomLoadPtr rom_cvs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x8000, REGION_CPU3, 0 )
 		ROM_LOAD( "5b.bin",            0x0000, 0x0800, CRC(f055a624) SHA1(5dfe89d7271092e665cdd5cd59d15a2b70f92f43) )
 	
 		ROM_REGION( 0x0820, REGION_PROMS, 0 )
 	    ROM_LOAD( "82s185.10h",        0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) )
 		ROM_LOAD( "82s123.10k",        0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( huncholy ) 
+	static RomLoadPtr rom_huncholy = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "ho-gp1.bin", 0x0000, 0x0400, CRC(4f17cda7) SHA1(ae6fe495c723042c6e060d4ada50aaef1019d5eb) ) 
@@ -514,9 +514,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( darkwar ) 
+	static RomLoadPtr rom_darkwar = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "dw-gp1.bin", 0x0000, 0x0400, CRC(f10ccf24) SHA1(f694a9016fc935798e5342598e4fd60fbdbc2829) ) 
@@ -557,9 +557,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 8ball ) 
+	static RomLoadPtr rom_8ball = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "8b-gp1.bin", 0x0000, 0x0400, CRC(1b4fb37f) SHA1(df6dd2766a3b70eec0bde0ae1932b35abdab3735) ) 
@@ -600,9 +600,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 8ball1 ) 
+	static RomLoadPtr rom_8ball1 = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "8a-gp1.bin", 0x0000, 0x0400, CRC(b5d3b763) SHA1(23a01bcbd536ba7f773934ea9dedc7dd9f698100) ) 
@@ -643,9 +643,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hunchbak ) 
+	static RomLoadPtr rom_hunchbak = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "hb-gp1.bin", 0x0000, 0x0400, CRC(af801d54) SHA1(68e31561e98f7e2caa337dd764941d08f075b559) ) 
@@ -686,9 +686,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wallst ) 
+	static RomLoadPtr rom_wallst = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "ws-gp1.bin", 0x0000, 0x0400, CRC(bdac81b6) SHA1(6ce865d8902e815742a9ecf10d6f9495f376dede) ) 
@@ -729,9 +729,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dazzler ) 
+	static RomLoadPtr rom_dazzler = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "dz-gp1.bin", 0x0000, 0x0400, CRC(2c5d75de) SHA1(d121de662e95f2fc362e367cef57e5e70bafd197) ) 
@@ -772,9 +772,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( radarzon ) 
+	static RomLoadPtr rom_radarzon = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "rd-gp1.bin", 0x0000, 0x0400, CRC(775786ba) SHA1(5ad0f4e774821a7ed73615118ea42132d3b5424b) ) 
@@ -815,9 +815,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( radarzn1 ) 
+	static RomLoadPtr rom_radarzn1 = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "r1-gp1.bin", 0x0000, 0x0400, CRC(7c73c21f) SHA1(1113025ea16cfcc500b9624a031f3d25290db163) ) 
@@ -858,9 +858,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( radarznt ) 
+	static RomLoadPtr rom_radarznt = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "rt-gp1.bin", 0x0000, 0x0400, CRC(43573974) SHA1(854fe7022e9bdd94bb119c014156e9ffdb6682fa) ) 
@@ -901,9 +901,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( outline ) 
+	static RomLoadPtr rom_outline = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "rt-gp1.bin", 0x0000, 0x0400, CRC(43573974) SHA1(854fe7022e9bdd94bb119c014156e9ffdb6682fa) ) 
@@ -944,9 +944,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( goldbug ) 
+	static RomLoadPtr rom_goldbug = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "gb-gp1.bin", 0x0000, 0x0400, CRC(8deb7761) SHA1(35f27fb6b5e3f76ddaf2c074b3391931e679df6e) ) 
@@ -987,9 +987,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( superbik ) 
+	static RomLoadPtr rom_superbik = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "sb-gp1.bin", 0x0000, 0x0400, CRC(f0209700) SHA1(7843e8ebcbecb93814863ddd135f5acb0d481043) ) 
@@ -1030,9 +1030,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hero ) 
+	static RomLoadPtr rom_hero = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "hr-gp1.bin", 0x0000, 0x0400, CRC(82f39788) SHA1(44217dc2312d10fceeb35adf3999cd6f240b60be) ) 
@@ -1073,9 +1073,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( logger ) 
+	static RomLoadPtr rom_logger = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "lg-gp1.bin", 0x0000, 0x0400, CRC(0022b9ed) SHA1(4b94d2663f802a8140e8eae1b66ee78fdfa654f5) ) 
@@ -1116,9 +1116,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cosmos ) 
+	static RomLoadPtr rom_cosmos = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "cs-gp1.bin", 0x0000, 0x0400, CRC(7eb96ddf) SHA1(f7456ee1ace03ab98c4e8128d375464122c4df01) ) 
@@ -1159,9 +1159,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( heartatk ) 
+	static RomLoadPtr rom_heartatk = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "ha-gp1.bin", 0x0000, 0x0400, CRC(e8297c23) SHA1(e79ae7e99f904afe90b43a54df7b0e257d65ac0b) ) 
@@ -1202,9 +1202,9 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spacefrt ) 
+	static RomLoadPtr rom_spacefrt = new RomLoadPtr(){ public void handler(){  
 		
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "sf-gp1.bin", 0x0000, 0x0400, CRC(1158fc3a) SHA1(c1f470324b6ec65c3061f78a6ff8620154f20c09) ) 
@@ -1245,7 +1245,7 @@ public class cvs
 		ROM_REGION( 0x0820, REGION_PROMS, 0 ) 
 		ROM_LOAD( "82s185.10h", 0x0000, 0x0800, CRC(c205bca6) SHA1(ec9bd220e75f7b067ede6139763ef8aca0fb7a29) ) 
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( spacefrt )
 	{

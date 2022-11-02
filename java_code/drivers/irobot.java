@@ -352,7 +352,7 @@ public class irobot
 	 *
 	 *************************************/
 	
-	ROM_START( irobot )
+	static RomLoadPtr rom_irobot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 ) /* 64k for code + 48K Banked ROM*/
 		ROM_LOAD( "136029.208",     0x06000, 0x2000, CRC(b4d0be59) SHA1(5b476dbee8b171a96301b2204420161333d4ca97) )
 		ROM_LOAD( "136029.209",     0x08000, 0x4000, CRC(f6be3cd0) SHA1(a88ae0cc9ee22aa5dd3db0173f24313189f894f8) )
@@ -387,7 +387,7 @@ public class irobot
 		ROM_LOAD( "ir121.bin",      0x2820,  0x0400, CRC(adebcb99) SHA1(4628f8af43d82e578833b1452ec747eeb822b4e4) )
 		ROM_LOAD( "ir122.bin",      0x2c20,  0x0400, CRC(da7b6f79) SHA1(02398ba6e7c56d961bf92e2755e530db1144219d) )
 		ROM_LOAD( "ir123.bin",      0x3020,  0x0400, CRC(39fff18f) SHA1(85f338eeff7d8ed58804611bf8446ebb697d196d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 		/*  Colorprom from John's driver. ? */
 		/*  ROM_LOAD( "136029.125",    0x0000, 0x0020, CRC(c05abf82) ) */

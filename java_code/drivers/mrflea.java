@@ -325,7 +325,7 @@ public class mrflea
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( mrflea )
+	static RomLoadPtr rom_mrflea = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 code; main CPU */
 		ROM_LOAD( "cpu_d1",	0x0000, 0x2000, CRC(d286217c) SHA1(d750d64bb70f735a38b737881abb9a5fbde1c98c) )
 		ROM_LOAD( "cpu_d3",	0x2000, 0x2000, CRC(95cf94bc) SHA1(dd0a51d79b0b28952e6177f36af93f296b3cd954) )
@@ -358,7 +358,7 @@ public class mrflea
 		ROM_LOAD( "vd_l2",	0xa000, 0x2000, CRC(4d7fb925) SHA1(dc5224318451a59b020996a513269698a6d19972) )
 		ROM_LOAD( "vd_l3",	0xc000, 0x2000, CRC(6d81588a) SHA1(8dbc53d7034a661f9d9afd99f3a3cb5dff3ff137) )
 		ROM_LOAD( "vd_l4",	0xe000, 0x2000, CRC(423735a5) SHA1(4ee93f93cd2b08560e148525e08880d64c64fcd2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static InputPortPtr input_ports_mrflea = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 

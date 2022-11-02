@@ -311,7 +311,7 @@ public class skyarmy
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( skyarmy )
+	static RomLoadPtr rom_skyarmy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "a1h.bin", 0x0000, 0x2000, CRC(e3fb9d70) SHA1(b8e3a6d7d6ef30c1397f9b741132c5257c16be2d) )
 		ROM_LOAD( "a2h.bin", 0x2000, 0x2000, CRC(0417653e) SHA1(4f6ad7335b5b7e85b4e16cce3c127488c02401b2) )
@@ -328,7 +328,7 @@ public class skyarmy
 	
 	        ROM_REGION( 0x0020, REGION_PROMS, 0 )
 	        ROM_LOAD( "a6.bin",  0x0000, 0x0020, CRC(c721220b) SHA1(61b3320fb616c0600d56840cb6438616c7e0c6eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1982, skyarmy, 0, skyarmy, skyarmy, 0, ROT90, "Shoei", "Sky Army", GAME_WRONG_COLORS )
 }

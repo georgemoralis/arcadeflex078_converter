@@ -313,7 +313,7 @@ public class cbasebal
 	
 	
 	
-	ROM_START( cbasebal )
+	static RomLoadPtr rom_cbasebal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x90000, REGION_CPU1, 0 )	/* 576k for code + 576k for decrypted opcodes */
 		ROM_LOAD( "cbj10.11j",    0x00000, 0x08000, CRC(bbff0acc) SHA1(db9e2c89e030255851789caaf85f24dc73609d9b) )
 		ROM_LOAD( "cbj07.16f",    0x10000, 0x20000, CRC(8111d13f) SHA1(264e21e824c87f55da326440c6ed71e1c287a63e) )
@@ -338,7 +338,7 @@ public class cbasebal
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "cbj01.1e",     0x00000, 0x20000, CRC(1d8968bd) SHA1(813e475d1d0c343e7dad516f1fe564d00c9c27fb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( cbasebal )

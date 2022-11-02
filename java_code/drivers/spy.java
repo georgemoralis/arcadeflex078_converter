@@ -576,7 +576,7 @@ public class spy
 	
 	***************************************************************************/
 	
-	ROM_START( spy )
+	static RomLoadPtr rom_spy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x29000, REGION_CPU1, 0 ) /* code + banked roms + space for banked ram */
 		ROM_LOAD( "857n03.bin",   0x10000, 0x10000, CRC(97993b38) SHA1(0afd561bc85fcbfe30f2d16807424ceec7188ce7) )
 		ROM_LOAD( "857n02.bin",   0x20000, 0x08000, CRC(31a97efe) SHA1(6c9ec3954e4d16634bf95835b8b404d3a6ef6e24) )
@@ -601,9 +601,9 @@ public class spy
 	
 		ROM_REGION( 0x40000, REGION_SOUND2, 0 ) /* samples for 007232 #1 */
 		ROM_LOAD( "857b04.bin",   0x00000, 0x40000, CRC(20b83c13) SHA1(63062f1c0a9adbbced3d3d73682a2cd1217bee7d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spyu )
+	static RomLoadPtr rom_spyu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x29000, REGION_CPU1, 0 ) /* code + banked roms + space for banked ram */
 		ROM_LOAD( "857m03.bin",   0x10000, 0x10000, CRC(3bd87fa4) SHA1(257371ef31c8adcdc04f46e989b7a2f3531c2ab1) )
 		ROM_LOAD( "857m02.bin",   0x20000, 0x08000, CRC(306cc659) SHA1(91d150b8d320bf19c12bc46103ffdffacf4387c3) )
@@ -628,7 +628,7 @@ public class spy
 	
 		ROM_REGION( 0x40000, REGION_SOUND2, 0 ) /* samples for 007232 #1 */
 		ROM_LOAD( "857b04.bin",   0x00000, 0x40000, CRC(20b83c13) SHA1(63062f1c0a9adbbced3d3d73682a2cd1217bee7d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

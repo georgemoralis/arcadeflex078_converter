@@ -276,7 +276,7 @@ public class hanaroku
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( hanaroku )
+	static RomLoadPtr rom_hanaroku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* z80 code */
 		ROM_LOAD( "zc5_1a.u02",  0x00000, 0x08000, CRC(9e3b62ce) SHA1(81aee570b67950c21ab3c8f9235dd383529b34d5) )
 	
@@ -289,7 +289,7 @@ public class hanaroku
 		ROM_REGION( 0x0400, REGION_PROMS, 0 ) /* colour */
 		ROM_LOAD16_BYTE( "zc0_006.u21",  0x0000, 0x0200, CRC(8e8fbc30) SHA1(7075521bbd790c46c58d9e408b0d7d6a42ed00bc) )
 		ROM_LOAD16_BYTE( "zc0_007.u22",  0x0001, 0x0200, CRC(67225de1) SHA1(98322e71d93d247a67fb4e52edad6c6c32a603d8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1988, hanaroku, 0,        hanaroku, hanaroku, 0, ROT0, "Alba", "Hanaroku", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )

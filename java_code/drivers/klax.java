@@ -250,7 +250,7 @@ public class klax
 	 *
 	 *************************************/
 	
-	ROM_START( klax )
+	static RomLoadPtr rom_klax = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "136075-6.006", 0x00000, 0x10000, CRC(e8991709) SHA1(90d69b0712e68e842a8b946539f1f43ef165e8de) )
 		ROM_LOAD16_BYTE( "136075-6.005", 0x00001, 0x10000, CRC(72b8c510) SHA1(f79d3a2de4deaabbcec632e8be9a1d5f6c0c3740) )
@@ -270,10 +270,10 @@ public class klax
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "136075-1.015", 0x00000, 0x10000, CRC(4d24c768) SHA1(da102105a4d8c552e3594b8ffb1903ecbaa69415) )
 		ROM_LOAD( "136075-1.016", 0x10000, 0x10000, CRC(12e9b4b7) SHA1(2447f116cd865e46e61022143a2668beca99d5d1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( klax2 )
+	static RomLoadPtr rom_klax2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "136075.006",   0x00000, 0x10000, CRC(05c98fc0) SHA1(84880d3d65c46c96c739063b3f61b1663989c56e) )
 		ROM_LOAD16_BYTE( "136075.005",   0x00001, 0x10000, CRC(d461e1ee) SHA1(73e8615a742555f74c1086c0b745afc7e94a478f) )
@@ -293,10 +293,10 @@ public class klax
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "136075-1.015", 0x00000, 0x10000, CRC(4d24c768) SHA1(da102105a4d8c552e3594b8ffb1903ecbaa69415) )
 		ROM_LOAD( "136075-1.016", 0x10000, 0x10000, CRC(12e9b4b7) SHA1(2447f116cd865e46e61022143a2668beca99d5d1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( klax3 )
+	static RomLoadPtr rom_klax3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "5006",         0x00000, 0x10000, CRC(65eb9a31) SHA1(3f47d58fe9eb154ab14ac282919f92679b5c7922) )
 		ROM_LOAD16_BYTE( "5005",         0x00001, 0x10000, CRC(7be27349) SHA1(79eef2b7f4a0fb6991d81f6543d5ae00de9f2452) )
@@ -316,10 +316,10 @@ public class klax
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "136075-1.015", 0x00000, 0x10000, CRC(4d24c768) SHA1(da102105a4d8c552e3594b8ffb1903ecbaa69415) )
 		ROM_LOAD( "136075-1.016", 0x10000, 0x10000, CRC(12e9b4b7) SHA1(2447f116cd865e46e61022143a2668beca99d5d1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( klaxj )
+	static RomLoadPtr rom_klaxj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "136075-3.406", 0x00000, 0x10000, CRC(ab2aa50b) SHA1(0ebffc8b4724eb8c4423e0b1f62b0fff7cc30aab) )
 		ROM_LOAD16_BYTE( "136075-3.405", 0x00001, 0x10000, CRC(9dc9a590) SHA1(4c77b1ad9c083325f33520f2b6aa598dde247ad8) )
@@ -339,10 +339,10 @@ public class klax
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "136075-1.015", 0x00000, 0x10000, CRC(4d24c768) SHA1(da102105a4d8c552e3594b8ffb1903ecbaa69415) )
 		ROM_LOAD( "136075-1.016", 0x10000, 0x10000, CRC(12e9b4b7) SHA1(2447f116cd865e46e61022143a2668beca99d5d1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( klaxd )
+	static RomLoadPtr rom_klaxd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "2206.bin",     0x00000, 0x10000, CRC(9d1a713b) SHA1(6e60a43934bd8959c5c07dd12e087c63ea791bb9) )
 		ROM_LOAD16_BYTE( "1205.bin",     0x00001, 0x10000, CRC(45065a5a) SHA1(77339ca04e54a04489ce9d6e11816475e57d1311) )
@@ -362,7 +362,7 @@ public class klax
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "136075-1.015", 0x00000, 0x10000, CRC(4d24c768) SHA1(da102105a4d8c552e3594b8ffb1903ecbaa69415) )
 		ROM_LOAD( "136075-1.016", 0x10000, 0x10000, CRC(12e9b4b7) SHA1(2447f116cd865e46e61022143a2668beca99d5d1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

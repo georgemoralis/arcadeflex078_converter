@@ -339,7 +339,7 @@ public class _88games
 	
 	***************************************************************************/
 	
-	ROM_START( 88games )
+	static RomLoadPtr rom_88games = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x21000, REGION_CPU1, 0 ) /* code + banked roms + space for banked ram */
 	    ROM_LOAD( "861m01.k18", 0x08000, 0x08000, CRC(4a4e2959) SHA1(95572686bef48b5c1ce1dedf0afc891d92aff00d) )
 		ROM_LOAD( "861m02.k16", 0x10000, 0x10000, CRC(e19f15f6) SHA1(6c801b274e87eaff7f40148381ade5b38120cc12) )
@@ -391,9 +391,9 @@ public class _88games
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) /* samples for UPD7759 #1 */
 		ROM_LOAD( "861a07.c", 0x000000, 0x10000, CRC(5067a38b) SHA1(b5a8f7122356dd72a97e71b480835ba500116aaf) )
 		ROM_LOAD( "861a07.d", 0x010000, 0x10000, CRC(86731451) SHA1(c1410f6c7a23aa0c213878a6531d3e7eb966b0a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( konami88 )
+	static RomLoadPtr rom_konami88 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x21000, REGION_CPU1, 0 ) /* code + banked roms + space for banked ram */
 		ROM_LOAD( "861.e03", 0x08000, 0x08000, CRC(55979bd9) SHA1(d683cc514e2b41fc4033d5dc107ca22ba8981ada) )
 		ROM_LOAD( "861.e02", 0x10000, 0x10000, CRC(5b7e98a6) SHA1(39b6e93221d14a4695c79fb39c4eea54ec5ffb0c) )
@@ -445,9 +445,9 @@ public class _88games
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) /* samples for UPD7759 #1 */
 		ROM_LOAD( "861a07.c", 0x000000, 0x10000, CRC(5067a38b) SHA1(b5a8f7122356dd72a97e71b480835ba500116aaf) )
 		ROM_LOAD( "861a07.d", 0x010000, 0x10000, CRC(86731451) SHA1(c1410f6c7a23aa0c213878a6531d3e7eb966b0a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hypsptsp )
+	static RomLoadPtr rom_hypsptsp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x21000, REGION_CPU1, 0 ) /* code + banked roms + space for banked ram */
 		ROM_LOAD( "861f03.k18", 0x08000, 0x08000, CRC(8c61aebd) SHA1(de720acfe07fd70fe467f9c73122e0fbeab2b8c8) )
 		ROM_LOAD( "861f02.k16", 0x10000, 0x10000, CRC(d2460c28) SHA1(936220aa3983ffa2330843f683347768772561af) )
@@ -499,7 +499,7 @@ public class _88games
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) /* samples for UPD7759 #1 */
 		ROM_LOAD( "861a07.c", 0x000000, 0x10000, CRC(5067a38b) SHA1(b5a8f7122356dd72a97e71b480835ba500116aaf) )
 		ROM_LOAD( "861a07.d", 0x010000, 0x10000, CRC(86731451) SHA1(c1410f6c7a23aa0c213878a6531d3e7eb966b0a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -525,7 +525,7 @@ public class xexex
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( xexex )
+	static RomLoadPtr rom_xexex = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "xex_a01.rom",  0x000000, 0x40000, CRC(3ebcb066) SHA1(83a20433d9fdcc8b8d7133991f9a8164dddb61f3) )
 		ROM_LOAD16_BYTE( "xex_a02.rom",  0x000001, 0x40000, CRC(36ea7a48) SHA1(34f8046d7ecf5ea66c59c5bc0d7627942c28fd3b) )
@@ -552,9 +552,9 @@ public class xexex
 		ROM_REGION( 0x300000, REGION_SOUND1, 0 )
 		ROM_LOAD( "xex_b06.rom", 0x000000, 0x200000, CRC(3b12fce4) SHA1(c69172d9965b8da8a539812fac92d5f1a3c80d17) )
 		ROM_LOAD( "xex_b07.rom", 0x200000, 0x100000, CRC(ec87fe1b) SHA1(ec9823aea5a1fc5c47c8262e15e10b28be87231c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( xexexj )
+	static RomLoadPtr rom_xexexj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "067jaa01.16d", 0x000000, 0x40000, CRC(06e99784) SHA1(d53fe3724608992a6938c36aa2719dc545d6b89e) )
 		ROM_LOAD16_BYTE( "067jaa02.16e", 0x000001, 0x40000, CRC(30ae5bc4) SHA1(60491e31eef64a9206d1372afa32d83c6c0968b3) )
@@ -581,7 +581,7 @@ public class xexex
 		ROM_REGION( 0x300000, REGION_SOUND1, 0 )
 		ROM_LOAD( "xex_b06.rom", 0x000000, 0x200000, CRC(3b12fce4) SHA1(c69172d9965b8da8a539812fac92d5f1a3c80d17) )
 		ROM_LOAD( "xex_b07.rom", 0x200000, 0x100000, CRC(ec87fe1b) SHA1(ec9823aea5a1fc5c47c8262e15e10b28be87231c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	MACHINE_INIT( xexex )
 	{

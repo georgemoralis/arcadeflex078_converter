@@ -727,7 +727,7 @@ public class namconb1
 	
 	/***************************************************************/
 	
-	ROM_START( ptblank )
+	static RomLoadPtr rom_ptblank = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "gn2mprlb.15b", 0x00002, 0x80000, CRC(fe2d9425) SHA1(51b166a629cbb522720d63720558816b496b6b76) )
 		ROM_LOAD32_WORD( "gn2mprub.13b", 0x00000, 0x80000, CRC(3bf4985a) SHA1(f559e0d5f55d23d886fe61bd7d5ca556acc7f87c) )
@@ -752,9 +752,9 @@ public class namconb1
 	
 		ROM_REGION( 0x80000, NAMCONB1_TILEMASKREGION, 0 )
 		ROM_LOAD( "gn1-sha0.bin", 0, 0x80000, CRC(86d4ff85) SHA1(a71056b2bcbba50c834fe28269ebda9719df354a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunbulet )
+	static RomLoadPtr rom_gunbulet = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "gn1-mprl.bin", 0x00002, 0x80000, CRC(f99e309e) SHA1(3fe0ddf756e6849f8effc7672456cbe32f65c98a) )
 		ROM_LOAD32_WORD( "gn1-mpru.bin", 0x00000, 0x80000, CRC(72a4db07) SHA1(8c5e1e51cd961b311d03f7b21f36a5bd5e8e9104) )
@@ -779,9 +779,9 @@ public class namconb1
 	
 		ROM_REGION( 0x80000, NAMCONB1_TILEMASKREGION, 0 )
 		ROM_LOAD( "gn1-sha0.bin", 0, 0x80000, CRC(86d4ff85) SHA1(a71056b2bcbba50c834fe28269ebda9719df354a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nebulray )
+	static RomLoadPtr rom_nebulray = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "nr2-mpru.13b", 0x00000, 0x80000, CRC(049b97cb) SHA1(0e344b29a4d4bdc854fa9849589772df2eeb0a05) )
 		ROM_LOAD32_WORD( "nr2-mprl.15b", 0x00002, 0x80000, CRC(0431b6d4) SHA1(54c96e8ac9e753956c31bdef79d390f1c20e10ff) )
@@ -813,9 +813,9 @@ public class namconb1
 	
 		ROM_REGION( 0x20, REGION_PROMS, 0 ) /* custom key data? */
 		ROM_LOAD( "c366.bin", 0, 0x20, CRC(8c96f31d) SHA1(d186859cfc19a63266084372080d0a5bee687ae2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nebulryj )
+	static RomLoadPtr rom_nebulryj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "nr1-mpru", 0x00000, 0x80000, CRC(42ef71f9) SHA1(20e3cb63e1fde293c60c404b378d901d635c4b79) )
 		ROM_LOAD32_WORD( "nr1-mprl", 0x00002, 0x80000, CRC(fae5f62c) SHA1(143d716abbc834aac6270db3bbb89ec71ea3804d) )
@@ -847,9 +847,9 @@ public class namconb1
 	
 		ROM_REGION( 0x20, REGION_PROMS, 0 ) /* custom key data? */
 		ROM_LOAD( "c366.bin", 0, 0x20, CRC(8c96f31d) SHA1(d186859cfc19a63266084372080d0a5bee687ae2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gslgr94u )
+	static RomLoadPtr rom_gslgr94u = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "gse2mprl.bin", 0x00002, 0x80000, CRC(a514349c) SHA1(1f7ec81cd6193410d2f01e6f0f84878561fc8035) )
 		ROM_LOAD32_WORD( "gse2mpru.bin", 0x00000, 0x80000, CRC(b6afd238) SHA1(438a3411ac8ce3d22d5da8c0800738cb8d2994a9) )
@@ -872,9 +872,9 @@ public class namconb1
 	
 		ROM_REGION( 0x80000, NAMCONB1_TILEMASKREGION, 0 )
 		ROM_LOAD( "gse-sha0.bin", 0, 0x80000, CRC(6b2beabb) SHA1(815f7aef44735584edd4a9ca7e672471d07f225e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sws95 )
+	static RomLoadPtr rom_sws95 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "ss51mprl.bin", 0x00002, 0x80000, CRC(c9e0107d) SHA1(0f10582416023a86ea1ef2679f3f06016c086e08) )
 		ROM_LOAD32_WORD( "ss51mpru.bin", 0x00000, 0x80000, CRC(0d93d261) SHA1(5edef26e2c86dbc09727d910af92747d022e4fed) )
@@ -898,9 +898,9 @@ public class namconb1
 	
 		ROM_REGION( 0x80000, NAMCONB1_TILEMASKREGION, 0 )
 		ROM_LOAD( "ss51sha0.bin", 0, 0x80000, CRC(3bf4d081) SHA1(7b07b86f753ea6bcd90eb7d152c12884a6fe785a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sws96 )
+	static RomLoadPtr rom_sws96 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "ss61mprl.bin", 0x00002, 0x80000, CRC(06f55e73) SHA1(6be26f8a2ef600bf07c580f210d7b265ac464002) )
 		ROM_LOAD32_WORD( "ss61mpru.bin", 0x00000, 0x80000, CRC(0abdbb83) SHA1(67e8b712291f9bcf2c3a52fbc451fad54679cab8) )
@@ -923,9 +923,9 @@ public class namconb1
 	
 		ROM_REGION( 0x80000, NAMCONB1_TILEMASKREGION, 0 )
 		ROM_LOAD( "ss61sha0.bin", 0, 0x80000, CRC(fceaa19c) SHA1(c9303a755ac7af19c4804a264d1a09d987f39e74) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sws97 )
+	static RomLoadPtr rom_sws97 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "ss71mprl.bin", 0x00002, 0x80000, CRC(bd60b50e) SHA1(9e00bacd506182ab2af2c0efdd5cc401b3e46485) )
 		ROM_LOAD32_WORD( "ss71mpru.bin", 0x00000, 0x80000, CRC(3444f5a8) SHA1(8d0f35b3ba8f65dbc67c3b2d273833227a8b8b2a) )
@@ -948,9 +948,9 @@ public class namconb1
 	
 		ROM_REGION( 0x80000, NAMCONB1_TILEMASKREGION, 0 )
 		ROM_LOAD( "ss71sha0.bin", 0, 0x80000, CRC(be8c2758) SHA1(0a1b6c03cdaec6103ae8483b67faf3840234f825) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vshoot )
+	static RomLoadPtr rom_vshoot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "vsj1mprl.15b", 0x00002, 0x80000, CRC(83a60d92) SHA1(c3db0c79f772a79418914353a3d6ecc4883ea54e) )
 		ROM_LOAD32_WORD( "vsj1mpru.13b", 0x00000, 0x80000, CRC(c63eb92d) SHA1(f93bd4b91daee645677955020dc8df14dc9bfd27) )
@@ -975,9 +975,9 @@ public class namconb1
 	
 		ROM_REGION( 0x80000, NAMCONB1_TILEMASKREGION, 0 )
 		ROM_LOAD( "vsjsha-0.5m", 0, 0x80000, CRC(78335ea4) SHA1(d4b9f179b1b456a866354ea308664c036de6414d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( outfxies )
+	static RomLoadPtr rom_outfxies = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "ou2mprl.11c", 0x00002, 0x80000, CRC(f414a32e) SHA1(9733ab087cfde1b8fb5b676d8a2eb5325ebdbb56) )
 		ROM_LOAD32_WORD( "ou2mpru.11d", 0x00000, 0x80000, CRC(ab5083fb) SHA1(cb2e7a4838c2b80057edb83ea63116bccb1394d3) )
@@ -1017,9 +1017,9 @@ public class namconb1
 		ROM_REGION( 0x100000, REGION_USER1, 0 )
 		ROM_LOAD( "ou1dat0.20a", 0x00000, 0x80000, CRC(1a49aead) SHA1(df243aff1a6fb5bcf4d5d883c5af2374a4aff477) )
 		ROM_LOAD( "ou1dat1.20b", 0x80000, 0x80000, CRC(63bb119d) SHA1(d4c2820243b84c3f5cdf7f9e66bb50f53d0efed2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( outfxesj )
+	static RomLoadPtr rom_outfxesj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "ou1-mprl.11c", 0x00002, 0x80000, CRC(d3b9e530) SHA1(3f5fe5eea817a23dfe42e76f32912ce94d4c49c9) )
 		ROM_LOAD32_WORD( "ou1-mpru.11d", 0x00000, 0x80000, CRC(d98308fb) SHA1(fdefeebf56464a20e3aaefd88df4eee9f7b5c4f3) )
@@ -1059,10 +1059,10 @@ public class namconb1
 		ROM_REGION( 0x100000, REGION_USER1, 0 )
 		ROM_LOAD( "ou1dat0.20a", 0x00000, 0x80000, CRC(1a49aead) SHA1(df243aff1a6fb5bcf4d5d883c5af2374a4aff477) )
 		ROM_LOAD( "ou1dat1.20b", 0x80000, 0x80000, CRC(63bb119d) SHA1(d4c2820243b84c3f5cdf7f9e66bb50f53d0efed2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( machbrkr )
+	static RomLoadPtr rom_machbrkr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* main program */
 		ROM_LOAD32_WORD( "mb1_mprl.11c", 0x00002, 0x80000, CRC(86cf0644) SHA1(07eeadda1d94c9be2f882edb6f2eb0b98292e500) )
 		ROM_LOAD32_WORD( "mb1_mpru.11d", 0x00000, 0x80000, CRC(fb1ff916) SHA1(e0ba96c1f26a60f87d8050e582e164d91e132183) )
@@ -1103,7 +1103,7 @@ public class namconb1
 	
 		ROM_REGION( 0x100000, REGION_USER1, 0 )
 		ROM_LOAD( "mb1_dat0.20a", 0x00000, 0x80000, CRC(fb2e3cd1) SHA1(019b1d645a07619036522f42e0b9a537f39b6b93) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************/
 	

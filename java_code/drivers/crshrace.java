@@ -670,7 +670,7 @@ public class crshrace
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( crshrace )
+	static RomLoadPtr rom_crshrace = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "1",            0x000000, 0x80000, CRC(21e34fb7) SHA1(be47b4a9bce2d6ce0a127dffe032c61547b2a3c0) )
 	
@@ -702,9 +702,9 @@ public class crshrace
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "h893",         0x000000, 0x100000, CRC(32513b63) SHA1(c4ede4aaa2611cedb53d47448422a1926acf3052) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( crshrac2 )
+	static RomLoadPtr rom_crshrac2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "01-ic10.bin",  0x000000, 0x80000, CRC(b284aacd) SHA1(f0ef279cdec30eb32e8aa8cdd51e289b70f2d6f5) )
 	
@@ -736,7 +736,7 @@ public class crshrace
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "h893",         0x000000, 0x100000, CRC(32513b63) SHA1(c4ede4aaa2611cedb53d47448422a1926acf3052) )	// IC69.BIN
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	void crshrace_patch_code(UINT16 offset)

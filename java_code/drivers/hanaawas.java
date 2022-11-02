@@ -217,7 +217,7 @@ public class hanaawas
 	
 	***************************************************************************/
 	
-	ROM_START( hanaawas )
+	static RomLoadPtr rom_hanaawas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "1.1e",    	0x0000, 0x2000, CRC(618dc1e3) SHA1(31817f256512352db0d27322998d9dcf95a993cf) )
 		ROM_LOAD( "2.3e",    	0x2000, 0x1000, CRC(5091b67f) SHA1(5a66740b8829b9b4d3aea274f9ff36e0b9e8c151) )
@@ -234,7 +234,7 @@ public class hanaawas
 		ROM_LOAD( "13j.bpr",	0x0000, 0x0020, CRC(99300d85) SHA1(dd383db1f3c8c6d784121d32f20ffed3d83e2278) )	/* color PROM */
 		ROM_LOAD( "2a.bpr",		0x0020, 0x0100, CRC(e26f21a2) SHA1(d0df06f833e0f97872d9d2ffeb7feef94aaaa02a) )	/* lookup table */
 		ROM_LOAD( "6g.bpr",		0x0120, 0x0100, CRC(4d94fed5) SHA1(3ea8e6fb95d5677991dc90fe7435f91e5320bb16) )	/* I don't know what this is */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

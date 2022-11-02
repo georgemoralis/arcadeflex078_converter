@@ -1238,7 +1238,7 @@ public class wecleman
 							WEC Le Mans 24 ROM Definitions
 	***************************************************************************/
 	
-	ROM_START( wecleman )
+	static RomLoadPtr rom_wecleman = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* Main CPU Code */
 		ROM_LOAD16_BYTE( "602f08.17h", 0x00000, 0x10000, CRC(493b79d3) SHA1(9625e3b65c211d5081d8ed8977de287eff100842) )
@@ -1287,7 +1287,7 @@ public class wecleman
 		ROM_REGION( 0x04000, REGION_USER1, 0 )	/* extra data for road effects? */
 		ROM_LOAD( "602a12.1a",  0x000000, 0x04000, CRC(77b9383d) SHA1(7cb970889677704d6324bb64aafc05326c4503ad) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	void wecleman_unpack_sprites(void)
 	{
@@ -1370,7 +1370,7 @@ public class wecleman
 								Hot Chase ROM Definitions
 	***************************************************************************/
 	
-	ROM_START( hotchase )
+	static RomLoadPtr rom_hotchase = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* Main Code */
 		ROM_LOAD16_BYTE( "763k05", 0x000000, 0x010000, CRC(f34fef0b) SHA1(9edaf6da988348cb32d5686fe7a67fb92b1c9777) )
 		ROM_LOAD16_BYTE( "763k04", 0x000001, 0x010000, CRC(60f73178) SHA1(49c919d09fa464b205d7eccce337349e3a633a14) )
@@ -1413,7 +1413,7 @@ public class wecleman
 	
 		ROM_REGION( 0x08000, REGION_USER1, 0 )	/* extra data for road effects? */
 		ROM_LOAD( "763a12", 0x000000, 0x008000, CRC(05f1e553) SHA1(8aaeb7374bd93038c24e6470398936f22cabb0fe) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*      Important: you must leave extra space when listing sprite ROMs
 		in a ROM module definition.  This routine unpacks each sprite nibble

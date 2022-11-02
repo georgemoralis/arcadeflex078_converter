@@ -216,7 +216,7 @@ public class ttmahjng
 	
 	***************************************************************************/
 	
-	ROM_START( ttmahjng )
+	static RomLoadPtr rom_ttmahjng = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "ju04", 0x0000, 0x1000, CRC(fe7c693a) SHA1(be0630557e0bcd9ec2e9542cc4a4d947889ec57a) )
 		ROM_LOAD( "ju05", 0x1000, 0x1000, CRC(985723d3) SHA1(9d7499c48cfc242875a95d01459b8f3252ea41bc) )
@@ -232,7 +232,7 @@ public class ttmahjng
 		ROM_LOAD( "ju01", 0x0000, 0x0800, CRC(0f05ca3c) SHA1(6af547b2ec4f69069b4ad62d96d109ec0105dd8b) )
 		ROM_LOAD( "ju02", 0x0800, 0x0800, CRC(c1ffeceb) SHA1(18cf337ef2c9b51f1e9e4f08743225755c4ff420) )
 		ROM_LOAD( "ju08", 0x1000, 0x0800, CRC(2dcc76b5) SHA1(1732bcf5492dda34425681e7f28775ad7a5e04af) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1981, ttmahjng, 0, ttmahjng, ttmahjng, 0, ROT0, "Taito", "Mahjong" )

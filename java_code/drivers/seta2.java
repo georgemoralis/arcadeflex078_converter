@@ -1454,7 +1454,7 @@ public class seta2
 	
 	***************************************************************************/
 	
-	ROM_START( gundamex )
+	static RomLoadPtr rom_gundamex = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )		/* TMP68301 Code */
 		ROM_LOAD16_BYTE(	  "ka002002.u2",  0x000000, 0x080000, CRC(e850f6d8) SHA1(026325e305676b1f8d3d9e7573920f8b70d7bccb) )
 		ROM_LOAD16_BYTE(	  "ka002004.u3",  0x000001, 0x080000, CRC(c0fb1208) SHA1(84b25e4c73cb8e023ee5dbf69f588be98700b43f) )
@@ -1477,9 +1477,9 @@ public class seta2
 		ROM_REGION( 0x300000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		/* Leave 1MB empty (addressable by the chip) */
 		ROM_LOAD( "ka001015.u28", 0x100000, 0x200000, CRC(ada2843b) SHA1(09d06026031bc7558da511c3c0e29187ea0a0099) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( grdians )
+	static RomLoadPtr rom_grdians = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )		/* TMP68301 Code */
 		ROM_LOAD16_BYTE( "u2.bin", 0x000000, 0x080000, CRC(36adc6f2) SHA1(544e87f88179fe1342e7a06a8948ac1828e85108) )
 		ROM_LOAD16_BYTE( "u3.bin", 0x000001, 0x080000, CRC(2704f416) SHA1(9081a12cbb9927d36e1c50b52aa2c6003810ee42) )
@@ -1506,9 +1506,9 @@ public class seta2
 		ROM_REGION( 0x200000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		/* Leave 1MB empty (addressable by the chip) */
 		ROM_LOAD( "u32.bin", 0x100000, 0x100000, CRC(cf0f3017) SHA1(8376d3a674f71aec72f52c72758fbc53d9feb1a1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mj4simai )
+	static RomLoadPtr rom_mj4simai = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )		/* TMP68301 Code */
 		ROM_LOAD16_BYTE( "ll.u2",       0x000000, 0x080000, CRC(7be9c781) SHA1(d29e579706d98909933f6bed2ee292c88ed10d2c) )
 		ROM_LOAD16_BYTE( "lh1.u3",      0x000001, 0x080000, CRC(82aa3f72) SHA1(a93d5dc7cdf12f852a692759d91f6f2951b6b5b5) )
@@ -1527,9 +1527,9 @@ public class seta2
 		ROM_REGION( 0x500000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		/* Leave 1MB empty (addressable by the chip) */
 		ROM_LOAD( "cha-07.u32",  0x100000, 0x400000, CRC(817519ee) SHA1(ed09740cdbf61a328f7b50eb569cf498fb749416) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( myangel )
+	static RomLoadPtr rom_myangel = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )		/* TMP68301 Code */
 		ROM_LOAD16_BYTE( "kq1-prge.u2", 0x000000, 0x080000, CRC(6137d4c0) SHA1(762341e11b56e4a7787a0662833b702b78aee0a9) )
 		ROM_LOAD16_BYTE( "kq1-prgo.u3", 0x000001, 0x080000, CRC(4aad10d8) SHA1(a08e1c4f57c64be829e0807ae2791da947fd60aa) )
@@ -1549,9 +1549,9 @@ public class seta2
 		ROM_REGION( 0x300000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		/* Leave 1MB empty (addressable by the chip) */
 		ROM_LOAD( "kq1-snd.u32", 0x100000, 0x200000, CRC(8ca1b449) SHA1(f54096fb5400843af4879135c96760485b6cb319) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( myangel2 )
+	static RomLoadPtr rom_myangel2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )		/* TMP68301 Code */
 		ROM_LOAD16_BYTE( "kqs1ezpr.u2", 0x000000, 0x080000, CRC(2469aac2) SHA1(7dade2de31252e305d24c659c4801dd4687ad1f6) )
 		ROM_LOAD16_BYTE( "kqs1ozpr.u3", 0x000001, 0x080000, CRC(6336375c) SHA1(72089f77e94832e74e0512944acadeccd0dec8b0) )
@@ -1571,9 +1571,9 @@ public class seta2
 		ROM_REGION( 0x500000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		/* Leave 1MB empty (addressable by the chip) */
 		ROM_LOAD( "kqs1-snd.u32", 0x100000, 0x400000, CRC(792a6b49) SHA1(341b4e8f248b5032217733bada32e353c67e3888) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pzlbowl )
+	static RomLoadPtr rom_pzlbowl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* TMP68301 Code */
 		ROM_LOAD16_BYTE( "kup-u06.i03", 0x000000, 0x080000, CRC(314e03ac) SHA1(999398e55161dd75570d418f4c9899e3bf311cc8) )
 		ROM_LOAD16_BYTE( "kup-u07.i03", 0x000001, 0x080000, CRC(a0423a04) SHA1(9539023c5c2f2bf72ee3fb6105443ffd3d61e2f8) )
@@ -1587,9 +1587,9 @@ public class seta2
 		ROM_REGION( 0x500000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		/* Leave 1MB empty (addressable by the chip) */
 		ROM_LOAD( "kus-u18.i00", 0x100000, 0x400000, CRC(e2b1dfcf) SHA1(fb0b8be119531a1a27efa46ed7b86b05a37ed585) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( penbros )
+	static RomLoadPtr rom_penbros = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* TMP68301 Code */
 		ROM_LOAD16_BYTE( "u06.bin", 0x000000, 0x080000, CRC(7bbdffac) SHA1(d5766cb171b8d2e4c04a6bae37181fa5ada9d797) )
 		ROM_LOAD16_BYTE( "u07.bin", 0x000001, 0x080000, CRC(d50cda5f) SHA1(fc66f55f2070b447c5db85c948ce40adc37512f7) )
@@ -1603,7 +1603,7 @@ public class seta2
 		ROM_REGION( 0x300000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		/* Leave 1MB empty (addressable by the chip) */
 		ROM_LOAD( "u18.bin", 0x100000, 0x200000, CRC(de4e65e2) SHA1(82d4e590c714b3e9bf0ffaf1500deb24fd315595) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	DRIVER_INIT( gundamex )
 	{

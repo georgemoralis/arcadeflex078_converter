@@ -293,7 +293,7 @@ public class _1943
 	
 	***************************************************************************/
 	
-	ROM_START( 1943 )
+	static RomLoadPtr rom_1943 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for the banked ROMs images */
 		ROM_LOAD( "1943.01",      0x00000, 0x08000, CRC(c686cc5c) SHA1(5efb2d9df737564d599f71b71a6438f7624b27c3) )
 		ROM_LOAD( "1943.02",      0x10000, 0x10000, CRC(d8880a41) SHA1(2f9b6a3922efa05eed66c63284bace5f337304ac) )
@@ -346,9 +346,9 @@ public class _1943
 		ROM_LOAD( "bmprom.07",    0x0900, 0x0100, CRC(b56f30c3) SHA1(9f5e6db464d21457a33ec8bdfdff069632b791db) )	/* sprite palette bank */
 		ROM_LOAD( "bmprom.04",    0x0a00, 0x0100, CRC(91a8a2e1) SHA1(9583c87eff876f04bc2ccf7218cd8081f1bcdb94) )	/* priority encoder / palette selector (not used) */
 		ROM_LOAD( "bmprom.06",    0x0b00, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 1943j )
+	static RomLoadPtr rom_1943j = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for the banked ROMs images */
 		ROM_LOAD( "1943jap.001",  0x00000, 0x08000, CRC(f6935937) SHA1(6fe8885d734447c2a667cf80dd545200aad6c767) )
 		ROM_LOAD( "1943jap.002",  0x10000, 0x10000, CRC(af971575) SHA1(af1d8ce73e8671b7b41248ce6486c9b5aaf6a233) )
@@ -401,9 +401,9 @@ public class _1943
 		ROM_LOAD( "bmprom.07",    0x0900, 0x0100, CRC(b56f30c3) SHA1(9f5e6db464d21457a33ec8bdfdff069632b791db) )	/* sprite palette bank */
 		ROM_LOAD( "bmprom.04",    0x0a00, 0x0100, CRC(91a8a2e1) SHA1(9583c87eff876f04bc2ccf7218cd8081f1bcdb94) )	/* priority encoder / palette selector (not used) */
 		ROM_LOAD( "bmprom.06",    0x0b00, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 1943kai )
+	static RomLoadPtr rom_1943kai = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for the banked ROMs images */
 		ROM_LOAD( "1943kai.01",   0x00000, 0x08000, CRC(7d2211db) SHA1(b02a0b3daf7e1e224b7cad8fbe93439bd5ec9f0b) )
 		ROM_LOAD( "1943kai.02",   0x10000, 0x10000, CRC(2ebbc8c5) SHA1(3be5ad061411642723e3f2bcb7b3c3caa11ee15f) )
@@ -456,7 +456,7 @@ public class _1943
 		ROM_LOAD( "bmk07.bin",    0x0900, 0x0100, CRC(76307f8d) SHA1(8d655e2a5c50541795316d924b2f18b55f4b9571) )	/* sprite palette bank */
 		ROM_LOAD( "bmprom.04",    0x0a00, 0x0100, CRC(91a8a2e1) SHA1(9583c87eff876f04bc2ccf7218cd8081f1bcdb94) )	/* priority encoder / palette selector (not used) */
 		ROM_LOAD( "bmprom.06",    0x0b00, 0x0100, CRC(0eaf5158) SHA1(bafd4108708f66cd7b280e47152b108f3e254fc9) )	/* video timing (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

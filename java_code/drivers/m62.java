@@ -1611,7 +1611,7 @@ public class m62
 	
 	***************************************************************************/
 	
-	ROM_START( kungfum )
+	static RomLoadPtr rom_kungfum = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "a-4e-c.bin",   0x0000, 0x4000, CRC(b6e2d083) SHA1(17e2cfe2b9d6121239803aba7132918e54ae02bf) )
 		ROM_LOAD( "a-4d-c.bin",   0x4000, 0x4000, CRC(7532918e) SHA1(9d513d5a3b99cc54c4491371cd44af048ef0fb33) )
@@ -1650,9 +1650,9 @@ public class m62
 		ROM_LOAD( "b-5f-.bin",    0x0600, 0x0020, CRC(7a601c3d) SHA1(5c5cdf51b2c9fdb2b05402d9c260208ae73fe245) )	/* sprite height, one entry per 32 */
 																/* sprites. Used at run time! */
 		ROM_LOAD( "b-6f-.bin",    0x0620, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as battroad */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kungfud )
+	static RomLoadPtr rom_kungfud = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "a-4e-d",       0x0000, 0x4000, CRC(fc330a46) SHA1(50edbd6131310afa17d476e278a7098ab1cfae73) )
 		ROM_LOAD( "a-4d-d",       0x4000, 0x4000, CRC(1b2fd32f) SHA1(34487dacf2ec9fbf55148953a9f248fae9442568) )
@@ -1691,9 +1691,9 @@ public class m62
 		ROM_LOAD( "b-5f-.bin",    0x0600, 0x0020, CRC(7a601c3d) SHA1(5c5cdf51b2c9fdb2b05402d9c260208ae73fe245) )	/* sprite height, one entry per 32 */
 																/* sprites. Used at run time! */
 		ROM_LOAD( "b-6f-.bin",    0x0620, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as battroad */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spartanx )
+	static RomLoadPtr rom_spartanx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "a-4e-c-j.bin", 0x0000, 0x4000, CRC(32a0a9a6) SHA1(fbb601a4c98a131013ea49a6877f2cd8139434fa) )
 		ROM_LOAD( "a-4d-c-j.bin", 0x4000, 0x4000, CRC(3173ea78) SHA1(cb6102abf9cf8df531f6e808b59e076831456ff5) )
@@ -1732,9 +1732,9 @@ public class m62
 		ROM_LOAD( "b-5f-.bin",    0x0600, 0x0020, CRC(7a601c3d) SHA1(5c5cdf51b2c9fdb2b05402d9c260208ae73fe245) )	/* sprite height, one entry per 32 */
 																/* sprites. Used at run time! */
 		ROM_LOAD( "b-6f-.bin",    0x0620, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as battroad */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kungfub )
+	static RomLoadPtr rom_kungfub = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "c5.5h",        0x0000, 0x4000, CRC(5d8e791d) SHA1(90cd911f715a50a90427abd89b38272a6df08d69) )
 		ROM_LOAD( "c4.5k",        0x4000, 0x4000, CRC(4000e2b8) SHA1(719b0aa1fd0cbe671178ac728d76d439bd7932d9) )
@@ -1773,9 +1773,9 @@ public class m62
 		ROM_LOAD( "b-5f-.bin",    0x0600, 0x0020, CRC(7a601c3d) SHA1(5c5cdf51b2c9fdb2b05402d9c260208ae73fe245) )	/* sprite height, one entry per 32 */
 																/* sprites. Used at run time! */
 		ROM_LOAD( "b-6f-.bin",    0x0620, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as battroad */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kungfub2 )
+	static RomLoadPtr rom_kungfub2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "kf4",          0x0000, 0x4000, CRC(3f65313f) SHA1(bd584896f558440a0f7bf8e1ca49bf478fe77553) )
 		ROM_LOAD( "kf5",          0x4000, 0x4000, CRC(9ea325f3) SHA1(7c35128a3e70e5994a5e17db656dec1a53c1fe67) )
@@ -1814,9 +1814,9 @@ public class m62
 		ROM_LOAD( "b-5f-.bin",    0x0600, 0x0020, CRC(7a601c3d) SHA1(5c5cdf51b2c9fdb2b05402d9c260208ae73fe245) )	/* sprite height, one entry per 32 */
 																/* sprites. Used at run time! */
 		ROM_LOAD( "b-6f-.bin",    0x0620, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as battroad */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( battroad )
+	static RomLoadPtr rom_battroad = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1e000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "br-a-4e.b",	0x00000, 0x2000, CRC(9bf14768) SHA1(53169553b956e5bcbd3fae13b86ab859cd08c955) )
 		ROM_LOAD( "br-a-4d.b",	0x02000, 0x2000, CRC(39ca1627) SHA1(bbeb59ad93b4eb874dc3c1eebfc1136c0c5112c8) )
@@ -1862,9 +1862,9 @@ public class m62
 		ROM_LOAD( "br-b-5p",     0x0620, 0x0020, CRC(ce746937) SHA1(387e73a9ca684ac2e30061fca281970ff20ef0a5) )	/* sprite height, one entry per 32 */
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "br-b-6f",     0x0640, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as kungfum */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ldrun )
+	static RomLoadPtr rom_ldrun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "lr-a-4e",      0x0000, 0x2000, CRC(5d7e2a4d) SHA1(fe8aeff360f6c3a8606d67a8b95148c3c2ef7267) )
 		ROM_LOAD( "lr-a-4d",      0x2000, 0x2000, CRC(96f20473) SHA1(e400c43f3f32e12f68ca204c60bcebdb2b3da55d) )
@@ -1895,9 +1895,9 @@ public class m62
 		ROM_LOAD( "lr-b-5p",      0x0600, 0x0020, CRC(e01f69e2) SHA1(0d00ef348025ea4a9c274a7e3dbb006217d8449d) )	/* sprite height, one entry per 32 */
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "lr-b-6f",      0x0620, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ldruna )
+	static RomLoadPtr rom_ldruna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "roma4c",       0x0000, 0x2000, CRC(279421e1) SHA1(051e103b2ade4a332053ba05aa7f126dd9b97c2c) )
 		ROM_LOAD( "lr-a-4d",      0x2000, 0x2000, CRC(96f20473) SHA1(e400c43f3f32e12f68ca204c60bcebdb2b3da55d) )
@@ -1928,9 +1928,9 @@ public class m62
 		ROM_LOAD( "lr-b-5p",      0x0600, 0x0020, CRC(e01f69e2) SHA1(0d00ef348025ea4a9c274a7e3dbb006217d8449d) )	/* sprite height, one entry per 32 */
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "lr-b-6f",      0x0620, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ldrun2 )
+	static RomLoadPtr rom_ldrun2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code + 16k for banks */
 		ROM_LOAD( "lr2-a-4e.a",   0x00000, 0x2000, CRC(22313327) SHA1(c82c9d3218e0384e26b86f9475fea5056cd9832b) )
 		ROM_LOAD( "lr2-a-4d",     0x02000, 0x2000, CRC(ef645179) SHA1(d4cae3cb223d7d10e2cce751af5c77493c1c60df) )
@@ -1967,9 +1967,9 @@ public class m62
 		ROM_LOAD( "lr2-b-5p",     0x0600, 0x0020, CRC(e01f69e2) SHA1(0d00ef348025ea4a9c274a7e3dbb006217d8449d) )	/* sprite height, one entry per 32 */
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "lr2-b-6f",     0x0620, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ldrun3 )
+	static RomLoadPtr rom_ldrun3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "lr3a4eb.bin",  0x0000, 0x4000, CRC(09affc47) SHA1(1cd56b967e4c8ada6c6e1015aead5f7551034358) )
 		ROM_LOAD( "lr3a4db.bin",  0x4000, 0x4000, CRC(23a02178) SHA1(0560b92dfc9b57d01abb62a7b270beb27fa42040) )
@@ -2003,9 +2003,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "lr3-n-4f",     0x0620, 0x0100, CRC(df674be9) SHA1(4d8c5378234bc24fac62dc227d8cd72f1ab7a35c) )	/* unknown */
 		ROM_LOAD( "lr3-b-6f",     0x0720, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ldrun3jp )
+	static RomLoadPtr rom_ldrun3jp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "lr3-a-4e",     0x0000, 0x4000, CRC(5b334e8e) SHA1(018ee450f88feaf5da025e01d2d839b29d5f1559) )
 		ROM_LOAD( "lr3-a-4d.a",   0x4000, 0x4000, CRC(a84bc931) SHA1(0348d238a85a059a6423794910adec4462e14f27) )
@@ -2036,9 +2036,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "lr3-n-4f",     0x0620, 0x0100, CRC(df674be9) SHA1(4d8c5378234bc24fac62dc227d8cd72f1ab7a35c) )	/* unknown */
 		ROM_LOAD( "lr3-b-6f",     0x0720, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ldrun4 )
+	static RomLoadPtr rom_ldrun4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )	/* 64k for code + 32k for banked ROM */
 		ROM_LOAD( "lr4-a-4e",     0x00000, 0x4000, CRC(5383e9bf) SHA1(01f6f76b768107b389d7240bd15a5e0720defcb6) )
 		ROM_LOAD( "lr4-a-4d.c",   0x04000, 0x4000, CRC(298afa36) SHA1(077b5fa8a246059801232c5287225e3bb7507345) )
@@ -2072,9 +2072,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "lr4-v-4h",     0x0620, 0x0100, CRC(df674be9) SHA1(4d8c5378234bc24fac62dc227d8cd72f1ab7a35c) )	/* unknown */
 		ROM_LOAD( "lr4-b-6f",     0x0720, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lotlot )
+	static RomLoadPtr rom_lotlot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "lot-a-4e",     0x0000, 0x4000, CRC(2913d08f) SHA1(829115333825a9483322a910efee9ee470d85a0e) )
 		ROM_LOAD( "lot-a-4d",     0x4000, 0x4000, CRC(0443095f) SHA1(2c3ca107b54519632513a75b80a1a7d8b971f2b1) )
@@ -2112,9 +2112,9 @@ public class m62
 		ROM_LOAD( "lot-k-7e",     0x0920, 0x0200, CRC(6cef0fbd) SHA1(0c5c63a203e7bd852a3574c18f212487caf529ca) )	/* unknown */
 		ROM_LOAD( "lot-k-7h",     0x0b20, 0x0200, CRC(04442bee) SHA1(37d10b605830b9355b00256af479c06cd4b97950) )	/* unknown */
 		ROM_LOAD( "lot-b-6f",     0x0d20, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kidniki )
+	static RomLoadPtr rom_kidniki = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* main CPU */
 		ROM_LOAD( "dr04.4e",      0x00000, 0x04000, CRC(80431858) SHA1(3a387f63ce0c7601264f91ae1f6fe604f2ef8ef1) )
 		ROM_LOAD( "dr03.4cd",     0x04000, 0x04000, CRC(dba20934) SHA1(a7aac4fcea5c1a94ddaf67e85bf2ce2e77c965cb) )
@@ -2162,10 +2162,10 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "dr28.8f",      0x0620, 0x0200, CRC(6cef0fbd) SHA1(0c5c63a203e7bd852a3574c18f212487caf529ca) )	/* unknown */
 		ROM_LOAD( "dr33.6f",      0x0820, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( yanchamr )
+	static RomLoadPtr rom_yanchamr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* main CPU */
 		ROM_LOAD( "ky_a-4e-.bin", 0x00000, 0x04000, CRC(c73ad2d6) SHA1(2e5d100e043f77c056b0d5bb80f310a6866fd2b1) )
 		ROM_LOAD( "ky_a-4d-.bin", 0x04000, 0x04000, CRC(401af828) SHA1(eec1c082f42e441071fcf005803205b2275b0327) )
@@ -2213,9 +2213,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "dr28.8f",      0x0620, 0x0200, CRC(6cef0fbd) SHA1(0c5c63a203e7bd852a3574c18f212487caf529ca) )	/* unknown */
 		ROM_LOAD( "dr33.6f",      0x0820, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spelunkr )
+	static RomLoadPtr rom_spelunkr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )	/* main CPU */
 		ROM_LOAD( "spra.4e",      0x00000, 0x4000, CRC(cf811201) SHA1(9b29880b28e1d94b07a16b5455bc498dc882342f) )
 		ROM_LOAD( "spra.4d",      0x04000, 0x4000, CRC(bb4faa4f) SHA1(350f7b086ed6357354d60548419d139fddb34c9d) )
@@ -2279,9 +2279,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "sprm.8h",      0x0620, 0x0200, CRC(875cc442) SHA1(1117b6ae516c361b4cc4d0b7146ca98472ce2b21) )	/* unknown */
 		ROM_LOAD( "sprb.6f",      0x0820, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spelnkrj )
+	static RomLoadPtr rom_spelnkrj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )	/* main CPU */
 		ROM_LOAD( "spr_a4ec.bin", 0x00000, 0x4000, CRC(4e94a80c) SHA1(591ec5aa3fb508eedd120d9f7fb9454c3547148a) )
 		ROM_LOAD( "spr_a4dd.bin", 0x04000, 0x4000, CRC(e7c0cbce) SHA1(19f914e9155972c91ccc8dc5b133f35246613c52) )
@@ -2345,9 +2345,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "sprm.8h",      0x0620, 0x0200, CRC(875cc442) SHA1(1117b6ae516c361b4cc4d0b7146ca98472ce2b21) )	/* unknown */
 		ROM_LOAD( "sprb.6f",      0x0820, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spelunk2 )
+	static RomLoadPtr rom_spelunk2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x24000, REGION_CPU1, 0 )	/* main CPU */
 		ROM_LOAD( "sp2-a.4e",     0x00000, 0x4000, CRC(96c04bbb) SHA1(5d7ee2d21d30e3ccbb428c2f9771568dbf3cfdb4) )
 		ROM_LOAD( "sp2-a.4d",     0x04000, 0x4000, CRC(cb38c2ff) SHA1(28ab5f0c65657ee0eaa82275bdb60298eedd3821) )
@@ -2409,9 +2409,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "sp2-r.8j",     0x0720, 0x0200, CRC(875cc442) SHA1(1117b6ae516c361b4cc4d0b7146ca98472ce2b21) )	/* unknown */
 		ROM_LOAD( "sp2-b.6f",     0x0920, 0x0100, CRC(34d88d3c) SHA1(727f4c5cfff33538886fa0a29fd119aa085d7008) )	/* video timing - common to the other games */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( youjyudn )
+	static RomLoadPtr rom_youjyudn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )	/* main CPU */
 		ROM_LOAD( "yju_a4eb.bin", 0x00000, 0x4000, CRC(0d356bdc) SHA1(20ddd68720d733791fb3cf791b26e100af12d609) )
 		ROM_LOAD( "yju_a4db.bin", 0x04000, 0x4000, CRC(c169be13) SHA1(2f7e65924d152206fae97e5f50197963e2c566df) )
@@ -2453,9 +2453,9 @@ public class m62
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "yju_p-8d.bpr", 0x0620, 0x0200, CRC(6cef0fbd) SHA1(0c5c63a203e7bd852a3574c18f212487caf529ca) )	/* unknown */
 		ROM_LOAD( "yju_b-6f.bpr", 0x0820, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as kungfum */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( horizon )
+	static RomLoadPtr rom_horizon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "hrza-4e",   0x0000, 0x4000, CRC(98b96ba2) SHA1(8478ec3b39c970c6008f078cbb5ab39462865015) )
 		ROM_LOAD( "hrza-4d",   0x4000, 0x4000, CRC(06b06ac7) SHA1(d9ae9633455733fd14fc4d448b85365bfebef446) )
@@ -2487,7 +2487,7 @@ public class m62
 		ROM_LOAD( "hrzb-5p",     0x0600, 0x0020, CRC(208b49e9) SHA1(065f1e05dd8bb94304969147e5d497931b5ff00a) )	/* sprite height, one entry per 32 */
 		                                                        /* sprites. Used at run time! */
 		ROM_LOAD( "hrzb-6f",     0x0620, 0x0100, CRC(82c20d12) SHA1(268903f7d9be58a70d030b02bf31a2d6b5b6e249) )	/* video timing - same as kungfum */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static void init_m62(void)

@@ -781,7 +781,7 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	ROM_START( scontra )
+	static RomLoadPtr rom_scontra = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30800, REGION_CPU1, 0 )	/* ROMs + banked RAM */
 		ROM_LOAD( "e02.k11",     0x10000, 0x08000, CRC(a61c0ead) SHA1(9a0aadc8d3538fc1d88b761753fffcac8923a218) )	/* banked ROM */
 		ROM_CONTINUE(            0x08000, 0x08000 )				/* fixed ROM */
@@ -834,9 +834,9 @@ public class thunderx
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "775a09.b19",   0x0000, 0x0100, CRC(46d1e0df) SHA1(65dad04a124cc49cbc9bb271f865d77efbc4d57c) )	/* priority encoder (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( scontraj )
+	static RomLoadPtr rom_scontraj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30800, REGION_CPU1, 0 )	/* ROMs + banked RAM */
 		ROM_LOAD( "775-f02.bin", 0x10000, 0x08000, CRC(8d5933a7) SHA1(e13ec62a4209b790b609429d98620ec0d07bd0ee) )	/* banked ROM */
 		ROM_CONTINUE(            0x08000, 0x08000 )				/* fixed ROM */
@@ -889,9 +889,9 @@ public class thunderx
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "775a09.b19",   0x0000, 0x0100, CRC(46d1e0df) SHA1(65dad04a124cc49cbc9bb271f865d77efbc4d57c) )	/* priority encoder (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( thunderx )
+	static RomLoadPtr rom_thunderx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x29000, REGION_CPU1, 0 )	/* ROMs + banked RAM */
 		ROM_LOAD( "873k03.k15", 0x10000, 0x10000, CRC(276817ad) SHA1(34b1beecf2a4c54dd7cd150c5d83b44f67be288a) )
 		ROM_LOAD( "873k02.k13", 0x20000, 0x08000, CRC(80cc1c45) SHA1(881bc6eea94671e8c3fdb7a10b0e742b18cb7212) )
@@ -922,9 +922,9 @@ public class thunderx
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "873a08.f20",   0x0000, 0x0100, CRC(e2d09a1b) SHA1(a9651e137486b2df367c39eb43f52d0833589e87) )	/* priority encoder (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( thnderxj )
+	static RomLoadPtr rom_thnderxj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x29000, REGION_CPU1, 0 )	/* ROMs + banked RAM */
 		ROM_LOAD( "873-n03.k15", 0x10000, 0x10000, CRC(a01e2e3e) SHA1(eba0d95dc0c5eed18743a96e4bbda5e60d5d9c97) )
 		ROM_LOAD( "873-n02.k13", 0x20000, 0x08000, CRC(55afa2cc) SHA1(5fb9df0c7c7c0c2029dbe0f3c1e0340234a03e8a) )
@@ -955,7 +955,7 @@ public class thunderx
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "873a08.f20",   0x0000, 0x0100, CRC(e2d09a1b) SHA1(a9651e137486b2df367c39eb43f52d0833589e87) )	/* priority encoder (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	

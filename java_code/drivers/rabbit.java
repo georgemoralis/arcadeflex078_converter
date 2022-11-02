@@ -125,7 +125,7 @@ public class rabbit
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( rabbit )
+	static RomLoadPtr rom_rabbit = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* 68020 Code */
 		ROM_LOAD32_BYTE( "jpr0.0", 0x000000, 0x080000, CRC(52bb18c0) SHA1(625bc8a4daa6d08cacd92d9110cf67a95a91325a) )
 		ROM_LOAD32_BYTE( "jpr1.1", 0x000001, 0x080000, CRC(38299d0d) SHA1(72ccd51781b47636bb16ac18037cb3121d17199f) )
@@ -146,9 +146,9 @@ public class rabbit
 	
 		ROM_REGION( 0x600000, REGION_USER3, 0 ) /* Sound Roms? */
 		ROM_LOAD( "jsn0.11", 0x000000, 0x400000, CRC(e1f726e8) SHA1(598d75f3ff9e43ec8ce6131ed37f4345bf2f2d8e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tmmjprd )
+	static RomLoadPtr rom_tmmjprd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* 68020 Code - doesn't seem to dsam quite right, bitswap? */
 		ROM_LOAD32_BYTE( "p00.bin", 0x000000, 0x080000, CRC(a1efd960) SHA1(7f41ab58de32777bccbfe28e6e5a1f2dca35bb90) )
 		ROM_LOAD32_BYTE( "p01.bin", 0x000001, 0x080000, CRC(9c325374) SHA1(1ddf1c292fc1bcf4dcefb5d4aa3abdeb1489c020) )
@@ -181,7 +181,7 @@ public class rabbit
 		ROM_REGION( 0x800000, REGION_USER3, 0 ) /* Sound Roms? */
 		/* probably actually just maps with the others ... */
 		ROM_LOAD16_BYTE( "21.bin", 0x0000001, 0x400000, CRC(bb5fa8da) SHA1(620e609b3e2524d06d58844625f186fd4682205f))
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1997, rabbit, 0, rabbit, rabbit, 0, ROT0, "Electronic Arts", "Rabbit", GAME_NOT_WORKING | GAME_NO_SOUND )

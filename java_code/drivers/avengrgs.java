@@ -303,7 +303,7 @@ public class avengrgs
 	
 	/***************************************************************************/
 	
-	ROM_START( avengrgs )
+	static RomLoadPtr rom_avengrgs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD32_WORD_SWAP( "sd_00-2.7k", 0x000002, 0x80000, CRC(136be46a) SHA1(7679f5f78f7983d43ecdb9bdd04e45792a13d9f2) )
 		ROM_LOAD32_WORD_SWAP( "sd_01-2.7l", 0x000000, 0x80000, CRC(9d87f576) SHA1(dd20cd060d020d81f4e012be10d0211be7526641) )
@@ -333,7 +333,7 @@ public class avengrgs
 		ROM_LOAD16_WORD_SWAP( "mcg-12.5a",  0x400000, 0x200000, CRC(bef9b28f) SHA1(b7a2a0539ea4d22b48ce3f3eb367017f219da2c1) )
 		ROM_LOAD16_WORD_SWAP( "mcg-13.9k",  0x200000, 0x200000, CRC(92301551) SHA1(a7891e7a3c8d7f165ca73f5d5a034501df46e9a2) )
 		ROM_LOAD16_WORD_SWAP( "mcg-14.6a",  0x000000, 0x200000, CRC(c0d8b5f0) SHA1(08eecf6e7d0273e41cda3472709a67e2b16068c9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	

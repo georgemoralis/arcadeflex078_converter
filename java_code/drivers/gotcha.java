@@ -288,7 +288,7 @@ public class gotcha
 	
 	***************************************************************************/
 	
-	ROM_START( gotcha )
+	static RomLoadPtr rom_gotcha = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "gotcha.u3",    0x00000, 0x40000, CRC(5e5d52e0) SHA1(c3e9375350b7931e3c9874a045d7a9d8df5ea691) )
 		ROM_LOAD16_BYTE( "gotcha.u2",    0x00001, 0x40000, CRC(3aa8eaff) SHA1(348f2ab43101d51c553ff10f9d18cc499006c965) )
@@ -322,7 +322,7 @@ public class gotcha
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "gotcha-u.z11", 0x000000, 0x80000, CRC(6111c6ae) SHA1(9170a37eaca56586da2f5e4894816640193c8802) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

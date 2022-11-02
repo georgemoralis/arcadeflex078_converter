@@ -432,7 +432,7 @@ public class galaga
 	
 	***************************************************************************/
 	
-	ROM_START( galaga )
+	static RomLoadPtr rom_galaga = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "04m_g01.bin",  0x0000, 0x1000, CRC(a3a0f743) SHA1(6907773db7c002ecde5e41853603d53387c5c7cd) )
 		ROM_LOAD( "04k_g02.bin",  0x1000, 0x1000, CRC(43bb0d5c) SHA1(666975aed5ce84f09794c54b550d64d95ab311f0) )
@@ -460,9 +460,9 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galagamw )
+	static RomLoadPtr rom_galagamw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "3200a.bin",    0x0000, 0x1000, CRC(3ef0b053) SHA1(0c04a362b737998c0952a753fb3fd8c8a17e9b46) )
 		ROM_LOAD( "3300b.bin",    0x1000, 0x1000, CRC(1b280831) SHA1(f7ea12e61929717ebe43a4198a97f109845a2c62) )
@@ -490,9 +490,9 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galagads )
+	static RomLoadPtr rom_galagads = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "3200a.bin",    0x0000, 0x1000, CRC(3ef0b053) SHA1(0c04a362b737998c0952a753fb3fd8c8a17e9b46) )
 		ROM_LOAD( "3300b.bin",    0x1000, 0x1000, CRC(1b280831) SHA1(f7ea12e61929717ebe43a4198a97f109845a2c62) )
@@ -520,9 +520,9 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gallag )
+	static RomLoadPtr rom_gallag = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "04m_g01.bin",  0x0000, 0x1000, CRC(a3a0f743) SHA1(6907773db7c002ecde5e41853603d53387c5c7cd) )
 		ROM_LOAD( "gallag.2",     0x1000, 0x1000, CRC(5eda60a7) SHA1(853d7b974dd04abd7af3a8ba2681dfabce4dce18) )
@@ -553,9 +553,9 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galagab2 )
+	static RomLoadPtr rom_galagab2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "g1",           0x0000, 0x1000, CRC(ab036c9f) SHA1(ca7f5da42d4e76fd89bb0b35198a23c01462fbfe) )
 		ROM_LOAD( "g2",           0x1000, 0x1000, CRC(d9232240) SHA1(ab202aa259c3d332ef13dfb8fc8580ce2a5a253d) )
@@ -586,9 +586,9 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galaga84 )
+	static RomLoadPtr rom_galaga84 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "g1",           0x0000, 0x1000, CRC(ab036c9f) SHA1(ca7f5da42d4e76fd89bb0b35198a23c01462fbfe) )
 		ROM_LOAD( "gal84_u2",     0x1000, 0x1000, CRC(4d832a30) SHA1(88ee11df88cf08005efccd6305f87fb3e2797db6) )
@@ -619,9 +619,9 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nebulbee )
+	static RomLoadPtr rom_nebulbee = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "nebulbee.01",  0x0000, 0x1000, CRC(f405f2c4) SHA1(9249afeffd8df0f24539ea9b4f88c23a6ad58d8c) )
 		ROM_LOAD( "nebulbee.02",  0x1000, 0x1000, CRC(31022b60) SHA1(90e64afb4128c6dfeeee89635ea9f97a34f70f5f) )
@@ -649,7 +649,7 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -699,7 +699,7 @@ public class galaga
 	
 	*/
 	
-	ROM_START( gatsbee )
+	static RomLoadPtr rom_gatsbee = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "1.4b",	0x0000, 0x1000, CRC(9fb8e28b) SHA1(7171e3fb37b0d6cc8f7a023c1775080d5986de99) )
 		ROM_LOAD( "2.4c",	0x1000, 0x1000, CRC(bf6cb840) SHA1(5763140d32d35a38cdcb49e6de1fd5b07a9e8cc2) )
@@ -730,7 +730,7 @@ public class galaga
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT (gatsbee)
 	{

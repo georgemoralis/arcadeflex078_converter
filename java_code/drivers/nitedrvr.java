@@ -397,7 +397,7 @@ public class nitedrvr
 	 *
 	 *************************************/
 	
-	ROM_START( nitedrvr )
+	static RomLoadPtr rom_nitedrvr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "6569-01.d2",   0x9000, 0x0800, CRC(7afa7542) SHA1(81018e25ebdeae1daf1308676661063b6fd7fd22) )
 		ROM_LOAD( "6570-01.f2",   0x9800, 0x0800, CRC(bf5d77b1) SHA1(6f603f8b0973bd89e0e721b66944aac8e9f904d9) )
@@ -408,7 +408,7 @@ public class nitedrvr
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "6559-01.h7",   0x0000, 0x0100, CRC(5a8d0e42) SHA1(772220c4c24f18769696ddba26db2bc2e5b0909d) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

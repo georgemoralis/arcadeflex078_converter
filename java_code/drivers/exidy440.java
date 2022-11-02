@@ -1140,7 +1140,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	ROM_START( crossbow )
+	static RomLoadPtr rom_crossbow = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "xbl-2.1a",   0x08000, 0x2000, CRC(bd53ac46) SHA1(0f16ff2d5d08b20c8388d9334995b21c455bf155) )
 		ROM_LOAD( "xbl-2.3a",   0x0a000, 0x2000, CRC(703e1376) SHA1(602fc4d9c8fdf3a56ff83112f1e4e8aa5879da8c) )
@@ -1194,10 +1194,10 @@ public class exidy440
 		ROM_LOAD( "xba-1.1r",   0x1a000, 0x2000, CRC(b8ec43b3) SHA1(aebc8151025104d45d9b0ca88118f12b7ef9564b) )
 		ROM_LOAD( "xba-1.1s",   0x1c000, 0x2000, CRC(c9ead134) SHA1(411115da95eb42d14a60a7f10c660038cc882005) )
 		ROM_LOAD( "xba-1.1t",   0x1e000, 0x2000, CRC(5f41c282) SHA1(670b94534051ce5c6f0c8e0ff5ad7ab78c95be19) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( cheyenne )
+	static RomLoadPtr rom_cheyenne = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "cyl-1.1a",   0x08000, 0x2000, CRC(504c3fa6) SHA1(e3b8b3cfb0884c8bc7871382c3a2bf7dcd70641d) )
 		ROM_LOAD( "cyl-1.3a",   0x0a000, 0x2000, CRC(09b7903b) SHA1(24676bf3f01a451b502281321828c80f875b5427) )
@@ -1248,10 +1248,10 @@ public class exidy440
 		ROM_LOAD( "cya-1.1n",   0x16000, 0x2000, CRC(5fcee4fd) SHA1(3e4bc94284db237e5b0a5966cb1d2774f030d4b5) )
 		ROM_LOAD( "cya-1.1p",   0x18000, 0x2000, CRC(81a4a876) SHA1(7dc18b0af14e11c9f14d6b03fd68709fc4d4d63f) )
 		ROM_LOAD( "cya-1.1r",   0x1a000, 0x2000, CRC(dfd84e73) SHA1(6974091ce5cb1677d2e91da263be443023e55ce8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( combat )
+	static RomLoadPtr rom_combat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "1a",   0x08000, 0x2000, CRC(159a573b) SHA1(751614f0c9518f6f55e647daa4a7bbf795bc6e6d) )
 		ROM_LOAD( "3a",   0x0a000, 0x2000, CRC(59ae51a7) SHA1(c964aefb0705af0966386bae20fd5f885d1677b7) )
@@ -1296,10 +1296,10 @@ public class exidy440
 		ROM_LOAD( "xba-1.1p", 0x1a000, 0x2000, CRC(788bfac6) SHA1(8cec8ea7a876939719e9901b00055fc90615f237) )	/* from Crossbow */
 		ROM_LOAD( "xba-1.2l", 0x1c000, 0x2000, CRC(2c24cb35) SHA1(4ea16998f477d6429a92ca05ef74daa21315e695) )	/* from Crossbow */
 		ROM_LOAD( "xba-1.1t", 0x1e000, 0x2000, CRC(5f41c282) SHA1(670b94534051ce5c6f0c8e0ff5ad7ab78c95be19) )	/* from Crossbow */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( catch22 )
+	static RomLoadPtr rom_catch22 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "22l-8_0.1a",   0x08000, 0x2000, CRC(232e8723) SHA1(10da33e94026dc856ea4fcdd11945527321383d1) )
 		ROM_LOAD( "22l-8_0.3a",   0x0a000, 0x2000, CRC(a94afce6) SHA1(bbc349240460c001e8eda78d80b36bb2c40b090e) )
@@ -1344,10 +1344,10 @@ public class exidy440
 		ROM_LOAD( "xba-1.1p", 0x1a000, 0x2000, CRC(788bfac6) SHA1(8cec8ea7a876939719e9901b00055fc90615f237) )	/* from Crossbow */
 		ROM_LOAD( "xba-1.2l", 0x1c000, 0x2000, CRC(2c24cb35) SHA1(4ea16998f477d6429a92ca05ef74daa21315e695) )	/* from Crossbow */
 		ROM_LOAD( "xba-1.1t", 0x1e000, 0x2000, CRC(5f41c282) SHA1(670b94534051ce5c6f0c8e0ff5ad7ab78c95be19) )	/* from Crossbow */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( cracksht )
+	static RomLoadPtr rom_cracksht = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "csl2.1a",   0x08000, 0x2000, CRC(16fd0171) SHA1(3c39d8e3483e0d6b82ec2e0d3cdd61250015b165) )
 		ROM_LOAD( "csl2.3a",   0x0a000, 0x2000, CRC(906f3209) SHA1(2c479e525a3ed31969c168ddf5a72dc909c2c494) )
@@ -1390,10 +1390,10 @@ public class exidy440
 		ROM_LOAD( "csa3.1r",   0x1a000, 0x2000, CRC(dfa783e4) SHA1(cb5e1132224085ff9694b8037abbed8d0926ca99) )
 		ROM_LOAD( "csa3.1s",   0x1c000, 0x2000, CRC(18d097ac) SHA1(c3546c5a21458e7117d36f2e477d3d5db7827487) )
 		ROM_LOAD( "csa3.1t",   0x1e000, 0x2000, CRC(5f41c282) SHA1(670b94534051ce5c6f0c8e0ff5ad7ab78c95be19) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( claypign )
+	static RomLoadPtr rom_claypign = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "claypige.1a",   0x08000, 0x2000, CRC(446d7004) SHA1(c2bbfbfdfd144ff61178dbacd244e2f9d1c3ffc3) )
 		ROM_LOAD( "claypige.3a",   0x0a000, 0x2000, CRC(df39701b) SHA1(416f586441e87f7e2b36dee4731249a75b82c897) )
@@ -1423,10 +1423,10 @@ public class exidy440
 		ROM_LOAD( "claypige.k1",   0x10000, 0x2000, CRC(07f12d18) SHA1(57041cd31abfd94f8c5ad172aeafef5302484973) )
 		ROM_LOAD( "claypige.l1",   0x12000, 0x2000, CRC(f448eb4f) SHA1(40e2116dcff76a58bc460c4725bfd463d4dda227) )
 		ROM_LOAD( "claypige.m1",   0x14000, 0x2000, CRC(36865f5b) SHA1(18dd278760daba466c5a52cf267878ec2afdede7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( chiller )
+	static RomLoadPtr rom_chiller = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "chl3.1a",   0x08000, 0x2000, CRC(996ad02e) SHA1(0c242614f28b8ee1a65a4d336fb645c814a50293) )
 		ROM_LOAD( "chl3.3a",   0x0a000, 0x2000, CRC(17e6f904) SHA1(e43adea5f3106bc97ac4762213478a02656300fe) )
@@ -1476,10 +1476,10 @@ public class exidy440
 		ROM_LOAD( "cha3.1r",   0x1a000, 0x2000, CRC(b8ec43b3) SHA1(aebc8151025104d45d9b0ca88118f12b7ef9564b) )
 		ROM_LOAD( "cha3.1s",   0x1c000, 0x2000, CRC(5f41c282) SHA1(670b94534051ce5c6f0c8e0ff5ad7ab78c95be19) )
 		ROM_LOAD( "cha3.1t",   0x1e000, 0x2000, CRC(3a3a48af) SHA1(4128f277e12753de66a9a7d5529920b97cfa12a8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( topsecex )
+	static RomLoadPtr rom_topsecex = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "tsl1.a1",   0x08000, 0x2000, CRC(30ff2142) SHA1(28dad2a785101229b3de1859f8fb068b49d6037c) )
 		ROM_LOAD( "tsl1.a3",   0x0a000, 0x2000, CRC(9295e5b7) SHA1(cc73e6d111f922ca7ecd10ba576df3119cd4d328) )
@@ -1536,10 +1536,10 @@ public class exidy440
 		ROM_LOAD( "tsa1.1r",   0x1a000, 0x2000, CRC(753f0a5f) SHA1(24cda4f879c594840b1190e733d44bb2d59e9102) )
 		ROM_LOAD( "tsa1.1s",   0x1c000, 0x2000, CRC(745f9340) SHA1(49ddae23057fbc1bc71afe4ebccbfc73a08953dc) )
 		ROM_LOAD( "tsa1.1t",   0x1e000, 0x2000, CRC(0e74b7a6) SHA1(6d0c4e84fb2793aa86b3b7612aeac4a2d1394434) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( hitnmiss )
+	static RomLoadPtr rom_hitnmiss = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "hml3.a1",   0x08000, 0x2000, CRC(d79ae18e) SHA1(bec0b583e7667390a0f97efeb031d97f5027a827) )
 		ROM_LOAD( "hml3.a3",   0x0a000, 0x2000, CRC(61baf38b) SHA1(ac92baea5f235204e06ece2c1b7d674bcad0d265) )
@@ -1583,10 +1583,10 @@ public class exidy440
 		ROM_LOAD( "hma.1r",   0x1a000, 0x2000, CRC(e8bb33bc) SHA1(246cbd125be5bc17b2693231bab1eafc0ed686bb) )
 		ROM_LOAD( "hma.1s",   0x1c000, 0x2000, CRC(65f1aa6e) SHA1(5385d76fbcf551e26629544ddee7ca6a4b447a4a) )
 		ROM_LOAD( "hma.1t",   0x1e000, 0x2000, CRC(eb35dfcc) SHA1(97ef32874c1f3cd3370b5784642c7c7bd134f54d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( hitnmis2 )
+	static RomLoadPtr rom_hitnmis2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "hml2.a1",   0x08000, 0x2000, CRC(322f7e83) SHA1(e80e51c943402d0b644b1788e6a278130610d0e6) )
 		ROM_LOAD( "hml2.a3",   0x0a000, 0x2000, CRC(0e12a721) SHA1(22ee013d68c1afc218672cbb40c99fc9de607328) )
@@ -1631,10 +1631,10 @@ public class exidy440
 		ROM_LOAD( "hma.1r",   0x1a000, 0x2000, CRC(e8bb33bc) SHA1(246cbd125be5bc17b2693231bab1eafc0ed686bb) )
 		ROM_LOAD( "hma.1s",   0x1c000, 0x2000, CRC(65f1aa6e) SHA1(5385d76fbcf551e26629544ddee7ca6a4b447a4a) )
 		ROM_LOAD( "hma.1t",   0x1e000, 0x2000, CRC(eb35dfcc) SHA1(97ef32874c1f3cd3370b5784642c7c7bd134f54d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( whodunit )
+	static RomLoadPtr rom_whodunit = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "wdl8.1a",   0x08000, 0x2000, CRC(50658904) SHA1(5d1b44a0e20c4ec599c339235f42ca881f8a5bfc) )
 		ROM_LOAD( "wdl8.3a",   0x0a000, 0x2000, CRC(5d1530f8) SHA1(258d19c14a757497e0ce95a3ab8332168d97e67c) )
@@ -1689,10 +1689,10 @@ public class exidy440
 		ROM_LOAD( "wda6.r1",   0x1a000, 0x2000, CRC(0579a3b8) SHA1(554bced664c12547a766ee6df1278b967714b5ae) )
 		ROM_LOAD( "wda6.s1",   0x1c000, 0x2000, CRC(f55c3c6e) SHA1(54878fe1106986e9aa26c6141921429119703990) )
 		ROM_LOAD( "wda6.t1",   0x1e000, 0x2000, CRC(38363b52) SHA1(4b1c3225a32882e35e5af742f1c6b1e665722fd4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( showdown )
+	static RomLoadPtr rom_showdown = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus lots of banked ROMs */
 		ROM_LOAD( "showda1.bin",   0x08000, 0x2000, CRC(e4031507) SHA1(3d5183cd049be843fd38e3d1bd2d0a305df723bd) )
 		ROM_LOAD( "showd3a.bin",   0x0a000, 0x2000, CRC(e7de171e) SHA1(881a2b596949de3b4bb1263e2aa08faeb3051a6e) )
@@ -1743,7 +1743,7 @@ public class exidy440
 		ROM_LOAD( "showd1r.bin",   0x1a000, 0x2000, CRC(95b099ed) SHA1(1327852712ade3fc96bd8192045c081c4d32f4ba) )
 		ROM_LOAD( "showd1s.bin",   0x1c000, 0x2000, CRC(8f230881) SHA1(daa8efc355fb042b2fce89a0d2950a90e56a806f) )
 		ROM_LOAD( "showd1t.bin",   0x1e000, 0x2000, CRC(70e724c7) SHA1(df2905f91038693c87452813216aa86bbb81521b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -332,7 +332,7 @@ public class hexion
 	
 	***************************************************************************/
 	
-	ROM_START( hexion )
+	static RomLoadPtr rom_hexion = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x34800, REGION_CPU1, 0 )	/* ROMs + space for additional RAM */
 		ROM_LOAD( "122jab01.bin", 0x00000, 0x20000, CRC(eabc6dd1) SHA1(e74c1f1f2fcf8973f0741a2d544f25c8639448bf) )
 		ROM_RELOAD(               0x10000, 0x20000 )	/* banked at 8000-9fff */
@@ -348,7 +348,7 @@ public class hexion
 		ROM_LOAD( "122a04.10b",   0x0000, 0x0100, CRC(506eb8c6) SHA1(3bff7cf286942d8bdbc3998245c3de20981fbecb) )
 		ROM_LOAD( "122a03.11b",   0x0100, 0x0100, CRC(590c4f64) SHA1(db4b34f8c5fdfea034a94d65873f6fb842f123e9) )
 		ROM_LOAD( "122a02.13b",   0x0200, 0x0100, CRC(5734305c) SHA1(c72e59acf79a4db1a5a9d827eef899c0675336f2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1992, hexion, 0, hexion, hexion, 0, ROT0, "Konami", "Hexion (Japan)" )

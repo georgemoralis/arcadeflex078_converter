@@ -3320,65 +3320,65 @@ public class segac2
 	
 	/* ----- System C Games ----- */
 	
-	ROM_START( bloxeedc ) /* Bloxeed (C System Version)  (c)1989 Sega / Elorg */
+	static RomLoadPtr rom_bloxeedc = new RomLoadPtr(){ public void handler(){  /* Bloxeed (C System Version)  (c)1989 Sega / Elorg */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr12908.32", 0x000000, 0x020000, CRC(fc77cb91) SHA1(248a462e3858ffdc171af7d806e57deecb5dae50) )
 		ROM_LOAD16_BYTE( "epr12907.31", 0x000001, 0x020000, CRC(e5fcbac6) SHA1(a1adec5ef5574bff96a3d66619a24a6715097bb9) )
 		ROM_LOAD16_BYTE( "epr12993.34", 0x040000, 0x020000, CRC(487bc8fc) SHA1(3fb205bf56f35443e993e08b39c1a08c13ca5e3b) )
 		ROM_LOAD16_BYTE( "epr12992.33", 0x040001, 0x020000, CRC(19b0084c) SHA1(b3ba0f3d8d39a19aa66edb24885ea21192e22704) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( columns ) /* Columns (US) (c)1990 Sega */
+	static RomLoadPtr rom_columns = new RomLoadPtr(){ public void handler(){  /* Columns (US) (c)1990 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr13114.32", 0x000000, 0x020000, CRC(ff78f740) SHA1(0a034103a4b942f43e62f6e717f5dbf1bfb0b613) )
 		ROM_LOAD16_BYTE( "epr13113.31", 0x000001, 0x020000, CRC(9a426d9b) SHA1(3322e65ebf8d0a6047f7d408387c63ea401b8973) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( columnsj ) /* Columns (Jpn) (c)1990 Sega */
+	static RomLoadPtr rom_columnsj = new RomLoadPtr(){ public void handler(){  /* Columns (Jpn) (c)1990 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr13112.32", 0x000000, 0x020000, CRC(bae6e53e) SHA1(2c2fd621eecd55591f22d076323972a7d0314615) )
 		ROM_LOAD16_BYTE( "epr13111.31", 0x000001, 0x020000, CRC(aa5ccd6d) SHA1(480e29e3112282d1790f1fb68075453325ba4336) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( columns2 ) /* Columns II - The Voyage Through Time (Jpn)  (c)1990 Sega */
+	static RomLoadPtr rom_columns2 = new RomLoadPtr(){ public void handler(){  /* Columns II - The Voyage Through Time (Jpn)  (c)1990 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr13361.rom", 0x000000, 0x020000, CRC(b54b5f12) SHA1(4d7fbae7d9bcadd433ebc25aef255dc43df611bc) )
 		ROM_LOAD16_BYTE( "epr13360.rom", 0x000001, 0x020000, CRC(a59b1d4f) SHA1(e9ee315677782e1c61ae8f11260101cc03176188) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tantrbl2 ) /* Tant-R (Puzzle & Action) (Alt Bootleg Running on C Board?, No Samples) */
+	static RomLoadPtr rom_tantrbl2 = new RomLoadPtr(){ public void handler(){  /* Tant-R (Puzzle & Action) (Alt Bootleg Running on C Board?, No Samples) */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "trb2_2.32",    0x000000, 0x080000, CRC(8fc99c48) SHA1(d90ed673fe1f6e1f878c0d8fc62f5439b56d0a47) )
 		ROM_LOAD16_BYTE( "trb2_1.31",    0x000001, 0x080000, CRC(c318d00d) SHA1(703760d4ddc45bc0921ae96a27d9a8fbf12a1e96) )
 		ROM_LOAD16_BYTE( "mpr15616.34",  0x100000, 0x080000, CRC(17b80202) SHA1(f47bf2aa0c5972647438619b8453c7dede5c422f) )
 		ROM_LOAD16_BYTE( "mpr15615.33",  0x100001, 0x080000, CRC(36a88bd4) SHA1(cc7f6a947d1b79bb86957c43035b53d6d2bcfa28) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ichidntb ) /* Ichident-R (Puzzle & Action 2) (Bootleg Running on C Board?, No Samples) */
+	static RomLoadPtr rom_ichidntb = new RomLoadPtr(){ public void handler(){  /* Ichident-R (Puzzle & Action 2) (Bootleg Running on C Board?, No Samples) */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "27c4000.2",0x000000, 0x080000, CRC(5a194f44) SHA1(67a4d21b91704f8c2210b5106e82e22ba3366f4c) )
 		ROM_LOAD16_BYTE( "27c4000.1",0x000001, 0x080000, CRC(de209f84) SHA1(0860d0ebfab2952e82fc1e292bf9410d673d9322) )
 		ROM_LOAD16_BYTE( "epr16888", 0x100000, 0x080000, CRC(85d73722) SHA1(7ebe81b4d6c89f87f60200a3a8cddb07d581adef) )
 		ROM_LOAD16_BYTE( "epr16887", 0x100001, 0x080000, CRC(bc3bbf25) SHA1(e760ad400bc183b38e9787d88c8ac084fbe2ae21) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* ----- System C-2 Games ----- */
 	
-	ROM_START( borench ) /* Borench  (c)1990 Sega */
+	static RomLoadPtr rom_borench = new RomLoadPtr(){ public void handler(){  /* Borench  (c)1990 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ic32.bin", 0x000000, 0x040000, CRC(2c54457d) SHA1(adf3ea5393d2633ec6215e64f0cd89ad4567e765) )
 		ROM_LOAD16_BYTE( "ic31.bin", 0x000001, 0x040000, CRC(b46445fc) SHA1(24e85ef5abbc5376a854b13ed90f08f0c30d7f25) )
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )
 		ROM_LOAD( "ic4.bin", 0x000000, 0x020000, CRC(62b85e56) SHA1(822ab733c87938bb70a9e32cc5dd36bbf6f21d11) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tfrceac ) /* ThunderForce AC  (c)1990 Technosoft / Sega */
+	static RomLoadPtr rom_tfrceac = new RomLoadPtr(){ public void handler(){  /* ThunderForce AC  (c)1990 Technosoft / Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ic32.bin", 0x000000, 0x040000, CRC(95ecf202) SHA1(92b0f351f2bee7d59873a4991615f14f1afe4da7) )
 		ROM_LOAD16_BYTE( "ic31.bin", 0x000001, 0x040000, CRC(e63d7f1a) SHA1(a40d0a5a96f379a467048dc8fddd8aaaeb94da1d) )
@@ -3388,10 +3388,10 @@ public class segac2
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )
 		ROM_LOAD( "ic4.bin", 0x000000, 0x040000, CRC(e09961f6) SHA1(e109b5f41502b765d191f22e3bbcff97d6defaa1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tfrceacj ) /* ThunderForce AC (Jpn)  (c)1990 Technosoft / Sega */
+	static RomLoadPtr rom_tfrceacj = new RomLoadPtr(){ public void handler(){  /* ThunderForce AC (Jpn)  (c)1990 Technosoft / Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr13657.32", 0x000000, 0x040000, CRC(a0f38ffd) SHA1(da548e7f61aed0e82a460553a119941da8857bc4) )
 		ROM_LOAD16_BYTE( "epr13656.31", 0x000001, 0x040000, CRC(b9438d1e) SHA1(598209c9fec3527fde720af09e5bebd7379f5b2b) )
@@ -3401,10 +3401,10 @@ public class segac2
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )
 		ROM_LOAD( "ic4.bin", 0x000000, 0x040000, CRC(e09961f6) SHA1(e109b5f41502b765d191f22e3bbcff97d6defaa1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tfrceacb ) /* ThunderForce AC (Bootleg)  (c)1990 Technosoft / Sega */
+	static RomLoadPtr rom_tfrceacb = new RomLoadPtr(){ public void handler(){  /* ThunderForce AC (Bootleg)  (c)1990 Technosoft / Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "4.bin",    0x000000, 0x040000, CRC(eba059d3) SHA1(7bc04401f9a138fa151ac09a528b70acfb2021e3) )
 		ROM_LOAD16_BYTE( "3.bin",    0x000001, 0x040000, CRC(3e5dc542) SHA1(4a66dc842afaa145dab82b232738eea107bdf0f8) )
@@ -3414,10 +3414,10 @@ public class segac2
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )
 		ROM_LOAD( "ic4.bin", 0x000000, 0x040000, CRC(e09961f6) SHA1(e109b5f41502b765d191f22e3bbcff97d6defaa1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ribbit ) /* Ribbit  (c)1991 Sega */
+	static RomLoadPtr rom_ribbit = new RomLoadPtr(){ public void handler(){  /* Ribbit  (c)1991 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ep13833.32", 0x000000, 0x040000, CRC(5347f8ce) SHA1(b95b99536157edfbf0d74a42f64235f47dca7ee1) )
 		ROM_LOAD16_BYTE( "ep13832.31", 0x000001, 0x040000, CRC(889c42c2) SHA1(0839a50a68b64a66d995f1bfaff42fcb60bb4d45) )
@@ -3427,10 +3427,10 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "ep13834.4", 0x000000, 0x020000, CRC(ab0c1833) SHA1(f864e12ecf6c0524da20fc66747a4fa4280e67e9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tantr ) /* Tant-R (Puzzle & Action)  (c)1992 Sega */
+	static RomLoadPtr rom_tantr = new RomLoadPtr(){ public void handler(){  /* Tant-R (Puzzle & Action)  (c)1992 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr15614.32", 0x000000, 0x080000, CRC(557782bc) SHA1(1546a999ab97c380dc87f6c95d5687722206740d) )
 		ROM_LOAD16_BYTE( "epr15613.31", 0x000001, 0x080000, CRC(14bbb235) SHA1(8dbfec5fb1d7a695acbb2fc0e78e4bdf76eb8d9d) )
@@ -3439,10 +3439,10 @@ public class segac2
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr15617.4", 0x000000, 0x040000, CRC(338324a1) SHA1(79e2782d0d4764dd723886f846c852a6f6c1fb64) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tantrbl ) /* Tant-R (Puzzle & Action) (Bootleg)  (c)1992 Sega */
+	static RomLoadPtr rom_tantrbl = new RomLoadPtr(){ public void handler(){  /* Tant-R (Puzzle & Action) (Bootleg)  (c)1992 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "pa_e10.bin",  0x000000, 0x080000, CRC(6c3f711f) SHA1(55aa2d50422134b95d9a7c5cbdc453b207b91b4c) )
 		ROM_LOAD16_BYTE( "pa_f10.bin",  0x000001, 0x080000, CRC(75526786) SHA1(8f5aa7f6918b71a79e6fca18194beec2aef15844) )
@@ -3452,10 +3452,10 @@ public class segac2
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )
 		ROM_LOAD( "pa_e03.bin", 0x000000, 0x020000, CRC(72918c58) SHA1(cb42363b163727a887a0b762519c72dcdf0a6460) )
 		ROM_LOAD( "pa_e02.bin", 0x020000, 0x020000, CRC(4e85b2a3) SHA1(3f92fb931d315c5a2d6c54b3204718574928cb7b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( puyopuyo	) /* Puyo Puyo  (c)1992 Sega / Compile */
+	static RomLoadPtr rom_puyopuyo = new RomLoadPtr(){ public void handler(){  /* Puyo Puyo  (c)1992 Sega / Compile */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr15036", 0x000000, 0x020000, CRC(5310ca1b) SHA1(dcfe2bf7476b640dfb790e8716e75b483d535e48) )
 		ROM_LOAD16_BYTE( "epr15035", 0x000001, 0x020000, CRC(bc62e400) SHA1(12bb6031574838a28889f6edb31dbb689265287c) )
@@ -3465,10 +3465,10 @@ public class segac2
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr15034", 0x000000, 0x020000, CRC(5688213b) SHA1(f3f234e482871ca903a782e51008f3bfed04ee63) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( puyopuya	) /* Puyo Puyo (Rev A)  (c)1992 Sega / Compile */
+	static RomLoadPtr rom_puyopuya = new RomLoadPtr(){ public void handler(){  /* Puyo Puyo (Rev A)  (c)1992 Sega / Compile */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ep15036a.32", 0x000000, 0x020000, CRC(61b35257) SHA1(e09a7e992999befc88fc7928a478d1e2d14d7b08) )
 		ROM_LOAD16_BYTE( "ep15035a.31", 0x000001, 0x020000, CRC(dfebb6d9) SHA1(6f685729ef4660c2eba409c5236c6d2f313eef5b) )
@@ -3478,10 +3478,10 @@ public class segac2
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr15034", 0x000000, 0x020000, CRC(5688213b) SHA1(f3f234e482871ca903a782e51008f3bfed04ee63) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( puyopuyb ) /* Puyo Puyo  (c)1992 Sega / Compile  Bootleg */
+	static RomLoadPtr rom_puyopuyb = new RomLoadPtr(){ public void handler(){  /* Puyo Puyo  (c)1992 Sega / Compile  Bootleg */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "puyopuyb.4bo", 0x000000, 0x020000, CRC(89ea4d33) SHA1(bef9d011524e71c072d309f6da3c2ebc38878e0e) )
 		ROM_LOAD16_BYTE( "puyopuyb.3bo", 0x000001, 0x020000, CRC(c002e545) SHA1(7a59ac764d60e9955830d9617b0bd122b44e7b2f) )
@@ -3491,10 +3491,10 @@ public class segac2
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )
 		ROM_LOAD( "puyopuyb.abo", 0x000000, 0x020000, CRC(79112b3b) SHA1(fc3a202e1e2ff39950d4af689b7fcca86c301805) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ichidant ) /* Ichident-R (Puzzle & Action 2)  (c)1994 Sega */
+	static RomLoadPtr rom_ichidant = new RomLoadPtr(){ public void handler(){  /* Ichident-R (Puzzle & Action 2)  (c)1994 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr16886", 0x000000, 0x080000, CRC(38208e28) SHA1(07fc634bdf2d3e25274c9c374b3506dec765114c) )
 		ROM_LOAD16_BYTE( "epr16885", 0x000001, 0x080000, CRC(1ce4e837) SHA1(16600600e12e3f35e3da89524f7f51f019b5ad17) )
@@ -3503,10 +3503,10 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr16884", 0x000000, 0x080000, CRC(fd9dcdd6) SHA1(b8053a2e68072e7664ffc3c53f983f3ba72a892b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ichidnte ) /* Ichident-R (Puzzle & Action 2)  (c)1994 Sega */
+	static RomLoadPtr rom_ichidnte = new RomLoadPtr(){ public void handler(){  /* Ichident-R (Puzzle & Action 2)  (c)1994 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "pa2_32.bin", 0x000000, 0x080000, CRC(7ba0c025) SHA1(855e9bb2a20c6f51b26381233c57c26aa96ad1f6) )
 		ROM_LOAD16_BYTE( "pa2_31.bin", 0x000001, 0x080000, CRC(5f86e5cc) SHA1(44e201de00dfbf7c66d0e0d40d17b162c6f0625b) )
@@ -3515,9 +3515,9 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "pa2_02.bin", 0x000000, 0x080000, CRC(fc7b0da5) SHA1(46770aa7e19b4f8a183be3f433c48ad677b552b1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( stkclmns ) /* Stack Columns  (c)1994 Sega */
+	static RomLoadPtr rom_stkclmns = new RomLoadPtr(){ public void handler(){  /* Stack Columns  (c)1994 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr16795.32", 0x000000, 0x080000, CRC(b478fd02) SHA1(aaf9d9f9f4dc900b4e8ff6f258f26e782e5c3166) )
 		ROM_LOAD16_BYTE( "epr16794.31", 0x000001, 0x080000, CRC(6d0e8c56) SHA1(8f98d9fd98a1faa70b173cfd72f15102d11e79ae) )
@@ -3526,30 +3526,30 @@ public class segac2
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr16793.4", 0x000000, 0x020000, CRC(ebb2d057) SHA1(4a19ee5d71e4aabe7d9b9b968ab5ee4bc6262aad) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( puyopuy2 ) /* Puyo Puyo 2  (c)1994 Compile */
+	static RomLoadPtr rom_puyopuy2 = new RomLoadPtr(){ public void handler(){  /* Puyo Puyo 2  (c)1994 Compile */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "pp2.eve", 0x000000, 0x080000, CRC(1cad1149) SHA1(77fb0482fa35e615c0bed65f4d7f4dd89b241f23) )
 		ROM_LOAD16_BYTE( "pp2.odd", 0x000001, 0x080000, CRC(beecf96d) SHA1(c2bdad4b6184c11f81f2a5db409cb4ea186205a7) )
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "pp2.snd", 0x000000, 0x080000, CRC(020ff6ef) SHA1(6095b8277b47a6fd7a9721f15a70ae5bf6be9b1a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( potopoto ) /* Poto Poto  (c)1994 Sega */
+	static RomLoadPtr rom_potopoto = new RomLoadPtr(){ public void handler(){  /* Poto Poto  (c)1994 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr16662", 0x000000, 0x040000, CRC(bbd305d6) SHA1(1a4f4869fefac188c69bc67df0b625e43a0c3f1f) )
 		ROM_LOAD16_BYTE( "epr16661", 0x000001, 0x040000, CRC(5a7d14f4) SHA1(a615b5f481256366db7b1c6302a8dcb69708102b) )
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr16660", 0x000000, 0x040000, CRC(8251c61c) SHA1(03eef3aa0bdde2c1d93128648f54fd69278d85dd) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( zunkyou ) /* Zunzunkyou No Yabou  (c)1994 Sega */
+	static RomLoadPtr rom_zunkyou = new RomLoadPtr(){ public void handler(){  /* Zunzunkyou No Yabou  (c)1994 Sega */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr16812.32", 0x000000, 0x080000, CRC(eb088fb0) SHA1(69089a3516ad50f35e81971ef3c33eb3f5d52374) )
 		ROM_LOAD16_BYTE( "epr16811.31", 0x000001, 0x080000, CRC(9ac7035b) SHA1(1803ffbadc1213e04646d483e27da1591e22cd06) )
@@ -3558,10 +3558,10 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr16810.4", 0x000000, 0x080000, CRC(d542f0fe) SHA1(23ea50110dfe1cd9f286a535d15e0c3bcba73b00) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( puckpkmn ) /* Puckman Pockimon  (c)2000 Genie */
+	static RomLoadPtr rom_puckpkmn = new RomLoadPtr(){ public void handler(){  /* Puckman Pockimon  (c)2000 Genie */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "puckpoke.u5", 0x000000, 0x080000, CRC(fd334b91) SHA1(cf8bf6645a4082ea4392937e169b1686c9c7e246) )
 		ROM_LOAD16_BYTE( "puckpoke.u4", 0x000001, 0x080000, CRC(839cc76b) SHA1(e15662a7175db7a8e222dda176a8ed92e0d56e9d) )
@@ -3570,9 +3570,9 @@ public class segac2
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "puckpoke.u3", 0x00000, 0x40000, CRC(7b066bac) SHA1(429616e21c672b07e0705bc63234249cac3af56f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pclubj ) /* Print Club (c)1995 Atlus */
+	static RomLoadPtr rom_pclubj = new RomLoadPtr(){ public void handler(){  /* Print Club (c)1995 Atlus */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "epr18171.32", 0x000000, 0x080000, CRC(6c8eb8e2) SHA1(bbd885a83269524215c1d8470544086e3e82c05c) )
 		ROM_LOAD16_BYTE( "epr18170.31", 0x000001, 0x080000, CRC(72c631e6) SHA1(77c4ed793db6cb75346998f38a637db64fd258bd) )
@@ -3581,9 +3581,9 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr18169.4", 0x000000, 0x080000, CRC(5c00ccfb) SHA1(d043ffa6528bb9b76774c96df4edf8222a1878a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pclubjv2 ) /* Print Club vol.2 (c)1995 Atlus */
+	static RomLoadPtr rom_pclubjv2 = new RomLoadPtr(){ public void handler(){  /* Print Club vol.2 (c)1995 Atlus */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "p2jwn.u32", 0x000000, 0x080000, CRC(dfc0f7f1) SHA1(d2399f3ff05006590903f943cd77a9c709b9b5b1) )
 		ROM_LOAD16_BYTE( "p2jwn.u31", 0x000001, 0x080000, CRC(6ab4c694) SHA1(d8cfaa1a49e86842079c6e3800a95c5afaf76ab6) )
@@ -3592,9 +3592,9 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr18169.4", 0x000000, 0x080000, CRC(5c00ccfb) SHA1(d043ffa6528bb9b76774c96df4edf8222a1878a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pclubjv4 ) /* Print Club vol.4 (c)1996 Atlus */
+	static RomLoadPtr rom_pclubjv4 = new RomLoadPtr(){ public void handler(){  /* Print Club vol.4 (c)1996 Atlus */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "p4jsm.u32", 0x000000, 0x080000, CRC(36ff5f80) SHA1(33872aa00c8ca3f54dd7503a44562fbdad92df7d) )
 		ROM_LOAD16_BYTE( "p4jsm.u31", 0x000001, 0x080000, CRC(f3c021ad) SHA1(34792d861265b609d5022955eb7d2f471c63dfb8) )
@@ -3603,9 +3603,9 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr18169.4", 0x000000, 0x080000, CRC(5c00ccfb) SHA1(d043ffa6528bb9b76774c96df4edf8222a1878a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pclubjv5 ) /* Print Club vol.5 (c)1996 Atlus */
+	static RomLoadPtr rom_pclubjv5 = new RomLoadPtr(){ public void handler(){  /* Print Club vol.5 (c)1996 Atlus */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "p5jat.u32", 0x000000, 0x080000, CRC(72220e69) SHA1(615de759d73469841987fb028eaf5d5598c32553) )
 		ROM_LOAD16_BYTE( "p5jat.u31", 0x000001, 0x080000, CRC(06d83fde) SHA1(dc68375ccb16cde7900eb05f702bc15e7e702ea5) )
@@ -3614,18 +3614,18 @@ public class segac2
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )
 		ROM_LOAD( "epr18169.4", 0x000000, 0x080000, CRC(5c00ccfb) SHA1(d043ffa6528bb9b76774c96df4edf8222a1878a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* MegaTech Games - Genesis & sms! Games with a timer */
 	
 	/* 12368-xx  xx is the game number? if so there are a _lot_ of carts, mt_beast is 01, mt_sonic is 52! */
 	
-	ROM_START( megatech )
+	static RomLoadPtr rom_megatech = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x8000, REGION_USER1, 0 )
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_beast ) /* Altered Beast */
+	static RomLoadPtr rom_mt_beast = new RomLoadPtr(){ public void handler(){  /* Altered Beast */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12538.ic1", 0x000000, 0x080000, CRC(3bea3dce) SHA1(ec72e4fde191dedeb3f148f132603ed3c23f0f86) )
 	
@@ -3636,9 +3636,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_astro ) /* Astro Warrior (Sms Game!) */
+	static RomLoadPtr rom_mt_astro = new RomLoadPtr(){ public void handler(){  /* Astro Warrior (Sms Game!) */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		/* z80 code because this is sms based .... */
 		ROM_LOAD( "ep13817.ic2", 0x000000, 0x020000, CRC(299cbb74) SHA1(901697a3535ad70190647f34ad5b30b695d54542) )
@@ -3650,10 +3650,10 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mt_wcsoc ) /* World Cup Soccer */
+	static RomLoadPtr rom_mt_wcsoc = new RomLoadPtr(){ public void handler(){  /* World Cup Soccer */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "12607.ic1", 0x000000, 0x080000, CRC(bc591b30) SHA1(55e8577171c0933eee53af1dabd0f4c6462d5fc8) )
 	
@@ -3664,9 +3664,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_gng ) /* Ghouls and Ghosts (bad dump?) */
+	static RomLoadPtr rom_mt_gng = new RomLoadPtr(){ public void handler(){  /* Ghouls and Ghosts (bad dump?) */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12605.ic1", 0x000000, 0x080000, BAD_DUMP CRC(0c6d6f25) SHA1(96c9c0e41036a23fc8e75e18ee2dad87654f200f) )
 		ROM_LOAD16_WORD_SWAP( "mpr12605.14", 0x080000, 0x020000, BAD_DUMP CRC(1066c6ab) SHA1(c30e4442732bdb38c96d780542f8550a94d127b0) )
@@ -3678,10 +3678,10 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mt_gaxe ) /* Golden Axe */
+	static RomLoadPtr rom_mt_gaxe = new RomLoadPtr(){ public void handler(){  /* Golden Axe */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "12806.ic1", 0x000000, 0x080000, CRC(43456820) SHA1(2f7f1fcd979969ac99426f11ab99999a5494a121) )
 	
@@ -3692,9 +3692,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_smgp ) /* Super Monaco Grand Prix */
+	static RomLoadPtr rom_mt_smgp = new RomLoadPtr(){ public void handler(){  /* Super Monaco Grand Prix */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "13250.ic1", 0x000000, 0x080000, CRC(189b885f) SHA1(31c06ffcb48b1604989a94e584261457de4f1f46) )
 	
@@ -3705,9 +3705,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_sonic ) /* Sonic */
+	static RomLoadPtr rom_mt_sonic = new RomLoadPtr(){ public void handler(){  /* Sonic */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp13913.ic1", 0x000000, 0x080000, CRC(480b4b5c) SHA1(ab1dc1f738e3b2d0898a314b123fa71182bf572e) )
 	
@@ -3718,9 +3718,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_gaxe2 ) /* Golden Axe 2 */
+	static RomLoadPtr rom_mt_gaxe2 = new RomLoadPtr(){ public void handler(){  /* Golden Axe 2 */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp14272.ic1", 0x000000, 0x080000, CRC(d4784cae) SHA1(b6c286027d06fd850016a2a1ee1f1aeea080c3bb) )
 	
@@ -3731,9 +3731,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_fshrk ) /* Fire Shark */
+	static RomLoadPtr rom_mt_fshrk = new RomLoadPtr(){ public void handler(){  /* Fire Shark */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp14341.ic1", 0x000000, 0x080000, CRC(04d65ebc) SHA1(24338aecdc52b6f416548be722ca475c83dbae96) )
 	
@@ -3744,10 +3744,10 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mt_eswat ) /* E-Swat */
+	static RomLoadPtr rom_mt_eswat = new RomLoadPtr(){ public void handler(){  /* E-Swat */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp13192.ic1", 0x000000, 0x080000, CRC(82f458ef) SHA1(58444b783312def71ecffc4ad021b72a609685cb) )
 	
@@ -3758,9 +3758,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_bbros ) /* Bonanza Bros */
+	static RomLoadPtr rom_mt_bbros = new RomLoadPtr(){ public void handler(){  /* Bonanza Bros */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp13905a.ic1", 0x000000, 0x100000, CRC(68a88d60) SHA1(2f56e8a2b0999de4fa0d14a1527f4e1df0f9c7a2) )
 	
@@ -3771,9 +3771,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_kcham ) /* Kid Chameleon */
+	static RomLoadPtr rom_mt_kcham = new RomLoadPtr(){ public void handler(){  /* Kid Chameleon */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp14557.ic1", 0x000000, 0x100000, CRC(e1a889a4) SHA1(a2768eacafc47d371e5276f0cce4b12b6041337a) )
 	
@@ -3784,9 +3784,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_lastb ) /* Last Battle */
+	static RomLoadPtr rom_mt_lastb = new RomLoadPtr(){ public void handler(){  /* Last Battle */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12578f.ic1", 0x000000, 0x080000, CRC(531191a0) SHA1(f6bc26e975c01a3e10ab4033e4c5f494627a1e2f) )
 	
@@ -3797,9 +3797,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_mwalk ) /* Moon Walker */
+	static RomLoadPtr rom_mt_mwalk = new RomLoadPtr(){ public void handler(){  /* Moon Walker */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp13285a.ic1", 0x000000, 0x080000, CRC(189516e4) SHA1(2a79e07da2e831832b8d448cae87a833c85e67c9) )
 	
@@ -3810,9 +3810,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_mystd ) /* Mystic Defender */
+	static RomLoadPtr rom_mt_mystd = new RomLoadPtr(){ public void handler(){  /* Mystic Defender */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12707.1", 0x000000, 0x080000, CRC(4f2c513d) SHA1(f9bb548b3688170fe18bb3f1b5b54182354143cf) )
 	
@@ -3823,9 +3823,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_shar2 ) /* Space Harrier 2 */
+	static RomLoadPtr rom_mt_shar2 = new RomLoadPtr(){ public void handler(){  /* Space Harrier 2 */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp11934.ic1", 0x000000, 0x080000, CRC(932daa09) SHA1(a2d7a76f3604c6227d43229908bfbd02b0ef5fd9) )
 	
@@ -3836,9 +3836,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_stbld ) /* Super Thunder Blade */
+	static RomLoadPtr rom_mt_stbld = new RomLoadPtr(){ public void handler(){  /* Super Thunder Blade */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp11996f.ic1", 0x000000, 0x080000,  CRC(9355c34e) SHA1(26ff91c2921408673c644b0b1c8931d98524bf63) )
 	
@@ -3849,9 +3849,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_tetri ) /* Tetris (Bad Dump) */
+	static RomLoadPtr rom_mt_tetri = new RomLoadPtr(){ public void handler(){  /* Tetris (Bad Dump) */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "mp12356.ic1", 0x000001, 0x020000, BAD_DUMP CRC(136767d2) SHA1(4fa07facda60fa85588a997ff9ff2ddde0dc2534) ) // same data in each half, fails self-check (red screen) doesn't work in GENS
 		ROM_LOAD16_BYTE( "mp12357.ic2", 0x000000, 0x020000, BAD_DUMP CRC(6d5a20f2) SHA1(e8aef99621974a137ea81a597f600881741f94d1) ) // same data in each half, fails self-check (red screen)
@@ -3863,9 +3863,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_tfor2 ) /* Thunder Force 2 */
+	static RomLoadPtr rom_mt_tfor2 = new RomLoadPtr(){ public void handler(){  /* Thunder Force 2 */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12559.ic1", 0x000000, 0x080000, CRC(b093bee3) SHA1(0bf6194c3d228425f8cf1903ed70d8da1b027b6a) )
 	
@@ -3876,9 +3876,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_tlbba ) /* Tommy Lasorda Baseball */
+	static RomLoadPtr rom_mt_tlbba = new RomLoadPtr(){ public void handler(){  /* Tommy Lasorda Baseball */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12706.ic1", 0x000000, 0x080000, CRC(8901214f) SHA1(f5ec166be1cf9b86623b9d7a78ec903b899da32a) )
 	
@@ -3889,9 +3889,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_ggolf ) /* Great Golf (Bad Dump) */
+	static RomLoadPtr rom_mt_ggolf = new RomLoadPtr(){ public void handler(){  /* Great Golf (Bad Dump) */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp11129f.ic1", 0x000000, 0x020000, BAD_DUMP CRC(942738ba) SHA1(e99d4e39c965fc123a39d75521a274687e917a57) ) // first 32kb is repeated 4 times, doesn't work in MEKA
 	
@@ -3902,9 +3902,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_gsocr ) /* Great Soccer. (Bad Dump) */
+	static RomLoadPtr rom_mt_gsocr = new RomLoadPtr(){ public void handler(){  /* Great Soccer. (Bad Dump) */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp10747f.ic1", 0x000000, 0x020000, BAD_DUMP CRC(9cf53703) SHA1(c6b4d1de56bd5bf067ec7fc80449c07686d01337) ) // first 32kb is repeated 4 times, doesn't work in MEKA
 	
@@ -3915,9 +3915,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_parlg ) /* Parlour Games.  */
+	static RomLoadPtr rom_mt_parlg = new RomLoadPtr(){ public void handler(){  /* Parlour Games.  */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp11404.ic1", 0x000000, 0x020000, CRC(E030E66C) SHA1(06664DAF208F07CB00B603B12ECCFC3F01213A17) )
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* z80 */
@@ -3927,9 +3927,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_shnbi ) /* Shinobi. */
+	static RomLoadPtr rom_mt_shnbi = new RomLoadPtr(){ public void handler(){  /* Shinobi. */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp11706.ic1", 0x000000, 0x040000, CRC(0C6FAC4E) SHA1(7C0778C055DC9C2B0AAE1D166DBDB4734E55B9D1) )
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* z80 */
@@ -3939,9 +3939,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_revsh ) /* The Revenge Of Shinobi. */
+	static RomLoadPtr rom_mt_revsh = new RomLoadPtr(){ public void handler(){  /* The Revenge Of Shinobi. */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12675.ic1", 0x000000, 0x080000, CRC(672A1D4D) SHA1(5FD0AF14C8F2CF8CEAB1AE61A5A19276D861289A) )
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* z80 */
@@ -3951,9 +3951,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_aftrb ) /* Afterburner. */
+	static RomLoadPtr rom_mt_aftrb = new RomLoadPtr(){ public void handler(){  /* Afterburner. */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp11271.ic1", 0x000000, 0x080000, CRC(1C951F8E) SHA1(51531DF038783C84640A0CAB93122E0B59E3B69A) )
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* z80 */
@@ -3963,9 +3963,9 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mt_tgolf ) /* Arnold Palmer Tournament Golf */
+	static RomLoadPtr rom_mt_tgolf = new RomLoadPtr(){ public void handler(){  /* Arnold Palmer Tournament Golf */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "mp12645f.ic1", 0x000000, 0x080000, CRC(c07ef8d2) SHA1(9d111fdc7bb92d52bfa048cd134aa488b4f475ef) )
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* z80 */
@@ -3975,7 +3975,7 @@ public class segac2
 	
 		ROM_REGION( 0x10000, REGION_CPU3, 0 ) /* Bios */
 		ROM_LOAD( "epr12664.20", 0x000000, 0x8000, CRC(f71e9526) SHA1(1c7887541d02c41426992d17f8e3db9e03975953) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/* MegaPlay Games - Modified Genesis games */
@@ -3992,12 +3992,12 @@ public class segac2
 		ROM_LOAD_BIOS( 0, "ep15294.ic2", 0x000000, 0x20000, CRC(aa8dc2d8) SHA1(96771ad7b79dc9c83a1594243250d65052d23176) ) \
 		ROM_LOAD_BIOS( 1, "megaplay.bin",0x000000, 0x20000, CRC(f97c68aa) SHA1(bcabc879950bca1ced11c550a484e697ec5706b2) ) \
 	
-	ROM_START( megaplay )
+	static RomLoadPtr rom_megaplay = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_USER1, 0 )
 		MEGAPLAY_BIOS
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mp_sonic ) /* Sonic */
+	static RomLoadPtr rom_mp_sonic = new RomLoadPtr(){ public void handler(){  /* Sonic */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ep15177.ic2", 0x000000, 0x040000, CRC(a389b03b) SHA1(8e9e1cf3dd65ddf08757f5a1ce472130c902ea2c) )
 		ROM_LOAD16_BYTE( "ep15176.ic1", 0x000001, 0x040000, CRC(d180cc21) SHA1(62805cfaaa80c1da6146dd89fc2b49d819fd4f22) )
@@ -4010,9 +4010,9 @@ public class segac2
 	
 		ROM_REGION( 0x28000, REGION_CPU3, 0 ) /* Bios */
 		MEGAPLAY_BIOS
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mp_gaxe2 ) /* Golden Axe 2 */
+	static RomLoadPtr rom_mp_gaxe2 = new RomLoadPtr(){ public void handler(){  /* Golden Axe 2 */
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ep15179b.ic2", 0x000000, 0x040000, CRC(00d97b84) SHA1(914bbf566ddf940aab67b92af237d251650ddadf) )
 		ROM_LOAD16_BYTE( "ep15178b.ic1", 0x000001, 0x040000, CRC(2ea576db) SHA1(6d96b948243533de1f488b1f80e0d5431a4f1f53) )
@@ -4024,7 +4024,7 @@ public class segac2
 	
 		ROM_REGION( 0x28000, REGION_CPU3, 0 ) /* Bios */
 		MEGAPLAY_BIOS
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************
 		Machine Init Functions

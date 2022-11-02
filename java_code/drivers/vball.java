@@ -470,7 +470,7 @@ public class vball
 	
 	***************************************************************************/
 	
-	ROM_START( vball )
+	static RomLoadPtr rom_vball = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )	/* Main CPU: 64k for code */
 		ROM_LOAD( "vball.124",  0x10000, 0x08000, CRC(be04c2b5) SHA1(40fed4ae272719e940f1796ef35420ab451ab7b6) )/* Bankswitched */
 		ROM_CONTINUE(		0x08000, 0x08000 )		 /* Static code  */
@@ -501,9 +501,9 @@ public class vball
 		ROM_LOAD_NIB_LOW ( "vball.44",   0x0000, 0x00800, CRC(a317240f) SHA1(bd57ad516f7a8ff774276fd26b02dd34659d41ad) )
 		ROM_LOAD_NIB_HIGH( "vball.43",   0x0000, 0x00800, CRC(1ff70b4f) SHA1(a469baa0dda844ba307c09ddefb23f239cfe7b5f) )
 		ROM_LOAD( "vball.160",  0x0800, 0x00800, CRC(2ffb68b3) SHA1(d560fdcd5e5c79d37e5b5bde22fbaf662fe89252) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vball2pj )
+	static RomLoadPtr rom_vball2pj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )	/* Main CPU */
 		ROM_LOAD( "25j2-2-5.124",  0x10000, 0x08000,  CRC(432509c4) SHA1(6de50e21d279f4ac9674bc91990ba9535e80908c) )/* Bankswitched */
 		ROM_CONTINUE(		  0x08000, 0x08000 )		 /* Static code  */
@@ -529,7 +529,7 @@ public class vball
 		ROM_LOAD_NIB_LOW ( "vball.44",   0x0000, 0x00800, CRC(a317240f) SHA1(bd57ad516f7a8ff774276fd26b02dd34659d41ad) )
 		ROM_LOAD_NIB_HIGH( "vball.43",   0x0000, 0x00800, CRC(1ff70b4f) SHA1(a469baa0dda844ba307c09ddefb23f239cfe7b5f) )
 		ROM_LOAD( "vball.160",  0x0800, 0x00800, CRC(2ffb68b3) SHA1(d560fdcd5e5c79d37e5b5bde22fbaf662fe89252) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1988, vball,    0,     vball,    vball,    0, ROT0, "Technos", "U.S. Championship V'ball (set 1)" )

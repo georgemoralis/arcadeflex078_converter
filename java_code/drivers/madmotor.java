@@ -340,7 +340,7 @@ public class madmotor
 	
 	/******************************************************************************/
 	
-	ROM_START( madmotor )
+	static RomLoadPtr rom_madmotor = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "02", 0x00000, 0x20000, CRC(50b554e0) SHA1(e33d0ab5464ab5ff394dd630536ac83baf0aa2c9) )
 		ROM_LOAD16_BYTE( "00", 0x00001, 0x20000, CRC(2d6a1b3f) SHA1(fa7058bf907becac56ed9938c5643aaefdf7a2c0) )
@@ -379,7 +379,7 @@ public class madmotor
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )	/* ADPCM samples */
 		ROM_LOAD( "13",    0x00000, 0x20000, CRC(cc4d65e9) SHA1(b9bcaa52c570f94d2f2e5dd84c94773cc4115442) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

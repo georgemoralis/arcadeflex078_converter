@@ -348,7 +348,7 @@ public class boxer
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( boxer )
+	static RomLoadPtr rom_boxer = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD_NIB_LOW ( "3400l.e1", 0x3400, 0x0400, CRC(df85afa4) SHA1(5a74a08f1e0b0bbec02999d5e46513d8afd333ac) )
@@ -381,7 +381,7 @@ public class boxer
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 ) /* sync prom */
 		ROM_LOAD( "9402.m3", 0x0000, 0x0100, CRC(00e224a0) SHA1(1a384ef488791c62566c91b18d6a1fb4a5def2ba) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1978, boxer, 0, boxer, boxer, 0, 0, "Atari", "Boxer (prototype)", GAME_NO_SOUND )

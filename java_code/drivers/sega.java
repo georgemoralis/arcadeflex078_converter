@@ -946,7 +946,7 @@ public class sega
 	 *
 	 *************************************/
 	
-	ROM_START( spacfury ) /* Revision C */
+	static RomLoadPtr rom_spacfury = new RomLoadPtr(){ public void handler(){  /* Revision C */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "969c.u25",     0x0000, 0x0800, CRC(411207f2) SHA1(2a082be4052b5d8f365abd0a51ea805d270d1189) )
 		ROM_LOAD( "960c.u1",      0x0800, 0x0800, CRC(d071ab7e) SHA1(c7d2429e4fa77988d7ac62bc68f876ffb7467838) )
@@ -964,10 +964,10 @@ public class sega
 		ROM_LOAD( "970c.u6",     0x0800, 0x1000, CRC(979d8535) SHA1(1ed097e563319ca6d2b7df9875ce7ee921eae468) )
 		ROM_LOAD( "971c.u5",     0x1800, 0x1000, CRC(022dbd32) SHA1(4e0504b5ccc28094078912673c49571cf83804ab) )
 		ROM_LOAD( "972c.u4",     0x2800, 0x1000, CRC(fad9346d) SHA1(784e5ab0fb00235cfd733c502baf23960923504f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( spacfura ) /* Revision A */
+	static RomLoadPtr rom_spacfura = new RomLoadPtr(){ public void handler(){  /* Revision A */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "969a.u25",     0x0000, 0x0800, CRC(896a615c) SHA1(542386196eca9fd822e36508e173201ee8a962ed) )
 		ROM_LOAD( "960a.u1",      0x0800, 0x0800, CRC(e1ea7964) SHA1(9c84c525973fcf1437b062d98195272723249d02) )
@@ -985,10 +985,10 @@ public class sega
 		ROM_LOAD( "970.u6",      0x0800, 0x1000, CRC(f3b47b36) SHA1(6ae0b627349664140a7f70799645b368e452d69c) )
 		ROM_LOAD( "971.u5",      0x1800, 0x1000, CRC(e72bbe88) SHA1(efadf8aa448c289cf4d0cf1831255b9ac60820f2) )
 		ROM_LOAD( "972.u4",      0x2800, 0x1000, CRC(8b3da539) SHA1(3a0c4af96a2116fc668a340534582776b2018663) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( zektor )
+	static RomLoadPtr rom_zektor = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "1611.cpu",     0x0000, 0x0800, CRC(6245aa23) SHA1(815f3c7edad9c290b719a60964085e90e7268112) )
 		ROM_LOAD( "1586.rom",     0x0800, 0x0800, CRC(efeb4fb5) SHA1(b337179c01870c953b8d38c20263802e9a7936d3) )
@@ -1018,10 +1018,10 @@ public class sega
 		ROM_LOAD( "1608.spc",    0x0800, 0x1000, CRC(637e2b13) SHA1(8a470f9a8a722f7ced340c4d32b4cf6f05b3e848) )
 		ROM_LOAD( "1609.spc",    0x1800, 0x1000, CRC(675ee8e5) SHA1(e314482028b8925ad02e833a1d22224533d0a683) )
 		ROM_LOAD( "1610.spc",    0x2800, 0x1000, CRC(2915c7bd) SHA1(3ed98747b5237aa1b3bab6866292370dc2c7655a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tacscan )
+	static RomLoadPtr rom_tacscan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "1711a",        0x0000, 0x0800, CRC(0da13158) SHA1(256c5441a4841441501c9b7bcf09e0e99e8dd671) )
 		ROM_LOAD( "1670c",        0x0800, 0x0800, CRC(98de6fd5) SHA1(f22c215d7558e00366fec5092abb51c670468f8c) )
@@ -1045,10 +1045,10 @@ public class sega
 		ROM_LOAD( "1688a",        0x9800, 0x0800, CRC(0326d87a) SHA1(3a5ea4526db417b9e00b24b019c1c6016773c9e7) )
 		ROM_LOAD( "1709a",        0xa000, 0x0800, CRC(f35ed1ec) SHA1(dce95a862af0c6b67fb76b99fee0523d53b7551c) )
 		ROM_LOAD( "1710a",        0xa800, 0x0800, CRC(6203be22) SHA1(89731c7c88d0125a11368d707f566eb53c783266) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( elim2 )
+	static RomLoadPtr rom_elim2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "cpu_u25.969",  0x0000, 0x0800, CRC(411207f2) SHA1(2a082be4052b5d8f365abd0a51ea805d270d1189) )
 		ROM_LOAD( "1333",         0x0800, 0x0800, CRC(fd2a2916) SHA1(431d340c0c9257d66f5851a591861bcefb600cec) )
@@ -1067,10 +1067,10 @@ public class sega
 	
 		ROM_REGION( 0x0400, REGION_USER1, 0 )
 		ROM_LOAD ("s-c.u39",      0x0000, 0x0400, CRC(56484d19) SHA1(61f43126fdcfc230638ed47085ae037a098e6781) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( elim2a )
+	static RomLoadPtr rom_elim2a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "cpu_u25.969",  0x0000, 0x0800, CRC(411207f2) SHA1(2a082be4052b5d8f365abd0a51ea805d270d1189) )
 		ROM_LOAD( "1158",         0x0800, 0x0800, CRC(a40ac3a5) SHA1(9cf707e3439def17390ae16b49552fb1996a6335) )
@@ -1089,10 +1089,10 @@ public class sega
 	
 		ROM_REGION( 0x0400, REGION_USER1, 0 )
 		ROM_LOAD ("s-c.u39",      0x0000, 0x0400, CRC(56484d19) SHA1(61f43126fdcfc230638ed47085ae037a098e6781) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( elim4 )
+	static RomLoadPtr rom_elim4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "1390_cpu.u25", 0x0000, 0x0800, CRC(97010c3e) SHA1(b07db05abf48461b633bbabe359a973a5bc6da13) )
 		ROM_LOAD( "1347",         0x0800, 0x0800, CRC(657d7320) SHA1(ef8a637d94dfa8b9dfa600269d914d635e597a9c) )
@@ -1112,10 +1112,10 @@ public class sega
 	
 		ROM_REGION( 0x0400, REGION_USER1, 0 )
 		ROM_LOAD ("s-c.u39",      0x0000, 0x0400, CRC(56484d19) SHA1(61f43126fdcfc230638ed47085ae037a098e6781) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( startrek )
+	static RomLoadPtr rom_startrek = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "cpu1873",      0x0000, 0x0800, CRC(be46f5d9) SHA1(fadf13042d31b0dacf02a3166545c946f6fd3f33) )
 		ROM_LOAD( "1848",         0x0800, 0x0800, CRC(65e3baf3) SHA1(0c081ed6c8be0bb5eb3d5769ac1f0b8fe4735d11) )
@@ -1149,7 +1149,7 @@ public class sega
 	
 		ROM_REGION( 0x0400, REGION_USER1, 0 )
 		ROM_LOAD ("s-c.u39",      0x0000, 0x0400, CRC(56484d19) SHA1(61f43126fdcfc230638ed47085ae037a098e6781) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

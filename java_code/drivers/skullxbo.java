@@ -291,7 +291,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	ROM_START( skullxbo )
+	static RomLoadPtr rom_skullxbo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "5150228a.072", 0x000000, 0x010000, CRC(9546d88b) SHA1(4b02c1c8a57377e651a719a0fe2a3532594f3e71) )
 		ROM_LOAD16_BYTE( "5151228c.072", 0x000001, 0x010000, CRC(b9ed8bd4) SHA1(784a2fc8f5901d9e462966e3f7226ce3c6db980a) )
@@ -352,10 +352,10 @@ public class skullxbo
 		ROM_LOAD( "1146-7j.072",  0x010000, 0x010000, CRC(133e6aef) SHA1(e393d0b246889779029443a19e3859d45cb900db) )
 		ROM_LOAD( "1147-7e.072",  0x020000, 0x010000, CRC(ba4d556e) SHA1(af4364f2c456abc20f1742c945a3acfeb5e192c4) )
 		ROM_LOAD( "1148-7d.072",  0x030000, 0x010000, CRC(c48df49a) SHA1(c92fde9be1a1ab09453c57eefb0dcfe49e538d07) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( skullxb4 )
+	static RomLoadPtr rom_skullxb4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "4150228a.072", 0x000000, 0x010000, CRC(607fc73b) SHA1(e6ebaf1a7570df1d12becae217becdd0a60d6aca) )
 		ROM_LOAD16_BYTE( "4151228c.072", 0x000001, 0x010000, CRC(76bbf619) SHA1(2cbd61f414684587c0e634c223c758b0a28aafc0) )
@@ -416,10 +416,10 @@ public class skullxbo
 		ROM_LOAD( "1146-7j.072",  0x010000, 0x010000, CRC(133e6aef) SHA1(e393d0b246889779029443a19e3859d45cb900db) )
 		ROM_LOAD( "1147-7e.072",  0x020000, 0x010000, CRC(ba4d556e) SHA1(af4364f2c456abc20f1742c945a3acfeb5e192c4) )
 		ROM_LOAD( "1148-7d.072",  0x030000, 0x010000, CRC(c48df49a) SHA1(c92fde9be1a1ab09453c57eefb0dcfe49e538d07) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( skullxb3 )
+	static RomLoadPtr rom_skullxb3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "3150228a.072", 0x000000, 0x010000, CRC(47083d59) SHA1(a713231c22a3c2de09af65aa2bae17ea41f10cf0) )
 		ROM_LOAD16_BYTE( "3151228c.072", 0x000001, 0x010000, CRC(2c03feaf) SHA1(e7ad1568e3008386f520ed3ba90aefbfc9417a64) )
@@ -480,10 +480,10 @@ public class skullxbo
 		ROM_LOAD( "1146-7j.072",  0x010000, 0x010000, CRC(133e6aef) SHA1(e393d0b246889779029443a19e3859d45cb900db) )
 		ROM_LOAD( "1147-7e.072",  0x020000, 0x010000, CRC(ba4d556e) SHA1(af4364f2c456abc20f1742c945a3acfeb5e192c4) )
 		ROM_LOAD( "1148-7d.072",  0x030000, 0x010000, CRC(c48df49a) SHA1(c92fde9be1a1ab09453c57eefb0dcfe49e538d07) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( skullxb2 )
+	static RomLoadPtr rom_skullxb2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "2150228a.072", 0x000000, 0x010000, CRC(8614f9ef) SHA1(981ba6fad7aa7002c3a5aa0d4dd859e664ca0fdb) )
 		ROM_LOAD16_BYTE( "2151228c.072", 0x000001, 0x010000, CRC(47090acb) SHA1(12c47d6112bec88aaf25d10ba2d5335b6b474fb7) )
@@ -544,10 +544,10 @@ public class skullxbo
 		ROM_LOAD( "1146-7j.072",  0x010000, 0x010000, CRC(133e6aef) SHA1(e393d0b246889779029443a19e3859d45cb900db) )
 		ROM_LOAD( "1147-7e.072",  0x020000, 0x010000, CRC(ba4d556e) SHA1(af4364f2c456abc20f1742c945a3acfeb5e192c4) )
 		ROM_LOAD( "1148-7d.072",  0x030000, 0x010000, CRC(c48df49a) SHA1(c92fde9be1a1ab09453c57eefb0dcfe49e538d07) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( skullxb1 )
+	static RomLoadPtr rom_skullxb1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1150228a.072", 0x000000, 0x010000, CRC(376bb0c7) SHA1(195c8411f3ea9681e9ba6661a55418c194324339) )
 		ROM_LOAD16_BYTE( "1151228c.072", 0x000001, 0x010000, CRC(858382f7) SHA1(6e18183962c36bf2599cf04b7dc824e840a94343) )
@@ -608,7 +608,7 @@ public class skullxbo
 		ROM_LOAD( "1146-7j.072",  0x010000, 0x010000, CRC(133e6aef) SHA1(e393d0b246889779029443a19e3859d45cb900db) )
 		ROM_LOAD( "1147-7e.072",  0x020000, 0x010000, CRC(ba4d556e) SHA1(af4364f2c456abc20f1742c945a3acfeb5e192c4) )
 		ROM_LOAD( "1148-7d.072",  0x030000, 0x010000, CRC(c48df49a) SHA1(c92fde9be1a1ab09453c57eefb0dcfe49e538d07) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

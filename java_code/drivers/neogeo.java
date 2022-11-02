@@ -1637,7 +1637,7 @@ public class neogeo
 	
 	/******************************************************************************/
 	
-	ROM_START( nam1975 )
+	static RomLoadPtr rom_nam1975 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "001-p1.bin", 0x000000, 0x080000, CRC(cc9fc951) SHA1(92f4e6ddeeb825077d92dbb70b50afea985f15c0) )
 	
@@ -1660,9 +1660,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "001-c4.bin", 0x100001, 0x80000, CRC(0a32570d) SHA1(f108446ec7844fde25f7a4ab454f76d384bf5e52) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "001-c5.bin", 0x200000, 0x80000, CRC(90b74cc2) SHA1(89898da36db259180e5261ed45eafc99ca13e504) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "001-c6.bin", 0x200001, 0x80000, CRC(e62bed58) SHA1(d05b2903b212a51ee131e52c761b714cb787683e) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bstars )
+	static RomLoadPtr rom_bstars = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "002-p1.bin", 0x000000, 0x080000, CRC(3bc7790e) SHA1(50b2fffb1278151bb4849fbe1f8cb23916019815) )
 	
@@ -1686,9 +1686,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "002-c4.bin", 0x100001, 0x080000, CRC(5fd87f2f) SHA1(a5dd6f26f9485f216c2428ae1792c182beb10dbc) )
 		ROM_LOAD16_BYTE( "002-c5.bin", 0x200000, 0x080000, CRC(807ed83b) SHA1(3268e7d4602c3f55f1e0da2c80653d5ae461ef67) )
 		ROM_LOAD16_BYTE( "002-c6.bin", 0x200001, 0x080000, CRC(5a3cad41) SHA1(c620d18f4ff32ed5489c941dfc641030a54f1c14) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tpgolf )
+	static RomLoadPtr rom_tpgolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "003-p1.bin", 0x000000, 0x080000, CRC(f75549ba) SHA1(3f7bdf5e2964e921fe1dd87c51a79a1a501fc73f) )
 		ROM_LOAD16_WORD_SWAP( "003-p2.bin", 0x080000, 0x080000, CRC(b7809a8f) SHA1(1604c889592c9610668bff296de48a0d6906156d) )
@@ -1715,9 +1715,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "003-c6.bin", 0x200001, 0x80000, CRC(1e63411a) SHA1(ee397e2f679042e87b37d95837af62bb95a72af9) )
 		ROM_LOAD16_BYTE( "003-c7.bin", 0x300000, 0x80000, CRC(2886710c) SHA1(1533dd935f0a8f92a0a3c47d1d2bc6d035454244) )
 		ROM_LOAD16_BYTE( "003-c8.bin", 0x300001, 0x80000, CRC(422af22d) SHA1(f67c844c34545de6ea187f5bfdf440dec8518532) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mahretsu )
+	static RomLoadPtr rom_mahretsu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "004-p1.bin", 0x000000, 0x080000, CRC(fc6f53db) SHA1(64a62ca4c8fb68954e06121399c9402278bd0467) )
 	
@@ -1739,9 +1739,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "004-c2.bin", 0x000001, 0x80000, CRC(bdc13520) SHA1(2bc4c996d019a4c539f6c3188ef18089e54b7efa) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "004-c3.bin", 0x100000, 0x80000, CRC(9c571a37) SHA1(21388aeb92bb8e15a55a063701ca9df79e292127) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "004-c4.bin", 0x100001, 0x80000, CRC(7e81cb29) SHA1(5036f04df30cf6903bd1a8cc06ff6f015c24a74b) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( maglord )
+	static RomLoadPtr rom_maglord = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "005-p1.bin", 0x000000, 0x080000, CRC(bd0a492d) SHA1(d043d3710cf2b0d2b3798008e65e4c7c3ead1af3) )
 	
@@ -1763,9 +1763,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "005-c4.bin", 0x100001, 0x80000, CRC(9c46dcf4) SHA1(4c05f3dc25777a87578ce09a6cefb3a4cebf3266) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "005-c5.bin", 0x200000, 0x80000, CRC(69086dec) SHA1(7fa47f4a765948813ebf366168275dcc3c42e951) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "005-c6.bin", 0x200001, 0x80000, CRC(ab7ac142) SHA1(e6ad2843947d35d8e913d2666f87946c1ba7944f) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( maglordh )
+	static RomLoadPtr rom_maglordh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "005-p1h.bin", 0x000000, 0x080000, CRC(599043c5) SHA1(43f234b0f89b72b4c6050c40d9daa5c4e96b94ce) )
 	
@@ -1787,9 +1787,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "005-c4.bin", 0x100001, 0x80000, CRC(9c46dcf4) SHA1(4c05f3dc25777a87578ce09a6cefb3a4cebf3266) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "005-c5.bin", 0x200000, 0x80000, CRC(69086dec) SHA1(7fa47f4a765948813ebf366168275dcc3c42e951) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "005-c6.bin", 0x200001, 0x80000, CRC(ab7ac142) SHA1(e6ad2843947d35d8e913d2666f87946c1ba7944f) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ridhero )
+	static RomLoadPtr rom_ridhero = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "006-p1.bin", 0x000000, 0x080000, CRC(d4aaf597) SHA1(34d35b71adb5bd06f4f1b50ffd9c58ab9c440a84) )
 	
@@ -1812,9 +1812,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "006-c2.bin", 0x000001, 0x080000, CRC(e0b70ece) SHA1(e2b750e43cdddcea29d1c9c943a3628117a16a1b) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "006-c3.bin", 0x100000, 0x080000, CRC(8acff765) SHA1(11fe89b9d112d0658c9ddf40d928584de6ea9202) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "006-c4.bin", 0x100001, 0x080000, CRC(205e3208) SHA1(aa2acf2c6f48ffffdcc0c94ddc031acc9e4a2e68) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ridheroh )
+	static RomLoadPtr rom_ridheroh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "006-p1h.bin", 0x000000, 0x080000, CRC(52445646) SHA1(647bb31f2f68453c1366cb6e2e867e37d1df7a54) )
 	
@@ -1837,9 +1837,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "006-c2.bin", 0x000001, 0x080000, CRC(e0b70ece) SHA1(e2b750e43cdddcea29d1c9c943a3628117a16a1b) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "006-c3.bin", 0x100000, 0x080000, CRC(8acff765) SHA1(11fe89b9d112d0658c9ddf40d928584de6ea9202) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "006-c4.bin", 0x100001, 0x080000, CRC(205e3208) SHA1(aa2acf2c6f48ffffdcc0c94ddc031acc9e4a2e68) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( alpham2 )
+	static RomLoadPtr rom_alpham2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "007-p1.bin", 0x000000, 0x080000, CRC(5b266f47) SHA1(8afbf995989f47ad93fea1f31a884afc7228b53a) )
 		ROM_LOAD16_WORD_SWAP( "007-p2.bin", 0x080000, 0x020000, CRC(eb9c1044) SHA1(65d3416dcd96663bc4e7cefe90ecb7c1eafb2dda) )
@@ -1859,9 +1859,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "007-c2.bin", 0x000001, 0x100000, CRC(4dad2945) SHA1(ac85a146276537fed124bda892bb93ff549f1d93) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "007-c3.bin", 0x200000, 0x080000, CRC(68c2994e) SHA1(4f8dfc6e5188942e03b853a2c9f0ea6138dec791) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "007-c4.bin", 0x200001, 0x080000, CRC(7d588349) SHA1(a5ed789d7bbc25be5c5b2d99883b64d379c103a2) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ncombat )
+	static RomLoadPtr rom_ncombat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "009-p1.bin", 0x000000, 0x080000, CRC(b45fcfbf) SHA1(3872147dda2d1ba905d35f4571065d87b1958b4a) )
 	
@@ -1884,9 +1884,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "009-c4.bin", 0x100001, 0x80000, CRC(39c2d039) SHA1(8ca6c3f977c43c7abba2a00a0e70f02e2a49f5f2) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "009-c5.bin", 0x200000, 0x80000, CRC(67a4344e) SHA1(b325f152c7b2388fc92c5826e1dc99094b9ea749) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "009-c6.bin", 0x200001, 0x80000, CRC(2eca8b19) SHA1(16764ef10e404325ba0a1a2ad3a4c0af287be21f) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cyberlip )
+	static RomLoadPtr rom_cyberlip = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "010-p1.bin", 0x000000, 0x080000, CRC(69a6b42d) SHA1(6e7cb089de83f1d22cc4a87db5b1a94bf76fb1e8) )
 	
@@ -1910,9 +1910,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "010-c4.bin", 0x100001, 0x80000, CRC(f7be4674) SHA1(b4ad0432d4bb6d5a98e27015910343c964b73ed4) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "010-c5.bin", 0x200000, 0x80000, CRC(e8076da0) SHA1(3ec5cc19809dea688041a42b32c13d257576f3da) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "010-c6.bin", 0x200001, 0x80000, CRC(c495c567) SHA1(2f58475fbb5f1adafce027d396fb05dd71e8fb55) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( superspy )
+	static RomLoadPtr rom_superspy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "011-p1.bin", 0x000000, 0x080000, CRC(c7f944b5) SHA1(da7560e09187c68f1d9f7656218497b4464c56c9) )
 		ROM_LOAD16_WORD_SWAP( "011-p2.bin", 0x080000, 0x020000, CRC(811a4faf) SHA1(8169dfaf79f52d80ecec402ce1b1ab9cafb7ebdd) )
@@ -1933,9 +1933,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "011-c2.bin", 0x000001, 0x100000, CRC(9e29d986) SHA1(b417763bad1acf76116cd56f4203c2d2677e22e5) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "011-c3.bin", 0x200000, 0x100000, CRC(14832ff2) SHA1(1179792d773d97d5e45e7d8f009051d362d72e24) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "011-c4.bin", 0x200001, 0x100000, CRC(b7f63162) SHA1(077a81b2bb0a8f17c9df6945078608f74432877a) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mutnat )
+	static RomLoadPtr rom_mutnat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "014-p1.bin", 0x000000, 0x080000, CRC(6f1699c8) SHA1(87206f67a619dede7959230f9ff3701b8b78957a) )
 	
@@ -1954,9 +1954,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "014-c2.bin", 0x000001, 0x100000, CRC(69ba4e18) SHA1(b3369190c47771a790c7adffa958ff55d90e758b) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "014-c3.bin", 0x200000, 0x100000, CRC(890327d5) SHA1(47f97bf120a8480758e1f3bb8982be4c5325c036) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "014-c4.bin", 0x200001, 0x100000, CRC(e4002651) SHA1(17e53a5f4708866a120415bf24f3b89621ad0bcc) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kotm )
+	static RomLoadPtr rom_kotm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "016-p1.bin", 0x000000, 0x080000, CRC(1b818731) SHA1(b98b1b33c0301fd79aac908f6b635dd00d1cb08d) )
 		ROM_LOAD16_WORD_SWAP( "016-p2.bin", 0x080000, 0x020000, CRC(12afdc2b) SHA1(3a95f5910cbb9f17e63ddece995c6e120fa2f622) )
@@ -1976,9 +1976,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "016-c2.bin", 0x000001, 0x100000, CRC(320db048) SHA1(d6b43834de6f5442e23ca8fb26b3a36e96790d8d) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "016-c3.bin", 0x200000, 0x100000, CRC(98de7995) SHA1(e33edf4d36c82196d2b474e37be180a05976f558) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "016-c4.bin", 0x200001, 0x100000, CRC(070506e2) SHA1(3a2ec365e1d87a9c5ce1ee9bea88402a8eef4ed7) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kotmh )
+	static RomLoadPtr rom_kotmh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "016-hp1.bin",0x000000, 0x080000, CRC(b774621e) SHA1(7684b2e07163aec68cd083ef1d8900f855f6cb42) )
 		ROM_LOAD16_WORD_SWAP( "016-p2.bin", 0x080000, 0x020000, CRC(12afdc2b) SHA1(3a95f5910cbb9f17e63ddece995c6e120fa2f622) )
@@ -1998,9 +1998,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "016-c2.bin", 0x000001, 0x100000, CRC(320db048) SHA1(d6b43834de6f5442e23ca8fb26b3a36e96790d8d) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "016-c3.bin", 0x200000, 0x100000, CRC(98de7995) SHA1(e33edf4d36c82196d2b474e37be180a05976f558) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "016-c4.bin", 0x200001, 0x100000, CRC(070506e2) SHA1(3a2ec365e1d87a9c5ce1ee9bea88402a8eef4ed7) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sengoku )
+	static RomLoadPtr rom_sengoku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "017-p1.bin", 0x000000, 0x080000, CRC(f8a63983) SHA1(7a10ecb2f0fd8315641374c065d2602107b09e72) )
 		ROM_LOAD16_WORD_SWAP( "017-p2.bin", 0x080000, 0x020000, CRC(3024bbb3) SHA1(88892e1292dd60f35a76f9a22e623d4f0f9693cc) )
@@ -2020,9 +2020,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "017-c2.bin", 0x000001, 0x100000, CRC(d55c550d) SHA1(6110f693aa23710939c04153cf5af26493e4a03f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "017-c3.bin", 0x200000, 0x100000, CRC(ed51ef65) SHA1(e8a8d86e24454948e51a75c883bc6e4091cbf820) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "017-c4.bin", 0x200001, 0x100000, CRC(f4f3c9cb) SHA1(8faafa89dbd0345218f71f891419d2e4e7578200) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sengokh )
+	static RomLoadPtr rom_sengokh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "017-p1h.bin", 0x000000, 0x080000, CRC(33eccae0) SHA1(000ccf9a9c73df75eeba3f2c367c3a1a9e0a3a6b) )
 		ROM_LOAD16_WORD_SWAP( "017-p2.bin",  0x080000, 0x020000, CRC(3024bbb3) SHA1(88892e1292dd60f35a76f9a22e623d4f0f9693cc) )
@@ -2042,9 +2042,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "017-c2.bin", 0x000001, 0x100000, CRC(d55c550d) SHA1(6110f693aa23710939c04153cf5af26493e4a03f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "017-c3.bin", 0x200000, 0x100000, CRC(ed51ef65) SHA1(e8a8d86e24454948e51a75c883bc6e4091cbf820) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "017-c4.bin", 0x200001, 0x100000, CRC(f4f3c9cb) SHA1(8faafa89dbd0345218f71f891419d2e4e7578200) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( burningf )
+	static RomLoadPtr rom_burningf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "018-p1.bin", 0x000000, 0x080000, CRC(4092c8db) SHA1(df194a4ad2c35e0e18bc053ff9284183444a4666) )
 	
@@ -2063,9 +2063,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "018-c2.bin", 0x000001, 0x100000, CRC(d4378876) SHA1(45659aa1755d96b992c977042186e47fff68bba9) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "018-c3.bin", 0x200000, 0x100000, CRC(862b60da) SHA1(e2303eb1609f1050f0b4f46693a15e37deb176fb) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "018-c4.bin", 0x200001, 0x100000, CRC(e2e0aff7) SHA1(1c691c092a6e2787de4f433b0eb9252bfdaa7e16) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( burningh )
+	static RomLoadPtr rom_burningh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "018-p1h.bin", 0x000000, 0x080000, CRC(ddffcbf4) SHA1(c646c4bbdb4e9b32df76c90f582ccd69fcc9f8e7) )
 	
@@ -2084,9 +2084,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "018-c2.bin", 0x000001, 0x100000, CRC(d4378876) SHA1(45659aa1755d96b992c977042186e47fff68bba9) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "018-c3.bin", 0x200000, 0x100000, CRC(862b60da) SHA1(e2303eb1609f1050f0b4f46693a15e37deb176fb) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "018-c4.bin", 0x200001, 0x100000, CRC(e2e0aff7) SHA1(1c691c092a6e2787de4f433b0eb9252bfdaa7e16) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lbowling )
+	static RomLoadPtr rom_lbowling = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "019-p1.bin", 0x000000, 0x080000, CRC(a2de8445) SHA1(893d7ae72b4644123469de143fa35fac1cbcd61e) )
 	
@@ -2104,9 +2104,9 @@ public class neogeo
 		ROM_REGION( 0x100000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "019-c1.bin", 0x000000, 0x080000, CRC(4ccdef18) SHA1(5011e30ec235d0b0a5a513a11d4275777e61acdb) )
 		ROM_LOAD16_BYTE( "019-c2.bin", 0x000001, 0x080000, CRC(d4dd0802) SHA1(82069752028c118d42384a95befde45844f0f247) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gpilots )
+	static RomLoadPtr rom_gpilots = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "020-p1.bin", 0x000000, 0x080000, CRC(e6f2fe64) SHA1(50ab82517e077727d97668a4df2b9b96d2e78ab6) )
 		ROM_LOAD16_WORD_SWAP( "020-p2.bin", 0x080000, 0x020000, CRC(edcb22ac) SHA1(505d2db38ae999b7d436e8f2ff56b81796d62b54) )
@@ -2127,9 +2127,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "020-c2.bin", 0x000001, 0x100000, CRC(5f4a925c) SHA1(71c5ef8141234daaa7025427a6c65e79766973a5) )
 		ROM_LOAD16_BYTE( "020-c3.bin", 0x200000, 0x100000, CRC(d1e42fd0) SHA1(f0d476aebbdc2ce008f5f0783be86d295b24aa44) )
 		ROM_LOAD16_BYTE( "020-c4.bin", 0x200001, 0x100000, CRC(edde439b) SHA1(79be7b10ecdab54c2f77062b8f5fda0e299fa982) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( joyjoy )
+	static RomLoadPtr rom_joyjoy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "021-p1.bin", 0x000000, 0x080000, CRC(39c3478f) SHA1(06ebe54c9c4e14c5c31e770013d58b7162359ecc) )
 	
@@ -2146,9 +2146,9 @@ public class neogeo
 		ROM_REGION( 0x100000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "021-c1.bin", 0x000000, 0x080000, CRC(509250ec) SHA1(d6ddb16d8222088f153a85a905bcb99541a5f2cf) )
 		ROM_LOAD16_BYTE( "021-c2.bin", 0x000001, 0x080000, CRC(09ed5258) SHA1(6bf50cd10236e29146b49e714a0e0ebcfe30a682) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bjourney )
+	static RomLoadPtr rom_bjourney = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "022-p1.bin", 0x000000, 0x100000, CRC(6a2f6d4a) SHA1(b8ca548e56f1c7abcdce415ba7329e0cf698ee13) )
 	
@@ -2167,9 +2167,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "022-c2.bin", 0x000001, 0x100000, CRC(e8c1491a) SHA1(c468d2556b3de095aaa05edd1bc16d71303e9478) )
 		ROM_LOAD16_BYTE( "022-c3.bin", 0x200000, 0x080000, CRC(66e69753) SHA1(974b823fc62236fbc23e727f25b61a805a707a9e) )
 		ROM_LOAD16_BYTE( "022-c4.bin", 0x200001, 0x080000, CRC(71bfd48a) SHA1(47288be69e6992d09ebef108b4de9ffab6293dc8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quizdais )
+	static RomLoadPtr rom_quizdais = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "023-p1.bin", 0x000000, 0x100000, CRC(c488fda3) SHA1(4cdf2f1837fffd720efef42f81f933bdf2ef1402) )
 	
@@ -2185,9 +2185,9 @@ public class neogeo
 		ROM_REGION( 0x200000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "023-c1.bin", 0x000000, 0x100000, CRC(2999535a) SHA1(0deabf771039987b559edc2444eea741bd7ba861) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "023-c2.bin", 0x000001, 0x100000, CRC(876a99e6) SHA1(8d1dcfc0927d7523f8be8203573192406ec654b4) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lresort )
+	static RomLoadPtr rom_lresort = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "024-p1.bin", 0x000000, 0x080000, CRC(89c4ab97) SHA1(3a1817c427185ea1b44fe52f009c00b0a9007c85) )
 	
@@ -2206,9 +2206,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "024-c2.bin", 0x000001, 0x100000, CRC(3f0a7fd8) SHA1(d0c9c7a9dde9ce175fb243d33ec11fa719d0158c) )
 		ROM_LOAD16_BYTE( "024-c3.bin", 0x200000, 0x080000, CRC(e9f745f8) SHA1(bbe6141da28b0db7bf5cf321d69b7e613e2414d7) )
 		ROM_LOAD16_BYTE( "024-c4.bin", 0x200001, 0x080000, CRC(7382fefb) SHA1(e916dec5bb5462eb9ae9711f08c7388937abb980) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( eightman )
+	static RomLoadPtr rom_eightman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "025-p1.bin", 0x000000, 0x080000, CRC(43344cb0) SHA1(29dfd699f35b0a74e20fedd6c9174c289f0ef6e0) )
 	
@@ -2227,9 +2227,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "025-c2.bin", 0x000001, 0x100000, CRC(e1ee51c3) SHA1(da8d074bb4e923ed7b8a154fd31b42f2d65b8e96) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "025-c3.bin", 0x200000, 0x080000, CRC(0923d5b0) SHA1(ab72ba1e3ebf56dd356f9ad181f986b1360a1089) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "025-c4.bin", 0x200001, 0x080000, CRC(e3eca67b) SHA1(88154cbc1a261c2f425430119ebc08a30adc9675) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( minasan )
+	static RomLoadPtr rom_minasan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "027-p1.bin", 0x000000, 0x080000, CRC(c8381327) SHA1(c8f8be0ba276c6d12ef13d05af3cf83a2b924894) )
 	
@@ -2248,9 +2248,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "027-c2.bin", 0x000001, 0x100000, CRC(da61f5a6) SHA1(82c5b4e5c5c5e30a3fd1c2e11c6157f39d033c42) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "027-c3.bin", 0x200000, 0x100000, CRC(08df1228) SHA1(288b7ad328c2249f28d17df4dad3584995dca7bf) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "027-c4.bin", 0x200001, 0x100000, CRC(54e87696) SHA1(90816dc86be3983dc57f56ededf7738475c0c61e) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( legendos )
+	static RomLoadPtr rom_legendos = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "029-p1.bin", 0x000000, 0x080000, CRC(9d563f19) SHA1(9bff7bf9fdcf81a0a6c4ce3e196097d4f05e67b6) )
 	
@@ -2268,9 +2268,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "029-c2.bin", 0x000001, 0x100000, CRC(318b2711) SHA1(7014110cee98280317e1189f306ca40652b61f6f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "029-c3.bin", 0x200000, 0x100000, CRC(6bc52cb2) SHA1(14323a4664b7dcbcde82e594168e535d7a921e44) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "029-c4.bin", 0x200001, 0x100000, CRC(37ef298c) SHA1(7a0c4c896dc3e730e06dcadbf00cf354f08a4466) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 2020bb )
+	static RomLoadPtr rom_2020bb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "030-p1.bin", 0x000000, 0x080000, CRC(d396c9cb) SHA1(47ba421d14d05b965a8d44e7475b227a208e5a07) )
 	
@@ -2289,9 +2289,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "030-c2.bin", 0x000001, 0x100000, CRC(d6314bf0) SHA1(0920cc580d7997fcb0170dd619af2f305d635577) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "030-c3.bin", 0x200000, 0x080000, CRC(6a87ae30) SHA1(b2ca080d8233f43cfb2e60d894af65c7b3f8b809) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "030-c4.bin", 0x200001, 0x080000, CRC(bef75dd0) SHA1(8df572804d36d6b25d94b64e8be17a42babbbe95) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 2020bbh )
+	static RomLoadPtr rom_2020bbh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "030-p1h.bin", 0x000000, 0x080000, CRC(12d048d7) SHA1(ee0d03a565b11ca3bee2d24f62ff46a85ef18d90) )
 	
@@ -2310,9 +2310,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "030-c2.bin", 0x000001, 0x100000, CRC(d6314bf0) SHA1(0920cc580d7997fcb0170dd619af2f305d635577) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "030-c3.bin", 0x200000, 0x080000, CRC(6a87ae30) SHA1(b2ca080d8233f43cfb2e60d894af65c7b3f8b809) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "030-c4.bin", 0x200001, 0x080000, CRC(bef75dd0) SHA1(8df572804d36d6b25d94b64e8be17a42babbbe95) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( socbrawl )
+	static RomLoadPtr rom_socbrawl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "031-p1.bin", 0x000000, 0x080000, CRC(a2801c24) SHA1(627d76ff0740ca29586f37b268f47fb469822529) )
 	
@@ -2331,9 +2331,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "031-c2.bin", 0x000001, 0x100000, CRC(efde5382) SHA1(e42789c8d87ee3d4549d0a903e990c03338cbbd8) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "031-c3.bin", 0x200000, 0x080000, CRC(580f7f33) SHA1(f4f95a7c8de00e1366a723fc4cd0e8c1905af636) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "031-c4.bin", 0x200001, 0x080000, CRC(ed297de8) SHA1(616f8fa4c86231f3e79faf9f69f8bb909cbc35f0) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( roboarmy )
+	static RomLoadPtr rom_roboarmy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "032-p1.bin", 0x000000, 0x080000, CRC(cd11cbd4) SHA1(23163e3da2f07e830a7f4a02aea1cb01a54ccbf3) )
 	
@@ -2356,9 +2356,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "032-c4.bin", 0x100001, 0x080000, CRC(8d4ebbe3) SHA1(384ee64db1726b0aef2d3ce8b1d914b56e7925d9) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "032-c5.bin", 0x200000, 0x080000, CRC(40adfccd) SHA1(b11f866dd70ba0ed9123424508355cb948b19bdc) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "032-c6.bin", 0x200001, 0x080000, CRC(462571de) SHA1(5c3d610d492f91564423873b3b434dcda700373f) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fatfury1 )
+	static RomLoadPtr rom_fatfury1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "033-p1.bin", 0x000000, 0x080000, CRC(47ebdc2f) SHA1(d46786502920fb510f1999db00c5e09fb641c0bd) )
 		ROM_LOAD16_WORD_SWAP( "033-p2.bin", 0x080000, 0x020000, CRC(c473af1c) SHA1(4919eeca20abe807493872ca7c79a5d1f496fe68) )
@@ -2378,9 +2378,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "033-c2.bin", 0x000001, 0x100000, CRC(5bb952f3) SHA1(ea964bbcc0408b6ae07cbb5043d003281b1aca15) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "033-c3.bin", 0x200000, 0x100000, CRC(9b714a7c) SHA1(b62bdcede3207d062a89e0a4a9adf706101bb681) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "033-c4.bin", 0x200001, 0x100000, CRC(9397476a) SHA1(a12dbb74020aeb6ebf24ec2abbfba5129cabcb7d) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fbfrenzy )
+	static RomLoadPtr rom_fbfrenzy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "034-p1.bin", 0x000000, 0x080000, CRC(cdef6b19) SHA1(97482db0dffc6d625fb41fa38449c0a74d741a72) )
 	
@@ -2399,9 +2399,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "034-c2.bin", 0x000001, 0x100000, CRC(9743ea2f) SHA1(cf4fccdf10d521d555e92bc24123142393c2b3bb) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "034-c3.bin", 0x200000, 0x080000, CRC(e5aa65f5) SHA1(714356a2cee976ec0f515b1034ce971018e5c02e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "034-c4.bin", 0x200001, 0x080000, CRC(0eb138cc) SHA1(21d31e1f136c674caa6dd44073281cd07b72ea9b) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bakatono )
+	static RomLoadPtr rom_bakatono = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "036-p1.bin", 0x000000, 0x080000, CRC(1c66b6fa) SHA1(6c50cc452971c46c763ae0b2def95792671a1798) )
 	
@@ -2420,9 +2420,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "036-c2.bin", 0x000001, 0x100000, CRC(bbf003f5) SHA1(054b2a3327e038836eece652055bb84c115cf8ed) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "036-c3.bin", 0x200000, 0x100000, CRC(9ac0708e) SHA1(8decfe06d73a3dd3c3cf280719978fcf6d559d29) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "036-c4.bin", 0x200001, 0x100000, CRC(f2577d22) SHA1(a37db8055ca4680e244c556dc6df8bdba16c2083) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( crsword )
+	static RomLoadPtr rom_crsword = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "037-p1.bin", 0x000000, 0x080000, CRC(e7f2553c) SHA1(8469ecb900477feed05ae3311fe9515019bbec2a) )
 	
@@ -2440,9 +2440,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "037-c2.bin", 0x000001, 0x100000, CRC(ac122a78) SHA1(7bfa4d29b7d7d9443f64d81caeafa74fe05c606e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "037-c3.bin", 0x200000, 0x100000, CRC(9d7ed1ca) SHA1(2bbd25dc3a3f825d0af79a418f06a23a1bf03cc0) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "037-c4.bin", 0x200001, 0x100000, CRC(4a24395d) SHA1(943f911f40985db901eaef4c28dfcda299fca73e) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( trally )
+	static RomLoadPtr rom_trally = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "038-p1.bin", 0x000000, 0x080000, CRC(1e52a576) SHA1(a1cb56354c3378e955b0cd482c3c41ae15add952) )
 		ROM_LOAD16_WORD_SWAP( "038-p2.bin", 0x080000, 0x080000, CRC(a5193e2f) SHA1(96803480439e90da23cdca70d59ff519ee85beeb) )
@@ -2462,9 +2462,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "038-c2.bin", 0x000001, 0x100000, CRC(bba9c29e) SHA1(b70bbfdfa8c4f9ea76406530e86b16e42498d284) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "038-c3.bin", 0x200000, 0x080000, CRC(3bb7b9d6) SHA1(bc1eae6181ad5abf79736afc8db4ca34113d43f8) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "038-c4.bin", 0x200001, 0x080000, CRC(a4513ecf) SHA1(934aa103c226eac55157b44d7b4dfa35515322c3) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kotm2 )
+	static RomLoadPtr rom_kotm2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "039-p1.bin", 0x000000, 0x080000, CRC(b372d54c) SHA1(b70fc6f72e16a66b6e144cc01370548e3398b8b8) )
 		ROM_LOAD16_WORD_SWAP( "039-p2.bin", 0x080000, 0x080000, CRC(28661afe) SHA1(6c85ff6ab334b1ca744f726f42dac211537e7315) )
@@ -2488,9 +2488,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x600000, 0x100000 )
 		ROM_LOAD16_BYTE( "039-c4.bin", 0x200001, 0x100000, CRC(b0d44111) SHA1(9ef02149c87aeeb9fca611e57139e3ccf9ae72cd) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x600001, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sengoku2 )
+	static RomLoadPtr rom_sengoku2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "040-p1.bin", 0x000000, 0x080000, CRC(cc245299) SHA1(5dd4b017328526c485e31f6ca28a2f3bc2cef778) )
 		ROM_LOAD16_WORD_SWAP( "040-p2.bin", 0x080000, 0x080000, CRC(2e466360) SHA1(1b26e7a1dad52b3f1973b86b15360903eb170521) )
@@ -2511,9 +2511,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "040-c2.bin", 0x000001, 0x200000, CRC(e2aadef3) SHA1(45835db57547b48641337b5c7ce9e8a140d71ca0) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "040-c3.bin", 0x400000, 0x200000, CRC(037614d5) SHA1(af86e1f35b1bb718906608c01abec35cd60c4e61) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "040-c4.bin", 0x400001, 0x200000, CRC(e9947e5b) SHA1(06fec16539f410fe27ca8c353183aed282205903) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bstars2 )
+	static RomLoadPtr rom_bstars2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "041-p1.bin", 0x000000, 0x080000, CRC(523567fd) SHA1(f1e81eb4678f586b214ea102cde6effea1b0f768) )
 	
@@ -2533,9 +2533,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "041-c2.bin", 0x000001, 0x100000, CRC(766cfc2f) SHA1(79e1063925d54a57df943019a88bea56c9152df3) )
 		ROM_LOAD16_BYTE( "041-c3.bin", 0x200000, 0x100000, CRC(fb31339d) SHA1(f4e821299680970b2e979acc4a170029b968c807) )
 		ROM_LOAD16_BYTE( "041-c4.bin", 0x200001, 0x100000, CRC(70457a0c) SHA1(a1e307f11ddab85d2e9c09d0428fac2e6da774b1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quizdai2 )
+	static RomLoadPtr rom_quizdai2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "042-p1.bin", 0x000000, 0x100000, CRC(ed719dcf) SHA1(12baf2601e86c0e4358517b9fa1c55f2f5835f1d) )
 	
@@ -2554,9 +2554,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "042-c2.bin", 0x000001, 0x100000, CRC(1436dfeb) SHA1(27d136fb1be793bd345a741f5e55a977275fff86) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "042-c3.bin", 0x200000, 0x080000, CRC(bcd4a518) SHA1(f355298fe0f2cf50ddcc0d613db56a5c04d7230f) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "042-c4.bin", 0x200001, 0x080000, CRC(d602219b) SHA1(34cf0f16db1e224396464ac838f4cd2e6d1c640e) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 3countb )
+	static RomLoadPtr rom_3countb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "043-p1.bin", 0x000000, 0x080000, CRC(eb2714c4) SHA1(ba5dbfee4160f27ff36060b777d64b93dc2e929c) )
 		ROM_LOAD16_WORD_SWAP( "043-p2.bin", 0x080000, 0x080000, CRC(5e764567) SHA1(3e34d051e8e1483073e4fcce0b688e50a1e713ce) )
@@ -2576,9 +2576,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "043-c2.bin", 0x0000001, 0x200000, CRC(0b28095d) SHA1(9f8184bab13939d2ef80e007462ed083c6cdd46f) )
 		ROM_LOAD16_BYTE( "043-c3.bin", 0x0400000, 0x200000, CRC(bcc0cb35) SHA1(8bbee3201212be19ab53598c8663205cf27b6b4e) )
 		ROM_LOAD16_BYTE( "043-c4.bin", 0x0400001, 0x200000, CRC(4d1ff7b9) SHA1(469fda8aaca673cb25b6b3c5534d78a990140d38) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aof )
+	static RomLoadPtr rom_aof = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "044-p1.bin", 0x000000, 0x080000, CRC(ca9f7a6d) SHA1(4d28ef86696f7e832510a66d3e8eb6c93b5b91a1) )
 	
@@ -2601,9 +2601,9 @@ public class neogeo
 		ROM_CONTINUE(      			 0x600000, 0x100000 )
 		ROM_LOAD16_BYTE( "044-c4.bin", 0x200001, 0x100000, CRC(6235fbaa) SHA1(9090e337d7beed25ba81ae0708d0aeb57e6cf405) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			 0x600001, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( samsho )
+	static RomLoadPtr rom_samsho = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "045-p1.bin", 0x000000, 0x080000, CRC(80aa6c97) SHA1(6e07a4aa7b4719ae487a10cee9389cb55a370a7a) )
 		ROM_LOAD16_WORD_SWAP( "045-p2.bin", 0x080000, 0x080000, CRC(71768728) SHA1(9ff0e01d3fb73ad04279d4fdf4c53c3160888179) )
@@ -2626,9 +2626,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "045-c4.bin", 0x400001, 0x200000, CRC(935c62f0) SHA1(0053d40085fac14096b683f4341f65e543b71dc1) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "045-c5.bin", 0x800000, 0x080000, CRC(a2bb8284) SHA1(aa118e3b8c062daa219b36758b9a3814c08c69dc) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "045-c6.bin", 0x800001, 0x080000, CRC(4fa71252) SHA1(afe374a9d1f2d955a59efe7b6196b89e021b164c) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tophuntr )
+	static RomLoadPtr rom_tophuntr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "046-p1.bin", 0x000000, 0x100000, CRC(69fa9e29) SHA1(9a40a16163193bb506a32bd34f6323b25ec69622) )
 		ROM_LOAD16_WORD_SWAP( "046-p2.sp2", 0x100000, 0x100000, CRC(f182cb3e) SHA1(6b4e0af5d4e623f0682f37ff5c69e5b705e20028) )
@@ -2654,9 +2654,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "046-c6.bin", 0x400001, 0x100000, CRC(273171df) SHA1(9c35832221e016c12ef1ed71da167f565daaf86c) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "046-c7.bin", 0x600000, 0x100000, CRC(12829c4c) SHA1(ac5f3d848d7116fc35c97f53a72c85e049dd3a2f) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "046-c8.bin", 0x600001, 0x100000, CRC(c944e03d) SHA1(be23999b8ce09ee15ba500ce4d5e2a82a4f58d9b) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fatfury2 )
+	static RomLoadPtr rom_fatfury2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "047-p1.bin", 0x000000, 0x080000, CRC(be40ea92) SHA1(958b891bb8beb6af122d5467257ab20cbc6cf574) )
 		ROM_LOAD16_WORD_SWAP( "047-p2.bin", 0x080000, 0x080000, CRC(2a9beac5) SHA1(61378f89d64fef4c172825694f83229c2ab1a7af) )
@@ -2680,9 +2680,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x600000, 0x100000 )
 		ROM_LOAD16_BYTE( "047-c4.bin", 0x200001, 0x100000, CRC(9fe27432) SHA1(89d22d77ba8bc6d1f6c974195c34ad61b9010de7) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x600001, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( janshin )
+	static RomLoadPtr rom_janshin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "048-p1.bin", 0x000000, 0x100000, CRC(7514cb7a) SHA1(da512c0a8e8160a9db7f956e351245327c38eaf1) )
 	
@@ -2698,9 +2698,9 @@ public class neogeo
 		ROM_REGION( 0x400000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "048-c1.bin", 0x000000, 0x200000, CRC(3fa890e9) SHA1(e73d2802bacfbc2b2b16fbbedddde17488e4bbde) )
 		ROM_LOAD16_BYTE( "048-c2.bin", 0x000001, 0x200000, CRC(59c48ad8) SHA1(2630817e735a6d197377558f4324c1442803fe15) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( androdun )
+	static RomLoadPtr rom_androdun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "049-p1.bin", 0x000000, 0x080000, CRC(3b857da2) SHA1(4dd86c739944696c16c3cdd85935d6dfa9fdc276) )
 		ROM_LOAD16_WORD_SWAP( "049-p2.bin", 0x080000, 0x080000, CRC(2f062209) SHA1(991cf3e3677929b2cc0b2787b0c7b6ad3700f618) )
@@ -2721,9 +2721,9 @@ public class neogeo
 		/* these just contain junk, probably shouldn't be here */
 	//	ROM_LOAD16_BYTE( "049-c3.bin", 0x200000, 0x100000, CRC(2e0f3f9a) SHA1(8ee3442be92835922762420e8d0ff86dc14b3d69) ) /* Plane 0,1 */
 	//	ROM_LOAD16_BYTE( "049-c4.bin", 0x200001, 0x100000, CRC(4a19fb92) SHA1(171219f0b38a04bfcee5b823c043a8181dfc87f8) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ncommand )
+	static RomLoadPtr rom_ncommand = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "050-p1.bin", 0x000000, 0x100000, CRC(4e097c40) SHA1(43311a7ca14a14dcd4a99d8576a12e897b078643) )
 	
@@ -2742,9 +2742,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "050-c2.bin", 0x000001, 0x100000, CRC(c4cf5548) SHA1(ef9eca5aeff9dda2209a050c2af00ed8979ae2bc) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "050-c3.bin", 0x200000, 0x100000, CRC(03422c1e) SHA1(920e5015aebe2ffc5ce43a52365c7f0a705f3b9e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "050-c4.bin", 0x200001, 0x100000, CRC(0845eadb) SHA1(3c71a02bf0e07a5381846bb6d75bbe7dd546adea) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( viewpoin )
+	static RomLoadPtr rom_viewpoin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "051-p1.bin", 0x000000, 0x100000, CRC(17aa899d) SHA1(674cd8ace7acdf4f407de741e3d0071bcb49c902) )
 	
@@ -2763,9 +2763,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x400000, 0x100000 )
 		ROM_LOAD16_BYTE( "051-c2.bin", 0x000001, 0x100000, CRC(40d69f1e) SHA1(ec4a13582772594957f927622d50f54b0dfcd8d8) )
 		ROM_CONTINUE(      			   0x400001, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ssideki )
+	static RomLoadPtr rom_ssideki = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "052-p1.bin", 0x000000, 0x080000, CRC(9cd97256) SHA1(1c780b711137fd79cc81b01941e84f3d59e0071f) )
 	
@@ -2783,9 +2783,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x400000, 0x100000 )
 		ROM_LOAD16_BYTE( "052-c2.bin", 0x000001, 0x100000, CRC(776a2d1f) SHA1(bca0bac87443e9e78c623d284f6cc96cc9c9098f) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x400001, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wh1 )
+	static RomLoadPtr rom_wh1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "053-p1.bin", 0x000000, 0x080000, CRC(95b574cb) SHA1(b7b7af6a04c3d902e7f8852897741ecaf0b1062c) )
 		ROM_LOAD16_WORD_SWAP( "053-p2.bin", 0x080000, 0x080000, CRC(f198ed45) SHA1(24ccc091e97f63796562bb5b30df51f39bd504ef) )
@@ -2807,9 +2807,9 @@ public class neogeo
 		ROM_CONTINUE(      			0x400001, 0x100000 )
 		ROM_LOAD16_BYTE( "053-c3.bin", 0x200000, 0x100000, CRC(0dd64965) SHA1(e97b3b8a461da5e8861b3dfdacb25e007ced37a1) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "053-c4.bin", 0x200001, 0x100000, CRC(9270d954) SHA1(a2ef909868f6b06cdcc22a63ddf6c96be12b999c) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wh1h )
+	static RomLoadPtr rom_wh1h = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "053-p1.rom", 0x000000, 0x080000, CRC(ed29fde2) SHA1(52b8ca5b804f786f95e1dfb348d8c7b82f1d4ddf) )
 		ROM_LOAD16_WORD_SWAP( "053-p2.rom", 0x080000, 0x080000, CRC(98f2b158) SHA1(a64e1425970eb53cc910891db39973dee3d54ccc) )
@@ -2831,9 +2831,9 @@ public class neogeo
 		ROM_CONTINUE(      			0x400001, 0x100000 )
 		ROM_LOAD16_BYTE( "053-c3.bin", 0x200000, 0x100000, CRC(0dd64965) SHA1(e97b3b8a461da5e8861b3dfdacb25e007ced37a1) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "053-c4.bin", 0x200001, 0x100000, CRC(9270d954) SHA1(a2ef909868f6b06cdcc22a63ddf6c96be12b999c) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof94 )
+	static RomLoadPtr rom_kof94 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "055-p1.bin", 0x100000, 0x100000, CRC(f10a2042) SHA1(d08a3f3c28be4b1793de7d362456281329fe1828) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -2858,9 +2858,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "055-c6.bin", 0x800001, 0x200000, CRC(498da52c) SHA1(1e6e6202ee053a5261db889177ce3a087e078bda) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "055-c7.bin", 0xc00000, 0x200000, CRC(62f66888) SHA1(ac91a0eab0753bee175ad40213a4ae5d38ed5b87) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "055-c8.bin", 0xc00001, 0x200000, CRC(fe0a235d) SHA1(a45c66836e4e3c77dfef9d4c6cc422cb59169149) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aof2 )
+	static RomLoadPtr rom_aof2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "056-p1.bin", 0x000000, 0x100000, CRC(a3b1d021) SHA1(ee42f3ca4516226b0088d0303ed28e3ecdabcd71) )
 	
@@ -2884,9 +2884,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "056-c6.bin", 0x800001, 0x200000, CRC(31de68d3) SHA1(13ba7046cdd6863125f8284e60f102d4720af5a4) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "056-c7.bin", 0xc00000, 0x200000, CRC(3f36df57) SHA1(79ee97e9ae811a51141b535633f90e1491209d54) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "056-c8.bin", 0xc00001, 0x200000, CRC(e546d7a8) SHA1(74a2fca994a5a93a5784a46c0f68193122456a09) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wh2 )
+	static RomLoadPtr rom_wh2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "057-p1.bin", 0x100000, 0x100000, CRC(65a891d9) SHA1(ff8d5ccb0dd22c523902bb3db3c645583a335056) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -2908,9 +2908,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "057-c4.bin", 0x400001, 0x200000, CRC(8d96425e) SHA1(0f79c868a6a33ad25e38d842f30ec4440d809033) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "057-c5.bin", 0x800000, 0x200000, CRC(b20354af) SHA1(da7609fd467f2f4d71d92970f438a04d11ab1cc1) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "057-c6.bin", 0x800001, 0x200000, CRC(b13d1de3) SHA1(7d749c23a33d90fe50279e884540d71cf1aaaa6b) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fatfursp )
+	static RomLoadPtr rom_fatfursp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "058-p1.bin", 0x000000, 0x100000, CRC(2f585ba2) SHA1(429b4bf43fb9b1082c15d645ca328f9d175b976b) )
 		ROM_LOAD16_WORD_SWAP( "058-p2.bin", 0x100000, 0x080000, CRC(d7c71a6b) SHA1(b3428063031a2e5857da40a5d2ffa87fb550c1bb) )
@@ -2935,9 +2935,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "058-c4.bin", 0x400001, 0x200000, CRC(4ad066ff) SHA1(4e304646d954d5f7bbabc5d068e85de31d38830f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "058-c5.bin", 0x800000, 0x200000, CRC(49c5e0bf) SHA1(f3784178f90751990ea47a082a6aa869ee3566c9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "058-c6.bin", 0x800001, 0x200000, CRC(8ff1f43d) SHA1(6180ceb5412a3e2e34e9513a3283b9f63087f747) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fatfursa )
+	static RomLoadPtr rom_fatfursa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "058-ep1.bin", 0x000000, 0x100000, CRC(36be707d) SHA1(59dc26a85f967f07a1a8ce9300e7f0eb52ccf794) )
 		/* the first part of this is the same as p3 in the other set, maybe the other cart was actually an upgraded one? */
@@ -2961,9 +2961,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "058-c4.bin", 0x400001, 0x200000, CRC(4ad066ff) SHA1(4e304646d954d5f7bbabc5d068e85de31d38830f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "058-c5.bin", 0x800000, 0x200000, CRC(49c5e0bf) SHA1(f3784178f90751990ea47a082a6aa869ee3566c9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "058-c6.bin", 0x800001, 0x200000, CRC(8ff1f43d) SHA1(6180ceb5412a3e2e34e9513a3283b9f63087f747) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( savagere )
+	static RomLoadPtr rom_savagere = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "059-p1.bin", 0x100000, 0x100000, CRC(01d4e9c0) SHA1(3179d2be59bf2de6918d506117cff50acf7e09f3) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -2988,9 +2988,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "059-c6.bin", 0x800001, 0x200000, CRC(1c8d5def) SHA1(475d89a5c4922a9f6bd756d23c2624d57b6e9d62) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "059-c7.bin", 0xc00000, 0x200000, CRC(c88f7035) SHA1(c29a428b741f4fe7b71a3bc23c87925b6bc1ca8f) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "059-c8.bin", 0xc00001, 0x200000, CRC(484ce3ba) SHA1(4f21ed20ce6e2b67e2b079404599310c94f591ff) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fightfev )
+	static RomLoadPtr rom_fightfev = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "060-p1.bin", 0x000000, 0x080000, CRC(3032041b) SHA1(4b8ed2e6f74579ea35a53e06ccac42d6905b0f51) )
 		ROM_LOAD16_WORD_SWAP( "060-p2.bin", 0x080000, 0x080000, CRC(b0801d5f) SHA1(085746d8f5d271d5f84ccbb7f577193c391f88d4) )
@@ -3010,9 +3010,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "060-c2.bin", 0x0000001, 0x200000, CRC(c6649492) SHA1(5d39b077387ed6897ac075ede4a2aa94bb64545e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "060-c3.bin", 0x0400000, 0x200000, CRC(0956b437) SHA1(c70be8b5cebf321afe4c3f5e9a12413c3077694a) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "060-c4.bin", 0x0400001, 0x200000, CRC(026f3b62) SHA1(d608483b70d60e7aa0e41f25a8b3fed508129eb7) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fightfva )
+	static RomLoadPtr rom_fightfva = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "060-p1a.bin", 0x0000000, 0x100000, CRC(2a104b50) SHA1(3eb663d3df7074e1cdf4c0e450a35c9cf55d8979) )
 		/* there was also a copy of the 060-p1.bin with the name 060-p2.bin maybe it should be loaded over the top or this
@@ -3033,9 +3033,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "060-c2.bin", 0x0000001, 0x200000, CRC(c6649492) SHA1(5d39b077387ed6897ac075ede4a2aa94bb64545e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "060-c3.bin", 0x0400000, 0x200000, CRC(0956b437) SHA1(c70be8b5cebf321afe4c3f5e9a12413c3077694a) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "060-c4.bin", 0x0400001, 0x200000, CRC(026f3b62) SHA1(d608483b70d60e7aa0e41f25a8b3fed508129eb7) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ssideki2 )
+	static RomLoadPtr rom_ssideki2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "061-p1.bin", 0x000000, 0x100000, CRC(5969e0dc) SHA1(78abea880c125ec5a85bef6404478512a34b5513) )
 	
@@ -3054,9 +3054,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "061-c2.bin", 0x000001, 0x200000, CRC(c3be42ae) SHA1(7fa65538bd0a0a162e4d3e9f49913da59d915e02) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "061-c3.bin", 0x400000, 0x200000, CRC(2a7b98b9) SHA1(75e1019dca8a8583afcc53651ac856cba3a96315) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "061-c4.bin", 0x400001, 0x200000, CRC(c0be9a1f) SHA1(228f41eaefdf3e147761f8ef849e3b5f321877d4) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spinmast )
+	static RomLoadPtr rom_spinmast = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "062-p1.bin", 0x000000, 0x100000, CRC(37aba1aa) SHA1(1a2ab9593371cc2f665121d554eec3f6bb4d09ff) )
 		ROM_LOAD16_WORD_SWAP( "062-p2.bin", 0x100000, 0x080000, CRC(43763ad2) SHA1(9b08cf1a79294c3206f6364466cae2c8b15acad5) )
@@ -3079,9 +3079,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "062-c6.bin", 0x400001, 0x100000, CRC(cde5ade5) SHA1(5899ef5dfcdbb8cf8c6aba748dbb52f3c5fed5fe) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "062-c7.bin", 0x600000, 0x100000, CRC(bb2fd7c0) SHA1(cce11c4cf39ac60143235ff89261806df339dae5) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "062-c8.bin", 0x600001, 0x100000, CRC(8d7be933) SHA1(e7097cfa26a959f90721e2e8368ceb47ea9db661) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( samsho2 )
+	static RomLoadPtr rom_samsho2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "063-p1.bin", 0x100000, 0x100000, CRC(22368892) SHA1(0997f8284aa0f57a333be8a0fdea777d0d01afd6) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3107,9 +3107,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "063-c6.bin", 0x800001, 0x200000, CRC(ae4c0a88) SHA1(cc8a7d11daa3821f83a6fd0942534706f939e576) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "063-c7.bin", 0xc00000, 0x200000, CRC(2df3cbcf) SHA1(e54f9022359963711451c2025825b862d36c6975) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "063-c8.bin", 0xc00001, 0x200000, CRC(1ffc6dfa) SHA1(acea18aca76c072e0bac2a364fc96d49cfc86e77) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wh2j )
+	static RomLoadPtr rom_wh2j = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "064-p1.bin", 0x100000, 0x100000, CRC(385a2e86) SHA1(cfde4a1aeae038a3d6ca9946065624f097682d3d) )
 		ROM_CONTINUE(					   0x000000, 0x100000 )
@@ -3133,9 +3133,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "064-c6.bin", 0x800001, 0x200000, CRC(a43e4766) SHA1(54f282f2b1ff2934cca7acbb4386a2b99a29df3a) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "064-c7.bin", 0xc00000, 0x200000, CRC(59d97215) SHA1(85a960dc7f364df13ee0c2f99a4c53aefb081486) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "064-c8.bin", 0xc00001, 0x200000, CRC(fc092367) SHA1(69ff4ae909dd857de3ca8645d63f8b4bde117448) ) /* Plane 0,1 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wjammers )
+	static RomLoadPtr rom_wjammers = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "065-p1.bin", 0x000000, 0x080000, CRC(e81e7a31) SHA1(bb1a8922afe269f6e3ea63c3a377c2a6e2171d2d) )
 	
@@ -3156,9 +3156,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "065-c2.bin", 0x000001, 0x100000, CRC(d9f3e71d) SHA1(fad1f64061eac1bf85bf6d75d2eae974a8c94069) )
 		ROM_LOAD16_BYTE( "065-c3.bin", 0x200000, 0x100000, CRC(40986386) SHA1(65795a50197049681265946713d416c9cdb68f08) )
 		ROM_LOAD16_BYTE( "065-c4.bin", 0x200001, 0x100000, CRC(715e15ff) SHA1(ac8b8b01f5c7384b883afbe0cf977430378e3fef) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( karnovr )
+	static RomLoadPtr rom_karnovr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "066-p1.bin", 0x000000, 0x100000, CRC(8c86fd22) SHA1(8cf97c6fb9c5717167ccc54bf5856248ccaf32c6) )
 	
@@ -3178,9 +3178,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "066-c4.bin", 0x400001, 0x200000, CRC(cb3dc5f4) SHA1(865d9ccfc3df517c341d6aac16120f6b6aa759fe) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "066-c5.bin", 0x800000, 0x200000, CRC(9a28785d) SHA1(19723e1f7ff429e8a038d89488b279f830dfaf6e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "066-c6.bin", 0x800001, 0x200000, CRC(c15c01ed) SHA1(7cf5583e6610bcdc3b332896cefc71df84fb3f19) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gururin )
+	static RomLoadPtr rom_gururin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "067-p1.bin", 0x000000, 0x80000, CRC(4cea8a49) SHA1(cea4a35db8de898e30eb40dd339b3cbe77ac0856) )
 	
@@ -3196,9 +3196,9 @@ public class neogeo
 		ROM_REGION( 0x400000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "067-c1.bin", 0x000000, 0x200000, CRC(35866126) SHA1(e4b24670ccc7901af5f66b11b15fae4e67f843ab) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "067-c2.bin", 0x000001, 0x200000, CRC(9db64084) SHA1(68a43c12f63f5e98d68ad0902a6551c5d30f8543) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pspikes2 )
+	static RomLoadPtr rom_pspikes2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "068-p1.bin", 0x000000, 0x100000, CRC(105a408f) SHA1(2ee51defa1c24c66c63a6498ee542ac26de3cfbb) )
 	
@@ -3220,9 +3220,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "068-c4.bin", 0x200001, 0x100000, CRC(35072596) SHA1(4150a21041f06514c97592bd8af686504b06e187) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "068-c5.bin", 0x400000, 0x100000, CRC(151dd624) SHA1(f2690a3fe9c64f70f283df785a5217d5b92a289f) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "068-c6.bin", 0x400001, 0x100000, CRC(a6722604) SHA1(b40c57fb4be93ac0b918829f88393ced3d4f8bde) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fatfury3 )
+	static RomLoadPtr rom_fatfury3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "069-p1.bin", 0x000000, 0x100000, CRC(a8bcfbbc) SHA1(519c4861151797e5f4d4f33432b83dfabed8e7c4) )
 		ROM_LOAD16_WORD_SWAP( "069-p2.bin", 0x100000, 0x200000, CRC(dbe963ed) SHA1(8ece7f663cfe8e563576a397e41161d392cee67e) )
@@ -3245,9 +3245,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "069-c4.bin", 0x0800001, 0x400000, CRC(a25fc3d0) SHA1(83cb349e2f1032652060b233e741fb893be5af16) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "069-c5.bin", 0x1000000, 0x200000, CRC(b3ec6fa6) SHA1(7e4c8ee9dd8d9a25ff183d9d8b05f38769348bc7) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "069-c6.bin", 0x1000001, 0x200000, CRC(69210441) SHA1(6d496c549dba65caabeaffe5b762e86f9d648a26) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( panicbom )
+	static RomLoadPtr rom_panicbom = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "073-p1.bin", 0x000000, 0x040000, CRC(0b21130d) SHA1(885c67347d33c0a4cd8c91b45c72959900d707a5) )
 	
@@ -3264,9 +3264,9 @@ public class neogeo
 		ROM_REGION( 0x200000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "073-c1.bin", 0x000000, 0x100000, CRC(8582e1b5) SHA1(e17d8f57b8ebee14b8e705374b34abe928937258) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "073-c2.bin", 0x000001, 0x100000, CRC(e15a093b) SHA1(548a418c81af79cd7ab6ad165b8d6daee30abb49) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aodk )
+	static RomLoadPtr rom_aodk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "074-p1.bin", 0x100000, 0x100000, CRC(62369553) SHA1(ca4d561ee08d16fe6804249d1ba49188eb3bd606) )
 		ROM_CONTINUE(					   0x000000, 0x100000 )
@@ -3290,9 +3290,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "074-c6.bin", 0x800001, 0x200000, CRC(73e8e7e0) SHA1(dd6580227743e6a3db4950456ebe870008e022b2) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "074-c7.bin", 0xc00000, 0x200000, CRC(ac7daa01) SHA1(78407a464f67d949933ce2ccaa23fbed80dff1ea) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "074-c8.bin", 0xc00001, 0x200000, CRC(14e7ad71) SHA1(d4583fbce361fd1a11ac6c1a27b0b669e8a5c718) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sonicwi2 )
+	static RomLoadPtr rom_sonicwi2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "075-p1.bin", 0x100000, 0x100000, CRC(92871738) SHA1(fed040a7c1ff9e495109813a702d09fb1d2ecf3a) )
 		ROM_CONTINUE(                         0x000000, 0x100000 )
@@ -3312,9 +3312,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "075-c2.bin", 0x000001, 0x200000, CRC(fe6355d6) SHA1(ca72fff7a908b6d9325761079ff2a0e28f34cf89) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "075-c3.bin", 0x400000, 0x200000, CRC(c1b438f1) SHA1(b3751c5b426bca0fcc3a58bdb86712c22ef908ab) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "075-c4.bin", 0x400001, 0x200000, CRC(1f777206) SHA1(e29c5ae65ebdcc1167a894306d2446ce909639da) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( zedblade )
+	static RomLoadPtr rom_zedblade = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "076-p1.bin", 0x000000, 0x080000, CRC(d7c1effd) SHA1(485c2308a40baecd122be9ab4996044622bdcc7e) )
 	
@@ -3334,9 +3334,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "076-c2.bin", 0x000001, 0x200000, CRC(09233884) SHA1(1895cd0d126a022bce1cc4c7a569032d89f35e3f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "076-c3.bin", 0x400000, 0x200000, CRC(d06431e3) SHA1(643bd1ad74af272795b02143ba80a76e375036ab) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "076-c4.bin", 0x400001, 0x200000, CRC(4b1c089b) SHA1(cd63961d88c5be84673cce83c683a86b222a064d) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galaxyfg )
+	static RomLoadPtr rom_galaxyfg = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "078-p1.bin", 0x100000, 0x100000, CRC(45906309) SHA1(cdcd96a564acf42e959193e139e149b29c103e25) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3361,9 +3361,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "078-c6.bin", 0x800001, 0x200000, CRC(d779a181) SHA1(2761026abd9698a7b56114b76631563abd41fd12) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "078-c7.bin", 0xc00000, 0x100000, CRC(4f27d580) SHA1(c0f12496b45b2fe6e94aa8ac52b0157063127e0a) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "078-c8.bin", 0xc00001, 0x100000, CRC(0a7cc0d8) SHA1(68aaee6341c87e56ce11acc1c4ec8047839fe70d) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( strhoop )
+	static RomLoadPtr rom_strhoop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "079-p1.bin", 0x000000, 0x100000, CRC(5e78328e) SHA1(7a00b096ed6dd77afc3008c5a4c83686e475f323) )
 	
@@ -3382,9 +3382,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "079-c2.bin", 0x000001, 0x200000, CRC(5b9b8fb6) SHA1(362aa0de0d2cf9aa03758363ffb1e15e046a3930) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "079-c3.bin", 0x400000, 0x200000, CRC(cd65bb62) SHA1(6f47d77d61d4289bcee82df7c4efa5346a6e4c80) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "079-c4.bin", 0x400001, 0x200000, CRC(a4c90213) SHA1(1b9f7b5f31acd6df2bdab81b849f32c13aa1b884) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quizkof )
+	static RomLoadPtr rom_quizkof = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "080-p1.bin", 0x000000, 0x100000, CRC(4440315e) SHA1(f4adba8e341d64a1f6280dfd98ebf6918c00608d) )
 	
@@ -3404,9 +3404,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "080-c2.bin",  0x000001, 0x200000, CRC(c78c49da) SHA1(0b95a340842847ab304517060e506098f8e5f0e0) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "080-c3.bin",  0x400000, 0x200000, CRC(b4851bfe) SHA1(b8286c601de5755c1681ea46e177fc89006fc066) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "080-c4.bin",  0x400001, 0x200000, CRC(ca6f5460) SHA1(ed36e244c9335f4c0a97c57b7b7f1b849dd3a90d) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ssideki3 )
+	static RomLoadPtr rom_ssideki3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "081-p1.bin", 0x100000, 0x100000, CRC(6bc27a3d) SHA1(94692abe7343f9204a557acae4ab74d0af511ca3) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3429,9 +3429,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "081-c4.bin", 0x400001, 0x200000, CRC(47d26a7c) SHA1(591ef24a3d381163c5da80fa64e6883b8ea9abfb) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "081-c5.bin", 0x800000, 0x200000, CRC(17d42f0d) SHA1(7de7765bf43d390c50b2f59c2288502a7121d086) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "081-c6.bin", 0x800001, 0x200000, CRC(6b53fb75) SHA1(fadf7a12661d83ae35d9258aa4947969d51c08b8) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( doubledr )
+	static RomLoadPtr rom_doubledr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "082-p1.bin", 0x100000, 0x100000, CRC(34ab832a) SHA1(fbb1bd195f5653f7b9c89648649f838eaf83cbe4) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3455,9 +3455,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "082-c6.bin", 0x800001, 0x200000, CRC(844a8a11) SHA1(b2acbd4cacce66fb32c052b2fba9984904679bda) )
 		ROM_LOAD16_BYTE( "082-c7.bin", 0xc00000, 0x100000, CRC(727c4d02) SHA1(8204c7f037d46e0c58f269f9c7a535bc2589f526) )
 		ROM_LOAD16_BYTE( "082-c8.bin", 0xc00001, 0x100000, CRC(69a5fa37) SHA1(020e70e0e8b3c5d00a40fe97e418115a3187e50a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pbobblen )
+	static RomLoadPtr rom_pbobblen = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "083-p1.bin", 0x000000, 0x040000, CRC(7c3c34e1) SHA1(50fafb3529351c82a3656e6b07ab174a7bf8da0b) )
 	
@@ -3475,9 +3475,9 @@ public class neogeo
 		ROM_REGION( 0x100000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "083-c5.bin", 0x000000, 0x080000, CRC(e89ad494) SHA1(69c9ea415773af94ac44c48af05d55ada222b138) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "083-c6.bin", 0x000001, 0x080000, CRC(4b42d7eb) SHA1(042ae50a528cea21cf07771d3915c57aa16fd5af) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pbobblna )
+	static RomLoadPtr rom_pbobblna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "083-p1.rom", 0x000000, 0x040000, CRC(d6efe86f) SHA1(f80a0b291c2e88dd894851bd14fa8cf7523fb7fe) )
 	
@@ -3495,9 +3495,9 @@ public class neogeo
 		ROM_REGION( 0x100000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "083-c5.bin", 0x000000, 0x080000, CRC(e89ad494) SHA1(69c9ea415773af94ac44c48af05d55ada222b138) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "083-c6.bin", 0x000001, 0x080000, CRC(4b42d7eb) SHA1(042ae50a528cea21cf07771d3915c57aa16fd5af) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof95 )
+	static RomLoadPtr rom_kof95 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "084-p1.bin", 0x100000, 0x100000, CRC(5e54cf95) SHA1(41abe2042fdbb1526e92a0789976a9b1ac5e60f0) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3537,9 +3537,9 @@ public class neogeo
 		/* 1400000-17fffff empty */
 		ROM_LOAD16_BYTE( "084-c7.bin", 0x1800000, 0x100000, CRC(9904025f) SHA1(eec770746a0ad073f7d353ab16a2cc3a5278d307) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "084-c8.bin", 0x1800001, 0x100000, CRC(78eb0f9b) SHA1(2925ea21ed2ce167f08a25589e94f28643379034) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof95a )
+	static RomLoadPtr rom_kof95a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 	 	ROM_LOAD16_WORD_SWAP( "084a-p1.bin",0x100000, 0x100000, CRC(2cba2716) SHA1(f6c2d0537c9c3e0938065c65b1797c47198fcff8) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3566,9 +3566,9 @@ public class neogeo
 		/* 1400000-17fffff empty */
 		ROM_LOAD16_BYTE( "084-c7.bin", 0x1800000, 0x100000, CRC(9904025f) SHA1(eec770746a0ad073f7d353ab16a2cc3a5278d307) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "084-c8.bin", 0x1800001, 0x100000, CRC(78eb0f9b) SHA1(2925ea21ed2ce167f08a25589e94f28643379034) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tws96 )
+	static RomLoadPtr rom_tws96 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "086-p1.bin", 0x000000, 0x100000, CRC(03e20ab6) SHA1(3a0a5a54649178ce7a6158980cb4445084b40fb5) )
 	
@@ -3589,9 +3589,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x000001, 0x200000 )
 		ROM_LOAD16_BYTE( "086-c3.bin", 0x800000, 0x100000, CRC(750ddc0c) SHA1(9304a83d81afd544d88be0cd3ee47ae401d2da0e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "086-c4.bin", 0x800001, 0x100000, CRC(7a6e7d82) SHA1(b1bb82cec3d68367d5e01e63c44c11b67e577411) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( samsho3 )
+	static RomLoadPtr rom_samsho3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "087-p1.bin", 0x000000, 0x100000, CRC(282a336e) SHA1(e062f1939d36a45f185b5dbd726cdd833dc7c28c) )
 		ROM_LOAD16_WORD_SWAP( "087-p2.bin", 0x100000, 0x200000, CRC(9bbe27e0) SHA1(b18117102159903c8e8f4e4226e1cc91a400e816) )
@@ -3621,9 +3621,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1000001, 0x200000 )
 		ROM_LOAD16_BYTE( "087-c7.bin", 0x1800000, 0x080000, CRC(7a01f666) SHA1(d177f165fc7bbd9742e0e236ef8182b48d89e982) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "087-c8.bin", 0x1800001, 0x080000, CRC(ffd009c2) SHA1(1b49e36596ca6bef3d7c943491b496eb759975d7) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( stakwin )
+	static RomLoadPtr rom_stakwin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "088-p1.bin",  0x100000, 0x100000, CRC(bd5814f6) SHA1(95179a4dee61ae88bb5d9fd74af0c56c8c29f5ea) )
 		ROM_CONTINUE(						 0x000000, 0x100000)
@@ -3642,9 +3642,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "088-c2.bin", 0x000001, 0x200000, CRC(4d865347) SHA1(ad448cf96f3dce44c83412ed6878c495eb4a8a1e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "088-c3.bin", 0x400000, 0x200000, CRC(8fa5a9eb) SHA1(7bee19d8a2bccedd8e2cf0c0e9138902b9dafc23) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "088-c4.bin", 0x400001, 0x200000, CRC(4604f0dc) SHA1(ddf5dbb5e07313998a8f695ad19354ea54585dd6) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pulstar )
+	static RomLoadPtr rom_pulstar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "089-p1.bin", 0x000000, 0x100000, CRC(5e5847a2) SHA1(b864d0ec4184b785569ddbf67c2115b5ab86ee3e) )
 		ROM_LOAD16_WORD_SWAP( "089-p2.bin", 0x100000, 0x200000, CRC(028b774c) SHA1(fc5da2821a5072f2b78245fc59b6e3eeef116d16) )
@@ -3674,9 +3674,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1000001, 0x200000 )
 		ROM_LOAD16_BYTE( "089-c7.bin", 0x1800000, 0x200000, CRC(6a5618ca) SHA1(9a1d5f998b0dfabacf9dad45c94bef2bb43e5e0c) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "089-c8.bin", 0x1800001, 0x200000, CRC(a223572d) SHA1(2791b1212f57937b2b2a95bc9e420c06d0c37669) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( whp )
+	static RomLoadPtr rom_whp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "090-p1.bin", 0x100000, 0x100000, CRC(afaa4702) SHA1(83d122fddf17d4774353abf4a0655f3939f7b752) )
 		ROM_CONTINUE(					  0x000000, 0x100000 )
@@ -3705,9 +3705,9 @@ public class neogeo
 		/* 1400000-17fffff empty */
 		ROM_LOAD16_BYTE( "090-c7.bin", 0x1800000, 0x200000, CRC(59d97215) SHA1(85a960dc7f364df13ee0c2f99a4c53aefb081486) )
 		ROM_LOAD16_BYTE( "090-c8.bin", 0x1800001, 0x200000, CRC(fc092367) SHA1(69ff4ae909dd857de3ca8645d63f8b4bde117448) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kabukikl )
+	static RomLoadPtr rom_kabukikl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "092-p1.bin", 0x100000, 0x100000, CRC(28ec9b77) SHA1(7cdc789a99f8127f437d68cbc41278c926be9efd) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3733,9 +3733,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x800000, 0x200000 )
 		ROM_LOAD16_BYTE( "092-c4.bin", 0xc00001, 0x200000, CRC(e1a8aa6a) SHA1(3e33d6e0d6a0feb8cc43dc511a2792922742547d) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( neobombe )
+	static RomLoadPtr rom_neobombe = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "093-p1.bin", 0x000000, 0x100000, CRC(a1a71d0d) SHA1(059284c84f61a825923d86d2f29c91baa2c439cd) )
 	
@@ -3757,9 +3757,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x000001, 0x200000 )
 		ROM_LOAD16_BYTE( "093-c3.bin", 0x800000, 0x080000, CRC(e37578c5) SHA1(20024caa0f09ee887a6418dd02d02a0df93786fd) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "093-c4.bin", 0x800001, 0x080000, CRC(59826783) SHA1(0110a2b6186cca95f75225d4d0269d61c2ad25b1) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gowcaizr )
+	static RomLoadPtr rom_gowcaizr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "094-p1.bin", 0x100000, 0x100000, CRC(33019545) SHA1(213db6c0b7d24b74b809854f9c606dbea1d9ba00) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3784,9 +3784,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "094-c6.bin", 0x800001, 0x200000, CRC(31bbd918) SHA1(7ff8c5e3f17d40e7a8a189ad8f8026de55368810) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "094-c7.bin", 0xc00000, 0x200000, CRC(2091ec04) SHA1(a81d4bdbef1ac6ea49845dc30e31bf9745694100) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "094-c8.bin", 0xc00001, 0x200000, CRC(0d31dee6) SHA1(4979aa3daa7e490fbe39e7b3c70cbb2ef7551c5f) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rbff1 )
+	static RomLoadPtr rom_rbff1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "095-p1.bin", 0x000000, 0x100000, CRC(63b4d8ae) SHA1(03aa9f6bab6aee685d1b57a52823797704eea845) )
 		ROM_LOAD16_WORD_SWAP( "095-p2.bin", 0x100000, 0x200000, CRC(cc15826e) SHA1(44d6ac6c0ca697a6f367dcfd809b1e1771cb0635) )
@@ -3811,9 +3811,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "095-c6.bin", 0x1000001, 0x400000, CRC(3e164718) SHA1(53217f938c8964c1ca68a6fd5249c4169a5ac8e6) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "095-c7.bin", 0x1800000, 0x200000, CRC(ca605e12) SHA1(5150b835247fd705bc1dece97d423d9c20a51416) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "095-c8.bin", 0x1800001, 0x200000, CRC(4e6beb6c) SHA1(c0ac7cfc832ace6ad52c58f5da3a8101baead749) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aof3 )
+	static RomLoadPtr rom_aof3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "096-p1.bin", 0x000000, 0x100000, CRC(9edb420d) SHA1(150d80707325ece351c72c21c6186cfb5996adba) )
 		ROM_LOAD16_WORD_SWAP( "096-p2.bin", 0x100000, 0x200000, CRC(4d5a2602) SHA1(4c26d6135d2877d9c38169662033e9d0cc24d943) )
@@ -3844,9 +3844,9 @@ public class neogeo
 		ROM_CONTINUE(      			  0x1000001, 0x200000 )
 		ROM_LOAD16_BYTE( "096-c7.bin", 0x1800000, 0x200000, CRC(51bd8ab2) SHA1(c8def9c64de64571492b5b7e14b794e3c18f1393) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "096-c8.bin", 0x1800001, 0x200000, CRC(9a34f99c) SHA1(fca72d95ec42790a7f1e771a1e25dbc5bec5fc19) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sonicwi3 )
+	static RomLoadPtr rom_sonicwi3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "097-p1.bin", 0x100000, 0x100000, CRC(0547121d) SHA1(e0bb6c614f572b74ba9a9f0d3d5b69fbc91ebc52) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3868,9 +3868,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x000001, 0x200000 )
 		ROM_LOAD16_BYTE( "097-c3.bin", 0x800000, 0x200000, CRC(c339fff5) SHA1(58dfd1e30dc0ad3f816a5dbd1cc7e7ccbb792c53) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "097-c4.bin", 0x800001, 0x200000, CRC(84a40c6e) SHA1(061a13fba5fed883e5ee9566cedc208df2511bcf) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( turfmast )
+	static RomLoadPtr rom_turfmast = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "200-p1.bin",  0x100000, 0x100000, CRC(28c83048) SHA1(e7ef87e1de21d2bb17ef17bb08657e92363f0e9a) )
 		ROM_CONTINUE(						 0x000000, 0x100000)
@@ -3892,9 +3892,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x000000, 0x200000 )
 		ROM_LOAD16_BYTE( "200-c2.bin", 0x400001, 0x200000, CRC(596cc256) SHA1(705f949b3ba721b2e7973eaf2b2f9283dfef778c) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x000001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mslug )
+	static RomLoadPtr rom_mslug = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "201-p1.bin", 0x100000, 0x100000, CRC(08d8daa5) SHA1(b888993dbb7e9f0a28a01d7d2e1da00ef9cf6f38) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -3918,9 +3918,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x800000, 0x200000 )
 		ROM_LOAD16_BYTE( "201-c4.bin", 0xc00001, 0x200000, CRC(5ac1d497) SHA1(313249ea47b3553974cde1c4c36f1ff3adeb07d1) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( puzzledp )
+	static RomLoadPtr rom_puzzledp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "202-p1.bin", 0x000000, 0x080000, CRC(2b61415b) SHA1(0e3e4faf2fd6e63407425e1ac788003e75aeeb4f) )
 	
@@ -3936,9 +3936,9 @@ public class neogeo
 		ROM_REGION( 0x200000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "202-c1.bin", 0x000000, 0x100000, CRC(cc0095ef) SHA1(3d86f455e6db10a2449b775dc386f1826ba3b62e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "202-c2.bin", 0x000001, 0x100000, CRC(42371307) SHA1(df794f989e2883634bf7ffeea48d6bc3854529af) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mosyougi )
+	static RomLoadPtr rom_mosyougi = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "203-p1.bin", 0x000000, 0x100000, CRC(7ba70e2d) SHA1(945f472cc3e7706f613c52df18de35c986d166e7) )
 	
@@ -3954,9 +3954,9 @@ public class neogeo
 		ROM_REGION( 0x400000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "203-c1.bin",  0x000000, 0x200000, CRC(bba9e8c0) SHA1(db89b7275a59ae6104a8308025c7e142a67b947b) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "203-c2.bin",  0x000001, 0x200000, CRC(2574be03) SHA1(198cfd697c623022919ae4118928a7fe30cd6c46) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( marukodq )
+	static RomLoadPtr rom_marukodq = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "206-p1.bin", 0x000000, 0x100000, CRC(c33ed21e) SHA1(bffff0d17e587e67672227e60c0ebd3f3a7193e6) )
 	
@@ -3975,9 +3975,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "206-c2.bin", 0x000001, 0x400000, CRC(67dbe24d) SHA1(37047c4e52525ff6d39a462222ec3e4cfc63e31c) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "206-c3.bin", 0x800000, 0x100000, CRC(79aa2b48) SHA1(31f94217cd35f48845c74a55256314c16fd26ed7) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "206-c4.bin", 0x800001, 0x100000, CRC(55e1314d) SHA1(fffbc9eb9000ff5b1063af1817de7ea4a267fedd) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( neomrdo )
+	static RomLoadPtr rom_neomrdo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "207-p1.bin", 0x000000, 0x80000, CRC(39efdb82) SHA1(75fe68921f871872e5fc92594e43b4cd712e819b) )
 	
@@ -3993,9 +3993,9 @@ public class neogeo
 		ROM_REGION( 0x400000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "207-c1.bin", 0x000000, 0x200000, CRC(c7541b9d) SHA1(25ca1a2b14cc2648d8dbe432cbd1396017af822c) )
 		ROM_LOAD16_BYTE( "207-c2.bin", 0x000001, 0x200000, CRC(f57166d2) SHA1(bf3aa47d17156485c2177fb63cba093f050abb98) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sdodgeb )
+	static RomLoadPtr rom_sdodgeb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "208-p1.bin", 0x100000, 0x100000, CRC(127f3d32) SHA1(18e77b79b1197a89371533ef9b1e4d682c44d875) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -4015,9 +4015,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "208-c2.bin", 0x0000001, 0x400000, CRC(1c737bb6) SHA1(8e341989981a713e61dfed8bde9a6459583ef46d) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "208-c3.bin", 0x0800000, 0x200000, CRC(14cb1703) SHA1(a46acec03c1b2351fe36810628f02b7c848d13db) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "208-c4.bin", 0x0800001, 0x200000, CRC(c7165f19) SHA1(221f03de893dca0e5305fa17aa94f96c67713818) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( goalx3 )
+	static RomLoadPtr rom_goalx3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "209-p1.bin", 0x100000, 0x100000, CRC(2a019a79) SHA1(422a639e74284fef2e53e1b49cf8803b0a7e80c6) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -4038,9 +4038,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x000001, 0x200000 )
 		ROM_LOAD16_BYTE( "209-c3.bin", 0x800000, 0x100000, CRC(5f91bace) SHA1(3864be27dce6d8f8828d3bf09bfc8116116a2b56) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "209-c4.bin", 0x800001, 0x100000, CRC(1e9f76f2) SHA1(b57fdc226bfe328b8848127fb4292295f1287bf6) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( overtop )
+	static RomLoadPtr rom_overtop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "212-p1.bin", 0x100000, 0x100000, CRC(16c063a9) SHA1(5432869f830eed816ee5ed71c7fd39f749d15619) )
 		ROM_CONTINUE(					  0x000000, 0x100000 )
@@ -4061,9 +4061,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "212-c4.bin", 0x0800001, 0x400000, CRC(5f41a699) SHA1(abbb162658e06a37db8475b659ece7e1270ebb49) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "212-c5.bin", 0x1000000, 0x200000, CRC(fc858bef) SHA1(0031def13e7cf4a465a1eca7aa0d13d1b21427e2) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "212-c6.bin", 0x1000001, 0x200000, CRC(0589c15e) SHA1(b1167caf7cb61f3e05a5d342290bfe00e02e9d38) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( neodrift )
+	static RomLoadPtr rom_neodrift = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "213-p1.bin",  0x100000, 0x100000, CRC(e397d798) SHA1(10f459111db4bab7aaa63ca47e83304a84300812) )
 		ROM_CONTINUE(						 0x000000, 0x100000)
@@ -4083,9 +4083,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x000000, 0x200000 )
 		ROM_LOAD16_BYTE( "213-c2.bin", 0x400001, 0x200000, CRC(9dc9c72a) SHA1(c3960b18d940233332c2b1ee2b2b94685c724d1e) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x000001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof96 )
+	static RomLoadPtr rom_kof96 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "214-p1.bin", 0x000000, 0x100000, CRC(52755d74) SHA1(4232d627f1d2e6ea9fc8cf01571d77d4d5b8a1bb) )
 		ROM_LOAD16_WORD_SWAP( "214-p2.bin", 0x100000, 0x200000, CRC(002ccb73) SHA1(3ae8df682c75027ca82db25491021eeba00a267e) )
@@ -4110,9 +4110,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "214-c6.bin", 0x1000001, 0x400000, CRC(44d30dc7) SHA1(c8ae001e37224b55d9e4a4d99f6578b4f6eb055f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "214-c7.bin", 0x1800000, 0x400000, CRC(3687331b) SHA1(2be95caab76d7af51674f93884330ba73a6053e4) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "214-c8.bin", 0x1800001, 0x400000, CRC(fa1461ad) SHA1(6c71a7f08e4044214223a6bf80984582ab5e0328) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof96h )
+	static RomLoadPtr rom_kof96h = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "214-pg1.bin",0x000000, 0x100000, CRC(bd3757c9) SHA1(35392a044117e46c088ff0fdd07d69a3faa4f96e) )
 		ROM_LOAD16_WORD_SWAP( "214-p2.bin", 0x100000, 0x200000, CRC(002ccb73) SHA1(3ae8df682c75027ca82db25491021eeba00a267e) )
@@ -4137,9 +4137,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "214-c6.bin", 0x1000001, 0x400000, CRC(44d30dc7) SHA1(c8ae001e37224b55d9e4a4d99f6578b4f6eb055f) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "214-c7.bin", 0x1800000, 0x400000, CRC(3687331b) SHA1(2be95caab76d7af51674f93884330ba73a6053e4) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "214-c8.bin", 0x1800001, 0x400000, CRC(fa1461ad) SHA1(6c71a7f08e4044214223a6bf80984582ab5e0328) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ssideki4 )
+	static RomLoadPtr rom_ssideki4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "215-p1.bin", 0x100000, 0x100000, CRC(519b4ba3) SHA1(5aa59514b23aa663f2c4014ee94a31e9f59151de) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -4166,9 +4166,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x0800001, 0x200000 )
 		ROM_LOAD16_BYTE( "215-c5.bin", 0x1000000, 0x200000, CRC(0c6f97ec) SHA1(b8d297f0ba2b04404eb0f7c6673ecc206fadae0c) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "215-c6.bin", 0x1000001, 0x200000, CRC(329c5e1b) SHA1(015c36b8d3efab9b4647f110ecb5c118a9c80f43) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kizuna )
+	static RomLoadPtr rom_kizuna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "216-p1.bin", 0x100000, 0x100000, CRC(75d2b3de) SHA1(ee778656c26828935ee2a2bfd0ce5a22aa681c10) )
 		ROM_CONTINUE(					 0x000000, 0x100000 )
@@ -4196,9 +4196,9 @@ public class neogeo
 		/* 1400000-17fffff empty */
 		ROM_LOAD16_BYTE( "216-c7.bin", 0x1800000, 0x200000, CRC(c88f7035) SHA1(c29a428b741f4fe7b71a3bc23c87925b6bc1ca8f) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "216-c8.bin", 0x1800001, 0x200000, CRC(484ce3ba) SHA1(4f21ed20ce6e2b67e2b079404599310c94f591ff) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ninjamas )
+	static RomLoadPtr rom_ninjamas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "217-p1.bin", 0x000000, 0x100000, CRC(3e97ed69) SHA1(336bcae375a5109945d11356503bf0d9f4a9a50a) )
 		ROM_LOAD16_WORD_SWAP( "217-p2.bin", 0x100000, 0x200000, CRC(191fca88) SHA1(e318e5931704779bbe461719a5eeeba89bd83a5d) )
@@ -4230,9 +4230,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1800000, 0x200000 )
 		ROM_LOAD16_BYTE( "217-c8.bin", 0x1c00001, 0x200000, CRC(5a5df034) SHA1(1863cdc8af52590b94c4a55f9333fc00d9b0b8a6) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ragnagrd )
+	static RomLoadPtr rom_ragnagrd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "218-p1.bin", 0x100000, 0x100000, CRC(ca372303) SHA1(67991e4fef9b36bc7d909810eebb857ac2f906f1) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -4264,9 +4264,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1800000, 0x200000 )
 		ROM_LOAD16_BYTE( "218-c8.bin", 0x1c00001, 0x200000, CRC(d5915828) SHA1(996930728f5f6aea180aba110e5214dc37f5b84a) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pgoal )
+	static RomLoadPtr rom_pgoal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "219-p1.bin", 0x100000, 0x100000, CRC(6af0e574) SHA1(c3f0fed0d942e48c99c80b1713f271c033ce0f4f) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -4288,9 +4288,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "219-c4.bin", 0x0400001, 0x200000, CRC(c9f4324c) SHA1(9d0dfcd39e72cbd63252b71b3ed879971b6f3443) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "219-c5.bin", 0x0800000, 0x200000, CRC(5fdad0a5) SHA1(56f6d2a7224aa4e82a1858079f918e85cadbd6c2) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "219-c6.bin", 0x0800001, 0x200000, CRC(f57b4a1c) SHA1(875ca69afbc5304ec23f4bc9186abe92f477f6c8) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( magdrop2 )
+	static RomLoadPtr rom_magdrop2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "221-p1.bin", 0x000000, 0x80000, CRC(7be82353) SHA1(08ab39f52b893591c13a7d7aa26b20ce86e9ddf5) )
 	
@@ -4306,9 +4306,9 @@ public class neogeo
 		ROM_REGION( 0x800000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "221-c1.bin", 0x000000, 0x400000, CRC(1f862a14) SHA1(1253e8b65d863d552d00dbdbfc5c168f5fc7edd1) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "221-c2.bin", 0x000001, 0x400000, CRC(14b90536) SHA1(e0d41f6b84d8261729f154b44ddd95c9b9c0714a) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( samsho4 )
+	static RomLoadPtr rom_samsho4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "222-p1.bin", 0x000000, 0x100000, CRC(1a5cb56d) SHA1(9a0a5a1c7c5d428829f22d3d17f7033d43a51b5b) )
 		ROM_LOAD16_WORD_SWAP( "222-p2.bin", 0x300000, 0x200000, CRC(7587f09b) SHA1(4cbd14b1e5158ab2c96b0860afc550b5dc746ca7) )
@@ -4342,9 +4342,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1800000, 0x200000 )
 		ROM_LOAD16_BYTE( "222-c8.bin", 0x1c00001, 0x200000, CRC(f33967f1) SHA1(780a05ba8c1873748842599a71672140d1ffd2e8) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rbffspec )
+	static RomLoadPtr rom_rbffspec = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "223-p1.bin", 0x000000, 0x100000, CRC(f84a2d1d) SHA1(fc19225d9dbdb6bd0808023ee32c7829f6ffdef6) )
 		ROM_LOAD16_WORD_SWAP( "223-p2.bin", 0x300000, 0x200000, CRC(27e3e54b) SHA1(09f8912c9f105e54bac9781680859988f43917e8) )
@@ -4378,9 +4378,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1800000, 0x200000 )
 		ROM_LOAD16_BYTE( "223-c8.bin", 0x1c00001, 0x200000, CRC(efdeb140) SHA1(faf7e7a38891b08d2dd17f427fda05586cceab7f) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( twinspri )
+	static RomLoadPtr rom_twinspri = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "224-p1.bin", 0x100000, 0x100000, CRC(7697e445) SHA1(5b55ca120f77a931d40719b14e0bfc8cac1d628c) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -4402,9 +4402,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x000001, 0x200000 )
 		ROM_LOAD16_BYTE( "224-c3.bin", 0x800000, 0x100000, CRC(c59e4129) SHA1(93f02d1b4fbb152a9d336494fbff0d7642921de5) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "224-c4.bin", 0x800001, 0x100000, CRC(b5532e53) SHA1(7d896c25ba97f6e5d43c13d4df4ba72964a976ed) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wakuwak7 )
+	static RomLoadPtr rom_wakuwak7 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "225-p1.bin", 0x000000, 0x100000, CRC(b14da766) SHA1(bdffd72ff705fc6b085a4026217bac1c4bc93163) )
 		ROM_LOAD16_WORD_SWAP( "225-p2.bin", 0x100000, 0x200000, CRC(fe190665) SHA1(739d9a8fc2da34381654d9e291141eacc210ae5c) )
@@ -4432,9 +4432,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1000000, 0x200000 )
 		ROM_LOAD16_BYTE( "225-c6.bin", 0x1400001, 0x200000, CRC(d996a90a) SHA1(f0365056a7b4f660b00c670a17efbb9f70e8db5d) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1000001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( stakwin2 )
+	static RomLoadPtr rom_stakwin2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "227-p1.bin", 0x100000, 0x100000, CRC(daf101d2) SHA1(96b90f884bae2969ebd8c04aba509928464e2433) )
 		ROM_CONTINUE(					  0x000000, 0x100000 )
@@ -4454,9 +4454,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "227-c2.bin", 0x0000001, 0x400000, CRC(7e402d39) SHA1(9d3a44f98ddd0b606c8b3efa0c6b9d5a46c0bfeb) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "227-c3.bin", 0x0800000, 0x200000, CRC(93dfd660) SHA1(5b473c556ef919cd7a872351dbb20a636aae32b6) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "227-c4.bin", 0x0800001, 0x200000, CRC(7efea43a) SHA1(3f2b1718fe7be06b6d75ec34badc2de2a3554d3e) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( breakers )
+	static RomLoadPtr rom_breakers = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "230-p1.bin", 0x100000, 0x100000, CRC(ed24a6e6) SHA1(3fb77ae696d92d2f9a5d589e08b708545c7cda0a) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -4476,9 +4476,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "230-c2.bin", 0x000001, 0x400000, CRC(fdee05cd) SHA1(efc4ffd790953ac7c25d5f045c64a9b49d24b096) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "230-c3.bin", 0x800000, 0x400000, CRC(645077f3) SHA1(0ae74f3b4b3b88f128c6d8c0f35ffa53f5d67ef2) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "230-c4.bin", 0x800001, 0x400000, CRC(63aeb74c) SHA1(9ff6930c0c3d79b46b86356e8565ce4fcd69ac38) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( miexchng )
+	static RomLoadPtr rom_miexchng = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "231-p1.bin", 0x000000, 0x80000, CRC(61be1810) SHA1(1ab0e11352ca05329c6e3f5657b60e4a227fcbfb) )
 	
@@ -4496,9 +4496,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "231-c2.bin", 0x000001, 0x200000, CRC(554bcd9b) SHA1(e658161618bd41a66f1040be409efdea28020cf6) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "231-c3.bin", 0x400000, 0x080000, CRC(14524eb5) SHA1(e090b99a1ee2cca4a7f7d5262e764d1cab6bada2) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "231-c4.bin", 0x400001, 0x080000, CRC(1694f171) SHA1(a6af5d3f1e0b3f73da275e04d4434c6c9c7b9208) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof97 )
+	static RomLoadPtr rom_kof97 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "232-p1.bin", 0x000000, 0x100000, CRC(7db81ad9) SHA1(8bc42be872fd497eb198ca13bf004852b88eb1dc) )
 		ROM_LOAD16_WORD_SWAP( "232-p2.bin", 0x100000, 0x400000, CRC(158b23f6) SHA1(9744620a70513490aaf9c5eda33e5ec31222be19) )
@@ -4521,9 +4521,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "232-c4.bin", 0x1000001, 0x800000, CRC(49bb1e68) SHA1(f769c1bd1b019521111ff3f0d22c63cb1f2640ef) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "232-c5.bin", 0x2000000, 0x400000, CRC(34fc4e51) SHA1(b39c65f27873f71a6f5a5d1d04e5435f874472ee) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "232-c6.bin", 0x2000001, 0x400000, CRC(4ff4d47b) SHA1(4d5689ede24a5fe4330bd85d4d3f4eb2795308bb) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof97a )
+	static RomLoadPtr rom_kof97a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "232-pg1.bin",0x000000, 0x100000, CRC(5c2400b7) SHA1(49e23f80c012c62146a1bb8f254a7597823de430) )
 		ROM_LOAD16_WORD_SWAP( "232-p2.bin", 0x100000, 0x400000, CRC(158b23f6) SHA1(9744620a70513490aaf9c5eda33e5ec31222be19) )
@@ -4546,9 +4546,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "232-c4.bin", 0x1000001, 0x800000, CRC(49bb1e68) SHA1(f769c1bd1b019521111ff3f0d22c63cb1f2640ef) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "232-c5.bin", 0x2000000, 0x400000, CRC(34fc4e51) SHA1(b39c65f27873f71a6f5a5d1d04e5435f874472ee) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "232-c6.bin", 0x2000001, 0x400000, CRC(4ff4d47b) SHA1(4d5689ede24a5fe4330bd85d4d3f4eb2795308bb) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( magdrop3 )
+	static RomLoadPtr rom_magdrop3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "233-p1.bin", 0x000000, 0x100000, CRC(931e17fa) SHA1(4a95c4b79d0878485ce272e9f4c4f647bec0e070) )
 	
@@ -4571,9 +4571,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x800000, 0x200000 )
 		ROM_LOAD16_BYTE( "233-c4.bin", 0xc00001, 0x200000, CRC(f55dddf3) SHA1(fec0930e5cb26be4d73bfa8c76ef37eb4bbec60a) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lastblad )
+	static RomLoadPtr rom_lastblad = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "234-p1.bin", 0x000000, 0x100000, CRC(cd01c06d) SHA1(d66142571afe07c6191b52f319f1bc8bc8541c14) )
 		ROM_LOAD16_WORD_SWAP( "234-p2.bin", 0x100000, 0x400000, CRC(0fdc289e) SHA1(1ff31c0b0f4f9ddbedaf4bcf927faaae81892ec7) )
@@ -4597,9 +4597,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "234-c4.bin", 0x1000001, 0x800000, CRC(3d60b037) SHA1(78a50233bcd19e92c7b6f7ee1a53417d9db21f6a) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "234-c5.bin", 0x2000000, 0x200000, CRC(17bbd7ca) SHA1(7abb4ae5d3f5bb488c20ffe59496316bce999c23) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "234-c6.bin", 0x2000001, 0x200000, CRC(5c35d541) SHA1(6bdd3e8abc0e577420762aea5ab20b1360868905) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lastblda )
+	static RomLoadPtr rom_lastblda = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "234-p1.rom", 0x000000, 0x100000, CRC(e123a5a3) SHA1(a3ddabc00feeb54272b145246612ad4632b0e413) )
 		ROM_LOAD16_WORD_SWAP( "234-p2.bin", 0x100000, 0x400000, CRC(0fdc289e) SHA1(1ff31c0b0f4f9ddbedaf4bcf927faaae81892ec7) )
@@ -4623,9 +4623,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "234-c4.bin", 0x1000001, 0x800000, CRC(3d60b037) SHA1(78a50233bcd19e92c7b6f7ee1a53417d9db21f6a) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "234-c5.bin", 0x2000000, 0x200000, CRC(17bbd7ca) SHA1(7abb4ae5d3f5bb488c20ffe59496316bce999c23) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "234-c6.bin", 0x2000001, 0x200000, CRC(5c35d541) SHA1(6bdd3e8abc0e577420762aea5ab20b1360868905) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( puzzldpr )
+	static RomLoadPtr rom_puzzldpr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "235-p1.bin", 0x000000, 0x080000, CRC(afed5de2) SHA1(a5d82c6dbe687505e8c8d7339908da45cd379a0b) )
 	
@@ -4641,9 +4641,9 @@ public class neogeo
 		ROM_REGION( 0x200000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "202-c1.bin", 0x000000, 0x100000, CRC(cc0095ef) SHA1(3d86f455e6db10a2449b775dc386f1826ba3b62e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "202-c2.bin", 0x000001, 0x100000, CRC(42371307) SHA1(df794f989e2883634bf7ffeea48d6bc3854529af) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( irrmaze )
+	static RomLoadPtr rom_irrmaze = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "236-p1.bin", 0x000000, 0x200000, CRC(6d536c6e) SHA1(87d66683304a6617da8af7dfdfcbf4a3ab63056a) )
 	
@@ -4668,9 +4668,9 @@ public class neogeo
 		ROM_REGION( 0x0800000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "236-c1.bin", 0x000000, 0x400000, CRC(c1d47902) SHA1(727001c34f979226fc8f581113ce2aaac4fc0d42) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "236-c2.bin", 0x000001, 0x400000, CRC(e15f972e) SHA1(6a329559c57a67be73a6733513b59e9e6c8d61cc) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( popbounc )
+	static RomLoadPtr rom_popbounc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "237-p1.bin", 0x000000, 0x100000, CRC(be96e44f) SHA1(43679da8664fbb491103a1108040ddf94d59fc2b) )
 	
@@ -4686,9 +4686,9 @@ public class neogeo
 		ROM_REGION( 0x400000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "237-c1.bin", 0x000000, 0x200000, CRC(eda42d66) SHA1(2735538fcb9dc0c16e043a8728c8b642650189f4) )
 		ROM_LOAD16_BYTE( "237-c2.bin", 0x000001, 0x200000, CRC(5e633c65) SHA1(9a82107caf027317c173c1c1ef676f0fdeea79b2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( shocktro )
+	static RomLoadPtr rom_shocktro = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "238-p1.bin", 0x000000, 0x100000, CRC(5677456f) SHA1(f76169fa5c90871d65e2a16fd1bb036c90533ac8) )
 		ROM_LOAD16_WORD_SWAP( "238-p2.bin", 0x300000, 0x200000, CRC(646f6c76) SHA1(d8fb851414995ba09dbe397d9ed1c765a52d8e1e) )
@@ -4721,9 +4721,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1800000, 0x200000 )
 		ROM_LOAD16_BYTE( "238-c8.bin", 0x1c00001, 0x200000, CRC(e8e890fb) SHA1(abbbfa0e162d7711d62df08a9721d8c923888c78) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( shocktra )
+	static RomLoadPtr rom_shocktra = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "238-pg1.p1", 0x000000, 0x100000, CRC(efedf8dc) SHA1(f638df9bf7aa7d514ee2bccfc7f2adbf39ca83fc) )
 		ROM_LOAD16_WORD_SWAP( "238-p2.bin", 0x300000, 0x200000, CRC(646f6c76) SHA1(d8fb851414995ba09dbe397d9ed1c765a52d8e1e) )
@@ -4756,9 +4756,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1800000, 0x200000 )
 		ROM_LOAD16_BYTE( "238-c8.bin", 0x1c00001, 0x200000, CRC(e8e890fb) SHA1(abbbfa0e162d7711d62df08a9721d8c923888c78) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( blazstar )
+	static RomLoadPtr rom_blazstar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "239-p1.bin", 0x000000, 0x100000, CRC(183682f8) SHA1(dcee1c2cf4a991ca1f9f2b40c4a738f21682807b) )
 		ROM_LOAD16_WORD_SWAP( "239-p2.bin", 0x100000, 0x200000, CRC(9a9f4154) SHA1(f8805453d0995c8fa16cd9accfb7a990071ca630) )
@@ -4790,9 +4790,9 @@ public class neogeo
 		ROM_CONTINUE(      			   0x1800000, 0x200000 )
 		ROM_LOAD16_BYTE( "239-c8.bin", 0x1c00001, 0x200000, CRC(cdbbb7d7) SHA1(eadd2711bcb54e1ea6c449b459843ac3c0ac8415) ) /* Plane 2,3 */
 		ROM_CONTINUE(      			   0x1800001, 0x200000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rbff2 )
+	static RomLoadPtr rom_rbff2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "240-p1.bin", 0x000000, 0x100000, CRC(b6969780) SHA1(e3373d18e0f0724d69efb8024a27cca121f1b5b2) )
 		ROM_LOAD16_WORD_SWAP( "240-p2.bin", 0x100000, 0x400000, CRC(960aa88d) SHA1(3d9e785891871af90313f178dca2724633406674) )
@@ -4816,9 +4816,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "240-c4.bin", 0x1000001, 0x800000, CRC(c19a07eb) SHA1(139eac8b51cadf328dd42d8109f4e2463f57230c) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "240-c5.bin", 0x2000000, 0x800000, CRC(244dff5a) SHA1(156548156d3ceaa808d0053d0749af2526a3943e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "240-c6.bin", 0x2000001, 0x800000, CRC(4609e507) SHA1(bb17f50a377dddb77c1eeda5944a7bcbf0cca5f7) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rbff2a )
+	static RomLoadPtr rom_rbff2a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "240-p1.rom", 0x000000, 0x100000, CRC(80e41205) SHA1(8f83eb8ff54be4ec40f8a0dd2cbe56c54908d00a) )
 		ROM_LOAD16_WORD_SWAP( "240-p2.bin", 0x100000, 0x400000, CRC(960aa88d) SHA1(3d9e785891871af90313f178dca2724633406674) )
@@ -4842,9 +4842,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "240-c4.bin", 0x1000001, 0x800000, CRC(c19a07eb) SHA1(139eac8b51cadf328dd42d8109f4e2463f57230c) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "240-c5.bin", 0x2000000, 0x800000, CRC(244dff5a) SHA1(156548156d3ceaa808d0053d0749af2526a3943e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "240-c6.bin", 0x2000001, 0x800000, CRC(4609e507) SHA1(bb17f50a377dddb77c1eeda5944a7bcbf0cca5f7) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mslug2 )
+	static RomLoadPtr rom_mslug2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "241-p1.bin", 0x000000, 0x100000, CRC(2a53c5da) SHA1(5a6aba482cac588a6c2c51179c95b487c6e11899) )
 		ROM_LOAD16_WORD_SWAP( "241-p2.bin", 0x100000, 0x200000, CRC(38883f44) SHA1(fcf34b8c6e37774741542393b963635412484a27) )
@@ -4864,9 +4864,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "241-c2.bin", 0x0000001, 0x800000, CRC(e5806221) SHA1(1e5475cfab129c77acc610f09369ca42ba5aafa5) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "241-c3.bin", 0x1000000, 0x800000, CRC(9f6bfa6f) SHA1(a4319b48004e723f81a980887678e3e296049a53) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "241-c4.bin", 0x1000001, 0x800000, CRC(7d3e306f) SHA1(1499316fb381775218d897b81a6a0c3465d1a37c) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof98 ) /* encrypted code + protection */
+	static RomLoadPtr rom_kof98 = new RomLoadPtr(){ public void handler(){  /* encrypted code + protection */
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "yz98-p1.160", 0x000000, 0x200000, CRC(8893df89) SHA1(0452828785110601c65f667209fc2d2926cd3751) )
 		ROM_LOAD16_WORD_SWAP( "242-p2.bin", 0x200000, 0x400000, CRC(980aba4c) SHA1(5e735929ec6c3ca5b2efae3c7de47bcbb8ade2c5) )
@@ -4892,9 +4892,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "242-c6.bin", 0x2000001, 0x800000, CRC(da07b6a2) SHA1(9c3f0da7cde1ffa8feca89efc88f07096e502acf) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "242-c7.bin", 0x3000000, 0x800000, CRC(f6d7a38a) SHA1(dd295d974dd4a7e5cb26a3ef3febcd03f28d522b) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "242-c8.bin", 0x3000001, 0x800000, CRC(c823e045) SHA1(886fbf64bcb58bc4eabb1fc9262f6ac9901a0f28) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof98n )
+	static RomLoadPtr rom_kof98n = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "242-p1.bin", 0x000000, 0x100000, CRC(61ac868a) SHA1(26577264aa72d6af272952a876fcd3775f53e3fa) )
 		ROM_LOAD16_WORD_SWAP( "242-p2.bin", 0x100000, 0x400000, CRC(980aba4c) SHA1(5e735929ec6c3ca5b2efae3c7de47bcbb8ade2c5) )
@@ -4920,9 +4920,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "242-c6.bin", 0x2000001, 0x800000, CRC(da07b6a2) SHA1(9c3f0da7cde1ffa8feca89efc88f07096e502acf) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "242-c7.bin", 0x3000000, 0x800000, CRC(f6d7a38a) SHA1(dd295d974dd4a7e5cb26a3ef3febcd03f28d522b) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "242-c8.bin", 0x3000001, 0x800000, CRC(c823e045) SHA1(886fbf64bcb58bc4eabb1fc9262f6ac9901a0f28) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lastbld2 )
+	static RomLoadPtr rom_lastbld2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "243-p1.bin", 0x000000, 0x100000, CRC(af1e6554) SHA1(bd8526f60c2472937728a5d933fbd19d899f2cba) )
 		ROM_LOAD16_WORD_SWAP( "243-p2.bin", 0x100000, 0x400000, CRC(add4a30b) SHA1(7db62564db49fe0218cbb35b119d62582a24d658) )
@@ -4946,9 +4946,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "243-c4.bin",  0x1000001, 0x800000, CRC(8bd2a9d2) SHA1(0935df65cd2b0891a708bcc0f1c188148058d4b5) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "243-c5.bin",  0x2000000, 0x800000, CRC(6a503dcf) SHA1(23241b16d7e20f923d41186b29487ab922c7f530) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "243-c6.bin",  0x2000001, 0x800000, CRC(ec9c36d0) SHA1(e145e9e359000dda6e1dfe95a996bc6d29cfca21) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( neocup98 )
+	static RomLoadPtr rom_neocup98 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "244-p1.bin", 0x100000, 0x100000, CRC(f8fdb7a5) SHA1(f34ee5d1c24e70427d05ef488f46906dbd9f9950) )
 		ROM_CONTINUE(					   0x000000, 0x100000 )
@@ -4966,9 +4966,9 @@ public class neogeo
 		ROM_REGION( 0x1000000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "244-c1.bin", 0x000000, 0x800000, CRC(d2c40ec7) SHA1(989d972aabcc7f190bdd5d861d3e13c09dd0803e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "244-c2.bin", 0x000001, 0x800000, CRC(33aa0f35) SHA1(3443c7765c6aa177003d42bbfcac9f31d1e12575) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( breakrev )
+	static RomLoadPtr rom_breakrev = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "245-p1.bin", 0x100000, 0x100000, CRC(c828876d) SHA1(1dcba850e5cf8219d0945612cfded6d20ca8682a) )
 		ROM_CONTINUE(					   0x000000, 0x100000 )
@@ -4990,9 +4990,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "230-c4.bin", 0x0800001, 0x400000, CRC(63aeb74c) SHA1(9ff6930c0c3d79b46b86356e8565ce4fcd69ac38) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "245-c5.bin",  0x1000000, 0x200000, CRC(28ff1792) SHA1(0cc5c16ac42f52cee74f88235aef0671bee33b4c) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "245-c6.bin",  0x1000001, 0x200000, CRC(23c65644) SHA1(9dc74c3075cf0f738b6b41e5e8d89a74a6c9ef07) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( shocktr2 )
+	static RomLoadPtr rom_shocktr2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "246-p1.bin", 0x000000, 0x100000, CRC(6d4b7781) SHA1(3c9d53d5da9842bfd45037c919064dda3fb2e089) )
 		ROM_LOAD16_WORD_SWAP( "246-p2.bin", 0x100000, 0x400000, CRC(72ea04c3) SHA1(4fb1d22c30f5f3db4637dd92a4d2705c88de399d) )
@@ -5015,9 +5015,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "246-c4.bin", 0x1000001, 0x800000, CRC(5503854e) SHA1(a0f2e7c609cbb2aa43493a39d7dcaeca3d511d26) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "246-c5.bin", 0x2000000, 0x800000, CRC(055b3701) SHA1(97f5e92538d1f2e437dcb3f80e56e1230287e8d1) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "246-c6.bin", 0x2000001, 0x800000, CRC(7e2caae1) SHA1(d9de14e3e323664a8c5b7f1df1ba9ec7dd0e6a46) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( flipshot )
+	static RomLoadPtr rom_flipshot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "247-p1.bin", 0x000000, 0x080000, CRC(d2e7a7e3) SHA1(1ff4f070fcc658bbc7dc69e16c87f82d7392d100) )
 	
@@ -5033,9 +5033,9 @@ public class neogeo
 		ROM_REGION( 0x400000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "247-c1.bin",  0x000000, 0x200000, CRC(c9eedcb2) SHA1(7627f2810322c146511525eb70b573a6a5ede926) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "247-c2.bin",  0x000001, 0x200000, CRC(7d6d6e87) SHA1(6475b58b9f91c20d1f465f3e892de0c68e12a92b) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pbobbl2n )
+	static RomLoadPtr rom_pbobbl2n = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "248-p1.bin", 0x000000, 0x100000, CRC(9d6c0754) SHA1(95c70c2d51fc4de01e768e03cc800a850aaad5dc) )
 	
@@ -5054,9 +5054,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "248-c2.bin", 0x000001, 0x400000, CRC(77f9fdac) SHA1(4642d71d32b6a05dc8bfa0f95c936a77c7cef05e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "248-c3.bin", 0x800000, 0x100000, CRC(8890bf7c) SHA1(a52f6bafd60e72003bfe38c80c1dde24b4983b2a) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "248-c4.bin", 0x800001, 0x100000, CRC(8efead3f) SHA1(f577d2f7c6f850b3d100c36947ad15e33dfa0bed) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ctomaday )
+	static RomLoadPtr rom_ctomaday = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "249-p1.bin", 0x100000, 0x100000, CRC(c9386118) SHA1(5554662c7bc8605889cac4a67fee05bbb4eb786f) )
 		ROM_CONTINUE(					   0x000000, 0x100000 )
@@ -5074,9 +5074,9 @@ public class neogeo
 		ROM_REGION( 0x800000, REGION_GFX3, 0 )
 		ROM_LOAD16_BYTE( "249-c1.bin",  0x000000, 0x400000, CRC(041fb8ee) SHA1(dacc84d713d76818d89a26358374afaa22fa82a2) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "249-c2.bin",  0x000001, 0x400000, CRC(74f3cdf4) SHA1(55ddabaf77f4d575f4deb24fe63e4bdc2c6f31e1) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mslugx )
+	static RomLoadPtr rom_mslugx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "250-p1.bin", 0x000000, 0x100000, CRC(81f1f60b) SHA1(4c19f2e9824e606178ac1c9d4b0516fbaa625035) )
 		ROM_LOAD16_WORD_SWAP( "250-p2.bin", 0x100000, 0x400000, CRC(1fda2e12) SHA1(18aaa7a3ba8da99f78c430e9be69ccde04bc04d9) )
@@ -5099,9 +5099,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "250-c4.bin", 0x1000001, 0x800000, CRC(31354513) SHA1(31be8ea2498001f68ce4b06b8b90acbf2dcab6af) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "250-c5.bin", 0x2000000, 0x800000, CRC(a4b56124) SHA1(d41069856df990a1a99d39fb263c8303389d5475) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "250-c6.bin", 0x2000001, 0x800000, CRC(83e3e69d) SHA1(39be66287696829d243fb71b3fb8b7dc2bc3298f) ) /* Plane 0,1 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof99 ) /* Original Version - Encrypted Code & GFX */
+	static RomLoadPtr rom_kof99 = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted Code & GFX */
 		ROM_REGION( 0x900000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "251-sma.kc",  0x0c0000, 0x040000, CRC(6c9d0647) SHA1(2a0ce62ca6c18007e8fbe1b60475c7874ab79389) )	/* stored in the custom chip */
 		ROM_LOAD16_WORD_SWAP( "251-p1.bin",  0x100000, 0x400000, CRC(006e4532) SHA1(47791ab4044ad55988b1d3412d95b65b91a163c8) )
@@ -5133,9 +5133,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "251-c6.bin",   0x2000001, 0x800000, CRC(65bbf281) SHA1(79ae174667a23dabcfe865b6cd6133c86098452e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "251-c7.bin",   0x3000000, 0x800000, CRC(ff65f62e) SHA1(7cd335fede05b56e15db90ce407c1183a78da4e9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "251-c8.bin",   0x3000001, 0x800000, CRC(8d921c68) SHA1(42acf1d27d52a8e3b6262eb7df50693c0b135565) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof99a ) /* Original Version - Encrypted Code & GFX */
+	static RomLoadPtr rom_kof99a = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted Code & GFX */
 		ROM_REGION( 0x900000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "251-sma.ka",  0x0c0000, 0x040000, CRC(7766d09e) SHA1(4e0a49d1ad669a62676cb30f527c6590cde80194) )	/* stored in the custom chip */
 		ROM_LOAD16_WORD_SWAP( "251-p1.bin",  0x100000, 0x400000, CRC(006e4532) SHA1(47791ab4044ad55988b1d3412d95b65b91a163c8) )
@@ -5167,9 +5167,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "251-c6.bin",   0x2000001, 0x800000, CRC(65bbf281) SHA1(79ae174667a23dabcfe865b6cd6133c86098452e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "251-c7.bin",   0x3000000, 0x800000, CRC(ff65f62e) SHA1(7cd335fede05b56e15db90ce407c1183a78da4e9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "251-c8.bin",   0x3000001, 0x800000, CRC(8d921c68) SHA1(42acf1d27d52a8e3b6262eb7df50693c0b135565) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof99e ) /* Original Version - Encrypted Code & GFX */
+	static RomLoadPtr rom_kof99e = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted Code & GFX */
 		ROM_REGION( 0x900000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "251-sma.ka",  0x0c0000, 0x040000, CRC(7766d09e) SHA1(4e0a49d1ad669a62676cb30f527c6590cde80194) )	/* stored in the custom chip */
 		ROM_LOAD16_WORD_SWAP( "251-ep1.p1",  0x100000, 0x200000, CRC(1e8d692d) SHA1(eea1aa8c0a17f089ac14831889c36535e559072c) )
@@ -5203,9 +5203,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "251-c6.bin",   0x2000001, 0x800000, CRC(65bbf281) SHA1(79ae174667a23dabcfe865b6cd6133c86098452e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "251-c7.bin",   0x3000000, 0x800000, CRC(ff65f62e) SHA1(7cd335fede05b56e15db90ce407c1183a78da4e9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "251-c8.bin",   0x3000001, 0x800000, CRC(8d921c68) SHA1(42acf1d27d52a8e3b6262eb7df50693c0b135565) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof99n ) /* Original Version - Encrypted GFX */
+	static RomLoadPtr rom_kof99n = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted GFX */
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "152-p1.bin", 0x000000, 0x100000, CRC(f2c7ddfa) SHA1(d592eecc53d442c55c2f26a6a721fdf2924d2a5b) )
 		ROM_LOAD16_WORD_SWAP( "152-p2.bin", 0x100000, 0x400000, CRC(274ef47a) SHA1(98654b68cc85c19d4a90b46f3110f551fa2e5357) )
@@ -5236,9 +5236,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "251-c6.bin",   0x2000001, 0x800000, CRC(65bbf281) SHA1(79ae174667a23dabcfe865b6cd6133c86098452e) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "251-c7.bin",   0x3000000, 0x800000, CRC(ff65f62e) SHA1(7cd335fede05b56e15db90ce407c1183a78da4e9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "251-c8.bin",   0x3000001, 0x800000, CRC(8d921c68) SHA1(42acf1d27d52a8e3b6262eb7df50693c0b135565) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof99p ) /* Prototype Version - Possibly Hacked */
+	static RomLoadPtr rom_kof99p = new RomLoadPtr(){ public void handler(){  /* Prototype Version - Possibly Hacked */
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "251-p1p.bin", 0x000000, 0x100000, CRC(f37929c4) SHA1(226e7e3d629568399b88275e5bcd4e5b3839be95) )
 		ROM_LOAD16_WORD_SWAP( "251-p2p.bin", 0x100000, 0x400000, CRC(739742ad) SHA1(31acaf05a9bf186305888d3db7e4e8a83f7bb0a4) )
@@ -5267,9 +5267,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "251-c6p.bin", 0x2000001, 0x800000, CRC(4d40a691) SHA1(2b580d0678a5e6033ef16130671e860364d35e56) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "251-c7p.bin", 0x3000000, 0x800000, CRC(a4479a58) SHA1(d50e6cc9ccfe1ddbc6d90d46b8ca2cb0304edd8c) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "251-c8p.bin", 0x3000001, 0x800000, CRC(ead513ce) SHA1(e9b07a0b01fdeb3004755a479df059c81b4d0ed6) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ganryu ) /* Original Version - Encrypted GFX */
+	static RomLoadPtr rom_ganryu = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted GFX */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "252-p1.bin", 0x100000, 0x100000, CRC(4b8ac4fb) SHA1(93d90271bff281862b03beba3809cf95a47a1e44) )
 		ROM_CONTINUE(						0x000000, 0x100000 )
@@ -5291,9 +5291,9 @@ public class neogeo
 		/* Encrypted */
 		ROM_LOAD16_BYTE( "252-c1.bin", 0x0000000, 0x800000, CRC(50ee7882) SHA1(ace0f95407c246d0456341cf2ad8a7668b81df8a) )
 		ROM_LOAD16_BYTE( "252-c2.bin", 0x0000001, 0x800000, CRC(62585474) SHA1(b35461598087aa82886af0030c61b26cc064af5f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( garou )
+	static RomLoadPtr rom_garou = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x900000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "253-sma.bin", 0x0c0000, 0x040000, CRC(98bc93dc) SHA1(01fe3d18b50f770e131e8d8eeff4c630ba8c9551) )	/* stored in the custom chip */
 		ROM_LOAD16_WORD_SWAP( "253-ep1.p1",  0x100000, 0x200000, CRC(ea3171a4) SHA1(bbda40f652baa0dc5fc6a006c001a1bdb0df43f6) )
@@ -5327,9 +5327,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "253-c6.bin", 0x2000001, 0x800000, CRC(308d098b) SHA1(b052f1fa9fbc69606004c250e2505360eaa24949) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "253-c7.bin", 0x3000000, 0x800000, CRC(c0e995ae) SHA1(8675ca787d28246174c313167f82557f021366fc) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "253-c8.bin", 0x3000001, 0x800000, CRC(21a11303) SHA1(fd61221ad257c185ef5c1f9694bd6b840b591af3) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( garouo )
+	static RomLoadPtr rom_garouo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x900000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "253-smao.bin", 0x0c0000, 0x040000, CRC(96c72233) SHA1(29e19effd40fdf7e5144332396857f4ad0eff13e) )	/* stored in the custom chip */
 		ROM_LOAD16_WORD_SWAP( "253-p1.bin",   0x100000, 0x400000, CRC(18ae5d7e) SHA1(bdb58ec9137d8653979b47132f2d10e1cc6aaa24) )
@@ -5361,9 +5361,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "253-c6.bin", 0x2000001, 0x800000, CRC(308d098b) SHA1(b052f1fa9fbc69606004c250e2505360eaa24949) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "253-c7.bin", 0x3000000, 0x800000, CRC(c0e995ae) SHA1(8675ca787d28246174c313167f82557f021366fc) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "253-c8.bin", 0x3000001, 0x800000, CRC(21a11303) SHA1(fd61221ad257c185ef5c1f9694bd6b840b591af3) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( garoup ) /* Prototype Version, seems genuine */
+	static RomLoadPtr rom_garoup = new RomLoadPtr(){ public void handler(){  /* Prototype Version, seems genuine */
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "253-p1p.bin", 0x000000, 0x100000, CRC(c72f0c16) SHA1(1ff6bb651682f93bef9ff02622c3cf63fe594986) )
 		ROM_LOAD16_WORD_SWAP( "253-p2p.bin", 0x100000, 0x400000, CRC(bf8de565) SHA1(0e24574168cd38138bed0aa4dca49849f6901ca2) )
@@ -5389,9 +5389,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "253-c6p.bin", 0x2000001, 0x800000, CRC(0a6fab38) SHA1(eaee6f2f18af91f7959d84d4b991b3fc182d07c4) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "253-c7p.bin", 0x3000000, 0x800000, CRC(d68e806f) SHA1(92bfd9839115bd590972ae4ecc45ad35dce22387) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "253-c8p.bin", 0x3000001, 0x800000, CRC(f778fe99) SHA1(c963f6ba90a36d02991728b44ffcf174ca18268a) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( s1945p ) /* Original Version, Encrypted GFX Roms */
+	static RomLoadPtr rom_s1945p = new RomLoadPtr(){ public void handler(){  /* Original Version, Encrypted GFX Roms */
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "254-p1.bin", 0x000000, 0x100000, CRC(ff8efcff) SHA1(dcaeaca573385c172ecc43ee6bee355359091893) )
 		ROM_LOAD16_WORD_SWAP( "254-p2.bin", 0x100000, 0x400000, CRC(efdfd4dd) SHA1(254f3e1b546eed788f7ae919be9d1bf9702148ce) )
@@ -5421,9 +5421,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "254-c6.bin", 0x2000001, 0x800000, CRC(e34970fc) SHA1(6e43e15e27bc914357f977116ab1e2d98711bb21) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "254-c7.bin", 0x3000000, 0x800000, CRC(f2323239) SHA1(5b3e8dd77474203be010ec7363858d806344a320) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "254-c8.bin", 0x3000001, 0x800000, CRC(66848c7d) SHA1(24d4ed627940a4cf8129761c1da15556e52e199c) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( preisle2 ) /* Original Version, Encrypted GFX */
+	static RomLoadPtr rom_preisle2 = new RomLoadPtr(){ public void handler(){  /* Original Version, Encrypted GFX */
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "255-p1.bin", 0x000000, 0x100000, CRC(dfa3c0f3) SHA1(793c6a46f3a794536dc0327a3f3fad20e25ab661) )
 		ROM_LOAD16_WORD_SWAP( "255-p2.bin", 0x100000, 0x400000, CRC(42050b80) SHA1(0981a8295d43b264c2b95e5d7568bdda4e64c976) )
@@ -5450,9 +5450,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "255-c4.bin",   0x1000001, 0x800000, CRC(40371d69) SHA1(90011ccc5672ff1b90737cf50c963e71b6217ce3) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "255-c5.bin",   0x2000000, 0x800000, CRC(0b2e6adf) SHA1(15c7d9aa8b1ad9a071e6fd0ef0de8a057c23b02e) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "255-c6.bin",   0x2000001, 0x800000, CRC(b001bdd3) SHA1(394ba8004644844ee97a120cfda48aeac685af8a) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mslug3 ) /* Original Version - Encrypted Code & GFX */
+	static RomLoadPtr rom_mslug3 = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted Code & GFX */
 		ROM_REGION( 0x900000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "256-sma.bin", 0x0c0000, 0x040000, CRC(9cd55736) SHA1(d6efb2b313127c2911d47d9324626b3f1e7c6ccb) )	/* stored in the custom chip */
 		ROM_LOAD16_WORD_SWAP( "256-p1.bin",  0x100000, 0x400000, CRC(b07edfd5) SHA1(dcbd9e500bfae98d754e55cdbbbbf9401013f8ee) )
@@ -5484,9 +5484,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "256-c6.bin",   0x2000001, 0x800000, CRC(c698fd5d) SHA1(16818883b06849ba2f8d61bdd5e21aaf99bd8408) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "256-c7.bin",   0x3000000, 0x800000, CRC(cfceddd2) SHA1(7def666adf8bd1703f40c61f182fc040b6362dc9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "256-c8.bin",   0x3000001, 0x800000, CRC(4d9be34c) SHA1(a737bdfa2b815aea7067e7af2636e83a9409c414) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mslug3n ) /* Original Version - Encrypted GFX */
+	static RomLoadPtr rom_mslug3n = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted GFX */
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "256-ph1.rom",  0x000000, 0x100000, CRC(9c42ca85) SHA1(7a8f77a89867b889295ae9b9dfd4ba28f02d234d) )
 		ROM_LOAD16_WORD_SWAP( "256-ph2.rom",  0x100000, 0x400000, CRC(1f3d8ce8) SHA1(08b05a8abfb86ec09a5e758d6273acf1489961f9) )
@@ -5517,9 +5517,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "256-c6.bin",   0x2000001, 0x800000, CRC(c698fd5d) SHA1(16818883b06849ba2f8d61bdd5e21aaf99bd8408) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "256-c7.bin",   0x3000000, 0x800000, CRC(cfceddd2) SHA1(7def666adf8bd1703f40c61f182fc040b6362dc9) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "256-c8.bin",   0x3000001, 0x800000, CRC(4d9be34c) SHA1(a737bdfa2b815aea7067e7af2636e83a9409c414) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof2000 ) /* Original Version, Encrypted Code + Sound + GFX Roms */
+	static RomLoadPtr rom_kof2000 = new RomLoadPtr(){ public void handler(){  /* Original Version, Encrypted Code + Sound + GFX Roms */
 		ROM_REGION( 0x900000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "257-sma.bin", 0x0c0000, 0x040000, CRC(71c6e6bb) SHA1(1bd29ded4c6b29780db8e8b772c452189699ca89) )	/* stored in the custom chip */
 		ROM_LOAD16_WORD_SWAP( "257-p1.bin",  0x100000, 0x400000, CRC(60947b4c) SHA1(5faa0a7ac7734d6c8e276589bd12dd574264647d) )
@@ -5553,9 +5553,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "257-c6.bin",   0x2000001, 0x800000, CRC(fa7200d5) SHA1(6f2b0d38af34e280d56a58955400e5c679906871) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "257-c7.bin",   0x3000000, 0x800000, CRC(7da11fe4) SHA1(065336cf166807acb6c8569d59d3bf37a19b0a42) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "257-c8.bin",   0x3000001, 0x800000, CRC(b1afa60b) SHA1(b916184f5cfe4121752270f4f65abf35d8eb0519) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kof2000n ) /* Original Version, Encrypted Sound + GFX Roms */
+	static RomLoadPtr rom_kof2000n = new RomLoadPtr(){ public void handler(){  /* Original Version, Encrypted Sound + GFX Roms */
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "257-p1n.bin",  0x000000, 0x100000, CRC(5f809dbe) SHA1(2bc233dcff5622de86d01e3b74b840c7caf12982) )
 		ROM_LOAD16_WORD_SWAP( "257-p2n.bin",  0x100000, 0x400000, CRC(693c2c5e) SHA1(dc9121b7369ef46596343cac055a00aec81704d4) )
@@ -5588,9 +5588,9 @@ public class neogeo
 		ROM_LOAD16_BYTE( "257-c6.bin",   0x2000001, 0x800000, CRC(fa7200d5) SHA1(6f2b0d38af34e280d56a58955400e5c679906871) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "257-c7.bin",   0x3000000, 0x800000, CRC(7da11fe4) SHA1(065336cf166807acb6c8569d59d3bf37a19b0a42) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "257-c8.bin",   0x3000001, 0x800000, CRC(b1afa60b) SHA1(b916184f5cfe4121752270f4f65abf35d8eb0519) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bangbead ) /* Original Version - Encrypted GFX */
+	static RomLoadPtr rom_bangbead = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted GFX */
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "259-p1.bin", 0x100000, 0x100000, CRC(88a37f8b) SHA1(566db84850fad5e8fe822e8bba910a33e083b550) )
 		ROM_CONTINUE(                       0x000000, 0x100000 )
@@ -5613,12 +5613,12 @@ public class neogeo
 		/* Encrypted */
 		ROM_LOAD16_BYTE( "259-c1.bin", 0x0000000, 0x800000, CRC(1f537f74) SHA1(b8ef691e92191c20a5ed4f20a75cca3c7383bca6) )
 		ROM_LOAD16_BYTE( "259-c2.bin", 0x0000001, 0x800000, CRC(0efd98ff) SHA1(d350315d3c7f26d638458e5ccf2126069a4c7a5b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* same data, diff. format roms, not encrypted, it could be a bootleg, not a prototype, since its identical
 	   when decrypted i'm disabling it for now */
 	#if 0
-	ROM_START( bangbedp )
+	static RomLoadPtr rom_bangbedp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "259-p1.bin", 0x100000, 0x100000, CRC(88a37f8b) SHA1(566db84850fad5e8fe822e8bba910a33e083b550) )
 		ROM_CONTINUE(                       0x000000, 0x100000 )
@@ -5639,10 +5639,10 @@ public class neogeo
 		ROM_LOAD16_BYTE( "259-c2p.bin", 0x000001, 0x200000, CRC(baf5a320) SHA1(ead3d81d9b4aeb45af4f9cb5c38157f2236b506c) ) /* Plane 2,3 */
 		ROM_LOAD16_BYTE( "259-c3p.bin", 0x400000, 0x100000, CRC(c8e52157) SHA1(f10f58e905c4cbaf182b20e63abe5364462133c5) ) /* Plane 0,1 */
 		ROM_LOAD16_BYTE( "259-c4p.bin", 0x400001, 0x100000, CRC(69fa8e60) SHA1(29c1fbdb79dedf1470683202e2cb3435732d9275) ) /* Plane 2,3 */
-	ROM_END
+	ROM_END(); }}; 
 	#endif
 	
-	ROM_START( nitd ) /* Original Version - Encrypted GFX */
+	static RomLoadPtr rom_nitd = new RomLoadPtr(){ public void handler(){  /* Original Version - Encrypted GFX */
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "260-p1.bin", 0x000000, 0x080000, CRC(61361082) SHA1(441f3f41c1aa752c0e0a9a0b1d92711d9e636b85) )
 	
@@ -5663,12 +5663,12 @@ public class neogeo
 		/* Encrypted */
 		ROM_LOAD16_BYTE( "260-c1.bin", 0x0000000, 0x800000, CRC(147b0c7f) SHA1(a647c3a2f6d146ff47521c1d39f58830601f5781) )
 		ROM_LOAD16_BYTE( "260-c2.bin", 0x0000001, 0x800000, CRC(d2b04b0d) SHA1(ce4322e6cfacb627fe997efe81018861e21d3c27) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	
 	/* dummy entry for the dummy bios driver */
-	ROM_START( neogeo )
+	static RomLoadPtr rom_neogeo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION16_BE( 0x020000, REGION_USER1, 0 )
 		NEOGEO_BIOS
 	
@@ -5682,7 +5682,7 @@ public class neogeo
 		ROM_FILL(                 0x000000, 0x20000, 0 )
 		ROM_REGION( 0x20000, REGION_GFX2, 0 )
 		ROM_LOAD( "sfix.sfx",  0x000000, 0x20000, CRC(354029fc) SHA1(4ae4bf23b4c2acff875775d4cbff5583893ce2a1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

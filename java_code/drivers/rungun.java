@@ -451,7 +451,7 @@ public class rungun
 	
 	#define ROM_LOAD64_WORD(name,offset,length,crc)		ROMX_LOAD(name, offset, length, crc, ROM_GROUPWORD | ROM_SKIP(6))
 	
-	ROM_START( rungunu )
+	static RomLoadPtr rom_rungunu = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0)
 		ROM_LOAD16_BYTE( "247b03", 0x000000, 0x80000, CRC(f259fd11) SHA1(60381a3fa7f78022dcb3e2f3d13ea32a10e4e36e) )
@@ -485,9 +485,9 @@ public class rungun
 		ROM_REGION( 0x400000, REGION_SOUND1, 0)
 		ROM_LOAD( "247-a06", 0x000000, 0x200000, CRC(b8b2a67e) SHA1(a873d32f4b178c714743664fa53c0dca29cb3ce4) )
 		ROM_LOAD( "247-a07", 0x200000, 0x200000, CRC(0108142d) SHA1(4dc6a36d976dad9c0da5a5b1f01f2eb3b369c99d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rungun )
+	static RomLoadPtr rom_rungun = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0)
 		ROM_LOAD16_BYTE( "247-c03", 0x000000, 0x80000, CRC(fec3e1d6) SHA1(cd89dc32ad06308134d277f343a7e8b5fe381f69) )
@@ -526,9 +526,9 @@ public class rungun
 		ROM_REGION( 0x400000, REGION_SOUND1, 0)
 		ROM_LOAD( "247-a06", 0x000000, 0x200000, CRC(b8b2a67e) SHA1(a873d32f4b178c714743664fa53c0dca29cb3ce4) )
 		ROM_LOAD( "247-a07", 0x200000, 0x200000, CRC(0108142d) SHA1(4dc6a36d976dad9c0da5a5b1f01f2eb3b369c99d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( slmdunkj )
+	static RomLoadPtr rom_slmdunkj = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0)
 		ROM_LOAD16_BYTE( "247jaa03.bin", 0x000000, 0x20000, CRC(87572078) SHA1(cfa784eb40ed8b3bda9d57abb6022bbe92056206) )
@@ -567,7 +567,7 @@ public class rungun
 		ROM_REGION( 0x400000, REGION_SOUND1, 0)
 		ROM_LOAD( "247-a06", 0x000000, 0x200000, CRC(b8b2a67e) SHA1(a873d32f4b178c714743664fa53c0dca29cb3ce4) )
 		ROM_LOAD( "247-a07", 0x200000, 0x200000, CRC(0108142d) SHA1(4dc6a36d976dad9c0da5a5b1f01f2eb3b369c99d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( rng )
 	{

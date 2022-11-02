@@ -253,7 +253,7 @@ public class sspeedr
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( sspeedr )
+	static RomLoadPtr rom_sspeedr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "ssr0000.pgm", 0x0000, 0x0800, CRC(bfc7069a) SHA1(2f7aa3d3c7cfd804ba4b625c6a8338534a204855) )
 		ROM_LOAD( "ssr0800.pgm", 0x0800, 0x0800, CRC(ec46b59a) SHA1(d5727efecb32ad3d034b885e4a57d7373368ca9e) )
@@ -266,7 +266,7 @@ public class sspeedr
 	
 		ROM_REGION( 0x0800, REGION_GFX3, 0 ) /* track */
 		ROM_LOAD( "ssrm762c.l3", 0x0000, 0x0800, CRC(ebaad3ee) SHA1(54ac994b505d20c75cf07a4f68da12360ee00153) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1979, sspeedr, 0, sspeedr, sspeedr, 0, ROT270, "Midway", "Super Speed Race", GAME_NO_SOUND )

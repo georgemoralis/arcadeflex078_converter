@@ -391,7 +391,7 @@ public class namcos12
 		PORT_BIT( 0xfffc, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	ROM_START( aquarush )
+	static RomLoadPtr rom_aquarush = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -408,9 +408,9 @@ public class namcos12
 	
 		ROM_REGION( 0x0800000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "aq1wav0.2",    0x000000, 0x800000, CRC(0cf7278d) SHA1(aee31e4d9b3522f42325071768803c542aa6de09) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ehrgeiz )
+	static RomLoadPtr rom_ehrgeiz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -433,9 +433,9 @@ public class namcos12
 	
 		ROM_REGION( 0x0800000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "eg1wav0.2",    0x0000000, 0x800000, CRC(961fe69f) SHA1(0189a061959a8d94b9d2db627911264faf9f28fd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fgtlayer )
+	static RomLoadPtr rom_fgtlayer = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -458,9 +458,9 @@ public class namcos12
 		ROM_REGION( 0x1000000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "ftl1wav0.2",   0x0000000, 0x800000, CRC(ee009a2b) SHA1(c332bf59917b2673d7acb864bf92d25d74a350b6) )
 		ROM_LOAD( "ftl1wav1.1",   0x0800000, 0x800000, CRC(a54a89cd) SHA1(543b47c6442f7a78e26992b041235a91d719bb89) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( golgo13 )
+	static RomLoadPtr rom_golgo13 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -488,9 +488,9 @@ public class namcos12
 		ROM_REGION( 0x1000000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "glg1wav0.1",   0x0000000, 0x800000, CRC(672d4f7c) SHA1(16a7564a2c68840a438a33ac2381df4e70e1bb45) )
 		ROM_LOAD( "glg1wav1.13",  0x0800000, 0x800000, CRC(480b0a1a) SHA1(341d5ec8ad0f3c0a121eeeec9466aaeec2bd1c74) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mdhorse )
+	static RomLoadPtr rom_mdhorse = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -511,9 +511,9 @@ public class namcos12
 	
 		ROM_REGION( 0x0800000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "mdh1wav0",     0x0000000, 0x800000, CRC(7b031123) SHA1(7cbc1f71d259405f9f1ef26026d51abcb255b057) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mrdrillr )
+	static RomLoadPtr rom_mrdrillr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -530,9 +530,9 @@ public class namcos12
 	
 		ROM_REGION( 0x0800000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "dri1wav0.5",   0x0000000, 0x800000, CRC(32928df1) SHA1(79af92a2d24a0e3d5bfe1785776b0f86a93882ce) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pacapp )
+	static RomLoadPtr rom_pacapp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -554,9 +554,9 @@ public class namcos12
 		ROM_REGION( 0x1000000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "ppp1wav0.5",   0x0000000, 0x800000, CRC(184ccc7d) SHA1(b74638cebef209638c625aac7e8c5b924f56a8bb) )
 		ROM_LOAD( "ppp1wav1.4",   0x0800000, 0x800000, CRC(cbcf74c5) SHA1(a089277c9befc87b5bbe0d4e5b8187a4ad5ef143) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( soulclbr )
+	static RomLoadPtr rom_soulclbr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -576,9 +576,9 @@ public class namcos12
 	
 		ROM_REGION( 0x0800000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "soc1wav0.2",   0x0000000, 0x800000, CRC(c100618d) SHA1(b87f88ee42ad9c5affa674e5f816d902143fed99) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sws99 )
+	static RomLoadPtr rom_sws99 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -601,9 +601,9 @@ public class namcos12
 		ROM_REGION( 0x1000000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "ss91wav0.2",   0x0000000, 0x800000, CRC(1c5e2ff1) SHA1(4f29dfd49f6b5c3ca3b758823d368051354bd673) )
 		ROM_LOAD( "ss91wav1.1",   0x0800000, 0x800000, CRC(5f4c8861) SHA1(baee7182c32bc064d805de5a16948faf78941ac4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tekken3 )
+	static RomLoadPtr rom_tekken3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -627,9 +627,9 @@ public class namcos12
 		ROM_REGION( 0x0800000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "tet1wav0.5",   0x0000000, 0x400000, CRC(77ba7975) SHA1(fe9434dcf0fb232c85efaaae1b4b13d36099620a) )
 		ROM_LOAD( "tet1wav1.4",   0x0400000, 0x400000, CRC(ffeba79f) SHA1(941412bbe9d0305d9a23c224c1bb774c4321f6df) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tekkentt )
+	static RomLoadPtr rom_tekkentt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -655,7 +655,7 @@ public class namcos12
 		ROM_REGION( 0x1000000, REGION_SOUND1, 0 ) /* samples */
 		ROM_LOAD( "teg3wav0.1",   0x0000000, 0x800000, CRC(4bd99104) SHA1(f76b0576cc28fe49d3c1c402988b933933e52e15) )
 		ROM_LOAD( "teg3wav1.12",  0x0800000, 0x800000, CRC(dbc74fff) SHA1(601b7e7361ea744b34e3fa1fc39d88641de7f4c6) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1996, tekken3,   0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Tekken 3 (TET1/VER.E)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 	GAMEX( 1998, soulclbr,  0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Soul Calibur (SOC1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )

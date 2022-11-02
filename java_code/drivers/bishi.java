@@ -258,7 +258,7 @@ public class bishi
 	
 	// ROM definitions
 	
-	ROM_START( bishi )
+	static RomLoadPtr rom_bishi = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "575jaa.a05", 0x000000, 0x80000, CRC(7d354567) SHA1(7fc11585693c91c0ef7a8e00df4f2f01b356210f) )
 		ROM_LOAD16_WORD_SWAP( "575jaa.a06", 0x080000, 0x80000, CRC(9b2f7fbb) SHA1(26c828085c44a9c4d4e713e8fcc0bc8fc973d107) )
@@ -277,7 +277,7 @@ public class bishi
 		ROM_LOAD( "575jaa.a02", 0x080000, 0x080000, CRC(d228eb06) SHA1(075bd48242b5f590bfbfc45bc430578375fad70f) )
 		ROM_LOAD( "575jaa.a03", 0x100000, 0x080000, CRC(9ec0321f) SHA1(03999dc415f556d0cd58e6358f826b97e85b477b) )
 		ROM_LOAD( "575jaa.a04", 0x180000, 0x080000, CRC(0120967f) SHA1(14cc2b9269f46859d1de418c8d4c76a6bdb09d16) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( bishi )
 	{

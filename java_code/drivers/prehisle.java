@@ -276,7 +276,7 @@ public class prehisle
 	
 	/******************************************************************************/
 	
-	ROM_START( prehisle )
+	static RomLoadPtr rom_prehisle = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "gt.2", 0x00000, 0x20000, CRC(7083245a) SHA1(c4f72440e3fb130c8c44224c958bf70c61e8c34e) )
 		ROM_LOAD16_BYTE( "gt.3", 0x00001, 0x20000, CRC(6d8cdf58) SHA1(0078e54db899132d2b1244aed0b974173717f82e) )
@@ -302,9 +302,9 @@ public class prehisle
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "gt.4",  0x000000, 0x20000, CRC(85dfb9ec) SHA1(78c865e7ccffddb71dcddccab358fa945f521f25) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( prehislu )
+	static RomLoadPtr rom_prehislu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "gt-u2.2h", 0x00000, 0x20000, CRC(a14f49bb) SHA1(6b39a894c3d3862be349a58c748d2d763d5a269c) )
 		ROM_LOAD16_BYTE( "gt-u3.3h", 0x00001, 0x20000, CRC(f165757e) SHA1(26cf369fed1713deec182852d76fe014ed46d6ac) )
@@ -330,9 +330,9 @@ public class prehisle
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "gt.4",  0x000000, 0x20000, CRC(85dfb9ec) SHA1(78c865e7ccffddb71dcddccab358fa945f521f25) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gensitou )
+	static RomLoadPtr rom_gensitou = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "gt2j.bin", 0x00000, 0x20000, CRC(a2da0b6b) SHA1(d102118f83b96094fd4ea4b3468713c4946c949d) )
 		ROM_LOAD16_BYTE( "gt3j.bin", 0x00001, 0x20000, CRC(c1a0ae8e) SHA1(2c9643abfd71edf8612e63d69cea4fbc19aad19d) )
@@ -358,7 +358,7 @@ public class prehisle
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "gt.4",  0x000000, 0x20000, CRC(85dfb9ec) SHA1(78c865e7ccffddb71dcddccab358fa945f521f25) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

@@ -768,7 +768,7 @@ public class ninjaw
 						DRIVERS
 	***************************************************************************/
 	
-	ROM_START( ninjaw )
+	static RomLoadPtr rom_ninjaw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 256K for 68000 CPUA code */
 		ROM_LOAD16_BYTE( "b31-45",    0x00000, 0x10000, CRC(107902c3) SHA1(026f71a918059e3374ae262304a2ee1270f5c5bd) )
 		ROM_LOAD16_BYTE( "b31-47",    0x00001, 0x10000, CRC(bd536b1e) SHA1(39c86cbb3a33fc77a0141b5648a1aca862e0a5fd) )
@@ -822,9 +822,9 @@ public class ninjaw
 		ROM_REGION( 0x01000, REGION_USER1, 0 )	/* unknown roms */
 		ROM_LOAD( "b31-25.38", 0x00000, 0x200, CRC(a0b4ba48) SHA1(dc9a46366a0cbf63a609f177c3d3ba9675416662) )
 		ROM_LOAD( "b31-26.58", 0x00000, 0x200, CRC(13e5fe15) SHA1(c973c7965954a2a0b427908f099592ed89cf0ff0) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ninjawj )
+	static RomLoadPtr rom_ninjawj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 256K for 68000 CPUA code */
 		ROM_LOAD16_BYTE( "b31_30.35", 0x00000, 0x10000, CRC(056edd9f) SHA1(8922cede80b31ce0f7a00c8cab13d835464c6058) )
 		ROM_LOAD16_BYTE( "b31_28.32", 0x00001, 0x10000, CRC(cfa7661c) SHA1(a7a6abb33a514d910e3198d5acbd4c31b2434b6c) )
@@ -878,9 +878,9 @@ public class ninjaw
 		ROM_REGION( 0x01000, REGION_USER1, 0 )	/* unknown roms */
 		ROM_LOAD( "b31-25.38", 0x00000, 0x200, CRC(a0b4ba48) SHA1(dc9a46366a0cbf63a609f177c3d3ba9675416662) )
 		ROM_LOAD( "b31-26.58", 0x00000, 0x200, CRC(13e5fe15) SHA1(c973c7965954a2a0b427908f099592ed89cf0ff0) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( darius2 )
+	static RomLoadPtr rom_darius2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 256K for 68000 CPUA code */
 		ROM_LOAD16_BYTE( "c07-32-1", 0x00000, 0x10000, CRC(216c8f6a) SHA1(493b0779b99a228911f56ef9d2d4a3945683bec0) )
 		ROM_LOAD16_BYTE( "c07-29-1", 0x00001, 0x10000, CRC(48de567f) SHA1(cdf50052933cd2603fd4374e8bae8b30a6c690b5) )
@@ -921,7 +921,7 @@ public class ninjaw
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "c07-12.107", 0x00000, 0x80000, CRC(e0b71258) SHA1(0258e308b643d723475824752ebffc4ea29d1ac4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( ninjaw )

@@ -480,7 +480,7 @@ public class plygonet
 		reset_sound_region();
 	}
 	
-	ROM_START( plygonet )
+	static RomLoadPtr rom_plygonet = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x200000, REGION_CPU1, 0)
 		ROM_LOAD32_BYTE( "305a01.bin", 0x000003, 512*1024, CRC(8bdb6c95) SHA1(e981833842f8fd89b9726901fbe2058444204792) )
@@ -504,7 +504,7 @@ public class plygonet
 		/* sound data */
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		ROM_LOAD( "305b08.bin", 0x000000, 0x200000, CRC(874607df) SHA1(763b44a80abfbc355bcb9be8bf44373254976019) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*          ROM        parent   machine    inp        init */
 	GAMEX( 1993, plygonet, 0,       plygonet, polygonet, polygonet, ROT90, "Konami", "Polygonet Commanders (ver UAA)", GAME_NOT_WORKING )

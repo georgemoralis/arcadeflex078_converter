@@ -1226,7 +1226,7 @@ public class aerofgt
 	
 	***************************************************************************/
 	
-	ROM_START( pspikes )
+	static RomLoadPtr rom_pspikes = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "pspikes2.bin", 0x00000, 0x40000, CRC(ec0c070e) SHA1(4ddcc184e835a2f9d15f01aaa03734fd75fe797e) )
 	
@@ -1246,9 +1246,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "o5b",          0x000000, 0x100000, CRC(07d6cbac) SHA1(d3d5778dbaca7b6cdceae959d0847d56df7b5cc1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pspikesk )
+	static RomLoadPtr rom_pspikesk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "20",           0x00000, 0x40000, CRC(75cdcee2) SHA1(272a08c46c1d0989f9fbb156e28e6a7ffa9c0a53) )
 	
@@ -1268,9 +1268,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "o5b",          0x000000, 0x100000, CRC(07d6cbac) SHA1(d3d5778dbaca7b6cdceae959d0847d56df7b5cc1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( svolly91 )
+	static RomLoadPtr rom_svolly91 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "u11.jpn",      0x00000, 0x40000, CRC(ea2e4c82) SHA1(f9cf9122499d9b1e54221fb8b6ef9c12004ca85e) )
 	
@@ -1290,9 +1290,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "o5b",          0x000000, 0x100000, CRC(07d6cbac) SHA1(d3d5778dbaca7b6cdceae959d0847d56df7b5cc1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spinlbrk )
+	static RomLoadPtr rom_spinlbrk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "ic98",    0x00000, 0x10000, CRC(36c2bf70) SHA1(f627d0e7dad1760bcc95af4a6346050a1a277048) )
 		ROM_LOAD16_BYTE( "ic104",   0x00001, 0x10000, CRC(34a7e158) SHA1(5884570c1be38bfedffca3fd38089d0ae3391d4f) )
@@ -1332,9 +1332,9 @@ public class aerofgt
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "ic166",        0x000000, 0x80000, CRC(6e0d063a) SHA1(313983e69f9625814de033fef7f6e9564694117a) )
 		ROM_LOAD( "ic163",        0x080000, 0x80000, CRC(e6621dfb) SHA1(85ee77c4720b7eb20ecf293c16b3105c8dcb1114) )	//FIRST AND SECOND HALF IDENTICAL
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spinlbru )
+	static RomLoadPtr rom_spinlbru = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "ic98.u5", 0x00000, 0x10000, CRC(3a0f7667) SHA1(55d5fa1a325c17532ed83d231032bdbe9fb84d85) )
 		ROM_LOAD16_BYTE( "ic104.u6",0x00001, 0x10000, CRC(a0e0af31) SHA1(21f6c3246bb7be2fd926324fd6d041e319a4e214) )
@@ -1374,9 +1374,9 @@ public class aerofgt
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "ic166",        0x000000, 0x80000, CRC(6e0d063a) SHA1(313983e69f9625814de033fef7f6e9564694117a) )
 		ROM_LOAD( "ic163",        0x080000, 0x80000, CRC(e6621dfb) SHA1(85ee77c4720b7eb20ecf293c16b3105c8dcb1114) )	//FIRST AND SECOND HALF IDENTICAL
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spinlbrj )
+	static RomLoadPtr rom_spinlbrj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "j5",      0x00000, 0x10000, CRC(6a3d690e) SHA1(4ac1985ea0a73b8fc12105ff75121718595dd171) )
 		ROM_LOAD16_BYTE( "j6",      0x00001, 0x10000, CRC(869593fa) SHA1(5821b011d42113f247bd100cecf140bbfc1e969c) )
@@ -1416,9 +1416,9 @@ public class aerofgt
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "ic166",        0x000000, 0x80000, CRC(6e0d063a) SHA1(313983e69f9625814de033fef7f6e9564694117a) )
 		ROM_LOAD( "ic163",        0x080000, 0x80000, CRC(e6621dfb) SHA1(85ee77c4720b7eb20ecf293c16b3105c8dcb1114) )	//FIRST AND SECOND HALF IDENTICAL
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( karatblz )
+	static RomLoadPtr rom_karatblz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "rom2v3",  0x00000, 0x40000, CRC(01f772e1) SHA1(f87f19a82d75839b5671f23ce14218d7b910eabc) )
 		ROM_LOAD16_WORD_SWAP( "1.u15",   0x40000, 0x40000, CRC(d16ee21b) SHA1(d454cdf22b72a537b9d7ae73deb8136a4f09da47) )
@@ -1448,9 +1448,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "u104",         0x000000, 0x100000, CRC(5795e884) SHA1(a4178497ad0a1e60ceb87612b218d77b36d2a11b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( karatblu )
+	static RomLoadPtr rom_karatblu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "2.u14",   0x00000, 0x40000, CRC(202e6220) SHA1(2605511a0574cbc39fdf3d8ae27a0aa9b43345fb) )
 		ROM_LOAD16_WORD_SWAP( "1.u15",   0x40000, 0x40000, CRC(d16ee21b) SHA1(d454cdf22b72a537b9d7ae73deb8136a4f09da47) )
@@ -1480,9 +1480,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "u104",         0x000000, 0x100000, CRC(5795e884) SHA1(a4178497ad0a1e60ceb87612b218d77b36d2a11b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( turbofrc )
+	static RomLoadPtr rom_turbofrc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "tfrc2.bin",    0x00000, 0x40000, CRC(721300ee) SHA1(79ab32fdfd377592a0bdbd1c4794cfd529a3eb7b) )
 		ROM_LOAD16_WORD_SWAP( "tfrc1.bin",    0x40000, 0x40000, CRC(6cd5312b) SHA1(57b109fe268fb963e981c91b6d288667a3c9a665) )
@@ -1515,9 +1515,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "tfrcu179.bin", 0x000000, 0x100000, CRC(60ca0333) SHA1(28b94edc98d360386759780ccd1122d43ffa5279) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aerofgt )
+	static RomLoadPtr rom_aerofgt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_WORD_SWAP( "1.u4",         0x00000, 0x80000, CRC(6fdff0a2) SHA1(7cc9529b426091027aa3e23586cb7d162376c0ff) )
 	
@@ -1540,9 +1540,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "it-19-06",     0x000000, 0x100000, CRC(cdbbdb1d) SHA1(067c816545f246ff1fd4c821d70df1e7eb47938c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aerofgtb )
+	static RomLoadPtr rom_aerofgtb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "v2",                0x00000, 0x40000, CRC(5c9de9f0) SHA1(93b62c59f0bc052c6fdbd5aae292a7ab2122dfd1) )
 		ROM_LOAD16_BYTE( "v1",                0x00001, 0x40000, CRC(89c1dcf4) SHA1(41401d63049c140e4254dc791022d85c44271390) )
@@ -1570,9 +1570,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "it-19-06",     0x000000, 0x100000, CRC(cdbbdb1d) SHA1(067c816545f246ff1fd4c821d70df1e7eb47938c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aerofgtc )
+	static RomLoadPtr rom_aerofgtc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "v2.149",            0x00000, 0x40000, CRC(f187aec6) SHA1(8905af34f114ae22fbfbd3ae115f19280bdd4fb3) )
 		ROM_LOAD16_BYTE( "v1.111",            0x00001, 0x40000, CRC(9e684b19) SHA1(b5e1e5b74ed9fd223c9315ee2d548e620224c102) )
@@ -1601,9 +1601,9 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "it-19-06",     0x000000, 0x100000, CRC(cdbbdb1d) SHA1(067c816545f246ff1fd4c821d70df1e7eb47938c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sonicwi )
+	static RomLoadPtr rom_sonicwi = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "2.149",        0x00000, 0x40000, CRC(3d1b96ba) SHA1(941be323c0cb15e05c92b897984617b05c5cf676) )
 		ROM_LOAD16_BYTE( "1.111",        0x00001, 0x40000, CRC(a3d09f94) SHA1(a1064d659488878f5303edc2b8636312ab632a83) )
@@ -1632,7 +1632,7 @@ public class aerofgt
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 ) /* sound samples */
 		ROM_LOAD( "it-19-06",     0x000000, 0x100000, CRC(cdbbdb1d) SHA1(067c816545f246ff1fd4c821d70df1e7eb47938c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

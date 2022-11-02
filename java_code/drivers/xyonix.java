@@ -286,7 +286,7 @@ public class xyonix
 	
 	/* ROM Loading ***************************************************************/
 	
-	ROM_START( xyonix )
+	static RomLoadPtr rom_xyonix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "xyonix3.bin", 0x00000, 0x10000, CRC(1960a74e) SHA1(5fd7bc31ca2f5f1e114d3d0ccf6554ebd712cbd3) )
 	
@@ -296,7 +296,7 @@ public class xyonix
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "xyonix.pr",   0x0000, 0x0100, CRC(0012cfc9) SHA1(c7454107a1a8083a370b662c617117b769c0dc1c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* GAME drivers **************************************************************/
 	

@@ -547,7 +547,7 @@ public class angelkds
 	
 	*/
 	
-	ROM_START( angelkds )
+	static RomLoadPtr rom_angelkds = new RomLoadPtr(){ public void handler(){ 
 		/* Nasco X090-PC-A  (Sega 837-6600) */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "11428.c10",    0x00000, 0x08000, CRC(90daacd2) SHA1(7e50ad1cbed0c1e6bad04ef1611cad25538c905f) )
@@ -589,9 +589,9 @@ public class angelkds
 	
 		ROM_REGION( 0x20, REGION_PROMS, 0 )
 		ROM_LOAD( "63s081n.u5",	  0x00,    0x20,    CRC(36b98627) SHA1(d2d54d92d1d47e7cc85104989ee421ce5d80a42a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spcpostn )
+	static RomLoadPtr rom_spcpostn = new RomLoadPtr(){ public void handler(){ 
 		/* X090-PC-A 171-5383 */
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 ) /* D317-0005 (NEC Z80 Custom) */
 		ROM_LOAD( "epr10125.c10", 0x00000, 0x08000, CRC(bffd38c6) SHA1(af02907124343ddecd21439d25f1ebb81ef9f51a) ) /* encrypted */
@@ -624,7 +624,7 @@ public class angelkds
 	
 		ROM_REGION( 0x20, REGION_PROMS, 0 )
 		ROM_LOAD( "63s081n.u5",   0x00,    0x20,    CRC(36b98627) SHA1(d2d54d92d1d47e7cc85104989ee421ce5d80a42a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( spcpostn )	{ spcpostn_decode(); }

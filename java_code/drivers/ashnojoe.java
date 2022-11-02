@@ -380,7 +380,7 @@ public class ashnojoe
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( ashnojoe )
+	static RomLoadPtr rom_ashnojoe = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 68000 code */
 		ROM_LOAD16_BYTE( "5.bin", 0x00000, 0x10000, CRC(c61e1569) SHA1(422c18f5810539b5a9e3a9bd4e3b4d70bde8d1d5) )
 		ROM_LOAD16_BYTE( "6.bin", 0x00001, 0x10000, CRC(c0a16338) SHA1(fb127b9d38f2c9807b6e23ff71935fc8a22a2e8f) )
@@ -415,7 +415,7 @@ public class ashnojoe
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )   /* samples? */
 		ROM_LOAD( "sj401-nw.bin", 0x00000, 0x80000, CRC(25dfab59) SHA1(7d50159204ba05323a2442778f35192e66117dda) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1990, ashnojoe, 0, ashnojoe, ashnojoe, ashnojoe, ROT0, "WAVE / Taito Corporation", "Ashita no Joe (Japan)", GAME_IMPERFECT_SOUND )
 }

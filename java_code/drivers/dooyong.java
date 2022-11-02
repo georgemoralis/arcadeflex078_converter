@@ -1153,7 +1153,7 @@ public class dooyong
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( lastday )
+	static RomLoadPtr rom_lastday = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "lday3.bin",    0x00000, 0x10000, CRC(a06dfb1e) SHA1(c6220eda8c01d55862700e369db7291dbbedc8c8) )
 		ROM_RELOAD(               0x10000, 0x10000 )				/* banked at 0x8000-0xbfff */
@@ -1188,9 +1188,9 @@ public class dooyong
 		ROM_REGION( 0x20000, REGION_GFX6, 0 )	/* fg tilemaps */
 		ROM_LOAD16_BYTE( "lday11.bin",   0x00000, 0x10000, CRC(04b961de) SHA1(7a94c9d0800d79048660cf3758708a346ead33f9) )
 		ROM_LOAD16_BYTE( "lday13.bin",   0x00001, 0x10000, CRC(6bdbd887) SHA1(a54f26f9ddd72b8b8f7a030610c1c4a5f94a3358) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lastdaya )
+	static RomLoadPtr rom_lastdaya = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "lday3.bin",    0x00000, 0x10000, CRC(a06dfb1e) SHA1(c6220eda8c01d55862700e369db7291dbbedc8c8) )
 		ROM_RELOAD(               0x10000, 0x10000 )				/* banked at 0x8000-0xbfff */
@@ -1225,9 +1225,9 @@ public class dooyong
 		ROM_REGION( 0x20000, REGION_GFX6, 0 )	/* fg tilemaps */
 		ROM_LOAD16_BYTE( "lday11.bin",   0x00000, 0x10000, CRC(04b961de) SHA1(7a94c9d0800d79048660cf3758708a346ead33f9) )
 		ROM_LOAD16_BYTE( "lday13.bin",   0x00001, 0x10000, CRC(6bdbd887) SHA1(a54f26f9ddd72b8b8f7a030610c1c4a5f94a3358) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gulfstrm )
+	static RomLoadPtr rom_gulfstrm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "1.l4",         0x00000, 0x20000, CRC(59e0478b) SHA1(dd6e48c6e91ddb087d20336eab79bbadd968d4b1) )
 		ROM_RELOAD(               0x10000, 0x20000 )				/* banked at 0x8000-0xbfff */
@@ -1262,9 +1262,9 @@ public class dooyong
 		ROM_REGION( 0x20000, REGION_GFX6, 0 )	/* fg tilemaps */
 		ROM_LOAD16_BYTE( "10.n8",        0x00000, 0x10000, CRC(b4f15bf4) SHA1(cb203390c3f917f213807a23c442e43bc6bcfc67) )
 		ROM_LOAD16_BYTE( "11.n9",        0x00001, 0x10000, CRC(7dfe4a9c) SHA1(40982b5b266e4a928544ab5ec330080935588c57) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gulfstr2 )
+	static RomLoadPtr rom_gulfstr2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "18.1",         0x00000, 0x20000, CRC(d38e2667) SHA1(3690d708c7be85871d6bb32a774d711a30782126) )
 		ROM_RELOAD(               0x10000, 0x20000 )				/* banked at 0x8000-0xbfff */
@@ -1299,9 +1299,9 @@ public class dooyong
 		ROM_REGION( 0x20000, REGION_GFX6, 0 )	/* fg tilemaps */
 		ROM_LOAD16_BYTE( "10.bin",       0x00000, 0x10000, CRC(08149140) SHA1(ff0094883ca0fc81bae991d6ea62d0064d6f7c47) )
 		ROM_LOAD16_BYTE( "11.bin",       0x00001, 0x10000, CRC(2ed7545b) SHA1(6a70743bbb03ef694310f2b5531f384209db62a1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pollux )
+	static RomLoadPtr rom_pollux = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "pollux2.bin",  0x00000, 0x10000, CRC(45e10d4e) SHA1(ece25fcc0acda9a8cfc00f3132a87469037b5a4e) )
 		ROM_RELOAD(               0x10000, 0x10000 )	/* banked at 0x8000-0xbfff */
@@ -1331,9 +1331,9 @@ public class dooyong
 		ROM_REGION( 0x20000, REGION_GFX6, 0 )	/* fg tilemaps */
 		ROM_LOAD16_BYTE( "pollux5.bin",  0x00000, 0x10000, CRC(ac090d34) SHA1(6b554450d8d46165e25fd6f12ab4c4b9b63dcd35) )
 		ROM_LOAD16_BYTE( "pollux4.bin",  0x00001, 0x10000, CRC(2c6bd3be) SHA1(6648264be83588a01f264e7ec72d84e29e0d4795) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( polluxa )
+	static RomLoadPtr rom_polluxa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "dooyong2.bin",  0x00000, 0x10000, CRC(e4ea8dbd) SHA1(19652261981672fae896e3065f1f5078f7ae93b6) )
 		ROM_RELOAD(               0x10000, 0x10000 )	/* banked at 0x8000-0xbfff */
@@ -1363,9 +1363,9 @@ public class dooyong
 		ROM_REGION( 0x20000, REGION_GFX6, 0 )	/* fg tilemaps */
 		ROM_LOAD16_BYTE( "pollux5.bin",  0x00000, 0x10000, CRC(ac090d34) SHA1(6b554450d8d46165e25fd6f12ab4c4b9b63dcd35) )
 		ROM_LOAD16_BYTE( "pollux4.bin",  0x00001, 0x10000, CRC(2c6bd3be) SHA1(6648264be83588a01f264e7ec72d84e29e0d4795) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bluehawk )
+	static RomLoadPtr rom_bluehawk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "rom19",        0x00000, 0x20000, CRC(24149246) SHA1(458fd429a895353b8636c717dcd58d57b8723012) )
 		ROM_RELOAD(               0x10000, 0x20000 )	/* banked at 0x8000-0xbfff */
@@ -1391,9 +1391,9 @@ public class dooyong
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* OKI6295 samples */
 		ROM_LOAD( "rom4",         0x00000, 0x20000, CRC(f7318919) SHA1(8b7e2ffe77603142cf1b9440585f8dfa9199ed05) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bluehawn )
+	static RomLoadPtr rom_bluehawn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "rom19",        0x00000, 0x20000, CRC(24149246) SHA1(458fd429a895353b8636c717dcd58d57b8723012) )	// ROM2
 		ROM_RELOAD(               0x10000, 0x20000 )	/* banked at 0x8000-0xbfff */
@@ -1419,9 +1419,9 @@ public class dooyong
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* OKI6295 samples */
 		ROM_LOAD( "rom4",         0x00000, 0x20000, CRC(f7318919) SHA1(8b7e2ffe77603142cf1b9440585f8dfa9199ed05) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sadari )
+	static RomLoadPtr rom_sadari = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "1.3d",         0x00000, 0x20000, CRC(bd953217) SHA1(6e230103ea01744761ab8a194d0dde6921bee92e) )
 		ROM_RELOAD(               0x10000, 0x20000 )				/* banked at 0x8000-0xbfff */
@@ -1448,9 +1448,9 @@ public class dooyong
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* OKI6295 samples */
 		ROM_LOAD( "8.10r",        0x00000, 0x20000, CRC(9c29a093) SHA1(b6252e0cb8e618cdc4a741ee7ab01058f929fd11) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gundl94 )
+	static RomLoadPtr rom_gundl94 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "gd94_001.d3",  0x00000, 0x20000, CRC(3a5cc045) SHA1(182743458c36bb6254a39cf9a371fd2b0d72d145) )
 		ROM_RELOAD(               0x10000, 0x20000 )				/* banked at 0x8000-0xbfff */
@@ -1481,9 +1481,9 @@ public class dooyong
 		ROM_REGION( 0x40000, REGION_GFX4, ROMREGION_DISPOSE )	/* more tiles? they don't seem to belong to this game! */
 		ROM_LOAD16_BYTE( "gd94_006.j7",  0x00000, 0x20000, CRC(1d9536fe) SHA1(d72e66a529456c87217f9ba88f7f45aa2aa3e399) )
 		ROM_LOAD16_BYTE( "gd94_010.l7",  0x00001, 0x20000, CRC(4b74857f) SHA1(a4413369fdb165c0f12454592181675095f28145) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( primella )
+	static RomLoadPtr rom_primella = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD( "1_d3.bin",     0x00000, 0x20000, CRC(82fea4e0) SHA1(3603c0edda29868d5e282465880e1ad341365f6f) )
 		ROM_RELOAD(               0x10000, 0x20000 )				/* banked at 0x8000-0xbfff */
@@ -1506,7 +1506,7 @@ public class dooyong
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* OKI6295 samples */
 		ROM_LOAD( "gd94_008.r9",  0x00000, 0x20000, CRC(f92e5803) SHA1(69dd11469e9e6bdc7825a5a14994276b50c10a14) )	/* 6_r9 */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -1570,7 +1570,7 @@ public class dooyong
 	
 	*/
 	
-	ROM_START( superx )
+	static RomLoadPtr rom_superx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD16_BYTE( "2.3m",   0x00000, 0x20000, CRC(be7aebe7) SHA1(81934d861a15a96cf23721ad38f821e1f94ec980) )
 		ROM_LOAD16_BYTE( "3.3l",   0x00001, 0x20000, CRC(dc4a25fc) SHA1(660bf33a9ae7534c37353f9690af180268ce7f30) )
@@ -1602,10 +1602,10 @@ public class dooyong
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKI6295 samples */
 		ROM_LOAD( "4.7v",     0x00000, 0x20000, CRC(434290b5) SHA1(3f2fb5aed1f109add17f00fe3a2364eedc7172ae) )
 		ROM_LOAD( "5.7u",     0x20000, 0x20000, CRC(ebe6abb4) SHA1(801b22845603f86c7bab77baa6946afc613aebdb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* this set only had 68k roms, sound program, and samples */
-	ROM_START( superxm )
+	static RomLoadPtr rom_superxm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD16_BYTE( "2_m.3m",   0x00000, 0x20000, CRC(41c50aac) SHA1(75f6470bde217e4b9139d8af97a17ca22c374944) )
 		ROM_LOAD16_BYTE( "3_m.3l",   0x00001, 0x20000, CRC(6738b703) SHA1(e37f5f76b1efbd2f5098014ca380d4340204e487) )
@@ -1637,9 +1637,9 @@ public class dooyong
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKI6295 samples */
 		ROM_LOAD( "4.7v",     0x00000, 0x20000, CRC(434290b5) SHA1(3f2fb5aed1f109add17f00fe3a2364eedc7172ae) )
 		ROM_LOAD( "5.7u",     0x20000, 0x20000, CRC(ebe6abb4) SHA1(801b22845603f86c7bab77baa6946afc613aebdb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rshark )
+	static RomLoadPtr rom_rshark = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
 		ROM_LOAD16_BYTE( "rspl00.bin",   0x00000, 0x20000, CRC(40356b9d) SHA1(28749a0d4c1ac8e094c551594033d47061071d8b) )
 		ROM_LOAD16_BYTE( "rspu00.bin",   0x00001, 0x20000, CRC(6635c668) SHA1(242d9c5828e142d5820c75c4e4696fcc5f5ffbb7) )
@@ -1678,7 +1678,7 @@ public class dooyong
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKI6295 samples */
 		ROM_LOAD( "rse1.bin",     0x00000, 0x20000, CRC(0291166f) SHA1(7c4c80cfd921a07b8195306cfbd2f84947aa7d6f) )
 		ROM_LOAD( "rse2.bin",     0x20000, 0x20000, CRC(5a26ee72) SHA1(3ceed1f50510993354dd4def577af5cf4c4a4f7a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

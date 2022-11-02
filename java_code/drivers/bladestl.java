@@ -483,7 +483,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	ROM_START( bladestl )
+	static RomLoadPtr rom_bladestl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 ) /* code + banked roms */
 		ROM_LOAD( "797t01.bin", 0x10000, 0x08000, CRC(89d7185d) SHA1(0d2f346d9515cab0389106c0e227fb0bd84a2c9c) )	/* fixed ROM */
 		ROM_CONTINUE(			0x08000, 0x08000 )				/* banked ROM */
@@ -501,9 +501,9 @@ public class bladestl
 		ROM_REGION( 0xc0000, REGION_SOUND1, 0 ) /* uPD7759 data (chip 1) */
 		ROM_LOAD( "797a03", 0x00000, 0x80000, CRC(9ee1a542) SHA1(c9a142a326875a50f03e49e83a84af8bb423a467) )
 		ROM_LOAD( "797a04",	0x80000, 0x40000, CRC(9ac8ea4e) SHA1(9f81eff970c9e8aea6f67d8a7d89805fae044ae1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bladstle )
+	static RomLoadPtr rom_bladstle = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 ) /* code + banked roms */
 		ROM_LOAD( "797e01", 0x10000, 0x08000, CRC(f8472e95) SHA1(8b6caa905fb1642300dd9da508871b00429872c3) )	/* fixed ROM */
 		ROM_CONTINUE(		0x08000, 0x08000 )				/* banked ROM */
@@ -521,7 +521,7 @@ public class bladestl
 		ROM_REGION( 0xc0000, REGION_SOUND1, 0 ) /* uPD7759 data */
 		ROM_LOAD( "797a03", 0x00000, 0x80000, CRC(9ee1a542) SHA1(c9a142a326875a50f03e49e83a84af8bb423a467) )
 		ROM_LOAD( "797a04",	0x80000, 0x40000, CRC(9ac8ea4e) SHA1(9f81eff970c9e8aea6f67d8a7d89805fae044ae1) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

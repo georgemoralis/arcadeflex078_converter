@@ -357,7 +357,7 @@ public class ace
 	
 	***************************************************************************/
 	
-	ROM_START( ace )
+	static RomLoadPtr rom_ace = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "ace.a1",		0x0000, 0x0200, CRC(16811834) SHA1(5502812dd161908eea3fa8851d7e5c1e22b0f8ff) )
 		ROM_LOAD( "ace.a2",		0x0200, 0x0200, CRC(f9eae80e) SHA1(8865b86c7b5d57c76312c16f8a614bf35ffaf532) )
@@ -369,7 +369,7 @@ public class ace
 		ROM_REGION( 0x0200, REGION_GFX1, 0 )
 		ROM_LOAD( "ace.k4",		0x0000, 0x0200, CRC(daa05ec6) SHA1(8b71ffb802293dc93f6b492ff128a704e676a5fd) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1976, ace, 0, ace, ace, 0, ROT0, "Allied Leisure", "Ace", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
 }

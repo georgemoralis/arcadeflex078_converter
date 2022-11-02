@@ -1644,7 +1644,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	ROM_START( sentetst )
+	static RomLoadPtr rom_sentetst = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "sdiagef.bin",  0x2e000, 0x2000, CRC(2a39fc53) SHA1(04ea68bfad455cc928e57390eba5597c38bbab69) )
 	
@@ -1653,10 +1653,10 @@ public class balsente
 	
 		ROM_REGION( 0x10000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "sdiaggr0.bin", 0x00000, 0x2000, CRC(5e0ff62a) SHA1(3f0ebebb2f58530af7fac57a4780dfb37ef1ee1d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( cshift )
+	static RomLoadPtr rom_cshift = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "cs-ab0.bin", 0x10000, 0x2000, CRC(d2069e75) SHA1(17d5719e6e1976cebb332932cf3e900a88136928) )
 		ROM_LOAD( "cs-ab1.bin", 0x12000, 0x2000, CRC(198f25a8) SHA1(5ca25fe57e94d8362896c903196e0080efd35ef5) )
@@ -1676,10 +1676,10 @@ public class balsente
 		ROM_LOAD( "cs-gr2.bin", 0x04000, 0x2000, CRC(1784f939) SHA1(ff7f43451580e3b314c24b00a66765c0b395ddf6) )
 		ROM_LOAD( "cs-gr3.bin", 0x06000, 0x2000, CRC(b43916a2) SHA1(8d42fb6ae7cf8b2d94eb0c14e00bb115f8ef01b4) )
 		ROM_LOAD( "cs-gr4.bin", 0x08000, 0x2000, CRC(a94cd35b) SHA1(0ca0497a1b055ff1ae6b7bc36ae45749dff50caa) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gghost )
+	static RomLoadPtr rom_gghost = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ggh-ab0.bin", 0x10000, 0x2000, CRC(ed0fdeac) SHA1(294cee47c0541c58d4d766388c281ed30b8f5426) )
 		ROM_LOAD( "ggh-ab1.bin", 0x12000, 0x2000, CRC(5bfbae58) SHA1(65c795354223cd5e2474ad9e779b77f58ed5b896) )
@@ -1700,10 +1700,10 @@ public class balsente
 		ROM_LOAD( "ggh-gr3.bin", 0x06000, 0x2000, CRC(dd7e25d0) SHA1(cc6402835d1b46d160869ba1d1cad54f24d3fe86) )
 		ROM_LOAD( "ggh-gr4.bin", 0x08000, 0x2000, CRC(b4293435) SHA1(5e2b96c19c4f5c63a5afa2de504d29fe64a4c908) )
 		ROM_LOAD( "ggh-gr5.bin", 0x0a000, 0x2000, CRC(d3da0093) SHA1(7474901b089ea62abad0a2f657fd8c4a1be09bf0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( hattrick )
+	static RomLoadPtr rom_hattrick = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "rom-ab0.u9a", 0x10000, 0x2000, CRC(f25c1b99) SHA1(43b2334be7cfb8091eea963e10547295362372d3) )
 		ROM_LOAD( "rom-ab1.u8a", 0x12000, 0x2000, CRC(c1df3d1f) SHA1(754f537d12efe8891638fd11a2ee8a5b234fb079) )
@@ -1717,10 +1717,10 @@ public class balsente
 		ROM_REGION( 0x10000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "rom-gr0.u9b", 0x00000, 0x2000, CRC(9f41baba) SHA1(fa817a8e4d2f7b86a2294132e3991f7b6d8cb11a) )
 		ROM_LOAD( "rom-gr1.u8b", 0x02000, 0x2000, CRC(951f08c9) SHA1(059a575dd35cd8e822e12ac2606b47b6272bbb41) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( otwalls )
+	static RomLoadPtr rom_otwalls = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "otw-ab0.bin", 0x10000, 0x2000, CRC(474441c7) SHA1(16fb5be9f94e072d4f3003abcc9dcf6d7af2359a) )
 		ROM_LOAD( "otw-ab1.bin", 0x12000, 0x2000, CRC(2e9e9411) SHA1(7dfd8dafa34e4d22fa0c5e472e3e98a1c0969f43) )
@@ -1741,10 +1741,10 @@ public class balsente
 		ROM_LOAD( "otw-gr3.bin", 0x06000, 0x2000, CRC(6b17e4a9) SHA1(f9c57da863d613a456ee056569a87a9552ad3874) )
 		ROM_LOAD( "otw-gr4.bin", 0x08000, 0x2000, CRC(15985c8c) SHA1(94f21c348bfbe4db6d0cfa5b5e35d2df4b8f936d) )
 		ROM_LOAD( "otw-gr5.bin", 0x0a000, 0x2000, CRC(448f7e3c) SHA1(505724e90f17b05ccf0137dbed0d33e39db1d5ab) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( snakepit )
+	static RomLoadPtr rom_snakepit = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "spit-ab0.bin", 0x10000, 0x2000, CRC(5aa86081) SHA1(e65e256661b13a0631398e115dd02fce281bafa4) )
 		ROM_LOAD( "spit-ab1.bin", 0x12000, 0x2000, CRC(588228b8) SHA1(b64032a4fd1f52179d38e2073380bba6ec321302) )
@@ -1765,10 +1765,10 @@ public class balsente
 		ROM_LOAD( "spit-gr3.bin", 0x06000, 0x2000, CRC(c6703ec2) SHA1(0f5d7c17ee508f8fea316b7f92cdd7cc174b155f) )
 		ROM_LOAD( "spit-gr4.bin", 0x08000, 0x2000, CRC(b4293435) SHA1(5e2b96c19c4f5c63a5afa2de504d29fe64a4c908) )
 		ROM_LOAD( "spit-gr5.bin", 0x0a000, 0x2000, CRC(dc27c970) SHA1(291ef10a8c330ef8e47622246b6301d2e5171df7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( snakjack )
+	static RomLoadPtr rom_snakjack = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "rom-ab0.u9a", 0x10000, 0x2000, CRC(da2dd119) SHA1(85ae452b137e69e051fa66648f295d180339794e) )
 		ROM_LOAD( "rom-ab1.u8a", 0x12000, 0x2000, CRC(657ddf26) SHA1(48591a6b0c30d576f0e08dd54c95cbda76b5dfbd) )
@@ -1789,10 +1789,10 @@ public class balsente
 		ROM_LOAD( "rom-gr3.u6b", 0x06000, 0x2000, CRC(b6602be8) SHA1(c5bc95e0116fb2cf86a694561dc2c21612ba4434) )
 		ROM_LOAD( "rom-gr4.u5b", 0x08000, 0x2000, CRC(3fbfa686) SHA1(6c137d177c7aa2701497ac3ac922fdb8cd9f52b3) )
 		ROM_LOAD( "rom-gr5.u4b", 0x0a000, 0x2000, CRC(345f94fb) SHA1(0af24f4e1a797efe5272f64b8a34483fe6002436) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( stocker )
+	static RomLoadPtr rom_stocker = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "stkr-ab0.bin", 0x10000, 0x2000, CRC(784a00ad) SHA1(33e76be44207bc24dbb9c2f04204df22ba5154ff) )
 		ROM_LOAD( "stkr-ab1.bin", 0x12000, 0x2000, CRC(cdae01dc) SHA1(7c2956acae639fd2f2cf061d1c32ae9edabe9270) )
@@ -1809,10 +1809,10 @@ public class balsente
 		ROM_LOAD( "stkr-gr1.bin", 0x02000, 0x2000, CRC(4a5cc00b) SHA1(9ce46ed94e715a5997998aee6377baf2869ab3a6) )
 		ROM_LOAD( "stkr-gr2.bin", 0x04000, 0x2000, CRC(70002382) SHA1(c151ad3df2714a2f9f8b047894e7585ca16bd29e) )
 		ROM_LOAD( "stkr-gr3.bin", 0x06000, 0x2000, CRC(68c862d8) SHA1(302ce10e23d17af9aa7fa13d18c602656a262eaa) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( triviag1 )
+	static RomLoadPtr rom_triviag1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "tpg1-ab0.bin", 0x10000, 0x2000, CRC(79fd3ac3) SHA1(52db0ba445f9a953f6ceb43c3d173b73c71af192) )
 		ROM_LOAD( "tpg1-ab1.bin", 0x12000, 0x2000, CRC(0ff677e9) SHA1(14fdc1ee87893ea91eea40949aeac5381c569bdd) )
@@ -1833,10 +1833,10 @@ public class balsente
 		ROM_LOAD( "tpg1-gr3.bin", 0x06000, 0x2000, CRC(323a8640) SHA1(7ec6f8f9bcfa5de442dce4f6e81e697da34dbab8) )
 		ROM_LOAD( "tpg1-gr4.bin", 0x08000, 0x2000, CRC(673acf42) SHA1(7b36a86441732ba14576f9c1dd14fe0da575d4bf) )
 		ROM_LOAD( "tpg1-gr5.bin", 0x0a000, 0x2000, CRC(067bfd66) SHA1(32f5973f2f0aed67c8f9b5886f52b9dc516a611e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( triviag2 )
+	static RomLoadPtr rom_triviag2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.bin",  0x10000, 0x4000, CRC(4fca20c5) SHA1(595b32ff035036cafbf49d75aa170f39e9f52b38) )
 		ROM_LOAD( "ab23.bin",  0x14000, 0x4000, CRC(6cf2ddeb) SHA1(0d6667babd9ab70820cf165900d90003f0893be7) )
@@ -1852,10 +1852,10 @@ public class balsente
 		ROM_LOAD( "gr01.bin",  0x00000, 0x4000, CRC(6829de8e) SHA1(4ec494883ba358f2ac7ce8d5a623a2f34b5bc843) )
 		ROM_LOAD( "gr23.bin",  0x04000, 0x4000, CRC(89398700) SHA1(771ee04baa9a31d435a6234490105878713e7845) )
 		ROM_LOAD( "gr45.bin",  0x08000, 0x4000, CRC(1e870293) SHA1(32149c9c8047854f2b2ad8844c4bd00a8ded588e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( triviasp )
+	static RomLoadPtr rom_triviasp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "allsport.8a", 0x10000, 0x4000, CRC(54b7ff31) SHA1(1bdf9c9eb1a0fb4c1013680372d289882abf4b47) )
 		ROM_LOAD( "allsport.7a", 0x14000, 0x4000, CRC(59fae9d2) SHA1(a555f0679c59bf7c9dad0ecb9656a2f8faf39902) )
@@ -1871,10 +1871,10 @@ public class balsente
 		ROM_LOAD( "gr01.bin",    0x00000, 0x4000, CRC(6829de8e) SHA1(4ec494883ba358f2ac7ce8d5a623a2f34b5bc843) )
 		ROM_LOAD( "gr23.bin",    0x04000, 0x4000, CRC(89398700) SHA1(771ee04baa9a31d435a6234490105878713e7845) )
 		ROM_LOAD( "allsport.3b", 0x08000, 0x4000, CRC(7415a7fc) SHA1(93d832434f359ce7b02aef276c89456b16438979) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( triviayp )
+	static RomLoadPtr rom_triviayp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.bin",  0x10000, 0x4000, CRC(97d35a85) SHA1(3ee8400fc3a2bf8a2f6374ffc34a4d295ee13bab) )
 		ROM_LOAD( "ab23.bin",  0x14000, 0x4000, CRC(2ff67c70) SHA1(c45b5fde4ec979322c9e251e66183632552d35bd) )
@@ -1890,10 +1890,10 @@ public class balsente
 		ROM_LOAD( "gr01.bin", 0x00000, 0x4000, CRC(6829de8e) SHA1(4ec494883ba358f2ac7ce8d5a623a2f34b5bc843) )
 		ROM_LOAD( "gr23.bin", 0x04000, 0x4000, CRC(89398700) SHA1(771ee04baa9a31d435a6234490105878713e7845) )
 		ROM_LOAD( "gr45.bin", 0x08000, 0x4000, CRC(1242033e) SHA1(1a3fe186bb261e2c7d9fbbb2a3103b39bf029b35) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( triviabb )
+	static RomLoadPtr rom_triviabb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.bin",  0x10000, 0x4000, CRC(1b7c439d) SHA1(8b3020dcb375b2f2e5e975a8067df6504aa8691e) )
 		ROM_LOAD( "ab23.bin",  0x14000, 0x4000, CRC(e4f1e704) SHA1(e5135134b54e1e2e95c5bfe6e5f0e2dd280db69d) )
@@ -1909,10 +1909,10 @@ public class balsente
 		ROM_LOAD( "gr01.bin", 0x00000, 0x4000, CRC(6829de8e) SHA1(4ec494883ba358f2ac7ce8d5a623a2f34b5bc843) )
 		ROM_LOAD( "gr23.bin", 0x04000, 0x4000, CRC(89398700) SHA1(771ee04baa9a31d435a6234490105878713e7845) )
 		ROM_LOAD( "gr45.bin", 0x08000, 0x4000, CRC(92fb6fb1) SHA1(1a322bd3cfacdf82d4fcc4b4d47f78a701411919) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gimeabrk )
+	static RomLoadPtr rom_gimeabrk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.u8a",  0x10000, 0x4000, CRC(18cc53db) SHA1(3bb47c349b3ab7b81e3557e3b4877617fb549c9e) )
 		ROM_LOAD( "ab23.u7a",  0x14000, 0x4000, CRC(6bd4190a) SHA1(b6562b3575dc8265c01719cfbcb554b69bc1b37f) )
@@ -1925,10 +1925,10 @@ public class balsente
 		ROM_REGION( 0x10000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "gr01.u6b", 0x00000, 0x4000, CRC(e3cdc476) SHA1(2f17c3f84767850d45192dfb507dd2716ecadc20) )
 		ROM_LOAD( "gr23.u5b", 0x04000, 0x4000, CRC(0555d9c0) SHA1(da0d1f207ad056b2d82a5ad6382372066883d161) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( minigolf )
+	static RomLoadPtr rom_minigolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.u8a",  0x10000, 0x4000, CRC(348f827f) SHA1(a013ef3068e14e0738bcfa4de26c0c2df4c0a7f6) )
 		ROM_LOAD( "ab23.u7a",  0x14000, 0x4000, CRC(19a6ff47) SHA1(70b6da3b4186e5b9463f2ea0fefefad21ec80637) )
@@ -1943,10 +1943,10 @@ public class balsente
 		ROM_LOAD( "gr01.u6b", 0x00000, 0x4000, CRC(8e24d594) SHA1(d35329fb78f90ec478418917aa1ef06d0967e6f8) )
 		ROM_LOAD( "gr23.u5b", 0x04000, 0x4000, CRC(3bf355ef) SHA1(691df25b35b00e21ad09d17a21fe98a353aa3dda) )
 		ROM_LOAD( "gr45.u4b", 0x08000, 0x4000, CRC(8eb14921) SHA1(fda8b8f8e801360310f7cb1aa4c6aea1fa0a4b25) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( minigol2 )
+	static RomLoadPtr rom_minigol2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.u8a",  0x10000, 0x4000, CRC(348f827f) SHA1(a013ef3068e14e0738bcfa4de26c0c2df4c0a7f6) )
 		ROM_LOAD( "ab23.u7a",  0x14000, 0x4000, CRC(19a6ff47) SHA1(70b6da3b4186e5b9463f2ea0fefefad21ec80637) )
@@ -1962,10 +1962,10 @@ public class balsente
 		ROM_LOAD( "gr01.u6b", 0x00000, 0x4000, CRC(8e24d594) SHA1(d35329fb78f90ec478418917aa1ef06d0967e6f8) )
 		ROM_LOAD( "gr23.u5b", 0x04000, 0x4000, CRC(3bf355ef) SHA1(691df25b35b00e21ad09d17a21fe98a353aa3dda) )
 		ROM_LOAD( "gr45.u4b", 0x08000, 0x4000, CRC(8eb14921) SHA1(fda8b8f8e801360310f7cb1aa4c6aea1fa0a4b25) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toggle )
+	static RomLoadPtr rom_toggle = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "tgle-ab0.bin", 0x10000, 0x2000, CRC(8c7b7fad) SHA1(13eaf5b3727ff8b7ce2cfbab99541ca1e538aeba) )
 		ROM_LOAD( "tgle-ab1.bin", 0x12000, 0x2000, CRC(771e5434) SHA1(b1bcefc81054c81a22a91106c5bc99ef204cd009) )
@@ -1982,10 +1982,10 @@ public class balsente
 		ROM_REGION( 0x10000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "tgle-gr0.bin", 0x00000, 0x2000, CRC(0e0e5d0e) SHA1(363858ce08767f8a9b8eaec56405377cdd74b178) )
 		ROM_LOAD( "tgle-gr1.bin", 0x02000, 0x2000, CRC(3b141ad2) SHA1(72430fd616adbc72d86a5f10672572a31bed0b5d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nametune )
+	static RomLoadPtr rom_nametune = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x70000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "nttab01.bin",  0x10000, 0x4000, CRC(f99054f1) SHA1(aaa3aae71f67be2df34b9682b1b4092a208fbf26) )
 		ROM_CONTINUE(             0x40000, 0x4000 )
@@ -2009,10 +2009,10 @@ public class balsente
 	
 		ROM_REGION( 0x10000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "nttgr0.bin",  0x00000, 0x8000, CRC(6b75bb4b) SHA1(e7131d112fb0b36985c5b6383700f55728a1c4fd) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nstocker )
+	static RomLoadPtr rom_nstocker = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.u8a",  0x10000, 0x4000, CRC(a635f973) SHA1(edb12469818a3114fb97d21e11c63eb37678a07b) )
 		ROM_LOAD( "ab23.u7a",  0x14000, 0x4000, CRC(223acbb2) SHA1(195ebd349722cce323616c81cc4e86f0a9c6fa13) )
@@ -2031,10 +2031,10 @@ public class balsente
 		ROM_LOAD( "gr23.u3c", 0x04000, 0x4000, CRC(35d4433e) SHA1(399d04c2a29d993f77d0d5c2d62915081d4a85dd) )
 		ROM_LOAD( "gr45.u2c", 0x08000, 0x4000, CRC(734b858a) SHA1(71763789807021938b840a88af34aad7f4751298) )
 		ROM_LOAD( "gr67.u1c", 0x0c000, 0x4000, CRC(3311f9c0) SHA1(63b185c761b258113c31cc269ce0b1462bf37f40) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( sfootbal )
+	static RomLoadPtr rom_sfootbal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "sfbab01.bin",  0x10000, 0x4000, CRC(2a69803f) SHA1(ca86c9d079fbebae4c93c889d98a8573facc05da) )
 		ROM_LOAD( "sfbab23.bin",  0x14000, 0x4000, CRC(89f157c2) SHA1(59701b7770dce7ec01d0feb01d67450943e6cfbb) )
@@ -2049,10 +2049,10 @@ public class balsente
 		ROM_LOAD( "sfbgr23.bin", 0x04000, 0x4000, CRC(5c5af726) SHA1(04cdd476e6689d17273659fb1fe0ca642edbe5a8) )
 		ROM_LOAD( "sfbgr45.bin", 0x08000, 0x4000, CRC(e767251e) SHA1(3c05295317a673fb1de5924f27de276d2846d805) )
 		ROM_LOAD( "sfbgr67.bin", 0x0c000, 0x4000, CRC(42452a7a) SHA1(37479d6e9071ac775215a6815dbaf280b3c6a57f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( spiker )
+	static RomLoadPtr rom_spiker = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.u8a",  0x10000, 0x4000, CRC(2d53d023) SHA1(01c1d2cd7d8be60c40527e9c1571b84388a39bd8) )
 		ROM_LOAD( "ab23.u7a",  0x14000, 0x4000, CRC(3be87edf) SHA1(0d4f1ff501d5d865abc3906f6b232ec04586d3dc) )
@@ -2065,10 +2065,10 @@ public class balsente
 		ROM_LOAD( "gr01.u4c", 0x00000, 0x4000, CRC(0caa6e3e) SHA1(ce6765d44e444d24129ec99f04a41a866a32eee2) )
 		ROM_LOAD( "gr23.u3c", 0x04000, 0x4000, CRC(970c81f6) SHA1(f22189e172a795d115597feb48ccbc04be3859b9) )
 		ROM_LOAD( "gr45.u2c", 0x08000, 0x4000, CRC(90ddd737) SHA1(8e1dde2f42e9bf755dedeef218745d1fc54faac7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( stompin )
+	static RomLoadPtr rom_stompin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab01.bin",  0x10000, 0x4000, CRC(46f428c6) SHA1(06c59d06ccc0bd7067e419f12781050ab4ac98c2) )
 		ROM_LOAD( "ab23.bin",  0x14000, 0x4000, CRC(0e13132f) SHA1(d572e5d170df99bb99db7d41ede881c24e5b8d1c) )
@@ -2085,10 +2085,10 @@ public class balsente
 		ROM_LOAD( "gr23.u3c", 0x04000, 0x4000, CRC(761abb80) SHA1(a1278e93a4fa66cc4d347954dd45121120da568d) )
 		ROM_LOAD( "gr45.u2c", 0x08000, 0x4000, CRC(0d2cf2e6) SHA1(beccb1342127e79a845c4b6b20f20052097ebb98) )
 		ROM_LOAD( "gr67.u2c", 0x0c000, 0x4000, CRC(2bab2784) SHA1(a4020fd8f5ca2fdb37efd37cbccf86cae0468eb0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rescraid )
+	static RomLoadPtr rom_rescraid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab1.a10",   0x10000, 0x8000, CRC(33a76b47) SHA1(72cefb3ae7d0ecfc099f9d09a26533dd7ca7c4f2) )
 		ROM_LOAD( "ab12.a12",  0x18000, 0x8000, CRC(7c7a9f12) SHA1(2dbe1158d124ecd24aeb6e46079a8e08fda61208) )
@@ -2101,10 +2101,10 @@ public class balsente
 		ROM_REGION( 0x10000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "gr0.a5",    0x00000, 0x8000, CRC(e0dfc133) SHA1(0b120b4410098d8db26b5819043d4fe7c426b948) )
 		ROM_LOAD( "gr4.a7",    0x08000, 0x8000, CRC(952ade30) SHA1(f065368f645616d6d84be469ba45a9afa8788eda) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rescrdsa )
+	static RomLoadPtr rom_rescrdsa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "ab1-sa.a10",   0x10000, 0x8000, CRC(aa0a9f48) SHA1(b871573df0abdba20de78f655da846423191f0b4) )
 		ROM_LOAD( "ab12-sa.a12",  0x18000, 0x8000, CRC(16d4da86) SHA1(240cfe8c5c4c005da9b9f370a04ed32fc245ec64) )
@@ -2117,10 +2117,10 @@ public class balsente
 		ROM_REGION( 0x10000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "gr0.a5",    0x00000, 0x8000, CRC(e0dfc133) SHA1(0b120b4410098d8db26b5819043d4fe7c426b948) )
 		ROM_LOAD( "gr4.a7",    0x08000, 0x8000, CRC(952ade30) SHA1(f065368f645616d6d84be469ba45a9afa8788eda) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( grudge )
+	static RomLoadPtr rom_grudge = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "grudge.ab0", 0x10000, 0x8000, CRC(260965ca) SHA1(79eb5dc6605974ece3d5564f10c4598204907398) )
 		ROM_LOAD( "grudge.ab4", 0x18000, 0x8000, CRC(c6cd734d) SHA1(076546569e9c8ff40f96bd2cac014bcabc53099d) )
@@ -2132,10 +2132,10 @@ public class balsente
 	
 		ROM_REGION( 0x8000, REGION_GFX1, 0 )		/* up to 64k of sprites */
 		ROM_LOAD( "grudge.gr0", 0x00000, 0x8000, CRC(b9681f53) SHA1(bb0c516408f1769e018f0ec8707786d4d1e9ef7e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( shrike )
+	static RomLoadPtr rom_shrike = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 64k for code for the first CPU, plus 128k of banked ROMs */
 		ROM_LOAD( "savgu35.bin", 0x10000, 0x2000, CRC(dd2230a0) SHA1(72be0e07d76ee1f170ab457ae62db87111758697) )
 		ROM_LOAD( "savgu20.bin", 0x12000, 0x2000, CRC(3d140edc) SHA1(6c7e7dda7718e3f9644aad317da0b2277c2c1402) )
@@ -2171,7 +2171,7 @@ public class balsente
 		ROM_LOAD( "savgu12.bin", 0x18000, 0x2000, CRC(ccdfedb1) SHA1(b87e885df46e814626f46102f323ccd8396bcf8f) )
 		ROM_LOAD( "savgu11.bin", 0x1a000, 0x2000, CRC(db11ff4c) SHA1(cd85486cd08ec4392421e9b94d380b81a575c811) )
 		ROM_LOAD( "savgu10.bin", 0x1c000, 0x2000, CRC(6f3d9aa1) SHA1(7616dd016f5c8990b4972cf6edf758e27857aa1e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

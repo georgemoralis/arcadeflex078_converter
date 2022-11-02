@@ -361,7 +361,7 @@ public class zac2650
 	    /* c4 = hit saucer */
 	} };
 	
-	ROM_START( sia2650 )
+	static RomLoadPtr rom_sia2650 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x2000, REGION_CPU1, 0 )
 		ROM_LOAD( "42_1.bin",   0x0000, 0x0800, CRC(a85550a9) SHA1(3f1e6b8e61894ff997e31b9c5ff819aa4678394e) )
 		ROM_LOAD( "44_2.bin",   0x0800, 0x0800, CRC(48d5a3ed) SHA1(7f6421ba8225d49c1038595517f31b076d566586) )
@@ -369,9 +369,9 @@ public class zac2650
 	
 		ROM_REGION( 0x400, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "06_inv.bin", 0x0000, 0x0400, CRC(7bfed23e) SHA1(f754f0a4d6c8f9812bf333c30fa433b63d49a750) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tinv2650 )
+	static RomLoadPtr rom_tinv2650 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x2000, REGION_CPU1, 0 )
 		ROM_LOAD( "42_1.bin",   0x0000, 0x0800, CRC(a85550a9) SHA1(3f1e6b8e61894ff997e31b9c5ff819aa4678394e) )
 		ROM_LOAD( "44_2t.bin",  0x0800, 0x0800, CRC(083c8621) SHA1(d9b33d532903b0e6dee2357b9e3b329856505a73) )
@@ -379,9 +379,9 @@ public class zac2650
 	
 		ROM_REGION( 0x400, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "06_inv.bin", 0x0000, 0x0400, CRC(7bfed23e) SHA1(f754f0a4d6c8f9812bf333c30fa433b63d49a750) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dodgem )
+	static RomLoadPtr rom_dodgem = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x2000, REGION_CPU1, 0 )
 		ROM_LOAD( "rom1.bin",     0x0000, 0x0400, CRC(a327b57d) SHA1(a9cb17e60ab7b4ed9d5a9e7f8451a8f29bb7d00d) )
 		ROM_LOAD( "rom2.bin",     0x0400, 0x0400, CRC(2a06ec74) SHA1(34fd3cbb1ddadb81abde54046bf245e2285bb740) )
@@ -396,7 +396,7 @@ public class zac2650
 		/* unknown */
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "74s571",		  0x0000, 0x0200, CRC(cc0b407e) SHA1(e675e3d7ff82e1cff9001e367620208bffa8b42f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( tinvader )

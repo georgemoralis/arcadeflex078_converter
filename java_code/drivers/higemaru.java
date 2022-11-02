@@ -218,7 +218,7 @@ public class higemaru
 	
 	***************************************************************************/
 	
-	ROM_START( higemaru )
+	static RomLoadPtr rom_higemaru = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "hg4",          0x0000, 0x2000, CRC(dc67a7f9) SHA1(701875e2e85efbe84bf66515117861563f3883c0) )
 		ROM_LOAD( "hg5",          0x2000, 0x2000, CRC(f65a4b68) SHA1(687d46406de389c8bad6cc052a2516135db93d4a) )
@@ -238,7 +238,7 @@ public class higemaru
 		ROM_LOAD( "hgb1",         0x0120, 0x0100, CRC(07c607ce) SHA1(c048602d62f47129152bbc7ccd38627d78a4392f) )	/* sprite lookup table */
 		ROM_LOAD( "hgb4",         0x0220, 0x0100, CRC(712ac508) SHA1(5349d722ab6733afdda65f6e0a98322f0d515e86) )	/* interrupt timing (not used) */
 		ROM_LOAD( "hgb2",         0x0320, 0x0100, CRC(4921635c) SHA1(aee37d6cdc36acf0f11ff5f93e7b16e4b12f6c39) )	/* video timing? (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1984, higemaru, 0, higemaru, higemaru, 0, ROT0, "Capcom", "Pirate Ship Higemaru" )

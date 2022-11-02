@@ -714,7 +714,7 @@ public class hyprduel
 	}
 	
 	
-	ROM_START( hyprduel )
+	static RomLoadPtr rom_hyprduel = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "hd_prg2.rom", 0x000000, 0x40000, CRC(c7402722) SHA1(e385676cdcee65a3ddf07791d82a1fe83ba1b3e2) )
 		ROM_LOAD16_BYTE( "hd_prg1.rom", 0x000001, 0x40000, CRC(d8297c2b) SHA1(2e23c5b1784d0a465c0c0dc3ca28505689a8b16c) )
@@ -729,9 +729,9 @@ public class hyprduel
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* Samples */
 		ROM_LOAD( "97.11", 0x00000, 0x40000, CRC(bf3f8574) SHA1(9e743f05e53256c886d43e1f0c43d7417134b9b3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hyprdelj )
+	static RomLoadPtr rom_hyprdelj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "u24a.10", 0x000000, 0x40000, CRC(2458f91d) SHA1(c75c7bccc84738e29b35667793491a1213aea1da) )
 		ROM_LOAD16_BYTE( "u23a.9",  0x000001, 0x40000, CRC(98aedfca) SHA1(42028e57ac79473cde683be2100b953ff3b2b345) )
@@ -746,7 +746,7 @@ public class hyprduel
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* Samples */
 		ROM_LOAD( "97.11", 0x00000, 0x40000, CRC(bf3f8574) SHA1(9e743f05e53256c886d43e1f0c43d7417134b9b3) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1993, hyprduel, 0,        hyprduel, hyprduel, hyprduel, ROT0, "Technosoft", "Hyper Duel (World)", GAME_NOT_WORKING )

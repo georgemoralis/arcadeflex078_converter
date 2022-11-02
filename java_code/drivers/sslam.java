@@ -271,7 +271,7 @@ public class sslam
 	//	MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( sslam )
+	static RomLoadPtr rom_sslam = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xD00000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "it_21.bin", 0x00000, 0x80000, CRC(1ce52917) SHA1(b9b1d14ea44c248ce6e615c5c553c0d485c1302b) )
 		ROM_RELOAD ( 0xc00000, 0x80000 )
@@ -292,7 +292,7 @@ public class sslam
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 ) /* OKI Samples */
 		ROM_LOAD( "it_20.bin", 0x00000, 0x80000, CRC(d0a9245f) SHA1(2e840cdd7bdfe7c6f986daf88576de0559597499) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX(1993, sslam, 0, sslam, sslam, 0, ROT0, "Playmark", "Super Slam", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

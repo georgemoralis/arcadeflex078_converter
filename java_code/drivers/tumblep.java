@@ -909,7 +909,7 @@ public class tumblep
 	
 	/******************************************************************************/
 	
-	ROM_START( tumblep )
+	static RomLoadPtr rom_tumblep = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE("hl00-1.f12", 0x00000, 0x40000, CRC(fd697c1b) SHA1(1a3dee4c7383f2bc2d73037e80f8f5d8297e7433) )
 		ROM_LOAD16_BYTE("hl01-1.f13", 0x00001, 0x40000, CRC(d5a62a3f) SHA1(7249563993fa8e1f19ddae51306d4a576b5cb206) )
@@ -926,9 +926,9 @@ public class tumblep
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 ) /* Oki samples */
 		ROM_LOAD( "hl03-.j15",    0x00000, 0x20000, CRC(01b81da0) SHA1(914802f3206dc59a720af9d57eb2285bc8ba822b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tumblepj )
+	static RomLoadPtr rom_tumblepj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE("hk00-1.f12", 0x00000, 0x40000, CRC(2d3e4d3d) SHA1(0acc8b93bd49395904dff11c582bdbaccdbd3eef) )
 		ROM_LOAD16_BYTE("hk01-1.f13", 0x00001, 0x40000, CRC(56912a00) SHA1(0545f6bff2a0aa2f36adda0f9d73b165387abc3a) )
@@ -945,9 +945,9 @@ public class tumblep
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 ) /* Oki samples */
 		ROM_LOAD( "hl03-.j15",    0x00000, 0x20000, CRC(01b81da0) SHA1(914802f3206dc59a720af9d57eb2285bc8ba822b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tumblepb )
+	static RomLoadPtr rom_tumblepb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE ("thumbpop.12", 0x00000, 0x40000, CRC(0c984703) SHA1(588d2b2464e0027c8d0703a2b62ebda225ba4276) )
 		ROM_LOAD16_BYTE( "thumbpop.13", 0x00001, 0x40000, CRC(864c4053) SHA1(013eb35e79aa7a7cd1a8061c4b75b37a8bfb10c6) )
@@ -962,9 +962,9 @@ public class tumblep
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 ) /* Oki samples */
 		ROM_LOAD( "thumbpop.snd", 0x00000, 0x80000, CRC(fabbf15d) SHA1(de60be43a5cd1d4b93c142bde6cbfc48a25545a3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tumblep2 )
+	static RomLoadPtr rom_tumblep2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE ("thumbpop.2", 0x00000, 0x40000, CRC(34b016e1) SHA1(b4c496358d48469d170a69e8bba58e0ea919b418) )
 		ROM_LOAD16_BYTE( "thumbpop.3", 0x00001, 0x40000, CRC(89501c71) SHA1(2c202218934b845fdf7c99eaf280dccad90767f2) )
@@ -979,9 +979,9 @@ public class tumblep
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 ) /* Oki samples */
 		ROM_LOAD( "thumbpop.snd", 0x00000, 0x80000, CRC(fabbf15d) SHA1(de60be43a5cd1d4b93c142bde6cbfc48a25545a3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( jumpkids )
+	static RomLoadPtr rom_jumpkids = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "23.15c", 0x00000, 0x40000, CRC(6ba11e91) SHA1(9f83ef79beb97af1625e7b46858d6f0681dafb23) )
 		ROM_LOAD16_BYTE( "24.16c", 0x00001, 0x40000, CRC(5795d98b) SHA1(d1435f0b79a4fa45770c56b91f078c1885fbd048) )
@@ -1004,9 +1004,9 @@ public class tumblep
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 ) /* Samples */
 		ROM_LOAD( "22.2c", 0x00000, 0x20000, CRC(fae44fbf) SHA1(142215ccca9e405232afbfc95527e13cc5b8296e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fncywld )
+	static RomLoadPtr rom_fncywld = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "01_fw02.bin", 0x000000, 0x080000, CRC(ecb978c1) SHA1(68fbf93a81875f744c6f9820dc4c7d88e912e0a0) )
 		ROM_LOAD16_BYTE( "02_fw03.bin", 0x000001, 0x080000, CRC(2d233b42) SHA1(aebeb5d3e06e73d14f713f201b25466bcac97a68) )
@@ -1025,7 +1025,7 @@ public class tumblep
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* Samples */
 		ROM_LOAD( "00_fw01.bin", 0x000000, 0x040000, CRC(b395fe01) SHA1(ac7f2e21413658f8d2a1abf3a76b7817a4e050c9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Hatch Catch
 	Interrupts
@@ -1039,7 +1039,7 @@ public class tumblep
 	
 	*/
 	
-	ROM_START( htchctch )
+	static RomLoadPtr rom_htchctch = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "p03.b16",  0x00001, 0x20000, CRC(eff14c40) SHA1(8fdda1fb859546c16f940e51f7e126768205154c) )
 		ROM_LOAD16_BYTE( "p04.b17",  0x00000, 0x20000, CRC(6991483a) SHA1(c8d868ef1f87655c37f0b1efdbb71cd26918f270) )
@@ -1068,13 +1068,13 @@ public class tumblep
 		ROM_LOAD16_BYTE( "p10uor3.bin",  0x40000, 0x20000, CRC(6462e6e0) SHA1(0d107214dfb257e15931701bad6b42c6aadd8a18) )
 		ROM_LOAD16_BYTE( "p11uor4.bin",  0x40001, 0x20000, CRC(9c511d98) SHA1(6615cbb125bd1e1b4da400ec4c4a0f4df8f6fa75) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* BC Story
 	protected like hatch catch .. but different code .. we don't have it
 	also might be bad dumps, rom data is in a strange order */
 	
-	ROM_START( bcstry )
+	static RomLoadPtr rom_bcstry = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "bcstry_u.35",  0x20001, 0x20000, BAD_DUMP CRC(d25b80a4) SHA1(6ea1c28cf508b856e93a06063e634a09291cb32c) )
 		ROM_CONTINUE ( 0x00001, 0x20000)
@@ -1115,7 +1115,7 @@ public class tumblep
 		ROM_LOAD16_BYTE( "bcstry_u.105", 0x300001, 0x80000, CRC(8166b596) SHA1(cbf6f5cec5f6991bb1d4ec0ea03cd617ff38fc3b) ) // a
 		ROM_LOAD16_BYTE( "bcstry_u.107", 0x300000, 0x80000, CRC(ab3c923a) SHA1(aaca1d2ed7b53e0933e0bd94a19458dd1598f204) ) // a
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

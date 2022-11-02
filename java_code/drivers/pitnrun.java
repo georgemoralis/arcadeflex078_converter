@@ -334,7 +334,7 @@ public class pitnrun
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( pitnrun )
+	static RomLoadPtr rom_pitnrun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "pr12",  0x00000, 0x02000, CRC(587a7b85) SHA1(f200ff9b706e13760a23e0187c6bffe496af0087) )
 		ROM_LOAD( "pr11",  0x02000, 0x02000, CRC(270cd6dd) SHA1(ad42562e18aa30319fc55c201e5507e8734a5b4d) )
@@ -367,7 +367,7 @@ public class pitnrun
 		ROM_LOAD( "clr.1",  0x0000, 0x0020, CRC(643012f4) SHA1(4a0c9766b9da456e39ce379ad62d695bf82413b0) )
 		ROM_LOAD( "clr.2",  0x0020, 0x0020, CRC(50705f02) SHA1(a3d348678fd66f37c7a0d29af88f40740918b8d3) )
 		ROM_LOAD( "clr.3",  0x0040, 0x0020, CRC(25e70e5e) SHA1(fdb9c69e9568a725dd0e3ac25835270fb4f49280) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1984, pitnrun, 0, pitnrun, pitnrun, 0, ROT90, "Taito Corporation", "Pit & Run", GAME_IMPERFECT_SOUND )
 	

@@ -1089,7 +1089,7 @@ public class mitchell
 	
 	
 	
-	ROM_START( mgakuen )
+	static RomLoadPtr rom_mgakuen = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 192k for code */
 		ROM_LOAD( "mg-1.1j",      0x00000, 0x08000, CRC(bf02ea6b) SHA1(bb1f5fbb211a5ed181f1afbba6b39737639d3ee7) )
 		ROM_LOAD( "mg-2.1l",      0x10000, 0x20000, CRC(64141b0c) SHA1(2de6bcd5cf2c042e5bf5c294dd7625393e99682b) )
@@ -1106,9 +1106,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "mg-5.1c",      0x00000, 0x80000, CRC(170332f1) SHA1(bc60f144a224f348fd5b8c0207e18a881f739fc1) )	/* banked */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( 7toitsu )
+	static RomLoadPtr rom_7toitsu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 192k for code */
 		ROM_LOAD( "mc01.1j",      0x00000, 0x08000, CRC(0bebe45f) SHA1(24fadffd0033565441a75f36e2cb085a37e0f0e5) )
 		ROM_LOAD( "mc02.1l",      0x10000, 0x20000, CRC(375378b0) SHA1(cbb5db5fda1d87902b22130243d579cb28803707) )
@@ -1125,9 +1125,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "mg-5.1c",      0x00000, 0x80000, CRC(170332f1) SHA1(bc60f144a224f348fd5b8c0207e18a881f739fc1) )	/* banked */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mgakuen2 )
+	static RomLoadPtr rom_mgakuen2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "mg2-xf.1j",    0x00000, 0x08000, CRC(c8165d2d) SHA1(95146e293b2e005c4015590811119a4070dda65b) )
 		ROM_LOAD( "mg2-y.1l",     0x10000, 0x20000, CRC(75bbcc14) SHA1(52ec279fda131c8de06d8c940df12d61ec6881cc) )
@@ -1145,9 +1145,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "mg2-e.1c",     0x00000, 0x80000, CRC(70fd0809) SHA1(7f85fc5f575c925c3246b45fc041f57fc3eb7cc8) )	/* banked */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pkladies )
+	static RomLoadPtr rom_pkladies = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x20000, REGION_CPU1, 0 )	/* 128k for code + 128k for decrypted opcodes */
 		ROM_LOAD( "pko-prg1.14f", 0x00000, 0x08000, CRC(86585a94) SHA1(067791da20556e6c47de26fbf85389d92f9709db) )
 		ROM_LOAD( "pko-prg2.15f", 0x10000, 0x10000, CRC(86cbe82d) SHA1(3997a642004d1226cfce0f590123d4e407edf094) )
@@ -1165,9 +1165,9 @@ public class mitchell
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "pko-voi1.2d",  0x00000, 0x20000, CRC(07e0f531) SHA1(315715f7686ae09c446029da36faec5bab7fcaf0) )
 		ROM_LOAD( "pko-voi2.3d",  0x20000, 0x20000, CRC(18398bf6) SHA1(9e9ab85383350d01ba597951a48f18ecee1f46c6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pkladiel )
+	static RomLoadPtr rom_pkladiel = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x30000, REGION_CPU1, 0 )	/* 128k for code + 128k for decrypted opcodes */
 		ROM_LOAD( "pk05.14f",     0x00000, 0x08000, CRC(ea1740a6) SHA1(eafd3fb0056a648dfc67b5d0a1dc93c4262e2a8b) )
 		ROM_LOAD( "pk06.15f",     0x10000, 0x20000, CRC(3078ff5e) SHA1(5d91d68a07a968ee59f693841da165833a9fcf08) )	/* larger than pkladies - 2nd half unused? */
@@ -1185,9 +1185,9 @@ public class mitchell
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "pko-voi1.2d",  0x00000, 0x20000, CRC(07e0f531) SHA1(315715f7686ae09c446029da36faec5bab7fcaf0) )
 		ROM_LOAD( "pko-voi2.3d",  0x20000, 0x20000, CRC(18398bf6) SHA1(9e9ab85383350d01ba597951a48f18ecee1f46c6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dokaben )
+	static RomLoadPtr rom_dokaben = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "db06.11h",     0x00000, 0x08000, CRC(413e0886) SHA1(e9e6117fbbd980bc0f5448ada6c1856919bf92b5) )
 		ROM_LOAD( "db07.13h",     0x10000, 0x20000, CRC(8bdcf49e) SHA1(7d845ae2e640ec7d8d642e3aeef741d9f7b0a57c) )
@@ -1207,9 +1207,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "db01.1d",      0x00000, 0x20000, CRC(62fa6b81) SHA1(0168b40df583f11cb28718aa8ab8be7cc08bf561) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pang )
+	static RomLoadPtr rom_pang = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x30000, REGION_CPU1, 0 )	/* 192k for code + 192k for decrypted opcodes */
 		ROM_LOAD( "pang6.bin",    0x00000, 0x08000, CRC(68be52cd) SHA1(67b9ac15f4cbd3959c417f979beae36ae17334c1) )
 		ROM_LOAD( "pang7.bin",    0x10000, 0x20000, CRC(4a2e70f6) SHA1(039db1b51374e5637b5c2ba8e18ccd08816613a7) )
@@ -1228,9 +1228,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bb1.bin",      0x00000, 0x20000, CRC(c52e5b8e) SHA1(933b954bfdd2d67e28b032ffabde192531249c1f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pangb )
+	static RomLoadPtr rom_pangb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x30000, REGION_CPU1, 0 )	/* 192k for code + 192k for decrypted opcodes */
 		ROM_LOAD( "pang_04.bin",  0x30000, 0x08000, CRC(f68f88a5) SHA1(6f57891d399a46d8d5a531771129552ed420d10a) )   /* Decrypted opcode + data */
 		ROM_CONTINUE(             0x00000, 0x08000 )
@@ -1251,9 +1251,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bb1.bin",      0x00000, 0x20000, CRC(c52e5b8e) SHA1(933b954bfdd2d67e28b032ffabde192531249c1f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bbros )
+	static RomLoadPtr rom_bbros = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x30000, REGION_CPU1, 0 )	/* 192k for code + 192k for decrypted opcodes */
 		ROM_LOAD( "bb6.bin",      0x00000, 0x08000, CRC(a3041ca4) SHA1(2accb2151f621e4802211efe986969ebd3acb6d4) )
 		ROM_LOAD( "bb7.bin",      0x10000, 0x20000, CRC(09231c68) SHA1(9e735487a99a5eb89a6abb81d5d9a20414ad75bf) )
@@ -1272,9 +1272,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bb1.bin",      0x00000, 0x20000, CRC(c52e5b8e) SHA1(933b954bfdd2d67e28b032ffabde192531249c1f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pompingw )
+	static RomLoadPtr rom_pompingw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x30000, REGION_CPU1, 0 )	/* 192k for code + 192k for decrypted opcodes */
 		ROM_LOAD( "pwj_06.11h",   0x00000, 0x08000, CRC(4a0a6426) SHA1(c61346c5f80507bdf543e9ea32ee3f814be8e27f) )
 		ROM_LOAD( "pwj_07.13h",   0x10000, 0x20000, CRC(a9402420) SHA1(2ca3aa59d561826477e3509fcaeeec753d64d419) )
@@ -1293,9 +1293,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bb1.bin",      0x00000, 0x20000, CRC(c52e5b8e) SHA1(933b954bfdd2d67e28b032ffabde192531249c1f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cworld )
+	static RomLoadPtr rom_cworld = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "cw05.bin",     0x00000, 0x08000, CRC(d3c1723d) SHA1(b67f63e39f4301909c967555222820b54e98a205) )
 		ROM_LOAD( "cw06.bin",     0x10000, 0x20000, CRC(d71ed4a3) SHA1(5b6d498810e6fc8041f4326087f3be56863e91d9) )
@@ -1317,9 +1317,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "cw01.bin",     0x00000, 0x20000, CRC(f4368f5b) SHA1(7a8657dd4c5f3b60f5137af3c644793c479562a8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hatena )
+	static RomLoadPtr rom_hatena = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "q2-05.rom",    0x00000, 0x08000, CRC(66c9e1da) SHA1(7ddbc4acf9d9d5b69f0bb60af65a171f3ba185b1) )
 		ROM_LOAD( "q2-06.rom",    0x10000, 0x20000, CRC(5fc39916) SHA1(84ead43d8bad3f9c88fcb02171500298613646dc) )
@@ -1341,9 +1341,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "q2-01.rom",    0x00000, 0x20000, CRC(149e7a89) SHA1(103ab075b92c895e9991e7ef23df2b38d6a792c6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spang )
+	static RomLoadPtr rom_spang = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "spe_06.rom",   0x00000, 0x08000, CRC(1af106fb) SHA1(476ba5c95e090663a47d3f98451bf3b79bac7748) )
 		ROM_LOAD( "spe_07.rom",   0x10000, 0x20000, CRC(208b5f54) SHA1(9d44f7240b56756dcb69d110036b1cb13b1bbc02) )
@@ -1363,9 +1363,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "spe_01.rom",   0x00000, 0x20000, CRC(2d19c133) SHA1(b3ec226f35494dfc259e910895cec8a49dd2f846) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sbbros )
+	static RomLoadPtr rom_sbbros = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "06.j12",       0x00000, 0x08000, CRC(292eee6a) SHA1(d33368d2373a1ee9e24ada6aa045e0675c8e8160) )
 		ROM_LOAD( "07.j13",       0x10000, 0x20000, CRC(f46b698d) SHA1(6a1867f591aa0fb9e02dd472699df93f9d018793) )
@@ -1385,9 +1385,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "01.d1",        0x00000, 0x20000, CRC(b96ea126) SHA1(83fa71994518d40b8938520faa8701c63b7f579e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( marukin )
+	static RomLoadPtr rom_marukin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x30000, REGION_CPU1, 0 )	/* 192k for code + 192k for decrypted opcodes */
 		ROM_LOAD( "mg3-01.9d",    0x00000, 0x08000, CRC(04357973) SHA1(61b0b347479126213c90ef6833c09537fab03093) )
 		ROM_LOAD( "mg3-02.10d",   0x10000, 0x20000, CRC(50d08da0) SHA1(5d115eb646f34827d02219be3d5346f05c0c27b6) )
@@ -1404,9 +1404,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "mg3-e.1d",     0x00000, 0x80000, CRC(106c2fa9) SHA1(21d4579f41282dc69ea11fe2977c427543f1c69d) )	/* banked */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qtono1 )
+	static RomLoadPtr rom_qtono1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "q3-05.rom",    0x00000, 0x08000, CRC(1dd0a344) SHA1(814049bf957b78ff2d1c8da316dfe5303abee4df) )
 		ROM_LOAD( "q3-06.rom",    0x10000, 0x20000, CRC(bd6a2110) SHA1(8c4d7a10dfaee0fcd18be21c80fc3d2ff9615eae) )
@@ -1428,9 +1428,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "q3-01.rom",    0x00000, 0x20000, CRC(6c1be591) SHA1(7cab7121d78284dc95ae4218d1e7639a659dda8b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( qsangoku )
+	static RomLoadPtr rom_qsangoku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "q4-05c.rom",   0x00000, 0x08000, CRC(e1d010b4) SHA1(7fca1ee45054331320abb6a99f10fa98dd4be994) )
 		ROM_LOAD( "q4-06.rom",    0x10000, 0x20000, CRC(a0301849) SHA1(60910d84f869fd5735cd5500a93b761d8b8dbacb) )
@@ -1452,9 +1452,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "q4-01.rom",    0x00000, 0x20000, CRC(5d0d07d8) SHA1(d36e42852dd1ec0955d19b16e7dfe157b3d48522) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( block )
+	static RomLoadPtr rom_block = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "ble_05.bin",   0x00000, 0x08000, CRC(fa2a4536) SHA1(8f584745116bd0ced4d66719cd80c0372b797134) )
 		ROM_LOAD( "ble_06.bin",   0x10000, 0x20000, CRC(58a77402) SHA1(cb24b1edd53a0965c3a9a34fe764b5c1f8dd9733) )
@@ -1476,9 +1476,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bl_01.rom",    0x00000, 0x20000, CRC(c2ec2abb) SHA1(89981f2a887ace4c4580e2828cbdc962f89c215e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( blocka )
+	static RomLoadPtr rom_blocka = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "ble_05.rom",   0x00000, 0x08000, CRC(c12e7f4c) SHA1(335f4eab2323b942d5feeb3bab6f7286fabfffb4) )
 		ROM_LOAD( "ble_06.rom",   0x10000, 0x20000, CRC(cdb13d55) SHA1(2e4489d12a603b4c7dfb90d246ebff9176e88a0b) )
@@ -1500,9 +1500,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bl_01.rom",    0x00000, 0x20000, CRC(c2ec2abb) SHA1(89981f2a887ace4c4580e2828cbdc962f89c215e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( blockj )
+	static RomLoadPtr rom_blockj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "blj_05.rom",   0x00000, 0x08000, CRC(3b55969a) SHA1(86de2f1f5878de380a8b1e3935cffa146863f07f) )
 		ROM_LOAD( "ble_06.rom",   0x10000, 0x20000, CRC(cdb13d55) SHA1(2e4489d12a603b4c7dfb90d246ebff9176e88a0b) )
@@ -1524,9 +1524,9 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bl_01.rom",    0x00000, 0x20000, CRC(c2ec2abb) SHA1(89981f2a887ace4c4580e2828cbdc962f89c215e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( blockbl )
+	static RomLoadPtr rom_blockbl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x50000, REGION_CPU1, 0 )	/* 320k for code + 320k for decrypted opcodes */
 		ROM_LOAD( "m7.l6",        0x50000, 0x08000, CRC(3b576fd9) SHA1(99cf14eba089ed9c7d9f287277dab4a8a997a9a4) )   /* Decrypted opcode + data */
 		ROM_CONTINUE(             0x00000, 0x08000 )
@@ -1552,7 +1552,7 @@ public class mitchell
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* OKIM */
 		ROM_LOAD( "bl_01.rom",    0x00000, 0x20000, CRC(c2ec2abb) SHA1(89981f2a887ace4c4580e2828cbdc962f89c215e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static void bootleg_decode(void)

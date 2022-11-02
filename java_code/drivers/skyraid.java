@@ -305,7 +305,7 @@ public class skyraid
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( skyraid )
+	static RomLoadPtr rom_skyraid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "030595.e1", 0x7000, 0x800, CRC(c6cb3a2b) SHA1(e4cb8d259446d0614c0c8f097f97dcf21869782e) )
 		ROM_RELOAD(            0xF000, 0x800 )
@@ -332,7 +332,7 @@ public class skyraid
 	
 		ROM_REGION( 0x0300, REGION_PROMS, 0 )
 		ROM_LOAD( "006559.c4", 0x0200, 0x100, CRC(5a8d0e42) SHA1(772220c4c24f18769696ddba26db2bc2e5b0909d) ) /* sync */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1978, skyraid, 0, skyraid, skyraid, 0, ORIENTATION_FLIP_Y, "Atari", "Sky Raider", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )

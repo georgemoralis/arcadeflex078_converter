@@ -511,7 +511,7 @@ public class hyperspt
 	
 	***************************************************************************/
 	
-	ROM_START( hyperspt )
+	static RomLoadPtr rom_hyperspt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	 /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "c01",          0x4000, 0x2000, CRC(0c720eeb) SHA1(cc0719db7e59c72e603ab2ca42565303bc41d281) )
 		ROM_LOAD( "c02",          0x6000, 0x2000, CRC(560258e0) SHA1(788d0d3cbbd97fb54eceb3281ccf84a31e5e3e98) )
@@ -547,9 +547,9 @@ public class hyperspt
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/*	64k for speech rom	  */
 		ROM_LOAD( "c08",          0x0000, 0x2000, CRC(e8f8ea78) SHA1(8d37818e5a2740c96696f37996f2a3f870386690) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hpolym84 )
+	static RomLoadPtr rom_hpolym84 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	 /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "c01",          0x4000, 0x2000, CRC(0c720eeb) SHA1(cc0719db7e59c72e603ab2ca42565303bc41d281) )
 		ROM_LOAD( "c02",          0x6000, 0x2000, CRC(560258e0) SHA1(788d0d3cbbd97fb54eceb3281ccf84a31e5e3e98) )
@@ -585,9 +585,9 @@ public class hyperspt
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/*	64k for speech rom	  */
 		ROM_LOAD( "c08",          0x0000, 0x2000, CRC(e8f8ea78) SHA1(8d37818e5a2740c96696f37996f2a3f870386690) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( roadf )
+	static RomLoadPtr rom_roadf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	 /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "g05_g01.bin",  0x4000, 0x2000, CRC(e2492a06) SHA1(e03895b83f1529dd7bb20e1380cb60c7606db3e4) )
 		ROM_LOAD( "g07_f02.bin",  0x6000, 0x2000, CRC(0bf75165) SHA1(d3d16d63ca15c8f6b05c37b4e37e41785334ffff) )
@@ -613,9 +613,9 @@ public class hyperspt
 		ROM_LOAD( "c03_c27.bin",  0x0000, 0x0020, CRC(45d5e352) SHA1(0f4d358aaffcb68193247090e82f093752730518) )
 		ROM_LOAD( "j12_c28.bin",  0x0020, 0x0100, CRC(2955e01f) SHA1(b0652d177a45571edc5978143d4023e7b173b383) )
 		ROM_LOAD( "a09_c29.bin",  0x0120, 0x0100, CRC(5b3b5f2a) SHA1(e83556fba6d50ad20dff6e19bd300ba0c30cc6e2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( roadf2 )
+	static RomLoadPtr rom_roadf2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	 /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "5g",           0x4000, 0x2000, CRC(d8070d30) SHA1(334e4586686c29d33c3281cc446c13d2d96301dd) )
 		ROM_LOAD( "6g",           0x6000, 0x2000, CRC(8b661672) SHA1(bdc983d1ad88372ea1fc8263d4c254d26079ece7) )
@@ -641,7 +641,7 @@ public class hyperspt
 		ROM_LOAD( "c03_c27.bin",  0x0000, 0x0020, CRC(45d5e352) SHA1(0f4d358aaffcb68193247090e82f093752730518) )
 		ROM_LOAD( "j12_c28.bin",  0x0020, 0x0100, CRC(2955e01f) SHA1(b0652d177a45571edc5978143d4023e7b173b383) )
 		ROM_LOAD( "a09_c29.bin",  0x0120, 0x0100, CRC(5b3b5f2a) SHA1(e83556fba6d50ad20dff6e19bd300ba0c30cc6e2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( hyperspt )

@@ -417,7 +417,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	ROM_START( eprom )
+	static RomLoadPtr rom_eprom = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xa0000, REGION_CPU1, 0 )	/* 10*64k for 68000 code */
 		ROM_LOAD16_BYTE( "136069.50a",   0x00000, 0x10000, CRC(08888dec) SHA1(a0a137828b9e1efbdbc0e5ddaf4d73d24b36948a) )
 		ROM_LOAD16_BYTE( "136069.40a",   0x00001, 0x10000, CRC(29cb1e97) SHA1(ccf7024dccbd61983d61450f15c805422e4eee09) )
@@ -457,10 +457,10 @@ public class eprom
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1360691.25d",  0x00000, 0x04000, CRC(409d818e) SHA1(63dcde3ce87c1a9d5afef8089432c499cc70f8f0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( eprom2 )
+	static RomLoadPtr rom_eprom2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xa0000, REGION_CPU1, 0 )	/* 10*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1025.50a",   0x00000, 0x10000, CRC(b0c9a476) SHA1(6d0edeeb9458e92191f6623307eddc9b2f830d4d) )
 		ROM_LOAD16_BYTE( "1024.40a",   0x00001, 0x10000, CRC(4cc2c50c) SHA1(088908cc57b07d71a5d664674e38fa02c55bb4fc) )
@@ -502,10 +502,10 @@ public class eprom
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1360691.25d",  0x00000, 0x04000, CRC(409d818e) SHA1(63dcde3ce87c1a9d5afef8089432c499cc70f8f0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( klaxp1 )
+	static RomLoadPtr rom_klaxp1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xa0000, REGION_CPU1, 0 )	/* 10*64k for 68000 code */
 		ROM_LOAD16_BYTE( "klax_ft1.50a",   0x00000, 0x10000, CRC(87ee72d1) SHA1(39ae6f8406f0768480bcc80d395a14d9c2c65dca) )
 		ROM_LOAD16_BYTE( "klax_ft1.40a",   0x00001, 0x10000, CRC(ba139fdb) SHA1(98a8ac5e0349b934f55d0d9de85abacd3fd0d77d) )
@@ -526,10 +526,10 @@ public class eprom
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "klaxadp0.1f", 0x00000, 0x10000, CRC(ba1e864f) SHA1(7c45e9040701b54c8be398c6e5cdf9201dc37c17) )
 		ROM_LOAD( "klaxadp1.1e", 0x10000, 0x10000, CRC(dec9a5ac) SHA1(8039d946ac3613fa6193b557cc8775c81871831d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( klaxp2 )
+	static RomLoadPtr rom_klaxp2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xa0000, REGION_CPU1, 0 )	/* 10*64k for 68000 code */
 		ROM_LOAD16_BYTE( "klax_ft2.50a",   0x00000, 0x10000, CRC(7d401937) SHA1(8db0560528a86b9cb01c4598a49694bd44b00dba) )
 		ROM_LOAD16_BYTE( "klax_ft2.40a",   0x00001, 0x10000, CRC(c5ca33a9) SHA1(c2e2948f987ba43f61c043baed06ffea8787be43) )
@@ -550,7 +550,7 @@ public class eprom
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM data */
 		ROM_LOAD( "klaxadp0.1f", 0x00000, 0x10000, CRC(ba1e864f) SHA1(7c45e9040701b54c8be398c6e5cdf9201dc37c17) )
 		ROM_LOAD( "klaxadp1.1e", 0x10000, 0x10000, CRC(dec9a5ac) SHA1(8039d946ac3613fa6193b557cc8775c81871831d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

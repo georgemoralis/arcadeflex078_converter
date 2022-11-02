@@ -1766,7 +1766,7 @@ public class cischeat
 	
 	***************************************************************************/
 	
-	ROM_START( bigrun )
+	static RomLoadPtr rom_bigrun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "br8950b.e1",  0x000000, 0x040000, CRC(bfb54a62) SHA1(49f78e162e8bc19a75c62029737acd665b9b124b) )
 		ROM_LOAD16_BYTE( "br8950b.e2",  0x000001, 0x040000, CRC(c0483e81) SHA1(e8fd8860191c7d8cb4dda44c69ce05cd58174a07) )
@@ -1831,7 +1831,7 @@ public class cischeat
 		ROM_LOAD( "br8951b.21",  0x000000, 0x020000, CRC(59b9c26b) SHA1(09fea3b77b045d9c1ed62bf53efa8b5242a33a10) )	// x00xxxxxxxxxxxxx, mask=0001e0
 		ROM_LOAD( "br8951b.22",  0x000000, 0x020000, CRC(c112a803) SHA1(224a2ed690b78caef266958a93524211ff4a8e70) )	// x00xxxxxxxxxxxxx
 		ROM_LOAD( "br8951b.23",  0x000000, 0x010000, CRC(b9474fec) SHA1(f1f0eab014e8f52572484b83f56189e0ff6f2b0d) )	// 000xxxxxxxxxxxxx
-	ROM_END
+	ROM_END(); }}; 
 	
 	DRIVER_INIT( bigrun )
 	{
@@ -1893,7 +1893,7 @@ public class cischeat
 	
 	***************************************************************************/
 	
-	ROM_START( cischeat )
+	static RomLoadPtr rom_cischeat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ch9071v2.03", 0x000000, 0x040000, CRC(dd1bb26f) SHA1(2b9330b45edcc3291ad4ac935558c1f070ab5bd9) )
 		ROM_LOAD16_BYTE( "ch9071v2.01", 0x000001, 0x040000, CRC(7b65276a) SHA1(e0075b6d09da12ab7c84b888ffe65cd33ec7c6b6) )
@@ -1953,7 +1953,7 @@ public class cischeat
 		ROM_LOAD( "ch9072.01",  0x000000, 0x020000, CRC(b2efed33) SHA1(3b347d4bc866aaa6cb53bd0991b4fb6a22e40a5c) ) // FIXED BITS (xxxxxxxx0xxxxxxx)
 		ROM_LOAD( "ch9072.02",  0x000000, 0x040000, CRC(536edde4) SHA1(45ebd2add357275177fcd7b6d9ea748c6756f1c0) )
 		ROM_LOAD( "ch9072.03",  0x000000, 0x040000, CRC(7e79151a) SHA1(5a305cff8600446be426641ce112208b379094b9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	DRIVER_INIT( cischeat )
 	{
@@ -2098,7 +2098,7 @@ public class cischeat
 	
 	***************************************************************************/
 	
-	ROM_START( f1gpstar )
+	static RomLoadPtr rom_f1gpstar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "9188a-27.v20", 0x000000, 0x040000, CRC(0a9d3896) SHA1(5e3332a1b779dead1e4f9ef274a2f168721db0ed) )
 		ROM_LOAD16_BYTE( "9188a-22.v20", 0x000001, 0x040000, CRC(de15c9ca) SHA1(f356b02ca66b7e8ab0293e6e28fcd3f7996c80c8) )
@@ -2180,7 +2180,7 @@ public class cischeat
 	
 		ROM_LOAD( "pr90015a",  0x000000, 0x000800, CRC(777583db) SHA1(8fd060a68fbb6156feb55afcfc5afd95999a8a62) )	// FIXED BITS (00000xxx0000xxxx)
 		ROM_LOAD( "pr90015b",  0x000000, 0x000100, CRC(be240dac) SHA1(6203b73c1a5e09e525380a78b555c3818929d5eb) )	// FIXED BITS (000xxxxx000xxxx1)
-	ROM_END
+	ROM_END(); }}; 
 	
 	DRIVER_INIT( f1gpstar )
 	{
@@ -2315,7 +2315,7 @@ public class cischeat
 	
 	***************************************************************************/
 	
-	ROM_START( f1gpstr2 )
+	static RomLoadPtr rom_f1gpstr2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "9188a-27.125", 0x000000, 0x040000, CRC(ee60b894) SHA1(92247cd3b0e3fb2ed0ad27062d1cc13dadb21465) )
 		ROM_LOAD16_BYTE( "9188a-22.92" , 0x000001, 0x040000, CRC(f229332b) SHA1(f7037515d77a1f42ce555b8baa15075d7009a5c6) )
@@ -2405,7 +2405,7 @@ public class cischeat
 	
 		ROM_LOAD( "pr90015a.117", 0x000000, 0x000800, CRC(777583db) SHA1(8fd060a68fbb6156feb55afcfc5afd95999a8a62) )	// FIXED BITS (00000xxx0000xxxx)
 		ROM_LOAD( "pr90015b.153", 0x000000, 0x000100, CRC(be240dac) SHA1(6203b73c1a5e09e525380a78b555c3818929d5eb) )	// FIXED BITS (000xxxxx000xxxx1)
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2441,7 +2441,7 @@ public class cischeat
 	
 	***************************************************************************/
 	
-	ROM_START( scudhamm )
+	static RomLoadPtr rom_scudhamm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )		/* Main CPU Code */
 		ROM_LOAD16_BYTE( "3", 0x000000, 0x040000, CRC(a908e7bd) SHA1(be0a8f959ab5c19122eee6c3def6137f37f1a9c6) )
 		ROM_LOAD16_BYTE( "4", 0x000001, 0x040000, CRC(981c8b02) SHA1(db6c8993bf1c3993ab31dd649022ab76169975e1) )
@@ -2474,7 +2474,7 @@ public class cischeat
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 )		/* Samples (4x40000) */
 		ROM_LOAD( "1.l",  0x000000, 0x080000, CRC(3c94aa90) SHA1(f9278fec9d93dac0309f30e35c727bd481f347d4) )
 		ROM_LOAD( "1.h",  0x080000, 0x080000, CRC(5caee787) SHA1(267f4d3c28e71e53180a5d0ff27a6555ac6fa4a0) )	// 1xxxxxxxxxxxxxxxxxx = 0xFF
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************

@@ -407,7 +407,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	ROM_START( foodf )
+	static RomLoadPtr rom_foodf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for 68000 code */
 		ROM_LOAD16_BYTE( "301-8c.020",   0x000001, 0x002000, CRC(dfc3d5a8) SHA1(7abe5e9c27098bd8c93cc06f1b9e3db0744019e9) )
 		ROM_LOAD16_BYTE( "302-9c.020",   0x000000, 0x002000, CRC(ef92dc5c) SHA1(eb41291615165f549a68ebc6d4664edef1a04ac5) )
@@ -424,10 +424,10 @@ public class foodf
 		ROM_REGION( 0x4000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "110-4d.020",   0x000000, 0x002000, CRC(8870e3d6) SHA1(702007d3d543f872b5bf5d00b49f6e05b46d6600) )
 		ROM_LOAD( "111-4e.020",   0x002000, 0x002000, CRC(84372edf) SHA1(9beef3ff3b28405c45d691adfbc233921073be47) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( foodf2 )
+	static RomLoadPtr rom_foodf2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for 68000 code */
 		ROM_LOAD16_BYTE( "201-8c.020",   0x000001, 0x002000, CRC(4ee52d73) SHA1(ff4ab8169a9b260bbd1f49023a30064e2f0b6686) )
 		ROM_LOAD16_BYTE( "202-9c.020",   0x000000, 0x002000, CRC(f8c4b977) SHA1(824d33baa413b2ee898c75157624ea007c92032f) )
@@ -444,10 +444,10 @@ public class foodf
 		ROM_REGION( 0x4000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "110-4d.020",   0x000000, 0x002000, CRC(8870e3d6) SHA1(702007d3d543f872b5bf5d00b49f6e05b46d6600) )
 		ROM_LOAD( "111-4e.020",   0x002000, 0x002000, CRC(84372edf) SHA1(9beef3ff3b28405c45d691adfbc233921073be47) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( foodfc )
+	static RomLoadPtr rom_foodfc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for 68000 code */
 		ROM_LOAD16_BYTE( "113-8c.020",   0x000001, 0x002000, CRC(193a299f) SHA1(58bbf714eff22d8a47b174e4b121f14a8dcb4ef9) )
 		ROM_LOAD16_BYTE( "114-9c.020",   0x000000, 0x002000, CRC(33ed6bbe) SHA1(5d80fb092d2964b851e6c5982572d4ffc5078c55) )
@@ -464,7 +464,7 @@ public class foodf
 		ROM_REGION( 0x4000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "110-4d.020",   0x000000, 0x002000, CRC(8870e3d6) SHA1(702007d3d543f872b5bf5d00b49f6e05b46d6600) )
 		ROM_LOAD( "111-4e.020",   0x002000, 0x002000, CRC(84372edf) SHA1(9beef3ff3b28405c45d691adfbc233921073be47) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

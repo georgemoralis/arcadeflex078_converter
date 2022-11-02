@@ -243,7 +243,7 @@ public class kickgoal
 	
 	/* Rom Loading ***************************************************************/
 	
-	ROM_START( kickgoal )
+	static RomLoadPtr rom_kickgoal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "ic6",   0x000000, 0x40000, CRC(498ca792) SHA1(c638c3a1755870010c5961b58bcb02458ff4e238) )
 		ROM_LOAD16_BYTE( "ic5",   0x000001, 0x40000, CRC(d528740a) SHA1(d56a71004aabc839b0833a6bf383e5ef9d4948fa) )
@@ -259,7 +259,7 @@ public class kickgoal
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )	/* OKIM6295 samples */
 		ROM_LOAD( "ic13",   0x00000, 0x080000, CRC(c6cb56e9) SHA1(835773b3f0647d3c553180bcf10e57ad44d68353) ) // BAD ADDRESS LINES (mask=010000)
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* GAME drivers **************************************************************/
 	

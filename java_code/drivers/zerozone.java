@@ -253,7 +253,7 @@ public class zerozone
 	
 	***************************************************************************/
 	
-	ROM_START( zerozone )
+	static RomLoadPtr rom_zerozone = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )     /* 128k for 68000 code */
 		ROM_LOAD16_BYTE( "zz-4.rom", 0x0000, 0x10000, CRC(83718b9b) SHA1(b3fc6da5816142b9c92a7b8615eb5bcb2c78ea46) )
 		ROM_LOAD16_BYTE( "zz-5.rom", 0x0001, 0x10000, CRC(18557f41) SHA1(6ef908732b7775c1ea2b33f799635075db5756de) )
@@ -267,9 +267,9 @@ public class zerozone
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )      /* ADPCM samples */
 		ROM_LOAD( "zz-2.rom", 0x00000, 0x20000, CRC(c7551e81) SHA1(520de3074fa6a71fef10d5a76cba5580fd1cbbae) )
 		ROM_LOAD( "zz-3.rom", 0x20000, 0x20000, CRC(e348ff5e) SHA1(6d2755d9b31366f4c2ddd296790234deb8f821c8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lvgirl94 )
+	static RomLoadPtr rom_lvgirl94 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )     /* 128k for 68000 code */
 		ROM_LOAD16_BYTE( "rom4", 0x0000, 0x10000, CRC(c4fb449e) SHA1(dd1c567ba2cf951267dd622e2e9af265e742f246) )
 		ROM_LOAD16_BYTE( "rom5", 0x0001, 0x10000, CRC(5d446a1a) SHA1(2d7ea25e5b86e7cf4eb7f10daa1eaaaed6830a53) )
@@ -284,7 +284,7 @@ public class zerozone
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )      /* ADPCM samples */
 		ROM_LOAD( "rom2", 0x00000, 0x20000, CRC(c7551e81) SHA1(520de3074fa6a71fef10d5a76cba5580fd1cbbae) )
 		ROM_LOAD( "rom3", 0x20000, 0x20000, CRC(e348ff5e) SHA1(6d2755d9b31366f4c2ddd296790234deb8f821c8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1993, zerozone, 0, zerozone, zerozone, 0, ROT0, "Comad", "Zero Zone" )

@@ -1905,7 +1905,7 @@ public class tnzs
 	
 	***************************************************************************/
 	
-	ROM_START( plumppop )
+	static RomLoadPtr rom_plumppop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "a98-09.bin", 0x00000, 0x08000, CRC(107f9e06) SHA1(0aa7f32721c3cab96eccc7c831b9f57877c4e1dc) )
 		ROM_CONTINUE(           0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -1939,9 +1939,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )		/* color proms */
 		ROM_LOAD( "a98-13.bpr", 0x0000, 0x200, CRC(7cde2da5) SHA1(0cccfc35fb716ebb4cffa85c75681f33ca80a56e) )	/* hi bytes */
 		ROM_LOAD( "a98-12.bpr", 0x0200, 0x200, CRC(90dc9da7) SHA1(f719dead7f4597e5ee6f1103599505b98cb58299) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( extrmatn )
+	static RomLoadPtr rom_extrmatn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )				/* Region 0 - main cpu */
 		ROM_LOAD( "b06-20.bin", 0x00000, 0x08000, CRC(04e3fc1f) SHA1(b1cf2f79f43fa33d6175368c897f84ec6aa6e746) )
 		ROM_CONTINUE(           0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -1963,9 +1963,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )
 		ROM_LOAD( "b06-09.bin", 0x00000, 0x200, CRC(f388b361) SHA1(f00db6ad6994cfe9b7ad76e30b7049b11f8c16e4) )	/* hi bytes */
 		ROM_LOAD( "b06-08.bin", 0x00200, 0x200, CRC(10c9aac3) SHA1(09d6f791dea358e78099af7a370b00b8504ffc97) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( arknoid2 )
+	static RomLoadPtr rom_arknoid2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )				/* Region 0 - main cpu */
 		ROM_LOAD( "b08_05.11c",	0x00000, 0x08000, CRC(136edf9d) SHA1(f632321650897eee585511a84f451a205d1f7704) )
 		ROM_CONTINUE(           0x18000, 0x08000 )			/* banked at 8000-bfff */
@@ -1987,9 +1987,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )
 		ROM_LOAD( "b08-08.15f",	0x00000, 0x200, CRC(a4f7ebd9) SHA1(094eb63c18898c6ee8d722492bdfd28091c61773) )	/* hi bytes */
 		ROM_LOAD( "b08-07.16f",	0x00200, 0x200, CRC(ea34d9f7) SHA1(9a46edc64f961bd96908419cabd92445d300fc19) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( arknid2u )
+	static RomLoadPtr rom_arknid2u = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )				/* Region 0 - main cpu */
 		ROM_LOAD( "b08_11.11c", 0x00000, 0x08000, CRC(99555231) SHA1(2798f3f5b3f1fa27598fe7a6e95c75d9142c8d34) )
 		ROM_CONTINUE(           0x18000, 0x08000 )			/* banked at 8000-bfff */
@@ -2011,9 +2011,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )
 		ROM_LOAD( "b08-08.15f",	0x00000, 0x200, CRC(a4f7ebd9) SHA1(094eb63c18898c6ee8d722492bdfd28091c61773) )	/* hi bytes */
 		ROM_LOAD( "b08-07.16f",	0x00200, 0x200, CRC(ea34d9f7) SHA1(9a46edc64f961bd96908419cabd92445d300fc19) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( arknid2j )
+	static RomLoadPtr rom_arknid2j = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )				/* Region 0 - main cpu */
 		ROM_LOAD( "b08_05.11c", 0x00000, 0x08000, CRC(136edf9d) SHA1(f632321650897eee585511a84f451a205d1f7704) )
 		ROM_CONTINUE(           0x18000, 0x08000 )			/* banked at 8000-bfff */
@@ -2035,9 +2035,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )
 		ROM_LOAD( "b08-08.15f",	0x00000, 0x200, CRC(a4f7ebd9) SHA1(094eb63c18898c6ee8d722492bdfd28091c61773) )	/* hi bytes */
 		ROM_LOAD( "b08-07.16f",	0x00200, 0x200, CRC(ea34d9f7) SHA1(9a46edc64f961bd96908419cabd92445d300fc19) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( drtoppel )
+	static RomLoadPtr rom_drtoppel = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "b19-09.bin", 0x00000, 0x08000, CRC(3e654f82) SHA1(d9e351d82546b08eb7887ea1d976fa97a259db6e) )
 		ROM_CONTINUE(           0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -2063,9 +2063,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )		/* color proms */
 		ROM_LOAD( "b19-13.bin", 0x0000, 0x200, CRC(6a547980) SHA1(c82f8dfad028565b4b4e5be1167f2f290c929090) )	/* hi bytes */
 		ROM_LOAD( "b19-12.bin", 0x0200, 0x200, CRC(5754e9d8) SHA1(8c7d29e22c90b1f72929b95675dc15e431aae044) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( drtopplu )
+	static RomLoadPtr rom_drtopplu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "b19-09.bin", 0x00000, 0x08000, CRC(3e654f82) SHA1(d9e351d82546b08eb7887ea1d976fa97a259db6e) )
 		ROM_CONTINUE(           0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -2091,9 +2091,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )		/* color proms */
 		ROM_LOAD( "b19-13.bin", 0x0000, 0x200, CRC(6a547980) SHA1(c82f8dfad028565b4b4e5be1167f2f290c929090) )	/* hi bytes */
 		ROM_LOAD( "b19-12.bin", 0x0200, 0x200, CRC(5754e9d8) SHA1(8c7d29e22c90b1f72929b95675dc15e431aae044) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( drtopplj )
+	static RomLoadPtr rom_drtopplj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "b19-09.bin", 0x00000, 0x08000, CRC(3e654f82) SHA1(d9e351d82546b08eb7887ea1d976fa97a259db6e) )
 		ROM_CONTINUE(           0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -2119,9 +2119,9 @@ public class tnzs
 		ROM_REGION( 0x0400, REGION_PROMS, 0 )		/* color proms */
 		ROM_LOAD( "b19-13.bin", 0x0000, 0x200, CRC(6a547980) SHA1(c82f8dfad028565b4b4e5be1167f2f290c929090) )	/* hi bytes */
 		ROM_LOAD( "b19-12.bin", 0x0200, 0x200, CRC(5754e9d8) SHA1(8c7d29e22c90b1f72929b95675dc15e431aae044) )	/* lo bytes */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kageki )
+	static RomLoadPtr rom_kageki = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "b35-16.11c", 0x00000, 0x08000, CRC(a4e6fd58) SHA1(7cfe5b3fa6c88cdab45719f5b58541270825ad30) )	/* US ver */
 		ROM_CONTINUE(           0x18000, 0x08000 )
@@ -2143,9 +2143,9 @@ public class tnzs
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "b35-15.98g",  0x00000, 0x10000, CRC(e6212a0f) SHA1(43891f4fd141b00ed458be47a107a2550a0534c2) )	/* US ver */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kagekij )
+	static RomLoadPtr rom_kagekij = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "b35-09j.11c", 0x00000, 0x08000, CRC(829637d5) SHA1(0239ae925968336a90cbe16e23519773b6f2f2ac) )	/* JP ver */
 		ROM_CONTINUE(            0x18000, 0x08000 )
@@ -2167,9 +2167,9 @@ public class tnzs
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "b35-12j.98g", 0x00000, 0x10000, CRC(184409f1) SHA1(711bdd499670e86630ebb6820262b1d8d651c987) )	/* JP ver */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chukatai )
+	static RomLoadPtr rom_chukatai = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "b44-10", 0x00000, 0x08000, CRC(8c69e008) SHA1(7825965f517f3562a508345b7c0d32b8a57bd38a) )
 		ROM_CONTINUE(       0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -2191,9 +2191,9 @@ public class tnzs
 		ROM_LOAD( "b44-06.a05", 0xa0000, 0x20000, CRC(269978a8) SHA1(aef7b8d3d00dcc4201e0a1e28026f6f1bdafd0b7) )
 		ROM_LOAD( "b44-07.a04", 0xc0000, 0x20000, CRC(3e0e737e) SHA1(f8d62c7b69c79da9df7ef5ce454060d3645e5884) )
 		ROM_LOAD( "b44-08.a02", 0xe0000, 0x20000, CRC(6cb1e8fc) SHA1(4ab0c2cce1de2616044a9bfb9bf17f95a49baffd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chukatau )
+	static RomLoadPtr rom_chukatau = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "b44-10", 0x00000, 0x08000, CRC(8c69e008) SHA1(7825965f517f3562a508345b7c0d32b8a57bd38a) )
 		ROM_CONTINUE(       0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -2215,9 +2215,9 @@ public class tnzs
 		ROM_LOAD( "b44-06.a05", 0xa0000, 0x20000, CRC(269978a8) SHA1(aef7b8d3d00dcc4201e0a1e28026f6f1bdafd0b7) )
 		ROM_LOAD( "b44-07.a04", 0xc0000, 0x20000, CRC(3e0e737e) SHA1(f8d62c7b69c79da9df7ef5ce454060d3645e5884) )
 		ROM_LOAD( "b44-08.a02", 0xe0000, 0x20000, CRC(6cb1e8fc) SHA1(4ab0c2cce1de2616044a9bfb9bf17f95a49baffd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chukataj )
+	static RomLoadPtr rom_chukataj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "b44-10", 0x00000, 0x08000, CRC(8c69e008) SHA1(7825965f517f3562a508345b7c0d32b8a57bd38a) )
 		ROM_CONTINUE(       0x18000, 0x08000 )				/* banked at 8000-bfff */
@@ -2239,9 +2239,9 @@ public class tnzs
 		ROM_LOAD( "b44-06.a05", 0xa0000, 0x20000, CRC(269978a8) SHA1(aef7b8d3d00dcc4201e0a1e28026f6f1bdafd0b7) )
 		ROM_LOAD( "b44-07.a04", 0xc0000, 0x20000, CRC(3e0e737e) SHA1(f8d62c7b69c79da9df7ef5ce454060d3645e5884) )
 		ROM_LOAD( "b44-08.a02", 0xe0000, 0x20000, CRC(6cb1e8fc) SHA1(4ab0c2cce1de2616044a9bfb9bf17f95a49baffd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tnzs )
+	static RomLoadPtr rom_tnzs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "b53_10.32", 0x00000, 0x08000, CRC(a73745c6) SHA1(73eb38e75e08312d752332f988dc655084b4a86d) )
 		ROM_CONTINUE(          0x18000, 0x18000 )		/* banked at 8000-bfff */
@@ -2263,9 +2263,9 @@ public class tnzs
 		ROM_LOAD( "b53-03.3",	0xa0000, 0x20000, CRC(74acfb9b) SHA1(90b544ed7ede7565660bdd13c94c15c54423cda9) )
 		ROM_LOAD( "b53-02.2",	0xc0000, 0x20000, CRC(095d0dc0) SHA1(ced2937d0594fa00ae344a4e3a3cba23772dc160) )
 		ROM_LOAD( "b53-01.1",	0xe0000, 0x20000, CRC(9800c54d) SHA1(761647177d621ac2cdd8b009876eed35809f3c92) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tnzsb )
+	static RomLoadPtr rom_tnzsb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "nzsb5324.bin", 0x00000, 0x08000, CRC(d66824c6) SHA1(fd381ac0dc52ce670c3fde320ea60a209e288a52) )
 		ROM_CONTINUE(             0x18000, 0x18000 )		/* banked at 8000-bfff */
@@ -2287,9 +2287,9 @@ public class tnzs
 		ROM_LOAD( "b53-03.3",	0xa0000, 0x20000, CRC(74acfb9b) SHA1(90b544ed7ede7565660bdd13c94c15c54423cda9) )
 		ROM_LOAD( "b53-02.2",	0xc0000, 0x20000, CRC(095d0dc0) SHA1(ced2937d0594fa00ae344a4e3a3cba23772dc160) )
 		ROM_LOAD( "b53-01.1",	0xe0000, 0x20000, CRC(9800c54d) SHA1(761647177d621ac2cdd8b009876eed35809f3c92) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tnzs2 )
+	static RomLoadPtr rom_tnzs2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "ns_c-11.rom", 0x00000, 0x08000, CRC(3c1dae7b) SHA1(0004fccc171714c80565326f8690f9662c5b75d9) )
 		ROM_CONTINUE(            0x18000, 0x18000 )		/* banked at 8000-bfff */
@@ -2310,9 +2310,9 @@ public class tnzs
 		ROM_LOAD( "ns_a05.rom",   0xa0000, 0x20000, CRC(6e762e20) SHA1(66731fe4053b9c09bc9c95d10aba212db08b4636) )
 		ROM_LOAD( "ns_a04.rom",   0xc0000, 0x20000, CRC(e1fd1b9d) SHA1(6027491b927c2ab9c77fbf8895da1abcfbe32d62) )
 		ROM_LOAD( "ns_a02.rom",   0xe0000, 0x20000, CRC(2ab06bda) SHA1(2b208b564e55c258665e1f66b26fe14a6c68eb96) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( insectx )
+	static RomLoadPtr rom_insectx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k + bankswitch areas for the first CPU */
 		ROM_LOAD( "insector.u32", 0x00000, 0x08000, CRC(18eef387) SHA1(b22633930d39be1e72fbd5b080972122da3cb3ef) )
 		ROM_CONTINUE(             0x18000, 0x18000 )		/* banked at 8000-bfff */
@@ -2324,7 +2324,7 @@ public class tnzs
 		ROM_REGION( 0x100000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "insector.r15", 0x00000, 0x80000, CRC(d00294b1) SHA1(f43a4f7d13193ddbbcdef71a5085c1db0fc062d4) )
 		ROM_LOAD( "insector.r16", 0x80000, 0x80000, CRC(db5a7434) SHA1(71fac872b19a13a7ad25c8ad895c322ec9573fdc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR COMPANY    FULLNAME     FLAGS ) */

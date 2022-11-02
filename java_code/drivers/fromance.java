@@ -1214,7 +1214,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	ROM_START( nekkyoku )
+	static RomLoadPtr rom_nekkyoku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "1-ic1a.bin",  0x000000, 0x008000, CRC(bb52d959) SHA1(1dfeb108879978dbcc1398e64b26c36505bee6d0) )
 		ROM_LOAD( "2-ic2a.bin",  0x008000, 0x008000, CRC(61848d8b) SHA1(72048c53e4364544ca8a79e213db9d02b7b4778f) )
@@ -1239,10 +1239,10 @@ public class fromance
 		ROM_LOAD( "5-ic10a.bin", 0x0c0000, 0x008000, CRC(2e78515f) SHA1(397985c082ffc0df07cd44d54e4fef909c30a4f1) )
 		ROM_FILL(                0x0c8000, 0x038000, 0xff )
 		ROM_FILL(                0x100000, 0x100000, 0xff )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( idolmj )
+	static RomLoadPtr rom_idolmj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "3-13g.bin", 0x000000, 0x008000, CRC(910e9e7a) SHA1(5d577549ca25def14fbc6db682afda105244b7c1) )
 	
@@ -1263,10 +1263,10 @@ public class fromance
 		ROM_LOAD( "1-1e.bin",  0x080000, 0x008000, CRC(abf03c62) SHA1(0ad88ffe3f06f493978f292154894415ed38f797) )
 		ROM_FILL(              0x088000, 0x008000, 0xff )
 		ROM_FILL(              0x090000, 0x170000, 0xff )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mjnatsu )
+	static RomLoadPtr rom_mjnatsu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "3-ic70.bin", 0x000000, 0x008000, CRC(543eb9e1) SHA1(cfe1d33bdf6541e2207465a941f342be21b69f7d) )
 	
@@ -1288,10 +1288,10 @@ public class fromance
 		ROM_LOAD( "ic59.bin",   0x000000, 0x080000, CRC(03983ac7) SHA1(1e14ec3c614b227a6362f2a3a7582ac7a4f58ee3) )
 		ROM_LOAD( "ic64.bin",   0x080000, 0x040000, CRC(9bd8e855) SHA1(a445dd7634958f69e58aed2581513e7a583ff66b) )
 		ROM_FILL(               0x0c0000, 0x140000, 0xff )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( natsuiro )
+	static RomLoadPtr rom_natsuiro = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "3-ic70.bin", 0x000000, 0x008000, CRC(543eb9e1) SHA1(cfe1d33bdf6541e2207465a941f342be21b69f7d) )
 	
@@ -1314,10 +1314,10 @@ public class fromance
 		ROM_LOAD( "ic64.bin",   0x080000, 0x040000, CRC(9bd8e855) SHA1(a445dd7634958f69e58aed2581513e7a583ff66b) )
 		ROM_LOAD( "m2.bin",     0x0c0000, 0x008000, CRC(61129677) SHA1(a1789b4e23b46c61c822eb02fdfa65b7d0a34ce8) )
 		ROM_FILL(               0x0c8000, 0x138000, 0xff )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mfunclub )
+	static RomLoadPtr rom_mfunclub = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "3.70",        0x000000, 0x008000, CRC(e6f76ca3) SHA1(2f4292e50770c3325c1573781cb21940d73e8fb1) )
 	
@@ -1339,10 +1339,10 @@ public class fromance
 		ROM_FILL(                0x080000, 0x100000, 0xff )
 		ROM_LOAD( "2.75",        0x180000, 0x010000, CRC(4dd4f786) SHA1(06f398cffc54ac9e7c42eddc1d46e00c0a64d9c7) )
 		ROM_FILL(                0x190000, 0x070000, 0xff )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( daiyogen )
+	static RomLoadPtr rom_daiyogen = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "n1-ic70.bin", 0x000000, 0x008000, CRC(29af632b) SHA1(9a55cc7a82dc2735be6310de27521ff0f5c352bd) )
 	
@@ -1359,10 +1359,10 @@ public class fromance
 		ROM_REGION( 0x100000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "ic59.bin",    0x000000, 0x080000, CRC(715f2f8c) SHA1(a1206bc21556c2644688f6332b9a57c7188ea7fa) )
 		ROM_LOAD( "ic64.bin",    0x080000, 0x080000, CRC(e5a41864) SHA1(73b25fe87e347feabe7256ced80a696c377d690c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nmsengen )
+	static RomLoadPtr rom_nmsengen = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "3-ic70.bin",   0x000000, 0x008000, CRC(4e6edbbb) SHA1(890f93569a6dec6bf7c917a3db4f268c6ec64564) )
 	
@@ -1384,10 +1384,10 @@ public class fromance
 		ROM_LOAD( "ic69.bin",     0x180000, 0x040000, CRC(dc867ccd) SHA1(69745b9f6aecb92fea8e70b0cec4895dea444c04) )
 		ROM_LOAD( "2-ic75.bin",   0x1c0000, 0x020000, CRC(e2fad82e) SHA1(3ab41e8e7674f8d12b0a0f518c5a54af8afa1231) )
 		ROM_FILL(                 0x1e0000, 0x020000, 0xff )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( fromance )
+	static RomLoadPtr rom_fromance = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 		ROM_LOAD( "2-ic70.bin", 0x000000, 0x008000, CRC(a0866e26) SHA1(019a8dfaa54dd397f642622d7ed847b7147a61f7) )
 	
@@ -1409,7 +1409,7 @@ public class fromance
 		ROM_LOAD( "ic69.bin",   0x180000, 0x040000, CRC(d06a0fc0) SHA1(ea645b77f671ad71049e4db547b2c4a22e12d6c3) )
 		ROM_LOAD( "3-ic75.bin", 0x1c0000, 0x020000, CRC(bb314e78) SHA1(58ce4f9c94e45b05543289643b848fbdcb9ab473) )
 		ROM_FILL(               0x1e0000, 0x020000, 0xff )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

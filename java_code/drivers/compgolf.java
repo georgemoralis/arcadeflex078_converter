@@ -366,7 +366,7 @@ public class compgolf
 	
 	/***************************************************************************/
 	
-	ROM_START( compgolf )
+	static RomLoadPtr rom_compgolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "cv06.bin",     0x04000, 0x4000, CRC(8f76979d) SHA1(432f6a1402fd3276669f5f45f03fd12380900178) )
 		ROM_CONTINUE(             0x04000, 0x4000 )
@@ -389,7 +389,7 @@ public class compgolf
 	
 		ROM_REGION( 0x100, REGION_PROMS, 0 )
 		ROM_LOAD( "cv08-1.bpr",   0x00000, 0x0100, CRC(b7c43db9) SHA1(418b11e4c8a9bce6873b0624ac53a5011c5807d0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static void compgolf_expand_bg(void)
 	{

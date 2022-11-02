@@ -962,7 +962,7 @@ public class fitfight
 	
 	***/
 	
-	ROM_START( fitfight )
+	static RomLoadPtr rom_fitfight = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "u138_ff1.bin", 0x000001, 0x080000, CRC(165600fe) SHA1(b1987dbf34abdb6d08bdf7f71b256b62125e6517) )
 		ROM_LOAD16_BYTE( "u125_ff1.bin", 0x000000, 0x080000, CRC(2f9bdb66) SHA1(4c1ade349f1219d448453b27d4a7517966912ffa) )
@@ -992,7 +992,7 @@ public class fitfight
 	
 		ROM_LOAD( "s8_ff1.bin",   0x000000, 0x080000, CRC(0edf5706) SHA1(481bcc031ea9489c14925510b0d567f858428783) )
 		ROM_LOAD( "s8_ff1h.bin",  0x080000, 0x080000, CRC(1d00074f) SHA1(d5c6963aee5c47a77a097b0b1e254b1f1bc69a73) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***
 	
@@ -1015,7 +1015,7 @@ public class fitfight
 	
 	***/
 	
-	ROM_START( histryma )
+	static RomLoadPtr rom_histryma = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "l_th.bin", 0x000001, 0x080000, CRC(5af9356a) SHA1(f3d797dcc528a3a2a4f0ebbf07d59bd2cc868622) )
 		ROM_LOAD16_BYTE( "r_th.bin", 0x000000, 0x080000, CRC(1a44b504) SHA1(621d95b67d413da3e8a90c0cde494b2529b92407) )
@@ -1045,7 +1045,7 @@ public class fitfight
 	
 		ROM_LOAD( "s8_th.bin",   0x000000, 0x080000, CRC(57fd170f) SHA1(2b8cc688de894bbb7d44f9458b3d012a64f79b20) )
 		ROM_LOAD( "s8h_th.bin",  0x080000, 0x080000, CRC(cd7bd0de) SHA1(2cd0f41e2575e667aa971f2f5716694dee203ab3) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***
 	
@@ -1079,7 +1079,7 @@ public class fitfight
 	
 	***/
 	
-	ROM_START( bbprot )
+	static RomLoadPtr rom_bbprot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "l_bb.bin", 0x000001, 0x080000, CRC(2b7b9a9a) SHA1(51088358814cc337af150526ac7fd6216c102299) )
 		ROM_LOAD16_BYTE( "r_bb.bin", 0x000000, 0x080000, CRC(28480f3e) SHA1(b89533fd01781e1b83c98b0b61a77f554fbdb4f3) )
@@ -1110,7 +1110,7 @@ public class fitfight
 		ROM_LOAD( "s16_21_1.bin",  0x000000, 0x080000, CRC(023c1e63) SHA1(4d082261c355bb010f6b829e7d08ba88d9b677fc) )
 		ROM_LOAD( "s16_x_mc.bin",  0x100000, 0x080000, CRC(1ad5447f) SHA1(65f542c91358fe460b3ad3c7ef435505aa95b3e6) )
 		ROM_LOAD( "s16_h_mc.bin",  0x080000, 0x080000, CRC(3b9091de) SHA1(b426dab6361f5d48519dc9de146e1b2270af6c8b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* INIT */
 	

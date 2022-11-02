@@ -287,7 +287,7 @@ public class safarir
 	
 	***************************************************************************/
 	
-	ROM_START( safarir )
+	static RomLoadPtr rom_safarir = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "rl01",		0x0000, 0x0400, CRC(cf7703c9) SHA1(b4182df9332b355edaa518462217a6e31e1c07b2) )
 		ROM_LOAD( "rl02",		0x0400, 0x0400, CRC(1013ecd3) SHA1(2fe367db8ca367b36c5378cb7d5ff918db243c78) )
@@ -301,7 +301,7 @@ public class safarir
 	
 		ROM_REGION( 0x0400, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "rl07",		0x0000, 0x0400, CRC(ba525203) SHA1(1c261cc1259787a7a248766264fefe140226e465) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( safarir )

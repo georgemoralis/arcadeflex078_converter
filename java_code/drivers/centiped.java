@@ -1352,7 +1352,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	ROM_START( centiped )
+	static RomLoadPtr rom_centiped = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "centiped.307", 0x2000, 0x0800, CRC(5ab0d9de) SHA1(8ea6e3304202831aabaf31dbd0f970a7b3bfe421) )
 		ROM_LOAD( "centiped.308", 0x2800, 0x0800, CRC(4c07fd3e) SHA1(af4fdbf32c23b1864819d620a874e7f205da3cdb) )
@@ -1362,10 +1362,10 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "centiped.211", 0x0000, 0x0800, CRC(880acfb9) SHA1(6c862352c329776f2f9974a0df9dbe41f9dbc361) )
 		ROM_LOAD( "centiped.212", 0x0800, 0x0800, CRC(b1397029) SHA1(974c03d29aeca672fffa4dfc00a06be6a851aacb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( centipd2 )
+	static RomLoadPtr rom_centipd2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "centiped.207", 0x2000, 0x0800, CRC(b2909e2f) SHA1(90ec90bd1e262861730afd5b113ec8dddd958ed8) )
 		ROM_LOAD( "centiped.208", 0x2800, 0x0800, CRC(110e04ff) SHA1(4cb481792411b6aefac561744cfbe107aba8bab3) )
@@ -1375,10 +1375,10 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "centiped.211", 0x0000, 0x0800, CRC(880acfb9) SHA1(6c862352c329776f2f9974a0df9dbe41f9dbc361) )
 		ROM_LOAD( "centiped.212", 0x0800, 0x0800, CRC(b1397029) SHA1(974c03d29aeca672fffa4dfc00a06be6a851aacb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( centtime )
+	static RomLoadPtr rom_centtime = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "cent_d1.bin",  0x2000, 0x0800, CRC(c4d995eb) SHA1(d0b2f0461cfa35842045d40ffb65e777703b773e) )
 		ROM_LOAD( "cent_e1.bin",  0x2800, 0x0800, CRC(bcdebe1b) SHA1(53f3bf88a79ce40661c0a9381928e55d8c61777a) )
@@ -1388,10 +1388,10 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "centiped.211", 0x0000, 0x0800, CRC(880acfb9) SHA1(6c862352c329776f2f9974a0df9dbe41f9dbc361) )
 		ROM_LOAD( "centiped.212", 0x0800, 0x0800, CRC(b1397029) SHA1(974c03d29aeca672fffa4dfc00a06be6a851aacb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( centipdb )
+	static RomLoadPtr rom_centipdb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "olympia.c28",  0x2000, 0x0800, CRC(8a744e57) SHA1(0bc83fe01d929af4e5c7f2a8d1236560df41f9ce) )
 		ROM_LOAD( "olympia.c29",  0x2800, 0x0800, CRC(bb897b10) SHA1(bb1039fe64774277870f675eb72dd9f3f596f865) )
@@ -1401,10 +1401,10 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "olympia.c32",  0x0000, 0x0800, CRC(d91b9724) SHA1(5ff9ccb2769c853b44764bfe829ad1df08686dc6) )
 		ROM_LOAD( "olympia.c33",  0x0800, 0x0800, CRC(1a6acd02) SHA1(9c5daa8195705669d59b018a89ff8d03bc18999e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( centipb2 )
+	static RomLoadPtr rom_centipb2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "d1",  		  0x2000, 0x0800, CRC(b17b8e0b) SHA1(01944cf040cf23aeb4c50d4f2e63181e08a07310) )
 		ROM_LOAD( "e1",  		  0x2800, 0x0800, CRC(7684398e) SHA1(eea8e05506a7af2fec55c2689e3caafc62ea524f) )
@@ -1416,9 +1416,9 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "centiped.211", 0x0000, 0x0800, CRC(880acfb9) SHA1(6c862352c329776f2f9974a0df9dbe41f9dbc361) )
 		ROM_LOAD( "centiped.212", 0x0800, 0x0800, CRC(b1397029) SHA1(974c03d29aeca672fffa4dfc00a06be6a851aacb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( millpac )
+	static RomLoadPtr rom_millpac = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "millpac1.1d",  0x2000, 0x0800, CRC(4dd6913d) SHA1(9eca634e1a827f9bbcf3c532d44e175ac4751755) )
 		ROM_LOAD( "millpac2.1e",  0x2800, 0x0800, CRC(411c81f1) SHA1(15184642522f0b7eab81301295d435c10ce2d78d) )
@@ -1430,10 +1430,10 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "millpac6.7f",  0x0000, 0x0800, CRC(79f05520) SHA1(25c9f3b4826f48830f5c42d41d4f030b49e58d6a) )
 		ROM_LOAD( "millpac7.7j",  0x0800, 0x0800, CRC(4880b2bd) SHA1(1909b8fb275f38f1b57bf53ba348b866cc48a599) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( magworm )
+	static RomLoadPtr rom_magworm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "magworm.0",	  0x2000, 0x0800, CRC(a88e970a) SHA1(f0cc6fdcdecf05f11cef7ebae4e11783a8bbc5ba) )
 		ROM_LOAD( "magworm.1",	  0x2800, 0x0800, CRC(7a04047e) SHA1(3c00756c8ffbc5e78d4a7409802cc2ed8f668264) )
@@ -1443,10 +1443,10 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "magworm.4",    0x0000, 0x0800, CRC(cea64e1a) SHA1(9022102124e1ad93f912ce8bdf85f8a886b0879b) )
 		ROM_LOAD( "magworm.5",    0x0800, 0x0800, CRC(24558ea5) SHA1(8cd7131e19afd7a96191b1b3c3fba7ae9a140f4b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( milliped )
+	static RomLoadPtr rom_milliped = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "milliped.104", 0x4000, 0x1000, CRC(40711675) SHA1(b595d6a0f5d3c611ade1b83a94c3b909d2124dc4) )
 		ROM_LOAD( "milliped.103", 0x5000, 0x1000, CRC(fb01baf2) SHA1(9c1d0bbc20bf25dd21761a311fd1ed80aa029241) )
@@ -1456,10 +1456,10 @@ public class centiped
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "milliped.107", 0x0000, 0x0800, CRC(68c3437a) SHA1(4c7ea33d9501456ee8f5a642da7d6c972f2bb90d) )
 		ROM_LOAD( "milliped.106", 0x0800, 0x0800, CRC(f4468045) SHA1(602fcc7290f9f4eacb841c76665961ebf4307f80) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( warlords )
+	static RomLoadPtr rom_warlords = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "037154.1m",    0x5000, 0x0800, CRC(18006c87) SHA1(6b4aab1b1710819d29f4bbc29269eb9c915626c0) )
 		ROM_LOAD( "037153.1k",    0x5800, 0x0800, CRC(67758f4c) SHA1(b65ca677b54de7a8202838207d9a7bb0aed3e0f2) )
@@ -1477,7 +1477,7 @@ public class centiped
 		/* Bytes 0x40-0x7f are for the upright version of the cabinet with a */
 		/* mirror and painted background. */
 		ROM_LOAD( "warlord.clr",  0x0000, 0x0100, CRC(a2c5c277) SHA1(f04de9fb6ee9619b4a4aae10c92b16b3123046cf) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*************************************

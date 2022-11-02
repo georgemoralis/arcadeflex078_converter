@@ -344,7 +344,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	ROM_START( dday )
+	static RomLoadPtr rom_dday = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "e8_63co.bin",  0x0000, 0x1000, CRC(13d53793) SHA1(045f4b02803cb24305f90593777bb4a59f1bbb34) )
 		ROM_LOAD( "e7_64co.bin",  0x1000, 0x1000, CRC(e1ef2a70) SHA1(946ef20e2cd441ca858f969e7f25ab7c940671f8) )
@@ -374,9 +374,9 @@ public class dday
 		ROM_LOAD( "dday.m11",     0x0000, 0x0100, CRC(aef6bbfc) SHA1(9e07729a4389221bc120af91d8275e1d05f3be7a) )  /* red component */
 		ROM_LOAD( "dday.m8",      0x0100, 0x0100, CRC(ad3314b9) SHA1(d103f4f6103987ea85f0791ffc66a1cf9c711031) )  /* green component */
 		ROM_LOAD( "dday.m3",      0x0200, 0x0100, CRC(e877ab82) SHA1(03e3905aee37f6743e7a4a87338f9504c832a55b) )  /* blue component */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ddayc )
+	static RomLoadPtr rom_ddayc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "e8_63-c.bin",  0x0000, 0x1000, CRC(d4fa3ae3) SHA1(587cfcd0bb3103c9875b8a5fd185a321212a86ab) )
 		ROM_LOAD( "e7_64-c.bin",  0x1000, 0x1000, CRC(9fb8b1a7) SHA1(abd935274745db28039f2e341e9be0490e307772) )
@@ -406,7 +406,7 @@ public class dday
 		ROM_LOAD( "dday.m11",     0x0000, 0x0100, CRC(aef6bbfc) SHA1(9e07729a4389221bc120af91d8275e1d05f3be7a) )  /* red component */
 		ROM_LOAD( "dday.m8",      0x0100, 0x0100, CRC(ad3314b9) SHA1(d103f4f6103987ea85f0791ffc66a1cf9c711031) )  /* green component */
 		ROM_LOAD( "dday.m3",      0x0200, 0x0100, CRC(e877ab82) SHA1(03e3905aee37f6743e7a4a87338f9504c832a55b) )  /* blue component */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1982, dday,  0,    dday, dday,  0, ROT0, "Olympia", "D-Day", GAME_IMPERFECT_COLORS )

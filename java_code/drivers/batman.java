@@ -264,7 +264,7 @@ public class batman
 	 *
 	 *************************************/
 	
-	ROM_START( batman )
+	static RomLoadPtr rom_batman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 6*128k for 68000 code */
 		ROM_LOAD16_BYTE( "085-2030.10r",  0x00000, 0x20000, CRC(7cf4e5bf) SHA1(d6068a65fb524d839a34e596a272fac1ce90981c) )
 		ROM_LOAD16_BYTE( "085-2031.7r",   0x00001, 0x20000, CRC(7d7f3fc4) SHA1(8ee3e9ad3464006a26c36155b6099433110e2a6e) )
@@ -305,7 +305,7 @@ public class batman
 		ROM_LOAD( "085-1042.17e",  0xa0000, 0x20000, CRC(8c496986) SHA1(07c84c68885e2ab3e81ee92942d6a0f29e4dffa8) )
 		ROM_LOAD( "085-1043.15e",  0xc0000, 0x20000, CRC(51812d3b) SHA1(6748fecef753179a9257c0da5a7b7c9648437208) )
 		ROM_LOAD( "085-1044.12e",  0xe0000, 0x20000, CRC(5e2d7f31) SHA1(737c7204d91f5dd5c9ed0321fc6c0d6194a18f8a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -577,7 +577,7 @@ public class esd16
 	
 	***************************************************************************/
 	
-	ROM_START( multchmp )
+	static RomLoadPtr rom_multchmp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "multchmp.u02", 0x000000, 0x040000, CRC(7da8c0df) SHA1(763a3240554a02d8a9a0b13b6bfcd384825a6c57) )
 		ROM_LOAD16_BYTE( "multchmp.u03", 0x000001, 0x040000, CRC(5dc62799) SHA1(ff7882985efc20309c3f901a622f1beffa0c47be) )
@@ -605,7 +605,7 @@ public class esd16
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "multchmp.u10", 0x00000, 0x20000, CRC(6e741fcd) SHA1(742e0952916c00f67dd9f8d01e721a9a538d2fc4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************
 	
@@ -643,7 +643,7 @@ public class esd16
 	***************************************************************************/
 	
 	
-	ROM_START( hedpanic )
+	static RomLoadPtr rom_hedpanic = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "esd2", 0x000000, 0x040000, CRC(8cccc691) SHA1(d6a5dd6c21a67638b9023182f77780282b9b04e5) )
 		ROM_LOAD16_BYTE( "esd1", 0x000001, 0x040000, CRC(d8574925) SHA1(bd4990778b90a49aa6b10f8cf6709ce2424f546a) )
@@ -665,7 +665,7 @@ public class esd16
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "esd4", 0x000000, 0x080000, CRC(5692fe92) SHA1(4423039cb437ab36d198b212ef394bf1704be404) ) // 0x020000 of data repeated 4x
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************
 	

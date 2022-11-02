@@ -399,7 +399,7 @@ public class spbactn
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( spbactn )
+	static RomLoadPtr rom_spbactn = new RomLoadPtr(){ public void handler(){ 
 		/* Board 9002-A (CPU Board) */
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "rom1.bin", 0x00000, 0x20000, CRC(6741bd3f) SHA1(844eb6465a15d339043fd6d2b6ba20ba216de493) )
@@ -423,9 +423,9 @@ public class spbactn
 		ROM_REGION( 0x080000, REGION_GFX3, 0 ) /* 8x8 Sprite Tiles */
 		ROM_LOAD( "b-u110",  0x00000, 0x40000, CRC(862ebacd) SHA1(05732e8524c50256c1db29317625d0edc19b87d2) )
 		ROM_LOAD( "b-u111",  0x40000, 0x40000, CRC(1cc1379a) SHA1(44fdab8cb5ab1488688f1ac52f005454e835efee) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( spbactnj )
+	static RomLoadPtr rom_spbactnj = new RomLoadPtr(){ public void handler(){ 
 		/* Board 9002-A (CPU Board) */
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "a-u68.1", 0x00000, 0x20000, CRC(b5b2d824) SHA1(be04ca370a381d7396f39e31fb2680973193daee) )
@@ -449,7 +449,7 @@ public class spbactn
 		ROM_REGION( 0x080000, REGION_GFX3, 0 ) /* 8x8 Sprite Tiles */
 		ROM_LOAD( "b-u110",  0x00000, 0x40000, CRC(862ebacd) SHA1(05732e8524c50256c1db29317625d0edc19b87d2) )
 		ROM_LOAD( "b-u111",  0x40000, 0x40000, CRC(1cc1379a) SHA1(44fdab8cb5ab1488688f1ac52f005454e835efee) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1991, spbactn, 0,        spbactn, spbactn, 0, ROT90, "Tecmo", "Super Pinball Action (US)", GAME_IMPERFECT_GRAPHICS )
 	GAMEX( 1991, spbactnj, spbactn, spbactn, spbactn, 0, ROT90, "Tecmo", "Super Pinball Action (Japan)", GAME_IMPERFECT_GRAPHICS )

@@ -2410,7 +2410,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	ROM_START( cobracom )
+	static RomLoadPtr rom_cobracom = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "el11-5.bin",  0x08000, 0x08000, CRC(af0a8b05) SHA1(096e4e7f2785a20bfaec14277413ce4e20e90214) )
 		ROM_LOAD( "el12-4.bin",  0x10000, 0x10000, CRC(7a44ef38) SHA1(d7dc277dce08f9d073290e100be4a7ca2e2b82cb) )
@@ -2439,9 +2439,9 @@ public class dec8
 		ROM_CONTINUE(            0x40000, 0x08000 )
 		ROM_LOAD( "el09.bin",    0x20000, 0x08000, CRC(1fae5be7) SHA1(be6e090b0b82648b385d9b6d11775f3ff40f0af3) )
 		ROM_CONTINUE(            0x60000, 0x08000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cobracmj )
+	static RomLoadPtr rom_cobracmj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "eh-11.rom",    0x08000, 0x08000, CRC(868637e1) SHA1(8b1e3e045e341bb94b1f6c7d89198b22e6c19de7) )
 		ROM_LOAD( "eh-12.rom",    0x10000, 0x10000, CRC(7c878a83) SHA1(9b2a3083c6dae69626fdab16d97517d30eaa1859) )
@@ -2470,9 +2470,9 @@ public class dec8
 		ROM_CONTINUE(            0x40000, 0x08000 )
 		ROM_LOAD( "el09.bin",    0x20000, 0x08000, CRC(1fae5be7) SHA1(be6e090b0b82648b385d9b6d11775f3ff40f0af3) )
 		ROM_CONTINUE(            0x60000, 0x08000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ghostb )
+	static RomLoadPtr rom_ghostb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )
 		ROM_LOAD( "dz-01.rom", 0x08000, 0x08000, CRC(7c5bb4b1) SHA1(75865102c9bfbf9bd341b8ea54f49904c727f474) )
 		ROM_LOAD( "dz-02.rom", 0x10000, 0x10000, CRC(8e117541) SHA1(7dfa6eabb29f39a615f3e5123bddcc7197ab82d0) )
@@ -2505,9 +2505,9 @@ public class dec8
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )
 		ROM_LOAD( "dz19a.10d", 0x0000, 0x0400, CRC(47e1f83b) SHA1(f073eea1f33ed7a4862e4efd143debf1e0ee64b4) )
 		ROM_LOAD( "dz20a.11d", 0x0400, 0x0400, CRC(d8fe2d99) SHA1(56f8fcf2f871c7d52d4299a5b9988401ada4319d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ghostb3 )
+	static RomLoadPtr rom_ghostb3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )
 		ROM_LOAD( "dz01-3b",   0x08000, 0x08000, CRC(c8cc862a) SHA1(e736107beb11a12cdf413655c6874df28d5a9c70) )
 		ROM_LOAD( "dz-02.rom", 0x10000, 0x10000, CRC(8e117541) SHA1(7dfa6eabb29f39a615f3e5123bddcc7197ab82d0) )
@@ -2540,9 +2540,9 @@ public class dec8
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )
 		ROM_LOAD( "dz19a.10d", 0x0000, 0x0400, CRC(47e1f83b) SHA1(f073eea1f33ed7a4862e4efd143debf1e0ee64b4) )
 		ROM_LOAD( "dz20a.11d", 0x0400, 0x0400, CRC(d8fe2d99) SHA1(56f8fcf2f871c7d52d4299a5b9988401ada4319d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( meikyuh )
+	static RomLoadPtr rom_meikyuh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "dw-01.rom", 0x08000, 0x08000, CRC(87610c39) SHA1(47b83e7decd18f117d00a9f55c42da93b337c04a) )
 		ROM_LOAD( "dw-02.rom", 0x10000, 0x10000, CRC(40c9b0b8) SHA1(81deb25e00eb4d4c5133ea42cda279c318ee771c) )
@@ -2574,9 +2574,9 @@ public class dec8
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )
 		ROM_LOAD( "dz19a.10d", 0x0000, 0x0400, BAD_DUMP CRC(47e1f83b) SHA1(f073eea1f33ed7a4862e4efd143debf1e0ee64b4)  )
 		ROM_LOAD( "dz20a.11d", 0x0400, 0x0400, BAD_DUMP CRC(d8fe2d99) SHA1(56f8fcf2f871c7d52d4299a5b9988401ada4319d)  )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( srdarwin )
+	static RomLoadPtr rom_srdarwin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )
 		ROM_LOAD( "dy01-e.b14", 0x20000, 0x08000, CRC(176e9299) SHA1(20cd44ab610e384ab4f0172054c9adc432b12e9c) )
 		ROM_CONTINUE(           0x08000, 0x08000 )
@@ -2608,9 +2608,9 @@ public class dec8
 	
 		ROM_REGION( 256, REGION_PROMS, 0 )
 		ROM_LOAD( "dy12.f4",  0x00000,  0x100,  CRC(ebfaaed9) SHA1(5723dbfa3eb3fc4df8c8975b320a5c49848309d8) )	/* Priority (Not yet used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( srdarwnj )
+	static RomLoadPtr rom_srdarwnj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )
 		ROM_LOAD( "dy_01.rom", 0x20000, 0x08000, CRC(1eeee4ff) SHA1(89a70de8bd61c671582b11773ce69b2edcd9c2f8) )
 		ROM_CONTINUE(          0x08000, 0x08000 )
@@ -2642,9 +2642,9 @@ public class dec8
 	
 		ROM_REGION( 256, REGION_PROMS, 0 )
 		ROM_LOAD( "dy12.f4",  0x00000,  0x100,  CRC(ebfaaed9) SHA1(5723dbfa3eb3fc4df8c8975b320a5c49848309d8) )	/* Priority (Not yet used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gondo )
+	static RomLoadPtr rom_gondo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "dt-00.256", 0x08000, 0x08000, CRC(a8cf9118) SHA1(865744c9866957d686a31608d356e279fe58934e) )
 		ROM_LOAD( "dt-01.512", 0x10000, 0x10000, CRC(c39bb877) SHA1(9beb59ba19f38417c5d4d36e8f3c41f2b017d2d6) )
@@ -2683,9 +2683,9 @@ public class dec8
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7122e.10b", 0x00000,  0x400,  CRC(dcbfec4e) SHA1(a375caef4575746870e285d90ba991ea7daefad6) )	/* Priority (Not yet used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( makyosen )
+	static RomLoadPtr rom_makyosen = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "ds00",      0x08000, 0x08000, CRC(33bb16fe) SHA1(5d3873b66e0d08b35d56a8b508c774b27368a100) )
 		ROM_LOAD( "dt-01.512", 0x10000, 0x10000, CRC(c39bb877) SHA1(9beb59ba19f38417c5d4d36e8f3c41f2b017d2d6) )
@@ -2724,9 +2724,9 @@ public class dec8
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7122e.10b", 0x00000,  0x400,  CRC(dcbfec4e) SHA1(a375caef4575746870e285d90ba991ea7daefad6) )	/* Priority (Not yet used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( oscar )
+	static RomLoadPtr rom_oscar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "ed10", 0x08000, 0x08000, CRC(f9b0d4d4) SHA1(dc2aba978ba96f365027c7be5714728d5d7fb802) )
 		ROM_LOAD( "ed09", 0x10000, 0x10000, CRC(e2d4bba9) SHA1(99f0310debe51f4bcd00b5fdaedc1caf2eeccdeb) )
@@ -2751,9 +2751,9 @@ public class dec8
 		ROM_LOAD( "ed03", 0x20000, 0x10000, CRC(4fc4fb0f) SHA1(0906762a3adbffe765e072255262fedaa78bdb2a) )
 		ROM_LOAD( "ed00", 0x40000, 0x10000, CRC(ac201f2d) SHA1(77f13eb6a1a44444ca9b25363031451b0d68c988) )
 		ROM_LOAD( "ed02", 0x60000, 0x10000, CRC(7ddc5651) SHA1(f5ec5245cf3d9d4d9c1df6a8128c24565e331317) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( oscarj0 )
+	static RomLoadPtr rom_oscarj0 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "du10", 0x08000, 0x08000, CRC(120040d8) SHA1(22d5f84f3ca724cbf39dfc4790f2175ba4945aaf) )
 		ROM_LOAD( "ed09", 0x10000, 0x10000, CRC(e2d4bba9) SHA1(99f0310debe51f4bcd00b5fdaedc1caf2eeccdeb) )
@@ -2778,9 +2778,9 @@ public class dec8
 		ROM_LOAD( "ed03", 0x20000, 0x10000, CRC(4fc4fb0f) SHA1(0906762a3adbffe765e072255262fedaa78bdb2a) )
 		ROM_LOAD( "ed00", 0x40000, 0x10000, CRC(ac201f2d) SHA1(77f13eb6a1a44444ca9b25363031451b0d68c988) )
 		ROM_LOAD( "ed02", 0x60000, 0x10000, CRC(7ddc5651) SHA1(f5ec5245cf3d9d4d9c1df6a8128c24565e331317) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( oscarj1 )
+	static RomLoadPtr rom_oscarj1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "oscr10-1.bin", 0x08000, 0x08000, CRC(4ebc9f7a) SHA1(df8fdc4b4b203dc1bdd048f069fb6b723bdea0d2) ) /* DU10-1 */
 		ROM_LOAD( "ed09", 0x10000, 0x10000, CRC(e2d4bba9) SHA1(99f0310debe51f4bcd00b5fdaedc1caf2eeccdeb) )
@@ -2805,9 +2805,9 @@ public class dec8
 		ROM_LOAD( "ed03", 0x20000, 0x10000, CRC(4fc4fb0f) SHA1(0906762a3adbffe765e072255262fedaa78bdb2a) )
 		ROM_LOAD( "ed00", 0x40000, 0x10000, CRC(ac201f2d) SHA1(77f13eb6a1a44444ca9b25363031451b0d68c988) )
 		ROM_LOAD( "ed02", 0x60000, 0x10000, CRC(7ddc5651) SHA1(f5ec5245cf3d9d4d9c1df6a8128c24565e331317) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( oscarj )
+	static RomLoadPtr rom_oscarj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "oscr10-2.bin", 0x08000, 0x08000, CRC(114e898d) SHA1(1072ccabe6d53c50cdfa1e27d5d848ecdd6559cc) ) /* DU10-2 */
 		ROM_LOAD( "ed09", 0x10000, 0x10000, CRC(e2d4bba9) SHA1(99f0310debe51f4bcd00b5fdaedc1caf2eeccdeb) )
@@ -2832,9 +2832,9 @@ public class dec8
 		ROM_LOAD( "ed03", 0x20000, 0x10000, CRC(4fc4fb0f) SHA1(0906762a3adbffe765e072255262fedaa78bdb2a) )
 		ROM_LOAD( "ed00", 0x40000, 0x10000, CRC(ac201f2d) SHA1(77f13eb6a1a44444ca9b25363031451b0d68c988) )
 		ROM_LOAD( "ed02", 0x60000, 0x10000, CRC(7ddc5651) SHA1(f5ec5245cf3d9d4d9c1df6a8128c24565e331317) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lastmisn )
+	static RomLoadPtr rom_lastmisn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "dl03-6.13h",  0x08000, 0x08000, CRC(47751a5e) SHA1(190970a6eb849781e8853f2bed7b34ac44e569ca) ) /* Rev 6 roms */
 		ROM_LOAD( "lm_dl04.7h",  0x10000, 0x10000, CRC(7dea1552) SHA1(920684413e2ba4313111e79821c5714977b26b1a) )
@@ -2865,9 +2865,9 @@ public class dec8
 	
 		ROM_REGION( 256, REGION_PROMS, 0 )
 		ROM_LOAD( "dl-14.9c",    0x00000,  0x100,  CRC(2e55aa12) SHA1(c0f2b9649467eb9d2c1e47589b5990f5c5e8cc93) )	/* Priority (Not yet used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lastmsno )
+	static RomLoadPtr rom_lastmsno = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "lm_dl03.13h", 0x08000, 0x08000, CRC(357f5f6b) SHA1(a114aac50db62a6bcb943681e517ad7c88ec47f4) ) /* Rev 5 roms */
 		ROM_LOAD( "lm_dl04.7h",  0x10000, 0x10000, CRC(7dea1552) SHA1(920684413e2ba4313111e79821c5714977b26b1a) )
@@ -2898,9 +2898,9 @@ public class dec8
 	
 		ROM_REGION( 256, REGION_PROMS, 0 )
 		ROM_LOAD( "dl-14.9c",    0x00000,  0x100,  CRC(2e55aa12) SHA1(c0f2b9649467eb9d2c1e47589b5990f5c5e8cc93) )	/* Priority (Not yet used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lastmsnj )
+	static RomLoadPtr rom_lastmsnj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "dl03-.13h",   0x08000, 0x08000, CRC(4be5e7e1) SHA1(9f943658663da31947cebdcbcb5f4e2be0714c06) )
 		ROM_LOAD( "dl04-.7h",    0x10000, 0x10000, CRC(f026adf9) SHA1(4ccd0e714a6eb7cee388c93beee2d5510407c961) )
@@ -2931,9 +2931,9 @@ public class dec8
 	
 		ROM_REGION( 256, REGION_PROMS, 0 )
 		ROM_LOAD( "dl-14.9c",    0x00000,  0x100,  CRC(2e55aa12) SHA1(c0f2b9649467eb9d2c1e47589b5990f5c5e8cc93) )	/* Priority (Not yet used) */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( shackled )
+	static RomLoadPtr rom_shackled = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )
 		ROM_LOAD( "dk-02.rom", 0x08000, 0x08000, CRC(87f8fa85) SHA1(1cb93a60eefdb453a3cc6ec9c5cc2e367fb8aeb0) )
 		ROM_LOAD( "dk-06.rom", 0x10000, 0x10000, CRC(69ad62d1) SHA1(1aa23b12ab4f1908cddd25f091e1f9bd70a5113c) )
@@ -2965,9 +2965,9 @@ public class dec8
 		ROM_LOAD( "dk-10.rom", 0x20000, 0x10000, CRC(408e6d08) SHA1(28cb76792e5f84bd101a91cb82597a5939804f84) )
 		ROM_LOAD( "dk-09.rom", 0x40000, 0x10000, CRC(c1557fac) SHA1(7d39ec793113a48baf45c2ea07abb07e2e48985a) )
 		ROM_LOAD( "dk-08.rom", 0x60000, 0x10000, CRC(5e54e9f5) SHA1(1ab41a3bde1f2c2be670e89cf402be28001c17d1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( breywood )
+	static RomLoadPtr rom_breywood = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )
 		ROM_LOAD( "7.bin", 0x08000, 0x08000, CRC(c19856b9) SHA1(766994703bb59879c311675353d7231ad27c7c16) )
 		ROM_LOAD( "3.bin", 0x10000, 0x10000, CRC(2860ea02) SHA1(7ac090c3ae9d71baa6227ec9555f1c9f2d25ea0d) )
@@ -2999,9 +2999,9 @@ public class dec8
 		ROM_LOAD( "10.bin", 0x20000, 0x10000, CRC(c19733aa) SHA1(3dfcfd33c5c4f792bb941ac933301c03ddd72b03) )
 		ROM_LOAD( "11.bin", 0x40000, 0x10000, CRC(e37d5dbe) SHA1(ff79b4f6d8b0a3061e78d15480df0155650f347f) )
 		ROM_LOAD( "12.bin", 0x60000, 0x10000, CRC(beee880f) SHA1(9a818a75cbec425a13f629bda6d50aa341aa1896) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( csilver )
+	static RomLoadPtr rom_csilver = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )
 		ROM_LOAD( "a4", 0x08000, 0x08000, CRC(02dd8cfc) SHA1(f29c0d9dd03e8c52672c0f3dbee44a93c5b4261d) )
 		ROM_LOAD( "a2", 0x10000, 0x10000, CRC(570fb50c) SHA1(3002f53182834a060fc282be1bc5767906e19ba2) )
@@ -3033,9 +3033,9 @@ public class dec8
 		ROM_LOAD( "a10", 0x30000, 0x10000, CRC(3192571d) SHA1(240c6c099f1e6edbf0be7d5a4ec396b056c9f70f) )
 		ROM_LOAD( "b1",  0x40000, 0x10000, CRC(3ef77a32) SHA1(97b97c35a6ca994d2e7a6e7a63101eda9709bcb1) )
 		ROM_LOAD( "b2",  0x50000, 0x10000, CRC(9cf3d5b8) SHA1(df4974f8412ab1cf65871b8e4e3dbee478bf4d21) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( garyoret )
+	static RomLoadPtr rom_garyoret = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x58000, REGION_CPU1, 0 )
 		ROM_LOAD( "dv00", 0x08000, 0x08000, CRC(cceaaf05) SHA1(b8f54638feab77d023e01ced947e1269f0d19fd8) )
 		ROM_LOAD( "dv01", 0x10000, 0x10000, CRC(c33fc18a) SHA1(0d9594b0e6c39aea5b9f15f6aa364b31604f1066) )
@@ -3079,7 +3079,7 @@ public class dec8
 		ROM_CONTINUE(     0x70000, 0x08000 )
 		ROM_LOAD( "dv11", 0x68000, 0x08000, CRC(b5948aee) SHA1(587afbfeda985bede9e4b5f57dad6763f4294962) )
 		ROM_CONTINUE(     0x78000, 0x08000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

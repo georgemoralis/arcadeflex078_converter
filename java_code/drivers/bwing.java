@@ -459,7 +459,7 @@ public class bwing
 	//****************************************************************************
 	// ROM Maps
 	
-	ROM_START( bwing )
+	static RomLoadPtr rom_bwing = new RomLoadPtr(){ public void handler(){ 
 		// Top Board(SCU-01)
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // main CPU
 		ROM_LOAD( "bw_bv-02.10a", 0x04000, 0x04000, CRC(5ce74ab5) SHA1(b414f0bbe1c4c5b4c810bb4b9fba16aaf86520ff) )
@@ -487,10 +487,10 @@ public class bwing
 		// GPU Banks
 		ROM_REGION( 0x08000, REGION_USER1, 0 )
 		ROM_FILL(0x00000, 0x08000, 0)
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( bwings )
+	static RomLoadPtr rom_bwings = new RomLoadPtr(){ public void handler(){ 
 		// Top Board(SCU-01)
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // main CPU
 		ROM_LOAD( "bw_bv-02.10a", 0x04000, 0x04000, CRC(5ce74ab5) SHA1(b414f0bbe1c4c5b4c810bb4b9fba16aaf86520ff) )
@@ -519,10 +519,10 @@ public class bwing
 		// GPU Banks
 		ROM_REGION( 0x08000, REGION_USER1, 0 )
 		ROM_FILL(0x00000, 0x08000, 0)
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( batwings )
+	static RomLoadPtr rom_batwings = new RomLoadPtr(){ public void handler(){ 
 		// Top Board(SCU-01)
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // main CPU
 		ROM_LOAD( "bv-02-.10a",   0x04000, 0x04000, CRC(6074a86b) SHA1(0ce1bd74450144fd3c6556787d6c5c5d4531d830) )  // different
@@ -550,10 +550,10 @@ public class bwing
 		// GPU Banks
 		ROM_REGION( 0x08000, REGION_USER1, 0 )
 		ROM_FILL(0x00000, 0x08000, 0)
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( zaviga )
+	static RomLoadPtr rom_zaviga = new RomLoadPtr(){ public void handler(){ 
 		// Top Board(DE-0169-0)
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // main CPU
 		ROM_LOAD( "as04", 0x04000, 0x04000, CRC(b79f5da2) SHA1(b39748666d3f7fb1ac46d282cce09fe9531df6b1) )
@@ -581,10 +581,10 @@ public class bwing
 		// GPU Banks
 		ROM_REGION( 0x08000, REGION_USER1, 0 )
 		ROM_FILL(0x00000, 0x08000, 0)
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( zavigaj )
+	static RomLoadPtr rom_zavigaj = new RomLoadPtr(){ public void handler(){ 
 		// Top Board(DE-0169-0)
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // main CPU
 		ROM_LOAD( "as04", 0x04000, 0x04000, CRC(b79f5da2) SHA1(b39748666d3f7fb1ac46d282cce09fe9531df6b1) )
@@ -612,7 +612,7 @@ public class bwing
 		// GPU Banks
 		ROM_REGION( 0x08000, REGION_USER1, 0 )
 		ROM_FILL(0x00000, 0x08000, 0)
-	ROM_END
+	ROM_END(); }}; 
 	
 	//****************************************************************************
 	// Initializations

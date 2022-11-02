@@ -419,7 +419,7 @@ public class tankbust
 	
 	***************************************************************************/
 	
-	ROM_START( tankbust )
+	static RomLoadPtr rom_tankbust = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "a-s4-6.bin",		0x00000, 0x4000, CRC(8ebe7317) SHA1(bc45d530ad6335312c9c3efdcedf7acd2cdeeb55) )
 		ROM_LOAD( "a-s7-9.bin",		0x04000, 0x2000, CRC(047aee33) SHA1(62ee776c403b228e065baa9218f32597951ca935) )
@@ -457,7 +457,7 @@ public class tankbust
 		ROM_LOAD( "tb-prom.2r8",	0x0020, 0x0020, CRC(ec50d674) SHA1(64c8961eca33b23e14b7383eb7e64fcac8772ee7) ) //background
 		ROM_LOAD( "tb-prom.3p8",	0x0040, 0x0020, CRC(3e70eafd) SHA1(b200350a3f6c166228706734419dd3ef1207eeef) ) //background palette 2 ??
 		ROM_LOAD( "tb-prom.4k8",	0x0060, 0x0020, CRC(624f40d2) SHA1(8421f1d774afc72e0817d41edae74a2837021a5f) ) //text
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME(1985, tankbust,	 0, 	  tankbust, tankbust,  0, ROT90, "Valadon Automation", "Tank Busters" )

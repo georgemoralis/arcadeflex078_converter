@@ -263,7 +263,7 @@ public class wrally
 	
 	
 	
-	ROM_START( wrally )
+	static RomLoadPtr rom_wrally = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"worldr17.c23",	0x000000, 0x080000, CRC(050f5629) SHA1(74fc2cd5114f3bc4b2429f1d8d7eeb1658f9f179) )
 		ROM_LOAD16_BYTE(	"worldr16.c22",	0x000001, 0x080000, CRC(9e0d126c) SHA1(369360b7ec2c3497af3bf62b4eba24c3d9f94675) )
@@ -279,9 +279,9 @@ public class wrally
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched from all the ROMs */
 		ROM_RELOAD(		0x040000, 0x080000 )
 		ROM_LOAD( "worldr15.c03",	0x0c0000, 0x080000, CRC(11f0fe2c) SHA1(96c2a04874fa036576b7cfc5559bb0e33582ffd2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wrallya )
+	static RomLoadPtr rom_wrallya = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"c23.bin",	0x000000, 0x080000, CRC(8b7d93c3) SHA1(ce4163eebc5d4a0c1266d650523b1ffc702d1b87) )
 		ROM_LOAD16_BYTE(	"c22.bin",	0x000001, 0x080000, CRC(56da43b6) SHA1(02db8f969ed5e7f5e5356c45c0312faf5f000335) )
@@ -300,7 +300,7 @@ public class wrally
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched from all the ROMs */
 		ROM_RELOAD(		0x040000, 0x080000 )
 		ROM_LOAD( "worldr15.c03",	0x0c0000, 0x080000, CRC(11f0fe2c) SHA1(96c2a04874fa036576b7cfc5559bb0e33582ffd2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

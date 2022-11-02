@@ -580,7 +580,7 @@ public class m107
 	
 	/***************************************************************************/
 	
-	ROM_START( firebarr )
+	static RomLoadPtr rom_firebarr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "f4-h0",  0x000001, 0x40000, CRC(2aa5676e) SHA1(7f51c462c58b63fa4f34ec9dd2ee69c932ebf718) )
 		ROM_LOAD16_BYTE( "f4-l0",  0x000000, 0x40000, CRC(42f75d59) SHA1(eba3a02874d608ecb8c93160c8f0b4c8bb8061d2) )
@@ -613,9 +613,9 @@ public class m107
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* ADPCM samples */
 		ROM_LOAD( "f4-da0",          0x000000, 0x80000, CRC(7a493e2e) SHA1(f6a8bacbe25760c86bdd8e8bb6d052ff15718eef) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dsoccr94 )
+	static RomLoadPtr rom_dsoccr94 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 ) /* v30 main cpu */
 		ROM_LOAD16_BYTE( "ds_h0-c.rom",  0x000001, 0x040000, CRC(d01d3fd7) SHA1(925dff999252bf3b920bc0f427744e1464620fe8) )
 		ROM_LOAD16_BYTE( "ds_l0-c.rom",  0x000000, 0x040000, CRC(8af0afe2) SHA1(423c77d392a79cdaed66ad8c13039450d34d3f6d) )
@@ -640,9 +640,9 @@ public class m107
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, ROMREGION_SOUNDONLY )	 /* ADPCM samples */
 		ROM_LOAD( "ds_da0.rom" ,  0x000000, 0x100000, CRC(67fc52fd) SHA1(5771e948115af8fe4a6d3f448c03a2a9b42b6f20) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wpksoc )
+	static RomLoadPtr rom_wpksoc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 ) /* v30 main cpu */
 		ROM_LOAD16_BYTE( "pkeurd.h0",    0x000001, 0x040000, CRC(b4917788) SHA1(673294c518eaf28354fa6a3058f9325c6d9ddde6) )
 		ROM_LOAD16_BYTE( "pkeurd.l0",    0x000000, 0x040000, CRC(03816bae) SHA1(832e2ec722b41d41626fec583fc11e9ff62cdaa0) )
@@ -669,7 +669,7 @@ public class m107
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, ROMREGION_SOUNDONLY )	 /* ADPCM samples */
 		ROM_LOAD( "pk.da0",       0x000000, 0x80000, CRC(26a34cf4) SHA1(a8a7cd91cdc6d644ee02ca16e7fdc8debf8f3a5f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	

@@ -305,7 +305,7 @@ public class speedbal
 	
 	***************************************************************************/
 	
-	ROM_START( speedbal )
+	static RomLoadPtr rom_speedbal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64K for code: main */
 		ROM_LOAD( "sb1.bin",  0x0000,  0x8000, CRC(1c242e34) SHA1(8b2e8983e0834c99761ce2b5ea765dba56e77964) )
 		ROM_LOAD( "sb3.bin",  0x8000,  0x8000, CRC(7682326a) SHA1(15a72bf088a9adfaa50c11202b4970e07c309a21) )
@@ -325,7 +325,7 @@ public class speedbal
 		ROM_REGION( 0x10000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "sb6.bin",  0x00000, 0x08000, CRC(0e2506eb) SHA1(56f779266b977819063c475b84ca246fc6d8d6a7) )    /* sprites */
 		ROM_LOAD( "sb7.bin",  0x08000, 0x08000, CRC(9f1b33d1) SHA1(1f8be8f8e6a2ee99a7dafeead142ccc629fa792d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( speedbal )

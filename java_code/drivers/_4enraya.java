@@ -218,7 +218,7 @@ public class _4enraya
 	
 	***************************************************************************/
 	
-	ROM_START( 4enraya )
+	static RomLoadPtr rom_4enraya = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "5.bin",   0x0000, 0x8000, CRC(cf1cd151) SHA1(3920b0a6ed5798859158871b578b01ec742b0d13) )
 		ROM_LOAD( "4.bin",   0x8000, 0x4000, CRC(f9ec1be7) SHA1(189159129ecbc4f6909c086867b0e02821f5b976) )
@@ -230,7 +230,7 @@ public class _4enraya
 	
 		ROM_REGION( 0x0020,  REGION_PROMS, 0 )
 		ROM_LOAD( "1.bpr",   0x0000, 0x0020, CRC(dcbd2352) SHA1(ce72e84129ed1b455aaf648e1dfaa4333e7e7628) )	/* not used */
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1990, 4enraya,  0,       4enraya,  4enraya,  0, ROT0, "IDSA", "4 En Raya" )
 }

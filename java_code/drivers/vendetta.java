@@ -620,7 +620,7 @@ public class vendetta
 	
 	***************************************************************************/
 	
-	ROM_START( vendetta )
+	static RomLoadPtr rom_vendetta = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x49000, REGION_CPU1, 0 ) /* code + banked roms + banked ram */
 		ROM_LOAD( "081t01", 0x10000, 0x38000, CRC(e76267f5) SHA1(efef6c2edb4c181374661f358dad09123741b63d) )
 		ROM_CONTINUE(		0x08000, 0x08000 )
@@ -640,9 +640,9 @@ public class vendetta
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "081a03", 0x000000, 0x100000, CRC(14b6baea) SHA1(fe15ee57f19f5acaad6c1642d51f390046a7468a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vendetao )
+	static RomLoadPtr rom_vendetao = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x49000, REGION_CPU1, 0 ) /* code + banked roms + banked ram */
 		ROM_LOAD( "081r01", 0x10000, 0x38000, CRC(84796281) SHA1(e4330c6eaa17adda5b4bd3eb824388c89fb07918) )
 		ROM_CONTINUE(		0x08000, 0x08000 )
@@ -662,9 +662,9 @@ public class vendetta
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "081a03", 0x000000, 0x100000, CRC(14b6baea) SHA1(fe15ee57f19f5acaad6c1642d51f390046a7468a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vendet2p )
+	static RomLoadPtr rom_vendet2p = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x49000, REGION_CPU1, 0 ) /* code + banked roms + banked ram */
 		ROM_LOAD( "081w01", 0x10000, 0x38000, CRC(cee57132) SHA1(8b6413877e127511daa76278910c2ee3247d613a) )
 		ROM_CONTINUE(		0x08000, 0x08000 )
@@ -684,9 +684,9 @@ public class vendetta
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "081a03", 0x000000, 0x100000, CRC(14b6baea) SHA1(fe15ee57f19f5acaad6c1642d51f390046a7468a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vendetas )
+	static RomLoadPtr rom_vendetas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x49000, REGION_CPU1, 0 ) /* code + banked roms + banked ram */
 		ROM_LOAD( "081u01", 0x10000, 0x38000, CRC(b4d9ade5) SHA1(fbd543738cb0b68c80ff05eed7849b608de03395) )
 		ROM_CONTINUE(		0x08000, 0x08000 )
@@ -706,9 +706,9 @@ public class vendetta
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "081a03", 0x000000, 0x100000, CRC(14b6baea) SHA1(fe15ee57f19f5acaad6c1642d51f390046a7468a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vendtaso )
+	static RomLoadPtr rom_vendtaso = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x49000, REGION_CPU1, 0 ) /* code + banked roms + banked ram */
 		ROM_LOAD( "081d01", 0x10000, 0x38000, CRC(335da495) SHA1(ea74680eb898aeecf9f1eec95f151bcf66e6b6cb) )
 		ROM_CONTINUE(		0x08000, 0x08000 )
@@ -728,9 +728,9 @@ public class vendetta
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "081a03", 0x000000, 0x100000, CRC(14b6baea) SHA1(fe15ee57f19f5acaad6c1642d51f390046a7468a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vendettj )
+	static RomLoadPtr rom_vendettj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x49000, REGION_CPU1, 0 ) /* code + banked roms + banked ram */
 		ROM_LOAD( "081p01", 0x10000, 0x38000, CRC(5fe30242) SHA1(2ea98e66637fa2ad60044b1a2b0dd158a82403a2) )
 		ROM_CONTINUE(		0x08000, 0x08000 )
@@ -750,10 +750,10 @@ public class vendetta
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "081a03", 0x000000, 0x100000, CRC(14b6baea) SHA1(fe15ee57f19f5acaad6c1642d51f390046a7468a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( esckids )
+	static RomLoadPtr rom_esckids = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x049000, REGION_CPU1, 0 )		// Main CPU (053248) Code & Banked (1M x 1)
 		ROM_LOAD( "975r01", 0x010000, 0x018000, CRC(7b5c5572) SHA1(b94b58c010539926d112c2dfd80bcbad76acc986) )
 		ROM_CONTINUE(		0x008000, 0x008000 )
@@ -773,7 +773,7 @@ public class vendetta
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )	// Samples MASK-ROM (4M x 1)
 		ROM_LOAD( "975c03", 0x000000, 0x080000, CRC(dc4a1707) SHA1(f252d08483fd664f8fc03bf8f174efd452b4cdc5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************

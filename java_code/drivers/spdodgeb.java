@@ -472,7 +472,7 @@ public class spdodgeb
 	
 	
 	
-	ROM_START( spdodgeb )
+	static RomLoadPtr rom_spdodgeb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "22a-04.139",	  0x10000, 0x08000, CRC(66071fda) SHA1(4a239295900e6234a2a693321ca821671747a58e) )  /* Two banks */
 		ROM_CONTINUE(             0x08000, 0x08000 )		 /* Static code */
@@ -498,9 +498,9 @@ public class spdodgeb
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )	/* color PROMs */
 		ROM_LOAD( "mb7132e.158",  0x0000, 0x0400, CRC(7e623722) SHA1(e1fe60533237bd0aba5c8de9775df620ed5227c0) )
 		ROM_LOAD( "mb7122e.159",  0x0400, 0x0400, CRC(69706e8d) SHA1(778ee88ff566aa38c80e0e61bb3fe8458f0e9450) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nkdodgeb )
+	static RomLoadPtr rom_nkdodgeb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "12.bin",	      0x10000, 0x08000, CRC(aa674fd8) SHA1(4e8d3e07b54d23b221cb39cf10389bc7a56c4021) )  /* Two banks */
 		ROM_CONTINUE(             0x08000, 0x08000 )		 /* Static code */
@@ -530,7 +530,7 @@ public class spdodgeb
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )	/* color PROMs */
 		ROM_LOAD( "27s191.bin",  0x0000, 0x0800, CRC(317e42ea) SHA1(59caacc02fb7fb11604bd177f790fd68830ca7c1) )
 		ROM_LOAD( "82s137.bin",  0x0400, 0x0400, CRC(6059f401) SHA1(280b1bda3a55f2d8c2fd4552c4dcec7100f0170f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

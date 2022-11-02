@@ -502,7 +502,7 @@ public class superchs
 	
 	/***************************************************************************/
 	
-	ROM_START( superchs )
+	static RomLoadPtr rom_superchs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 1024K for 68020 code (CPU A) */
 		ROM_LOAD32_BYTE( "d46-35.27", 0x00000, 0x40000, CRC(1575c9a7) SHA1(e3441d6018ed3315c62c5e5c4534d8712b025ae2) )
 		ROM_LOAD32_BYTE( "d46-34.25", 0x00001, 0x40000, CRC(c72a4d2b) SHA1(6ef64de15e52007406ce3255071a1f856e0e8b49) )
@@ -535,7 +535,7 @@ public class superchs
 		ROM_LOAD16_BYTE( "d46-12.4", 0x000000, 0x200000, CRC(a24a53a8) SHA1(5d5fb87a94ceabda89360064d7d9b6d23c4c606b) )
 		ROM_RELOAD     (             0x400000, 0x200000 )
 		ROM_LOAD16_BYTE( "d46-11.5", 0x800000, 0x200000, CRC(d4ea0f56) SHA1(dc8d2ed3c11d0b6f9ebdfde805188884320235e6) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static READ32_HANDLER( main_cycle_r )
 	{

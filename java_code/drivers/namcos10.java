@@ -176,13 +176,13 @@ public class namcos10
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
 	INPUT_PORTS_END(); }}; 
 	
-	ROM_START( mrdrilr2 )
+	static RomLoadPtr rom_mrdrilr2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
 		ROM_REGION32_LE( 0x800000, REGION_USER2, 0 ) /* main prg */
 		ROM_LOAD( "dr21vera.1a",  0x000000, 0x800000, CRC(f93532a2) SHA1(8b72f2868978be1f0e0abd11425a3c8b2b0c4e99) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 2000, mrdrilr2,  0,        namcos10, namcos10, namcos10, ROT0, "Namco", "Mr Driller 2", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

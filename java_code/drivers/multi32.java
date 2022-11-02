@@ -1030,7 +1030,7 @@ public class multi32
 	
 	
 	
-	ROM_START( orunners )
+	static RomLoadPtr rom_orunners = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* v60 code */
 		ROM_LOAD32_WORD( "epr15618.bin", 0x000000, 0x020000, CRC(25647f76) SHA1(9f882921ebb2f078350295c322b263f75812c053) )
 		ROM_RELOAD(                      0x040000, 0x020000 )
@@ -1068,9 +1068,9 @@ public class multi32
 		ROM_LOAD("mpr15552.bin", 0x200000, 0x200000, CRC(1c4b5e73) SHA1(50a8e9a200575a3522a51bf094aa0e87b90bb0a3) )
 	
 		ROM_REGION( 0x20000, REGION_GFX3, 0 ) /* FG tiles */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( harddunk )
+	static RomLoadPtr rom_harddunk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* v60 code */
 		ROM_LOAD32_WORD( "ep16512.37", 0x000000, 0x40000, CRC(1a7de085) SHA1(2e0dac1f7715089b7f6b1035c859ffe2d674932f) )
 		ROM_RELOAD(                      0x080000, 0x040000 )
@@ -1101,9 +1101,9 @@ public class multi32
 		ROM_LOAD("mp16507.2", 0x200000, 0x200000, CRC(31e068d3) SHA1(9ac88b15af441fb3b31ce759c565b60a09039571) )
 	
 		ROM_REGION( 0x20000, REGION_GFX3, 0 ) /* FG tiles */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( harddunj )
+	static RomLoadPtr rom_harddunj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* v60 code */
 		ROM_LOAD32_WORD( "16508.37", 0x000000, 0x40000, CRC(b3713be5) SHA1(8123638a838e41fcc0d32e14382421b521eff94f) )
 		ROM_RELOAD(                      0x080000, 0x040000 )
@@ -1133,9 +1133,9 @@ public class multi32
 		ROM_LOAD("mp16507.2", 0x200000, 0x200000, CRC(31e068d3) SHA1(9ac88b15af441fb3b31ce759c565b60a09039571) )
 	
 		ROM_REGION( 0x20000, REGION_GFX3, 0 ) /* FG tiles */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( titlef )
+	static RomLoadPtr rom_titlef = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* v60 code */
 		ROM_LOAD32_WORD( "tf-15386.rom", 0x000000, 0x40000, CRC(7ceaf15d) SHA1(0295ac248e5814fbe7caecb346ccbcaf8abf67dc) )
 		ROM_RELOAD(                      0x080000, 0x040000 )
@@ -1164,9 +1164,9 @@ public class multi32
 		ROM_LOAD("tf-15385.rom", 0x000000, 0x200000, CRC(5a9b0aa0) SHA1(d208aa165f9eea05e3b8c3f406ff44374e4f6887) )
 	
 		ROM_REGION( 0x20000, REGION_GFX3, 0 ) /* FG tiles */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( scross )
+	static RomLoadPtr rom_scross = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* v60 code */
 		ROM_LOAD32_WORD( "epr15093.bin", 0x000000, 0x040000, CRC(2adc7a4b) SHA1(dca71f00d94898c0758394704d819e13482bf120) )
 		ROM_RELOAD(                      0x080000, 0x040000 )
@@ -1203,7 +1203,7 @@ public class multi32
 		ROM_LOAD("epr15032.bin", 0x200000, 0x200000, CRC(cb709f3d) SHA1(3962c8b5907d1f8f611f58ddac693cc47364a79c) )
 	
 		ROM_REGION( 0x20000, REGION_GFX3, 0 ) /* FG tiles */
-	ROM_END
+	ROM_END(); }}; 
 	
 	// boot, and are playable, some gfx problems
 	GAMEX( 1992, orunners,     0,        multi32, orunners, orunners, ROT0, "Sega", "Outrunners (US)", GAME_IMPERFECT_GRAPHICS )

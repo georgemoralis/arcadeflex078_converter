@@ -865,7 +865,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	ROM_START( marble )
+	static RomLoadPtr rom_marble = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -907,10 +907,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136033.118",   0x000, 0x200, CRC(2101b0ed) SHA1(e4fb8dfa80ed78847c697f9de2bd8540b0c04889) )  /* remap */
 		ROM_LOAD( "136033.119",   0x200, 0x200, CRC(19f6e767) SHA1(041f24cc03c9043c31c3294c9565dfda9bdada74) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( marble2 )
+	static RomLoadPtr rom_marble2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -948,10 +948,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136033.118",   0x000, 0x200, CRC(2101b0ed) SHA1(e4fb8dfa80ed78847c697f9de2bd8540b0c04889) )  /* remap */
 		ROM_LOAD( "136033.119",   0x200, 0x200, CRC(19f6e767) SHA1(041f24cc03c9043c31c3294c9565dfda9bdada74) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( marble3 )
+	static RomLoadPtr rom_marble3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -989,10 +989,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136033.118",   0x000, 0x200, CRC(2101b0ed) SHA1(e4fb8dfa80ed78847c697f9de2bd8540b0c04889) )  /* remap */
 		ROM_LOAD( "136033.119",   0x200, 0x200, CRC(19f6e767) SHA1(041f24cc03c9043c31c3294c9565dfda9bdada74) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( marble4 )
+	static RomLoadPtr rom_marble4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1034,10 +1034,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136033.118",   0x000, 0x200, CRC(2101b0ed) SHA1(e4fb8dfa80ed78847c697f9de2bd8540b0c04889) )  /* remap */
 		ROM_LOAD( "136033.119",   0x200, 0x200, CRC(19f6e767) SHA1(041f24cc03c9043c31c3294c9565dfda9bdada74) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( peterpak )
+	static RomLoadPtr rom_peterpak = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1076,10 +1076,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136028.136",   0x000, 0x200, CRC(861cfa36) SHA1(d18ca5e28bf48df6506be6bc0283c996c6520ef4) )  /* remap */
 		ROM_LOAD( "136028.137",   0x200, 0x200, CRC(8507e5ea) SHA1(a009a98fe02625a20f4a9d9ab1c70891bf4e45ec) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( indytemp )
+	static RomLoadPtr rom_indytemp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1124,10 +1124,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136036.152",   0x000, 0x200, CRC(4f96e57c) SHA1(271633a0aacd1d1efe2917728b73e90010c64d2c) )  /* remap */
 		ROM_LOAD( "136036.151",   0x200, 0x200, CRC(7daf351f) SHA1(95c13d81a47440f847af7b19632cc032380b9ff4) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( indytem2 )
+	static RomLoadPtr rom_indytem2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1172,10 +1172,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136036.152",   0x000, 0x200, CRC(4f96e57c) SHA1(271633a0aacd1d1efe2917728b73e90010c64d2c) )  /* remap */
 		ROM_LOAD( "136036.151",   0x200, 0x200, CRC(7daf351f) SHA1(95c13d81a47440f847af7b19632cc032380b9ff4) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( indytem3 )
+	static RomLoadPtr rom_indytem3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1220,10 +1220,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136036.152",   0x000, 0x200, CRC(4f96e57c) SHA1(271633a0aacd1d1efe2917728b73e90010c64d2c) )  /* remap */
 		ROM_LOAD( "136036.151",   0x200, 0x200, CRC(7daf351f) SHA1(95c13d81a47440f847af7b19632cc032380b9ff4) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( indytem4 )
+	static RomLoadPtr rom_indytem4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1268,10 +1268,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136036.152",   0x000, 0x200, CRC(4f96e57c) SHA1(271633a0aacd1d1efe2917728b73e90010c64d2c) )  /* remap */
 		ROM_LOAD( "136036.151",   0x200, 0x200, CRC(7daf351f) SHA1(95c13d81a47440f847af7b19632cc032380b9ff4) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( indytemd )
+	static RomLoadPtr rom_indytemd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x00000, 0x04000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x00001, 0x04000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1316,10 +1316,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "136036.152",   0x000, 0x200, CRC(4f96e57c) SHA1(271633a0aacd1d1efe2917728b73e90010c64d2c) )  /* remap */
 		ROM_LOAD( "136036.151",   0x200, 0x200, CRC(7daf351f) SHA1(95c13d81a47440f847af7b19632cc032380b9ff4) )  /* color */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadrunn )
+	static RomLoadPtr rom_roadrunn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1377,10 +1377,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "126-7a.040",   0x000000, 0x000200, CRC(1713c0cd) SHA1(237ce1c53d8a17823df3341360f03b2b94cd91bb) )
 		ROM_LOAD( "125-5a.040",   0x000200, 0x000200, CRC(a9ca8795) SHA1(77583510e7a7179493f313e0c0b25d029dd6e583) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadrun2 )
+	static RomLoadPtr rom_roadrun2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1438,10 +1438,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "126-7a.040",   0x000000, 0x000200, CRC(1713c0cd) SHA1(237ce1c53d8a17823df3341360f03b2b94cd91bb) )
 		ROM_LOAD( "125-5a.040",   0x000200, 0x000200, CRC(a9ca8795) SHA1(77583510e7a7179493f313e0c0b25d029dd6e583) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadrun1 )
+	static RomLoadPtr rom_roadrun1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1499,10 +1499,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "126-7a.040",   0x000000, 0x000200, CRC(1713c0cd) SHA1(237ce1c53d8a17823df3341360f03b2b94cd91bb) )
 		ROM_LOAD( "125-5a.040",   0x000200, 0x000200, CRC(a9ca8795) SHA1(77583510e7a7179493f313e0c0b25d029dd6e583) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadblst )
+	static RomLoadPtr rom_roadblst = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1563,10 +1563,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadblsg )
+	static RomLoadPtr rom_roadblsg = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1627,10 +1627,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadbls3 )
+	static RomLoadPtr rom_roadbls3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1691,10 +1691,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadblg2 )
+	static RomLoadPtr rom_roadblg2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1755,10 +1755,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadbls2 )
+	static RomLoadPtr rom_roadbls2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1819,10 +1819,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadblg1 )
+	static RomLoadPtr rom_roadblg1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1883,10 +1883,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadbls1 )
+	static RomLoadPtr rom_roadbls1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -1947,10 +1947,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadblsc )
+	static RomLoadPtr rom_roadblsc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -2011,10 +2011,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadblcg )
+	static RomLoadPtr rom_roadblcg = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -2075,10 +2075,10 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( roadblc1 )
+	static RomLoadPtr rom_roadblc1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x88000, REGION_CPU1, 0 )	/* 8.5*64k for 68000 code & slapstic ROM */
 		ROM_LOAD16_BYTE( "136032.205",   0x000000, 0x004000, CRC(88d0be26) SHA1(d124045eccc562ff0423b23a240e27ad740fa0c9) )
 		ROM_LOAD16_BYTE( "136032.206",   0x000001, 0x004000, CRC(3c79ef05) SHA1(20fdca7131478e1ee12691bdafd2d5bb74cbd16f) )
@@ -2139,7 +2139,7 @@ public class atarisy1
 		ROM_REGION( 0x400, REGION_PROMS, 0 )	/* graphics mapping PROMs */
 		ROM_LOAD( "1174-12d.048", 0x000000, 0x000200, CRC(db4a4d53) SHA1(c5468f3585ec9bc23c9ee990b3ae3738b0309823) )
 		ROM_LOAD( "1173-2d.048",  0x000200, 0x000200, CRC(c80574af) SHA1(9a3dc83f70e79915ce0db3e6e69b5dcfee3acb6f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

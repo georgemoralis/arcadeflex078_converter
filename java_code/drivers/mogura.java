@@ -256,7 +256,7 @@ public class mogura
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( mogura )
+	static RomLoadPtr rom_mogura = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "gx141.5n", 0x00000, 0x08000, CRC(98e6120d) SHA1(45cdb2d78224a7c44fff8cd3487f33c57669a06c)  )
 	
@@ -265,7 +265,7 @@ public class mogura
 	
 		ROM_REGION( 0x20, REGION_PROMS, 0 )
 		ROM_LOAD( "gx141.7j", 0x00, 0x20,  CRC(b21c5d5f) SHA1(6913c840dd69a7d4687f4c4cbe3ff12300f62bc2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1991, mogura, 0, mogura, mogura, 0, ROT0, "Konami", "Mogura Desse" )
 }

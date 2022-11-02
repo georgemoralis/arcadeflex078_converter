@@ -210,7 +210,7 @@ public class leprechn
 	
 	***************************************************************************/
 	
-	ROM_START( leprechn )
+	static RomLoadPtr rom_leprechn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )  /* 64k for the main CPU */
 		ROM_LOAD( "lep1",         0x8000, 0x1000, CRC(2c4a46ca) SHA1(28a157c1514bc9f27cc27baddb83cf1a1887f3d1) )
 		ROM_LOAD( "lep2",         0x9000, 0x1000, CRC(6ed26b3e) SHA1(4ee5d09200d9e8f94ae29751c8ee838faa268f15) )
@@ -223,9 +223,9 @@ public class leprechn
 	
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )  /* 64k for the audio CPU */
 		ROM_LOAD( "lepsound",     0xf000, 0x1000, CRC(6651e294) SHA1(ce2875fc4df61a30d51d3bf2153864b562601151) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( potogold )
+	static RomLoadPtr rom_potogold = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )  /* 64k for the main CPU */
 		ROM_LOAD( "pog.pg1",      0x8000, 0x1000, CRC(9f1dbda6) SHA1(baf20e9a0793c0f1529396f95a820bd1f9431465) )
 		ROM_LOAD( "pog.pg2",      0x9000, 0x1000, CRC(a70e3811) SHA1(7ee306dc7d75a7d3fd497870ec92bef9d86535e9) )
@@ -238,7 +238,7 @@ public class leprechn
 	
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )  /* 64k for the audio CPU */
 		ROM_LOAD( "pog.snd",      0xf000, 0x1000, CRC(ec61f0a4) SHA1(26944ecc3e7413259928c8b0a74b2260e67d2c4e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

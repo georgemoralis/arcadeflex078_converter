@@ -2478,7 +2478,7 @@ public class nbmj8891
 	
 	
 	
-	ROM_START( gionbana )
+	static RomLoadPtr rom_gionbana = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "gion_03.bin", 0x00000, 0x10000, CRC(615e993b) SHA1(6efda8d1f0d5be6418a73dd86b898bb518de3f8b) )
 	
@@ -2502,9 +2502,9 @@ public class nbmj8891
 	
 		ROM_REGION( 0x40000, REGION_USER1, 0 ) /* protection data */
 		ROM_LOAD( "gion_m1.bin", 0x00000, 0x40000, CRC(f730ea47) SHA1(f969fa85a91a337ba3fc89e9c458ef116088075e) )	// same as housemnq/2i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hanamomo )
+	static RomLoadPtr rom_hanamomo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "hmog_21.bin", 0x00000, 0x10000, CRC(5b59d413) SHA1(9f7b7fe9f50a88958f8f7d819fb7fb4275f43260) )
 	
@@ -2533,9 +2533,9 @@ public class nbmj8891
 		ROM_LOAD( "hmog_18.bin", 0x110000, 0x10000, CRC(44062920) SHA1(ec27af882da301a3873aa6c0bfb08152b01e95f5) )
 		ROM_LOAD( "hmog_19.bin", 0x120000, 0x10000, CRC(81414383) SHA1(8520dcfb26234544d0318de086d249e12a233e32) )
 		ROM_LOAD( "hmog_20.bin", 0x130000, 0x10000, CRC(f3edc9d3) SHA1(9a6ff08cbc1630e40bdb233bab436bfe18eafb23) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( msjiken )
+	static RomLoadPtr rom_msjiken = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "msjn_11.bin",  0x00000, 0x10000, CRC(723499ef) SHA1(ae709e992372c00791e50932ba59456d3dcbc84b) )
 	
@@ -2560,9 +2560,9 @@ public class nbmj8891
 		ROM_LOAD( "msjn_08r.bin", 0x0e0000, 0x10000, CRC(dec0e799) SHA1(bb3919d6226ee8e09e1b32248e94927bc1c44773) )
 		ROM_LOAD( "msjn_09r.bin", 0x0f0000, 0x10000, CRC(552167d9) SHA1(ad4d9cfed79cc1cccff88656cfe9d5ce14ea746a) )
 		ROM_LOAD( "msjn_09.bin",  0x100000, 0x10000, CRC(df62249e) SHA1(974fc848d770ac2537d47b734a7d166b3fb980b2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( telmahjn )
+	static RomLoadPtr rom_telmahjn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "telm_03.bin", 0x00000, 0x10000, CRC(851bff09) SHA1(850c0cf58646dfe49df68e607e8461a6e98c2137) )
 	
@@ -2590,9 +2590,9 @@ public class nbmj8891
 	
 		ROM_REGION( 0x40000, REGION_USER1, 0 ) /* protection data */
 		ROM_LOAD( "telm_m1.bin", 0x00000, 0x40000, CRC(2199e3e9) SHA1(965af4a29db4ff909dbeeebab1b828eb4f23f57e) )	// same as housemnq/1i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mgmen89 )
+	static RomLoadPtr rom_mgmen89 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "mg89_03.bin", 0x00000, 0x10000, CRC(1ac5cd84) SHA1(15cdfb95b586bd037c9584808911c6f38ed5eace) )
 	
@@ -2618,9 +2618,9 @@ public class nbmj8891
 	
 		ROM_REGION( 0x40000, REGION_USER1, 0 ) /* protection data */
 		ROM_LOAD( "mg89_m1.bin", 0x00000, 0x40000, CRC(77ba1eaf) SHA1(bde55b4d2938f44fd07ff7d5b5a845f2ea64b4fc) )	// same as housemnq/5i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjfocus )
+	static RomLoadPtr rom_mjfocus = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "2_3h",   0x00000, 0x10000, CRC(fd88b3e6) SHA1(3cb47cfaba421d8539268db353735174809d1506) )
 	
@@ -2652,9 +2652,9 @@ public class nbmj8891
 		/* this ROM was not dumped, but the program expects the same checksum
 		   as peepshow, so it's a safe assumption that it's the same. */
 		ROM_LOAD( "mask",   0x00000, 0x40000, CRC(2199e3e9) SHA1(965af4a29db4ff909dbeeebab1b828eb4f23f57e) )	// same as housemnq/1i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjfocusm )
+	static RomLoadPtr rom_mjfocusm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "mfcs_02m.bin", 0x00000, 0x10000, CRC(409d4f0b) SHA1(c19196e8315337a075d44f0814630fb820688788) )
 	
@@ -2682,9 +2682,9 @@ public class nbmj8891
 	
 		ROM_REGION( 0x40000, REGION_USER1, 0 ) /* protection data */
 		ROM_LOAD( "mfcs_m1m.bin", 0x00000, 0x40000, CRC(da46163e) SHA1(c6e5f59fe813915f94d81ff28526614c943b7082) )	// same as orangec/ic2.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( peepshow )
+	static RomLoadPtr rom_peepshow = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "2.3h",   0x00000, 0x10000, CRC(8db1746c) SHA1(2735988352a831537efeb369a52f041c6c2d47b0) )
 	
@@ -2715,9 +2715,9 @@ public class nbmj8891
 		   However, what's in there matches the telmahjn one, and the program expects
 		   the same checksum, so it's a safe assumption that it's the same. */
 		ROM_LOAD( "mask",   0x00000, 0x40000, CRC(2199e3e9) SHA1(965af4a29db4ff909dbeeebab1b828eb4f23f57e) )	// same as housemnq/1i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( scandal )
+	static RomLoadPtr rom_scandal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "1.3h",   0x00000, 0x10000, CRC(97e73a9c) SHA1(53d2cecb30b146da55674ea6bdde1b687597cf98) )
 	
@@ -2738,9 +2738,9 @@ public class nbmj8891
 		ROM_LOAD( "5.10p",  0x0a0000, 0x10000, CRC(60472080) SHA1(4d3f8bc02bc4c9abbe0ce08c3061aa68407ebb03) )
 		ROM_LOAD( "4.10n",  0x0b0000, 0x10000, CRC(d9267e88) SHA1(4778e7c10085736c481c67672aecde0cfe0aee62) )
 		ROM_LOAD( "3.10m",  0x0c0000, 0x10000, CRC(9e303eda) SHA1(14a988c8df572aa16bc0464bcb9fd627c8b57537) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( scandalm )
+	static RomLoadPtr rom_scandalm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "scmm_01.bin", 0x00000, 0x10000, CRC(9811bab6) SHA1(05a0d9e2f038d5bf0588a66f71ac55a7c0386dac) )
 	
@@ -2761,9 +2761,9 @@ public class nbmj8891
 		ROM_LOAD( "5.10p",  0x0a0000, 0x10000, CRC(60472080) SHA1(4d3f8bc02bc4c9abbe0ce08c3061aa68407ebb03) )
 		ROM_LOAD( "4.10n",  0x0b0000, 0x10000, CRC(d9267e88) SHA1(4778e7c10085736c481c67672aecde0cfe0aee62) )
 		ROM_LOAD( "3.10m",  0x0c0000, 0x10000, CRC(9e303eda) SHA1(14a988c8df572aa16bc0464bcb9fd627c8b57537) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjnanpas )
+	static RomLoadPtr rom_mjnanpas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "mnst_03.bin", 0x00000, 0x10000, CRC(ece14e07) SHA1(de952a69fb9ecc676a43f5d4f0fd6159420fcc4f) )
 	
@@ -2797,9 +2797,9 @@ public class nbmj8891
 		/* the protection data is not used at all! They forgot a debug flag set in the
 		   code which skips the protection check. */
 		ROM_LOAD( "mnst_m1.bin", 0x00000, 0x40000, CRC(77ba1eaf) SHA1(bde55b4d2938f44fd07ff7d5b5a845f2ea64b4fc) )	// same as housemnq/5i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjnanpaa )
+	static RomLoadPtr rom_mjnanpaa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "mnst_03.old", 0x00000, 0x10000, CRC(a105b2b8) SHA1(3aa9a41fc8a1ffd37f89b660a986f0c8e48d61f8) )
 	
@@ -2833,9 +2833,9 @@ public class nbmj8891
 		/* the protection data is not used at all! They forgot a debug flag set in the
 		   code which skips the protection check. */
 		ROM_LOAD( "mnst_m1.bin", 0x00000, 0x40000, CRC(77ba1eaf) SHA1(bde55b4d2938f44fd07ff7d5b5a845f2ea64b4fc) )	// same as housemnq/5i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjnanpau )
+	static RomLoadPtr rom_mjnanpau = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "03.bin",      0x00000, 0x10000, CRC(f96bdda7) SHA1(cea176ef11db0607137da70479ccde575bf7524a) )
 	
@@ -2869,9 +2869,9 @@ public class nbmj8891
 		/* the protection data is not used at all! They forgot a debug flag set in the
 		   code which skips the protection check. */
 		ROM_LOAD( "mnst_m1.bin", 0x00000, 0x40000, CRC(77ba1eaf) SHA1(bde55b4d2938f44fd07ff7d5b5a845f2ea64b4fc) )	// same as housemnq/5i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pairsten )
+	static RomLoadPtr rom_pairsten = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "3.j3", 0x00000, 0x10000, CRC(037d6acb) SHA1(9a01f9765fd4cd459e22fc639b23306e50d2f051) )
 	
@@ -2898,9 +2898,9 @@ public class nbmj8891
 	
 		ROM_REGION( 0x40000, REGION_USER1, 0 ) /* protection data */
 		ROM_LOAD( "mask.f2", 0x00000, 0x40000, CRC(77ba1eaf) SHA1(bde55b4d2938f44fd07ff7d5b5a845f2ea64b4fc) )	// same as housemnq/5i.bin gfx data
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bananadr )
+	static RomLoadPtr rom_bananadr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "1.4h",   0x00000, 0x10000, CRC(a6344e0d) SHA1(ee8df28fb2f579d3eb10d8aa454c6289de4a9239) )
 	
@@ -2928,9 +2928,9 @@ public class nbmj8891
 		ROM_LOAD( "20.10d", 0x110000, 0x10000, CRC(3e44d46a) SHA1(1226f69f5dab2ba511a311472e24d1d6fbae2490) )
 		ROM_LOAD( "21.10c", 0x120000, 0x10000, CRC(320c0d74) SHA1(abd33da491de2deb898550e988b0ad20b90d6ca0) )
 		ROM_LOAD( "22.10a", 0x130000, 0x10000, CRC(def886e1) SHA1(25a10ea8cf5905262197661dd6a22c0bd7d5ac6e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( club90s )
+	static RomLoadPtr rom_club90s = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "c90s_03.bin", 0x00000, 0x10000, CRC(f8148ba5) SHA1(befff52276c369d4a8f2cc78ae88ecb6d90e7543) )
 	
@@ -2947,9 +2947,9 @@ public class nbmj8891
 		ROM_LOAD( "c90s_09.bin", 0x120000, 0x20000, CRC(2fb74265) SHA1(e3421942a7c2bd2f18f694408feec9dac2f3945b) )
 		ROM_LOAD( "c90s_10.bin", 0x140000, 0x20000, CRC(ca858e2c) SHA1(4d4ac9c662669159b7a736c93cf223e1be839c49) )
 		ROM_LOAD( "c90s_11.bin", 0x160000, 0x20000, CRC(56ca8768) SHA1(876f284d3c8b3dcd131e5484358862b7883e4a8d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( club90sa )
+	static RomLoadPtr rom_club90sa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "c90s_23.bin", 0x00000, 0x10000, CRC(60433c11) SHA1(58a07271d1c7c3578cd4857bfaf9c9568b22a049) )
 	
@@ -2966,9 +2966,9 @@ public class nbmj8891
 		ROM_LOAD( "c90s_09.bin", 0x120000, 0x20000, CRC(2fb74265) SHA1(e3421942a7c2bd2f18f694408feec9dac2f3945b) )
 		ROM_LOAD( "c90s_10.bin", 0x140000, 0x20000, CRC(ca858e2c) SHA1(4d4ac9c662669159b7a736c93cf223e1be839c49) )
 		ROM_LOAD( "c90s_11.bin", 0x160000, 0x20000, CRC(56ca8768) SHA1(876f284d3c8b3dcd131e5484358862b7883e4a8d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mladyhtr )
+	static RomLoadPtr rom_mladyhtr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "mlht_03.bin", 0x00000, 0x10000, CRC(bda76c24) SHA1(c779b9420162c5b077a16e2a20a592a56b088b2e) )
 	
@@ -2996,9 +2996,9 @@ public class nbmj8891
 		ROM_LOAD( "mlht_19.bin", 0x1a0000, 0x10000, CRC(5056763d) SHA1(2f6f2dda454d0f9eb6e8670c720148b6e2b4a027) )
 		ROM_LOAD( "mlht_20.bin", 0x1b0000, 0x10000, CRC(a58edec9) SHA1(c7a7b4ad54140eb335e519bfb7ac638f6d62cd28) )
 		ROM_LOAD( "mlht_21.bin", 0x1c0000, 0x10000, CRC(c7769608) SHA1(330cfd5e60a91a0e0e06804223cc063e337b67d3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chinmoku )
+	static RomLoadPtr rom_chinmoku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "3.3h",   0x00000, 0x10000, CRC(eddff33e) SHA1(b16ff69466463eeda01dc16ba7e62eac23bc8348) )
 	
@@ -3026,9 +3026,9 @@ public class nbmj8891
 		ROM_LOAD( "20.10m", 0x1b0000, 0x10000, CRC(1445d8b0) SHA1(929193045fb05e8c24d7ed1dec9ef082dd90953b) )
 		ROM_LOAD( "21.10n", 0x1c0000, 0x10000, CRC(38620a45) SHA1(662b1b47b9c786ceee44d0465d4dfd38daadd27f) )
 		ROM_LOAD( "22.10p", 0x1d0000, 0x10000, CRC(85119fce) SHA1(3203e54f260f8dc2b28cdce84c1995f57d3d001a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( maiko )
+	static RomLoadPtr rom_maiko = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "mikb_02.bin", 0x00000, 0x10000, CRC(fbf68ebd) SHA1(0ddc9fc39bc362563462c57a728f1fc4ce3f682b) )
 	
@@ -3043,9 +3043,9 @@ public class nbmj8891
 		ROM_LOAD( "mikb_07.bin", 0x080000, 0x20000, CRC(0aaf5033) SHA1(1818f81ebd66ed7e5591551f223ac924f57ef921) )
 		ROM_LOAD( "mikb_08.bin", 0x0a0000, 0x20000, CRC(2628caa1) SHA1(2163035dd9a0561d7a7ddf540d2c532fcb681ddc) )
 		ROM_LOAD( "mj-1802.bin", 0x180000, 0x80000, CRC(e6213f10) SHA1(377399e9cd20fc2055b680eb28d024824161b2ff) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hanaoji )
+	static RomLoadPtr rom_hanaoji = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "hnoj_02.bin", 0x00000, 0x10000, CRC(580cd095) SHA1(e798e9db64072d14c46840235c88dcdcc3d3ec6a) )
 	
@@ -3062,9 +3062,9 @@ public class nbmj8891
 		ROM_LOAD( "hnoj_09.bin", 0x0c0000, 0x20000, CRC(4ec74a59) SHA1(92803e99aa6fb5c8f2227db3b7cc875266249ed1) )
 		ROM_LOAD( "hnoj_10.bin", 0x0e0000, 0x20000, CRC(e9212fc5) SHA1(c09f4a93f01630696acb0e80b1c6adb711377319) )
 		ROM_LOAD( "hnoj_11.bin", 0x100000, 0x20000, CRC(bfe38671) SHA1(6c81864caab61ea60dfe446b390221bdcfb0895e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mmcamera )
+	static RomLoadPtr rom_mmcamera = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "2.3h",        0x00000, 0x10000, CRC(b6eed2cf) SHA1(87171ba9ba247e54244867f720738f9b88a1213e) )
 	
@@ -3089,7 +3089,7 @@ public class nbmj8891
 		ROM_LOAD( "17.10h",      0x0e0000, 0x10000, CRC(78cef468) SHA1(aedd94d3fcf097587e77f52d03a50a63606bdab6) )
 		ROM_LOAD( "18.10k",      0x0f0000, 0x10000, CRC(59182700) SHA1(cdf6b5dba205254e26dcfc4b33238f270eb71551) )
 		ROM_LOAD( "9.10l",       0x100000, 0x10000, CRC(0429ae8f) SHA1(e380e159b2dcafcbfd3e9991ee9e76b842189e37) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1988, msjiken,   0,        msjiken,  msjiken,  msjiken,  ROT270, "Nichibutsu", "Mahjong Satsujin Jiken (Japan 881017)" )

@@ -361,7 +361,7 @@ public class raiden2
 	
 	/* ROM LOADING */
 	
-	ROM_START( raiden2 )
+	static RomLoadPtr rom_raiden2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* v30 main cpu */
 		ROM_LOAD16_BYTE("prg0",   0x100000, 0x80000, CRC(09475ec4) SHA1(05027f2d8f9e11fcbd485659eda68ada286dae32) )
 		ROM_LOAD16_BYTE("prg1",   0x100001, 0x80000, CRC(4609b5f2) SHA1(272d2aa75b8ea4d133daddf42c4fc9089093df2e) )
@@ -385,7 +385,7 @@ public class raiden2
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "voi1", 0x00000, 0x80000, CRC(f340457b) SHA1(8169acb24c82f68d223a31af38ee36eb6cb3adf4) )
 		ROM_LOAD( "voi2", 0x80000, 0x80000, CRC(d321ff54) SHA1(b61e602525f36eb28a1408ffb124abfbb6a08706) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* INIT */
 	

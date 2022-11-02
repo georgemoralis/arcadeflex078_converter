@@ -789,7 +789,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	ROM_START( bbusters )
+	static RomLoadPtr rom_bbusters = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bb-3.k10",   0x000000, 0x20000, CRC(04da1820) SHA1(0b6e06adf9c181d7aef28f781efbdd2c225fe81e) )
 		ROM_LOAD16_BYTE( "bb-5.k12",   0x000001, 0x20000, CRC(777e0611) SHA1(b7ac0c6ea3738d560a5be75aed286821de918808) )
@@ -831,9 +831,9 @@ public class bbusters
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )
 		ROM_LOAD( "bb-pcmb.l3",  0x000000, 0x80000, CRC(c8d5dd53) SHA1(0f7e94532cc14852ca12c1b792e5479667af899e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mechatt )
+	static RomLoadPtr rom_mechatt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ma5-e.bin", 0x000000, 0x20000, CRC(9bbb852a) SHA1(34b696bf79cf53cac1c384a3143c0f3f243a71f3) )
 		ROM_LOAD16_BYTE( "ma4.bin",   0x000001, 0x20000, CRC(0d414918) SHA1(0d51b893d37ba124b983beebb691e65bdc52d300) )
@@ -867,7 +867,7 @@ public class bbusters
 		ROM_REGION( 0x20000, REGION_USER1, 0 ) /* Zoom table */
 		ROM_LOAD( "ma8.bin",       0x000000, 0x10000, CRC(61f3de03) SHA1(736f9634fe054ea68a2aa90a743bd0dc320f23c9) )
 		/* ma9 is identical to ma8 */
-	ROM_END
+	ROM_END(); }}; 
 	
 	#if 0
 	static void bbusters_patch_code(UINT16 offset)

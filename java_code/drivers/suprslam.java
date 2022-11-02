@@ -372,7 +372,7 @@ public class suprslam
 	
 	/*** ROM LOADING *************************************************************/
 	
-	ROM_START( suprslam )
+	static RomLoadPtr rom_suprslam = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_WORD_SWAP( "eb26ic47.bin", 0x000000, 0x080000, CRC(8d051fd8) SHA1(1820209306116e5b09cc10a8b3661d232c688b24) )
 		ROM_LOAD16_WORD_SWAP( "eb26ic73.bin", 0x080000, 0x080000, CRC(ca4ad383) SHA1(143ee475761fa54d5b3a9f4e3fb3acc8408972fd) )
@@ -399,7 +399,7 @@ public class suprslam
 		ROM_REGION( 0x400000, REGION_GFX3, ROMREGION_DISPOSE ) /* 16x16x4 BG GFX */
 		ROM_LOAD( "eb26ic12.bin", 0x000000, 0x200000, CRC(14561bd7) SHA1(5f69f68a305aba9acb21b844c8aa5b1de60f89ff) )
 		ROM_LOAD( "eb26ic36.bin", 0x200000, 0x200000, CRC(92019d89) SHA1(dbf6f8384341707996e4b9e07a3d4f536cf4905b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*** GAME DRIVERS ************************************************************/
 	

@@ -542,7 +542,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	ROM_START( roadriot )
+	static RomLoadPtr rom_roadriot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80004, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "rriot.8d", 0x00000, 0x20000, CRC(bf8aaafc) SHA1(1594d91b56609d49921c866d8f5796619e79217b) )
 		ROM_LOAD16_BYTE( "rriot.8c", 0x00001, 0x20000, CRC(5dd2dd70) SHA1(8f6a0e809ec1f6feea8a18197a789086a7b9dd6a) )
@@ -592,10 +592,10 @@ public class atarig42
 		ROM_LOAD( "089-1001.bin",  0x0000, 0x0200, CRC(5836cb5a) SHA1(2c797f6a1227d6e1fd7a12f99f0254072c8c266e) )
 		ROM_LOAD( "089-1002.bin",  0x0200, 0x0200, CRC(44288753) SHA1(811582015264f85a32643196cdb331a41430318f) )
 		ROM_LOAD( "089-1003.bin",  0x0400, 0x0200, CRC(1f571706) SHA1(26d5ea59163b3482ab1f8a26178d0849c5fd9692) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( guardian )
+	static RomLoadPtr rom_guardian = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80004, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "2021.8e",  0x00000, 0x20000, CRC(efea1e02) SHA1(f0f1ef300f36953aff73b68ffe6d9950ac575f7d) )
 		ROM_LOAD16_BYTE( "2020.8cd", 0x00001, 0x20000, CRC(a8f655ba) SHA1(2defe4d138613e248718a617d103794e051746f7) )
@@ -635,7 +635,7 @@ public class atarig42
 		ROM_LOAD( "092-1001.bin",  0x0000, 0x0200, CRC(b3251eeb) SHA1(5e83baa70aaa28f07f32657bf974fd87719972d3) )
 		ROM_LOAD( "092-1002.bin",  0x0200, 0x0200, CRC(0c5314da) SHA1(a9c7ee3ab015c7f3ada4200acd2854eb9a5c74b0) )
 		ROM_LOAD( "092-1003.bin",  0x0400, 0x0200, CRC(344b406a) SHA1(f4422f8c0d7004d0277a4fc77718d555f80fcf69) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

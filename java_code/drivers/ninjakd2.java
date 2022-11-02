@@ -582,7 +582,7 @@ public class ninjakd2
 	
 	
 	
-	ROM_START( ninjakd2 )
+	static RomLoadPtr rom_ninjakd2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "nk2_01.rom",   0x00000, 0x8000, CRC(3cdbb906) SHA1(f48f82528b5fc581ee3b1ccd0ef9cdecc7249bb3) )
 		ROM_LOAD( "nk2_02.rom",   0x10000, 0x8000, CRC(b5ce9a1a) SHA1(295a7e1d41e1a8ee45f1250086a0c9314837eded) )
@@ -621,9 +621,9 @@ public class ninjakd2
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "nk2_09.rom",   0x0000, 0x10000, CRC(c1d2d170) SHA1(0f325815086fde90fd85360d3660042b0b68ba96) )	/* raw pcm samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ninjak2a )
+	static RomLoadPtr rom_ninjak2a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "nk2_01.bin",   0x00000, 0x8000, CRC(e6adca65) SHA1(33d483dde0853f37455cde32b461f4e919601b4b) )
 		ROM_LOAD( "nk2_02.bin",   0x10000, 0x8000, CRC(d9284bd1) SHA1(e790fb1a718a1f7997931f2f390fe053655f231d) )
@@ -663,9 +663,9 @@ public class ninjakd2
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "nk2_09.rom",   0x0000, 0x10000, CRC(c1d2d170) SHA1(0f325815086fde90fd85360d3660042b0b68ba96) )	/* raw pcm samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ninjak2b )
+	static RomLoadPtr rom_ninjak2b = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "1.3s",         0x00000, 0x8000, CRC(cb4f4624) SHA1(4fc66641adc0a2c0eca332f27c5777df62fa507b) )
 		ROM_LOAD( "2.3q",         0x10000, 0x8000, CRC(0ad0c100) SHA1(c5bbc107ba07bd6950bb4d7377e827c084b8229b) )
@@ -705,9 +705,9 @@ public class ninjakd2
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "nk2_09.rom",   0x0000, 0x10000, CRC(c1d2d170) SHA1(0f325815086fde90fd85360d3660042b0b68ba96) )	/* raw pcm samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rdaction )
+	static RomLoadPtr rom_rdaction = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "1.3u",  	      0x00000, 0x8000, CRC(5c475611) SHA1(2da88a95b5d68b259c8ae48af1438a82a1d601c1) )
 		ROM_LOAD( "2.3s",         0x10000, 0x8000, CRC(a1e23bd2) SHA1(c3b6574dc9fa66b4f41c37754a0d20a865f8bc28) )
@@ -747,7 +747,7 @@ public class ninjakd2
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "nk2_09.rom",   0x0000, 0x10000, CRC(c1d2d170) SHA1(0f325815086fde90fd85360d3660042b0b68ba96) )	/* raw pcm samples */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

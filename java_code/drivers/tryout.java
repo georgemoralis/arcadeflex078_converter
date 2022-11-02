@@ -258,7 +258,7 @@ public class tryout
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( tryout )
+	static RomLoadPtr rom_tryout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
 		ROM_LOAD( "ch10-1.bin",   0x04000, 0x4000, CRC(d046231b) SHA1(145f9e9b0707824f7ae6d1587754b28c17907807) ) 
 		ROM_LOAD( "ch12.bin",     0x08000, 0x4000, CRC(bcd221be) SHA1(69869de8b5d56a97e2cd15fa275527aa767f1e44) ) 
@@ -283,7 +283,7 @@ public class tryout
 	
 		ROM_REGION( 0x20, REGION_PROMS, 0 ) 
 		ROM_LOAD( "ch14.bpr",     0x00000, 0x0020, CRC(8ce19925) SHA1(12f8f6022f1148b6ba1d019a34247452637063a7) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
 	DRIVER_INIT( tryout )
 	{

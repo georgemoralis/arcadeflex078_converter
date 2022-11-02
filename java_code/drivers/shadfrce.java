@@ -600,7 +600,7 @@ public class shadfrce
 	
 	/* Rom Defs. */
 	
-	ROM_START( shadfrce )
+	static RomLoadPtr rom_shadfrce = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "32a12-01.34", 0x00001, 0x40000, CRC(04501198) SHA1(50f981c13f9ed19d681d494376018ba86464ea13) )
 		ROM_LOAD16_BYTE( "32a13-01.26", 0x00000, 0x40000, CRC(b8f8a05c) SHA1(bd9d4218a7cf57b56aec1f7e710e02af8471f9d7) )
@@ -627,7 +627,7 @@ public class shadfrce
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, ROMREGION_SOUNDONLY ) /* Samples */
 		ROM_LOAD( "32j9-0.76",  0x000000, 0x080000, CRC(16001e81) SHA1(67928d2024f963aee91f1498b6f4c76101d2f3b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1993, shadfrce, 0, shadfrce, shadfrce, 0, ROT0, "Technos Japan", "Shadow Force (US Version 2)", GAME_NO_COCKTAIL )

@@ -826,7 +826,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	ROM_START( cerberus )
+	static RomLoadPtr rom_cerberus = new RomLoadPtr(){ public void handler(){ 
 	    ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "3-23u101", 0x00000, 0x02000, CRC(d78210df) SHA1(7557bc9da7d7347073cebcc080ff2040184ee77b) )
 		ROM_LOAD( "3-23u102", 0x02000, 0x02000, CRC(eed121ef) SHA1(862c4fee6c4483569aec7969ce797a5c3fbae336) )
@@ -861,10 +861,10 @@ public class leland
 		ROM_LOAD( "3-23u89",  0x1e000, 0x2000, CRC(7e5e82bb) SHA1(ccbb583689d420a0b7413c0a221a3f57a5ab0e63) )
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mayhem )
+	static RomLoadPtr rom_mayhem = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )
 		ROM_LOAD( "13208.101",   0x00000, 0x04000, CRC(04306973) SHA1(83e35fa7f2b2c6c1a65ee2f76223e12234eb69ad) )
 		ROM_LOAD( "13215.102",   0x10000, 0x02000, CRC(06e689ae) SHA1(1bf4ae82809eaaf06608d2015bdeceae57a345a1) )
@@ -909,10 +909,10 @@ public class leland
 		ROM_LOAD( "13202.89",  0x1c000, 0x4000, CRC(c5eaa4e3) SHA1(007a526543d06b8f39e4e93da6ad19725ec6aa2d) )
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( powrplay )
+	static RomLoadPtr rom_powrplay = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )
 		ROM_LOAD( "13306.101",   0x00000, 0x02000, CRC(981fc215) SHA1(c2ae1ff12f96c713d0dc6f6503ce0ba18ac342c4) )
 		ROM_LOAD( "13307.102",   0x10000, 0x02000, CRC(38a6ddfe) SHA1(a4a4372697e14584c3a6a9a8c94e5a4ee58b3ee6) )
@@ -955,10 +955,10 @@ public class leland
 		/* U89 = Empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( wseries )
+	static RomLoadPtr rom_wseries = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )
 		ROM_LOAD( "13409-01.101",   0x00000, 0x02000, CRC(b5eccf5c) SHA1(1ca781245292399d1b573e6be2edbb79daf9b5d6) )
 		ROM_LOAD( "13410-01.102",   0x10000, 0x02000, CRC(dd1ec091) SHA1(ef644c49bbe1cc30ecafab928a0715ea3461a1bd) )
@@ -1005,10 +1005,10 @@ public class leland
 		/* 89 = Empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( alleymas )
+	static RomLoadPtr rom_alleymas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )
 		ROM_LOAD( "101",   0x00000, 0x02000, CRC(4273e260) SHA1(1b2a726e0a6fe6a60d447c987471a6e1a9e78479) )
 		ROM_LOAD( "102",   0x10000, 0x02000, CRC(eb6575aa) SHA1(0876c83d13565937610b5af52aacee1ae6fd59ba) )
@@ -1055,10 +1055,10 @@ public class leland
 		/* U89 = Empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( dangerz )
+	static RomLoadPtr rom_dangerz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "13823.12t",   0x00000, 0x10000, CRC(31604634) SHA1(0b3d4fea91faf41519888954a21a82827eae6e2a) )
 		ROM_LOAD( "13824.13t",   0x10000, 0x10000, CRC(381026c6) SHA1(16c810d162789154e3b5ad38545855370f73b679) )
@@ -1092,10 +1092,10 @@ public class leland
 		ROM_LOAD( "13810.89",  0x1c000, 0x4000, CRC(4f645973) SHA1(94bf12db53dc08eb917c17f1ba0d5a40922ff22c) )
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( basebal2 )
+	static RomLoadPtr rom_basebal2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x38000, REGION_CPU1, 0 )
 		ROM_LOAD( "14115-00.101",   0x00000, 0x02000, CRC(05231fee) SHA1(d2f4f81309d344576aadb39c209240b901476ac2) )
 		ROM_LOAD( "14116-00.102",   0x10000, 0x02000, CRC(e1482ea3) SHA1(a55b8c99428fefd033ac481944b370a4c82ac134) )
@@ -1147,10 +1147,10 @@ public class leland
 		/* 89 = Empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( dblplay )
+	static RomLoadPtr rom_dblplay = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x38000, REGION_CPU1, 0 )
 		ROM_LOAD( "15018-01.101",   0x00000, 0x02000, CRC(17b6af29) SHA1(00865927d74f735ed9bbe635bb554d408bf7f856) )
 		ROM_LOAD( "15019-01.102",   0x10000, 0x02000, CRC(9fc8205e) SHA1(2b783c406539a3d06adacd6b15c8edd86b994561) )
@@ -1204,10 +1204,10 @@ public class leland
 		/* 89 = Empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( strkzone )
+	static RomLoadPtr rom_strkzone = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x38000, REGION_CPU1, 0 )
 		ROM_LOAD( "strkzone.101",   0x00000, 0x04000, CRC(8d83a611) SHA1(d17114559c8d60e3107895bdcb1886cc843b624c) )
 		ROM_LOAD( "strkzone.102",   0x10000, 0x02000, CRC(3859e67d) SHA1(0a0d18c16fa5becae2ecc147dfafadc16dee8d2f) )
@@ -1261,10 +1261,10 @@ public class leland
 		/* 89 = Empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( redlin2p )
+	static RomLoadPtr rom_redlin2p = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "13932-01.23t", 0x00000, 0x10000, CRC(ecdf0fbe) SHA1(186e1cecadb84b5085d9ccbf6512553a80b9ebfb) )
 		ROM_LOAD( "13931-01.22t", 0x10000, 0x10000, CRC(16d01978) SHA1(6882eac35a54a91f12a8d37a4f83d7ca0dc65ef5) )
@@ -1304,10 +1304,10 @@ public class leland
 		ROM_LOAD( "13927-01.u89",  0x1c000, 0x4000, CRC(30e60fb5) SHA1(374c84358d2b7ae7c74321996797af9adbc2a155) )
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( quarterb )
+	static RomLoadPtr rom_quarterb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "15219-05.49t", 0x00000, 0x10000, CRC(ff653e4f) SHA1(761e18ccbdc1c559648c47d06ee21a8a4710c5a0) )
 		ROM_LOAD( "15218-05.48t", 0x10000, 0x10000, CRC(34b83d81) SHA1(0425638063872ff562939439871631f7aa642182) )
@@ -1351,10 +1351,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( quartrba )
+	static RomLoadPtr rom_quartrba = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "15219-02.49t",   0x00000, 0x10000, CRC(7fbe1e5a) SHA1(a4af54328935e348f2903fe7f7dea8612660b899) )
 		ROM_LOAD( "15218-02.48t",   0x10000, 0x10000, CRC(6fbd4b27) SHA1(8146f276af5e3ef968851fa95c8f979b8b969ef6) )
@@ -1398,10 +1398,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( viper )
+	static RomLoadPtr rom_viper = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "15617-03.49t",   0x00000, 0x10000, CRC(7e4688a6) SHA1(282f98d22447b2f93d6f328a351ce1613a33069b) )
 		ROM_LOAD( "15616-03.48t",   0x10000, 0x10000, CRC(3fe2f0bf) SHA1(2a1a7d1654e5f45a5b30374596865006e80928f5) )
@@ -1436,10 +1436,10 @@ public class leland
 		ROM_LOAD( "15605-01.u89",  0x1c000, 0x4000, CRC(4aa9c788) SHA1(77095d7ce4949db3c39c19d131d2902e4099b6d4) )
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( teamqb )
+	static RomLoadPtr rom_teamqb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "15618-03.58t",   0x00000, 0x10000, CRC(b32568dc) SHA1(92fb8dd89cc7838129e7b106bc0e35107372904f) )
 		ROM_LOAD( "15619-03.59t",   0x10000, 0x10000, CRC(40b3319f) SHA1(26c6e26cd440fc7e1ab5ee7536e17a1c00b83f44) )
@@ -1478,10 +1478,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( teamqb2 )
+	static RomLoadPtr rom_teamqb2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "15618-03.58t",   0x00000, 0x10000, CRC(b32568dc) SHA1(92fb8dd89cc7838129e7b106bc0e35107372904f) )
 		ROM_LOAD( "15619-02.59t",   0x10000, 0x10000, CRC(6d533714) SHA1(ab177aaa5b034250c85bde0c2441902f72d44f42) )
@@ -1520,10 +1520,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( aafb )
+	static RomLoadPtr rom_aafb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "03-28011.u58",   0x00000, 0x10000, CRC(fa75a4a0) SHA1(ff37d71d8f2776a8ae9b15f95f105f282b079c5b) )
 		ROM_LOAD( "03-28012.u59",   0x10000, 0x10000, CRC(ab6a606f) SHA1(6c8872c73b26760517884b2996a0f3834b16b480) )
@@ -1562,10 +1562,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( aafbb )
+	static RomLoadPtr rom_aafbb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "24014-02.u58",   0x00000, 0x10000, CRC(5db4a3d0) SHA1(f759ab16de48562db1640bc5df68be188725aecf) )
 		ROM_LOAD( "24015-02.u59",   0x10000, 0x10000, NO_DUMP )
@@ -1604,10 +1604,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( aafbc )
+	static RomLoadPtr rom_aafbc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "u58t.bin",   0x00000, 0x10000, CRC(25cc4ccc) SHA1(0fe02e23942a10bb9a46524e75705f10fbb0a79a) )
 		ROM_LOAD( "u59t.bin",   0x10000, 0x10000, CRC(bfa1b56f) SHA1(b5dba27bfcd47cfeebdcf99e9d5f978d5d7f4fb3) )
@@ -1646,10 +1646,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( aafbd2p )
+	static RomLoadPtr rom_aafbd2p = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "26014-01.58t", 0x00000, 0x10000, CRC(79fd14cd) SHA1(1dd75bcecd51d414194ca19381bee0b9f70a8007) )
 		ROM_LOAD( "26015-01.59t", 0x10000, 0x10000, CRC(3b0382f0) SHA1(1b01af999201f202e76da8e445ff986d096103cd) )
@@ -1688,10 +1688,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( offroad )
+	static RomLoadPtr rom_offroad = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "22121-04.u58",   0x00000, 0x10000, CRC(c5790988) SHA1(a6bae6b024d86b49a23805037b77d15a3c7913ef) )
 		ROM_LOAD( "22122-03.u59",   0x10000, 0x10000, CRC(ae862fdc) SHA1(ac31630cff5850409f87bfa5a7303eeedf8a895d) )
@@ -1730,10 +1730,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( offroadt )
+	static RomLoadPtr rom_offroadt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 )
 		ROM_LOAD( "ortpu58.bin",   0x00000, 0x10000, CRC(adbc6211) SHA1(cb3181a0dd64754d9a65a7a557e4a183b8d539a2) )
 		ROM_LOAD( "ortpu59.bin",   0x10000, 0x10000, CRC(296dd3b6) SHA1(01ae1f2976e2fecc8237fc7b4cf4fb86dd170a70) )
@@ -1774,10 +1774,10 @@ public class leland
 		/* 89 = empty */
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( pigout )
+	static RomLoadPtr rom_pigout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 )
 		ROM_LOAD( "poutu58t.bin",  0x00000, 0x10000, CRC(8fe4b683) SHA1(6f98a4e54a558a642b7193af85823b29ade46919) )
 		ROM_LOAD( "poutu59t.bin",  0x10000, 0x10000, CRC(ab907762) SHA1(971c34ae42c17aa27880665966dc15a98387bebb) )
@@ -1817,10 +1817,10 @@ public class leland
 		ROM_LOAD( "poutu89.bin",  0x1c000, 0x4000, CRC(6c874a05) SHA1(a931ba5ac41facfaf32c5e940eb011e780ab234a) )
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( pigouta )
+	static RomLoadPtr rom_pigouta = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 )
 		ROM_LOAD( "03-29020.01", 0x00000, 0x10000, CRC(6c815982) SHA1(0720b22afd16e9bdc5d4a9e9a0071674ea46d038) )
 		ROM_LOAD( "03-29021.01", 0x10000, 0x10000, CRC(9de7a763) SHA1(9a612730a9d80d84114c1afc4a1887277d1ad5bc) )
@@ -1860,7 +1860,7 @@ public class leland
 		ROM_LOAD( "poutu89.bin",  0x1c000, 0x4000, CRC(6c874a05) SHA1(a931ba5ac41facfaf32c5e940eb011e780ab234a) )
 	
 	    ROM_REGION( LELAND_BATTERY_RAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

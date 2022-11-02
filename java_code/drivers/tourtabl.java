@@ -219,7 +219,7 @@ public class tourtabl
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( tourtabl )
+	static RomLoadPtr rom_tourtabl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "030751.ab2", 0x0800, 0x0800, CRC(4479a6f7) SHA1(bf3fd859614533a592f831e3539ea0a9d1964c82) )
 		ROM_RELOAD(             0xE800, 0x0800 )
@@ -227,10 +227,10 @@ public class tourtabl
 		ROM_RELOAD(             0xF000, 0x0800 )
 		ROM_LOAD( "030753.ab4", 0x1800, 0x0800, CRC(3978b269) SHA1(4fa05c655bb74711eb99428f36df838ec70da699) )
 		ROM_RELOAD(             0xF800, 0x0800 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( tourtab2 )
+	static RomLoadPtr rom_tourtab2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "030929.ab2", 0x0800, 0x0800, CRC(fcdfafa2) SHA1(f35ab83366a334a110fbba0cef09f4db950dbb68) )
 		ROM_RELOAD(             0xE800, 0x0800 )
@@ -238,7 +238,7 @@ public class tourtabl
 		ROM_RELOAD(             0xF000, 0x0800 )
 		ROM_LOAD( "030753.ab4", 0x1800, 0x0800, CRC(3978b269) SHA1(4fa05c655bb74711eb99428f36df838ec70da699) )
 		ROM_RELOAD(             0xF800, 0x0800 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1978, tourtabl, 0,        tourtabl, tourtabl, NULL, ROT0, "Atari", "Tournament Table (set 1)" )

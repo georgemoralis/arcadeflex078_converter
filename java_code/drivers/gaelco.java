@@ -261,7 +261,7 @@ public class gaelco
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( bigkarnk )
+	static RomLoadPtr rom_bigkarnk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"d16",	0x000000, 0x040000, CRC(44fb9c73) SHA1(c33852b37afea15482f4a43cb045434660e7a056) )
 		ROM_LOAD16_BYTE(	"d19",	0x000001, 0x040000, CRC(ff79dfdd) SHA1(2bfa440299317967ba2018d3a148291ae0c144ae) )
@@ -281,7 +281,7 @@ public class gaelco
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )	/* ADPCM samples - sound chip is OKIM6295 */
 		ROM_LOAD( "d1",	0x000000, 0x040000, CRC(26444ad1) SHA1(804101b9bbb6e1b6d43a1e9d91737f9c3b27802a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*============================================================================
@@ -506,7 +506,7 @@ public class gaelco
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( maniacsp )
+	static RomLoadPtr rom_maniacsp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"d18",	0x000000, 0x020000, CRC(740ecab2) SHA1(8d8583364cc6aeea58ea2b9cb9a2aab2a43a44df) )
 		ROM_LOAD16_BYTE(	"d16",	0x000001, 0x020000, CRC(c6c42729) SHA1(1aac9f93d47a4eb57e06e206e9f50e349b1817da) )
@@ -530,10 +530,10 @@ public class gaelco
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched from all the ROMs */
 		ROM_RELOAD(		0x040000, 0x080000 )
 		ROM_RELOAD(		0x0c0000, 0x080000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( biomtoy )
+	static RomLoadPtr rom_biomtoy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"d18",	0x000000, 0x080000, CRC(4569ce64) SHA1(96557aca55779c23f7c2c11fddc618823c04ead0) )
 		ROM_LOAD16_BYTE(	"d16",	0x000001, 0x080000, CRC(739449bd) SHA1(711a8ea5081f15dea6067577516c9296239c4145) )
@@ -562,7 +562,7 @@ public class gaelco
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched from all the ROMs */
 		ROM_RELOAD(		0x040000, 0x080000 )
 		ROM_LOAD( "c3",	0x0c0000, 0x080000, CRC(914e4bbc) SHA1(ca82b7481621a119f05992ed093b963da70d748a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

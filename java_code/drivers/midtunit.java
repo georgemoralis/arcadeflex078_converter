@@ -664,7 +664,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	ROM_START( mk )
+	static RomLoadPtr rom_mk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) 	/* sound CPU */
@@ -694,10 +694,10 @@ public class midtunit
 		ROM_LOAD( "mkt-uj19.bin", 0x900000, 0x80000, CRC(33b9b7a4) SHA1(e8ceca4c049e1f55d480a03ff793b595bd04d344) )
 		ROM_LOAD( "mkt-uj20.bin", 0x980000, 0x80000, CRC(eae96df0) SHA1(b40532312ba61e4065abfd733dd0c93eecad48e9) )
 		ROM_LOAD( "mkt-uj22.bin", 0xa00000, 0x80000, CRC(5e12523b) SHA1(468f93ef9bb6addb45c1c939d24b6511f255426a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mkr4 )
+	static RomLoadPtr rom_mkr4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) 	/* sound CPU */
@@ -727,10 +727,10 @@ public class midtunit
 		ROM_LOAD( "mkt-uj19.bin", 0x900000, 0x80000, CRC(33b9b7a4) SHA1(e8ceca4c049e1f55d480a03ff793b595bd04d344) )
 		ROM_LOAD( "mkt-uj20.bin", 0x980000, 0x80000, CRC(eae96df0) SHA1(b40532312ba61e4065abfd733dd0c93eecad48e9) )
 		ROM_LOAD( "mkt-uj22.bin", 0xa00000, 0x80000, CRC(5e12523b) SHA1(468f93ef9bb6addb45c1c939d24b6511f255426a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk2 )
+	static RomLoadPtr rom_mk2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -768,10 +768,10 @@ public class midtunit
 		ROM_LOAD( "uj19-vid", 0x900000, 0x100000, CRC(2d763156) SHA1(06536006da49ab5fb6b75b25f801b83fad000ff5) )
 		ROM_LOAD( "uj20-vid", 0xa00000, 0x100000, CRC(b96824f0) SHA1(d42b122f9a57da330192abc7e5f97abc4065d718) )
 		ROM_LOAD( "uj22-vid", 0xb00000, 0x100000, CRC(8891d785) SHA1(fd460df1ef8f4306ea42f7dc41488a80fd2c8f53) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk2r32 )
+	static RomLoadPtr rom_mk2r32 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -809,10 +809,10 @@ public class midtunit
 		ROM_LOAD( "uj19-vid", 0x900000, 0x100000, CRC(2d763156) SHA1(06536006da49ab5fb6b75b25f801b83fad000ff5) )
 		ROM_LOAD( "uj20-vid", 0xa00000, 0x100000, CRC(b96824f0) SHA1(d42b122f9a57da330192abc7e5f97abc4065d718) )
 		ROM_LOAD( "uj22-vid", 0xb00000, 0x100000, CRC(8891d785) SHA1(fd460df1ef8f4306ea42f7dc41488a80fd2c8f53) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk2r21 )
+	static RomLoadPtr rom_mk2r21 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -850,10 +850,10 @@ public class midtunit
 		ROM_LOAD( "uj19-vid", 0x900000, 0x100000, CRC(2d763156) SHA1(06536006da49ab5fb6b75b25f801b83fad000ff5) )
 		ROM_LOAD( "uj20-vid", 0xa00000, 0x100000, CRC(b96824f0) SHA1(d42b122f9a57da330192abc7e5f97abc4065d718) )
 		ROM_LOAD( "uj22-vid", 0xb00000, 0x100000, CRC(8891d785) SHA1(fd460df1ef8f4306ea42f7dc41488a80fd2c8f53) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk2r14 )
+	static RomLoadPtr rom_mk2r14 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -891,10 +891,10 @@ public class midtunit
 		ROM_LOAD( "uj19-vid", 0x900000, 0x100000, CRC(2d763156) SHA1(06536006da49ab5fb6b75b25f801b83fad000ff5) )
 		ROM_LOAD( "uj20-vid", 0xa00000, 0x100000, CRC(b96824f0) SHA1(d42b122f9a57da330192abc7e5f97abc4065d718) )
 		ROM_LOAD( "uj22-vid", 0xb00000, 0x100000, CRC(8891d785) SHA1(fd460df1ef8f4306ea42f7dc41488a80fd2c8f53) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk2r42 )
+	static RomLoadPtr rom_mk2r42 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -932,10 +932,10 @@ public class midtunit
 		ROM_LOAD( "uj19-vid", 0x900000, 0x100000, CRC(2d763156) SHA1(06536006da49ab5fb6b75b25f801b83fad000ff5) )
 		ROM_LOAD( "uj20-vid", 0xa00000, 0x100000, CRC(b96824f0) SHA1(d42b122f9a57da330192abc7e5f97abc4065d718) )
 		ROM_LOAD( "uj22-vid", 0xb00000, 0x100000, CRC(8891d785) SHA1(fd460df1ef8f4306ea42f7dc41488a80fd2c8f53) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk2r91 )
+	static RomLoadPtr rom_mk2r91 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -973,10 +973,10 @@ public class midtunit
 		ROM_LOAD( "uj19-vid", 0x900000, 0x100000, CRC(2d763156) SHA1(06536006da49ab5fb6b75b25f801b83fad000ff5) )
 		ROM_LOAD( "uj20-vid", 0xa00000, 0x100000, CRC(b96824f0) SHA1(d42b122f9a57da330192abc7e5f97abc4065d718) )
 		ROM_LOAD( "uj22-vid", 0xb00000, 0x100000, CRC(8891d785) SHA1(fd460df1ef8f4306ea42f7dc41488a80fd2c8f53) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk2chal )
+	static RomLoadPtr rom_mk2chal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -1014,7 +1014,7 @@ public class midtunit
 		ROM_LOAD( "uj19-vid", 0x900000, 0x100000, CRC(2d763156) SHA1(06536006da49ab5fb6b75b25f801b83fad000ff5) )
 		ROM_LOAD( "uj20-vid", 0xa00000, 0x100000, CRC(b96824f0) SHA1(d42b122f9a57da330192abc7e5f97abc4065d718) )
 		ROM_LOAD( "uj22-vid", 0xb00000, 0x100000, CRC(8891d785) SHA1(fd460df1ef8f4306ea42f7dc41488a80fd2c8f53) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*
@@ -1050,7 +1050,7 @@ public class midtunit
 	*/
 	
 	
-	ROM_START( nbajam )
+	static RomLoadPtr rom_nbajam = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1085,10 +1085,10 @@ public class midtunit
 		ROM_LOAD( "nbauj20.bin", 0x980000, 0x80000, CRC(f9cebbb6) SHA1(6202e490bc5658bd0741422f841540fcd037cfee) )
 		ROM_LOAD( "nbauj22.bin", 0xa00000, 0x80000, CRC(59a95878) SHA1(b95165987853f164842ab2b5895ea95484a1d78b) )
 		ROM_LOAD( "nbauj23.bin", 0xa80000, 0x80000, CRC(427d2eee) SHA1(4985e3dd9c9e1bedd5a900958bf549656debd494) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nbajamr2 )
+	static RomLoadPtr rom_nbajamr2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1123,10 +1123,10 @@ public class midtunit
 		ROM_LOAD( "nbauj20.bin", 0x980000, 0x80000, CRC(f9cebbb6) SHA1(6202e490bc5658bd0741422f841540fcd037cfee) )
 		ROM_LOAD( "nbauj22.bin", 0xa00000, 0x80000, CRC(59a95878) SHA1(b95165987853f164842ab2b5895ea95484a1d78b) )
 		ROM_LOAD( "nbauj23.bin", 0xa80000, 0x80000, CRC(427d2eee) SHA1(4985e3dd9c9e1bedd5a900958bf549656debd494) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nbajamte )
+	static RomLoadPtr rom_nbajamte = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1161,10 +1161,10 @@ public class midtunit
 		ROM_LOAD( "te-uj20.bin", 0x980000, 0x80000, CRC(bf263d61) SHA1(b5b59e8df55f8030eff068c1d8b07dad8521bf5d) )
 		ROM_LOAD( "te-uj22.bin", 0xa00000, 0x80000, CRC(39791051) SHA1(7aa02500ddacd31fca04044a22a38f36452ca300) )
 		ROM_LOAD( "te-uj23.bin", 0xa80000, 0x80000, CRC(f8c30998) SHA1(33e2f982d74e9f3686b1f4a8172c49fb8b604cf5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nbajamt1 )
+	static RomLoadPtr rom_nbajamt1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1199,10 +1199,10 @@ public class midtunit
 		ROM_LOAD( "te-uj20.bin", 0x980000, 0x80000, CRC(bf263d61) SHA1(b5b59e8df55f8030eff068c1d8b07dad8521bf5d) )
 		ROM_LOAD( "te-uj22.bin", 0xa00000, 0x80000, CRC(39791051) SHA1(7aa02500ddacd31fca04044a22a38f36452ca300) )
 		ROM_LOAD( "te-uj23.bin", 0xa80000, 0x80000, CRC(f8c30998) SHA1(33e2f982d74e9f3686b1f4a8172c49fb8b604cf5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nbajamt2 )
+	static RomLoadPtr rom_nbajamt2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1237,10 +1237,10 @@ public class midtunit
 		ROM_LOAD( "te-uj20.bin", 0x980000, 0x80000, CRC(bf263d61) SHA1(b5b59e8df55f8030eff068c1d8b07dad8521bf5d) )
 		ROM_LOAD( "te-uj22.bin", 0xa00000, 0x80000, CRC(39791051) SHA1(7aa02500ddacd31fca04044a22a38f36452ca300) )
 		ROM_LOAD( "te-uj23.bin", 0xa80000, 0x80000, CRC(f8c30998) SHA1(33e2f982d74e9f3686b1f4a8172c49fb8b604cf5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nbajamt3 )
+	static RomLoadPtr rom_nbajamt3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1275,10 +1275,10 @@ public class midtunit
 		ROM_LOAD( "te-uj20.bin", 0x980000, 0x80000, CRC(bf263d61) SHA1(b5b59e8df55f8030eff068c1d8b07dad8521bf5d) )
 		ROM_LOAD( "te-uj22.bin", 0xa00000, 0x80000, CRC(39791051) SHA1(7aa02500ddacd31fca04044a22a38f36452ca300) )
 		ROM_LOAD( "te-uj23.bin", 0xa80000, 0x80000, CRC(f8c30998) SHA1(33e2f982d74e9f3686b1f4a8172c49fb8b604cf5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( jdreddp )
+	static RomLoadPtr rom_jdreddp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1313,7 +1313,7 @@ public class midtunit
 		ROM_LOAD( "jd_uj20.rom", 0x980000, 0x80000, CRC(8fc7bfb9) SHA1(c3c31ea641a6e304b060a7938e2ac473db8a7aab) )
 		ROM_LOAD( "jd_uj22.rom", 0xa00000, 0x80000, CRC(7438295e) SHA1(dbc28a9273897d50abf8e7bebe0753949365eb42) )
 		ROM_LOAD( "jd_uj23.rom", 0xa80000, 0x80000, CRC(86ea157d) SHA1(9189e07abc73b601a26ae8aaf6d49ed87d1befca) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

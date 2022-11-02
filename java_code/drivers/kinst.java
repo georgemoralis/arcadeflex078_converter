@@ -402,7 +402,7 @@ public class kinst
 	 *
 	 *************************************/
 	
-	ROM_START( kinst )
+	static RomLoadPtr rom_kinst = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )		/* dummy region for R3000 */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -422,10 +422,10 @@ public class kinst
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "kinst.chd", 0, MD5(6d4c2f152c9a18ab3a9b05b8804306a8) SHA1(a37a2c5e52ea936a715210d237874dd573bb002f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( kinst2 )
+	static RomLoadPtr rom_kinst2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )		/* dummy region for R3000 */
 	
 		ROM_REGION32_LE( 0x80000, REGION_USER1, 0 )	/* 512k for R4600 code */
@@ -443,7 +443,7 @@ public class kinst
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "kinst2.chd", 0, MD5(2563b089b316f2c8636d78af661ac656) SHA1(ab0242233d2eaf9d907abe246a54e09a8a2561a5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

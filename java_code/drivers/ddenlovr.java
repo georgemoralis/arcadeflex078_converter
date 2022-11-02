@@ -2256,7 +2256,7 @@ public class ddenlovr
 	
 	***************************************************************************/
 	
-	ROM_START( mmpanic )
+	static RomLoadPtr rom_mmpanic = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "nwc7002a",     0x00000, 0x40000, CRC(725b337f) SHA1(4d1f1ebc4de524d959dde60498d3f7038c7f3ed2) )
 		ROM_RELOAD(               0x10000, 0x40000 )
@@ -2272,7 +2272,7 @@ public class ddenlovr
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "nwc7001a",     0x00000, 0x40000, CRC(1ae3660d) SHA1(c4711f00a30f7d2c80fe241d7e0a464f0bb2555f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2296,7 +2296,7 @@ public class ddenlovr
 	
 	***************************************************************************/
 	
-	ROM_START( quizchq )
+	static RomLoadPtr rom_quizchq = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x118000, REGION_CPU1, 0 )	/* Z80 Code + space for banked RAM */
 		ROM_LOAD( "nwc7302.3e",   0x00000, 0x80000, CRC(14217f2d) SHA1(3cdffcf73e62586893bfaa7c47520b0698d3afda) )
 		ROM_RELOAD(               0x10000, 0x80000 )
@@ -2313,9 +2313,9 @@ public class ddenlovr
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "nwc7301.1f",   0x00000, 0x80000, CRC(52c672e8) SHA1(bc05155f4d9c711cc2ed187a4dd2207b886452f0) )	// 2 banks
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( quizchql )
+	static RomLoadPtr rom_quizchql = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x118000, REGION_CPU1, 0 )	/* Z80 Code + space for banked RAM */
 		ROM_LOAD( "2.rom",        0x00000, 0x80000, CRC(1bf8fb25) SHA1(2f9a62654a018f19f6783be655d992c457551fc9) )
 		ROM_RELOAD(               0x10000, 0x80000 )
@@ -2334,11 +2334,11 @@ public class ddenlovr
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "1snd.rom",     0x00000, 0x80000, CRC(cebb9220) SHA1(7a2ee750f2e608a37858b849914316dc778bcae2) )	// 2 banks
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
-	ROM_START( quiz365 )
+	static RomLoadPtr rom_quiz365 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "7805.rom", 0x000000, 0x080000, CRC(6db33222) SHA1(5f0cc9a15815252d8d5e85975ce8770717eb3ac8) )
 		ROM_LOAD16_BYTE( "7804.rom", 0x000001, 0x080000, CRC(46d04ace) SHA1(b6489309d7704d2382802aa0f2f7526e367667ad) )
@@ -2355,7 +2355,7 @@ public class ddenlovr
 		ROM_REGION( 0x100000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "7801.rom", 0x080000, 0x080000, CRC(285cc62a) SHA1(7cb3bd0ead303787964bcf7a0ecf896b6a6bfa54) )	// bank 2,3
 		ROM_CONTINUE(         0x000000, 0x080000 )				// bank 0,1
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2372,7 +2372,7 @@ public class ddenlovr
 	
 	***************************************************************************/
 	
-	ROM_START( rongrong )
+	static RomLoadPtr rom_rongrong = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x118000, REGION_CPU1, 0 )	/* Z80 Code + space for banked RAM */
 		ROM_LOAD( "rr_8002g.rom", 0x00000, 0x80000, CRC(9a5d2885) SHA1(9ca049085d14b1cfba6bd48adbb0b883494e7d29) )
 		ROM_RELOAD(               0x10000, 0x80000 )
@@ -2387,7 +2387,7 @@ public class ddenlovr
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "rr_8001w.rom", 0x00000, 0x40000, CRC(8edc87a2) SHA1(87e8ad50be025263e682cbfb5623f3a35b17118f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2404,7 +2404,7 @@ public class ddenlovr
 	
 	***************************************************************************/
 	
-	ROM_START( nettoqc )
+	static RomLoadPtr rom_nettoqc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "10305.rom", 0x000000, 0x080000, CRC(ebb14a1f) SHA1(5e4511a878d0bcede79a287fb184e912c9eb7dc5) )
 		ROM_LOAD16_BYTE( "10303.rom", 0x000001, 0x080000, CRC(30c114c3) SHA1(fa9c26d465d2d919e141bbc080a04ac0f87c7010) )
@@ -2422,7 +2422,7 @@ public class ddenlovr
 		ROM_REGION( 0x100000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "10301.rom", 0x000000, 0x080000, CRC(52afd952) SHA1(3ed6d92b78552d390ee305bb216648dbf6d63daf) )
 		ROM_LOAD( "10302.rom", 0x080000, 0x080000, CRC(6e2d4660) SHA1(d7924af8807f7238a7885b204a8c352ff75298b7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2445,7 +2445,7 @@ public class ddenlovr
 	
 	***************************************************************************/
 	
-	ROM_START( ddenlovr )
+	static RomLoadPtr rom_ddenlovr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "1134h.1a", 0x000000, 0x040000, CRC(43accdff) SHA1(3023d4a071fc877f8e4325e95e586739077ccb02) )
 		ROM_LOAD16_BYTE( "1133h.1c", 0x000001, 0x040000, CRC(361bf7b6) SHA1(1727112284cd1dcc1ed17ccba214cb0f8993650a) )
@@ -2461,7 +2461,7 @@ public class ddenlovr
 		ROM_REGION( 0x200000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "1131h.1f", 0x080000, 0x080000, CRC(32f68241) SHA1(585b5e0d2d959af8b57ecc0a277aeda27e5cae9c) )	// bank 2, 3
 		ROM_LOAD( "1132h.1e", 0x100000, 0x080000, CRC(2de6363d) SHA1(2000328e41bc0261f19e02323434e9dfdc61013a) )	// bank 4, 5
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2474,7 +2474,7 @@ public class ddenlovr
 	
 	***************************************************************************/
 	
-	ROM_START( hanakanz )
+	static RomLoadPtr rom_hanakanz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "50720.5b",     0x00000, 0x80000, CRC(dc40fcfc) SHA1(32c8b3d23039ac47504c881552572f2c22afa585) )
 		ROM_RELOAD(               0x10000, 0x80000 )
@@ -2489,7 +2489,7 @@ public class ddenlovr
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "50710.1c",     0x00000, 0x80000, CRC(72ae072f) SHA1(024af2ae6aa12b7f76d12a9c589f07ec7f47e395) )	// 2 banks
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( rongrong )

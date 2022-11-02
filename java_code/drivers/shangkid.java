@@ -648,7 +648,7 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	ROM_START( chinhero )
+	static RomLoadPtr rom_chinhero = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 code (main) */
 		ROM_LOAD( "ic2.1",		  0x0000, 0x2000, CRC(8974bac4) SHA1(932a677d0928f4146201f206b71ac2bcc0f6735c) )
 		ROM_LOAD( "ic3.2",		  0x2000, 0x2000, CRC(9b7a02fe) SHA1(b17593262ec24b999d66634b84eee95c1088f7eb) )
@@ -695,9 +695,9 @@ public class shangkid
 		ROM_LOAD( "ic8",		  0xa20, 0x020, CRC(84bcd9af) SHA1(5a5afeb6aedb8ac6ac49fb8da62df57fbd8b1780) ) /* main CPU banking */
 		ROM_LOAD( "ic22",		  0xa40, 0x020, CRC(84bcd9af) SHA1(5a5afeb6aedb8ac6ac49fb8da62df57fbd8b1780) ) /* coprocessor banking */
 		ROM_LOAD( "ic42",		  0xa60, 0x020, CRC(2ccfe10a) SHA1(d89ea91e5da436805fca9ded9b33609f4a862724) ) /* sound cpu banking */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chinher2 )
+	static RomLoadPtr rom_chinher2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 code (main) */
 		ROM_LOAD( "1.128",        0x0000, 0x4000, CRC(68e247aa) SHA1(27c2b864e482ba10c81337ed7c03a58b395e52bb) ) 
 		ROM_LOAD( "2.128",        0x4000, 0x4000, CRC(0346d8c9) SHA1(458b9a37b0ad0cafecdb0348f7d93508531bc310) ) 
@@ -740,9 +740,9 @@ public class shangkid
 		ROM_LOAD( "ic8",          0xa20, 0x020, CRC(84bcd9af) SHA1(5a5afeb6aedb8ac6ac49fb8da62df57fbd8b1780) ) /* main CPU banking */
 		ROM_LOAD( "ic22",         0xa40, 0x020, CRC(84bcd9af) SHA1(5a5afeb6aedb8ac6ac49fb8da62df57fbd8b1780) ) /* coprocessor banking */
 		ROM_LOAD( "ic42",         0xa60, 0x020, CRC(2ccfe10a) SHA1(d89ea91e5da436805fca9ded9b33609f4a862724) ) /* sound cpu banking */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( shangkid )
+	static RomLoadPtr rom_shangkid = new RomLoadPtr(){ public void handler(){ 
 		/* Main CPU - handles game logic */
 		ROM_REGION( 0x12000, REGION_CPU1, 0 ) /* Z80 (NEC D780C-1) code */
 		ROM_LOAD( "cr00ic02.bin", 0x00000, 0x4000, CRC(2e420377) SHA1(73eb916b1693ffab8049ea0d8d3503629fa27948) )
@@ -804,9 +804,9 @@ public class shangkid
 		ROM_LOAD( "cr22ic8.bin",  0xa20, 0x020, CRC(1a7e0b06) SHA1(648d58a4ad14f4b242e492cf302d6678d899cf4f) )	/* 82S123 - main CPU banking */
 		ROM_LOAD( "cr23ic22.bin", 0xa40, 0x020, CRC(efb5f265) SHA1(3de15e03cb12956d34074abb48236537f2b47dba) )	/* 82S123 - coprocessor banking */
 		ROM_LOAD( "cr24ic42.bin", 0xa60, 0x020, CRC(823878aa) SHA1(eb5026270890e5af9193e354b7e814f32238a9bf) )	/* 82S123 - sample player banking */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hiryuken )
+	static RomLoadPtr rom_hiryuken = new RomLoadPtr(){ public void handler(){ 
 		/* Main CPU - handles game logic */
 		ROM_REGION( 0x12000, REGION_CPU1, 0 ) /* Z80 (NEC D780C-1) code */
 		ROM_LOAD( "1.2", 0x00000, 0x4000, CRC(c7af7f2e) SHA1(b035a4230e10bcf0891e41423a51fb6169087b8e) )
@@ -868,9 +868,9 @@ public class shangkid
 		ROM_LOAD( "cr22ic8.bin",  0xa20, 0x020, CRC(1a7e0b06) SHA1(648d58a4ad14f4b242e492cf302d6678d899cf4f) ) /* 82S123 - main CPU banking */		// 1.8
 		ROM_LOAD( "cr23ic22.bin", 0xa40, 0x020, CRC(efb5f265) SHA1(3de15e03cb12956d34074abb48236537f2b47dba) ) /* 82S123 - coprocessor banking */		// 2.22
 		ROM_LOAD( "cr24ic42.bin", 0xa60, 0x020, CRC(823878aa) SHA1(eb5026270890e5af9193e354b7e814f32238a9bf) ) /* 82S123 - sample player banking */	// 3.42
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dynamski )
+	static RomLoadPtr rom_dynamski = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x12000, REGION_CPU1, 0 ) /* Z80 code */
 		ROM_LOAD( "dynski.1",     0x00000, 0x1000, CRC(30191160) SHA1(5ffa3355f53e4be65bd96101088d2d7b66490141) ) /* code */
 		ROM_LOAD( "dynski.2",     0x01000, 0x1000, CRC(5e08a0b0) SHA1(89398752e8ea1ffd8ec8392f5c8e20f25cf8fdfb) )
@@ -895,7 +895,7 @@ public class shangkid
 		ROM_LOAD( "dynskic.15f",  0x020, 0x020, CRC(3869514b) SHA1(1ef062284e52777ec6e269368a16b9b357a2647a) )	/* palette */
 		ROM_LOAD( "dynski.11e",   0x040, 0x100, CRC(e625aa09) SHA1(c10371f1adf7245815c0bdcb24458c7b04edd5b9) )	/* lookup table */
 		ROM_LOAD( "dynski.4g",    0x140, 0x100, CRC(761fe465) SHA1(87741a6e4d14440073aaed3a8a15bc5e30b8fcfc) )	/* lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1984, dynamski, 0,        dynamski, dynamski, 0,        ROT90, "Taiyo", "Dynamic Ski", GAME_NO_COCKTAIL )

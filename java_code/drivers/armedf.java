@@ -926,7 +926,7 @@ public class armedf
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( legion )
+	static RomLoadPtr rom_legion = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )	/* 64K*8 for 68000 code */
 		ROM_LOAD16_BYTE( "lg1.bin", 0x000001, 0x010000, CRC(c4aeb724) SHA1(b4c0383f3b1fa6b1d5bdab0f3a5293c89a82a474) )
 		ROM_LOAD16_BYTE( "lg3.bin", 0x000000, 0x010000, CRC(777e4935) SHA1(225766940059b4c12e69332ea77eb618dbd1467b) )
@@ -955,9 +955,9 @@ public class armedf
 	
 		ROM_REGION( 0x8000, REGION_USER1, 0 )	/* ? */
 		ROM_LOAD( "legion.1i",        0x0000, 0x8000, CRC(79f4a827) SHA1(25e4c1b5b8466627244b7226310e67e4261333b6) ) // lg10
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( legiono )
+	static RomLoadPtr rom_legiono = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )	/* 64K*8 for 68000 code */
 		ROM_LOAD16_BYTE( "legion.1a", 0x000001, 0x010000, CRC(8c0cda1d) SHA1(14b93d4fb4381ebc6a4ccdb480089bf69c6f474b) )
 		ROM_LOAD16_BYTE( "legion.1c", 0x000000, 0x010000, CRC(21226660) SHA1(ee48812d6ec9d4dccc58684164916f91b71aabf2) )
@@ -985,9 +985,9 @@ public class armedf
 	
 		ROM_REGION( 0x8000, REGION_USER1, 0 )	/* ? */
 		ROM_LOAD( "legion.1i",        0x0000, 0x8000, CRC(79f4a827) SHA1(25e4c1b5b8466627244b7226310e67e4261333b6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( terraf )
+	static RomLoadPtr rom_terraf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )	/* 64K*8 for 68000 code */
 		ROM_LOAD16_BYTE( "terrafor.014", 0x00000, 0x10000, CRC(8e5f557f) SHA1(3462a58146c3f33bf8686adbd2ead25dae3804a8) )
 		ROM_LOAD16_BYTE( "terrafor.011", 0x00001, 0x10000, CRC(5320162a) SHA1(eaffafcaf146cdddb03f40f92ce23dfd096eb89e) )
@@ -1019,9 +1019,9 @@ public class armedf
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "tf.clr",       0x0000, 0x0100, CRC(81244757) SHA1(6324f63e571f0f7a0bb9eb97f9994809db79493f) )	/* ??? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( terrafu )
+	static RomLoadPtr rom_terrafu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )	/* 64K*8 for 68000 code */
 		ROM_LOAD16_BYTE( "tf.8",         0x00000, 0x10000, CRC(fea6dd64) SHA1(682eae338ce14808f134897f594fae1c69e75a1a) )
 		ROM_LOAD16_BYTE( "tf.3",         0x00001, 0x10000, CRC(02f9d05a) SHA1(88985373bc3cffbc838e0b701ecd732a417975a1) )
@@ -1053,9 +1053,9 @@ public class armedf
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "tf.clr",       0x0000, 0x0100, CRC(81244757) SHA1(6324f63e571f0f7a0bb9eb97f9994809db79493f) )	/* ??? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kodure )
+	static RomLoadPtr rom_kodure = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 64K*8 for 68000 code */
 		ROM_LOAD16_BYTE( "kodure8.6e", 0x00000, 0x10000, CRC(6bbfb1e6) SHA1(ffc8f835e28ff5f5b11f826b74ac2712c3018178) )
 		ROM_LOAD16_BYTE( "kodure3.6h", 0x00001, 0x10000, CRC(f9178ec8) SHA1(68085b6030f4d1f89931263df68635b3b276e9f0) )
@@ -1086,9 +1086,9 @@ public class armedf
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "tf.11j", 0x0000, 0x0100, CRC(81244757) SHA1(6324f63e571f0f7a0bb9eb97f9994809db79493f) )	/* ??? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cclimbr2 )
+	static RomLoadPtr rom_cclimbr2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 64K*8 for 68000 code */
 		ROM_LOAD16_BYTE( "4.bin", 0x00000, 0x10000, CRC(7922ea14) SHA1(4395c1dfdeeba8173cce23b5453185c3ff976980) )
 		ROM_LOAD16_BYTE( "1.bin", 0x00001, 0x10000, CRC(2ac7ed67) SHA1(5e9c3ca4f5b259ed7b08db8353be7d36ac947578) )
@@ -1120,9 +1120,9 @@ public class armedf
 	
 		ROM_REGION( 0x4000, REGION_GFX5, 0 )	/* data for mcu/blitter */
 		ROM_LOAD( "9.bin",  0x0000, 0x4000, CRC(740d260f) SHA1(5b4487930c7a1fb0a796aec2243bec631b1b5104) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( armedf )
+	static RomLoadPtr rom_armedf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "af_06.rom", 0x00000, 0x10000, CRC(c5326603) SHA1(135a8d96d792cf9b55e39e21160ee419be76d28a) )
 		ROM_LOAD16_BYTE( "af_01.rom", 0x00001, 0x10000, CRC(458e9542) SHA1(22e4281eaac6b9b04af324cc96b5f3e4d1cefe43) )
@@ -1148,7 +1148,7 @@ public class armedf
 		ROM_REGION( 0x40000, REGION_GFX4, ROMREGION_DISPOSE )
 		ROM_LOAD( "af_11.rom", 0x00000, 0x20000, CRC(b46c473c) SHA1(d8573225e2d8b133b3bdd4fa5a12d445c71d5e0e) ) /* sprites */
 		ROM_LOAD( "af_12.rom", 0x20000, 0x20000, CRC(23cb6bfe) SHA1(34cb013827206bea71f5336b308ba92bee688506) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( terraf )

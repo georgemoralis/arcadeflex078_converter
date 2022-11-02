@@ -544,7 +544,7 @@ public class ladybug
 	
 	***************************************************************************/
 	
-	ROM_START( ladybug )
+	static RomLoadPtr rom_ladybug = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "lb1.cpu",      0x0000, 0x1000, CRC(d09e0adb) SHA1(ddc1f849cbcefb64b70a26c2a4c993f0516af814) )
 		ROM_LOAD( "lb2.cpu",      0x1000, 0x1000, CRC(88bc4a0a) SHA1(193c9f90b7550020c0923cb158dff7d5faa53bc6) )
@@ -565,9 +565,9 @@ public class ladybug
 		ROM_LOAD( "10-2.vid",     0x0000, 0x0020, CRC(df091e52) SHA1(4d7fea6d9ab31e5f280b1dc198a325f00c3826ef) ) /* palette */
 		ROM_LOAD( "10-1.vid",     0x0020, 0x0020, CRC(40640d8f) SHA1(85d13a9b78c47174cff7c869f52b30263bae575e) ) /* sprite color lookup table */
 		ROM_LOAD( "10-3.vid",     0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ladybugb )
+	static RomLoadPtr rom_ladybugb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "lb1a.cpu",     0x0000, 0x1000, CRC(ec135e54) SHA1(69fc6db04b28c25eda329fc88c235267ca93a09f) )
 		ROM_LOAD( "lb2a.cpu",     0x1000, 0x1000, CRC(3049c5c6) SHA1(51ceb70fa4789ff91c9bb1e157be5b6c09ff3c8e) )
@@ -588,9 +588,9 @@ public class ladybug
 		ROM_LOAD( "10-2.vid",     0x0000, 0x0020, CRC(df091e52) SHA1(4d7fea6d9ab31e5f280b1dc198a325f00c3826ef) ) /* palette */
 		ROM_LOAD( "10-1.vid",     0x0020, 0x0020, CRC(40640d8f) SHA1(85d13a9b78c47174cff7c869f52b30263bae575e) ) /* sprite color lookup table */
 		ROM_LOAD( "10-3.vid",     0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( snapjack )
+	static RomLoadPtr rom_snapjack = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "sj2a.bin",     0x0000, 0x1000, CRC(6b30fcda) SHA1(85e4ebbbe8e8d6c79a14387d7a6818abc9430037) )
 		ROM_LOAD( "sj2b.bin",     0x1000, 0x1000, CRC(1f1088d1) SHA1(0fd5204ea27e9bdd811e9ea21e9bbab84b916f4a) )
@@ -611,9 +611,9 @@ public class ladybug
 		ROM_LOAD( "sj8t.bin",     0x0000, 0x0020, CRC(cbbd9dd1) SHA1(e267726ba59e9a42ac89dd22eb1508ad21fd32ac) ) /* palette */
 		ROM_LOAD( "sj9k.bin",     0x0020, 0x0020, CRC(5b16fbd2) SHA1(0a776aeca3947a6f29d527018f5182e758b50c5d) ) /* sprite color lookup table */
 		ROM_LOAD( "sj9h.bin",     0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cavenger )
+	static RomLoadPtr rom_cavenger = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "1",            0x0000, 0x1000, CRC(9e0cc781) SHA1(f23bd6b9f427c26ac996a5c8ba29f356cf45c78a) )
 		ROM_LOAD( "2",            0x1000, 0x1000, CRC(5ce5b950) SHA1(170e3f8be592dcccb8868474f40f8f2223e8a8b5) )
@@ -634,9 +634,9 @@ public class ladybug
 		ROM_LOAD( "t8.bpr",       0x0000, 0x0020, CRC(42a24dd5) SHA1(03175ee7f8e11896a89d7cc0d614a78a49923627) ) /* palette */
 		ROM_LOAD( "k9.bpr",       0x0020, 0x0020, CRC(d736b8de) SHA1(4c9c76826f3a2a631d01fd2531d55318172b0c12) ) /* sprite color lookup table */
 		ROM_LOAD( "h9.bpr",       0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dorodon )
+	static RomLoadPtr rom_dorodon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 ) /* 64K for data, 64K for encrypted opcodes */
 		ROM_LOAD( "dorodon.0",   0x0000, 0x2000, CRC(460aaf26) SHA1(c4ea41cba4ac2d93fedec3c117a4470fee2a910f) )
 		ROM_LOAD( "dorodon.1",   0x2000, 0x2000, CRC(d2451eb6) SHA1(4154bfe50b7f75444d3f0c9be6bd2475fdba1938) )
@@ -661,9 +661,9 @@ public class ladybug
 		ROM_LOAD( "dorodon.bp0", 0x0000, 0x0020, CRC(8fcf0bc8) SHA1(392d22731b3e4bc663d6e4385f6069ee2b4ee029) ) /* palette */
 		ROM_LOAD( "dorodon.bp1", 0x0020, 0x0020, CRC(3f209be4) SHA1(f924494eed357a15ffc11331c163af24585d4ab9) ) /* sprite color lookup table */
 		ROM_LOAD( "dorodon.bp2", 0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* timing?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dorodon2 )
+	static RomLoadPtr rom_dorodon2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 ) /* 64K for data, 64K for encrypted opcodes */
 		ROM_LOAD( "1.3fg",        0x0000, 0x2000, CRC(4d05d6f8) SHA1(db12ad04295f0ce112b6e90fde94a53ed1d6c3b9) )
 		ROM_LOAD( "2.3h",         0x2000, 0x2000, CRC(27b43b09) SHA1(12a8a6b8665bb9d1967ec631a794aab564a50570) )
@@ -689,7 +689,7 @@ public class ladybug
 		ROM_LOAD( "dorodon.bp0", 0x0000, 0x0020, CRC(8fcf0bc8) SHA1(392d22731b3e4bc663d6e4385f6069ee2b4ee029) ) /* palette */
 		ROM_LOAD( "dorodon.bp1", 0x0020, 0x0020, CRC(3f209be4) SHA1(f924494eed357a15ffc11331c163af24585d4ab9) ) /* sprite color lookup table */
 		ROM_LOAD( "dorodon.bp2", 0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* timing?? */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( dorodon )

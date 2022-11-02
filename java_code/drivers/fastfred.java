@@ -644,7 +644,7 @@ public class fastfred
 	
 	***************************************************************************/
 	
-	ROM_START( fastfred )
+	static RomLoadPtr rom_fastfred = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "ffr.01",       0x0000, 0x1000, CRC(15032c13) SHA1(18ae84e87ac430e3f1cbc388ad16fb1d20aaba2f) )
 		ROM_LOAD( "ffr.02",       0x1000, 0x1000, CRC(f9642744) SHA1(b086ad284593b7f2ad314ad5002c9a2b293b8103) )
@@ -676,9 +676,9 @@ public class fastfred
 		ROM_LOAD( "red.9h",       0x0000, 0x0100, CRC(b801e294) SHA1(79926dc69c9088c2a5e5f15e260c644a90071ba0) )
 		ROM_LOAD( "green.8h",     0x0100, 0x0100, CRC(7da063d0) SHA1(8e40174c4f6ba4a15edd89a6fe2b98a5e50531ff) )
 		ROM_LOAD( "blue.7h",      0x0200, 0x0100, CRC(85c05c18) SHA1(a609a45c593fc6c491624076f7d65da55b5e603f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( flyboy )
+	static RomLoadPtr rom_flyboy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "flyboy01.cpu", 0x0000, 0x1000, CRC(b05aa900) SHA1(1ad394a438ddf96974b0b841d916766e45e8f3ba) )
 		ROM_LOAD( "flyboy02.cpu", 0x1000, 0x1000, CRC(474867f5) SHA1(b352318eee71218155046bba9f032364e1213c02) )
@@ -710,9 +710,9 @@ public class fastfred
 		ROM_LOAD( "red.9h",       0x0000, 0x0100, CRC(b801e294) SHA1(79926dc69c9088c2a5e5f15e260c644a90071ba0) )
 		ROM_LOAD( "green.8h",     0x0100, 0x0100, CRC(7da063d0) SHA1(8e40174c4f6ba4a15edd89a6fe2b98a5e50531ff) )
 		ROM_LOAD( "blue.7h",      0x0200, 0x0100, CRC(85c05c18) SHA1(a609a45c593fc6c491624076f7d65da55b5e603f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( flyboyb )
+	static RomLoadPtr rom_flyboyb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "rom1.cpu",     0x0000, 0x1000, CRC(e9e1f527) SHA1(999b8054751ddaa1b5bad48eaa12fc11a915c74c) )
 		ROM_LOAD( "rom2.cpu",     0x1000, 0x1000, CRC(07fbe78c) SHA1(875e29e6ed7525678b52276248f0cf4c885bd521) )
@@ -744,9 +744,9 @@ public class fastfred
 		ROM_LOAD( "red.9h",       0x0000, 0x0100, CRC(b801e294) SHA1(79926dc69c9088c2a5e5f15e260c644a90071ba0) )
 		ROM_LOAD( "green.8h",     0x0100, 0x0100, CRC(7da063d0) SHA1(8e40174c4f6ba4a15edd89a6fe2b98a5e50531ff) )
 		ROM_LOAD( "blue.7h",      0x0200, 0x0100, CRC(85c05c18) SHA1(a609a45c593fc6c491624076f7d65da55b5e603f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( jumpcoas )
+	static RomLoadPtr rom_jumpcoas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "jumpcoas.001", 0x0000, 0x2000, CRC(0778c953) SHA1(7def6656532332e56d76700431e4c3199e407e50) )
 		ROM_LOAD( "jumpcoas.002", 0x2000, 0x2000, CRC(57f59ce1) SHA1(1508afb34f77c829ed62b16be10b0ebf8e91a62c) )
@@ -762,9 +762,9 @@ public class fastfred
 		ROM_LOAD( "jumpcoas.red", 0x0000, 0x0100, CRC(13714880) SHA1(ede901434f3a35138574e65985e5791e6686ef0d) )
 		ROM_LOAD( "jumpcoas.gre", 0x0100, 0x0100, CRC(05354848) SHA1(c44f6b4b9c9d58d9ace617dcd36ca197f6d7dd8c) )
 		ROM_LOAD( "jumpcoas.blu", 0x0200, 0x0100, CRC(f4662db7) SHA1(638ac15b15ae908581561ff77f446d81ec64c086) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( boggy84 )
+	static RomLoadPtr rom_boggy84 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "cpurom1.bin", 0x0000, 0x2000, CRC(665266c0) SHA1(7785a7d710948718236f9be4b3e2a3fdc00662a5) )
 		ROM_LOAD( "cpurom2.bin", 0x2000, 0x2000, CRC(6c096798) SHA1(74ea860ef10cb566bcb07d67e6c79f542a66de91) )
@@ -780,9 +780,9 @@ public class fastfred
 		ROM_LOAD( "r12e", 0x0000, 0x0100, CRC(f3862912) SHA1(128ba48202299ef5852f08fd0f910d8e9f68f22c) )
 		ROM_LOAD( "g12e", 0x0100, 0x0100, CRC(80b87220) SHA1(7bd81060b986d5cd4a27dc8a9394423959deaa05) )
 		ROM_LOAD( "b12e", 0x0200, 0x0100, CRC(52b7f445) SHA1(6395ac705a35e602a355cbf700025ff917e89b37) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( redrobin )
+	static RomLoadPtr rom_redrobin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "redro01f.16d", 0x0000, 0x1000, CRC(0788ce10) SHA1(32084714fe005d0489ab1a7e6684a49bd103ce5e) )
 		ROM_LOAD( "redrob02.17d", 0x1000, 0x1000, CRC(bf9b95b4) SHA1(55de12c36e193525159ecca6cff883b69709f5ba) )
@@ -815,9 +815,9 @@ public class fastfred
 		ROM_LOAD( "red.9h",       0x0000, 0x0100, CRC(b801e294) SHA1(79926dc69c9088c2a5e5f15e260c644a90071ba0) )
 		ROM_LOAD( "green.8h",     0x0100, 0x0100, CRC(7da063d0) SHA1(8e40174c4f6ba4a15edd89a6fe2b98a5e50531ff) )
 		ROM_LOAD( "blue.7h",      0x0200, 0x0100, CRC(85c05c18) SHA1(a609a45c593fc6c491624076f7d65da55b5e603f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( imago )
+	static RomLoadPtr rom_imago = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "11",    0x0000, 0x1000, CRC(3cce69b4) SHA1(e7d52e388e09e86abb597493f5807ee088cf7a40) ) 
 		ROM_CONTINUE(	   0x2000, 0x1000 )
@@ -852,7 +852,7 @@ public class fastfred
 		ROM_REGION( 0x2000, REGION_USER1, 0 )	
 		ROM_LOAD( "1",      0x0000, 0x1000, CRC(b0a1fb54) SHA1(fbc746748947a7aa35a428dc862ff4ad53516d38) ) //contains the same 2 bytes
 		ROM_LOAD( "15",     0x1000, 0x1000, CRC(85fcc195) SHA1(a76f24201c037d1e6f909fb0ea4ad59b1d6ddd57) ) //unknown
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( flyboy )

@@ -665,7 +665,7 @@ public class tbowl
 	***/
 	
 	
-	ROM_START( tbowl )
+	static RomLoadPtr rom_tbowl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 ) /* NEC D70008AC-8 (Z80 Clone) */
 		ROM_LOAD( "4.11b",	    0x00000, 0x08000, CRC(db8a4f5d) SHA1(730dee040c18ed8736c07a7de0b986f667b0f2f5) )
 		ROM_LOAD( "6206b.5",	0x10000, 0x10000, CRC(133c5c11) SHA1(7d4e76db3505ccf033d0d9b8d21feaf09b76dcc4) )
@@ -704,9 +704,9 @@ public class tbowl
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "6206a.2",	0x00000, 0x10000, CRC(1e9e5936) SHA1(60370d1de28b1c5ffeff7843702aaddb19ff1f58) )
 		ROM_LOAD( "6206a.3",	0x10000, 0x10000, CRC(3aa24744) SHA1(06de3f9a2431777218cc67f59230fddbfa01cf2d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tbowlj )
+	static RomLoadPtr rom_tbowlj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 ) /* NEC D70008AC-8 (Z80 Clone) */
 		ROM_LOAD( "6206b.4",	0x00000, 0x08000, CRC(7ed3eff7) SHA1(4a17f2838e9bbed8b1638783c62d07d1074e2b35) )
 		ROM_LOAD( "6206b.5",	0x10000, 0x10000, CRC(133c5c11) SHA1(7d4e76db3505ccf033d0d9b8d21feaf09b76dcc4) )
@@ -745,7 +745,7 @@ public class tbowl
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "6206a.2",	0x00000, 0x10000, CRC(1e9e5936) SHA1(60370d1de28b1c5ffeff7843702aaddb19ff1f58) )
 		ROM_LOAD( "6206a.3",	0x10000, 0x10000, CRC(3aa24744) SHA1(06de3f9a2431777218cc67f59230fddbfa01cf2d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1987, tbowl,    0,        tbowl,    tbowl,    0, ROT0,  "Tecmo", "Tecmo Bowl (World?)", GAME_IMPERFECT_SOUND )
 	GAMEX( 1987, tbowlj,   tbowl,    tbowl,    tbowlj,   0, ROT0,  "Tecmo", "Tecmo Bowl (Japan)", GAME_IMPERFECT_SOUND )

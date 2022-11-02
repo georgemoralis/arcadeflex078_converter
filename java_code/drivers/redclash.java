@@ -420,7 +420,7 @@ public class redclash
 	
 	***************************************************************************/
 	
-	ROM_START( zerohour )
+	static RomLoadPtr rom_zerohour = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "zerohour.1",   0x0000, 0x0800, CRC(0dff4b48) SHA1(4911255f953851d0e5c2b66090b95254ac59ac9e) )
 		ROM_LOAD( "zerohour.2",   0x0800, 0x0800, CRC(cf41b6ac) SHA1(263794e6be22c20e2b10fe9099e475097475df7b) )
@@ -443,9 +443,9 @@ public class redclash
 		ROM_LOAD( "zerohour.ic2", 0x0000, 0x0020, CRC(b55aee56) SHA1(33e4767c8afbb7b3af67517ea1dfd69bf692cac7) ) /* palette */
 		ROM_LOAD( "zerohour.n2",  0x0020, 0x0020, CRC(9adabf46) SHA1(f3538fdbc4280b6be46a4d7ebb4c34bd1a1ce2b7) ) /* sprite color lookup table */
 		ROM_LOAD( "zerohour.u6",  0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( redclash )
+	static RomLoadPtr rom_redclash = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "rc1.11c",      0x0000, 0x1000, CRC(5b62ff5a) SHA1(981d3c72f28b7d136a0bad9243d39fd1ba3abc97) )
 		ROM_LOAD( "rc3.7c",       0x1000, 0x1000, CRC(409c4ee7) SHA1(15c03a4093d7695751a143aa749229fcb7721f46) )
@@ -467,9 +467,9 @@ public class redclash
 		ROM_LOAD( "6331-1.12f",   0x0000, 0x0020, CRC(43989681) SHA1(0d471e6f499294f2f62f27392b8370e2af8e38a3) ) /* palette */
 		ROM_LOAD( "6331-2.4a",    0x0020, 0x0020, CRC(9adabf46) SHA1(f3538fdbc4280b6be46a4d7ebb4c34bd1a1ce2b7) ) /* sprite color lookup table */
 		ROM_LOAD( "6331-3.11e",   0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* ?? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( redclask )
+	static RomLoadPtr rom_redclask = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "rc1.8c",       0x0000, 0x0800, CRC(fd90622a) SHA1(a65a32d519e7fee89b160f8152322df20b6af4ea) )
 		ROM_LOAD( "rc2.7c",       0x0800, 0x0800, CRC(c8f33440) SHA1(60d1faee415faa13102b8e744f444f1480b8bd73) )
@@ -494,7 +494,7 @@ public class redclash
 		ROM_LOAD( "6331-1.12f",   0x0000, 0x0020, CRC(43989681) SHA1(0d471e6f499294f2f62f27392b8370e2af8e38a3) ) /* 6331.7e */
 		ROM_LOAD( "6331-2.4a",    0x0020, 0x0020, CRC(9adabf46) SHA1(f3538fdbc4280b6be46a4d7ebb4c34bd1a1ce2b7) ) /* 6331.2r */
 		ROM_LOAD( "6331-3.11e",   0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* 6331.6w */
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( redclash )
 	{

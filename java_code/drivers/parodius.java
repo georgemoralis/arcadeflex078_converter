@@ -365,7 +365,7 @@ public class parodius
 	
 	***************************************************************************/
 	
-	ROM_START( parodius )
+	static RomLoadPtr rom_parodius = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x51000, REGION_CPU1, 0 ) /* code + banked roms + palette RAM */
 		ROM_LOAD( "955l01.bin", 0x10000, 0x20000, CRC(49a658eb) SHA1(dd53060c4da99b8e1f896ebfec572296ef2b5665) )
 		ROM_LOAD( "955l02.bin", 0x30000, 0x18000, CRC(161d7322) SHA1(a752f28c19c58263680221ad1119f2fd57df4723) )
@@ -384,9 +384,9 @@ public class parodius
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "955d04.bin", 0x00000, 0x80000, CRC(e671491a) SHA1(79e71cb5212eb7d14d3479b0734ea0270473a66d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( parodisj )
+	static RomLoadPtr rom_parodisj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x51000, REGION_CPU1, 0 ) /* code + banked roms + palette RAM */
 		ROM_LOAD( "955e01.bin", 0x10000, 0x20000, CRC(49baa334) SHA1(8902fbb2228111b15de6537bd168241933df134d) )
 		ROM_LOAD( "955e02.bin", 0x30000, 0x18000, CRC(14010d6f) SHA1(69fe162ea08c3bd4b3e78e9d10d278bd15444af4) )
@@ -405,7 +405,7 @@ public class parodius
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 ) /* 053260 samples */
 		ROM_LOAD( "955d04.bin", 0x00000, 0x80000, CRC(e671491a) SHA1(79e71cb5212eb7d14d3479b0734ea0270473a66d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************
 	

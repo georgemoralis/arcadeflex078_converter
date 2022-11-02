@@ -923,7 +923,7 @@ public class tubep
 	
 	
 	
-	ROM_START( tubep )
+	static RomLoadPtr rom_tubep = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* Z80 (master) cpu code */
 		ROM_LOAD( "tp-p.5", 0x0000, 0x2000, CRC(d5e0cc2f) SHA1(db9b062b14af52bb5458fe71996da295a69148ac) )
 		ROM_LOAD( "tp-p.6", 0x2000, 0x2000, CRC(97b791a0) SHA1(20ef87b3d3bdfc8b983bcb8231252f81d98ad452) )
@@ -975,10 +975,10 @@ public class tubep
 		ROM_REGION( 0x40,   REGION_PROMS, 0 ) /* color proms */
 		ROM_LOAD( "tp-2.c12", 0x0000, 0x0020, CRC(ac7e582f) SHA1(9d8f9eda7130b49b91d9c63bafa119b2a91eeda0) ) /* text and sprites palette */
 		ROM_LOAD( "tp-1.c13", 0x0020, 0x0020, CRC(cd0910d6) SHA1(1e6dae16115d5a03bbaf76c695327a06eb6da602) ) /* color control prom */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rjammer )
+	static RomLoadPtr rom_rjammer = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* Z80 (master) cpu code */
 		ROM_LOAD( "tp-p.1", 0x0000, 0x2000, CRC(93eeed67) SHA1(9ccfc49f42c6b451ff1c541d6487276f4bf9338e) )
 		ROM_LOAD( "tp-p.2", 0x2000, 0x2000, CRC(ed2830c4) SHA1(078046e88604617342d29f0f4a0473fe6d484b19) )
@@ -1030,7 +1030,7 @@ public class tubep
 		ROM_REGION( 0x40,   REGION_PROMS, 0 ) /* color proms */
 		ROM_LOAD( "16b", 0x0000, 0x0020, CRC(9a12873a) SHA1(70f088b6eb5431e2ac6afcf15531eeb02a169442) ) /* text palette, sprites palette */
 		ROM_LOAD( "16a", 0x0020, 0x0020, CRC(90222a71) SHA1(c3fd49c8075b0af451f6d2a142a4c4a2e397ac08) ) /* background palette */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*     year  rom      parent  machine  inp   init */
 	GAME( 1984, tubep,   0,      tubep,   tubep,   0, ROT0, "Nichibutsu + Fujitek", "Tube Panic" )

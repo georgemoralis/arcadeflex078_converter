@@ -396,7 +396,7 @@ public class wwfsstar
 	 just the 1 sets supported
 	*******************************************************************************/
 	
-	ROM_START( wwfsstar )
+	static RomLoadPtr rom_wwfsstar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* Main CPU  (68000) */
 		ROM_LOAD16_BYTE( "24ac-04.34", 0x00000, 0x20000, CRC(ee9b850e) SHA1(6b634ad98b6104b9e860d05e73f3a139c2a19a78) )
 		ROM_LOAD16_BYTE( "24ad-04.35", 0x00001, 0x20000, CRC(057c2eef) SHA1(6eb5f60fa51b3e7f17fc6a81182a01ea406febea) )
@@ -455,7 +455,7 @@ public class wwfsstar
 		ROM_LOAD( "wwfs46.bin",    0x50000, 0x10000, CRC(985e5180) SHA1(9fd8b1ae844a2be465748e3a95ea24aa032e490d) )
 		ROM_LOAD( "wwfs45.bin",    0x60000, 0x10000, CRC(b2fad792) SHA1(083977c041c42c50e4f1f7140d97a7b792f768e9) )
 		ROM_LOAD( "wwfs44.bin",    0x70000, 0x10000, CRC(4f965fa9) SHA1(4312838e216d2a90fe413d027f46d77c74a0aa07) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1989, wwfsstar, 0, wwfsstar, wwfsstar,  0, ROT0, "Technos Japan", "WWF Superstars (US)" )

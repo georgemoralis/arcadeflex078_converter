@@ -575,7 +575,7 @@ public class konamigq
 		PORT_ANALOG( 0xff, 0x00, IPT_LIGHTGUN_Y | IPF_PLAYER3, 25, 15, 0, 0xff );
 	INPUT_PORTS_END(); }}; 
 	
-	ROM_START( cryptklr )
+	static RomLoadPtr rom_cryptklr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x0400000, REGION_CPU1, 0 ) /* main ram */
 		ROM_REGION( 0x0000400, REGION_USER1, 0 ) /* scratchpad */
 	
@@ -590,7 +590,7 @@ public class konamigq
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "420uaa04", 0, MD5(179464886f58a2e14b284e3813227a86) SHA1(18fe867c44982bacf0d3ff8453487cd06425a6b7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1995, cryptklr, 0, konamigq, konamigq, konamigq, ROT0, "Konami", "Crypt Killer (ver. UAA)", GAME_IMPERFECT_GRAPHICS )
 }

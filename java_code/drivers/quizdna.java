@@ -523,7 +523,7 @@ public class quizdna
 	
 	/****************************************************************************/
 	
-	ROM_START( quizdna )
+	static RomLoadPtr rom_quizdna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xd0000, REGION_CPU1, 0 ) /* CPU */
 		ROM_LOAD( "quiz2-pr.28",  0x00000,  0x08000, CRC(a428ede4) SHA1(cdca3bd84b2ea421fb05502ea29e9eb605e574eb) )
 		ROM_CONTINUE(             0x18000,  0x78000 ) /* banked */
@@ -547,9 +547,9 @@ public class quizdna
 		ROM_REGION( 0x00020, REGION_USER1, 0 ) /* fg control */
 		ROM_LOAD( "quiz2.148",    0x000000,  0x000020, CRC(91267e8a) SHA1(ae5bd8efea5322c4d9986d06680a781392f9a642) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gakupara )
+	static RomLoadPtr rom_gakupara = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xd0000, REGION_CPU1, 0 ) /* CPU */
 		ROM_LOAD( "u28.bin",  0x00000,  0x08000, CRC(72124bb8) SHA1(e734acff7e9d6b8c6a95c76860732320a2e3a828) )
 		ROM_CONTINUE(         0x18000,  0x78000 )             /* banked */
@@ -573,9 +573,9 @@ public class quizdna
 		ROM_REGION( 0x00020, REGION_USER1, 0 ) /* fg control */
 		ROM_LOAD( "u148.bin", 0x000000,  0x000020, CRC(971df9d2) SHA1(280f5b386922b9902ca9211c719642c2bd0ba899) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gekiretu )
+	static RomLoadPtr rom_gekiretu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xd0000, REGION_CPU1, 0 ) /* CPU */
 		ROM_LOAD( "quiz3-pr.28",  0x00000,  0x08000, CRC(a761e86f) SHA1(85331ef53598491e78c2d123b1ebd358aff46436) )
 		ROM_CONTINUE(             0x18000,  0x78000 ) /* banked */
@@ -599,7 +599,7 @@ public class quizdna
 		ROM_REGION( 0x00020, REGION_USER1, 0 ) /* fg control */
 		ROM_LOAD( "quiz3.148",    0x000000,  0x000020, CRC(91267e8a) SHA1(ae5bd8efea5322c4d9986d06680a781392f9a642) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1991, gakupara, 0, gakupara, gakupara, 0, ROT0, "NMK",  "Quiz Gakuen Paradise (Japan)" )
 	GAME( 1992, quizdna,  0, quizdna,  quizdna,  0, ROT0, "Face", "Quiz DNA no Hanran (Japan)" )

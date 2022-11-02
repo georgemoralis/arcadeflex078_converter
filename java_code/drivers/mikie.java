@@ -301,7 +301,7 @@ public class mikie
 	***************************************************************************/
 	
 	
-	ROM_START( mikie )
+	static RomLoadPtr rom_mikie = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "11c_n14.bin",  0x6000, 0x2000, CRC(f698e6dd) SHA1(99220eeee4e7b88caa26f2d08502689e1f1fcdf8) )
 		ROM_LOAD( "12a_o13.bin",  0x8000, 0x4000, CRC(826e7035) SHA1(bd62783cb1ba4e7f0196f337280461bb7627f70f) )
@@ -325,9 +325,9 @@ public class mikie
 		ROM_LOAD( "02i_d20.bin",  0x0200, 0x0100, CRC(676a0669) SHA1(14236a831204d52cdf8c2ef318a565d6c5587ce0) )	/* blue component */
 		ROM_LOAD( "12h_d22.bin",  0x0300, 0x0100, CRC(872be05c) SHA1(1525303589d7ed909bc6e2827fbaa2c16ad4030b) )	/* character lookup table */
 		ROM_LOAD( "f09_d18.bin",  0x0400, 0x0100, CRC(7396b374) SHA1(fedcc421a61d6623dc9c41b0a3e164efeb50ec7c) )	/* sprite lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mikiej )
+	static RomLoadPtr rom_mikiej = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "11c_n14.bin",  0x6000, 0x2000, CRC(f698e6dd) SHA1(99220eeee4e7b88caa26f2d08502689e1f1fcdf8) )
 		ROM_LOAD( "12a_o13.bin",  0x8000, 0x4000, CRC(826e7035) SHA1(bd62783cb1ba4e7f0196f337280461bb7627f70f) )
@@ -351,9 +351,9 @@ public class mikie
 		ROM_LOAD( "02i_d20.bin",  0x0200, 0x0100, CRC(676a0669) SHA1(14236a831204d52cdf8c2ef318a565d6c5587ce0) )	/* blue component */
 		ROM_LOAD( "12h_d22.bin",  0x0300, 0x0100, CRC(872be05c) SHA1(1525303589d7ed909bc6e2827fbaa2c16ad4030b) )	/* character lookup table */
 		ROM_LOAD( "f09_d18.bin",  0x0400, 0x0100, CRC(7396b374) SHA1(fedcc421a61d6623dc9c41b0a3e164efeb50ec7c) )	/* sprite lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mikiehs )
+	static RomLoadPtr rom_mikiehs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "11c_l14.bin",  0x6000, 0x2000, CRC(633f3a6d) SHA1(9255e0cb8d53773a52cade2fbd2e4c1968164313) )
 		ROM_LOAD( "12a_m13.bin",  0x8000, 0x4000, CRC(9c42d715) SHA1(533ae7c5bde6d341b9138dd439d9ff46fe0767f4) )
@@ -377,7 +377,7 @@ public class mikie
 		ROM_LOAD( "02i_d20.bin",  0x0200, 0x0100, CRC(676a0669) SHA1(14236a831204d52cdf8c2ef318a565d6c5587ce0) )	/* blue component */
 		ROM_LOAD( "12h_d22.bin",  0x0300, 0x0100, CRC(872be05c) SHA1(1525303589d7ed909bc6e2827fbaa2c16ad4030b) )	/* character lookup table */
 		ROM_LOAD( "f09_d18.bin",  0x0400, 0x0100, CRC(7396b374) SHA1(fedcc421a61d6623dc9c41b0a3e164efeb50ec7c) )	/* sprite lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

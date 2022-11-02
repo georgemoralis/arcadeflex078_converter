@@ -800,7 +800,7 @@ public class mainevt
 	
 	/* 4 players - English title screen - No "Warning" message in the ROM */
 	
-	ROM_START( mainevt )
+	static RomLoadPtr rom_mainevt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "799c02.k11",   0x10000, 0x08000, CRC(e2e7dbd5) SHA1(80314cd42a9f47f7bb82a2160fb5ef2ddc6dff30) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -826,12 +826,12 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* 512k for the UPD7759C samples */
 		ROM_LOAD( "799b06.c22",   0x00000, 0x80000, CRC(2c8c47d7) SHA1(18a899767177ddfd870df9ed156d8bbc04b58a19) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/* 4 players - English title screen - No "Warning" message in the ROM */
 	
-	ROM_START( mainevto )
+	static RomLoadPtr rom_mainevto = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "799_02.k11",   0x10000, 0x08000, CRC(c143596b) SHA1(5da7efaf0f7c7a493cc242eae115f278bc9c134b) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -857,12 +857,12 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* 512k for the UPD7759C samples */
 		ROM_LOAD( "799b06.c22",   0x00000, 0x80000, CRC(2c8c47d7) SHA1(18a899767177ddfd870df9ed156d8bbc04b58a19) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/* 2 players - English title screen - "Warning" message in the ROM (not displayed) */
 	
-	ROM_START( mainev2p )
+	static RomLoadPtr rom_mainev2p = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "799x02.k11",   0x10000, 0x08000, CRC(42cfc650) SHA1(2d1918ebc0d93a2356ad995a6854dbde7c3b8daf) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -888,12 +888,12 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* 512k for the UPD7759C samples */
 		ROM_LOAD( "799b06.c22",   0x00000, 0x80000, CRC(2c8c47d7) SHA1(18a899767177ddfd870df9ed156d8bbc04b58a19) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/* 2 players - Japan title screen - "Warning" message in the ROM (displayed) */
 	
-	ROM_START( ringohja )
+	static RomLoadPtr rom_ringohja = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "799n02.k11",   0x10000, 0x08000, CRC(f9305dd0) SHA1(7135053be9d46ac9c09ab63eca1eb71825a71a13) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -919,9 +919,9 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* 512k for the UPD7759C samples */
 		ROM_LOAD( "799b06.c22",   0x00000, 0x80000, CRC(2c8c47d7) SHA1(18a899767177ddfd870df9ed156d8bbc04b58a19) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( devstors )
+	static RomLoadPtr rom_devstors = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "890-z02.k11",  0x10000, 0x08000, CRC(ebeb306f) SHA1(838fcfe95dfedd61f21f34301d48e337db765ab2) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -944,9 +944,9 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* 512k for 007232 samples */
 	 	ROM_LOAD( "dev-f03.rom",  0x00000, 0x80000, CRC(19065031) SHA1(12c47fbe28f85fa2f901fe52601188a5e9633f22) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( devstor2 )
+	static RomLoadPtr rom_devstor2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "dev-x02.rom",  0x10000, 0x08000, CRC(e58ebb35) SHA1(4253b6a7128534cc0866bc910a271d91ac8b40fd) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -969,9 +969,9 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* 512k for 007232 samples */
 	 	ROM_LOAD( "dev-f03.rom",  0x00000, 0x80000, CRC(19065031) SHA1(12c47fbe28f85fa2f901fe52601188a5e9633f22) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( devstor3 )
+	static RomLoadPtr rom_devstor3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "890k02.k11",   0x10000, 0x08000, CRC(52f4ccdd) SHA1(074e526ed170a5f2083c8c0808734291a2ea7403) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -994,9 +994,9 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* 512k for 007232 samples */
 	 	ROM_LOAD( "dev-f03.rom",  0x00000, 0x80000, CRC(19065031) SHA1(12c47fbe28f85fa2f901fe52601188a5e9633f22) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( garuka )
+	static RomLoadPtr rom_garuka = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD( "890w02.bin",   0x10000, 0x08000, CRC(b2f6f538) SHA1(95dad3258a2e4c5648d0fc22c06fa3e2da3b5ed1) )
 		ROM_CONTINUE(             0x08000, 0x08000 )
@@ -1019,7 +1019,7 @@ public class mainevt
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* 512k for 007232 samples */
 	 	ROM_LOAD( "dev-f03.rom",  0x00000, 0x80000, CRC(19065031) SHA1(12c47fbe28f85fa2f901fe52601188a5e9633f22) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

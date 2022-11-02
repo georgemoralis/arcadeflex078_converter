@@ -550,7 +550,7 @@ public class zodiack
 	  Game driver(s)
 	
 	***************************************************************************/
-	ROM_START( zodiack )
+	static RomLoadPtr rom_zodiack = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "ovg30c.2",     0x0000, 0x2000, CRC(a2125e99) SHA1(00ae4ed2c7b6895d2dc58aa2fc51c25b6428e4ba) )
 		ROM_LOAD( "ovg30c.3",     0x2000, 0x2000, CRC(aee2b77f) SHA1(2581b7a75d38663cc5ebc91a77385ca7eb9b4aba) )
@@ -567,9 +567,9 @@ public class zodiack
 		ROM_REGION( 0x0040, REGION_PROMS, 0 )
 		ROM_LOAD( "ovg40c.2a",    0x0000, 0x0020, CRC(703821b8) SHA1(33dcc9b0bea5e110eb4ffd3b8b8763e32e927b22) )
 		ROM_LOAD( "ovg40c.2b",    0x0020, 0x0020, CRC(21f77ec7) SHA1(b1019afc4361aca98b7120b21743bfeb5ea2ff63) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dogfight )
+	static RomLoadPtr rom_dogfight = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "df-2",         0x0000, 0x2000, CRC(ad24b28b) SHA1(5bfc24c9d176a987525c5ad3eff3308f679d4d44) )
 		ROM_LOAD( "df-3",         0x2000, 0x2000, CRC(cd172707) SHA1(9d7a494006db13cbe9c895875a18d9423a0128bc) )
@@ -587,9 +587,9 @@ public class zodiack
 		ROM_REGION( 0x0040, REGION_PROMS, 0 )
 		ROM_LOAD( "1.bpr",        0x0000, 0x0020, CRC(69a35aa5) SHA1(fe494ed1ff642f95834dfca92e9c4494e04f7b81) )
 		ROM_LOAD( "2.bpr",        0x0020, 0x0020, CRC(596ae457) SHA1(1c1a3130d88c5fd5c66ce9f91d97a09c0a0b535f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( moguchan )
+	static RomLoadPtr rom_moguchan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "2.5r",         0x0000, 0x1000, CRC(85d0cb7e) SHA1(20066f71d80161dff556bc86edf40fcc2ac3b993) )
 		ROM_LOAD( "4.5m",         0x1000, 0x1000, CRC(359ef951) SHA1(93e80fcd371e8d2026919d0e046b636b7c19002e) )
@@ -606,9 +606,9 @@ public class zodiack
 		ROM_REGION( 0x0040, REGION_PROMS, 0 )
 		ROM_LOAD( "moguchan.2a",  0x0000, 0x0020, CRC(e83daab3) SHA1(58b38091dfbc3f3b4ddf6c6febd98c909be89063) )
 		ROM_LOAD( "moguchan.2b",  0x0020, 0x0020, CRC(9abfdf40) SHA1(44c4dcdd3d79af2c4a897cc003b5287dece0313e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( percuss )
+	static RomLoadPtr rom_percuss = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "percuss.1",    0x0000, 0x1000, CRC(ff0364f7) SHA1(048963d70e513068fdb591b4bc152473fe4cc2c3) )
 		ROM_LOAD( "percuss.3",    0x1000, 0x1000, CRC(7f646c59) SHA1(976210f1fed11c03e0a159c8189630a1fec63fc9) )
@@ -628,9 +628,9 @@ public class zodiack
 		ROM_REGION( 0x0040, REGION_PROMS, 0 )
 		ROM_LOAD( "percus2a.prm", 0x0000, 0x0020, CRC(e2ee9637) SHA1(e4ca064793ae1dc36b2d852448162d062a2f26f8) )
 		ROM_LOAD( "percus2b.prm", 0x0020, 0x0020, CRC(e561b029) SHA1(7d21a3492a179f5ce541911d19e4816960547089) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bounty )
+	static RomLoadPtr rom_bounty = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "1.4f",      0x0000, 0x1000, CRC(f495b19d) SHA1(df2de0869b10da1ee1d98d48615c9e1dce798c26) )
 		ROM_LOAD( "3.4k",      0x1000, 0x1000, CRC(fa3086c3) SHA1(b8bab26a4e68e6d2e5b899e900c9affd297c22de) )
@@ -649,7 +649,7 @@ public class zodiack
 		ROM_REGION( 0x0040, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7051.2a",   0x0000, 0x0020, CRC(0de11a46) SHA1(3bc81571832dd78b29654e86479815ee5f97a4d3) )
 		ROM_LOAD( "mb7051.2b",   0x0020, 0x0020, CRC(465e31d4) SHA1(d47a4aa0e8931dcd8f85017ef04c2f6ad79f5725) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

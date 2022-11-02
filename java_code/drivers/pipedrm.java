@@ -698,7 +698,7 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	ROM_START( pipedrm )
+	static RomLoadPtr rom_pipedrm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "01.u12",	0x00000, 0x08000, CRC(9fe261fb) SHA1(57beeeade8809be0a71086f55b14b1676c0b3759) )
 		ROM_LOAD( "02.u11",	0x10000, 0x10000, CRC(c8209b67) SHA1(cca7356d75e8091b07e3328aef523ff452abbcd8) )
@@ -724,10 +724,10 @@ public class pipedrm
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )
 		ROM_LOAD( "g71",     0x00000, 0x80000, CRC(488e2fd1) SHA1(8ef8ceb2bd36a245138802f51babf62f17c30942) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( pipedrmj )
+	static RomLoadPtr rom_pipedrmj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "1",	0x00000, 0x08000, CRC(dbfac46b) SHA1(98ddfaed61de28b238964445572eb398b9dd03c7) )
 		ROM_LOAD( "2",	0x10000, 0x10000, CRC(b7adb99a) SHA1(fdab2b99e86aa0b6b17ec95556222e5211ba55e9) )
@@ -753,10 +753,10 @@ public class pipedrm
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )
 		ROM_LOAD( "g71",     0x00000, 0x80000, CRC(488e2fd1) SHA1(8ef8ceb2bd36a245138802f51babf62f17c30942) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( hatris )
+	static RomLoadPtr rom_hatris = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "2-ic79.bin",	0x00000, 0x08000, CRC(bbcaddbf) SHA1(7f01493dadfed87112644a8ef77ae58fa273980d) )
 	
@@ -775,7 +775,7 @@ public class pipedrm
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "pc-ic53.bin", 0x00000, 0x20000, CRC(07147712) SHA1(97692186e85f3a4a19dbd1bd95ed882e903a3c4a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

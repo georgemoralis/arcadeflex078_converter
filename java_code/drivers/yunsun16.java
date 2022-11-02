@@ -530,7 +530,7 @@ public class yunsun16
 	
 	***************************************************************************/
 	
-	ROM_START( magicbub )
+	static RomLoadPtr rom_magicbub = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "magbuble.u33", 0x000000, 0x040000, CRC(18fdd582) SHA1(89f4c52ec0e213285a04743da88f6e39408b573d) )
@@ -554,7 +554,7 @@ public class yunsun16
 		ROM_REGION( 0x020000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "magbuble.131", 0x000000, 0x020000, CRC(03e04e89) SHA1(7d80e6a7be2322e32e40acae72bedd8d7e90ad33) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -563,7 +563,7 @@ public class yunsun16
 	
 	***************************************************************************/
 	
-	ROM_START( shocking )
+	static RomLoadPtr rom_shocking = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "yunsun16.u33", 0x000000, 0x040000, CRC(8a155521) SHA1(000c9095558e6cae30ce43a885c3fbcf55713f40) )
@@ -585,7 +585,7 @@ public class yunsun16
 		ROM_LOAD( "yunsun16.131", 0x000000, 0x080000, CRC(d0a1bb8c) SHA1(10f33521bd6031ed73ee5c7be1382165925aa8f8) )
 		ROM_RELOAD(               0x080000, 0x080000             )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************

@@ -810,7 +810,7 @@ public class tetrisp2
 	
 	***************************************************************************/
 	
-	ROM_START( tetrisp2 )
+	static RomLoadPtr rom_tetrisp2 = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "t2p_04.rom", 0x000000, 0x080000, CRC(e67f9c51) SHA1(d8b2937699d648267b163c7c3f591426877f3701) )
@@ -837,7 +837,7 @@ public class tetrisp2
 		ROM_REGION( 0x400000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "96019-07.7", 0x000000, 0x400000, CRC(a8a61954) SHA1(86c3db10b348ba1f44ff696877b8b20845fa53de) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -862,7 +862,7 @@ public class tetrisp2
 	
 	***************************************************************************/
 	
-	ROM_START( teplus2j )
+	static RomLoadPtr rom_teplus2j = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "tet2-4v2.2", 0x000000, 0x080000, CRC(5bfa32c8) SHA1(55fb2872695fcfbad13f5c0723302e72da69e44a) )	// v2.2
@@ -884,14 +884,14 @@ public class tetrisp2
 		ROM_REGION( 0x400000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "96019-07.7", 0x000000, 0x400000, CRC(a8a61954) SHA1(86c3db10b348ba1f44ff696877b8b20845fa53de) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***
 	
 	Rock 'n' Tread
 	
 	***/
-	ROM_START( rockn )
+	static RomLoadPtr rom_rockn = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "98344_1.bin", 0x000001, 0x80000, CRC(4cf79e58) SHA1(f50e596d43c9ab2072ae0476169eee2a8512fd8d) )
@@ -912,7 +912,7 @@ public class tetrisp2
 	
 		ROM_REGION( 0x8000000, REGION_SOUND1, 0 )	/* Samples */
 		ROM_LOAD( "audio", 0x0000000, 0x8000000, NO_DUMP ) // not dumped (number of roms / type unknown)
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

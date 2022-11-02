@@ -267,7 +267,7 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	ROM_START( avalnche )
+	static RomLoadPtr rom_avalnche = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		/* Note: These are being loaded into a bogus location, */
 		/*		 They are nibble wide rom images which will be */
@@ -280,7 +280,7 @@ public class avalnche
 		ROM_LOAD( "30615.d3",     	0xa800, 0x0800, CRC(3e1a86b4) SHA1(3ff4cffea5b7a32231c0996473158f24c3bbe107) )
 		ROM_LOAD( "30616.e3",     	0xb000, 0x0800, CRC(f620f0f8) SHA1(7802b399b3469fc840796c3145b5f63781090956) )
 		ROM_LOAD( "30614.c3",     	0xb800, 0x0800, CRC(a12d5d64) SHA1(1647d7416bf9266d07f066d3797bda943e004d24) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

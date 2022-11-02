@@ -1022,7 +1022,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	ROM_START( narc )
+	static RomLoadPtr rom_narc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x30000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1105,10 +1105,10 @@ public class midyunit
 		ROM_LOAD( "u28",  0x6c0000, 0x10000, CRC(d6cdac24) SHA1(d4bbe3a1be89be7d21769bfe476b50c05cd0c357) )
 		ROM_LOAD( "u27",  0x6d0000, 0x10000, CRC(4d33bbec) SHA1(05a3bd66ff91c824e841ca3943585f6aa383c5c2) )
 		ROM_LOAD( "u26",  0x6e0000, 0x10000, CRC(cb19f784) SHA1(1e4d85603c940e247fdc45f0366dfb484285e588) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( narc3 )
+	static RomLoadPtr rom_narc3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x30000, REGION_CPU2, 0 )     /* sound CPU */
@@ -1195,10 +1195,10 @@ public class midyunit
 		ROM_LOAD( "u28",  0x6c0000, 0x10000, CRC(d6cdac24) SHA1(d4bbe3a1be89be7d21769bfe476b50c05cd0c357) )
 		ROM_LOAD( "u27",  0x6d0000, 0x10000, CRC(4d33bbec) SHA1(05a3bd66ff91c824e841ca3943585f6aa383c5c2) )
 		ROM_LOAD( "u26",  0x6e0000, 0x10000, CRC(cb19f784) SHA1(1e4d85603c940e247fdc45f0366dfb484285e588) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( trog )
+	static RomLoadPtr rom_trog = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1224,10 +1224,10 @@ public class midyunit
 	
 		ROM_LOAD (  "trogu90.bin",  0x280000, 0x20000, CRC(16e06753) SHA1(62ec2b18e6b965ea0792d655d7878b4225da3aca) )
 		ROM_LOAD (  "trogu91.bin",  0x2a0000, 0x20000, CRC(880a02c7) SHA1(ab1b2d24be4571a183b230d267c6c8167d4a42a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( trog3 )
+	static RomLoadPtr rom_trog3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1253,10 +1253,10 @@ public class midyunit
 	
 		ROM_LOAD (  "trogu90.bin",  0x280000, 0x20000, CRC(16e06753) SHA1(62ec2b18e6b965ea0792d655d7878b4225da3aca) )
 		ROM_LOAD (  "trogu91.bin",  0x2a0000, 0x20000, CRC(880a02c7) SHA1(ab1b2d24be4571a183b230d267c6c8167d4a42a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( trogpa6 )
+	static RomLoadPtr rom_trogpa6 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1282,10 +1282,10 @@ public class midyunit
 	
 		ROM_LOAD (  "trogu90.bin",  0x280000, 0x20000, CRC(16e06753) SHA1(62ec2b18e6b965ea0792d655d7878b4225da3aca) )
 		ROM_LOAD (  "trogu91.bin",  0x2a0000, 0x20000, CRC(880a02c7) SHA1(ab1b2d24be4571a183b230d267c6c8167d4a42a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( trogp )
+	static RomLoadPtr rom_trogp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1311,10 +1311,10 @@ public class midyunit
 	
 		ROM_LOAD (  "trogu90.bin",  0x280000, 0x20000, CRC(16e06753) SHA1(62ec2b18e6b965ea0792d655d7878b4225da3aca) )
 		ROM_LOAD (  "trogu91.bin",  0x2a0000, 0x20000, CRC(880a02c7) SHA1(ab1b2d24be4571a183b230d267c6c8167d4a42a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( smashtv )
+	static RomLoadPtr rom_smashtv = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1338,10 +1338,10 @@ public class midyunit
 	 	ROM_LOAD ( "u106.gam",  0x400000, 0x20000, CRC(5c718361) SHA1(6178b1d53411f24d5a5a01559727e300cd27d587) )
 	 	ROM_LOAD ( "u107.gam",  0x420000, 0x20000, CRC(0fba1e36) SHA1(17038cf35a72678bba149a632f1ad1b80cc3a38c) )
 	 	ROM_LOAD ( "u108.gam",  0x440000, 0x20000, CRC(cb0a092f) SHA1(33cbb87b4be1eadb1f3624ef5e218e65109fa3eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( smashtv6 )
+	static RomLoadPtr rom_smashtv6 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1365,10 +1365,10 @@ public class midyunit
 	 	ROM_LOAD ( "u106.gam",  0x400000, 0x20000, CRC(5c718361) SHA1(6178b1d53411f24d5a5a01559727e300cd27d587) )
 	 	ROM_LOAD ( "u107.gam",  0x420000, 0x20000, CRC(0fba1e36) SHA1(17038cf35a72678bba149a632f1ad1b80cc3a38c) )
 	 	ROM_LOAD ( "u108.gam",  0x440000, 0x20000, CRC(cb0a092f) SHA1(33cbb87b4be1eadb1f3624ef5e218e65109fa3eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( smashtv5 )
+	static RomLoadPtr rom_smashtv5 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1392,10 +1392,10 @@ public class midyunit
 	 	ROM_LOAD ( "u106.gam",  0x400000, 0x20000, CRC(5c718361) SHA1(6178b1d53411f24d5a5a01559727e300cd27d587) )
 	 	ROM_LOAD ( "u107.gam",  0x420000, 0x20000, CRC(0fba1e36) SHA1(17038cf35a72678bba149a632f1ad1b80cc3a38c) )
 	 	ROM_LOAD ( "u108.gam",  0x440000, 0x20000, CRC(cb0a092f) SHA1(33cbb87b4be1eadb1f3624ef5e218e65109fa3eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( smashtv4 )
+	static RomLoadPtr rom_smashtv4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1419,10 +1419,10 @@ public class midyunit
 	 	ROM_LOAD ( "u106.gam",  0x400000, 0x20000, CRC(5c718361) SHA1(6178b1d53411f24d5a5a01559727e300cd27d587) )
 	 	ROM_LOAD ( "u107.gam",  0x420000, 0x20000, CRC(0fba1e36) SHA1(17038cf35a72678bba149a632f1ad1b80cc3a38c) )
 	 	ROM_LOAD ( "u108.gam",  0x440000, 0x20000, CRC(cb0a092f) SHA1(33cbb87b4be1eadb1f3624ef5e218e65109fa3eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( hiimpact )
+	static RomLoadPtr rom_hiimpact = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1449,10 +1449,10 @@ public class midyunit
 		ROM_LOAD ( "la1u107.bin",  0x420000, 0x20000, CRC(ef48e8fa) SHA1(538de37cd8342085ec27f67292a7eeb1007e3b1f) )
 		ROM_LOAD ( "la1u108.bin",  0x440000, 0x20000, CRC(5f363e12) SHA1(da398c0204f785aad4c52007d2f25031ecc1c63f) )
 		ROM_LOAD ( "la1u109.bin",  0x460000, 0x20000, CRC(3689fbbc) SHA1(d95c0a2e3abf977ba7a899e419c22d004020c560) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( shimpact )
+	static RomLoadPtr rom_shimpact = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1479,10 +1479,10 @@ public class midyunit
 		ROM_LOAD ( "shiu107.bin",  0x440000, 0x40000, CRC(a8815dad) SHA1(627d916a4b0ab03a943d123ca0eabd514634ad30) )
 		ROM_LOAD ( "shiu108.bin",  0x480000, 0x40000, CRC(d39685a3) SHA1(84e5da34a9946b954635befd37760683850d310b) )
 		ROM_LOAD ( "shiu109.bin",  0x4c0000, 0x40000, CRC(36e0b2b2) SHA1(96d76698a09cd884349bf0c4c1b75423b4404432) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( shimpacp )
+	static RomLoadPtr rom_shimpacp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1509,10 +1509,10 @@ public class midyunit
 		ROM_LOAD ( "shiu107.bin",  0x440000, 0x40000, CRC(a8815dad) SHA1(627d916a4b0ab03a943d123ca0eabd514634ad30) )
 		ROM_LOAD ( "shiu108.bin",  0x480000, 0x40000, CRC(d39685a3) SHA1(84e5da34a9946b954635befd37760683850d310b) )
 		ROM_LOAD ( "shiu109.pa3",  0x4c0000, 0x40000, CRC(58f71141) SHA1(f7143bdaa7325b88e01a1d6be3aeb1d69cf0672b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( strkforc )
+	static RomLoadPtr rom_strkforc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x70000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1540,10 +1540,10 @@ public class midyunit
 	
 		ROM_LOAD (  "sfu90.bin",  0x280000, 0x20000, CRC(607bcdc0) SHA1(f174a549ade75df2f86142150a1e4c3554907602) )
 		ROM_LOAD (  "sfu91.bin",  0x2a0000, 0x20000, CRC(da02547e) SHA1(d29c071bd9deab2414ac0733d9a18fcf8c68b4d9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mkprot9 )
+	static RomLoadPtr rom_mkprot9 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1572,10 +1572,10 @@ public class midyunit
 	 	ROM_LOAD ( "mkg-u107.rom",  0x480000, 0x80000, CRC(2a6c10a0) SHA1(cc90923c44f2961b945a0fd0f85ecc2ba04af2cb) )
 	  	ROM_LOAD ( "mkg-u108.rom",  0x500000, 0x80000, CRC(23308979) SHA1(0b36788624a1cf0d3f4c895be5ba967b8dfcf85e) )
 	 	ROM_LOAD ( "mkg-u109.rom",  0x580000, 0x80000, CRC(cafc47bb) SHA1(8610af6e52f7089ff4acd850c53ab8b4119e4445) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mkla1 )
+	static RomLoadPtr rom_mkla1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1604,10 +1604,10 @@ public class midyunit
 	 	ROM_LOAD ( "mkg-u107.rom",  0x480000, 0x80000, CRC(2a6c10a0) SHA1(cc90923c44f2961b945a0fd0f85ecc2ba04af2cb) )
 	  	ROM_LOAD ( "mkg-u108.rom",  0x500000, 0x80000, CRC(23308979) SHA1(0b36788624a1cf0d3f4c895be5ba967b8dfcf85e) )
 	 	ROM_LOAD ( "mkg-u109.rom",  0x580000, 0x80000, CRC(cafc47bb) SHA1(8610af6e52f7089ff4acd850c53ab8b4119e4445) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mkla2 )
+	static RomLoadPtr rom_mkla2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1636,10 +1636,10 @@ public class midyunit
 	 	ROM_LOAD ( "mkg-u107.rom",  0x480000, 0x80000, CRC(2a6c10a0) SHA1(cc90923c44f2961b945a0fd0f85ecc2ba04af2cb) )
 	  	ROM_LOAD ( "mkg-u108.rom",  0x500000, 0x80000, CRC(23308979) SHA1(0b36788624a1cf0d3f4c895be5ba967b8dfcf85e) )
 	 	ROM_LOAD ( "mkg-u109.rom",  0x580000, 0x80000, CRC(cafc47bb) SHA1(8610af6e52f7089ff4acd850c53ab8b4119e4445) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mkla3 )
+	static RomLoadPtr rom_mkla3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1668,10 +1668,10 @@ public class midyunit
 	 	ROM_LOAD ( "mkg-u107.rom",  0x480000, 0x80000, CRC(2a6c10a0) SHA1(cc90923c44f2961b945a0fd0f85ecc2ba04af2cb) )
 	  	ROM_LOAD ( "mkg-u108.rom",  0x500000, 0x80000, CRC(23308979) SHA1(0b36788624a1cf0d3f4c895be5ba967b8dfcf85e) )
 	 	ROM_LOAD ( "mkg-u109.rom",  0x580000, 0x80000, CRC(cafc47bb) SHA1(8610af6e52f7089ff4acd850c53ab8b4119e4445) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mkla4 )
+	static RomLoadPtr rom_mkla4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1700,10 +1700,10 @@ public class midyunit
 	 	ROM_LOAD ( "mkg-u107.rom",  0x480000, 0x80000, CRC(2a6c10a0) SHA1(cc90923c44f2961b945a0fd0f85ecc2ba04af2cb) )
 	  	ROM_LOAD ( "mkg-u108.rom",  0x500000, 0x80000, CRC(23308979) SHA1(0b36788624a1cf0d3f4c895be5ba967b8dfcf85e) )
 	 	ROM_LOAD ( "mkg-u109.rom",  0x580000, 0x80000, CRC(cafc47bb) SHA1(8610af6e52f7089ff4acd850c53ab8b4119e4445) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( term2 )
+	static RomLoadPtr rom_term2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1733,10 +1733,10 @@ public class midyunit
 	 	ROM_LOAD ( "t2.107",  0x480000, 0x80000, CRC(268d4035) SHA1(89a310830be9fbc91794fcccc57053d0933c42a3) )
 	 	ROM_LOAD ( "t2.108",  0x500000, 0x80000, CRC(379fdaed) SHA1(408df6702c8ea8d3dce0b231955c6a60f3f5f22b) )
 	 	ROM_LOAD ( "t2.109",  0x580000, 0x80000, CRC(306a9366) SHA1(b94c23c033221f7f7fddd2911b8cec9549929768) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( term2la2 )
+	static RomLoadPtr rom_term2la2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1766,9 +1766,9 @@ public class midyunit
 	 	ROM_LOAD ( "t2.107",  0x480000, 0x80000, CRC(268d4035) SHA1(89a310830be9fbc91794fcccc57053d0933c42a3) )
 	 	ROM_LOAD ( "t2.108",  0x500000, 0x80000, CRC(379fdaed) SHA1(408df6702c8ea8d3dce0b231955c6a60f3f5f22b) )
 	 	ROM_LOAD ( "t2.109",  0x580000, 0x80000, CRC(306a9366) SHA1(b94c23c033221f7f7fddd2911b8cec9549929768) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( term2la1 )
+	static RomLoadPtr rom_term2la1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 ) /* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 ) /* sound CPU */
@@ -1798,9 +1798,9 @@ public class midyunit
 		ROM_LOAD ( "t2.107", 0x480000, 0x80000, CRC(268d4035) SHA1(89a310830be9fbc91794fcccc57053d0933c42a3) )
 		ROM_LOAD ( "t2.108", 0x500000, 0x80000, CRC(379fdaed) SHA1(408df6702c8ea8d3dce0b231955c6a60f3f5f22b) )
 		ROM_LOAD ( "t2.109", 0x580000, 0x80000, CRC(306a9366) SHA1(b94c23c033221f7f7fddd2911b8cec9549929768) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( totcarn )
+	static RomLoadPtr rom_totcarn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1830,10 +1830,10 @@ public class midyunit
 	 	ROM_LOAD ( "tcu107.bin",  0x440000, 0x40000, CRC(95323320) SHA1(5296206f3d84c21374968ffcacfe59eb3215ca46) )
 	 	ROM_LOAD ( "tcu108.bin",  0x480000, 0x40000, CRC(ed152acc) SHA1(372dbc4fdb581ac00a7eb5669cc1ac7afd6033f8) )
 	 	ROM_LOAD ( "tcu109.bin",  0x4c0000, 0x40000, CRC(80715252) SHA1(4586a259780963837ce362b526f161122d2e3cb4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( totcarnp )
+	static RomLoadPtr rom_totcarnp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( 0x50000, REGION_CPU2, 0 )	/* sound CPU */
@@ -1863,7 +1863,7 @@ public class midyunit
 	 	ROM_LOAD ( "tcu107.bin",  0x440000, 0x40000, CRC(95323320) SHA1(5296206f3d84c21374968ffcacfe59eb3215ca46) )
 	 	ROM_LOAD ( "tcu108.bin",  0x480000, 0x40000, CRC(ed152acc) SHA1(372dbc4fdb581ac00a7eb5669cc1ac7afd6033f8) )
 	 	ROM_LOAD ( "tcu109.bin",  0x4c0000, 0x40000, CRC(80715252) SHA1(4586a259780963837ce362b526f161122d2e3cb4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

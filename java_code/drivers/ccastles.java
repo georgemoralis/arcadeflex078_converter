@@ -313,7 +313,7 @@ public class ccastles
 	 *
 	 *************************************/
 	
-	ROM_START( ccastles )
+	static RomLoadPtr rom_ccastles = new RomLoadPtr(){ public void handler(){ 
 	     ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code */
 	     ROM_LOAD( "022-403.bin",  0x0a000, 0x2000, CRC(81471ae5) SHA1(8ec13b48119ecf8fe85207403c0a0de5240cded4) )
 	     ROM_LOAD( "022-404.bin",  0x0c000, 0x2000, CRC(820daf29) SHA1(a2cff00e9ddce201344692b75038431e4241fedd) )
@@ -324,10 +324,10 @@ public class ccastles
 	     ROM_REGION( 0x4000, REGION_GFX1, ROMREGION_DISPOSE )
 	     ROM_LOAD( "ccastles.107", 0x0000, 0x2000, CRC(39960b7d) SHA1(82bdf764ac23e72598883283c5e957169387abd4) )
 	     ROM_LOAD( "ccastles.106", 0x2000, 0x2000, CRC(9d1d89fc) SHA1(01c279edee322cc28f34506c312e4a9e3363b1be) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ccastle3 )
+	static RomLoadPtr rom_ccastle3 = new RomLoadPtr(){ public void handler(){ 
 	     ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code */
 	     ROM_LOAD( "ccastles.303", 0x0a000, 0x2000, CRC(10e39fce) SHA1(5247f52e14ccf39f0ec699a39c8ebe35e61e07d2) )
 	     ROM_LOAD( "ccastles.304", 0x0c000, 0x2000, CRC(74510f72) SHA1(d22550f308ff395d51869b52449bc0669a4e35e4) )
@@ -338,10 +338,10 @@ public class ccastles
 	     ROM_REGION( 0x4000, REGION_GFX1, ROMREGION_DISPOSE )
 	     ROM_LOAD( "ccastles.107", 0x0000, 0x2000, CRC(39960b7d) SHA1(82bdf764ac23e72598883283c5e957169387abd4) )
 	     ROM_LOAD( "ccastles.106", 0x2000, 0x2000, CRC(9d1d89fc) SHA1(01c279edee322cc28f34506c312e4a9e3363b1be) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ccastle2 )
+	static RomLoadPtr rom_ccastle2 = new RomLoadPtr(){ public void handler(){ 
 	     ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code */
 	     ROM_LOAD( "ccastles.203", 0x0a000, 0x2000, CRC(348a96f0) SHA1(76de7bf6a01ccb15a4fe7333c1209f623a2e0d1b) )
 	     ROM_LOAD( "ccastles.204", 0x0c000, 0x2000, CRC(d48d8c1f) SHA1(8744182a3e2096419de63e341feb77dd8a8bcb34) )
@@ -352,7 +352,7 @@ public class ccastles
 	     ROM_REGION( 0x4000, REGION_GFX1, ROMREGION_DISPOSE )
 	     ROM_LOAD( "ccastles.107", 0x0000, 0x2000, CRC(39960b7d) SHA1(82bdf764ac23e72598883283c5e957169387abd4) )
 	     ROM_LOAD( "ccastles.106", 0x2000, 0x2000, CRC(9d1d89fc) SHA1(01c279edee322cc28f34506c312e4a9e3363b1be) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

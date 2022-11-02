@@ -451,7 +451,7 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	ROM_START( inufuku )
+	static RomLoadPtr rom_inufuku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1000000, REGION_CPU1, 0 )	// main cpu + data
 		ROM_LOAD16_WORD_SWAP( "u147.bin",     0x0000000, 0x080000, CRC(ab72398c) SHA1(f5dc266ffa936ea6528b46a34113f5e2f8141d71) )
 		ROM_LOAD16_WORD_SWAP( "u146.bin",     0x0080000, 0x080000, CRC(e05e9bd4) SHA1(af0fdf31c2bdf851bf15c9de725dcbbb58464d54) )
@@ -474,7 +474,7 @@ public class inufuku
 	
 		ROM_REGION( 0x0400000, REGION_SOUND1, 0 )	// adpcm data
 		ROM_LOAD( "lhmn5ku6.u53", 0x0000000, 0x400000, CRC(b320c5c9) SHA1(7c99da2d85597a3c008ed61a3aa5f47ad36186ec) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/******************************************************************************

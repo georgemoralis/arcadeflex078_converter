@@ -644,7 +644,7 @@ public class cclimber
 	
 	***************************************************************************/
 	
-	ROM_START( cclimber )
+	static RomLoadPtr rom_cclimber = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "cc11",         0x0000, 0x1000, CRC(217ec4ff) SHA1(334604c3a051d57440a9d0bfc34b809418ef1d2d) )
 		ROM_LOAD( "cc10",         0x1000, 0x1000, CRC(b3c26cef) SHA1(f52cb5482c12a9c5fb56e2e2aec7cab0ed23e5a5) )
@@ -674,9 +674,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13",         0x0000, 0x1000, CRC(e0042f75) SHA1(86cb31b110742a0f7ae33052c88f42d00deb5468) )
 		ROM_LOAD( "cc12",         0x1000, 0x1000, CRC(5da13aaa) SHA1(b2d41e69435d09c456648a10e33f5e1fbb0bc64c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cclimbrj )
+	static RomLoadPtr rom_cclimbrj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "cc11j.bin",    0x0000, 0x1000, CRC(89783959) SHA1(948fa88fcb9e3797b9c10934d36cf6a55cb590fe) )
 		ROM_LOAD( "cc10j.bin",    0x1000, 0x1000, CRC(14eda506) SHA1(4bc55b4c4ec197952b05ad32584f15f0383cc2df) )
@@ -706,9 +706,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "cc12j.bin",    0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ccboot )
+	static RomLoadPtr rom_ccboot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "m11.bin",      0x0000, 0x1000, CRC(5efbe180) SHA1(e0c24f21d563da075eb5019d0e76cb01c2598c7a) )
 		ROM_LOAD( "m10.bin",      0x1000, 0x1000, CRC(be2748c7) SHA1(ae66bc4e5e02bf9944a3ee4b0d2dec073f732260) )
@@ -739,9 +739,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "cc12j.bin",    0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ccboot2 )
+	static RomLoadPtr rom_ccboot2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "11.4k",        0x0000, 0x1000, CRC(b2b17e24) SHA1(1242d64242b3a6fe099457d155ebc508e5482818) )
 		ROM_LOAD( "10.4j",        0x1000, 0x1000, CRC(8382bc0f) SHA1(2390ee2ec08a074c7bc4b9c7750b979a1d3a8a67) )
@@ -772,9 +772,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "cc12j.bin",    0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ckong )
+	static RomLoadPtr rom_ckong = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "d05-07.bin",   0x0000, 0x1000, CRC(b27df032) SHA1(57f9be139c610405e3c2fddd7093dfb1277e450e) )
 		ROM_LOAD( "f05-08.bin",   0x1000, 0x1000, CRC(5dc1aaba) SHA1(42b9e5946ffce7c156d114bde68f37c2c34853c4) )
@@ -801,9 +801,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "cc12j.bin",    0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ckonga )
+	static RomLoadPtr rom_ckonga = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "d05-07.bin",   0x0000, 0x1000, CRC(b27df032) SHA1(57f9be139c610405e3c2fddd7093dfb1277e450e) )
 		ROM_LOAD( "f05-08.bin",   0x1000, 0x1000, CRC(5dc1aaba) SHA1(42b9e5946ffce7c156d114bde68f37c2c34853c4) )
@@ -830,9 +830,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "cc12j.bin",    0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ckongjeu )
+	static RomLoadPtr rom_ckongjeu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "d05-07.bin",   0x0000, 0x1000, CRC(b27df032) SHA1(57f9be139c610405e3c2fddd7093dfb1277e450e) )
 		ROM_LOAD( "f05-08.bin",   0x1000, 0x1000, CRC(5dc1aaba) SHA1(42b9e5946ffce7c156d114bde68f37c2c34853c4) )
@@ -859,9 +859,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "cc12j.bin",    0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ckongo )
+	static RomLoadPtr rom_ckongo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "o55a-1",       0x0000, 0x1000, CRC(8bfb4623) SHA1(1b8e12d1f337756bbfa9c3d736db7513d571c1b3) )
 		ROM_LOAD( "o55a-2",       0x1000, 0x1000, CRC(9ae8089b) SHA1(e50864bb77dce24ba6d10c4fc16ccaa593962442) )
@@ -893,9 +893,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "cc12j.bin",    0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ckongalc )
+	static RomLoadPtr rom_ckongalc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "ck7.bin",      0x0000, 0x1000, CRC(2171cac3) SHA1(7b18bfe44c32fb64b675bbbe2136344522c79b09) )
 		ROM_LOAD( "ck8.bin",      0x1000, 0x1000, CRC(88b83ff7) SHA1(4afc494cc264aaa4614da6aed02ce062d9c20850) )
@@ -922,9 +922,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "ck12.bin",     0x1000, 0x1000, CRC(2eb23b60) SHA1(c9e7dc584562aceb374193655fbacb7df6c9c731) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( monkeyd )
+	static RomLoadPtr rom_monkeyd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "ck7.bin",      0x0000, 0x1000, CRC(2171cac3) SHA1(7b18bfe44c32fb64b675bbbe2136344522c79b09) )
 		ROM_LOAD( "ck8.bin",      0x1000, 0x1000, CRC(88b83ff7) SHA1(4afc494cc264aaa4614da6aed02ce062d9c20850) )
@@ -951,9 +951,9 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "cc13j.bin",    0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "ck12.bin",     0x1000, 0x1000, CRC(2eb23b60) SHA1(c9e7dc584562aceb374193655fbacb7df6c9c731) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rpatrolb )
+	static RomLoadPtr rom_rpatrolb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "rp1.4l",       0x0000, 0x1000, CRC(bfd7ae7a) SHA1(a06d1cc2674ed40d0bfa67dd6d724964c1e40600) )
 		ROM_LOAD( "rp2.4j",       0x1000, 0x1000, CRC(03f53340) SHA1(35336945f4b634fc4c7791ac9c9e6643c8cd8006) )
@@ -982,9 +982,9 @@ public class cclimber
 		ROM_LOAD( "bprom3.9c",    0x0040, 0x0020, CRC(ee03bc96) SHA1(45e33e750a536a904f30136d84dd7993d97e8e54) )
 	
 		/* no samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( silvland )
+	static RomLoadPtr rom_silvland = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "7.2r",         0x0000, 0x1000, CRC(57e6be62) SHA1(c1d47970f8209256c9ccd6512b921dec6c276998) )
 		ROM_LOAD( "8.1n",         0x1000, 0x1000, CRC(bbb2b287) SHA1(93cd4ebe238c189c80be8b8ab1ec2649256dd6ea) )
@@ -1013,10 +1013,10 @@ public class cclimber
 		ROM_LOAD( "mb7051.1t",    0x0040, 0x0020, CRC(04a1be01) SHA1(9c270c04d374d46752ec99bd4e79fed1e2896bc0) )
 	
 		/* no samples */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( cannonb )
+	static RomLoadPtr rom_cannonb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x11000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "canballs.5d", 0x10000, 0x1000, CRC(43ad0d16) SHA1(682f1ee15e41bb5a161287536bb97704c0d3be9c) ) /* only this one ROM is encrypted */
 		ROM_LOAD( "canballs.5f",  0x1000, 0x1000, CRC(3e0dacdd) SHA1(cdd3684a6962f2fb582b8a415383c06a5e5059dd) )
@@ -1043,7 +1043,7 @@ public class cclimber
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "canballs.5s",  0x0000, 0x1000, CRC(5f0bcdfb) SHA1(7f79bf6de117348f606696ed7ea1937bbf926612) )
 		ROM_LOAD( "canballs.5p",  0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( cannonb )
 	{
@@ -1410,7 +1410,7 @@ public class cclimber
 	
 	
 	
-	ROM_START( swimmer )
+	static RomLoadPtr rom_swimmer = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "sw1",          0x0000, 0x1000, CRC(f12481e7) SHA1(4e8ee509043fd57ec1579594f0b2c543f270bead) )
 		ROM_LOAD( "sw2",          0x1000, 0x1000, CRC(a0b6fdd2) SHA1(7d3603de6c282224869824c7572868fc85599ea2) )
@@ -1441,9 +1441,9 @@ public class cclimber
 		ROM_LOAD( "24s10.13b",    0x0000, 0x100, CRC(8e35b97d) SHA1(2e2c254574660e01b9983f795a2adb5b9911d7f0) )
 		ROM_LOAD( "24s10.13a",    0x0100, 0x100, CRC(c5f24909) SHA1(27f2c967d440f6387841aa3f7b116c64bb812af1) )
 		ROM_LOAD( "18s030.12c",   0x0200, 0x020, CRC(3b2deb3a) SHA1(bb7b5c662454f5b355cc59cbdf8879e4664bed1d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( swimmera )
+	static RomLoadPtr rom_swimmera = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "swa1",         0x0000, 0x1000, CRC(42c2b6c5) SHA1(13688e1ee08308b13ead5af7b4f65043dae4e40f) )
 		ROM_LOAD( "swa2",         0x1000, 0x1000, CRC(49bac195) SHA1(a5d2cc2cdd10003f69014c4799f5f59e47a44260) )
@@ -1474,9 +1474,9 @@ public class cclimber
 		ROM_LOAD( "24s10.13b",    0x0000, 0x100, CRC(8e35b97d) SHA1(2e2c254574660e01b9983f795a2adb5b9911d7f0) )
 		ROM_LOAD( "24s10.13a",    0x0100, 0x100, CRC(c5f24909) SHA1(27f2c967d440f6387841aa3f7b116c64bb812af1) )
 		ROM_LOAD( "18s030.12c",   0x0200, 0x020, CRC(3b2deb3a) SHA1(bb7b5c662454f5b355cc59cbdf8879e4664bed1d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( swimmerb )
+	static RomLoadPtr rom_swimmerb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "sw1.9l",       0x0000, 0x1000, CRC(b045be08) SHA1(52187e1daebec521a98157f22960637393e40e62) )
 		ROM_LOAD( "sw2.9k",       0x1000, 0x1000, CRC(163d65e5) SHA1(b505f05af96f241285f0f7082ed03fa07bbde7de) )
@@ -1507,9 +1507,9 @@ public class cclimber
 		ROM_LOAD( "24s10.13b",    0x0000, 0x100, CRC(8e35b97d) SHA1(2e2c254574660e01b9983f795a2adb5b9911d7f0) )
 		ROM_LOAD( "24s10.13a",    0x0100, 0x100, CRC(c5f24909) SHA1(27f2c967d440f6387841aa3f7b116c64bb812af1) )
 		ROM_LOAD( "18s030.12c",   0x0200, 0x020, CRC(3b2deb3a) SHA1(bb7b5c662454f5b355cc59cbdf8879e4664bed1d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( guzzler )
+	static RomLoadPtr rom_guzzler = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "guzz-01.bin",  0x0000, 0x2000, CRC(58aaa1e9) SHA1(4ea9c85670a0d71483ac79564093043762a24b2c) )
 		ROM_LOAD( "guzz-02.bin",  0x2000, 0x2000, CRC(f80ceb17) SHA1(eedff7355fb5aa18b82f0a3e39bba5521c359791) )
@@ -1534,7 +1534,7 @@ public class cclimber
 		ROM_LOAD( "guzzler.003",  0x0000, 0x100, CRC(f86930c1) SHA1(58efc8cbef05e1612d12e2f0babddf15571d42bb) )
 		ROM_LOAD( "guzzler.002",  0x0100, 0x100, CRC(b566ea9e) SHA1(345078af6a339fbe6cd966046acd9d04c8926b5c) )
 		ROM_LOAD( "guzzler.001",  0x0200, 0x020, CRC(69089495) SHA1(96b067b22be14536bac748f8d61e5587a8a04e92) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

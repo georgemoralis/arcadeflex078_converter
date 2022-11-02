@@ -219,7 +219,7 @@ public class targeth
 		MDRV_SOUND_ADD(OKIM6295, targeth_okim6295_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( targeth )
+	static RomLoadPtr rom_targeth = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"targeth.c23",	0x000000, 0x040000, CRC(840887d6) SHA1(9a36b346608d531a62a2e0704ea44f12e07f9d91) )
 		ROM_LOAD16_BYTE(	"targeth.c22",	0x000001, 0x040000, CRC(d2435eb8) SHA1(ce75a115dad8019c8e66a1c3b3e15f54781f65ae) )
@@ -235,7 +235,7 @@ public class targeth
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched from all the ROMs */
 		ROM_RELOAD(					0x040000, 0x080000 )
 		ROM_LOAD( "targeth.c3",		0x0c0000, 0x080000, CRC(d4c771df) SHA1(7cc0a86ef6aa3d26ab8f19d198f62112bf012870) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1994, targeth, 0, targeth,targeth, 0, ROT0, "Gaelco", "Target Hits", GAME_UNEMULATED_PROTECTION )
 }

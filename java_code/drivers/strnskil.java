@@ -380,7 +380,7 @@ public class strnskil
 	
 	/****************************************************************************/
 	
-	ROM_START( strnskil )
+	static RomLoadPtr rom_strnskil = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* main CPU */
 		ROM_LOAD( "tvg3.7",  0x0000,  0x2000, CRC(31fd793a) SHA1(b86efe8ea60edf414a23fb6abc09db691c085fe9) )
 		ROM_CONTINUE(        0x8000,  0x2000 )
@@ -411,9 +411,9 @@ public class strnskil
 	
 		ROM_REGION( 0x0100, REGION_USER1, 0 ) /* scroll control PROM */
 		ROM_LOAD( "15-6.prm", 0x0000,  0x0100, CRC(ec4faf5b) SHA1(7ebbf50807d04105ebadec91bded069408e399ba) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( guiness )
+	static RomLoadPtr rom_guiness = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* main CPU */
 		ROM_LOAD( "tvg3.15", 0x0000,  0x2000, CRC(3a605ad8) SHA1(f6e2dd4989fdb68bc55857f5a8f06601416139d5) )
 		ROM_CONTINUE(        0x8000,  0x2000 )
@@ -444,9 +444,9 @@ public class strnskil
 	
 		ROM_REGION( 0x0100, REGION_USER1, 0 ) /* scroll control PROM */
 		ROM_LOAD( "15-6.prm", 0x0000,  0x0100, CRC(ec4faf5b) SHA1(7ebbf50807d04105ebadec91bded069408e399ba) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( pettanp )
+	static RomLoadPtr rom_pettanp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* main CPU */
 		ROM_LOAD( "tvg2-16a.7",  0x0000,  0x2000, CRC(4cbbbd01) SHA1(3905cf9e9d324bb23688ab29c98d71529d3dbf0c) )
 		ROM_CONTINUE(            0x8000,  0x2000 )
@@ -479,7 +479,7 @@ public class strnskil
 	
 		ROM_REGION( 0x1000, REGION_USER2, 0 ) /* protection? */
 		ROM_LOAD( "tvg12-16.2", 0x0000,  0x1000, CRC(3abc6ba8) SHA1(15e0b0f9d068f6094e2be4f4f1dea0ff6e85686b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME(  1984, strnskil, 0,        strnskil, strnskil, 0, ROT0, "Sun Electronics", "Strength & Skill" )
 	GAME(  1984, guiness,  strnskil, strnskil, strnskil, 0, ROT0, "Sun Electronics", "The Guiness (Japan)" )

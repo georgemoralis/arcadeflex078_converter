@@ -309,18 +309,18 @@ public class usgames
 	
 	
 	
-	ROM_START( usg32 )
+	static RomLoadPtr rom_usg32 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD( "usg32-0.bin", 0x08000, 0x08000, CRC(bc313387) SHA1(8df2e2736f14e965303993ae4105176bdd59f49d) )
 		/* for the banked region */
 		ROM_LOAD( "usg32-1.bin", 0x18000, 0x08000, CRC(baaea800) SHA1(1f35b8c0d40a923488c591497a3c3806d6d104e1) )
 		ROM_LOAD( "usg32-2.bin", 0x28000, 0x08000, CRC(d73d7f48) SHA1(a76582b80acd38abbb6f0f61d27b2920a3128516) )
 		ROM_LOAD( "usg32-3.bin", 0x38000, 0x08000, CRC(22747804) SHA1(b86af1db1733ddd0629843e44da9bc8d6b102eb6) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/* You can't change the status of "Sexy Triv I" and "Sexy Triv II" */
-	ROM_START( usg83 )
+	static RomLoadPtr rom_usg83 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD( "grom08-3.rom", 0x08000, 0x08000, CRC(aae84186) SHA1(8385b5c1dded1ea6f90c277b045778c7110a45db) )
 		/* for the banked region */
@@ -328,10 +328,10 @@ public class usgames
 		ROM_LOAD( "usg83-2.bin", 0x28000, 0x08000, CRC(29fbb23b) SHA1(6c2c17897e60ec8d4cdeaf9b382ef00ab71f6e0a) )
 		ROM_LOAD( "grom3.rom",   0x38000, 0x10000, CRC(4e110844) SHA1(b51c596a41760f1f0f70f49ae81f03d98a17fb6f) )
 		ROM_LOAD( "usg83-4.bin", 0x48000, 0x08000, CRC(437697c4) SHA1(d14ae6f0b7adfb921c69ae3fdcd2cb525cb731fa) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Similar to 'usg83', but you can change the status of "Sexy Triv I" */
-	ROM_START( usg83x )
+	static RomLoadPtr rom_usg83x = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD( "usg83-0.bin", 0x08000, 0x08000, CRC(4ad9b6e0) SHA1(54940619511b37577bbcd9d05b941079ba793c72) )
 		/* for the banked region */
@@ -339,10 +339,10 @@ public class usgames
 		ROM_LOAD( "usg83-2.bin", 0x28000, 0x08000, CRC(29fbb23b) SHA1(6c2c17897e60ec8d4cdeaf9b382ef00ab71f6e0a) )
 		ROM_LOAD( "usg83-3.bin", 0x38000, 0x08000, CRC(41c475ac) SHA1(48019843e2f57bf4c2fca5136e3d0a64de3dfc04) )
 		ROM_LOAD( "usg83-4.bin", 0x48000, 0x08000, CRC(437697c4) SHA1(d14ae6f0b7adfb921c69ae3fdcd2cb525cb731fa) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Similar to 'usg83', but "Sport Triv" and "Rush Hour" aren't available by default */
-	ROM_START( usg82 )
+	static RomLoadPtr rom_usg82 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD( "rom0.rom",   0x08000, 0x08000, CRC(09c20b78) SHA1(8b622fef536e98e22866a15c6a5b5da583169e8c) )
 		/* for the banked region */
@@ -350,10 +350,10 @@ public class usgames
 		ROM_LOAD( "usg83-2.bin", 0x28000, 0x08000, CRC(29fbb23b) SHA1(6c2c17897e60ec8d4cdeaf9b382ef00ab71f6e0a) )
 		ROM_LOAD( "grom3.rom",   0x38000, 0x10000, CRC(4e110844) SHA1(b51c596a41760f1f0f70f49ae81f03d98a17fb6f) )
 		ROM_LOAD( "usg83-4.bin", 0x48000, 0x08000, CRC(437697c4) SHA1(d14ae6f0b7adfb921c69ae3fdcd2cb525cb731fa) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( usg185 ) // an upgraded 182?
+	static RomLoadPtr rom_usg185 = new RomLoadPtr(){ public void handler(){  // an upgraded 182?
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD( "usg182.u12",   0x08000, 0x08000, CRC(2f4ed125) SHA1(6ea2ce263b8abe8d283d1c85d403ec908a422448) )
 		/* for the banked region */
@@ -361,10 +361,10 @@ public class usgames
 		ROM_LOAD( "usg185.u35",   0x20000, 0x10000, CRC(795e71c8) SHA1(852dceab906f79d05da67a81f855c71738662430) ) // ROM 3
 		ROM_LOAD( "usg185.u28",   0x30000, 0x10000, CRC(c6ba8a81) SHA1(e826492626707e30782d4d2f42419357970d67b3) ) // ROM 2
 		ROM_LOAD( "usg185.u18",   0x40000, 0x10000, CRC(1cfd934d) SHA1(544c41c5fcc2e576f5a8c88996f9257956f6c580) ) // ROM 1
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( usg252 )
+	static RomLoadPtr rom_usg252 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD( "usg252.u12",   0x08000, 0x08000, CRC(766a855a) SHA1(e67ca9944d92192de423de6aa8a60f2e28b17db1) )
 		/* for the banked region */
@@ -384,7 +384,7 @@ public class usgames
 		ROM_CONTINUE(             0x48000, 0x04000 )
 		ROM_CONTINUE(             0x44000, 0x04000 )
 		ROM_CONTINUE(             0x40000, 0x04000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

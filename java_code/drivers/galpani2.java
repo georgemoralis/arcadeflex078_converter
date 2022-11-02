@@ -598,7 +598,7 @@ public class galpani2
 	
 	***************************************************************************/
 	
-	ROM_START( galpani2 )
+	static RomLoadPtr rom_galpani2 = new RomLoadPtr(){ public void handler(){ 
 	 	ROM_REGION( 0x100000, REGION_CPU1, 0 )			/* CPU#1 Code */
 		ROM_LOAD16_BYTE( "g000t1.133", 0x000000, 0x080000, CRC(332048e7) SHA1(1a353d4b29f7a08158fc454309dc496df6b5b108) )
 		ROM_LOAD16_BYTE( "g001t1.134", 0x000001, 0x080000, CRC(c92937c3) SHA1(0c9e894c0e23e319bd2d01ec573f02ed510e3ed6) )
@@ -643,7 +643,7 @@ public class galpani2
 		ROM_CONTINUE(            0x200000, 0x100000 )
 		ROM_LOAD( "gp2-101.044", 0x100000, 0x100000, CRC(f75ba6a0) SHA1(91cc0c019a7ebfa2562bbe570af029f00b5e0699) )	//  $4 x $40000
 		ROM_RELOAD(              0x300000, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	/*
 	CPU #0 PC 02F8F4 : OKI 1 bank 00000007
 	CPU #0 PC 02F918 : OKI 1 (030)000000-000000

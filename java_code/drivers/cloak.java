@@ -407,7 +407,7 @@ public class cloak
 	 *
 	 *************************************/
 	
-	ROM_START( cloak )
+	static RomLoadPtr rom_cloak = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "501.023",      0x4000, 0x2000, CRC(c2dbef1b) SHA1(3bab091afb846ea5f09200e3b44dc8dd430993fe) )
 		ROM_LOAD( "502.023",      0x6000, 0x2000, CRC(316d0c7b) SHA1(58e50661c077415d9465d85c015b8238b4552304) )
@@ -430,10 +430,10 @@ public class cloak
 		ROM_REGION( 0x2000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "107.023",      0x0000, 0x1000, CRC(c42c84a4) SHA1(6f241e772f8b46c8d3acad2e967f1ab530886b11) )
 		ROM_LOAD( "108.023",      0x1000, 0x1000, CRC(4fe13d58) SHA1(b21a32b2ff5363ab35fd1438344a04deb4077dbc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( cloaksp )
+	static RomLoadPtr rom_cloaksp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "501.023",      0x4000, 0x2000, CRC(c2dbef1b) SHA1(3bab091afb846ea5f09200e3b44dc8dd430993fe) )
 		ROM_LOAD( "502.023",      0x6000, 0x2000, CRC(316d0c7b) SHA1(58e50661c077415d9465d85c015b8238b4552304) )
@@ -456,10 +456,10 @@ public class cloak
 		ROM_REGION( 0x2000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "107.023",      0x0000, 0x1000, CRC(c42c84a4) SHA1(6f241e772f8b46c8d3acad2e967f1ab530886b11) )
 		ROM_LOAD( "108.023",      0x1000, 0x1000, CRC(4fe13d58) SHA1(b21a32b2ff5363ab35fd1438344a04deb4077dbc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( cloakfr )
+	static RomLoadPtr rom_cloakfr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "501.023",      0x4000, 0x2000, CRC(c2dbef1b) SHA1(3bab091afb846ea5f09200e3b44dc8dd430993fe) )
 		ROM_LOAD( "502.023",      0x6000, 0x2000, CRC(316d0c7b) SHA1(58e50661c077415d9465d85c015b8238b4552304) )
@@ -482,10 +482,10 @@ public class cloak
 		ROM_REGION( 0x2000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "107.023",      0x0000, 0x1000, CRC(c42c84a4) SHA1(6f241e772f8b46c8d3acad2e967f1ab530886b11) )
 		ROM_LOAD( "108.023",      0x1000, 0x1000, CRC(4fe13d58) SHA1(b21a32b2ff5363ab35fd1438344a04deb4077dbc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( cloakgr )
+	static RomLoadPtr rom_cloakgr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "501.023",      0x4000, 0x2000, CRC(c2dbef1b) SHA1(3bab091afb846ea5f09200e3b44dc8dd430993fe) )
 		ROM_LOAD( "502.023",      0x6000, 0x2000, CRC(316d0c7b) SHA1(58e50661c077415d9465d85c015b8238b4552304) )
@@ -508,7 +508,7 @@ public class cloak
 		ROM_REGION( 0x2000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "107.023",      0x0000, 0x1000, CRC(c42c84a4) SHA1(6f241e772f8b46c8d3acad2e967f1ab530886b11) )
 		ROM_LOAD( "108.023",      0x1000, 0x1000, CRC(4fe13d58) SHA1(b21a32b2ff5363ab35fd1438344a04deb4077dbc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

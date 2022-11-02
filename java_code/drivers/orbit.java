@@ -446,7 +446,7 @@ public class orbit
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( orbit )
+	static RomLoadPtr rom_orbit = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD_NIB_LOW ( "033701.h2", 0x6800, 0x400, CRC(6de43b85) SHA1(1643972f45d3a0dd6540158c575cd84cee2b0c9a) )
 		ROM_LOAD_NIB_HIGH( "033693.l2", 0x6800, 0x400, CRC(8878409e) SHA1(a14e0161705bbc230f0aec1837ebc41d62178368) )
@@ -472,7 +472,7 @@ public class orbit
 	
 		ROM_REGION( 0x100, REGION_PROMS, 0 )                  /* sync, unused */
 		ROM_LOAD( "033688.p6", 0x0000, 0x100, CRC(ee66ddba) SHA1(5b9ae4cbf019375c8d54528b69280413c641c4f2) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1978, orbit, 0, orbit, orbit, 0, 0, "Atari", "Orbit" )

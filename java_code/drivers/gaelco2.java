@@ -214,7 +214,7 @@ public class gaelco2
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( maniacsq )
+	static RomLoadPtr rom_maniacsq = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "d8-d15.1m",	0x000000, 0x020000, CRC(9121d1b6) SHA1(ad8f0d996b6d42fc0c6645466608e82ca96e0b66) )
 		ROM_LOAD16_BYTE( "d0-d7.1m",	0x000001, 0x020000, CRC(a95cfd2a) SHA1(b5bad76f12d2a1f6bf6b35482f2f933ceb00e552) )
@@ -227,7 +227,7 @@ public class gaelco2
 		ROM_LOAD( "d24-d31.1m",	0x0180000, 0x0020000, CRC(578c3588) SHA1(c2e1fba29f21d6822677886fb2d26e050b336c14) )	/* GFX only */
 		ROM_FILL(				0x01a0000, 0x0060000, 0x0 )			/* Empty */
 		ROM_FILL(				0x0200000, 0x0080000, 0x0 )			/* to decode GFX as 5bpp */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -363,7 +363,7 @@ public class gaelco2
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( bang )
+	static RomLoadPtr rom_bang = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "bang.u53",	0x000000, 0x080000, CRC(014bb939) SHA1(bb245acf7a3bd4a56b3559518bcb8d0ae39dbaf4) )
 		ROM_LOAD16_BYTE( "bang.u55",	0x000001, 0x080000, CRC(582f8b1e) SHA1(c9b0d4c1dee71cdb2c01d49f20ffde32eddc9583) )
@@ -388,11 +388,11 @@ public class gaelco2
 		ROM_LOAD( "bang.u21",	0x0800000, 0x0080000, CRC(fd93d7f2) SHA1(ff9d8eb5ac8d9757132aa6d79d2f7662c14cd650) )	/* GFX only */
 		ROM_LOAD( "bang.u14",	0x0880000, 0x0080000, CRC(858fcbf9) SHA1(1e67431c8775666f4839bdc427fabf59ffc708c0) )	/* GFX only */
 		ROM_FILL(				0x0900000, 0x0100000, 0x0 )			/* Empty */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
-	ROM_START( bangj )
+	static RomLoadPtr rom_bangj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "bang-a.u53",	0x000000, 0x080000, CRC(5ee514e9) SHA1(b78b507d18de41be58049f5c597acd107ec1273f) )
 		ROM_LOAD16_BYTE( "bang-a.u55",	0x000001, 0x080000, CRC(b90223ab) SHA1(7c097754a710169f41c574c3cc1a6346824853c4) )
@@ -417,7 +417,7 @@ public class gaelco2
 		ROM_LOAD( "bang-a.u21",	0x0800000, 0x0080000, CRC(531ce3b6) SHA1(196bb720591acc082f815b609a7cf1609510c8c1) )	/* GFX only */
 		ROM_LOAD( "bang-a.u14",	0x0880000, 0x0080000, CRC(f8e1cf84) SHA1(559c08584094e605635c5ef3a25534ea0bcfa199) )	/* GFX only */
 		ROM_FILL(				0x0900000, 0x0100000, 0x0 )			/* Empty */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*============================================================================
@@ -596,7 +596,7 @@ public class gaelco2
 	*/
 	
 	
-	ROM_START( aligator )
+	static RomLoadPtr rom_aligator = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"u45",	0x000000, 0x080000, CRC(61c47c56) SHA1(6dd3fc6fdab252e0fb43c0793eef70203c888d7f) )
 		ROM_LOAD16_BYTE(	"u44",	0x000001, 0x080000, CRC(f0be007a) SHA1(2112b2e5f020028b50c8f2c72c83c9fee7a78224) )
@@ -610,9 +610,9 @@ public class gaelco2
 		ROM_LOAD( "u47",		0x0400000, 0x0400000, CRC(74a5a29f) SHA1(8ea2aa1f8a80c5b88ca9222c5ecc3c4794e0a160) )	/* GFX + Sound */
 		ROM_LOAD( "u50",		0x0800000, 0x0400000, CRC(85daecf9) SHA1(824f6d2491075b1ef96ecd6667c5510409338a2f) )	/* GFX only */
 		ROM_LOAD( "u49",		0x0c00000, 0x0400000, CRC(70a4ee0b) SHA1(07b09916f0366d0c6eed94a905ec0b9d6ac9e7e1) )	/* GFX + Sound */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( aligatun )
+	static RomLoadPtr rom_aligatun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"ahntu45n.040",	0x000000, 0x080000, CRC(fc02cb2d) SHA1(700aa60ec0d2bb705b1335de63daae678dcb8570) )
 		ROM_LOAD16_BYTE(	"ahntu44n.040",	0x000001, 0x080000, CRC(7fbea3a3) SHA1(89efa5b7908c2f010a3097954dbccd9cb7adc50c) )
@@ -626,7 +626,7 @@ public class gaelco2
 		ROM_LOAD( "u47",		0x0400000, 0x0400000, CRC(74a5a29f) SHA1(8ea2aa1f8a80c5b88ca9222c5ecc3c4794e0a160) )	/* GFX + Sound */
 		ROM_LOAD( "u50",		0x0800000, 0x0400000, CRC(85daecf9) SHA1(824f6d2491075b1ef96ecd6667c5510409338a2f) )	/* GFX only */
 		ROM_LOAD( "u49",		0x0c00000, 0x0400000, CRC(70a4ee0b) SHA1(07b09916f0366d0c6eed94a905ec0b9d6ac9e7e1) )	/* GFX + Sound */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -875,7 +875,7 @@ public class gaelco2
 	*/
 	
 	
-	ROM_START( touchgo )
+	static RomLoadPtr rom_touchgo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"tg56",	0x000000, 0x080000, CRC(6d0f5c65) SHA1(00db7a7da3ec1676169aa78fe4f08a7746c3accf) )
 		ROM_LOAD16_BYTE(	"tg57",	0x000001, 0x080000, CRC(845787b5) SHA1(27c9910cd9f38328326ecb5cd093dfeb6d4f6244) )
@@ -893,7 +893,7 @@ public class gaelco2
 		ROM_LOAD( "ic66",		0x0400000, 0x0200000, CRC(52682953) SHA1(82cde061bdd827ed4a47a9a4256cd0e887ebc29d) )	/* Sound only */
 		ROM_FILL(				0x0600000, 0x0200000, 0x0 )			/* Empty */
 		ROM_LOAD( "ic67",		0x0800000, 0x0400000, CRC(c0a2ce5b) SHA1(94b024373c7c546c0f4fe9737639f02e9c7ebbdb) )	/* GFX only */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -1032,7 +1032,7 @@ public class gaelco2
 	-----------------------------------------------------------------------------|
 	*/
 	
-	ROM_START( snowboar )
+	static RomLoadPtr rom_snowboar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"sb53",	0x000000, 0x080000, CRC(e4eaefd4) SHA1(c7de2ae3a4a919fbe16d4997e3f9e2303b8c96b1) )
 		ROM_LOAD16_BYTE(	"sb55",	0x000001, 0x080000, CRC(e2476994) SHA1(2ad18652a1fc6ac058c8399373fb77e7a81d5bbd) )
@@ -1046,9 +1046,9 @@ public class gaelco2
 		ROM_LOAD( "sb44",		0x0000000, 0x0400000, CRC(1bbe88bc) SHA1(15bce9ada2b742ba4d537fa8efc0f29f661bff00) )	/* GFX only */
 		ROM_LOAD( "sb45",		0x0400000, 0x0400000, CRC(373983d9) SHA1(05e35a8b27cab469885f0ec2a5df200a366b50a1) )	/* Sound only */
 		ROM_LOAD( "sb46",		0x0800000, 0x0400000, CRC(22e7c648) SHA1(baddb9bc13accd83bea61533d7286cf61cd89279) )	/* GFX only */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( snowbalt )
+	static RomLoadPtr rom_snowbalt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"sb.53",	0x000000, 0x080000, CRC(4742749e) SHA1(933e39893ab74895ae4a99a932f8245a03ea0b5d) )
 		ROM_LOAD16_BYTE(	"sb.55",	0x000001, 0x080000, CRC(6ddc431f) SHA1(8801c0cf1711bb956447ba1e631db28bd075caea) )
@@ -1083,7 +1083,7 @@ public class gaelco2
 		ROM_LOAD( "sb.e2",		0x1100000, 0x0080000, CRC(f5948c6c) SHA1(91bba817ced194b02885ce84b7a8132ef5ca631a) )	/* GFX only */
 		ROM_LOAD( "sb.e3",		0x1180000, 0x0080000, CRC(4baa678f) SHA1(a7fbbd687e2d8d7e96207c8ace0799a3cc9c3272) )	/* GFX only */
 		ROM_FILL(				0x1200000, 0x0200000, 0x0 )			/* Empty */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -1301,7 +1301,7 @@ public class gaelco2
 	POT1/2: Volume adjust of left/right channel
 	*/
 	
-	ROM_START( wrally2 )
+	static RomLoadPtr rom_wrally2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "wr2.64",	0x000000, 0x080000, CRC(4cdf4e1e) SHA1(a3b3ff4a70336b61c7bba5d518527bf4bd901867) )
 		ROM_LOAD16_BYTE( "wr2.63",	0x000001, 0x080000, CRC(94887c9f) SHA1(ad09f1fbeff4c3ba47f72346d261b22fa6a51457) )
@@ -1324,7 +1324,7 @@ public class gaelco2
 		ROM_LOAD( "wr2.21d",	0x0800000, 0x0080000, CRC(899b0583) SHA1(a313e679980cc4da22bc70f2c7c9685af4f3d6df) ) 	/* GFX only */
 		ROM_LOAD( "wr2.14d",	0x0880000, 0x0080000, CRC(6eb781d5) SHA1(d5c13db88e6de606b34805391cef9f3fbf09fac4) ) 	/* GFX only */
 		ROM_FILL(				0x0900000, 0x0100000, 0x0 )			/* Empty */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

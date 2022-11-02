@@ -409,7 +409,7 @@ public class bsktball
 	 *
 	 *************************************/
 	
-	ROM_START( bsktball )
+	static RomLoadPtr rom_bsktball = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "034765.d1",    0x2000, 0x0800, CRC(798cea39) SHA1(b1b709a74258b01b21d7c2038a3b6abe879944c5) )
 		ROM_LOAD( "034764.c1",    0x2800, 0x0800, CRC(a087109e) SHA1(f5d6dcccc4a54db35be3d8997bc51e73892747fb) )
@@ -420,7 +420,7 @@ public class bsktball
 		ROM_REGION( 0x1000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "034757.a6",    0x0000, 0x0800, CRC(010e8ad3) SHA1(43ce2c2089ec3011e2d28e8257a35efeed0e71c5) )
 		ROM_LOAD( "034758.b6",    0x0800, 0x0800, CRC(f7bea344) SHA1(df544bff67bb0334f77cef11792199d9c3f5fdf4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

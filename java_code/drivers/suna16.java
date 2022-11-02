@@ -754,7 +754,7 @@ public class suna16
 	
 	***************************************************************************/
 	
-	ROM_START( bssoccer )
+	static RomLoadPtr rom_bssoccer = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) 	/* 68000 Code */
 		ROM_LOAD16_BYTE( "02", 0x000000, 0x080000, CRC(32871005) SHA1(b094ee3f4fc24c0521915d565f6e203d51e51f6d) )
@@ -779,7 +779,7 @@ public class suna16
 		ROM_LOAD( "08", 0x200000, 0x080000, CRC(96cd2136) SHA1(1241859d6c5e64de73898763f0358171ea4aeae3) )
 		ROM_LOAD( "10", 0x280000, 0x080000, CRC(1ca94d21) SHA1(23d892b840e37064a175584f955f25f990d9179d) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -802,7 +802,7 @@ public class suna16
 	
 	***************************************************************************/
 	
-	ROM_START( uballoon )
+	static RomLoadPtr rom_uballoon = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) 	/* 68000 Code */
 		ROM_LOAD16_BYTE( "prg2.rom", 0x000000, 0x080000, CRC(72ab80ea) SHA1(b755940877cf286559208106dd5e6933aeb72242) )
@@ -822,7 +822,7 @@ public class suna16
 		ROM_LOAD( "gfx3.rom", 0x100000, 0x080000, CRC(718f3150) SHA1(5971f006203f86743ebc825e4ab1ed1f811e3165) )
 		ROM_LOAD( "gfx4.rom", 0x180000, 0x080000, CRC(af7e057e) SHA1(67a03b54ffa1483c8ed044f27287b7f3f1150455) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( uballoon )

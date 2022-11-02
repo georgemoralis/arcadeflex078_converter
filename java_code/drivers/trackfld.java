@@ -580,7 +580,7 @@ public class trackfld
 	
 	***************************************************************************/
 	
-	ROM_START( trackfld )
+	static RomLoadPtr rom_trackfld = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )     /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "a01_e01.bin",  0x6000, 0x2000, CRC(2882f6d4) SHA1(f7ddae2c5412a2849efd7f9629e92a5b0328e7cb) )
 		ROM_LOAD( "a02_e02.bin",  0x8000, 0x2000, CRC(1743b5ee) SHA1(31301031a525f893c31461f634350f01a9492ef4) )
@@ -609,9 +609,9 @@ public class trackfld
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* 64k for speech rom */
 		ROM_LOAD( "c9_d15.bin",   0x0000, 0x2000, CRC(f546a56b) SHA1(caee3d8546eb7a75ce2a578c6a1a630246aec6b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( trackflc )
+	static RomLoadPtr rom_trackflc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )     /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "f01.1a",       0x6000, 0x2000, CRC(4e32b360) SHA1(cafd4b9ef5548d31d894610dfd2288425d29ed58) )
 		ROM_LOAD( "f02.2a",       0x8000, 0x2000, CRC(4e7ebf07) SHA1(266110e5195ab1e374724536b82ec4da35123dc7) )
@@ -640,9 +640,9 @@ public class trackfld
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* 64k for speech rom */
 		ROM_LOAD( "c9_d15.bin",   0x0000, 0x2000, CRC(f546a56b) SHA1(caee3d8546eb7a75ce2a578c6a1a630246aec6b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hyprolym )
+	static RomLoadPtr rom_hyprolym = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )     /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "hyprolym.a01", 0x6000, 0x2000, CRC(82257fb7) SHA1(4a5038292e582d5c3b5f2d82b01c57ccb24f3095) )
 		ROM_LOAD( "hyprolym.a02", 0x8000, 0x2000, CRC(15b83099) SHA1(79827590d74f20c9a95723e06b05af2b15c34f5f) )
@@ -671,9 +671,9 @@ public class trackfld
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* 64k for speech rom */
 		ROM_LOAD( "c9_d15.bin",   0x0000, 0x2000, CRC(f546a56b) SHA1(caee3d8546eb7a75ce2a578c6a1a630246aec6b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hyprolyb )
+	static RomLoadPtr rom_hyprolyb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )     /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "a1.1",         0x6000, 0x2000, CRC(9aee2d5a) SHA1(81f151459f1113b5f2f76ddc140bf86676f778e4) )
 		ROM_LOAD( "hyprolym.a02", 0x8000, 0x2000, CRC(15b83099) SHA1(79827590d74f20c9a95723e06b05af2b15c34f5f) )
@@ -707,9 +707,9 @@ public class trackfld
 		ROM_LOAD( "tfprom.1",     0x0000, 0x0020, CRC(d55f30b5) SHA1(4d6a851f4886778307f75771645078b97ad55f5f) ) /* palette */
 		ROM_LOAD( "tfprom.3",     0x0020, 0x0100, CRC(d2ba4d32) SHA1(894b5cedf01ba9225a0d6215291857e455b84903) ) /* sprite lookup table */
 		ROM_LOAD( "tfprom.2",     0x0120, 0x0100, CRC(053e5861) SHA1(6740a62cf7b6938a4f936a2fed429704612060a5) ) /* char lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mastkin )
+	static RomLoadPtr rom_mastkin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "mk3",          0x8000, 0x2000, CRC(9f80d6ae) SHA1(724321d8c3e32d679f8170dfef6555d0179f9d20) )
 		ROM_LOAD( "mk4",          0xa000, 0x2000, CRC(99f361e7) SHA1(8706e5c393325c5a89d32388991bc48fa4102779) )
@@ -736,9 +736,9 @@ public class trackfld
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* 64k for speech rom */
 		ROM_LOAD( "mk2",          0x0000, 0x2000, CRC(f546a56b) SHA1(caee3d8546eb7a75ce2a578c6a1a630246aec6b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( whizquiz )
+	static RomLoadPtr rom_whizquiz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "ic9_a1.bin",   0xe000, 0x2000, CRC(608e1ff3) SHA1(f3350a3367df59ec1780bb22c7a6a227e7b10d5e) )	/* encrypted? */
 	
@@ -768,7 +768,7 @@ public class trackfld
 		ROM_LOAD( "prom.1",       0x0000, 0x0020, NO_DUMP ) /* palette */
 		ROM_LOAD( "prom.3",       0x0020, 0x0100, NO_DUMP ) /* sprite lookup table */
 		ROM_LOAD( "prom.2",       0x0120, 0x0100, NO_DUMP ) /* char lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( trackfld )

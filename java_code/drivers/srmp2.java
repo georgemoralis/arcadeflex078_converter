@@ -1221,7 +1221,7 @@ public class srmp2
 	
 	***************************************************************************/
 	
-	ROM_START( srmp2 )
+	static RomLoadPtr rom_srmp2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 )					/* 68000 Code */
 		ROM_LOAD16_BYTE( "uco-2.17", 0x000000, 0x020000, CRC(0d6c131f) SHA1(be85f2578b0ae2a072565605b7dbeb970e5e3851) )
 		ROM_LOAD16_BYTE( "uco-3.18", 0x000001, 0x020000, CRC(e9fdf5f8) SHA1(aa1f8cc3f1d0ed942403c0473605775bc1537cbf) )
@@ -1242,9 +1242,9 @@ public class srmp2
 		ROM_REGION( 0x000800, REGION_PROMS, 0 )					/* Color PROMs */
 		ROM_LOAD( "uc-1o.12", 0x000000, 0x000400, CRC(fa59b5cb) SHA1(171c4c36bd1c8e6548b34a9f6e2ff755ecf09b47) )
 		ROM_LOAD( "uc-2o.13", 0x000400, 0x000400, CRC(50a33b96) SHA1(cfb6d3cb6b73d1bf484014fb340c28bc1774137d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( srmp3 )
+	static RomLoadPtr rom_srmp3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x028000, REGION_CPU1, 0 )					/* 68000 Code */
 		ROM_LOAD( "za0-10.bin", 0x000000, 0x008000, CRC(939d126f) SHA1(7a5c7f7fbee8de11a08194d3c8f10a20f8dc2f0a) )
 		ROM_CONTINUE(           0x010000, 0x018000 )
@@ -1265,9 +1265,9 @@ public class srmp2
 		ROM_REGION( 0x000400, REGION_PROMS, 0 )					/* Color PROMs */
 		ROM_LOAD( "za0-12.prm", 0x000000, 0x000200, CRC(1ac5387c) SHA1(022f204dbe2374478279b586451673a08ee489c8) )
 		ROM_LOAD( "za0-13.prm", 0x000200, 0x000200, CRC(4ea3d2fe) SHA1(c7d18b9c1331e08faadf33e52033c658bf2b16fc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjyuugi )
+	static RomLoadPtr rom_mjyuugi = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )					/* 68000 Code */
 		ROM_LOAD16_BYTE( "um001.001", 0x000000, 0x020000, CRC(28d5340f) SHA1(683d89987b8b794695fdb6104d8e6ff5204afafb) )
 		ROM_LOAD16_BYTE( "um001.003", 0x000001, 0x020000, CRC(275197de) SHA1(2f8efa112f23f172eaef9bb732b2a253307dd896) )
@@ -1287,9 +1287,9 @@ public class srmp2
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )				/* Samples */
 		ROM_LOAD( "maj-001.01", 0x000000, 0x080000, CRC(029a0b60) SHA1(d02788b8673ae73aca81f1570ff335982ac9ab40) )
 		ROM_LOAD( "maj-001.02", 0x080000, 0x080000, CRC(eb28e641) SHA1(67e1d89c9b40e4a83a3783d4343d7a8121668091) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mjyuugia )
+	static RomLoadPtr rom_mjyuugia = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )					/* 68000 Code */
 		ROM_LOAD16_BYTE( "um_001.001", 0x000000, 0x020000, CRC(76dc0594) SHA1(4bd81616769cdc59eaf6f7921e404e166500f67f) )
 		ROM_LOAD16_BYTE( "um001.003",  0x000001, 0x020000, CRC(275197de) SHA1(2f8efa112f23f172eaef9bb732b2a253307dd896) )
@@ -1309,9 +1309,9 @@ public class srmp2
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )				/* Samples */
 		ROM_LOAD( "maj-001.01", 0x000000, 0x080000, CRC(029a0b60) SHA1(d02788b8673ae73aca81f1570ff335982ac9ab40) )
 		ROM_LOAD( "maj-001.02", 0x080000, 0x080000, CRC(eb28e641) SHA1(67e1d89c9b40e4a83a3783d4343d7a8121668091) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ponchin )
+	static RomLoadPtr rom_ponchin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )					/* 68000 Code */
 		ROM_LOAD16_BYTE( "um2_1_1.u22", 0x000000, 0x020000, CRC(cf88efbb) SHA1(7bd2304d365524fc5bcf3fb30752f5efec73a9f5) )
 		ROM_LOAD16_BYTE( "um2_1_3.u42", 0x000001, 0x020000, CRC(e053458f) SHA1(db4a34589a08d0252d700144a6260a0f6c4e8e30) )
@@ -1327,9 +1327,9 @@ public class srmp2
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )				/* Samples */
 		ROM_LOAD( "um2_1_9.u56",  0x000000, 0x080000, CRC(9165c79a) SHA1(854e30fc6121f7b3e5e1e5b6772757a92b63aef8) )
 		ROM_LOAD( "um2_1_10.u63", 0x080000, 0x080000, CRC(53e643e9) SHA1(3b221217e8f846ae96a9a47149037cea19d97549) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ponchina )
+	static RomLoadPtr rom_ponchina = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )					/* 68000 Code */
 		ROM_LOAD16_BYTE( "u22.bin",     0x000000, 0x020000, CRC(9181de20) SHA1(03fdb289d862ff2d87249d35991bd60784e172d9) )
 		ROM_LOAD16_BYTE( "um2_1_3.u42", 0x000001, 0x020000, CRC(e053458f) SHA1(db4a34589a08d0252d700144a6260a0f6c4e8e30) )
@@ -1345,7 +1345,7 @@ public class srmp2
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )				/* Samples */
 		ROM_LOAD( "um2_1_9.u56",  0x000000, 0x080000, CRC(9165c79a) SHA1(854e30fc6121f7b3e5e1e5b6772757a92b63aef8) )
 		ROM_LOAD( "um2_1_10.u63", 0x080000, 0x080000, CRC(53e643e9) SHA1(3b221217e8f846ae96a9a47149037cea19d97549) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1987, srmp2,     0,        srmp2,    srmp2,    srmp2,   ROT0, "Seta", "Super Real Mahjong Part 2 (Japan)" )

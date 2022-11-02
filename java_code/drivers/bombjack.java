@@ -357,7 +357,7 @@ public class bombjack
 	
 	***************************************************************************/
 	
-	ROM_START( bombjack )
+	static RomLoadPtr rom_bombjack = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "09_j01b.bin",  0x0000, 0x2000, CRC(c668dc30) SHA1(51dd6a2688b42e9f28f0882bd76f75be7ec3222a) )
 		ROM_LOAD( "10_l01b.bin",  0x2000, 0x2000, CRC(52a1e5fb) SHA1(e1cdc4b4efbc6c7a1e4fa65019486617f2acba1b) )
@@ -385,9 +385,9 @@ public class bombjack
 	
 		ROM_REGION( 0x1000, REGION_GFX4, 0 )	/* background tilemaps */
 		ROM_LOAD( "02_p04t.bin",  0x0000, 0x1000, CRC(398d4a02) SHA1(ac18a8219f99ba9178b96c9564de3978e39c59fd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bombjac2 )
+	static RomLoadPtr rom_bombjac2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "09_j01b.bin",  0x0000, 0x2000, CRC(c668dc30) SHA1(51dd6a2688b42e9f28f0882bd76f75be7ec3222a) )
 		ROM_LOAD( "10_l01b.bin",  0x2000, 0x2000, CRC(52a1e5fb) SHA1(e1cdc4b4efbc6c7a1e4fa65019486617f2acba1b) )
@@ -415,7 +415,7 @@ public class bombjack
 	
 		ROM_REGION( 0x1000, REGION_GFX4, 0 )	/* background tilemaps */
 		ROM_LOAD( "02_p04t.bin",  0x0000, 0x1000, CRC(398d4a02) SHA1(ac18a8219f99ba9178b96c9564de3978e39c59fd) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( bombjack )
 	{

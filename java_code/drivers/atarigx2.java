@@ -1481,7 +1481,7 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	ROM_START( spclords )
+	static RomLoadPtr rom_spclords = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD32_BYTE( "136095.21b", 0x00000, 0x20000, CRC(2ba99ce2) SHA1(5d8d138698c29838a85da1721c3400c666a14e18) )
 		ROM_LOAD32_BYTE( "136095.22b", 0x00001, 0x20000, CRC(631c5009) SHA1(6b2ea907087e411579f55dff60724ba33afa8a06) )
@@ -1516,10 +1516,10 @@ public class atarigx2
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )	/* 1MB for ADPCM samples */
 		ROM_LOAD( "136095.81a",  0x80000, 0x80000, CRC(212560dd) SHA1(9d90bca5b478050d640b2393c9d3d59a4bd493dd) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( spclorda )
+	static RomLoadPtr rom_spclorda = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD32_BYTE( "136095.21a", 0x00000, 0x20000, CRC(fe8edb0b) SHA1(ae50a637df476c62f8194577cdca2677f9b5cbd0) )
 		ROM_LOAD32_BYTE( "136095.22a", 0x00001, 0x20000, CRC(c2d2867b) SHA1(481fe54d6cd8698bfd2776e2af6f51332304b7ba) )
@@ -1559,10 +1559,10 @@ public class atarigx2
 		ROM_LOAD( "094-001a.bin",  0x0000, 0x0200, NO_DUMP CRC(a70ade3f) )
 		ROM_LOAD( "094-002a.bin",  0x0200, 0x0200, NO_DUMP CRC(f4768b4d) )
 		ROM_LOAD( "094-003a.bin",  0x0400, 0x0200, NO_DUMP CRC(22a76ad4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( motofren )
+	static RomLoadPtr rom_motofren = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD32_BYTE( "94-0221a.23e", 0x00000, 0x20000, CRC(134e9ff0) SHA1(801b817bf49b4317a7518192025a878b9cd13f7f) )
 		ROM_LOAD32_BYTE( "94-0222a.23j", 0x00001, 0x20000, CRC(f6df65c7) SHA1(0a2092a509ae8c61e3f55c30c47bf39c71e2aa6e) )
@@ -1604,10 +1604,10 @@ public class atarigx2
 		ROM_LOAD( "094-001a.bin",  0x0000, 0x0200, CRC(a70ade3f) SHA1(f4a558b17767eed2683c768d1b441e75edcff967) )
 		ROM_LOAD( "094-002a.bin",  0x0200, 0x0200, CRC(f4768b4d) SHA1(a506fa5386ab0ea2851ff1f8474d4bfc66deaa70) )
 		ROM_LOAD( "094-003a.bin",  0x0400, 0x0200, CRC(22a76ad4) SHA1(ce840c283bbd3a5f19dc8d91b19d1571eff51ff4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rrreveng )
+	static RomLoadPtr rom_rrreveng = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD32_BYTE( "rrprghh.bin", 0x00000, 0x20000, CRC(d2903e9d) SHA1(8782cd6ee39e2159b9ebc68ecdc3ecefcdeb8623) )
 		ROM_LOAD32_BYTE( "rrprghl.bin", 0x00001, 0x20000, CRC(1afd500c) SHA1(6d24087a839e5e7d9c764026a9f3089e52785cdb) )
@@ -1646,10 +1646,10 @@ public class atarigx2
 		ROM_LOAD( "rrmoprg1.bin",  0x0000, 0x0200, NO_DUMP )
 		ROM_LOAD( "rrmoprg2.bin",  0x0200, 0x0200, NO_DUMP )
 		ROM_LOAD( "rrmoprg3.bin",  0x0400, 0x0200, NO_DUMP )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rrrevenp )
+	static RomLoadPtr rom_rrrevenp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD32_BYTE( "rrprghh.bin", 0x00000, 0x20000, CRC(d2903e9d) SHA1(8782cd6ee39e2159b9ebc68ecdc3ecefcdeb8623) )
 		ROM_LOAD32_BYTE( "rrprghl.bin", 0x00001, 0x20000, CRC(1afd500c) SHA1(6d24087a839e5e7d9c764026a9f3089e52785cdb) )
@@ -1688,7 +1688,7 @@ public class atarigx2
 		ROM_LOAD( "rrmoprg1.bin",  0x0000, 0x0200, NO_DUMP )
 		ROM_LOAD( "rrmoprg2.bin",  0x0200, 0x0200, NO_DUMP )
 		ROM_LOAD( "rrmoprg3.bin",  0x0400, 0x0200, NO_DUMP )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

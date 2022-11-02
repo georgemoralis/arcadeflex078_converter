@@ -308,7 +308,7 @@ public class tail2nos
 	
 	
 	
-	ROM_START( tail2nos )
+	static RomLoadPtr rom_tail2nos = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "v4",           0x00000, 0x10000, CRC(1d4240c2) SHA1(db8992d8e718e20acb7b3f2f0b1f358098863145) )
 		ROM_LOAD16_BYTE( "v7",           0x00001, 0x10000, CRC(0fb70066) SHA1(3d38672402d5ab70599c191cc274746a192b399b) )
@@ -341,9 +341,9 @@ public class tail2nos
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 ) /* sound samples */
 		ROM_LOAD( "osb",          0x00000, 0x20000, CRC(d49ab2f5) SHA1(92f7f6c8f35ac39910879dd88d2cfb6db7c848c9) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sformula )
+	static RomLoadPtr rom_sformula = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "ic129.4",      0x00000, 0x10000, CRC(672bf690) SHA1(b322234b47f20a36430bc03be0b52d9b7f82967b) )
 		ROM_LOAD16_BYTE( "ic130.7",      0x00001, 0x10000, CRC(73f0c91c) SHA1(faf14eb1a210c7330b47b78ca6c6563ea6482b3b) )
@@ -376,7 +376,7 @@ public class tail2nos
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 ) /* sound samples */
 		ROM_LOAD( "osb",          0x00000, 0x20000, CRC(d49ab2f5) SHA1(92f7f6c8f35ac39910879dd88d2cfb6db7c848c9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

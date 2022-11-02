@@ -304,7 +304,7 @@ public class strvmstr
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( strvmstr )
+	static RomLoadPtr rom_strvmstr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "stm16.u16",    0x0000, 0x8000, CRC(ae734db9) SHA1(1bacdfdebaa1f250bfbd49053c3910f1396afe11) ) 
 		
@@ -329,7 +329,7 @@ public class strvmstr
 		ROM_LOAD( "rock-pop.hi1", 0x28000, 0x8000, CRC(e2954db6) SHA1(d545236a844b63c85937ee8fb8e65bcd74b1bf43) ) 
 		ROM_LOAD( "cars.hi2",     0x30000, 0x8000, CRC(50310557) SHA1(7559c603625e4df442b440b8b08e6efef06e2781) ) 
 		ROM_LOAD( "entrtn.hi3",   0x38000, 0x8000, CRC(a8cf603b) SHA1(6efa5753d8d252452b3f5be8635a28364e4d8de1) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1986, strvmstr, 0, strvmstr, strvmstr, 0, ROT90, "Enerdyne Technologies Inc.", "Super Trivia Master", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

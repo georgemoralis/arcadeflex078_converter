@@ -2132,7 +2132,7 @@ public class vsnes
 	/******************************************************************************/
 	
 	
-	ROM_START( suprmrio)
+	static RomLoadPtr rom_suprmrio = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "1d",  0x8000, 0x2000, CRC(be4d5436) SHA1(08162a7c987f1939d09bebdb676f596c86abf465) )
 		ROM_LOAD( "1c",  0xa000, 0x2000, CRC(0011fc5a) SHA1(5c2c49938a12affc03e64e5bdab307998be20020) )
@@ -2142,9 +2142,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0  ) /* PPU memory */
 		ROM_LOAD( "2b",  0x0000, 0x2000, CRC(42418d40) SHA1(22ab61589742cfa4cc6856f7205d7b4b8310bc4d) )
 		ROM_LOAD( "2a",  0x2000, 0x2000, CRC(15506b86) SHA1(69ecf7a3cc8bf719c1581ec7c0d68798817d416f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( iceclimb )
+	static RomLoadPtr rom_iceclimb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "ic-1d",  0x8000, 0x2000, CRC(65e21765) SHA1(900f1efe5e8005ee8cdccbf5039914dfe466aa3d) )
 		ROM_LOAD( "ic-1c",  0xa000, 0x2000, CRC(a7909c51) SHA1(04708a9e429cbddab6988ff7b3ec5aa0109f6228) )
@@ -2154,9 +2154,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "ic-2b",  0x0000, 0x2000, CRC(331460b4) SHA1(4cf94d711cdb5715d14f1ab3cadec245e0adfb1e) )
 		ROM_LOAD( "ic-2a",  0x2000, 0x2000, CRC(4ec44fb3) SHA1(676e0ab574dec08df562c6f278e8a9cc7c8afa41) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( iceclmbj )
+	static RomLoadPtr rom_iceclmbj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "ic4_46db.bin",  0x8000, 0x2000, CRC(0ea5f9cb) SHA1(3ba6228ac8011371fc36ce9dde4fc158a81a99a2) )
 		ROM_LOAD( "ic4_46cb.bin",  0xa000, 0x2000, CRC(51fe438e) SHA1(f40812d4275dabaac6f9539e1300c08d07992654) )
@@ -2166,10 +2166,10 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "ic-2b",  0x0000, 0x2000, CRC(331460b4) SHA1(4cf94d711cdb5715d14f1ab3cadec245e0adfb1e) )
 		ROM_LOAD( "ic-2a",  0x2000, 0x2000, CRC(4ec44fb3) SHA1(676e0ab574dec08df562c6f278e8a9cc7c8afa41) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Gun games */
-	ROM_START( duckhunt )
+	static RomLoadPtr rom_duckhunt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "1d",  0x8000, 0x2000, CRC(3f51f0ed) SHA1(984d8a5cecddde776ffd4f718ee0ca7a9959228b) )
 		ROM_LOAD( "1c",  0xa000, 0x2000, CRC(8bc7376c) SHA1(d90d663c5e5b6d5247089c8ba618912305049b19) )
@@ -2179,9 +2179,9 @@ public class vsnes
 		ROM_REGION( 0x4000, REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "2b",  0x0000, 0x2000, CRC(0c52ec28) SHA1(c8fb6a5d4c13a7075d313326e2da9ce88780a88d) )
 		ROM_LOAD( "2a",  0x2000, 0x2000, CRC(3d238df3) SHA1(e868ef3d5357ef5294e4faeecc9dbf801c5253e8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hogalley)
+	static RomLoadPtr rom_hogalley = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1,0  ) /* 6502 memory */
 		ROM_LOAD( "1d",  0x8000, 0x2000, CRC(2089e166) SHA1(7db09b5b6bcd87589bed89a5fc1a4b772155a0f3) )
 		ROM_LOAD( "1c",  0xa000, 0x2000, CRC(a85934ae) SHA1(f26af4f60a4072c45e900dff7f74d9907bc2e1e0) )
@@ -2191,9 +2191,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "2b",  0x0000, 0x2000, CRC(7623e954) SHA1(65cfce87bb4e72f0c84ce5eff48985a38c3dfc4a) )
 		ROM_LOAD( "2a",  0x2000, 0x2000, CRC(78c842b6) SHA1(39f2a7fc1f1cbe2378a369e45b5cbb05057db3f0) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsgshoe )
+	static RomLoadPtr rom_vsgshoe = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "mds-gm5.1d",  0x10000, 0x4000, CRC(063b342f) SHA1(66f69de27db5b08969f9250d0a6760e7311bd9bf)  ) // its probably not bad .. just banked somehow
 		ROM_LOAD( "mds-gm5.1c",  0x14000, 0x2000, CRC(e1b7915e) SHA1(ed0fdf74b05a3ccd1645c4f580436fd439f81dea) )
@@ -2203,34 +2203,34 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "mds-gm5.2b",  0x0000, 0x2000, CRC(192c3360) SHA1(5ddbe007d8bc693a0b7c92f33e6ed6b27dc1c08e) )
 		ROM_LOAD( "mds-gm5.2a",  0x2000, 0x2000, CRC(823dd178) SHA1(77578a48ded0c244d1ae30aafaa9259b7dd0dfc4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsfdf )
+	static RomLoadPtr rom_vsfdf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "prg2", 0x10000, 0x10000, CRC(3bce8f0f) SHA1(5a9b91bae4b28c1df54fb290efdec4805f4f217e) )
 		ROM_LOAD( "prg1", 0x20000, 0x10000, CRC(c74499ce) SHA1(14f50d4d11c363e761a6472a6e57a5e5a6dab9ce) )
 	
 		ROM_REGION( 0x10000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "cha2.1",  0x00000, 0x10000, CRC(a2f88df0) SHA1(10ef432d3132b01a1fcb38d8f521edd2a029ac5e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( goonies )
+	static RomLoadPtr rom_goonies = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "prg.u7",  0x10000, 0x10000, CRC(1e438d52) SHA1(ac187904c125e56a71acff979e53f3398a05c075) )
 	
 		ROM_REGION( 0x10000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "chr.u4",  0x0000, 0x10000, CRC(4c4b61b0) SHA1(7221c2499531e591a5a99e2cb339ae3a76b662c2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsgradus )
+	static RomLoadPtr rom_vsgradus = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000,REGION_CPU1, 0  ) /* 6502 memory */
 		ROM_LOAD( "prg.u7",  0x10000, 0x10000, CRC(d99a2087) SHA1(b26efe78798453a903921723f3c9ac69f579b7d2) )
 	
 		ROM_REGION( 0x10000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "chr.u4",  0x0000, 0x10000, CRC(23cf2fc3) SHA1(0a3f48aec529b92abc261952e632af7ff766b1ef) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( btlecity )
+	static RomLoadPtr rom_btlecity = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "bc.1d",  0x8000, 0x2000, CRC(6aa87037) SHA1(f3313700955498800a3d59c523ba2a4e0cf443bc) )
 		ROM_LOAD( "bc.1c",  0xa000, 0x2000, CRC(bdb317db) SHA1(a8b3e8deb1e625d764aaffe86a513bc7ede51a46) )
@@ -2240,9 +2240,9 @@ public class vsnes
 		ROM_REGION( 0x4000, REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "bc.2b",  0x0000, 0x2000, CRC(634f68bd) SHA1(db1a18083667fdaf6cdd9ed7666bec6bf6e39f29) )
 		ROM_LOAD( "bc.2a",  0x2000, 0x2000, CRC(a9b49a05) SHA1(c14706e6a5524f81e79c101e32deef9f3d60de3f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cluclu )
+	static RomLoadPtr rom_cluclu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0  ) /* 6502 memory */
 		ROM_LOAD( "cl.6d",  0x8000, 0x2000, CRC(1e9f97c9) SHA1(47d847632145d8160d006f014f9e0a7483783d0e) )
 		ROM_LOAD( "cl.6c",  0xa000, 0x2000, CRC(e8b843a7) SHA1(03827b31d47d2a8a132bf9944fee724c6c1c6d2e) )
@@ -2252,9 +2252,9 @@ public class vsnes
 		ROM_REGION( 0x4000, REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "cl.8b",  0x0000, 0x2000, CRC(960d9a6c) SHA1(2569d59fd880cfc2eb4638294d1429ba749f5dcb) )
 		ROM_LOAD( "cl.8a",  0x2000, 0x2000, CRC(e3139791) SHA1(33d9e6d2a3233ee311c2cef2d0a425ded2cf3b0f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( excitebk )
+	static RomLoadPtr rom_excitebk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "eb-1d",  0x8000, 0x2000, CRC(7e54df1d) SHA1(38d878041976386e8608c73133040b18d0e4b9cd) )
 		ROM_LOAD( "eb-1c",  0xa000, 0x2000, CRC(89baae91) SHA1(6aebf13c415e3246edf7daa847533b7e3ae0425f) )
@@ -2264,9 +2264,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "eb-2b",  0x0000, 0x2000, CRC(80be1f50) SHA1(d8544b9a0a9d8719ab601fa9c68c4305385b14c7) )
 		ROM_LOAD( "eb-2a",  0x2000, 0x2000, CRC(a9b49a05) SHA1(c14706e6a5524f81e79c101e32deef9f3d60de3f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( excitbkj )
+	static RomLoadPtr rom_excitbkj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "eb4-46da.bin",  0x8000, 0x2000, CRC(6aa87037) SHA1(f3313700955498800a3d59c523ba2a4e0cf443bc) )
 		ROM_LOAD( "eb4-46ca.bin",  0xa000, 0x2000, CRC(bdb317db) SHA1(a8b3e8deb1e625d764aaffe86a513bc7ede51a46) )
@@ -2277,9 +2277,9 @@ public class vsnes
 		ROM_LOAD( "eb4-48ba.bin",  0x0000, 0x2000, CRC(62a76c52) SHA1(7ebd0dac976abe8636f4f75a3b2a473d7a54934d) )
 	//	ROM_LOAD( "eb4-48aa.bin",  0x2000, 0x2000, CRC(a9b49a05) SHA1(c14706e6a5524f81e79c101e32deef9f3d60de3f) )
 		ROM_LOAD( "eb-2a",         0x2000, 0x2000, CRC(a9b49a05) SHA1(c14706e6a5524f81e79c101e32deef9f3d60de3f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( jajamaru )
+	static RomLoadPtr rom_jajamaru = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "10.bin", 0x8000, 0x2000, CRC(16af1704) SHA1(ebcf9ad06e302c51ee4432631a6b0fb85a9630ed) )
 		ROM_LOAD( "9.bin",  0xa000, 0x2000, CRC(db7d1814) SHA1(6a0c9cf97006a8a41dc2f025a5f8acbb798dec60) )
@@ -2289,9 +2289,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "12.bin",  0x0000, 0x2000, CRC(c91d536a) SHA1(8cb4b0819652df484553b9dd1f82391d51c90fcc) )
 		ROM_LOAD( "11.bin",  0x2000, 0x2000, CRC(f0034c04) SHA1(402dcf6ad443baeee3038ecab12db008a1ad2787) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ladygolf)
+	static RomLoadPtr rom_ladygolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0  ) /* 6502 memory */
 		ROM_LOAD( "lg-1d",  0x8000, 0x2000, CRC(8b2ab436) SHA1(145a75f30f1fab5b1babf01ada9ed23f59c2c18d) )
 		ROM_LOAD( "lg-1c",  0xa000, 0x2000, CRC(bda6b432) SHA1(c8322f07df0adbd70cb49f2284b046478a3a57c1) )
@@ -2301,9 +2301,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "lg-2b",  0x0000, 0x2000, CRC(95618947) SHA1(e8f09bffa3fa1a1cac8fa25df9fba962951c1fb3) )
 		ROM_LOAD( "lg-2a",  0x2000, 0x2000, CRC(d07407b1) SHA1(b998b46fe83e76fac3d7b71495d1da8580a731f9) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( smgolfj )
+	static RomLoadPtr rom_smgolfj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0  ) /* 6502 memory */
 		ROM_LOAD( "gf3_6d_b.bin",  0x8000, 0x2000, CRC(8ce375b6) SHA1(f787f5ebe584cc95428b63660cd41e2b3df6ddf2) )
 		ROM_LOAD( "gf3_6c_b.bin",  0xa000, 0x2000, CRC(50a938d3) SHA1(5f5c5e50024fe113240f1b0b3b6d38cbf9130133) )
@@ -2313,9 +2313,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "gf3_8b_b.bin",  0x0000, 0x2000, CRC(7ef68029) SHA1(a639e463fd0abfb1bff0dd17aa0c9f70a72ee139) )
 		ROM_LOAD( "gf3_8a_b.bin",  0x2000, 0x2000, CRC(f2285878) SHA1(e0d34161a1879975f51c12222cf366228170b0e3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( machridr )
+	static RomLoadPtr rom_machridr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1,0 ) /* 6502 memory */
 		ROM_LOAD( "mr-1d",  0x8000, 0x2000, CRC(379c44b9) SHA1(7b148ba7f7eea64509733f94b4eaafe5bfcf3527) )
 		ROM_LOAD( "mr-1c",  0xa000, 0x2000, CRC(cb864802) SHA1(65f06a8eaca3347432f3f2f673a24692415d869f) )
@@ -2325,9 +2325,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1 , 0) /* PPU memory */
 		ROM_LOAD( "mr-2b",  0x0000, 0x2000, CRC(33a2b41a) SHA1(671f37bce742e63250296e62c143f8a82f860b04) )
 		ROM_LOAD( "mr-2a",  0x2000, 0x2000, CRC(685899d8) SHA1(02b6a9bc21367c481d0091fa8a8f2d1b841244bf) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( machridj )
+	static RomLoadPtr rom_machridj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1,0 ) /* 6502 memory */
 		ROM_LOAD( "mr4-11da.bin",  0x8000, 0x2000, CRC(ab7e0594) SHA1(fc5982a93791608a20e5ec9e3a4b71d702bda354) )
 		ROM_LOAD( "mr4-11ca.bin",  0xa000, 0x2000, CRC(d4a341c3) SHA1(c799e40d0ebd1447032d8767fb2caeee6b33f31a) )
@@ -2337,9 +2337,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1 , 0) /* PPU memory */
 		ROM_LOAD( "mr4-12ba.bin",  0x0000, 0x2000, CRC(59867e36) SHA1(2b5546aa9f140277d611d6d5516b1343e5e672a0) )
 		ROM_LOAD( "mr4-12aa.bin",  0x2000, 0x2000, CRC(ccfedc5a) SHA1(3d6321681fbe256d7c71037205d45d22fc264569) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START(smgolf)
+	static RomLoadPtr rom_smgolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1,0 ) /* 6502 memory */
 		ROM_LOAD( "golf-1d",  0x8000, 0x2000, CRC(a3e286d3) SHA1(ee7539a46e0e062ffd63d84e8b83de29b860a501) )
 		ROM_LOAD( "golf-1c",  0xa000, 0x2000, CRC(e477e48b) SHA1(2ebcc548ac8defc521860d2d2f585be0eee6620e) )
@@ -2349,9 +2349,9 @@ public class vsnes
 		ROM_REGION( 0x4000, REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "golf-2b",  0x0000, 0x2000, CRC(2782a3e5) SHA1(4e57aab58fb250da951a9aecd21d6aa79e697bcb) )
 		ROM_LOAD( "golf-2a",  0x2000, 0x2000, CRC(6e93fdef) SHA1(44f46421adabbc40135c681592cb5226b7c9012a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( smgolfb )
+	static RomLoadPtr rom_smgolfb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "gf4-2.1df",	0x8000, 0x2000, CRC(4a723087) SHA1(87dc063d295f55871598a1e1eb4e62ce298b2f0c) )
 		ROM_LOAD( "gf4-2.1cf",  0xa000, 0x2000, CRC(2debda63) SHA1(33b42eb5641ec947b2f2dcbc632ee6c81fa2ffe3) )
@@ -2361,9 +2361,9 @@ public class vsnes
 		ROM_REGION( 0x4000, REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "gf4-2.2bf",  0x0000, 0x2000, NO_DUMP )
 		ROM_LOAD( "gf4-2.2af",  0x2000, 0x2000, CRC(47e9b8c6) SHA1(2eee6eaf7d15e215816363c7bb7142a2bdc2d530) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vspinbal )
+	static RomLoadPtr rom_vspinbal = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "pb-6d",  0x8000, 0x2000, CRC(69fc575e) SHA1(d5165959c3569f5ebccd03d2cad4714f9240cc4c) )
 		ROM_LOAD( "pb-6c",  0xa000, 0x2000, CRC(fa9472d2) SHA1(d20ffb156bea1f474ad7d9776e217cb05048f00f) )
@@ -2373,9 +2373,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "pb-8b",  0x0000, 0x2000, CRC(8822ee9e) SHA1(950113952e6d356e45e03479ba5dd5a8cb131609) )
 		ROM_LOAD( "pb-8a",  0x2000, 0x2000, CRC(cbe98a28) SHA1(c00c5f15a33611bfe3ad420b93b1cc2cae011c3e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vspinblj )
+	static RomLoadPtr rom_vspinblj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "pn3_6d_b.bin",  0x8000, 0x2000, CRC(fd50c42e) SHA1(4a3ea9e85b60caf8b6975fd2798bc59e86ec257f) )
 		ROM_LOAD( "pn3_6c_b.bin",  0xa000, 0x2000, CRC(59beb9e5) SHA1(682b31dfbdf1ee44fd5d5d63169ab35409e93546) )
@@ -2385,9 +2385,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "pn3_8b_b.bin",  0x0000, 0x2000, CRC(1e3fec3e) SHA1(aef18cee358af202ec48c1c36986e42e134466b1) )
 		ROM_LOAD( "pn3_8a_b.bin",  0x2000, 0x2000, CRC(6f963a65) SHA1(af69564b51aa42ef0815c952e0d0d0d928651685) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsslalom )
+	static RomLoadPtr rom_vsslalom = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "slalom.1d",  0x8000, 0x2000, CRC(6240a07d) SHA1(c9a3743a1caaa417c3828365a4c7a75272c20146) )
 		ROM_LOAD( "slalom.1c",  0xa000, 0x2000, CRC(27c355e4) SHA1(ba55258396a17858e136fe45332f6cc13a46b072) )
@@ -2396,9 +2396,9 @@ public class vsnes
 	
 		ROM_REGION( 0x2000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "slalom.2a",  0x0000, 0x2000, CRC(977bb126) SHA1(9b12cd37246237c24a8077c6184a2f71d342ac47) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vssoccer )
+	static RomLoadPtr rom_vssoccer = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "soccer1d",  0x8000, 0x2000, CRC(0ac52145) SHA1(148d9850cd80fb64e28f478891c16dac71e67e96) )
 		ROM_LOAD( "soccer1c",  0xa000, 0x2000, CRC(f132e794) SHA1(f289f5acec7e2a62fc569a401e7ab5200df302f5) )
@@ -2408,9 +2408,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "soccer2b",  0x0000, 0x2000, CRC(307b19ab) SHA1(b35ef4c2cf071db77cec1b4529b43a20cfcce172) )
 		ROM_LOAD( "soccer2a",  0x2000, 0x2000, CRC(7263613a) SHA1(aa5673b57833d1f32c2cb0230a809397ec6103b4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( starlstr )
+	static RomLoadPtr rom_starlstr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "sl_04.1d",  0x8000, 0x2000, CRC(4fd5b385) SHA1(a4cfdb9d74538a162825d9fbbed67e2a645bcc2c) )
 		ROM_LOAD( "sl_03.1c",  0xa000, 0x2000, CRC(f26cd7ca) SHA1(f6fd5a6028b111a8fca68684bad651a92e0fd7be) )
@@ -2420,9 +2420,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "sl_06.2b",  0x0000, 0x2000, CRC(25f0e027) SHA1(4fcbe4bb959689948cb8f505d5c495dabb893f7b) )
 		ROM_LOAD( "sl_05.2a",  0x2000, 0x2000, CRC(2bbb45fd) SHA1(53c3588bd25baa6b8ff41f4755db9e0e806c9719) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vstetris )
+	static RomLoadPtr rom_vstetris = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "a000.6c",  0xa000, 0x2000, CRC(92a1cf10) SHA1(463f62aec3f26d70b35e804398a38baf8f41a5e3) )
 		ROM_LOAD( "c000.6b",  0xc000, 0x2000, CRC(9e9cda9d) SHA1(27d91b957ff0b3abd5567341574318548470fb3c) )
@@ -2430,71 +2430,71 @@ public class vsnes
 	
 		ROM_REGION( 0x2000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "char.8b",  0x0000, 0x2000, CRC(51e8d403) SHA1(ed734994d164c4b59794249a13bce333896b3ee5) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( drmario )
+	static RomLoadPtr rom_drmario = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "dm-uiprg",  0x10000, 0x10000, CRC(d5d7eac4) SHA1(cd74c3a7a2fc7c25420037ae5f4a25307aff6587) )
 	
 		ROM_REGION( 0x8000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "dm-u3chr",  0x0000, 0x8000, CRC(91871aa5) SHA1(32a4299ead7b37f49877dc9597653b07a73ddbf3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cstlevna )
+	static RomLoadPtr rom_cstlevna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "mds-cv.prg",  0x10000, 0x20000, CRC(ffbef374) SHA1(9eb3b75e7b45df51b8bcd29df84689a7e8557f4f) )
 	
 		/* No cart gfx - uses vram */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( topgun )
+	static RomLoadPtr rom_topgun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "rc-003",  0x10000, 0x20000, CRC(8c0c2df5) SHA1(d9b1b87204e025a637821a0168475e1209ce0c8a) )
 	
 		/* No cart gfx - uses vram */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tkoboxng )
+	static RomLoadPtr rom_tkoboxng = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "tkoprg.bin",  0x10000, 0x10000, CRC(eb2dba63) SHA1(257c9f3565ff1d136094e99636ca57e300352b7e) )
 	
 		ROM_REGION( 0x10000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "tkochr.bin",  0x0000, 0x10000, CRC(21275ba5) SHA1(160131586aeeca848deabff258a2ce5f62b17c5f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rbibb )
+	static RomLoadPtr rom_rbibb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000,REGION_CPU1,0 ) /* 6502 memory */
 		ROM_LOAD( "rbi-prg",  0x10000, 0x10000, CRC(135adf7c) SHA1(e090b0aec98463c565e300a910561499d8bd9676) )
 	
 		ROM_REGION( 0x8000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "rbi-cha",  0x0000, 0x8000, CRC(a3c14889) SHA1(ef00f4fbf21cf34e946957b9b6825b8e2cb16536) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rbibba )
+	static RomLoadPtr rom_rbibba = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000,REGION_CPU1,0 ) /* 6502 memory */
 		ROM_LOAD( "rbi-prga", 0x10000, 0x10000, CRC(a5939d0d) SHA1(476ac2a3974b69082bb8eebdfc0d15befaa2e165) )
 	
 		ROM_REGION( 0x8000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "rbi-cha",  0x0000, 0x8000, CRC(a3c14889) SHA1(ef00f4fbf21cf34e946957b9b6825b8e2cb16536) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsskykid )
+	static RomLoadPtr rom_vsskykid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000,REGION_CPU1,0 ) /* 6502 memory */
 		ROM_LOAD( "sk-prg1",  0x10000, 0x08000, CRC(cf36261e) SHA1(e4a3d2a223f066c231631d92504f08e60b303dfd) )
 	
 		ROM_REGION( 0x8000,REGION_GFX1 , 0) /* PPU memory */
 		ROM_LOAD( "sk-cha",  0x0000, 0x8000, CRC(9bd44dad) SHA1(bf33d175b6ab991d63a0acaf83ba22d5b7ab11b9) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( platoon )
+	static RomLoadPtr rom_platoon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "prgver0.ic4",  0x10000, 0x20000, CRC(e2c0a2be) SHA1(1f8e33d6da8402be6a376668a424bfde38471021) )
 	
 		ROM_REGION( 0x20000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "chrver0.ic6",  0x00000, 0x20000, CRC(689df57d) SHA1(854aaa9feb16e3f239fba6069fbf65e69858fe73) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bnglngby )
+	static RomLoadPtr rom_bnglngby = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "rb4-26db.bin", 0x8000, 0x2000, CRC(d152d8c2) SHA1(d127195be8219df1c6f7bdd86658ed26c658470e) )
 		ROM_LOAD( "rb4-26cb.bin", 0xa000, 0x2000, CRC(c3383935) SHA1(8ed1e8ed36069e5e6f2f3c672aae5e1f3dabbdd0) )
@@ -2507,18 +2507,18 @@ public class vsnes
 	
 		ROM_REGION( 0x2000, REGION_USER1, 0 ) /* unknown */
 		ROM_LOAD( "rb4-21ab.bin", 0x0000, 0x2000, CRC(b49939ad) SHA1(ebaab2864d9ff9876e9d2666746c4bab57e49ec3) ) /* Unknown, maps at 0xe000, maybe from another set, but we have other roms? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( supxevs )
+	static RomLoadPtr rom_supxevs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "prg2",  0x10000, 0x10000, CRC(645669f0) SHA1(3b18c0bb33dd5a95f52a2de7b9a5730990517ad9) )
 		ROM_LOAD( "prg1",  0x20000, 0x10000, CRC(ff762ceb) SHA1(04ca386ef4ad79f99d1efdc0a4d908ef0e523d75) )
 	
 		ROM_REGION( 0x8000,REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "cha",   0x00000, 0x08000, CRC(e27c7434) SHA1(a033bbaf0c28504ed2a641dea28f016a88ef03ac) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mightybj )
+	static RomLoadPtr rom_mightybj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "1d.bin",  0x8000, 0x2000, CRC(55dc8d77) SHA1(eafb8636d994a10caee9eb0ba544260281706058) )
 		ROM_LOAD( "1c.bin",  0xa000, 0x2000, CRC(151a6d15) SHA1(2652aef97aae122711ef471d9dc1d42f6393b91f) )
@@ -2527,11 +2527,11 @@ public class vsnes
 	
 		ROM_REGION( 0x2000, REGION_GFX1, 0 ) /* PPU memory */
 		ROM_LOAD( "2b.bin",  0x0000, 0x2000, CRC(5425a4d0) SHA1(09eb9d93b680c9eefde5ee6e16cf81de931cccb9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Dual System */
 	
-	ROM_START( balonfgt )
+	static RomLoadPtr rom_balonfgt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "bf.1d",  0x08000, 0x02000, CRC(1248a6d6) SHA1(0f6c586e8e021a0710ec4e967750b55a74229d74) )
 		ROM_LOAD( "bf.1c",  0x0a000, 0x02000, CRC(14af0e42) SHA1(ceb749eca2dfe81fddc6cb57e4aa87a4bfac0316) )
@@ -2551,9 +2551,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "bf.8b",  0x0000, 0x2000, CRC(f27d9aa0) SHA1(429a1ad2a07947e4c4809495bfab55bf0f0e428f) )
 		ROM_LOAD( "bf.8a",  0x2000, 0x2000, CRC(76e6bbf8) SHA1(a4cae3a129a787162050187453b1583c8735fb46) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsmahjng )
+	static RomLoadPtr rom_vsmahjng = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "mj.1c",  0x0a000, 0x02000, CRC(ec77671f) SHA1(3716a4d5ab1efee0416dd7f6466d29379dc6f296) )
 		ROM_LOAD( "mj.1b",  0x0c000, 0x02000, CRC(ac53398b) SHA1(2582c73efec233a389900949d6af7c4c9a9e7148) )
@@ -2569,9 +2569,9 @@ public class vsnes
 	
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "mj.8b",  0x0000, 0x2000, CRC(9dae3502) SHA1(b7ffbc17af35eeac1b06c651f6c25f71827e9c3b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsbball )
+	static RomLoadPtr rom_vsbball = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "bb-1d",  0x08000, 0x02000, CRC(0cc5225f) SHA1(a8eb3153ce3f1282901c305177347112df0fb3b2) )
 		ROM_LOAD( "bb-1c",  0x0a000, 0x02000, CRC(9856ac60) SHA1(f033171c3dea6af63f1f328fee74e695c67adc92) )
@@ -2591,9 +2591,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "bb-8b",  0x0000, 0x2000, CRC(3ff8bec3) SHA1(28c1bf89ed1046243ca8cf122cefa0752c242577) )
 		ROM_LOAD( "bb-8a",  0x2000, 0x2000, CRC(13b20cfd) SHA1(cb333cbea09557a9d2bdc351fabc61fc7760c35d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsbballj )
+	static RomLoadPtr rom_vsbballj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "ba_1d_a1.bin",  0x08000, 0x02000, CRC(6dbc129b) SHA1(3e786632563364bf7ae13c7d25c522999f237009) )
 		ROM_LOAD( "ba_1c_a1.bin",  0x0a000, 0x02000, CRC(2a684b3a) SHA1(316aa1051a5ff33e5a2369f9e984b34f637595ff) )
@@ -2613,9 +2613,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "ba_8b_a.bin",  0x0000, 0x2000, CRC(919147d0) SHA1(9fccdfccc2a3ec634e350880ded7053f36c377bc) )
 		ROM_LOAD( "ba_8a_a.bin",  0x2000, 0x2000, CRC(3f7edb00) SHA1(f59d24f15bdb8903187eabc1578dcb60443614ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsbbalja )
+	static RomLoadPtr rom_vsbbalja = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "ba_1d_a2.bin",  0x08000, 0x02000, CRC(f3820b70) SHA1(c50d0c2e34f646dd186ee0f2774e94add733f21d) )
 		ROM_LOAD( "ba_1c_a2.bin",  0x0a000, 0x02000, CRC(39fbbf28) SHA1(9941defda548f2c51cf62f0ad62a041ee9a69c37) )
@@ -2635,9 +2635,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "ba_8b_a.bin",  0x0000, 0x2000, CRC(919147d0) SHA1(9fccdfccc2a3ec634e350880ded7053f36c377bc) )
 		ROM_LOAD( "ba_8a_a.bin",  0x2000, 0x2000, CRC(3f7edb00) SHA1(f59d24f15bdb8903187eabc1578dcb60443614ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vsbbaljb )
+	static RomLoadPtr rom_vsbbaljb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "ba_1d_a3.bin",  0x08000, 0x02000, CRC(e234d609) SHA1(a148d6b57fbc9d5f91737fa30c2df2c2b66df404) )
 		ROM_LOAD( "ba_1c_a3.bin",  0x0a000, 0x02000, CRC(ca1a9591) SHA1(3544f244c59d3dab40c2745e84775b7c1defaf54) )
@@ -2657,9 +2657,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "ba_8b_a.bin",  0x0000, 0x2000, CRC(919147d0) SHA1(9fccdfccc2a3ec634e350880ded7053f36c377bc) )
 		ROM_LOAD( "ba_8a_a.bin",  0x2000, 0x2000, CRC(3f7edb00) SHA1(f59d24f15bdb8903187eabc1578dcb60443614ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vstennis )
+	static RomLoadPtr rom_vstennis = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "vst-1d",  0x08000, 0x02000, CRC(f4e9fca0) SHA1(05b91f578bc0a118ab75ce487b14adcd1fb6e714) )
 		ROM_LOAD( "vst-1c",  0x0a000, 0x02000, CRC(7e52df58) SHA1(a5ddebfa1f7f1a2b6b46d4b4a7f2c36477158e7e) )
@@ -2679,9 +2679,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2 , 0) /* PPU memory */
 		ROM_LOAD( "vst-8b",  0x0000, 0x2000, CRC(c81e9260) SHA1(6d4809a05364cc05485ee1add833428529af2be6) )
 		ROM_LOAD( "vst-8a",  0x2000, 0x2000, CRC(d91eb295) SHA1(6b69bcef5421a6bcde89a2d1f514853f9f7992c3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wrecking )
+	static RomLoadPtr rom_wrecking = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "wr.1d",  0x08000, 0x02000, CRC(8897e1b9) SHA1(7d33f6ee78d8663d62e6e05e231fd3d19ad09baa) )
 		ROM_LOAD( "wr.1c",  0x0a000, 0x02000, CRC(d4dc5ebb) SHA1(bce9b2ebabe7b882f1bc71e2dd50906365521d78) )
@@ -2701,9 +2701,9 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "wr.8b",  0x0000, 0x2000, CRC(455d77ac) SHA1(fa09d0be51cc780f6c16cd314facc84043e1e69b) )
 		ROM_LOAD( "wr.8a",  0x2000, 0x2000, CRC(653350d8) SHA1(d9aa699394654deaf50fadd8a652f08a340377eb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( iceclmrj )
+	static RomLoadPtr rom_iceclmrj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000,REGION_CPU1, 0 ) /* 6502 memory */
 		ROM_LOAD( "ic4-41da.bin",  0x08000, 0x02000, CRC(94e3197d) SHA1(414156809a3fe2c072d8947a91708f3ed40008b2) )
 		ROM_LOAD( "ic4-41ca.bin",  0x0a000, 0x02000, CRC(b253011e) SHA1(abc2c84e342d1f8e8d0dbb580370733ef4b38413) )
@@ -2723,7 +2723,7 @@ public class vsnes
 		ROM_REGION( 0x4000,REGION_GFX2, 0 ) /* PPU memory */
 		ROM_LOAD( "ic4-48ba.bin",  0x0000, 0x2000, CRC(331460b4) SHA1(4cf94d711cdb5715d14f1ab3cadec245e0adfb1e) )
 		ROM_LOAD( "ic4-48aa.bin",  0x2000, 0x2000, CRC(4ec44fb3) SHA1(676e0ab574dec08df562c6f278e8a9cc7c8afa41) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

@@ -296,7 +296,7 @@ public class flower
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( flower )
+	static RomLoadPtr rom_flower = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* main cpu */
 		ROM_LOAD( "1.5j",   0x0000, 0x8000, CRC(a4c3af78) SHA1(d149b0e0d82318273dd9cc5a143b175cdc818d0d) )
 	
@@ -329,7 +329,7 @@ public class flower
 	
 		ROM_REGION( 0x100, REGION_PROMS, 0 )
 		ROM_LOAD( "proms",  0x0000, 0x0100, NO_DUMP )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1986, flower, 0, flower, flower, 0, ROT0, "Komax", "Flower", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )

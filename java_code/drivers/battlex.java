@@ -250,7 +250,7 @@ public class battlex
 	
 	/*** ROM LOADING *************************************************************/
 	
-	ROM_START( battlex )
+	static RomLoadPtr rom_battlex = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "p-rom1.6",    0x0000, 0x1000, CRC(b00ae551) SHA1(32a963fea23ea58fc3aab93cc814784a932f045e) )
 		ROM_LOAD( "p-rom2.5",    0x1000, 0x1000, CRC(e765bb11) SHA1(99671e63f4c7d3d8754277451f0b35cba03b532d) )
@@ -273,7 +273,7 @@ public class battlex
 	
 		ROM_REGION( 0x1000, REGION_USER2, 0 )
 		ROM_LOAD( "2732.e",    0x0000, 0x1000, CRC(126842b7) SHA1(2da4f64e077232c1dd0853d07d801f9781517850) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( battlex )
 	{

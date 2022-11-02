@@ -309,7 +309,7 @@ public class flyball
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( flyball )
+	static RomLoadPtr rom_flyball = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x11000, REGION_CPU1, 0 )                  /* program */
 		ROM_LOAD( "6129.d5", 0x10000, 0x0200, CRC(17eda069) SHA1(e4ef0bf4546cf00668d759a188e0989a4f003825) )
 		ROM_LOAD( "6130.f5", 0x10200, 0x0200, CRC(a756955b) SHA1(220b7f1789bba4481d595b36b4bae25f98d3ad8d) )
@@ -329,7 +329,7 @@ public class flyball
 		ROM_REGION( 0x0400, REGION_GFX2, ROMREGION_DISPOSE )   /* sprites */
 		ROM_LOAD16_BYTE( "6137.e2", 0x0000, 0x0200, CRC(68961fda) SHA1(a06c7b453cce04716f49bd65ecfe1ba67cb8681e) )
 		ROM_LOAD16_BYTE( "6138.f2", 0x0001, 0x0200, CRC(aab314f6) SHA1(6625c719fdc000d6af94bc9474de8f7e977cee97) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1976, flyball, 0, flyball, flyball, 0, 0, "Atari", "Flyball", GAME_NO_SOUND )

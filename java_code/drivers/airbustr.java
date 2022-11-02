@@ -852,7 +852,7 @@ public class airbustr
 	
 	***************************************************************************/
 	
-	ROM_START( airbustr )
+	static RomLoadPtr rom_airbustr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x24000, REGION_CPU1, 0 )
 		ROM_LOAD( "pr12.h19", 0x00000, 0x0c000, CRC(91362eb2) SHA1(cd85acfa6542af68dd1cad46f9426a95cfc9432e) )
 		ROM_CONTINUE(           0x10000, 0x14000 )
@@ -874,9 +874,9 @@ public class airbustr
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKI-M6295 samples */
 		ROM_LOAD( "pr-200.bin", 0x00000, 0x40000, CRC(a4dd3390) SHA1(2d72b46b4979857f6b66489bebda9f48799f59cf) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( airbustj )
+	static RomLoadPtr rom_airbustj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x24000, REGION_CPU1, 0 )
 		ROM_LOAD( "pr-14j.bin", 0x00000, 0x0c000, CRC(6b9805bd) SHA1(db6df33cf17316a4b81d7731dca9fe8bbf81f014) )
 		ROM_CONTINUE(           0x10000, 0x14000 )
@@ -898,7 +898,7 @@ public class airbustr
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKI-M6295 samples */
 		ROM_LOAD( "pr-200.bin", 0x00000, 0x40000, CRC(a4dd3390) SHA1(2d72b46b4979857f6b66489bebda9f48799f59cf) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

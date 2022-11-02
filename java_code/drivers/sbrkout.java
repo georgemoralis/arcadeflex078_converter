@@ -309,7 +309,7 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	ROM_START( sbrkout )
+	static RomLoadPtr rom_sbrkout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "033453.c1",    0x2800, 0x0800, CRC(a35d00e3) SHA1(53617ed1d362e82d6f45abd66056bffe23300e3b) )
 		ROM_LOAD( "033454.d1",    0x3000, 0x0800, CRC(d42ea79a) SHA1(66c9b29226cde36d1ac6d1e81f34ebb5c79eded4) )
@@ -326,7 +326,7 @@ public class sbrkout
 		ROM_REGION( 0x0120, REGION_PROMS, 0 )
 		ROM_LOAD( "006400.m2",    0x0000, 0x0100, CRC(b8094b4c) SHA1(82dc6799a19984f3b204ee3aeeb007e55afc8be3) )	/* sync (not used) */
 		ROM_LOAD( "006401.e2",    0x0100, 0x0020, CRC(857df8db) SHA1(06313d5bde03220b2bc313d18e50e4bb1d0cfbbb) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

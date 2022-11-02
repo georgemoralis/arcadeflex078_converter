@@ -381,7 +381,7 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	ROM_START( jrpacman )
+	static RomLoadPtr rom_jrpacman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "jrp8d.bin",    0x0000, 0x2000, CRC(e3fa972e) SHA1(5ea34621213c649ca2848ab31aab2cbe751723d4) )
 		ROM_LOAD( "jrp8e.bin",    0x2000, 0x2000, CRC(ec889e94) SHA1(8294e9e79f8fd19a419431fa690e6ac4a1302f58) )
@@ -403,7 +403,7 @@ public class jrpacman
 		ROM_REGION( 0x0200, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "jrprom.7p",    0x0000, 0x0100, CRC(a9cc86bf) SHA1(bbcec0570aeceb582ff8238a4bc8546a23430081) )
 		ROM_LOAD( "jrprom.5s",    0x0100, 0x0100, CRC(77245b66) SHA1(0c4d0bee858b97632411c440bea6948a74759746) )	/* timing - not used */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

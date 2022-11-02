@@ -394,7 +394,7 @@ public class mpatrol
 	
 	***************************************************************************/
 	
-	ROM_START( mpatrol )
+	static RomLoadPtr rom_mpatrol = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "mp-a.3m",      0x0000, 0x1000, CRC(5873a860) SHA1(8c03726d6e049c3edbc277440184e31679f78258) )
 		ROM_LOAD( "mp-a.3l",      0x1000, 0x1000, CRC(f4b85974) SHA1(dfb2efb57378a20af6f20569f4360cde95596f93) )
@@ -426,9 +426,9 @@ public class mpatrol
 		ROM_LOAD( "1m",           0x0100, 0x0020, CRC(6a57eff2) SHA1(2d1c12dab5915da2ccd466e39436c88be434d634) ) /* background palette */
 		ROM_LOAD( "1c1j",         0x0120, 0x0020, CRC(26979b13) SHA1(8c41a8cce4f3384c392a9f7a223a50d7be0e14a5) ) /* sprite palette */
 		ROM_LOAD( "2hx",          0x0140, 0x0100, CRC(7ae4cd97) SHA1(bc0662fac82ffe65f02092d912b2c2b0c7a8ac2b) ) /* sprite lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mpatrolw )
+	static RomLoadPtr rom_mpatrolw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "mpw-a.3m",     0x0000, 0x1000, CRC(baa1a1d4) SHA1(7968a7f221e7f4c9c81ddc8de17f6568e17b9ea8) )
 		ROM_LOAD( "mpw-a.3l",     0x1000, 0x1000, CRC(52459e51) SHA1(ae685b7848baa1b87a3f2bce97356286171e16d4) )
@@ -461,7 +461,7 @@ public class mpatrol
 		ROM_LOAD( "1m",           0x0100, 0x0020, CRC(6a57eff2) SHA1(2d1c12dab5915da2ccd466e39436c88be434d634) ) /* background palette */
 		ROM_LOAD( "1c1j",         0x0120, 0x0020, CRC(26979b13) SHA1(8c41a8cce4f3384c392a9f7a223a50d7be0e14a5) ) /* sprite palette */
 		ROM_LOAD( "2hx",          0x0140, 0x0100, CRC(7ae4cd97) SHA1(bc0662fac82ffe65f02092d912b2c2b0c7a8ac2b) ) /* sprite lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

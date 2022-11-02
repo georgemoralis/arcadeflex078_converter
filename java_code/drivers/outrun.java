@@ -254,7 +254,7 @@ public class outrun
 	} };
 	
 	
-	ROM_START( shangon )
+	static RomLoadPtr rom_shangon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 ) /* 68000 code - protected */
 		ROM_LOAD16_BYTE( "ic133", 0x000000, 0x10000, CRC(e52721fe) SHA1(21f0aa14d0cbda3d762bca86efe089646031aef5) )
 		ROM_LOAD16_BYTE( "ic118", 0x000001, 0x10000, CRC(5fee09f6) SHA1(b97a08ba75d8c617aceff2b03c1f2bfcb16181ef) )
@@ -306,9 +306,9 @@ public class outrun
 	
 		ROM_REGION( 0x40000, REGION_GFX3, 0 ) /* Road Graphics  (region size should be gr_bitmapwidth*256, 0 )*/
 		ROM_LOAD( "ic47", 0x0000, 0x8000, CRC(7836bcc3) SHA1(26f308bf96224311ddf685799d7aa29aac42dd2f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( shangonb )
+	static RomLoadPtr rom_shangonb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x030000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "s-hangon.30", 0x000000, 0x10000, CRC(d95e82fc) SHA1(bc6cd0b0ac98a9c53f2e22ac086521704ab59e4d) )
 		ROM_LOAD16_BYTE( "s-hangon.32", 0x000001, 0x10000, CRC(2ee4b4fb) SHA1(ba4042ab6e533c16c3cde848248d75e484be113f) )
@@ -359,10 +359,10 @@ public class outrun
 	
 		ROM_REGION( 0x40000, REGION_GFX3, 0 ) /* Road Graphics  (region size should be gr_bitmapwidth*256, 0 )*/
 		ROM_LOAD( "s-hangon.26", 0x0000, 0x8000, CRC(1bbe4fc8) SHA1(30f7f301e4d10d3b254d12bf3d32e5371661a566) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	// Outrun hardware
-	ROM_START( outrun )
+	static RomLoadPtr rom_outrun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "10380a", 0x000000, 0x10000, CRC(434fadbc) SHA1(83c861d331e69ef4f2452c313ae4b5ea9d8b7948) )
 		ROM_LOAD16_BYTE( "10382a", 0x000001, 0x10000, CRC(1ddcc04e) SHA1(945d207d8d602d7fdb6d25f6b93c9c0b995e8d5a) )
@@ -407,9 +407,9 @@ public class outrun
 	
 		ROM_REGION( 0x80000, REGION_GFX3, 0 ) /* Road Graphics  (region size should be gr_bitmapwidth*256, 0 )*/
 		ROM_LOAD( "10185", 0x0000, 0x8000, CRC(22794426) SHA1(a554d4b68e71861a0d0da4d031b3b811b246f082) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( outruna )
+	static RomLoadPtr rom_outruna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "10380b", 0x000000, 0x10000, CRC(1f6cadad) SHA1(31e870f307f44eb4f293b607123b623beee2bc3c) )
 		ROM_LOAD16_BYTE( "10382b", 0x000001, 0x10000, CRC(c4c3fa1a) SHA1(69236cf9f27691dee290c79db1fc9b5e73ea77d7) )
@@ -454,10 +454,10 @@ public class outrun
 	
 		ROM_REGION( 0x80000, REGION_GFX3, 0 ) /* Road Graphics  (region size should be gr_bitmapwidth*256, 0 )*/
 		ROM_LOAD( "10185", 0x0000, 0x8000, CRC(22794426) SHA1(a554d4b68e71861a0d0da4d031b3b811b246f082) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( outrunb )
+	static RomLoadPtr rom_outrunb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "orun_mn.rom", 0x000000, 0x10000, CRC(cddceea2) SHA1(34cb4ca61c941e96e585f3cd2aed79bdde67f8eb) )
 		ROM_LOAD16_BYTE( "orun_ml.rom", 0x000001, 0x10000, CRC(9cfc07d5) SHA1(b1b5992ff99e4158bb008684e694e088a4b282c6) )
@@ -512,11 +512,11 @@ public class outrun
 		ROM_LOAD( "orun_me.rom", 0x0000, 0x8000, CRC(666fe754) SHA1(606090db53d658d7b04dca4748014a411e12f259) )
 	
 	//	ROM_LOAD( "orun_mf.rom", 0x0000, 0x8000, CRC(ed5bda9c) )	//??
-	ROM_END
+	ROM_END(); }}; 
 	
 	// Turbo Outrun
 	
-	ROM_START( toutrun )
+	static RomLoadPtr rom_toutrun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 	// custom cpu 317-0106
 		ROM_LOAD16_BYTE( "epr12397.133", 0x000000, 0x10000, CRC(e4b57d7d) SHA1(62be55356c82b38ebebcc87a5458e23300019339) )
@@ -566,10 +566,10 @@ public class outrun
 	
 		ROM_REGION( 0x40000, REGION_GFX3, 0 ) /* road */
 		ROM_LOAD( "epr12298.11", 0x0, 0x08000, CRC(fc9bc41b) SHA1(9af73e096253cf2c4f283f227530110a4b37fcee) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toutruna )
+	static RomLoadPtr rom_toutruna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 	// custom cpu 317-0106
 		ROM_LOAD16_BYTE( "epr12410.133", 0x000000, 0x10000, CRC(aa74f3e9) SHA1(2daf6b17317542063c0a40beea5b45c797192591) )
@@ -619,7 +619,7 @@ public class outrun
 	
 		ROM_REGION( 0x40000, REGION_GFX3, 0 ) /* road */
 		ROM_LOAD( "epr12298.11", 0x0, 0x08000, CRC(fc9bc41b) SHA1(9af73e096253cf2c4f283f227530110a4b37fcee) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	

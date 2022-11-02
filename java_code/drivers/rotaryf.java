@@ -159,7 +159,7 @@ public class rotaryf
 	
 	MACHINE_DRIVER_END
 	
-	ROM_START( rotaryf )
+	static RomLoadPtr rom_rotaryf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "krf-1.bin",            0x0000, 0x0400, CRC(f7b2d3e6) SHA1(be7afc1a14be60cb895fc4180167353c7156fc4c) )
 		ROM_RELOAD (                      0x4000, 0x0400             )
@@ -168,7 +168,7 @@ public class rotaryf
 		ROM_LOAD( "krf-4.bin",            0x4c00, 0x0400, CRC(b4703093) SHA1(9239d6da818049bc98a631c3bf5b962b5df5b2ea) )
 		ROM_LOAD( "krf-5.bin",            0x5000, 0x0400, CRC(ae233f07) SHA1(a7bbd2ee4477ee041d170e2fc4e94c99c3b564fc) )
 		ROM_LOAD( "krf-6.bin",            0x5400, 0x0400, CRC(e28b3713) SHA1(428f73891125f80c722357f1029b18fa9416bcfd) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX(19??, rotaryf, 0,        rotaryf, rotaryf, 8080bw,	ROT270,   "<unknown>", "Rotary Fighter", GAME_NO_SOUND )
 }

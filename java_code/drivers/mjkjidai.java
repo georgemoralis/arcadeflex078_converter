@@ -347,7 +347,7 @@ public class mjkjidai
 	
 	***************************************************************************/
 	
-	ROM_START( mjkjidai )
+	static RomLoadPtr rom_mjkjidai = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "mkj-00.14g",   0x00000, 0x8000, CRC(188a27e9) SHA1(2306ad112aaf8d9ac77a89d0e4c3a17f36945130) )
 		ROM_LOAD( "mkj-01.15g",   0x08000, 0x4000, CRC(a6a5e9c7) SHA1(974f4343f4347a0065f833c1fdcc47e96d42932d) )	/* banked, there is code flowing from 7fff to this bank */
@@ -369,7 +369,7 @@ public class mjkjidai
 	
 		ROM_REGION( 0x8000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "mkj-40.14c",   0x00000, 0x8000, CRC(4d8fcc4a) SHA1(24c2b8031367035c89c6649a084bce0714f3e8d4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1986, mjkjidai, 0, mjkjidai, mjkjidai, 0, ROT0, "Sanritsu",  "Mahjong Kyou Jidai (Japan)", GAME_IMPERFECT_GRAPHICS )

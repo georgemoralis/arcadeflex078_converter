@@ -2380,10 +2380,10 @@ public class konamigx
 	
 	#define GX_BIOS ROM_LOAD("300a01.34k", 0x000000, 128*1024, CRC(d5fa95f5) SHA1(c483aa98ff8ef40cdac359c19ad23fea5ecc1906) )
 	
-	ROM_START(konamigx)
+	static RomLoadPtr rom_konamigx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0)
 		GX_BIOS
-	ROM_END
+	ROM_END(); }}; 
 	
 	#define SPR_WOR_DROM_LOAD(name,offset,length,crc) ROMX_LOAD(name, offset, length, crc, ROM_GROUPSIZE(2) | ROM_SKIP(5))
 	#define SPR_5TH_ROM_LOAD(name,offset,length,crc)	 ROMX_LOAD(name, offset, length, crc, ROM_GROUPSIZE(1) | ROM_SKIP(5))
@@ -2402,7 +2402,7 @@ public class konamigx
 	
 	
 	/* Gokujou Parodius */
-	ROM_START( gokuparo )
+	static RomLoadPtr rom_gokuparo = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2429,10 +2429,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "321b17.9g", 0x000000, 2*1024*1024, CRC(b3e8d5d8) SHA1(6644a414e7f0e69ded9aa1bf892566002cebae26) )
 		ROM_LOAD( "321b18.7g", 0x200000, 2*1024*1024, CRC(2c561ad0) SHA1(6265054072ba1c2837dd96e0259b20bc50457160) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Fantastic Journey (US version) */
-	ROM_START( fantjour )
+	static RomLoadPtr rom_fantjour = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2459,10 +2459,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "321b17.9g", 0x000000, 2*1024*1024, CRC(b3e8d5d8) SHA1(6644a414e7f0e69ded9aa1bf892566002cebae26) )
 		ROM_LOAD( "321b18.7g", 0x200000, 2*1024*1024, CRC(2c561ad0) SHA1(6265054072ba1c2837dd96e0259b20bc50457160) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Salamander 2 */
-	ROM_START( salmndr2 )
+	static RomLoadPtr rom_salmndr2 = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2490,10 +2490,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "521-a12.9g", 0x000000, 2*1024*1024, CRC(66614d3b) SHA1(e1e5ebe546bced6ab74b0af500acf0f3308902a4) )
 		ROM_LOAD( "521-a13.7g", 0x200000, 1*1024*1024, CRC(c3322475) SHA1(1774524ff031e0c4a7f3432810e968d37f9c6331) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Twinbee Yahoo! */
-	ROM_START( tbyahhoo )
+	static RomLoadPtr rom_tbyahhoo = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2520,10 +2520,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "424a17.9g", 0x000000, 2*1024*1024, CRC(e9dd9692) SHA1(c289019c8d1dd71b3cec26479c39b649de804707) )
 		ROM_LOAD( "424a18.7g", 0x200000, 2*1024*1024, CRC(0f0d9f3a) SHA1(57f6b113b80f06964b7e672ad517c1654c5569c5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Daisu-Kiss */
-	ROM_START( daiskiss )
+	static RomLoadPtr rom_daiskiss = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2549,10 +2549,10 @@ public class konamigx
 		/* sound data */
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		ROM_LOAD( "535a22.9g", 0x000000, 2*1024*1024, CRC(7ee59acb) SHA1(782bf15f205e9fe7bd069f6445eb8187837dee32) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Sexy Parodius */
-	ROM_START( sexyparo )
+	static RomLoadPtr rom_sexyparo = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2579,10 +2579,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "533a22.9g", 0x000000, 2*1024*1024, CRC(97233814) SHA1(dba20a81517796b7baf7c82551bd7f1c1a8ecd7e) )
 		ROM_LOAD( "533a23.7g", 0x200000, 2*1024*1024, CRC(1bb7552b) SHA1(3c6f96b4ab97737c3634c08b94dd304d5517d88d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Run and Gun 2 */
-	ROM_START( rungun2 )
+	static RomLoadPtr rom_rungun2 = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2626,10 +2626,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "505a23.7r", 0x000000, 2*1024*1024, CRC(67f03445) SHA1(9b5c1d1bb7b0ee275862d10effd9daed49568af4) )
 		ROM_LOAD( "505a22.9r", 0x200000, 2*1024*1024, CRC(c2b67a9d) SHA1(9ff091972d7fad50bf0df2b3d8b5ee989e3df27f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Slam Dunk 2 */
-	ROM_START( slamdnk2 )
+	static RomLoadPtr rom_slamdnk2 = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2673,10 +2673,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "505a23.7r", 0x000000, 2*1024*1024, CRC(67f03445) SHA1(9b5c1d1bb7b0ee275862d10effd9daed49568af4) )
 		ROM_LOAD( "505a22.9r", 0x200000, 2*1024*1024, CRC(c2b67a9d) SHA1(9ff091972d7fad50bf0df2b3d8b5ee989e3df27f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Rushing Heroes */
-	ROM_START( rushhero )
+	static RomLoadPtr rom_rushhero = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2719,10 +2719,10 @@ public class konamigx
 		/* sound data */
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "605a23.7r", 0x000000, 4*1024*1024, CRC(992c4751) SHA1(18ecfc21138f9dc62f0658750808bbef649510f7))
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Taisen Tokkae-dama */
-	ROM_START( tokkae )
+	static RomLoadPtr rom_tokkae = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2752,10 +2752,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "615a22.9g", 0x000000, 2*1024*1024, CRC(ea7e47dd) SHA1(5bf5bad9427b083757c400eaf58c63a6267c1caf) )
 		ROM_LOAD( "615a23.7g", 0x200000, 2*1024*1024, CRC(22d71f36) SHA1(3f24bb4cd8e1d693b42219e05960ad0c756b08cb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Tokimeki Memorial Taisen Puzzle-dama */
-	ROM_START( tkmmpzdm )
+	static RomLoadPtr rom_tkmmpzdm = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2784,10 +2784,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "515a13.9g", 0x000000, 2*1024*1024, CRC(4b066b00) SHA1(874dd49847b10e6d9c39decb81557534baa36d79) )
 		ROM_LOAD( "515a14.7g", 0x200000, 2*1024*1024, CRC(128cc944) SHA1(b0cd2ec1b9a2ac936d57b6d6c2a70f9c13dc97a5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Winning Spike */
-	ROM_START( winspike )
+	static RomLoadPtr rom_winspike = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2814,10 +2814,10 @@ public class konamigx
 		/* sound data */
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "705a22.9g", 0x000000, 4*1024*1024, CRC(1a9246f6) SHA1(a40ff43310d035f7b88c4e397a4ee75151578c17) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Taisen Puzzle-dama */
-	ROM_START( puzldama )
+	static RomLoadPtr rom_puzldama = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2844,10 +2844,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "315a17.9g", 0x000000, 2*1024*1024, CRC(ea763d61) SHA1(2a7dcb2a2a23c9fea62fb82ffc18949bf15b9f6f) )
 		ROM_LOAD( "315a18.7g", 0x200000, 2*1024*1024, CRC(6e416cee) SHA1(145a766ad2fa2b692692053dd36e0caf51d67a56) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Dragoon Might */
-	ROM_START( dragoonj )
+	static RomLoadPtr rom_dragoonj = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2881,10 +2881,10 @@ public class konamigx
 		/* sound data */
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		ROM_LOAD( "417a17.9g", 0x000000, 2*1024*1024, CRC(88d47dfd) SHA1(b5d6dd7ee9ac0c427dc3e714a97945c954260913) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Soccer Superstars */
-	ROM_START( soccerss )
+	static RomLoadPtr rom_soccerss = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2925,10 +2925,10 @@ public class konamigx
 		/* sound data */
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "427a16.9r", 0x000000, 2*1024*1024,  CRC(39547265) SHA1(c0efd68c0c1ea59141045150842f36d43e1f01d8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Vs. Net Soccer */
-	ROM_START(vsnetscr)
+	static RomLoadPtr rom_vsnetscr = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -2966,10 +2966,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		// probably should be 4M byte mode like Rushing Heroes
 		ROM_LOAD( "627a23.7r", 0x000000, 0x200000, BAD_DUMP CRC(b0266eb6) SHA1(65fafcee4b8f9a6e9f05df6f1fb4db519e97f776) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Lethal Enforcers II */
-	ROM_START( le2 )
+	static RomLoadPtr rom_le2 = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -3001,10 +3001,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "312a17.9g", 0x000000, 2*1024*1024, CRC(ed101448) SHA1(ef1342f37fbbb092eddee0c237b40989ad42cf26) )
 		ROM_LOAD( "312a18.7g", 0x200000, 1*1024*1024, CRC(5717abd7) SHA1(d304d733e7fca0363ea6b3872c2d3bbe4edf1179) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Lethal Enforcers II (US Version) */
-	ROM_START( le2u )
+	static RomLoadPtr rom_le2u = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x300000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -3036,10 +3036,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "312a17.9g", 0x000000, 2*1024*1024, CRC(ed101448) SHA1(ef1342f37fbbb092eddee0c237b40989ad42cf26) )
 		ROM_LOAD( "312a18.7g", 0x200000, 1*1024*1024, CRC(5717abd7) SHA1(d304d733e7fca0363ea6b3872c2d3bbe4edf1179) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Racin' Force */
-	ROM_START( racinfrc )
+	static RomLoadPtr rom_racinfrc = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -3083,10 +3083,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "250a17.14y", 0x000000, 2*1024*1024, CRC(adefa079) SHA1(d25911e3a02d92dc936c3d7e9d76fc270bd1a75a) )
 		ROM_LOAD( "250a18.12y", 0x200000, 2*1024*1024, CRC(8014a2eb) SHA1(d82f0a7d559340ae05a78ecc8bb69bb35b9c0658) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Konami Open Golf Championship */
-	ROM_START( opengolf )
+	static RomLoadPtr rom_opengolf = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -3133,10 +3133,10 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "218a17.14y", 0x000000, 2*1024*1024, CRC(0b525127) SHA1(218b306c12e1094a676815b7dddaf13bf19be2d5) )
 		ROM_LOAD( "218a18.12y", 0x200000, 1*1024*1024, CRC(98ec4cfb) SHA1(638753f9d9269719a37133b9c39c242507fdd8ac) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Golfing Greats 2 */
-	ROM_START( ggreats2 )
+	static RomLoadPtr rom_ggreats2 = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )
 		GX_BIOS
@@ -3183,7 +3183,7 @@ public class konamigx
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "218a17.14y", 0x000000, 2*1024*1024, CRC(0b525127) SHA1(218b306c12e1094a676815b7dddaf13bf19be2d5) )
 		ROM_LOAD( "218a18.12y", 0x200000, 1*1024*1024, CRC(98ec4cfb) SHA1(638753f9d9269719a37133b9c39c242507fdd8ac) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/**********************************************************************************/
 	/* initializers */

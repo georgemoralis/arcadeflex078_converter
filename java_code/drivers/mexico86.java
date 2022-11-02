@@ -472,7 +472,7 @@ public class mexico86
 	
 	***************************************************************************/
 	
-	ROM_START( kikikai )
+	static RomLoadPtr rom_kikikai = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )    /* 196k for code */
 		ROM_LOAD( "a85-17.rom", 0x00000, 0x08000, CRC(c141d5ab) SHA1(fe3622ba283e514416c43a44f83f922a958b27cd) ) /* 1st half, main code        */
 		ROM_CONTINUE(           0x20000, 0x08000 )             /* 2nd half, banked at 0x8000 */
@@ -495,9 +495,9 @@ public class mexico86
 		ROM_LOAD( "a85-08.rom", 0x0000, 0x0100, CRC(d15f61a8) SHA1(945c8aa26c85269c10373218bef13e04e25eb1e4) )
 		ROM_LOAD( "a85-10.rom", 0x0100, 0x0100, CRC(8fc3fa86) SHA1(d4d86f8e147bbf2a370de428ac20a28b0f146782) )
 		ROM_LOAD( "a85-09.rom", 0x0200, 0x0100, CRC(b931c94d) SHA1(fb554084f34c602d1ff7806fb945a06cf14332af) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kicknrun )
+	static RomLoadPtr rom_kicknrun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )    /* 196k for code */
 		ROM_LOAD( "a87-08.bin", 0x00000, 0x08000, CRC(715e1b04) SHA1(60b7259758ec73f1cc945556e9c2b25766b745a8) ) /* 1st half, main code        */
 		ROM_CONTINUE(           0x20000, 0x08000 )             /* 2nd half, banked at 0x8000 */
@@ -524,9 +524,9 @@ public class mexico86
 		ROM_LOAD( "a87-10.bin", 0x0000, 0x0100, CRC(be6eb1f0) SHA1(f4d00e9b12bf116bf84edb2ff6caab158094b668) )
 		ROM_LOAD( "a87-12.bin", 0x0100, 0x0100, CRC(3e953444) SHA1(e9c84ca9390fd7c73738a8b681a02e87fbd51bb4) )
 		ROM_LOAD( "a87-11.bin", 0x0200, 0x0100, CRC(14f6c28d) SHA1(8c60974e4607906a3f77260bdd0704af60d596fc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mexico86 )
+	static RomLoadPtr rom_mexico86 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )    /* 196k for code */
 		ROM_LOAD( "2_g.bin",    0x00000, 0x08000, CRC(2bbfe0fb) SHA1(8f047e001ea8e49d28f73e546c82812af1c2533c) ) /* 1st half, main code        */
 		ROM_CONTINUE(           0x20000, 0x08000 )             /* 2nd half, banked at 0x8000 */
@@ -553,7 +553,7 @@ public class mexico86
 		ROM_LOAD( "a87-10.bin", 0x0000, 0x0100, CRC(be6eb1f0) SHA1(f4d00e9b12bf116bf84edb2ff6caab158094b668) )
 		ROM_LOAD( "a87-12.bin", 0x0100, 0x0100, CRC(3e953444) SHA1(e9c84ca9390fd7c73738a8b681a02e87fbd51bb4) )
 		ROM_LOAD( "a87-11.bin", 0x0200, 0x0100, CRC(14f6c28d) SHA1(8c60974e4607906a3f77260bdd0704af60d596fc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1986, kikikai,  0,        kikikai,  kikikai,  0, ROT90, "Taito Corporation", "KiKi KaiKai" )

@@ -467,7 +467,7 @@ public class spdbuggy
 	
 	***************************************************************************/
 	
-	ROM_START( spdbuggy )
+	static RomLoadPtr rom_spdbuggy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* Main CPU Code */
 		ROM_LOAD16_BYTE( "ic174.6",  0xf0001, 0x08000, CRC(5e352d8d) SHA1(350c206b5241d5628e673ce1108f728c8c4f980c) )
 		ROM_LOAD16_BYTE( "ic213.8",  0xf0000, 0x08000, CRC(abcc8ad2) SHA1(aeb695c3675d40a951fe8272cbf0f6673435dab8) )
@@ -506,7 +506,7 @@ public class spdbuggy
 		ROM_LOAD( "ic138.5", 0x00000, 0x04000, CRC(7d84135b) SHA1(3c669c4e796e83672aceeb6de1aeea28f9f2fef0) )	// fn_data even
 		ROM_LOAD( "ic95.4",  0x04000, 0x04000, CRC(493ea590) SHA1(bde4e09bba2e53a0650f26976d81cd1e0bc88cb4) )	// odd
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1986, spdbuggy, 0, spdbuggy, spdbuggy, 0, ROT0, "Tatsumi", "Speed Buggy", GAME_NO_SOUND | GAME_NOT_WORKING )
 	

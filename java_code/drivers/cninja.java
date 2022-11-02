@@ -1059,7 +1059,7 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	ROM_START( cninja )
+	static RomLoadPtr rom_cninja = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gn02rev3.bin", 0x00000, 0x20000, CRC(39aea12a) SHA1(5de4e26d2c03c559249720b6a204567673754774) )
 		ROM_LOAD16_BYTE( "gn05rev2.bin", 0x00001, 0x20000, CRC(0f4360ef) SHA1(d60b3377e818a037d0f94383dd207865853f529d) )
@@ -1098,9 +1098,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7122h.7v", 0x00000,  0x400,  CRC(a1267336) SHA1(d11ea9d78526ac3c0dc6e57a2da5914273ad1e3f) )	/* Priority  Unused */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cninja0 )
+	static RomLoadPtr rom_cninja0 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gn-02.rom", 0x00000, 0x20000, CRC(ccc59524) SHA1(430ae28ca38ec6a97b00cc3dee02d57e073819d4) )
 		ROM_LOAD16_BYTE( "gn-05.rom", 0x00001, 0x20000, CRC(a002cbe4) SHA1(76f57e49fc41a779856f70feb14432a8ffd08bff) )
@@ -1139,9 +1139,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7122h.7v", 0x00000,  0x400,  CRC(a1267336) SHA1(d11ea9d78526ac3c0dc6e57a2da5914273ad1e3f) )	/* Priority  Unused */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cninjau )
+	static RomLoadPtr rom_cninjau = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gm02-3.1k", 0x00000, 0x20000, CRC(d931c3b1) SHA1(336390072a3a085fc534d9e2443c76104093b24f) )
 		ROM_LOAD16_BYTE( "gm05-2.3k", 0x00001, 0x20000, CRC(7417d3fb) SHA1(24c65101585955d56440b63a307021b5c137d7b9) )
@@ -1180,9 +1180,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7122h.7v", 0x00000,  0x400,  CRC(a1267336) SHA1(d11ea9d78526ac3c0dc6e57a2da5914273ad1e3f) )	/* Priority  Unused */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( joemac )
+	static RomLoadPtr rom_joemac = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gl02-2.k1", 0x00000, 0x20000,  CRC(80da12e2) SHA1(1037ed56c15dbe1eb8bb8b70f0bc3affc1119782) )
 		ROM_LOAD16_BYTE( "gl05-2.k3", 0x00001, 0x20000,  CRC(fe4dbbbb) SHA1(85a3c5470270ebfc695fc5e937cf133a33860bec) )
@@ -1221,9 +1221,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "mb7122h.7v", 0x00000,  0x400,  CRC(a1267336) SHA1(d11ea9d78526ac3c0dc6e57a2da5914273ad1e3f) )	/* Priority  Unused */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( stoneage )
+	static RomLoadPtr rom_stoneage = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "sa_1_019.bin", 0x00000, 0x20000,  CRC(7fb8c44f) SHA1(0167805793a4288f545c0a8ea66bd1ad82bac437) )
 		ROM_LOAD16_BYTE( "sa_1_033.bin", 0x00001, 0x20000,  CRC(961c752b) SHA1(b9ac7882662f84de7309c46f8c9344693215d9f7) )
@@ -1261,9 +1261,9 @@ public class cninja
 		ROM_LOAD( "sa_1_069.bin",  0x00000,  0x40000, CRC(2188f3ca) SHA1(9c29b62ed261e63d701ff8d43020089c89a64ab2) )
 	
 		/* No extra Oki samples in the bootleg */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( edrandy )
+	static RomLoadPtr rom_edrandy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 	  	ROM_LOAD16_BYTE( "gg-00-2", 0x00000, 0x20000, CRC(ce1ba964) SHA1(da21734721344eff41a64a7f2382d5c027a24782) )
 		ROM_LOAD16_BYTE( "gg-04-2", 0x00001, 0x20000, CRC(24caed19) SHA1(bdca689dbb13685e71d3385a9ff7b356d2459d45) )
@@ -1310,9 +1310,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "ge-12", 0x00000,  0x400,  CRC(278f674f) SHA1(d4f5b9770d6d2ddebf1b999e291c80a3e274d492) )	/* Priority  Unused, same as Robocop 2 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( edrandy1 )
+	static RomLoadPtr rom_edrandy1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 	  	ROM_LOAD16_BYTE( "gg00-1.bin", 0x00000, 0x20000, CRC(a029cc4a) SHA1(3801fd6df6d1299972eeadbdbba1b0b7acf89139) )
 	  	ROM_LOAD16_BYTE( "gg04-1.bin", 0x00001, 0x20000, CRC(8b7928a4) SHA1(4075713a830c9d5e324bb790468ec555fa747106) )
@@ -1359,9 +1359,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "ge-12", 0x00000,  0x400,  CRC(278f674f) SHA1(d4f5b9770d6d2ddebf1b999e291c80a3e274d492) )	/* Priority  Unused, same as Robocop 2 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( edrandyj )
+	static RomLoadPtr rom_edrandyj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 	  	ROM_LOAD16_BYTE( "ge-00-2",   0x00000, 0x20000, CRC(b3d2403c) SHA1(9747dbe7905e1453e3e7764c874c523c54970e2e) )
 	  	ROM_LOAD16_BYTE( "ge-04-2",   0x00001, 0x20000, CRC(8a9624d6) SHA1(d5a9b56bc8a1d67fa28df95299cb205e9c965310) )
@@ -1408,9 +1408,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "ge-12", 0x00000,  0x400,  CRC(278f674f) SHA1(d4f5b9770d6d2ddebf1b999e291c80a3e274d492) )	/* Priority Unused, same as Robocop 2 */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( robocop2 )
+	static RomLoadPtr rom_robocop2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gq-03.1k",   0x00000, 0x20000, CRC(a7e90c28) SHA1(e1ff720e4e63de3adc94505a566e7340f65567d5) )
 		ROM_LOAD16_BYTE( "gq-07.3k",   0x00001, 0x20000, CRC(d2287ec1) SHA1(8f596205c69b0ed3974cb0bd17fcc3b3bf47a0ca) )
@@ -1458,9 +1458,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "go-12.v7", 0x00000,  0x400,  CRC(278f674f) SHA1(d4f5b9770d6d2ddebf1b999e291c80a3e274d492) )	/* Priority  Unused */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( robocp2u )
+	static RomLoadPtr rom_robocp2u = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "robo03.k1",  0x00000, 0x20000, CRC(f4c96cc9) SHA1(2eb58aca1134c33f2084267e65a565f9adc6ba49) )
 		ROM_LOAD16_BYTE( "robo07.k3",  0x00001, 0x20000, CRC(11e53a7c) SHA1(cdeb7f1983a771238d9d2000f99aed35ae4a06ee) )
@@ -1508,9 +1508,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "go-12.v7", 0x00000,  0x400,  CRC(278f674f) SHA1(d4f5b9770d6d2ddebf1b999e291c80a3e274d492) )	/* Priority  Unused */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( robocp2j )
+	static RomLoadPtr rom_robocp2j = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "go_03-1.k1", 0x00000, 0x20000, CRC(52506608) SHA1(a0e738fe1083a17cb40f28ad95b695b6caebf3b1) )
 		ROM_LOAD16_BYTE( "go_07-1.k3", 0x00001, 0x20000, CRC(739cda17) SHA1(5a69873d79beabace4739ad313e8c090919206ba) )
@@ -1558,9 +1558,9 @@ public class cninja
 	
 		ROM_REGION( 1024, REGION_PROMS, 0 )
 		ROM_LOAD( "go-12.v7", 0x00000,  0x400,  CRC(278f674f) SHA1(d4f5b9770d6d2ddebf1b999e291c80a3e274d492) )	/* Priority  Unused */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mutantf )
+	static RomLoadPtr rom_mutantf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE("hd03-4.2c",  0x00000, 0x20000, CRC(94859545) SHA1(4b218442bf1ba01b9b6b54c0037c76c827b79d35) )
 		ROM_LOAD16_BYTE("hd00-4.2a",  0x00001, 0x20000, CRC(3cdb648f) SHA1(f803d2894d4c32de770861c70f837377afd329fe) )
@@ -1602,9 +1602,9 @@ public class cninja
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* ADPCM samples */
 		ROM_LOAD( "maf-09.18l",    0x00000, 0x80000, CRC(28e7ed81) SHA1(e168a2748b75c647f6f9c0d7d25d4f046aa98094) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mutantfa )
+	static RomLoadPtr rom_mutantfa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE("hd03-3.2c",   0x00000, 0x20000, CRC(e6f53574) SHA1(98d5a76bda52346e4bee5b1b0755e3fee4ad8283) )
 		ROM_LOAD16_BYTE("hd00-3.2a",   0x00001, 0x20000, CRC(d3055454) SHA1(83531ae52e5928ac64279bcb98878eef291f8f70) )
@@ -1646,9 +1646,9 @@ public class cninja
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* ADPCM samples */
 		ROM_LOAD( "maf-09.18l",    0x00000, 0x80000, CRC(28e7ed81) SHA1(e168a2748b75c647f6f9c0d7d25d4f046aa98094) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( deathbrd )
+	static RomLoadPtr rom_deathbrd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE("hf-03-2.2c", 0x00000, 0x20000, CRC(fb86fff3) SHA1(af4cfc19ec85e0aa49b5e46d95bdd94a20922cce) )
 		ROM_LOAD16_BYTE("hf-00-2.2a", 0x00001, 0x20000, CRC(099aa422) SHA1(b62f261b1903dd2d1a308f7abb9584b3726204b5) )
@@ -1690,7 +1690,7 @@ public class cninja
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* ADPCM samples */
 		ROM_LOAD( "maf-09.18l",    0x00000, 0x80000, CRC(28e7ed81) SHA1(e168a2748b75c647f6f9c0d7d25d4f046aa98094) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/**********************************************************************************/
 	

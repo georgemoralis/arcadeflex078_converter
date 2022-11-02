@@ -173,7 +173,7 @@ public class gumbo
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( gumbo )
+	static RomLoadPtr rom_gumbo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "u1.bin", 0x00001, 0x20000, CRC(e09899e4) SHA1(b62876dc3ada8509b766a80f496f1227b6af0ced) )
 		ROM_LOAD16_BYTE( "u2.bin", 0x00000, 0x20000, CRC(60e59acb) SHA1(dd11329374c8f63851ddf5af54c91f78fad4fd3d) )
@@ -188,7 +188,7 @@ public class gumbo
 		ROM_REGION( 0x40000, REGION_GFX2, 0 ) /* BG Tiles */
 		ROM_LOAD( "u512.bin", 0x00000, 0x20000, CRC(97741798) SHA1(3603e14511817da19f6819d5612728d333695e99) )
 		ROM_LOAD( "u511.bin", 0x20000, 0x20000, CRC(1411451b) SHA1(941d5f311f727e3a8d41ecbbe35b687d48cc2cef) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1994, gumbo, 0, gumbo, gumbo, 0, ROT0, "Min Corp.", "Gumbo" )
 }

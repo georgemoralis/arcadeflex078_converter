@@ -661,7 +661,7 @@ public class gberet
 	
 	***************************************************************************/
 	
-	ROM_START( gberet )
+	static RomLoadPtr rom_gberet = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "577l03.10c",   0x0000, 0x4000, CRC(ae29e4ff) SHA1(5c66de1403c5df5b6647bb37e26070ffd33590e8) )
 		ROM_LOAD( "577l02.8c",    0x4000, 0x4000, CRC(240836a5) SHA1(b76f3789f152198bf8a9a366378d664e683c6c9d) )
@@ -680,9 +680,9 @@ public class gberet
 		ROM_LOAD( "577h09.2f",    0x0000, 0x0020, CRC(c15e7c80) SHA1(c0e8a01e63ed8cf20b33456b68890313b387ad23) ) /* palette */
 		ROM_LOAD( "577h10.5f",    0x0020, 0x0100, CRC(e9de1e53) SHA1(406b8dfe54e6176082005cc5545e79c098672547) ) /* sprites */
 		ROM_LOAD( "577h11.6f",    0x0120, 0x0100, CRC(2a1a992b) SHA1(77cff7c9c8433f999a87776021935864cf9dccb4) ) /* characters */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rushatck )
+	static RomLoadPtr rom_rushatck = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "577h03.10c",   0x0000, 0x4000, CRC(4d276b52) SHA1(ba5d61c89fd2db4b303b81deccc887561156cbe3) )
 		ROM_LOAD( "577h02.8c",    0x4000, 0x4000, CRC(b5802806) SHA1(0e4698ecfb9eda916703165ea5d55516fdef5fe4) )
@@ -701,9 +701,9 @@ public class gberet
 		ROM_LOAD( "577h09.2f",    0x0000, 0x0020, CRC(c15e7c80) SHA1(c0e8a01e63ed8cf20b33456b68890313b387ad23) ) /* palette */
 		ROM_LOAD( "577h10.5f",    0x0020, 0x0100, CRC(e9de1e53) SHA1(406b8dfe54e6176082005cc5545e79c098672547) ) /* sprites */
 		ROM_LOAD( "577h11.6f",    0x0120, 0x0100, CRC(2a1a992b) SHA1(77cff7c9c8433f999a87776021935864cf9dccb4) ) /* characters */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gberetb )
+	static RomLoadPtr rom_gberetb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "2-ic82.10g",   0x0000, 0x8000, CRC(6d6fb494) SHA1(0d01c86ed7a8962ee3e1056a8d41584ad1406f0f) )
 		ROM_LOAD( "3-ic81.10f",   0x8000, 0x4000, CRC(f1520a0a) SHA1(227b2d2e1fc0e81ae02e663a3089e7399612e3cf) )
@@ -721,9 +721,9 @@ public class gberet
 		ROM_LOAD( "577h09",       0x0000, 0x0020, CRC(c15e7c80) SHA1(c0e8a01e63ed8cf20b33456b68890313b387ad23) ) /* palette */
 		ROM_LOAD( "577h10",       0x0020, 0x0100, CRC(e9de1e53) SHA1(406b8dfe54e6176082005cc5545e79c098672547) ) /* sprites */
 		ROM_LOAD( "577h11",       0x0120, 0x0100, CRC(2a1a992b) SHA1(77cff7c9c8433f999a87776021935864cf9dccb4) ) /* characters */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mrgoemon )
+	static RomLoadPtr rom_mrgoemon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 64k for code + banked ROM */
 		ROM_LOAD( "621d01.10c",   0x00000, 0x8000, CRC(b2219c56) SHA1(274160be5dabbbfa61af71d92bddffbb56eadab6) )
 		ROM_LOAD( "621d02.12c",   0x08000, 0x4000, CRC(c3337a97) SHA1(6fd5f365b2624a37f252c202cd97877705b4a6c2) )
@@ -740,7 +740,7 @@ public class gberet
 		ROM_LOAD( "621a06.5f",    0x0000, 0x0020, CRC(7c90de5f) SHA1(8ac5708e72e32f3d79ccde0cbaedefc34f8ac57e) ) /* palette */
 		ROM_LOAD( "621a07.6f",    0x0020, 0x0100, CRC(3980acdc) SHA1(f4e0bd74bccd77b84096c38bc70cf488a42d9562) ) /* sprites */
 		ROM_LOAD( "621a08.7f",    0x0120, 0x0100, CRC(2fb244dd) SHA1(ceb909ad96c0dabc8684e69b028f4287e227c351) ) /* characters */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

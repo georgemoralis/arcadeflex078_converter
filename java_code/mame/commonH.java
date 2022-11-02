@@ -316,8 +316,8 @@ public class commonH
 	***************************************************************************/
 	
 	/* ----- start/stop macros ----- */
-	#define ROM_START(name)								static const struct RomModule rom_##name[] = {
-	#define ROM_END                                      { ROMENTRY_END, 0, 0, 0, NULL } };
+	#define static RomLoadPtr rom_name = new RomLoadPtr(){ public void handler(){ 								static const struct RomModule rom_##name[] = {
+	#define ROM_END(); }};                                       { ROMENTRY_END, 0, 0, 0, NULL } };
 	
 	/* ----- ROM region macros ----- */
 	#define ROM_REGION(length,type,flags)                { ROMENTRY_REGION, 0, length, flags, (const char*)type },

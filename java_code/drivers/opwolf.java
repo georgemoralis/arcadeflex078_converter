@@ -528,7 +528,7 @@ public class opwolf
 						DRIVERS
 	***************************************************************************/
 	
-	ROM_START( opwolf )
+	static RomLoadPtr rom_opwolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "opwlf.40",  0x00000, 0x10000, CRC(3ffbfe3a) SHA1(e41257e6af18bab4e36267a0c25a6aaa742972d2) )
 		ROM_LOAD16_BYTE( "opwlf.30",  0x00001, 0x10000, CRC(fdabd8a5) SHA1(866ec6168489024b8d157f2d5b1553d7f6e3d9b7) )
@@ -550,9 +550,9 @@ public class opwolf
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "opwlf_s.21",   0x00000, 0x80000, CRC(f3e19c64) SHA1(39d48645f776c9c2ade537d959ecc6f9dc6dfa1b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( opwolfb )
+	static RomLoadPtr rom_opwolfb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )     /* 256k for 68000 code */
 		ROM_LOAD16_BYTE( "opwlfb.12",  0x00000, 0x10000, CRC(d87e4405) SHA1(de8a7763acd57293fbbff609e949ecd66c0f9234) )
 		ROM_LOAD16_BYTE( "opwlfb.10",  0x00001, 0x10000, CRC(9ab6f75c) SHA1(85310258ca005ffb031e8d6b3f43c3d1fc29ef14) )
@@ -595,7 +595,7 @@ public class opwolf
 		ROM_LOAD16_BYTE( "opwlfb.24",   0x20001, 0x10000, CRC(8efc5d4d) SHA1(21068d7fcfe293d99ad9f999d84483bf1a49ec6d) )
 		ROM_LOAD16_BYTE( "opwlfb.23",   0x40001, 0x10000, CRC(a874c703) SHA1(c9d6074265f5d5028c69c81eaba29fa178943341) )
 		ROM_LOAD16_BYTE( "opwlfb.22",   0x60001, 0x10000, CRC(9228481f) SHA1(8160f919f5e6a347c915a2bd7488b488fe2401bc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( opwolf )

@@ -474,7 +474,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	ROM_START( policetr )
+	static RomLoadPtr rom_policetr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )		/* dummy region for R3000 */
 	
 		ROM_REGION( 0x400000, REGION_GFX1, ROMREGION_ERASE00 )
@@ -494,10 +494,10 @@ public class policetr
 		ROM_RELOAD(              0x3f8000, 0x100000 )
 		ROM_LOAD( "pt-u162.bin", 0x100000, 0x100000, CRC(75fe850e) SHA1(ab8cf24ae6e5cf80f6a9a34e46f2b1596879643b) )
 		ROM_RELOAD(              0x4f8000, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( policeto )
+	static RomLoadPtr rom_policeto = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )		/* dummy region for R3000 */
 	
 		ROM_REGION( 0x400000, REGION_GFX1, ROMREGION_ERASE00 )
@@ -517,10 +517,10 @@ public class policetr
 		ROM_RELOAD(              0x3f8000, 0x100000 )
 		ROM_LOAD( "pt-u162.bin", 0x100000, 0x100000, CRC(75fe850e) SHA1(ab8cf24ae6e5cf80f6a9a34e46f2b1596879643b) )
 		ROM_RELOAD(              0x4f8000, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( plctr13b )
+	static RomLoadPtr rom_plctr13b = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )		/* dummy region for R3000 */
 	
 		ROM_REGION( 0x400000, REGION_GFX1, ROMREGION_ERASE00 )
@@ -546,9 +546,9 @@ public class policetr
 		ROM_RELOAD(              0x3f8000, 0x100000 )
 		ROM_LOAD( "pt-u162.bin", 0x100000, 0x100000, CRC(75fe850e) SHA1(ab8cf24ae6e5cf80f6a9a34e46f2b1596879643b) )
 		ROM_RELOAD(              0x4f8000, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sshooter )
+	static RomLoadPtr rom_sshooter = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )		/* dummy region for R3000 */
 	
 		ROM_REGION( 0x800000, REGION_GFX1, ROMREGION_ERASE00 )
@@ -572,7 +572,7 @@ public class policetr
 		ROM_RELOAD(              0x3f8000, 0x100000 )
 		ROM_LOAD( "ss-u162.bin", 0x100000, 0x100000, CRC(40ef448a) SHA1(c96f7b169be2576e9f3783af84c07259efefb812) ) // 2:1
 		ROM_RELOAD(              0x4f8000, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

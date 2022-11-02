@@ -276,7 +276,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	ROM_START( toobin )
+	static RomLoadPtr rom_toobin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "3133-1j.061",  0x000000, 0x010000, CRC(79a92d02) SHA1(72eebb96a3963f94558bb204e0afe08f2b4c1864) )
 		ROM_LOAD16_BYTE( "3137-1f.061",  0x000001, 0x010000, CRC(e389ef60) SHA1(24861fe5eb49de852987993a905fefe4dd43b204) )
@@ -329,10 +329,10 @@ public class toobin
 	
 		ROM_REGION( 0x004000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1142-20h.061", 0x000000, 0x004000, CRC(a6ab551f) SHA1(6a11e16f3965416c81737efcb81e751484ba5ace) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toobine )
+	static RomLoadPtr rom_toobine = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "3733-1j.061",  0x000000, 0x010000, CRC(286c7fad) SHA1(1f06168327bdc356f1bc4cf9a951f914932c491a) )
 		ROM_LOAD16_BYTE( "3737-1f.061",  0x000001, 0x010000, CRC(965c161d) SHA1(30d959a945cb7dc7f00ad4ca9db027a377024030) )
@@ -385,10 +385,10 @@ public class toobin
 	
 		ROM_REGION( 0x004000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1142-20h.061", 0x000000, 0x004000, CRC(a6ab551f) SHA1(6a11e16f3965416c81737efcb81e751484ba5ace) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toobing )
+	static RomLoadPtr rom_toobing = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "3233-1j.061",  0x000000, 0x010000, CRC(b04eb760) SHA1(760525b4f72fad47cfc457e14db70ade30a9ddac) )
 		ROM_LOAD16_BYTE( "3237-1f.061",  0x000001, 0x010000, CRC(4e41a470) SHA1(3a4c9b0d93cf4cff80978c0568bb9ef9eeb878dd) )
@@ -441,10 +441,10 @@ public class toobin
 	
 		ROM_REGION( 0x004000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1142-20h.061", 0x000000, 0x004000, CRC(a6ab551f) SHA1(6a11e16f3965416c81737efcb81e751484ba5ace) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toobin2e )
+	static RomLoadPtr rom_toobin2e = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "2733-1j.061",  0x000000, 0x010000, CRC(a6334cf7) SHA1(39e540619c24af65bda44160a5bdaebf3600b64b) )
 		ROM_LOAD16_BYTE( "2737-1f.061",  0x000001, 0x010000, CRC(9a52dd20) SHA1(a370ae3e4c7af55ea61b57a203a900f2be3ce6b9) )
@@ -497,10 +497,10 @@ public class toobin
 	
 		ROM_REGION( 0x004000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1142-20h.061", 0x000000, 0x004000, CRC(a6ab551f) SHA1(6a11e16f3965416c81737efcb81e751484ba5ace) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toobin2 )
+	static RomLoadPtr rom_toobin2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "2133-1j.061",  0x000000, 0x010000, CRC(2c3382e4) SHA1(39919e9b5b586b630e0581adabfe25d83b2bfaef) )
 		ROM_LOAD16_BYTE( "2137-1f.061",  0x000001, 0x010000, CRC(891c74b1) SHA1(2f39d0e4934ccf48bb5fc0737f34fc5a65cfd903) )
@@ -553,10 +553,10 @@ public class toobin
 	
 		ROM_REGION( 0x004000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1142-20h.061", 0x000000, 0x004000, CRC(a6ab551f) SHA1(6a11e16f3965416c81737efcb81e751484ba5ace) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( toobin1 )
+	static RomLoadPtr rom_toobin1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1133-1j.061",  0x000000, 0x010000, CRC(caeb5d1b) SHA1(8036871a04b5206fd383ac0fd9a9d3218128088b) )
 		ROM_LOAD16_BYTE( "1137-1f.061",  0x000001, 0x010000, CRC(9713d9d3) SHA1(55791150312de201bdd330bfd4cbb132cb3959e4) )
@@ -609,7 +609,7 @@ public class toobin
 	
 		ROM_REGION( 0x004000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "1142-20h.061", 0x000000, 0x004000, CRC(a6ab551f) SHA1(6a11e16f3965416c81737efcb81e751484ba5ace) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

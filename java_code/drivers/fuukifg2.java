@@ -640,7 +640,7 @@ public class fuukifg2
 	
 	***************************************************************************/
 	
-	ROM_START( gogomile )
+	static RomLoadPtr rom_gogomile = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "fp2n", 0x000000, 0x080000, CRC(e73583a0) SHA1(05c6ee5cb2c151b32c462e8b920f9a57fb6cce5b) )
 		ROM_LOAD16_BYTE( "fp1n", 0x000001, 0x080000, CRC(7b110824) SHA1(980e326d3b9e113ed522be3076663a249da4e739) )
@@ -668,9 +668,9 @@ public class fuukifg2
 		ROM_REGION( 0x100000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "lh538n1d.25", 0x000000, 0x080000, CRC(01622a95) SHA1(8d414bfc6dcfab1cf9cfe5738eb5c2ff31b77df6) )
 		ROM_CONTINUE(            0x000000, 0x080000             )	// english half first
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gogomilj )
+	static RomLoadPtr rom_gogomilj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "fp2.2", 0x000000, 0x080000, CRC(28fd3e4e) SHA1(3303e5759c0781035c74354587e1916719695754) )	// 1xxxxxxxxxxxxxxxxxx = 0xFF
 		ROM_LOAD16_BYTE( "fp1.1", 0x000001, 0x080000, CRC(35a5fc45) SHA1(307207791cee7f40e88feffc5805ac25008a8566) )	// 1xxxxxxxxxxxxxxxxxx = 0xFF
@@ -697,7 +697,7 @@ public class fuukifg2
 		/* 0x40000 * 4: sounds+speech (japanese),sounds+speech (english) */
 		ROM_REGION( 0x100000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "lh538n1d.25", 0x000000, 0x100000, CRC(01622a95) SHA1(8d414bfc6dcfab1cf9cfe5738eb5c2ff31b77df6) )	// 0x40000 * 4
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -733,7 +733,7 @@ public class fuukifg2
 	
 	***************************************************************************/
 	
-	ROM_START( pbancho )
+	static RomLoadPtr rom_pbancho = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "rom2.no1", 0x000000, 0x080000, CRC(1b4fd178) SHA1(02cf3d2554b29cd253470d68ea959738f3b98dbe) )	// 1xxxxxxxxxxxxxxxxxx = 0xFF
@@ -759,7 +759,7 @@ public class fuukifg2
 		ROM_REGION( 0x040000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "rom25.no3", 0x000000, 0x040000, CRC(a7bfb5ea) SHA1(61937eae4f8855bc09c494aff52d76d41dc3b76a) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************

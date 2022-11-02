@@ -347,7 +347,7 @@ public class speedspn
 	
 	/*** ROM LOADING *************************************************************/
 	
-	ROM_START( speedspn )
+	static RomLoadPtr rom_speedspn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x088000, REGION_CPU1, 0 )	/* CPU1 code */
 		/* most of this is probably actually banked */
 		ROM_LOAD( "tch-ss1.u78", 0x00000, 0x008000, CRC(41b6b45b) SHA1(d969119959db4cc3be50f188bfa41e4b4896eaca) ) /* fixed code */
@@ -368,7 +368,7 @@ public class speedspn
 		ROM_REGION( 0x40000, REGION_GFX2, ROMREGION_DISPOSE | ROMREGION_INVERT )	/* GFX */
 		ROM_LOAD( "tch-ss8.u39", 0x00000, 0x020000, CRC(2f27b16d) SHA1(7cc017fa08573f8a9d94d017abb987f8288bcd29) )
 		ROM_LOAD( "tch-ss9.u34", 0x20000, 0x020000, CRC(c372f8ec) SHA1(514bef0859c0adfd9cdd22864230fc83e9b1962d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*** GAME DRIVERS ************************************************************/
 	

@@ -326,7 +326,7 @@ public class pirates
 	
 	/* Rom Loading */
 	
-	ROM_START( pirates )
+	static RomLoadPtr rom_pirates = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code (encrypted) */
 		ROM_LOAD16_BYTE( "r_449b.bin",  0x00000, 0x80000, CRC(224aeeda) SHA1(5b7e47a106af0debf8b07f120571f437ad6ab5c3) )
 		ROM_LOAD16_BYTE( "l_5c1e.bin",  0x00001, 0x80000, CRC(46740204) SHA1(6f1da3b2cbea25bbfdec74c625c5fb23459b83b6) )
@@ -345,9 +345,9 @@ public class pirates
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0) /* OKI samples (encrypted) */
 		ROM_LOAD( "s89_49d4.bin", 0x000000, 0x080000, CRC(63a739ec) SHA1(c57f657225e62b3c9c5f0c7185ad7a87794d55f4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( genix )
+	static RomLoadPtr rom_genix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code (encrypted) */
 		ROM_LOAD16_BYTE( "1.15",  0x00000, 0x80000, CRC(d26abfb0) SHA1(4a89ba7504f86cb612796c376f359ab61ec3d902) )
 		ROM_LOAD16_BYTE( "2.16",  0x00001, 0x80000, CRC(a14a25b4) SHA1(9fa64c6514bdee56b5654b001f8367283b461e8a) )
@@ -366,7 +366,7 @@ public class pirates
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0) /* OKI samples (encrypted) */
 		ROM_LOAD( "0.31", 0x000000, 0x080000, CRC(80d087bc) SHA1(04d1aacc273c7ffa57b48bd043d55b5b3d993f74) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Init */
 	

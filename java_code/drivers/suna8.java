@@ -2325,7 +2325,7 @@ public class suna8
 	
 	***************************************************************************/
 	
-	ROM_START( hardhead )
+	static RomLoadPtr rom_hardhead = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 ) /* Main Z80 Code */
 		ROM_LOAD( "p1",  0x00000, 0x8000, CRC(c6147926) SHA1(8d1609aaeac344c6aec102e92d34caab22a8ec64) )	// 1988,9,14
 		ROM_LOAD( "p2",  0x10000, 0x8000, CRC(faa2cf9a) SHA1(5987f146b58fcbc3aaa9c010d86022b5172bcfb4) )
@@ -2351,9 +2351,9 @@ public class suna8
 	
 		ROM_REGION( 0x8000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "p14", 0x0000, 0x8000, CRC(41314ac1) SHA1(1ac9213b0ac4ce9fe6256e93875672e128a5d069) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hardhedb )
+	static RomLoadPtr rom_hardhedb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 ) /* Main Z80 Code */
 		ROM_LOAD( "9_1_6l.rom", 0x00000, 0x8000, CRC(750e6aee) SHA1(ec8f61a1a3d95ef0e3748968f6da73e972763493) )	// 1988,9,14 (already decrypted)
 		ROM_LOAD( "p2",  0x10000, 0x8000, CRC(faa2cf9a) SHA1(5987f146b58fcbc3aaa9c010d86022b5172bcfb4) )
@@ -2380,7 +2380,7 @@ public class suna8
 	
 		ROM_REGION( 0x8000, REGION_SOUND1, ROMREGION_SOUNDONLY )	/* Samples */
 		ROM_LOAD( "p14", 0x0000, 0x8000, CRC(41314ac1) SHA1(1ac9213b0ac4ce9fe6256e93875672e128a5d069) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2440,7 +2440,7 @@ public class suna8
 	
 	***************************************************************************/
 	
-	ROM_START( rranger )
+	static RomLoadPtr rom_rranger = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "1",  0x00000, 0x8000, CRC(4fb4f096) SHA1(c5ac3e04080cdcf570769918587e8cf8d455fc30) )	// V 2.0 1988,4,15
 		ROM_LOAD( "2",  0x10000, 0x8000, CRC(ff65af29) SHA1(90f9a0c862e2a9da0343446a325961ab29d26b4b) )
@@ -2465,9 +2465,9 @@ public class suna8
 		ROM_LOAD( "11", 0x28000, 0x8000, CRC(19037a7b) SHA1(a6843b0220bab5c47307a0c761d5bd638716aef0) )
 		ROM_LOAD( "12", 0x30000, 0x8000, CRC(c59c0ec7) SHA1(80003f3e33610a84f6e194918276d5f60145b00e) )
 		ROM_LOAD( "13", 0x38000, 0x8000, CRC(9809fee8) SHA1(b7e0664702d0c1f77247d7c76a381b24687a09ea) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sranger )
+	static RomLoadPtr rom_sranger = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "r1", 0x00000, 0x8000, CRC(4eef1ede) SHA1(713074400e27f6983f97ce73e522a1d687961317) )	// V 2.0 1988,4,15
 		ROM_LOAD( "2",  0x10000, 0x8000, CRC(ff65af29) SHA1(90f9a0c862e2a9da0343446a325961ab29d26b4b) )
@@ -2492,9 +2492,9 @@ public class suna8
 		ROM_LOAD( "11",  0x28000, 0x8000, CRC(19037a7b) SHA1(a6843b0220bab5c47307a0c761d5bd638716aef0) )
 		ROM_LOAD( "12",  0x30000, 0x8000, CRC(c59c0ec7) SHA1(80003f3e33610a84f6e194918276d5f60145b00e) )
 		ROM_LOAD( "13",  0x38000, 0x8000, CRC(9809fee8) SHA1(b7e0664702d0c1f77247d7c76a381b24687a09ea) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( srangerb )
+	static RomLoadPtr rom_srangerb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "r1bt", 0x00000, 0x8000, CRC(40635e7c) SHA1(741290ad640e941774d496a329cd29198ab83463) )	// NYWACORPORATION LTD 88-1-07
 		ROM_LOAD( "2",    0x10000, 0x8000, CRC(ff65af29) SHA1(90f9a0c862e2a9da0343446a325961ab29d26b4b) )
@@ -2520,9 +2520,9 @@ public class suna8
 		ROM_LOAD( "11",  0x28000, 0x8000, CRC(19037a7b) SHA1(a6843b0220bab5c47307a0c761d5bd638716aef0) )
 		ROM_LOAD( "12",  0x30000, 0x8000, CRC(c59c0ec7) SHA1(80003f3e33610a84f6e194918276d5f60145b00e) )
 		ROM_LOAD( "13",  0x38000, 0x8000, CRC(9809fee8) SHA1(b7e0664702d0c1f77247d7c76a381b24687a09ea) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( srangerw )
+	static RomLoadPtr rom_srangerw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "w1", 0x00000, 0x8000, CRC(2287d3fc) SHA1(cc2dab587ca50fc4371d2861ac842cd81370f868) )	// 88,2,28
 		ROM_LOAD( "2",  0x10000, 0x8000, CRC(ff65af29) SHA1(90f9a0c862e2a9da0343446a325961ab29d26b4b) )
@@ -2547,7 +2547,7 @@ public class suna8
 		ROM_LOAD( "11",  0x28000, 0x8000, CRC(19037a7b) SHA1(a6843b0220bab5c47307a0c761d5bd638716aef0) )
 		ROM_LOAD( "12",  0x30000, 0x8000, CRC(c59c0ec7) SHA1(80003f3e33610a84f6e194918276d5f60145b00e) )
 		ROM_LOAD( "13",  0x38000, 0x8000, CRC(9809fee8) SHA1(b7e0664702d0c1f77247d7c76a381b24687a09ea) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2579,7 +2579,7 @@ public class suna8
 	
 	***************************************************************************/
 	
-	ROM_START( brickzn )
+	static RomLoadPtr rom_brickzn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000 * 2, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "brickzon.009", 0x00000, 0x08000, CRC(1ea68dea) SHA1(427152a26b062c5e77089de49c1da69369d4d557) )	// V5.0 1992,3,3
 		ROM_RELOAD(               0x50000, 0x08000             )
@@ -2604,9 +2604,9 @@ public class suna8
 	
 		ROM_REGION( 0x0200 * 2, REGION_USER1, 0 )	/* Palette RAM Banks */
 		ROM_REGION( 0x2000 * 2, REGION_USER2, 0 )	/* Sprite  RAM Banks */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( brickzn3 )
+	static RomLoadPtr rom_brickzn3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000 * 2, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "39",           0x00000, 0x08000, CRC(043380bd) SHA1(7eea7cc7d754815df233879b4a9d3d88eac5b28d) )	// V3.0 1992,1,23
 		ROM_RELOAD(               0x50000, 0x08000             )
@@ -2631,7 +2631,7 @@ public class suna8
 	
 		ROM_REGION( 0x0200 * 2, REGION_USER1, 0 )	/* Palette RAM Banks */
 		ROM_REGION( 0x2000 * 2, REGION_USER2, 0 )	/* Sprite  RAM Banks */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -2671,7 +2671,7 @@ public class suna8
 	
 	***************************************************************************/
 	
-	ROM_START( hardhea2 )
+	static RomLoadPtr rom_hardhea2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000 * 2, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "hrd-hd9",  0x00000, 0x08000, CRC(69c4c307) SHA1(0dfde1dcda51b5b1740aff9e96cb877a428a3e04) )	// V 2.0 1991,2,12
 		ROM_RELOAD(           0x50000, 0x08000             )
@@ -2702,7 +2702,7 @@ public class suna8
 	
 		ROM_REGION( 0x0200 * 2, REGION_USER1, 0 )	/* Palette RAM Banks */
 		ROM_REGION( 0x2000 * 2, REGION_USER2, 0 )	/* Sprite  RAM Banks */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2711,7 +2711,7 @@ public class suna8
 	
 	***************************************************************************/
 	
-	ROM_START( starfigh )
+	static RomLoadPtr rom_starfigh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000 * 2, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "starfgtr.l1", 0x00000, 0x08000, CRC(f93802c6) SHA1(4005b06b69dd440dfb6385766386a1168e73288f) )	// V.1
 		ROM_RELOAD(              0x50000, 0x08000             )
@@ -2750,7 +2750,7 @@ public class suna8
 	
 		ROM_REGION( 0x0200 * 2, REGION_USER1, 0 )	/* Palette RAM Banks */
 		ROM_REGION( 0x2000 * 2, REGION_USER2, 0 )	/* Sprite  RAM Banks */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2761,7 +2761,7 @@ public class suna8
 	
 	***************************************************************************/
 	
-	ROM_START( sparkman )
+	static RomLoadPtr rom_sparkman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000 * 2, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "sparkman.e7", 0x00000, 0x08000, CRC(d89c5780) SHA1(177f0ae21c00575a7eb078e86f3a790fc95211e4) )	/* "SPARK MAN MAIN PROGRAM 1989,8,12 K.H.T (SUNA ELECTRPNICS) V 2.0 SOULE KOREA" */
 		ROM_RELOAD(              0x50000, 0x08000 )
@@ -2796,7 +2796,7 @@ public class suna8
 	
 		ROM_REGION( 0x0200 * 2, REGION_USER1, 0 )	/* Palette RAM Banks */
 		ROM_REGION( 0x2000 * 2, REGION_USER2, 0 )	/* Sprite  RAM Banks */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************

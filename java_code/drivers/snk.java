@@ -1369,7 +1369,7 @@ public class snk
 	
 	/***********************************************************************/
 	
-	ROM_START( tnk3 )
+	static RomLoadPtr rom_tnk3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "tnk3-p1.bin",  0x0000, 0x4000, CRC(0d2a8ca9) SHA1(eba950dab044496e8c1c02af20a9d380996ea20a) )
 		ROM_LOAD( "tnk3-p2.bin",  0x4000, 0x4000, CRC(0ae0a483) SHA1(6a1ba86da4fd75bfb00855db04eac2727ec4159e) )
@@ -1401,9 +1401,9 @@ public class snk
 		ROM_LOAD( "tnk3-p7.bin", 0x00000, 0x4000, CRC(06b92c88) SHA1(b39c2cc4a58937d89f9b0c9093b9742509db64a3) )
 		ROM_LOAD( "tnk3-p8.bin", 0x08000, 0x4000, CRC(63d0e2eb) SHA1(96182639bb620d9692a4c8266130769c44dd29f8) )
 		ROM_LOAD( "tnk3-p9.bin", 0x10000, 0x4000, CRC(872e3fac) SHA1(98e7e9315fe7ccc51151c67dc60a362a1c2d8372) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tnk3j )
+	static RomLoadPtr rom_tnk3j = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "p1.4e",  0x0000, 0x4000, CRC(03aca147) SHA1(9ce4cfdfbd22f10e13c8e474dc2e5aa3bfd57e0b) )
 		ROM_LOAD( "tnk3-p2.bin",  0x4000, 0x4000, CRC(0ae0a483) SHA1(6a1ba86da4fd75bfb00855db04eac2727ec4159e) )
@@ -1435,11 +1435,11 @@ public class snk
 		ROM_LOAD( "tnk3-p7.bin", 0x00000, 0x4000, CRC(06b92c88) SHA1(b39c2cc4a58937d89f9b0c9093b9742509db64a3) )
 		ROM_LOAD( "tnk3-p8.bin", 0x08000, 0x4000, CRC(63d0e2eb) SHA1(96182639bb620d9692a4c8266130769c44dd29f8) )
 		ROM_LOAD( "tnk3-p9.bin", 0x10000, 0x4000, CRC(872e3fac) SHA1(98e7e9315fe7ccc51151c67dc60a362a1c2d8372) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( athena )
+	static RomLoadPtr rom_athena = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for cpuA code */
 		ROM_LOAD( "up02_p4.rom",  0x0000, 0x4000,  CRC(900a113c) SHA1(3a85f87cbf79d60f58858df4852d6d97300c9280) )
 		ROM_LOAD( "up02_m4.rom",  0x4000, 0x8000,  CRC(61c69474) SHA1(93f1222a3908c84fe6679e2deb90afbe4a22e675) )
@@ -1467,11 +1467,11 @@ public class snk
 		ROM_LOAD( "up01_p2.rom",  0x00000, 0x8000, CRC(c63a871f) SHA1(0ab8ebebd750fdcad283eed427179f2124b300ae) )
 		ROM_LOAD( "up01_s2.rom",  0x08000, 0x8000, CRC(760568d8) SHA1(9dc447c446791c79322e21e3caef6ceae347e2fb) )
 		ROM_LOAD( "up01_t2.rom",  0x10000, 0x8000, CRC(57b35c73) SHA1(6d15b94b50c3734f7d60bd9bd1c5e6c76591d829) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( fitegolf )
+	static RomLoadPtr rom_fitegolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "gu2",    0x0000, 0x4000, CRC(19be7ad6) SHA1(6f0faf606e44a3f8cc027699cc816aa3414a1b98) )
 		ROM_LOAD( "gu1",    0x4000, 0x8000, CRC(bc32568f) SHA1(35fec3dbdd773ec7f427ecdd81066fb8f1b74e05) )
@@ -1499,9 +1499,9 @@ public class snk
 		ROM_LOAD( "gu9",   0x00000, 0x8000, CRC(d4957ec5) SHA1(8ead7866ba5ac66ead6b707aa868bcae30c486e1) )
 		ROM_LOAD( "gu10",  0x08000, 0x8000, CRC(b3acdac2) SHA1(7377480d5e1b5ab2c49f5fee2927623ce8240e19) )
 		ROM_LOAD( "gu11",  0x10000, 0x8000, CRC(b99cf73b) SHA1(23989fc3914e77d364807a9eb96a4ddf75ad7cf1) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fitegol2 )
+	static RomLoadPtr rom_fitegol2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "np45.128", 0x0000, 0x4000, CRC(16e8e763) SHA1(0b5296f2a91a7f3176b7461ca4958865ce998241) )
 		ROM_LOAD( "mn45.256", 0x4000, 0x8000, CRC(a4fa09d5) SHA1(ae7f0cb47de06006ae71252c4201a93a01a26887) )
@@ -1529,9 +1529,9 @@ public class snk
 		ROM_LOAD( "gu9",   0x00000, 0x8000, CRC(d4957ec5) SHA1(8ead7866ba5ac66ead6b707aa868bcae30c486e1) )	// P2.256
 		ROM_LOAD( "gu10",  0x08000, 0x8000, CRC(b3acdac2) SHA1(7377480d5e1b5ab2c49f5fee2927623ce8240e19) )	// R2.256
 		ROM_LOAD( "gu11",  0x10000, 0x8000, CRC(b99cf73b) SHA1(23989fc3914e77d364807a9eb96a4ddf75ad7cf1) )	// S2.256
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( countryc )
+	static RomLoadPtr rom_countryc = new RomLoadPtr(){ public void handler(){ 
 	
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "cc2.2e",  0x0000, 0x04000,  CRC(43d205e0) SHA1(d32f597bf2b70e326e68583cb95e0beeea34d5d0) )
@@ -1563,11 +1563,11 @@ public class snk
 		ROM_LOAD( "cc9.7g",   0x08000, 0x8000, CRC(56249142) SHA1(10b703f15977ba21757aee3d212790372b35cc66) )
 		ROM_LOAD( "cc8.7e",   0x10000, 0x8000, CRC(55943065) SHA1(ea545c6e8666c915994836d2f2cfc02db35e37c1) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( ikari )
+	static RomLoadPtr rom_ikari = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* CPU A */
 		ROM_LOAD( "1.rom",  0x0000, 0x10000, CRC(52a8b2dd) SHA1(a896387d68ed9a55c313bdb81acdf8d68b7a1264) )
 	
@@ -1603,9 +1603,9 @@ public class snk
 		ROM_LOAD( "15.rom", 0x18000, 0x8000, CRC(65a61c99) SHA1(767694c919180de208b6211b593db68fc5a66ff1) )
 		ROM_LOAD( "13.rom", 0x20000, 0x8000, CRC(315383d7) SHA1(1c1c5931e3447c4dcbd54fc8ae383b03cb5fbf5b) )
 		ROM_LOAD( "16.rom", 0x28000, 0x8000, CRC(e9b03e07) SHA1(124e5328a965ea2af28c4d74934a82394a2ffd72) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ikarijp )
+	static RomLoadPtr rom_ikarijp = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "up03_l4.rom",  0x0000, 0x4000, CRC(cde006be) SHA1(a42e23659cf0ea5194f8a7a9a1679ebcaed75ead) )
 		ROM_LOAD( "up03_k4.rom",  0x4000, 0x8000, CRC(26948850) SHA1(bfeba5f7019f6eaacf2a5464756d9cb283c5f5a2) )
@@ -1644,9 +1644,9 @@ public class snk
 		ROM_LOAD( "15.rom", 0x18000, 0x8000, CRC(65a61c99) SHA1(767694c919180de208b6211b593db68fc5a66ff1) )
 		ROM_LOAD( "13.rom", 0x20000, 0x8000, CRC(315383d7) SHA1(1c1c5931e3447c4dcbd54fc8ae383b03cb5fbf5b) )
 		ROM_LOAD( "16.rom", 0x28000, 0x8000, CRC(e9b03e07) SHA1(124e5328a965ea2af28c4d74934a82394a2ffd72) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ikarijpb )
+	static RomLoadPtr rom_ikarijpb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* CPU A */
 		ROM_LOAD( "ik1",	  0x00000, 0x4000, CRC(2ef87dce) SHA1(4b52567fee81018f7a4b33bac79ea521c7d19d52) )
 		ROM_LOAD( "up03_k4.rom",  0x04000, 0x8000, CRC(26948850) SHA1(bfeba5f7019f6eaacf2a5464756d9cb283c5f5a2) )
@@ -1685,11 +1685,11 @@ public class snk
 		ROM_LOAD( "15.rom", 0x18000, 0x8000, CRC(65a61c99) SHA1(767694c919180de208b6211b593db68fc5a66ff1) )
 		ROM_LOAD( "13.rom", 0x20000, 0x8000, CRC(315383d7) SHA1(1c1c5931e3447c4dcbd54fc8ae383b03cb5fbf5b) )
 		ROM_LOAD( "16.rom", 0x28000, 0x8000, CRC(e9b03e07) SHA1(124e5328a965ea2af28c4d74934a82394a2ffd72) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( victroad )
+	static RomLoadPtr rom_victroad = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* CPU A code */
 		ROM_LOAD( "p1",  0x0000, 0x10000,  CRC(e334acef) SHA1(f6d8da554276abbe5579c92eea46591a92623f6e) )
 	
@@ -1729,9 +1729,9 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "p4",  0x00000, 0x10000, CRC(e10fb8cc) SHA1(591aa1f947216795252dc4d9ec2600ef63dada7d) )
 		ROM_LOAD( "p5",  0x10000, 0x10000, CRC(93e5f110) SHA1(065a78805e50ce6a48cb7930f264bada236feb13) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dogosoke ) /* Victory Road Japan */
+	static RomLoadPtr rom_dogosoke = new RomLoadPtr(){ public void handler(){  /* Victory Road Japan */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* CPU A code */
 		ROM_LOAD( "up03_p4.rom",  0x0000, 0x10000,  CRC(37867ad2) SHA1(4444e428eb7126451f34351b1a2bc193484ca641) )
 	
@@ -1771,11 +1771,11 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "up03_f5.rom", 0x00000, 0x10000, CRC(5b43fe9f) SHA1(28f803f633b83b17f9b10516d38c862f90d55ff3) )
 		ROM_LOAD( "up03_g5.rom", 0x10000, 0x10000, CRC(aae30cd6) SHA1(9d0d2c0f947387a0924bf0ed73de9305c1625054) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( gwar )
+	static RomLoadPtr rom_gwar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "7g",  0x00000, 0x10000, CRC(5bcfa7dc) SHA1(1af2c36df287c9c84be8e7fc173b66f3dde5375e) )
 	
@@ -1817,9 +1817,9 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "g04",  0x00000, 0x10000, CRC(2255f8dd) SHA1(fac31b617762d0fa39cf82a658be250b91ab73ce) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gwara )
+	static RomLoadPtr rom_gwara = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "gv3",  0x00000, 0x10000, CRC(24936d83) SHA1(33842322ead66e426946c6cfaa04e56afea90d78) )
 	
@@ -1861,9 +1861,9 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "g04",  0x00000, 0x10000, CRC(2255f8dd) SHA1(fac31b617762d0fa39cf82a658be250b91ab73ce) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gwarj )
+	static RomLoadPtr rom_gwarj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "7y3047",  0x00000, 0x10000, CRC(7f8a880c) SHA1(1eb1c3eb45aa933118e5bd116eb3f81f39063ae3) )
 	
@@ -1905,9 +1905,9 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "g04",  0x00000, 0x10000, CRC(2255f8dd) SHA1(fac31b617762d0fa39cf82a658be250b91ab73ce) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gwarb )
+	static RomLoadPtr rom_gwarb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "g01",  0x00000, 0x10000, CRC(ce1d3c80) SHA1(605ada3529d0b26425e6c573c31117249bb7a7db) )
 	
@@ -1949,11 +1949,11 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "g04",  0x00000, 0x10000, CRC(2255f8dd) SHA1(fac31b617762d0fa39cf82a658be250b91ab73ce) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( bermudat )
+	static RomLoadPtr rom_bermudat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "bt_p1.rom",  0x0000, 0x10000,  CRC(43dec5e9) SHA1(2b29016d4af2a0a6be87f440f235a6a76f8a52a0) )
 	
@@ -1998,9 +1998,9 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "bt_p4.rom",  0x00000, 0x10000, CRC(4bc83229) SHA1(b58d08ebed0b02279385a7ac2f385e62443e3de6) )
 		ROM_LOAD( "bt_p5.rom",  0x10000, 0x10000, CRC(817bd62c) SHA1(d3ee2ff01a4da8b928728b2fd4948fabd2b04420) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bermudao )
+	static RomLoadPtr rom_bermudao = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "btj_p01.bin", 0x0000, 0x10000,  CRC(eda75f36) SHA1(d6fcb46dc45007a77bf6a8ca7aa53aefedcecf92) )
 	
@@ -2045,9 +2045,9 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "btj_p04.bin", 0x00000, 0x10000, CRC(b2e01129) SHA1(b47ffbcbd9a70f74dfd6906d4f9386db24a7294f) )
 		ROM_LOAD( "btj_p05.bin", 0x10000, 0x10000, CRC(924c24f7) SHA1(7a2dafbdaa748121fc6279677f6bffd9e10b1a54) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( worldwar )
+	static RomLoadPtr rom_worldwar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "ww4.bin",  0x0000, 0x10000,  CRC(bc29d09f) SHA1(9bd5a47565934590347b7152457869331ae94375) )
 	
@@ -2092,9 +2092,9 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "bt_p4.rom",  0x00000, 0x10000, CRC(4bc83229) SHA1(b58d08ebed0b02279385a7ac2f385e62443e3de6) )
 		ROM_LOAD( "bt_p5.rom",  0x10000, 0x10000, CRC(817bd62c) SHA1(d3ee2ff01a4da8b928728b2fd4948fabd2b04420) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bermudaa )
+	static RomLoadPtr rom_bermudaa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "4",  0x0000, 0x10000,  CRC(4de39d01) SHA1(4312660c6658079c2d148c07d24f741804f3e45c) )
 	
@@ -2139,11 +2139,11 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "bt_p4.rom",  0x00000, 0x10000, CRC(4bc83229) SHA1(b58d08ebed0b02279385a7ac2f385e62443e3de6) )
 		ROM_LOAD( "bt_p5.rom",  0x10000, 0x10000, CRC(817bd62c) SHA1(d3ee2ff01a4da8b928728b2fd4948fabd2b04420) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( psychos )
+	static RomLoadPtr rom_psychos = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "p7",  0x00000, 0x10000, CRC(562809f4) SHA1(71d2a0fbfbe953e2bc4169d3c0a4f259911f04c3) )
 	
@@ -2190,9 +2190,9 @@ public class snk
 		ROM_LOAD( "p2",  0x10000, 0x10000, CRC(da3abda1) SHA1(aeafe8f41c0ea2f93791abce01a53d8e417d1216) )
 		ROM_LOAD( "p3",  0x20000, 0x10000, CRC(f3683ae8) SHA1(a2e77995f835eaa211ea7d384382cf6a5a121490) )
 		ROM_LOAD( "p4",  0x30000, 0x10000, CRC(437d775a) SHA1(355c227b22ae34f47e2bb27d4b5440ccaedf2eea) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( psychosj )
+	static RomLoadPtr rom_psychosj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "up03_m4.rom",  0x0000, 0x10000,  CRC(05dfb409) SHA1(e6c378c86689c7ab9190908c8e4aa2d4563c3774) )
 	
@@ -2239,11 +2239,11 @@ public class snk
 		ROM_LOAD( "up03_c5.rom",  0x10000, 0x10000, CRC(34e41dfb) SHA1(cdc4cb47a31c4f6eee8bc804389ee62af5173c15) )
 		ROM_LOAD( "up03_d5.rom",  0x20000, 0x10000, CRC(aa583c5e) SHA1(8433517d789c6b30938bfef366b44a0412dd5e7e) )
 		ROM_LOAD( "up03_f5.rom",  0x30000, 0x10000, CRC(7e8bce7a) SHA1(dd482045332719c76e598110d7285997b337352a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( chopper )
+	static RomLoadPtr rom_chopper = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "kk_01.rom",  0x0000, 0x10000,  CRC(8fa2f839) SHA1(13cfdbeb433aa3e1dc7e7927c00690e02ed08274) )
 	
@@ -2285,9 +2285,9 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "kk_02.rom",  0x00000, 0x10000, CRC(06169ae0) SHA1(2690ce7cb28cf5c6d37886ce5fbe444067c08403) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( choppera )
+	static RomLoadPtr rom_choppera = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "1a.rom",  0x0000, 0x10000,  CRC(dc325860) SHA1(89391897e6f31d9c1d3b7f27618f63fe8018d42a) )
 	
@@ -2329,9 +2329,9 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "kk_02.rom",  0x00000, 0x10000, CRC(06169ae0) SHA1(2690ce7cb28cf5c6d37886ce5fbe444067c08403) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chopperb )
+	static RomLoadPtr rom_chopperb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "chpri-1.bin",  0x0000, 0x10000,  CRC(a4e6e978) SHA1(dafc2a3da3725344023a09f5bdaedd0e8e1dbbe2) )
 	
@@ -2373,9 +2373,9 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "kk_02.rom",  0x00000, 0x10000, CRC(06169ae0) SHA1(2690ce7cb28cf5c6d37886ce5fbe444067c08403) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( legofair ) /* ChopperI (Japan) */
+	static RomLoadPtr rom_legofair = new RomLoadPtr(){ public void handler(){  /* ChopperI (Japan) */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "up03_m4.rom",  0x0000, 0x10000,  CRC(79a485c0) SHA1(bbf51e7321656b6a04223909d4958ceb4892193a) )
 	
@@ -2417,11 +2417,11 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "kk_02.rom",  0x00000, 0x10000, CRC(06169ae0) SHA1(2690ce7cb28cf5c6d37886ce5fbe444067c08403) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( ftsoccer )
+	static RomLoadPtr rom_ftsoccer = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for cpuA code */
 		ROM_LOAD( "ft-003.bin",  0x00000, 0x10000, CRC(649d4448) SHA1(876a4cf3ce3211ee19390deb17a661ec52b419d2) )
 	
@@ -2460,11 +2460,11 @@ public class snk
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "ft-004.bin",  0x00000, 0x10000, CRC(435c3716) SHA1(42053741f60594e7ae8516b3ba600f5badb3620f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	
-	ROM_START( tdfever ) /* USA set */
+	static RomLoadPtr rom_tdfever = new RomLoadPtr(){ public void handler(){  /* USA set */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "td2-ver3.6c",  0x0000, 0x10000,  CRC(92138fe4) SHA1(17a2bc12f516cdbea3cc5e283b0a8a2d101dfa47) )
 	
@@ -2502,9 +2502,9 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "up02_p6.rom",  0x00000, 0x10000, CRC(04794557) SHA1(94f476e88b089ad98a133e7356fd271601119fdf) )
 		ROM_LOAD( "up02_n6.rom",  0x10000, 0x10000, CRC(155e472e) SHA1(722b4625e6ab796e129daf903386b5b6b1a945cd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tdfeverj )
+	static RomLoadPtr rom_tdfeverj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "up02_c6.rom",  0x0000, 0x10000,  CRC(88d88ec4) SHA1(774de920290b5c787b0f3d0076883dda106364be) )
 	
@@ -2542,9 +2542,9 @@ public class snk
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "up02_p6.rom",  0x00000, 0x10000, CRC(04794557) SHA1(94f476e88b089ad98a133e7356fd271601119fdf) )
 		ROM_LOAD( "up02_n6.rom",  0x10000, 0x10000, CRC(155e472e) SHA1(722b4625e6ab796e129daf903386b5b6b1a945cd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tdfever2 )
+	static RomLoadPtr rom_tdfever2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
 		ROM_LOAD( "tdmain.6c",	  0x0000,  0x10000, CRC(9e3eaed8) SHA1(4a591767b22a46605747740a1e1de9aada2893fe) )
 	
@@ -2585,7 +2585,7 @@ public class snk
 		ROM_LOAD( "td04.6n",	  0x10000, 0x10000, CRC(98af6d2d) SHA1(0f41f53d4143ec54b8e84cd480e3ab34c3e7ea20) )
 		ROM_LOAD( "td22.6l",	  0x20000, 0x10000, CRC(34b4bce9) SHA1(bf9b000995dcbb27450c0ad1a8ef1bcc4feee080) )
 		ROM_LOAD( "td21.6k",	  0x30000, 0x10000, CRC(f5a96d8e) SHA1(33bb2c41426449179fc27ee88b2c8db27b4ed1da) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***********************************************************************/
 	

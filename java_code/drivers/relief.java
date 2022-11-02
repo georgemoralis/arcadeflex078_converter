@@ -396,7 +396,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	ROM_START( relief )
+	static RomLoadPtr rom_relief = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "0011d.19e", 0x00000, 0x20000, CRC(cb3f73ad) SHA1(533a96095e678b4a414d6d9b861b1d4010ced30f) )
 		ROM_LOAD16_BYTE( "0012d.19j", 0x00001, 0x20000, CRC(90655721) SHA1(f50a2f317215a864d09e33a4acd927b873350425) )
@@ -415,10 +415,10 @@ public class relief
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )	/* 2MB for ADPCM data */
 		ROM_LOAD( "093-0030.9b",  0x100000, 0x80000, CRC(f4c567f5) SHA1(7e8c1d54d918b0b41625eacbaf6dcb5bd99d1949) )
 		ROM_LOAD( "093-0031.10b", 0x180000, 0x80000, CRC(ba908d73) SHA1(a83afd86f4c39394cf624b728a87b8d8b6de1944) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( relief2 )
+	static RomLoadPtr rom_relief2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 8*64k for 68000 code */
 		ROM_LOAD16_BYTE( "093-0011.19e", 0x00000, 0x20000, CRC(794cea33) SHA1(6e9830ce04a505746dea5aafaf37c629c28b061d) )
 		ROM_LOAD16_BYTE( "093-0012.19j", 0x00001, 0x20000, CRC(577495f8) SHA1(f45b0928b13db7f49b7688620008fc03fca08cde) )
@@ -437,7 +437,7 @@ public class relief
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )	/* 2MB for ADPCM data */
 		ROM_LOAD( "093-0030.9b",  0x100000, 0x80000, CRC(f4c567f5) SHA1(7e8c1d54d918b0b41625eacbaf6dcb5bd99d1949) )
 		ROM_LOAD( "093-0031.10b", 0x180000, 0x80000, CRC(ba908d73) SHA1(a83afd86f4c39394cf624b728a87b8d8b6de1944) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -228,7 +228,7 @@ public class thoop2
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( thoop2 )
+	static RomLoadPtr rom_thoop2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"th2c23.040",	0x000000, 0x080000, CRC(3e465753) SHA1(1ea1173b9fe5d652e7b5fafb822e2535cecbc198) )
 		ROM_LOAD16_BYTE(	"th2c22.040",	0x000001, 0x080000, CRC(837205b7) SHA1(f78b90c2be0b4dddaba26f074ea00eff863cfdb2) )
@@ -241,7 +241,7 @@ public class thoop2
 		ROM_LOAD( "th2-c1.080",		0x000000, 0x100000, CRC(8fac8c30) SHA1(8e49bb596144761eae95f3e1266e57fb386664f2) )
 		ROM_RELOAD(					0x040000, 0x100000 )
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched */
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1994, thoop2,  0, thoop2, thoop2,  0, ROT0, "Gaelco", "TH Strikes Back", GAME_UNEMULATED_PROTECTION )
 }

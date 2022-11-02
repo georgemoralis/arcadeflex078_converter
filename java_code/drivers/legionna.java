@@ -1591,7 +1591,7 @@ public class legionna
 	
 	***************************************************************************/
 	
-	ROM_START( legionna )
+	static RomLoadPtr rom_legionna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "1",           0x00000, 0x20000, CRC(9e2d3ec8) SHA1(8af9ca349389cbbd2b541aafa09de57f87f6fd72) )
 		ROM_LOAD32_BYTE( "2",           0x00001, 0x20000, CRC(35c8a28f) SHA1(31a1f2f9e04dfcab4b3357d6d27c24b434a8c14b) )
@@ -1623,9 +1623,9 @@ public class legionna
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "5",   0x00000, 0x20000, CRC(21d09bde) SHA1(8dce5011e083706ac7b57c5aee4b79d30fa8d4cb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( legionnu )
+	static RomLoadPtr rom_legionnu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "1",   0x00000, 0x20000, CRC(9e2d3ec8) SHA1(8af9ca349389cbbd2b541aafa09de57f87f6fd72) )
 		ROM_LOAD32_BYTE( "2",   0x00001, 0x20000, CRC(35c8a28f) SHA1(31a1f2f9e04dfcab4b3357d6d27c24b434a8c14b) )
@@ -1657,9 +1657,9 @@ public class legionna
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "5",   0x00000, 0x20000, CRC(21d09bde) SHA1(8dce5011e083706ac7b57c5aee4b79d30fa8d4cb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( heatbrl )
+	static RomLoadPtr rom_heatbrl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "1e_ver2.9k",   0x00000, 0x20000, CRC(b30bd632) SHA1(8684dd4787929886b0bce283301e492206ade9d9) )
 		ROM_LOAD32_BYTE( "2e_ver2.9m",   0x00001, 0x20000, CRC(f3a23056) SHA1(d8840468535ac59fede60ea5a2928410d9c7a33a) )
@@ -1691,9 +1691,9 @@ public class legionna
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "barrel.8",  0x00000, 0x20000, CRC(489e5b1d) SHA1(ecd69d87ed354d1d08dbe6c2890af5f05d9d67d0) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( heatbrlo )
+	static RomLoadPtr rom_heatbrlo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "barrel.1h",   0x00000, 0x20000, CRC(d5a85c36) SHA1(421a42863faa940057ed5637748f791152a15502) )
 		ROM_LOAD32_BYTE( "barrel.2h",   0x00001, 0x20000, CRC(5104d463) SHA1(f65ee824508da431567661804f6235b61425b2dd) )
@@ -1730,9 +1730,9 @@ public class legionna
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "barrel.8",  0x00000, 0x20000, CRC(489e5b1d) SHA1(ecd69d87ed354d1d08dbe6c2890af5f05d9d67d0) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( heatbrlu )
+	static RomLoadPtr rom_heatbrlu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "1e_ver2.9k",   0x00000, 0x20000, CRC(b30bd632) SHA1(8684dd4787929886b0bce283301e492206ade9d9) )
 		ROM_LOAD32_BYTE( "2u",           0x00001, 0x20000, CRC(289dd629) SHA1(fb379e067ffee4e54d55da638e45e22d6b2ef788) )
@@ -1764,7 +1764,7 @@ public class legionna
 	
 		ROM_REGION( 0x020000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "barrel.8",  0x00000, 0x20000, CRC(489e5b1d) SHA1(ecd69d87ed354d1d08dbe6c2890af5f05d9d67d0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -1816,7 +1816,7 @@ public class legionna
 	
 	*/
 	
-	ROM_START( godzilla )
+	static RomLoadPtr rom_godzilla = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "2.025",        0x000000, 0x020000, CRC(be9c6e5a) SHA1(9a7e49ac9cdbcc02b13b3448544cee5fe398ec16) )
 		ROM_LOAD32_BYTE( "1.024",        0x000001, 0x020000, CRC(0d6b663d) SHA1(01e02999cffd2642f7a37e492fe7f83770cddd67) )
@@ -1856,7 +1856,7 @@ public class legionna
 	
 		ROM_REGION( 0x080000, REGION_USER1, 0 )
 		ROM_LOAD( "copx-d2.313",  0x000000, 0x080000, CRC(7c52581b) SHA1(7e668476f886806b0c06fa0bcf4bbc955878c87c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*
 	
@@ -1910,7 +1910,7 @@ public class legionna
 	
 	*/
 	
-	ROM_START( sdgndmrb )
+	static RomLoadPtr rom_sdgndmrb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "rb-p1.25",     0x000000, 0x040000, CRC(0995c511) SHA1(97fb2bd7d26720552ace25e655fce09ad9a7afd7) )
 		ROM_LOAD32_BYTE( "rb-p2.24",     0x000001, 0x040000, CRC(c9eb756f) SHA1(88d784a71bfab4f321d3320aed1b6b2648529979) )
@@ -1945,9 +1945,9 @@ public class legionna
 	
 		ROM_REGION( 0x040000, REGION_USER1, 0 )
 		ROM_LOAD( "copx-d2.313",  0x0000, 0x040000, CRC(a6732ff9) SHA1(c4856ec77869d9098da24b1bb3d7d58bb74b4cda) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cupsoc )
+	static RomLoadPtr rom_cupsoc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "seibu1.10n",   0x000000, 0x040000, CRC(e91fdc95) SHA1(71c56fffabca79e73dfc61aad17bc58e09a28680) )
 		ROM_LOAD32_BYTE( "seibu2.10q",   0x000001, 0x040000, CRC(7816df3c) SHA1(d5cfbf493cc00c47406b314c08e9cbf159a7f98c) )
@@ -1978,9 +1978,9 @@ public class legionna
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "seibu8.7a",    0x000000, 0x040000, CRC(6f594808) SHA1(218aa12068aa587c7656355f6a6b86d97c868774) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cupsoc2 )
+	static RomLoadPtr rom_cupsoc2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "scc_01.bin",   0x000000, 0x040000, CRC(c122203c) SHA1(93c0ae90c0ed3889b9159774ba89536108c9b259) )
 		ROM_LOAD32_BYTE( "scc_02.bin",   0x000001, 0x040000, CRC(105511b4) SHA1(f2ebe95a10f5928f57d4f532e2d2432f13b774b2) )
@@ -2014,9 +2014,9 @@ public class legionna
 	
 		ROM_REGION( 0x080000, REGION_USER1, 0 )
 		ROM_LOAD( "copx-d1.bin",  0x000000, 0x080000, CRC(029bc402) SHA1(0f64e4c32d95abfa3920b39ed3cf0cc6eb50191b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( olysoc92 )
+	static RomLoadPtr rom_olysoc92 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD32_BYTE( "u025.1",       0x000000, 0x040000, CRC(a94e7780) SHA1(abbe328be425b4529e6b75ffa723c6771e4b6fcf) )
 		ROM_LOAD32_BYTE( "u024.2",       0x000001, 0x040000, CRC(cb5f0748) SHA1(e11bf11a3766ab33c60a143867496887c6238b11) )
@@ -2047,7 +2047,7 @@ public class legionna
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "seibu8.7a",    0x000000, 0x040000, CRC(6f594808) SHA1(218aa12068aa587c7656355f6a6b86d97c868774) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( legionna )
 	{

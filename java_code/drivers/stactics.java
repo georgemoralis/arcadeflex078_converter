@@ -265,7 +265,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	ROM_START( stactics )
+	static RomLoadPtr rom_stactics = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "epr-218x",     0x0000, 0x0800, CRC(b1186ad2) SHA1(88929a183ac0499619b3e07241f3b5a0c89bdab1) )
 		ROM_LOAD( "epr-219x",     0x0800, 0x0800, CRC(3b86036d) SHA1(6ad5e14dcfdbc6d2a0a32ae7f18ce41ab4b51eec) )
@@ -283,7 +283,7 @@ public class stactics
 	
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )
 		ROM_LOAD( "pr54",         0x0000, 0x0800, CRC(9640bd6e) SHA1(dd12952a6591f2056ac1b5688dca0a3a2ef69f2d) )         /* color/priority prom */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

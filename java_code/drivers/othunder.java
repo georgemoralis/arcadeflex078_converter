@@ -584,7 +584,7 @@ public class othunder
 						DRIVERS
 	***************************************************************************/
 	
-	ROM_START( othunder )
+	static RomLoadPtr rom_othunder = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 512K for 68000 code */
 		ROM_LOAD16_BYTE( "b67-20",    0x00000, 0x20000, CRC(21439ea2) SHA1(d5b5a194e9698cf43513c0d56146772e8132ab07) )
 		ROM_LOAD16_BYTE( "b67-23",    0x00001, 0x20000, CRC(789e9daa) SHA1(15bb0eec68aeea0b9f55889566338c9ce0ac9b5e) )
@@ -618,9 +618,9 @@ public class othunder
 	//	ROM_LOAD( "b67-10", 0x00000, 0xcd5, CRC(312f9e2a) )
 	//	ROM_LOAD( "b67-11", 0x00000, 0xada, CRC(f863b864) )
 	//	ROM_LOAD( "b67-12", 0x00000, 0xcd5, CRC(653d86bb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( othundu )
+	static RomLoadPtr rom_othundu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 512K for 68000 code */
 		ROM_LOAD16_BYTE( "b67-20-1.63", 0x00000, 0x20000, CRC(851a453b) SHA1(48b8c379e78cd79463f1e24dc23816a97cf819b8) )
 		ROM_LOAD16_BYTE( "b67-22-1.64", 0x00001, 0x20000, CRC(19480dc0) SHA1(8bbc982c89f0878e7639330970df5aa93ecbb083) )
@@ -648,7 +648,7 @@ public class othunder
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* Delta-T samples */
 		ROM_LOAD( "b67-07", 0x00000, 0x80000, CRC(4f834357) SHA1(f34705ce64870a8b24ec2639505079cc031fb719) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( othunder )

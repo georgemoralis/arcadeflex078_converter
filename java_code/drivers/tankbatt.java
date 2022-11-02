@@ -315,7 +315,7 @@ public class tankbatt
 	
 	***************************************************************************/
 	
-	ROM_START( tankbatt )
+	static RomLoadPtr rom_tankbatt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "tb1-1.bin",    0x6000, 0x0800, CRC(278a0b8c) SHA1(11ea8fe8401b3cd986616a30a759c0ac1a5ce73b) )
 		ROM_LOAD( "tb1-2.bin",    0x6800, 0x0800, CRC(e0923370) SHA1(8d3dbea877bed9f9c267d8002dc180f6eb1e5a8f) )
@@ -328,7 +328,7 @@ public class tankbatt
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "tankbatt.clr", 0x0000, 0x0100, CRC(1150d613) SHA1(33bb50c199198ba5a129b9e3cfd0f8afca4bf95f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -563,7 +563,7 @@ public class gameplan
 	there are three 6522 VIAs, at 2000, 2800, and 3000
 	*/
 	
-	ROM_START( kaos )
+	static RomLoadPtr rom_kaos = new RomLoadPtr(){ public void handler(){ 
 	    ROM_REGION( 0x10000, REGION_CPU1, 0 )
 	    ROM_LOAD( "kaosab.g2",    0x9000, 0x0800, CRC(b23d858f) SHA1(e31fa657ace34130211a0b9fc0d115fd89bb20dd) )
 	    ROM_CONTINUE(		   	  0xd000, 0x0800			 )
@@ -580,10 +580,10 @@ public class gameplan
 	
 	    ROM_REGION( 0x10000, REGION_CPU2, 0 )
 		ROM_LOAD( "kaossnd.e1",   0xf800, 0x800, CRC(ab23d52a) SHA1(505f3e4a56e78a3913010f5484891f01c9831480) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( killcom )
+	static RomLoadPtr rom_killcom = new RomLoadPtr(){ public void handler(){ 
 	    ROM_REGION( 0x10000, REGION_CPU1, 0 )
 	    ROM_LOAD( "killcom.e2",   0xc000, 0x800, CRC(a01cbb9a) SHA1(a8769243adbdddedfda5f3c8f054e9281a0eca46) )
 	    ROM_LOAD( "killcom.f2",   0xc800, 0x800, CRC(bb3b4a93) SHA1(a0ea61ac30a4d191db619b7bfb697914e1500036) )
@@ -596,9 +596,9 @@ public class gameplan
 	
 	    ROM_REGION( 0x10000, REGION_CPU2, 0 )
 		ROM_LOAD( "killsnd.e1",   0xf800, 0x800, CRC(77d4890d) SHA1(a3ed7e11dec5d404f022c521256ff50aa6940d3c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( megatack )
+	static RomLoadPtr rom_megatack = new RomLoadPtr(){ public void handler(){ 
 	    ROM_REGION( 0x10000, REGION_CPU1, 0 )
 	    ROM_LOAD( "megattac.e2",  0xc000, 0x800, CRC(33fa5104) SHA1(15693eb540563e03502b53ed8a83366e395ca529) )
 	    ROM_LOAD( "megattac.f2",  0xc800, 0x800, CRC(af5e96b1) SHA1(5f6ab47c12d051f6af446b08f3cd459fbd2c13bf) )
@@ -611,9 +611,9 @@ public class gameplan
 	
 	    ROM_REGION( 0x10000, REGION_CPU2, 0 )
 		ROM_LOAD( "megatsnd.e1",  0xf800, 0x800, CRC(0c186bdb) SHA1(233af9481a3979971f2d5aa75ec8df4333aa5e0d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( challeng )
+	static RomLoadPtr rom_challeng = new RomLoadPtr(){ public void handler(){ 
 	    ROM_REGION( 0x10000, REGION_CPU1, 0 )
 	    ROM_LOAD( "chall.6",      0xa000, 0x1000, CRC(b30fe7f5) SHA1(ce93a57d626f90d31ddedbc35135f70758949dfa) )
 	    ROM_LOAD( "chall.5",      0xb000, 0x1000, CRC(34c6a88e) SHA1(250577e2c8eb1d3a78cac679310ec38924ac1fe0) )
@@ -624,7 +624,7 @@ public class gameplan
 	
 	    ROM_REGION( 0x10000, REGION_CPU2, 0 )
 		ROM_LOAD( "chall.snd",    0xf800, 0x800, CRC(1b2bffd2) SHA1(36ceb5abbc92a17576c375019f1c5900320398f9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

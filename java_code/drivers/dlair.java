@@ -263,7 +263,7 @@ public class dlair
 	
 	***************************************************************************/
 	
-	ROM_START( dlair )
+	static RomLoadPtr rom_dlair = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "u45",          0x0000, 0x2000, CRC(329b354a) SHA1(54bbc5aa647d3c20166a57f9d3aa5569e7289af8) )
 		ROM_LOAD( "u46",          0x2000, 0x2000, CRC(8479612b) SHA1(b5543a06928274bde0e1bdda0747d936feaff177) )
@@ -272,7 +272,7 @@ public class dlair
 	
 		ROM_REGION( 0x2000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "u33",          0x0000, 0x2000, CRC(e7506d96) SHA1(610ae25bd8db13b18b9e681e855ffa978043255b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

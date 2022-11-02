@@ -1991,7 +1991,7 @@ public class seattle
 	 *
 	 *************************************/
 	
-	ROM_START( wg3dh )
+	static RomLoadPtr rom_wg3dh = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version L1.1 */
@@ -2002,10 +2002,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "wg3dh.chd", 0, MD5(424dbda376e8c45ec873b79194bdb924) SHA1(c12875036487a9324734012e601d1f234d2e783e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mace )
+	static RomLoadPtr rom_mace = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version L1.1 */
@@ -2016,10 +2016,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "mace.chd", 0, BAD_DUMP MD5(276577faa5632eb23dc5a97c11c0a1b1) SHA1(e2cce4ff2e15267b7008422252bdf62b188cf743) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( sfrush )
+	static RomLoadPtr rom_sfrush = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( 0x040000, REGION_CPU2, 0 )		/* RAM for TMS320C31 */
@@ -2038,10 +2038,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )	/* Hard Drive Version L1.06 */
 		DISK_IMAGE( "sfrush.chd", 0, MD5(7a77addb141fc11fd5ca63850382e0d1) SHA1(0e5805e255e91f08c9802a04b42056d61ba5eb41) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( calspeed )
+	static RomLoadPtr rom_calspeed = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version 1.02 */
@@ -2052,10 +2052,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "calspeed.chd", 0, MD5(dc8c919af86a1ab88a0b05ea2b6c74b3) SHA1(e6cbc8290af2df9704838a925cb43b6972b80d95) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( biofreak )
+	static RomLoadPtr rom_biofreak = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version 1.02 */
@@ -2066,10 +2066,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "biofreak.chd", 0, MD5(f4663a3fd0ceed436756710b97d283e4) SHA1(88b87cb651b97eac117c9342127938e30dc8c138) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( blitz )
+	static RomLoadPtr rom_blitz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version 1.02 */
@@ -2080,10 +2080,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )	/* Hard Drive Version 1.21 */
 		DISK_IMAGE( "blitz.chd", 0, MD5(9cec59456c4d239ba05c7802082489e4) SHA1(0f001488b3709d40cee5e278603df2bbae1116b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( blitz99 )
+	static RomLoadPtr rom_blitz99 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version 1.02 */
@@ -2094,10 +2094,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )	/* Hard Drive Version 1.30 */
 		DISK_IMAGE( "blitz99.chd", 0, MD5(4bb6caf8f985e90d99989eede5504188) SHA1(4675751875943b756c8db6997fd288938a7999bb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( blitz2k )
+	static RomLoadPtr rom_blitz2k = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version 1.02 */
@@ -2108,10 +2108,10 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )	/* Hard Drive Version 1.5 */
 		DISK_IMAGE( "blitz2k.chd", 0, MD5(7778a82f35c05ed797b315439843246c) SHA1(153a7df368833cd5f5a52c3fe17045c5549a0c17) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( carnevil )
+	static RomLoadPtr rom_carnevil = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x800000, REGION_CPU1, 0 )		/* dummy R5000 region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x408000, REGION_CPU2, 0 )	/* ADSP-2115 data Version 1.02 */
@@ -2122,7 +2122,7 @@ public class seattle
 	
 		DISK_REGION( REGION_DISKS )
 		DISK_IMAGE( "carnevil.chd", 0, BAD_DUMP MD5(6eafae86091c0a915cf8cfdc3d73adc2) SHA1(5e6524d4b97de141c38e301a17e8af15661cb5d6) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -398,7 +398,7 @@ public class supertnk
 	
 	
 	
-	ROM_START( supertnk )
+	static RomLoadPtr rom_supertnk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for TMS9980 code - normal and banked ROM */
 		ROM_LOAD( "supertan.2d",	0x0000, 0x0800, CRC(1656a2c1) SHA1(1d49945aed105003a051cfbf646af7a4be1b7e86) )
 		ROM_LOAD( "supertnk.3d",	0x4800, 0x0800, CRC(8b023a9a) SHA1(1afdc8d75f2ca04153bac20c0e3e123e2a7acdb7) )
@@ -416,7 +416,7 @@ public class supertnk
 		ROM_LOAD( "supertnk.s",		0x0020, 0x0020, CRC(91722fcf) SHA1(f77386014b459cc151d2990ac823b91c04e8d319) )
 		/* unknown */
 		ROM_LOAD( "supertnk.t",		0x0040, 0x0020, CRC(154390bd) SHA1(4dc0fd7bd8999d2670c8d93aaada835d2a84d4db) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( supertnk ){

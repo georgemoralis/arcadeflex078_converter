@@ -283,7 +283,7 @@ public class ssozumo
 	
 	
 	
-	ROM_START( ssozumo )
+	static RomLoadPtr rom_ssozumo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		/* Main Program ROMs */
 		ROM_LOAD( "ic61.g01",	0x06000, 0x2000, CRC(86968f46) SHA1(6acd111b71fbb4ef00ae03be4fb93d305a6564e7) )	// m1
@@ -336,7 +336,7 @@ public class ssozumo
 		ROM_LOAD( "ic30.gz2",	0x00020, 0x0020, CRC(0de202e1) SHA1(ca1aa66c1d3d4724d322ec0346860c37729ddaed) )	/* tile palette red and green components */
 		ROM_LOAD( "ic32.gz1",	0x00040, 0x0020, CRC(6fbff4d2) SHA1(b2cd38fa8e9a74539b96d6e8e0375fff2dd77a20) )	/* char palette blue component */
 		ROM_LOAD( "ic31.gz3",	0x00060, 0x0020, CRC(18e7fe63) SHA1(b0834b94b22ead765ddac5591ab1dc66ec20f17f) )	/* tile palette blue component */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

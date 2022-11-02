@@ -458,7 +458,7 @@ public class overdriv
 	
 	***************************************************************************/
 	
-	ROM_START( overdriv )
+	static RomLoadPtr rom_overdriv = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "789.2",        0x00000, 0x20000, CRC(77f18f3f) SHA1(a8c91435573c7851a7864d07eeacfb2f142abbe2) )
 		ROM_LOAD16_BYTE( "789.1",        0x00001, 0x20000, CRC(4f44e6ad) SHA1(9fa871f55e6b2ec353dd979ded568cd9da83f5d6) )
@@ -494,7 +494,7 @@ public class overdriv
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )	/* 053260 samples */
 		ROM_LOAD( "e03.j1",       0x000000, 0x100000, CRC(51ebfebe) SHA1(17f0c23189258e801f48d5833fe934e7a48d071b) )
 		ROM_LOAD( "e02.f1",       0x100000, 0x100000, CRC(bdd3b5c6) SHA1(412332d64052c0a3714f4002c944b0e7d32980a4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

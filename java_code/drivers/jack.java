@@ -750,7 +750,7 @@ public class jack
 	
 	***************************************************************************/
 	
-	ROM_START( jack )
+	static RomLoadPtr rom_jack = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "j8",           0x0000, 0x1000, CRC(c8e73998) SHA1(1332c8dee99d07cc2823797ecc3551d720428b36) )
 		ROM_LOAD( "jgk.j6",       0x1000, 0x1000, CRC(36d7810e) SHA1(b8757222586eb6aa31fc3b1d1fd00ddb1c68cb0b) )
@@ -769,9 +769,9 @@ public class jack
 		ROM_LOAD( "jgk.j13",      0x1000, 0x1000, CRC(6aec2c8d) SHA1(f81c44e79e18a864abfeb8769f012a6e93679164) )
 		ROM_LOAD( "jgk.j11",      0x2000, 0x1000, CRC(fd14c525) SHA1(5e6a8274d008c5dd276aaf85f7f943810b5ac987) )
 		ROM_LOAD( "jgk.j10",      0x3000, 0x1000, CRC(eab890b2) SHA1(a5b83dff6bc6fd51f80db136fad8075262720f01) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( jack2 )
+	static RomLoadPtr rom_jack2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "jgk.j8",       0x0000, 0x1000, CRC(fe229e20) SHA1(191cfb7bb08d46cab713e23abd69f27db1685346) )
 		ROM_LOAD( "jgk.j6",       0x1000, 0x1000, CRC(36d7810e) SHA1(b8757222586eb6aa31fc3b1d1fd00ddb1c68cb0b) )
@@ -790,9 +790,9 @@ public class jack
 		ROM_LOAD( "jgk.j13",      0x1000, 0x1000, CRC(6aec2c8d) SHA1(f81c44e79e18a864abfeb8769f012a6e93679164) )
 		ROM_LOAD( "jgk.j11",      0x2000, 0x1000, CRC(fd14c525) SHA1(5e6a8274d008c5dd276aaf85f7f943810b5ac987) )
 		ROM_LOAD( "jgk.j10",      0x3000, 0x1000, CRC(eab890b2) SHA1(a5b83dff6bc6fd51f80db136fad8075262720f01) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( jack3 )
+	static RomLoadPtr rom_jack3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "jack8",        0x0000, 0x1000, CRC(632151d2) SHA1(080f29818d537474c821b9920427bda47f5a7254) )
 		ROM_LOAD( "jack6",        0x1000, 0x1000, CRC(f94f80d9) SHA1(2301e6d0b814bf897e5c8ed43a342e3213be0a27) )
@@ -811,9 +811,9 @@ public class jack
 		ROM_LOAD( "jgk.j13",      0x1000, 0x1000, CRC(6aec2c8d) SHA1(f81c44e79e18a864abfeb8769f012a6e93679164) )
 		ROM_LOAD( "jgk.j11",      0x2000, 0x1000, CRC(fd14c525) SHA1(5e6a8274d008c5dd276aaf85f7f943810b5ac987) )
 		ROM_LOAD( "jgk.j10",      0x3000, 0x1000, CRC(eab890b2) SHA1(a5b83dff6bc6fd51f80db136fad8075262720f01) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( treahunt )
+	static RomLoadPtr rom_treahunt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "thunt-1.f2",   0x0000, 0x1000, CRC(0b35858c) SHA1(b8f80c69fcbce71e1b85c8f39599f8bebfeb2585) )
 		ROM_LOAD( "thunt-2.f3",   0x1000, 0x1000, CRC(67305a51) SHA1(c00b9592c4e146892313e8d32261338957a6a04a) )
@@ -832,9 +832,9 @@ public class jack
 		ROM_LOAD( "thunt-12.a3",  0x1000, 0x1000, CRC(da4ee9eb) SHA1(e01c9cfa426d2b94e6bc976622b888b2ca224771) )
 		ROM_LOAD( "thunt-10.a1",  0x2000, 0x1000, CRC(51ec7934) SHA1(f39d99c356d8d9960022fa2c068b5f7206404d85) )
 		ROM_LOAD( "thunt-11.a2",  0x3000, 0x1000, CRC(f9781143) SHA1(f168648a78240fdf02063d39f324838f4dfe9a56) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( zzyzzyxx )
+	static RomLoadPtr rom_zzyzzyxx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "a.2f",         0x0000, 0x1000, CRC(a9102e34) SHA1(80d71df7d235980603f35aa3f474aaf58fb39946) )
 		ROM_LOAD( "zzyzzyxx.b",   0x1000, 0x1000, CRC(efa9d4c6) SHA1(aaa66723fed87f1134b59634050d1eb6a83c8159) )
@@ -854,9 +854,9 @@ public class jack
 		ROM_LOAD( "m.1d",         0x1000, 0x1000, CRC(217b1402) SHA1(b842b2bde8ff5be6b240ccfb35c7a9f701dab5f4) )
 		ROM_LOAD( "k.1b",         0x2000, 0x1000, CRC(b8b2b8cc) SHA1(e149fc91043f3233e10c81358b8624a4bc0baf4e) )
 		ROM_LOAD( "l.1a",         0x3000, 0x1000, CRC(ab421a83) SHA1(1cc3e1bcf9e90ffbf7bfeeb0caa8a4f63b34146a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( zzyzzyx2 )
+	static RomLoadPtr rom_zzyzzyx2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "a.2f",         0x0000, 0x1000, CRC(a9102e34) SHA1(80d71df7d235980603f35aa3f474aaf58fb39946) )
 		ROM_LOAD( "b.3f",         0x1000, 0x1000, CRC(4277beab) SHA1(269338a165286ed44b0fad1873e409f847b8d476) )
@@ -876,9 +876,9 @@ public class jack
 		ROM_LOAD( "m.1d",         0x1000, 0x1000, CRC(217b1402) SHA1(b842b2bde8ff5be6b240ccfb35c7a9f701dab5f4) )
 		ROM_LOAD( "k.1b",         0x2000, 0x1000, CRC(b8b2b8cc) SHA1(e149fc91043f3233e10c81358b8624a4bc0baf4e) )
 		ROM_LOAD( "l.1a",         0x3000, 0x1000, CRC(ab421a83) SHA1(1cc3e1bcf9e90ffbf7bfeeb0caa8a4f63b34146a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( brix )
+	static RomLoadPtr rom_brix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "a",            0x0000, 0x1000, CRC(050e0d70) SHA1(f5e0ed0845443701233de194d9ce24ec35e03a27) )
 		ROM_LOAD( "b",            0x1000, 0x1000, CRC(668118ae) SHA1(688d6f79d30186bade15dbb1f08e8b25cbefa852) )
@@ -898,9 +898,9 @@ public class jack
 		ROM_LOAD( "m.1d",         0x1000, 0x1000, CRC(217b1402) SHA1(b842b2bde8ff5be6b240ccfb35c7a9f701dab5f4) )
 		ROM_LOAD( "k",            0x2000, 0x1000, CRC(c7d7e2a0) SHA1(9790e78abf4f57ddfcef8e5632699152f9440a67) )
 		ROM_LOAD( "l.1a",         0x3000, 0x1000, CRC(ab421a83) SHA1(1cc3e1bcf9e90ffbf7bfeeb0caa8a4f63b34146a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( freeze )
+	static RomLoadPtr rom_freeze = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "freeze.f2",    0x0000, 0x1000, CRC(0a431665) SHA1(57b7fc72c7e3b0d09b4a0676a4e7094657e2b742) )
 		ROM_LOAD( "freeze.f3",    0x1000, 0x1000, CRC(1189b8ad) SHA1(8feb9387783e63a98efb60778fdf9eb9d5392cd9) )
@@ -919,9 +919,9 @@ public class jack
 		ROM_LOAD( "freeze.3a",    0x1000, 0x1000, CRC(6d2125e4) SHA1(6c3a12af512a1243b73759a758da8329bca38833) )
 		ROM_LOAD( "freeze.1a",    0x2000, 0x1000, CRC(3a7f2fa9) SHA1(5f0811ea4e61b9918de2d16ffcfa4a02af833613) )
 		ROM_LOAD( "freeze.2a",    0x3000, 0x1000, CRC(dd70ddd6) SHA1(d03cac0b4248da5d49ffac6ee57a3f8dd368731b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sucasino )
+	static RomLoadPtr rom_sucasino = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "1",       	  0x0000, 0x1000, CRC(e116e979) SHA1(99b0c783ace93e643738a1a924cafb690d2c1127) )
 		ROM_LOAD( "2",      	  0x1000, 0x1000, CRC(2a2635f5) SHA1(e3b70942adc4eab81000287c8da67d3732ddda70) )
@@ -940,9 +940,9 @@ public class jack
 		/* 1000-1fff empty */
 		ROM_LOAD( "10",      	  0x2000, 0x1000, CRC(3b0783ce) SHA1(880f258351a8b0d76abe433cc77d95b991ae1adc) )
 		/* 3000-3fff empty */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tripool )
+	static RomLoadPtr rom_tripool = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "tri73a.bin",   0x0000, 0x1000, CRC(96893aa7) SHA1(ea1dc5824d89c1bb131850625a65d018a9127179) )
 		ROM_LOAD( "tri62a.bin",   0x2000, 0x1000, CRC(3299dc65) SHA1(8f93247e2f49be6b601006be62f4ad539ec899fe) )
@@ -958,9 +958,9 @@ public class jack
 		ROM_REGION( 0x4000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "tri93a.bin",   0x2000, 0x1000, CRC(35213782) SHA1(05d5a67ffa3d26377c54777917d3ba51677ebd28) )
 		ROM_LOAD( "tri105a.bin",  0x0000, 0x1000, CRC(366a753c) SHA1(30fa8d80e42287e3e8677aefd15beab384265728) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tripoola )
+	static RomLoadPtr rom_tripoola = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "tri73a.bin",   0x0000, 0x1000, CRC(96893aa7) SHA1(ea1dc5824d89c1bb131850625a65d018a9127179) )
 		ROM_LOAD( "tri62a.bin",   0x2000, 0x1000, CRC(3299dc65) SHA1(8f93247e2f49be6b601006be62f4ad539ec899fe) )
@@ -976,7 +976,7 @@ public class jack
 		ROM_REGION( 0x4000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "tri93a.bin",   0x2000, 0x1000, CRC(35213782) SHA1(05d5a67ffa3d26377c54777917d3ba51677ebd28) )
 		ROM_LOAD( "tri105a.bin",  0x0000, 0x1000, CRC(366a753c) SHA1(30fa8d80e42287e3e8677aefd15beab384265728) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static void treahunt_decode(void)
 	{

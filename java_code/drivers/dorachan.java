@@ -125,7 +125,7 @@ public class dorachan
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
 	MACHINE_DRIVER_END
 	
-	ROM_START( dorachan )
+	static RomLoadPtr rom_dorachan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "c1.e1",      0x0000, 0x400, CRC(29d66a96) SHA1(a0297d87574af65c6ded99aeb377ac407f6f163f) )
 		ROM_LOAD( "d2.e2",      0x0400, 0x400, CRC(144b6cd1) SHA1(195ce86e912a4b395097008c6d812fd75a1a2482) )
@@ -142,7 +142,7 @@ public class dorachan
 		ROM_LOAD( "d13.rom",    0x7400, 0x400, CRC(24ccfcf9) SHA1(85e5052ee657f518b0509eb64e494bc3a74e651e) )
 		ROM_REGION( 0x400, REGION_USER1, 0 )
 		ROM_LOAD( "d14.rom",    0x0000, 0x400, CRC(c0d3ee84) SHA1(f2207c685ce8d5144a373c28f11d2cebf9518b65) ) /* color map ? */
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1980, dorachan, 0, dorachan, dorachan, 0, ROT90, "Craul Denshi", "Dorachan",GAME_NO_SOUND)
 	

@@ -251,7 +251,7 @@ public class superqix
 	
 	***************************************************************************/
 	
-	ROM_START( superqix )
+	static RomLoadPtr rom_superqix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "sq01.97",      0x00000, 0x08000, CRC(0888b7de) SHA1(de3e4637436de185f43d2ad4186d4cfdcd4d33d9) )
 		ROM_LOAD( "sq02.96",      0x10000, 0x10000, CRC(9c23cb64) SHA1(7e04cb18cabdc0031621162cbc228cd95875a022) )
@@ -268,9 +268,9 @@ public class superqix
 	
 		ROM_REGION( 0x1000, REGION_USER1, 0 )	/* Unknown (protection related?) */
 		ROM_LOAD( "sq07.108",     0x00000, 0x1000, CRC(071a598c) SHA1(2726705c3b82f5703e856261cdec5e86d7e1994e) )	// FIXED BITS (xxxx1xxx)
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sqixbl )
+	static RomLoadPtr rom_sqixbl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "cpu.2",        0x00000, 0x08000, CRC(682e28e3) SHA1(fe9221d26d7397be5a0fc8fdc51672b5924f3cf2) )
 		ROM_LOAD( "sq02.96",      0x10000, 0x10000, CRC(9c23cb64) SHA1(7e04cb18cabdc0031621162cbc228cd95875a022) )
@@ -284,9 +284,9 @@ public class superqix
 	
 		ROM_REGION( 0x10000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "sq05.1",       0x00000, 0x10000, CRC(df326540) SHA1(1fe025edcd38202e24c4e1005f478b6a88533453) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( perestro )
+	static RomLoadPtr rom_perestro = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 64k for code */
 		/* 0x8000 - 0x10000 in the rom is empty anyway */
 		ROM_LOAD( "rom1.bin",        0x00000, 0x20000, CRC(0cbf96c1) SHA1(cf2b1367887d1b8812a56aa55593e742578f220c) )
@@ -299,7 +299,7 @@ public class superqix
 	
 		ROM_REGION( 0x10000, REGION_GFX3, ROMREGION_DISPOSE )
 		ROM_LOAD( "rom3.bin",       0x00000, 0x10000, CRC(00c91d5a) SHA1(fdde56d3689a47e6bfb296e442207b93b887ec7a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT(perestro)

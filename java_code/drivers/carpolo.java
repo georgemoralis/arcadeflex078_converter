@@ -279,7 +279,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	ROM_START( carpolo )
+	static RomLoadPtr rom_carpolo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "4000.6c",   0xf000, 0x0200, CRC(9d2e75a5) SHA1(c249d0b31de452738516f04a7bc3fb472d54f79d) )
 		ROM_LOAD( "4001.6d",   0xf200, 0x0200, CRC(69fb3768) SHA1(5fcc0807e560de0d73f8bab6943f3cad5ee324c9) )
@@ -309,7 +309,7 @@ public class carpolo
 	
 		ROM_REGION( 0x0020, REGION_USER1, 0 )
 		ROM_LOAD( "327.10s",   0x0000, 0x0020, CRC(e047d24d) SHA1(2ea7afc8d97c906295bf2af929e0515f6c34137f) )		/* sprite image map */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

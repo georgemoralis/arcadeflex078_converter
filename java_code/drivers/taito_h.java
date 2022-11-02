@@ -682,7 +682,7 @@ public class taito_h
 	
 	***************************************************************************/
 	
-	ROM_START( syvalion )
+	static RomLoadPtr rom_syvalion = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )		/* main cpu */
 		ROM_LOAD16_BYTE( "b51-20.bin", 0x00000, 0x20000, CRC(440b6418) SHA1(262b65f39eb13c11ae7b87013951097ab0a9cb63) )
 		ROM_LOAD16_BYTE( "b51-22.bin", 0x00001, 0x20000, CRC(e6c61079) SHA1(b786ef1bfc72706347c12c17616652bc8302a98c) )
@@ -716,9 +716,9 @@ public class taito_h
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* samples */
 		ROM_LOAD( "b51-17.bin", 0x00000, 0x80000, CRC(d85096aa) SHA1(dac39ed182e9eda06575f1667c4c1ff9a4a56599) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( recordbr )
+	static RomLoadPtr rom_recordbr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )		/* main cpu */
 		ROM_LOAD16_BYTE( "b56-17.rom", 0x00000, 0x20000, CRC(3e0a9c35) SHA1(900a741b2abbbbe883b9d78162a88b4397af1a56) )
 		ROM_LOAD16_BYTE( "b56-16.rom", 0x00001, 0x20000, CRC(b447f12c) SHA1(58ee30337836f260c7fbda728dac93f06d861ec4) )
@@ -744,9 +744,9 @@ public class taito_h
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )	/* samples */
 		ROM_LOAD( "b56-10.bin", 0x00000, 0x80000, CRC(de1bce59) SHA1(aa3aea30d6f53e60d9a0d4ec767e1b261d5efc8a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dleague )
+	static RomLoadPtr rom_dleague = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "c02-19a.33", 0x00000, 0x20000, CRC(7e904e45) SHA1(04ac470c973753e71fba3998099a88ab0e6fcbab) )
 		ROM_LOAD16_BYTE( "c02-21a.36", 0x00001, 0x20000, CRC(18c8a32b) SHA1(507cd7a83dcb6eaefa52f2661b9f3a6fabbfbd46) )
@@ -776,7 +776,7 @@ public class taito_h
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "c02-01.31", 0x00000, 0x80000, CRC(d5a3d1aa) SHA1(544f807015b5d854a4d8cb73e4dbae4b953fd440) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( taitoh )

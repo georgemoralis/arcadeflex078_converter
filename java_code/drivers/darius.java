@@ -891,7 +891,7 @@ public class darius
 	                                  DRIVERS
 	***************************************************************************/
 	
-	ROM_START( darius )
+	static RomLoadPtr rom_darius = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_FILL( 0x00000, 0x60000, 0xffffffff )
 		ROM_LOAD16_BYTE( "da-59.bin",   0x00000, 0x10000, CRC(11aab4eb) SHA1(92f795e96a940e8d94abbf429ba4ac119992b991) )
@@ -948,9 +948,9 @@ public class darius
 		ROM_LOAD16_BYTE( "a96-24.163",   0x0000, 0x0400, CRC(0fa8be7f) SHA1(079686b5d65b4b966591090d8c0e13e66dc5beca) )	/* proms, currently unused */
 		ROM_LOAD16_BYTE( "a96-25.164",   0x0400, 0x0400, CRC(265508a6) SHA1(f8ee1c658b33ae76d8a457a4042d9b4b58247823) )
 		ROM_LOAD16_BYTE( "a96-26.165",   0x0800, 0x0400, CRC(4891b9c0) SHA1(1f550a9a4ad3ca379f88f5865ed1b281c7b87f31) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dariusj )
+	static RomLoadPtr rom_dariusj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_FILL( 0x00000, 0x60000, 0xffffffff )
 		ROM_LOAD16_BYTE( "a96_29-1.185", 0x00000, 0x10000, CRC(75486f62) SHA1(818b095f2c6cc5764161c3e14ba70fe1c4b2f724) )
@@ -1003,9 +1003,9 @@ public class darius
 		ROM_LOAD16_BYTE( "a96-24.163",   0x0000, 0x0400, CRC(0fa8be7f) SHA1(079686b5d65b4b966591090d8c0e13e66dc5beca) )	/* proms, currently unused */
 		ROM_LOAD16_BYTE( "a96-25.164",   0x0400, 0x0400, CRC(265508a6) SHA1(f8ee1c658b33ae76d8a457a4042d9b4b58247823) )
 		ROM_LOAD16_BYTE( "a96-26.165",   0x0800, 0x0400, CRC(4891b9c0) SHA1(1f550a9a4ad3ca379f88f5865ed1b281c7b87f31) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dariuso )
+	static RomLoadPtr rom_dariuso = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_FILL( 0x00000, 0x60000, 0xffffffff )
 		ROM_LOAD16_BYTE( "a96-29.185",   0x00000, 0x10000, CRC(f775162b) SHA1(a17e570c2ba4daf0a3526b45c324c822faac0c8d) )
@@ -1058,9 +1058,9 @@ public class darius
 		ROM_LOAD16_BYTE( "a96-24.163",   0x0000, 0x0400, CRC(0fa8be7f) SHA1(079686b5d65b4b966591090d8c0e13e66dc5beca) )	/* proms, currently unused */
 		ROM_LOAD16_BYTE( "a96-25.164",   0x0400, 0x0400, CRC(265508a6) SHA1(f8ee1c658b33ae76d8a457a4042d9b4b58247823) )
 		ROM_LOAD16_BYTE( "a96-26.165",   0x0800, 0x0400, CRC(4891b9c0) SHA1(1f550a9a4ad3ca379f88f5865ed1b281c7b87f31) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dariuse )
+	static RomLoadPtr rom_dariuse = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_FILL( 0x00000, 0x60000, 0xffffffff )
 		ROM_LOAD16_BYTE( "dae-68.bin",   0x00000, 0x10000, CRC(ed721127) SHA1(8127f4a9b26b5fb83a381235eef0577d60d1cfd7) )
@@ -1113,7 +1113,7 @@ public class darius
 		ROM_LOAD16_BYTE( "a96-24.163",   0x0000, 0x0400, CRC(0fa8be7f) SHA1(079686b5d65b4b966591090d8c0e13e66dc5beca) )	/* proms, currently unused */
 		ROM_LOAD16_BYTE( "a96-25.164",   0x0400, 0x0400, CRC(265508a6) SHA1(f8ee1c658b33ae76d8a457a4042d9b4b58247823) )
 		ROM_LOAD16_BYTE( "a96-26.165",   0x0800, 0x0400, CRC(4891b9c0) SHA1(1f550a9a4ad3ca379f88f5865ed1b281c7b87f31) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( darius )

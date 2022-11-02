@@ -262,7 +262,7 @@ public class splash
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( splash )
+	static RomLoadPtr rom_splash = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )	/* 68000 code + gfx */
 		ROM_LOAD16_BYTE(	"4g",	0x000000, 0x020000, CRC(b38fda40) SHA1(37ddf4b6f9f2f6cc58efefc277bc3ae9dc71e6d0) )
 		ROM_LOAD16_BYTE(	"4i",	0x000001, 0x020000, CRC(02359c47) SHA1(6817424b2b1afffa99cec5b8fae4fb8436db2bb5) )
@@ -281,7 +281,7 @@ public class splash
 		ROM_LOAD( "15i",	0x020000, 0x020000, CRC(2a8cb830) SHA1(bc54dfb03fade154085aa2f66784e07664a7a3d8) )
 		ROM_LOAD( "16i",	0x040000, 0x020000, CRC(21aeff2c) SHA1(0c307e94f4a814c674ba0ab471a6bdd57e43c265) )
 		ROM_LOAD( "13i",	0x060000, 0x020000, CRC(febb9893) SHA1(bb607a608c6c1658748a17a62431e8c30323c7ec) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1992, splash, 0, splash, splash, 0, ROT0, "Gaelco", "Splash! (Ver. 1.2 World)" )

@@ -477,7 +477,7 @@ public class tecmosys
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( deroon )
+	static RomLoadPtr rom_deroon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) // Main Program
 		ROM_LOAD16_BYTE( "t001upau.bin", 0x00000, 0x80000, CRC(14b92c18) SHA1(b47b8c828222a3f7c0fe9271899bd38171d972fb) )
 		ROM_LOAD16_BYTE( "t002upal.bin", 0x00001, 0x80000, CRC(0fb05c68) SHA1(5140592e15414770fb46d5ac9ba8f76e3d4ab323) )
@@ -500,9 +500,9 @@ public class tecmosys
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 ) // M6295 Samples
 		ROM_LOAD( "t501uad1.w01", 0x000000, 0x080000, CRC(2fbcfe27) SHA1(f25c830322423f0959a36955edb563a6150f2142) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tkdensho )
+	static RomLoadPtr rom_tkdensho = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x600000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "aeprge-2.pal", 0x00000, 0x80000, CRC(25e453d6) SHA1(9c84e2af42eff5cc9b14c1759d5bab42fa7bb663) )
 		ROM_LOAD16_BYTE( "aeprgo-2.pau", 0x00001, 0x80000, CRC(22d59510) SHA1(5ade482d6ab9a22df2ee8337458c22cfa9045c73) )
@@ -532,7 +532,7 @@ public class tecmosys
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 ) // M6295 Samples
 		ROM_LOAD( "ae500w07.ad1", 0x000000, 0x080000, CRC(3734f92c) SHA1(048555b5aa89eaf983305c439ba08d32b4a1bb80) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( deroon )

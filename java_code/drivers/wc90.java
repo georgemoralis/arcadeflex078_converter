@@ -396,7 +396,7 @@ public class wc90
 		MDRV_VIDEO_START( wc90t )
 	MACHINE_DRIVER_END
 	
-	ROM_START( wc90 )
+	static RomLoadPtr rom_wc90 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128k for code */
 		ROM_LOAD( "ic87_01.bin",  0x00000, 0x08000, CRC(4a1affbc) SHA1(bc531e97ca31c66fdac194e2d79d5c6ba1300556) )	/* c000-ffff is not used */
 		ROM_LOAD( "ic95_02.bin",  0x10000, 0x10000, CRC(847d439c) SHA1(eade31050da9e84feb4406e327d050a7496871b7) )	/* banked at f000-f7ff */
@@ -427,9 +427,9 @@ public class wc90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* 64k for ADPCM samples */
 		ROM_LOAD( "ic82_06.bin",  0x00000, 0x20000, CRC(2fd692ed) SHA1(0273dc39181504320bec0187d074b2f86c821508) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wc90a )
+	static RomLoadPtr rom_wc90a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128k for code */
 		ROM_LOAD( "wc90-1.bin",   0x00000, 0x08000, CRC(d1804e1a) SHA1(eec7374f4d23c89843f38fffff436635adb43b63) )	/* c000-ffff is not used */
 		ROM_LOAD( "ic95_02.bin",  0x10000, 0x10000, CRC(847d439c) SHA1(eade31050da9e84feb4406e327d050a7496871b7) )	/* banked at f000-f7ff */
@@ -460,9 +460,9 @@ public class wc90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* 64k for ADPCM samples */
 		ROM_LOAD( "ic82_06.bin",  0x00000, 0x20000, CRC(2fd692ed) SHA1(0273dc39181504320bec0187d074b2f86c821508) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wc90t )
+	static RomLoadPtr rom_wc90t = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128k for code */
 		ROM_LOAD( "wc90a-1.bin",  0x00000, 0x08000, CRC(b6f51a68) SHA1(e0263dee35bf99cb4288a1df825bbbca17c85d36) )	/* c000-ffff is not used */
 		ROM_LOAD( "wc90a-2.bin",  0x10000, 0x10000, CRC(c50f2a98) SHA1(0fbeabadebfa75515d5e35bfcc565ecfa4d6e693) )	/* banked at f000-f7ff */
@@ -493,7 +493,7 @@ public class wc90
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* 64k for ADPCM samples */
 		ROM_LOAD( "ic82_06.bin",  0x00000, 0x20000, CRC(2fd692ed) SHA1(0273dc39181504320bec0187d074b2f86c821508) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

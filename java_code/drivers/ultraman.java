@@ -316,7 +316,7 @@ public class ultraman
 	
 	
 	
-	ROM_START( ultraman )
+	static RomLoadPtr rom_ultraman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x040000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE(	"910-b01.c11",	0x000000, 0x020000, CRC(3d9e4323) SHA1(54ee218c9be1ac029836624839d0845b39e6e30f) )
 		ROM_LOAD16_BYTE(	"910-b02.d11",	0x000001, 0x020000, CRC(d24c82e9) SHA1(e792e2601e235939546fe98d52bfafe5a95b3491) )
@@ -351,7 +351,7 @@ public class ultraman
 	
 		ROM_REGION( 0x040000, REGION_SOUND1, 0 )	/* M6295 data */
 		ROM_LOAD( "910-a06.c06",	0x000000, 0x040000, CRC(28fa99c9) SHA1(54663d79ee105ac18d6ba01333a52e3732f2e5fe) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

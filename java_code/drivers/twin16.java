@@ -1057,7 +1057,7 @@ public class twin16
 	
 	/* ROMs */
 	
-	ROM_START( devilw )
+	static RomLoadPtr rom_devilw = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "687_l03.10a",		0x00000,  0x8000, CRC(7201983c) SHA1(06d089406d2f702e8d51ffdfbf34e4727a28d506) )
 	
@@ -1091,9 +1091,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "687_i02.7c",			0x00000, 0x20000, CRC(e5947501) SHA1(9ec7319bd97711981db60af6f477c2ba2ec7e6b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( majuu )
+	static RomLoadPtr rom_majuu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "687_l03.10a",		0x00000,  0x8000, CRC(7201983c) SHA1(06d089406d2f702e8d51ffdfbf34e4727a28d506) )
 	
@@ -1127,9 +1127,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "687_i02.7c",			0x00000, 0x20000, CRC(e5947501) SHA1(9ec7319bd97711981db60af6f477c2ba2ec7e6b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( darkadv )
+	static RomLoadPtr rom_darkadv = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "687_n03.10a",		0x00000,  0x8000, CRC(a24c682f) SHA1(cf053270d3f77448ff802db832598ae3cf7dae6c) )
 	
@@ -1163,9 +1163,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "687_i02.7c",			0x00000, 0x20000, CRC(e5947501) SHA1(9ec7319bd97711981db60af6f477c2ba2ec7e6b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vulcan )
+	static RomLoadPtr rom_vulcan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "785_g03.10a",		0x00000,  0x8000, CRC(67a3b50d) SHA1(3c83f3b0df73d9361ec3cda26a6c4c603a088419) )
 	
@@ -1197,9 +1197,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "785_f02.7c",			0x00000, 0x20000, CRC(c39f5ca4) SHA1(92ebea11b7d3a72d0f58c456f16a6ff36d6b3062) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gradius2 )
+	static RomLoadPtr rom_gradius2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "785_g03.10a",		0x00000,  0x8000, CRC(67a3b50d) SHA1(3c83f3b0df73d9361ec3cda26a6c4c603a088419) )
 	
@@ -1231,9 +1231,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "785_f02.7c",			0x00000, 0x20000, CRC(c39f5ca4) SHA1(92ebea11b7d3a72d0f58c456f16a6ff36d6b3062) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( grdius2a )
+	static RomLoadPtr rom_grdius2a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "785_g03.10a",		0x00000,  0x8000, CRC(67a3b50d) SHA1(3c83f3b0df73d9361ec3cda26a6c4c603a088419) )
 	
@@ -1265,9 +1265,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "785_f02.7c",			0x00000, 0x20000, CRC(c39f5ca4) SHA1(92ebea11b7d3a72d0f58c456f16a6ff36d6b3062) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( grdius2b )
+	static RomLoadPtr rom_grdius2b = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // Z80 code (sound CPU)
 		ROM_LOAD( "785_g03.10a",		0x00000,  0x8000, CRC(67a3b50d) SHA1(3c83f3b0df73d9361ec3cda26a6c4c603a088419) )
 	
@@ -1299,9 +1299,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "785_f02.7c",			0x00000, 0x20000, CRC(c39f5ca4) SHA1(92ebea11b7d3a72d0f58c456f16a6ff36d6b3062) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fround )
+	static RomLoadPtr rom_fround = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "870_f03.10a",		0x00000,  0x8000, CRC(a645c727) SHA1(e173e79130f187d090766664f1c478d47062749c) )
 	
@@ -1323,9 +1323,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "870_c02.7c",			0x00000, 0x20000, CRC(54e12c6d) SHA1(8171441aeb1a1dc4d65fae59c7c217f992f70cbc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( froundl )
+	static RomLoadPtr rom_froundl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "870_f03.10a",		0x00000,  0x8000, CRC(a645c727) SHA1(e173e79130f187d090766664f1c478d47062749c) )
 	
@@ -1347,9 +1347,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )	// samples
 		ROM_LOAD( "870_c02.7c",			0x00000, 0x20000, CRC(54e12c6d) SHA1(8171441aeb1a1dc4d65fae59c7c217f992f70cbc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hpuncher )
+	static RomLoadPtr rom_hpuncher = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// Z80 code (sound CPU)
 		ROM_LOAD( "870_g03.10a",		0x00000,  0x8000, CRC(db9c10c8) SHA1(b2ec4d6800a4ab00dfcc8d3cd4abf9b9d7c5544a) )
 	
@@ -1377,9 +1377,9 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		ROM_LOAD( "870_c02.7c",			0x00000, 0x20000, CRC(54e12c6d) SHA1(8171441aeb1a1dc4d65fae59c7c217f992f70cbc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( miaj )
+	static RomLoadPtr rom_miaj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // Z80 code (sound CPU)
 		ROM_LOAD( "808_e03.10a",		0x00000,  0x8000, CRC(3d93a7cd) SHA1(dcdd327e78f32436b276d0666f62a5b733b296e8) )
 	
@@ -1408,9 +1408,9 @@ public class twin16
 		ROM_LOAD("808_d01.5a",			0x00000, 0x20000, CRC(fd4d37c0) SHA1(ef91c6e7bb57c27a9a51729fffd1bfe3e806fb61) )
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cuebrick )
+	static RomLoadPtr rom_cuebrick = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) // Z80 code (sound CPU)
 		ROM_LOAD( "903_d03.10a",		0x00000,  0x8000, CRC(455e855a) SHA1(cfdd54a5071862653ee94c0455301f4a7245fbd8) )
 	
@@ -1441,7 +1441,7 @@ public class twin16
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 ) // samples
 		// unpopulated
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Driver Initialization */
 	

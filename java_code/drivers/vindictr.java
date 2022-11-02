@@ -317,7 +317,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	ROM_START( vindictr )
+	static RomLoadPtr rom_vindictr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "5117-d1.059",  0x000000, 0x010000, CRC(2e5135e4) SHA1(804b3ba201088ac2c35cfcbd530acbd73548ea8c) )
 		ROM_LOAD16_BYTE( "5118-d3.059",  0x000001, 0x010000, CRC(e357fa79) SHA1(220a10287f4bf9d981fd412c8dd0a9c106eaf342) )
@@ -346,10 +346,10 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1123-16n.059", 0x000000, 0x004000, CRC(f99b631a) SHA1(7a2430b6810c77b0f717d6e9d71823eadbcf6013) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vindicte )
+	static RomLoadPtr rom_vindicte = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "5717-d1.059",  0x000000, 0x010000, CRC(af5ba4a8) SHA1(fdb6e7f0707af94b39368cc39ae45c53209ce32e) )
 		ROM_LOAD16_BYTE( "5718-d3.059",  0x000001, 0x010000, CRC(c87b0581) SHA1(f33c72e83e8c811d3405deb470573327c7b68ea6) )
@@ -378,10 +378,10 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1123-16n.059", 0x000000, 0x004000, CRC(f99b631a) SHA1(7a2430b6810c77b0f717d6e9d71823eadbcf6013) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vindictg )
+	static RomLoadPtr rom_vindictg = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1217-d1.059",  0x000000, 0x010000, CRC(0a589e9a) SHA1(6770212b57599cd9bcdeb126aec30d9815608005) )
 		ROM_LOAD16_BYTE( "1218-d3.059",  0x000001, 0x010000, CRC(e8b7959a) SHA1(b63747934b188f44a5e59a54f52d15b33f9d676b) )
@@ -410,10 +410,10 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1223-16n.059", 0x000000, 0x004000, CRC(d27975bb) SHA1(a8ab8bdbd9fbcbcf73e8621b2a4447d25bf612b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vindice4 )
+	static RomLoadPtr rom_vindice4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1117-d1.059",  0x000000, 0x010000, CRC(2e5135e4) SHA1(804b3ba201088ac2c35cfcbd530acbd73548ea8c) )
 		ROM_LOAD16_BYTE( "1118-d3.059",  0x000001, 0x010000, CRC(e357fa79) SHA1(220a10287f4bf9d981fd412c8dd0a9c106eaf342) )
@@ -442,10 +442,10 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1123-16n.059", 0x000000, 0x004000, CRC(f99b631a) SHA1(7a2430b6810c77b0f717d6e9d71823eadbcf6013) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vindict4 )
+	static RomLoadPtr rom_vindict4 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1117-d1.059",  0x000000, 0x010000, CRC(2e5135e4) SHA1(804b3ba201088ac2c35cfcbd530acbd73548ea8c) )
 		ROM_LOAD16_BYTE( "1118-d3.059",  0x000001, 0x010000, CRC(e357fa79) SHA1(220a10287f4bf9d981fd412c8dd0a9c106eaf342) )
@@ -474,10 +474,10 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1123-16n.059", 0x000000, 0x004000, CRC(f99b631a) SHA1(7a2430b6810c77b0f717d6e9d71823eadbcf6013) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vindice3 )
+	static RomLoadPtr rom_vindice3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "3117-d1.059",  0x000000, 0x010000, CRC(af5ba4a8) SHA1(fdb6e7f0707af94b39368cc39ae45c53209ce32e) )
 		ROM_LOAD16_BYTE( "3118-d3.059",  0x000001, 0x010000, CRC(c87b0581) SHA1(f33c72e83e8c811d3405deb470573327c7b68ea6) )
@@ -506,10 +506,10 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1123-16n.059", 0x000000, 0x004000, CRC(f99b631a) SHA1(7a2430b6810c77b0f717d6e9d71823eadbcf6013) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vindict2 )
+	static RomLoadPtr rom_vindict2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1117-d1.059",  0x000000, 0x010000, CRC(2e5135e4) SHA1(804b3ba201088ac2c35cfcbd530acbd73548ea8c) )
 		ROM_LOAD16_BYTE( "1118-d3.059",  0x000001, 0x010000, CRC(e357fa79) SHA1(220a10287f4bf9d981fd412c8dd0a9c106eaf342) )
@@ -538,10 +538,10 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1123-16n.059", 0x000000, 0x004000, CRC(f99b631a) SHA1(7a2430b6810c77b0f717d6e9d71823eadbcf6013) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( vindict1 )
+	static RomLoadPtr rom_vindict1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x60000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1117-d1.059",  0x000000, 0x010000, CRC(2e5135e4) SHA1(804b3ba201088ac2c35cfcbd530acbd73548ea8c) )
 		ROM_LOAD16_BYTE( "1118-d3.059",  0x000001, 0x010000, CRC(e357fa79) SHA1(220a10287f4bf9d981fd412c8dd0a9c106eaf342) )
@@ -570,7 +570,7 @@ public class vindictr
 	
 		ROM_REGION( 0x04000, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "1123-16n.059", 0x000000, 0x004000, CRC(f99b631a) SHA1(7a2430b6810c77b0f717d6e9d71823eadbcf6013) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

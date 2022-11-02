@@ -461,7 +461,7 @@ public class supbtime
 	
 	/******************************************************************************/
 	
-	ROM_START( supbtime )
+	static RomLoadPtr rom_supbtime = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gk03", 0x00000, 0x20000, CRC(aeaeed61) SHA1(4bceb4475a642a36406395f1e84b16fa137f67a5) )
 		ROM_LOAD16_BYTE( "gk04", 0x00001, 0x20000, CRC(2bc5a4eb) SHA1(721ec73c32af8b998babb6d7c9e526ced0c2389b) )
@@ -478,9 +478,9 @@ public class supbtime
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 	  	ROM_LOAD( "gc05.bin",    0x00000, 0x20000, CRC(2f2246ff) SHA1(3fcceb6f5aa5f33187bcf4c59d88327f396fa80d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( supbtimj )
+	static RomLoadPtr rom_supbtimj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gc03.bin", 0x00000, 0x20000, CRC(b5621f6a) SHA1(2dfd361e81dc4805bc248cc293d94131162df2d2) )
 		ROM_LOAD16_BYTE( "gc04.bin", 0x00001, 0x20000, CRC(551b2a0c) SHA1(8a6dde2d64029b8e7f7c9b88bd05633b69417dc1) )
@@ -497,9 +497,9 @@ public class supbtime
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 	  	ROM_LOAD( "gc05.bin",    0x00000, 0x20000, CRC(2f2246ff) SHA1(3fcceb6f5aa5f33187bcf4c59d88327f396fa80d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( chinatwn )
+	static RomLoadPtr rom_chinatwn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "gv_00-.f11", 0x00000, 0x20000, CRC(2ea7ea5d) SHA1(3d0eb63f3af00bcf10ba7416dd26b366578006bf) )
 		ROM_LOAD16_BYTE( "gv_01-.f13", 0x00001, 0x20000, CRC(bcab03c7) SHA1(cd6c1ad26a0867482565a0544ea1870012cabf34) )
@@ -516,7 +516,7 @@ public class supbtime
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 	  	ROM_LOAD( "gv_03-.j14",    0x00000, 0x20000, CRC(948faf92) SHA1(2538c7d4fa7fe0bfdd5dccece8ee82e911cee63f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

@@ -266,7 +266,7 @@ public class bigstrkb
 	
 	/* Rom Loading */
 	
-	ROM_START( bigstrkb )
+	static RomLoadPtr rom_bigstrkb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "footgaa.015", 0x00001, 0x40000, CRC(33b1d7f3) SHA1(7a48c3c7f5ed61099d07b3259778ad382b7660a2) )
 		ROM_LOAD16_BYTE( "footgaa.016", 0x00000, 0x40000, CRC(1c6b8709) SHA1(b371cb1421877247d88ffc52ad090b3c6279b78f) )
@@ -294,7 +294,7 @@ public class bigstrkb
 	
 		ROM_REGION( 0x40000, REGION_SOUND2, 0 ) /* Samples? */
 		ROM_LOAD( "footgaa.009", 0x00000, 0x40000, CRC(19bf0896) SHA1(30c8e030d7dbcd38f213010596c8f9c5b8089f62) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* GAME drivers */
 	

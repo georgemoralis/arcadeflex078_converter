@@ -289,7 +289,7 @@ public class phozon
 	
 	
 	
-	ROM_START( phozon )
+	static RomLoadPtr rom_phozon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the MAIN CPU  */
 		ROM_LOAD( "6e.rom", 0x8000, 0x2000, CRC(a6686af1) SHA1(87a948b289356675d0418c87c3c0ae36ceba3ee0) )
 		ROM_LOAD( "6h.rom", 0xa000, 0x2000, CRC(72a65ba0) SHA1(b1d5146c009469d4c6695f08ea2c6ad5d05b5b9b) )
@@ -321,7 +321,7 @@ public class phozon
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound PROMs */
 		ROM_LOAD( "sound.prm", 0x0000, 0x0100, CRC(ad43688f) SHA1(072f427453efb1dda8147da61804fff06e1bc4d5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

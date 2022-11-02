@@ -380,7 +380,7 @@ public class nyny
 	***************************************************************************/
 	
 	
-	ROM_START( nyny )
+	static RomLoadPtr rom_nyny = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x10000, REGION_CPU1, 0)	/* 64k for code for the first CPU (Video) */
 		ROM_LOAD( "nyny01s.100",  0xa800, 0x800, CRC(a2b76eca) SHA1(e46717e6ad330be4c4e7d9fab4f055f89aa31bcc) )
 		ROM_LOAD( "nyny02s.099",  0xb000, 0x800, CRC(ef2d4dae) SHA1(718c0ecf7770a780aebb1dc8bf4ca86ea0a5ea28) )
@@ -400,9 +400,9 @@ public class nyny
 	
 		ROM_REGION(0x10000, REGION_CPU3, 0) 	/* 64k for code for the third CPU (sound) */
 		ROM_LOAD( "nyny11.snd",   0xf800, 0x800, CRC(650450fc) SHA1(214693df394ca05eff5dbe1e800107d326ba80f6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nynyg )
+	static RomLoadPtr rom_nynyg = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x10000, REGION_CPU1, 0)	/* 64k for code for the first CPU (Video) */
 		ROM_LOAD( "gny1.cpu",     0xa800, 0x800, CRC(fb5b8f17) SHA1(2202325451dfd4e7c16cba93f0fade46929ffa72) )
 		ROM_LOAD( "gny2.cpu",     0xb000, 0x800, CRC(d248dd93) SHA1(0c4579698f8917332041c08af6902b8f8acd7d62) )
@@ -424,9 +424,9 @@ public class nyny
 		/* The original dump of this ROM was bad [FIXED BITS (x1xxxxxx)] */
 		/* Since what's left is identical to the Sigma version, I'm assuming it's the same. */
 		ROM_LOAD( "nyny11.snd",   0xf800, 0x800, CRC(650450fc) SHA1(214693df394ca05eff5dbe1e800107d326ba80f6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( arcadia )
+	static RomLoadPtr rom_arcadia = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION(0x10000, REGION_CPU1, 0)	/* 64k for code for the first CPU (Video) */
 		ROM_LOAD( "ar-01",        0xa800, 0x800, CRC(7b7e8f27) SHA1(2bb1d07d87ad5b952de9460c840d7e8b59ed1b4a) )
 		ROM_LOAD( "ar-02",        0xb000, 0x800, CRC(81d9e172) SHA1(4279582f1edf54f0974fa277565d8ade6d9faa50) )
@@ -446,7 +446,7 @@ public class nyny
 	
 		ROM_REGION(0x10000, REGION_CPU3, 0) 	/* 64k for code for the third CPU (sound) */
 		ROM_LOAD( "ar-11",        0xf800, 0x800, CRC(208f4488) SHA1(533f8942e1c964cc88253e9dc4ec711f77607e4c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAMEX( 1980, nyny,    0,    nyny, nyny, 0, ROT270, "Sigma Enterprises Inc.", "New York New York", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )

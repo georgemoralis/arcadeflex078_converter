@@ -245,7 +245,7 @@ public class midxunit
 	 *
 	 *************************************/
 	
-	ROM_START( revx )
+	static RomLoadPtr rom_revx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34020 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x800000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -304,7 +304,7 @@ public class midxunit
 		ROM_LOAD( "revx.52",  0x0e80000, 0x80000, CRC(fbf55510) SHA1(8a5b0004ed09391fe37f0f501b979903d6ae4868) )
 		ROM_LOAD( "revx.53",  0x0f00000, 0x80000, CRC(a045b265) SHA1(b294d3a56e41f5ec4ab9bbcc0088833b1cab1879) )
 		ROM_LOAD( "revx.54",  0x0f80000, 0x80000, CRC(24471269) SHA1(262345bd147402100785459af422dafd1c562787) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

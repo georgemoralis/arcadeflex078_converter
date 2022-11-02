@@ -961,7 +961,7 @@ public class galpanic
 	
 	***************************************************************************/
 	
-	ROM_START( galpanic )
+	static RomLoadPtr rom_galpanic = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "pm110.4m2",    0x000000, 0x80000, CRC(ae6b17a8) SHA1(f3a625eef45cc85cdf9760f77ea7ce93387911f9) )
 		ROM_LOAD16_BYTE( "pm109.4m1",    0x000001, 0x80000, CRC(b85d792d) SHA1(0ed78e15f6e58285ce6944200b023ada1e673b0e) )
@@ -985,9 +985,9 @@ public class galpanic
 		ROM_LOAD( "pm008e.l",     0x00000, 0x80000, CRC(d9379ba8) SHA1(5ae7c743319b1a12f2b101a9f0f8fe0728ed1476) )
 		ROM_RELOAD(               0x40000, 0x80000 )
 		ROM_LOAD( "pm007e.u",     0xc0000, 0x80000, CRC(c7ed7950) SHA1(133258b058d3c562208d0d00b9fac71202647c32) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galpanib )
+	static RomLoadPtr rom_galpanib = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "pm110.4m2",    0x000000, 0x80000, CRC(ae6b17a8) SHA1(f3a625eef45cc85cdf9760f77ea7ce93387911f9) )
 		ROM_LOAD16_BYTE( "pm109.4m1",    0x000001, 0x80000, CRC(b85d792d) SHA1(0ed78e15f6e58285ce6944200b023ada1e673b0e) )
@@ -1006,9 +1006,9 @@ public class galpanic
 		ROM_LOAD( "pm008e.l",     0x00000, 0x80000, CRC(d9379ba8) SHA1(5ae7c743319b1a12f2b101a9f0f8fe0728ed1476) )
 		ROM_RELOAD(               0x40000, 0x80000 )
 		ROM_LOAD( "pm007e.u",     0xc0000, 0x80000, CRC(c7ed7950) SHA1(133258b058d3c562208d0d00b9fac71202647c32) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fantasia )
+	static RomLoadPtr rom_fantasia = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "prog2_16.rom", 0x000000, 0x80000, CRC(e27c6c57) SHA1(420b66928c46e76fa2496f221691dd6c34542287) )
 		ROM_LOAD16_BYTE( "prog1_13.rom", 0x000001, 0x80000, CRC(68d27413) SHA1(84cb7d6523325496469d621f6f4da1b719162147) )
@@ -1035,9 +1035,9 @@ public class galpanic
 		ROM_LOAD16_BYTE( "gscr1_12.rom", 0x000001, 0x80000, CRC(4bd25be6) SHA1(9834f081c0390ccaa1234efd2393b6495e946c64) )
 		ROM_LOAD16_BYTE( "gscr4_14.rom", 0x100000, 0x80000, CRC(4e7e6ed4) SHA1(3e9e942e3de398edc8ac9f82769c3f41708d3741) )
 		ROM_LOAD16_BYTE( "gscr3_11.rom", 0x100001, 0x80000, CRC(6d00a4c5) SHA1(8fc0d78200b82ab87658d364ebe2f2e7239722e7) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fantsy95 )
+	static RomLoadPtr rom_fantsy95 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "prog2.12",  0x000000, 0x80000, CRC(1e684da7) SHA1(2104a6fb5f019011009f4faa769afcada90cff97) )
 		ROM_LOAD16_BYTE( "prog1.7",   0x000001, 0x80000, CRC(dc4e4f6b) SHA1(9934121692a6d32164bef03c72c25dc727438e54) )
@@ -1058,9 +1058,9 @@ public class galpanic
 		ROM_LOAD( "musc1.1", 0x00000, 0x80000, CRC(3117e2ef) SHA1(6581a7104556d44f814c537bbd74998922927034) )
 		ROM_RELOAD(               0x40000, 0x80000 )
 		ROM_LOAD( "musc2.2", 0xc0000, 0x80000, CRC(0c1109f9) SHA1(0e4ea534a32b1649e2e9bb8af7254b917ec03a90) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( newfant )
+	static RomLoadPtr rom_newfant = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "prog2_12.rom", 0x000000, 0x80000, CRC(de43a457) SHA1(91db13f63b46146131c58e775119ea3b073ca409) )
 		ROM_LOAD16_BYTE( "prog1_07.rom", 0x000001, 0x80000, CRC(370b45be) SHA1(775873df9d3af803dbd1a392a45cad5f37b1b1c7) )
@@ -1081,9 +1081,9 @@ public class galpanic
 		ROM_LOAD( "musc1_01.rom", 0x00000, 0x80000, CRC(10347fce) SHA1(f5fbe8ef363fe18b7104be5d2fa92943d1a5d7a2) )
 		ROM_RELOAD(               0x40000, 0x80000 )
 		ROM_LOAD( "musc2_02.rom", 0xc0000, 0x80000, CRC(b9646a8c) SHA1(e9432261ac86e4251a2c97301c6d014c05110a9c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( missw96 )
+	static RomLoadPtr rom_missw96 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "mw96_10.bin",  0x000000, 0x80000, CRC(b1309bb1) SHA1(3cc7a903cb007d8fc0f836a33780c1c9231d1629) )
 		ROM_LOAD16_BYTE( "mw96_06.bin",  0x000001, 0x80000, CRC(a5892bb3) SHA1(99130eb0af307fe66c9668414475e003f9c7d969) )
@@ -1102,9 +1102,9 @@ public class galpanic
 		ROM_LOAD( "mw96_01.bin",  0x00000, 0x80000, CRC(e78a659e) SHA1(d209184c70e0d7e6d17034c6f536535cda782d42) )
 		ROM_RELOAD(               0x40000, 0x80000 )
 		ROM_LOAD( "mw96_02.bin",  0xc0000, 0x80000, CRC(60fa0c00) SHA1(391aa31e61663cc083a8a2320ba48a9859f3fd4e) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( fantsia2 )
+	static RomLoadPtr rom_fantsia2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x500000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "prog2.g17",    0x000000, 0x80000, CRC(57c59972) SHA1(4b1da928b537cf340a67026d07bc3dfc078b0d0f) )
 		ROM_LOAD16_BYTE( "prog1.f17",    0x000001, 0x80000, CRC(bf2d9a26) SHA1(92f0c1bd32f1e5e0ede3ba847242a212dfae4986) )
@@ -1126,9 +1126,9 @@ public class galpanic
 		ROM_LOAD( "music2.1b",    0x00000, 0x80000, CRC(23cc4f9c) SHA1(06b5342c25de966ce590917c571e5b19af1fef7d) )
 		ROM_RELOAD(               0x40000, 0x80000 )
 		ROM_LOAD( "music1.1a",    0xc0000, 0x80000, CRC(864167c2) SHA1(c454b26b6dea993e6bd64546f92beef05e46d7d7) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galhustl )
+	static RomLoadPtr rom_galhustl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_BYTE( "ue17.3", 0x00000, 0x80000, CRC(b2583dbb) SHA1(536f4aa2246ec816c4f270f9d42acc090718ee8b) )
 		ROM_LOAD16_BYTE( "ud17.4", 0x00001, 0x80000, CRC(470a3668) SHA1(ad86e96ab8f1f5da23fb1feaabfb9c757965418e) )
@@ -1141,7 +1141,7 @@ public class galpanic
 	
 		ROM_REGION( 0x100000, REGION_GFX1, 0 )
 		ROM_LOAD( "galhstl5.u5", 0x00000, 0x80000, CRC(44a18f15) SHA1(1217cf7fbbb442358b15016099efeface5dcbd22) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1990, galpanic, 0,        galpanic, galpanic, 0, ROT90, "Kaneko", "Gals Panic (set 1)", GAME_NO_COCKTAIL )
 	GAMEX( 1990, galpanib, galpanic, galpanib, galpanib, 0, ROT90, "Kaneko", "Gals Panic (set 2)", GAME_NO_COCKTAIL )

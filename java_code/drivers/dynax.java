@@ -2314,7 +2314,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( hanamai )
+	static RomLoadPtr rom_hanamai = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "1611.13a", 0x00000, 0x10000, CRC(5ca0b073) SHA1(56b64077e7967fdbb87a7685ca9662cc7881b5ec) )
 		ROM_LOAD( "1610.14a", 0x48000, 0x10000, CRC(b20024aa) SHA1(bb6ce9821c1edbf7d4cfadc58a2b257755856937) )
@@ -2334,7 +2334,7 @@ public class dynax
 		ROM_REGION( 0x400, REGION_PROMS, ROMREGION_DISPOSE )	/* Color PROMs */
 		ROM_LOAD( "2.3j",  0x000, 0x200, CRC(7b0618a5) SHA1(df3aadcc7d54fab0c07f85d20c138a45798644e4) )	// FIXED BITS (0xxxxxxx)
 		ROM_LOAD( "1.4j",  0x200, 0x200, CRC(9cfcdd2d) SHA1(a649e9381754c4a19ccecc6e558067cc3ff27f91) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2355,7 +2355,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( hnkochou )
+	static RomLoadPtr rom_hnkochou = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "2009.s4a", 0x00000, 0x10000, CRC(b3657123) SHA1(3385edb2055abc7be3abb030509c6ac71907a5f3) )
 		ROM_LOAD( "2008.s3a", 0x18000, 0x10000, CRC(1c009be0) SHA1(0f950d2685f8b67f37065e19deae0cf0cb9594f1) )
@@ -2372,7 +2372,7 @@ public class dynax
 		ROM_REGION( 0x400, REGION_PROMS, ROMREGION_DISPOSE )	/* Color PROMs */
 		ROM_LOAD( "2.3j",  0x000, 0x200, CRC(7b0618a5) SHA1(df3aadcc7d54fab0c07f85d20c138a45798644e4) )	// FIXED BITS (0xxxxxxx)
 		ROM_LOAD( "1.4j",  0x200, 0x200, CRC(9cfcdd2d) SHA1(a649e9381754c4a19ccecc6e558067cc3ff27f91) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -2392,7 +2392,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( hnoridur )
+	static RomLoadPtr rom_hnoridur = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000 + 0x19*0x8000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "2309.12",  0x00000, 0x20000, CRC(5517dd68) SHA1(3da27032a412b51b67e852b61166c2fdc138a370) )
 		ROM_RELOAD(           0x10000, 0x20000 )
@@ -2406,7 +2406,7 @@ public class dynax
 		ROM_LOAD( "2306.3",   0x0a0000, 0x20000, CRC(014a4945) SHA1(0cd747787a81226fd4937616a6ce45af731a4049) )
 		ROM_LOAD( "2307.4",   0x0c0000, 0x20000, CRC(8b6f8a2d) SHA1(c5f3ec64a7ea3edc556182f42e6da4842d88e0ba) )
 		ROM_LOAD( "2308.5",   0x0e0000, 0x20000, CRC(6f996e6e) SHA1(c2b916afbfd257417f0383ad261f3720a027fdd9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	
@@ -2434,7 +2434,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( drgpunch )
+	static RomLoadPtr rom_drgpunch = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "2401.3d", 0x00000, 0x10000, CRC(b310709c) SHA1(6ad6cfb54856f65a888ac44e694890f32f26e049) )
 		ROM_LOAD( "2402.6d", 0x28000, 0x10000, CRC(d21ed237) SHA1(7e1c7b40c300578132ebd79cbad9f7976cc85947) )
@@ -2450,9 +2450,9 @@ public class dynax
 		ROM_REGION( 0x400, REGION_PROMS, ROMREGION_DISPOSE )	/* Color PROMs */
 		ROM_LOAD( "2.18g", 0x000, 0x200, CRC(9adccc33) SHA1(acf4d5a28430378dbccc1b9fa0b6391cc8149fee) )	// FIXED BITS (0xxxxxxx)
 		ROM_LOAD( "1.17g", 0x200, 0x200, CRC(324fa9cf) SHA1(a03e23d9a9687dec4c23a8e41254a3f4b70c7e25) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sprtmtch )
+	static RomLoadPtr rom_sprtmtch = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "3101.3d", 0x00000, 0x08000, CRC(d8fa9638) SHA1(9851d38b6b3f56cf3cc101419c24f8d5f97950a9) )
 		ROM_CONTINUE(        0x28000, 0x08000 )
@@ -2464,7 +2464,7 @@ public class dynax
 		ROM_REGION( 0x400, REGION_PROMS, ROMREGION_DISPOSE )	/* Color PROMs */
 		ROM_LOAD( "18g", 0x000, 0x200, CRC(dcc4e0dd) SHA1(4e0fb8fd7192bf32247966742df4b80585f32c37) )	// FIXED BITS (0xxxxxxx)
 		ROM_LOAD( "17g", 0x200, 0x200, CRC(5443ebfb) SHA1(5b63220a3f6520e353db99b06e645640d1cfde2f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2499,7 +2499,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( roldfrog )
+	static RomLoadPtr rom_roldfrog = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "roldfrog.001", 0x00000, 0x20000, CRC(ba9eb1c6) SHA1(649d1103f3188554eaa3fc87a1f52c53233932b2) )
 		ROM_RELOAD(               0x20000, 0x20000 )
@@ -2521,9 +2521,9 @@ public class dynax
 		ROM_LOAD( "roldfrog.011",       0x20000, 0x20000, CRC(610bf6f3) SHA1(04a7efac2e83c6747d4bd480b1f3118eb44a1f76) )
 		ROM_LOAD( "roldfrog.012",       0x40000, 0x20000, CRC(466ede67) SHA1(2d44dba1e76e5ceebf33fa6fc148ed665701a7ff) )
 		ROM_LOAD( "roldfrog.013",       0x60000, 0x20000, CRC(fad3e8be) SHA1(eccd7b1440d3a0d433c92ff33213326e0d57422a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( roldfrga )
+	static RomLoadPtr rom_roldfrga = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "roldfrog.001", 0x00000, 0x20000, CRC(ba9eb1c6) SHA1(649d1103f3188554eaa3fc87a1f52c53233932b2) )
 		ROM_RELOAD(               0x20000, 0x20000 )
@@ -2545,7 +2545,7 @@ public class dynax
 		ROM_LOAD( "roldfrog.011",       0x20000, 0x20000, CRC(610bf6f3) SHA1(04a7efac2e83c6747d4bd480b1f3118eb44a1f76) )
 		ROM_LOAD( "roldfrog.012",       0x40000, 0x20000, CRC(466ede67) SHA1(2d44dba1e76e5ceebf33fa6fc148ed665701a7ff) )
 		ROM_LOAD( "roldfrog.013",       0x60000, 0x20000, CRC(fad3e8be) SHA1(eccd7b1440d3a0d433c92ff33213326e0d57422a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2563,7 +2563,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( mjfriday )
+	static RomLoadPtr rom_mjfriday = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "2606.2b",  0x00000, 0x10000, CRC(00e0e0d3) SHA1(89fa4d684ec36d5e974e39294efd65a9fd832517) )
 		ROM_LOAD( "2605.2c",  0x28000, 0x10000, CRC(5459ebda) SHA1(86e51f0c120de87be8f51b498a562360e6b242b8) )
@@ -2577,7 +2577,7 @@ public class dynax
 		ROM_REGION( 0x400, REGION_PROMS, ROMREGION_DISPOSE )	/* Color PROMs */
 		ROM_LOAD( "d26_2.9e", 0x000, 0x200, CRC(d6db5c60) SHA1(89ee10d092011c2c4eaab2c097aa88f5bb98bb97) )	// FIXED BITS (0xxxxxxx)
 		ROM_LOAD( "d26_1.8e", 0x200, 0x200, CRC(af5edf32) SHA1(7202e0aa1ee3f22e3c5fb69a88db455a241929c5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2608,7 +2608,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( maya )
+	static RomLoadPtr rom_maya = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "1.17e", 0x00000, 0x10000, CRC(5aaa015e) SHA1(b84d02b1b6c07636176f226fef09a034d00445f0) )
 		ROM_LOAD( "2.15e", 0x28000, 0x10000, CRC(7ea5b49a) SHA1(aaae848669d9f88c0660f46cc801e4eb0f5e3b89) )
@@ -2624,7 +2624,7 @@ public class dynax
 		ROM_REGION( 0x400, REGION_PROMS, ROMREGION_DISPOSE )	/* Color PROMs */
 		ROM_LOAD( "prom2.5b",  0x000, 0x200, CRC(d276bf61) SHA1(987058b37182a54a360a80a2f073b000606a11c9) )	// FIXED BITS (0xxxxxxx)
 		ROM_LOAD( "prom1.6b",  0x200, 0x200, CRC(e38eb360) SHA1(739960dd57ec3305edd57aa63816a81ddfbebf3e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( maya )
 	{
@@ -2665,7 +2665,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( mjdialq2 )
+	static RomLoadPtr rom_mjdialq2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x78000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "5201.2b", 0x00000, 0x10000, CRC(5186c2df) SHA1(f05ae3fd5e6c39f3bf2263eaba645d89c454bd70) )
 		ROM_RELOAD(          0x10000, 0x08000 )				// 1
@@ -2683,7 +2683,7 @@ public class dynax
 		ROM_REGION( 0x400, REGION_PROMS, ROMREGION_DISPOSE )	/* Color PROMs */
 		ROM_LOAD( "d52-2.9e", 0x000, 0x200, CRC(18585ce3) SHA1(7f2e20bb09c1d810910094a6b19e5151666d74ac) )	// FIXED BITS (0xxxxxxx)
 		ROM_LOAD( "d52-1.8e", 0x200, 0x200, CRC(8868247a) SHA1(97652025c411b379dfab576dc7f2d8d0d61d0828) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2735,7 +2735,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( yarunara )
+	static RomLoadPtr rom_yarunara = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000 + 0x1d*0x8000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "5501m.2d",  0x00000, 0x20000, CRC(d86fade5) SHA1(4ae5e22972eb4ead9aa4a455ff1a18e128c33ed6) )
 		ROM_RELOAD(            0x10000, 0x20000 )
@@ -2758,7 +2758,7 @@ public class dynax
 		ROM_LOAD( "5512m.4a",  0x340000, 0x20000, CRC(b4220316) SHA1(b0797c9c6ab226520d29c780ea709f62e02dd268) )
 		ROM_LOAD( "5511m.3a",  0x360000, 0x20000, CRC(40ee77d8) SHA1(e0dd9750d8b7b7dd9695a8365bdc926bd6d9f886) )
 		ROM_LOAD( "5510m.2a",  0x380000, 0x20000, CRC(bb9c71e1) SHA1(21f2977196aaa27b76ee6547a08aba8da7aba76c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2786,7 +2786,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( quiztvqq )
+	static RomLoadPtr rom_quiztvqq = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000 + 0x28*0x8000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "6401.2d",      0x000000, 0x020000, CRC(ce0e237c) SHA1(fd94a45052e3a68ef8cda2853b911a9993675fa6) )
 		// 14-17
@@ -2809,7 +2809,7 @@ public class dynax
 		ROM_LOAD( "6411.s2h",     0x140000, 0x020000, CRC(7bd43065) SHA1(13b4fcc4155f555ec0c7fbb2f3bb6c19c2788cf5) )
 		ROM_LOAD( "6412.s3a",     0x160000, 0x020000, CRC(43e645f3) SHA1(67a2975d4428142a2fbfd1d7b20139a15757bfb4) )
 		ROM_LOAD( "6413.s3b",     0x180000, 0x020000, CRC(f7b81238) SHA1(447d983971bed978816dd836504ffcfae0023a69) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2835,7 +2835,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( mjangels )
+	static RomLoadPtr rom_mjangels = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000 + 0x28*0x8000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "612-01.2d",    0x000000, 0x020000, CRC(cd353ba9) SHA1(8344dc5dd482ad6d36aa1e6b5824a09a3627dc65) )
 		// 00-03
@@ -2859,7 +2859,7 @@ public class dynax
 		ROM_LOAD( "612-10.s5c",   0x160000, 0x020000, CRC(bf1edb0e) SHA1(932ca328c5968529d52b2c629b6bb866cfa1e784) )
 		ROM_LOAD( "612-09.s4c",   0x180000, 0x020000, CRC(8345999e) SHA1(c70c731ababcb28752dd4961d6dc54d43cb6bcba) )
 		ROM_LOAD( "612-08.s3c",   0x1a0000, 0x020000, CRC(aad88516) SHA1(e6c7ef3325a17b2945530847998d314685c39f5d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2910,7 +2910,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( mcnpshnt )
+	static RomLoadPtr rom_mcnpshnt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000 + 0xc*0x8000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "3318.12", 0x000000, 0x020000, CRC(e3b457a8) SHA1(b768895797157cad029ac1f652a838ecf6587d4f) )
 		ROM_RELOAD(          0x010000, 0x020000 )
@@ -2934,7 +2934,7 @@ public class dynax
 		ROM_LOAD( "3307.3a", 0x2a0000, 0x020000, CRC(07dbaf8a) SHA1(99f995b71ca116d2e5587e08f9b0b4493d96937b) )
 		ROM_LOAD( "3306.2a", 0x2c0000, 0x020000, CRC(86afcc80) SHA1(e5d818761bb375b6c862546e238b2c6cf13898a8) )
 		ROM_LOAD( "3305.1a", 0x2e0000, 0x020000, CRC(8a9ebab8) SHA1(755c40a64541518b27cfa94959feb5de6f55b358) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************
@@ -2978,7 +2978,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	ROM_START( 7jigen )
+	static RomLoadPtr rom_7jigen = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000 + 0xc*0x8000, REGION_CPU1, 0 )	/* Z80 Code */
 		ROM_LOAD( "3701.1a",      0x000000, 0x020000, CRC(ee8ab3c4) SHA1(9ccc9e9697dd452cd28e38c81cebea0b862f0642) )
 		ROM_RELOAD(               0x010000, 0x020000 )
@@ -3001,7 +3001,7 @@ public class dynax
 		ROM_LOAD( "3710.s3a",     0x2a0000, 0x020000, CRC(0a92af7c) SHA1(4383dc8f3019b3b2716d32e1c91b0ac5b1e367c3) )
 		ROM_LOAD( "3709.s2a",     0x2c0000, 0x020000, CRC(86f27f1c) SHA1(43b829597993d3043d5bbb0a468f603910638b87) )
 		ROM_LOAD( "3708.s1a",     0x2e0000, 0x020000, CRC(8082d0ac) SHA1(44d708f8e307b782105082092edd3ea9affd2329) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************

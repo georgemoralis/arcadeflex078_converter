@@ -526,7 +526,7 @@ public class bigevglf
 	
 	***************************************************************************/
 	
-	ROM_START( bigevglf )
+	static RomLoadPtr rom_bigevglf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )
 		ROM_LOAD( "a67-21",   0x00000, 0x8000, CRC(2a62923d) SHA1(7b025180e203f268ae4d11baa18096e0a5704f77))
 		ROM_LOAD( "a67-20",   0x08000, 0x4000, CRC(841561b1) SHA1(5d91449e135ef22508194a9543343c29e1c496cf))
@@ -555,7 +555,7 @@ public class bigevglf
 		ROM_LOAD( "a67-13",   0x08000, 0x8000, CRC(ad6e04af) SHA1(4680d789cf53c4808105ad4f3c70aedb6d8bcf36))
 		ROM_LOAD( "a67-14",   0x10000, 0x8000, CRC(d6708cce) SHA1(5b48f9dff2a3e28242dc2004469dc2ac2b5d0321))
 		ROM_LOAD( "a67-15",   0x18000, 0x8000, CRC(1d261428) SHA1(0f3e6d83a8a462436fa414de4e1e4306db869d3e))
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1986, bigevglf,  0,        bigevglf,  bigevglf,  0, ROT270, "Taito America Corporation", "Big Event Golf")
 }

@@ -685,7 +685,7 @@ public class taitoair
 	board - possibly?
 	*************************************************************/
 	
-	ROM_START( topland )
+	static RomLoadPtr rom_topland = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 68000 */
 		ROM_LOAD16_BYTE( "b62_41.43",  0x00000, 0x20000, CRC(28264798) SHA1(72e4441ad468f37cff69c36699867119ad28274c) )
 		ROM_LOAD16_BYTE( "b62_40.14",  0x00001, 0x20000, CRC(db872f7d) SHA1(6932c62d8051b1811c30139dbd0375115305c731) )
@@ -724,9 +724,9 @@ public class taitoair
 	
 		ROM_REGION( 0x02000, REGION_USER1, 0 )	/* unknown */
 		ROM_LOAD( "b62-28.22", 0x00000, 0x02000, CRC(c4be68a6) SHA1(2c07a0e71d11bca67427331217c507d849500ec1) )	// video board
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ainferno )
+	static RomLoadPtr rom_ainferno = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )	/* 68000 */
 		ROM_LOAD16_BYTE( "c45_22.43", 0x00000, 0x20000, CRC(50300926) SHA1(9c2a60282d3f9f115b94cb5b6d64bbfc9d726d1d) )
 		ROM_LOAD16_BYTE( "c45_20.14", 0x00001, 0x20000, CRC(39b189d9) SHA1(002013c02b546d3f5a9f3a3149971975a73cc8ce) )
@@ -766,7 +766,7 @@ public class taitoair
 		ROM_REGION( 0x02000, REGION_USER1, 0 )
 		ROM_LOAD( "c45-xx.22", 0x00000, 0x02000, NO_DUMP )	// video board
 		/* Readme says 7 pals on video board and 6 on cpu board */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( taitoair )

@@ -366,7 +366,7 @@ public class xxmissio
 	
 	/****************************************************************************/
 	
-	ROM_START( xxmissio )
+	static RomLoadPtr rom_xxmissio = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* CPU1 */
 		ROM_LOAD( "xx1.4l", 0x0000,  0x8000, CRC(86e07709) SHA1(7bfb7540b6509f07a6388ca2da6b3892f5b1df74) )
 	
@@ -387,7 +387,7 @@ public class xxmissio
 		ROM_REGION( 0x10000, REGION_GFX2, ROMREGION_DISPOSE ) /* BG */
 		ROM_LOAD16_BYTE( "xx10.4c", 0x0000,  0x8000, CRC(d27d7834) SHA1(60c24dc2ab7e2a33da4002f1f07eaf7898cf387f) )
 		ROM_LOAD16_BYTE( "xx11.4b", 0x0001,  0x8000, CRC(d9dd827c) SHA1(aea3a5abd871adf7f75ad4d6cc57eff0833135c7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1986, xxmissio, 0, xxmissio, xxmissio, 0, ROT90, "UPL", "XX Mission" )
 }

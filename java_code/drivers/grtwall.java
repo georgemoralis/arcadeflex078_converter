@@ -125,7 +125,7 @@ public class grtwall
 	}
 	
 	
-	ROM_START( grtwall )
+	static RomLoadPtr rom_grtwall = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 Code */
 		ROM_LOAD16_WORD_SWAP( "wlcc4096.rom",         0x00000, 0x100000, CRC(3b16729f) SHA1(4ef4e5cbd6ccc65775e36c2c8b459bc1767d6574) ) // 1ST+2ND IDENTICAL
 	
@@ -134,7 +134,7 @@ public class grtwall
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 ) /* Samples? */
 		ROM_LOAD( "040-c3c2.snd",         0x00000, 0x100000, CRC(220949aa) SHA1(1e0dba168a0687d32aaaed42714ae24358f4a3e7) )  // 1ST+2ND IDENTICAL
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1994, grtwall, 0, grtwall, grtwall, grtwall, ROT0, "IGS", "The Great Wall", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

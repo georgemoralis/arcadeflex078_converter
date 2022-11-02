@@ -134,7 +134,7 @@ public class beezer
 	
 	***************************************************************************/
 	
-	ROM_START( beezer )
+	static RomLoadPtr rom_beezer = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "g1",   0x0d000, 0x1000, CRC(3467a0ec) SHA1(0b094a9bf772b101acd26cf09009c67dd4785ed2) )
 		ROM_LOAD( "g3",   0x0e000, 0x1000, CRC(9950cdf2) SHA1(b2b59cc1080357de6ba297392881d626157df809) )
@@ -154,9 +154,9 @@ public class beezer
 		ROM_REGION( 0x0300, REGION_PROMS, 0 )
 		ROM_LOAD( "d1.cpu", 0x000, 0x0100, CRC(8db17a40) SHA1(0e04a4f5f99b302dbbbfda438808d549f8680fe2) )
 		ROM_LOAD( "e1.cpu", 0x100, 0x0100, CRC(3c775c5e) SHA1(ac86f45938c0c9d5fec1245bf86718442baf445b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( beezer1 )
+	static RomLoadPtr rom_beezer1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )     /* 64k for main CPU */
 		ROM_LOAD( "g1.32",   0x0d000, 0x1000, CRC(3134cb93) SHA1(7d4a484378b66ccf2fded31885d6dfb2abae9317) )
 		ROM_LOAD( "g3.32",   0x0e000, 0x1000, CRC(a3cb2c2d) SHA1(1e17eb0eaf02f86865845a065a5f714fc51aa7d6) )
@@ -176,7 +176,7 @@ public class beezer
 		ROM_REGION( 0x0300, REGION_PROMS, 0 )
 		ROM_LOAD( "d1.cpu", 0x000, 0x0100, CRC(8db17a40) SHA1(0e04a4f5f99b302dbbbfda438808d549f8680fe2) )
 		ROM_LOAD( "e1.cpu", 0x100, 0x0100, CRC(3c775c5e) SHA1(ac86f45938c0c9d5fec1245bf86718442baf445b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1982, beezer,  0,       beezer, beezer, beezer, ORIENTATION_FLIP_X, "Tong Electronic", "Beezer (set 1)", GAME_IMPERFECT_SOUND )
 	GAMEX( 1982, beezer1,  beezer, beezer, beezer, beezer, ORIENTATION_FLIP_X, "Tong Electronic", "Beezer (set 2)", GAME_IMPERFECT_SOUND )

@@ -243,7 +243,7 @@ public class grobda
 	
 	
 	
-	ROM_START( grobda )
+	static RomLoadPtr rom_grobda = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "gr2-3",     0xa000, 0x2000, CRC(8e3a23be) SHA1(e54c1366adc561609a3817e074b01245fb335153) )
 		ROM_LOAD( "gr2-2",     0xc000, 0x2000, CRC(19ffa83d) SHA1(9f4faf5e0de783868d984f166b92ebcf8bb0f93f) )
@@ -266,9 +266,9 @@ public class grobda
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "mb7052.3m", 0x0000, 0x0100, CRC(66eb1467) SHA1(02b99ced4afd9ac139f634739769f7bf353274f9) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( grobda2 )
+	static RomLoadPtr rom_grobda2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "gr1-3.d1",  0xa000, 0x2000, CRC(4ef4a7c1) SHA1(33367e63531601c3d4f4a7b2170cb1c87f6d72a7) )
 		ROM_LOAD( "gr2-2.a",   0xc000, 0x2000, CRC(f93e82ae) SHA1(cb591bbcaab5ef26f097e7bab9b3638990465d4c) )
@@ -291,9 +291,9 @@ public class grobda
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "mb7052.3m", 0x0000, 0x0100, CRC(66eb1467) SHA1(02b99ced4afd9ac139f634739769f7bf353274f9) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( grobda3 )
+	static RomLoadPtr rom_grobda3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code for the first CPU  */
 		ROM_LOAD( "gr1-3.d1",  0xa000, 0x2000, CRC(4ef4a7c1) SHA1(33367e63531601c3d4f4a7b2170cb1c87f6d72a7) )
 		ROM_LOAD( "gr1-2.c1",  0xc000, 0x2000, CRC(7dcc6e8e) SHA1(7580686b7082432a79217c3d7b5ebfa0c25952e3) )
@@ -316,7 +316,7 @@ public class grobda
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 )	/* sound prom */
 		ROM_LOAD( "mb7052.3m", 0x0000, 0x0100, CRC(66eb1467) SHA1(02b99ced4afd9ac139f634739769f7bf353274f9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1984, grobda,  0,      grobda, grobda, 0, ROT90, "Namco", "Grobda (New version)" )

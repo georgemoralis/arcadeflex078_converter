@@ -717,7 +717,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	ROM_START( deadeye )
+	static RomLoadPtr rom_deadeye = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x08000, REGION_CPU1, 0 ) 	/* 32K for code */
 		ROM_LOAD( "de1.8h",       0x0000, 0x0400, CRC(bd09e4dc) SHA1(5428835f6bc3d162496fdce174fcaaaba98c09f9) )
 		ROM_LOAD( "de2.9h",       0x0400, 0x0400, CRC(b89edec3) SHA1(5ce0058f23b7e5c832029ca97d9a40d1494bf972) )
@@ -742,10 +742,10 @@ public class meadows
 	
 		ROM_REGION( 0x08000, REGION_CPU2, 0 ) 	/* 32K for code for the sound cpu */
 		ROM_LOAD( "de_snd",       0x0000, 0x0400, CRC(c10a1b1a) SHA1(779ea261d23360634081295a164cacbd819d8719) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gypsyjug )
+	static RomLoadPtr rom_gypsyjug = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x08000, REGION_CPU1, 0 ) 	/* 32K for code */
 		ROM_LOAD( "gj.1b",        0x0000, 0x0400, CRC(f6a71d9f) SHA1(11a86ae781297e4077a69e6809487022fed9c444) )
 		ROM_LOAD( "gj.2b",        0x0400, 0x0400, CRC(94c14455) SHA1(ed704680c2b83d1726d1a17d64f5d57925a495b2) )
@@ -772,10 +772,10 @@ public class meadows
 		ROM_LOAD( "gj.a4s",       0x0000, 0x0400, CRC(17a116bc) SHA1(797ba0b292afa3ba7eec985b533014acc00ed47d) )
 		ROM_LOAD( "gj.a5s",       0x0400, 0x0400, CRC(fc23ae09) SHA1(42be34a9ef8c4c8ef9f94c85ca031076f84faa96) )
 		ROM_LOAD( "gj.a6s",       0x0800, 0x0400, CRC(9e7bd71e) SHA1(e00801820c1a39cbfed124a29470da03cf8b40b4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( minferno )
+	static RomLoadPtr rom_minferno = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x08000, REGION_CPU1, ROMREGION_INVERT )	/* 32K for code */
 		ROM_LOAD_NIB_LOW ( "inferno.f5",	0x0000, 0x0400, CRC(58472a73) SHA1(7f8b9502c3db11219d6b765dec7b6ff3f62d6c8b) )
 		ROM_LOAD_NIB_HIGH( "inferno.e5",	0x0000, 0x0400, CRC(451942af) SHA1(0a03d74c1b98771d2170c76ca41e972300c34c3a) )
@@ -786,7 +786,7 @@ public class meadows
 	
 		ROM_REGION( 0x00400, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "inferno.b8",		0x0200, 0x0200, CRC(1b06466b) SHA1(aef13ab84526ee7493837eef7f48d9ede65b8e62) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

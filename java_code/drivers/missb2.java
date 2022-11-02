@@ -465,7 +465,7 @@ public class missb2
 	
 	
 	
-	ROM_START( missb2 )
+	static RomLoadPtr rom_missb2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "msbub2-u.204", 0x00000, 0x10000, CRC(b633bdde) SHA1(29a389c52ff06718f1c4c39f6a854856c237356b) ) /* FIRST AND SECOND HALF IDENTICAL */
 		/* ROMs banked at 8000-bfff */
@@ -495,7 +495,7 @@ public class missb2
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "a71-25.bin",  0x0000, 0x0100, CRC(2d0f8545) SHA1(089c31e2f614145ef2743164f7b52ae35bc06808) )	/* video timing - taken from bublbobl */
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( missb2 )
 	{

@@ -1329,7 +1329,7 @@ public class namcos86
 	
 	***************************************************************************/
 	
-	ROM_START( hopmappy )
+	static RomLoadPtr rom_hopmappy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "hm1",         0x08000, 0x8000, CRC(1a83914e) SHA1(6cb96b2518f4b867e20bd5d31ac6913d09c95f06) )
 		/* 9d empty */
@@ -1364,9 +1364,9 @@ public class namcos86
 		ROM_LOAD( "pl1-mcu.bin", 0x0f000, 0x1000, CRC(6ef08fb3) SHA1(4842590d60035a0059b0899eb2d5f58ae72c2529) )
 	
 		/* the PCM expansion board is not present in this game */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skykiddx )
+	static RomLoadPtr rom_skykiddx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "sk3_1b.9c", 0x08000, 0x8000, CRC(767b3514) SHA1(7b85e520e56924235d1f4987333f183c914fafc1) )
 		ROM_LOAD( "sk3_2.9d",  0x10000, 0x8000, CRC(74b8f8e2) SHA1(0c9f0a283c764d5db59abea17a7f3285718b4501) )
@@ -1402,9 +1402,9 @@ public class namcos86
 		ROM_LOAD( "rt1-mcu.bin", 0x0f000, 0x1000, CRC(6ef08fb3) SHA1(4842590d60035a0059b0899eb2d5f58ae72c2529) )
 	
 		/* the PCM expansion board is not present in this game */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skykiddo )
+	static RomLoadPtr rom_skykiddo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "sk3-1.9c",  0x08000, 0x8000, CRC(5722a291) SHA1(0b3ca2585bf5c18214c1337dce8f92027e9d78c2) )
 		ROM_LOAD( "sk3_2.9d",  0x10000, 0x8000, CRC(74b8f8e2) SHA1(0c9f0a283c764d5db59abea17a7f3285718b4501) )
@@ -1440,9 +1440,9 @@ public class namcos86
 		ROM_LOAD( "rt1-mcu.bin", 0x0f000, 0x1000, CRC(6ef08fb3) SHA1(4842590d60035a0059b0899eb2d5f58ae72c2529) )
 	
 		/* the PCM expansion board is not present in this game */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( roishtar )
+	static RomLoadPtr rom_roishtar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "ri1-1c.9c", 0x08000, 0x8000, CRC(14acbacb) SHA1(3c6130f9e5a4ba84be0cc3547c1086707ee3b8e9) )
 		ROM_LOAD( "ri1-2.9d",  0x14000, 0x2000, CRC(fcd58d91) SHA1(e7b6d7afd7cf6c374ee90d6499ea0f205e742b21) )
@@ -1484,9 +1484,9 @@ public class namcos86
 		ROM_LOAD( "rt1-mcu.bin", 0x0f000, 0x1000, CRC(6ef08fb3) SHA1(4842590d60035a0059b0899eb2d5f58ae72c2529) )
 	
 		/* the PCM expansion board is not present in this game */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( genpeitd )
+	static RomLoadPtr rom_genpeitd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "gt1-1b.9c", 0x08000, 0x8000, CRC(75396194) SHA1(2a526064fb91b2796c913f3050867352ac63e643) )
 		/* 9d empty */
@@ -1535,9 +1535,9 @@ public class namcos86
 		ROM_LOAD( "gt1-18.h3",  0x20000, 0x20000, CRC(7ef9e5ea) SHA1(0464d43b39903ce373d70854bbcd5da05896ecae) )
 		ROM_LOAD( "gt1-19.k3",  0x40000, 0x20000, CRC(38e11f6c) SHA1(52dea9d444d5a0421db4a8bf5c79a9d901b6f005) )
 		/* m3 empty */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rthunder )
+	static RomLoadPtr rom_rthunder = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "rt3-1b.9c",  0x8000, 0x8000, CRC(7d252a1b) SHA1(cb92709e94eb273b3ce44c55cd252170ad1017f4) )
 		/* 9d empty */
@@ -1586,9 +1586,9 @@ public class namcos86
 		ROM_LOAD( "rt1-22.h3",  0x10000, 0x10000, CRC(fe963e72) SHA1(4c9ce4e4c8e756a743c541f670a6741b520125e3) )
 		/* k3 empty */
 		/* m3 empty */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rthundro )
+	static RomLoadPtr rom_rthundro = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "r1",         0x8000, 0x8000, CRC(6f8c1252) SHA1(586f2e33dd16f31131e4ae9423d639fdc6555c9c) )
 		/* 9d empty */
@@ -1637,9 +1637,9 @@ public class namcos86
 		ROM_LOAD( "rt1-22.h3",  0x10000, 0x10000, CRC(fe963e72) SHA1(4c9ce4e4c8e756a743c541f670a6741b520125e3) )
 		/* k3 empty */
 		/* m3 empty */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wndrmomo )
+	static RomLoadPtr rom_wndrmomo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x18000, REGION_CPU1, 0 )
 		ROM_LOAD( "wm1-1.9c", 0x8000, 0x8000, CRC(34b50bf0) SHA1(112c8c8a0a16382008cacd2e484f91fa9338d10a) )
 		/* 9d empty */
@@ -1688,7 +1688,7 @@ public class namcos86
 		ROM_LOAD( "wm1-18.h3", 0x10000, 0x10000, CRC(6d73bcc5) SHA1(fccd83bb3a872b4cd8bd9f11f5cdf5926cb9b74e) )
 		ROM_LOAD( "wm1-19.k3", 0x20000, 0x10000, CRC(d288e912) SHA1(d0db58d7ed3d8cf895e031901f91f810f0e18709) )
 		ROM_LOAD( "wm1-20.m3", 0x30000, 0x10000, CRC(076a72cb) SHA1(0d0d74a6b11b07a2d768567e7bc06cf08bbcd68f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

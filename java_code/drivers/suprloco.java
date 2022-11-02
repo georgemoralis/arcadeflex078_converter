@@ -227,7 +227,7 @@ public class suprloco
 	
 	***************************************************************************/
 	
-	ROM_START( suprloco )
+	static RomLoadPtr rom_suprloco = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "ic37.bin",     0x0000, 0x4000, CRC(57f514dd) SHA1(707800b90a22547a56b01d1e11775e9ee5555d23) )	/* encrypted */
 		ROM_LOAD( "ic15.bin",     0x4000, 0x4000, CRC(5a1d2fb0) SHA1(fdb9416e5530718245fd597073a63feddb233c3c) )	/* encrypted */
@@ -254,7 +254,7 @@ public class suprloco
 		ROM_CONTINUE(             0x0080, 0x0080 )
 		ROM_LOAD( "ic89.bin",     0x0200, 0x0400, CRC(1d4b02cb) SHA1(00d822f1bc4f57f2f5d5a0615241f8136246a842) )  /* 3bpp to 4bpp table */
 		ROM_LOAD( "ic7.bin",      0x0600, 0x0020, CRC(89ba674f) SHA1(17c87840c8011968675a5a6f55966467df02364b) )	/* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

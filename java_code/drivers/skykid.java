@@ -502,7 +502,7 @@ public class skykid
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( skykid )
+	static RomLoadPtr rom_skykid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 6809 code */
 		ROM_LOAD( "sk1_2.6c",		0x08000, 0x4000, CRC(ea8a5822) SHA1(5b13133410bcb7d647e662b476dbfd2edab8aac0) )
 		ROM_LOAD( "sk1-1x.6b",		0x0c000, 0x4000, CRC(7abe6c6c) SHA1(7d2631cc6149fa3e02b1355cb899de5474ff5d0a) )
@@ -530,9 +530,9 @@ public class skykid
 		ROM_LOAD( "sk1-3.2r",		0x0200, 0x0100, CRC(d06b620b) SHA1(968a2d62c65e201d521e9efa8fcf6ad15898e4b3) )	/* blue component */
 		ROM_LOAD( "sk1-4.5n",		0x0300, 0x0200, CRC(c697ac72) SHA1(3b79755e6cbb22c14fc4affdbd3f4521da1d90e8) )	/* tiles lookup table */
 		ROM_LOAD( "sk1-5.6n",		0x0500, 0x0200, CRC(161514a4) SHA1(4488ce60d12be6586e4a1ddbbfd06bf4e7dfaceb) )	/* sprites lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skykido )
+	static RomLoadPtr rom_skykido = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 6809 code */
 		ROM_LOAD( "sk1_2.6c",		0x08000, 0x4000, CRC(ea8a5822) SHA1(5b13133410bcb7d647e662b476dbfd2edab8aac0) )
 		ROM_LOAD( "sk1_1.6b",		0x0c000, 0x4000, CRC(070a49d4) SHA1(4b994bde3e34b574bd927843804d2fb1a08d1bdf) )
@@ -560,9 +560,9 @@ public class skykid
 		ROM_LOAD( "sk1-3.2r",		0x0200, 0x0100, CRC(d06b620b) SHA1(968a2d62c65e201d521e9efa8fcf6ad15898e4b3) )	/* blue component */
 		ROM_LOAD( "sk1-4.5n",		0x0300, 0x0200, CRC(c697ac72) SHA1(3b79755e6cbb22c14fc4affdbd3f4521da1d90e8) )	/* tiles lookup table */
 		ROM_LOAD( "sk1-5.6n",		0x0500, 0x0200, CRC(161514a4) SHA1(4488ce60d12be6586e4a1ddbbfd06bf4e7dfaceb) )	/* sprites lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skykidd )
+	static RomLoadPtr rom_skykidd = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )	/* 6809 code */
 		ROM_LOAD( "sk1_2x.6c",		0x08000, 0x4000, CRC(8370671a) SHA1(7038f952ebfc4482440b73ee4027fa908561d122) )
 		ROM_LOAD( "sk1_1.6b",		0x0c000, 0x4000, CRC(070a49d4) SHA1(4b994bde3e34b574bd927843804d2fb1a08d1bdf) )
@@ -590,9 +590,9 @@ public class skykid
 		ROM_LOAD( "sk1-3.2r",		0x0200, 0x0100, CRC(d06b620b) SHA1(968a2d62c65e201d521e9efa8fcf6ad15898e4b3) )	/* blue component */
 		ROM_LOAD( "sk1-4.5n",		0x0300, 0x0200, CRC(c697ac72) SHA1(3b79755e6cbb22c14fc4affdbd3f4521da1d90e8) )	/* tiles lookup table */
 		ROM_LOAD( "sk1-5.6n",		0x0500, 0x0200, CRC(161514a4) SHA1(4488ce60d12be6586e4a1ddbbfd06bf4e7dfaceb) )	/* sprites lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( drgnbstr )
+	static RomLoadPtr rom_drgnbstr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 ) /* 6809 code */
 		ROM_LOAD( "db1_2b.6c",		0x08000, 0x04000, CRC(0f11cd17) SHA1(691d853f4f08898ecf4bccfb70a568de309329f1) )
 		ROM_LOAD( "db1_1.6b",		0x0c000, 0x04000, CRC(1c7c1821) SHA1(8b6111afc42e2996bdc2fc276be0c40556cd431e) )
@@ -620,7 +620,7 @@ public class skykid
 		ROM_LOAD( "db1-3.2r",		0x00200, 0x0100, CRC(c95ff576) SHA1(861a7340d29e6a6a0d5ead93abd3f73cc3df0cc7) )	/* blue component */
 		ROM_LOAD( "db1-4.5n",		0x00300, 0x0200, CRC(b2180c21) SHA1(a5d14c31d54f04494ea99c3d94bd1b5e072b612e) )	/* tiles lookup table */
 		ROM_LOAD( "db1-5.6n",		0x00500, 0x0200, CRC(5e2b3f74) SHA1(ef58661fa12a52bc358e81179254d37de7551b38) )	/* sprites lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

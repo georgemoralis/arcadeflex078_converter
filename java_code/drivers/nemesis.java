@@ -2302,7 +2302,7 @@ public class nemesis
 	***************************************************************************/
 	
 	/* ROM names should be 456D01~456D08 */
-	ROM_START( nemesis )
+	static RomLoadPtr rom_nemesis = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )    /* 4 * 64k for code and rom */
 		ROM_LOAD16_BYTE( "12a_01.bin",   0x00000, 0x8000, CRC(35ff1aaa) SHA1(2879a5d2ff7dca217fe5cd40be871878294c491f) )
 		ROM_LOAD16_BYTE( "12c_05.bin",   0x00001, 0x8000, CRC(23155faa) SHA1(08c73c669b3a5275353cbfcbe58ced92d93244a7) )
@@ -2319,10 +2319,10 @@ public class nemesis
 		ROM_REGION( 0x0200,  REGION_SOUND1, 0 )      /* 2x 256 byte for 0005289 wavetable data */
 		ROM_LOAD(      "400-a01.fse",  0x00000, 0x0100, CRC(5827b1e8) SHA1(fa8cf5f868cfb08bce203baaebb6c4055ee2a000) )
 		ROM_LOAD(      "400-a02.fse",  0x00100, 0x0100, CRC(2f44f970) SHA1(7ab46f9d5d587665782cefc623b8de0124a6d38a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* ROM names should be 456E01~456E08 */
-	ROM_START( nemesuk )
+	static RomLoadPtr rom_nemesuk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )    /* 4 * 64k for code and rom */
 		ROM_LOAD16_BYTE( "12a_01.uk",    0x00000, 0x8000, CRC(e1993f91) SHA1(6759bb9ba0ce28ad4d7f61b824a7d0fe43215bdc) )
 		ROM_LOAD16_BYTE( "12c_05.uk",    0x00001, 0x8000, CRC(c9761c78) SHA1(bfd63517efa820a05a0d9a908dd0917cd0d01b77) )
@@ -2339,9 +2339,9 @@ public class nemesis
 		ROM_REGION( 0x0200,  REGION_SOUND1, 0 )      /* 2x 256 byte for 0005289 wavetable data */
 		ROM_LOAD(      "400-a01.fse",  0x00000, 0x0100, CRC(5827b1e8) SHA1(fa8cf5f868cfb08bce203baaebb6c4055ee2a000) )
 		ROM_LOAD(      "400-a02.fse",  0x00100, 0x0100, CRC(2f44f970) SHA1(7ab46f9d5d587665782cefc623b8de0124a6d38a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( konamigt )
+	static RomLoadPtr rom_konamigt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )    /* 4 * 64k for code and rom */
 		ROM_LOAD16_BYTE( "c01.rom",      0x00000, 0x8000, CRC(56245bfd) SHA1(12579ae0031c172d42b766f5a801ef479148105e) )
 		ROM_LOAD16_BYTE( "c05.rom",      0x00001, 0x8000, CRC(8d651f44) SHA1(0d057ce063dd19c0a708cffa413511b367206682) )
@@ -2358,9 +2358,9 @@ public class nemesis
 		ROM_REGION( 0x0200,  REGION_SOUND1, 0 )      /* 2x 256 byte for 0005289 wavetable data */
 		ROM_LOAD(      "400-a01.fse",  0x00000, 0x0100, CRC(5827b1e8) SHA1(fa8cf5f868cfb08bce203baaebb6c4055ee2a000) )
 		ROM_LOAD(      "400-a02.fse",  0x00100, 0x0100, CRC(2f44f970) SHA1(7ab46f9d5d587665782cefc623b8de0124a6d38a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rf2 )
+	static RomLoadPtr rom_rf2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )    /* 5 * 64k for code and rom */
 		ROM_LOAD16_BYTE( "400-a06.15l",  0x00000, 0x08000, CRC(b99d8cff) SHA1(18e277827a534bab2b3b8b81e51d886b8382d435) )
 		ROM_LOAD16_BYTE( "400-a04.10l",  0x00001, 0x08000, CRC(d02c9552) SHA1(ec0aaa093541dab98412c11f666161cd558c383a) )
@@ -2373,9 +2373,9 @@ public class nemesis
 		ROM_REGION( 0x0200,  REGION_SOUND1, 0 )      /* 2x 256 byte for 0005289 wavetable data */
 		ROM_LOAD(      "400-a01.fse",  0x00000, 0x0100, CRC(5827b1e8) SHA1(fa8cf5f868cfb08bce203baaebb6c4055ee2a000) )
 		ROM_LOAD(      "400-a02.fse",  0x00100, 0x0100, CRC(2f44f970) SHA1(7ab46f9d5d587665782cefc623b8de0124a6d38a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( twinbee )
+	static RomLoadPtr rom_twinbee = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )    /* 5 * 64k for code and rom */
 		ROM_LOAD16_BYTE( "400-a06.15l",  0x00000, 0x08000, CRC(b99d8cff) SHA1(18e277827a534bab2b3b8b81e51d886b8382d435) )
 		ROM_LOAD16_BYTE( "400-a04.10l",  0x00001, 0x08000, CRC(d02c9552) SHA1(ec0aaa093541dab98412c11f666161cd558c383a) )
@@ -2388,9 +2388,9 @@ public class nemesis
 		ROM_REGION( 0x0200,  REGION_SOUND1, 0 )      /* 2x 256 byte for 0005289 wavetable data */
 		ROM_LOAD(      "400-a01.fse",  0x00000, 0x0100, CRC(5827b1e8) SHA1(fa8cf5f868cfb08bce203baaebb6c4055ee2a000) )
 		ROM_LOAD(      "400-a02.fse",  0x00100, 0x0100, CRC(2f44f970) SHA1(7ab46f9d5d587665782cefc623b8de0124a6d38a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gradius )
+	static RomLoadPtr rom_gradius = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )    /* 5 * 64k for code and rom */
 		ROM_LOAD16_BYTE( "400-a06.15l",  0x00000, 0x08000, CRC(b99d8cff) SHA1(18e277827a534bab2b3b8b81e51d886b8382d435) )
 		ROM_LOAD16_BYTE( "400-a04.10l",  0x00001, 0x08000, CRC(d02c9552) SHA1(ec0aaa093541dab98412c11f666161cd558c383a) )
@@ -2403,9 +2403,9 @@ public class nemesis
 		ROM_REGION( 0x0200,  REGION_SOUND1, 0 )      /* 2x 256 byte for 0005289 wavetable data */
 		ROM_LOAD(      "400-a01.fse",  0x00000, 0x0100, CRC(5827b1e8) SHA1(fa8cf5f868cfb08bce203baaebb6c4055ee2a000) )
 		ROM_LOAD(      "400-a02.fse",  0x00100, 0x0100, CRC(2f44f970) SHA1(7ab46f9d5d587665782cefc623b8de0124a6d38a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gwarrior )
+	static RomLoadPtr rom_gwarrior = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )    /* 5 * 64k for code and rom */
 		ROM_LOAD16_BYTE( "400-a06.15l",  0x00000, 0x08000, CRC(b99d8cff) SHA1(18e277827a534bab2b3b8b81e51d886b8382d435) )
 		ROM_LOAD16_BYTE( "400-a04.10l",  0x00001, 0x08000, CRC(d02c9552) SHA1(ec0aaa093541dab98412c11f666161cd558c383a) )
@@ -2418,9 +2418,9 @@ public class nemesis
 		ROM_REGION( 0x0200,  REGION_SOUND1, 0 )      /* 2x 256 byte for 0005289 wavetable data */
 		ROM_LOAD(      "400-a01.fse",  0x00000, 0x0100, CRC(5827b1e8) SHA1(fa8cf5f868cfb08bce203baaebb6c4055ee2a000) )
 		ROM_LOAD(      "400-a02.fse",  0x00100, 0x0100, CRC(2f44f970) SHA1(7ab46f9d5d587665782cefc623b8de0124a6d38a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( salamand )
+	static RomLoadPtr rom_salamand = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "18b.bin",      0x00000, 0x10000, CRC(a42297f9) SHA1(7c974779e438eae649b39b36f6f6d24847099a6e) )
 		ROM_LOAD16_BYTE( "18c.bin",      0x00001, 0x10000, CRC(f9130b0a) SHA1(925ea65c13fc87fc59f893cc0ead2c82fd0bed6f) )
@@ -2435,9 +2435,9 @@ public class nemesis
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "10a.bin",      0x00000, 0x20000, CRC(09fe0632) SHA1(4c3b29c623d70bbe8a938a0beb4638912c46fb6a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( salamanj )
+	static RomLoadPtr rom_salamanj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "587j02.18b",   0x00000, 0x10000, CRC(f68ee99a) SHA1(aec1f4720abe2529120ae711daa9e7e7d966b351) )
 		ROM_LOAD16_BYTE( "587j05.18c",   0x00001, 0x10000, CRC(72c16128) SHA1(6921445caa0b1121e483c9c62c17aad8aa42cc18) )
@@ -2452,9 +2452,9 @@ public class nemesis
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "10a.bin",      0x00000, 0x20000, CRC(09fe0632) SHA1(4c3b29c623d70bbe8a938a0beb4638912c46fb6a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lifefrce )
+	static RomLoadPtr rom_lifefrce = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "587-k02.bin",  0x00000, 0x10000, CRC(4a44da18) SHA1(8e76bc2b9c48bfc65664fb6ee4d1d33622ee1eb8) )
 		ROM_LOAD16_BYTE( "587-k05.bin",  0x00001, 0x10000, CRC(2f8c1cbd) SHA1(aa309d509be69f315e50047abff42d9b30334e1d) )
@@ -2469,9 +2469,9 @@ public class nemesis
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "10a.bin",      0x00000, 0x20000, CRC(09fe0632) SHA1(4c3b29c623d70bbe8a938a0beb4638912c46fb6a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lifefrcj )
+	static RomLoadPtr rom_lifefrcj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "587-n02.bin",  0x00000, 0x10000, CRC(235dba71) SHA1(f3a0092a7d002436253054953e36d0865ce95b80) )
 		ROM_LOAD16_BYTE( "587-n05.bin",  0x00001, 0x10000, CRC(054e569f) SHA1(e810f7e3e762875e2e71e4356997257e1bbe0da1) )
@@ -2486,9 +2486,9 @@ public class nemesis
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "10a.bin",      0x00000, 0x20000, CRC(09fe0632) SHA1(4c3b29c623d70bbe8a938a0beb4638912c46fb6a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( blkpnthr )
+	static RomLoadPtr rom_blkpnthr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "604f02.18b",   0x00000, 0x10000, CRC(487bf8da) SHA1(43b01599a1e3f82972d597a7a92bdd4ce1343847) )
 		ROM_LOAD16_BYTE( "604f05.18c",   0x00001, 0x10000, CRC(b08f8ca2) SHA1(ca3b17709a86abdcfa0034ccb4ff8d0afc84558f) )
@@ -2500,9 +2500,9 @@ public class nemesis
 	
 		ROM_REGION( 0x20000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "604a01.10a",   0x00000, 0x20000, CRC(eceb64a6) SHA1(028157d336770fe4ca17c24476d62a790255898a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( citybomb )
+	static RomLoadPtr rom_citybomb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c0000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "g10.rom",      0x000000, 0x10000, CRC(26207530) SHA1(ccb5e4ca472aad11cf308973d6a020d3af22a134) )
 		ROM_LOAD16_BYTE( "g09.rom",      0x000001, 0x10000, CRC(ce7de262) SHA1(73ab58c057113ffffb633c314fa383e65236d423) )
@@ -2518,9 +2518,9 @@ public class nemesis
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "787e01.1k",   0x00000, 0x80000, CRC(edc34d01) SHA1(b1465d1a7364a7cebc14b96cd01dc78e57975972) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( citybmrj )
+	static RomLoadPtr rom_citybmrj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c0000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "787h10.15k",   0x000000, 0x10000, CRC(66fecf69) SHA1(5881ec019ef6228a693af5c9f6c26e05bdee3846) )
 		ROM_LOAD16_BYTE( "787h09.15h",   0x000001, 0x10000, CRC(a0e29468) SHA1(78971da14a748ade6ea94770080a393c7617b97d) )
@@ -2536,9 +2536,9 @@ public class nemesis
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "787e01.1k",   0x00000, 0x80000, CRC(edc34d01) SHA1(b1465d1a7364a7cebc14b96cd01dc78e57975972) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kittenk )
+	static RomLoadPtr rom_kittenk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x140000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "kitten.15k",   0x000000, 0x10000, CRC(8267cb2b) SHA1(63c4ebef834850eff379141b8eb0fafbdcf26d0e) )
 		ROM_LOAD16_BYTE( "kitten.15h",   0x000001, 0x10000, CRC(eb41cfa5) SHA1(d481e63faea098625a42613c13f82fec310a7c62) )
@@ -2550,9 +2550,9 @@ public class nemesis
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "712b01.1k",   0x00000, 0x80000, CRC(f65b5d95) SHA1(12701be68629844720cd16af857ce38ef06af61c) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nyanpani )
+	static RomLoadPtr rom_nyanpani = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x140000, REGION_CPU1, 0 )    /* 64k for code */
 		ROM_LOAD16_BYTE( "712j10.15k",   0x000000, 0x10000, CRC(924b27ec) SHA1(019279349b1be45ba46e57ef8f21d79a1b115d7b) )
 		ROM_LOAD16_BYTE( "712j09.15h",   0x000001, 0x10000, CRC(a9862ea1) SHA1(84e481eb6159889d54d0dfe4c31399ab06e13bb7) )
@@ -2564,7 +2564,7 @@ public class nemesis
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, 0 )    /* 007232 data */
 		ROM_LOAD(      "712b01.1k",   0x00000, 0x80000, CRC(f65b5d95) SHA1(12701be68629844720cd16af857ce38ef06af61c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -431,7 +431,7 @@ public class crimfght
 	
 	***************************************************************************/
 	
-	ROM_START( crimfght )
+	static RomLoadPtr rom_crimfght = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 ) /* code + banked roms */
 		ROM_LOAD( "821l02.f24", 0x10000, 0x18000, CRC(588e7da6) SHA1(285febb3bcca31f82b34af3695a59eafae01cd30) )
 		ROM_CONTINUE(           0x08000, 0x08000 )
@@ -452,9 +452,9 @@ public class crimfght
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* data for the 007232 */
 		ROM_LOAD( "821k03.e5",  0x00000, 0x40000, CRC(fef8505a) SHA1(5c5121609f69001838963e961cb227d6b64e4f5f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( crimfgtj )
+	static RomLoadPtr rom_crimfgtj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 ) /* code + banked roms */
 		ROM_LOAD( "821p02.bin", 0x10000, 0x18000, CRC(f33fa2e1) SHA1(00fc9e8250fa51386f3af2fca0f137bec9e1c220) )
 		ROM_CONTINUE(           0x08000, 0x08000 )
@@ -475,9 +475,9 @@ public class crimfght
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* data for the 007232 */
 		ROM_LOAD( "821k03.e5",  0x00000, 0x40000, CRC(fef8505a) SHA1(5c5121609f69001838963e961cb227d6b64e4f5f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( crimfgt2 )
+	static RomLoadPtr rom_crimfgt2 = new RomLoadPtr(){ public void handler(){ 
 	ROM_REGION( 0x28000, REGION_CPU1, 0 ) /* code + banked roms */
 		ROM_LOAD( "crimefb.r02", 0x10000, 0x18000, CRC(4ecdd923) SHA1(78e5260c4bb9b18d7818fb6300d7e1d3a577fb63) )
 		ROM_CONTINUE(           0x08000, 0x08000 )
@@ -498,7 +498,7 @@ public class crimfght
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* data for the 007232 */
 		ROM_LOAD( "821k03.e5",  0x00000, 0x40000, CRC(fef8505a) SHA1(5c5121609f69001838963e961cb227d6b64e4f5f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************
 	

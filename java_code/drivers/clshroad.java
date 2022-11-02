@@ -390,7 +390,7 @@ public class clshroad
 	
 	
 	
-	ROM_START( firebatl )
+	static RomLoadPtr rom_firebatl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "rom01",       0x00000, 0x2000, CRC(10e24ef6) SHA1(b6dae9824eb3cecececbdfdb416a90b1b61ff18d) )
 		ROM_LOAD( "rom02",       0x02000, 0x2000, CRC(47f79bee) SHA1(23e64ff69ff5112b0413d12a283ca90cf3642389) )
@@ -433,9 +433,9 @@ public class clshroad
 		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
 		ROM_LOAD( "prom3.bpr",   0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "prom2.bpr",   0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( clshroad )
+	static RomLoadPtr rom_clshroad = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )		/* Main Z80 Code */
 		ROM_LOAD( "clashr3.bin", 0x0000, 0x8000, CRC(865c32ae) SHA1(e5cdd2d624fe6dc8bd6bebf2bd1c79d287408c63) )
 	
@@ -470,7 +470,7 @@ public class clshroad
 		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
 		ROM_LOAD( "clashrd.g8",  0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "clashrd.g7",  0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT ( firebatl )
 	{

@@ -896,7 +896,7 @@ public class argus
 	
 	***************************************************************************/
 	
-	ROM_START( argus )
+	static RomLoadPtr rom_argus = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 ) 					/* Main CPU */
 		ROM_LOAD( "ag_02.bin", 0x00000, 0x08000, CRC(278a3f3d) SHA1(c5ac5a004ebf0194c33f71dab4020fa636cefbc2) )
 		ROM_LOAD( "ag_03.bin", 0x10000, 0x08000, CRC(3a7f3bfa) SHA1(b11e134c084fc3c982dfe31836c1cf3fc0d481fd) )
@@ -929,9 +929,9 @@ public class argus
 	
 		ROM_REGION( 0x08000, REGION_USER2, 0 )					/* Pattern */
 		ROM_LOAD( "ag_16.bin", 0x00000, 0x08000, CRC(39a51714) SHA1(ad89a630f1352eb4d8beeeebf909d5e2b5d7cc12) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( valtric )
+	static RomLoadPtr rom_valtric = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 ) 					/* Main CPU */
 		ROM_LOAD( "vt_04.bin",    0x00000, 0x08000, CRC(709c705f) SHA1(b82e2209a0371dcbc2708c485b02985cea04353f) )
 		ROM_LOAD( "vt_06.bin",    0x10000, 0x10000, CRC(c9cbb4e4) SHA1(3c84cda778263a9bb2031e29f6f29f29878d2070) )
@@ -952,9 +952,9 @@ public class argus
 	
 		ROM_REGION( 0x08000, REGION_GFX3, ROMREGION_DISPOSE )	/* Text */
 		ROM_LOAD( "vt_07.bin",    0x00000, 0x08000, CRC(d5f9bfb9) SHA1(6b3f11f9b8f76c0144a109f1506d8cbb01876237) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( butasan )
+	static RomLoadPtr rom_butasan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 ) 					/* Main CPU */
 		ROM_LOAD( "buta-04.bin",  0x00000, 0x08000, CRC(47ff4ca9) SHA1(d89a41f6987c91d20b010f0cbda332cf54b21f8c) )
 		ROM_LOAD( "buta-03.bin",  0x10000, 0x10000, CRC(69fd88c7) SHA1(fd827d7926a2de5ffe2982b3a59ea43de00ee46b) )
@@ -986,7 +986,7 @@ public class argus
 		ROM_REGION( 0x00200, REGION_PROMS, 0 )					/* Data proms ??? */
 		ROM_LOAD( "buta-01.prm",  0x00000, 0x00100, CRC(45baedd0) SHA1(afdafb67d55007e6fb99518657e27ce61d2cb7e6) )
 		ROM_LOAD( "buta-02.prm",  0x00100, 0x00100, CRC(0dcb18fc) SHA1(0b097b873c9484981f87a5e3d1af767f901ae05f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*  ( YEAR   NAME     PARENT  MACHINE   INPUT     INIT  MONITOR  COMPANY                 FULLNAME ) */

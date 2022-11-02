@@ -386,7 +386,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	ROM_START( thunderj )
+	static RomLoadPtr rom_thunderj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xa0000, REGION_CPU1, 0 )	/* 10*64k for 68000 code */
 		ROM_LOAD16_BYTE( "2001.14e",   0x00000, 0x10000, CRC(f6a71532) SHA1(b1c55968d7da9b64bde737d66aa8f0ddcdcfee27) )
 		ROM_LOAD16_BYTE( "2002.14c",   0x00001, 0x10000, CRC(173ec10d) SHA1(e32eca9194336f3d7e289b2a187ed125ed03688c) )
@@ -452,7 +452,7 @@ public class thunderj
 		ROM_LOAD( "tj1017.bin",  0x10000, 0x10000, CRC(4e5e25e8) SHA1(373c946abd24ce8dd5221f1a0409af4537610d3d) )
 		ROM_LOAD( "tj1018.bin",  0x20000, 0x10000, CRC(ec81895d) SHA1(56acffb0700d3b70ca705fba9d240a82950fd320) )
 		ROM_LOAD( "tj1019.bin",  0x30000, 0x10000, CRC(a4009037) SHA1(01cd3f4cf510f4956258f39f3ddbb42628bc2b9a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

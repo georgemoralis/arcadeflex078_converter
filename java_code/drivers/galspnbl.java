@@ -372,7 +372,7 @@ public class galspnbl
 	
 	***************************************************************************/
 	
-	ROM_START( galspnbl )
+	static RomLoadPtr rom_galspnbl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "7.rom",        0x000000, 0x80000, CRC(ce0189bf) SHA1(06d8cc6f5b819fe2ca536ce553db6986547a15ba) )
 		ROM_LOAD16_BYTE( "3.rom",        0x000001, 0x80000, CRC(9b0a8744) SHA1(ac80f22b8b2f4c559c225bf203af698bf59699e7) )
@@ -396,9 +396,9 @@ public class galspnbl
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKIM6295 samples */
 		ROM_LOAD( "1.rom",        0x00000, 0x40000, CRC(93c06d3d) SHA1(8620d274ca7824e7e72a1ad1da3eaa804d550653) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hotpinbl )
+	static RomLoadPtr rom_hotpinbl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x400000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "hp_07.bin",    0x000000, 0x80000, CRC(978cc13e) SHA1(0060aaf7259fdeeacb07e9ced01bdf69c27bdfb6) )
 		ROM_LOAD16_BYTE( "hp_03.bin",    0x000001, 0x80000, CRC(68388726) SHA1(d8dca9050403be70097a0f833ba189bd2fa87e80) )
@@ -422,7 +422,7 @@ public class galspnbl
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKIM6295 samples */
 		ROM_LOAD( "hp_01.bin",    0x00000, 0x40000, CRC(93c06d3d) SHA1(8620d274ca7824e7e72a1ad1da3eaa804d550653) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

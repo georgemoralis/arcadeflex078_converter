@@ -429,7 +429,7 @@ public class ataxx
 	 *
 	 *************************************/
 	
-	ROM_START( ataxx )
+	static RomLoadPtr rom_ataxx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "ataxx.038",   0x00000, 0x20000, CRC(e1cf6236) SHA1(fabf423a006b1db22273c6fffa03edc148d7d957) )
 		ROM_RELOAD(              0x10000, 0x20000 )
@@ -459,10 +459,10 @@ public class ataxx
 	    /* Empty / not used */
 	
 		ROM_REGION( LELAND_BATTERY_RAM_SIZE + ATAXX_EXTRA_TRAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ataxxa )
+	static RomLoadPtr rom_ataxxa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "u38",   0x00000, 0x20000, CRC(3378937d) SHA1(3c62da7e11b2860c7fe3a35c077cadcf4d0272ca) )
 		ROM_RELOAD(        0x10000, 0x20000 )
@@ -492,10 +492,10 @@ public class ataxx
 	    /* Empty / not used */
 	
 		ROM_REGION( LELAND_BATTERY_RAM_SIZE + ATAXX_EXTRA_TRAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ataxxj )
+	static RomLoadPtr rom_ataxxj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )
 		ROM_LOAD( "ataxxj.038", 0x00000, 0x20000, CRC(513fa7d4) SHA1(1aada72214c0165d76667935855bf996a5b3d55b) )
 		ROM_RELOAD(             0x10000, 0x20000 )
@@ -525,10 +525,10 @@ public class ataxx
 	    /* Empty / not used */
 	
 		ROM_REGION( LELAND_BATTERY_RAM_SIZE + ATAXX_EXTRA_TRAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( wsf )
+	static RomLoadPtr rom_wsf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x50000, REGION_CPU1, 0 )
 		ROM_LOAD( "30022-03.u64",  0x00000, 0x20000, CRC(2e7faa96) SHA1(d43915a433133eca650fabece61a4a65642b39f6) )
 		ROM_RELOAD(                0x10000, 0x20000 )
@@ -568,10 +568,10 @@ public class ataxx
 		ROM_LOAD( "30021-01.u8",   0x00000, 0x20000, CRC(bb91dc10) SHA1(a7d8676867b5cfe1049040e593985af57ef04334) )
 	
 		ROM_REGION( LELAND_BATTERY_RAM_SIZE + ATAXX_EXTRA_TRAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( indyheat )
+	static RomLoadPtr rom_indyheat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )
 		ROM_LOAD( "u64_27c.010",   0x00000, 0x20000, CRC(2b97a347) SHA1(958a774e9ea3678c0fdd2466e578df8267b4413e) )
 		ROM_RELOAD(                0x10000, 0x20000 )
@@ -618,10 +618,10 @@ public class ataxx
 		ROM_LOAD( "u9_27c.010",  0x20000, 0x20000, CRC(0dc8f488) SHA1(2ff0f45f17b8a182afdaa5603e7a1af70e6336b7) )
 	
 		ROM_REGION( LELAND_BATTERY_RAM_SIZE + ATAXX_EXTRA_TRAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( brutforc )
+	static RomLoadPtr rom_brutforc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )
 		ROM_LOAD( "u64",   0x00000, 0x20000, CRC(008ae3b8) SHA1(bc9fdba761501efeaf665ac33ff1ad6935d70638) )
 		ROM_RELOAD(                 0x10000, 0x20000 )
@@ -668,10 +668,10 @@ public class ataxx
 		ROM_LOAD( "u11", 0x60000, 0x20000, CRC(5ed4877f) SHA1(eab9e949b1afd1fa21d87af5abcb1a8dc9bcf0d8) )
 	
 		ROM_REGION( LELAND_BATTERY_RAM_SIZE + ATAXX_EXTRA_TRAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( asylum )
+	static RomLoadPtr rom_asylum = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x90000, REGION_CPU1, 0 )
 		ROM_LOAD( "asy-m0.64",   0x00000, 0x20000, CRC(f5ca36fd) SHA1(8c36ce3ca1c30ffb0a32ff7e9df61901c1ee6151) )
 		ROM_RELOAD(              0x10000, 0x20000 )
@@ -724,7 +724,7 @@ public class ataxx
 		ROM_LOAD( "asy-65.11", 0x60000, 0x20000, CRC(4b185d22) SHA1(d59a72d8c6532875f6e31939c5f846da64ba1bdd) )
 	
 		ROM_REGION( LELAND_BATTERY_RAM_SIZE + ATAXX_EXTRA_TRAM_SIZE, REGION_USER2, 0 ) /* extra RAM regions */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

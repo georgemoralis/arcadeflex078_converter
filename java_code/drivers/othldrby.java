@@ -287,7 +287,7 @@ public class othldrby
 	
 	***************************************************************************/
 	
-	ROM_START( othldrby )
+	static RomLoadPtr rom_othldrby = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "db0.1",        0x00000, 0x80000, CRC(6b4008d3) SHA1(4cf838c47563ba482be8364b2e115569a4a06c83) )
 	
@@ -297,7 +297,7 @@ public class othldrby
 	
 		ROM_REGION( 0x080000, REGION_SOUND1, 0 )	/* OKIM6295 samples */
 		ROM_LOAD( "db0.4",        0x00000, 0x80000, CRC(a9701868) SHA1(9ee89556666d358e8d3915622573b3ba660048b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1995, othldrby, 0, othldrby, othldrby, 0, ROT0, "Sunwise", "Othello Derby (Japan)" )

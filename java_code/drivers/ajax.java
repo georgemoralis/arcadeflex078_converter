@@ -313,7 +313,7 @@ public class ajax
 	
 	
 	
-	ROM_START( ajax )
+	static RomLoadPtr rom_ajax = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )	/* 052001 code */
 		ROM_LOAD( "770_m01.n11",	0x10000, 0x08000, CRC(4a64e53a) SHA1(acd249bfcb5f248c41b3e40c7c1bce1b8c645d3a) )	/* banked ROM */
 		ROM_CONTINUE(				0x08000, 0x08000 )				/* fixed ROM */
@@ -347,9 +347,9 @@ public class ajax
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* 007232 data (chip 2) */
 		ROM_LOAD( "770c11",		0x000000, 0x080000, CRC(299a615a) SHA1(29cdcc21998c72f4cf311792b904b79bde236bab) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( typhoon )
+	static RomLoadPtr rom_typhoon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )	/* 052001 code */
 		ROM_LOAD( "770_k01.n11",	0x10000, 0x08000, CRC(5ba74a22) SHA1(897d3309f2efb3bfa56e86581ee4a492e656788c) )	/* banked ROM */
 		ROM_CONTINUE(				0x08000, 0x08000 )				/* fixed ROM */
@@ -383,9 +383,9 @@ public class ajax
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* 007232 data (chip 2) */
 		ROM_LOAD( "770c11",		0x000000, 0x080000, CRC(299a615a) SHA1(29cdcc21998c72f4cf311792b904b79bde236bab) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ajaxj )
+	static RomLoadPtr rom_ajaxj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x28000, REGION_CPU1, 0 )	/* 052001 code */
 		ROM_LOAD( "770_l01.n11",	0x10000, 0x08000, CRC(7cea5274) SHA1(8e3b2b11a8189e3a1703b3b4b453fbb386f5537f) )	/* banked ROM */
 		ROM_CONTINUE(				0x08000, 0x08000 )				/* fixed ROM */
@@ -419,7 +419,7 @@ public class ajax
 	
 		ROM_REGION( 0x080000, REGION_SOUND2, 0 )	/* 007232 data (chip 2) */
 		ROM_LOAD( "770c11",		0x000000, 0x080000, CRC(299a615a) SHA1(29cdcc21998c72f4cf311792b904b79bde236bab) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( ajax )

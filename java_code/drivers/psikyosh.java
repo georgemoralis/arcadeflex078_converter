@@ -613,7 +613,7 @@ public class psikyosh
 	
 	/* PS3 */
 	
-	ROM_START( soldivid )
+	static RomLoadPtr rom_soldivid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0)
 		ROM_LOAD32_WORD_SWAP( "2-prog_l.u18", 0x000002, 0x080000, CRC(cf179b04) SHA1(343f00a81cffd44334a4db81b6b828b7cf73c1e8) )
 		ROM_LOAD32_WORD_SWAP( "1-prog_h.u17", 0x000000, 0x080000, CRC(f467d1c4) SHA1(a011e6f310a54f09efa0bf4597783cd78c05ad6f) )
@@ -629,9 +629,9 @@ public class psikyosh
 	
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 )
 		ROM_LOAD( "sound.bin", 0x000000, 0x400000, CRC(e98f8d45) SHA1(7791c0f31d08f37c6ec65e7cecf8ef54ca73b1fd) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( s1945ii )
+	static RomLoadPtr rom_s1945ii = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0) /* Code */
 		ROM_LOAD32_WORD_SWAP( "2_prog_l.u18", 0x000002, 0x080000, CRC(20a911b8) SHA1(82ba7b93bd621fc45a4dc2722752077b59a0a233) )
 		ROM_LOAD32_WORD_SWAP( "1_prog_h.u17", 0x000000, 0x080000, CRC(4c0fe85e) SHA1(74f810a1c3e9d629c8b190f68d73ce07b11f77b7) )
@@ -651,9 +651,9 @@ public class psikyosh
 		ROM_RELOAD ( 0x400000, 0x400000 )
 		/* 0x400000 - 0x7fffff allocated but left blank, it randomly reads from here on the
 		    Iron Casket level causing a crash otherwise, not sure why, bug in the sound emulation? */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( daraku )
+	static RomLoadPtr rom_daraku = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x200000, REGION_CPU1, 0)
 		ROM_LOAD32_WORD_SWAP( "4_prog_l.u18", 0x000002, 0x080000, CRC(660b4609) SHA1(ee6b5606fae41881c3e671ee642baae5c03331ca) )
@@ -678,9 +678,9 @@ public class psikyosh
 	
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 ) /* Samples */
 		ROM_LOAD( "sound.u32", 0x000000, 0x400000, CRC(ef2c781d) SHA1(1313f082f6dbe4da0efaf261226085eb7325667f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sbomberb )
+	static RomLoadPtr rom_sbomberb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0)
 		ROM_LOAD32_WORD_SWAP( "1-b_pr_l.u18", 0x000002, 0x080000, CRC(52d12225) SHA1(0a31a5d557414e7bf51dc6f7fbdd417a20b78df1) )
 		ROM_LOAD32_WORD_SWAP( "1-b_pr_h.u17", 0x000000, 0x080000, CRC(1bbd0345) SHA1(c6ccb7c97cc9e9ea298c1883d1dd5563907a7255) )
@@ -699,11 +699,11 @@ public class psikyosh
 	
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 ) /* Samples */
 		ROM_LOAD( "sound.u32", 0x000000, 0x400000, CRC(85cbff69) SHA1(34c7f4d337111de2064f84214294b6bdc37bf16c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* PS5 */
 	
-	ROM_START( gunbird2 )
+	static RomLoadPtr rom_gunbird2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0)
 		ROM_LOAD32_WORD_SWAP( "2_prog_l.u16", 0x000002, 0x080000, CRC(76f934f0) SHA1(cf197796d66f15639a6b3d5311c18da33cefd06b) )
 		ROM_LOAD32_WORD_SWAP( "1_prog_h.u17", 0x000000, 0x080000, CRC(7328d8bf) SHA1(c640de1ab5b32400b2d77e0dc6e3ee0f78ab7803) )
@@ -721,9 +721,9 @@ public class psikyosh
 	
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 ) /* Samples */
 		ROM_LOAD( "sound.u9", 0x000000, 0x400000, CRC(f19796ab) SHA1(b978f0550ebd675e8ce9d9edcfcc3f6214e49e8b) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( s1945iii )
+	static RomLoadPtr rom_s1945iii = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0)
 		ROM_LOAD32_WORD_SWAP( "2_progl.u16", 0x000002, 0x080000, CRC(5d5d385f) SHA1(67b3bcabd71cf084bcea7a59939281a8d6257059) )
 		ROM_LOAD32_WORD_SWAP( "1_progh.u17", 0x000000, 0x080000, CRC(1b8a5a18) SHA1(718a176bd48e16f964fcb07c568b5227cfc0515f) )
@@ -742,11 +742,11 @@ public class psikyosh
 		ROM_REGION( 0x800000, REGION_SOUND1, 0 ) /* Samples */
 		ROM_LOAD( "sound.u9", 0x000000, 0x400000, CRC(c5374beb) SHA1(d13e12cbd249246d953c45bb3bfa576a0ec75595) )
 		ROM_RELOAD ( 0x400000, 0x400000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* PS5v2 */
 	
-	ROM_START( dragnblz )
+	static RomLoadPtr rom_dragnblz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0)
 		ROM_LOAD32_WORD_SWAP( "2prog_h.u21",   0x000000, 0x080000, CRC(fc5eade8) SHA1(e5d05543641e4a3900b0d42e0d5f75734683d635) )
 		ROM_LOAD32_WORD_SWAP( "1prog_l.u22",   0x000002, 0x080000, CRC(95d6fd02) SHA1(2b2830e7fa66cbd13666191762bfddc40571caec) )
@@ -775,7 +775,7 @@ public class psikyosh
 	
 		ROM_REGION( 0x800000, REGION_SOUND1, 0 ) /* Samples - Not Dumped */
 		ROM_LOAD( "snd0.u52", 0x000000, 0x200000, CRC(7fd1b225) SHA1(6aa61021ada51393bbb34fd1aea00b8feccc8197) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/* are these right? should i fake the counter return?

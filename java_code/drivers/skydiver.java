@@ -378,7 +378,7 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	ROM_START( skydiver )
+	static RomLoadPtr rom_skydiver = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "33167-02.f1", 0x2800, 0x0800, CRC(25a5c976) SHA1(50fbf5dceab5d78292dc14bf25f2076e8139a594) )
 		ROM_LOAD( "33164-02.e1", 0x3000, 0x0800, CRC(a348ac39) SHA1(7401cbd2f7236bd1d6ad0e39eb3de2b7d75e8f45) )
@@ -392,7 +392,7 @@ public class skydiver
 		ROM_REGION( 0x0800, REGION_GFX2, ROMREGION_DISPOSE )
 		ROM_LOAD( "33176-01.l5", 0x0000, 0x0400, CRC(6b082a01) SHA1(8facc94843ea041d205137056bd2035cf968125b) )
 		ROM_LOAD( "33177-01.k5", 0x0400, 0x0400, CRC(f5541af0) SHA1(0967269518b6eac3c4e9ddaee39303086476c580) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

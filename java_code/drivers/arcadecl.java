@@ -406,7 +406,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	ROM_START( arcadecl )
+	static RomLoadPtr rom_arcadecl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "pgm0",  0x00000, 0x80000, CRC(b5b93623) SHA1(a2e96c0c6eceb3d8f205e28d6b8197055aeb8cc4) )
 		ROM_LOAD16_BYTE( "prog1", 0x00001, 0x80000, CRC(e7efef85) SHA1(05f2119d8ecc27f6efea85f5174ea7da404d7e9b) )
@@ -416,10 +416,10 @@ public class arcadecl
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "adpcm",      0x00000, 0x80000, CRC(03ca7f03) SHA1(87ff53599b6f0cdfa5a1779773e09cc5cfe3c2a8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( sparkz )
+	static RomLoadPtr rom_sparkz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "sparkzpg.0", 0x00000, 0x80000, CRC(a75c331c) SHA1(855ed44bd23c1dd0ca64926cacc8be62aca82fe2) )
 		ROM_LOAD16_BYTE( "sparkzpg.1", 0x00001, 0x80000, CRC(1af1fc04) SHA1(6d92edb1a881ba6b63e0144c9c3e631b654bf8ae) )
@@ -429,7 +429,7 @@ public class arcadecl
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, 0 )
 		ROM_LOAD( "sparkzsn",      0x00000, 0x80000, CRC(87097ce2) SHA1(dc4d199b5af692d111c087af3edc01e2ac0287a8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

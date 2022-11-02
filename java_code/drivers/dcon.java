@@ -335,7 +335,7 @@ public class dcon
 	
 	/***************************************************************************/
 	
-	ROM_START( dcon )
+	static RomLoadPtr rom_dcon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE("p0-0",   0x000000, 0x20000, CRC(a767ec15) SHA1(5ceeba97b58c4e24d8c0991303dd6f7a2dfeda48) )
 		ROM_LOAD16_BYTE("p0-1",   0x000001, 0x20000, CRC(a7efa091) SHA1(aa0e97d20f3bdc1adc019fe62112a8417bb3ddf1) )
@@ -368,9 +368,9 @@ public class dcon
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	 /* ADPCM samples */
 		ROM_LOAD( "pcm", 0x000000, 0x20000, CRC(d2133b85) SHA1(a2e61c9893da8a95c35c0b47e2c43c315b654de8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( sdgndmps )
+	static RomLoadPtr rom_sdgndmps = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "911-a01.25",   0x00000, 0x20000, CRC(3362915d) SHA1(d98e2d4de402ca549664e148c9a6fe94fccfd5e9) )
 		ROM_LOAD16_BYTE( "911-a02.29",   0x00001, 0x20000, CRC(fbc78285) SHA1(85d40b0e7bb923a0daacbd78ce7d5bb9c80b9ffc) )
@@ -403,7 +403,7 @@ public class dcon
 	
 		ROM_REGION( 512, REGION_PROMS, 0 )
 		ROM_LOAD( "bnd-007.88",   0x00000, 512, CRC(96f7646e) SHA1(400a831b83d6ac4d2a46ef95b97b1ee237099e44) ) /* Priority */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	static DRIVER_INIT( sdgndmps )

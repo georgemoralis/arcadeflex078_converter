@@ -643,7 +643,7 @@ public class mhavoc
 	 * Alpha one is a single-board prototype
 	 */
 	
-	ROM_START( mhavoc )
+	static RomLoadPtr rom_mhavoc = new RomLoadPtr(){ public void handler(){ 
 		/* Alpha Processor ROMs */
 		ROM_REGION( 0x21000, REGION_CPU1, 0 )	/* 152KB for ROMs */
 		/* Vector Generator ROM */
@@ -665,10 +665,10 @@ public class mhavoc
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* 16k for code */
 		ROM_LOAD( "136025.108",   0x08000, 0x4000, CRC(93faf210) SHA1(7744368a1d520f986d1c4246113a7e24fcdd6d04) )
 		ROM_RELOAD(               0x0c000, 0x4000 ) /* reset+interrupt vectors */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mhavoc2 )
+	static RomLoadPtr rom_mhavoc2 = new RomLoadPtr(){ public void handler(){ 
 		/* Alpha Processor ROMs */
 		ROM_REGION( 0x21000, REGION_CPU1, 0 )
 		/* Vector Generator ROM */
@@ -692,10 +692,10 @@ public class mhavoc
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )	/* 16k for code */
 		ROM_LOAD( "136025.108",   0x08000, 0x4000, CRC(93faf210) SHA1(7744368a1d520f986d1c4246113a7e24fcdd6d04) )
 		ROM_RELOAD(               0x0c000, 0x4000 ) /* reset+interrupt vectors */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mhavocrv )
+	static RomLoadPtr rom_mhavocrv = new RomLoadPtr(){ public void handler(){ 
 		/* Alpha Processor ROMs */
 		ROM_REGION( 0x21000, REGION_CPU1, 0 )	/* 152KB for ROMs */
 		/* Vector Generator ROM */
@@ -717,10 +717,10 @@ public class mhavoc
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* 16k for code */
 		ROM_LOAD( "136025.908",   0x08000, 0x4000, CRC(c52ec664) SHA1(08120a385f71b17ec02a3c2ef856ff835a91773e) )
 		ROM_RELOAD(               0x0c000, 0x4000 ) /* reset+interrupt vectors */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mhavocp )
+	static RomLoadPtr rom_mhavocp = new RomLoadPtr(){ public void handler(){ 
 		/* Alpha Processor ROMs */
 		ROM_REGION( 0x21000, REGION_CPU1, 0 )
 		/* Vector Generator ROM */
@@ -744,10 +744,10 @@ public class mhavoc
 		ROM_REGION( 0x10000, REGION_CPU2, 0 ) /* 16k for code */
 		ROM_LOAD( "136025.008",   0x8000, 0x4000, CRC(22ea7399) SHA1(eeda8cc40089506063835a62c3273e7dd3918fd5) )
 		ROM_RELOAD(               0xc000, 0x4000 )/* reset+interrupt vectors */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( alphaone )
+	static RomLoadPtr rom_alphaone = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x21000, REGION_CPU1, 0 )
 		/* Vector Generator ROM */
 		ROM_LOAD( "vec5000.tw",   0x05000, 0x1000, CRC(2a4c149f) SHA1(b60a0b29958bee9b5f7c1d88163680b626bb76dd) )
@@ -767,10 +767,10 @@ public class mhavoc
 		ROM_LOAD( "vec_pg23.tw",  0x1c000, 0x4000, CRC(1ff74292) SHA1(90e61c48544c62d905e207bba5c67ae7694e86a5) )
 	
 		/* the last 0x1000 is used for the 2 RAM pages */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( alphaona )
+	static RomLoadPtr rom_alphaona = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x21000, REGION_CPU1, 0 )
 		/* Vector Generator ROM */
 		ROM_LOAD( "vec5000.tw",   0x05000, 0x1000, CRC(2a4c149f) SHA1(b60a0b29958bee9b5f7c1d88163680b626bb76dd) )
@@ -790,7 +790,7 @@ public class mhavoc
 		ROM_LOAD( "vec_pg23.tw",  0x1c000, 0x4000, CRC(1ff74292) SHA1(90e61c48544c62d905e207bba5c67ae7694e86a5) )
 	
 		/* the last 0x1000 is used for the 2 RAM pages */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

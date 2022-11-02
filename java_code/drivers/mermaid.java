@@ -251,7 +251,7 @@ public class mermaid
 	  Game driver(s)
 	
 	***************************************************************************/
-	ROM_START( mermaid )
+	static RomLoadPtr rom_mermaid = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "g960_32.15",	  0x0000, 0x1000, CRC(8311f090) SHA1(c59485a712cf1cd384f03874c693b58e972fe4da) )
 		ROM_LOAD( "g960_33.16",	  0x1000, 0x1000, CRC(9f274fc4) SHA1(4098e98c9d95f7e621de061925374154a23c5d35) )
@@ -279,9 +279,9 @@ public class mermaid
 	
 		ROM_REGION( 0x1000, REGION_USER1, 0 )	/* unknown */
 		ROM_LOAD( "g960_42.39",	  0x0000, 0x1000, CRC(287840bb) SHA1(9a1836f39f328b0c9672976d95a9ece45bb9e89f) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rougien )
+	static RomLoadPtr rom_rougien = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )       /* 64k for code */
 		ROM_LOAD( "rou-00.bin", 0x0000,  0x1000,  CRC(14cd1108) SHA1(46657fa4d900936e2a71ad43702d2c43fef09efe) )
 		ROM_LOAD( "rou-01.bin", 0x1000,  0x1000,  CRC(ee40670d) SHA1(7c31c3b693999bc1ae42b9f2de1a9883d3db535d) )
@@ -319,7 +319,7 @@ public class mermaid
 		ROM_LOAD( "rou-40.bin",  0x0000,  0x1000, CRC(ab38b942) SHA1(9575f67e002c68d384122e05a12c6c0f21335825) )
 		ROM_LOAD( "rou-41.bin",  0x1000,  0x1000, CRC(59ed0d88) SHA1(7faf6ab01fa3c1c04c38d2ea27b27c47450876de) )
 		ROM_LOAD( "rou-42.bin",  0x2000,  0x1000, CRC(5ce13444) SHA1(e6da83190b26b094159a3a97deffd31d0d20a061) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1982, mermaid, 0, mermaid, mermaid, 0, ROT0, "[Sanritsu] Rock-ola", "Mermaid", GAME_NOT_WORKING )
 	GAMEX( 1982, rougien, 0, mermaid, mermaid, 0, ROT0, "Sanritsu", "Rougien", GAME_NOT_WORKING )

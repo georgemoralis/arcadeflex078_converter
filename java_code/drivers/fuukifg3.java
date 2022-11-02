@@ -556,7 +556,7 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	ROM_START( asurabld )
+	static RomLoadPtr rom_asurabld = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 ) /* M68020 */
 		ROM_LOAD32_BYTE( "pgm3.u1", 0x000000, 0x80000, CRC(053e9758) SHA1(c2754d3f0c607c81c8fa33b667b576eb0474fd0b) )
 		ROM_LOAD32_BYTE( "pgm2.u2", 0x000001, 0x80000, CRC(16b656ca) SHA1(5ffb551ce7dec462d3896f0fed693454496894bc) )
@@ -588,7 +588,7 @@ public class fuukifg3
 	
 		ROM_REGION( 0x400000, REGION_SOUND1, 0 ) // doesn't seem to be oki
 		ROM_LOAD( "pcm.u6", 0x00000, 0x400000, CRC(ac72225a) SHA1(8d16399ed34ac5bd69dbf43b2de2b0db9ac1c610) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/***************************************************************************

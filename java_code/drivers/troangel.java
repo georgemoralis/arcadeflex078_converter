@@ -203,7 +203,7 @@ public class troangel
 	
 	
 	
-	ROM_START( troangel )
+	static RomLoadPtr rom_troangel = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* main CPU */
 		ROM_LOAD( "ta-a-3k",	0x0000, 0x2000, CRC(f21f8196) SHA1(7cbf74b77a559ee70312b799e707394d9b849f5b) )
 		ROM_LOAD( "ta-a-3m",	0x2000, 0x2000, CRC(58801e55) SHA1(91bdda778f2c4486001bc4ad26d6f21ba275ae08) )
@@ -231,7 +231,7 @@ public class troangel
 		ROM_LOAD( "ta-a-5b",	0x0100,	0x0100, CRC(efd11d4b) SHA1(7c7c356063ab35e4ffb8d65cd20c27c2a4b36537) ) /* chars palette high 4 bits */
 		ROM_LOAD( "ta-b-1b",	0x0200, 0x0020, CRC(f94911ea) SHA1(ad61a323476a97156a255a72048a28477b421284) ) /* sprites palette */
 		ROM_LOAD( "ta-b-3d",	0x0220,	0x0100, CRC(ed3e2aa4) SHA1(cfdfc151803080d1ecdd04af1bfea3dbdce8dca0) ) /* sprites lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

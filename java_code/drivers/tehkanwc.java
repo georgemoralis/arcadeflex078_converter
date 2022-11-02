@@ -895,7 +895,7 @@ public class tehkanwc
 	
 	***************************************************************************/
 	
-	ROM_START( tehkanwc )
+	static RomLoadPtr rom_tehkanwc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "twc-1.bin",    0x0000, 0x4000, CRC(34d6d5ff) SHA1(72f4d408b8a7766d348f6a229d395e0c98215c40) )
 		ROM_LOAD( "twc-2.bin",    0x4000, 0x4000, CRC(7017a221) SHA1(4b4700af0a6ff64f976db369ba4b9d97cee1fd5f) )
@@ -920,9 +920,9 @@ public class tehkanwc
 	
 		ROM_REGION( 0x8000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "twc-5.bin",    0x0000, 0x4000, CRC(444b5544) SHA1(0786d6d9ada7fe49c8ab9751b049095474d2e598) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gridiron )
+	static RomLoadPtr rom_gridiron = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "gfight1.bin",  0x0000, 0x4000, CRC(51612741) SHA1(a0417a35f0ce51ba7fc81f27b356852a97f52a58) )
 		ROM_LOAD( "gfight2.bin",  0x4000, 0x4000, CRC(a678db48) SHA1(5ddcb93b3ed52cec6ba04bb19832ae239b7d2287) )
@@ -950,9 +950,9 @@ public class tehkanwc
 	
 		ROM_REGION( 0x8000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "gfight6.bin",  0x0000, 0x4000, CRC(d05d463d) SHA1(30f2bce0ad75c4a7d8344cff16bce27f5e3a3f5d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( teedoff )
+	static RomLoadPtr rom_teedoff = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "to-1.bin",     0x0000, 0x4000, CRC(cc2aebc5) SHA1(358e77e53b35dd89fcfdb3b2484b8c4fbc34c1be) )
 		ROM_LOAD( "to-2.bin",     0x4000, 0x4000, CRC(f7c9f138) SHA1(2fe56059ef67387b5938bb4751aa2f74a58b04fb) )
@@ -977,7 +977,7 @@ public class tehkanwc
 	
 		ROM_REGION( 0x8000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "to-5.bin",     0x0000, 0x8000, CRC(e5e4246b) SHA1(b2fe2e68fa86163ebe1ef00ecce73fb62cef6b19) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

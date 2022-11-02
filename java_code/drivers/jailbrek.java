@@ -288,7 +288,7 @@ public class jailbrek
 	
 	***************************************************************************/
 	
-	ROM_START( jailbrek )
+	static RomLoadPtr rom_jailbrek = new RomLoadPtr(){ public void handler(){ 
 	    ROM_REGION( 2*0x10000, REGION_CPU1, 0 )     /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "jailb11d.bin", 0x8000, 0x4000, CRC(a0b88dfd) SHA1(f999e382b9d3b812fca41f4d0da3ea692fef6b19) )
 		ROM_LOAD( "jailb9d.bin",  0xc000, 0x4000, CRC(444b7d8e) SHA1(c708b67c2d249448dae9a3d10c24d13ba6849597) )
@@ -311,9 +311,9 @@ public class jailbrek
 	
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 ) /* speech rom */
 		ROM_LOAD( "jailb8c.bin",  0x0000, 0x2000, CRC(d91d15e3) SHA1(475fe50aafbf8f2fb79880ef0e2c25158eda5270) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( manhatan )
+	static RomLoadPtr rom_manhatan = new RomLoadPtr(){ public void handler(){ 
 	    ROM_REGION( 2*0x10000, REGION_CPU1, 0 )     /* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "507n03.9d",    0x8000, 0x4000, CRC(e5039f7e) SHA1(0f12484ed40444d978e0405c27bdd027ae2e2a0b) )
 		ROM_LOAD( "507n02.11d",   0xc000, 0x4000, CRC(143cc62c) SHA1(9520dbb1b6f1fa439e03d4caa9bed96ef8f805f2) )
@@ -336,7 +336,7 @@ public class jailbrek
 	
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 ) /* speech rom */
 		ROM_LOAD( "507p01.8c",    0x0000, 0x2000, CRC(4a1da0b7) SHA1(e18987f0f7fa8740d5f91d1701ee11612c94e8e8) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( jailbrek )

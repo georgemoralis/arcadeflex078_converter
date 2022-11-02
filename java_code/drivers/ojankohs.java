@@ -1101,7 +1101,7 @@ public class ojankohs
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( ojankohs )
+	static RomLoadPtr rom_ojankohs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x98000, REGION_CPU1, 0 )
 		ROM_LOAD( "3.3c", 0x00000, 0x08000, CRC(f652db23) SHA1(7fcb4227804301f0404af4b007eb4accb0787c98) )
 		ROM_LOAD( "5b",   0x10000, 0x80000, CRC(bd4fd0b6) SHA1(79e0937fdd34ec03b4b0a503efc1fa7c8f29e7cf) )
@@ -1109,9 +1109,9 @@ public class ojankohs
 	
 		ROM_REGION( 0x80000, REGION_GFX1, ROMREGION_DISPOSE )
 		ROM_LOAD( "13b",  0x00000, 0x80000, CRC(bda30bfa) SHA1(c412e573c40816735f7e2d0600dd0d78ebce91dc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ojankoy )
+	static RomLoadPtr rom_ojankoy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x70000, REGION_CPU1, 0 )
 		ROM_LOAD( "p-ic17.bin", 0x00000, 0x08000, CRC(9f149c30) SHA1(e3a8407844c0bb2d2fda83b01a187c87b3b7767a) )
 		ROM_LOAD( "ic30.bin",   0x10000, 0x20000, CRC(37be3f7c) SHA1(9ef19ef1e118d75ae719623b90188d68e6faa8f2) )
@@ -1133,9 +1133,9 @@ public class ojankohs
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )
 		ROM_LOAD( "0-ic65.bin", 0x0000, 0x0400, CRC(28fde5ef) SHA1(81c645b5601ff33c6a5091e7debe99a8d6b6bd70) )
 		ROM_LOAD( "1-ic64.bin", 0x0400, 0x0400, CRC(36c305c5) SHA1(43be6346e421f03a55bddb58a1570905321cf914) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ojanko2 )
+	static RomLoadPtr rom_ojanko2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x70000, REGION_CPU1, 0 )
 		ROM_LOAD( "p-ic17.bin", 0x00000, 0x08000, CRC(4b33bd54) SHA1(be235492cf3824ea740f401201ad821bb71c6d89) )
 		ROM_LOAD( "ic30.bin",   0x10000, 0x20000, CRC(37be3f7c) SHA1(9ef19ef1e118d75ae719623b90188d68e6faa8f2) )
@@ -1156,9 +1156,9 @@ public class ojankohs
 		ROM_REGION( 0x0800, REGION_PROMS, 0 )
 		ROM_LOAD( "0-ic65.bin", 0x0000, 0x0400, CRC(86e19b01) SHA1(1facd72183d127aec1c5ad8f17f3450512698d94) )
 		ROM_LOAD( "1-ic64.bin", 0x0400, 0x0400, CRC(e2f7093d) SHA1(428903e4fc9f05cf8dab01a5d4145a5b44faa311) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ccasino )
+	static RomLoadPtr rom_ccasino = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x68000, REGION_CPU1, 0 )
 		ROM_LOAD( "p5.bin", 0x00000, 0x08000, CRC(d6cf3387) SHA1(507a40a0ace0742a8fd205c641d27d22d80da948) )
 		ROM_LOAD( "l5.bin", 0x10000, 0x20000, CRC(49c9ecfb) SHA1(96005904cef9b9e4434034c9d68978ff9c431457) )
@@ -1173,9 +1173,9 @@ public class ojankohs
 		ROM_LOAD( "f1.bin", 0x48000, 0x08000, CRC(799cc0e7) SHA1(51ca991a76945235375f1c7c4db2abfa1d7ebd15) )
 		ROM_LOAD( "g1.bin", 0x50000, 0x08000, CRC(3ac8ae04) SHA1(7ac3095bb2ee6e86970464746fe4644eabc769ec) )
 		ROM_LOAD( "h1.bin", 0x58000, 0x08000, CRC(f0af2d38) SHA1(14f29404a10633f5c4b574fc1f34139f9fb8a8bf) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ojankoc )
+	static RomLoadPtr rom_ojankoc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )   /* CPU */
 		ROM_LOAD( "c11.1p", 0x0000, 0x8000, CRC(cb3e900c) SHA1(95f0354f147e339a97368b5cc67200151cdfa0e9) )
 	
@@ -1190,7 +1190,7 @@ public class ojankohs
 		ROM_LOAD( "8.1l", 0x38000, 0x8000, CRC(534573b7) SHA1(ec53cad7d652c88508edd29c2412834920fe8ef6) )
 		ROM_LOAD( "9.1m", 0x48000, 0x8000, CRC(2bf88eda) SHA1(55de96d057a0f35d9e74455444751f217aa4741e) )
 		ROM_LOAD( "0.1n", 0x50000, 0x8000, CRC(5665016e) SHA1(0f7f0a8e55e93bcb3060c91d9704905a6e827250) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1986, ojankoc,  0, ojankoc,  ojankoc,  0, ROT0, "V-System Co.", "Ojanko Club (Japan)" )

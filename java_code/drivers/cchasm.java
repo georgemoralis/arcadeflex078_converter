@@ -227,7 +227,7 @@ public class cchasm
 	 *
 	 *************************************/
 	
-	ROM_START( cchasm )
+	static RomLoadPtr rom_cchasm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 	    ROM_LOAD16_BYTE( "chasm.u4",  0x000000, 0x001000, CRC(19244f25) SHA1(79deaae82da8d1b16d05bbac43ba900c4b1d9f26) )
 	    ROM_LOAD16_BYTE( "chasm.u12", 0x000001, 0x001000, CRC(5d702c7d) SHA1(cbdceed45a1112594fbcbeb6976edc932b32d518) )
@@ -248,9 +248,9 @@ public class cchasm
 	
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )	/* 64k for the audio CPU */
 		ROM_LOAD( "2732.bin", 0x0000, 0x1000, CRC(715adc4a) SHA1(426be4f3334ef7f2e8eb4d533e64276c30812aa3) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( cchasm1 )
+	static RomLoadPtr rom_cchasm1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
 	    ROM_LOAD16_BYTE( "chasm.u4",  0x000000, 0x001000, CRC(19244f25) SHA1(79deaae82da8d1b16d05bbac43ba900c4b1d9f26) )
 	    ROM_LOAD16_BYTE( "chasm.u12", 0x000001, 0x001000, CRC(5d702c7d) SHA1(cbdceed45a1112594fbcbeb6976edc932b32d518) )
@@ -271,7 +271,7 @@ public class cchasm
 	
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )	/* 64k for the audio CPU */
 		ROM_LOAD( "2732.bin", 0x0000, 0x1000, CRC(715adc4a) SHA1(426be4f3334ef7f2e8eb4d533e64276c30812aa3) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

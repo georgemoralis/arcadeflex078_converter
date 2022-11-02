@@ -630,7 +630,7 @@ public class slapshot
 						DRIVERS
 	***************************************************************************/
 	
-	ROM_START( slapshot )
+	static RomLoadPtr rom_slapshot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 1024K for 68000 code */
 		ROM_LOAD16_BYTE( "d71-15.3",  0x00000, 0x80000, CRC(1470153f) SHA1(63fd5314fcaafba7326fd9481e3c686901dde65c) )
 		ROM_LOAD16_BYTE( "d71-16.1",  0x00001, 0x80000, CRC(f13666e0) SHA1(e8b475163ea7da5ee3f2b900004cc67c684bab75) )
@@ -661,9 +661,9 @@ public class slapshot
 	//	ROM_LOAD( "d71-11.42",  0x00000, 0x00???, NO_DUMP )
 	//	ROM_LOAD( "d71-12.59",  0x00000, 0x00???, NO_DUMP )
 	//	ROM_LOAD( "d71-13.8",   0x00000, 0x00???, NO_DUMP )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( opwolf3 )
+	static RomLoadPtr rom_opwolf3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )	/* 1024K for 68000 code */
 		ROM_LOAD16_BYTE( "d74_16.3",  0x000000, 0x80000, CRC(198ff1f6) SHA1(f5b51e39cd73ea56cbf53731d3c885bfcecbd696) )
 		ROM_LOAD16_BYTE( "d74_21.1",  0x000001, 0x80000, CRC(c61c558b) SHA1(6340eb83ba4cd8d7c63b22ea738c8367c87c1de1) )
@@ -688,9 +688,9 @@ public class slapshot
 		ROM_LOAD( "d74_01.37",  0x000000, 0x200000, CRC(115313e0) SHA1(51a69e7a26960b1328ccefeaec0fb26bdccc39f2) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( opwolf3u )
+	static RomLoadPtr rom_opwolf3u = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x200000, REGION_CPU1, 0 )	/* 1024K for 68000 code */
 		ROM_LOAD16_BYTE( "d74_16.3",  0x000000, 0x80000, CRC(198ff1f6) SHA1(f5b51e39cd73ea56cbf53731d3c885bfcecbd696) )
 		ROM_LOAD16_BYTE( "d74_20.1",  0x000001, 0x80000, CRC(960fd892) SHA1(2584a048d29a96b69428fba2b71269ea6ccf9010) )
@@ -715,7 +715,7 @@ public class slapshot
 		ROM_LOAD( "d74_01.37",  0x000000, 0x200000, CRC(115313e0) SHA1(51a69e7a26960b1328ccefeaec0fb26bdccc39f2) )
 	
 		/* no Delta-T samples */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( slapshot )

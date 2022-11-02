@@ -621,7 +621,7 @@ public class gaplus
 	
 	
 	
-	ROM_START( gaplus )
+	static RomLoadPtr rom_gaplus = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for the MAIN CPU */
 		ROM_LOAD( "gp3-4c.8d",    0xa000, 0x2000, CRC(10d7f64c) SHA1(e39f77af16016d28170e4ac1c2a784b0a7ec5454) )
 		ROM_LOAD( "gp3-3c.8c",    0xc000, 0x2000, CRC(962411e8) SHA1(2b6bb2a5d77a837810180391ef6c0ce745bfed64) )
@@ -655,9 +655,9 @@ public class gaplus
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 ) /* sound prom */
 		ROM_LOAD( "gp2-4.3f",     0x0000, 0x0100, CRC(2d9fbdd8) SHA1(e6a23cd5ce3d3e76de3b70c8ab5a3c45b1147af4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gapluso )
+	static RomLoadPtr rom_gapluso = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for the MAIN CPU */
 		ROM_LOAD( "gp2-4.8d",     0xa000, 0x2000, CRC(e525d75d) SHA1(93fcd8b940491abf6344181811d0b35765d7e45c) )
 		ROM_LOAD( "gp2-3b.8c",    0xc000, 0x2000, CRC(d77840a4) SHA1(81402b28a2d5ac2d1301252534afa0cb65d7e162) )
@@ -691,9 +691,9 @@ public class gaplus
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 ) /* sound prom */
 		ROM_LOAD( "gp2-4.3f",     0x0000, 0x0100, CRC(2d9fbdd8) SHA1(e6a23cd5ce3d3e76de3b70c8ab5a3c45b1147af4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gaplusa )
+	static RomLoadPtr rom_gaplusa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for the MAIN CPU */
 		ROM_LOAD( "gp2-4.64",     0xa000, 0x2000, CRC(484f11e0) SHA1(659756ae183dac3817440c8975f203c7dbe08c6b) )
 		ROM_LOAD( "gp2-3.64",     0xc000, 0x2000, CRC(a74b0266) SHA1(a534c6b4af569ed545bf52769c7d5ceb5f2c4935) )
@@ -727,9 +727,9 @@ public class gaplus
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 ) /* sound prom */
 		ROM_LOAD( "gp2-4.3f",     0x0000, 0x0100, CRC(2d9fbdd8) SHA1(e6a23cd5ce3d3e76de3b70c8ab5a3c45b1147af4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galaga3 )
+	static RomLoadPtr rom_galaga3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for the MAIN CPU */
 		ROM_LOAD( "gp3-4c.8d",    0xa000, 0x2000, CRC(10d7f64c) SHA1(e39f77af16016d28170e4ac1c2a784b0a7ec5454) )
 		ROM_LOAD( "gp3-3c.8c",    0xc000, 0x2000, CRC(962411e8) SHA1(2b6bb2a5d77a837810180391ef6c0ce745bfed64) )
@@ -763,9 +763,9 @@ public class gaplus
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 ) /* sound prom */
 		ROM_LOAD( "gp2-4.3f",     0x0000, 0x0100, CRC(2d9fbdd8) SHA1(e6a23cd5ce3d3e76de3b70c8ab5a3c45b1147af4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galaga3a )
+	static RomLoadPtr rom_galaga3a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for the MAIN CPU */
 		ROM_LOAD( "gal3_9e.bin",  0xa000, 0x2000, CRC(f4845e7f) SHA1(7b1377254f594bea4a8ffc7e388d9106e0266b55) )
 		ROM_LOAD( "gal3_9d.bin",  0xc000, 0x2000, CRC(86fac687) SHA1(07f76af524dbb3e79de41ef4bf32e7380776d9f5) )
@@ -799,9 +799,9 @@ public class gaplus
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 ) /* sound prom */
 		ROM_LOAD( "gp2-4.3f",     0x0000, 0x0100, CRC(2d9fbdd8) SHA1(e6a23cd5ce3d3e76de3b70c8ab5a3c45b1147af4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( galaga3m )
+	static RomLoadPtr rom_galaga3m = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for the MAIN CPU */
 		ROM_LOAD( "mi.9e",        0xa000, 0x2000, CRC(e392704e) SHA1(8eebd48dfe8491f491e844d4ad0964e25efb013b) )
 		ROM_LOAD( "gal3_9d.bin",  0xc000, 0x2000, CRC(86fac687) SHA1(07f76af524dbb3e79de41ef4bf32e7380776d9f5) )
@@ -835,7 +835,7 @@ public class gaplus
 	
 		ROM_REGION( 0x0100, REGION_SOUND1, 0 ) /* sound prom */
 		ROM_LOAD( "gp2-4.3f",     0x0000, 0x0100, CRC(2d9fbdd8) SHA1(e6a23cd5ce3d3e76de3b70c8ab5a3c45b1147af4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*          rom       parent    machine   inp      init                                    */

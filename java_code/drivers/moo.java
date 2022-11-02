@@ -735,7 +735,7 @@ public class moo
 	
 	
 	
-	ROM_START( moo )
+	static RomLoadPtr rom_moo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		/* main program */
 		ROM_LOAD16_BYTE( "151b01",    0x000000,  0x40000, CRC(fb2fa298) SHA1(f03b24681a2b329ba797fd2780ac9a3cf862ebcb) )
@@ -765,9 +765,9 @@ public class moo
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		/* K054539 samples */
 		ROM_LOAD( "151a08", 0x000000, 0x200000, CRC(962251d7) SHA1(32dccf515d2ca8eeffb45cada3dcc60089991b77) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mooua )
+	static RomLoadPtr rom_mooua = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		/* main program */
 		ROM_LOAD16_BYTE( "151b01", 0x000000,  0x40000, CRC(fb2fa298) SHA1(f03b24681a2b329ba797fd2780ac9a3cf862ebcb) )
@@ -797,9 +797,9 @@ public class moo
 		ROM_REGION( 0x200000, REGION_SOUND1, 0 )
 		/* K054539 samples */
 		ROM_LOAD( "151a08", 0x000000, 0x200000, CRC(962251d7) SHA1(32dccf515d2ca8eeffb45cada3dcc60089991b77) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bucky )
+	static RomLoadPtr rom_bucky = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x240000, REGION_CPU1, 0 )
 		/* main program */
 		ROM_LOAD16_BYTE( "173ea.b01", 0x000000,  0x40000, CRC(7785ac8a) SHA1(ef78d14f54d3a0b724b9702a18c67891e2d366a7) )
@@ -830,9 +830,9 @@ public class moo
 		/* K054539 samples */
 		ROM_LOAD("173a08.b6", 0x000000, 0x200000, CRC(dcdded95) SHA1(8eeb546a0b60a35a6dce36c5ee872e6c93c577c9) )
 		ROM_LOAD("173a09.a6", 0x200000, 0x200000, CRC(c93697c4) SHA1(0528a604868267a30d281b822c187df118566691) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( buckyua )
+	static RomLoadPtr rom_buckyua = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x240000, REGION_CPU1, 0 )
 		/* main program */
 		ROM_LOAD16_BYTE( "q5", 0x000000,  0x40000, CRC(dcaecca0) SHA1(c41847c9d89cdaf7cfa81ad9cc018c32592a882f) )
@@ -863,7 +863,7 @@ public class moo
 		/* K054539 samples */
 		ROM_LOAD("173a08.b6", 0x000000, 0x200000, CRC(dcdded95) SHA1(8eeb546a0b60a35a6dce36c5ee872e6c93c577c9) )
 		ROM_LOAD("173a09.a6", 0x200000, 0x200000, CRC(c93697c4) SHA1(0528a604868267a30d281b822c187df118566691) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT( moo )
@@ -877,7 +877,7 @@ public class moo
 		game_type = (!strcmp(Machine.gamedrv.name, "bucky") || !strcmp(Machine.gamedrv.name, "buckyua"));
 	}
 	
-	ROM_START( moobl )
+	static RomLoadPtr rom_moobl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "moo03.rom", 0x000000, 0x80000, CRC(fed6a1cb) SHA1(be58e266973930d643b5e15dcc974a82e1a3ae35) )
 		ROM_LOAD16_WORD_SWAP( "moo04.rom", 0x100000, 0x80000, CRC(ec45892a) SHA1(594330cbbfbca87e61ddf519e565018b6eaf5a20) )
@@ -926,7 +926,7 @@ public class moo
 		ROM_CONTINUE(          0x280000+0x30000, 0x010000)//bank a hi
 		ROM_CONTINUE(          0x2c0000+0x30000, 0x010000)//bank b hi
 		ROM_CONTINUE(          0x300000+0x30000, 0x010000)//bank c hi
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1992, moo,     0,       moo,     moo,     moo,      ROT0, "Konami", "Wild West C.O.W.-Boys of Moo Mesa (World version EA)")
 	GAME( 1992, mooua,   moo,     moo,     moo,     moo,      ROT0, "Konami", "Wild West C.O.W.-Boys of Moo Mesa (US version UA)")

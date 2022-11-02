@@ -330,7 +330,7 @@ public class blmbycar
 	
 	***************************************************************************/
 	
-	ROM_START( blmbycar )
+	static RomLoadPtr rom_blmbycar = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "bcrom4.bin", 0x000000, 0x080000, CRC(06d490ba) SHA1(6d113561b474bf613c6b91c9525a52025ae65ab7) )
 		ROM_LOAD16_BYTE( "bcrom6.bin", 0x000001, 0x080000, CRC(33aca664) SHA1(04fff492654d3edac62e9d35808e5946bcc78cbb) )
@@ -345,9 +345,9 @@ public class blmbycar
 		ROM_LOAD( "bc_rom1",     0x040000, 0x080000, CRC(ac6f8ba1) SHA1(69d2d47cdd331bde5a8973d29659b3f8520452e7) )
 		ROM_LOAD( "bc_rom2",     0x0c0000, 0x080000, CRC(a4bc31bf) SHA1(f3d60141a91449a73f6cec9f4bc5d95ca7911e19) )
 		ROM_COPY( REGION_SOUND1, 0x040000, 0x000000,   0x040000 )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( blmbycau )
+	static RomLoadPtr rom_blmbycau = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* 68000 Code */
 		ROM_LOAD16_BYTE( "bc_rom4", 0x000000, 0x080000, CRC(76f054a2) SHA1(198efd152b13033e5249119ca48b9e0f6351b0b9) )
 		ROM_LOAD16_BYTE( "bc_rom6", 0x000001, 0x080000, CRC(2570b4c5) SHA1(706465950023a6ef7c85ceb9c76246d7556b3859) )
@@ -362,7 +362,7 @@ public class blmbycar
 		ROM_LOAD( "bc_rom1",     0x040000, 0x080000, CRC(ac6f8ba1) SHA1(69d2d47cdd331bde5a8973d29659b3f8520452e7) )
 		ROM_LOAD( "bc_rom2",     0x0c0000, 0x080000, CRC(a4bc31bf) SHA1(f3d60141a91449a73f6cec9f4bc5d95ca7911e19) )
 		ROM_COPY( REGION_SOUND1, 0x040000, 0x000000,   0x040000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	DRIVER_INIT( blmbycar )

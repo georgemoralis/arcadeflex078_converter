@@ -1312,7 +1312,7 @@ public class segar
 	 *
 	 *************************************/
 	
-	ROM_START( astrob )
+	static RomLoadPtr rom_astrob = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "829b",	  0x0000, 0x0800, CRC(14ae953c) SHA1(eb63d1b95faa5193db7fa6ab245e99325d519b5e) ) /* U25 */
 		ROM_LOAD( "907a",     0x0800, 0x0800, CRC(a9aaaf38) SHA1(73c2b9421b267563acb33d63fbbbda818793c4c1) ) /* U1 */
@@ -1341,10 +1341,10 @@ public class segar
 		ROM_LOAD( "810",      0x1000, 0x0800, CRC(ff0163c5) SHA1(158a12f9bf01d25c7e98f34fce56df51d49e5a85) ) /* U5 */
 		ROM_LOAD( "811",      0x1800, 0x0800, CRC(219f3978) SHA1(728edb9251f7cde237fa3b005971366a099c6342) ) /* U4 */
 		ROM_LOAD( "812a",     0x2000, 0x0800, CRC(410ad0d2) SHA1(9b5f05bb64a6ecfe3543025a10c6ec67de797333) ) /* U3 */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( astrob2 )
+	static RomLoadPtr rom_astrob2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "829b",     0x0000, 0x0800, CRC(14ae953c) SHA1(eb63d1b95faa5193db7fa6ab245e99325d519b5e) ) /* U25 */
 		ROM_LOAD( "888",      0x0800, 0x0800, CRC(42601744) SHA1(6bb58384c28b2105746a2f410f5e0979609db9bf) ) /* U1 */
@@ -1373,10 +1373,10 @@ public class segar
 		ROM_LOAD( "810",      0x1000, 0x0800, CRC(ff0163c5) SHA1(158a12f9bf01d25c7e98f34fce56df51d49e5a85) ) /* U5 */
 		ROM_LOAD( "811",      0x1800, 0x0800, CRC(219f3978) SHA1(728edb9251f7cde237fa3b005971366a099c6342) ) /* U4 */
 		ROM_LOAD( "812a",     0x2000, 0x0800, CRC(410ad0d2) SHA1(9b5f05bb64a6ecfe3543025a10c6ec67de797333) ) /* U3 */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( astrob1 )
+	static RomLoadPtr rom_astrob1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "829",      0x0000, 0x0800, CRC(5f66046e) SHA1(6aa7f94122db1a75a89c12ad9d087aec1a70d675) ) /* U25 */
 		ROM_LOAD( "837",      0x0800, 0x0800, CRC(ce9c3763) SHA1(2cb4c3041905d38b040ef76f69f6197d699f9ec5) ) /* U1 */
@@ -1402,10 +1402,10 @@ public class segar
 		ROM_LOAD( "810",      0x1000, 0x0800, CRC(ff0163c5) SHA1(158a12f9bf01d25c7e98f34fce56df51d49e5a85) ) /* U5 */
 		ROM_LOAD( "811",      0x1800, 0x0800, CRC(219f3978) SHA1(728edb9251f7cde237fa3b005971366a099c6342) ) /* U4 */
 		ROM_LOAD( "812a",     0x2000, 0x0800, CRC(410ad0d2) SHA1(9b5f05bb64a6ecfe3543025a10c6ec67de797333) ) /* U3 */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( 005 )
+	static RomLoadPtr rom_005 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "1346b.u25",    0x0000, 0x0800, CRC(8e68533e) SHA1(a257c556d31691068ed5c991f1fb2b51da4826db) ) /* U25 */
 		ROM_LOAD( "5092.u1",      0x0800, 0x0800, CRC(29e10a81) SHA1(c4b4e6c75bcf276e53f39a456d8d633c83dcf485) ) /* U1 */
@@ -1431,10 +1431,10 @@ public class segar
 	
 		ROM_REGION( 0x0800, REGION_SOUND1, 0 )      /* 2k for sound */
 		ROM_LOAD( "epr-1286.16",  0x0000, 0x0800, CRC(fbe0d501) SHA1(bfa277689790f835d8a43be4beee0581e1096bcc) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( monsterb )
+	static RomLoadPtr rom_monsterb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )     /* 64k for code + space for background */
 		ROM_LOAD( "1778cpu.bin",  0x0000, 0x0800, CRC(19761be3) SHA1(551a5eb958b6efac41f32e7feb2786400fcfb6d3) ) /* U25 */
 		ROM_LOAD( "1779.bin",     0x0800, 0x0800, CRC(5b67dc4c) SHA1(5d2c5128b6cba2d8aa98cae8cb78dbe0c998e965) ) /* U1 */
@@ -1477,10 +1477,10 @@ public class segar
 	
 		ROM_REGION( 0x2000, REGION_USER1, 0 )		      /* background charmaps */
 		ROM_LOAD( "1518a.bin",    0x0000, 0x2000, CRC(2d5932fe) SHA1(a9ca239a062e047b307cf3d0740cb6492a55abb4) ) /* ??? */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( spaceod )
+	static RomLoadPtr rom_spaceod = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "so-959.dat",   0x0000, 0x0800, CRC(bbae3cd1) SHA1(2e99fd4b0db60462721b174b0db1b10b2fd13d25) ) /* U25 */
 		ROM_LOAD( "so-941.dat",   0x0800, 0x0800, CRC(8b63585a) SHA1(eb064a2dca5cb44373f1acc86243a3dcca1951ee) ) /* U1 */
@@ -1515,10 +1515,10 @@ public class segar
 		ROM_LOAD( "epr-10.dat",  0x1000, 0x1000, CRC(8ce88100) SHA1(61177a75512bbf3629df6329e23f06fc470f36ed) )
 		ROM_LOAD( "epr-11.dat",  0x2000, 0x1000, CRC(1bdbdab5) SHA1(3bb60c7bd029dd53bac7ebe640206d3980b3b426) )
 		ROM_LOAD( "epr-12.dat",  0x3000, 0x1000, CRC(629a4a1f) SHA1(19badfa72207cb750364f4cab229529078b7af63) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( pignewt )
+	static RomLoadPtr rom_pignewt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "cpu.u25",    0x0000, 0x0800, NO_DUMP ) /* U25 */
 		ROM_LOAD( "1888c",      0x0800, 0x0800, CRC(fd18ed09) SHA1(8bba49d93ae72dbc0497a5a24991c5da26d169d3) ) /* U1 */
@@ -1553,10 +1553,10 @@ public class segar
 		ROM_LOAD( "1908c.bg",  0x2000, 0x1000, CRC(92cb14da) SHA1(257db7bb2758d579bcf171cda410acff1877122c) ) /* ??? */
 	
 		/* SOUND ROMS ARE PROBABLY MISSING! */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( pignewta )
+	static RomLoadPtr rom_pignewta = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "cpu.u25",    0x0000, 0x0800, NO_DUMP ) /* U25 */
 		ROM_LOAD( "1888a",      0x0800, 0x0800, CRC(491c0835) SHA1(65c917ebcfa8e5199e9923c04626c067fda3c637) ) /* U1 */
@@ -1592,10 +1592,10 @@ public class segar
 		ROM_LOAD( "1908a.bg",  0x2000, 0x1000, BAD_DUMP CRC(92cb14da) SHA1(257db7bb2758d579bcf171cda410acff1877122c)  ) /* ??? */
 	
 		/* SOUND ROMS ARE PROBABLY MISSING! */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( sindbadm )
+	static RomLoadPtr rom_sindbadm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "epr5393.new",  0x0000, 0x2000, CRC(51f2e51e) SHA1(0fd96863d0dfaa0bab09be6fea1e7d12b9c40d68) )
 		ROM_LOAD( "epr5394.new",  0x2000, 0x2000, CRC(d39ce2ee) SHA1(376065a40caa499da99e556098a03387edca5883) )
@@ -1616,7 +1616,7 @@ public class segar
 		ROM_LOAD( "epr5425.new",  0x2000, 0x2000, CRC(b654841a) SHA1(9b224fbe5f4c7bbb486a3d15550cc10e4f317631) )
 		ROM_LOAD( "epr5426.new",  0x4000, 0x2000, CRC(9de0da28) SHA1(79e01005861e2426a8112544b1bc6d1c6a9ce936) )
 		ROM_LOAD( "epr5427.new",  0x6000, 0x2000, CRC(a94f4d41) SHA1(fe4f412ea3680c0e5a6242827eab9e82a841d7c7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

@@ -401,7 +401,7 @@ public class exzisus
 	
 	***************************************************************************/
 	
-	ROM_START( exzisus )
+	static RomLoadPtr rom_exzisus = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )     				/* Z80 CPU A */
 		ROM_LOAD( "b23-11.bin", 0x00000, 0x08000, CRC(d6a79cef) SHA1(e2b56aa38c017b24b50f304b9fe49ee14006f9a4) )
 		ROM_CONTINUE(           0x10000, 0x08000 )
@@ -437,7 +437,7 @@ public class exzisus
 		ROM_LOAD( "b23-04.bin",  0x00000, 0x00400, CRC(5042cffa) SHA1(c969748866a12681cf2dbf25a46da2c4e4f92313) )
 		ROM_LOAD( "b23-03.bin",  0x00400, 0x00400, CRC(9458fd45) SHA1(7f7cdacf37bb6f15de1109fa73ba3c5fc88893d0) )
 		ROM_LOAD( "b23-05.bin",  0x00800, 0x00400, CRC(87f0f69a) SHA1(37df6fd56245fab9beaabfd86fd8f95d7c42c2a5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*  ( YEAR      NAME  PARENT  MACHINE    INPUT     INIT  MONITOR  COMPANY              FULLNAME ) */

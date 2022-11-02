@@ -620,7 +620,7 @@ public class tceptor
 	
 	***************************************************************************/
 	
-	ROM_START( tceptor )
+	static RomLoadPtr rom_tceptor = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )			// 68A09EP
 		ROM_LOAD( "tc1-1.10f",  0x08000, 0x08000, CRC(4C6B063E) SHA1(d9701657186f8051391084f51a720037f9f418b1) )
 	
@@ -674,9 +674,9 @@ public class tceptor
 		ROM_LOAD( "tc1-4.2e",   0x01000, 0x00100, CRC(A4E73D53) SHA1(df8231720e9b57cf2751f86ac3ed7433804f51ca) )	// road color table
 		ROM_LOAD( "tc1-6.7s",   0x01100, 0x00400, CRC(72707677) SHA1(122c1b619c9efa3b7055908dda3102ee28230504) )	// sprite color table
 		ROM_LOAD( "tc1-17.7k",  0x01500, 0x02000, CRC(90DB1BF6) SHA1(dbb9e50a8efc3b4012fcf587cc87da9ef42a1b80) )	// sprite related
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tceptor2 )
+	static RomLoadPtr rom_tceptor2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )			// 68A09EP
 		ROM_LOAD( "tc2-1.10f",  0x08000, 0x08000, CRC(F953F153) SHA1(f4cd0a133d23b4bf3c24c70c28c4ecf8ad4daf6f) )
 	
@@ -725,7 +725,7 @@ public class tceptor
 		ROM_LOAD( "tc2-4.2e",   0x01000, 0x00100, CRC(6B49FC30) SHA1(66ca39cd7985643acd71905111ae2d931c082465) )	// road color table
 		ROM_LOAD( "tc2-6.7s",   0x01100, 0x00400, CRC(BADCDA76) SHA1(726e0019241d31716f3af9ebe900089bce771477) )	// sprite color table
 		ROM_LOAD( "tc1-17.7k",  0x01500, 0x02000, CRC(90DB1BF6) SHA1(dbb9e50a8efc3b4012fcf587cc87da9ef42a1b80) )	// sprite related
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR   COMPANY FULLNAME ) */

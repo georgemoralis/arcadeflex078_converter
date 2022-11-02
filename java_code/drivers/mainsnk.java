@@ -266,7 +266,7 @@ public class mainsnk
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( mainsnk)
+	static RomLoadPtr rom_mainsnk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "snk.p01",      0x000000, 0x002000, CRC(00db1ca2) SHA1(efe83488cf88adc185e6024b8f6ad5f8ef7f4cfd) ) 
 		ROM_LOAD( "snk.p02",      0x002000, 0x002000, CRC(df5c86b5) SHA1(e9c854524e3d8231c874314cdff321e66ec7f0c4) ) 
@@ -299,7 +299,7 @@ public class mainsnk
 		ROM_LOAD( "main3.bin",    0x000000, 0x000800, CRC(78b29dde) SHA1(c2f93cde6fd8bc175e9e0d38af41b7710d7f1c82) ) 
 		ROM_LOAD( "main2.bin",    0x000800, 0x000800, CRC(7c314c93) SHA1(c6bd2a0eaf617448ef65dcbadced313b0d69ab88) ) 
 		ROM_LOAD( "main1.bin",    0x001000, 0x000800, CRC(deb895c4) SHA1(f1281dcb3471d9627565706ff09ba72f09dc62a4) ) 
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1984, mainsnk,      0,          mainsnk, mainsnk, 0,          ROT0, "SNK", "Main Event (1984)")
 	

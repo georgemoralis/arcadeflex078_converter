@@ -324,7 +324,7 @@ public class lemmings
 	
 	/******************************************************************************/
 	
-	ROM_START( lemmings )
+	static RomLoadPtr rom_lemmings = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* 68000 code */
 		ROM_LOAD16_BYTE( "lemmings.5", 0x00000, 0x20000, CRC(e9a2b439) SHA1(873723a06d71bb41772951f451a75578b30267d5) )
 		ROM_LOAD16_BYTE( "lemmings.1", 0x00001, 0x20000, CRC(bf52293b) SHA1(47a1ed64bf02776db086fdce80997b8a0c068791) )
@@ -352,7 +352,7 @@ public class lemmings
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )	/* ADPCM samples */
 	  	ROM_LOAD( "lemmings.16",    0x00000, 0x20000, CRC(f747847c) SHA1(00880fa6dff979e5d15daea61938bd18c768c92f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

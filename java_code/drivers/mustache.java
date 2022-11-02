@@ -250,7 +250,7 @@ public class mustache
 		MDRV_VIDEO_UPDATE(mustache)
 	MACHINE_DRIVER_END
 	
-	ROM_START( mustache )
+	static RomLoadPtr rom_mustache = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD( "mustache.h18", 0x0000, 0x8000, CRC(123bd9b8) SHA1(33a7cba5c3a54b0b1a15dd1e24d298b6f7274321) )
 		ROM_LOAD( "mustache.h16", 0x8000, 0x4000, CRC(62552beb) SHA1(ee10991d7de0596608fa1db48805781cbfbbdb9f) )
@@ -275,7 +275,7 @@ public class mustache
 		ROM_LOAD( "mustache.c1",0x0200, 0x0100, CRC(65da3604) SHA1(e4874d4152a57944d4e47306250833ea5cd0d89b) )
 	
 		ROM_LOAD( "mustache.b6",0x0300, 0x1000, CRC(5f83fa35) SHA1(cb13e63577762d818e5dcbb52b8a53f66e284e8f) ) /* 63S281N near SEI0070BU */
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT( mustache )
 	{

@@ -262,7 +262,7 @@ public class ikki
 	
 	/****************************************************************************/
 	
-	ROM_START( ikki )
+	static RomLoadPtr rom_ikki = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* main CPU */
 		ROM_LOAD( "tvg17_1",  0x0000,  0x2000, CRC(cb28167c) SHA1(6843553faee0d3bbe432689fdf5f5454470e2b09) )
 		ROM_CONTINUE(         0x8000,  0x2000 )
@@ -293,7 +293,7 @@ public class ikki
 		ROM_REGION( 0x0200, REGION_USER1, 0 )
 		ROM_LOAD( "prom17_1", 0x0000,  0x0100, CRC(ca0af30c) SHA1(6d7cfeb16daf61c6e7f93172809b0983bf13cd6c) ) /* video attribute */
 		ROM_LOAD( "prom17_2", 0x0100,  0x0100, CRC(f3c55174) SHA1(936c5432c4fccfcb2601c1e08b98d5509202fe5b) ) /* unknown */
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAME( 1985, ikki, 0, ikki, ikki, 0, ROT0, "Sun Electronics", "Ikki (Japan)" )
 }

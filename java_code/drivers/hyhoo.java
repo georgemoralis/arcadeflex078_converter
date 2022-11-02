@@ -357,7 +357,7 @@ public class hyhoo
 	MACHINE_DRIVER_END
 	
 	
-	ROM_START( hyhoo )
+	static RomLoadPtr rom_hyhoo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "hyhoo.1",  0x00000, 0x08000, CRC(c2852861) SHA1(ad23d8f5b196f15f863862010c8fb0dc4c072172) )
 	
@@ -370,9 +370,9 @@ public class hyhoo
 		ROM_LOAD( "hy1506-1.3i", 0x100000, 0x80000, CRC(4a18c783) SHA1(34844a95a893d5026331c67584a04f68db7d8b50) )
 		ROM_LOAD( "hy1506-1.4i", 0x180000, 0x80000, CRC(df26de46) SHA1(adb33f5dccb4af940d09d9bbc8fc102e11071dd9) )
 		ROM_LOAD( "hyhoo.3",     0x280000, 0x10000, CRC(b641c5a6) SHA1(25fecdf68cb0665b37f98da8e604e0127e939aac) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hyhoo2 )
+	static RomLoadPtr rom_hyhoo2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* program */
 		ROM_LOAD( "hyhoo2.2",  0x00000, 0x08000, CRC(d8733cdc) SHA1(e683e3a799ed06fb5d4149e1ba76ebd6828b6369) )
 		ROM_LOAD( "hyhoo2.1",  0x08000, 0x08000, CRC(4a1d9493) SHA1(ee9288e9cb1f681216a98fb31539cb75b4548935) )
@@ -397,7 +397,7 @@ public class hyhoo
 		ROM_LOAD( "hyhoo2.s10",  0x290000, 0x10000, CRC(944b01bb) SHA1(2dab98a3919997d1d592e10501e7bd63153195d8) )
 		ROM_LOAD( "hyhoo2.s11",  0x2a0000, 0x10000, CRC(5f4e455b) SHA1(f096765efbe855f7c0bfa371e08db238b42f17bb) )
 		ROM_LOAD( "hyhoo2.s12",  0x2b0000, 0x10000, CRC(92a07b8a) SHA1(0528e809159d1b3f18fe3c75e5fbc789eb985cbf) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1987, hyhoo,  0, hyhoo,  hyhoo,  hyhoo,  ROT90, "Nichibutsu", "Taisen Quiz HYHOO (Japan)" )

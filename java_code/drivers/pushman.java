@@ -528,7 +528,7 @@ public class pushman
 	/***************************************************************************/
 	
 	
-	ROM_START( pushman )
+	static RomLoadPtr rom_pushman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "pman-12.212", 0x000000, 0x10000, CRC(4251109d) SHA1(d4b020e4ecc2005b3a4c1b34d88de82b09bf5a6b) )
 		ROM_LOAD16_BYTE( "pman-11.197", 0x000001, 0x10000, CRC(1167ed9f) SHA1(ca0296950a75ef15ff6f9d3a776b02180b941d61) )
@@ -556,9 +556,9 @@ public class pushman
 	
 		ROM_REGION( 0x10000, REGION_GFX4, 0 )	/* bg tilemaps */
 		ROM_LOAD( "pman-10.189", 0x00000, 0x08000, CRC(5f9ae9a1) SHA1(87619918c28c942780f6dbd3818d4cc69932eefc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bballs )
+	static RomLoadPtr rom_bballs = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bb12.m17", 0x000000, 0x10000, CRC(4501c245) SHA1(b03ace135b077e8c226dd3be04fa8e86ad096770) )
 		ROM_LOAD16_BYTE( "bb11.l17", 0x000001, 0x10000, CRC(55e45b60) SHA1(103d848ae74b59ac2f5a5c5300323bbf8b109752) )
@@ -589,7 +589,7 @@ public class pushman
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 ) /* this is the same as tiger road / f1-dream */
 		ROM_LOAD( "bb_prom.e9",   0x0000, 0x0100, CRC(ec80ae36) SHA1(397ec8fc1b106c8b8d4bf6798aa429e8768a101a) )	/* priority (not used) */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	GAME( 1990, pushman, 0, pushman, pushman, 0, ROT0, "Comad (American Sammy license)", "Pushman" )

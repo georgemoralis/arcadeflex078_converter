@@ -276,7 +276,7 @@ public class bogeyman
 	
 	/******************************************************************************/
 	
-	ROM_START( bogeyman )
+	static RomLoadPtr rom_bogeyman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x58000, REGION_CPU1, 0 )
 	 	ROM_LOAD( "j20.c14",  0x04000, 0x04000, CRC(ea90d637) SHA1(aa89bee806badb05119516d84e7674cd302aaf4e) )
 		ROM_LOAD( "j10.c15",  0x08000, 0x04000, CRC(0a8f218d) SHA1(5e5958cccfe634e3d274d187a0a7fe4789f3a9c3) )
@@ -303,7 +303,7 @@ public class bogeyman
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "82s129.5k",  0x0000, 0x0100, CRC(4a7c5367) SHA1(a67f5b90c18238cbfb1507230b4614191d37eef4) )	/* Colour prom 1 */
 		ROM_LOAD( "82s129.6k",  0x0100, 0x0100, CRC(b6127713) SHA1(5bd8627453916ac6605af7d1193f79c748eab981) )	/* Colour prom 2 */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

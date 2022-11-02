@@ -310,7 +310,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	ROM_START( paradise )
+	static RomLoadPtr rom_paradise = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x44000, REGION_CPU1, 0 )		/* Z80 Code */
 		ROM_LOAD( "u128", 0x00000, 0x0c000, CRC(8e5b5a24) SHA1(a4e559d9329f8a7a9d12cd90d98d0525958085d8) )
 		ROM_CONTINUE(     0x10000, 0x34000    )
@@ -335,7 +335,7 @@ public class paradise
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, ROMREGION_SOUNDONLY )	/* Samples (banked) */
 		ROM_LOAD( "u113", 0x00000, 0x80000, CRC(53de6025) SHA1(c94b3778b57ff7f46ce4cff661841019fb187d5d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* target ball
 	
@@ -351,7 +351,7 @@ public class paradise
 		install_port_read_handler(0, 0x2000, 0x2fff, tgt_ball_unk);
 	}
 	
-	ROM_START( tgtball )
+	static RomLoadPtr rom_tgtball = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x44000, REGION_CPU1, 0 )		/* Z80 Code */
 		ROM_LOAD( "rom7.bin", 0x00000, 0x0c000, CRC(8dbeab12) SHA1(7181c23459990aecbe2d13377aaf19f65108eac6) )
 		ROM_CONTINUE(     0x10000, 0x34000    )
@@ -376,7 +376,7 @@ public class paradise
 	
 		ROM_REGION( 0x80000, REGION_SOUND2, ROMREGION_SOUNDONLY )	/* Samples (banked) */
 		ROM_LOAD( "rom9.bin", 0x00000, 0x40000, CRC(150a6cc6) SHA1(b435fcf8ba48006f506db6b63ba54a30a6b3eade) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************
 	

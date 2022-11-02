@@ -1664,7 +1664,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	ROM_START( stratab )
+	static RomLoadPtr rom_stratab = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "sbprogv3.bin", 0x08000, 0x8000, CRC(a5ae728f) SHA1(85098eef1614d5148e8082df4c936883662292ee) )
 		ROM_COPY( REGION_CPU1,    0x8000, 0x14000, 0x8000 )
@@ -1679,10 +1679,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x20000, CRC(6ff390b9) SHA1(f31dae9e31f3fc83b9253e49fd4204820db3587e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( stratab1 )
+	static RomLoadPtr rom_stratab1 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "sbprgv1.bin",  0x08000, 0x8000, CRC(46d51604) SHA1(de7b6306fdcee4907b07667baf874bd195822e6a) )
 		ROM_COPY( REGION_CPU1,    0x8000, 0x14000, 0x8000 )
@@ -1697,10 +1697,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x20000, CRC(6ff390b9) SHA1(f31dae9e31f3fc83b9253e49fd4204820db3587e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( wfortune )
+	static RomLoadPtr rom_wfortune = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "wofpgm", 0x04000, 0x4000, CRC(bd984654) SHA1(8e16d2feb26e9a6f86c4a36bf0f03db80ded03f6) )
 		ROM_CONTINUE(       0x10000, 0xc000 )
@@ -1717,10 +1717,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "wofsbom0", 0x00000, 0x20000, CRC(5c28c3fe) SHA1(eba64ede749fb26f9926f644d66860b54b4c76e7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( wfortuna )
+	static RomLoadPtr rom_wfortuna = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "wofpgmr1.bin", 0x04000, 0x4000, CRC(c3d3eb21) SHA1(21137663afd19fba875e188640f0347fc8c5dcf0) )
 		ROM_CONTINUE(             0x10000, 0xc000 )
@@ -1737,10 +1737,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "wofsbom0", 0x00000, 0x20000, CRC(5c28c3fe) SHA1(eba64ede749fb26f9926f644d66860b54b4c76e7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gtg )
+	static RomLoadPtr rom_gtg = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "u5.bin", 0x04000, 0x4000, CRC(61984272) SHA1(be735f8576fb2cccc0e9e6ea6f2fd54b6c0b3bb3) )
 		ROM_CONTINUE(       0x10000, 0xc000 )
@@ -1759,10 +1759,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x20000, CRC(1cccbfdf) SHA1(546059fea2e7cd5627a666d80b1fc3ed8fcc0762) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( slikshot )
+	static RomLoadPtr rom_slikshot = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "pgm20.u5",  0x04000, 0x4000, CRC(370a00eb) SHA1(b2878f161f4931d9fc3979a84b29660941e2608f) )
 		ROM_CONTINUE(          0x10000, 0xc000 )
@@ -1783,10 +1783,10 @@ public class itech8
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x10000, CRC(4b075f5e) SHA1(d1ac2c06352a5b96486a7e8cf8baae0c0e5b1883) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( sliksh17 )
+	static RomLoadPtr rom_sliksh17 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "u5.bin", 0x04000, 0x4000, CRC(09d70554) SHA1(a009cd3b22261c60f1028694baef51f61713154f) )
 		ROM_CONTINUE(       0x10000, 0xc000 )
@@ -1807,10 +1807,10 @@ public class itech8
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x10000, CRC(4b075f5e) SHA1(d1ac2c06352a5b96486a7e8cf8baae0c0e5b1883) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( dynobop )
+	static RomLoadPtr rom_dynobop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "dynobop.u5", 0x04000, 0x4000, CRC(98452c40) SHA1(9b9316fc258792e0d825f16e0fadf8e0c35a864e) )
 		ROM_CONTINUE(           0x10000, 0xc000 )
@@ -1831,10 +1831,10 @@ public class itech8
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )
 		ROM_LOAD( "dynobop.sr0", 0x00000, 0x10000, CRC(b355bf1d) SHA1(c9745638feb33ec181b8d9a894421f9854286cd9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( sstrike )
+	static RomLoadPtr rom_sstrike = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "sstrku5.bin", 0x08000, 0x8000, CRC(af00cddf) SHA1(b866e8dfce1449f7462a79efa385ea6b55cdc6e7) )
 		ROM_COPY( REGION_CPU1,    0x8000, 0x14000, 0x8000 )
@@ -1855,10 +1855,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "sstsrom0.bin", 0x00000, 0x20000, CRC(6ff390b9) SHA1(f31dae9e31f3fc83b9253e49fd4204820db3587e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gtg2 )
+	static RomLoadPtr rom_gtg2 = new RomLoadPtr(){ public void handler(){ 
 		/* banks are loaded in the opposite order from the others, */
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "u5.2",   0x10000, 0x4000, CRC(4a61580f) SHA1(7c64648d47418fbcc0f9b5bd91f88856209bc0f5) )
@@ -1878,10 +1878,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "vr-srom0", 0x00000, 0x20000, CRC(4dd4db42) SHA1(0dffb51e8de36d8747f443fd65fe9927815eaff0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gtg2t )
+	static RomLoadPtr rom_gtg2t = new RomLoadPtr(){ public void handler(){ 
 		/* banks are loaded in the opposite order from the others, */
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "u5",     0x10000, 0x4000, CRC(c7b3a9f3) SHA1(5edaca6fd6ee58bd1676dc9b2c86da4dd2f51687) )
@@ -1901,10 +1901,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "vr-srom0", 0x00000, 0x20000, CRC(4dd4db42) SHA1(0dffb51e8de36d8747f443fd65fe9927815eaff0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( gtg2j )
+	static RomLoadPtr rom_gtg2j = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "u5.bin", 0x04000, 0x4000, CRC(9c95ceaa) SHA1(d9fd2b2419c026822a07d2ba51d6ab40b7cd0d49) )
 		ROM_CONTINUE(       0x10000, 0xc000 )
@@ -1923,10 +1923,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x20000, CRC(1cccbfdf) SHA1(546059fea2e7cd5627a666d80b1fc3ed8fcc0762) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( arlingtn )
+	static RomLoadPtr rom_arlingtn = new RomLoadPtr(){ public void handler(){ 
 		/* banks are loaded in the opposite order from the others, */
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "ahrd121.bin", 0x10000, 0x4000, CRC(00aae02e) SHA1(3bcfbd256c34ae222dde24ba9544f19da70b698e) )
@@ -1943,10 +1943,10 @@ public class itech8
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x40000, CRC(56087f81) SHA1(1d4a1f396ee9d8ed51d0417ea94b0b379312d72f) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( neckneck )
+	static RomLoadPtr rom_neckneck = new RomLoadPtr(){ public void handler(){ 
 		/* banks are loaded in the opposite order from the others, */
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "nn_prg12.u5", 0x04000, 0x4000, CRC(8e51734a) SHA1(c184af73670235a9245bfdeec2b58acfe93170e3) )
@@ -1964,10 +1964,10 @@ public class itech8
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )
 		ROM_LOAD( "nn_srom0.bin", 0x00000, 0x40000, CRC(33687201) SHA1(7c84d453fb7e59b0a27cd68a049d019ff65f6f19) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( peggle )
+	static RomLoadPtr rom_peggle = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "j-stick.u5", 0x04000, 0x4000, CRC(140d5a9c) SHA1(841e5f45c6f306d9bd286e7d3e3c75b169c932e1) )
 		ROM_CONTINUE(           0x10000, 0xc000 )
@@ -1983,10 +1983,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0", 0x00000, 0x20000, CRC(001846ea) SHA1(6a6b77f6d51c4a68105c935804b896aad9981719) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( pegglet )
+	static RomLoadPtr rom_pegglet = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "trakball.u5", 0x04000, 0x4000, CRC(d2694868) SHA1(9945a308550c9d89a647d80257e3ab14f793ac6f) )
 		ROM_CONTINUE(            0x10000, 0xc000 )
@@ -2002,10 +2002,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0", 0x00000, 0x20000, CRC(001846ea) SHA1(6a6b77f6d51c4a68105c935804b896aad9981719) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( hstennis )
+	static RomLoadPtr rom_hstennis = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "tenbim.v11", 0x04000, 0x4000, CRC(faffab5c) SHA1(4de525f6adb16205c47788b78aecdebd57008295) )
 		ROM_CONTINUE(           0x10000, 0xc000 )
@@ -2023,10 +2023,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x20000, CRC(d9ce58c3) SHA1(92574e60497d86b8608fba6278ccfc9036cb7f22) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( hstenn10 )
+	static RomLoadPtr rom_hstenn10 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 )
 		ROM_LOAD( "tenbim.v10", 0x04000, 0x4000, CRC(d108a6e0) SHA1(1041e1d95b10245fc50f6484e710803db2706f9a) )
 		ROM_CONTINUE(           0x10000, 0xc000 )
@@ -2044,10 +2044,10 @@ public class itech8
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x20000, CRC(d9ce58c3) SHA1(92574e60497d86b8608fba6278ccfc9036cb7f22) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rimrockn )
+	static RomLoadPtr rom_rimrockn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x34000, REGION_CPU1, 0 )
 		ROM_LOAD( "u5-2_2",    0x04000, 0x4000, CRC(97777683) SHA1(0998dde26daaa2d2b78e83647e03ba01b0ef31f2) )
 		ROM_CONTINUE(          0x10000, 0x4000 )
@@ -2069,10 +2069,10 @@ public class itech8
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0", 0x00000, 0x40000, CRC(7ad42be0) SHA1(c9b519bad3c5c9a3315d1bf3292cc30ee0771db7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rimrck20 )
+	static RomLoadPtr rom_rimrck20 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x34000, REGION_CPU1, 0 )
 		ROM_LOAD( "rrb.bin",   0x04000, 0x4000, CRC(7e9d5545) SHA1(2aa028b3f5d05bec4ee289e7d39eaad30b3d4d5f) )
 		ROM_CONTINUE(          0x10000, 0x4000 )
@@ -2094,10 +2094,10 @@ public class itech8
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0", 0x00000, 0x40000, CRC(7ad42be0) SHA1(c9b519bad3c5c9a3315d1bf3292cc30ee0771db7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rimrck16 )
+	static RomLoadPtr rom_rimrck16 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x34000, REGION_CPU1, 0 )
 		ROM_LOAD( "rrbbv16.u5",0x04000, 0x4000, CRC(999cd502) SHA1(8ad0d641a9f853eff27be1d4de04ab86b9275d57) )
 		ROM_CONTINUE(          0x10000, 0x4000 )
@@ -2119,10 +2119,10 @@ public class itech8
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0", 0x00000, 0x40000, CRC(7ad42be0) SHA1(c9b519bad3c5c9a3315d1bf3292cc30ee0771db7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rimrck12 )
+	static RomLoadPtr rom_rimrck12 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x34000, REGION_CPU1, 0 )
 		ROM_LOAD( "rrbbv12.u5",0x04000, 0x4000, CRC(661761a6) SHA1(7224b1eac2fd0969d70657448ab241a433143df4) )
 		ROM_CONTINUE(          0x10000, 0x4000 )
@@ -2144,10 +2144,10 @@ public class itech8
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0", 0x00000, 0x40000, CRC(7ad42be0) SHA1(c9b519bad3c5c9a3315d1bf3292cc30ee0771db7) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( ninclown )
+	static RomLoadPtr rom_ninclown = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "prog1", 0x00000, 0x20000, CRC(fabfdcd2) SHA1(7a9852838cf7772d8f8f956b03823c4222520a5a) )
 		ROM_LOAD16_BYTE( "prog0", 0x00001, 0x20000, CRC(eca63db5) SHA1(b86d75ee81e155a21de18c2e0fa898f15d61560d) )
@@ -2166,7 +2166,7 @@ public class itech8
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )
 		ROM_LOAD( "srom0.bin", 0x00000, 0x40000, CRC(f6b501e1) SHA1(0f1eb6f40f891d11822f1255c0a84975526b2b1b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

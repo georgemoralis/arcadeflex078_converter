@@ -516,7 +516,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	ROM_START( badlands )
+	static RomLoadPtr rom_badlands = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 )	/* 4*64k for 68000 code */
 		ROM_LOAD16_BYTE( "1008.20f",  0x00000, 0x10000, CRC(a3da5774) SHA1(5ab1eb61d25594b2d7c40400cb57e7f47a717598) )
 		ROM_LOAD16_BYTE( "1006.27f",  0x00001, 0x10000, CRC(aa03b4f3) SHA1(5eda60c715ffcefd4ad34bdb90579e8671dc384a) )
@@ -539,7 +539,7 @@ public class badlands
 		ROM_LOAD( "1010.14r", 0x000000, 0x10000, CRC(c15f629e) SHA1(944e3479dce6e420cf9a3f4c1438c5ca66e5cb97) )	/* mo */
 		ROM_LOAD( "1011.10r", 0x010000, 0x10000, CRC(fb0b6717) SHA1(694ab0f04d673682831a24027757d4b3c40a4e0e) )
 		ROM_LOAD( "1019.14t", 0x020000, 0x10000, CRC(0e26bff6) SHA1(ee018dd37a27c7e7c16a57ea0d32aeb9cdf26bb4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

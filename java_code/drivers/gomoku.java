@@ -186,7 +186,7 @@ public class gomoku
 	
 	
 	
-	ROM_START( gomoku )
+	static RomLoadPtr rom_gomoku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	// program
 		ROM_LOAD( "rj_1.7a",      0x0000, 0x1000, CRC(ed20d539) SHA1(7cbbc678cbe5c85b914ca44f82bdbd452cf694a0) )
 		ROM_LOAD( "rj_2.7c",      0x1000, 0x1000, CRC(26a28516) SHA1(53d5d134cd91020fa06e380d355deb1df6b9cb6e) )
@@ -217,7 +217,7 @@ public class gomoku
 	
 		ROM_REGION( 0x0020, REGION_USER5, 0 )	// –³‚¢‚Æ‹N“®‚¹‚¸
 		ROM_LOAD( "rj_prom.9k",   0x0000, 0x0020, CRC(cff72923) SHA1(4f61375028ab62da46ed119bc81052f5f98c28d4) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	//     YEAR,     NAME,   PARENT,  MACHINE,    INPUT,     INIT,    MONITOR, COMPANY, FULLNAME, FLAGS

@@ -533,7 +533,7 @@ public class stfight
 	
 	***************************************************************************/
 	
-	ROM_START( empcity )
+	static RomLoadPtr rom_empcity = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x18000, REGION_CPU1, 0 )	/* 96k for code + 96k for decrypted opcodes */
 		ROM_LOAD( "ec_01.rom",  0x00000, 0x8000, CRC(fe01d9b1) SHA1(c4b62d1b7e3a062f6a7a75f49cce5712f9016f98) )
 		ROM_LOAD( "ec_02.rom",  0x10000, 0x8000, CRC(b3cf1ef7) SHA1(91bc92293cbb47c38a2552c5beea53894b87d446) )	/* bank switched */
@@ -582,9 +582,9 @@ public class stfight
 	
 		ROM_REGION( 0x08000, REGION_SOUND1, 0 )	/* adpcm voice data */
 		ROM_LOAD( "sf04.bin",   0x00000, 0x8000, CRC(1b8d0c07) SHA1(c163ccd2b7ed6c84facc075eb1564ca399f3ba17) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( empcityj )
+	static RomLoadPtr rom_empcityj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x18000, REGION_CPU1, 0 )	/* 96k for code + 96k for decrypted opcodes */
 		ROM_LOAD( "1.bin",      0x00000, 0x8000, CRC(8162331c) SHA1(f2fdf5fbc52d4ea692fb87fa049c48935a73d67b) )
 		ROM_LOAD( "2.bin",      0x10000, 0x8000, CRC(960edea6) SHA1(fd19475e841defe42625a94c40c6390b7e6e7682) )	/* bank switched */
@@ -633,9 +633,9 @@ public class stfight
 	
 		ROM_REGION( 0x08000, REGION_SOUND1, 0 )	/* adpcm voice data */
 		ROM_LOAD( "sf04.bin",   0x00000, 0x8000, CRC(1b8d0c07) SHA1(c163ccd2b7ed6c84facc075eb1564ca399f3ba17) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( stfight )
+	static RomLoadPtr rom_stfight = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x18000, REGION_CPU1, 0 )	/* 96k for code + 96k for decrypted opcodes */
 		ROM_LOAD( "a-1.4q",     0x00000, 0x8000, CRC(ff83f316) SHA1(84553ebd96ddbf59a1bcb221d53781980a006925) )
 		ROM_LOAD( "sf02.bin",   0x10000, 0x8000, CRC(e626ce9e) SHA1(2c6c5a5cf15cc50217c9864a4d861af8a1b1b5ad) )	/* bank switched */
@@ -684,7 +684,7 @@ public class stfight
 	
 		ROM_REGION( 0x08000, REGION_SOUND1, 0 )	/* adpcm voice data */
 		ROM_LOAD( "sf04.bin",   0x00000, 0x8000, CRC(1b8d0c07) SHA1(c163ccd2b7ed6c84facc075eb1564ca399f3ba17) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

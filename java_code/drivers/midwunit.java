@@ -629,7 +629,7 @@ public class midwunit
 	 *
 	 *************************************/
 	
-	ROM_START( mk3 )
+	static RomLoadPtr rom_mk3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -667,10 +667,10 @@ public class midwunit
 		ROM_LOAD( "mk3-u116.bin",  0x1100000, 0x080000, CRC(ba246ad0) SHA1(ec6bdd4b9cd3007bb66bb8de36d148abb30e7f11) )
 		ROM_LOAD( "mk3-u115.bin",  0x1200000, 0x080000, CRC(3ee8b124) SHA1(1523d51e36d3c336b134a562da36a29ba137c0f6) )
 		ROM_LOAD( "mk3-u114.bin",  0x1300000, 0x080000, CRC(a8d99922) SHA1(04ff8d85448701070672f44dbf5bcfd744f1bc8a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk3r20 )
+	static RomLoadPtr rom_mk3r20 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -708,10 +708,10 @@ public class midwunit
 		ROM_LOAD( "mk3-u116.bin",  0x1100000, 0x080000, CRC(ba246ad0) SHA1(ec6bdd4b9cd3007bb66bb8de36d148abb30e7f11) )
 		ROM_LOAD( "mk3-u115.bin",  0x1200000, 0x080000, CRC(3ee8b124) SHA1(1523d51e36d3c336b134a562da36a29ba137c0f6) )
 		ROM_LOAD( "mk3-u114.bin",  0x1300000, 0x080000, CRC(a8d99922) SHA1(04ff8d85448701070672f44dbf5bcfd744f1bc8a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( mk3r10 )
+	static RomLoadPtr rom_mk3r10 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -749,10 +749,10 @@ public class midwunit
 		ROM_LOAD( "mk3-u116.bin",  0x1100000, 0x080000, CRC(ba246ad0) SHA1(ec6bdd4b9cd3007bb66bb8de36d148abb30e7f11) )
 		ROM_LOAD( "mk3-u115.bin",  0x1200000, 0x080000, CRC(3ee8b124) SHA1(1523d51e36d3c336b134a562da36a29ba137c0f6) )
 		ROM_LOAD( "mk3-u114.bin",  0x1300000, 0x080000, CRC(a8d99922) SHA1(04ff8d85448701070672f44dbf5bcfd744f1bc8a) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( umk3 )
+	static RomLoadPtr rom_umk3 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -790,10 +790,10 @@ public class midwunit
 		ROM_LOAD( "umk-u112.bin",  0x1500000, 0x100000, CRC(b5a46488) SHA1(dbf22e55d200eb9ff550f48b223cf0c6114a9357) )
 		ROM_LOAD( "umk-u111.bin",  0x1600000, 0x100000, CRC(a87523c8) SHA1(e70b7599fef82001f762fc2c48f7b85474431ccc) )
 		ROM_LOAD( "umk-u110.bin",  0x1700000, 0x100000, CRC(0038f205) SHA1(059c1c71a2d92ee6db36c09831d213a48a7e81d0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( umk3r11 )
+	static RomLoadPtr rom_umk3r11 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -831,10 +831,10 @@ public class midwunit
 		ROM_LOAD( "umk-u112.bin",  0x1500000, 0x100000, CRC(b5a46488) SHA1(dbf22e55d200eb9ff550f48b223cf0c6114a9357) )
 		ROM_LOAD( "umk-u111.bin",  0x1600000, 0x100000, CRC(a87523c8) SHA1(e70b7599fef82001f762fc2c48f7b85474431ccc) )
 		ROM_LOAD( "umk-u110.bin",  0x1700000, 0x100000, CRC(0038f205) SHA1(059c1c71a2d92ee6db36c09831d213a48a7e81d0) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( openice )
+	static RomLoadPtr rom_openice = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -867,10 +867,10 @@ public class midwunit
 		ROM_LOAD( "oiceu120.bin",  0x0d00000, 0x100000, CRC(4295686a) SHA1(2522e57335bb8cca6d76942d2fd62560f88e37a6) )
 		ROM_LOAD( "oiceu119.bin",  0x0e00000, 0x100000, CRC(948b9b27) SHA1(62d031410f491d557e27ba055d3db9d36d5a153c) )
 		ROM_LOAD( "oiceu118.bin",  0x0f00000, 0x100000, CRC(9eaaf93e) SHA1(56bd881df5282f659ac68ace960a3b085c13dd9d) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nbahangt )
+	static RomLoadPtr rom_nbahangt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -908,10 +908,10 @@ public class midwunit
 		ROM_LOAD( "mhtu112.bin",  0x1500000, 0x100000, CRC(644e1bca) SHA1(447cc3b0a16aaff39b6cd095f1c255a91f235f7f) )
 		ROM_LOAD( "mhtu111.bin",  0x1600000, 0x100000, CRC(10d3b768) SHA1(e22fcb02a17c78f963ee5d35a38a9ab14f3de450) )
 		ROM_LOAD( "mhtu110.bin",  0x1700000, 0x100000, CRC(8575aeb2) SHA1(883acfc45416ab6e1ab77fc897638f89286bea7e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( nbamaxht )
+	static RomLoadPtr rom_nbamaxht = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -949,10 +949,10 @@ public class midwunit
 		ROM_LOAD( "mhtu112.bin",  0x1500000, 0x100000, CRC(644e1bca) SHA1(447cc3b0a16aaff39b6cd095f1c255a91f235f7f) )
 		ROM_LOAD( "mhtu111.bin",  0x1600000, 0x100000, CRC(10d3b768) SHA1(e22fcb02a17c78f963ee5d35a38a9ab14f3de450) )
 		ROM_LOAD( "mhtu110.bin",  0x1700000, 0x100000, CRC(8575aeb2) SHA1(883acfc45416ab6e1ab77fc897638f89286bea7e) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rmpgwt )
+	static RomLoadPtr rom_rmpgwt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -985,10 +985,10 @@ public class midwunit
 		ROM_LOAD( "rwt.120",  0x0d00000, 0x100000, CRC(6d643dee) SHA1(923ad01a0eb5a26d2a913f09fde254605113c868) )
 		ROM_LOAD( "rwt.119",  0x0e00000, 0x100000, CRC(4e49c133) SHA1(0f83b0d645286f6c6196bcf316ac010378b96c43) )
 		ROM_LOAD( "rwt.118",  0x0f00000, 0x100000, CRC(43a6f51e) SHA1(cb9d698a6a2ab9134339264e851b57e599db135c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( rmpgwt11 )
+	static RomLoadPtr rom_rmpgwt11 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -1021,10 +1021,10 @@ public class midwunit
 		ROM_LOAD( "rwt.120",  0x0d00000, 0x100000, CRC(6d643dee) SHA1(923ad01a0eb5a26d2a913f09fde254605113c868) )
 		ROM_LOAD( "rwt.119",  0x0e00000, 0x100000, CRC(4e49c133) SHA1(0f83b0d645286f6c6196bcf316ac010378b96c43) )
 		ROM_LOAD( "rwt.118",  0x0f00000, 0x100000, CRC(43a6f51e) SHA1(cb9d698a6a2ab9134339264e851b57e599db135c) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( wwfmania )
+	static RomLoadPtr rom_wwfmania = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10, REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION( ADSP2100_SIZE + 0x400000, REGION_CPU2, 0 )	/* ADSP-2105 data */
@@ -1057,7 +1057,7 @@ public class midwunit
 		ROM_LOAD( "wwf.120",  0x0d00000, 0x100000, CRC(3a05d371) SHA1(4ed73e1c06ea7bd33e6c72a6a752960ba55d1975) )
 		ROM_LOAD( "wwf.119",  0x0e00000, 0x100000, CRC(97ffa659) SHA1(986f8ec57085b808d33c85ed55b35a5e1cadf3b6) )
 		ROM_LOAD( "wwf.118",  0x0f00000, 0x100000, CRC(46668e97) SHA1(282ca2e561f7553717d60b5a745f8e3fc1bda610) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

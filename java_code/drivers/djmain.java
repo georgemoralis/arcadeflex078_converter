@@ -1011,7 +1011,7 @@ public class djmain
 	 *
 	 *************************************/
 	
-	ROM_START( bm1stmix )
+	static RomLoadPtr rom_bm1stmix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "753jab01.6a", 0x000000, 0x80000, CRC(25BF8629) SHA1(2be73f9dd25cae415c6443f221cc7d38d5555ae5) )
 		ROM_LOAD16_BYTE( "753jab02.8a", 0x000001, 0x80000, CRC(6AB951DE) SHA1(a724ede03b74e9422c120fcc263e2ebcc3a3e110) )
@@ -1031,9 +1031,9 @@ public class djmain
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		// There is an alternate image: MD5(260c9b72f4a03055e3abad61c6225324)
 		DISK_IMAGE( "753jaa11.chd", 0, MD5(d56ec7b9877d1f26d7fc1cabed404947) SHA1(71d200d1bd3f1f3a01f4daa78dc9abcca8b8a1fb) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bm2ndmix )
+	static RomLoadPtr rom_bm2ndmix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "853jab01.6a", 0x000000, 0x80000, CRC(C8DF72C0) SHA1(6793b587ba0611bc3da8c4955d6a87e47a19a223) )
 		ROM_LOAD16_BYTE( "853jab02.8a", 0x000001, 0x80000, CRC(BF6ACE08) SHA1(29d3fdf1c73a73a0a66fa5a4c4ac3f293cb82e37) )
@@ -1052,9 +1052,9 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "853jaa11.chd", 0, MD5(37281741b748bea7dfa711a956649d1e) SHA1(03d6cc5aea5920163fbaba34c4f838ca605a87e3) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bm2ndmxa )
+	static RomLoadPtr rom_bm2ndmxa = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "853jaa01.6a", 0x000000, 0x80000, CRC(4F0BF5D0) SHA1(4793bb411e85f2191eb703a170c16cf163ea79e7) )
 		ROM_LOAD16_BYTE( "853jaa02.8a", 0x000001, 0x80000, CRC(E323925B) SHA1(1f9f52a7ab6359b617e87f8b3d7ac4269885c621) )
@@ -1073,9 +1073,9 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "853jaa11.chd", 0, MD5(37281741b748bea7dfa711a956649d1e) SHA1(03d6cc5aea5920163fbaba34c4f838ca605a87e3) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bmcompmx )
+	static RomLoadPtr rom_bmcompmx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "858jab01.6a", 0x000000, 0x80000, CRC(92841EB5) SHA1(3a9d90a9c4b16cb7118aed2cadd3ab32919efa96) )
 		ROM_LOAD16_BYTE( "858jab02.8a", 0x000001, 0x80000, CRC(7B19969C) SHA1(3545acabbf53bacc5afa72a3c5af3cd648bc2ae1) )
@@ -1094,9 +1094,9 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "858jaa11.chd", 0, MD5(e7b26f6f03f807a32b2e5e291324d582) SHA1(86f8bb393d3db3c3f492f007a5b4eaec58dfca09) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hmcompmx )
+	static RomLoadPtr rom_hmcompmx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "858uab01.6a", 0x000000, 0x80000, CRC(F9C16675) SHA1(f2b50a3544f43af6fd987256a8bd4125b95749ef) )
 		ROM_LOAD16_BYTE( "858uab02.8a", 0x000001, 0x80000, CRC(4E8F1E78) SHA1(88d654de4377b584ff8a5e1f8bc81ffb293ec8a5) )
@@ -1115,9 +1115,9 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "858jaa11.chd", 0, MD5(e7b26f6f03f807a32b2e5e291324d582) SHA1(86f8bb393d3db3c3f492f007a5b4eaec58dfca09) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bm4thmix )
+	static RomLoadPtr rom_bm4thmix = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "847jaa01.6a", 0x000000, 0x80000, CRC(81138A1B) SHA1(ebe211126f871e541881e1670f56d50b058dead3) )
 		ROM_LOAD16_BYTE( "847jaa02.8a", 0x000001, 0x80000, CRC(4EEB0010) SHA1(942303dfb19a4a78dd74ad24576031760553a661) )
@@ -1136,9 +1136,9 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "847jaa11.chd", 0, MD5(47cb5c1b856aa11cf38f0c7ea4a7d1c3) SHA1(374d5d5340d4a8818577f9ae81021651d6ee3429) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hmcompm2 )
+	static RomLoadPtr rom_hmcompm2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "988uaa01.6a", 0x000000, 0x80000, CRC(5E5CC6C0) SHA1(0e7cd601d4543715cbc9f65e6fd48837179c962a) )
 		ROM_LOAD16_BYTE( "988uaa02.8a", 0x000001, 0x80000, CRC(E262984A) SHA1(f47662e40f91f2addb1a4b649923c1d0ee017341) )
@@ -1157,9 +1157,9 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "988jaa11.chd", 0, MD5(cc21d58d6bee58f1c4baf08f345fe2c5) SHA1(9ccc04973b035d20dada83842c8ee5387472870e) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bmdct )
+	static RomLoadPtr rom_bmdct = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "995jaa01.6a", 0x000000, 0x80000, CRC(2C224169) SHA1(0608469fa0a15026f461be5141ed29bf740144ca) )
 		ROM_LOAD16_BYTE( "995jaa02.8a", 0x000001, 0x80000, CRC(A2EDB472) SHA1(795e44e56dfee6c5eceb28172bc20ba5b31c366b) )
@@ -1178,9 +1178,9 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "995jaa11.chd", 0, MD5(8f5936d2b0b0914b5c88f5432c6cac21) SHA1(deed0fca533f3e56e04f9967f3f76145ca106f06) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( bmcorerm )
+	static RomLoadPtr rom_bmcorerm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )		/* MC68EC020FG25 MPU */
 		ROM_LOAD16_BYTE( "a05jaa01.6a", 0x000000, 0x80000, CRC(CD6F1FC5) SHA1(237cbc17a693efb6bffffd6afb24f0944c29330c) )
 		ROM_LOAD16_BYTE( "a05jaa02.8a", 0x000001, 0x80000, CRC(FE07785E) SHA1(14c652008cb509b5206fb515aad7dfe36a6fe6f4) )
@@ -1199,7 +1199,7 @@ public class djmain
 	
 		DISK_REGION( REGION_DISKS )			/* IDE HARD DRIVE */
 		DISK_IMAGE( "a05jaa11.chd", 0, MD5(180f7b1b2145fab2d2ba717780f2ca26) SHA1(1a45e99667c158517d8edcd66453cd56631b5f6a) )	/* ver 1.00 JA */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

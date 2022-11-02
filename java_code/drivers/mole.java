@@ -175,7 +175,7 @@ public class mole
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( mole ) /* ALL ROMS ARE 2732 */
+	static RomLoadPtr rom_mole = new RomLoadPtr(){ public void handler(){  /* ALL ROMS ARE 2732 */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for 6502 code */
 		ROM_LOAD( "m3a.5h",	0x5000, 0x1000, CRC(5fbbdfef) SHA1(8129e90a05b3ca50f47f7610eec51c16c8609590) )
 		ROM_RELOAD(			0xd000, 0x1000)
@@ -191,7 +191,7 @@ public class mole
 		ROM_LOAD( "mfa.3a",	0x3000, 0x1000, CRC(0d0c7d13) SHA1(8a6d371571391f2b54ffa65b77e4e83fd607d2c9) )
 		ROM_LOAD( "mda.5a",	0x4000, 0x1000, CRC(41ae1842) SHA1(afc169c3245b0946ef81e65d0b755d498ee71667) )
 		ROM_LOAD( "mba.8a",	0x5000, 0x1000, CRC(50c43fc9) SHA1(af478f3d89cd6c87f32dcdda7fabce25738c340b) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static InputPortPtr input_ports_mole = new InputPortPtr(){ public void handler() { 
 		PORT_START();  // 0x8d00

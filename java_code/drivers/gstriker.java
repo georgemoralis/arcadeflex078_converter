@@ -478,7 +478,7 @@ public class gstriker
 	
 	/*** ROM LOADING *************************************************************/
 	
-	ROM_START( gstriker )
+	static RomLoadPtr rom_gstriker = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "human-1.u58",  0x00000, 0x80000, CRC(45cf4857) SHA1(8133a9a7bdd547cc3d69140a68a1a5a7341e9f5b) )
 	
@@ -505,9 +505,9 @@ public class gstriker
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 )
 		ROM_LOAD( "scrgs107.u99", 0x00000, 0x100000, CRC(ecc0a01b) SHA1(239e832b7d22925460a8f44eb82e782cd13aba49) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vgoalsoc )
+	static RomLoadPtr rom_vgoalsoc = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "c16_u37.u37",  0x00000, 0x80000, CRC(18c05440) SHA1(0fc78ee0ba6d7817d4a93a80f668f193c352c00d) )
 	
@@ -530,9 +530,9 @@ public class gstriker
 	
 		ROM_REGION( 0x200000, REGION_SOUND2, 0 )
 		ROM_LOAD( "c13_u104.104", 0x000000, 0x200000, CRC(8437b6f8) SHA1(79f183dcbf3cde5c77e086e4fdd8341809396e37) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( vgoalsca )
+	static RomLoadPtr rom_vgoalsca = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "vgoalc16.u37", 0x00000, 0x80000, CRC(775ef300) SHA1(d0ab1c13a19ce646c6edfc25a0c0994989560cbc) )
 	
@@ -555,9 +555,9 @@ public class gstriker
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 )
 		ROM_LOAD( "vgoalc16.104", 0x000000, 0x100000, CRC(6fb06e1b) SHA1(c4584b480fe1165f8e2f887acaa578690514d35d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( worldc94 )
+	static RomLoadPtr rom_worldc94 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )
 		ROM_LOAD16_WORD_SWAP( "13",           0x00000, 0x80000, CRC(42adb463) SHA1(ec7bcb684489b56f81ab851a9d8f42d54679363b) )
 	
@@ -582,7 +582,7 @@ public class gstriker
 	
 		ROM_REGION( 0x100000, REGION_SOUND2, 0 )
 		ROM_LOAD( "u104",         0x000000, 0x100000, CRC(df07d0af) SHA1(356560e164ff222bc9004fe202f829c93244a6c9) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/*** GAME DRIVERS ************************************************************/
 	

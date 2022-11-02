@@ -233,7 +233,7 @@ public class glass
 		MDRV_SOUND_ADD(OKIM6295, glass_okim6295_interface)
 	MACHINE_DRIVER_END
 	
-	ROM_START( glass )
+	static RomLoadPtr rom_glass = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "c23.bin",	0x000000, 0x040000, CRC(688cdf33) SHA1(b59dcc3fc15f72037692b745927b110e97d8282e) )
 		ROM_LOAD16_BYTE( "c22.bin",	0x000001, 0x040000, CRC(ab17c992) SHA1(1509b5b4bbfb4e022e0ab6fbbc0ffc070adfa531) )
@@ -252,7 +252,7 @@ public class glass
 		ROM_LOAD( "c1.bin",	 0x000000, 0x100000, CRC(d9f075a2) SHA1(31a7a677861f39d512e9d1f51925c689e481159a) )
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched from all the ROMs */
 		ROM_RELOAD(				0x040000, 0x100000 )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************
 	

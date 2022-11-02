@@ -678,7 +678,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	ROM_START( ultratnk )
+	static RomLoadPtr rom_ultratnk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x12000, REGION_CPU1, 0 )
 		ROM_LOAD_NIB_LOW ( "030180.n1",	 0xb000, 0x0800, CRC(b6aa6056) SHA1(6de094017b5d87a238053fac88129d20260f8222) ) /* ROM 3 D0-D3 */
 		ROM_LOAD_NIB_HIGH( "030181.k1",	 0xb000, 0x0800, CRC(17145c97) SHA1(afe0c9c562c27cd1fba57ea83377b0a4c12496db) ) /* ROM 3 D4-D7 */
@@ -696,7 +696,7 @@ public class ultratnk
 		ROM_LOAD( "30175-01.m6", 0x0400, 0x0400, CRC(a47459c9) SHA1(4ca92edc172fbac923ba71731a25546c04ffc7b0) )
 		ROM_LOAD( "30176-01.l6", 0x0800, 0x0400, CRC(1cc7c2dd) SHA1(7f8aebe8375751183afeae35ea2d241d22ee7a4f) )
 		ROM_LOAD( "30177-01.k6", 0x0c00, 0x0400, CRC(3a91b09f) SHA1(1e713cb612eb7d78fc4a003e4e60308f62e0b169) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

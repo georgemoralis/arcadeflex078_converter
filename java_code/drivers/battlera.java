@@ -329,7 +329,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	ROM_START( bldwolf )
+	static RomLoadPtr rom_bldwolf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* Main cpu code */
 		ROM_LOAD( "es00-1.rom", 0x00000, 0x10000, CRC(ff4aa252) SHA1(3c190e49020bb6923abb3f3c2632d3c86443c292) )
 		ROM_LOAD( "es01.rom",   0x10000, 0x10000, CRC(9fea3189) SHA1(0692df6df533dfe55f61df8aa0c5c11944ba3ae3) )
@@ -348,9 +348,9 @@ public class battlera
 	
 		ROM_REGION( 0x80000, REGION_GFX1, 0 )
 		/* Nothing */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( battlera )
+	static RomLoadPtr rom_battlera = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 ) /* Main cpu code */
 		ROM_LOAD( "00_e1.bin", 0x00000, 0x10000, CRC(aa1cbe69) SHA1(982530f3202bc7b8d94d2b818873b71f02c0e8de) ) /* ET00 */
 		ROM_LOAD( "es01.rom",  0x10000, 0x10000, CRC(9fea3189) SHA1(0692df6df533dfe55f61df8aa0c5c11944ba3ae3) ) /* ET01 */
@@ -369,7 +369,7 @@ public class battlera
 	
 		ROM_REGION( 0x80000, REGION_GFX1, 0 )
 		/* Nothing */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

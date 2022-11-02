@@ -266,7 +266,7 @@ public class champbas
 	
 	***************************************************************************/
 	
-	ROM_START( champbas )
+	static RomLoadPtr rom_champbas = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "champbb.1",    0x0000, 0x2000, CRC(218de21e) SHA1(7577fd04bdda4666c017f3b36e81ec23bcddd845) )
 		ROM_LOAD( "champbb.2",    0x2000, 0x2000, CRC(5ddd872e) SHA1(68e21572e27707c991180b1bd0a6b31f7b64abf6) )
@@ -286,9 +286,9 @@ public class champbas
 		ROM_REGION( 0x0120, REGION_PROMS, 0 )
 		ROM_LOAD( "champbb.pr2",  0x0000, 0x020, CRC(2585ffb0) SHA1(ce7f62f37955c2bbb4f82b139cc716978b084767) ) /* palette */
 		ROM_LOAD( "champbb.pr1",  0x0020, 0x100, CRC(872dd450) SHA1(6c1e2c4a2fc072f4bf4996c731adb0b01b347506) ) /* look-up table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( champbbj )
+	static RomLoadPtr rom_champbbj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "11.2e",      0x0000, 0x2000, CRC(e2dfc166) SHA1(482e084d7d21b1cf2d17431699e6bab4c4b6ac15) )
 		ROM_LOAD( "12.2g",      0x2000, 0x2000, CRC(7b4e5faa) SHA1(b7201816a819ef313ddc81f312d26982b83ef1c7) )
@@ -308,9 +308,9 @@ public class champbas
 		ROM_REGION( 0x0120, REGION_PROMS, 0 )
 		ROM_LOAD( "1e.bpr",    0x0000, 0x0020, CRC(f5ce825e) SHA1(956f580840f1a7d24bfbd72b2929d14e9ee1b660) ) /* palette */
 		ROM_LOAD( "5k.bpr",    0x0020, 0x0100, CRC(2e481ffa) SHA1(bc8979efd43bee8be0ce96ebdacc873a5821e06e) ) /* look-up table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( champbja )
+	static RomLoadPtr rom_champbja = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 64k for code */
 		ROM_LOAD( "10",         0x0000, 0x2000, CRC(f7cdaf8e) SHA1(d4c840f2107394fadbcf822d64aaa381ac900367) ) 
 		ROM_LOAD( "09",         0x2000, 0x2000, CRC(9d39e5b3) SHA1(11c1a1d2296c0bf16d7610eaa79b034bfd813740) ) 
@@ -330,9 +330,9 @@ public class champbas
 		ROM_REGION( 0x0120, REGION_PROMS, 0 )
 		ROM_LOAD( "clr",       0x0000, 0x0020, CRC(8f989357) SHA1(d0916fb5ef4b43bdf84663cd403418ffc5e98c17) ) /* palette */ 
 		ROM_LOAD( "5k.bpr",    0x0020, 0x0100, CRC(2e481ffa) SHA1(bc8979efd43bee8be0ce96ebdacc873a5821e06e) ) /* look-up table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( champbb2 )
+	static RomLoadPtr rom_champbb2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "epr5932",      0x0000, 0x2000, CRC(528e3c78) SHA1(ee300201580c1bace783f1340bd4f1ea2a00dffa) )
 		ROM_LOAD( "epr5929",      0x2000, 0x2000, CRC(17b6057e) SHA1(67c5aed950acf4d045edf39019066af2896265e1) )
@@ -353,7 +353,7 @@ public class champbas
 		ROM_REGION( 0x0120, REGION_PROMS, 0 )
 		ROM_LOAD( "pr5957",       0x0000, 0x020, CRC(f5ce825e) SHA1(956f580840f1a7d24bfbd72b2929d14e9ee1b660) ) /* palette */
 		ROM_LOAD( "pr5956",       0x0020, 0x100, CRC(872dd450) SHA1(6c1e2c4a2fc072f4bf4996c731adb0b01b347506) ) /* look-up table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

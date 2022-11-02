@@ -504,7 +504,7 @@ public class dbz2
 	
 	#define ROM_LOAD64_WORD(name,offset,length,crc)		ROMX_LOAD(name, offset, length, crc, ROM_GROUPWORD | ROM_SKIP(6))
 	
-	ROM_START( dbz )
+	static RomLoadPtr rom_dbz = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x400000, REGION_CPU1, 0)
 		ROM_LOAD16_BYTE( "222a11.9e", 0x000000, 0x80000, CRC(60c7d9b2) SHA1(718ef89e89b3943845e91bedfc5c1d26229f9fe5) )
@@ -541,9 +541,9 @@ public class dbz2
 		/* sound data */
 		ROM_REGION( 0x40000, REGION_SOUND1, 0)
 		ROM_LOAD( "222a03.7c", 0x000000, 0x40000, CRC(1924467b) SHA1(57922090509bcc63b4783e8f2c5e95afd2090b87) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dbz2 )
+	static RomLoadPtr rom_dbz2 = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
 		ROM_REGION( 0x400000, REGION_CPU1, 0)
 		ROM_LOAD16_BYTE( "a9e.9e", 0x000000, 0x80000, CRC(e6a142c9) SHA1(7951c8f7036a67a0cd3260f434654820bf3e603f) )
@@ -578,7 +578,7 @@ public class dbz2
 		/* sound data */
 		ROM_REGION( 0x40000, REGION_SOUND1, 0)
 		ROM_LOAD( "pcm.7c", 0x000000, 0x40000, CRC(b58c884a) SHA1(0e2a7267e9dff29c9af25558081ec9d56629bc43) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static DRIVER_INIT(dbz2)

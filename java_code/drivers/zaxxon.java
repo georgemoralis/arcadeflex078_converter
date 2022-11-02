@@ -1273,7 +1273,7 @@ public class zaxxon
 	
 	/* ROMs */
 	
-	ROM_START( zaxxon )
+	static RomLoadPtr rom_zaxxon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "zaxxon.3",     0x0000, 0x2000, CRC(6e2b4a30) SHA1(80ac53c554c84226b119cbe3cf3470bcdbcd5762) )
 		ROM_LOAD( "zaxxon.2",     0x2000, 0x2000, CRC(1c9ea398) SHA1(0cd259be3fa80f3d53dfa76d5ca06773cdfe5945) )
@@ -1303,9 +1303,9 @@ public class zaxxon
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "zaxxon.u98",   0x0000, 0x0100, CRC(6cc6695b) SHA1(01ae8450ccc302e1a5ae74230d44f6f531a962e2) ) /* palette */
 		ROM_LOAD( "zaxxon.u72",   0x0100, 0x0100, CRC(deaa21f7) SHA1(0cf08fb62f77d93ff7cb883c633e0db35906e11d) ) /* char lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( zaxxon2 )
+	static RomLoadPtr rom_zaxxon2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "3a",           0x0000, 0x2000, CRC(b18e428a) SHA1(d3ff077e37a3ed8a9cc32cba19e1694b79df6b30) )
 		ROM_LOAD( "zaxxon.2",     0x2000, 0x2000, CRC(1c9ea398) SHA1(0cd259be3fa80f3d53dfa76d5ca06773cdfe5945) )
@@ -1335,9 +1335,9 @@ public class zaxxon
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "zaxxon.u98",   0x0000, 0x0100, CRC(6cc6695b) SHA1(01ae8450ccc302e1a5ae74230d44f6f531a962e2) ) /* palette */
 		ROM_LOAD( "j214a2.72",    0x0100, 0x0100, CRC(a9e1fb43) SHA1(57dbcfe2438fd090c08594818549aeea6339eab2) ) /* char lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( zaxxonb )
+	static RomLoadPtr rom_zaxxonb = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "zaxxonb.3",    0x0000, 0x2000, CRC(125bca1c) SHA1(f4160966d42e5282736cde8a276204ba8910ca61) )
 		ROM_LOAD( "zaxxonb.2",    0x2000, 0x2000, CRC(c088df92) SHA1(c0c6cd8dcf6db65129980331fa9ecc3800b63436) )
@@ -1367,9 +1367,9 @@ public class zaxxon
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "zaxxon.u98",   0x0000, 0x0100, CRC(6cc6695b) SHA1(01ae8450ccc302e1a5ae74230d44f6f531a962e2) ) /* palette */
 		ROM_LOAD( "zaxxon.u72",   0x0100, 0x0100, CRC(deaa21f7) SHA1(0cf08fb62f77d93ff7cb883c633e0db35906e11d) ) /* char lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( szaxxon )
+	static RomLoadPtr rom_szaxxon = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "suzaxxon.3",   0x0000, 0x2000, CRC(af7221da) SHA1(b5d3beb296d52ed69b4ceacf329c20a72e3a1dce) )
 		ROM_LOAD( "suzaxxon.2",   0x2000, 0x2000, CRC(1b90fb2a) SHA1(afb2bd2ffee3f5e589064f59b6ac21ed915094df) )
@@ -1399,9 +1399,9 @@ public class zaxxon
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "suzaxxon.u98", 0x0000, 0x0100, CRC(15727a9f) SHA1(42840e9ab303fb64102a1dbae03d66c9cf743a9f) ) /* palette */
 		ROM_LOAD( "suzaxxon.u72", 0x0100, 0x0100, CRC(deaa21f7) SHA1(0cf08fb62f77d93ff7cb883c633e0db35906e11d) ) /* char lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( razmataz )
+	static RomLoadPtr rom_razmataz = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "u27",           0x0000, 0x2000, CRC(254f350f) SHA1(f8e84778b7ffc4da76e97992f01c742c212480cf) )
 		ROM_LOAD( "u28",           0x2000, 0x2000, CRC(3a1eaa99) SHA1(d1f2a61a8548135c9754097aa468672616244710) )
@@ -1435,9 +1435,9 @@ public class zaxxon
 		ROM_REGION( 0x1000, REGION_SOUND1, 0 ) /* sound? */
 		ROM_LOAD( "1923.u50",      0x0000, 0x0800, CRC(59994a51) SHA1(57ccee24a989efe39f8ffc08aab7d72a1cdef3d1) )
 		ROM_LOAD( "1924.u51",      0x0800, 0x0800, CRC(a75e0011) SHA1(7d67ce2e8a2de471221b3b565a937ae1a35e1560) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ixion )
+	static RomLoadPtr rom_ixion = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "1937d.u27",           0x0000, 0x2000, CRC(f447aac5) SHA1(f6ec02f20482649ba1765254e0e67a8593075092) )
 		ROM_LOAD( "1938b.u28",           0x2000, 0x2000, CRC(17f48640) SHA1(d661e8ae0747c2c526360cb72e403deba7a98e71) )
@@ -1471,9 +1471,9 @@ public class zaxxon
 		ROM_REGION( 0x1000, REGION_SOUND1, 0 ) /* sound? */
 		ROM_LOAD( "1943a.u50",      0x0000, 0x0800, CRC(77e5a1f0) SHA1(00152ffb59ebac718b300fdf24314b456748ffbe) )
 		ROM_LOAD( "1944a.u51",      0x0800, 0x0800, CRC(88215098) SHA1(54bd1c71e7f10f20623e47f4e791f54ce698bc08) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( congo )
+	static RomLoadPtr rom_congo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "congo1.bin",   0x0000, 0x2000, CRC(09355b5b) SHA1(0085ac7eb0035a88cb54cdd3dd6b2643141d39db) )
 		ROM_LOAD( "congo2.bin",   0x2000, 0x2000, CRC(1c5e30ae) SHA1(7cc5420e0e7a2793a671b938c121ae4079f5b1b8) )
@@ -1508,9 +1508,9 @@ public class zaxxon
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "congo.u68",    0x0000, 0x100, CRC(b788d8ae) SHA1(9765180f3087140c75e5953409df841787558160) ) /* palette */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( tiptop )
+	static RomLoadPtr rom_tiptop = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for code */
 		ROM_LOAD( "tiptop1.bin",  0x0000, 0x2000, CRC(e19dc77b) SHA1(d3782dd55701e0f5cd426ad2771c1bd0264c366a) )
 		ROM_LOAD( "tiptop2.bin",  0x2000, 0x2000, CRC(3fcd3b6e) SHA1(2898807ee36fca7fbc06616c9a070604beb782b9) )
@@ -1545,9 +1545,9 @@ public class zaxxon
 	
 		ROM_REGION( 0x0100, REGION_PROMS, 0 )
 		ROM_LOAD( "congo.u68",    0x0000, 0x100, CRC(b788d8ae) SHA1(9765180f3087140c75e5953409df841787558160) ) /* palette */
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( futspy )
+	static RomLoadPtr rom_futspy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 2*0x10000, REGION_CPU1, 0 )	/* 64k for code + 64k for decrypted opcodes */
 		ROM_LOAD( "fs_snd.u27",   0x0000, 0x2000, CRC(7578fe7f) SHA1(ab42bdf74b07c1ba5337c3d34647d3ee16f9db05) )
 		ROM_LOAD( "fs_snd.u28",   0x2000, 0x2000, CRC(8ade203c) SHA1(f095f4019befff7af4203c886ef42357f79592a1) )
@@ -1577,7 +1577,7 @@ public class zaxxon
 		ROM_REGION( 0x0200, REGION_PROMS, 0 )
 		ROM_LOAD( "futrprom.u98", 0x0000, 0x0100, CRC(9ba2acaa) SHA1(20e0257ca531ddc398b3aab861c7b5c41b659d40) ) /* palette */
 		ROM_LOAD( "futrprom.u72", 0x0100, 0x0100, CRC(f9e26790) SHA1(339f27e0126312d35211b5ce533f293b58851c1d) ) /* char lookup table */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/* Driver Initialization */
 	

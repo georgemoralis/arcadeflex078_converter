@@ -371,6 +371,25 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (sUtil.getToken("ROM_START")) {
+                        if (sUtil.parseChar() != '(') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != ')') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        sUtil.putString((new StringBuilder()).append("static RomLoadPtr rom_").append(Convertor.token[0]).append(" = new RomLoadPtr(){ public void handler(){ ").toString());
+                        continue;
+                    }
+                    if (sUtil.getToken("ROM_END")) {
+                        sUtil.putString((new StringBuilder()).append("ROM_END(); }}; ").toString());
+                        continue;
+                    }
                     Convertor.inpos = i;
                     break;
                 }

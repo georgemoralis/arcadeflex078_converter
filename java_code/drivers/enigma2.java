@@ -267,7 +267,7 @@ public class enigma2
 		MDRV_CPU_REPLACE("main", 8080, 2000000)
 	MACHINE_DRIVER_END
 	
-	ROM_START( enigma2a )
+	static RomLoadPtr rom_enigma2a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "36_en1.bin",   0x0000, 0x0800, CRC(15f44806) SHA1(4a2f7bc91d4edf7a069e0865d964371c97af0a0a) )
 		ROM_LOAD( "35_en2.bin",   0x0800, 0x0800, CRC(e841072f) SHA1(6ab02fd9fdeac5ab887cd25eee3d6b70ab01f849) )
@@ -280,9 +280,9 @@ public class enigma2
 		ROM_REGION( 0x10000, REGION_CPU2, 0 )
 		ROM_LOAD( "sound.bin",    0x0000, 0x0800, BAD_DUMP CRC(5f092d3c) SHA1(17c70f6af1b5560a45e6b1bdb330a98b27570fe9) )
 	
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( enigma2 )
+	static RomLoadPtr rom_enigma2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
 		ROM_LOAD( "1.5d",         0x0000, 0x0800, CRC(499749de) SHA1(401928ff41d3b4cbb68e6ad3bf3be4a10ae1781f) )
 		ROM_LOAD( "2.7d",         0x0800, 0x0800, CRC(173c1329) SHA1(3f1ad46d0e58ab236e4ff2b385d09fbf113627da) )
@@ -302,7 +302,7 @@ public class enigma2
 		/* Unknown */
 		ROM_REGION( 0x10000, REGION_USER1, 0 )
 		ROM_LOAD( "8.13f",        0x0000, 0x0800, CRC(e9cb116d) SHA1(41da4f46c5614ec3345c233467ebad022c6b0bf5) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	static DRIVER_INIT(enigma2) {	cmap=1;}
 	static DRIVER_INIT(enigma2a){	cmap=0;}

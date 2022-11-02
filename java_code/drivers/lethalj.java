@@ -347,7 +347,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	ROM_START( lethalj )
+	static RomLoadPtr rom_lethalj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( TOBYTE(0x400000), REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION16_LE( 0x100000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -370,10 +370,10 @@ public class lethalj
 	
 		ROM_REGION( 0x40000, REGION_SOUND3, 0)				/* sound data */
 		ROM_LOAD( "sound1", 0x00000, 0x40000, CRC(7d93ca66) SHA1(9e1dc0efa5d0f770c7e1f10de56fbf5620dea437) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
-	ROM_START( eggventr )
+	static RomLoadPtr rom_eggventr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( TOBYTE(0x400000), REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION16_LE( 0x100000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -398,9 +398,9 @@ public class lethalj
 	
 		ROM_REGION( 0x40000, REGION_SOUND3, 0)				/* sound data */
 		ROM_LOAD( "eu18.bin", 0x00000, 0x40000, CRC(3760b1db) SHA1(70e258a6036f9ce26b354c4df57e0e4d2c871bcb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( eggvntdx )
+	static RomLoadPtr rom_eggvntdx = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( TOBYTE(0x400000), REGION_CPU1, 0 )		/* 34010 dummy region */
 	
 		ROM_REGION16_LE( 0x100000, REGION_USER1, ROMREGION_DISPOSE )	/* 34010 code */
@@ -423,7 +423,7 @@ public class lethalj
 	
 		ROM_REGION( 0x40000, REGION_SOUND3, 0)				/* sound data */
 		ROM_LOAD( "eu18.bin", 0x00000, 0x40000, CRC(3760b1db) SHA1(70e258a6036f9ce26b354c4df57e0e4d2c871bcb) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	

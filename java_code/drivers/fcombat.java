@@ -389,7 +389,7 @@ public class fcombat
 		free(temp);
 	}
 	
-	ROM_START( fcombat )
+	static RomLoadPtr rom_fcombat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
 		ROM_LOAD( "fcombat2.t9",  0x0000, 0x4000, CRC(30cb0c14) SHA1(8b5b6a4efaca2f138709184725e9e0e0b9cfc4c7) )
 		ROM_LOAD( "fcombat3.10t", 0x4000, 0x4000, CRC(e8511da0) SHA1(bab5c9244c970b97c025381c37ad372aa3b5cddf) )
@@ -416,7 +416,7 @@ public class fcombat
 		ROM_LOAD( "fcprom_b.c4",  0x0120, 0x0100, CRC(ac9049f6) SHA1(57aa5b5df3e181bad76149745a422c3dd1edad49) ) /* sprite lookup table */
 	//	ROM_LOAD( "exerion.i3",   0x0220, 0x0100, CRC(fe72ab79) ) /* bg char lookup table */
 		ROM_LOAD( "fcprom_c.a9",  0x0320, 0x0100, CRC(768ac120) SHA1(ceede1d6cbeae08da96ef52bdca2718a839d88ab) ) /* bg char mixer */
-	ROM_END
+	ROM_END(); }}; 
 	
 	GAMEX( 1985, fcombat,  0,       fcombat, fcombat, fcombat,  ROT90, "Jaleco", "Field Combat", GAME_NOT_WORKING )
 }

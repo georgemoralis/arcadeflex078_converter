@@ -1301,7 +1301,7 @@ public class m92
 	
 	/***************************************************************************/
 	
-	ROM_START( bmaster )
+	static RomLoadPtr rom_bmaster = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "bm_d-h0.rom",  0x000001, 0x40000, CRC(49b257c7) SHA1(cb4917ef6c5f959094f95b8535ea12e6b9b0bcc2) )
 		ROM_LOAD16_BYTE( "bm_d-l0.rom",  0x000000, 0x40000, CRC(a873523e) SHA1(9aee134c299e12064842e16db296f4259eccdf5b) )
@@ -1326,9 +1326,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "bm_da.rom",       0x000000, 0x80000, CRC(62ce5798) SHA1(f7bf7706f71ce36d85c99e531d4789c4d7a095a0) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skingame )
+	static RomLoadPtr rom_skingame = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "is-h0-d",  0x000001, 0x40000, CRC(80940abb) SHA1(7af5b667383f40987cc8190d81937410ea2c0301) )
 		ROM_LOAD16_BYTE( "is-l0-d",  0x000000, 0x40000, CRC(b84beed6) SHA1(b026a68623d7d96545a4b01770fc6cdd2a0ed0f4) )
@@ -1356,9 +1356,9 @@ public class m92
 	
 		ROM_REGION( 0x4000, REGION_USER1, 0 )	/* EEPROM */
 		ROM_LOAD( "mt2eep",       0x000000, 0x800, CRC(208af971) SHA1(69384cac24b7af35a031f9b60e035131a8b10cb2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( majtitl2 )
+	static RomLoadPtr rom_majtitl2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "mt2-ho-b.5m",0x000001, 0x40000, CRC(b163b12e) SHA1(cdb01a5266bd11f4cff1cb5c05cf24de13a527b2) )
 		ROM_LOAD16_BYTE( "mt2-lo-b.5f",0x000000, 0x40000, CRC(6f3b5d9d) SHA1(a39f25f29195023fb507dc9ffbfcbd57a4e6b30a) )
@@ -1386,9 +1386,9 @@ public class m92
 	
 		ROM_REGION( 0x4000, REGION_USER1, 0 )	/* EEPROM */
 		ROM_LOAD( "mt2eep",       0x000000, 0x800, CRC(208af971) SHA1(69384cac24b7af35a031f9b60e035131a8b10cb2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( skingam2 )
+	static RomLoadPtr rom_skingam2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "mt2h0a", 0x000001, 0x40000, CRC(7c6dbbc7) SHA1(6ac2df542cbcac782d733aaa0f2e4ded702ec24f) )
 		ROM_LOAD16_BYTE( "mt2l0a", 0x000000, 0x40000, CRC(9de5f689) SHA1(ea5057cab0a2f5c4586337fc5a17f1a728450cbf) )
@@ -1416,9 +1416,9 @@ public class m92
 	
 		ROM_REGION( 0x4000, REGION_USER1, 0 )	/* EEPROM */
 		ROM_LOAD( "mt2eep",       0x000000, 0x800, CRC(208af971) SHA1(69384cac24b7af35a031f9b60e035131a8b10cb2) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunforce )
+	static RomLoadPtr rom_gunforce = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "gf_h0-c.rom",  0x000001, 0x20000, CRC(c09bb634) SHA1(9b0e3174beeef173f5ef70f86f5db42bb01d9989) )
 		ROM_LOAD16_BYTE( "gf_l0-c.rom",  0x000000, 0x20000, CRC(1bef6f7d) SHA1(ff4d674fc5f97f5b298b4b5dc73fb8a6772b5f09) )
@@ -1443,9 +1443,9 @@ public class m92
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "gf-da.rom",	 0x000000, 0x020000, CRC(933ba935) SHA1(482811e01239feecf10e232566a7809d0d4f11b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunforcj )
+	static RomLoadPtr rom_gunforcj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "gfbh0e.bin",  0x000001, 0x20000, CRC(43c36e0f) SHA1(08c278861568f0a2fb2699b89a4170f6843bbcb7) )
 		ROM_LOAD16_BYTE( "gfbl0e.bin",  0x000000, 0x20000, CRC(24a558d8) SHA1(89a9fb737d51798bdd5c08f448d2d8b3e161396a) )
@@ -1470,9 +1470,9 @@ public class m92
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "gf-da.rom",	 0x000000, 0x020000, CRC(933ba935) SHA1(482811e01239feecf10e232566a7809d0d4f11b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunforcu )
+	static RomLoadPtr rom_gunforcu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "gf_h0-d.5m",  0x000001, 0x20000, CRC(a6db7b5c) SHA1(5656473599e924ab799ea3c6f39d8ce34b08cb29) )
 		ROM_LOAD16_BYTE( "gf_l0-d.5f",  0x000000, 0x20000, CRC(82cf55f6) SHA1(42a2de61f2c5294c81fb135ea2472cc78637c66c) )
@@ -1497,9 +1497,9 @@ public class m92
 	
 		ROM_REGION( 0x20000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "gf-da.rom",	 0x000000, 0x020000, CRC(933ba935) SHA1(482811e01239feecf10e232566a7809d0d4f11b8) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( inthunt )
+	static RomLoadPtr rom_inthunt = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ith-h0-d.rom",0x000001, 0x040000, CRC(52f8e7a6) SHA1(26d9e272b01e7b82019812059dcc9fbb043c6129) )
 		ROM_LOAD16_BYTE( "ith-l0-d.rom",0x000000, 0x040000, CRC(5db79eb7) SHA1(ffd4228d7b88a44a82e639a5583753da183fcb23) )
@@ -1524,9 +1524,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "ith_ic9.rom" ,0x000000, 0x080000, CRC(318ee71a) SHA1(e6f49a7adf7155ba40c4f33a8fdc9553c00f5e3d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( inthuntu )
+	static RomLoadPtr rom_inthuntu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ithhoc.bin",0x000001, 0x040000, CRC(563dcec0) SHA1(0c7588ba603926fb0b490f2ba324ff73362a54d5) )
 		ROM_LOAD16_BYTE( "ithloc.bin",0x000000, 0x040000, CRC(1638c705) SHA1(8ca7a12c2f75172d4c2c808ea666b2f2e969398c) )
@@ -1551,9 +1551,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "ith_ic9.rom" ,0x000000, 0x080000, CRC(318ee71a) SHA1(e6f49a7adf7155ba40c4f33a8fdc9553c00f5e3d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( kaiteids )
+	static RomLoadPtr rom_kaiteids = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "ith-h0j.bin",0x000001, 0x040000, CRC(dc1dec36) SHA1(f0a6e3be19752bffd9fd5f435405c8f591eab258) )
 		ROM_LOAD16_BYTE( "ith-l0j.bin",0x000000, 0x040000, CRC(8835d704) SHA1(42be25ccdc31824797a17e6f76bd06edfe853833) )
@@ -1578,9 +1578,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "ith_ic9.rom" ,0x000000, 0x080000, CRC(318ee71a) SHA1(e6f49a7adf7155ba40c4f33a8fdc9553c00f5e3d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hook )
+	static RomLoadPtr rom_hook = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "h-h0-d.rom",0x000001, 0x040000, CRC(40189ff6) SHA1(ed86a566f0f47c03dd0628cda8b31a167788116c) )
 		ROM_LOAD16_BYTE( "h-l0-d.rom",0x000000, 0x040000, CRC(14567690) SHA1(74ddc300e81b006fdc57a4a86f5f178a30732dd8) )
@@ -1605,9 +1605,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "hook-da.rom" ,0x000000, 0x080000, CRC(88cd0212) SHA1(789532f5544b5d024d8af60eb8a5c133ae0d19d4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( hooku )
+	static RomLoadPtr rom_hooku = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "h0-c.3h",0x000001, 0x040000, CRC(84cc239e) SHA1(0a3011cd64cd27336b967b1b2446c8916b8be8e7) )
 		ROM_LOAD16_BYTE( "l0-c.5h",0x000000, 0x040000, CRC(45e194fe) SHA1(2049f242ea3058d42004bafb8b208759020be5bc) )
@@ -1632,9 +1632,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "hook-da.rom" ,0x000000, 0x080000, CRC(88cd0212) SHA1(789532f5544b5d024d8af60eb8a5c133ae0d19d4) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rtypeleo )
+	static RomLoadPtr rom_rtypeleo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "rtl-h0-c",     0x000001, 0x040000, CRC(5fef7fa1) SHA1(7d18d4ea979d887d6da42c79734b8c695f3df02b) )
 		ROM_LOAD16_BYTE( "rtl-l0-c",     0x000000, 0x040000, CRC(8156456b) SHA1(9755ab80feb92e3e3a36154d57ee2b53185b6816) )
@@ -1659,9 +1659,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "rtl-da.bin" ,0x000000, 0x080000, CRC(dbebd1ff) SHA1(b369d6e944331e6773608ff24f04b8f16267b8da) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( rtypelej )
+	static RomLoadPtr rom_rtypelej = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "rtl-h0-d.bin", 0x000001, 0x040000, CRC(3dbac89f) SHA1(bfb4d1ab480b7828f6b7374df6d30d766f327b95) )
 		ROM_LOAD16_BYTE( "rtl-l0-d.bin", 0x000000, 0x040000, CRC(f85a2537) SHA1(50eeca8de0c7fd28375d082a05f18473d0b15ed4) )
@@ -1686,9 +1686,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "rtl-da.bin" ,0x000000, 0x080000, CRC(dbebd1ff) SHA1(b369d6e944331e6773608ff24f04b8f16267b8da) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( mysticri )
+	static RomLoadPtr rom_mysticri = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "mr-h0-b.bin",  0x000001, 0x040000, CRC(d529f887) SHA1(fedfedd23fdbb8c4a19970dc4e2c8c0f96915982) )
 		ROM_LOAD16_BYTE( "mr-l0-b.bin",  0x000000, 0x040000, CRC(a457ab44) SHA1(6f85428061cf384c6d645ff0aacd850730a86987) )
@@ -1713,9 +1713,9 @@ public class m92
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "mr-da.bin" ,0x000000, 0x040000, CRC(1a11fc59) SHA1(6d1f4ca688bf015ecbbe369fbc0eb5e2bcaefcfc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunhohki )
+	static RomLoadPtr rom_gunhohki = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "mr-h0.bin",  0x000001, 0x040000, CRC(83352270) SHA1(25393ac0ec0f91c2890bbfc8c1b12e0f6bccb2ab) )
 		ROM_LOAD16_BYTE( "mr-l0.bin",  0x000000, 0x040000, CRC(9db308ae) SHA1(eadec2e07a602d104a38bf9e159865405ab11581) )
@@ -1740,9 +1740,9 @@ public class m92
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "mr-da.bin" ,0x000000, 0x040000, CRC(1a11fc59) SHA1(6d1f4ca688bf015ecbbe369fbc0eb5e2bcaefcfc) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( uccops )
+	static RomLoadPtr rom_uccops = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "uc_h0.rom",  0x000001, 0x040000, CRC(240aa5f7) SHA1(8d864bb1377e9f6d266631ed365c5809b9da33f8) )
 		ROM_LOAD16_BYTE( "uc_l0.rom",  0x000000, 0x040000, CRC(df9a4826) SHA1(298033d97b9587e3548cb3bffa16b7ba9a6ff20d) )
@@ -1767,9 +1767,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "uc_w42.rom", 0x000000, 0x080000, CRC(d17d3fd6) SHA1(b02da0d01c41c7bf50cd35d6c75bacc3e3e0b85a) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( uccopsj )
+	static RomLoadPtr rom_uccopsj = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "uca-h0.bin", 0x000001, 0x040000, CRC(9e17cada) SHA1(086bb9c1ab851cab3734c2f9188d8ff3c5f98913) )
 		ROM_LOAD16_BYTE( "uca-l0.bin", 0x000000, 0x040000, CRC(4a4e3208) SHA1(d61c74d46584e2c15e70f7a17b598e51981da9e8) )
@@ -1794,9 +1794,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "uca-da.bin", 0x000000, 0x080000, CRC(0b2855e9) SHA1(70f9decd78eab679a2ccad69e01cb303b61e0d38) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( lethalth )
+	static RomLoadPtr rom_lethalth = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "lt_d-h0.rom",  0x000001, 0x020000, CRC(20c68935) SHA1(edbb5322082bde7136ab015931fdcd18e5c293a8) )
 		ROM_LOAD16_BYTE( "lt_d-l0.rom",  0x000000, 0x020000, CRC(e1432fb3) SHA1(4b6c22d740cd598d0e34e257910fe7c3d4f3fd32) )
@@ -1821,9 +1821,9 @@ public class m92
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "lt_8a.rom" ,0x000000, 0x040000, CRC(357762a2) SHA1(d13b2a0f5d48c0171bcef708589cad194a7ea1ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( thndblst )
+	static RomLoadPtr rom_thndblst = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "lt_d-h0j.rom", 0x000001, 0x020000, CRC(dc218a18) SHA1(f092245fd56ca75096c77ce6abf848454b905cfc) )
 		ROM_LOAD16_BYTE( "lt_d-l0j.rom", 0x000000, 0x020000, CRC(ae9a3f81) SHA1(c323073e2c245b3c52f93e07b98b0c2d4f4e97b1) )
@@ -1848,9 +1848,9 @@ public class m92
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "lt_8a.rom" ,0x000000, 0x040000, CRC(357762a2) SHA1(d13b2a0f5d48c0171bcef708589cad194a7ea1ed) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( nbbatman )
+	static RomLoadPtr rom_nbbatman = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "a1-h0-a.34",  0x000001, 0x040000, CRC(24a9b794) SHA1(a4867a89ea2749d60e6d1225bd84a488403b8cf3) )
 		ROM_LOAD16_BYTE( "a1-l0-a.31",  0x000000, 0x040000, CRC(846d7716) SHA1(28434fd74b168ef73d00779b3e5d8b36b1f3ef80) )
@@ -1875,9 +1875,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "lh534k0k.8" ,0x000000, 0x080000, CRC(735e6380) SHA1(bf019815e579ef2393c00869f101a01f746e04d6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( leaguemn )
+	static RomLoadPtr rom_leaguemn = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "lma1-h0.34",  0x000001, 0x040000, CRC(47c54204) SHA1(59de4e9a75c88dba71aa1949e7ac2c4b9e98f413) )
 		ROM_LOAD16_BYTE( "lma1-l0.31",  0x000000, 0x040000, CRC(1d062c82) SHA1(8d5969dc0264a05334196132bc2b5a3a59fb9e3a) )
@@ -1902,9 +1902,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "lh534k0k.8" ,0x000000, 0x080000, CRC(735e6380) SHA1(bf019815e579ef2393c00869f101a01f746e04d6) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( ssoldier )
+	static RomLoadPtr rom_ssoldier = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "f3-h0-h.bin",  0x000001, 0x040000, CRC(b63fb9da) SHA1(429beb7ebc98815809fdd0ff69fcb4a14e1d8a14) )
 		ROM_LOAD16_BYTE( "f3-l0-h.bin",  0x000000, 0x040000, CRC(419361a2) SHA1(42284a7afedefdb58a9b505e87effeee8bb5a9d8) )
@@ -1933,9 +1933,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "f3_w95.da" ,0x000000, 0x080000, CRC(f7ca432b) SHA1(274458b68f906e6043bc36110a4903280647ac2d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( psoldier )
+	static RomLoadPtr rom_psoldier = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE( "f3_h0d.h0",  0x000001, 0x040000, CRC(38f131fd) SHA1(0e513a5edfd8ab14440c360000a40b9d750cb54a) )
 		ROM_LOAD16_BYTE( "f3_l0d.l0",  0x000000, 0x040000, CRC(1662969c) SHA1(8de1683076d7128ec16f1d053afb5e236add73e6) )
@@ -1964,9 +1964,9 @@ public class m92
 	
 		ROM_REGION( 0x80000, REGION_SOUND1, ROMREGION_SOUNDONLY )
 		ROM_LOAD( "f3_w95.da" ,0x000000, 0x080000, CRC(f7ca432b) SHA1(274458b68f906e6043bc36110a4903280647ac2d) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( dsccr94j )
+	static RomLoadPtr rom_dsccr94j = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE("a3_-h0-e.bin", 0x000001, 0x040000, CRC(8de1dbcd) SHA1(3726c7f8bc1e61a488ab7ef0b79a7a45054235c2) )
 		ROM_LOAD16_BYTE("a3_-l0-e.bin", 0x000000, 0x040000, CRC(d3df8bfd) SHA1(b98064579491aef8eb8ccb94195412e79674a0c1) )
@@ -1995,9 +1995,9 @@ public class m92
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )
 		ROM_LOAD("ds_da0.rom" ,  0x000000, 0x100000, CRC(67fc52fd) SHA1(5771e948115af8fe4a6d3f448c03a2a9b42b6f20) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( gunforc2 )
+	static RomLoadPtr rom_gunforc2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE("a2-h0-a.6h", 0x000001, 0x040000, CRC(49965e22) SHA1(077283c66a4cc2c47221c5f3267f440223615a15) )
 		ROM_LOAD16_BYTE("a2-l0-a.8h", 0x000000, 0x040000, CRC(8c88b278) SHA1(0fd8e663619dcd8c81b3baa290bb0e72c185273a) )
@@ -2022,9 +2022,9 @@ public class m92
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )
 		ROM_LOAD("a2_da.1l" ,  0x000000, 0x100000, CRC(3c8cdb6a) SHA1(d1f4186e8ddf99698443f8ee1c60a6e6bc367b09) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( geostorm )
+	static RomLoadPtr rom_geostorm = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x180000, REGION_CPU1, 0 )
 		ROM_LOAD16_BYTE("geo-h0.bin", 0x000001, 0x040000, CRC(9be58d09) SHA1(ab98b91abc8129c342c59674eab9683cccc6ca35) )
 		ROM_LOAD16_BYTE("geo-l0.bin", 0x000000, 0x040000, CRC(59abb75d) SHA1(52b48685470ffa3f36a8259bf333448bf40caea9) )
@@ -2049,7 +2049,7 @@ public class m92
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )
 		ROM_LOAD("a2_da.1l" ,  0x000000, 0x100000, CRC(3c8cdb6a) SHA1(d1f4186e8ddf99698443f8ee1c60a6e6bc367b09) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************/
 	

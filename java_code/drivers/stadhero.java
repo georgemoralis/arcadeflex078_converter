@@ -336,7 +336,7 @@ public class stadhero
 	
 	/******************************************************************************/
 	
-	ROM_START( stadhero )
+	static RomLoadPtr rom_stadhero = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 6*64k for 68000 code */
 		ROM_LOAD16_BYTE( "ef15.bin",  0x00000, 0x10000, CRC(bbba364e) SHA1(552096102f402085596635f02096462c6b8e13a7) )
 		ROM_LOAD16_BYTE( "ef13.bin",  0x00001, 0x10000, CRC(97c6717a) SHA1(6c81260f49a59f70c71f520e51330a6833828684) )
@@ -365,7 +365,7 @@ public class stadhero
 	
 		ROM_REGION( 0x10000, REGION_SOUND1, 0 )	/* ADPCM samples */
 		ROM_LOAD( "ef17.bin",  0x0000, 0x10000, CRC(07c78358) SHA1(ce82b429eec0193fd9665b717336756a514db144) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	/******************************************************************************/
 	

@@ -638,7 +638,7 @@ public class playmark
 	
 	***************************************************************************/
 	
-	ROM_START( bigtwin )
+	static RomLoadPtr rom_bigtwin = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "2.302",        0x000000, 0x80000, CRC(e6767f60) SHA1(ec0ba1c786e6fde04601c2f3f619e3c6545f9239) )
 		ROM_LOAD16_BYTE( "3.301",        0x000001, 0x80000, CRC(5aba6990) SHA1(4f664a91819fdd27821fa607425701d83fcbd8ce) )
@@ -664,9 +664,9 @@ public class playmark
 	
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 )	/* OKIM6295 samples */
 		ROM_LOAD( "1.013",        0x00000, 0x40000, CRC(ff6671dc) SHA1(517941946a3edfc2da0b7aa8a106ebb4ae849beb) )
-	ROM_END
+	ROM_END(); }}; 
 	
-	ROM_START( wbeachvl )
+	static RomLoadPtr rom_wbeachvl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 )	/* 68000 code */
 		ROM_LOAD16_BYTE( "wbv_02.bin",   0x000000, 0x40000, CRC(c7cca29e) SHA1(03af361081d688c4204a95f7f5babcc598b72c23) )
 		ROM_LOAD16_BYTE( "wbv_03.bin",   0x000001, 0x40000, CRC(db4e69d5) SHA1(119bf35a463d279ddde67ab08f6f1bab9f05cf0c) )
@@ -691,7 +691,7 @@ public class playmark
 	
 		ROM_REGION( 0x100000, REGION_SOUND1, 0 )	/* OKIM6295 samples */
 		ROM_LOAD( "wbv_01.bin",   0x00000, 0x100000, CRC(ac33f25f) SHA1(5d9ed16650aeb297d565376a99b31c88ab611668) )
-	ROM_END
+	ROM_END(); }}; 
 	
 	
 	static UINT8 playmark_asciitohex(UINT8 data)

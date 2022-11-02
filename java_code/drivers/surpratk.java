@@ -274,7 +274,7 @@ public class surpratk
 	
 	***************************************************************************/
 	
-	ROM_START( surpratk )
+	static RomLoadPtr rom_surpratk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x51000, REGION_CPU1, 0 ) /* code + banked roms + palette RAM */
 		ROM_LOAD( "911m01.bin", 0x10000, 0x20000, CRC(ee5b2cc8) SHA1(4b05f7ba4e804a3bccb41fe9d3258cbcfe5324aa) )
 		ROM_LOAD( "911m02.bin", 0x30000, 0x18000, CRC(5d4148a8) SHA1(4fa5947db777b4c742775d588dea38758812a916) )
@@ -287,7 +287,7 @@ public class surpratk
 		ROM_REGION( 0x080000, REGION_GFX2, 0 ) /* graphics ( don't dispose as the program can read them, 0 ) */
 		ROM_LOAD( "911d03.bin", 0x000000, 0x040000, CRC(e34ff182) SHA1(075ca7a91c843bdac7da21ddfcd43f7a043a09b6) )	/* sprites */
 		ROM_LOAD( "911d04.bin", 0x040000, 0x040000, CRC(20700bd2) SHA1(a2fa4a3ee28c1542cdd798907a9ece249aadff0a) )	/* sprites */
-	ROM_END
+	ROM_END(); }}; 
 	
 	/***************************************************************************
 	
