@@ -493,6 +493,17 @@ public class convertMame {
                     }
                     break;
                 }
+                case 'm':
+                    i = Convertor.inpos;
+                    if (type == VIDEO_UPDATE) {
+                        Convertor.token[0] = sUtil.parseToken();
+                        if (Convertor.token[0].endsWith("_videoram_w")) {
+                            sUtil.putString((new StringBuilder()).append(Convertor.token[0]).append(".handler").toString());
+                            continue;
+                        }
+                    }
+                    Convertor.inpos=i;
+                    break;
                 case 'M': {
                     i = Convertor.inpos;
                     if (sUtil.getToken("videoram_size")) {
