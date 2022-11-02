@@ -101,7 +101,7 @@ public class kopunch
 		SET_TILE_INFO(1, code, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_kopunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kopunch )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -118,7 +118,7 @@ public class kopunch
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_kopunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

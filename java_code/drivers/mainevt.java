@@ -30,6 +30,8 @@ public class mainevt
 {
 	
 	
+	VIDEO_START( mainevt );
+	VIDEO_START( dv );
 	
 	
 	

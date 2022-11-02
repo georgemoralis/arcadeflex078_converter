@@ -18,4 +18,6 @@
 
 WRITE32_HANDLER( namconb1_videoram_w );
 
+VIDEO_START( namconb1 );
 
+VIDEO_START( namconb2 );

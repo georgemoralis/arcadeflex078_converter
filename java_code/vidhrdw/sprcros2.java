@@ -118,7 +118,7 @@ public class sprcros2
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_sprcros2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sprcros2 )
 	{
 		sprcros2_bgtilemap = tilemap_create( get_sprcros2_bgtile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		sprcros2_fgtilemap = tilemap_create( get_sprcros2_fgtile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,32,32 );
@@ -129,7 +129,7 @@ public class sprcros2
 		tilemap_set_transparent_pen(sprcros2_fgtilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	static void sprcros2_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{

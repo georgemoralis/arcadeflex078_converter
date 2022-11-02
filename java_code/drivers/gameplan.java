@@ -19,6 +19,7 @@ package arcadeflex.v078.drivers;
 public class gameplan
 {
 	
+	VIDEO_START( gameplan );
 	
 	static int gameplan_current_port;
 	

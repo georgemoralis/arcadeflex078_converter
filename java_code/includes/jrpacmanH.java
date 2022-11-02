@@ -7,5 +7,6 @@
 /*----------- defined in vidhrdw/jrpacman.c -----------*/
 
 
+VIDEO_START( jrpacman );
 
 

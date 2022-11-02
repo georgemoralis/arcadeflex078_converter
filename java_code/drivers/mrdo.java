@@ -23,6 +23,7 @@ public class mrdo
 	
 	
 	
+	VIDEO_START( mrdo );
 	
 	
 	

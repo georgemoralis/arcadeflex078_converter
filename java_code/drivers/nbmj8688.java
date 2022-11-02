@@ -40,6 +40,12 @@ public class nbmj8688
 	#define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 	
 	
+	VIDEO_START( mbmj8688_8bit );
+	VIDEO_START( mbmj8688_hybrid_12bit );
+	VIDEO_START( mbmj8688_pure_12bit );
+	VIDEO_START( mbmj8688_hybrid_16bit );
+	VIDEO_START( mbmj8688_pure_16bit );
+	VIDEO_START( mbmj8688_pure_16bit_LCD );
 	
 	
 	

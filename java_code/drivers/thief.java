@@ -38,6 +38,7 @@ public class thief
 	static UINT8 thief_input_select;
 	
 	
+	VIDEO_START( thief );
 	
 	
 	public static InterruptHandlerPtr thief_interrupt = new InterruptHandlerPtr() {public void handler()

@@ -236,7 +236,7 @@ public class clshroad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_firebatl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( firebatl )
 	{
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
@@ -263,9 +263,9 @@ public class clshroad
 		tilemap_set_transparent_pen( tilemap_1,  0x0f );
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( clshroad )
 	{
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
@@ -292,7 +292,7 @@ public class clshroad
 		tilemap_set_transparent_pen( tilemap_1,  0x0f );
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

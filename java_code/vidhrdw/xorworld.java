@@ -108,7 +108,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_xorworld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( xorworld )
 	{
 		screen = tilemap_create(get_tile_info_xorworld_screen,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -116,7 +116,7 @@ public class xorworld
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/*
 		Sprite Format

@@ -58,7 +58,7 @@ public class starshp1
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_starshp1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( starshp1 )
 	{
 		UINT16 val = 0;
 	
@@ -97,7 +97,7 @@ public class starshp1
 		}
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static ReadHandlerPtr starshp1_rng_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -416,7 +416,7 @@ public class starshp1
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_starshp1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( starshp1 )
 	{
 		struct rectangle rect;
 	
@@ -455,5 +455,5 @@ public class starshp1
 		{
 			starshp1_collision_latch |= 8;
 		}
-	} };
+	}
 }

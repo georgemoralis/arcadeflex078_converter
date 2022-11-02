@@ -68,7 +68,7 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gauntlet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gauntlet )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -133,7 +133,7 @@ public class gauntlet
 		/* set up the base color for the playfield */
 		playfield_color_bank = vindctr2_screen_refresh ? 0 : 1;
 		return 0;
-	} };
+	}
 	
 	
 	

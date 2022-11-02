@@ -232,11 +232,11 @@ public class punchout
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_punchout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( punchout )
 	{
-		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size[0]);
+		memset(dirtybuffer,1,videoram_size);
 	
 		if ((dirtybuffer2 = auto_malloc(punchout_videoram2_size)) == 0)
 			return 1;
@@ -260,13 +260,13 @@ public class punchout
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_armwrest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( armwrest )
 	{
-		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size[0]);
+		memset(dirtybuffer,1,videoram_size);
 	
 		if ((dirtybuffer2 = auto_malloc(punchout_videoram2_size)) == 0)
 			return 1;
@@ -290,7 +290,7 @@ public class punchout
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

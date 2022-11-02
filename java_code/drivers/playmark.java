@@ -50,6 +50,8 @@ public class playmark
 	
 	
 	
+	VIDEO_START( bigtwin );
+	VIDEO_START( wbeachvl );
 	WRITE16_HANDLER( wbeachvl_txvideoram_w );
 	WRITE16_HANDLER( wbeachvl_fgvideoram_w );
 	WRITE16_HANDLER( wbeachvl_bgvideoram_w );

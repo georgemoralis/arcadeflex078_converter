@@ -30,6 +30,7 @@ public class matmania
 {
 	
 	
+	VIDEO_START( matmania );
 	
 	
 	

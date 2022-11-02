@@ -441,7 +441,7 @@ public class ygv608
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ygv608 )
 	{
 		memset( &ygv608, 0, sizeof(ygv608) );
 	
@@ -451,9 +451,9 @@ public class ygv608
 		namcond1_gfxbank = 0;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_STOP( ygv608 )
 	{
 		tilemap_A = NULL;
 		tilemap_B = NULL;
@@ -461,7 +461,7 @@ public class ygv608
 		if (work_bitmap != 0)
 			bitmap_free( work_bitmap );
 	#endif
-	} };
+	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

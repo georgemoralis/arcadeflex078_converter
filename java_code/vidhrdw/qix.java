@@ -37,7 +37,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( qix )
 	{
 		/* allocate memory for the full video RAM */
 		videoram = auto_malloc(256 * 256);
@@ -47,7 +47,7 @@ public class qix
 		/* initialize the mask for games that don't use it */
 		vram_mask = 0xff;
 		return 0;
-	} };
+	}
 	
 	
 	

@@ -102,15 +102,15 @@ public class wgp
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_wgp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( wgp )
 	{
 		return (wgp_core_vh_start(0,0,32,16));
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_wgp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( wgp2 )
 	{
 		return (wgp_core_vh_start(4,2,32,16));
-	} };
+	}
 	
 	
 	/******************************************************************

@@ -22,7 +22,7 @@ public class missile
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( missile )
 	{
 		/* force video ram to be $0000-$FFFF even though only $1900-$FFFF is used */
 		if ((missile_videoram = auto_malloc (256 * 256)) == 0)
@@ -33,7 +33,7 @@ public class missile
 	
 		memset (missile_videoram, 0, 256 * 256);
 		return 0;
-	} };
+	}
 	
 	
 	

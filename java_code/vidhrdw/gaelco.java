@@ -90,7 +90,7 @@ public class gaelco
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bigkarnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bigkarnk )
 	{
 		int i;
 	
@@ -111,9 +111,9 @@ public class gaelco
 		}
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_maniacsq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( maniacsq )
 	{
 		int i;
 	
@@ -134,7 +134,7 @@ public class gaelco
 		}
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

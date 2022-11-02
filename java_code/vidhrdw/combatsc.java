@@ -227,7 +227,7 @@ public class combatsc
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( combasc )
 	{
 		combasc_vreg = -1;
 	
@@ -252,9 +252,9 @@ public class combatsc
 		}
 	
 		return 1;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( combascb )
 	{
 		combasc_vreg = -1;
 	
@@ -280,7 +280,7 @@ public class combatsc
 		}
 	
 		return 1;
-	} };
+	}
 	
 	/***************************************************************************
 	

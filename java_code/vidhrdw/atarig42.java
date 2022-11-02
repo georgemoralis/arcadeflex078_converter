@@ -96,7 +96,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarig42  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( atarig42 )
 	{
 		static const struct atarirle_desc modesc =
 		{
@@ -149,7 +149,7 @@ public class atarig42
 		playfield_xscroll = 0;
 		playfield_yscroll = 0;
 		return 0;
-	} };
+	}
 	
 	
 	

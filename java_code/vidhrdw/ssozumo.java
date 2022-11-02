@@ -150,7 +150,7 @@ public class ssozumo
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ssozumo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ssozumo )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_x, 
 			TILEMAP_OPAQUE, 16, 16, 16, 32);
@@ -167,7 +167,7 @@ public class ssozumo
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	static void ssozumo_draw_sprites( struct mame_bitmap *bitmap )
 	{

@@ -496,7 +496,7 @@ public class twin16
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( twin16 )
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows_flip_y,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -507,9 +507,9 @@ public class twin16
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_fround  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( fround )
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -520,9 +520,9 @@ public class twin16
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( twin16 )
 	{
 		if( twin16_spriteram_process_enable() && need_process_spriteram )
 			twin16_spriteram_process();
@@ -530,7 +530,7 @@ public class twin16
 		need_process_spriteram = 1;
 	
 		buffer_spriteram16_w(0,0,0);
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

@@ -20,7 +20,7 @@ public class superchs
 	};
 	static struct tempsprite *spritelist;
 	
-	public static VideoUpdateHandlerPtr video_update_superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( superchs )
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
 		if (spritelist == 0)
@@ -30,7 +30,7 @@ public class superchs
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/************************************************************
 				SPRITE DRAW ROUTINES

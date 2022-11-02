@@ -54,7 +54,7 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_scontra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( scontra )
 	{
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
@@ -67,7 +67,7 @@ public class thunderx
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

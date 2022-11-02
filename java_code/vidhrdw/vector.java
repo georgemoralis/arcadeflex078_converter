@@ -186,7 +186,7 @@ public class vector
 	 * Initializes vector game video emulation
 	 */
 	
-	public static VideoUpdateHandlerPtr video_update_vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vector )
 	{
 		int i;
 	
@@ -244,7 +244,7 @@ public class vector
 		vector_set_gamma (gamma_correction);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/*

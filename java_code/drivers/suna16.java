@@ -35,6 +35,7 @@ public class suna16
 	READ16_HANDLER ( suna16_paletteram16_r );
 	WRITE16_HANDLER( suna16_paletteram16_w );
 	
+	VIDEO_START( suna16 );
 	
 	
 	/***************************************************************************

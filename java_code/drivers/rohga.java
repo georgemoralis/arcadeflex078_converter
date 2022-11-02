@@ -24,6 +24,9 @@ package arcadeflex.v078.drivers;
 public class rohga
 {
 	
+	VIDEO_START( rohga );
+	VIDEO_START( wizdfire );
+	VIDEO_START( nitrobal );
 	
 	static READ16_HANDLER( rohga_dip3_r ) { return readinputport(3); }
 	static READ16_HANDLER( nitrobal_control_r ) { return readinputport(3); }

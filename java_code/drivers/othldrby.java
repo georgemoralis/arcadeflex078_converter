@@ -30,6 +30,8 @@ public class othldrby
 	WRITE16_HANDLER( othldrby_vreg_addr_w );
 	WRITE16_HANDLER( othldrby_vreg_w );
 	
+	VIDEO_START( othldrby );
+	VIDEO_EOF( othldrby );
 	
 	
 	

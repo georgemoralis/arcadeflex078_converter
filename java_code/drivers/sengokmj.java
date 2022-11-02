@@ -81,6 +81,7 @@ public class sengokmj
 	
 	static UINT8 sengokumj_mux_data;
 	
+	VIDEO_START( sengokmj );
 	
 	/*Multiplexer device for the mahjong panel*/
 	public static ReadHandlerPtr mahjong_panel_0_r  = new ReadHandlerPtr() { public int handler(int offset)

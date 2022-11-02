@@ -147,7 +147,7 @@ public class zac2650
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tinvader )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 24, 24, 32, 32);
@@ -162,7 +162,7 @@ public class zac2650
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	static void tinvader_draw_sprites( struct mame_bitmap *bitmap )
 	{

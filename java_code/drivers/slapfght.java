@@ -194,6 +194,8 @@ public class slapfght
 {
 	
 	/* VIDHRDW */
+	VIDEO_START( slapfight );
+	VIDEO_START( perfrman );
 	
 	/* MACHINE */
 	MACHINE_INIT( slapfight );
@@ -794,10 +796,10 @@ public class slapfght
 		{ 0, 0 }
 	};
 	
-	static public static VideoUpdateHandlerPtr video_update_perfrman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static VIDEO_EOF( perfrman )
 	{
 		buffer_spriteram_w(0,0);
-	} };
+	}
 	
 	static MACHINE_DRIVER_START( perfrman )
 	

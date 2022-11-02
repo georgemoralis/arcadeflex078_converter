@@ -21,6 +21,7 @@ package arcadeflex.v078.drivers;
 public class madmotor
 {
 	
+	VIDEO_START( madmotor );
 	
 	READ16_HANDLER( madmotor_pf1_rowscroll_r );
 	WRITE16_HANDLER( madmotor_pf1_rowscroll_w );

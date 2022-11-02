@@ -58,7 +58,7 @@ public class crimfght
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_crimfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( crimfght )
 	{
 		paletteram = auto_malloc(0x400);
 		if (paletteram == 0) return 1;
@@ -73,7 +73,7 @@ public class crimfght
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

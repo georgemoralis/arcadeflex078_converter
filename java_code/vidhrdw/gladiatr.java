@@ -85,7 +85,8 @@ public class gladiatr
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	VIDEO_START( gladiatr );
+	VIDEO_START( gladiatr ){
 		sprite_bank = 2;
 	
 		dirtybuffer = auto_malloc(64*32);
@@ -96,7 +97,7 @@ public class gladiatr
 			return 1;
 		memset(dirtybuffer,1,64*32);
 		return 0;
-	} };
+	}
 	
 	
 	static void render_background( struct mame_bitmap *bitmap );

@@ -19,6 +19,7 @@ public class rollerg
 	static MACHINE_INIT( rollerg );
 	static void rollerg_banking( int lines );
 	
+	VIDEO_START( rollerg );
 	
 	
 	

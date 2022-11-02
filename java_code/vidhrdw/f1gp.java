@@ -57,7 +57,7 @@ public class f1gp
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_f1gp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( f1gp )
 	{
 		roz_tilemap = tilemap_create(f1gp_get_roz_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,64);
 		fg_tilemap =  tilemap_create(get_fg_tile_info,      tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -77,9 +77,9 @@ public class f1gp
 		zoomdata = (data16_t *)memory_region(REGION_GFX4);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_f1gp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( f1gp2 )
 	{
 		roz_tilemap = tilemap_create(f1gp2_get_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		fg_tilemap =  tilemap_create(get_fg_tile_info,       tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -103,7 +103,7 @@ public class f1gp
 		zoomdata = (data16_t *)memory_region(REGION_GFX4);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

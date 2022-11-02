@@ -120,7 +120,7 @@ public class system1
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( system1 )
 	{
 		if ((sprite_onscreen_map = auto_malloc(256*256)) == 0)
 			return 1;
@@ -136,7 +136,7 @@ public class system1
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr system1_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

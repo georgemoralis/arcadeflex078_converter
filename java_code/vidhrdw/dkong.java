@@ -165,7 +165,7 @@ public class dkong
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_dkong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dkong )
 	{
 		gfx_bank = 0;
 		palette_bank = 0;
@@ -177,7 +177,7 @@ public class dkong
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr dkongjr_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)

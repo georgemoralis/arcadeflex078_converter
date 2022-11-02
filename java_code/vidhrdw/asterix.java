@@ -53,7 +53,7 @@ public class asterix
 	 	{{-73-112, 0 }, {-73-112, 0}, {-73-112, 0}, {-73-112, 0}}
 	};
 	
-	public static VideoUpdateHandlerPtr video_update_asterix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( asterix )
 	{
 		K053251_vh_start();
 	
@@ -61,7 +61,7 @@ public class asterix
 		if (K053245_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER, asterix_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
 	/* useful function to sort the three tile layers by priority order */
 	static void sortlayers(int *layer,int *pri)

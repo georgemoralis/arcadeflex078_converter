@@ -55,6 +55,8 @@ public class bionicc
 	WRITE16_HANDLER( bionicc_gfxctrl_w );
 	
 	
+	VIDEO_START( bionicc );
+	VIDEO_EOF( bionicc );
 	
 	void bionicc_readinputs(void);
 	void bionicc_sound_cmd(int data);

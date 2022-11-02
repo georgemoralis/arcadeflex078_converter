@@ -227,7 +227,7 @@ public class mcatadv
 		profiler_mark(PROFILER_END);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mcatadv )
 	{
 		mcatadv_tilemap1 = tilemap_create(get_mcatadv_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		tilemap_set_transparent_pen(mcatadv_tilemap1,0);
@@ -235,23 +235,23 @@ public class mcatadv
 		mcatadv_tilemap2 = tilemap_create(get_mcatadv_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		tilemap_set_transparent_pen(mcatadv_tilemap2,0);
 	
-		spriteram_old = auto_malloc(spriteram_size[0]);
+		spriteram_old = auto_malloc(spriteram_size);
 		vidregs_old = auto_malloc(0xf);
 	
 		if(!mcatadv_tilemap1 || !mcatadv_tilemap2 || !spriteram_old || !vidregs_old)
 			return 1;
 	
-		memset(spriteram_old,0,spriteram_size[0]);
+		memset(spriteram_old,0,spriteram_size);
 	
 		palette_bank1 = 0;
 		palette_bank2 = 0;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( mcatadv )
 	{
-		memcpy(spriteram_old,spriteram16,spriteram_size[0]);
+		memcpy(spriteram_old,spriteram16,spriteram_size);
 		memcpy(vidregs_old,mcatadv_vidregs,0xf);
-	} };
+	}
 }

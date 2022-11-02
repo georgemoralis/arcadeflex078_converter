@@ -109,7 +109,7 @@ public class mcr12
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mcr1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mcr1 )
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcr1_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
@@ -118,10 +118,10 @@ public class mcr12
 		
 		/* handle the rest */
 		return video_start_common();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mcr2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mcr2 )
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcr2_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
@@ -130,10 +130,10 @@ public class mcr12
 		
 		/* handle the rest */
 		return video_start_common();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_twotigra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( twotigra )
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(twotigra_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
@@ -142,17 +142,17 @@ public class mcr12
 		
 		/* handle the rest */
 		return video_start_common();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_journey  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( journey )
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcr2_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
 		if (bg_tilemap == 0)
 			return 1;
 		return 0;
-	} };
+	}
 	
 	
 	

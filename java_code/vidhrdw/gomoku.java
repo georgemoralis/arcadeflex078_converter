@@ -115,7 +115,7 @@ public class gomoku
 	
 	******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gomoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gomoku )
 	{
 		unsigned char *GOMOKU_BG_X = memory_region( REGION_USER1 );
 		unsigned char *GOMOKU_BG_Y = memory_region( REGION_USER2 );
@@ -154,12 +154,12 @@ public class gomoku
 				if ((bgdata & 0x01) != 0) color = 0x21;	// íÉ(î’)
 				if ((bgdata & 0x02) != 0) color = 0x20;	// çï(ògê¸)
 	
-				plot_pixel.handler(gomoku_bg_bitmap, (255 - x + 7), (255 - y - 1), color);
+				plot_pixel(gomoku_bg_bitmap, (255 - x + 7), (255 - y - 1), color);
 			}
 		}
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************
 	

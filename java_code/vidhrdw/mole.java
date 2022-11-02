@@ -43,7 +43,7 @@ public class mole
 		SET_TILE_INFO((code & 0x200) ? 1 : 0, code & 0x1ff, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_moleattack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( moleattack )
 	{
 		tile_data = (UINT16 *)auto_malloc(NUM_TILES * sizeof(UINT16));
 	
@@ -57,7 +57,7 @@ public class mole
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr moleattack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

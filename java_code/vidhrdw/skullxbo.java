@@ -48,7 +48,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_skullxbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( skullxbo )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -103,7 +103,7 @@ public class skullxbo
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

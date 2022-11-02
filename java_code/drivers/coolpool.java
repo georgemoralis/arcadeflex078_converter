@@ -53,10 +53,10 @@ public class coolpool
 	static data16_t dpyadr;
 	static int dpyadrscan;
 	
-	public static VideoUpdateHandlerPtr video_update_coolpool  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( coolpool )
 	{
 		return 0;
-	} };
+	}
 	
 	void coolpool_to_shiftreg(unsigned int address, UINT16* shiftreg)
 	{

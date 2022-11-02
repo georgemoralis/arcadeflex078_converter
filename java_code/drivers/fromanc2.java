@@ -31,6 +31,9 @@ public class fromanc2
 {
 	
 	
+	VIDEO_START( fromanc2 );
+	VIDEO_START( fromancr );
+	VIDEO_START( fromanc4 );
 	
 	READ16_HANDLER( fromanc2_paletteram_0_r );
 	READ16_HANDLER( fromanc2_paletteram_1_r );

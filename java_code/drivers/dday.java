@@ -59,6 +59,7 @@ public class dday
 {
 	
 	
+	VIDEO_START( dday );
 	
 	
 	public static Memory_ReadAddress readmem[]={

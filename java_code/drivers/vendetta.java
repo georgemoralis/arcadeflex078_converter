@@ -100,6 +100,8 @@ public class vendetta
 	static void vendetta_banking( int lines );
 	static void vendetta_video_banking( int select );
 	
+	VIDEO_START( vendetta );
+	VIDEO_START( esckids );
 	
 	
 	/***************************************************************************

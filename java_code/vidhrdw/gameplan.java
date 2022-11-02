@@ -38,7 +38,7 @@ public class gameplan
 	***************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gameplan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gameplan )
 	{
 		if (strcmp(Machine.gamedrv.name, "kaos") == 0)
 			gameplan_this_is_kaos = 1;
@@ -51,7 +51,7 @@ public class gameplan
 			gameplan_this_is_megatack = 0;
 	
 		return video_start_generic_bitmapped();
-	} };
+	}
 	
 	
 	static int port_b;

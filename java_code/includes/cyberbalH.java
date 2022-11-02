@@ -29,6 +29,8 @@ READ16_HANDLER( cyberbal_paletteram_1_r );
 WRITE16_HANDLER( cyberbal_paletteram_0_w );
 WRITE16_HANDLER( cyberbal_paletteram_1_w );
 
+VIDEO_START( cyberbal );
+VIDEO_START( cyberb2p );
 
 void cyberbal_scanline_update(int param);
 

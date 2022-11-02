@@ -138,7 +138,7 @@ public class legionna
 		SET_TILE_INFO(0,tile,color,0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_legionna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( legionna )
 	{
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -158,9 +158,9 @@ public class legionna
 		tilemap_set_transparent_pen(text_layer,15);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_cupsoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cupsoc )
 	{
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -180,7 +180,7 @@ public class legionna
 		tilemap_set_transparent_pen(text_layer,15);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/*************************************************************************

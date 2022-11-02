@@ -182,7 +182,7 @@ public class taito_b
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_taitob_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static VIDEO_START( taitob_core )
 	{
 		framebuffer[0] = auto_bitmap_alloc(512,256);
 		framebuffer[1] = auto_bitmap_alloc(512,256);
@@ -203,9 +203,9 @@ public class taito_b
 		tilemap_set_scrolldx(tx_tilemap,0,24*8);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_taitob_color_order0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( taitob_color_order0 )
 	{
 	  /*graphics are shared, only that they use different palette*/
 	  /*this is the basic layout used in: Nastar, Ashura Blaster, Hit the Ice, Rambo3, Tetris*/
@@ -220,9 +220,9 @@ public class taito_b
 	  b_tx_color_base = 0x00;		/*text      */
 	
 	  return video_start_taitob_core();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_taitob_color_order1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( taitob_color_order1 )
 	{
 	  /*and this is the reversed layout used in: Crime City, Puzzle Bobble*/
 	  b_bg_color_base = 0x00;
@@ -231,9 +231,9 @@ public class taito_b
 	  b_tx_color_base = 0xc0;
 	
 	  return video_start_taitob_core();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_taitob_color_order2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( taitob_color_order2 )
 	{
 	  /*this is used in: rambo3a, masterw, silentd, selfeena, ryujin */
 	  b_bg_color_base = 0x30;
@@ -242,10 +242,10 @@ public class taito_b
 	  b_tx_color_base = 0x00;
 	
 	  return video_start_taitob_core();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hitice  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hitice )
 	{
 	  if (video_start_taitob_color_order0() != 0)
 	    return 1;
@@ -258,7 +258,7 @@ public class taito_b
 	  pixel_init = 1;
 	
 	  return 0;
-	} };
+	}
 	
 	
 	
@@ -675,7 +675,7 @@ public class taito_b
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( taitob )
 	{
 	  if (~video_control & 0x01)
 	    fillbitmap(framebuffer[framebuffer_page],0,Machine.visible_area);
@@ -684,6 +684,6 @@ public class taito_b
 	    framebuffer_page ^= 1;
 	
 	  taitob_draw_sprites(framebuffer[framebuffer_page],Machine.visible_area);
-	} };
+	}
 	
 }

@@ -57,6 +57,7 @@ public class brkthru
 	
 	unsigned char *brkthru_nmi_enable; /* needs to be tracked down */
 	
+	VIDEO_START( brkthru );
 	
 	
 	static int nmi_enable;

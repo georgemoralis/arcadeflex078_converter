@@ -192,7 +192,7 @@ public class taitosj
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_taitosj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( taitosj )
 	{
 		int i;
 	
@@ -207,13 +207,13 @@ public class taitosj
 		if (video_start_generic.handler() != 0)
 			return 1;
 	
-		if ((dirtybuffer2 = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer2 = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer2,1,videoram_size[0]);
+		memset(dirtybuffer2,1,videoram_size);
 	
-		if ((dirtybuffer3 = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer3 = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer3,1,videoram_size[0]);
+		memset(dirtybuffer3,1,videoram_size);
 	
 		if ((sprite_plane_collbitmap1 = auto_bitmap_alloc(16,16)) == 0)
 			return 1;
@@ -236,7 +236,7 @@ public class taitosj
 		flipscreen[0] = flipscreen[1] = 0;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

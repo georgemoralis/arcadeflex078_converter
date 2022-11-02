@@ -62,6 +62,7 @@ public class sshangha
 	
 	#define SSHANGHA_HACK	0
 	
+	VIDEO_START( sshangha );
 	
 	WRITE16_HANDLER( sshangha_pf2_data_w );
 	WRITE16_HANDLER( sshangha_pf1_data_w );

@@ -43,7 +43,7 @@ public class gijoe
 		*color = (*color>>2 & 0x0f) | layer_colorbase[layer];
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gijoe )
 	{
 		int i;
 	
@@ -59,7 +59,7 @@ public class gijoe
 		AVAC_vrc = 0xffff;
 	
 		return 0;
-	} };
+	}
 	
 	/* useful function to sort the four tile layers by priority order */
 	static void sortlayers(int *layer, int *pri)

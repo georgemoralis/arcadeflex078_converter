@@ -123,7 +123,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_thedeep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( thedeep )
 	{
 		tilemap_0  = tilemap_create(get_tile_info_0,tilemap_scan_rows_back,TILEMAP_TRANSPARENT,16,16,0x20,0x20);
 		tilemap_1  = tilemap_create(get_tile_info_1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,0x20,0x20);
@@ -137,7 +137,7 @@ public class thedeep
 		tilemap_set_scroll_cols(tilemap_0, 0x20);	// column scroll for the background
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

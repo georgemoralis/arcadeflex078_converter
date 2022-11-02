@@ -7,7 +7,10 @@
 /*----------- defined in vidhrdw/pengo.c -----------*/
 
 
+VIDEO_START( pacman );
+VIDEO_START( pengo );
 
 
 
 
+VIDEO_START( s2650games );

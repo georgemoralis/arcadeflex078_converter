@@ -80,6 +80,7 @@ public class route16
 	DRIVER_INIT( route16 );
 	DRIVER_INIT( route16b );
 	DRIVER_INIT( stratvox );
+	VIDEO_START( route16 );
 	
 	public static ReadHandlerPtr routex_prot_read  = new ReadHandlerPtr() { public int handler(int offset)
 	{

@@ -420,10 +420,10 @@ public class macrossp
 	#endif
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_macrossp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( macrossp )
 	{
 		/* looks like sprites are *two* frames ahead, like nmk16 */
-		memcpy(spriteram_old2,spriteram_old,spriteram_size[0]);
-		memcpy(spriteram_old,macrossp_spriteram,spriteram_size[0]);
-	} };
+		memcpy(spriteram_old2,spriteram_old,spriteram_size);
+		memcpy(spriteram_old,macrossp_spriteram,spriteram_size);
+	}
 }

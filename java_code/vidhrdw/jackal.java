@@ -49,22 +49,22 @@ public class jackal
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_jackal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( jackal )
 	{
-		videoram_size[0] = 0x400;
+		videoram_size = 0x400;
 	
 		dirtybuffer = 0;
 		tmpbitmap = 0;
 	
-		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
 	
-		memset(dirtybuffer,1,videoram_size[0]);
+		memset(dirtybuffer,1,videoram_size);
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

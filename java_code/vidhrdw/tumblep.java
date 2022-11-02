@@ -323,7 +323,7 @@ public class tumblep
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tumblep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tumblep )
 	{
 		pf1_tilemap =     tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1_alt_tilemap = tilemap_create(get_bg1_tile_info,tumblep_scan,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -336,9 +336,9 @@ public class tumblep
 		tilemap_set_transparent_pen(pf1_alt_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_fncywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( fncywld )
 	{
 		pf1_tilemap =     tilemap_create(get_fncywld_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1_alt_tilemap = tilemap_create(get_fncywld_bg1_tile_info,tumblep_scan,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -351,7 +351,7 @@ public class tumblep
 		tilemap_set_transparent_pen(pf1_alt_tilemap,15);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	

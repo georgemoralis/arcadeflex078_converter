@@ -47,6 +47,11 @@ typedef struct
 
 /* Machine */
 
+VIDEO_START( kaneko16_sprites );
+VIDEO_START( kaneko16_1xVIEW2 );
+VIDEO_START( kaneko16_2xVIEW2 );
+VIDEO_START( berlwall );
+VIDEO_START( sandscrp_1xVIEW2 );
 
 
 
@@ -61,6 +66,7 @@ void galpani2_mcu_run(void);
 
 
 
+VIDEO_START( galpani2 );
 
 WRITE16_HANDLER( galpani2_palette_0_w );
 WRITE16_HANDLER( galpani2_palette_1_w );

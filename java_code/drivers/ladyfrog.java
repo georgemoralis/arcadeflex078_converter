@@ -55,6 +55,7 @@ package arcadeflex.v078.drivers;
 public class ladyfrog
 {
 	
+	VIDEO_START( ladyfrog );
 	
 	static int sound_nmi_enable=0,pending_nmi=0;
 	static int snd_flag;

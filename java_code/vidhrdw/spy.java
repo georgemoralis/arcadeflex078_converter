@@ -52,7 +52,7 @@ public class spy
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_spy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( spy )
 	{
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
@@ -64,7 +64,7 @@ public class spy
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

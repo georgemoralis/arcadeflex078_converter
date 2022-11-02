@@ -32,6 +32,7 @@ public class jackal
 	
 	
 	MACHINE_INIT( jackal );
+	VIDEO_START( jackal );
 	
 	
 	

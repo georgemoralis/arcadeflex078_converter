@@ -175,7 +175,7 @@ public class psikyo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( psikyo )
 	{
 		/* The Hardware is Capable of Changing the Dimensions of the Tilemaps, its safer to create
 		   the various sized tilemaps now as opposed to later */
@@ -261,7 +261,7 @@ public class psikyo
 			return 0;
 		}
 		else return 1;
-	} };
+	}
 	
 	
 	
@@ -574,9 +574,9 @@ public class psikyo
 	
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( psikyo )
 	{
 		memcpy(spritebuf2, spritebuf1, 0x2000);
 		memcpy(spritebuf1, spriteram32, 0x2000);
-	} };
+	}
 }

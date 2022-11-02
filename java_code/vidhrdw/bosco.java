@@ -133,7 +133,7 @@ public class bosco
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_bosco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bosco )
 	{
 		int generator;
 		int x,y;
@@ -142,9 +142,9 @@ public class bosco
 		if (video_start_generic.handler() != 0)
 			return 1;
 	
-		if ((dirtybuffer2 = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer2 = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer2,1,videoram_size[0]);
+		memset(dirtybuffer2,1,videoram_size);
 	
 		if ((tmpbitmap1 = auto_bitmap_alloc(32*8,32*8)) == 0)
 			return 1;
@@ -194,7 +194,7 @@ public class bosco
 		displacement = 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr bosco_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)

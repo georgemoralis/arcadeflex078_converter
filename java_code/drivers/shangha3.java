@@ -33,6 +33,7 @@ public class shangha3
 	WRITE16_HANDLER( shangha3_flipscreen_w );
 	WRITE16_HANDLER( shangha3_gfxlist_addr_w );
 	WRITE16_HANDLER( shangha3_blitter_go_w );
+	VIDEO_START( shangha3 );
 	
 	
 	

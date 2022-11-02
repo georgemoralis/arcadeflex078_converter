@@ -12,6 +12,8 @@ public class genericH
 	
 	
 	
+	VIDEO_START( generic );
+	VIDEO_START( generic_bitmapped );
 	void video_stop_generic(void);
 	void video_stop_generic_bitmapped(void);
 	

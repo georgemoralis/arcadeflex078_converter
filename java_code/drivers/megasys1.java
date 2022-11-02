@@ -142,6 +142,7 @@ public class megasys1
 	
 	/* Functions defined in vidhrdw: */
 	
+	VIDEO_START( megasys1 );
 	
 	READ16_HANDLER( megasys1_vregs_C_r );
 	

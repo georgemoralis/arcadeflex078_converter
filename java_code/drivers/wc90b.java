@@ -85,6 +85,7 @@ public class wc90b
 	
 	
 	
+	VIDEO_START( wc90b );
 	
 	
 	

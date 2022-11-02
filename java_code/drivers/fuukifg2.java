@@ -55,6 +55,7 @@ public class fuukifg2
 	WRITE16_HANDLER( fuuki16_vram_2_w );
 	WRITE16_HANDLER( fuuki16_vram_3_w );
 	
+	VIDEO_START( fuuki16 );
 	
 	/***************************************************************************
 	

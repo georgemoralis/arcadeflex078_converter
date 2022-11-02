@@ -44,6 +44,7 @@ public class zaccaria
 	
 	
 	
+	VIDEO_START( zaccaria );
 	
 	
 	static int dsw;

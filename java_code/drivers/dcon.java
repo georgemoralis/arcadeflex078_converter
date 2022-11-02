@@ -29,6 +29,7 @@ public class dcon
 	WRITE16_HANDLER( dcon_control_w );
 	READ16_HANDLER( dcon_control_r );
 	
+	VIDEO_START( dcon );
 	
 	
 	/***************************************************************************/

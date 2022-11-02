@@ -47,7 +47,7 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( battlnts )
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 0;
@@ -59,7 +59,7 @@ public class battlnts
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

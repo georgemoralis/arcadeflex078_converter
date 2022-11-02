@@ -150,7 +150,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( afega )
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, afega_tilemap_scan_pages,
 									TILEMAP_OPAQUE,
@@ -168,7 +168,7 @@ public class afega
 		tilemap_set_transparent_pen(tilemap_0,0x0);
 		tilemap_set_transparent_pen(tilemap_1,0xf);
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

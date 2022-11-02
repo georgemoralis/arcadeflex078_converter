@@ -35,4 +35,5 @@ public class midvunitH
 	WRITE32_HANDLER( midvunit_textureram_w );
 	READ32_HANDLER( midvunit_textureram_r );
 	
+	VIDEO_START( midvunit );
 	}

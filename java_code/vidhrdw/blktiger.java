@@ -75,7 +75,7 @@ public class blktiger
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( blktiger )
 	{
 		scroll_ram = auto_malloc(BGRAM_BANK_SIZE * BGRAM_BANKS);
 	
@@ -98,7 +98,7 @@ public class blktiger
 		tilemap_set_transmask(bg_tilemap4x8,3,0xf000,0x8fff);
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -251,8 +251,8 @@ public class blktiger
 			tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( blktiger )
 	{
 		buffer_spriteram_w(0,0);
-	} };
+	}
 }

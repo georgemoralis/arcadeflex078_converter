@@ -7,5 +7,6 @@
 /*----------- defined in vidhrdw/cloud9.c -----------*/
 
 
+VIDEO_START( cloud9 );
 
 

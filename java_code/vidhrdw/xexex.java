@@ -38,7 +38,7 @@ public class xexex
 		*color = layer_colorbase[layer] | (*color>>2 & 0x0f);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( xexex )
 	{
 		int region = REGION_GFX3;
 	
@@ -64,7 +64,7 @@ public class xexex
 		K054338_invert_alpha(0);
 	
 		return 0;
-	} };
+	}
 	
 	/* useful function to sort the four tile layers by priority order */
 	/* suboptimal, but for such a size who cares ? */

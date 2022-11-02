@@ -132,7 +132,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarisy1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( atarisy1 )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -216,7 +216,7 @@ public class atarisy1
 		int3off_timer = timer_alloc(int3off_callback);
 		yscroll_reset_timer = timer_alloc(reset_yscroll_callback);
 		return 0;
-	} };
+	}
 	
 	
 	

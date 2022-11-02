@@ -813,7 +813,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	VIDEO_START( system16 ){
 		static int bank_default[16] = {
 			0x0,0x1,0x2,0x3,
 			0x4,0x5,0x6,0x7,
@@ -921,9 +921,9 @@ public class system16
 			return 0;
 		}
 		return 1;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	VIDEO_START( hangon ){
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
@@ -938,9 +938,9 @@ public class system16
 		sys16_bg_priority_value=0x1800;
 		sys16_fg_priority_value=0x2000;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	VIDEO_START( system18 ){
 		sys16_bg1_trans=1;
 	
 		background2 = tilemap_create(
@@ -985,7 +985,7 @@ public class system16
 			}
 		}
 		return 1;
-	} };
+	}
 	
 	/***************************************************************************/
 	
@@ -1559,7 +1559,7 @@ public class system16
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	VIDEO_START( outrun ){
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
@@ -1574,7 +1574,7 @@ public class system16
 		sys16_bg_priority_value=0x1800;
 		sys16_fg_priority_value=0x2000;
 		return 0;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (sys16_refreshenable != 0){
@@ -1641,7 +1641,7 @@ public class system16
 		return result;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_aburner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	VIDEO_START( aburner ){
 		int ret;
 	
 		aburner_backdrop = aburner_unpack_backdrop( memory_region(REGION_GFX3) );
@@ -1678,7 +1678,7 @@ public class system16
 			return 0;
 		}
 		return 1;
-	} };
+	}
 	
 	static void aburner_draw_road( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		/*

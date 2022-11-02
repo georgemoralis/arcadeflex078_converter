@@ -351,6 +351,8 @@ package arcadeflex.v078.drivers;
 public class wgp
 {
 	
+	VIDEO_START( wgp );
+	VIDEO_START( wgp2 );
 	
 	
 	READ16_HANDLER ( wgp_pivram_word_r );

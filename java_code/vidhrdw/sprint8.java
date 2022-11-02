@@ -87,7 +87,7 @@ public class sprint8
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sprint8 )
 	{
 		helper1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		helper2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
@@ -117,7 +117,7 @@ public class sprint8
 		tilemap_set_scrolly(tilemap2, 0, +24);
 	
 		return 0;
-	} };
+	}
 	
 	
 	static void draw_sprites(struct mame_bitmap* bitmap, const struct rectangle* rect)
@@ -154,7 +154,7 @@ public class sprint8
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( sprint8 )
 	{
 		int x;
 		int y;
@@ -180,5 +180,5 @@ public class sprint8
 				}
 			}
 		}
-	} };
+	}
 }

@@ -16,6 +16,7 @@ public class stadhero
 {
 	
 	/* Video emulation definitions */
+	VIDEO_START( stadhero );
 	
 	
 	WRITE16_HANDLER( stadhero_pf1_data_w );

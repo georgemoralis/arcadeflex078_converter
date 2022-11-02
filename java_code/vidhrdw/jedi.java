@@ -36,13 +36,13 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( jedi )
 	{
 		/* allocate dirty buffer for the foreground characters */
-		fgdirty = dirtybuffer = auto_malloc(videoram_size[0]);
+		fgdirty = dirtybuffer = auto_malloc(videoram_size);
 		if (fgdirty == 0)
 			return 1;
-		memset(fgdirty, 1, videoram_size[0]);
+		memset(fgdirty, 1, videoram_size);
 	
 		/* allocate an 8bpp bitmap for the raw foreground characters */
 		fgbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
@@ -74,7 +74,7 @@ public class jedi
 		/* reserve color 1024 for black (disabled display) */
 		palette_set_color(1024, 0, 0, 0);
 		return 0;
-	} };
+	}
 	
 	
 	

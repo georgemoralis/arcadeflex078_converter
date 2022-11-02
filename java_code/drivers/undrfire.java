@@ -126,6 +126,7 @@ package arcadeflex.v078.drivers;
 public class undrfire
 {
 	
+	VIDEO_START( undrfire );
 	
 	/* F3 sound */
 	READ16_HANDLER(f3_68000_share_r);

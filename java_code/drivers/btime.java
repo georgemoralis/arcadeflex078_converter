@@ -59,6 +59,8 @@ public class btime
 	
 	MACHINE_INIT( lnc );
 	
+	VIDEO_START( btime );
+	VIDEO_START( bnj );
 	
 	
 	

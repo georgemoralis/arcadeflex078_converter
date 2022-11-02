@@ -297,6 +297,8 @@ public class wecleman
 	WRITE16_HANDLER( wecleman_pageram_w );
 	READ16_HANDLER( wecleman_txtram_r );
 	WRITE16_HANDLER( wecleman_txtram_w );
+	VIDEO_START( wecleman );
+	VIDEO_START( hotchase );
 	
 	
 	/***************************************************************************

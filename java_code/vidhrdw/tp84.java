@@ -227,7 +227,7 @@ public class tp84
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tp84  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tp84 )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -243,13 +243,13 @@ public class tp84
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
-		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
+		sprite_mux_buffer = auto_malloc(256 * spriteram_size);
 	
 		if (sprite_mux_buffer == 0)
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	static void tp84_draw_sprites(struct mame_bitmap *bitmap)
 	{

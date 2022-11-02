@@ -38,6 +38,7 @@ public class malzak
 	
 	
 	// in vidhrdw/malzak.c
+	VIDEO_START( malzak );
 	
 	public static ReadHandlerPtr malzak_s2636_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

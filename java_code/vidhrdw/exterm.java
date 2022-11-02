@@ -83,10 +83,10 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( exterm )
 	{
 		return 0;
-	} };
+	}
 	
 	
 	

@@ -149,6 +149,8 @@ public class wardner
 	
 	/******************** Video stuff **********************/
 	
+	VIDEO_START( toaplan0 );
+	VIDEO_EOF( toaplan0 );
 	
 	
 	

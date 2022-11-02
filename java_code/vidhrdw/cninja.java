@@ -44,7 +44,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cninja )
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -54,9 +54,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_stoneage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( stoneage )
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -71,9 +71,9 @@ public class cninja
 		tilemap_set_scrolldx(deco16_get_tilemap(0,1),2,2);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( edrandy )
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -83,9 +83,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( robocop2 )
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -96,9 +96,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mutantf )
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -115,14 +115,14 @@ public class cninja
 		alpha_set_level(0x80);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( cninja )
 	{
 		deco16_raster_display_position=0;
-	} };
+	}
 	
 	static void raster_pf3_draw(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int flags, int pri)
 	{

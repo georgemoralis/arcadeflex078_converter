@@ -58,6 +58,7 @@ package arcadeflex.v078.drivers;
 public class othunder
 {
 	
+	VIDEO_START( othunder );
 	
 	static data16_t eep_latch = 0;
 	

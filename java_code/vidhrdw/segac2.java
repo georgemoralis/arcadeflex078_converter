@@ -198,7 +198,7 @@ public class segac2
 	};
 	#endif
 	
-	public static VideoUpdateHandlerPtr video_update_segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( segac2 )
 	{
 		static const UINT8 vdp_init[24] =
 		{
@@ -307,9 +307,9 @@ public class segac2
 	
 		return 0;
 	
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_puckpkmn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( puckpkmn )
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -322,11 +322,11 @@ public class segac2
 		scanbase = 0;
 	
 		return 0;
-	} };
+	}
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( megatech )
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -342,9 +342,9 @@ public class segac2
 		scanbase = 192;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( megaplay )
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -360,7 +360,7 @@ public class segac2
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************
 		VBLANK routines
@@ -381,7 +381,7 @@ public class segac2
 	
 	
 	/* end-of-frame callback to mark the start of VBLANK */
-	public static VideoUpdateHandlerPtr video_update_segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( segac2 )
 	{
 		/* set VBLANK flag */
 		internal_vblank = 1;
@@ -398,7 +398,7 @@ public class segac2
 		}
 	#endif
 	
-	} };
+	}
 	
 	
 	

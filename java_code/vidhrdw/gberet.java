@@ -112,7 +112,7 @@ public class gberet
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gberet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gberet )
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,64,32);
 	
@@ -123,7 +123,7 @@ public class gberet
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

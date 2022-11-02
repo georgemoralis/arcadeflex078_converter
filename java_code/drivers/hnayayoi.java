@@ -42,6 +42,8 @@ public class hnayayoi
 {
 	
 	
+	VIDEO_START( hnayayoi );
+	VIDEO_START( untoucha );
 	
 	
 	

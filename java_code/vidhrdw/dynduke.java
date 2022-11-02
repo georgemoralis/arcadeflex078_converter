@@ -110,7 +110,7 @@ public class dynduke
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_dynduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dynduke )
 	{
 		bg_layer = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,      16,16,32,32);
 		fg_layer = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -122,7 +122,7 @@ public class dynduke
 		tilemap_set_transparent_pen(tx_layer,15);
 	
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr dynduke_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

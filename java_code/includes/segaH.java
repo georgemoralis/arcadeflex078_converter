@@ -22,3 +22,4 @@ void tacscan_sh_update(void);
 
 /*----------- defined in vidhrdw/sega.c -----------*/
 
+VIDEO_START( sega );

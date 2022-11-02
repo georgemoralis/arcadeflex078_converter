@@ -224,7 +224,7 @@ public class cyberbal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cyberbal )
 	{
 		int result = video_start_cyberbal_common(2);
 		if (result == 0)
@@ -234,10 +234,10 @@ public class cyberbal
 			atarimo_set_xscroll(1, 4);
 		}
 		return result;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cyberb2p  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cyberb2p )
 	{
 		int result = video_start_cyberbal_common(1);
 		if (result == 0)
@@ -246,7 +246,7 @@ public class cyberbal
 			atarimo_set_xscroll(0, 5);
 		}
 		return result;
-	} };
+	}
 	
 	
 	

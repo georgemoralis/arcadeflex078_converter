@@ -106,7 +106,7 @@ public class mazerbla
 	
 	static struct mame_bitmap * tmpbitmaps[4];
 	
-	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mazerbla )
 	{
 		tmpbitmaps[0] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 		tmpbitmaps[1] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
@@ -120,7 +120,7 @@ public class mazerbla
 		}
 	
 		return 0;
-	} };
+	}
 	
 	#if 0
 	static int dbg_info = 1;

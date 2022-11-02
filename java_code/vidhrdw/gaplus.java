@@ -256,10 +256,10 @@ public class gaplus
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gaplus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
+	VIDEO_START( gaplus ) {
 	
 		/* set up spriteram area */
-		spriteram_size[0] = 0x80;
+		spriteram_size = 0x80;
 		spriteram = &gaplus_sharedram[0x780];
 		spriteram_2 = &gaplus_sharedram[0x780+0x800];
 		spriteram_3 = &gaplus_sharedram[0x780+0x800+0x800];
@@ -267,7 +267,7 @@ public class gaplus
 		starfield_init();
 	
 		return video_start_generic.handler();
-	} };
+	}
 	
 	/***************************************************************************
 	

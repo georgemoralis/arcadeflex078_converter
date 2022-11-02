@@ -21,6 +21,7 @@ public class aliens
 	static void aliens_banking( int lines );
 	
 	
+	VIDEO_START( aliens );
 	
 	
 	static int palette_selected;

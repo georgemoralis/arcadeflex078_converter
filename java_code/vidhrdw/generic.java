@@ -59,20 +59,20 @@ public class generic
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_generic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( generic )
 	{
 		dirtybuffer = 0;
 		tmpbitmap = 0;
 	
-		if (videoram_size[0] == 0)
+		if (videoram_size == 0)
 		{
-	logerror("Error: video_start_generic.handler() called but videoram_size[0] not initialized\n");
+	logerror("Error: video_start_generic.handler() called but videoram_size not initialized\n");
 			return 1;
 		}
 	
-		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size[0]);
+		memset(dirtybuffer,1,videoram_size);
 	
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -80,16 +80,16 @@ public class generic
 		state_save_register_func_postload(video_generic_postload);
 	
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_generic_bitmapped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( generic_bitmapped )
 	{
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

@@ -54,6 +54,7 @@ public class stactics
 	/* Defined in machine/stactics.c */
 	
 	/* Defined in vidhrdw/stactics.c */
+	VIDEO_START( stactics );
 	
 	
 	

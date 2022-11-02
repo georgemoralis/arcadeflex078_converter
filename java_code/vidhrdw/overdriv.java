@@ -55,7 +55,7 @@ public class overdriv
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_overdriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( overdriv )
 	{
 		K053251_vh_start();
 	
@@ -73,7 +73,7 @@ public class overdriv
 		K051316_set_offset(1,15,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

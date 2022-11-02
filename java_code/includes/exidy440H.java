@@ -21,4 +21,6 @@ void exidy440_sh_update(void);
 
 
 
+VIDEO_START( exidy440 );
+VIDEO_EOF( exidy440 );
 

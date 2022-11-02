@@ -94,7 +94,7 @@ public class lwings
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_lwings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( lwings )
 	{
 		fg_tilemap  = tilemap_create(get_fg_tile_info,        tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg1_tilemap = tilemap_create(lwings_get_bg1_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
@@ -105,9 +105,9 @@ public class lwings
 		tilemap_set_transparent_pen(fg_tilemap,3);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_trojan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( trojan )
 	{
 		fg_tilemap  = tilemap_create(get_fg_tile_info,        tilemap_scan_rows,    TILEMAP_TRANSPARENT,8, 8,32,32);
 		bg1_tilemap = tilemap_create(trojan_get_bg1_tile_info,tilemap_scan_cols,    TILEMAP_SPLIT,     16,16,32,32);
@@ -123,14 +123,14 @@ public class lwings
 			return 0;
 		}
 		return 1; /* error */
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_avengers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avengers )
 	{
 		int result = video_start_trojan();
 		bAvengersHardware = 1;
 		return result;
-	} };
+	}
 	
 	/***************************************************************************
 	
@@ -301,8 +301,8 @@ public class lwings
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_lwings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( lwings )
 	{
 		buffer_spriteram_w(0,0);
-	} };
+	}
 }

@@ -643,7 +643,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_namcos2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( namcos2 )
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -656,7 +656,7 @@ public class namcos2
 			}
 		}
 		return -1;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_namcos2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -683,7 +683,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( finallap )
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -692,7 +692,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -712,7 +712,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( luckywld )
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -728,7 +728,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -753,7 +753,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sgunner )
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -761,7 +761,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -781,7 +781,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( metlhawk )
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -789,7 +789,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

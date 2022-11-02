@@ -176,12 +176,12 @@ public class m72
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_m72  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( m72 )
 	{
 		bg_tilemap = tilemap_create(m72_get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 		fg_tilemap = tilemap_create(m72_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 	
-		m72_spriteram = auto_malloc(spriteram_size[0]);
+		m72_spriteram = auto_malloc(spriteram_size);
 	
 		if (!fg_tilemap || !bg_tilemap || !m72_spriteram)
 			return 1;
@@ -194,21 +194,21 @@ public class m72
 		tilemap_set_transmask(bg_tilemap,1,0x00ff,0xff00);
 		tilemap_set_transmask(bg_tilemap,2,0x0001,0xfffe);
 	
-		memset(m72_spriteram,0,spriteram_size[0]);
+		memset(m72_spriteram,0,spriteram_size);
 	
 		xadjust = 0;
 	
 		register_savestate();
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_rtype2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rtype2 )
 	{
 		bg_tilemap = tilemap_create(rtype2_get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 		fg_tilemap = tilemap_create(rtype2_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 	
-		m72_spriteram = auto_malloc(spriteram_size[0]);
+		m72_spriteram = auto_malloc(spriteram_size);
 	
 		if (!fg_tilemap || !bg_tilemap || !m72_spriteram)
 			return 1;
@@ -221,16 +221,16 @@ public class m72
 		tilemap_set_transmask(bg_tilemap,1,0x00ff,0xff00);
 		tilemap_set_transmask(bg_tilemap,2,0x0001,0xfffe);
 	
-		memset(m72_spriteram,0,spriteram_size[0]);
+		memset(m72_spriteram,0,spriteram_size);
 	
 		xadjust = -4;
 	
 		register_savestate();
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_poundfor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( poundfor )
 	{
 		int res = video_start_rtype2();
 	
@@ -239,11 +239,11 @@ public class m72
 		register_savestate();
 	
 		return res;
-	} };
+	}
 	
 	
 	/* Major Title has a larger background RAM, and rowscroll */
-	public static VideoUpdateHandlerPtr video_update_majtitle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( majtitle )
 	{
 	// The tilemap can be 256x64, but seems to be used at 128x64 (scroll wraparound).
 	// The layout ramains 256x64, the right half is just not displayed.
@@ -251,7 +251,7 @@ public class m72
 		bg_tilemap = tilemap_create(rtype2_get_bg_tile_info,majtitle_scan_rows,TILEMAP_SPLIT,8,8,128,64);
 		fg_tilemap = tilemap_create(rtype2_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 	
-		m72_spriteram = auto_malloc(spriteram_size[0]);
+		m72_spriteram = auto_malloc(spriteram_size);
 	
 		if (!fg_tilemap || !bg_tilemap || !m72_spriteram)
 			return 1;
@@ -264,21 +264,21 @@ public class m72
 		tilemap_set_transmask(bg_tilemap,1,0x00ff,0xff00);
 		tilemap_set_transmask(bg_tilemap,2,0x0001,0xfffe);
 	
-		memset(m72_spriteram,0,spriteram_size[0]);
+		memset(m72_spriteram,0,spriteram_size);
 	
 		xadjust = -4;
 	
 		register_savestate();
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_hharry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hharry )
 	{
 		bg_tilemap = tilemap_create(hharry_get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 		fg_tilemap = tilemap_create(hharry_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,64);
 	
-		m72_spriteram = auto_malloc(spriteram_size[0]);
+		m72_spriteram = auto_malloc(spriteram_size);
 	
 		if (!fg_tilemap || !bg_tilemap || !m72_spriteram)
 			return 1;
@@ -291,14 +291,14 @@ public class m72
 		tilemap_set_transmask(bg_tilemap,1,0x00ff,0xff00);
 		tilemap_set_transmask(bg_tilemap,2,0x0001,0xfffe);
 	
-		memset(m72_spriteram,0,spriteram_size[0]);
+		memset(m72_spriteram,0,spriteram_size);
 	
 		xadjust = -4;
 	
 		register_savestate();
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************
@@ -718,7 +718,7 @@ public class m72
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_m72  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( m72 )
 	{
 		int i;
 	
@@ -729,5 +729,5 @@ public class m72
 			scrollx2[i] = scrollx2[255];
 			scrolly2[i] = scrolly2[255];
 		}
-	} };
+	}
 }

@@ -94,7 +94,7 @@ public class wc90
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_wc90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( wc90 )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -107,9 +107,9 @@ public class wc90
 		tilemap_set_transparent_pen(tx_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_wc90t  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( wc90t )
 	{
 		bg_tilemap = tilemap_create(track_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,32);
 		fg_tilemap = tilemap_create(track_get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -122,7 +122,7 @@ public class wc90
 		tilemap_set_transparent_pen(tx_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

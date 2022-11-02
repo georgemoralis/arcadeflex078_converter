@@ -149,7 +149,7 @@ public class cischeat
 	**************************************************************************/
 	
 	/* 32 colour codes for the tiles */
-	public static VideoUpdateHandlerPtr video_update_cischeat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cischeat )
 	{
 		if (video_start_megasys1() != 0)	return 1;
 	
@@ -158,26 +158,26 @@ public class cischeat
 		prepare_shadows();
 	
 	 	return 0;
-	} };
+	}
 	
 	/**************************************************************************
 								F1 GrandPrix Star
 	**************************************************************************/
 	
 	/* 16 colour codes for the tiles */
-	public static VideoUpdateHandlerPtr video_update_f1gpstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( f1gpstar )
 	{
 		if (video_start_cischeat() != 0)	return 1;
 	
 	 	megasys1_bits_per_color_code = 4;
 	
 	 	return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_bigrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bigrun )
 	{
 		return video_start_f1gpstar();
-	} };
+	}
 	
 	
 	

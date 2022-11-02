@@ -26,6 +26,7 @@ package arcadeflex.v078.drivers;
 public class goindol
 {
 	
+	VIDEO_START( goindol );
 	
 	
 	

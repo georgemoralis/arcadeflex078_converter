@@ -26,10 +26,13 @@ void astrob_speech_sh_update(void);
 
 
 
+VIDEO_START( segar );
 
 
+VIDEO_START( monsterb );
 
 
+VIDEO_START( spaceod );
 
 
 

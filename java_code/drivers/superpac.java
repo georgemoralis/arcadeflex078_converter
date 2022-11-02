@@ -46,6 +46,7 @@ public class superpac
 	
 	
 	
+	VIDEO_START( superpac );
 	MACHINE_INIT( superpac );
 	
 	

@@ -36,6 +36,7 @@ public class lkage
 {
 	
 	
+	VIDEO_START( lkage );
 	
 	
 	

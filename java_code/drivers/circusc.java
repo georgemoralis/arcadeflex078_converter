@@ -20,6 +20,7 @@ public class circusc
 	
 	
 	
+	VIDEO_START( circusc );
 	
 	
 	

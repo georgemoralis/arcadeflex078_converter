@@ -197,7 +197,7 @@ public class galivan
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_galivan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( galivan )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,   16,16,128,128);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -208,9 +208,9 @@ public class galivan
 		tilemap_set_transparent_pen(tx_tilemap,15);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_ninjemak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ninjemak )
 	{
 		bg_tilemap = tilemap_create(ninjemak_get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,   16,16,512,32);
 		tx_tilemap = tilemap_create(ninjemak_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -221,7 +221,7 @@ public class galivan
 		tilemap_set_transparent_pen(tx_tilemap,15);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

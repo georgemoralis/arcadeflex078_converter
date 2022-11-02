@@ -219,7 +219,7 @@ public class xevious
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_xevious  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( xevious )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -232,7 +232,7 @@ public class xevious
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

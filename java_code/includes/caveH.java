@@ -21,7 +21,12 @@ WRITE16_HANDLER( cave_vram_2_8x8_w );
 WRITE16_HANDLER( cave_vram_3_8x8_w );
 
 
+VIDEO_START( cave_1_layer );
+VIDEO_START( cave_2_layers );
+VIDEO_START( cave_3_layers );
+VIDEO_START( cave_4_layers );
 
+VIDEO_START( sailormn_3_layers );
 
 
 

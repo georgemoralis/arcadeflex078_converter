@@ -116,7 +116,7 @@ public class _1943
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_1943  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( 1943 )
 	{
 		if ((sc2bitmap = auto_bitmap_alloc(9*32,8*32)) == 0)
 			return 1;
@@ -131,7 +131,7 @@ public class _1943
 		memset (sc1map, 0xff, sizeof (sc1map));
 	
 		return 0;
-	} };
+	}
 	
 	
 	

@@ -541,7 +541,7 @@ public class taito_f3
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( f3 )
 	{
 		if (sprite_lag==2)
 		{
@@ -549,7 +549,7 @@ public class taito_f3
 			{
 				get_sprite_info(spriteram32_buffered);
 			}
-			memcpy(spriteram32_buffered,spriteram32,spriteram_size[0]);
+			memcpy(spriteram32_buffered,spriteram32,spriteram_size);
 		}
 		else if (sprite_lag==1)
 		{
@@ -558,9 +558,9 @@ public class taito_f3
 				get_sprite_info(spriteram32);
 			}
 		}
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_STOP( f3 )
 	{
 	#if DEBUG_F3
 	#define FWRITE32(pRAM,len,file)	\
@@ -606,9 +606,9 @@ public class taito_f3
 		}
 	#undef FWRITE32
 	#endif	//DEBUG_F3
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( f3 )
 	{
 		const struct F3config *pCFG=&f3_config_table[0];
 		int tile;
@@ -698,8 +698,8 @@ public class taito_f3
 		Machine.gfx[2].color_granularity=16;
 	
 		flipscreen = 0;
-		memset(spriteram32_buffered,0,spriteram_size[0]);
-		memset(spriteram32,0,spriteram_size[0]);
+		memset(spriteram32_buffered,0,spriteram_size);
+		memset(spriteram32,0,spriteram_size);
 	
 		state_save_register_UINT32("f3", 0, "vcontrol0", f3_control_0, 8);
 		state_save_register_UINT32("f3", 0, "vcontrol1", f3_control_1, 8);
@@ -791,7 +791,7 @@ public class taito_f3
 		}
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	

@@ -101,7 +101,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_midtunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( midtunit )
 	{
 		int i;
 	
@@ -126,25 +126,25 @@ public class midtunit
 	
 		midtunit_using_34020 = 0;
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_midwunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( midwunit )
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
 		return result;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_midxunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( midxunit )
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
 		midtunit_using_34020 = 1;
 		videobank_select = 1;
 		return result;
-	} };
+	}
 	
 	
 	

@@ -35,7 +35,7 @@ public class videopin
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_videopin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( videopin )
 	{
 		tilemap = tilemap_create(get_tile_info, get_memory_offset, TILEMAP_OPAQUE, 8, 8, 48, 32);
 	
@@ -45,7 +45,7 @@ public class videopin
 		}
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_videopin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

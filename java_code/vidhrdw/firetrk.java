@@ -301,7 +301,7 @@ public class firetrk
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_firetrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( firetrk )
 	{
 		helper1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		helper2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
@@ -339,7 +339,7 @@ public class firetrk
 		}
 	
 		return 0;
-	} };
+	}
 	
 	
 	static void calc_car_positions(void)
@@ -425,7 +425,7 @@ public class firetrk
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_firetrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( firetrk )
 	{
 		int i;
 	
@@ -492,5 +492,5 @@ public class firetrk
 		{
 			firetrk_set_blink(0);
 		}
-	} };
+	}
 }

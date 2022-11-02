@@ -99,10 +99,10 @@ package arcadeflex.v078.drivers;
 public class shougi
 {
 	
-	//public static VideoUpdateHandlerPtr video_update_shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	//VIDEO_START( shougi )
 	//{
 	//	generic_vh_start();
-	//} };
+	//}
 	
 	/***************************************************************************
 	

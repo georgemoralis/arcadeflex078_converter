@@ -14,4 +14,5 @@ void meadows_sh_update(void);
 
 /*----------- defined in vidhrdw/meadows.c -----------*/
 
+VIDEO_START( meadows );
 

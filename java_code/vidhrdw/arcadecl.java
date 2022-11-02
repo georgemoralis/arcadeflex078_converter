@@ -35,7 +35,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( arcadecl )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -87,7 +87,7 @@ public class arcadecl
 		atarimo_set_yscroll(0, 0x110);
 		has_mo = (Machine.gfx[0].total_elements > 10);
 		return 0;
-	} };
+	}
 	
 	
 	

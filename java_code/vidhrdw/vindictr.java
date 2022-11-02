@@ -59,7 +59,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_vindictr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vindictr )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -114,7 +114,7 @@ public class vindictr
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

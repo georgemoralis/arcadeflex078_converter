@@ -743,7 +743,7 @@ public class jaguar
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cojag )
 	{
 		if (jagobj_init() != 0)
 			return 1;
@@ -760,7 +760,7 @@ public class jaguar
 		state_save_register_UINT8 ("cojag", 0, "cpu_irq_state", &cpu_irq_state, 1);
 		state_save_register_func_postload(update_cpu_irq);
 		return 0;
-	} };
+	}
 	
 	
 	

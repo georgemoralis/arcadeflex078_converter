@@ -29,6 +29,7 @@ package arcadeflex.v078.drivers;
 public class asterix
 {
 	
+	VIDEO_START( asterix );
 	WRITE16_HANDLER( asterix_spritebank_w );
 	
 	static unsigned char cur_control2;

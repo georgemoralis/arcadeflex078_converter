@@ -116,7 +116,7 @@ public class cop01
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cop01  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cop01 )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,      8,8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -131,7 +131,7 @@ public class cop01
 		tilemap_set_transmask(bg_tilemap,1,0x0fff,0xf000); /* split type 1 has pens 0-11 transparent in front half */
 	
 		return 0;
-	} };
+	}
 	
 	
 	

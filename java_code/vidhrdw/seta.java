@@ -409,7 +409,7 @@ public class seta
 	}
 	
 	/* 2 layers */
-	public static VideoUpdateHandlerPtr video_update_seta_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( seta_2_layers )
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -444,11 +444,11 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	} };
+	}
 	
 	
 	/* 1 layer */
-	public static VideoUpdateHandlerPtr video_update_seta_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( seta_1_layer )
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -478,9 +478,9 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_twineagl_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( twineagl_1_layer )
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -510,11 +510,11 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	} };
+	}
 	
 	
 	/* NO layers, only sprites */
-	public static VideoUpdateHandlerPtr video_update_seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( seta_no_layers )
 	{
 		tilemap_0 = 0;
 		tilemap_1 = 0;
@@ -523,15 +523,15 @@ public class seta
 		find_offsets();
 		seta_samples_bank = -1;	// set the samples bank to an out of range value at start-up
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_oisipuzl_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( oisipuzl_2_layers )
 	{
 		if (video_start_seta_2_layers() != 0)
 			return 1;
 		tilemaps_flip = 1;
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

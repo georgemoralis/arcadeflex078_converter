@@ -49,6 +49,9 @@ public class suna8
 	
 	
 	
+	VIDEO_START( suna8_textdim0 );
+	VIDEO_START( suna8_textdim8 );
+	VIDEO_START( suna8_textdim12 );
 	
 	
 	/***************************************************************************

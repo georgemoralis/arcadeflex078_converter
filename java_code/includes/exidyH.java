@@ -27,6 +27,8 @@ void targ_sh_stop(void);
 
 
 
+VIDEO_START( exidy );
+VIDEO_EOF( exidy );
 
 
 

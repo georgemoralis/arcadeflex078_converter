@@ -89,7 +89,7 @@ public class raiden
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_raiden  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( raiden )
 	{
 		bg_layer = tilemap_create(get_back_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
 		fg_layer = tilemap_create(get_fore_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -103,9 +103,9 @@ public class raiden
 		tilemap_set_transparent_pen(tx_layer,15);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_raidena  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( raidena )
 	{
 		bg_layer = tilemap_create(get_back_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
 		fg_layer = tilemap_create(get_fore_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -119,7 +119,7 @@ public class raiden
 		tilemap_set_transparent_pen(tx_layer,15);
 	
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr raiden_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

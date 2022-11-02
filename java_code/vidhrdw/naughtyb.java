@@ -154,20 +154,20 @@ public class naughtyb
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( naughtyb )
 	{
 		videoreg = palreg = bankreg = 0;
 	
 		/* Naughty Boy has a virtual screen twice as large as the visible screen */
-		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer, 1, videoram_size[0]);
+		memset(dirtybuffer, 1, videoram_size);
 	
 		if ((tmpbitmap = auto_bitmap_alloc(68*8,28*8)) == 0)
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

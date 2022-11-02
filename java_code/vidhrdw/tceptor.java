@@ -444,7 +444,7 @@ public class tceptor
 		tilemap_mark_all_tiles_dirty(bg2_tilemap);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tceptor )
 	{
 		int gfx_index;
 	
@@ -501,7 +501,7 @@ public class tceptor
 		state_save_register_func_postload(mark_all_tiles_dirty);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/*******************************************************************/

@@ -404,7 +404,7 @@ public class metro
 				empty_tiles[16*16*code + i] = code ^ 0x0f;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_metro_14100  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( metro_14100 )
 	{
 		support_8bpp = 0;
 		support_16x16 = 0;
@@ -429,9 +429,9 @@ public class metro
 		tilemap_set_transparent_pen(tilemap[2],0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_metro_14220  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( metro_14220 )
 	{
 		support_8bpp = 1;
 		support_16x16 = 0;
@@ -460,9 +460,9 @@ public class metro
 		tilemap_set_scrolldx(tilemap[2], -2, 2);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_metro_14300  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( metro_14300 )
 	{
 		support_8bpp = 1;
 		support_16x16 = 1;
@@ -492,9 +492,9 @@ public class metro
 		tilemap_set_transparent_pen(tilemap_16x16[2],0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_blzntrnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( blzntrnd )
 	{
 		if (video_start_metro_14220() != 0)
 			return 1;
@@ -515,9 +515,9 @@ public class metro
 		tilemap_set_scrolldx(tilemap[2], 8, -8);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_gstrik2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gstrik2 )
 	{
 		if (video_start_metro_14220() != 0)
 			return 1;
@@ -538,7 +538,7 @@ public class metro
 		tilemap_set_scrolldx(tilemap[2], 8, -8);
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

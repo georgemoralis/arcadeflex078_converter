@@ -3,6 +3,8 @@
 
 
 /* defined in vidhrdw/psiykosh.c */
+VIDEO_START( psikyosh );
+VIDEO_EOF( psikyosh );
 
 enum { EEPROM_0=0, EEPROM_DEFAULT=1, EEPROM_DARAKU, EEPROM_S1945III, EEPROM_DRAGNBLZ, EEPROM_GNBARICH };
 

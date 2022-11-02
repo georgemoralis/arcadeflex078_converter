@@ -59,6 +59,7 @@ public class shangkid
 	
 	/* from vidhrdw/shangkid.c */
 	
+	VIDEO_START( shangkid );
 	
 	
 	/***************************************************************************************/

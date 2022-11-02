@@ -39,17 +39,17 @@ public class leprechn
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_leprechn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( leprechn )
 	{
-		videoram_size[0] = Machine.drv.screen_width * Machine.drv.screen_height;
+		videoram_size = Machine.drv.screen_width * Machine.drv.screen_height;
 	
 		/* allocate our own dirty buffer */
-		videoram = auto_malloc(videoram_size[0]);
+		videoram = auto_malloc(videoram_size);
 		if (videoram == 0)
 			return 1;
 	
 		return video_start_generic_bitmapped();
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr leprechn_graphics_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)

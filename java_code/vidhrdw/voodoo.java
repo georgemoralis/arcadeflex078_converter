@@ -881,43 +881,43 @@ public class voodoo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_voodoo_1x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( voodoo_1x4mb )
 	{
 		tmus = 1;
 		voodoo2 = 0;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_voodoo_2x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( voodoo_2x4mb )
 	{
 		tmus = 2;
 		voodoo2 = 0;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_voodoo2_1x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( voodoo2_1x4mb )
 	{
 		tmus = 1;
 		voodoo2 = 1;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_voodoo2_2x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( voodoo2_2x4mb )
 	{
 		tmus = 2;
 		voodoo2 = 1;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_voodoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_STOP( voodoo )
 	{
 	#if LOG_RENDERERS
 		int i;
@@ -934,7 +934,7 @@ public class voodoo
 				renderer_list[i][7],
 				renderer_list[i][8]);
 	#endif
-	} };
+	}
 	
 	
 	

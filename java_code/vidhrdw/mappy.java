@@ -76,35 +76,35 @@ public class mappy
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static VIDEO_START( common )
 	{
-		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset (dirtybuffer, 1, videoram_size[0]);
+		memset (dirtybuffer, 1, videoram_size);
 	
 		if ((tmpbitmap = auto_bitmap_alloc (36*8,60*8)) == 0)
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mappy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mappy )
 	{
 		special_display = 0;
 		return video_start_common();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_motos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( motos )
 	{
 		special_display = 1;
 		return video_start_common();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_todruaga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( todruaga )
 	{
 		special_display = 2;
 		return video_start_common();
-	} };
+	}
 	
 	
 	

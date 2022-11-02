@@ -104,7 +104,7 @@ public class espial
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_espial  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( espial )
 	{
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -114,9 +114,9 @@ public class espial
 		tilemap_set_scroll_cols(tilemap, 32);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_netwars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( netwars )
 	{
 		/* Net Wars has a tile map that's twice as big as Espial's */
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,64);
@@ -128,7 +128,7 @@ public class espial
 		tilemap_set_scrolldy(tilemap, 0, 0x100);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/*************************************

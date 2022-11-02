@@ -48,7 +48,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_eprom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( eprom )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -103,7 +103,7 @@ public class eprom
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

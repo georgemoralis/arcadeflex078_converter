@@ -62,7 +62,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( leland )
 	{
 		/* allocate memory */
 	    leland_video_ram = auto_malloc(VRAM_SIZE);
@@ -75,10 +75,10 @@ public class leland
 		/* reset videoram */
 	    memset(leland_video_ram, 0, VRAM_SIZE);
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ataxx )
 	{
 		/* first do the standard stuff */
 		if (video_start_leland() != 0)
@@ -92,7 +92,7 @@ public class leland
 		/* reset QRAM */
 		memset(ataxx_qram, 0, QRAM_SIZE);
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -482,14 +482,14 @@ public class leland
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( leland )
 	{
 		/* update anything remaining */
 		update_for_scanline(VIDEO_HEIGHT * 8);
 	
 		/* set a timer to go off at the top of the frame */
 		timer_set(cpu_getscanlinetime(0), 0, scanline_reset);
-	} };
+	}
 	
 	
 	

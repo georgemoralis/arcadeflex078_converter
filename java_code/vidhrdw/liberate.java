@@ -128,7 +128,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_prosoccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( prosoccr )
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -139,9 +139,9 @@ public class liberate
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_boomrang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( boomrang )
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_SPLIT,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -153,9 +153,9 @@ public class liberate
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_liberate  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( liberate )
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -166,7 +166,7 @@ public class liberate
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************/
 	

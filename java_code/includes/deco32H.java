@@ -1,5 +1,12 @@
 
+VIDEO_START( captaven );
+VIDEO_START( fghthist );
+VIDEO_START( dragngun );
+VIDEO_START( lockload );
+VIDEO_START( tattass );
 
+VIDEO_EOF( captaven );
+VIDEO_EOF( dragngun );
 
 
 

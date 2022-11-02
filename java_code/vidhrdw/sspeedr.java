@@ -258,12 +258,12 @@ public class sspeedr
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sspeedr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sspeedr )
 	{
 		toggle = 0;
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_sspeedr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -276,8 +276,8 @@ public class sspeedr
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sspeedr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( sspeedr )
 	{
 		toggle ^= 1;
-	} };
+	}
 }

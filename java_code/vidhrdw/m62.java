@@ -448,10 +448,10 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_background, 1, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_kungfum  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kungfum )
 	{
 		return m62_start( get_kungfum_bg_tile_info, 32, 0, 8, 8, 64, 32 );
-	} };
+	}
 	
 	
 	static void get_ldrun_bg_tile_info( int offs )
@@ -488,10 +488,10 @@ public class m62
 		draw_sprites( bitmap, 0x0f, 0x10, 0x10 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ldrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ldrun )
 	{
 		return m62_start( get_ldrun_bg_tile_info, 1, 1, 8, 8, 64, 32 );
-	} };
+	}
 	
 	
 	static void get_battroad_bg_tile_info( int offs )
@@ -541,11 +541,11 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_battroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( battroad )
 	{
 		return m62_start( get_battroad_bg_tile_info, 1, 1, 8, 8, 64, 32 ) ||
 			m62_textlayer( get_battroad_fg_tile_info, 1, 1, 8, 8, 32, 32 );
-	} };
+	}
 	
 	
 	/* almost identical but scrolling background, more characters, */
@@ -567,10 +567,10 @@ public class m62
 		draw_sprites( bitmap, 0x1f, 0x00, 0x00 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ldrun4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ldrun4 )
 	{
 		return m62_start( get_ldrun4_bg_tile_info, 1, 0, 8, 8, 64, 32 );
-	} };
+	}
 	
 	
 	static void get_lotlot_bg_tile_info( int offs )
@@ -610,11 +610,11 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_lotlot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( lotlot )
 	{
 		return m62_start( get_lotlot_bg_tile_info, 1, 1, 12, 10, 32, 64 ) ||
 			m62_textlayer( get_lotlot_fg_tile_info, 1, 1, 12, 10, 32, 64 );
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr kidniki_text_vscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -666,11 +666,11 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_kidniki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kidniki )
 	{
 		return m62_start( get_kidniki_bg_tile_info, 1, 0, 8, 8, 64, 32 ) ||
 			m62_textlayer( get_kidniki_fg_tile_info, 1, 1, 12, 8, 32, 64 );
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr spelunkr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -713,11 +713,11 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_spelunkr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( spelunkr )
 	{
 		return m62_start( get_spelunkr_bg_tile_info, 1, 1, 8, 8, 64, 64 ) ||
 			m62_textlayer( get_spelunkr_fg_tile_info, 1, 1, 12, 8, 32, 32 );
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr spelunk2_gfxport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -753,11 +753,11 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_spelunk2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( spelunk2 )
 	{
 		return m62_start( get_spelunk2_bg_tile_info, 1, 1, 8, 8, 64, 64 ) ||
 			m62_textlayer( get_spelunkr_fg_tile_info, 1, 1, 12, 8, 32, 32 );
-	} };
+	}
 	
 	
 	static void get_youjyudn_bg_tile_info( int offs )
@@ -799,11 +799,11 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_youjyudn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( youjyudn )
 	{
 		return m62_start( get_youjyudn_bg_tile_info, 1, 0, 8, 16, 64, 16 ) ||
 			m62_textlayer( get_youjyudn_fg_tile_info, 1, 1, 12, 8, 32, 32 );
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr horizon_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -840,8 +840,8 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_background, 1, 0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_horizon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( horizon )
 	{
 		return m62_start( get_horizon_bg_tile_info, 32, 0, 8, 8, 64, 32 );
-	} };
+	}
 }

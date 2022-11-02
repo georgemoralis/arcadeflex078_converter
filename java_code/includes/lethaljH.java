@@ -8,6 +8,7 @@
 
 READ16_HANDLER( lethalj_gun_r );
 
+VIDEO_START( lethalj );
 
 WRITE16_HANDLER( lethalj_blitter_w );
 

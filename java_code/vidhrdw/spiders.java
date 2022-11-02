@@ -27,7 +27,7 @@ public class spiders
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_spiders  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( spiders )
 	{
 		int loop;
 	
@@ -49,7 +49,7 @@ public class spiders
 		memset(screenbuffer,1,SCREENBUFFER_SIZE*sizeof(int));
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

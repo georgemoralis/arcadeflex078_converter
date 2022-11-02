@@ -19,6 +19,7 @@ package arcadeflex.v078.drivers;
 public class flstory
 {
 	
+	VIDEO_START( flstory );
 	
 	
 	

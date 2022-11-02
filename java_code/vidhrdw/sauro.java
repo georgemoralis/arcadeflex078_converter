@@ -101,7 +101,7 @@ public class sauro
 		tilemap_set_scrollx(fg_tilemap, 0, scroll);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_sauro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sauro )
 	{
 		bg_tilemap = tilemap_create(get_tile_info_bg, tilemap_scan_cols,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -118,7 +118,7 @@ public class sauro
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	static void sauro_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -180,7 +180,7 @@ public class sauro
 		spriteram.write(offset,data);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_trckydoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( trckydoc )
 	{
 		bg_tilemap = tilemap_create(get_tile_info_bg, tilemap_scan_cols,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -189,7 +189,7 @@ public class sauro
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	static void trckydoc_draw_sprites( struct mame_bitmap *bitmap )
 	{

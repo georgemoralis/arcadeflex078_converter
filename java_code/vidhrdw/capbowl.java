@@ -43,14 +43,14 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( capbowl )
 	{
 		/* initialize TMS34061 emulation */
 	    if (tms34061_start(&tms34061intf))
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

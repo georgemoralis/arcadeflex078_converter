@@ -48,6 +48,7 @@ public class djmain
 	
 	
 	
+	VIDEO_START( djmain );
 	
 	
 	static enum {

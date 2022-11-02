@@ -154,7 +154,7 @@ public class dassault
 		return ((bank>>4)&0xf)<<12;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dassault )
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -167,7 +167,7 @@ public class dassault
 		alpha_set_level(0x80);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	

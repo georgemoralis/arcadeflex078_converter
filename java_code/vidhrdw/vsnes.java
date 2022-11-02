@@ -48,15 +48,15 @@ public class vsnes
 		{ ppu_irq, ppu_irq }					/* irq */
 	};
 	
-	public static VideoUpdateHandlerPtr video_update_vsnes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vsnes )
 	{
 		return ppu2c03b_init( &ppu_interface );
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_vsdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vsdual )
 	{
 		return ppu2c03b_init( &ppu_dual_interface );
-	} };
+	}
 	
 	/***************************************************************************
 	

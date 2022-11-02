@@ -62,6 +62,9 @@ public class mappy
 	
 	
 	/* video driver data & functions */
+	VIDEO_START( mappy );
+	VIDEO_START( motos );
+	VIDEO_START( todruaga );
 	
 	/* sound driver data & functions */
 	

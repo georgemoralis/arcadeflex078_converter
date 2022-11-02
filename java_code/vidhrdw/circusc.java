@@ -112,7 +112,7 @@ public class circusc
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_circusc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( circusc )
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -122,7 +122,7 @@ public class circusc
 		tilemap_set_scroll_cols(bg_tilemap,32);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

@@ -151,7 +151,7 @@ public class supbtime
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_supbtime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( supbtime )
 	{
 		pf1_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		pf2_tilemap = tilemap_create(get_bg_tile_info,supbtime_scan,    TILEMAP_TRANSPARENT,16,16,64,32);
@@ -163,7 +163,7 @@ public class supbtime
 		tilemap_set_transparent_pen(pf2_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	

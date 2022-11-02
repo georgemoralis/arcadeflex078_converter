@@ -75,7 +75,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( victory )
 	{
 		/* allocate bitmapram */
 		rram = auto_malloc(0x4000);
@@ -111,7 +111,7 @@ public class victory
 		micro.timer = timer_alloc(NULL);
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -1185,7 +1185,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( victory )
 	{
 		int bgcollmask = (video_control & 4) ? 4 : 7;
 		int count = 0;
@@ -1219,7 +1219,7 @@ public class victory
 					timer_set(pixel_time(x, y), x | (y << 8), bgcoll_irq_callback);
 			}
 		}
-	} };
+	}
 	
 	
 	

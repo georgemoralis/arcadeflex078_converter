@@ -332,7 +332,7 @@ public class hyprduel
 				empty_tiles[16*16*code + i] = code ^ 0x0f;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_hyprduel_14220  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hyprduel_14220 )
 	{
 		alloc_empty_tiles();
 		hypr_tiletable_old = auto_malloc(hyprduel_tiletable_size);
@@ -353,7 +353,7 @@ public class hyprduel
 		tilemap_set_scrolldx(tilemap[2], 0, 0);
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

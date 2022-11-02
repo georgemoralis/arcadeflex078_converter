@@ -51,6 +51,8 @@ public class dooyong
 	
 	
 	WRITE16_HANDLER( rshark_ctrl_w );
+	VIDEO_EOF( dooyong );
+	VIDEO_EOF( rshark );
 	
 	
 	

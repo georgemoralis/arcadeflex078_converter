@@ -52,7 +52,7 @@ public class mitchell
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_pang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( pang )
 	{
 		pang_objram=NULL;
 		paletteram=NULL;
@@ -82,7 +82,7 @@ public class mitchell
 		memset(paletteram, 0, 2*Machine.drv.total_colors);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

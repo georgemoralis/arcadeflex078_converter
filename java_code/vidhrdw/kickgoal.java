@@ -59,7 +59,7 @@ public class kickgoal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_kickgoal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kickgoal )
 	{
 		kickgoal_fgtm = tilemap_create(get_kickgoal_fg_tile_info,tilemap_scan_kicksfg,TILEMAP_TRANSPARENT, 8, 16,64,64);
 			tilemap_set_transparent_pen(kickgoal_fgtm,15);
@@ -67,7 +67,7 @@ public class kickgoal
 			tilemap_set_transparent_pen(kickgoal_bgtm,15);
 		kickgoal_bg2tm = tilemap_create(get_kickgoal_bg2_tile_info,tilemap_scan_kicksbg2,TILEMAP_OPAQUE, 32, 64,64,64);
 		return 0;
-	} };
+	}
 	
 	
 	

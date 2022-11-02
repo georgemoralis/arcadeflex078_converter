@@ -7,8 +7,13 @@
 /*----------- defined in vidhrdw/segac2.c -----------*/
 
 
+VIDEO_START( puckpkmn );
+VIDEO_START( megatech );
+VIDEO_START( megaplay );
 
+VIDEO_START( segac2 );
 
+VIDEO_EOF( segac2 );
 
 
 void	segac2_enable_display(int enable);

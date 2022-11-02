@@ -124,7 +124,7 @@ public class senjyo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( senjyo )
 	{
 		bgbitmap = auto_bitmap_alloc(256,256);
 		if (bgbitmap == 0)
@@ -157,7 +157,7 @@ public class senjyo
 		set_vh_global_attribute(NULL,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

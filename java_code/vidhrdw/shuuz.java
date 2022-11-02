@@ -38,7 +38,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_shuuz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( shuuz )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -86,7 +86,7 @@ public class shuuz
 		if (!atarimo_init(0, &modesc))
 			return 1;
 		return 0;
-	} };
+	}
 	
 	
 	

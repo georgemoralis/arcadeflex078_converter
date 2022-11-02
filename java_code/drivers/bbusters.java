@@ -176,6 +176,8 @@ public class bbusters
 	#define BBUSTERS_HACK	0
 	#define MECHATT_HACK	0
 	
+	VIDEO_START( bbuster );
+	VIDEO_START( mechatt );
 	
 	static data16_t *bbuster_ram, *eprom_data;
 	
@@ -706,16 +708,16 @@ public class bbusters
 			cpu_set_irq_line(0, 2, HOLD_LINE); /* at least 6 interrupts per frame to read gun controls */
 	} };
 	
-	static public static VideoUpdateHandlerPtr video_update_bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static VIDEO_EOF( bbuster )
 	{
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
-	} };
+	}
 	
-	static public static VideoUpdateHandlerPtr video_update_mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static VIDEO_EOF( mechatt )
 	{
 		buffer_spriteram16_w(0,0,0);
-	} };
+	}
 	
 	static MACHINE_DRIVER_START( bbusters )
 	

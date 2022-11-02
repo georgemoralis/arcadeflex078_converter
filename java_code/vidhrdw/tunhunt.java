@@ -82,7 +82,7 @@ public class tunhunt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tunhunt )
 	{
 		/*
 		Motion Object RAM contains 64 lines of run-length encoded data.
@@ -108,7 +108,7 @@ public class tunhunt
 		tilemap_set_scrollx(fg_tilemap, 0, 64);
 	
 		return 0;
-	} };
+	}
 	
 	public static PaletteInitHandlerPtr palette_init_tunhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{

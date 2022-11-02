@@ -86,7 +86,7 @@ public class aztarac
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_aztarac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( aztarac )
 	{
 		int xmin = Machine.visible_area.min_x;
 		int ymin = Machine.visible_area.min_y;
@@ -97,5 +97,5 @@ public class aztarac
 		ycenter=((ymax + ymin) / 2) << 16;
 	
 		return video_start_vector();
-	} };
+	}
 }

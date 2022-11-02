@@ -86,6 +86,7 @@ public class polepos
 	
 	/* from vidhrdw */
 	
+	VIDEO_START( polepos );
 	
 	WRITE16_HANDLER( polepos_view16_w );
 	WRITE16_HANDLER( polepos_road16_w );

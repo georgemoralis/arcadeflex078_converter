@@ -27,6 +27,7 @@ public class spy
 {
 	
 	
+	VIDEO_START( spy );
 	
 	static data8_t *pmcram;
 	

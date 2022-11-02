@@ -186,6 +186,7 @@ public class gstriker
 	
 	/* in vidhrdw */
 	WRITE16_HANDLER( gsx_videoram3_w );
+	VIDEO_START( gstriker );
 	
 	
 	/*** MISC READ / WRITE HANDLERS **********************************************/

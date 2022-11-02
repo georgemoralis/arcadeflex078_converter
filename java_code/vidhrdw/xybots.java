@@ -47,7 +47,7 @@ public class xybots
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_xybots  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( xybots )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -102,7 +102,7 @@ public class xybots
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

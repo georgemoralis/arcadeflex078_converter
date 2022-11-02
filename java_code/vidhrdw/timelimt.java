@@ -77,7 +77,7 @@ public class timelimt
 		SET_TILE_INFO(0, videoram.read(tile_index), 0, 0);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_timelimt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( timelimt )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -94,7 +94,7 @@ public class timelimt
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************/
 	

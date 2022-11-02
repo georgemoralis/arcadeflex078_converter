@@ -783,7 +783,7 @@ public class deco32
 		SET_TILE_INFO(2,(tile&0x0fff)|deco32_pf4_bank,(tile >> 12)&3,flags)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( captaven )
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1a_tilemap =tilemap_create(get_pf1a_tile_info,   deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -803,9 +803,9 @@ public class deco32
 		deco32_pf4_colourbank=0;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_fghthist  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) //unused
+	VIDEO_START( fghthist ) //unused
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -824,9 +824,9 @@ public class deco32
 		deco32_pf2_colourbank=deco32_pf4_colourbank=0;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dragngun )
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -851,9 +851,9 @@ public class deco32
 		state_save_register_int("deco32", 0, "SCTRL", &dragngun_sprite_ctrl);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_lockload  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( lockload )
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -878,9 +878,9 @@ public class deco32
 		state_save_register_int("deco32", 0, "SCTRL", &dragngun_sprite_ctrl);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_tattass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tattass )
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -902,20 +902,20 @@ public class deco32
 		alpha_set_level(0x80);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( captaven )
 	{
-		memcpy(buffered_spriteram32,spriteram32,spriteram_size[0]);
+		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
 		deco32_raster_display_position=0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( dragngun )
 	{
 		deco32_raster_display_position=0;
-	} };
+	}
 	
 	#if 0
 	static void print_debug_info()

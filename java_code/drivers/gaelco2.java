@@ -48,6 +48,9 @@ public class gaelco2
 	/* from vidhrdw/gaelco2.c */
 	WRITE16_HANDLER( gaelco2_vram_w );
 	WRITE16_HANDLER( gaelco2_palette_w );
+	VIDEO_EOF( gaelco2 );
+	VIDEO_START( gaelco2 );
+	VIDEO_START( gaelco2_dual );
 	
 	
 	#define TILELAYOUT16(NUM) static struct GfxLayout tilelayout16_##NUM =				\

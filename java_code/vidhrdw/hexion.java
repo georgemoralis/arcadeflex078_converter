@@ -48,7 +48,7 @@ public class hexion
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_hexion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hexion )
 	{
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,64,32);
@@ -65,7 +65,7 @@ public class hexion
 		unkram = vram[1] + 0x2000;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

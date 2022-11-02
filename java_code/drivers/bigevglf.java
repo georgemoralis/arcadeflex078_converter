@@ -64,6 +64,7 @@ package arcadeflex.v078.drivers;
 public class bigevglf
 {
 	
+	VIDEO_START( bigevglf );
 	
 	
 	

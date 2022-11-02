@@ -76,7 +76,7 @@ public class snk
 		gfx_drawmode_table[15] = DRAWMODE_NONE;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_snk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( snk )
 	{
 		snk_blink_parity = 0;
 	
@@ -89,7 +89,7 @@ public class snk
 		memset( dirtybuffer, 0xff, MAX_VRAM_SIZE );
 	
 		return 0;
-	} };
+	}
 	
 	/**************************************************************************************/
 	
@@ -272,7 +272,7 @@ public class snk
 	
 	/************************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_sgladiat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sgladiat )
 	{
 		dirtybuffer = auto_malloc( MAX_VRAM_SIZE );
 		if (dirtybuffer == 0) return 1;
@@ -280,7 +280,7 @@ public class snk
 		if (tmpbitmap == 0) return 1;
 		memset( dirtybuffer, 0xff, MAX_VRAM_SIZE );
 		return 0;
-	} };
+	}
 	
 	static void sgladiat_draw_background( struct mame_bitmap *bitmap, int scrollx, int scrolly )
 	{

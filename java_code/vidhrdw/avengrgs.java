@@ -11,10 +11,10 @@ public class avengrgs
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_avengrgs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avengrgs )
 	{
 		return 0;
-	} };
+	}
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{

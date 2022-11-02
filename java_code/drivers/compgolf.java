@@ -103,7 +103,7 @@ public class compgolf
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_compgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( compgolf )
 	{
 		background_tilemap = tilemap_create(get_back_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 		text_tilemap = tilemap_create(get_text_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -114,7 +114,7 @@ public class compgolf
 		tilemap_set_transparent_pen(text_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	/*
 	preliminary sprite list:

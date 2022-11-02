@@ -40,6 +40,7 @@ public class kickgoal
 	WRITE16_HANDLER( kickgoal_bgram_w  );
 	WRITE16_HANDLER( kickgoal_bg2ram_w );
 	
+	VIDEO_START( kickgoal );
 	
 	
 	

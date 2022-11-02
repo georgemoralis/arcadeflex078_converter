@@ -49,7 +49,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_simpsons  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( simpsons )
 	{
 		K053251_vh_start();
 	
@@ -59,7 +59,7 @@ public class simpsons
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

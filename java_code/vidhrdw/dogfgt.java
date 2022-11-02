@@ -85,7 +85,7 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dogfgt )
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 	
@@ -97,7 +97,7 @@ public class dogfgt
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

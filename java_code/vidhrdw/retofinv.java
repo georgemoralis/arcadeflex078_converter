@@ -96,7 +96,7 @@ public class retofinv
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_retofinv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( retofinv )
 	{
 		if ((bg_dirtybuffer = auto_malloc(retofinv_videoram_size)) == 0)
 			return 1;
@@ -107,7 +107,7 @@ public class retofinv
 		memset(bg_dirtybuffer,1,retofinv_videoram_size);
 		bg_bank = 0;
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr retofinv_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

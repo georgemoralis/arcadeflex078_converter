@@ -494,7 +494,7 @@ public class galaxian
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_galaxian_plain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( galaxian_plain )
 	{
 		int ret = video_start_common(tilemap_scan_rows);
 	
@@ -502,9 +502,9 @@ public class galaxian
 		tilemap_set_scroll = tilemap_set_scrolly;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_galaxian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( galaxian )
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -513,9 +513,9 @@ public class galaxian
 		draw_bullets = galaxian_draw_bullets;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_gmgalax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gmgalax )
 	{
 		int ret = video_start_galaxian();
 	
@@ -524,9 +524,9 @@ public class galaxian
 		modify_color      = gmgalax_modify_color;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mooncrst  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mooncrst )
 	{
 		int ret = video_start_galaxian();
 	
@@ -534,9 +534,9 @@ public class galaxian
 		modify_spritecode = mooncrst_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mooncrgx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mooncrgx )
 	{
 		int ret = video_start_galaxian();
 	
@@ -544,9 +544,9 @@ public class galaxian
 		modify_spritecode = mooncrgx_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_moonqsr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( moonqsr )
 	{
 		int ret = video_start_galaxian();
 	
@@ -554,9 +554,9 @@ public class galaxian
 		modify_spritecode = moonqsr_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mshuttle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mshuttle )
 	{
 		int ret = video_start_galaxian();
 	
@@ -564,9 +564,9 @@ public class galaxian
 		modify_spritecode = mshuttle_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_pisces  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( pisces )
 	{
 		int ret = video_start_galaxian();
 	
@@ -574,18 +574,18 @@ public class galaxian
 		modify_spritecode = pisces_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_gteikob2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gteikob2 )
 	{
 		int ret = video_start_pisces();
 	
 		draw_bullets = gteikob2_draw_bullets;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_batman2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( batman2 )
 	{
 		int ret = video_start_galaxian();
 	
@@ -593,9 +593,9 @@ public class galaxian
 		modify_spritecode = batman2_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_scramble  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( scramble )
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -606,9 +606,9 @@ public class galaxian
 		draw_background = scramble_draw_background;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_sfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sfx )
 	{
 		int ret = video_start_common(tilemap_scan_cols);
 	
@@ -622,36 +622,36 @@ public class galaxian
 		draw_background = turtles_draw_background;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_turtles  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( turtles )
 	{
 		int ret = video_start_galaxian_plain();
 	
 		draw_background = turtles_draw_background;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_theend  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( theend )
 	{
 		int ret = video_start_galaxian();
 	
 		draw_bullets = theend_draw_bullets;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_darkplnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( darkplnt )
 	{
 		int ret = video_start_galaxian_plain();
 	
 		draw_bullets = darkplnt_draw_bullets;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_rescue  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rescue )
 	{
 		int ret = video_start_scramble();
 	
@@ -660,9 +660,9 @@ public class galaxian
 		draw_background = rescue_draw_background;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_minefld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( minefld )
 	{
 		int ret = video_start_scramble();
 	
@@ -671,27 +671,27 @@ public class galaxian
 		draw_background = minefld_draw_background;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_stratgyx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( stratgyx )
 	{
 		int ret = video_start_galaxian_plain();
 	
 		draw_background = stratgyx_draw_background;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_ckongs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ckongs )
 	{
 		int ret = video_start_scramble();
 	
 		modify_spritecode = mshuttle_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_calipso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( calipso )
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -702,9 +702,9 @@ public class galaxian
 		modify_spritecode = calipso_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mariner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mariner )
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -717,18 +717,18 @@ public class galaxian
 		modify_charcode = mariner_modify_charcode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_froggers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( froggers )
 	{
 		int ret = video_start_galaxian_plain();
 	
 		draw_background = frogger_draw_background;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_frogger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( frogger )
 	{
 		int ret = video_start_froggers();
 	
@@ -736,18 +736,18 @@ public class galaxian
 		modify_ypos = frogger_modify_ypos;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_froggrmc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( froggrmc )
 	{
 		int ret = video_start_froggers();
 	
 		modify_color = frogger_modify_color;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_jumpbug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( jumpbug )
 	{
 		int ret = video_start_scramble();
 	
@@ -757,9 +757,9 @@ public class galaxian
 		modify_spritecode = jumpbug_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mimonkey  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mimonkey )
 	{
 		int ret = video_start_scramble();
 	
@@ -767,9 +767,9 @@ public class galaxian
 		modify_spritecode = mimonkey_modify_spritecode;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_dkongjrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dkongjrm )
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -779,9 +779,9 @@ public class galaxian
 		spriteram2_present= 1;
 	
 		return ret;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_newsin7  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( newsin7 )
 	{
 		int ret = video_start_scramble();
 	
@@ -789,7 +789,7 @@ public class galaxian
 		spritevisibleareaflipx = &_spritevisiblearea;
 	
 		return ret;
-	} };
+	}
 	
 	
 	static void rockclim_draw_background(struct mame_bitmap *bitmap)
@@ -802,7 +802,7 @@ public class galaxian
 		if (gfxbank[2])	*code|=0x40;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_rockclim  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rockclim )
 	{
 		int ret = video_start_galaxian();
 		rockclim_tilemap = tilemap_create(rockclim_get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
@@ -810,7 +810,7 @@ public class galaxian
 		modify_charcode = mooncrst_modify_charcode;
 		modify_spritecode = rockclim_modify_spritecode;
 		return ret;
-	} };
+	}
 	
 	static void drivfrcg_get_tile_info(int tile_index)
 	{
@@ -825,7 +825,7 @@ public class galaxian
 		SET_TILE_INFO(0,code,color,0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_drivfrcg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( drivfrcg )
 	{
 		tilemap = tilemap_create(drivfrcg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -864,7 +864,7 @@ public class galaxian
 		color_mask = (Machine.gfx[0].color_granularity == 4) ? 7 : 3;
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static WriteHandlerPtr galaxian_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

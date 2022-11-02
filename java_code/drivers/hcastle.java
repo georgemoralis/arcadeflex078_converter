@@ -15,6 +15,7 @@ package arcadeflex.v078.drivers;
 public class hcastle
 {
 	
+	VIDEO_START( hcastle );
 	
 	
 	

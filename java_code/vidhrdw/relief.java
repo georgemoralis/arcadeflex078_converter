@@ -48,7 +48,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_relief  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( relief )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -106,7 +106,7 @@ public class relief
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

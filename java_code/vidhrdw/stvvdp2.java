@@ -2596,13 +2596,13 @@ public class stvvdp2
 	}
 	
 	/* maybe we should move this to vidhrdw/stv.c */
-	public static VideoUpdateHandlerPtr video_update_stv_vdp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( stv_vdp2 )
 	{
 		stv_vdp2_start();
 		stv_vdp1_start();
 	
 		return 0;
-	} };
+	}
 	
 	static void stv_vdp2_dynamic_res_change()
 	{

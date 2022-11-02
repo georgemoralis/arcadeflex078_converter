@@ -127,6 +127,7 @@ package arcadeflex.v078.drivers;
 public class dassault
 {
 	
+	VIDEO_START( dassault );
 	
 	static data16_t *dassault_ram,*shared_ram,*dassault_ram2;
 	

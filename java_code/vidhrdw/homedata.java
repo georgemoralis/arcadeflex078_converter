@@ -517,7 +517,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mrokumei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mrokumei )
 	{
 		tilemap[0][0] = tilemap_create( mrokumei_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( mrokumei_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
@@ -531,9 +531,9 @@ public class homedata
 		tilemap_set_transparent_pen(tilemap[1][1],0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( reikaids )
 	{
 		tilemap[0][0] = tilemap_create( reikaids_get_info0_0, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 32, 32 );
 		tilemap[0][1] = tilemap_create( reikaids_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 32, 32 );
@@ -558,9 +558,9 @@ public class homedata
 		tilemap_set_transparent_pen(tilemap[1][3],0xff);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_pteacher  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( pteacher )
 	{
 		tilemap[0][0] = tilemap_create( pteacher_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( pteacher_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
@@ -574,9 +574,9 @@ public class homedata
 		tilemap_set_transparent_pen(tilemap[1][1],0xff);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_lemnangl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( lemnangl )
 	{
 		tilemap[0][0] = tilemap_create( lemnangl_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( lemnangl_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
@@ -590,7 +590,7 @@ public class homedata
 		tilemap_set_transparent_pen(tilemap[1][1],0x0f);
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -919,8 +919,8 @@ public class homedata
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_homedata  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( homedata )
 	{
 		homedata_visible_page ^= 1;
-	} };
+	}
 }

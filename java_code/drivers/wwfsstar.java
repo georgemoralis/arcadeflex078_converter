@@ -70,6 +70,7 @@ public class wwfsstar
 	WRITE16_HANDLER ( wwfsstar_scrollwrite );
 	
 	/* in (vidhrdw/wwfsstar.c) */
+	VIDEO_START( wwfsstar );
 	
 	READ16_HANDLER( input_port_2_word_r_cust );
 	

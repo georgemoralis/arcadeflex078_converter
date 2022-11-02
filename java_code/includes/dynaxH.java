@@ -32,5 +32,10 @@ void sprtmtch_update_irq(void);
 
 
 
+VIDEO_START( hanamai );
+VIDEO_START( hnoridur );
+VIDEO_START( mcnpshnt );
+VIDEO_START( sprtmtch );
+VIDEO_START( mjdialq2 );
 
 

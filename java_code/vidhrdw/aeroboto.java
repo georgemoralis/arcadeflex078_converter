@@ -47,7 +47,7 @@ public class aeroboto
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( aeroboto )
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,64);
 	
@@ -75,7 +75,7 @@ public class aeroboto
 		#endif
 	
 		return 0;
-	} };
+	}
 	
 	
 	

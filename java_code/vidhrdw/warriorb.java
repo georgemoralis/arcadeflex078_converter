@@ -54,15 +54,15 @@ public class warriorb
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_darius2d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( darius2d )
 	{
 		return (warriorb_core_vh_start(4,0));
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_warriorb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( warriorb )
 	{
 		return (warriorb_core_vh_start(4,1));
-	} };
+	}
 	
 	
 	/************************************************************

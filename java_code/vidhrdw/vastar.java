@@ -77,7 +77,7 @@ public class vastar
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_vastar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vastar )
 	{
 		fg_tilemap  = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg1_tilemap = tilemap_create(get_bg1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -94,7 +94,7 @@ public class vastar
 		tilemap_set_scroll_cols(bg2_tilemap, 32);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

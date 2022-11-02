@@ -51,15 +51,15 @@ public class atarifb
 	/***************************************************************************
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( atarifb )
 	{
 		if (video_start_generic() != 0)
 			return 1;
 	
-		memset(dirtybuffer, 1, videoram_size[0]);
+		memset(dirtybuffer, 1, videoram_size);
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

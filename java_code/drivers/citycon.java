@@ -14,6 +14,7 @@ public class citycon
 	
 	
 	
+	VIDEO_START( citycon );
 	
 	
 	public static ReadHandlerPtr citycon_in_r  = new ReadHandlerPtr() { public int handler(int offset)

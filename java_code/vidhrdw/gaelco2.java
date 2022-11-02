@@ -277,7 +277,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gaelco2 )
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -299,11 +299,11 @@ public class gaelco2
 		dual_monitor = 0;
 	
 		return 0;
-	} };
+	}
 	
 	#ifdef ONE_MONITOR
 	
-	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gaelco2_dual )
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -322,11 +322,11 @@ public class gaelco2
 		dual_monitor = 1;
 	
 		return 0;
-	} };
+	}
 	
 	#else
 	
-	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gaelco2_dual )
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -348,7 +348,7 @@ public class gaelco2
 		dual_monitor = 1;
 	
 		return 0;
-	} };
+	}
 	
 	#endif
 	/***************************************************************************
@@ -620,9 +620,9 @@ public class gaelco2
 	
 	#endif
 	
-	public static VideoUpdateHandlerPtr video_update_gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( gaelco2 )
 	{
 		/* sprites are one frame ahead */
 		buffer_spriteram16_w(0, 0, 0);
-	} };
+	}
 }

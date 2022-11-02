@@ -176,7 +176,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( marvins )
 	{
 		flipscreen = -1; old_bg_color = old_fg_color = -1;
 	
@@ -249,7 +249,7 @@ public class marvins
 	
 			return 0;
 		}
-	} };
+	}
 	
 	/***************************************************************************
 	**

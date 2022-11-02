@@ -315,7 +315,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( turbo )
 	{
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
@@ -375,10 +375,10 @@ public class turbo
 	
 		/* return success */
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_subroc3d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( subroc3d )
 	{
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
@@ -423,10 +423,10 @@ public class turbo
 	
 		/* return success */
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_buckrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( buckrog )
 	{
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
@@ -481,7 +481,7 @@ public class turbo
 	
 		/* return success */
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -962,13 +962,13 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( turbo )
 	{
 		/* only do collision checking if we didn't draw */
 		if (drew_frame == 0)
 			turbo_render(NULL);
 		drew_frame = 0;
-	} };
+	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

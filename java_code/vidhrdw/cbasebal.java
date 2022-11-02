@@ -50,7 +50,7 @@ public class cbasebal
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cbasebal )
 	{
 		cbasebal_textram = auto_malloc(0x1000);
 		cbasebal_scrollram = auto_malloc(0x1000);
@@ -69,7 +69,7 @@ public class cbasebal
 	#define GFX_ELEM_COLORS(gfxn) Machine.gfx[gfxn].color_granularity
 	
 		return 0;
-	} };
+	}
 	
 	
 	

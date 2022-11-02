@@ -12,14 +12,14 @@ public class topspeed
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_topspeed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( topspeed )
 	{
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(2,1,0,8,0,0,0))
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/********************************************************************************

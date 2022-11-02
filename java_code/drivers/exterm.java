@@ -75,6 +75,7 @@ public class exterm
 	
 	
 	/* Functions in vidhrdw/exterm.c */
+	VIDEO_START( exterm );
 	
 	void exterm_to_shiftreg_master(unsigned int address, unsigned short* shiftreg);
 	void exterm_from_shiftreg_master(unsigned int address, unsigned short* shiftreg);

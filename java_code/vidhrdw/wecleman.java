@@ -1129,7 +1129,7 @@ public class wecleman
 								Initializations
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_wecleman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( wecleman )
 	{
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
@@ -1220,7 +1220,7 @@ public class wecleman
 		*(Machine.gfx[0].gfxdata + (Machine.gfx[0].char_modulo*0xaca+7)) = 0;
 	
 		return 0;
-	} };
+	}
 	
 	//  Callbacks for the K051316
 	#define ZOOMROM0_MEM_REGION REGION_GFX2
@@ -1238,7 +1238,7 @@ public class wecleman
 		*color = ((*color & 0x3f) << 1) | ((*code & 0x80) >> 7);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hotchase )
 	{
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
@@ -1277,7 +1277,7 @@ public class wecleman
 		K051316_set_offset(1, -0xB0/2, -16);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

@@ -1054,7 +1054,7 @@ public class psikyosh
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( psikyosh )
 	{
 		zoom_bitmap = 0, z_bitmap = 0;
 		if ((zoom_bitmap = auto_bitmap_alloc_depth(16*16, 16*16,8)) == 0) /* hw can do 16-tile wide sprites */
@@ -1077,7 +1077,7 @@ public class psikyosh
 		}
 	
 		return 0;
-	} };
+	}
 	
 	static void psikyosh_prelineblend( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -1157,10 +1157,10 @@ public class psikyosh
 			}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( psikyosh )
 	{
 		buffer_spriteram32_w(0,0,0);
-	} };
+	}
 	
 	/*usrintf_showmessage	("Regs %08x %08x %08x\n     %08x %08x %08x",
 		psikyosh_bgram[0x17f0/4], psikyosh_bgram[0x17f4/4], psikyosh_bgram[0x17f8/4],

@@ -24,6 +24,7 @@ public class system1H
 	
 	
 	
+	VIDEO_START( system1 );
 	void system1_define_background_memory(int Mode);
 	
 	

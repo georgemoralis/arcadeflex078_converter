@@ -32,6 +32,7 @@ public class m107
 	
 	void m107_vh_raster_partial_refresh(struct mame_bitmap *bitmap,int start_line,int end_line);
 	void m107_screenrefresh(struct mame_bitmap *bitmap,const struct rectangle *clip);
+	VIDEO_START( m107 );
 	
 	/*****************************************************************************/
 	

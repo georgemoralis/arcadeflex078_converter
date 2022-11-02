@@ -40,13 +40,13 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_meadows  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( meadows )
 	{
 		bg_tilemap = tilemap_create(get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,30);
 		if (bg_tilemap == 0)
 			return 1;
 		return 0;
-	} };
+	}
 	
 	
 	

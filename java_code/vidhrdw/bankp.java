@@ -173,7 +173,7 @@ public class bankp
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_bankp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bankp )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT_COLOR, 8, 8, 32, 32);
@@ -191,7 +191,7 @@ public class bankp
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_bankp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

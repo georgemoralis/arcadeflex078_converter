@@ -109,7 +109,7 @@ public class _40love
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( fortyl )
 	{
 		fortyl_pixram1 = auto_malloc(0x4000);
 		fortyl_pixram2 = auto_malloc(0x4000);
@@ -126,7 +126,7 @@ public class _40love
 		tilemap_set_transparent_pen(background,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

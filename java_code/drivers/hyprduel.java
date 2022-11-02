@@ -42,6 +42,7 @@ public class hyprduel
 	WRITE16_HANDLER( hyprduel_vram_1_w );
 	WRITE16_HANDLER( hyprduel_vram_2_w );
 	
+	VIDEO_START( hyprduel_14220 );
 	
 	/***************************************************************************
 									Interrupts

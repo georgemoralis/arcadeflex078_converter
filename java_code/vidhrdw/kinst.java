@@ -80,13 +80,13 @@ public class kinst
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_kinst  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kinst )
 	{
 		vram_buffer = auto_malloc(320 * 240 * sizeof(UINT16));
 		if (vram_buffer == 0)
 			return 1;
 		return 0;
-	} };
+	}
 	
 	
 	

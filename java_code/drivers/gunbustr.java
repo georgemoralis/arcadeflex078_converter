@@ -53,6 +53,7 @@ package arcadeflex.v078.drivers;
 public class gunbustr
 {
 	
+	VIDEO_START( gunbustr );
 	
 	static UINT16 coin_word;
 	static data32_t *gunbustr_ram;

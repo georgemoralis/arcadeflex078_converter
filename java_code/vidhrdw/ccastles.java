@@ -89,7 +89,7 @@ public class ccastles
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_ccastles  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ccastles )
 	{
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -101,7 +101,7 @@ public class ccastles
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

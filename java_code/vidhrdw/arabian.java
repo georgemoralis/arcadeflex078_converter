@@ -166,7 +166,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( arabian )
 	{
 		UINT8 *gfxbase = memory_region(REGION_GFX1);
 		int offs;
@@ -226,7 +226,7 @@ public class arabian
 		}
 	
 		return 0;
-	} };
+	}
 	
 	
 	

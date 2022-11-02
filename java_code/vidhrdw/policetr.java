@@ -44,7 +44,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( policetr )
 	{
 		/* the source bitmap is in ROM */
 		srcbitmap = memory_region(REGION_GFX1);
@@ -58,7 +58,7 @@ public class policetr
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

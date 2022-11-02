@@ -77,6 +77,8 @@ public class astrocde
 	
 	
 	
+	VIDEO_START( astrocde );
+	VIDEO_START( astrocde_stars );
 	
 	int  wow_sh_start(const struct MachineSound *msound);
 	void wow_sh_update(void);

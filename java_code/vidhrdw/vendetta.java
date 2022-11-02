@@ -58,7 +58,7 @@ public class vendetta
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_vendetta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vendetta )
 	{
 		K053251_vh_start();
 	
@@ -67,9 +67,9 @@ public class vendetta
 		if (K053247_vh_start(REGION_GFX2,53,6,NORMAL_PLANE_ORDER,sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_esckids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( esckids )
 	{
 	    K053251_vh_start();
 	
@@ -78,7 +78,7 @@ public class vendetta
 		if (K053247_vh_start(REGION_GFX2,101,6,NORMAL_PLANE_ORDER,sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
 	
 	

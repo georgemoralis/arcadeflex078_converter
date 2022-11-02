@@ -259,7 +259,7 @@ public class bking2
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bking2 )
 	{
 		if ((tilemap = tilemap_create(get_tile_info, get_memory_offset, 0, 8, 8, 32, 32)) == NULL)
 		{
@@ -275,7 +275,7 @@ public class bking2
 		}
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -309,7 +309,7 @@ public class bking2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( bking2 )
 	{
 		static struct rectangle rect = { 0, 7, 0, 15 };
 	
@@ -388,5 +388,5 @@ public class bking2
 				}
 			}
 		}
-	} };
+	}
 }

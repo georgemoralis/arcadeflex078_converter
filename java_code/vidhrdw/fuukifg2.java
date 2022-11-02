@@ -100,7 +100,7 @@ public class fuukifg2
 			palette_set_color(pen,0,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( fuuki16 )
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 16, 16, 64,32);
@@ -125,7 +125,7 @@ public class fuukifg2
 		Machine.gfx[2].color_granularity=16; /* 256 colour tiles with palette selectable on 16 colour boundaries */
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

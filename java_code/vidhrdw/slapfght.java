@@ -80,7 +80,7 @@ public class slapfght
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_perfrman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( perfrman )
 	{
 		pf1_tilemap = tilemap_create(get_pf_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -90,9 +90,9 @@ public class slapfght
 		tilemap_set_transparent_pen(pf1_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_slapfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( slapfight )
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -103,7 +103,7 @@ public class slapfght
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

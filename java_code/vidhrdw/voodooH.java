@@ -7,6 +7,11 @@
 **************************************************************************/
 
 
+VIDEO_START( voodoo_1x4mb );
+VIDEO_START( voodoo_2x4mb );
+VIDEO_START( voodoo2_1x4mb );
+VIDEO_START( voodoo2_2x4mb );
+VIDEO_STOP( voodoo );
 
 void voodoo_set_init_enable(data32_t newval);
 

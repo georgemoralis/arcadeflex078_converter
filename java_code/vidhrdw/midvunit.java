@@ -61,11 +61,11 @@ public class midvunit
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_midvunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( midvunit )
 	{
 		scanline_timer = timer_alloc(scanline_timer_cb);
 		return 0;
-	} };
+	}
 	
 	
 	

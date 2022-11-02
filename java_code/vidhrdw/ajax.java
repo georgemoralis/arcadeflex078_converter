@@ -74,7 +74,7 @@ public class ajax
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_ajax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( ajax )
 	{
 		layer_colorbase[0] = 64;
 		layer_colorbase[1] = 0;
@@ -89,7 +89,7 @@ public class ajax
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

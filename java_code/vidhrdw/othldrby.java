@@ -64,7 +64,7 @@ public class othldrby
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_othldrby  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( othldrby )
 	{
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -83,7 +83,7 @@ public class othldrby
 		tilemap_set_transparent_pen(tilemap[2],0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -227,10 +227,10 @@ public class othldrby
 		draw_sprites(bitmap,cliprect,3);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_othldrby  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( othldrby )
 	{
 		/* sprites need to be delayed two frames */
 	    memcpy(buf_spriteram,buf_spriteram2,SPRITERAM_SIZE*sizeof(buf_spriteram[0]));
 	    memcpy(buf_spriteram2,&vram[SPRITERAM_START],SPRITERAM_SIZE*sizeof(buf_spriteram[0]));
-	} };
+	}
 }

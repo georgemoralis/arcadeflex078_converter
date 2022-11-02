@@ -93,6 +93,7 @@ public class shadfrce
 	WRITE16_HANDLER ( shadfrce_bg1scrollx_w );
 	WRITE16_HANDLER ( shadfrce_bg0scrolly_w );
 	WRITE16_HANDLER ( shadfrce_bg1scrolly_w );
+	VIDEO_START( shadfrce );
 	VIDEO_EOF(shadfrce);
 	WRITE16_HANDLER( shadfrce_fgvideoram_w );
 	WRITE16_HANDLER( shadfrce_bg0videoram_w );

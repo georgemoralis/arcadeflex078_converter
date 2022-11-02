@@ -549,7 +549,7 @@ public class dynax
 		trigger_irq = 1;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_hanamai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hanamai )
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
@@ -564,9 +564,9 @@ public class dynax
 		layer_layout = LAYOUT_HANAMAI;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_hnoridur  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hnoridur )
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
@@ -583,16 +583,16 @@ public class dynax
 		priority_table = priority_hnoridur;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mcnpshnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mcnpshnt )
 	{
 		if (video_start_hnoridur() != 0)	return 1;
 		priority_table = priority_mcnpshnt;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_sprtmtch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sprtmtch )
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
@@ -605,9 +605,9 @@ public class dynax
 		layer_layout = LAYOUT_DRGPUNCH;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mjdialq2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mjdialq2 )
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[1][0] = auto_malloc(256*256)))	return 1;
@@ -618,7 +618,7 @@ public class dynax
 		trigger_irq = 0;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

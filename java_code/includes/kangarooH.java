@@ -19,5 +19,6 @@ public class kangarooH
 	/*----------- defined in vidhrdw/kangaroo.c -----------*/
 	
 	
+	VIDEO_START( kangaroo );
 	
 	}

@@ -428,7 +428,7 @@ public class tubep
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tubep )
 	{
 		if ((dirtybuff = auto_malloc(0x800/2)) == 0)
 			return 1;
@@ -443,7 +443,7 @@ public class tubep
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr tubep_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -653,12 +653,12 @@ public class tubep
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tubep_eof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( tubep_eof )
 	{
 		/* clear displayed frame */
 		memset(spritemap+DISP*256*256, 0x0f, 256*256);
 		DISP = DISP ^ 1;
-	} };
+	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

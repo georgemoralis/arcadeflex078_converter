@@ -60,7 +60,7 @@ public class tsamurai
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_tsamurai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tsamurai )
 	{
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		foreground = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -72,7 +72,7 @@ public class tsamurai
 		tilemap_set_transparent_pen(foreground,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************
@@ -270,12 +270,12 @@ public class tsamurai
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_vsgongf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vsgongf )
 	{
 		foreground = tilemap_create(get_vsgongf_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		if (foreground == 0) return 1;
 		return 0;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_vsgongf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

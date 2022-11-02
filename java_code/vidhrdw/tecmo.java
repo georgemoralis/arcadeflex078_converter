@@ -88,7 +88,7 @@ public class tecmo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tecmo )
 	{
 		if (tecmo_video_type == 2)	/* gemini */
 		{
@@ -113,7 +113,7 @@ public class tecmo
 		tilemap_set_scrolldx(fg_tilemap,-48,256+48);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

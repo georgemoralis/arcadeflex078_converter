@@ -89,7 +89,7 @@ public class playmark
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bigtwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bigtwin )
 	{
 		bgbitmap = auto_bitmap_alloc(512,512);
 	
@@ -103,10 +103,10 @@ public class playmark
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_wbeachvl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( wbeachvl )
 	{
 		tx_tilemap = tilemap_create(wbeachvl_get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		fg_tilemap = tilemap_create(wbeachvl_get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -119,7 +119,7 @@ public class playmark
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

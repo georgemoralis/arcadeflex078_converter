@@ -114,7 +114,7 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarigt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( atarigt )
 	{
 			static const struct atarirle_desc modesc =
 		{
@@ -184,7 +184,7 @@ public class atarigt
 		tram_checksum = 0;
 		memset(atarigt_colorram, 0, 0x80000);
 		return 0;
-	} };
+	}
 	
 	
 	

@@ -29,6 +29,7 @@ public class portrait
 	
 	int portrait_scrollx_hi, portrait_scrollx_lo;
 	
+	VIDEO_START( portrait );
 	
 	static struct GfxLayout tile_layout =
 	{

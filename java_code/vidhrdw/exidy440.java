@@ -49,7 +49,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( exidy440 )
 	{
 		/* reset the system */
 		firq_enable = 0;
@@ -92,7 +92,7 @@ public class exidy440
 		/* mark everything dirty to start */
 		memset(scanline_dirty, 1, 256);
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -519,7 +519,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( exidy440 )
 	{
 		/* generate an interrupt once/frame for the beam */
 		if (exidy440_topsecret == 0)
@@ -542,5 +542,5 @@ public class exidy440
 			for (i = 0; i <= 12; i++, time += increment)
 				timer_set(time, beamx, beam_firq_callback);
 		}
-	} };
+	}
 }

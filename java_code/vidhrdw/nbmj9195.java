@@ -692,7 +692,7 @@ public class nbmj9195
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_sailorws  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sailorws )
 	{
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
@@ -708,9 +708,9 @@ public class nbmj9195
 	#endif
 		gfxdraw_mode = 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mjkoiura  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mjkoiura )
 	{
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_videoram0 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
@@ -722,9 +722,9 @@ public class nbmj9195
 	#endif
 		gfxdraw_mode = 0;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mscoutm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mscoutm )
 	{
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
@@ -741,7 +741,7 @@ public class nbmj9195
 		memset(sailorws_videoworkram1, 0x0000, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short)));
 		gfxdraw_mode = 2;
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************
 	

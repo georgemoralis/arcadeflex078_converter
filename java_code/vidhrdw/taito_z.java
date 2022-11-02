@@ -40,15 +40,15 @@ public class taito_z
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_taitoz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( taitoz )
 	{
 		return (taitoz_core_vh_start(0));
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_spacegun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( spacegun )
 	{
 		return (taitoz_core_vh_start(4));
-	} };
+	}
 	
 	/********************************************************
 	            SPRITE READ AND WRITE HANDLERS

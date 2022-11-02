@@ -272,7 +272,7 @@ public class popeye
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_skyskipr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( skyskipr )
 	{
 		if ((popeye_bitmapram = auto_malloc(popeye_bitmapram_size)) == 0)
 			return 1;
@@ -291,9 +291,9 @@ public class popeye
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_popeye  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( popeye )
 	{
 		if ((popeye_bitmapram = auto_malloc(popeye_bitmapram_size)) == 0)
 			return 1;
@@ -312,7 +312,7 @@ public class popeye
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	static void popeye_draw_background(struct mame_bitmap *bitmap)
 	{

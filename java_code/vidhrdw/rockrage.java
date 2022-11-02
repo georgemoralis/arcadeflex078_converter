@@ -70,7 +70,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rockrage )
 	{
 		layer_colorbase[0] = 0x00;
 		layer_colorbase[1] = 0x10;
@@ -84,7 +84,7 @@ public class rockrage
 		K007420_set_banklimit(0x3ff); // bladestl and battlnts may also need this
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

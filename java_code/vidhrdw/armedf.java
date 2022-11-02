@@ -96,7 +96,7 @@ public class armedf
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( armedf )
 	{
 		if( scroll_type == 4 || /* cclimbr2 */
 			scroll_type == 3 )  /* legion */
@@ -124,7 +124,7 @@ public class armedf
 		}
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	
@@ -322,8 +322,8 @@ public class armedf
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( armedf )
 	{
 		buffer_spriteram16_w(0,0,0);
-	} };
+	}
 }

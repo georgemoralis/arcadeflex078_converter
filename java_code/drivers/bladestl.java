@@ -36,6 +36,7 @@ public class bladestl
 	
 	/* from vidhrdw */
 	int bladestl_spritebank;
+	VIDEO_START( bladestl );
 	
 	public static InterruptHandlerPtr bladestl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

@@ -1026,58 +1026,58 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_dvg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dvg )
 	{
 		return avgdvg_init(USE_DVG);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg )
 	{
 		return avgdvg_init(USE_AVG);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg_starwars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg_starwars )
 	{
 		return avgdvg_init(USE_AVG_SWARS);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg_tempest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg_tempest )
 	{
 		return avgdvg_init(USE_AVG_TEMPEST);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg_mhavoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg_mhavoc )
 	{
 		return avgdvg_init(USE_AVG_MHAVOC);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg_alphaone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg_alphaone )
 	{
 		return avgdvg_init(USE_AVG_ALPHAONE);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg_bzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg_bzone )
 	{
 		return avgdvg_init(USE_AVG_BZONE);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg_quantum  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg_quantum )
 	{
 		return avgdvg_init(USE_AVG_QUANTUM);
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avg_redbaron  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( avg_redbaron )
 	{
 		return avgdvg_init(USE_AVG_RBARON);
-	} };
+	}
 	
 	
 	

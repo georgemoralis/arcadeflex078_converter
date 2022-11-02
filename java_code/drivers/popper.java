@@ -89,6 +89,7 @@ public class popper
 	
 	
 	
+	VIDEO_START( popper );
 	static data8_t *popper_sharedram;
 	
 	public static ReadHandlerPtr popper_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)

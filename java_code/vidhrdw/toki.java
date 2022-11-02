@@ -58,7 +58,7 @@ public class toki
 	}
 	
 	/* At EOF clear the previous frames scroll registers */
-	public static VideoUpdateHandlerPtr video_update_toki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( toki )
 	{
 		int i;
 	
@@ -73,12 +73,12 @@ public class toki
 			toki_background_xscroll[i]=toki_foreground_xscroll[i]=0xffff;
 	
 		buffer_spriteram16_w(0,0,0);
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_tokib  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( tokib )
 	{
 		buffer_spriteram16_w(0,0,0);
-	} };
+	}
 	
 	static void get_text_tile_info(int tile_index)
 	{
@@ -129,7 +129,7 @@ public class toki
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_toki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( toki )
 	{
 		text_layer       = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,32,32);
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -144,7 +144,7 @@ public class toki
 		tilemap_set_scroll_rows(background_layer,512);
 	
 		return 0;
-	} };
+	}
 	
 	/*************************************/
 	

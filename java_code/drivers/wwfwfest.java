@@ -411,10 +411,10 @@ public class wwfwfest
 		{ 90 }
 	};
 	
-	public static VideoUpdateHandlerPtr video_update_wwfwfest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( wwfwfest )
 	{
 		buffer_spriteram16_w(0,0,0);
-	} };
+	}
 	
 	/*******************************************************************************
 	 Machine Driver(s)

@@ -19,6 +19,8 @@ public class srumbler
 	
 	
 	
+	VIDEO_START( srumbler );
+	VIDEO_EOF( srumbler );
 	
 	
 	

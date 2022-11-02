@@ -41,6 +41,9 @@ package arcadeflex.v078.drivers;
 public class taito_f3
 {
 	
+	VIDEO_START( f3 );
+	VIDEO_EOF( f3 );
+	VIDEO_STOP( f3 );
 	
 	static data32_t coin_word[2], *f3_ram;
 	data32_t *f3_shared_ram;

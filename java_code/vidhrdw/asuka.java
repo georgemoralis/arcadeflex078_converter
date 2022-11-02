@@ -26,20 +26,20 @@ public class asuka
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( asuka )
 	{
 		return (asuka_core_video_start(0,0));
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_galmedes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( galmedes )
 	{
 		return (asuka_core_video_start(1,0));
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_cadash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cadash )
 	{
 		return (asuka_core_video_start(1,1));
-	} };
+	}
 	
 	/**************************************************************
 	                 SPRITE READ AND WRITE HANDLERS

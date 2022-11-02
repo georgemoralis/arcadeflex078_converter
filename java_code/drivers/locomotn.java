@@ -58,6 +58,7 @@ public class locomotn
 {
 	
 	
+	VIDEO_START( rallyx );
 	
 	
 	public static WriteHandlerPtr coin_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)

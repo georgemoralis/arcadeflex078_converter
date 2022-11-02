@@ -97,7 +97,7 @@ public class lemmings
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( lemmings )
 	{
 		bitmap0 = bitmap_alloc(2048,256);
 		vram_tilemap = tilemap_create(get_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -114,9 +114,9 @@ public class lemmings
 		fillbitmap(bitmap0,0x100,0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_STOP( lemmings )
 	{
 		if (bitmap0 != 0)
 			bitmap_free(bitmap0);
@@ -128,13 +128,13 @@ public class lemmings
 			free(sprite_triple_buffer_0);
 		if (sprite_triple_buffer_1 != 0)
 			free(sprite_triple_buffer_1);
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( lemmings )
 	{
 		memcpy(sprite_triple_buffer_0,buffered_spriteram16,0x800);
 		memcpy(sprite_triple_buffer_1,buffered_spriteram16_2,0x800);
-	} };
+	}
 	
 	/******************************************************************************/
 	

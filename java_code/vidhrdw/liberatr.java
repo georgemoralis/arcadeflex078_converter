@@ -306,7 +306,7 @@ public class liberatr
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_liberatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( liberatr )
 	{
 	    liberatr_videoram = 0;
 	    liberatr_planet_segs[0] = 0;
@@ -332,7 +332,7 @@ public class liberatr
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

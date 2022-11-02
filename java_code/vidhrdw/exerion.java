@@ -114,7 +114,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exerion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( exerion )
 	{
 		UINT16 *dst;
 		UINT8 *src;
@@ -189,7 +189,7 @@ public class exerion
 		}
 	
 		return video_start_generic.handler();
-	} };
+	}
 	
 	
 	

@@ -73,7 +73,7 @@ public class mainevt
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mainevt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mainevt )
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 8;
@@ -86,9 +86,9 @@ public class mainevt
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_dv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dv )
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 0;
@@ -101,7 +101,7 @@ public class mainevt
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/*****************************************************************************/
 	

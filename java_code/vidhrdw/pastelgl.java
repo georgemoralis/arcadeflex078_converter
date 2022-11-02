@@ -288,14 +288,14 @@ public class pastelgl
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_pastelgl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( pastelgl )
 	{
 		if ((pastelgl_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((pastelgl_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char))) == 0) return 1;
 		if ((pastelgl_paltbl = auto_malloc(0x10 * sizeof(char))) == 0) return 1;
 		memset(pastelgl_videoram, 0x00, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char)));
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************
 	

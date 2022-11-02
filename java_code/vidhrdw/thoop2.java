@@ -94,7 +94,7 @@ public class thoop2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_thoop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( thoop2 )
 	{
 		int i;
 	
@@ -115,7 +115,7 @@ public class thoop2
 		}
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

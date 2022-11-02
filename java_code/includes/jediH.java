@@ -7,4 +7,5 @@
 /*----------- defined in vidhrdw/jedi.c -----------*/
 
 
+VIDEO_START( jedi );
 

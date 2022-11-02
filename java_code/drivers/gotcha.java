@@ -27,6 +27,7 @@ public class gotcha
 {
 	
 	
+	VIDEO_START( gotcha );
 	WRITE16_HANDLER( gotcha_fgvideoram_w );
 	WRITE16_HANDLER( gotcha_bgvideoram_w );
 	WRITE16_HANDLER( gotcha_gfxbank_select_w );

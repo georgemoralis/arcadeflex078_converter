@@ -70,7 +70,7 @@ public class batman
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_batman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( batman )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -131,7 +131,7 @@ public class batman
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

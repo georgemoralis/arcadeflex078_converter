@@ -109,6 +109,8 @@ public class fuukifg3
 	WRITE32_HANDLER( fuuki32_vram_2_w );
 	WRITE32_HANDLER( fuuki32_vram_3_w );
 	
+	VIDEO_START( fuuki32 );
+	VIDEO_EOF( fuuki32 );
 	
 	//data32_t *fuuki32_shared_ram;
 	

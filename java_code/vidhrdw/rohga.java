@@ -20,7 +20,7 @@ public class rohga
 		return ((bank>>4)&0x3)<<12;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_rohga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rohga )
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -31,9 +31,9 @@ public class rohga
 		deco16_set_tilemap_bank_callback(3,wizdfire_bank_callback);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_wizdfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( wizdfire )
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -48,9 +48,9 @@ public class rohga
 		alpha_set_level(0x80);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_nitrobal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( nitrobal )
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -68,7 +68,7 @@ public class rohga
 		alpha_set_level(0x80);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	

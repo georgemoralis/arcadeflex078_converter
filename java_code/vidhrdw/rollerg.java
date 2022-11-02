@@ -52,7 +52,7 @@ public class rollerg
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rollerg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rollerg )
 	{
 		bg_colorbase = 16;
 		sprite_colorbase = 16;
@@ -65,7 +65,7 @@ public class rollerg
 	
 		K051316_set_offset(0, 22, 1);
 		return 0;
-	} };
+	}
 	
 	
 	

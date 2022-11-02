@@ -89,15 +89,15 @@ public class gyruss
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gyruss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gyruss )
 	{
-		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
+		sprite_mux_buffer = auto_malloc(256 * spriteram_size);
 	
 		if (sprite_mux_buffer == 0)
 			return 1;
 	
 		return video_start_generic.handler();
-	} };
+	}
 	
 	
 	

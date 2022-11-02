@@ -65,6 +65,7 @@ public class rallyx
 	
 	
 	
+	VIDEO_START( rallyx );
 	
 	
 	public static WriteHandlerPtr rallyx_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)

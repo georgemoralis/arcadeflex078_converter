@@ -356,7 +356,7 @@ public class hyhoo
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_hyhoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hyhoo )
 	{
 		if ((hyhoo_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((hyhoo_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
@@ -364,7 +364,7 @@ public class hyhoo
 		if ((hyhoo_palette = auto_malloc(0x10 * sizeof(char))) == 0) return 1;
 		memset(hyhoo_videoram, 0x0000, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short)));
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************
 	

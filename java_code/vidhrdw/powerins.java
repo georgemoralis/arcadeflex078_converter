@@ -205,7 +205,7 @@ public class powerins
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_powerins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( powerins )
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0,
 									powerins_get_memory_offset_0,
@@ -232,7 +232,7 @@ public class powerins
 			return 0;
 		}
 		else return 1;
-	} };
+	}
 	
 	
 	

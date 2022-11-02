@@ -155,7 +155,7 @@ public class polepos
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_polepos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( polepos )
 	{
 		/* allocate view bitmap */
 		view_bitmap = auto_bitmap_alloc(64*8, 16*8);
@@ -168,7 +168,7 @@ public class polepos
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

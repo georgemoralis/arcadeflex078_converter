@@ -573,37 +573,37 @@ public class nbmj8688
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688_8bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mbmj8688_8bit )
 	{
 		mjsikaku_gfxmode = GFXTYPE_8BIT;
 		return common_video_start();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688_hybrid_12bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mbmj8688_hybrid_12bit )
 	{
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_12BIT;
 		return common_video_start();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688_pure_12bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mbmj8688_pure_12bit )
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_12BIT;
 		return common_video_start();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688_hybrid_16bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mbmj8688_hybrid_16bit )
 	{
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_16BIT;
 		return common_video_start();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688_pure_16bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mbmj8688_pure_16bit )
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 		return common_video_start();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688_pure_16bit_LCD  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mbmj8688_pure_16bit_LCD )
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 	
@@ -611,7 +611,7 @@ public class nbmj8688
 		if ((HD61830B_ram[1] = auto_malloc(0x10000)) == 0) return 1;
 	
 		return common_video_start();
-	} };
+	}
 	
 	
 	/******************************************************************************

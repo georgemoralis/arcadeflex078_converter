@@ -53,7 +53,7 @@ public class vball
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_vb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( vb )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,TILEMAP_OPAQUE, 8, 8,64,64);
 		if (bg_tilemap == 0)
@@ -62,7 +62,7 @@ public class vball
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr vb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

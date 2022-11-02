@@ -149,7 +149,7 @@ public class tigeroad
 		return 2 * (col % 8) + 16 * ((127 - row) % 8) + 128 * (col / 8) + 2048 * ((127 - row) / 8);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tigeroad )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tigeroad_tilemap_scan, 
 			TILEMAP_SPLIT, 32, 32, 128, 128);
@@ -169,7 +169,7 @@ public class tigeroad
 		tilemap_set_transparent_pen(fg_tilemap, 3);
 	
 		return 0;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -180,8 +180,8 @@ public class tigeroad
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 2);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( tigeroad )
 	{
 		buffer_spriteram16_w(0,0,0);
-	} };
+	}
 }

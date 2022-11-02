@@ -34,7 +34,7 @@ public class sbrkout
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_sbrkout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sbrkout )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -43,7 +43,7 @@ public class sbrkout
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	static void sbrkout_draw_balls( struct mame_bitmap *bitmap )
 	{

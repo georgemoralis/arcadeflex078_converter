@@ -90,7 +90,7 @@ public class rpunch
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rpunch )
 	{
 		int i;
 	
@@ -117,7 +117,7 @@ public class rpunch
 		/* reset the timer */
 		crtc_timer = timer_alloc(crtc_interrupt_gen);
 		return 0;
-	} };
+	}
 	
 	
 	

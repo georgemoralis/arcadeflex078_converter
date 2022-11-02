@@ -61,6 +61,7 @@ public class speedbal
 	size_t speedbal_background_videoram_size;
 	size_t speedbal_sprites_dataram_size;
 	
+	VIDEO_START( speedbal );
 	
 	
 	unsigned char *speedbal_sharedram;

@@ -106,7 +106,7 @@ public class drmicro
 			colortable[i] = color_prom.read(i)& 0x0f;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( drmicro)
 	{
 		drmicro_videoram = auto_malloc(0x1000);
 	
@@ -119,7 +119,7 @@ public class drmicro
 		tilemap_set_transparent_pen(drmicro_bg2,0);
 	
 		return 0;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

@@ -15,4 +15,5 @@ WRITE16_HANDLER( atarisy2_xscroll_w );
 WRITE16_HANDLER( atarisy2_videoram_w );
 WRITE16_HANDLER( atarisy2_paletteram_w );
 
+VIDEO_START( atarisy2 );
 

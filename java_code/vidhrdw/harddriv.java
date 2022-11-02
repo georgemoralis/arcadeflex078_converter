@@ -74,7 +74,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( harddriv )
 	{
 		UINT32 *destmask, mask;
 		int i;
@@ -146,7 +146,7 @@ public class harddriv
 		vram_mask = hdgsp_vram_size - 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -466,11 +466,11 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( harddriv )
 	{
 		/* reset the display offset */
 		gfx_offsetscan = 0;
-	} };
+	}
 	
 	
 	

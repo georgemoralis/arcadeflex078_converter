@@ -1,3 +1,5 @@
+VIDEO_START( gcpinbal );
+VIDEO_EOF( gcpinbal );
 
 WRITE16_HANDLER( gcpinbal_spritectrl_w );
 WRITE16_HANDLER( gcpinbal_spriteflip_w );

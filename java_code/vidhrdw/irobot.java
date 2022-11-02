@@ -118,7 +118,7 @@ public class irobot
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( irobot )
 	{
 		/* Setup 2 bitmaps for the polygon generator */
 		if ((polybitmap1 = auto_malloc(BITMAP_WIDTH * Machine.drv.screen_height)) == 0)
@@ -132,7 +132,7 @@ public class irobot
 		ir_ymax = Machine.drv.screen_height;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

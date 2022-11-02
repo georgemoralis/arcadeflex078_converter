@@ -714,15 +714,15 @@ public class shanghai
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( shanghai )
 	{
 		return HD63484_start();
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_STOP( shanghai )
 	{
 		HD63484_stop();
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

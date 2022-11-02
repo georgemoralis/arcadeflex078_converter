@@ -47,7 +47,7 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_blstroid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( blstroid )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -95,7 +95,7 @@ public class blstroid
 		if (!atarimo_init(0, &modesc))
 			return 1;
 		return 0;
-	} };
+	}
 	
 	
 	

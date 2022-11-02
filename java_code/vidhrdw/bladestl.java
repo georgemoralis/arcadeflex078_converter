@@ -52,7 +52,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bladestl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bladestl )
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 1;
@@ -64,7 +64,7 @@ public class bladestl
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

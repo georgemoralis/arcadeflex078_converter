@@ -20,6 +20,7 @@ public class flkatck
 {
 	
 	/* from vidhrdw/flkatck.c */
+	VIDEO_START( flkatck );
 	
 	
 	/***************************************************************************/

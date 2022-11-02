@@ -94,7 +94,7 @@ public class pandoras
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_pandoras  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( pandoras )
 	{
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -102,7 +102,7 @@ public class pandoras
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

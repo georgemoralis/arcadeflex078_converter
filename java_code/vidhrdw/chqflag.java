@@ -59,7 +59,7 @@ public class chqflag
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_chqflag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( chqflag )
 	{
 		sprite_colorbase = 0;
 		zoom_colorbase[0] = 0x10;
@@ -78,7 +78,7 @@ public class chqflag
 		K051316_wraparound_enable(1,1);
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

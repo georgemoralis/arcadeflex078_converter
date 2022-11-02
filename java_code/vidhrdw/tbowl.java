@@ -223,7 +223,7 @@ public class tbowl
 	
 	/*** Video Start / Update ***/
 	
-	public static VideoUpdateHandlerPtr video_update_tbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tbowl )
 	{
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,128,32);
@@ -237,7 +237,7 @@ public class tbowl
 		tilemap_set_transparent_pen(bg2_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_tbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

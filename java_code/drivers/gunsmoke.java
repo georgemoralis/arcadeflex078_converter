@@ -69,6 +69,7 @@ public class gunsmoke
 	
 	
 	
+	VIDEO_START( gunsmoke );
 	
 	
 	#if GUNSMOKE_HACK

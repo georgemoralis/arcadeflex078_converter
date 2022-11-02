@@ -112,7 +112,7 @@ public class jcross
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( jcross )
 	{
 		flipscreen = -1;  old_fg_color = -1;
 	
@@ -130,7 +130,7 @@ public class jcross
 		tilemap_set_scrolldx( bg_tilemap,   16, 22 );
 		return 0;
 	
-	} };
+	}
 	
 	/***************************************************************************
 	**

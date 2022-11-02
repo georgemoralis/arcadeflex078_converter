@@ -99,20 +99,20 @@ public class megazone
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_megazone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( megazone )
 	{
 		dirtybuffer = 0;
 		tmpbitmap = 0;
 	
-		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size[0]);
+		memset(dirtybuffer,1,videoram_size);
 	
 		if ((tmpbitmap = auto_bitmap_alloc(256,256)) == 0)
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

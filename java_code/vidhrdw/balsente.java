@@ -40,7 +40,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( balsente )
 	{
 		/* reset the system */
 		palettebank_vis = 0;
@@ -77,7 +77,7 @@ public class balsente
 		sprite_mask = memory_region_length(REGION_GFX1) - 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

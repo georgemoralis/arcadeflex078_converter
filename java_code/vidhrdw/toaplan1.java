@@ -359,7 +359,7 @@ public class toaplan1
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( rallybik )
 	{
 		if (toaplan1_create_tilemaps() != 0)  return 1;
 		if (toaplan1_paletteram_alloc() != 0) return 1;
@@ -402,9 +402,9 @@ public class toaplan1
 		state_save_register_func_postload(rallybik_flipscreen);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( toaplan1 )
 	{
 		if (toaplan1_create_tilemaps() != 0)  return 1;
 		if (toaplan1_paletteram_alloc() != 0) return 1;
@@ -454,7 +454,7 @@ public class toaplan1
 		state_save_register_func_postload(toaplan1_flipscreen);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************
@@ -1247,21 +1247,21 @@ public class toaplan1
 		assume it happens automatically every frame, at the end of vblank
 	****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( rallybik )
 	{
 		buffer_spriteram16_w(0, 0, 0);
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( toaplan1 )
 	{
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_samesame  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( samesame )
 	{
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
 		cpu_set_irq_line(0, MC68000_IRQ_2, HOLD_LINE);	/* Frame done */
-	} };
+	}
 }

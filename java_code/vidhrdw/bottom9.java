@@ -62,7 +62,7 @@ public class bottom9
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bottom9  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bottom9 )
 	{
 		layer_colorbase[0] = 0;	/* not used */
 		layer_colorbase[1] = 0;
@@ -79,7 +79,7 @@ public class bottom9
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

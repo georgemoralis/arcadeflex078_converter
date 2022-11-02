@@ -126,7 +126,7 @@ public class kaneko16
 	KANEKO16_LAYER(2)
 	KANEKO16_LAYER(3)
 	
-	public static VideoUpdateHandlerPtr video_update_kaneko16_sprites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kaneko16_sprites )
 	{
 		/* 0x400 sprites max */
 		spritelist.first_sprite = (struct tempsprite *)auto_malloc(0x400 * sizeof(spritelist.first_sprite[0]));
@@ -135,9 +135,9 @@ public class kaneko16
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_kaneko16_1xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kaneko16_1xVIEW2 )
 	{
 		if (	video_start_kaneko16_sprites()	)
 			return 1;
@@ -185,9 +185,9 @@ public class kaneko16
 	
 			return 0;
 		}
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_kaneko16_2xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kaneko16_2xVIEW2 )
 	{
 		if (	video_start_kaneko16_1xVIEW2()	)
 			return 1;
@@ -230,9 +230,9 @@ public class kaneko16
 	
 			return 0;
 		}
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_sandscrp_1xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sandscrp_1xVIEW2 )
 	{
 		if (	video_start_kaneko16_1xVIEW2()	)
 			return 1;
@@ -240,7 +240,7 @@ public class kaneko16
 		tilemap_set_scrolldy( kaneko16_tmap_0, 0, 256 - 1 );
 		tilemap_set_scrolldy( kaneko16_tmap_1, 0, 256 - 1 );
 		return 0;
-	} };
+	}
 	
 	
 	/* Berlwall has an additional hi-color background */
@@ -268,7 +268,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_berlwall  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( berlwall )
 	{
 		int sx, x,y;
 		unsigned char *RAM	=	memory_region(REGION_GFX3);
@@ -309,13 +309,13 @@ public class kaneko16
 				if ((r & 0x10) && (b & 0x10))
 					g = (g - 1) & 0x1f;		/* decrease with wraparound */
 	
-				plot_pixel.handler( kaneko16_bg15_bitmap,
+				plot_pixel( kaneko16_bg15_bitmap,
 							sx * 256 + x, y,
 							Machine.pens[2048 + ((g << 10) | (r << 5) | b)] );
 		  }
 	
 		return video_start_kaneko16_1xVIEW2();
-	} };
+	}
 	
 	
 	/***************************************************************************

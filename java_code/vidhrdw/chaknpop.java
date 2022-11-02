@@ -185,7 +185,7 @@ public class chaknpop
 	  Initialize video hardware emulation
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_chaknpop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( chaknpop )
 	{
 		data8_t *RAM = memory_region(REGION_CPU1);
 	
@@ -217,7 +217,7 @@ public class chaknpop
 		state_save_register_func_postload(tx_tilemap_mark_all_dirty);
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

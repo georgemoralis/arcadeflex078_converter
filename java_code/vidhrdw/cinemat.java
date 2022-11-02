@@ -58,17 +58,17 @@ public class cinemat
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cinemat )
 	{
 		cinemat_screenh = Machine.visible_area.max_y - Machine.visible_area.min_y;
 		return video_start_vector();
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( cinemat )
 	{
 		vector_clear_list();
-	} };
+	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_spacewar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

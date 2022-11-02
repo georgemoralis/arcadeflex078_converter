@@ -189,6 +189,7 @@ public class segasyse
 	
 	/*- in (vidhrdw/segasyse.c) -*/
 	
+	VIDEO_START( segae );
 	
 	unsigned char segae_vdp_ctrl_r ( UINT8 chip );
 	unsigned char segae_vdp_data_r ( UINT8 chip );

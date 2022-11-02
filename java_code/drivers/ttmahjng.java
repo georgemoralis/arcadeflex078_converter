@@ -13,6 +13,7 @@ public class ttmahjng
 {
 	
 	
+	VIDEO_START( ttmahjng );
 	
 	
 	static int psel;

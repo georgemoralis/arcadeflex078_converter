@@ -128,6 +128,8 @@ public class combatsc
 	
 	
 	/* from vidhrdw/combasc.c */
+	VIDEO_START( combasc );
+	VIDEO_START( combascb );
 	
 	MACHINE_INIT( combasc );
 	

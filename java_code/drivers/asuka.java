@@ -114,6 +114,9 @@ public class asuka
 	WRITE16_HANDLER( asuka_spritectrl_w );
 	
 	
+	VIDEO_START( asuka );
+	VIDEO_START( galmedes );
+	VIDEO_START( cadash );
 	
 	
 	WRITE16_HANDLER( bonzeadv_c_chip_w );
@@ -991,10 +994,10 @@ public class asuka
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( asuka )
 	{
 		PC090OJ_eof_callback();
-	} };
+	}
 	
 	
 	static MACHINE_DRIVER_START( bonzeadv )

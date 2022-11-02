@@ -67,6 +67,9 @@ WRITE16_HANDLER( midyunit_sound_w );
 /*----------- defined in vidhrdw/midyunit.c -----------*/
 
 
+VIDEO_START( midyunit_4bit );
+VIDEO_START( midyunit_6bit );
+VIDEO_START( midzunit );
 
 READ16_HANDLER( midyunit_gfxrom_r );
 
@@ -87,3 +90,4 @@ void midyunit_display_interrupt(int scanline);
 
 WRITE16_HANDLER( midyunit_io_register_w );
 
+VIDEO_EOF( midyunit );

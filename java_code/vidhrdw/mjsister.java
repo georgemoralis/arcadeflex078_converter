@@ -28,7 +28,7 @@ public class mjsister
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mjsister )
 	{
 		if ((mjsister_tmpbitmap0 = bitmap_alloc(256,256)) == 0)
 			return 1;
@@ -40,7 +40,7 @@ public class mjsister
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	void mjsister_plot0(int offset,unsigned char data)
 	{

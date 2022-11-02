@@ -26,7 +26,7 @@ public class groundfx
 	
 	/******************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( groundfx )
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
 		if (spritelist == 0)
@@ -45,7 +45,7 @@ public class groundfx
 		hack_cliprect.max_y=24 + 44;
 	
 		return 0;
-	} };
+	}
 	
 	/***************************************************************
 				SPRITE DRAW ROUTINES

@@ -28,7 +28,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_battlera  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( battlera )
 	{
 		HuC6270_vram=auto_malloc(0x20000);
 		tile_dirty=auto_malloc(0x1000);
@@ -52,7 +52,7 @@ public class battlera
 		irq_enable=rcr_enable=sb_enable=bb_enable=0;
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	

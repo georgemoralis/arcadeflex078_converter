@@ -116,7 +116,7 @@ public class hyperspt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_hyperspt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( hyperspt )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -127,7 +127,7 @@ public class hyperspt
 		tilemap_set_scroll_rows(bg_tilemap, 32);
 	
 		return 0;
-	} };
+	}
 	
 	static void hyperspt_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -197,7 +197,7 @@ public class hyperspt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_roadf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( roadf )
 	{
 		bg_tilemap = tilemap_create(roadf_get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -208,5 +208,5 @@ public class hyperspt
 		tilemap_set_scroll_rows(bg_tilemap, 32);
 	
 		return 0;
-	} };
+	}
 }

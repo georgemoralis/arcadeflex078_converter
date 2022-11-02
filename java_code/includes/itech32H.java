@@ -18,6 +18,8 @@ void drivedge_update_interrupts(int vint, int xint, int qint);
 /*----------- defined in vidhrdw/itech32.c -----------*/
 
 
+VIDEO_START( itech32 );
+VIDEO_START( drivedge );
 
 WRITE16_HANDLER( timekill_colora_w );
 WRITE16_HANDLER( timekill_colorbc_w );

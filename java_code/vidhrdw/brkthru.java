@@ -128,7 +128,7 @@ public class brkthru
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_brkthru  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( brkthru )
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,16);
@@ -143,7 +143,7 @@ public class brkthru
 		tilemap_set_transparent_pen( bg_tilemap, 0 );
 	
 		return 0;
-	} };
+	}
 	
 	
 	

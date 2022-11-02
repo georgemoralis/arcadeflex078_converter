@@ -68,7 +68,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gridlee )
 	{
 		/* allocate a local copy of video RAM */
 		local_videoram = auto_malloc(256 * 256);
@@ -78,7 +78,7 @@ public class gridlee
 		/* reset the palette */
 		palettebank_vis = 0;
 		return 0;
-	} };
+	}
 	
 	
 	

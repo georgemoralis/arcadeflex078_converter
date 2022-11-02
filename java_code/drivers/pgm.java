@@ -96,6 +96,8 @@ public class pgm
 	data16_t *pgm_mainram, *pgm_bg_videoram, *pgm_tx_videoram, *pgm_videoregs, *pgm_rowscrollram;
 	WRITE16_HANDLER( pgm_tx_videoram_w );
 	WRITE16_HANDLER( pgm_bg_videoram_w );
+	VIDEO_START( pgm );
+	VIDEO_EOF( pgm );
 	void pgm_kov_decrypt(void);
 	void pgm_kovsh_decrypt(void);
 	void pgm_dw2_decrypt(void);

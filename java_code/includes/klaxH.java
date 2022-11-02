@@ -8,3 +8,4 @@
 
 WRITE16_HANDLER( klax_latch_w );
 
+VIDEO_START( klax );

@@ -173,6 +173,7 @@ public class spiders
 	
 	/* VIDHRDW */
 	
+	VIDEO_START( spiders );
 	
 	/* MACHINE */
 	

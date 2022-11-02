@@ -78,7 +78,7 @@ public class quizpani
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_quizpani  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( quizpani )
 	{
 		bg_tilemap  = tilemap_create(bg_tile_info, bg_scan,TILEMAP_OPAQUE,16,16,256,32);
 		txt_tilemap = tilemap_create(txt_tile_info,bg_scan,TILEMAP_TRANSPARENT,16,16,256,32);
@@ -88,7 +88,7 @@ public class quizpani
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_quizpani  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

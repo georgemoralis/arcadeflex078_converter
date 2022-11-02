@@ -88,6 +88,7 @@ public class wrally
 	/* from vidhrdw/wrally.c */
 	
 	WRITE16_HANDLER( wrally_vram_w );
+	VIDEO_START( wrally );
 	
 	/* from machine/wrally.c */
 	DRIVER_INIT( wrally );

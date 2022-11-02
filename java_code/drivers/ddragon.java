@@ -50,6 +50,7 @@ public class ddragon
 {
 	
 	/* from vidhrdw */
+	VIDEO_START( ddragon );
 	/* end of 
 	/* private globals */
 	static int dd_sub_cpu_busy;

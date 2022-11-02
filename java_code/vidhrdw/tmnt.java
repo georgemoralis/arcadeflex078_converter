@@ -211,7 +211,7 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mia )
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -222,9 +222,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,mia_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_cuebrckj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( cuebrckj )
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -235,9 +235,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,mia_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( tmnt )
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -248,9 +248,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,tmnt_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( punkshot )
 	{
 		K053251_vh_start();
 	
@@ -259,9 +259,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,punkshot_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	/* also tmnt2, ssriders */
+	VIDEO_START( lgtnfght )	/* also tmnt2, ssriders */
 	{
 		K053251_vh_start();
 	
@@ -280,9 +280,9 @@ public class tmnt
 		state_save_register_int  ("TMNT2", 0, "lasten",  &lasten);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_sunsetbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sunsetbl )
 	{
 		K053251_vh_start();
 	
@@ -291,9 +291,9 @@ public class tmnt
 		if (K053245_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,lgtnfght_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( detatwin )
 	{
 		K053251_vh_start();
 	
@@ -302,9 +302,9 @@ public class tmnt
 		if (K053245_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,detatwin_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( glfgreat )
 	{
 		K053251_vh_start();
 	
@@ -324,9 +324,9 @@ public class tmnt
 		K053936_set_offset(0, 85, 0);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( thndrx2 )
 	{
 		K053251_vh_start();
 	
@@ -335,9 +335,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,thndrx2_sprite_callback))
 			return 1;
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_prmrsocr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( prmrsocr )
 	{
 		K053251_vh_start();
 	
@@ -357,7 +357,7 @@ public class tmnt
 		K053936_set_offset(0, 85, 1);
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -855,8 +855,8 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( detatwin )
 	{
 		K053245_clear_buffer();
-	} };
+	}
 }

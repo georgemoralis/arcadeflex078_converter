@@ -167,6 +167,7 @@ public class wiz
 {
 	
 	
+	VIDEO_START( wiz );
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

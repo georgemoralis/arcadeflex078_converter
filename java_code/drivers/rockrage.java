@@ -17,6 +17,7 @@ public class rockrage
 	
 	
 	/* from vidhrdw */
+	VIDEO_START( rockrage );
 	
 	public static InterruptHandlerPtr rockrage_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

@@ -43,4 +43,5 @@ public class namcos22H
 	WRITE32_HANDLER( namcos22_dspram_w );
 	
 	
+	VIDEO_START( namcos22s );
 	}

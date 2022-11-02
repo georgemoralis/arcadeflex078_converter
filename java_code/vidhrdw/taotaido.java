@@ -238,7 +238,7 @@ public class taotaido
 		taotaido_drawsprites(bitmap,cliprect);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_taotaido  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( taotaido )
 	{
 		/* sprites need to be delayed by 2 frames? */
 	
@@ -247,5 +247,5 @@ public class taotaido
 	
 		memcpy(taotaido_spriteram_older,taotaido_spriteram_old,0x2000);
 		memcpy(taotaido_spriteram_old,taotaido_spriteram,0x2000);
-	} };
+	}
 }

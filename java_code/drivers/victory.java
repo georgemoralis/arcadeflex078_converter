@@ -119,6 +119,8 @@ public class victory
 	
 	/* video driver data & functions */
 	
+	VIDEO_START( victory );
+	VIDEO_EOF( victory );
 	
 	
 	

@@ -78,7 +78,7 @@ public class alpha68k
 		tilemap_mark_tile_dirty(fix_tilemap,offset/2);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_alpha68k  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( alpha68k )
 	{
 		fix_tilemap = tilemap_create(get_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -88,7 +88,7 @@ public class alpha68k
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	//AT

@@ -87,12 +87,12 @@ public class suna16
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( suna16 )
 	{
 		paletteram16_2 = auto_malloc( 0x100 * sizeof(data16_t) );
 		if (paletteram16_2 != NULL)	return 0;
 		else						return 1;
-	} };
+	}
 	
 	READ16_HANDLER( suna16_paletteram16_r )
 	{

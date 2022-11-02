@@ -64,7 +64,7 @@ public class kangaroo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_kangaroo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( kangaroo )
 	{
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -76,7 +76,7 @@ public class kangaroo
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

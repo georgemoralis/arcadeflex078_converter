@@ -42,6 +42,7 @@ public class hexa
 	
 	
 	
+	VIDEO_START( hexa );
 	
 	
 	

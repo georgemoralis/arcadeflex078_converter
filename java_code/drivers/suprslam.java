@@ -95,6 +95,7 @@ public class suprslam
 	
 	WRITE16_HANDLER( suprslam_screen_videoram_w );
 	WRITE16_HANDLER( suprslam_bg_videoram_w );
+	VIDEO_START( suprslam );
 	WRITE16_HANDLER (suprslam_bank_w);
 	
 	

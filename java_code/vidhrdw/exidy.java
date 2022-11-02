@@ -156,7 +156,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( exidy )
 	{
 	    if (video_start_generic() != 0)
 	        return 1;
@@ -174,7 +174,7 @@ public class exidy
 	        return 1;
 	
 	    return 0;
-	} };
+	}
 	
 	
 	
@@ -357,7 +357,7 @@ public class exidy
 		return (!(*exidy_sprite_enable & 0x40));
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( exidy )
 	{
 		UINT8 enable_set = ((*exidy_sprite_enable & 0x20) != 0);
 	    struct rectangle clip = { 0, 15, 0, 15 };
@@ -446,7 +446,7 @@ public class exidy
 							timer_set(pixel_time(org_2_x + sx, org_2_y + sy), 0x08, collision_irq_callback);
 	            }
 			}
-	} };
+	}
 	
 	
 	

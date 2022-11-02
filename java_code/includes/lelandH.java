@@ -75,8 +75,11 @@ void leland_i86_optimize_address(offs_t offset);
 /*----------- defined in vidhrdw/leland.c -----------*/
 
 
+VIDEO_START( leland );
+VIDEO_START( ataxx );
 
 
 
 
 
+VIDEO_EOF( leland );

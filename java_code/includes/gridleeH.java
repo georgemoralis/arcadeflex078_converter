@@ -25,5 +25,6 @@ public class gridleeH
 	
 	/* video driver data & functions */
 	
+	VIDEO_START( gridlee );
 	
 	}

@@ -71,7 +71,7 @@ public class atarig1
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarig1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( atarig1 )
 	{
 		static const struct atarirle_desc modesc_hydra =
 		{
@@ -140,7 +140,7 @@ public class atarig1
 		playfield_xscroll = 0;
 		playfield_yscroll = 0;
 		return 0;
-	} };
+	}
 	
 	
 	

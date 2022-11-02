@@ -27,7 +27,7 @@ public class mayumi
 		SET_TILE_INFO(0, code, col, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mayumi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mayumi )
 	{
 		mayumi_videoram = auto_malloc(0x1800);
 	
@@ -37,7 +37,7 @@ public class mayumi
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	public static WriteHandlerPtr mayumi_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

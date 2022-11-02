@@ -473,13 +473,13 @@ public class cave
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_cave_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)		{	return cave_vh_start(1);	} };
-	public static VideoUpdateHandlerPtr video_update_cave_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(2);	} };
-	public static VideoUpdateHandlerPtr video_update_cave_3_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(3);	} };
-	public static VideoUpdateHandlerPtr video_update_cave_4_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(4);	} };
+	VIDEO_START( cave_1_layer )		{	return cave_vh_start(1);	}
+	VIDEO_START( cave_2_layers )	{	return cave_vh_start(2);	}
+	VIDEO_START( cave_3_layers )	{	return cave_vh_start(3);	}
+	VIDEO_START( cave_4_layers )	{	return cave_vh_start(4);	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sailormn_3_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sailormn_3_layers )
 	{
 		if (cave_vh_start(2))
 			return 1;
@@ -493,7 +493,7 @@ public class cave
 		tilemap_set_scroll_cols(tilemap_2, 1);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

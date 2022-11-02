@@ -53,6 +53,7 @@ public class spdbuggy
 	/* Functions defined in vidhrdw */
 	
 	
+	VIDEO_START( spdbuggy );
 	
 	
 	
@@ -615,7 +616,7 @@ public class spdbuggy
 							[ Video Hardware Start ]
 	------------------------------------------------------------------------*/
 	
-	public static VideoUpdateHandlerPtr video_update_spdbuggy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( spdbuggy )
 	{
 		bg_tilemap = tilemap_create(spdbuggy_get_bg_tile_info,
 									tilemap_scan_rows,
@@ -642,7 +643,7 @@ public class spdbuggy
 			return 0;
 		}
 		else return 1;
-	} };
+	}
 	
 	
 	/***************************************************************************

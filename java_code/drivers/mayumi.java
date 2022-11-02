@@ -17,6 +17,7 @@ public class mayumi
 	
 	#define MCLK 10000000
 	
+	VIDEO_START( mayumi );
 	
 	
 	static int int_enable;

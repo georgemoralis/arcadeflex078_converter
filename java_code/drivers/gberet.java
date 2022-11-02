@@ -71,6 +71,7 @@ public class gberet
 	
 	
 	
+	VIDEO_START( gberet );
 	
 	
 	

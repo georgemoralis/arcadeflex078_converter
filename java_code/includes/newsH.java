@@ -1,1 +1,2 @@
 
+VIDEO_START( news );

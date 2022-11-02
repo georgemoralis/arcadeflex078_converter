@@ -618,27 +618,27 @@ public class psx
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_psx_type1_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( psx_type1_1024x1024 )
 	{
 		m_n_gputype = 1;
 		return psx_gpu_init( 1024, 1024 );
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_psx_type2_1024x512  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( psx_type2_1024x512 )
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 512 );
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_psx_type2_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( psx_type2_1024x1024 )
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 1024 );
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_STOP( psx )
 	{
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

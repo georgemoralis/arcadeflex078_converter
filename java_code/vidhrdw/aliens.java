@@ -57,7 +57,7 @@ public class aliens
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( aliens )
 	{
 		paletteram = auto_malloc(0x400);
 		if (paletteram == 0)
@@ -73,7 +73,7 @@ public class aliens
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

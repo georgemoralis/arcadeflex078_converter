@@ -58,7 +58,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_toobin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( toobin )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -113,7 +113,7 @@ public class toobin
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	} };
+	}
 	
 	
 	

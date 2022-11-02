@@ -140,7 +140,7 @@ public class btime
 	Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bnj )
 	{
 	    if (video_start_generic.handler() != 0)
 	        return 1;
@@ -157,15 +157,15 @@ public class btime
 	    bnj_scroll2 = 0;
 	
 	    return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( btime )
 	{
 	    bnj_scroll1 = 0;
 	    bnj_scroll2 = 0;
 	
 	    return video_start_generic.handler();
-	} };
+	}
 	
 	
 	

@@ -44,6 +44,7 @@ public class afega
 	WRITE16_HANDLER( afega_palette_w );
 	
 	
+	VIDEO_START( afega );
 	
 	
 	/***************************************************************************

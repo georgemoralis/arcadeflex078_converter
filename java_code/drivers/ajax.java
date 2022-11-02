@@ -25,6 +25,7 @@ public class ajax
 	MACHINE_INIT( ajax );
 	
 	/* from vidhrdw/ajax.c */
+	VIDEO_START( ajax );
 	
 	/****************************************************************************/
 	

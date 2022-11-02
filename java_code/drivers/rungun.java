@@ -46,6 +46,7 @@ public class rungun
 {
 	
 	
+	VIDEO_START( rng );
 	MACHINE_INIT( rng );
 	READ16_HANDLER( ttl_ram_r );
 	WRITE16_HANDLER( ttl_ram_w );

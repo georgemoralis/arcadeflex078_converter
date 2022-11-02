@@ -395,7 +395,7 @@ public class convertMame {
                 }
                 case 'V': {
                     i = Convertor.inpos;
-                    if (sUtil.getToken("VIDEO_START(") || sUtil.getToken("VIDEO_UPDATE(") || sUtil.getToken("VIDEO_STOP(") || sUtil.getToken("VIDEO_EOF(")) {
+                    if (sUtil.getToken("VIDEO_UPDATE(")) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();

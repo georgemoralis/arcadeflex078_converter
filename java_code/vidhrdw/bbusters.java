@@ -76,7 +76,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bbuster )
 	{
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,128,32);
@@ -89,9 +89,9 @@ public class bbusters
 		tilemap_set_transparent_pen(fix_tilemap, 15);
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( mechatt )
 	{
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,256,32);
@@ -104,7 +104,7 @@ public class bbusters
 		tilemap_set_transparent_pen(fix_tilemap, 15);
 	
 		return 0;
-	} };
+	}
 	
 	/******************************************************************************/
 	

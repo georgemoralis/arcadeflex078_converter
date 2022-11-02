@@ -45,6 +45,14 @@ package arcadeflex.v078.drivers;
 public class dec8
 {
 	
+	VIDEO_START( cobracom );
+	VIDEO_START( oscar );
+	VIDEO_START( ghostb );
+	VIDEO_START( lastmiss );
+	VIDEO_START( shackled );
+	VIDEO_START( srdarwin );
+	VIDEO_START( gondo );
+	VIDEO_START( garyoret );
 	
 	
 	/******************************************************************************/
@@ -58,10 +66,10 @@ public class dec8
 	/******************************************************************************/
 	
 	/* Only used by ghostb, gondo, garyoret, other games can control buffering */
-	static public static VideoUpdateHandlerPtr video_update_dec8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static VIDEO_EOF( dec8 )
 	{
 		buffer_spriteram_w(0,0);
-	} };
+	}
 	
 	public static ReadHandlerPtr i8751_h_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

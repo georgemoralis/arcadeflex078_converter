@@ -175,6 +175,7 @@
 
 
 /* Functions */
+VIDEO_START( megasys1 );
 
 WRITE16_HANDLER( megasys1_scrollram_0_w );
 WRITE16_HANDLER( megasys1_scrollram_1_w );

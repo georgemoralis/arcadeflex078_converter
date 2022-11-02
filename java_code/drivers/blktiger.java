@@ -26,6 +26,8 @@ public class blktiger
 	
 	
 	
+	VIDEO_START( blktiger );
+	VIDEO_EOF( blktiger );
 	
 	
 	

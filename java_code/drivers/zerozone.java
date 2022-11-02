@@ -35,6 +35,7 @@ package arcadeflex.v078.drivers;
 public class zerozone
 {
 	
+	VIDEO_START( zerozone );
 	WRITE16_HANDLER( zerozone_tilemap_w );
 	WRITE16_HANDLER( zerozone_tilebank_w );
 	

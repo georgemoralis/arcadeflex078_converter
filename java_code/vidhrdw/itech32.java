@@ -193,7 +193,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( itech32 )
 	{
 		int i;
 	
@@ -232,7 +232,7 @@ public class itech32
 		enable_latch[1] = (itech32_planes > 1) ? 1 : 0;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

@@ -6,3 +6,4 @@
 
 /*----------- defined in vidhrdw/shuuz.c -----------*/
 
+VIDEO_START( shuuz );

@@ -48,6 +48,7 @@ public class gumbo
 	
 	WRITE16_HANDLER( gumbo_bg_videoram_w );
 	WRITE16_HANDLER( gumbo_fg_videoram_w );
+	VIDEO_START( gumbo );
 	
 	static MEMORY_READ16_START( gumbo_readmem )
 		{ 0x000000, 0x03ffff, MRA16_ROM },

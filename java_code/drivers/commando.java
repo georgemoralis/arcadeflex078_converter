@@ -53,6 +53,8 @@ public class commando
 	
 	
 	
+	VIDEO_START( commando );
+	VIDEO_EOF( commando );
 	
 	
 	

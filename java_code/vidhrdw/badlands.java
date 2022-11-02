@@ -47,7 +47,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_badlands  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( badlands )
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -96,7 +96,7 @@ public class badlands
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	

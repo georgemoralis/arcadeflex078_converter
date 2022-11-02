@@ -1404,7 +1404,7 @@ public class namcos22
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( namcos22s )
 	{
 		mpMatrix = auto_malloc(sizeof(struct Matrix)*MAX_CAMERA);
 		if (mpMatrix != 0)
@@ -1450,7 +1450,7 @@ public class namcos22
 			}
 		}
 		return -1; /* error */
-	} };
+	}
 	
 	public static VideoUpdateHandlerPtr video_update_namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

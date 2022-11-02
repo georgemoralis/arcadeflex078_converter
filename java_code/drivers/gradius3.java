@@ -29,6 +29,7 @@ public class gradius3
 {
 	
 	
+	VIDEO_START( gradius3 );
 	READ16_HANDLER( gradius3_gfxrom_r );
 	READ16_HANDLER( gradius3_gfxram_r );
 	WRITE16_HANDLER( gradius3_gfxram_w );

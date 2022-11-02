@@ -6,3 +6,4 @@
 
 /*----------- defined in vidhrdw/xybots.c -----------*/
 
+VIDEO_START( xybots );

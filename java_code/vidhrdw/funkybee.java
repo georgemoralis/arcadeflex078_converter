@@ -104,7 +104,7 @@ public class funkybee
 		return 256 * row + col;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_funkybee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( funkybee )
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, funkybee_tilemap_scan,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -113,7 +113,7 @@ public class funkybee
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	static void funkybee_draw_sprites( struct mame_bitmap *bitmap )
 	{

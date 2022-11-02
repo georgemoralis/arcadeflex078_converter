@@ -91,6 +91,7 @@ public class nbmj8991
 	#define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 	
 	
+	VIDEO_START( pstadium );
 	
 	void pstadium_radrx_w(int data);
 	void pstadium_radry_w(int data);

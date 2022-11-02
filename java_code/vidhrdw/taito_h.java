@@ -79,29 +79,29 @@ public class taito_h
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( syvalion )
 	{
 		if ( TC0080VCO_vh_start(0,1,1,1,-2))
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( recordbr )
 	{
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( dleague )
 	{
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

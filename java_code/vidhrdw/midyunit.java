@@ -80,7 +80,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	static public static VideoUpdateHandlerPtr video_update_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static VIDEO_START( common )
 	{
 		/* allocate memory */
 		midyunit_cmos_ram = auto_malloc(0x2000 * 4);
@@ -106,10 +106,10 @@ public class midyunit
 		/* set up scanline 0 timer */
 		timer_set(cpu_getscanlinetime(0), 0, scanline0_callback);
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_midyunit_4bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( midyunit_4bit )
 	{
 		int result = video_start_common();
 		int i;
@@ -124,10 +124,10 @@ public class midyunit
 		palette_mask = 0x00ff;
 	
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_midyunit_6bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( midyunit_6bit )
 	{
 		int result = video_start_common();
 		int i;
@@ -142,10 +142,10 @@ public class midyunit
 		palette_mask = 0x0fff;
 	
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_midzunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( midzunit )
 	{
 		int result = video_start_common();
 		int i;
@@ -160,7 +160,7 @@ public class midyunit
 		palette_mask = 0x1fff;
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -776,11 +776,11 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_midyunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( midyunit )
 	{
 		/* finish updating/autoerasing, even if we skipped a frame */
 		update_partial(Machine.visible_area.max_y, 0);
-	} };
+	}
 	
 	
 	static void scanline0_callback(int param)

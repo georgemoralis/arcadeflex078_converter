@@ -199,7 +199,7 @@ public class bwing
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bwing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( bwing )
 	{
 		UINT32 *dwptr;
 		int i;
@@ -232,7 +232,7 @@ public class bwing
 		}
 	
 		return(0);
-	} };
+	}
 	
 	//****************************************************************************
 	// Realtime

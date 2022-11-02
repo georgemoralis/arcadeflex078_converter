@@ -8,3 +8,4 @@
 
 
 MACHINE_INIT( skydiver );
+VIDEO_START( skydiver );

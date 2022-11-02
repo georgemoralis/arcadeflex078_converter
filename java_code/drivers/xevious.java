@@ -211,6 +211,7 @@ public class xevious
 	MACHINE_INIT( xevious );
 	
 	
+	VIDEO_START( xevious );
 	
 	
 	

@@ -88,11 +88,17 @@ enum {
 
 /*********************************************/
 
+VIDEO_START( namcos21 );
 
+VIDEO_START( namcos2 );
 
+VIDEO_START( finallap );
 
+VIDEO_START( luckywld );
 
+VIDEO_START( metlhawk );
 
+VIDEO_START( sgunner );
 
 /* MACHINE */
 

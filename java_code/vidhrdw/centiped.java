@@ -55,7 +55,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_centiped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( centiped )
 	{
 		tilemap = tilemap_create(centiped_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 		if (tilemap == 0)
@@ -63,10 +63,10 @@ public class centiped
 	
 		centiped_flipscreen = 0;
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_warlords  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( warlords )
 	{
 		tilemap = tilemap_create(warlords_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 		if (tilemap == 0)
@@ -75,10 +75,10 @@ public class centiped
 		/* we overload centiped_flipscreen here to track the cocktail/upright state */
 		centiped_flipscreen = readinputport(0) & 0x80;
 		return 0;
-	} };
+	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_milliped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( milliped )
 	{
 		tilemap = tilemap_create(milliped_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 		if (tilemap == 0)
@@ -86,7 +86,7 @@ public class centiped
 	
 		centiped_flipscreen = 0;
 		return 0;
-	} };
+	}
 	
 	
 	

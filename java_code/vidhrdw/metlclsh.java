@@ -153,7 +153,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( metlclsh )
 	{
 		metlclsh_otherram = auto_malloc(0x800);	// banked ram
 	
@@ -167,7 +167,7 @@ public class metlclsh
 		tilemap_set_transparent_pen( fg_tilemap, 0 );
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

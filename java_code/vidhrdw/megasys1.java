@@ -252,7 +252,7 @@ public class megasys1
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( megasys1 )
 	{
 		int i;
 	
@@ -301,7 +301,7 @@ public class megasys1
 			hardware_type_z = 1;
 	
 	 	return 0;
-	} };
+	}
 	
 	/***************************************************************************
 	

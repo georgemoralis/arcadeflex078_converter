@@ -189,6 +189,7 @@ public class ms32
 	READ32_HANDLER( ms32_priram_r );
 	WRITE32_HANDLER( ms32_priram_w );
 	WRITE32_HANDLER( ms32_gfxctrl_w );
+	VIDEO_START( ms32 );
 	
 	static data32_t *ms32_fc000000;
 	

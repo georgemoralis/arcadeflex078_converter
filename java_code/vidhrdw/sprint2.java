@@ -29,7 +29,7 @@ public class sprint2
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sprint2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( sprint2 )
 	{
 		helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
@@ -46,7 +46,7 @@ public class sprint2
 		}
 	
 		return 0;
-	} };
+	}
 	
 	
 	public static ReadHandlerPtr sprint2_collision1_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -143,7 +143,7 @@ public class sprint2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sprint2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_EOF( sprint2 )
 	{
 		int i;
 		int j;
@@ -214,5 +214,5 @@ public class sprint2
 	
 			collision[i] |= collision_check(&rect);
 		}
-	} };
+	}
 }

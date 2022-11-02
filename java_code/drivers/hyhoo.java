@@ -34,6 +34,7 @@ public class hyhoo
 	#define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 	
 	
+	VIDEO_START( hyhoo );
 	
 	void hyhoo_radrx_w(int data);
 	void hyhoo_radry_w(int data);

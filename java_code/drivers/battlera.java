@@ -29,6 +29,7 @@ package arcadeflex.v078.drivers;
 public class battlera
 {
 	
+	VIDEO_START( battlera );
 	
 	
 	

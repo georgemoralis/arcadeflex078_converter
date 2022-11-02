@@ -275,7 +275,7 @@ public class omegaf
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( omegaf )
 	{
 		scrollx_mask = 0x07ff;
 		bank_mask = 7;
@@ -298,9 +298,9 @@ public class omegaf
 		tilemap_set_transparent_pen( bg2_tilemap, 15 );
 	
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_robokid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( robokid )
 	{
 		scrollx_mask = 0x01ff;
 		bank_mask = 1;
@@ -323,7 +323,7 @@ public class omegaf
 		tilemap_set_transparent_pen( bg2_tilemap, 15 );
 	
 		return 0;
-	} };
+	}
 	
 	
 	/***************************************************************************

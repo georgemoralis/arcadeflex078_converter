@@ -97,10 +97,10 @@ public class gcpinbal
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gcpinbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( gcpinbal )
 	{
 		return (gcpinbal_core_vh_start());
-	} };
+	}
 	
 	VIDEO_STOP (void)
 	{

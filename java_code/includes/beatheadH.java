@@ -7,6 +7,7 @@
 /*----------- defined in vidhrdw/beathead.c -----------*/
 
 
+VIDEO_START( beathead );
 
 void beathead_scanline_update(int scanline);
 

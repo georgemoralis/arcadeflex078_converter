@@ -195,7 +195,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_crgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	VIDEO_START( crgolf )
 	{
 		/* allocate temporary bitmaps */
 		screena = auto_bitmap_alloc(256, 256);
@@ -210,7 +210,7 @@ public class crgolf
 		fillbitmap(highbit, 16, NULL);
 	
 		return 0;
-	} };
+	}
 	
 	
 	
