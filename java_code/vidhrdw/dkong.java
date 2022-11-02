@@ -359,7 +359,7 @@ public class dkong
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 	
 		/* Draw the sprites. */
-		for (offs = 0;offs < spriteram_size;offs += 4)
+		for (offs = 0;offs < spriteram_size[0];offs += 4)
 		{
 			if (spriteram.read(offs))
 			{

@@ -82,6 +82,12 @@ public class convertMame {
                 }
                 case 's': {
                     i = Convertor.inpos;
+                    if (type == WRITE_HANDLER8 || type == VIDEO_UPDATE) {
+                        if (sUtil.getToken("spriteram_size")) {
+                            sUtil.putString((new StringBuilder()).append("spriteram_size[0]").toString());
+                            continue;
+                        }
+                    }
                     if (sUtil.getToken("spriteram")) {
                         if (sUtil.parseChar() != '[') {
                             Convertor.inpos = i;

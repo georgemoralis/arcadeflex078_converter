@@ -487,7 +487,7 @@ public class tetrisp2
 		else if (asc_pri == 2)
 			tilemap_draw(bitmap,cliprect, tilemap_fg,  0, 1 << 2);
 	
-		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size, 0);
+		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size[0], 0);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -571,6 +571,6 @@ public class tetrisp2
 		else if (asc_pri == 2)
 			tilemap_draw(bitmap,cliprect, tilemap_fg,  0, 1 << 2);
 	
-		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size, 0);
+		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size[0], 0);
 	} };
 }

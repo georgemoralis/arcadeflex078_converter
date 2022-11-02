@@ -91,7 +91,7 @@ public class gyruss
 	
 	public static VideoUpdateHandlerPtr video_update_gyruss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		sprite_mux_buffer = auto_malloc(256 * spriteram_size);
+		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
 	
 		if (!sprite_mux_buffer)
 			return 1;

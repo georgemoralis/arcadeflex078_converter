@@ -248,7 +248,7 @@ public class slapfght
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
 	
 		/* Draw the sprites */
-		for (offs = 0;offs < spriteram_size;offs += 4)
+		for (offs = 0;offs < spriteram_size[0];offs += 4)
 		{
 			if (flipscreen != 0)
 				drawgfx(bitmap,Machine.gfx[2],

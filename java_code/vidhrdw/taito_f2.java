@@ -843,10 +843,10 @@ public class taito_f2
 		taitof2_update_sprites_active_area();
 	
 		prepare_sprites = 0;
-		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size);
-		for (i = 0;i < spriteram_size/2;i++)
+		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size[0]);
+		for (i = 0;i < spriteram_size[0]/2;i++)
 			spriteram_buffered[i] = spriteram16[i];
-		memcpy(spriteram_delayed,spriteram16,spriteram_size);
+		memcpy(spriteram_delayed,spriteram16,spriteram_size[0]);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_taitof2_partial_buffer_delayed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -856,10 +856,10 @@ public class taito_f2
 		taitof2_update_sprites_active_area();
 	
 		prepare_sprites = 0;
-		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size);
-		for (i = 0;i < spriteram_size/2;i += 4)
+		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size[0]);
+		for (i = 0;i < spriteram_size[0]/2;i += 4)
 			spriteram_buffered[i] = spriteram16[i];
-		memcpy(spriteram_delayed,spriteram16,spriteram_size);
+		memcpy(spriteram_delayed,spriteram16,spriteram_size[0]);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_taitof2_partial_buffer_delayed_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -869,14 +869,14 @@ public class taito_f2
 		taitof2_update_sprites_active_area();
 	
 		prepare_sprites = 0;
-		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size);
-		for (i = 0;i < spriteram_size/2;i += 8)
+		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size[0]);
+		for (i = 0;i < spriteram_size[0]/2;i += 8)
 		{
 			spriteram_buffered[i]   = spriteram16[i];
 			spriteram_buffered[i+1] = spriteram16[i+1];
 			spriteram_buffered[i+4] = spriteram16[i+4];
 		}
-		memcpy(spriteram_delayed,spriteram16,spriteram_size);
+		memcpy(spriteram_delayed,spriteram16,spriteram_size[0]);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_taitof2_partial_buffer_delayed_qzchikyu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -889,8 +889,8 @@ public class taito_f2
 		taitof2_update_sprites_active_area();
 	
 		prepare_sprites = 0;
-		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size);
-		for (i = 0;i < spriteram_size/2;i += 8)
+		memcpy(spriteram_buffered,spriteram_delayed,spriteram_size[0]);
+		for (i = 0;i < spriteram_size[0]/2;i += 8)
 		{
 			spriteram_buffered[i]   = spriteram16[i];
 			spriteram_buffered[i+1] = spriteram16[i+1];
@@ -899,7 +899,7 @@ public class taito_f2
 			spriteram_buffered[i+6] = spriteram16[i+6];	// not needed?
 			spriteram_buffered[i+7] = spriteram16[i+7];	// not needed?
 		}
-		memcpy(spriteram_delayed,spriteram16,spriteram_size);
+		memcpy(spriteram_delayed,spriteram16,spriteram_size[0]);
 	} };
 	
 	

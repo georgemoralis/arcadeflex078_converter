@@ -243,7 +243,7 @@ public class matmania
 	
 	
 		/* Draw the sprites */
-		for (offs = 0;offs < spriteram_size;offs += 4)
+		for (offs = 0;offs < spriteram_size[0];offs += 4)
 		{
 			if (spriteram.read(offs)& 0x01)
 			{
@@ -339,7 +339,7 @@ public class matmania
 	
 	
 		/* Draw the sprites */
-		for (offs = 0;offs < spriteram_size;offs += 4)
+		for (offs = 0;offs < spriteram_size[0];offs += 4)
 		{
 			if (spriteram.read(offs)& 0x01)
 			{

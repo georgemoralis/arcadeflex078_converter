@@ -88,7 +88,7 @@ public class shadfrce
 	
 		shadfrce_bg1tilemap = tilemap_create(get_shadfrce_bg1tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 16, 16,32,32);
 	
-		shadfrce_spvideoram_old = auto_malloc(spriteram_size);
+		shadfrce_spvideoram_old = auto_malloc(spriteram_size[0]);
 	
 		return 0;
 	} };
@@ -191,6 +191,6 @@ public class shadfrce
 	public static VideoUpdateHandlerPtr video_update_shadfrce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* looks like sprites are *two* frames ahead */
-		memcpy(shadfrce_spvideoram_old,shadfrce_spvideoram,spriteram_size);
+		memcpy(shadfrce_spvideoram_old,shadfrce_spvideoram,spriteram_size[0]);
 	} };
 }

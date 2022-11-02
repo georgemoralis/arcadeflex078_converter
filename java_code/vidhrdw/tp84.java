@@ -243,7 +243,7 @@ public class tp84
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
-		sprite_mux_buffer = auto_malloc(256 * spriteram_size);
+		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
 	
 		if (!sprite_mux_buffer)
 			return 1;

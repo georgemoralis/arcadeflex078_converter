@@ -309,7 +309,7 @@ public class rallyx
 	
 	
 		/* draw the sprites */
-		for (offs = 0;offs < spriteram_size;offs += 2)
+		for (offs = 0;offs < spriteram_size[0];offs += 2)
 		{
 			sx = spriteram.read(offs + 1)+ ((spriteram_2.read(offs + 1)& 0x80) << 1) - displacement;
 			sy = 225 - spriteram_2.read(offs)- displacement;
@@ -471,7 +471,7 @@ public class rallyx
 	
 	
 		/* draw the sprites */
-		for (offs = 0;offs < spriteram_size;offs += 2)
+		for (offs = 0;offs < spriteram_size[0];offs += 2)
 		{
 			sx = spriteram.read(offs + 1)+ ((spriteram_2.read(offs + 1)& 0x80) << 1) - displacement;
 			sy = 225 - spriteram_2.read(offs)- displacement;
@@ -611,7 +611,7 @@ public class rallyx
 	
 	
 		/* draw the sprites */
-		for (offs = 0;offs < spriteram_size;offs += 2)
+		for (offs = 0;offs < spriteram_size[0];offs += 2)
 		{
 			sx = spriteram.read(offs + 1)+ ((spriteram_2.read(offs + 1)& 0x80) << 1) - displacement;
 			sy = 225 - spriteram_2.read(offs)- displacement;
@@ -750,7 +750,7 @@ public class rallyx
 	
 	
 		/* draw the sprites */
-		for (offs = 0;offs < spriteram_size;offs += 2)
+		for (offs = 0;offs < spriteram_size[0];offs += 2)
 		{
 			int flipx,flipy;
 	

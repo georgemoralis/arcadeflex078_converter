@@ -908,7 +908,7 @@ public class deco32
 	
 	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
+		memcpy(buffered_spriteram32,spriteram32,spriteram_size[0]);
 		deco32_raster_display_position=0;
 	} };
 	

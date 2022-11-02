@@ -264,7 +264,7 @@ public class pengo
 		{
 			/* Draw the sprites. Note that it is important to draw them exactly in this */
 			/* order, to have the correct priorities. */
-			for (offs = spriteram_size - 2;offs > 2*2;offs -= 2)
+			for (offs = spriteram_size[0] - 2;offs > 2*2;offs -= 2)
 			{
 				int sx,sy;
 	
@@ -377,7 +377,7 @@ public class pengo
 	
 	    /* Draw the sprites. Note that it is important to draw them exactly in this */
 		/* order, to have the correct priorities. */
-		for (offs = spriteram_size - 2;offs >= 0;offs -= 2)
+		for (offs = spriteram_size[0] - 2;offs >= 0;offs -= 2)
 		{
 			int sx,sy;
 	
@@ -473,7 +473,7 @@ public class pengo
 	
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);
 	
-		for (offs = spriteram_size - 2;offs > 2*2;offs -= 2)
+		for (offs = spriteram_size[0] - 2;offs > 2*2;offs -= 2)
 		{
 			int sx,sy;
 	

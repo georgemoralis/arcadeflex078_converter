@@ -120,11 +120,11 @@ public class carjmbre
 		//----x--- ?? probably colour
 		//-----xxx colour
 		//+3       x pos
-		for (offs = spriteram_size-4; offs >= 0; offs-=4)
+		for (offs = spriteram_size[0]-4; offs >= 0; offs-=4)
 		{
 			//before copying the sprites to spriteram the game reorders the first
 			//sprite to last, sprite ordering is incorrect if this isn't undone
-			troffs=(offs-4+spriteram_size)%spriteram_size;
+			troffs=(offs-4+spriteram_size[0])%spriteram_size[0];
 	
 			//unused sprites are marked with ypos <= 0x02 (or >= 0xfd if screen flipped)
 			if (spriteram.read(troffs)> 0x02 && spriteram.read(troffs)< 0xfd)

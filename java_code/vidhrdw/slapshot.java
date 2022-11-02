@@ -41,8 +41,8 @@ public class slapshot
 	{
 		int i;
 	
-		spriteram_delayed = auto_malloc(spriteram_size);
-		spriteram_buffered = auto_malloc(spriteram_size);
+		spriteram_delayed = auto_malloc(spriteram_size[0]);
+		spriteram_buffered = auto_malloc(spriteram_size[0]);
 		spritelist = auto_malloc(0x400 * sizeof(*spritelist));
 	
 		if (!spriteram_delayed || !spriteram_buffered || !spritelist)
@@ -72,8 +72,8 @@ public class slapshot
 		state_save_register_UINT16("main3", 0, "control", spritebank, 8);
 		state_save_register_int   ("main5", 0, "control", &sprites_disabled);
 		state_save_register_int   ("main6", 0, "control", &sprites_active_area);
-		state_save_register_UINT16("main7", 0, "memory", spriteram_delayed, spriteram_size/2);
-		state_save_register_UINT16("main8", 0, "memory", spriteram_buffered, spriteram_size/2);
+		state_save_register_UINT16("main7", 0, "memory", spriteram_delayed, spriteram_size[0]/2);
+		state_save_register_UINT16("main8", 0, "memory", spriteram_buffered, spriteram_size[0]/2);
 	
 		return 0;
 	} };

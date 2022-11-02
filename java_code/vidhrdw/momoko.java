@@ -229,7 +229,7 @@ public class momoko
 	
 	/* draw sprites (others) */
 	
-		for (offs=9*4; offs<spriteram_size; offs +=4)
+		for (offs=9*4; offs<spriteram_size[0]; offs +=4)
 		{
 			chr = spriteram.read(offs+1)| ((spriteram.read(offs+2)&0x60)<<3);
 			chr = ((chr & 0x380) << 1) | (chr & 0x7f);

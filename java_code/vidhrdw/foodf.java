@@ -121,7 +121,7 @@ public class foodf
 		tilemap_draw(bitmap, cliprect, atarigen_playfield_tilemap, 0,0);
 	
 		/* walk the motion object list. */
-		for (offs = 0; offs < spriteram_size / 4; offs += 2)
+		for (offs = 0; offs < spriteram_size[0] / 4; offs += 2)
 		{
 			int data1 = spriteram16[offs];
 			int data2 = spriteram16[offs+1];
