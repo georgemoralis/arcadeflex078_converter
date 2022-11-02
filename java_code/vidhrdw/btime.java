@@ -142,7 +142,7 @@ public class btime
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (video_start_generic() != 0)
+	    if (video_start_generic.handler() != 0)
 	        return 1;
 	
 	    if ((dirtybuffer2 = auto_malloc(bnj_backgroundram_size)) == 0)
@@ -164,7 +164,7 @@ public class btime
 	    bnj_scroll1 = 0;
 	    bnj_scroll2 = 0;
 	
-	    return video_start_generic();
+	    return video_start_generic.handler();
 	} };
 	
 	

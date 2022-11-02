@@ -88,7 +88,7 @@ public class digdug
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_digdug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_generic() != 0)
+		if (video_start_generic.handler() != 0)
 			return 1;
 	
 		pflastindex = -1;

@@ -397,6 +397,10 @@ public class convertMame {
                 }
                 case 'v':
                     int j = Convertor.inpos;
+                    if (sUtil.getToken("video_start_generic")) {
+                        sUtil.putString((new StringBuilder()).append("video_start_generic.handler").toString());
+                        continue;
+                    }
                     if (type == VIDEO_UPDATE) {
                         if (sUtil.getToken("videoram_size")) {
                             sUtil.putString((new StringBuilder()).append("videoram_size[0]").toString());

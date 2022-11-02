@@ -188,7 +188,7 @@ public class exerion
 			}
 		}
 	
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	

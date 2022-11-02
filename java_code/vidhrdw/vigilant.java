@@ -47,7 +47,7 @@ public class vigilant
 	
 	public static VideoUpdateHandlerPtr video_update_vigilant  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		video_start_generic();
+		video_start_generic.handler();
 	
 		if ((bg_bitmap = auto_bitmap_alloc(512*3,256)) == 0)
 			return 1;

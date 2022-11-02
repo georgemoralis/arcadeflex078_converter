@@ -65,7 +65,7 @@ public class malzak
 	
 	public static VideoUpdateHandlerPtr video_update_malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		video_start_generic();
+		video_start_generic.handler();
 	
 		if ((collision_bitmap = auto_bitmap_alloc_depth(Machine.drv.screen_width,Machine.drv.screen_height,8)) == 0)
 			return 1;

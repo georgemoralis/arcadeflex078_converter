@@ -192,7 +192,7 @@ public class pitnrun
 		tmp_bitmap[2] = auto_bitmap_alloc(128,128);
 		tmp_bitmap[3] = auto_bitmap_alloc(128,128);
 		pitnrun_spotlights();
-		return video_start_generic();
+		return video_start_generic.handler();
 	}
 	
 	static void pitnrun_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )

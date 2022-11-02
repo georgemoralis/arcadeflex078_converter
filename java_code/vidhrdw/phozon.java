@@ -77,7 +77,7 @@ public class phozon
 		spriteram_2 = &phozon_spriteram[0x780+0x800];
 		spriteram_3 = &phozon_spriteram[0x780+0x800+0x800];
 	
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	void phozon_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,

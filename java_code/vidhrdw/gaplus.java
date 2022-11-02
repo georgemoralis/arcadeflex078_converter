@@ -266,7 +266,7 @@ public class gaplus
 	
 		starfield_init();
 	
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	/***************************************************************************

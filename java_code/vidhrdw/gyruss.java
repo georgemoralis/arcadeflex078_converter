@@ -96,7 +96,7 @@ public class gyruss
 		if (!sprite_mux_buffer)
 			return 1;
 	
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	

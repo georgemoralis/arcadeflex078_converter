@@ -208,7 +208,7 @@ public class mpatrol
 		int i,j;
 	
 	
-		if (video_start_generic() != 0)
+		if (video_start_generic.handler() != 0)
 			return 1;
 	
 		/* prepare the background graphics */

@@ -45,7 +45,7 @@ public class flstory
 	
 		paletteram = auto_malloc(0x200);
 		paletteram_2 = auto_malloc(0x200);
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	public static WriteHandlerPtr flstory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

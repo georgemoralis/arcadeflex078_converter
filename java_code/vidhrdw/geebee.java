@@ -55,7 +55,7 @@ public class geebee
 	
 	public static VideoUpdateHandlerPtr video_update_geebee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if( video_start_generic() )
+		if( video_start_generic.handler() )
 			return 1;
 	
 		/* use an overlay only in upright mode */
@@ -66,7 +66,7 @@ public class geebee
 	
 	public static VideoUpdateHandlerPtr video_update_navalone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if( video_start_generic() )
+		if( video_start_generic.handler() )
 			return 1;
 	
 	    /* overlay? */
@@ -76,7 +76,7 @@ public class geebee
 	
 	public static VideoUpdateHandlerPtr video_update_sos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if( video_start_generic() )
+		if( video_start_generic.handler() )
 			return 1;
 	
 	    /* overlay? */
@@ -86,7 +86,7 @@ public class geebee
 	
 	public static VideoUpdateHandlerPtr video_update_kaitei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if( video_start_generic() )
+		if( video_start_generic.handler() )
 		return 1;
 	
 	    /* overlay? */

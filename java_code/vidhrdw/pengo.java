@@ -162,7 +162,7 @@ public class pengo
 		gfx_bank = 0;
 		xoffsethack = 0;
 	
-	    return video_start_generic();
+	    return video_start_generic.handler();
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_pacman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -172,7 +172,7 @@ public class pengo
 		/* one pixel to the left to get a more correct placement */
 		xoffsethack = 1;
 	
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	

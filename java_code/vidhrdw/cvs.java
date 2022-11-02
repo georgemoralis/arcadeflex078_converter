@@ -375,7 +375,7 @@ public class cvs
 		int generator = 0;
 	    int x,y;
 	
-		video_start_generic();
+		video_start_generic.handler();
 	
 		/* precalculate the star background */
 	

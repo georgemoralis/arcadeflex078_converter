@@ -79,7 +79,7 @@ public class nycaptor
 		paletteram = auto_malloc(0x200);
 		paletteram_2 = auto_malloc(0x200);
 		tilemap_set_scroll_cols(tilemap,32);
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	public static WriteHandlerPtr nycaptor_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -104,7 +104,7 @@ public class gunsmoke
 		if ((bgbitmap = auto_bitmap_alloc(9*32,9*32)) == 0)
 			return 1;
 	
-		if (video_start_generic() == 1)
+		if (video_start_generic.handler() == 1)
 			return 1;
 	
 		memset (bgmap, 0xff, sizeof (bgmap));

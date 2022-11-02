@@ -37,7 +37,7 @@ public class _4enraya
 	public static VideoUpdateHandlerPtr video_update_4enraya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
-		return video_start_generic();
+		return video_start_generic.handler();
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_4enraya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

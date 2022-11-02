@@ -84,7 +84,7 @@ public class lazercmd
 	
 	public static VideoUpdateHandlerPtr video_update_lazercmd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if( video_start_generic() )
+		if( video_start_generic.handler() )
 			return 1;
 	
 		/* is overlay enabled? */

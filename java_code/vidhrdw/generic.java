@@ -66,7 +66,7 @@ public class generic
 	
 		if (videoram_size[0] == 0)
 		{
-	logerror("Error: video_start_generic() called but videoram_size[0] not initialized\n");
+	logerror("Error: video_start_generic.handler() called but videoram_size[0] not initialized\n");
 			return 1;
 		}
 	
