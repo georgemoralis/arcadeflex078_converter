@@ -196,7 +196,7 @@ public class naughtyb
 			palreg  = (data >> 1) & 0x03;	/* pallette sel is bit 1 & 2 */
 			bankreg = (data >> 2) & 0x01;	/* banksel is just bit 2 */
 	
-			memset (dirtybuffer, 1, videoram_size);
+			memset (dirtybuffer, 1, videoram_size[0]);
 		}
 	} };
 	
@@ -212,7 +212,7 @@ public class naughtyb
 			palreg  = (data >> 1) & 0x03;	/* pallette sel is bit 1 & 2 */
 			bankreg = (data >> 3) & 0x01;	/* banksel is just bit 3 */
 	
-			memset (dirtybuffer, 1, videoram_size);
+			memset (dirtybuffer, 1, videoram_size[0]);
 		}
 	} };
 	

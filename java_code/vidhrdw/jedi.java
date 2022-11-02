@@ -153,7 +153,7 @@ public class jedi
 		if (jedi_alpha_bank != 2 * (data & 0x80))
 		{
 			jedi_alpha_bank = 2 * (data & 0x80);
-			memset(fgdirty, 1, videoram_size);
+			memset(fgdirty, 1, videoram_size[0]);
 		}
 	} };
 	

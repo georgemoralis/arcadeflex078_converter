@@ -116,7 +116,7 @@ public class leprechn
 			// Indicate that the we are busy
 			via_0_ca1_w(0, 1);
 	
-	        memset(videoram, data, videoram_size);
+	        memset(videoram, data, videoram_size[0]);
 	
 	        for (sx = 0; sx < Machine.drv.screen_width; sx++)
 	        {

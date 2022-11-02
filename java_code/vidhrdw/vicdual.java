@@ -125,7 +125,7 @@ public class vicdual
 		if (palette_bank != (data & 3))
 		{
 			palette_bank = data & 3;
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	} };
 	

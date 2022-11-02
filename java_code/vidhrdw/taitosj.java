@@ -285,9 +285,9 @@ public class taitosj
 		if (taitosj_colorbank[offset] != data)
 		{
 	logerror("colorbank %d = %02x\n",offset,data);
-			memset(dirtybuffer,1,videoram_size);
-			memset(dirtybuffer2,1,videoram_size);
-			memset(dirtybuffer3,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
+			memset(dirtybuffer2,1,videoram_size[0]);
+			memset(dirtybuffer3,1,videoram_size[0]);
 	
 			taitosj_colorbank[offset] = data;
 		}
@@ -306,9 +306,9 @@ public class taitosj
 				flipscreen[0] = data & 1;
 				flipscreen[1] = data & 2;
 	
-				memset(dirtybuffer,1,videoram_size);
-				memset(dirtybuffer2,1,videoram_size);
-				memset(dirtybuffer3,1,videoram_size);
+				memset(dirtybuffer,1,videoram_size[0]);
+				memset(dirtybuffer2,1,videoram_size[0]);
+				memset(dirtybuffer3,1,videoram_size[0]);
 			}
 	
 			taitosj_video_enable = data;

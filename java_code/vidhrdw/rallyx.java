@@ -205,8 +205,8 @@ public class rallyx
 		if (flip_screen != (data & 1))
 		{
 			flip_screen_set(data & 1);
-			memset(dirtybuffer,1,videoram_size);
-			memset(dirtybuffer2,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
+			memset(dirtybuffer2,1,videoram_size[0]);
 		}
 	} };
 	

@@ -60,7 +60,7 @@ public class carjmbre
 	
 		if(oldbg!=carjmbre_bgcolor)
 		{
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 	
 			for (i=0;i<64;i+=4)
 				palette_set_color(i, (carjmbre_bgcolor&0xff)*0x50, (carjmbre_bgcolor&0xff)*0x50, (carjmbre_bgcolor&0xff)!=0?0x50:0);

@@ -95,7 +95,7 @@ public class finalizr
 		if (charbank != (data & 3))
 		{
 			charbank = data & 3;
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	
 		spriterambank = data & 8;

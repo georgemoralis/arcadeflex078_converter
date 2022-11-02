@@ -34,7 +34,7 @@ public class galaga
 	public static WriteHandlerPtr gatsbee_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		galaga_gfxbank = data & 0x1;
-		memset (dirtybuffer, 1, videoram_size);
+		memset (dirtybuffer, 1, videoram_size[0]);
 	} };
 	
 	/***************************************************************************

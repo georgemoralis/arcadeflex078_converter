@@ -108,7 +108,7 @@ public class wiz
 			int i;
 	
 	
-			for (i = offset / 2;i < videoram_size;i += 32)
+			for (i = offset / 2;i < videoram_size[0];i += 32)
 			{
 				dirtybuffer[i] = 1;
 			}
@@ -124,7 +124,7 @@ public class wiz
 			palbank[offset] = data & 1;
 			palette_bank = palbank[0] + 2 * palbank[1];
 	
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	} };
 	
@@ -138,7 +138,7 @@ public class wiz
 		if (char_bank[offset] != (data & 1))
 		{
 			char_bank[offset] = data & 1;
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	} };
 	
@@ -148,7 +148,7 @@ public class wiz
 	    {
 			flipx = data;
 	
-			memset(dirtybuffer, 1, videoram_size);
+			memset(dirtybuffer, 1, videoram_size[0]);
 	    }
 	} };
 	
@@ -159,7 +159,7 @@ public class wiz
 	    {
 			flipy = data;
 	
-			memset(dirtybuffer, 1, videoram_size);
+			memset(dirtybuffer, 1, videoram_size[0]);
 	    }
 	} };
 	

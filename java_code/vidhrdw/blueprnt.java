@@ -72,13 +72,13 @@ public class blueprnt
 		if (flipscreen != (~data & 2))
 		{
 			flipscreen = ~data & 2;
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	
 		if (gfx_bank != ((data & 4) >> 2))
 		{
 			gfx_bank = ((data & 4) >> 2);
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	} };
 	

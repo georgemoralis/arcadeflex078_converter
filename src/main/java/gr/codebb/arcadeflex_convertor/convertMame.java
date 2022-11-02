@@ -437,7 +437,7 @@ public class convertMame {
                         sUtil.putString((new StringBuilder()).append("video_start_generic.handler").toString());
                         continue;
                     }
-                    if (type == VIDEO_UPDATE || type == VIDEO_START) {
+                    if (type == VIDEO_UPDATE || type == VIDEO_START || type == WRITE_HANDLER8) {
                         if (sUtil.getToken("videoram_size")) {
                             sUtil.putString((new StringBuilder()).append("videoram_size[0]").toString());
                             continue;

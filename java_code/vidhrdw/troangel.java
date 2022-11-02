@@ -120,7 +120,7 @@ public class troangel
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	
 		coin_counter_w(0,data & 0x02);

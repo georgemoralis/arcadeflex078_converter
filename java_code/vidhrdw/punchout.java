@@ -333,7 +333,7 @@ public class punchout
 		if (top_palette_bank != ((data >> 1) & 0x01))
 		{
 			top_palette_bank = (data >> 1) & 0x01;
-			memset(dirtybuffer,1,videoram_size);
+			memset(dirtybuffer,1,videoram_size[0]);
 		}
 		if (bottom_palette_bank != ((data >> 0) & 0x01))
 		{
