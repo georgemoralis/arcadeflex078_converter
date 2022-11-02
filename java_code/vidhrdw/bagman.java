@@ -32,9 +32,9 @@ public class bagman
 	
 	public static WriteHandlerPtr bagman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -106,9 +106,9 @@ public class bagman
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int gfxbank = (Machine.gfx[2] && (colorram[tile_index] & 0x10)) ? 2 : 0;
-		int code = videoram.read(tile_index)+ 8 * (colorram[tile_index] & 0x20);
-		int color = colorram[tile_index] & 0x0f;
+		int gfxbank = (Machine.gfx[2] && (colorram.read(tile_index)& 0x10)) ? 2 : 0;
+		int code = videoram.read(tile_index)+ 8 * (colorram.read(tile_index)& 0x20);
+		int color = colorram.read(tile_index)& 0x0f;
 	
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}

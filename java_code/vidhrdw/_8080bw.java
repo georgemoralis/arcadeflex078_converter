@@ -357,7 +357,7 @@ public class _8080bw
 		y = offset / 32;
 		x = 8 * (offset % 32);
 	
-		col = colorram[offset & 0x1f1f] & 0x07;
+		col = colorram.read(offset & 0x1f1f)& 0x07;
 	
 		plot_byte(x, y, data, col, background_color);
 	} };
@@ -371,7 +371,7 @@ public class _8080bw
 		y = offset / 32;
 		x = 8 * (offset % 32);
 	
-		col = ~colorram[offset & 0x1f1f] & 0x07;
+		col = ~colorram.read(offset & 0x1f1f)& 0x07;
 	
 		plot_byte(x, y, data, col, 0);
 	} };
@@ -393,7 +393,7 @@ public class _8080bw
 	
 		color_map = memory_region(REGION_PROMS)[(y >> 3 << 5) | (x >> 3)];
 		back_color = (color_map & 1) ? 6 : 2;
-		fore_color = ~colorram[offset & 0x1f1f] & 0x07;
+		fore_color = ~colorram.read(offset & 0x1f1f)& 0x07;
 	
 		/* bit 3 is connected to the cloud enable. bits 1 and 2 are marked 'not use' (sic)
 		   on the schematics */
@@ -451,7 +451,7 @@ public class _8080bw
 		x = 8 * (offset % 32);
 	
 		back_color = 8; /* TRANSPARENT PEN */
-		foreground_color = colorram[offset] & 0x07;
+		foreground_color = colorram.read(offset)& 0x07;
 	
 		plot_byte(x, y, data, foreground_color, back_color);
 	} };
@@ -459,7 +459,7 @@ public class _8080bw
 	
 	public static WriteHandlerPtr helifire_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		colorram[offset] = data;
+		colorram.write(offset,data);
 	
 		/* redraw region with (possibly) changed color */
 		videoram_w_p(offset, videoram.read(offset));
@@ -473,7 +473,7 @@ public class _8080bw
 	
 		offset &= 0x1f1f;
 	
-		colorram[offset] = data;
+		colorram.write(offset,data);
 	
 		/* redraw region with (possibly) changed color */
 		for (i = 0; i < 8; i++, offset += 0x20)
@@ -484,7 +484,7 @@ public class _8080bw
 	
 	public static ReadHandlerPtr schaser_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return colorram[offset & 0x1f1f];
+		return colorram.read(offset & 0x1f1f);
 	} };
 	
 	
@@ -1006,7 +1006,7 @@ public class _8080bw
 		int i;
 		int offs = ((offset>>5)<<8) | (offset&0x1f);
 	
-		colorram[offset] = data;
+		colorram.write(offset,data);
 	
 		/* redraw region with (possibly) changed color */
 		for (i=0; i<8; i++)
@@ -1026,7 +1026,7 @@ public class _8080bw
 		x = offset % 32;
 	
 		/* 32 x 32 colormap */
-		col = colorram[(y >> 3 << 5) | x ] & 0x07;
+		col = colorram.read((y >> 3 << 5) | x )& 0x07;
 	
 		plot_byte(8*x, y, data, col, 0);
 	} };

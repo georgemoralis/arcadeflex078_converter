@@ -162,7 +162,7 @@ public class toypop
 				x = 280 - x;
 				y = 216 - y;
 			}
-			drawgfx(bitmap,Machine.gfx[0],videoram.read(offs),colorram[offs] + 64*palettebank,flipscreen,flipscreen,x,y,0,TRANSPARENCY_PEN,0);
+			drawgfx(bitmap,Machine.gfx[0],videoram.read(offs),colorram.read(offs)+ 64*palettebank,flipscreen,flipscreen,x,y,0,TRANSPARENCY_PEN,0);
 		}
 	}
 	

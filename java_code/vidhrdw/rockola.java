@@ -104,9 +104,9 @@ public class rockola
 	
 	public static WriteHandlerPtr rockola_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
@@ -178,7 +178,7 @@ public class rockola
 	static void get_bg_tile_info(int tile_index)
 	{
 		int code = videoram.read(tile_index)+ 256 * charbank;
-		int color = (colorram[tile_index] & 0x38) >> 3;
+		int color = (colorram.read(tile_index)& 0x38) >> 3;
 	
 		SET_TILE_INFO(1, code, color, 0)
 	}
@@ -186,7 +186,7 @@ public class rockola
 	static void get_fg_tile_info(int tile_index)
 	{
 		int code = rockola_videoram2[tile_index];
-		int color = colorram[tile_index] & 0x07;
+		int color = colorram.read(tile_index)& 0x07;
 	
 		decodechar(Machine.gfx[0], code, rockola_charram, 
 			Machine.drv.gfxdecodeinfo[0].gfxlayout);
@@ -314,7 +314,7 @@ public class rockola
 	static void satansat_get_bg_tile_info(int tile_index)
 	{
 		int code = videoram.read(tile_index);
-		int color = (colorram[tile_index] & 0x0c) >> 2;
+		int color = (colorram.read(tile_index)& 0x0c) >> 2;
 	
 		SET_TILE_INFO(1, code, color, 0)
 	}
@@ -322,7 +322,7 @@ public class rockola
 	static void satansat_get_fg_tile_info(int tile_index)
 	{
 		int code = rockola_videoram2[tile_index];
-		int color = colorram[tile_index] & 0x03;
+		int color = colorram.read(tile_index)& 0x03;
 	
 		decodechar(Machine.gfx[0], code, rockola_charram, 
 			Machine.drv.gfxdecodeinfo[0].gfxlayout);

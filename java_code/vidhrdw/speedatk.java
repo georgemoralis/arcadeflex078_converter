@@ -81,9 +81,9 @@ public class speedatk
 	
 	public static WriteHandlerPtr speedatk_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(tilemap, offset);
 		}
 	} };
@@ -97,9 +97,9 @@ public class speedatk
 	{
 		int code, color, region;
 	
-		code = videoram.read(tile_index)+ ((colorram[tile_index] & 0xe0) << 3);
-		color = colorram[tile_index] & 0x0f;
-		region = (colorram[tile_index] & 0x10) >> 4;
+		code = videoram.read(tile_index)+ ((colorram.read(tile_index)& 0xe0) << 3);
+		color = colorram.read(tile_index)& 0x0f;
+		region = (colorram.read(tile_index)& 0x10) >> 4;
 	
 		color += 2;
 		if (region != 0)

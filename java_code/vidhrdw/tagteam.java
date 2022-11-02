@@ -60,9 +60,9 @@ public class tagteam
 	
 	public static WriteHandlerPtr tagteam_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -134,7 +134,7 @@ public class tagteam
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram.read(tile_index)+ 256 * colorram[tile_index];
+		int code = videoram.read(tile_index)+ 256 * colorram.read(tile_index);
 		int color = palettebank * 2; // GUESS
 	
 		SET_TILE_INFO(0, code, color, 0)

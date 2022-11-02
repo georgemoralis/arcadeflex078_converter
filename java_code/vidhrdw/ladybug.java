@@ -98,9 +98,9 @@ public class ladybug
 	
 	public static WriteHandlerPtr ladybug_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 	
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
@@ -117,8 +117,8 @@ public class ladybug
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram.read(tile_index)+ 32 * (colorram[tile_index] & 0x08);
-		int color = colorram[tile_index] & 0x07;
+		int code = videoram.read(tile_index)+ 32 * (colorram.read(tile_index)& 0x08);
+		int color = colorram.read(tile_index)& 0x07;
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}

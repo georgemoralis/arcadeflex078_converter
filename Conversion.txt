@@ -32,3 +32,4 @@ soundlatch_w ,1,2,3,4 handler
 videoram_w converts to videoram_w.handler
 plotpixel converts to plotpixel.handler
 paletteram,paletteram_2 read/write conversion
+colorram read/write conversion

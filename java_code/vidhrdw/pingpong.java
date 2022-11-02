@@ -112,16 +112,16 @@ public class pingpong
 	
 	public static WriteHandlerPtr pingpong_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int attr = colorram[tile_index];
+		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)+ ((attr & 0x20) << 3);
 		int color = attr & 0x1f; 
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);

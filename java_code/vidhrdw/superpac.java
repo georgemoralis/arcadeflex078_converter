@@ -249,7 +249,7 @@ public class superpac
 					sy = 27 - sy;
 				}
 	
-				drawgfx(tmpbitmap, Machine.gfx[0], videoram.read(offs), colorram[offs],
+				drawgfx(tmpbitmap, Machine.gfx[0], videoram.read(offs), colorram.read(offs),
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
 						Machine.visible_area, TRANSPARENCY_NONE, 0);
 			}
@@ -262,7 +262,7 @@ public class superpac
 	
 		/* Draw the high priority characters */
 		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
-			if (colorram[offs] & 0x40)
+			if (colorram.read(offs)& 0x40)
 			{
 				int sx, sy, mx, my;
 	
@@ -291,7 +291,7 @@ public class superpac
 					sy = 27 - sy;
 				}
 	
-				drawgfx(bitmap, Machine.gfx[0], videoram.read(offs), colorram[offs],
+				drawgfx(bitmap, Machine.gfx[0], videoram.read(offs), colorram.read(offs),
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
 						Machine.visible_area, TRANSPARENCY_COLOR, 31);
 			}

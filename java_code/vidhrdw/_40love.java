@@ -88,7 +88,7 @@ public class _40love
 	static void get_bg_tile_info(int tile_index)
 	{
 		int tile_number = videoram.read(tile_index);
-		int tile_attrib = colorram[(tile_index/64)*2];
+		int tile_attrib = colorram.read((tile_index/64)*2);
 		int tile_h_bank = (tile_attrib&0x40)<<3;	/* 0x40.0x200 */
 		int tile_l_bank = (tile_attrib&0x18)<<3;	/* 0x10.0x80, 0x08.0x40 */
 	
@@ -140,7 +140,7 @@ public class _40love
 	static void fortyl_set_scroll_x(int offset)
 	{
 		int	i = offset & ~1;
-		int x = ((colorram[i] & 0x80) << 1) | colorram[i+1];	/* 9 bits signed */
+		int x = ((colorram.read(i)& 0x80) << 1) | colorram.read(i+1);	/* 9 bits signed */
 	
 		if (fortyl_flipscreen != 0)
 			x += 0x51;
@@ -234,11 +234,11 @@ public class _40love
 	
 	public static WriteHandlerPtr fortyl_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( colorram[offset]!=data )
+		if( colorram.read(offset)!=data )
 		{
 			int i;
 	
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			for (i=(offset/2)*64; i<(offset/2)*64+64; i++)
 				tilemap_mark_tile_dirty(background,i);
 	
@@ -247,7 +247,7 @@ public class _40love
 	} };
 	public static ReadHandlerPtr fortyl_bg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return colorram[offset];
+		return colorram.read(offset);
 	} };
 	
 	/***************************************************************************

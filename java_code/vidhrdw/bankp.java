@@ -109,9 +109,9 @@ public class bankp
 	
 	public static WriteHandlerPtr bankp_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -166,9 +166,9 @@ public class bankp
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int code = videoram.read(tile_index)+ 256 * ((colorram[tile_index] & 3) >> 0);
-		int color = colorram[tile_index] >> 3;
-		int flags = (colorram[tile_index] & 0x04) ? TILE_FLIPX : 0;
+		int code = videoram.read(tile_index)+ 256 * ((colorram.read(tile_index)& 3) >> 0);
+		int color = colorram.read(tile_index)>> 3;
+		int flags = (colorram.read(tile_index)& 0x04) ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
 	}

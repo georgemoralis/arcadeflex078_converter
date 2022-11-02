@@ -156,7 +156,7 @@ public class galivan
 	
 	static void get_tx_tile_info(int tile_index)
 	{
-		int attr = colorram[tile_index];
+		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)| ((attr & 0x01) << 8);
 		SET_TILE_INFO(
 				0,
@@ -180,7 +180,7 @@ public class galivan
 	
 	static void ninjemak_get_tx_tile_info(int tile_index)
 	{
-		int attr = colorram[tile_index];
+		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)| ((attr & 0x03) << 8);
 		SET_TILE_INFO(
 				0,
@@ -242,9 +242,9 @@ public class galivan
 	
 	public static WriteHandlerPtr galivan_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(tx_tilemap,offset);
 		}
 	} };

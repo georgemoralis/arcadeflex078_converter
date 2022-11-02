@@ -104,9 +104,9 @@ public class wilytowr
 	
 	public static WriteHandlerPtr wilytowr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -140,7 +140,7 @@ public class wilytowr
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int attr = colorram[tile_index];
+		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)| ((attr & 0x30) << 4);
 		int color = (attr & 0x0f) + (pal_bank << 4);
 	

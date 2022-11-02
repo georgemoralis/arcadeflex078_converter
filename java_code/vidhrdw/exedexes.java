@@ -109,9 +109,9 @@ public class exedexes
 	
 	public static WriteHandlerPtr exedexes_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(tx_tilemap, offset);
 		}
 	} };
@@ -167,8 +167,8 @@ public class exedexes
 	
 	static void get_tx_tile_info(int tile_index)
 	{
-		int code = videoram.read(tile_index)+ 2 * (colorram[tile_index] & 0x80);
-		int color = colorram[tile_index] & 0x3f;
+		int code = videoram.read(tile_index)+ 2 * (colorram.read(tile_index)& 0x80);
+		int color = colorram.read(tile_index)& 0x3f;
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}

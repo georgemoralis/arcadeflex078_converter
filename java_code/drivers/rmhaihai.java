@@ -51,16 +51,16 @@ public class rmhaihai
 	
 	public static WriteHandlerPtr rmhaihai_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int attr = colorram[tile_index];
+		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)+ (gfxbank << 12) + ((attr & 0x07) << 8) + ((attr & 0x80) << 4);
 		int color = (gfxbank << 5) + (attr >> 3);
 	

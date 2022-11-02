@@ -39,7 +39,7 @@ public class yumefuda
 	static void y_get_bg_tile_info(int tile_index)
 	{
 		int code = videoram.read(tile_index);
-		int color = colorram[tile_index];
+		int color = colorram.read(tile_index);
 	
 		SET_TILE_INFO(
 				0,

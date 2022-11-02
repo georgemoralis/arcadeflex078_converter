@@ -220,7 +220,7 @@ public class cvs
 	    {
 	    	// Colour Map
 	
-	        return colorram[offset];
+	        return colorram.read(offset);
 	    }
 	    else
 	    {
@@ -508,7 +508,7 @@ public class cvs
 	
 	 			drawgfx(tmpbitmap,Machine.gfx[character_bank],
 					    character,
-						colorram[offs],
+						colorram.read(offs),
 					    0,0,
 					    sx,sy,
 					    0,TRANSPARENCY_NONE,0);
@@ -517,14 +517,14 @@ public class cvs
 	            /* Foreground for Collision Detection */
 	
 	            forecolor = 0;
-	            if(colorram[offs] & 0x80)
+	            if(colorram.read(offs)& 0x80)
 	            {
 					forecolor=258;
 	            }
 	            else
 				{
-					if((colorram[offs] & 0x03) == 3) forecolor=256;
-	                else if((colorram[offs] & 0x01) == 0) forecolor=257;
+					if((colorram.read(offs)& 0x03) == 3) forecolor=256;
+	                else if((colorram.read(offs)& 0x01) == 0) forecolor=257;
 	            }
 	
 	            if (forecolor != 0)

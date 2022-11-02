@@ -42,7 +42,7 @@ public class tankbust
 	static void get_bg_tile_info(int tile_index)
 	{
 		int code = videoram.read(tile_index);
-		int attr = colorram[tile_index];
+		int attr = colorram.read(tile_index);
 	
 		int color = ((attr>>4) & 0x07);
 	
@@ -126,15 +126,15 @@ public class tankbust
 	
 	public static WriteHandlerPtr tankbust_background_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( colorram[offset]!=data )
+		if( colorram.read(offset)!=data )
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	public static ReadHandlerPtr tankbust_background_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return colorram[offset];
+		return colorram.read(offset);
 	} };
 	
 	public static WriteHandlerPtr tankbust_txtram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -256,7 +256,7 @@ public class tankbust
 	
 		for (i=0; i<0x800; i++)
 		{
-			int tile_attrib = colorram[i];
+			int tile_attrib = colorram.read(i);
 	
 			if ( (tile_attrib&8) || (tile_attrib&0x80) )
 			{

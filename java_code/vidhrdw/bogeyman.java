@@ -55,9 +55,9 @@ public class bogeyman
 	
 	public static WriteHandlerPtr bogeyman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -88,7 +88,7 @@ public class bogeyman
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int attr = colorram[tile_index];
+		int attr = colorram.read(tile_index);
 		int gfxbank = ((((attr & 0x01) << 8) + videoram.read(tile_index)) / 0x80) + 3;
 		int code = videoram.read(tile_index)& 0x7f;
 		int color = (attr >> 1) & 0x07;

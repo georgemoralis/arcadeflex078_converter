@@ -49,7 +49,7 @@ public class tsamurai
 		SET_TILE_INFO(
 				1,
 				tile_number,
-				colorram[((tile_index&0x1f)*2)+1] & 0x1f,
+				colorram.read(((tile_index&0x1f)*2)+1)& 0x1f,
 				0)
 	}
 	
@@ -133,9 +133,9 @@ public class tsamurai
 	} };
 	public static WriteHandlerPtr tsamurai_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( colorram[offset]!=data )
+		if( colorram.read(offset)!=data )
 		{
-			colorram[offset]=data;
+			colorram.write(offset,data);
 			if ((offset & 1) != 0)
 			{
 				int col = offset/2;
@@ -222,7 +222,7 @@ public class tsamurai
 		tilemap_set_scroll_cols(foreground, 32);
 		for (i = 0 ; i < 32 ; i++)
 		{
-			tilemap_set_scrolly(foreground, i, colorram[i*2]);
+			tilemap_set_scrolly(foreground, i, colorram.read(i*2));
 		}
 	/* end of column scroll code */
 	

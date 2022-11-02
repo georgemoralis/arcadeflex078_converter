@@ -74,15 +74,15 @@ public class seicross
 	
 	public static WriteHandlerPtr seicross_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
 			/* bit 5 of the address is not used for color memory. There is just */
 			/* 512k of memory; every two consecutive rows share the same memory */
 			/* region. */
 			offset &= 0xffdf;
 	
-			colorram[offset] = data;
-			colorram[offset + 0x20] = data;
+			colorram.write(offset,data);
+			colorram.write(offset + 0x20,data);
 	
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 			tilemap_mark_tile_dirty(bg_tilemap, offset + 0x20);
@@ -91,9 +91,9 @@ public class seicross
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = videoram.read(tile_index)+ ((colorram[tile_index] & 0x10) << 4);
-		int color = colorram[tile_index] & 0x0f;
-		int flags = ((colorram[tile_index] & 0x40) ? TILE_FLIPX : 0) | ((colorram[tile_index] & 0x80) ? TILE_FLIPY : 0);
+		int code = videoram.read(tile_index)+ ((colorram.read(tile_index)& 0x10) << 4);
+		int color = colorram.read(tile_index)& 0x0f;
+		int flags = ((colorram.read(tile_index)& 0x40) ? TILE_FLIPX : 0) | ((colorram.read(tile_index)& 0x80) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(0, code, color, flags)
 	}

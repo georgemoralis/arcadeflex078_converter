@@ -51,7 +51,7 @@ public class dribling
 	public static WriteHandlerPtr dribling_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* it is very important that we mask off the two bits here */
-		colorram[offset & 0x1f9f] = data;
+		colorram.write(offset & 0x1f9f,data);
 	} };
 	
 	
@@ -81,7 +81,7 @@ public class dribling
 				int b5 = (x >> 3) & 1;
 				int b4 = (gfxbase[(x >> 3) | (y << 5)] >> (x & 7)) & 1;
 				int b3 = (videoram.read((x >> 3) | (y << 5))>> (x & 7)) & 1;
-				int b2_0 = colorram[(x >> 3) | ((y >> 2) << 7)] & 7;
+				int b2_0 = colorram.read((x >> 3) | ((y >> 2) << 7))& 7;
 	
 				/* assemble the various bits into a palette PROM index */
 				dst[x] = (b7 << 7) | (b6 << 6) | (b5 << 5) | (b4 << 4) | (b3 << 3) | b2_0;

@@ -86,9 +86,9 @@ public class hanaawas
 	
 	public static WriteHandlerPtr hanaawas_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
-			colorram[offset] = data;
+			colorram.write(offset,data);
 	
 			/* dirty both current and next offsets */
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
@@ -110,10 +110,10 @@ public class hanaawas
 	{
 		/* the color is determined by the current color byte, but the bank is via the previous one!!! */
 		int offset = (tile_index + (flip_screen ? 1 : -1)) & 0x3ff;
-		int attr = colorram[offset];
+		int attr = colorram.read(offset);
 		int gfxbank = (attr & 0x40) >> 6;
 		int code = videoram.read(tile_index)+ ((attr & 0x20) << 3);
-		int color = colorram[tile_index] & 0x1f;
+		int color = colorram.read(tile_index)& 0x1f;
 		
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}

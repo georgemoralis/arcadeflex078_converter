@@ -120,10 +120,10 @@ public class mappy
 	
 	public static WriteHandlerPtr mappy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (colorram[offset] != data)
+		if (colorram.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
-			colorram[offset] = data;
+			colorram.write(offset,data);
 		}
 	} };
 	
@@ -232,7 +232,7 @@ public class mappy
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs),
-						colorram[offs] & 0x3f,
+						colorram.read(offs)& 0x3f,
 						flipscreen,flipscreen,8*sx,8*sy,
 						0,TRANSPARENCY_NONE,0);
 			}
@@ -349,7 +349,7 @@ public class mappy
 		/* Draw the high priority characters */
 		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
-			if (colorram[offs] & 0x40)
+			if (colorram.read(offs)& 0x40)
 			{
 				int sx,sy,mx,my;
 	
@@ -395,7 +395,7 @@ public class mappy
 	
 					drawgfx(bitmap,Machine.gfx[0],
 							videoram.read(offs),
-							colorram[offs] & 0x3f,
+							colorram.read(offs)& 0x3f,
 							flipscreen,flipscreen,8*sx,sy,
 							0,TRANSPARENCY_COLOR,31);
 			}
