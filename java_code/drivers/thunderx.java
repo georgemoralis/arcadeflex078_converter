@@ -17,7 +17,7 @@ package arcadeflex.v078.drivers;
 public class thunderx
 {
 	
-	static static static void thunderx_banking(int lines);
+	static void thunderx_banking(int lines);
 	
 	
 	static int unknown_enable = 0;
@@ -969,14 +969,14 @@ public class thunderx
 		cpu_setbank( 1, &RAM[offs] );
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_scontra  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_scontra  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		paletteram = &RAM[0x30000];
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_thunderx  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_thunderx  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	

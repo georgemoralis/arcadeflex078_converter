@@ -313,12 +313,12 @@ public class toaplan2
 	***************************************************************************/
 	
 	
-	static public static MachineInitHandlerPtr machine_init_toaplan2  = new MachineInitHandlerPtr() { public void handler()		/* machine_init_toaplan2(); */
+	public static MachineInitHandlerPtr machine_init_toaplan2  = new MachineInitHandlerPtr() { public void handler()		/* machine_init_toaplan2(); */
 	{
 		mcu_data = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_ghox  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_ghox  = new MachineInitHandlerPtr() { public void handler()
 	{
 		old_p1_paddle_h = 0;
 		old_p1_paddle_v = 0;
@@ -328,7 +328,7 @@ public class toaplan2
 		machine_init_toaplan2();
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_batrider  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_batrider  = new MachineInitHandlerPtr() { public void handler()
 	{
 		current_bank = 2;
 	

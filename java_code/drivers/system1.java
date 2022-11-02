@@ -27,7 +27,7 @@ public class system1
 	
 	
 	
-	static public static MachineInitHandlerPtr machine_init_system1  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_system1  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* skip the long IC CHECK in Teddyboy Blues and Choplifter */
 		/* this is not a ROM patch, the game checks a RAM location */
@@ -38,7 +38,7 @@ public class system1
 		system1_define_background_memory(system1_BACKGROUND_MEMORY_SINGLE);
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_wbml  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_wbml  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* skip the long IC CHECK in Teddyboy Blues and Choplifter */
 		/* this is not a ROM patch, the game checks a RAM location */

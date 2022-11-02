@@ -73,7 +73,7 @@ public class skullxbo
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_skullxbo  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_skullxbo  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);

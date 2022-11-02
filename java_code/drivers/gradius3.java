@@ -78,7 +78,7 @@ public class gradius3
 	static int irqAen,irqBmask;
 	
 	
-	static public static MachineInitHandlerPtr machine_init_gradius3  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_gradius3  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* start with cpu B halted */
 		cpu_set_reset_line(1,ASSERT_LINE);

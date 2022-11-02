@@ -177,7 +177,7 @@ public class atarisy1
 	
 	static void delayed_joystick_int(int param);
 	
-	static public static MachineInitHandlerPtr machine_init_atarisy1  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_atarisy1  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* initialize the system */
 		atarigen_eeprom_reset();

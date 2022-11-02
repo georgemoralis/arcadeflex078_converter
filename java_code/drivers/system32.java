@@ -1045,7 +1045,7 @@ public class system32
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		irq_init();
@@ -1056,7 +1056,7 @@ public class system32
 		system32_screen_old_mode = 1;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_s32hi  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_s32hi  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		irq_init();

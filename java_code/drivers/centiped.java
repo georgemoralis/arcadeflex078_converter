@@ -306,7 +306,7 @@ public class centiped
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_centiped  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_centiped  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime(0), 0, generate_interrupt);
 		cpu_set_irq_line(0, 0, CLEAR_LINE);

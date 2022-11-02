@@ -55,7 +55,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_shuuz  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_shuuz  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 1);

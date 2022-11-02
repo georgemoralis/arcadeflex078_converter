@@ -120,7 +120,7 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_jrpacman  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_jrpacman  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	

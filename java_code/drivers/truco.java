@@ -103,7 +103,7 @@ public class truco
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static public static MachineInitHandlerPtr machine_init_truco  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_truco  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int a;
 		data8_t *	mem = memory_region( REGION_CPU1 );

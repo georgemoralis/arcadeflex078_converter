@@ -324,7 +324,7 @@ public class segac2
 	
 	******************************************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_segac2  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_segac2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* set the first scanline 0 timer to go off */
 		timer_set(cpu_getscanlinetime(0) + cpu_getscanlineperiod() * (320. / 342.), 0, vdp_reload_counter);
@@ -340,7 +340,7 @@ public class segac2
 		swizzle_table_index = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_genesis  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_genesis  = new MachineInitHandlerPtr() { public void handler()
 	{
 	    /* the following ensures that the Z80 begins without running away from 0 */
 		/* 0x76 is just a forced 'halt' as soon as the CPU is initially run */
@@ -361,7 +361,7 @@ public class segac2
 	
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_megaplay  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_megaplay  = new MachineInitHandlerPtr() { public void handler()
 	{
 	//	unsigned char* ram = memory_region(REGION_CPU3);
 	

@@ -390,7 +390,7 @@ public class homedata
 		upd7807_portc = data;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_reikaids_upd7807  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_reikaids_upd7807  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* on reset, ports are set as input (high impedance), therefore 0xff output */
 		reikaids_which=homedata_priority;
@@ -535,7 +535,7 @@ public class homedata
 		upd7807_portc = data;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_pteacher_upd7807  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_pteacher_upd7807  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* on reset, ports are set as input (high impedance), therefore 0xff output */
 		pteacher_upd7807_portc_w(0,0xff);

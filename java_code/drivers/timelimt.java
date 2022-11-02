@@ -27,7 +27,7 @@ public class timelimt
 	
 	static int nmi_enabled = 0;
 	
-	static public static MachineInitHandlerPtr machine_init_timelimt  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_timelimt  = new MachineInitHandlerPtr() { public void handler()
 	{
 		soundlatch_setclearedvalue( 0 );
 		nmi_enabled = 0;

@@ -805,7 +805,7 @@ public class outrun
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_outrun  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_outrun  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[8] = {
 			7,0,1,2,
 			3,4,5,6
@@ -856,7 +856,7 @@ public class outrun
 		sys16_gr_second_road = &sys16_extraram[0x8000];
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_outruna  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_outruna  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[8] = {
 			7,0,1,2,
 			3,4,5,6
@@ -1206,7 +1206,7 @@ public class outrun
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_shangon  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shangon  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_hangon;
 		sys16_sprxoffset = -0xc0;

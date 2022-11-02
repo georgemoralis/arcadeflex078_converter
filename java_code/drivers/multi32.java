@@ -536,7 +536,7 @@ public class multi32
 	MEMORY_END
 	
 	
-	static public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		irq_init();

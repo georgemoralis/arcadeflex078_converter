@@ -62,7 +62,7 @@ public class flyball
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_flyball  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_flyball  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int i;
 	

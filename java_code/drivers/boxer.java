@@ -87,7 +87,7 @@ public class boxer
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_boxer  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_boxer  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime(0), 0, periodic_callback);
 	

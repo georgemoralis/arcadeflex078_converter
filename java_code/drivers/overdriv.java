@@ -163,7 +163,7 @@ public class overdriv
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_overdriv  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_overdriv  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* start with cpu B halted */
 		cpu_set_reset_line(1,ASSERT_LINE);

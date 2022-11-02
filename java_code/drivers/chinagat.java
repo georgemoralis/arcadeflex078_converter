@@ -96,7 +96,7 @@ public class chinagat
 	
 	
 	
-	static public static MachineInitHandlerPtr machine_init_chinagat  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_chinagat  = new MachineInitHandlerPtr() { public void handler()
 	{
 		technos_video_hw = 1;
 		sprite_irq = M6809_IRQ_LINE;

@@ -1588,7 +1588,7 @@ public class deco32
 	
 	/**********************************************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_deco32  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_deco32  = new MachineInitHandlerPtr() { public void handler()
 	{
 		raster_irq_timer = timer_alloc(interrupt_gen);
 	} };

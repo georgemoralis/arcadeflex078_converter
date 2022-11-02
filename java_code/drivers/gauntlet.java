@@ -173,7 +173,7 @@ public class gauntlet
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_gauntlet  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_gauntlet  = new MachineInitHandlerPtr() { public void handler()
 	{
 		last_speech_write = 0x80;
 		sound_reset_val = 1;

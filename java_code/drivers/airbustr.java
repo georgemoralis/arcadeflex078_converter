@@ -209,7 +209,7 @@ public class airbustr
 	
 	
 	
-	static public static MachineInitHandlerPtr machine_init_airbustr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_airbustr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		soundlatch_status = soundlatch2_status = 0;
 		bankswitch_w(0,2);

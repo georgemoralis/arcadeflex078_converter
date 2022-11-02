@@ -152,7 +152,7 @@ public class gridlee
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_gridlee  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_gridlee  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* start timers to generate interrupts */
 		timer_set(cpu_getscanlinetime(0), 0, irq_timer);

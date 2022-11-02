@@ -176,7 +176,7 @@ public class rmhaihai
 		cpu_setbank(2, rom + bank*0x4000 + 0x2000);
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_themj  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_themj  = new MachineInitHandlerPtr() { public void handler()
 	{
 		themj_rombank_w(0,0);
 	} };

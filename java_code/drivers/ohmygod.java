@@ -32,7 +32,7 @@ public class ohmygod
 	static int sndbank;
 	static int nosound_kludge_step;
 	
-	static public static MachineInitHandlerPtr machine_init_ohmygod  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_ohmygod  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_SOUND1);
 	

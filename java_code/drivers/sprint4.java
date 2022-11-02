@@ -101,7 +101,7 @@ public class sprint4
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_sprint4  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_sprint4  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime(32), 32, nmi_callback);
 	

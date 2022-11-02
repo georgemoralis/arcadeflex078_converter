@@ -1485,7 +1485,7 @@ public class mazerbla
 	
 	
 	
-	static public static MachineInitHandlerPtr machine_init_mazerbla  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_mazerbla  = new MachineInitHandlerPtr() { public void handler()
 	{
 		game_id = MAZERBLA;
 		zpu_int_vector = 0xff;
@@ -1493,7 +1493,7 @@ public class mazerbla
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_greatgun  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_greatgun  = new MachineInitHandlerPtr() { public void handler()
 	{
 		game_id = GREATGUN;
 		zpu_int_vector = 0xff;

@@ -825,7 +825,7 @@ public class aburner
 	
 	/***************************************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_aburner  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_aburner  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode = 2;
 		sys16_spritesystem = sys16_sprite_aburner;
 		sys16_sprxoffset = -0xc0;

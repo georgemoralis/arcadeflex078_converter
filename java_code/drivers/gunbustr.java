@@ -374,7 +374,7 @@ public class gunbustr
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_gunbustr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_gunbustr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Sound cpu program loads to 0xc00000 so we use a bank */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU2);

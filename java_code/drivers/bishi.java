@@ -208,7 +208,7 @@ public class bishi
 		PORT_DIPSETTING(    0x00, "7 Kinds");
 	INPUT_PORTS_END(); }}; 
 	
-	static public static MachineInitHandlerPtr machine_init_bishi  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_bishi  = new MachineInitHandlerPtr() { public void handler()
 	{
 	} };
 	

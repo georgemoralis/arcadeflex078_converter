@@ -54,7 +54,7 @@ public class midvunit
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_midvunit  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_midvunit  = new MachineInitHandlerPtr() { public void handler()
 	{
 		dcs_reset_w(1);
 		dcs_reset_w(0);
@@ -67,7 +67,7 @@ public class midvunit
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_midvplus  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_midvplus  = new MachineInitHandlerPtr() { public void handler()
 	{
 		dcs_reset_w(1);
 		dcs_reset_w(0);

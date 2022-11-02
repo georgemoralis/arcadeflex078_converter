@@ -133,7 +133,7 @@ public class sshangha
 	
 	/******************************************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_sshangha  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_sshangha  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Such thing is needed as there is no code to turn the screen
 		   to normal orientation when the game is reset.

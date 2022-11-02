@@ -78,7 +78,7 @@ public class vastar
 	
 	
 	
-	static public static MachineInitHandlerPtr machine_init_vastar  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_vastar  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* we must start with the second CPU halted */
 		cpu_set_reset_line(1,ASSERT_LINE);

@@ -16,7 +16,7 @@ public class rollerg
 {
 	
 	/* prototypes */
-	static static void rollerg_banking( int lines );
+	static void rollerg_banking( int lines );
 	
 	
 	
@@ -357,7 +357,7 @@ public class rollerg
 		cpu_setbank(1,&RAM[offs]);
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_rollerg  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_rollerg  = new MachineInitHandlerPtr() { public void handler()
 	{
 		konami_cpu_setlines_callback = rollerg_banking;
 	

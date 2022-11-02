@@ -133,7 +133,7 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_inufuku  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_inufuku  = new MachineInitHandlerPtr() { public void handler()
 	{
 		;
 	} };

@@ -338,7 +338,7 @@ public class dynax
 		MSM5205_reset_w(0,~data & 1);
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_adpcm  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_adpcm  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* start with the MSM5205 reset */
 		resetkludge = 0;

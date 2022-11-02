@@ -59,7 +59,7 @@ public class ddragon
 	static int VBLK;
 	/* end of private globals */
 	
-	static public static MachineInitHandlerPtr machine_init_ddragon  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_ddragon  = new MachineInitHandlerPtr() { public void handler()
 	{
 		sprite_irq = IRQ_LINE_NMI;
 		sound_irq = M6809_IRQ_LINE;
@@ -70,7 +70,7 @@ public class ddragon
 		snd_cpu = 2;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_toffy  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_toffy  = new MachineInitHandlerPtr() { public void handler()
 	{
 		sound_irq = M6809_IRQ_LINE;
 		ym_irq = M6809_FIRQ_LINE;
@@ -80,7 +80,7 @@ public class ddragon
 		snd_cpu = 1;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_ddragonb  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_ddragonb  = new MachineInitHandlerPtr() { public void handler()
 	{
 		sprite_irq = IRQ_LINE_NMI;
 		sound_irq = M6809_IRQ_LINE;
@@ -91,7 +91,7 @@ public class ddragon
 		snd_cpu = 2;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_ddragon2  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_ddragon2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		sprite_irq = IRQ_LINE_NMI;
 		sound_irq = IRQ_LINE_NMI;

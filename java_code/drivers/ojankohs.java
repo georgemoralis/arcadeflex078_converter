@@ -50,7 +50,7 @@ public class ojankohs
 	static int ojankohs_vclk_left;
 	
 	
-	static public static MachineInitHandlerPtr machine_init_ojankohs  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_ojankohs  = new MachineInitHandlerPtr() { public void handler()
 	{
 		ojankohs_portselect = 0;
 	

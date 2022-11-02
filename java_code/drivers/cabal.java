@@ -56,7 +56,7 @@ public class cabal
 	
 	static int cabal_sound_command1, cabal_sound_command2;
 	
-	static public static MachineInitHandlerPtr machine_init_cabalbl  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cabalbl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cabal_sound_command1 = cabal_sound_command2 = 0xff;
 	} };

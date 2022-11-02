@@ -129,12 +129,12 @@ public class srmp2
 		RAM[0x00000 + 0x7850] = 0x00;							// NOP
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_srmp2  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_srmp2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		srmp2_port_select = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_srmp3  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_srmp3  = new MachineInitHandlerPtr() { public void handler()
 	{
 		srmp2_port_select = 0;
 	} };

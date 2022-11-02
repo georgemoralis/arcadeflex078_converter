@@ -144,7 +144,7 @@ public class itech32
 	
 	static void via6522_timer_callback(int which);
 	
-	static public static MachineInitHandlerPtr machine_init_itech32  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_itech32  = new MachineInitHandlerPtr() { public void handler()
 	{
 		vint_state = xint_state = qint_state = 0;
 		sound_data = 0;

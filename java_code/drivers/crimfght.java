@@ -18,7 +18,7 @@ public class crimfght
 	
 	
 	/* prototypes */
-	static static void crimfght_banking( int lines );
+	static void crimfght_banking( int lines );
 	
 	
 	
@@ -527,7 +527,7 @@ public class crimfght
 		cpu_setbank( 2, &RAM[offs] );
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_crimfght  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_crimfght  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	

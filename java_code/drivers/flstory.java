@@ -173,7 +173,7 @@ public class flstory
 	
 	static int vol_ctrl[16];
 	
-	static public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int i;
 	

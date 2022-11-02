@@ -29,7 +29,7 @@ public class blockhl
 {
 	
 	/* prototypes */
-	static static void blockhl_banking( int lines );
+	static void blockhl_banking( int lines );
 	
 	
 	
@@ -351,7 +351,7 @@ public class blockhl
 		if ((lines & 0x84) != 0x80) logerror("%04x: setlines %02x\n",activecpu_get_pc(),lines);
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_blockhl  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_blockhl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	

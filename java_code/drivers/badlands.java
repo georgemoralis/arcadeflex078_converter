@@ -148,7 +148,7 @@ public class badlands
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_badlands  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_badlands  = new MachineInitHandlerPtr() { public void handler()
 	{
 		pedal_value[0] = pedal_value[1] = 0x80;
 	

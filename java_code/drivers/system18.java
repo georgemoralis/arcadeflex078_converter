@@ -216,7 +216,7 @@ public class system18
 		}
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_shdancer  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shdancer  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_spritelist_end=0x8000;
 		sys16_update_proc = shdancer_update_proc;
 	} };
@@ -309,7 +309,7 @@ public class system18
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_shdancbl  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shdancbl  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_spritelist_end=0x8000;
 		sys16_sprxoffset = -0xbc+0x77;
 	
@@ -341,7 +341,7 @@ public class system18
 	}
 	#endif
 	
-	static public static MachineInitHandlerPtr machine_init_shdancrj  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shdancrj  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_spritelist_end=0x8000;
 		sys16_patch_code(0x6821, 0xdf);
 		sys16_update_proc = shdancer_update_proc;
@@ -433,7 +433,7 @@ public class system18
 		}
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_moonwalk  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_moonwalk  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_bg_priority_value=0x1000;
 		sys16_sprxoffset = -0x238;
 		sys16_spritelist_end=0x8000;
@@ -583,7 +583,7 @@ public class system18
 		}
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_astorm  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_astorm  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_fgxoffset = sys16_bgxoffset = -9;
 	
 		sys16_patch_code( 0x2D6E, 0x32 );

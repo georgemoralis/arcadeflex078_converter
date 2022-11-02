@@ -57,7 +57,7 @@ public class mjsister
 		dac_busy = 1;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_mjsister  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_mjsister  = new MachineInitHandlerPtr() { public void handler()
 	{
 		dac_busy = 0;
 	} };

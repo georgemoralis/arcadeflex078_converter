@@ -26,7 +26,7 @@ public class tail2nos
 	WRITE16_HANDLER( tail2nos_gfxbank_w );
 	
 	
-	static public static MachineInitHandlerPtr machine_init_tail2nos  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_tail2nos  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* point to the extra ROMs */
 		cpu_setbank(1,memory_region(REGION_USER1));

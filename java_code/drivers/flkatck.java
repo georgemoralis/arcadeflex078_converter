@@ -24,7 +24,7 @@ public class flkatck
 	
 	/***************************************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_flkatck  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_flkatck  = new MachineInitHandlerPtr() { public void handler()
 	{
 		K007232_set_bank( 0, 0, 1 );
 	} };

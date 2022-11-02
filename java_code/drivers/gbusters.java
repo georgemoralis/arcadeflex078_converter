@@ -17,7 +17,7 @@ public class gbusters
 {
 	
 	/* prototypes */
-	static static void gbusters_banking( int lines );
+	static void gbusters_banking( int lines );
 	
 	
 	
@@ -415,7 +415,7 @@ public class gbusters
 		/* other bits unknown */
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_gbusters  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_gbusters  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	

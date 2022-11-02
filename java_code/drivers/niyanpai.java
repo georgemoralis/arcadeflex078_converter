@@ -230,7 +230,7 @@ public class niyanpai
 		z80ctc_init(&ctc_intf);
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_niyanpai  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_niyanpai  = new MachineInitHandlerPtr() { public void handler()
 	{
 		//
 	} };

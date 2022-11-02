@@ -120,7 +120,7 @@ public class polyplay
 	};
 	
 	
-	static public static MachineInitHandlerPtr machine_init_polyplay  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_polyplay  = new MachineInitHandlerPtr() { public void handler()
 	{
 		channel1_active = 0;
 		channel1_const = 0;

@@ -875,7 +875,7 @@ public class galpanic
 		{ 100 }
 	};
 	
-	static public static MachineInitHandlerPtr machine_init_galpanib  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_galpanib  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* init watchdog */
 		watchdog_reset_r(0);

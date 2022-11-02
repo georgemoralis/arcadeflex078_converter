@@ -165,7 +165,7 @@ public class taito_l
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_fhawk  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_fhawk  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
@@ -174,7 +174,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_raimais  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_raimais  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
@@ -183,7 +183,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_champwr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_champwr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
@@ -193,7 +193,7 @@ public class taito_l
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_kurikint  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_kurikint  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
@@ -202,7 +202,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_evilston  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_evilston  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
@@ -211,7 +211,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_puzznic  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_puzznic  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
@@ -220,7 +220,7 @@ public class taito_l
 		portf1_r = input_port_3_r;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_plotting  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_plotting  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
@@ -229,7 +229,7 @@ public class taito_l
 		portf1_r = input_port_3_r;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_palamed  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_palamed  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
@@ -238,7 +238,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_cachat  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cachat  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
@@ -247,7 +247,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_horshoes  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_horshoes  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;

@@ -952,7 +952,7 @@ public class djmain
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_djmain  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_djmain  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset sound ram bank */
 		sndram_bank = 0;

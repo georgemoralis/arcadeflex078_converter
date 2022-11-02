@@ -36,7 +36,7 @@ public class aztarac
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_aztarac  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_aztarac  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_set_irq_callback(0, aztarac_irq_callback);
 	} };

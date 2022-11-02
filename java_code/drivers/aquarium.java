@@ -69,7 +69,7 @@ public class aquarium
 	VIDEO_UPDATE(aquarium);
 	
 	#if AQUARIUS_HACK
-	static public static MachineInitHandlerPtr machine_init_aquarium  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_aquarium  = new MachineInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int data = readinputport(3);

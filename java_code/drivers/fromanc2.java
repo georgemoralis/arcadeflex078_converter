@@ -83,17 +83,17 @@ public class fromanc2
 	// 	MACHINE INITIALYZE
 	// ----------------------------------------------------------------------------
 	
-	static public static MachineInitHandlerPtr machine_init_fromanc2  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_fromanc2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		//
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_fromancr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_fromancr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		//
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_fromanc4  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_fromanc4  = new MachineInitHandlerPtr() { public void handler()
 	{
 		//
 	} };

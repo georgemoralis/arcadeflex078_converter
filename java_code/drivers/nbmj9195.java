@@ -564,7 +564,7 @@ public class nbmj9195
 		z80ctc_init(&ctc_intf);
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_sailorws  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_sailorws  = new MachineInitHandlerPtr() { public void handler()
 	{
 		//
 	} };

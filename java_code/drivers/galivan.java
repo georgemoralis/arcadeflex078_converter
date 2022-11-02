@@ -41,7 +41,7 @@ public class galivan
 	
 	
 	
-	static public static MachineInitHandlerPtr machine_init_galivan  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_galivan  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	

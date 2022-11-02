@@ -150,7 +150,7 @@ public class cclimber
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_cclimber  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cclimber  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Disable interrupts, River Patrol / Silver Land needs this */
 		cpu_interrupt_enable(0,0);

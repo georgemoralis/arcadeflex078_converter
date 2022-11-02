@@ -18,7 +18,7 @@ public class surpratk
 {
 	
 	/* prototypes */
-	static static void surpratk_banking( int lines );
+	static void surpratk_banking( int lines );
 	
 	
 	static int videobank;
@@ -306,7 +306,7 @@ public class surpratk
 		cpu_setbank(1,&RAM[offs]);
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_surpratk  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_surpratk  = new MachineInitHandlerPtr() { public void handler()
 	{
 		konami_cpu_setlines_callback = surpratk_banking;
 	

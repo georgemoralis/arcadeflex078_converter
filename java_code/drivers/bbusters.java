@@ -186,7 +186,7 @@ public class bbusters
 	/******************************************************************************/
 	
 	#if BBUSTERS_HACK
-	static public static MachineInitHandlerPtr machine_init_bbusters  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_bbusters  = new MachineInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int data = readinputport(11) & 0x03;
@@ -205,7 +205,7 @@ public class bbusters
 	#endif
 	
 	#if MECHATT_HACK
-	static public static MachineInitHandlerPtr machine_init_mechatt  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_mechatt  = new MachineInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int data = readinputport(6) & 0x03;

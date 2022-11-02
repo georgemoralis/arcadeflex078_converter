@@ -84,7 +84,7 @@ public class seattle
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_seattle  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_seattle  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, rambase);
 		cpu_setbank(2, rambase);

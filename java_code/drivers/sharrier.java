@@ -288,7 +288,7 @@ public class sharrier
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_hangon  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_hangon  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_hangon;
 		sys16_sprxoffset = -0xc0;
@@ -478,7 +478,7 @@ public class sharrier
 		sys16_extraram[0x492/2] = sh_io_joy_r(0,0);
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_harrier  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_harrier  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_sharrier;
 		sys16_sprxoffset = -0xc0;
@@ -748,7 +748,7 @@ public class sharrier
 		sys16_bg_page[2] = data&0xf;
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_enduror  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_enduror  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_sharrier;
 		sys16_sprxoffset = -0xc0;

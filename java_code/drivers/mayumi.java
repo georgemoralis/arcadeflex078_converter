@@ -41,7 +41,7 @@ public class mayumi
 		flip_screen_set(data & 2);
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_mayumi  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_mayumi  = new MachineInitHandlerPtr() { public void handler()
 	{
 		bank_sel_w(0,0);
 	} };

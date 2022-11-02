@@ -101,7 +101,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_atetris  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_atetris  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset the slapstic */
 		slapstic_reset();

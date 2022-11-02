@@ -121,7 +121,7 @@ public class sprint8
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_sprint8  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_sprint8  = new MachineInitHandlerPtr() { public void handler()
 	{
 		collision_reset = 0;
 		collision_index = 0;

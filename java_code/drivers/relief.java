@@ -67,7 +67,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_relief  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_relief  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 2);

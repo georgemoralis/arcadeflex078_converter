@@ -42,7 +42,7 @@ public class kinst
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_kinst  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_kinst  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, rambase1 + 0x1000/4);
 		cpu_setbank(2, rombase);

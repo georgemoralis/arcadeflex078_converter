@@ -86,6 +86,28 @@ public class convertMame {
                 }
                 case 's': {
                     i = Convertor.inpos;
+                    if (sUtil.getToken("static")) {
+                        sUtil.skipSpace();
+                    }
+                    if (!sUtil.getToken("struct")) //static but not static struct
+                    {
+                        if (sUtil.getToken("MACHINE_INIT(")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.getToken(");"))//if it is a front function skip it
+                            {
+                                sUtil.skipLine();
+                                continue;
+                            } else {
+                                sUtil.putString("public static MachineInitHandlerPtr machine_init_" + Convertor.token[0] + "  = new MachineInitHandlerPtr() { public void handler()");
+                                type = MACHINE_INIT;
+                                i3 = -1;
+                                Convertor.inpos += 1;
+                                continue;
+                            }
+                        }
+                    }
                     if (type == WRITE_HANDLER8 || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP || type == VIDEO_EOF) {
                         if (sUtil.getToken("spriteram_size")) {
                             sUtil.putString((new StringBuilder()).append("spriteram_size[0]").toString());

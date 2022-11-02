@@ -64,7 +64,7 @@ public class cyberbal
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_cyberbal  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cyberbal  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
@@ -98,7 +98,7 @@ public class cyberbal
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_cyberb2p  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cyberb2p  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(cyberb2p_update_interrupts);

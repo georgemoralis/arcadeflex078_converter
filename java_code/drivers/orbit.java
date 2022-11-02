@@ -67,7 +67,7 @@ public class orbit
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_orbit  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_orbit  = new MachineInitHandlerPtr() { public void handler()
 	{
 		update_misc_flags(0);
 	} };

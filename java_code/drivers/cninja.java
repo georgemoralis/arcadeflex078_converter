@@ -838,7 +838,7 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_cninja  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cninja  = new MachineInitHandlerPtr() { public void handler()
 	{
 		raster_irq_timer = timer_alloc(interrupt_gen);
 		cninja_scanline=0;

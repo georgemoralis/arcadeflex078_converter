@@ -111,14 +111,14 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// above all
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_berlwall  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_berlwall  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 2;	// like type 0, but using 16 instead of 8 bytes
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_blazeon  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_blazeon  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
@@ -140,7 +140,7 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// ""
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_bloodwar  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_bloodwar  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Priorities unknown */
 		kaneko16_priority.tile[0] = 0;
@@ -158,7 +158,7 @@ public class kaneko16
 		memset(gtmr_mcu_com, 0, 4 * sizeof( data16_t) );
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_bakubrkr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_bakubrkr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
@@ -173,7 +173,7 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// above all
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_gtmr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_gtmr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
@@ -182,7 +182,7 @@ public class kaneko16
 		memset(gtmr_mcu_com, 0, 4 * sizeof( data16_t) );
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_mgcrystl  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_mgcrystl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	/*
@@ -212,7 +212,7 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// ""
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_sandscrp  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_sandscrp  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
@@ -221,7 +221,7 @@ public class kaneko16
 		watchdog_reset16_r(0,0);	// start with an armed watchdog
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_shogwarr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_shogwarr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	

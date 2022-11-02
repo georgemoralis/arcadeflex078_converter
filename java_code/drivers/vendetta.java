@@ -96,7 +96,7 @@ public class vendetta
 {
 	
 	/* prototypes */
-	static static void vendetta_banking( int lines );
+	static void vendetta_banking( int lines );
 	static void vendetta_video_banking( int select );
 	
 	
@@ -793,7 +793,7 @@ public class vendetta
 			cpu_setbank( 1, &RAM[ 0x10000 + ( lines * 0x2000 ) ] );
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_vendetta  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_vendetta  = new MachineInitHandlerPtr() { public void handler()
 	{
 		konami_cpu_setlines_callback = vendetta_banking;
 	

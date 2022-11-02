@@ -52,13 +52,13 @@ public class marineb
 	
 	
 	
-	static public static MachineInitHandlerPtr machine_init_marineb  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_marineb  = new MachineInitHandlerPtr() { public void handler()
 	{
 		marineb_active_low_flipscreen = 0;
 		machine_init_espial();
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_springer  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_springer  = new MachineInitHandlerPtr() { public void handler()
 	{
 		marineb_active_low_flipscreen = 1;
 		machine_init_espial();

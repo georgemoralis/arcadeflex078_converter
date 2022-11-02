@@ -73,7 +73,7 @@ public class galpani2
 	
 	static data16_t *galpani2_ram, *galpani2_ram2;
 	
-	static public static MachineInitHandlerPtr machine_init_galpani2  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_galpani2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	

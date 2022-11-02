@@ -201,7 +201,7 @@ public class firetrk
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_firetrk  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_firetrk  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_pulse(1. / 60, 0, frame_callback);
 	

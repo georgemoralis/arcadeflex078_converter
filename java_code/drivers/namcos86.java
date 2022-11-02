@@ -1201,7 +1201,7 @@ public class namcos86
 	};
 	
 	
-	static public static MachineInitHandlerPtr machine_init_namco86  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_namco86  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *base = memory_region(REGION_CPU1) + 0x10000;
 	

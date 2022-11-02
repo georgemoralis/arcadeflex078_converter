@@ -750,7 +750,7 @@ public class zn
 		}
 	} };
 	
-	static public static MachineInitHandlerPtr machine_init_zn  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_zn  = new MachineInitHandlerPtr() { public void handler()
 	{
 		n_playermode = 0;
 		player_reset();

@@ -139,7 +139,7 @@ public class cshooter
 	
 	static int cshooter_counter;
 	
-	static public static MachineInitHandlerPtr machine_init_cshooter  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cshooter  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cshooter_counter = 0;
 	} };

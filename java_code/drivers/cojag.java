@@ -102,7 +102,7 @@ public class cojag
 	 *
 	 *************************************/
 	
-	static public static MachineInitHandlerPtr machine_init_cojag  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_cojag  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* 68020 only: copy the interrupt vectors into RAM */
 		if (cojag_is_r3000 == 0)

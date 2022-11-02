@@ -71,7 +71,7 @@ public class nitedrvr
 	} };
 	
 	
-	static public static MachineInitHandlerPtr machine_init_nitedrvr  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_nitedrvr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_pulse(TIME_IN_SEC(0.693 * (180000 + (2 * 330)) * 1e-6), 0, nitedrvr_crash_toggle);
 	} };

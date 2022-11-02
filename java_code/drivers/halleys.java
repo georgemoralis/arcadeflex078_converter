@@ -2005,7 +2005,7 @@ public class halleys
 	//**************************************************************************
 	// Machine Definitions and Initializations
 	
-	static public static MachineInitHandlerPtr machine_init_halleys  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_halleys  = new MachineInitHandlerPtr() { public void handler()
 	{
 		mVectorType     = 0;
 		firq_level      = 0;

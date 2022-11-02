@@ -17,7 +17,7 @@ public class aliens
 {
 	
 	/* prototypes */
-	static static void aliens_banking( int lines );
+	static void aliens_banking( int lines );
 	
 	
 	
@@ -455,7 +455,7 @@ public class aliens
 		cpu_setbank( 1, &RAM[offs] );
 	}
 	
-	static public static MachineInitHandlerPtr machine_init_aliens  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_aliens  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	

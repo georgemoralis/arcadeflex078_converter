@@ -50,7 +50,7 @@ public class xybots
 	}
 	
 	
-	static public static MachineInitHandlerPtr machine_init_xybots  = new MachineInitHandlerPtr() { public void handler()
+	public static MachineInitHandlerPtr machine_init_xybots  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
