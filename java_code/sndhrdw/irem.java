@@ -124,20 +124,24 @@ public class irem
 	
 	
 	
-	MEMORY_READ_START( irem_sound_readmem )
-		{ 0x0000, 0x001f, m6803_internal_registers_r },
-		{ 0x0080, 0x00ff, MRA_RAM },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress irem_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, m6803_internal_registers_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	MEMORY_WRITE_START( irem_sound_writemem )
-		{ 0x0000, 0x001f, m6803_internal_registers_w },
-		{ 0x0080, 0x00ff, MWA_RAM },
-		{ 0x0800, 0x0800, MWA_NOP },    /* IACK */
-		{ 0x0801, 0x0802, irem_adpcm_w },
-		{ 0x9000, 0x9000, MWA_NOP },    /* IACK */
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress irem_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x001f, m6803_internal_registers_w ),
+		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x0800, MWA_NOP ),    /* IACK */
+		new Memory_WriteAddress( 0x0801, 0x0802, irem_adpcm_w ),
+		new Memory_WriteAddress( 0x9000, 0x9000, MWA_NOP ),    /* IACK */
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	PORT_READ_START( irem_sound_readport )
 		{ M6803_PORT1, M6803_PORT1, irem_port1_r },

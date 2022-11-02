@@ -69,68 +69,78 @@ public class williams
 	****************************************************************************/
 	
 	/* CVSD readmem/writemem structures */
-	MEMORY_READ_START( williams_cvsd_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x2000, 0x2001, YM2151_status_port_0_r },
-		{ 0x4000, 0x4003, cvsd_pia_r },
-		{ 0x8000, 0xffff, MRA_BANK6 },
-	MEMORY_END
+	public static Memory_ReadAddress williams_cvsd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x4000, 0x4003, cvsd_pia_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK6 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( williams_cvsd_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x4000, 0x4003, cvsd_pia_w },
-		{ 0x6000, 0x6000, hc55516_0_digit_clock_clear_w },
-		{ 0x6800, 0x6800, hc55516_0_clock_set_w },
-		{ 0x7800, 0x7800, cvsd_bank_select_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress williams_cvsd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4003, cvsd_pia_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, hc55516_0_digit_clock_clear_w ),
+		new Memory_WriteAddress( 0x6800, 0x6800, hc55516_0_clock_set_w ),
+		new Memory_WriteAddress( 0x7800, 0x7800, cvsd_bank_select_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
 	/* ADPCM readmem/writemem structures */
-	MEMORY_READ_START( williams_adpcm_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2401, 0x2401, YM2151_status_port_0_r },
-		{ 0x2c00, 0x2c00, OKIM6295_status_0_r },
-		{ 0x3000, 0x3000, adpcm_command_r },
-		{ 0x4000, 0xbfff, MRA_BANK6 },
-		{ 0xc000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress williams_adpcm_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2401, 0x2401, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x2c00, 0x2c00, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0x3000, 0x3000, adpcm_command_r ),
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_BANK6 ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( williams_adpcm_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, adpcm_bank_select_w },
-		{ 0x2400, 0x2400, YM2151_register_port_0_w },
-		{ 0x2401, 0x2401, YM2151_data_port_0_w },
-		{ 0x2800, 0x2800, DAC_0_data_w },
-		{ 0x2c00, 0x2c00, OKIM6295_data_0_w },
-		{ 0x3400, 0x3400, adpcm_6295_bank_select_w },
-		{ 0x3c00, 0x3c00, MWA_NOP },/*mk_sound_talkback_w }, -- talkback port? */
+	public static Memory_WriteAddress williams_adpcm_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, adpcm_bank_select_w ),
+		new Memory_WriteAddress( 0x2400, 0x2400, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2401, 0x2401, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2800, DAC_0_data_w ),
+		new Memory_WriteAddress( 0x2c00, 0x2c00, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0x3400, 0x3400, adpcm_6295_bank_select_w ),
+		new Memory_WriteAddress( 0x3c00, 0x3c00, MWA_NOP ),/*mk_sound_talkback_w }, -- talkback port? */
 		{ 0x4000, 0xffff, MWA_ROM },
 	MEMORY_END
 	
 	
 	
 	/* NARC master readmem/writemem structures */
-	MEMORY_READ_START( williams_narc_master_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2001, 0x2001, YM2151_status_port_0_r },
-		{ 0x3000, 0x3000, MRA_NOP },
-		{ 0x3400, 0x3400, narc_command_r },
-		{ 0x4000, 0xbfff, MRA_BANK6 },
-		{ 0xc000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress williams_narc_master_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2001, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x3000, 0x3000, MRA_NOP ),
+		new Memory_ReadAddress( 0x3400, 0x3400, narc_command_r ),
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_BANK6 ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( williams_narc_master_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x2800, 0x2800, MWA_NOP },/*mk_sound_talkback_w }, -- talkback port? */
+	public static Memory_WriteAddress williams_narc_master_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2800, MWA_NOP ),/*mk_sound_talkback_w }, -- talkback port? */
 		{ 0x2c00, 0x2c00, narc_command2_w },
 		{ 0x3000, 0x3000, DAC_0_data_w },
 		{ 0x3800, 0x3800, narc_master_bank_select_w },
@@ -140,24 +150,28 @@ public class williams
 	
 	
 	/* NARC slave readmem/writemem structures */
-	MEMORY_READ_START( williams_narc_slave_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x3000, 0x3000, MRA_NOP },
-		{ 0x3400, 0x3400, narc_command2_r },
-		{ 0x4000, 0xbfff, MRA_BANK5 },
-		{ 0xc000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress williams_narc_slave_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3000, MRA_NOP ),
+		new Memory_ReadAddress( 0x3400, 0x3400, narc_command2_r ),
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_BANK5 ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( williams_narc_slave_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, hc55516_0_clock_set_w },
-		{ 0x2400, 0x2400, hc55516_0_digit_clock_clear_w },
-		{ 0x3000, 0x3000, DAC_1_data_w },
-		{ 0x3800, 0x3800, narc_slave_bank_select_w },
-		{ 0x3c00, 0x3c00, MWA_NOP },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress williams_narc_slave_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, hc55516_0_clock_set_w ),
+		new Memory_WriteAddress( 0x2400, 0x2400, hc55516_0_digit_clock_clear_w ),
+		new Memory_WriteAddress( 0x3000, 0x3000, DAC_1_data_w ),
+		new Memory_WriteAddress( 0x3800, 0x3800, narc_slave_bank_select_w ),
+		new Memory_WriteAddress( 0x3c00, 0x3c00, MWA_NOP ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

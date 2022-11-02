@@ -674,7 +674,7 @@ public class convertMame {
                     break;
                 }
                 case 'm':
-                    i = Convertor.inpos;
+                    i = Convertor.inpos;  
                     if (type == VIDEO_UPDATE || type == VIDEO_START || type == WRITE_HANDLER8 || type == VIDEO_STOP || type == VIDEO_EOF) {
                         Convertor.token[0] = sUtil.parseToken();
                         if (Convertor.token[0].endsWith("_videoram_w")) {
@@ -686,6 +686,30 @@ public class convertMame {
                     break;
                 case 'M': {
                     i = Convertor.inpos;
+                    if (sUtil.getToken("MEMORY_READ_START(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(")")) {
+                            sUtil.putString("public static Memory_ReadAddress " + Convertor.token[0] + "[]={\n\t\tnew Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),");
+                            type = MEMORY_READ8;
+                            i3 = 1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
+                    if (sUtil.getToken("MEMORY_WRITE_START(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(")")) {
+                            sUtil.putString("public static Memory_WriteAddress " + Convertor.token[0] + "[]={\n\t\tnew Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),");
+                            type = MEMORY_WRITE8;
+                            i3 = 1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
                     if (sUtil.getToken("MACHINE_INIT(")) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();

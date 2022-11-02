@@ -248,29 +248,33 @@ public class cyberbal
 	 *
 	 *************************************/
 	
-	MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x2001, YM2151_status_port_0_r },
-		{ 0x2802, 0x2803, atarigen_6502_irq_ack_r },
-		{ 0x2c00, 0x2c01, atarigen_6502_sound_r },
-		{ 0x2c02, 0x2c03, cyberbal_special_port3_r },
-		{ 0x2c04, 0x2c05, cyberbal_sound_68k_6502_r },
-		{ 0x2c06, 0x2c07, cyberbal_sound_6502_stat_r },
-		{ 0x3000, 0x3fff, MRA_BANK8 },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x2802, 0x2803, atarigen_6502_irq_ack_r ),
+		new Memory_ReadAddress( 0x2c00, 0x2c01, atarigen_6502_sound_r ),
+		new Memory_ReadAddress( 0x2c02, 0x2c03, cyberbal_special_port3_r ),
+		new Memory_ReadAddress( 0x2c04, 0x2c05, cyberbal_sound_68k_6502_r ),
+		new Memory_ReadAddress( 0x2c06, 0x2c07, cyberbal_sound_6502_stat_r ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_BANK8 ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x2800, 0x2801, cyberbal_sound_68k_6502_w },
-		{ 0x2802, 0x2803, atarigen_6502_irq_ack_w },
-		{ 0x2804, 0x2805, atarigen_6502_sound_w },
-		{ 0x2806, 0x2807, cyberbal_sound_bank_select_w },
-		{ 0x3000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2801, cyberbal_sound_68k_6502_w ),
+		new Memory_WriteAddress( 0x2802, 0x2803, atarigen_6502_irq_ack_w ),
+		new Memory_WriteAddress( 0x2804, 0x2805, atarigen_6502_sound_w ),
+		new Memory_WriteAddress( 0x2806, 0x2807, cyberbal_sound_bank_select_w ),
+		new Memory_WriteAddress( 0x3000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

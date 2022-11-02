@@ -20,24 +20,28 @@ public class timeplt
 {
 	
 	
-	MEMORY_READ_START( timeplt_sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-		{ 0x3000, 0x33ff, MRA_RAM },
-		{ 0x4000, 0x4000, AY8910_read_port_0_r },
-		{ 0x6000, 0x6000, AY8910_read_port_1_r },
-	MEMORY_END
+	public static Memory_ReadAddress timeplt_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x33ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x4000, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0x6000, 0x6000, AY8910_read_port_1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	MEMORY_WRITE_START( timeplt_sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-		{ 0x3000, 0x33ff, MWA_RAM },
-		{ 0x4000, 0x4000, AY8910_write_port_0_w },
-		{ 0x5000, 0x5000, AY8910_control_port_0_w },
-		{ 0x6000, 0x6000, AY8910_write_port_1_w },
-		{ 0x7000, 0x7000, AY8910_control_port_1_w },
-		{ 0x8000, 0x8fff, timeplt_filter_w },
-	MEMORY_END
+	public static Memory_WriteAddress timeplt_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x33ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x5000, 0x5000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x7000, 0x7000, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, timeplt_filter_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	struct AY8910interface timeplt_ay8910_interface =

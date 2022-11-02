@@ -549,31 +549,35 @@ public class gottlieb
 	
 	
 	
-	MEMORY_READ_START( gottlieb_sound_readmem )
-		{ 0x0000, 0x01ff, riot_ram_r },
-		{ 0x0200, 0x03ff, gottlieb_riot_r },
-		{ 0x6000, 0x7fff, MRA_ROM },
+	public static Memory_ReadAddress gottlieb_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, riot_ram_r ),
+		new Memory_ReadAddress( 0x0200, 0x03ff, gottlieb_riot_r ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_ROM ),
 				 /* A15 not decoded except in expansion socket */
-		{ 0x8000, 0x81ff, riot_ram_r },
-		{ 0x8200, 0x83ff, gottlieb_riot_r },
-		{ 0xe000, 0xffff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x8000, 0x81ff, riot_ram_r ),
+		new Memory_ReadAddress( 0x8200, 0x83ff, gottlieb_riot_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	MEMORY_WRITE_START( gottlieb_sound_writemem )
-		{ 0x0000, 0x01ff, riot_ram_w, &riot_ram },
-		{ 0x0200, 0x03ff, gottlieb_riot_w },
-		{ 0x1000, 0x1000, DAC_0_data_w },
-		{ 0x2000, 0x2000, gottlieb_speech_w },
-		{ 0x3000, 0x3000, gottlieb_speech_clock_DAC_w },
-		{ 0x6000, 0x7fff, MWA_ROM },
+	public static Memory_WriteAddress gottlieb_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, riot_ram_w, riot_ram ),
+		new Memory_WriteAddress( 0x0200, 0x03ff, gottlieb_riot_w ),
+		new Memory_WriteAddress( 0x1000, 0x1000, DAC_0_data_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, gottlieb_speech_w ),
+		new Memory_WriteAddress( 0x3000, 0x3000, gottlieb_speech_clock_DAC_w ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_ROM ),
 				 /* A15 not decoded except in expansion socket */
-		{ 0x8000, 0x81ff, riot_ram_w },
-		{ 0x8200, 0x83ff, gottlieb_riot_w },
-		{ 0x9000, 0x9000, DAC_0_data_w },
-		{ 0xa000, 0xa000, gottlieb_speech_w },
-		{ 0xb000, 0xb000, gottlieb_speech_clock_DAC_w },
-		{ 0xe000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x8000, 0x81ff, riot_ram_w ),
+		new Memory_WriteAddress( 0x8200, 0x83ff, gottlieb_riot_w ),
+		new Memory_WriteAddress( 0x9000, 0x9000, DAC_0_data_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, gottlieb_speech_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, gottlieb_speech_clock_DAC_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	public static Memory_ReadAddress stooges_sound_readmem[]={
@@ -584,11 +588,13 @@ public class gottlieb
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	MEMORY_WRITE_START( stooges_sound_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x4000, 0x4001, DAC_0_data_w },
-		{ 0xe000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress stooges_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x4001, DAC_0_data_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	public static Memory_ReadAddress stooges_sound2_readmem[]={
@@ -600,17 +606,19 @@ public class gottlieb
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	MEMORY_WRITE_START( stooges_sound2_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x2000, 0x2000, MWA_NOP },	/* speech chip. The game sends strings */
+	public static Memory_WriteAddress stooges_sound2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, MWA_NOP ),	/* speech chip. The game sends strings */
 										/* of 15 bytes (clocked by 4000). The chip also */
 										/* checks a DATA REQUEST bit in 6000. */
-		{ 0x4000, 0x4000, stooges_sound_control_w },
-		{ 0x8000, 0x8000, stooges_8910_latch_w },
-		{ 0xa000, 0xa000, gottlieb_nmi_rate_w },	/* the timer generates NMIs */
-		{ 0xb000, 0xb000, gottlieb_cause_dac_nmi_w },
-		{ 0xc000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x4000, 0x4000, stooges_sound_control_w ),
+		new Memory_WriteAddress( 0x8000, 0x8000, stooges_8910_latch_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, gottlieb_nmi_rate_w ),	/* the timer generates NMIs */
+		new Memory_WriteAddress( 0xb000, 0xb000, gottlieb_cause_dac_nmi_w ),
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

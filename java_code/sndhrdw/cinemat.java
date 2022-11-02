@@ -810,26 +810,30 @@ public class cinemat
 	} };
 	
 	
-	MEMORY_READ_START( demon_sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x3000, 0x33ff, MRA_RAM },
-		{ 0x4001, 0x4001, AY8910_read_port_0_r },
-		{ 0x5001, 0x5001, AY8910_read_port_1_r },
-		{ 0x6001, 0x6001, AY8910_read_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress demon_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x3000, 0x33ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4001, 0x4001, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0x5001, 0x5001, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0x6001, 0x6001, AY8910_read_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( demon_sound_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x3000, 0x33ff, MWA_RAM },
-		{ 0x4002, 0x4002, AY8910_write_port_0_w },
-		{ 0x4003, 0x4003, AY8910_control_port_0_w },
-		{ 0x5002, 0x5002, AY8910_write_port_1_w },
-		{ 0x5003, 0x5003, AY8910_control_port_1_w },
-		{ 0x6002, 0x6002, AY8910_write_port_2_w },
-		{ 0x6003, 0x6003, AY8910_control_port_2_w },
-		{ 0x7000, 0x7000, MWA_NOP },  /* watchdog? */
-	MEMORY_END
+	public static Memory_WriteAddress demon_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x3000, 0x33ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4002, 0x4002, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x4003, 0x4003, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x5002, 0x5002, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x5003, 0x5003, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x6002, 0x6002, AY8910_write_port_2_w ),
+		new Memory_WriteAddress( 0x6003, 0x6003, AY8910_control_port_2_w ),
+		new Memory_WriteAddress( 0x7000, 0x7000, MWA_NOP ),  /* watchdog? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	PORT_WRITE_START( demon_sound_writeport )

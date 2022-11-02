@@ -699,72 +699,88 @@ public class atarijsa
 	 *
 	 *************************************/
 	
-	MEMORY_READ_START( atarijsa1_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x2001, YM2151_status_port_0_r },
-		{ 0x2800, 0x2bff, jsa1_io_r },
-		{ 0x3000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress atarijsa1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x2800, 0x2bff, jsa1_io_r ),
+		new Memory_ReadAddress( 0x3000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( atarijsa1_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x2800, 0x2bff, jsa1_io_w },
-		{ 0x3000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress atarijsa1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2bff, jsa1_io_w ),
+		new Memory_WriteAddress( 0x3000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_READ_START( atarijsa2_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x2001, YM2151_status_port_0_r },
-		{ 0x2800, 0x2bff, jsa2_io_r },
-		{ 0x3000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress atarijsa2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x2800, 0x2bff, jsa2_io_r ),
+		new Memory_ReadAddress( 0x3000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( atarijsa2_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x2800, 0x2bff, jsa2_io_w },
-		{ 0x3000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress atarijsa2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2bff, jsa2_io_w ),
+		new Memory_WriteAddress( 0x3000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_READ_START( atarijsa3_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x2001, YM2151_status_port_0_r },
-		{ 0x2800, 0x2bff, jsa3_io_r },
-		{ 0x3000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress atarijsa3_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x2800, 0x2bff, jsa3_io_r ),
+		new Memory_ReadAddress( 0x3000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( atarijsa3_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x2800, 0x2bff, jsa3_io_w },
-		{ 0x3000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress atarijsa3_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2bff, jsa3_io_w ),
+		new Memory_WriteAddress( 0x3000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_READ_START( atarijsa3s_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x2001, YM2151_status_port_0_r },
-		{ 0x2800, 0x2bff, jsa3s_io_r },
-		{ 0x3000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress atarijsa3s_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x2800, 0x2bff, jsa3s_io_r ),
+		new Memory_ReadAddress( 0x3000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( atarijsa3s_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x2800, 0x2bff, jsa3s_io_w },
-		{ 0x3000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress atarijsa3s_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2bff, jsa3s_io_w ),
+		new Memory_WriteAddress( 0x3000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -230,17 +230,21 @@ public class scobra
 		scobra_soundram[offset & 0x03ff] = data;
 	}
 	
-	MEMORY_READ_START( scobra_sound_readmem )
-		{ 0x0000, 0x2fff, MRA_ROM },
-		{ 0x8000, 0x8fff, scobra_soundram_r },
-	MEMORY_END
+	public static Memory_ReadAddress scobra_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, scobra_soundram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	MEMORY_WRITE_START( scobra_sound_writemem )
-		{ 0x0000, 0x2fff, MWA_ROM },
-		{ 0x8000, 0x8fff, scobra_soundram_w },
-		{ 0x8000, 0x83ff, MWA_NOP, &scobra_soundram },  /* only here to initialize pointer */
-		{ 0x9000, 0x9fff, scramble_filter_w },
-	MEMORY_END
+	public static Memory_WriteAddress scobra_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, scobra_soundram_w ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_NOP, scobra_soundram ),  /* only here to initialize pointer */
+		new Memory_WriteAddress( 0x9000, 0x9fff, scramble_filter_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	public static Memory_WriteAddress hustlerb_sound_writemem[]={

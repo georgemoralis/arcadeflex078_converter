@@ -242,26 +242,30 @@ public class mcr
 	
 	
 	/********* memory interfaces ***********/
-	MEMORY_READ_START( ssio_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0x9000, 0x9003, ssio_data_r },
-		{ 0xa001, 0xa001, AY8910_read_port_0_r },
-		{ 0xb001, 0xb001, AY8910_read_port_1_r },
-		{ 0xe000, 0xe000, MRA_NOP },
-		{ 0xf000, 0xf000, input_port_5_r },
-	MEMORY_END
+	public static Memory_ReadAddress ssio_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x9003, ssio_data_r ),
+		new Memory_ReadAddress( 0xa001, 0xa001, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xb001, 0xb001, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, MRA_NOP ),
+		new Memory_ReadAddress( 0xf000, 0xf000, input_port_5_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	MEMORY_WRITE_START( ssio_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0xa000, 0xa000, AY8910_control_port_0_w },
-		{ 0xa002, 0xa002, AY8910_write_port_0_w },
-		{ 0xb000, 0xb000, AY8910_control_port_1_w },
-		{ 0xb002, 0xb002, AY8910_write_port_1_w },
-		{ 0xc000, 0xc000, ssio_status_w },
-		{ 0xe000, 0xe000, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress ssio_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xb002, 0xb002, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xc000, 0xc000, ssio_status_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/********* machine driver ***********/
@@ -518,19 +522,23 @@ public class mcr
 	
 	
 	/********* memory interfaces ***********/
-	MEMORY_READ_START( turbocs_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x4000, 0x4003, pia_0_r },	/* Max RPM accesses the PIA here */
-		{ 0x6000, 0x6003, pia_0_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress turbocs_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x4003, pia_0_r ),	/* Max RPM accesses the PIA here */
+		new Memory_ReadAddress( 0x6000, 0x6003, pia_0_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	MEMORY_WRITE_START( turbocs_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x4000, 0x4003, pia_0_w },	/* Max RPM accesses the PIA here */
-		{ 0x6000, 0x6003, pia_0_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress turbocs_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x4003, pia_0_w ),	/* Max RPM accesses the PIA here */
+		new Memory_WriteAddress( 0x6000, 0x6003, pia_0_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/********* PIA interfaces ***********/
@@ -644,19 +652,23 @@ public class mcr
 	
 	
 	/********* memory interfaces ***********/
-	MEMORY_READ_START( squawkntalk_readmem )
-		{ 0x0000, 0x007f, MRA_RAM },
-		{ 0x0080, 0x0083, pia_0_r },
-		{ 0x0090, 0x0093, pia_1_r },
-		{ 0xd000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress squawkntalk_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x0083, pia_0_r ),
+		new Memory_ReadAddress( 0x0090, 0x0093, pia_1_r ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	MEMORY_WRITE_START( squawkntalk_writemem )
-		{ 0x0000, 0x007f, MWA_RAM },
-		{ 0x0080, 0x0083, pia_0_w },
-		{ 0x0090, 0x0093, pia_1_w },
-		{ 0xd000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress squawkntalk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x0083, pia_0_w ),
+		new Memory_WriteAddress( 0x0090, 0x0093, pia_1_w ),
+		new Memory_WriteAddress( 0xd000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/********* PIA interfaces ***********/

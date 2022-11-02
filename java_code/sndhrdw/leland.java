@@ -2197,20 +2197,24 @@ public class leland
 	 *
 	 *************************************/
 	
-	MEMORY_READ_START( leland_i86_readmem )
-		{ 0x00000, 0x03fff, MRA_RAM },
-		{ 0x0c000, 0x0ffff, MRA_BANK6 },	/* used by Ataxx */
-		{ 0x1c000, 0x1ffff, MRA_BANK7 },	/* used by Super Offroad */
-		{ 0x20000, 0xfffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress leland_i86_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x03fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0c000, 0x0ffff, MRA_BANK6 ),	/* used by Ataxx */
+		new Memory_ReadAddress( 0x1c000, 0x1ffff, MRA_BANK7 ),	/* used by Super Offroad */
+		new Memory_ReadAddress( 0x20000, 0xfffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	MEMORY_WRITE_START( leland_i86_writemem )
-		{ 0x00000, 0x03fff, MWA_RAM, &ram_base },
-		{ 0x0c000, 0x0ffff, MWA_BANK6 },
-		{ 0x1c000, 0x1ffff, MWA_BANK7 },
-		{ 0x20000, 0xfffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress leland_i86_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x03fff, MWA_RAM, ram_base ),
+		new Memory_WriteAddress( 0x0c000, 0x0ffff, MWA_BANK6 ),
+		new Memory_WriteAddress( 0x1c000, 0x1ffff, MWA_BANK7 ),
+		new Memory_WriteAddress( 0x20000, 0xfffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	PORT_READ_START( leland_i86_readport )
