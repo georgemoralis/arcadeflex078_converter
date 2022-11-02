@@ -26,6 +26,7 @@ System 24      68000x2  315-5292   315-5293  315-5294  315-5242        ym2151 da
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.vidhrdw;
 
 public class segaic24
 {

@@ -8,6 +8,7 @@ to be honest i think some of these cause more problems than they're worth ...
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class stvhacks
 {

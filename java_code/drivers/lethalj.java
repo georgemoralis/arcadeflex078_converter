@@ -42,6 +42,7 @@ Note 2: Lethal Justice uses a TMS34010FNL-50 instead of the TMS34010FNL-40
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class lethalj
 {

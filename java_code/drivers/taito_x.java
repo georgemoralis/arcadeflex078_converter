@@ -227,6 +227,7 @@ its place. The East Technology games on this hardware follow Daisenpu.
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class taito_x
 {

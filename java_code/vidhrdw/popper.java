@@ -7,6 +7,7 @@ Omori Electric CAD (OEC) 1983
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.vidhrdw;
 
 public class popper
 {

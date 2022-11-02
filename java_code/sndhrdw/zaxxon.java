@@ -70,6 +70,7 @@ FF3F Should be written an 0x80 for Mode 0
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.sndhrdw;
 
 public class zaxxon
 {

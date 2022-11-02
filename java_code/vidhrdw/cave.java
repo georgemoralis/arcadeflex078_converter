@@ -48,6 +48,7 @@ Note:	if MAME_DEBUG is defined, pressing:
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.vidhrdw;
 
 public class cave
 {

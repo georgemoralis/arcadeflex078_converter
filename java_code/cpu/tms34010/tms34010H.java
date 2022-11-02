@@ -14,6 +14,7 @@
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.tms34010;
 
 public class tms34010H
 {

@@ -46,6 +46,7 @@ This info came from http://www.ne.jp/asahi/cc-sakura/akkun/old/fryski.html
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class seicross
 {

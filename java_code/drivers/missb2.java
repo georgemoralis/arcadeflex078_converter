@@ -11,6 +11,7 @@ redesigned (8bpp!) graphics and different sound hardware... Crazy
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class missb2
 {

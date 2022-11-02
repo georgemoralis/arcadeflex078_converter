@@ -96,6 +96,7 @@ Slam Masters                             54321076  65432107    3131     19
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.machine;
 
 public class kabuki
 {

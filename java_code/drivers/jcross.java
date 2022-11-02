@@ -20,6 +20,7 @@ Could be bad dump ('final' romset is made of two sets marked as 'bad' )
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class jcross
 {

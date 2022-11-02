@@ -26,6 +26,7 @@ down hardware (it doesn't write any good sound data btw, mostly zeros).
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class supbtime
 {

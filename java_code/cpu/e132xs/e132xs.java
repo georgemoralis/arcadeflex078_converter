@@ -134,6 +134,7 @@ Add in cpuintrf.c
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.e132xs;
 
 public class e132xs
 {

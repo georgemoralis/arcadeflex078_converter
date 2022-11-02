@@ -62,6 +62,7 @@ const char* g_version = "3.3";
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.m68000;
 
 public class m68kmake
 {

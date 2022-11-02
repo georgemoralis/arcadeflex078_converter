@@ -78,6 +78,7 @@ quad primitives (n x 5 words) - indices of four verticies plus color code
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.vidhrdw;
 
 public class namcos21
 {

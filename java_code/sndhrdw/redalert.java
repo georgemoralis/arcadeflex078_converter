@@ -34,6 +34,7 @@ ask.  - Mike Balfour (mab22@po.cwru.edu)
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.sndhrdw;
 
 public class redalert
 {

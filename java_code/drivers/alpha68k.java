@@ -170,6 +170,7 @@ note: CLUT and color remap PROMs missing
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class alpha68k
 {

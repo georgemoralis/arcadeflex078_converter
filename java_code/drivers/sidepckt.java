@@ -17,6 +17,7 @@ i8751 protection simluation and other fixes by Bryan McPhail, 15/10/00.
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class sidepckt
 {

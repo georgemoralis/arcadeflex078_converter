@@ -202,6 +202,7 @@ C - uses sub board with support for player 3 and 4 controls
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class namcos1
 {

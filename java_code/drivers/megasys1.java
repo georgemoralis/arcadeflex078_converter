@@ -125,6 +125,7 @@ RAM			RW		0f0000-0f3fff		0e0000-0effff?		<
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class megasys1
 {

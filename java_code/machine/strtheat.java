@@ -22,6 +22,7 @@ plaintext version of the roms produces things like 30 second long coinup sounds.
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.machine;
 
 public class strtheat
 {

@@ -17,6 +17,7 @@
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.m6809;
 
 public class _6809dasm
 {

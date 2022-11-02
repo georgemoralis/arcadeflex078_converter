@@ -84,6 +84,7 @@ TODO general:
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.g65816;
 
 public class g65816
 {

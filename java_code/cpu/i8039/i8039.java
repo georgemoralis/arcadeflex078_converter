@@ -38,6 +38,7 @@
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.i8039;
 
 public class i8039
 {

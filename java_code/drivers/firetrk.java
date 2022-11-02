@@ -8,6 +8,7 @@ Atari Fire Truck + Super Bug + Monte Carlo driver
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class firetrk
 {

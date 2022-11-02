@@ -66,6 +66,7 @@ Change POLEPOS_TOGGLE to 0 if you are using the original gearshift
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class polepos
 {

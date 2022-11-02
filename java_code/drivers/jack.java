@@ -40,6 +40,7 @@ The 2 ay-8910 read ports are responsible for reading the sound commands.
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class jack
 {

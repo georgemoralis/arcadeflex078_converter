@@ -13,6 +13,7 @@ press F1+F3 to see ROM/RAM tests and the final animation
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.drivers;
 
 public class tail2nos
 {

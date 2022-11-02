@@ -125,6 +125,7 @@ M68KMAKE_TABLE_HEADER
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.m68000;
 
 public class m68k_in
 {

@@ -122,6 +122,7 @@ Table 3-2.  TMS32025/26 Memory Blocks
  * ported to v0.78
  * using automatic conversion tool v0.02
  */ 
+package arcadeflex.v078.cpu.tms32025;
 
 public class tms32025
 {
