@@ -91,7 +91,7 @@ public class playmark
 		5				/* reset_delay (otherwise wbeachvl will hang when saving settings) */
 	};
 	
-	static NVRAM_HANDLER( wbeachvl )
+	public static NVRAMHandlerPtr nvram_handler_wbeachvl  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 		{
@@ -110,7 +110,7 @@ public class playmark
 				EEPROM_set_data(init,128);
 			}
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( wbeachvl_port0_r )
 	{

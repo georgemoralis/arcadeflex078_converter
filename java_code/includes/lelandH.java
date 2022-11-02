@@ -39,8 +39,6 @@ void leland_init_eeprom(UINT8 default_val, const UINT16 *data, UINT8 serial_offs
 void ataxx_init_eeprom(UINT8 default_val, const UINT16 *data, UINT8 serial_offset);
 
 
-NVRAM_HANDLER( leland );
-NVRAM_HANDLER( ataxx );
 
 
 

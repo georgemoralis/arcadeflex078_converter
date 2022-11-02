@@ -558,7 +558,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	static NVRAM_HANDLER( itech32 )
+	public static NVRAMHandlerPtr nvram_handler_itech32  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		int i;
 	
@@ -569,10 +569,10 @@ public class itech32
 		else
 			for (i = 0x80; i < main_ram_size; i++)
 				((UINT8 *)main_ram)[i] = rand();
-	}
+	} };
 	
 	
-	static NVRAM_HANDLER( itech020 )
+	public static NVRAMHandlerPtr nvram_handler_itech020  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		int i;
 	
@@ -583,7 +583,7 @@ public class itech32
 		else
 			for (i = 0; i < nvram_size; i++)
 				((UINT8 *)nvram)[i] = rand();
-	}
+	} };
 	
 	
 	

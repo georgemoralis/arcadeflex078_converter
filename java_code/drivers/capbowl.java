@@ -104,7 +104,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	static NVRAM_HANDLER( capbowl )
+	public static NVRAMHandlerPtr nvram_handler_capbowl  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file,generic_nvram,generic_nvram_size);
@@ -120,7 +120,7 @@ public class capbowl
 				memset(generic_nvram,0x01,generic_nvram_size);
 			}
 		}
-	}
+	} };
 	
 	
 	

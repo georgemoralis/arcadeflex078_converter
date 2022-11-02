@@ -179,7 +179,7 @@ public class tetrisp2
 	static data16_t *tetrisp2_nvram;
 	static size_t tetrisp2_nvram_size;
 	
-	NVRAM_HANDLER( tetrisp2 )
+	public static NVRAMHandlerPtr nvram_handler_tetrisp2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file,tetrisp2_nvram,tetrisp2_nvram_size);
@@ -193,7 +193,7 @@ public class tetrisp2
 				memset(tetrisp2_nvram,0,tetrisp2_nvram_size);
 			}
 		}
-	}
+	} };
 	
 	
 	/* The game only ever writes even bytes and reads odd bytes */

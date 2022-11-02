@@ -204,7 +204,6 @@ enum {
 	PORT_BIT ( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );\
 	PORT_BIT ( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 
-NVRAM_HANDLER( nb1413m3 );
 int nb1413m3_sndrom_r(int offset);
 int nb1413m3_gfxrom_r(int offset);
 void nb1413m3_gfxrombank_w(int data);

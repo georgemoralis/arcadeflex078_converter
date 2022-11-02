@@ -57,7 +57,7 @@ public class seicross
 	static UINT8 *nvram;
 	static size_t nvram_size;
 	
-	static NVRAM_HANDLER( seicross )
+	public static NVRAMHandlerPtr nvram_handler_seicross  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file,nvram,nvram_size);
@@ -73,7 +73,7 @@ public class seicross
 				nvram[0x17] = 3;
 			}
 		}
-	}
+	} };
 	
 	
 	

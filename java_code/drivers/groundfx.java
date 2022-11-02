@@ -147,7 +147,7 @@ public class groundfx
 		"0100110000",	/* lock command */
 	};
 	
-	static NVRAM_HANDLER( groundfx )
+	public static NVRAMHandlerPtr nvram_handler_groundfx  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -158,7 +158,7 @@ public class groundfx
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
 		}
-	}
+	} };
 	
 	
 	/**********************************************************

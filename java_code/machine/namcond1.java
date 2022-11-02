@@ -194,7 +194,7 @@ public class namcond1
 	data16_t *namcond1_eeprom;
 	
 	/* not used at this point */
-	NVRAM_HANDLER( namcond1 )
+	public static NVRAMHandlerPtr nvram_handler_namcond1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 	  if( file == 0 )
 	    return;
@@ -207,6 +207,6 @@ public class namcond1
 	    /* write eeprom contents */
 	    mame_fwrite( file, namcond1_eeprom, NAMCOND1_EEPROM_SIZE );
 	  }
-	}
+	} };
 	
 }

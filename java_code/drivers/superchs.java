@@ -448,7 +448,7 @@ public class superchs
 		0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0xff
 	};
 	
-	static NVRAM_HANDLER( superchs )
+	public static NVRAMHandlerPtr nvram_handler_superchs  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -461,7 +461,7 @@ public class superchs
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the wheel setup values */
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( superchs )
 	

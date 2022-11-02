@@ -22,7 +22,6 @@ WRITE16_HANDLER( neogeo_sram16_unlock_w );
 READ16_HANDLER( neogeo_sram16_r );
 WRITE16_HANDLER( neogeo_sram16_w );
 
-NVRAM_HANDLER( neogeo );
 
 READ16_HANDLER( neogeo_memcard16_r );
 WRITE16_HANDLER( neogeo_memcard16_w );

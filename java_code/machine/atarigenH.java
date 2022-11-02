@@ -106,7 +106,6 @@ public class atarigenH
 	WRITE32_HANDLER( atarigen_eeprom32_w );
 	READ32_HANDLER( atarigen_eeprom_upper32_r );
 	
-	NVRAM_HANDLER( atarigen );
 	void atarigen_hisave(void);
 	
 	

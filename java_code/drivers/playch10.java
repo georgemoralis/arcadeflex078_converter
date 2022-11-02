@@ -354,7 +354,7 @@ public class playch10
 		ppu2c03b_spriteram_dma( 0, &work_ram[source] );
 	} };
 	
-	static NVRAM_HANDLER( playch10 )
+	public static NVRAMHandlerPtr nvram_handler_playch10  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		UINT8 *mem = memory_region( REGION_CPU2 ) + 0x6000;
 	
@@ -364,7 +364,7 @@ public class playch10
 			mame_fread( file, mem, 0x1000 );
 		else
 			memset(mem, 0, 0x1000);
-	}
+	} };
 	
 	/******************************************************************************/
 	

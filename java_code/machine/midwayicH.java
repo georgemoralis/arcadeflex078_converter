@@ -20,7 +20,6 @@ void midway_serial_pic2_reset_w(int state);
 UINT8 midway_serial_pic2_status_r(void);
 UINT8 midway_serial_pic2_r(void);
 void midway_serial_pic2_w(UINT8 data);
-NVRAM_HANDLER( midway_serial_pic2 );
 
 
 /* I/O ASIC connected to 2nd generation PIC */

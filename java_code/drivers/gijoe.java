@@ -71,7 +71,7 @@ public class gijoe
 	}
 	#endif
 	
-	static NVRAM_HANDLER( gijoe )
+	public static NVRAMHandlerPtr nvram_handler_gijoe  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -87,7 +87,7 @@ public class gijoe
 			else
 				init_eeprom_count = 2720;
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( control1_r )
 	{

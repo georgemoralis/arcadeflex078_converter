@@ -71,7 +71,7 @@ public class moo
 		"0100110000000" 	/* unlock command */
 	};
 	
-	static NVRAM_HANDLER( moo )
+	public static NVRAMHandlerPtr nvram_handler_moo  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -87,7 +87,7 @@ public class moo
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( control1_r )
 	{

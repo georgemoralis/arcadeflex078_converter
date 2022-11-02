@@ -254,7 +254,7 @@ public class policetr
 	};
 	
 	
-	static NVRAM_HANDLER( policetr )
+	public static NVRAMHandlerPtr nvram_handler_policetr  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -263,7 +263,7 @@ public class policetr
 			EEPROM_init(&eeprom_interface_policetr);
 			if (file != 0)	EEPROM_load(file);
 		}
-	}
+	} };
 	
 	
 	

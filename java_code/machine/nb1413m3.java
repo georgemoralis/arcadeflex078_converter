@@ -80,7 +80,7 @@ public class nb1413m3
 		}
 	} };
 	
-	NVRAM_HANDLER( nb1413m3 )
+	public static NVRAMHandlerPtr nvram_handler_nb1413m3  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file, nb1413m3_nvram, nb1413m3_nvram_size);
@@ -91,7 +91,7 @@ public class nb1413m3
 			else
 				memset(nb1413m3_nvram, 0, nb1413m3_nvram_size);
 		}
-	}
+	} };
 	
 	int nb1413m3_sndrom_r(int offset)
 	{

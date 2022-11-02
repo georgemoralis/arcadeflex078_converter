@@ -20,7 +20,6 @@
 
 
 
-NVRAM_HANDLER( namcond1 );
 
 /* VIDHRDW */
 

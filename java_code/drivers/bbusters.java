@@ -685,7 +685,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	static NVRAM_HANDLER( bbusters )
+	public static NVRAMHandlerPtr nvram_handler_bbusters  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0) {
 			mame_fwrite (file, eprom_data, 0x80);
@@ -696,7 +696,7 @@ public class bbusters
 			else
 				memset (eprom_data, 0xff, 0x80);
 		}
-	}
+	} };
 	
 	public static InterruptHandlerPtr bbuster = new InterruptHandlerPtr() {public void handler()
 	{

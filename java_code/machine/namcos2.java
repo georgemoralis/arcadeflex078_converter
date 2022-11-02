@@ -101,7 +101,7 @@ public class namcos2
 	data16_t *namcos2_eeprom;
 	size_t namcos2_eeprom_size;
 	
-	NVRAM_HANDLER( namcos2 ){
+	public static NVRAMHandlerPtr nvram_handler_namcos2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		if (read_or_write != 0){
 			mame_fwrite (file, namcos2_eeprom, namcos2_eeprom_size);
 		}
@@ -115,7 +115,7 @@ public class namcos2
 				memset (namcos2_eeprom, 0xff, namcos2_eeprom_size);
 			}
 		}
-	}
+	} };
 	
 	WRITE16_HANDLER( namcos2_68k_eeprom_w ){
 		COMBINE_DATA( &namcos2_eeprom[offset] );

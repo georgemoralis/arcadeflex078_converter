@@ -68,7 +68,7 @@ public class rungun
 		"0100110000000" /* unlock command */
 	};
 	
-	static NVRAM_HANDLER( rungun )
+	public static NVRAMHandlerPtr nvram_handler_rungun  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -84,7 +84,7 @@ public class rungun
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( rng_sysregs_r )
 	{

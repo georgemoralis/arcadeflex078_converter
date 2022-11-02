@@ -303,7 +303,7 @@ public class namconb1
 	data32_t *namconb1_spritebank32;
 	data32_t *namconb1_scrollram32;
 	
-	static NVRAM_HANDLER( namconb1 ){
+	public static NVRAMHandlerPtr nvram_handler_namconb1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		int i;
 		data8_t data[4];
 		if (read_or_write != 0)
@@ -337,7 +337,7 @@ public class namconb1
 				}
 			}
 		}
-	}
+	} };
 	
 	public static DriverInitHandlerPtr init_nebulray  = new DriverInitHandlerPtr() { public void handler()
 	{

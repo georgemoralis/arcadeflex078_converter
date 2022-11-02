@@ -265,14 +265,14 @@ public class ssv
 	static data16_t *ssv_nvram;
 	static size_t    ssv_nvram_size;
 	
-	NVRAM_HANDLER( ssv )
+	public static NVRAMHandlerPtr nvram_handler_ssv  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file, ssv_nvram, ssv_nvram_size);
 		else
 			if (file != 0)
 				mame_fread(file, ssv_nvram, ssv_nvram_size);
-	}
+	} };
 	
 	
 	/***************************************************************************

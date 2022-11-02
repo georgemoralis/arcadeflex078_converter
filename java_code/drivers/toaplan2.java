@@ -1088,7 +1088,7 @@ public class toaplan2
 	};
 	
 	
-	static NVRAM_HANDLER( bbakraid )
+	public static NVRAMHandlerPtr nvram_handler_bbakraid  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		/* Pin 6 of 93C66 is connected to Gnd! */
 	
@@ -1105,7 +1105,7 @@ public class toaplan2
 					EEPROM_set_data(bbakraid_unlimited_nvram, sizeof(bbakraid_unlimited_nvram));
 			}
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( bbakraid_nvram_r )
 	{

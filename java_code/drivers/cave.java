@@ -391,7 +391,7 @@ public class cave
 		}
 	}
 	
-	NVRAM_HANDLER( cave )
+	public static NVRAMHandlerPtr nvram_handler_cave  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -406,7 +406,7 @@ public class cave
 					EEPROM_set_data(cave_default_eeprom,cave_default_eeprom_length);
 			}
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -116,7 +116,7 @@ public class pirates
 		"*10011xxxx"	/* unlock command */
 	};
 	
-	static NVRAM_HANDLER( pirates )
+	public static NVRAMHandlerPtr nvram_handler_pirates  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0) EEPROM_save(file);
 		else
@@ -124,7 +124,7 @@ public class pirates
 			EEPROM_init(&eeprom_interface);
 			if (file != 0) EEPROM_load(file);
 		}
-	}
+	} };
 	
 	static WRITE16_HANDLER( pirates_out_w )
 	{

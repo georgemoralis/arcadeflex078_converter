@@ -20,7 +20,6 @@ public class simpsons
 	/* from vidhrdw */
 	
 	/* from machine */
-	NVRAM_HANDLER( simpsons );
 	
 	/***************************************************************************
 	

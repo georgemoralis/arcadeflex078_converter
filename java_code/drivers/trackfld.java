@@ -60,7 +60,7 @@ public class trackfld
 	static size_t nvram_size;
 	static int we_flipped_the_switch;
 	
-	static NVRAM_HANDLER( trackfld )
+	public static NVRAMHandlerPtr nvram_handler_trackfld  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 		{
@@ -123,9 +123,9 @@ public class trackfld
 				}
 			}
 		}
-	}
+	} };
 	
-	static NVRAM_HANDLER( mastkin )
+	public static NVRAMHandlerPtr nvram_handler_mastkin  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file,nvram,nvram_size);
@@ -134,7 +134,7 @@ public class trackfld
 			if (file != 0)
 				mame_fread(file,nvram,nvram_size);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

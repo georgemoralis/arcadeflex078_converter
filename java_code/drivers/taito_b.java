@@ -386,7 +386,7 @@ public class taito_b
 		"0100110000" 	/* unlock command*/
 	};
 	
-	static NVRAM_HANDLER( taito_b )
+	public static NVRAMHandlerPtr nvram_handler_taito_b  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -398,7 +398,7 @@ public class taito_b
 				EEPROM_load(file);
 			}
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( eeprom_r )
 	{

@@ -85,7 +85,7 @@ public class mitchell
 	static size_t nvram_size;
 	static int init_eeprom_count;
 	
-	static NVRAM_HANDLER( mitchell )
+	public static NVRAMHandlerPtr nvram_handler_mitchell  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 		{
@@ -107,7 +107,7 @@ public class mitchell
 			else
 				init_eeprom_count = 1000;	/* for Super Pang */
 		}
-	}
+	} };
 	
 	public static ReadHandlerPtr pang_port5_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

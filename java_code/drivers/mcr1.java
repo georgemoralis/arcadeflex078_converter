@@ -138,7 +138,7 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	static NVRAM_HANDLER( mcr1 )
+	public static NVRAMHandlerPtr nvram_handler_mcr1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		unsigned char *ram = memory_region(REGION_CPU1);
 	
@@ -148,7 +148,7 @@ public class mcr1
 			mame_fread(file, &ram[0x7000], 0x800);
 		else if (nvram_init != 0)
 			memcpy(&ram[0x7000], nvram_init, 16);
-	}
+	} };
 	
 	
 	

@@ -883,7 +883,7 @@ public class leland
 	} };
 	
 	
-	NVRAM_HANDLER( leland )
+	public static NVRAMHandlerPtr nvram_handler_leland  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 		{
@@ -900,10 +900,10 @@ public class leland
 			EEPROM_set_data(eeprom_data, 64*2);
 			memset(memory_region(REGION_USER2), 0x00, LELAND_BATTERY_RAM_SIZE);
 		}
-	}
+	} };
 	
 	
-	NVRAM_HANDLER( ataxx )
+	public static NVRAMHandlerPtr nvram_handler_ataxx  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 		{
@@ -920,7 +920,7 @@ public class leland
 			EEPROM_set_data(eeprom_data, 128*2);
 			memset(memory_region(REGION_USER2), 0x00, LELAND_BATTERY_RAM_SIZE);
 		}
-	}
+	} };
 	
 	
 	/*************************************

@@ -427,7 +427,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	static NVRAM_HANDLER( mcr3 )
+	public static NVRAMHandlerPtr nvram_handler_mcr3  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file, videoram, videoram_size);
@@ -435,7 +435,7 @@ public class mcr3
 			mame_fread(file, videoram, videoram_size);
 		else
 			memset(videoram, 0, videoram_size);
-	}
+	} };
 	
 	
 	

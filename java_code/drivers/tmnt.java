@@ -476,7 +476,7 @@ public class tmnt
 		"0100110000000" /* unlock command */
 	};
 	
-	static NVRAM_HANDLER( eeprom )
+	public static NVRAMHandlerPtr nvram_handler_eeprom  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -492,7 +492,7 @@ public class tmnt
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( detatwin_coin_r )
 	{
@@ -586,7 +586,7 @@ public class tmnt
 		"0100110000000" /* unlock command */
 	};
 	
-	static NVRAM_HANDLER( thndrx2 )
+	public static NVRAMHandlerPtr nvram_handler_thndrx2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -602,7 +602,7 @@ public class tmnt
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( thndrx2_in0_r )
 	{

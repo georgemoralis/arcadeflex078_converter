@@ -54,7 +54,7 @@ public class hyperspt
 	static size_t nvram_size;
 	static int we_flipped_the_switch;
 	
-	static NVRAM_HANDLER( hyperspt )
+	public static NVRAMHandlerPtr nvram_handler_hyperspt  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 		{
@@ -117,7 +117,7 @@ public class hyperspt
 				}
 			}
 		}
-	}
+	} };
 	
 	
 	

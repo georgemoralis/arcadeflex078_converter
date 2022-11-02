@@ -93,7 +93,7 @@ public class xexex
 		"0100110000000" /* unlock command */
 	};
 	
-	static NVRAM_HANDLER( xexex )
+	public static NVRAMHandlerPtr nvram_handler_xexex  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -109,7 +109,7 @@ public class xexex
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	
 	#if 0 // (for reference; do not remove)

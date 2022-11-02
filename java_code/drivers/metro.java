@@ -3782,7 +3782,7 @@ public class metro
 		MDRV_SOUND_ADD(YM2413, ym2413_intf_8MHz)
 	MACHINE_DRIVER_END
 	
-	NVRAM_HANDLER( dokyusp )
+	public static NVRAMHandlerPtr nvram_handler_dokyusp  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		data8_t def_data[] = {0x00,0xe0};
 	
@@ -3794,7 +3794,7 @@ public class metro
 			if (file != 0)	EEPROM_load(file);
 			else		EEPROM_set_data(def_data,sizeof(def_data)/sizeof(def_data[0]));
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( dokyusp )
 	

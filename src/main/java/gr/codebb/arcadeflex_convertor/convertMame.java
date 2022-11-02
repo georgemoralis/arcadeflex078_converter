@@ -27,6 +27,7 @@ public class convertMame {
     static final int MACHINE_INIT = 14;
     static final int DRIVER_INIT = 15;
     static final int MACHINE_STOP = 16;
+    static final int NVRAM_HANDLER = 17;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -136,6 +137,22 @@ public class convertMame {
                             } else {
                                 sUtil.putString("public static DriverInitHandlerPtr init_" + Convertor.token[0] + "  = new DriverInitHandlerPtr() { public void handler()");
                                 type = DRIVER_INIT;
+                                i3 = -1;
+                                Convertor.inpos += 1;
+                                continue;
+                            }
+                        }
+                        if (sUtil.getToken("NVRAM_HANDLER(")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.getToken(");"))//if it is a front function skip it
+                            {
+                                sUtil.skipLine();
+                                continue;
+                            } else {
+                                sUtil.putString("public static NVRAMHandlerPtr nvram_handler_" + Convertor.token[0] + "  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)");
+                                type = NVRAM_HANDLER;
                                 i3 = -1;
                                 Convertor.inpos += 1;
                                 continue;
@@ -453,6 +470,26 @@ public class convertMame {
                     Convertor.inpos = i;
                     break;
                 }
+                case 'N':
+                    i = Convertor.inpos;
+                    if (sUtil.getToken("NVRAM_HANDLER(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static NVRAMHandlerPtr nvram_handler_" + Convertor.token[0] + "  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)");
+                            type = NVRAM_HANDLER;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
+                    Convertor.inpos = i;
+                    break;
                 case 'V': {
                     i = Convertor.inpos;
                     if (sUtil.getToken("VIDEO_UPDATE(")) {
@@ -605,7 +642,8 @@ public class convertMame {
                     }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
                             || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
-                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT || type == MACHINE_STOP) {
+                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT
+                            || type == MACHINE_STOP || type == NVRAM_HANDLER) {
                         i3++;
                     }
                 }
@@ -623,7 +661,8 @@ public class convertMame {
                     }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
                             || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
-                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT || type == MACHINE_STOP) {
+                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT
+                            || type == MACHINE_STOP || type == NVRAM_HANDLER) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");

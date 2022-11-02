@@ -53,7 +53,7 @@ public class asterix
 	}
 	#endif
 	
-	static NVRAM_HANDLER( asterix )
+	public static NVRAMHandlerPtr nvram_handler_asterix  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -69,7 +69,7 @@ public class asterix
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( control1_r )
 	{

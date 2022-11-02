@@ -31,7 +31,7 @@ public class simpsons
 		"0100110000000" /* unlock command */
 	};
 	
-	NVRAM_HANDLER( simpsons )
+	public static NVRAMHandlerPtr nvram_handler_simpsons  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			EEPROM_save(file);
@@ -47,7 +47,7 @@ public class simpsons
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	public static ReadHandlerPtr simpsons_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

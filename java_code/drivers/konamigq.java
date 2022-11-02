@@ -155,7 +155,7 @@ public class konamigq
 	
 	/* EEPROM */
 	
-	static NVRAM_HANDLER( konamigq_93C46 )
+	public static NVRAMHandlerPtr nvram_handler_konamigq_93C46  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 		{
@@ -185,7 +185,7 @@ public class konamigq
 				EEPROM_set_data( def_eeprom, 128 );
 			}
 		}
-	}
+	} };
 	
 	static WRITE32_HANDLER( eeprom_w )
 	{

@@ -43,7 +43,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	static NVRAM_HANDLER( midyunit )
+	public static NVRAMHandlerPtr nvram_handler_midyunit  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 	{
 		if (read_or_write != 0)
 			mame_fwrite(file, midyunit_cmos_ram, 0x8000);
@@ -51,7 +51,7 @@ public class midyunit
 			mame_fread(file, midyunit_cmos_ram, 0x8000);
 		else
 			memset(midyunit_cmos_ram, 0, 0x8000);
-	}
+	} };
 	
 	
 	
