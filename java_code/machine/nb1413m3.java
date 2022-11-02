@@ -215,13 +215,13 @@ public class nb1413m3
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_PASTELGL:
-				return ((input_port_3_r(0) & 0xfe) | (nb1413m3_busyflag & 0x01));
+				return ((input_port_3_r.handler(0) & 0xfe) | (nb1413m3_busyflag & 0x01));
 				break;
 			case	NB1413M3_TAIWANMB:
-				return ((input_port_3_r(0) & 0xfc) | ((nb1413m3_outcoin_flag & 0x01) << 1) | (nb1413m3_busyflag & 0x01));
+				return ((input_port_3_r.handler(0) & 0xfc) | ((nb1413m3_outcoin_flag & 0x01) << 1) | (nb1413m3_busyflag & 0x01));
 				break;
 			default:
-				return ((input_port_2_r(0) & 0xfc) | ((nb1413m3_outcoin_flag & 0x01) << 1) | (nb1413m3_busyflag & 0x01));
+				return ((input_port_2_r.handler(0) & 0xfc) | ((nb1413m3_outcoin_flag & 0x01) << 1) | (nb1413m3_busyflag & 0x01));
 				break;
 		}
 	} };
@@ -356,7 +356,7 @@ public class nb1413m3
 				break;
 			case	NB1413M3_MAIKO:
 			case	NB1413M3_HANAOJI:
-				return ((input_port_8_r(0) & 0xfd) | ((nb1413m3_outcoin_flag & 0x01) << 1));
+				return ((input_port_8_r.handler(0) & 0xfd) | ((nb1413m3_outcoin_flag & 0x01) << 1));
 				break;
 			default:
 				return 0xff;

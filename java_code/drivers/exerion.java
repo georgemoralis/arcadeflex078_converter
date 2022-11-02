@@ -33,14 +33,14 @@ public class exerion
 	public static ReadHandlerPtr exerion_port01_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* the cocktail flip bit muxes between ports 0 and 1 */
-		return exerion_cocktail_flip ? input_port_1_r(offset) : input_port_0_r(offset);
+		return exerion_cocktail_flip ? input_port_1_r.handler(offset) : input_port_0_r.handler(offset);
 	} };
 	
 	
 	public static ReadHandlerPtr exerion_port3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bit 0 is VBLANK, which we simulate manually */
-		int result = input_port_3_r(offset);
+		int result = input_port_3_r.handler(offset);
 		int ybeam = cpu_getscanline();
 		if (ybeam > Machine.visible_area.max_y)
 			result |= 1;

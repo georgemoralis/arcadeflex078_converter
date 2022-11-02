@@ -54,7 +54,7 @@ public class tickee
 	
 	public static ReadHandlerPtr port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return input_port_1_r(offset) | (ticket_dispenser_0_r(0) >> 5) | (ticket_dispenser_1_r(0) >> 6);
+		return input_port_1_r.handler(offset) | (ticket_dispenser_0_r(0) >> 5) | (ticket_dispenser_1_r(0) >> 6);
 	} };
 	
 	

@@ -59,7 +59,7 @@ public class funkybee
 	public static ReadHandlerPtr funkybee_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		watchdog_reset_r(0);
-		return input_port_0_r(offset);
+		return input_port_0_r.handler(offset);
 	} };
 	
 	public static WriteHandlerPtr funkybee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)

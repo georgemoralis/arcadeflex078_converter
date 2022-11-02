@@ -100,25 +100,25 @@ public class segar
 	{
 		int dip1, dip2;
 	
-		dip1 = input_port_6_r(offset);
-		dip2 = input_port_7_r(offset);
+		dip1 = input_port_6_r.handler(offset);
+		dip2 = input_port_7_r.handler(offset);
 	
 		switch(offset)
 		{
 			case 0:
-			   return ((input_port_0_r(0) & 0xF0) | ((dip2 & 0x08)>>3) | ((dip2 & 0x80)>>6) |
+			   return ((input_port_0_r.handler(0) & 0xF0) | ((dip2 & 0x08)>>3) | ((dip2 & 0x80)>>6) |
 							((dip1 & 0x08)>>1) | ((dip1 & 0x80)>>4));
 			case 1:
-			   return ((input_port_1_r(0) & 0xF0) | ((dip2 & 0x04)>>2) | ((dip2 & 0x40)>>5) |
+			   return ((input_port_1_r.handler(0) & 0xF0) | ((dip2 & 0x04)>>2) | ((dip2 & 0x40)>>5) |
 							((dip1 & 0x04)>>0) | ((dip1 & 0x40)>>3));
 			case 2:
-			   return ((input_port_2_r(0) & 0xF0) | ((dip2 & 0x02)>>1) | ((dip2 & 0x20)>>4) |
+			   return ((input_port_2_r.handler(0) & 0xF0) | ((dip2 & 0x02)>>1) | ((dip2 & 0x20)>>4) |
 							((dip1 & 0x02)<<1) | ((dip1 & 0x20)>>2));
 			case 3:
-			   return ((input_port_3_r(0) & 0xF0) | ((dip2 & 0x01)>>0) | ((dip2 & 0x10)>>3) |
+			   return ((input_port_3_r.handler(0) & 0xF0) | ((dip2 & 0x01)>>0) | ((dip2 & 0x10)>>3) |
 							((dip1 & 0x01)<<2) | ((dip1 & 0x10)>>1));
 			case 4:
-			   return input_port_4_r(0);
+			   return input_port_4_r.handler(0);
 		}
 	
 		return 0;

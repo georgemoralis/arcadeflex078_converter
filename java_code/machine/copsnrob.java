@@ -31,19 +31,19 @@ public class copsnrob
 	    default:
 	    case 0x00:
 	        current_car_image = copsnrob_carimage[0];
-	        keys = input_port_4_r(0);
+	        keys = input_port_4_r.handler(0);
 	        break;
 	    case 0x04:
 	        current_car_image = copsnrob_carimage[1];
-	        keys = input_port_5_r(0);
+	        keys = input_port_5_r.handler(0);
 	        break;
 	    case 0x08:
 	        current_car_image = copsnrob_carimage[2];
-	        keys = input_port_6_r(0);
+	        keys = input_port_6_r.handler(0);
 	        break;
 	    case 0x0c:
 	        current_car_image = copsnrob_carimage[3];
-	        keys = input_port_7_r(0);
+	        keys = input_port_7_r.handler(0);
 	    }
 	
 	    if (current_car_image < 7)

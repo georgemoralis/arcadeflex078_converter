@@ -296,7 +296,7 @@ public class lazercmd
 	public static ReadHandlerPtr lazercmd_data_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data;
-		data = input_port_2_r(0) & 0x0f;
+		data = input_port_2_r.handler(0) & 0x0f;
 		return data;
 	} };
 	
@@ -395,16 +395,16 @@ public class lazercmd
 		switch (offset)
 		{
 			case 0: 			   /* player 1 joysticks */
-				data = input_port_0_r(0);
+				data = input_port_0_r.handler(0);
 				break;
 			case 1: 			   /* player 2 joysticks */
-				data = input_port_1_r(0);
+				data = input_port_1_r.handler(0);
 				break;
 			case 2: 			   /* player 1 + 2 buttons */
-				data = input_port_4_r(0);
+				data = input_port_4_r.handler(0);
 				break;
 			case 3: 			   /* coin slot + start buttons */
-				data = input_port_3_r(0);
+				data = input_port_3_r.handler(0);
 				break;
 			case 4: 			   /* vertical scan counter */
 				data = ((timer_count&0x10)>>1)|((timer_count&0x20)>>3)|((timer_count&0x40)>>5)|((timer_count&0x80)>>7);

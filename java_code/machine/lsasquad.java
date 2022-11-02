@@ -170,7 +170,7 @@ public class lsasquad
 	
 	public static ReadHandlerPtr lsasquad_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int res = input_port_3_r(0);
+		int res = input_port_3_r.handler(0);
 	
 		/* bit 0 = when 1, mcu is ready to receive data from main cpu */
 		/* bit 1 = when 0, mcu has sent data to the main cpu */

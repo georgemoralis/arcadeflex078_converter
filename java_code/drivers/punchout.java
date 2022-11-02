@@ -114,7 +114,7 @@ public class punchout
 	
 	public static ReadHandlerPtr punchout_input_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int data = input_port_3_r(offset);
+		int data = input_port_3_r.handler(offset);
 		/* bit 4 is busy pin level */
 		if( VLM5030_BSY() ) data &= ~0x10;
 		else data |= 0x10;

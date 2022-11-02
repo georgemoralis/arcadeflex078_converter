@@ -79,10 +79,10 @@ public class sbrkout
 	        switch (offset)
 	        {
 	                /* DSW */
-	                case 0x00:      return ((input_port_0_r(0) & 0x03) << 6);
-	                case 0x01:      return ((input_port_0_r(0) & 0x0C) << 4);
-	                case 0x02:      return ((input_port_0_r(0) & 0xC0) << 0);
-	                case 0x03:      return ((input_port_0_r(0) & 0x30) << 2);
+	                case 0x00:      return ((input_port_0_r.handler(0) & 0x03) << 6);
+	                case 0x01:      return ((input_port_0_r.handler(0) & 0x0C) << 4);
+	                case 0x02:      return ((input_port_0_r.handler(0) & 0xC0) << 0);
+	                case 0x03:      return ((input_port_0_r.handler(0) & 0x30) << 2);
 	
 	                /* Just in case */
 	                default:        return 0xFF;

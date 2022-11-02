@@ -515,15 +515,15 @@ public class taito_l
 		switch(mux_ctrl)
 		{
 		case 0:
-			return input_port_0_r(0);
+			return input_port_0_r.handler(0);
 		case 1:
-			return input_port_1_r(0);
+			return input_port_1_r.handler(0);
 		case 2:
-			return input_port_2_r(0);
+			return input_port_2_r.handler(0);
 		case 3:
-			return input_port_3_r(0);
+			return input_port_3_r.handler(0);
 		case 7:
-			return input_port_4_r(0);
+			return input_port_4_r.handler(0);
 		default:
 			logerror("Mux read from unknown port %d (%04x)\n", mux_ctrl, activecpu_get_pc());
 			return 0xff;

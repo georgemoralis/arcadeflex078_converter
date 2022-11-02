@@ -82,9 +82,9 @@ public class tnzs
 	
 		switch (tnzs_input_select & 0x0f)
 		{
-			case 0x0a:	data = input_port_4_r(0); break;
-			case 0x0c:	data = input_port_2_r(0); break;
-			case 0x0d:	data = input_port_3_r(0); break;
+			case 0x0a:	data = input_port_4_r.handler(0); break;
+			case 0x0c:	data = input_port_2_r.handler(0); break;
+			case 0x0d:	data = input_port_3_r.handler(0); break;
 			default:	data = 0xff; break;
 		}
 	
@@ -95,7 +95,7 @@ public class tnzs
 	
 	public static ReadHandlerPtr tnzs_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int data = input_port_4_r(0);
+		int data = input_port_4_r.handler(0);
 	
 	//	logerror("I8742:%04x  Read %02x from port 2\n", activecpu_get_previouspc(), data);
 	

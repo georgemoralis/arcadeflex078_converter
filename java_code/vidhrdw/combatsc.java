@@ -338,10 +338,10 @@ public class combatsc
 		{
 			switch (offset)
 			{
-				case 0x400:	return input_port_0_r(0); break;
-				case 0x401:	return input_port_1_r(0); break;
-				case 0x402:	return input_port_2_r(0); break;
-				case 0x403:	return input_port_3_r(0); break;
+				case 0x400:	return input_port_0_r.handler(0); break;
+				case 0x401:	return input_port_1_r.handler(0); break;
+				case 0x402:	return input_port_2_r.handler(0); break;
+				case 0x403:	return input_port_3_r.handler(0); break;
 			}
 		}
 		return banked_area[offset];

@@ -5529,22 +5529,22 @@ public class taitoic
 		switch (offset)
 		{
 			case 0x00:	/* IN00-07 (DSA) */
-				return input_port_0_r(0);
+				return input_port_0_r.handler(0);
 	
 			case 0x01:	/* IN08-15 (DSB) */
-				return input_port_1_r(0);
+				return input_port_1_r.handler(0);
 	
 			case 0x02:	/* IN16-23 (1P) */
-				return input_port_2_r(0);
+				return input_port_2_r.handler(0);
 	
 			case 0x03:	/* IN24-31 (2P) */
-				return input_port_3_r(0);
+				return input_port_3_r.handler(0);
 	
 			case 0x04:	/* coin counters and lockout */
 				return TC0220IOC_regs[4];
 	
 			case 0x07:	/* INB0-7 (coin) */
-				return input_port_4_r(0);
+				return input_port_4_r.handler(0);
 	
 			default:
 	logerror("PC %06x: warning - read TC0220IOC address %02x\n",activecpu_get_pc(),offset);
@@ -5690,22 +5690,22 @@ public class taitoic
 		switch (offset)
 		{
 			case 0x00:	/* DSA */
-				return input_port_0_r(0);
+				return input_port_0_r.handler(0);
 	
 			case 0x01:	/* DSB */
-				return input_port_1_r(0);
+				return input_port_1_r.handler(0);
 	
 			case 0x02:	/* 1P */
-				return input_port_2_r(0);
+				return input_port_2_r.handler(0);
 	
 			case 0x03:	/* 2P */
-				return input_port_3_r(0);
+				return input_port_3_r.handler(0);
 	
 			case 0x04:	/* coin counters and lockout */
 				return TC0510NIO_regs[4];
 	
 			case 0x07:	/* coin */
-				return input_port_4_r(0);
+				return input_port_4_r.handler(0);
 	
 			default:
 	logerror("PC %06x: warning - read TC0510NIO address %02x\n",activecpu_get_pc(),offset);
@@ -5773,22 +5773,22 @@ public class taitoic
 		switch (offset)
 		{
 			case 0x00:	/* DSA */
-				return input_port_0_r(0);
+				return input_port_0_r.handler(0);
 	
 			case 0x01:	/* DSB */
-				return input_port_1_r(0);
+				return input_port_1_r.handler(0);
 	
 			case 0x02:	/* 1P */
-				return input_port_2_r(0);
+				return input_port_2_r.handler(0);
 	
 			case 0x03:	/* 2P */
-				return input_port_3_r(0);
+				return input_port_3_r.handler(0);
 	
 			case 0x04:	/* coin counters and lockout */
 				return TC0640FIO_regs[4];
 	
 			case 0x07:	/* coin */
-				return input_port_4_r(0);
+				return input_port_4_r.handler(0);
 	
 			default:
 	logerror("PC %06x: warning - read TC0640FIO address %02x\n",activecpu_get_pc(),offset);

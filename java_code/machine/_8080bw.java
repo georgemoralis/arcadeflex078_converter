@@ -82,12 +82,12 @@ public class _8080bw
 	
 	public static ReadHandlerPtr boothill_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_0_r(0) & 0x8f) | boothill_controller_table[input_port_3_r(0) >> 5];
+	    return (input_port_0_r.handler(0) & 0x8f) | boothill_controller_table[input_port_3_r.handler(0) >> 5];
 	} };
 	
 	public static ReadHandlerPtr boothill_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_1_r(0) & 0x8f) | boothill_controller_table[input_port_4_r(0) >> 5];
+	    return (input_port_1_r.handler(0) & 0x8f) | boothill_controller_table[input_port_4_r.handler(0) >> 5];
 	} };
 	
 	
@@ -98,12 +98,12 @@ public class _8080bw
 	
 	public static ReadHandlerPtr gunfight_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_0_r(0) & 0x8f) | (gunfight_controller_table[input_port_3_r(0) >> 5]);
+	    return (input_port_0_r.handler(0) & 0x8f) | (gunfight_controller_table[input_port_3_r.handler(0) >> 5]);
 	} };
 	
 	public static ReadHandlerPtr gunfight_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_1_r(0) & 0x8f) | (gunfight_controller_table[input_port_4_r(0) >> 5]);
+	    return (input_port_1_r.handler(0) & 0x8f) | (gunfight_controller_table[input_port_4_r.handler(0) >> 5]);
 	} };
 	
 	/*
@@ -129,18 +129,18 @@ public class _8080bw
 	
 	public static ReadHandlerPtr spcenctr_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_0_r(0) & 0xc0) | (graybit6_controller_table[input_port_0_r(0) & 0x3f] ^ 0x3f);
+	    return (input_port_0_r.handler(0) & 0xc0) | (graybit6_controller_table[input_port_0_r.handler(0) & 0x3f] ^ 0x3f);
 	} };
 	
 	public static ReadHandlerPtr spcenctr_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_1_r(0) & 0xc0) | (graybit6_controller_table[input_port_1_r(0) & 0x3f] ^ 0x3f);
+	    return (input_port_1_r.handler(0) & 0xc0) | (graybit6_controller_table[input_port_1_r.handler(0) & 0x3f] ^ 0x3f);
 	} };
 	
 	
 	public static ReadHandlerPtr seawolf_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return (input_port_0_r(0) & 0xe0) | graybit6_controller_table[input_port_0_r(0) & 0x1f];
+		return (input_port_0_r.handler(0) & 0xe0) | graybit6_controller_table[input_port_0_r.handler(0) & 0x1f];
 	} };
 	
 	

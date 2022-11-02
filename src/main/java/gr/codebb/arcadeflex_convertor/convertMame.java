@@ -696,6 +696,52 @@ public class convertMame {
                     break;
                 case 'i':
                     i = Convertor.inpos;
+                    if (type == READ_HANDLER8) {
+                        if (sUtil.getToken("input_port_0_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_0_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_1_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_1_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_2_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_2_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_3_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_3_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_4_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_4_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_5_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_5_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_6_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_6_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_7_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_7_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_8_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_8_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_9_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_9_r.handler").toString());
+                            continue;
+                        }
+                        if (sUtil.getToken("input_port_10_r")) {
+                            sUtil.putString((new StringBuilder()).append("input_port_10_r.handler").toString());
+                            continue;
+                        }
+                    }
                     if (sUtil.getToken("if")) {
                         sUtil.skipSpace();
                         if (sUtil.parseChar() != '(') {
@@ -793,7 +839,6 @@ public class convertMame {
                             break;
                         } else {
                             sUtil.skipSpace();
-
                             if (sUtil.parseChar() == '=') {
                                 int g = Convertor.inpos;
                                 if (sUtil.parseChar() == '=') {
@@ -831,7 +876,7 @@ public class convertMame {
                                     Convertor.inpos = i;
                                     break;
                                 }
-                                //Convertor.inpos = g;
+                                Convertor.inpos = g;
                                 sUtil.skipSpace();
                                 Convertor.token[1] = sUtil.parseToken(';');
                                 sUtil.putString((new StringBuilder()).append("color_prom.write(").append(Convertor.token[0]).append(",").append(Convertor.token[1]).append(");").toString());

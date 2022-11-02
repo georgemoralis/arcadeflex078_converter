@@ -335,12 +335,12 @@ public class atarisy2
 	
 	public static ReadHandlerPtr switch_6502_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int result = input_port_0_r(offset);
+		int result = input_port_0_r.handler(offset);
 	
 		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x01;
 		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x02;
 		if (!has_tms5220 || tms5220_ready_r()) result ^= 0x04;
-		if (!(input_port_2_r(offset) & 0x80)) result ^= 0x10;
+		if (!(input_port_2_r.handler(offset) & 0x80)) result ^= 0x10;
 	
 		return result;
 	} };

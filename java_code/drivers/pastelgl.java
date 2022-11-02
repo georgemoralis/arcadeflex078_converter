@@ -99,7 +99,7 @@ public class pastelgl
 			case	0xa000:	return nb1413m3_inputport1_r(0);
 			case	0xb000:	return nb1413m3_inputport2_r(0);
 			case	0xc000:	return pastelgl_sndrom_r(0);
-			case	0xe000:	return input_port_2_r(0);
+			case	0xe000:	return input_port_2_r.handler(0);
 			case	0xf000:	return nb1413m3_dipsw1_r(0);
 			case	0xf100:	return nb1413m3_dipsw2_r(0);
 			default:	return 0xff;

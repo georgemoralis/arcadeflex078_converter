@@ -254,12 +254,12 @@ public class cosmic
 	{
 		/* The top four address lines from the CRTC are bits 0-3 */
 	
-		return (input_port_0_r(0) & 0xf0) | ((cpu_getscanline() & 0xf0) >> 4);
+		return (input_port_0_r.handler(0) & 0xf0) | ((cpu_getscanline() & 0xf0) >> 4);
 	} };
 	
 	public static ReadHandlerPtr magspot2_coinage_dip_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return (input_port_5_r(0) & (1 << (7 - offset))) ? 0 : 1;
+		return (input_port_5_r.handler(0) & (1 << (7 - offset))) ? 0 : 1;
 	} };
 	
 	
@@ -268,12 +268,12 @@ public class cosmic
 	public static ReadHandlerPtr nomnlnd_port_0_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int control;
-	    int fire = input_port_3_r(0);
+	    int fire = input_port_3_r.handler(0);
 	
 		if (offset != 0)
-			control = input_port_1_r(0);
+			control = input_port_1_r.handler(0);
 	    else
-			control = input_port_0_r(0);
+			control = input_port_0_r.handler(0);
 	
 	    /* If firing - stop tank */
 	

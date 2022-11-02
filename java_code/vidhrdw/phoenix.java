@@ -292,9 +292,9 @@ public class phoenix
 	public static ReadHandlerPtr phoenix_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (cocktail_mode != 0)
-			return (input_port_0_r(0) & 0x07) | (input_port_1_r(0) & 0xf8);
+			return (input_port_0_r.handler(0) & 0x07) | (input_port_1_r.handler(0) & 0xf8);
 		else
-			return input_port_0_r(0);
+			return input_port_0_r.handler(0);
 	} };
 	
 	public static ReadHandlerPtr pleiads_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)

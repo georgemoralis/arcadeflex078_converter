@@ -178,12 +178,12 @@ public class capbowl
 	
 	public static ReadHandlerPtr track_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return (input_port_0_r(offset) & 0xf0) | ((input_port_2_r(offset) - track[0]) & 0x0f);
+		return (input_port_0_r.handler(offset) & 0xf0) | ((input_port_2_r.handler(offset) - track[0]) & 0x0f);
 	} };
 	
 	public static ReadHandlerPtr track_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return (input_port_1_r(offset) & 0xf0) | ((input_port_3_r(offset) - track[1]) & 0x0f);
+		return (input_port_1_r.handler(offset) & 0xf0) | ((input_port_3_r.handler(offset) - track[1]) & 0x0f);
 	} };
 	
 	public static WriteHandlerPtr track_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)

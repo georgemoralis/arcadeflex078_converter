@@ -208,7 +208,7 @@ public class gladiatr
 	/* YM2203 port A handler (input) */
 	public static ReadHandlerPtr gladiator_dsw3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return input_port_2_r(offset)^0xff;
+		return input_port_2_r.handler(offset)^0xff;
 	} };
 	/* YM2203 port B handler (output) */
 	public static WriteHandlerPtr gladiator_int_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)

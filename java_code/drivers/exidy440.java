@@ -316,7 +316,7 @@ public class exidy440
 	
 	public static ReadHandlerPtr input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int result = input_port_0_r(offset);
+		int result = input_port_0_r.handler(offset);
 	
 		/* the FIRQ cause is reflected in the upper 2 bits */
 		if (exidy440_firq_vblank != 0) result ^= 0x80;
@@ -371,7 +371,7 @@ public class exidy440
 				break;
 	
 			case 0x20:										/* coin bits I/O1 */
-				result = (input_port_3_r(offset) & 0xfc) | coin_state;
+				result = (input_port_3_r.handler(offset) & 0xfc) | coin_state;
 				result ^= port_3_xor;
 	
 				/* sound command acknowledgements come on bit 3 here */
@@ -387,15 +387,15 @@ public class exidy440
 				break;
 	
 			case 0x60:										/* dip switches (8) */
-				result = input_port_1_r(offset);
+				result = input_port_1_r.handler(offset);
 				break;
 	
 			case 0x80:										/* player control bits */
-				result = input_port_2_r(offset) ^ port_2_xor;
+				result = input_port_2_r.handler(offset) ^ port_2_xor;
 				break;
 	
 			case 0xa0:										/* coin bits I/O3 */
-				result = (input_port_3_r(offset) & 0xfc) | coin_state;
+				result = (input_port_3_r.handler(offset) & 0xfc) | coin_state;
 				result ^= port_3_xor;
 	
 				/* sound command acknowledgements come on bit 3 here */
@@ -410,11 +410,11 @@ public class exidy440
 	
 				/* for Top Secret only */
 				if (offset == 0xc5)
-					return (input_port_5_r(offset) & 1) ? 0x01 : 0x02;
+					return (input_port_5_r.handler(offset) & 1) ? 0x01 : 0x02;
 				else if (offset == 0xc6)
-					return input_port_4_r(offset);
+					return input_port_4_r.handler(offset);
 				else if (offset == 0xc7)
-					return input_port_6_r(offset);
+					return input_port_6_r.handler(offset);
 				else
 					return 0;
 		}

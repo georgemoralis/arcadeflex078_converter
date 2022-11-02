@@ -63,7 +63,7 @@ public class hanaawas
 			}
 		}
 	
-		return (input_port_0_r(0) & 0xf0) | ordinal;
+		return (input_port_0_r.handler(0) & 0xf0) | ordinal;
 	} };
 	
 	

@@ -244,7 +244,7 @@ public class dkong
 	
 	public static ReadHandlerPtr dkong_in2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return input_port_2_r(offset) | (mcustatus << 6);
+		return input_port_2_r.handler(offset) | (mcustatus << 6);
 	} };
 	
 	

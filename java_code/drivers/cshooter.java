@@ -150,7 +150,7 @@ public class cshooter
 		   Code at 0x5061 is executed once during P.O.S.T. where there is one read.
 		   Code at 0x50b4 is then executed each frame (not sure) where there are 2 reads. */
 	
-		return ( (cshooter_counter++ & 1) ? 0xff : input_port_5_r(0) );
+		return ( (cshooter_counter++ & 1) ? 0xff : input_port_5_r.handler(0) );
 	} };
 	
 	public static WriteHandlerPtr cshooter_c500_w = new WriteHandlerPtr() {public void handler(int offset, int data)

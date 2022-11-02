@@ -472,8 +472,8 @@ public class popeye
 		int res;
 	
 	
-		res = input_port_3_r(offset);
-		res |= (input_port_4_r(offset) << (7-dswbit)) & 0x80;
+		res = input_port_3_r.handler(offset);
+		res |= (input_port_4_r.handler(offset) << (7-dswbit)) & 0x80;
 	
 		return res;
 	} };

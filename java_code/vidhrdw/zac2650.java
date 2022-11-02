@@ -55,7 +55,7 @@ public class zac2650
 	
 	public static ReadHandlerPtr tinvader_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return input_port_0_r(0) - CollisionBackground;
+		return input_port_0_r.handler(0) - CollisionBackground;
 	} };
 	
 	/*****************************************/

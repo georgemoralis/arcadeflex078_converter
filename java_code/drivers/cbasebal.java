@@ -121,7 +121,7 @@ public class cbasebal
 	
 		bit = EEPROM_read_bit() << 7;
 	
-		return (input_port_2_r(0) & 0x7f) | bit;
+		return (input_port_2_r.handler(0) & 0x7f) | bit;
 	} };
 	
 	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data)

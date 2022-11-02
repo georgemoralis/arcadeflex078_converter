@@ -19,26 +19,26 @@ public class stactics
 	{
 	    if (*stactics_motor_on & 0x01)
 	    {
-	        return (input_port_0_r(0)&0x7f);
+	        return (input_port_0_r.handler(0)&0x7f);
 	    }
 	    else if ((stactics_horiz_pos == 0) && (stactics_vert_pos == 0))
 	    {
-	        return (input_port_0_r(0)&0x7f);
+	        return (input_port_0_r.handler(0)&0x7f);
 	    }
 	    else
 	    {
-	        return (input_port_0_r(0)|0x80);
+	        return (input_port_0_r.handler(0)|0x80);
 	    }
 	} };
 	
 	public static ReadHandlerPtr stactics_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_2_r(0)&0xf0)+(stactics_vblank_count&0x08)+(rand()%8);
+	    return (input_port_2_r.handler(0)&0xf0)+(stactics_vblank_count&0x08)+(rand()%8);
 	} };
 	
 	public static ReadHandlerPtr stactics_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_3_r(0)&0x7d)+(stactics_shot_standby<<1)
+	    return (input_port_3_r.handler(0)&0x7d)+(stactics_shot_standby<<1)
 	                 +((stactics_shot_arrive^0x01)<<7);
 	} };
 	

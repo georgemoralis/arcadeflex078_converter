@@ -125,7 +125,7 @@ public class atarifb
 				  (sign_x_2 >> 6) |
 				  (sign_y_1 >> 5) |
 				  (sign_x_1 >> 4) |
-				  input_port_0_r(offset);
+				  input_port_0_r.handler(offset);
 			return val;
 		}
 		else
@@ -157,7 +157,7 @@ public class atarifb
 	{
 		if ((CTRLD & 0x20)==0x00)
 		{
-			return input_port_1_r(offset);
+			return input_port_1_r.handler(offset);
 		}
 		else
 		{
@@ -255,7 +255,7 @@ public class atarifb
 	{
 		if ((CTRLD & 0x40)==0x00)
 		{
-			return input_port_2_r(offset);
+			return input_port_2_r.handler(offset);
 		}
 		else if ((CTRLD & 0x60) == 0x60)
 		/* LD1 and LD2 both high, return Team 2 right player (player 3) */

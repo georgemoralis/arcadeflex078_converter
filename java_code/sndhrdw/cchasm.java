@@ -22,7 +22,7 @@ public class cchasm
 	    switch (offset & 0x61 )
 	    {
 	    case 0x00:
-	        coin = (input_port_3_r (offset) >> 4) & 0x7;
+	        coin = (input_port_3_r.handler (offset) >> 4) & 0x7;
 	        if (coin != 0x7) coin |= 0x8;
 	        return sound_flags | coin;
 	

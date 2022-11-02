@@ -77,7 +77,7 @@ public class jcross
 	
 	public static ReadHandlerPtr jcross_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return(input_port_0_r(0) | sound_cpu_busy);
+		return(input_port_0_r.handler(0) | sound_cpu_busy);
 	} };
 	
 	static WRITE_HANDLER(jcross_vregs0_w){jcross_vregs[0]=data;}

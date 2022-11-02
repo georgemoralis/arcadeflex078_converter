@@ -36,7 +36,7 @@ public class kopunch
 		if (offset == 0)
 			return rand();
 		else
-			return (rand() & 0x07) | input_port_1_r(0);
+			return (rand() & 0x07) | input_port_1_r.handler(0);
 	} };
 	
 	public static WriteHandlerPtr kopunch_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)

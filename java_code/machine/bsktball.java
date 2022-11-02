@@ -79,10 +79,10 @@ public class bsktball
 		int p2_vert;
 		int temp;
 	
-		p1_horiz = input_port_0_r(offset);
-		p1_vert  = input_port_1_r(offset);
-		p2_horiz = input_port_2_r(offset);
-		p2_vert  = input_port_3_r(offset);
+		p1_horiz = input_port_0_r.handler(offset);
+		p1_vert  = input_port_1_r.handler(offset);
+		p2_horiz = input_port_2_r.handler(offset);
+		p2_vert  = input_port_3_r.handler(offset);
 	
 		/* Set direction bits */
 	
@@ -152,7 +152,7 @@ public class bsktball
 		}
 		else
 		{
-			temp = input_port_4_r(offset) & 0x0F;
+			temp = input_port_4_r.handler(offset) & 0x0F;
 			/* Remap button 1 back to the Start button */
 			/* NOTE:  This is an ADDED feature, not a part of the original hardware! */
 			temp = (temp) & (temp>>2);

@@ -172,11 +172,11 @@ public class thepit
 		   horizontal flip switch. (This is how the real PCB does it) */
 		if (flip_screen_x != 0)
 		{
-			return input_port_3_r(offset);
+			return input_port_3_r.handler(offset);
 		}
 		else
 		{
-			return input_port_0_r(offset);
+			return input_port_0_r.handler(offset);
 		}
 	} };
 	

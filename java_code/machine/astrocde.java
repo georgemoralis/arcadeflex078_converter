@@ -68,12 +68,12 @@ public class astrocde
 	
 	public static ReadHandlerPtr seawolf2_controller1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return (input_port_0_r(0) & 0xc0) + ControllerTable[input_port_0_r(0) & 0x3f];
+		return (input_port_0_r.handler(0) & 0xc0) + ControllerTable[input_port_0_r.handler(0) & 0x3f];
 	} };
 	
 	public static ReadHandlerPtr seawolf2_controller2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return (input_port_1_r(0) & 0xc0) + ControllerTable[input_port_1_r(0) & 0x3f];
+		return (input_port_1_r.handler(0) & 0xc0) + ControllerTable[input_port_1_r.handler(0) & 0x3f];
 	} };
 	
 	

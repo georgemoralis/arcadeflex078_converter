@@ -138,7 +138,7 @@ public class marvins
 	/* this input port has one of its bits mapped to sound CPU status */
 	public static ReadHandlerPtr marvins_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return(input_port_0_r(0) | sound_cpu_busy);
+		return(input_port_0_r.handler(0) | sound_cpu_busy);
 	} };
 	
 	public static Memory_ReadAddress readmem_sound[]={

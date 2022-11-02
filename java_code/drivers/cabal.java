@@ -202,7 +202,7 @@ public class cabal
 	public static ReadHandlerPtr cabalbl_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(offset){
-			case 0x06: return input_port_3_r(0);
+			case 0x06: return input_port_3_r.handler(0);
 			case 0x08: return cabal_sound_command2;
 			case 0x0a: return cabal_sound_command1;
 			default: return(0xff);

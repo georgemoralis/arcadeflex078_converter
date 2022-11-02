@@ -20,17 +20,17 @@ public class leprechn
 	    switch (input_port_select)
 	    {
 	    case 0x01:
-	        return input_port_0_r(0);
+	        return input_port_0_r.handler(0);
 	    case 0x02:
-	        return input_port_2_r(0);
+	        return input_port_2_r.handler(0);
 	    case 0x04:
-	        return input_port_3_r(0);
+	        return input_port_3_r.handler(0);
 	    case 0x08:
-	        return input_port_1_r(0);
+	        return input_port_1_r.handler(0);
 	    case 0x40:
-	        return input_port_5_r(0);
+	        return input_port_5_r.handler(0);
 	    case 0x80:
-	        return input_port_4_r(0);
+	        return input_port_4_r.handler(0);
 	    }
 	
 	    return 0xff;

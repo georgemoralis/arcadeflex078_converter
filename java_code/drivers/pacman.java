@@ -473,7 +473,7 @@ public class pacman
 	
 	public static ReadHandlerPtr maketrax_special_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int data = input_port_2_r(offset);
+		int data = input_port_2_r.handler(offset);
 		int pc = activecpu_get_previouspc();
 	
 		if ((pc == 0x1973) || (pc == 0x2389)) return data | 0x40;
@@ -516,7 +516,7 @@ public class pacman
 	
 	public static ReadHandlerPtr korosuke_special_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int data = input_port_2_r(offset);
+		int data = input_port_2_r.handler(offset);
 		int pc = activecpu_get_previouspc();
 	
 		if ((pc == 0x196e) || (pc == 0x2387)) return data | 0x40;

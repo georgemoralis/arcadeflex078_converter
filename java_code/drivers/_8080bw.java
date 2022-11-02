@@ -1831,7 +1831,7 @@ public class _8080bw
 	public static ReadHandlerPtr sfl_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		sfl_int^=0x80;//vblank flag ?
-		return sfl_int|input_port_1_r(0);
+		return sfl_int|input_port_1_r.handler(0);
 	} };
 	
 	public static Memory_ReadAddress sflush_readmem[]={

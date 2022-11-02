@@ -224,26 +224,26 @@ public class royalmah
 	
 	public static ReadHandlerPtr royalmah_player_1_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int ret = (input_port_0_r(offset) & 0xc0) | 0x3f;
+		int ret = (input_port_0_r.handler(offset) & 0xc0) | 0x3f;
 	
-		if ((royalmah_input_port_select & 0x01) == 0)  ret &= input_port_0_r(offset);
-		if ((royalmah_input_port_select & 0x02) == 0)  ret &= input_port_1_r(offset);
-		if ((royalmah_input_port_select & 0x04) == 0)  ret &= input_port_2_r(offset);
-		if ((royalmah_input_port_select & 0x08) == 0)  ret &= input_port_3_r(offset);
-		if ((royalmah_input_port_select & 0x10) == 0)  ret &= input_port_4_r(offset);
+		if ((royalmah_input_port_select & 0x01) == 0)  ret &= input_port_0_r.handler(offset);
+		if ((royalmah_input_port_select & 0x02) == 0)  ret &= input_port_1_r.handler(offset);
+		if ((royalmah_input_port_select & 0x04) == 0)  ret &= input_port_2_r.handler(offset);
+		if ((royalmah_input_port_select & 0x08) == 0)  ret &= input_port_3_r.handler(offset);
+		if ((royalmah_input_port_select & 0x10) == 0)  ret &= input_port_4_r.handler(offset);
 	
 		return ret;
 	} };
 	
 	public static ReadHandlerPtr royalmah_player_2_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int ret = (input_port_5_r(offset) & 0xc0) | 0x3f;
+		int ret = (input_port_5_r.handler(offset) & 0xc0) | 0x3f;
 	
-		if ((royalmah_input_port_select & 0x01) == 0)  ret &= input_port_5_r(offset);
-		if ((royalmah_input_port_select & 0x02) == 0)  ret &= input_port_6_r(offset);
-		if ((royalmah_input_port_select & 0x04) == 0)  ret &= input_port_7_r(offset);
-		if ((royalmah_input_port_select & 0x08) == 0)  ret &= input_port_8_r(offset);
-		if ((royalmah_input_port_select & 0x10) == 0)  ret &= input_port_9_r(offset);
+		if ((royalmah_input_port_select & 0x01) == 0)  ret &= input_port_5_r.handler(offset);
+		if ((royalmah_input_port_select & 0x02) == 0)  ret &= input_port_6_r.handler(offset);
+		if ((royalmah_input_port_select & 0x04) == 0)  ret &= input_port_7_r.handler(offset);
+		if ((royalmah_input_port_select & 0x08) == 0)  ret &= input_port_8_r.handler(offset);
+		if ((royalmah_input_port_select & 0x10) == 0)  ret &= input_port_9_r.handler(offset);
 	
 		return ret;
 	} };

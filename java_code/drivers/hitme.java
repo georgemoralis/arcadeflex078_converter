@@ -195,40 +195,40 @@ public class hitme
 	{
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
-			return input_port_0_r (offset) - ((rand()%2) << 2) - 0x80;
+			return input_port_0_r.handler (offset) - ((rand()%2) << 2) - 0x80;
 		}
 		else
-			return input_port_0_r (offset) - ((rand()%2) << 2);
+			return input_port_0_r.handler (offset) - ((rand()%2) << 2);
 	} };
 	
 	static public static ReadHandlerPtr hitme_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
-			return input_port_1_r (offset) - 0x80;
+			return input_port_1_r.handler (offset) - 0x80;
 		}
 		else
-			return input_port_1_r (offset);
+			return input_port_1_r.handler (offset);
 	} };
 	
 	static public static ReadHandlerPtr hitme_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
-			return input_port_2_r (offset) - ((rand()%2) << 2) - 0x80;
+			return input_port_2_r.handler (offset) - ((rand()%2) << 2) - 0x80;
 		}
 		else
-			return input_port_2_r (offset) - ((rand()%2) << 2);
+			return input_port_2_r.handler (offset) - ((rand()%2) << 2);
 	} };
 	
 	static public static ReadHandlerPtr hitme_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
-			return input_port_3_r (offset) - 0x80;
+			return input_port_3_r.handler (offset) - 0x80;
 		}
 		else
-			return input_port_3_r (offset);
+			return input_port_3_r.handler (offset);
 	} };
 	
 	static public static WriteHandlerPtr output_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)

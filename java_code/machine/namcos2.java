@@ -721,14 +721,14 @@ public class namcos2
 		int data=0;
 	
 		/* Read/convert the bits one at a time */
-		if(input_port_2_r(0)>threshold) data|=0x01;
-		if(input_port_3_r(0)>threshold) data|=0x02;
-		if(input_port_4_r(0)>threshold) data|=0x04;
-		if(input_port_5_r(0)>threshold) data|=0x08;
-		if(input_port_6_r(0)>threshold) data|=0x10;
-		if(input_port_7_r(0)>threshold) data|=0x20;
-		if(input_port_8_r(0)>threshold) data|=0x40;
-		if(input_port_9_r(0)>threshold) data|=0x80;
+		if(input_port_2_r.handler(0)>threshold) data|=0x01;
+		if(input_port_3_r.handler(0)>threshold) data|=0x02;
+		if(input_port_4_r.handler(0)>threshold) data|=0x04;
+		if(input_port_5_r.handler(0)>threshold) data|=0x08;
+		if(input_port_6_r.handler(0)>threshold) data|=0x10;
+		if(input_port_7_r.handler(0)>threshold) data|=0x20;
+		if(input_port_8_r.handler(0)>threshold) data|=0x40;
+		if(input_port_9_r.handler(0)>threshold) data|=0x80;
 	
 		/* Return the result */
 		return data;

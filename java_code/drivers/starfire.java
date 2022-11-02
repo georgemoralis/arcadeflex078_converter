@@ -144,11 +144,11 @@ public class starfire
 	{
 		switch (offset & 15)
 		{
-			case 0:	return input_port_0_r(0);
-			case 1:	return input_port_1_r(0);	/* Note: need to loopback sounds lengths on that one */
-			case 5: return input_port_4_r(0);
-			case 6:	return input_port_2_r(0);
-			case 7:	return input_port_3_r(0);
+			case 0:	return input_port_0_r.handler(0);
+			case 1:	return input_port_1_r.handler(0);	/* Note: need to loopback sounds lengths on that one */
+			case 5: return input_port_4_r.handler(0);
+			case 6:	return input_port_2_r.handler(0);
+			case 7:	return input_port_3_r.handler(0);
 			default: return 0xff;
 		}
 	} };
@@ -171,10 +171,10 @@ public class starfire
 	
 		switch (offset & 15)
 		{
-			case 0:	return input_port_0_r(0);
-			case 1: return input_port_1_r(0);
+			case 0:	return input_port_0_r.handler(0);
+			case 1: return input_port_1_r.handler(0);
 			case 2:
-				temp = fireone_select ? input_port_2_r(0) : input_port_3_r(0);
+				temp = fireone_select ? input_port_2_r.handler(0) : input_port_3_r.handler(0);
 				temp = (temp & 0xc0) | fireone_paddle_map[temp & 0x3f];
 				return temp;
 			default: return 0xff;

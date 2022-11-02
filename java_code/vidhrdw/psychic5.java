@@ -202,19 +202,19 @@ public class psychic5
 				switch(offset)
 				{
 					case 0x00:
-						val = input_port_0_r(0);
+						val = input_port_0_r.handler(0);
 						break;
 					case 0x01:
-						val = input_port_1_r(0);
+						val = input_port_1_r.handler(0);
 						break;
 					case 0x02:
-						val = input_port_2_r(0);
+						val = input_port_2_r.handler(0);
 						break;
 					case 0x03:
-						val = input_port_3_r(0);
+						val = input_port_3_r.handler(0);
 						break;
 					case 0x04:
-						val = input_port_4_r(0);
+						val = input_port_4_r.handler(0);
 						break;
 					default:
 						val = ps5_io_ram[offset];

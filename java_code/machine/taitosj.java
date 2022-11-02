@@ -309,6 +309,6 @@ public class taitosj
 	
 	public static ReadHandlerPtr alpine_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return input_port_2_r(offset) | protection_value;
+		return input_port_2_r.handler(offset) | protection_value;
 	} };
 }

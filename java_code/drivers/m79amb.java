@@ -39,12 +39,12 @@ public class m79amb
 	
 	public static ReadHandlerPtr gray5bit_controller0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_2_r(0) & 0xe0) | (~ControllerTable[input_port_2_r(0) & 0x1f] & 0x1f);
+	    return (input_port_2_r.handler(0) & 0xe0) | (~ControllerTable[input_port_2_r.handler(0) & 0x1f] & 0x1f);
 	} };
 	
 	public static ReadHandlerPtr gray5bit_controller1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    return (input_port_3_r(0) & 0xe0) | (~ControllerTable[input_port_3_r(0) & 0x1f] & 0x1f);
+	    return (input_port_3_r.handler(0) & 0xe0) | (~ControllerTable[input_port_3_r.handler(0) & 0x1f] & 0x1f);
 	} };
 	
 	public static Memory_ReadAddress readmem[]={

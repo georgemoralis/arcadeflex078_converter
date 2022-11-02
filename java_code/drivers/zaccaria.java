@@ -291,7 +291,7 @@ public class zaccaria
 		switch (offset)
 		{
 			case 0:
-				return (input_port_6_r(0) & 0x07) | (acs & 0x08);   /* bits 4 and 5 must be 0 in Jack Rabbit */
+				return (input_port_6_r.handler(0) & 0x07) | (acs & 0x08);   /* bits 4 and 5 must be 0 in Jack Rabbit */
 	
 			case 2:
 				return 0x10;    /* Jack Rabbit */

@@ -125,7 +125,7 @@ public class mitchell
 	if (Machine.gamedrv == &driver_mgakuen2)	/* hack... music doesn't work otherwise */
 		bit ^= 0x08;
 	
-		return (input_port_0_r(0) & 0x76) | bit;
+		return (input_port_0_r.handler(0) & 0x76) | bit;
 	} };
 	
 	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data)

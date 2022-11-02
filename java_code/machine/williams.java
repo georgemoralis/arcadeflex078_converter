@@ -767,8 +767,8 @@ public class williams
 		int keys, altkeys;
 	
 		/* read the standard keys and the cheat keys */
-		keys = input_port_0_r(0);
-		altkeys = input_port_3_r(0);
+		keys = input_port_0_r.handler(0);
+		altkeys = input_port_3_r.handler(0);
 	
 		/* modify the standard keys with the cheat keys */
 		if (altkeys != 0)
@@ -847,7 +847,7 @@ public class williams
 	public static ReadHandlerPtr lottofun_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* merge in the ticket dispenser status */
-		return input_port_0_r(offset) | ticket_dispenser_r(offset);
+		return input_port_0_r.handler(offset) | ticket_dispenser_r(offset);
 	} };
 	
 	

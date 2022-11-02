@@ -139,19 +139,19 @@ public class crbaloon
 		
 		if (crbaloon_collision != 0)
 		{
-			return (input_port_2_r(0) & 0xf0) | 0x08;
+			return (input_port_2_r.handler(0) & 0xf0) | 0x08;
 	    }
 	
 		/* the following is needed for the game to boot up */
 		if ((val06 & 0x80) != 0)
 		{
 	logerror("PC %04x: %02x high\n",activecpu_get_pc(),offset);
-			return (input_port_2_r(0) & 0xf0) | 0x07;
+			return (input_port_2_r.handler(0) & 0xf0) | 0x07;
 		}
 		else
 		{
 	logerror("PC %04x: %02x low\n",activecpu_get_pc(),offset);
-			return (input_port_2_r(0) & 0xf0) | 0x07;
+			return (input_port_2_r.handler(0) & 0xf0) | 0x07;
 		}
 	} };
 	
@@ -159,18 +159,18 @@ public class crbaloon
 	{
 		if ((val08 & 0x02) != 0)
 			/* enable coin & start input? Wild guess!!! */
-			return input_port_3_r(0);
+			return input_port_3_r.handler(0);
 	
 		/* the following is needed for the game to boot up */
 		if ((val0a & 0x01) != 0)
 		{
 	logerror("PC %04x: 03 high\n",activecpu_get_pc());
-			return (input_port_3_r(0) & 0x0f) | 0x00;
+			return (input_port_3_r.handler(0) & 0x0f) | 0x00;
 		}
 		else
 		{
 	logerror("PC %04x: 03 low\n",activecpu_get_pc());
-			return (input_port_3_r(0) & 0x0f) | 0x00;
+			return (input_port_3_r.handler(0) & 0x0f) | 0x00;
 		}
 	} };
 	
@@ -180,10 +180,10 @@ public class crbaloon
 		switch (offset & 0x03)
 		{
 			case 0:
-				return input_port_0_r(offset);
+				return input_port_0_r.handler(offset);
 	
 			case 1:
-				return input_port_1_r(offset);
+				return input_port_1_r.handler(offset);
 	
 			case 2:
 				return crbaloon_IN2_r(offset);

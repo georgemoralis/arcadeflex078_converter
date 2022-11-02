@@ -18,18 +18,18 @@ public class shisen
 	
 	public static ReadHandlerPtr sichuan2_dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int ret = input_port_3_r(0);
+		int ret = input_port_3_r.handler(0);
 	
 		/* Based on the coin mode fill in the upper bits */
-		if (input_port_4_r(0) & 0x04)
+		if (input_port_4_r.handler(0) & 0x04)
 		{
 			/* Mode 1 */
-			ret	|= (input_port_5_r(0) << 4);
+			ret	|= (input_port_5_r.handler(0) << 4);
 		}
 		else
 		{
 			/* Mode 2 */
-			ret	|= (input_port_5_r(0) & 0xf0);
+			ret	|= (input_port_5_r.handler(0) & 0xf0);
 		}
 	
 		return ret;

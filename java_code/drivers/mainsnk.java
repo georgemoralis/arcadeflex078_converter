@@ -65,7 +65,7 @@ public class mainsnk
 	
 	public static ReadHandlerPtr mainsnk_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		int result = input_port_0_r( 0 );
+		int result = input_port_0_r.handler( 0 );
 		if( !sound_cpu_ready ) result |= 0x20;
 		return result;
 	} };

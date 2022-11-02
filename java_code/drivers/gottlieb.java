@@ -176,12 +176,12 @@ public class gottlieb
 	
 	public static ReadHandlerPtr gottlieb_track_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return input_port_2_r(offset) - track[0];
+		return input_port_2_r.handler(offset) - track[0];
 	} };
 	
 	public static ReadHandlerPtr gottlieb_track_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return input_port_3_r(offset) - track[1];
+		return input_port_3_r.handler(offset) - track[1];
 	} };
 	
 	public static WriteHandlerPtr gottlieb_track_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)

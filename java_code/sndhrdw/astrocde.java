@@ -206,7 +206,7 @@ public class astrocde
 	{
 		int Ans;
 	
-		Ans = (input_port_2_r(0) & 0x7F);
+		Ans = (input_port_2_r.handler(0) & 0x7F);
 		if (wow_status_r() != 0) Ans += 128;
 		return Ans;
 	} };

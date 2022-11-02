@@ -576,7 +576,7 @@ public class hal21
 	
 	public static ReadHandlerPtr CPUC_ready_r  = new ReadHandlerPtr() { public int handler(int offset) { snk_sound_busy_bit = 0; return 0; } };
 	
-	public static ReadHandlerPtr hal21_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return input_port_0_r(0) | snk_sound_busy_bit; } };
+	public static ReadHandlerPtr hal21_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return input_port_0_r.handler(0) | snk_sound_busy_bit; } };
 	
 	public static WriteHandlerPtr hal21_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data) { hal21_sound_scheduler(1, data); } };
 	public static WriteHandlerPtr hal21_soundack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { hal21_sound_scheduler(2, data); } };

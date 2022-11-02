@@ -133,8 +133,8 @@ public class mcr3
 		char fake;
 	
 		/* remap up and down on the mouse to aim up and down */
-		data = input_port_2_r(offset);
-		fake = input_port_6_r(offset);
+		data = input_port_2_r.handler(offset);
+		fake = input_port_6_r.handler(offset);
 	
 		delta += (fake - lastfake);
 		lastfake = fake;

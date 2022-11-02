@@ -36,3 +36,4 @@ colorram read/write conversion
 spriteram_size to spriteram_size[0]
 video_start_generic to video_start_generic.handler
 colorprom read/write conversion
+input_port_*_r (1-10) to input_port_*_r.handler

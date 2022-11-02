@@ -184,13 +184,13 @@ public class liberatr
 		if(*liberatr_ctrld)
 		{
 			/* 	mouse support */
-			xdelta = input_port_4_r(0);
-			ydelta = input_port_5_r(0);
+			xdelta = input_port_4_r.handler(0);
+			ydelta = input_port_5_r.handler(0);
 			res = ( ((ydelta << 4) & 0xf0)  |  (xdelta & 0x0f) );
 		}
 		else
 		{
-			res = input_port_0_r(offset);
+			res = input_port_0_r.handler(offset);
 		}
 	
 		return res;

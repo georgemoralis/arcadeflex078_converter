@@ -21,9 +21,9 @@ public class avalnche
 	{
 		switch (offset & 0x03)
 		{
-			case 0x00:	 return input_port_0_r(offset);
-			case 0x01:	 return input_port_1_r(offset);
-			case 0x02:	 return input_port_2_r(offset);
+			case 0x00:	 return input_port_0_r.handler(offset);
+			case 0x01:	 return input_port_1_r.handler(offset);
+			case 0x02:	 return input_port_2_r.handler(offset);
 			case 0x03:	 return 0; /* Spare */
 		}
 		return 0;

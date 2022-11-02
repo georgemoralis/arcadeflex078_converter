@@ -30,7 +30,7 @@ public class beaminv
 	
 	public static ReadHandlerPtr beaminv_input_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return (input_port_3_r(offset) & 0xfe) | ((cpu_getscanline() >> 7) & 0x01);
+		return (input_port_3_r.handler(offset) & 0xfe) | ((cpu_getscanline() >> 7) & 0x01);
 	} };
 	
 	
