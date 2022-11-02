@@ -560,7 +560,7 @@ public class taito_f3
 		}
 	}
 	
-	VIDEO_STOP( f3 )
+	public static VideoStopHandlerPtr video_stop_f3  = new VideoStopHandlerPtr() { public void handler()
 	{
 	#if DEBUG_F3
 	#define FWRITE32(pRAM,len,file)	\
@@ -606,7 +606,7 @@ public class taito_f3
 		}
 	#undef FWRITE32
 	#endif	//DEBUG_F3
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_f3  = new VideoStartHandlerPtr() { public int handler()
 	{

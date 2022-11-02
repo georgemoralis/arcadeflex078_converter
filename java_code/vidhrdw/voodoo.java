@@ -917,7 +917,7 @@ public class voodoo
 	} };
 	
 	
-	VIDEO_STOP( voodoo )
+	public static VideoStopHandlerPtr video_stop_voodoo  = new VideoStopHandlerPtr() { public void handler()
 	{
 	#if LOG_RENDERERS
 		int i;
@@ -934,7 +934,7 @@ public class voodoo
 				renderer_list[i][7],
 				renderer_list[i][8]);
 	#endif
-	}
+	} };
 	
 	
 	

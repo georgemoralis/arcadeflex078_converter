@@ -453,7 +453,7 @@ public class ygv608
 		return 0;
 	} };
 	
-	VIDEO_STOP( ygv608 )
+	public static VideoStopHandlerPtr video_stop_ygv608  = new VideoStopHandlerPtr() { public void handler()
 	{
 		tilemap_A = NULL;
 		tilemap_B = NULL;
@@ -461,7 +461,7 @@ public class ygv608
 		if (work_bitmap != 0)
 			bitmap_free( work_bitmap );
 	#endif
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

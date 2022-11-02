@@ -636,9 +636,9 @@ public class psx
 		return psx_gpu_init( 1024, 1024 );
 	} };
 	
-	VIDEO_STOP( psx )
+	public static VideoStopHandlerPtr video_stop_psx  = new VideoStopHandlerPtr() { public void handler()
 	{
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

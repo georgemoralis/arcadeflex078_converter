@@ -116,7 +116,7 @@ public class lemmings
 		return 0;
 	} };
 	
-	VIDEO_STOP( lemmings )
+	public static VideoStopHandlerPtr video_stop_lemmings  = new VideoStopHandlerPtr() { public void handler()
 	{
 		if (bitmap0 != 0)
 			bitmap_free(bitmap0);
@@ -128,7 +128,7 @@ public class lemmings
 			free(sprite_triple_buffer_0);
 		if (sprite_triple_buffer_1 != 0)
 			free(sprite_triple_buffer_1);
-	}
+	} };
 	
 	VIDEO_EOF( lemmings )
 	{
