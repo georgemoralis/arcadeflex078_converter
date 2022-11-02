@@ -495,7 +495,7 @@ public class convertMame {
                 }
                 case 'm':
                     i = Convertor.inpos;
-                    if (type == VIDEO_UPDATE) {
+                    if (type == VIDEO_UPDATE || type == WRITE_HANDLER8) {
                         Convertor.token[0] = sUtil.parseToken();
                         if (Convertor.token[0].endsWith("_videoram_w")) {
                             sUtil.putString((new StringBuilder()).append(Convertor.token[0]).append(".handler").toString());

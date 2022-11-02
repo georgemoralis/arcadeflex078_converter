@@ -137,13 +137,13 @@ public class astrof
 	public static WriteHandlerPtr astrof_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		// Astro Fighter's palette is set in astrof_video_control2_w, D0 is unused
-		common_videoram_w(offset, data, *astrof_color & 0x0e);
+		common_videoram_w.handler(offset, data, *astrof_color & 0x0e);
 	} };
 	
 	public static WriteHandlerPtr tomahawk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		// Tomahawk's palette is set per byte
-		common_videoram_w(offset, data, (*astrof_color & 0x0e) | ((*astrof_color & 0x01) << 4));
+		common_videoram_w.handler(offset, data, (*astrof_color & 0x0e) | ((*astrof_color & 0x01) << 4));
 	} };
 	
 	

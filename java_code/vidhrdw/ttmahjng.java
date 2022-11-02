@@ -142,7 +142,7 @@ public class ttmahjng
 	{
 		ttmahjng_videoram1[offset] = data;
 	
-		common_videoram_w(offset, data, 0, tmpbitmap1);
+		common_videoram_w.handler(offset, data, 0, tmpbitmap1);
 	} };
 	
 	/***************************************************************************
@@ -152,7 +152,7 @@ public class ttmahjng
 	{
 		ttmahjng_videoram2[offset] = data;
 	
-		common_videoram_w(offset, data, 4, tmpbitmap2);
+		common_videoram_w.handler(offset, data, 4, tmpbitmap2);
 	} };
 	
 	/***************************************************************************

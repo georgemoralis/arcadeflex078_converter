@@ -100,7 +100,7 @@ public class tagteam
 		y = offset % 32;
 		offset = 32 * y + x;
 	
-		tagteam_videoram_w(offset,data);
+		tagteam_videoram_w.handler(offset,data);
 	} };
 	
 	public static WriteHandlerPtr tagteam_mirrorcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

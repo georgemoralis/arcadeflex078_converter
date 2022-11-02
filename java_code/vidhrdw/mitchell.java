@@ -131,7 +131,7 @@ public class mitchell
 	public static WriteHandlerPtr pang_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (video_bank != 0) mgakuen_objram_w(offset,data);
-		else mgakuen_videoram_w(offset,data);
+		else mgakuen_videoram_w.handler(offset,data);
 	} };
 	
 	public static ReadHandlerPtr pang_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)

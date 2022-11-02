@@ -165,7 +165,7 @@ public class tutankhm
 	
 	#define JUNOBLITPIXEL(x)									\
 		if (JunoBLTRom[srcaddress+x])							\
-			tutankhm_videoram_w( destaddress+x,					\
+			tutankhm_videoram_w.handler( destaddress+x,					\
 				((JunoBLTRom[srcaddress+x] & 0xf0) >> 4)		\
 				| ((JunoBLTRom[srcaddress+x] & 0x0f) << 4));
 	
@@ -186,10 +186,10 @@ public class tutankhm
 	
 	#define JUNOCLEARPIXEL(x) 						\
 		if ((JunoBLTRom[srcaddress+x] & 0xF0)) 		\
-			tutankhm_videoram_w( destaddress+x,		\
+			tutankhm_videoram_w.handler( destaddress+x,		\
 				videoram.read(destaddress+x)& 0xF0);	\
 		if ((JunoBLTRom[srcaddress+x] & 0x0F))		\
-			tutankhm_videoram_w( destaddress+x,		\
+			tutankhm_videoram_w.handler( destaddress+x,		\
 				videoram.read(destaddress+x)& 0x0F);
 	
 					JUNOCLEARPIXEL(0);
