@@ -65,7 +65,7 @@ public class magmax
 		timer_set( cpu_getscanlinetime( scanline ), scanline, scanline_callback );
 	}
 	
-	static MACHINE_INIT( magmax )
+	static public static MachineInitHandlerPtr machine_init_magmax  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime( 64 ), 64, scanline_callback );
 	#if 0
@@ -75,7 +75,7 @@ public class magmax
 				logerror("SOUND Chan#%i name=%s\n", i, mixer_get_name(i) );
 		}
 	#endif
-	}
+	} };
 	
 	
 	static int gain_control = 0;

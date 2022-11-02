@@ -57,7 +57,6 @@ public class btime
 	
 	
 	
-	MACHINE_INIT( lnc );
 	
 	
 	

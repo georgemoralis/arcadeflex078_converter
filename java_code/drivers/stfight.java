@@ -240,7 +240,6 @@ public class stfight
 	// machine
 	DRIVER_INIT( empcity );
 	DRIVER_INIT( stfight );
-	MACHINE_INIT( stfight );
 	void stfight_adpcm_int( int data );
 	
 	// vidhrdw

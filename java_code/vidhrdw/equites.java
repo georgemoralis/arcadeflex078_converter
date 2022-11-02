@@ -274,10 +274,10 @@ public class equites
 		return (0);
 	} };
 	
-	MACHINE_INIT( splndrbt )
+	public static MachineInitHandlerPtr machine_init_splndrbt  = new MachineInitHandlerPtr() { public void handler()
 	{
 		splndrbt_video_reset();
-	}
+	} };
 	
 	/******************************************************************************/
 	// Realtime Functions

@@ -20,7 +20,7 @@ public class skydiver
 	static int width = 0;
 	
 	
-	MACHINE_INIT( skydiver )
+	public static MachineInitHandlerPtr machine_init_skydiver  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset all latches */
 		skydiver_start_lamp_1_w(0, 0);
@@ -35,7 +35,7 @@ public class skydiver
 		skydiver_lamp_r_w(0, 0);
 		skydiver_width_w(0, 0);
 		skydiver_coin_lockout_w(0, 0);
-	}
+	} };
 	
 	
 	/***************************************************************************

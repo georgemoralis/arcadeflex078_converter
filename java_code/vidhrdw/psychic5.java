@@ -39,11 +39,11 @@ public class psychic5
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
 	
-	MACHINE_INIT( psychic5 )
+	public static MachineInitHandlerPtr machine_init_psychic5  = new MachineInitHandlerPtr() { public void handler()
 	{
 		bg_clip_mode = -10;
 		flip_screen_set(0);
-	}
+	} };
 	
 	public static WriteHandlerPtr psychic5_vram_page_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

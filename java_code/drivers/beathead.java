@@ -161,7 +161,7 @@ public class beathead
 	}
 	
 	
-	static MACHINE_INIT( beathead )
+	static public static MachineInitHandlerPtr machine_init_beathead  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset the common subsystems */
 		atarigen_eeprom_reset();
@@ -180,7 +180,7 @@ public class beathead
 		irq_line_state = CLEAR_LINE;
 		irq_state[0] = irq_state[1] = irq_state[2] = 0;
 		irq_enable[0] = irq_enable[1] = irq_enable[2] = 0;
-	}
+	} };
 	
 	
 	

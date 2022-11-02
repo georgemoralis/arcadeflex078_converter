@@ -16,7 +16,6 @@
 
 
 /* Driver/Multisync board */
-MACHINE_INIT( harddriv );
 
 WRITE16_HANDLER( hd68k_irq_ack_w );
 void hdgsp_irq_gen(int state);

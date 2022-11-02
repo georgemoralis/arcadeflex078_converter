@@ -64,7 +64,7 @@ public class cyberbal
 	}
 	
 	
-	static MACHINE_INIT( cyberbal )
+	static public static MachineInitHandlerPtr machine_init_cyberbal  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
@@ -79,7 +79,7 @@ public class cyberbal
 	
 		/* make sure we're pointing to the right screen by default */
 		cyberbal_set_screen(0);
-	}
+	} };
 	
 	
 	static void cyberb2p_update_interrupts(void)
@@ -98,7 +98,7 @@ public class cyberbal
 	}
 	
 	
-	static MACHINE_INIT( cyberb2p )
+	static public static MachineInitHandlerPtr machine_init_cyberb2p  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(cyberb2p_update_interrupts);
@@ -107,7 +107,7 @@ public class cyberbal
 	
 		/* make sure we're pointing to the only screen */
 		cyberbal_set_screen(0);
-	}
+	} };
 	
 	
 	

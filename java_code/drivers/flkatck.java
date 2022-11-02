@@ -24,10 +24,10 @@ public class flkatck
 	
 	/***************************************************************************/
 	
-	static MACHINE_INIT( flkatck )
+	static public static MachineInitHandlerPtr machine_init_flkatck  = new MachineInitHandlerPtr() { public void handler()
 	{
 		K007232_set_bank( 0, 0, 1 );
-	}
+	} };
 	
 	public static InterruptHandlerPtr flkatck_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

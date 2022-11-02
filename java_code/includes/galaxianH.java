@@ -83,11 +83,6 @@ DRIVER_INIT( sfx );
 DRIVER_INIT( gmgalax );
 DRIVER_INIT( ladybugg );
 
-MACHINE_INIT( scramble );
-MACHINE_INIT( sfx );
-MACHINE_INIT( explorer );
-MACHINE_INIT( galaxian );
-MACHINE_INIT( devilfsg );
 
 READ_HANDLER(scobra_type2_ppi8255_0_r);
 READ_HANDLER(scobra_type2_ppi8255_1_r);

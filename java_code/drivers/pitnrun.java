@@ -79,7 +79,6 @@ public class pitnrun
 	READ_HANDLER (pitnrun_68705_portB_r);
 	READ_HANDLER (pitnrun_68705_portC_r);
 	
-	MACHINE_INIT( pitnrun );
 	
 	
 	

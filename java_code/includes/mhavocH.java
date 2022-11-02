@@ -18,7 +18,6 @@
 /*----------- defined in machine/mhavoc.c -----------*/
 
 
-MACHINE_INIT( mhavoc );
 
 
 

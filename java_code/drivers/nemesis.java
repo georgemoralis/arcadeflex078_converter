@@ -56,7 +56,6 @@ public class nemesis
 	WRITE16_HANDLER( nemesis_videoram2f_word_w );
 	READ16_HANDLER( nemesis_characterram_word_r );
 	WRITE16_HANDLER( nemesis_characterram_word_w );
-	MACHINE_INIT( nemesis );
 	
 	WRITE16_HANDLER( nemesis_gfx_flipx_w );
 	WRITE16_HANDLER( nemesis_gfx_flipy_w );
@@ -82,13 +81,13 @@ public class nemesis
 	int irq4_on = 0;
 	
 	
-	MACHINE_INIT( nemesis )
+	public static MachineInitHandlerPtr machine_init_nemesis  = new MachineInitHandlerPtr() { public void handler()
 	{
 		irq_on = 0;
 		irq1_on = 0;
 		irq2_on = 0;
 		irq4_on = 0;
-	}
+	} };
 	
 	
 	

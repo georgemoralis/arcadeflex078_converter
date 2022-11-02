@@ -8,7 +8,6 @@
 
 
 DRIVER_INIT( irobot );
-MACHINE_INIT( irobot );
 
 
 

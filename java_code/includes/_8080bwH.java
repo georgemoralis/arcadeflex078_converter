@@ -15,21 +15,6 @@
 
 /*----------- defined in sndhrdw/8080bw.c -----------*/
 
-MACHINE_INIT( invaders );
-MACHINE_INIT( sstrangr );
-MACHINE_INIT( invad2ct );
-MACHINE_INIT( sheriff );
-MACHINE_INIT( gunfight );
-MACHINE_INIT( boothill );
-MACHINE_INIT( helifire );
-MACHINE_INIT( phantom2 );
-MACHINE_INIT( bowler );
-MACHINE_INIT( ballbomb );
-MACHINE_INIT( seawolf );
-MACHINE_INIT( desertgu );
-MACHINE_INIT( schaser );
-MACHINE_INIT( polaris );
-MACHINE_INIT( clowns );
 
 
 

@@ -1167,20 +1167,20 @@ public class zaxxon
 	
 	/* Machine Initialization */
 	
-	MACHINE_INIT( zaxxon )
+	public static MachineInitHandlerPtr machine_init_zaxxon  = new MachineInitHandlerPtr() { public void handler()
 	{
 		zaxxon_vid_type = 0;
-	}
+	} };
 	
-	MACHINE_INIT( congo )
+	public static MachineInitHandlerPtr machine_init_congo  = new MachineInitHandlerPtr() { public void handler()
 	{
 		zaxxon_vid_type = 1;
-	}
+	} };
 	
-	MACHINE_INIT( futspy )
+	public static MachineInitHandlerPtr machine_init_futspy  = new MachineInitHandlerPtr() { public void handler()
 	{
 		zaxxon_vid_type = 2;
-	}
+	} };
 	
 	/* Machine Drivers */
 	

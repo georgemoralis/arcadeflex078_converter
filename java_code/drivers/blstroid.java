@@ -52,13 +52,13 @@ public class blstroid
 	}
 	
 	
-	static MACHINE_INIT( blstroid )
+	static public static MachineInitHandlerPtr machine_init_blstroid  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(blstroid_scanline_update, 8);
 		atarijsa_reset();
-	}
+	} };
 	
 	
 	

@@ -40,10 +40,10 @@ public class runaway
 	}
 	
 	
-	static MACHINE_INIT( runaway )
+	static public static MachineInitHandlerPtr machine_init_runaway  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime(16), 16, interrupt_callback);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr runaway_input_r  = new ReadHandlerPtr() { public int handler(int offset)

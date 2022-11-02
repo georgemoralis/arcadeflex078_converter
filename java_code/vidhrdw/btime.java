@@ -129,10 +129,10 @@ public class btime
 	} };
 	
 	
-	MACHINE_INIT( lnc )
+	public static MachineInitHandlerPtr machine_init_lnc  = new MachineInitHandlerPtr() { public void handler()
 	{
 	    *lnc_charbank = 1;
-	}
+	} };
 	
 	
 	/***************************************************************************

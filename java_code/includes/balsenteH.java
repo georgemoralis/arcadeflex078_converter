@@ -19,7 +19,6 @@ public class balsenteH
 	/*----------- defined in machine/balsente.c -----------*/
 	
 	
-	MACHINE_INIT( balsente );
 	
 	void balsente_noise_gen(int chip, int count, short *buffer);
 	

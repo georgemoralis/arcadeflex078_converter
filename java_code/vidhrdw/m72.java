@@ -20,23 +20,23 @@ public class m72
 	
 	static int irqbase;
 	
-	MACHINE_INIT( m72 )
+	public static MachineInitHandlerPtr machine_init_m72  = new MachineInitHandlerPtr() { public void handler()
 	{
 		irqbase = 0x20;
 		machine_init_m72_sound();
-	}
+	} };
 	
-	MACHINE_INIT( xmultipl )
+	public static MachineInitHandlerPtr machine_init_xmultipl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		irqbase = 0x08;
 		machine_init_m72_sound();
-	}
+	} };
 	
-	MACHINE_INIT( kengo )
+	public static MachineInitHandlerPtr machine_init_kengo  = new MachineInitHandlerPtr() { public void handler()
 	{
 		irqbase = 0x18;
 		machine_init_m72_sound();
-	}
+	} };
 	
 	public static InterruptHandlerPtr m72_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

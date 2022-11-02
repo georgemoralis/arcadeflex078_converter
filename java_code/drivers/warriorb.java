@@ -119,7 +119,6 @@ package arcadeflex.v078.drivers;
 public class warriorb
 {
 	
-	MACHINE_INIT( taito_dualscreen );
 	
 	
 	
@@ -727,11 +726,11 @@ public class warriorb
 		state_save_register_func_postload(reset_sound_region);
 	}
 	
-	MACHINE_INIT( taito_dualscreen )
+	public static MachineInitHandlerPtr machine_init_taito_dualscreen  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/**** mixer control enable ****/
 		mixer_sound_enable_global_w( 1 );	/* mixer enabled */
-	}
+	} };
 	
 	
 	/* Working Games */

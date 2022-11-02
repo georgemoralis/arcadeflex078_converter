@@ -1108,7 +1108,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( midyunit )
+	public static MachineInitHandlerPtr machine_init_midyunit  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset sound */
 		switch (sound_type)
@@ -1128,7 +1128,7 @@ public class midyunit
 				williams_adpcm_init(1);
 				break;
 		}
-	}
+	} };
 	
 	
 	

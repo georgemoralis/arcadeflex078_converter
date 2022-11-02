@@ -24,8 +24,6 @@
 
 
 
-MACHINE_INIT( leland );
-MACHINE_INIT( ataxx );
 
 
 void cerberus_bankswitch(void);

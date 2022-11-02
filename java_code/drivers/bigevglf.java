@@ -453,11 +453,11 @@ public class bigevglf
 		{ -1 }	/* end of array */
 	};
 	
-	MACHINE_INIT( bigevglf )
+	public static MachineInitHandlerPtr machine_init_bigevglf  = new MachineInitHandlerPtr() { public void handler()
 	{
 		beg13_ls74[0] = 0;
 		beg13_ls74[1] = 0;
-	}
+	} };
 	
 	
 	static struct AY8910interface ay8910_interface =

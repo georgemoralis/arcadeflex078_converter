@@ -34,17 +34,17 @@ public class zodiack
 	
 	
 	
-	static MACHINE_INIT( zodiack )
+	static public static MachineInitHandlerPtr machine_init_zodiack  = new MachineInitHandlerPtr() { public void handler()
 	{
 		percuss_hardware = 0;
 		machine_init_espial();
-	}
+	} };
 	
-	static MACHINE_INIT( percuss )
+	static public static MachineInitHandlerPtr machine_init_percuss  = new MachineInitHandlerPtr() { public void handler()
 	{
 		percuss_hardware = 1;
 		machine_init_espial();
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr zodiack_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)

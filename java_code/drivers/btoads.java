@@ -41,10 +41,10 @@ public class btoads
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( btoads )
+	static public static MachineInitHandlerPtr machine_init_btoads  = new MachineInitHandlerPtr() { public void handler()
 	{
 		tlc34076_reset(6);
-	}
+	} };
 	
 	
 	

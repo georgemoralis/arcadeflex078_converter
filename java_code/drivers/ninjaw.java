@@ -153,7 +153,6 @@ package arcadeflex.v078.drivers;
 public class ninjaw
 {
 	
-	MACHINE_INIT( ninjaw );
 	
 	
 	static UINT16 cpua_ctrl = 0xff;
@@ -934,11 +933,11 @@ public class ninjaw
 		state_save_register_func_postload(reset_sound_region);
 	}
 	
-	MACHINE_INIT( ninjaw )
+	public static MachineInitHandlerPtr machine_init_ninjaw  = new MachineInitHandlerPtr() { public void handler()
 	{
 	  /**** mixer control enable ****/
 	  mixer_sound_enable_global_w( 1 );	/* mixer enabled */
-	}
+	} };
 	
 	
 	/* Working Games */

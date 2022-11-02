@@ -194,7 +194,7 @@ public class acitya
 	} };
 	
 	
-	MACHINE_INIT( acitya )
+	public static MachineInitHandlerPtr machine_init_acitya  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -211,5 +211,5 @@ public class acitya
 		cpu_setbank (1, &RAM[0x1c000]);
 	
 		machine_init_pacman();
-	}
+	} };
 }

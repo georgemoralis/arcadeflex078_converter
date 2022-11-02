@@ -148,7 +148,7 @@ public class badlands
 	}
 	
 	
-	static MACHINE_INIT( badlands )
+	static public static MachineInitHandlerPtr machine_init_badlands  = new MachineInitHandlerPtr() { public void handler()
 	{
 		pedal_value[0] = pedal_value[1] = 0x80;
 	
@@ -158,7 +158,7 @@ public class badlands
 	
 		atarigen_sound_io_reset(1);
 		memcpy(bank_base, &bank_source_data[0x0000], 0x1000);
-	}
+	} };
 	
 	
 	

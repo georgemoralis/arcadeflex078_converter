@@ -38,10 +38,10 @@ public class clshroad
 	
 	
 	
-	MACHINE_INIT( clshroad )
+	public static MachineInitHandlerPtr machine_init_clshroad  = new MachineInitHandlerPtr() { public void handler()
 	{
 		flip_screen_set(0);
-	}
+	} };
 	
 	
 	/* Shared RAM with the sound CPU */

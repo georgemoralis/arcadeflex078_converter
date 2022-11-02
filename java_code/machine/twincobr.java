@@ -39,7 +39,7 @@ public class twincobr
 	static int fsharkbt_8741;
 	
 	
-	MACHINE_INIT( fsharkbt_reset_8741_mcu )	/* machine_init_fsharkbt_reset_8741_mcu */
+	public static MachineInitHandlerPtr machine_init_fsharkbt_reset_8741_mcu  = new MachineInitHandlerPtr() { public void handler()	/* machine_init_fsharkbt_reset_8741_mcu */
 	{
 		toaplan_main_cpu = 0;		/* 68000 */
 		twincobr_display_on = 0;
@@ -56,9 +56,9 @@ public class twincobr
 		state_save_register_int("toaplan0", 0, "DSP_execute", &dsp_execute);
 		state_save_register_int("toaplan0", 0, "CPU#0_type", &toaplan_main_cpu);
 		state_save_register_int("fsharkbt", 0, "MCU_Output", &fsharkbt_8741);
-	}
+	} };
 	
-	MACHINE_INIT( wardner )
+	public static MachineInitHandlerPtr machine_init_wardner  = new MachineInitHandlerPtr() { public void handler()
 	{
 		toaplan_main_cpu = 1;		/* Z80 */
 		twincobr_display_on = 1;
@@ -75,7 +75,7 @@ public class twincobr
 		state_save_register_int("wardner", 0, "DSP_execute", &dsp_execute);
 		state_save_register_int("wardner", 0, "CPU#0_type", &toaplan_main_cpu);
 		state_save_register_int("wardner", 0, "Wardner_MemBank", &wardner_membank);
-	}
+	} };
 	
 	
 	

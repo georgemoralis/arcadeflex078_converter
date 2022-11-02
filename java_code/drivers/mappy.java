@@ -54,8 +54,6 @@ public class mappy
 	
 	
 	/* machine driver data & functions */
-	MACHINE_INIT( mappy );
-	MACHINE_INIT( motos );
 	
 	
 	

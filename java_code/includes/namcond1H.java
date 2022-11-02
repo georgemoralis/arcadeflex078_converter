@@ -21,7 +21,6 @@
 
 
 NVRAM_HANDLER( namcond1 );
-MACHINE_INIT( namcond1 );
 
 /* VIDHRDW */
 

@@ -168,9 +168,9 @@ public class chaknpop
 		state_save_register_UINT8("chankpop", 0, "mcu_wait",    &mcu_wait,    1);
 	}
 	
-	MACHINE_INIT( chaknpop )
+	public static MachineInitHandlerPtr machine_init_chaknpop  = new MachineInitHandlerPtr() { public void handler()
 	{
 		mcu_seed = MCU_INITIAL_SEED;
 		mcu_wait = 0;
-	}
+	} };
 }

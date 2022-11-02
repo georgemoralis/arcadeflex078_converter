@@ -619,7 +619,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( midtunit )
+	public static MachineInitHandlerPtr machine_init_midtunit  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset sound */
 		switch (sound_type)
@@ -634,7 +634,7 @@ public class midtunit
 				dcs_reset_w(0);
 				break;
 		}
-	}
+	} };
 	
 	
 	

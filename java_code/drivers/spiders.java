@@ -176,7 +176,6 @@ public class spiders
 	
 	/* MACHINE */
 	
-	MACHINE_INIT( spiders );
 	
 	
 	/* Driver structure definition */

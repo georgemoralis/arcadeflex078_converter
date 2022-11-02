@@ -174,11 +174,11 @@ public class metro
 		return metro_irq_vectors[int_level]&0xff;
 	}
 	
-	MACHINE_INIT( metro )
+	public static MachineInitHandlerPtr machine_init_metro  = new MachineInitHandlerPtr() { public void handler()
 	{
 		if (irq_line == -1)
 			cpu_set_irq_callback(0, metro_irq_callback);
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( metro_irq_cause_w )

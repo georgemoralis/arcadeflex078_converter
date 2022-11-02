@@ -838,12 +838,12 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	static MACHINE_INIT( cninja )
+	static public static MachineInitHandlerPtr machine_init_cninja  = new MachineInitHandlerPtr() { public void handler()
 	{
 		raster_irq_timer = timer_alloc(interrupt_gen);
 		cninja_scanline=0;
 		cninja_irq_mask=0;
-	}
+	} };
 	
 	static struct YM2203interface ym2203_interface =
 	{

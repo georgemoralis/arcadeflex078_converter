@@ -6,7 +6,6 @@
 
 /* defined in machine/kyugo.c */
 
-MACHINE_INIT( kyugo );
 
 
 

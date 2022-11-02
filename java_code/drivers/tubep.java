@@ -332,10 +332,10 @@ public class tubep
 		timer_set( cpu_getscanlinetime( scanline ), scanline, scanline_callback );
 	}
 	
-	static MACHINE_INIT( tubep )
+	static public static MachineInitHandlerPtr machine_init_tubep  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime( 64 ), 64, scanline_callback );
-	}
+	} };
 	
 	
 	

@@ -96,7 +96,6 @@ enum {
 
 /* MACHINE */
 
-MACHINE_INIT( namcos2 );
 
 WRITE16_HANDLER( namcos2_gfx_ctrl_w );
 READ16_HANDLER( namcos2_gfx_ctrl_r );

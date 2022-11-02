@@ -145,7 +145,7 @@ public class snes
 	}
 	#endif	/* MESS */
 	
-	MACHINE_INIT( snes )
+	public static MachineInitHandlerPtr machine_init_snes  = new MachineInitHandlerPtr() { public void handler()
 	{
 		snes_init_ram();
 	
@@ -154,7 +154,7 @@ public class snes
 			snes_ram[STAT78] = SNES_NTSC;
 		else /* if( Machine.drv.frames_per_second == 50 ) */
 			snes_ram[STAT78] = SNES_PAL;
-	}
+	} };
 	
 	#ifdef MESS
 	MACHINE_STOP( snes )

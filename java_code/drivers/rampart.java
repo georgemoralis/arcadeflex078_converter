@@ -66,13 +66,13 @@ public class rampart
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( rampart )
+	static public static MachineInitHandlerPtr machine_init_rampart  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(scanline_update, 32);
-	}
+	} };
 	
 	
 	

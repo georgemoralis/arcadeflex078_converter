@@ -78,13 +78,13 @@ public class gradius3
 	static int irqAen,irqBmask;
 	
 	
-	static MACHINE_INIT( gradius3 )
+	static public static MachineInitHandlerPtr machine_init_gradius3  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* start with cpu B halted */
 		cpu_set_reset_line(1,ASSERT_LINE);
 		irqAen = 0;
 		irqBmask = 0;
-	}
+	} };
 	
 	static data16_t *sharedram;
 	

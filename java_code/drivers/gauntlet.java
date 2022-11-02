@@ -173,7 +173,7 @@ public class gauntlet
 	}
 	
 	
-	static MACHINE_INIT( gauntlet )
+	static public static MachineInitHandlerPtr machine_init_gauntlet  = new MachineInitHandlerPtr() { public void handler()
 	{
 		last_speech_write = 0x80;
 		sound_reset_val = 1;
@@ -183,7 +183,7 @@ public class gauntlet
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(scanline_update, 32);
 		atarigen_sound_io_reset(1);
-	}
+	} };
 	
 	
 	

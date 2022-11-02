@@ -194,18 +194,18 @@ public class alpha68k
 	/******************************************************************************/
 	
 	/* resets the values related to the microcontroller */
-	MACHINE_INIT( common )
+	public static MachineInitHandlerPtr machine_init_common  = new MachineInitHandlerPtr() { public void handler()
 	{
 		trigstate = 0;
 		deposits1 = 0;
 		deposits2 = 0;
 		credits   = 0;
-	}
+	} };
 	
-	MACHINE_INIT( tnexspce )
+	public static MachineInitHandlerPtr machine_init_tnexspce  = new MachineInitHandlerPtr() { public void handler()
 	{
 		alpha68k_flipscreen_w(0);
-	}
+	} };
 	
 	/******************************************************************************/
 	

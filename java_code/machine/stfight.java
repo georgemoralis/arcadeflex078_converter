@@ -86,11 +86,11 @@ public class stfight
 		rom[0xb5 + diff] = 0x00;
 	}
 	
-	MACHINE_INIT( stfight )
+	public static MachineInitHandlerPtr machine_init_stfight  = new MachineInitHandlerPtr() { public void handler()
 	{
 	    // initialise rom bank
 	    stfight_bank_w( 0, 0 );
-	}
+	} };
 	
 	// It's entirely possible that this bank is never switched out
 	// - in fact I don't even know how/where it's switched in!

@@ -24,18 +24,18 @@ public class mappy
 	static int credits, coin, start1, start2;
 	static int io_chip_1_enabled, io_chip_2_enabled;
 	
-	MACHINE_INIT( mappy )
+	public static MachineInitHandlerPtr machine_init_mappy  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Reset all flags */
 		credits = coin = start1 = start2 = 0;
 		interrupt_enable_1 = interrupt_enable_2 = 0;
-	}
+	} };
 	
-	MACHINE_INIT( motos )
+	public static MachineInitHandlerPtr machine_init_motos  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Reset all flags */
 		credits = coin = start1 = start2 = 0;
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr mappy_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)

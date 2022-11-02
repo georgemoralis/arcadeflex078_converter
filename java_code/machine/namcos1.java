@@ -932,7 +932,7 @@ public class namcos1
 		namcos1_install_rom_bank(0x3c0,0x3ff,0x20000 , 0x00000);
 	}
 	
-	MACHINE_INIT( namcos1 ) {
+	public static MachineInitHandlerPtr machine_init_namcos1  = new MachineInitHandlerPtr() { public void handler() {
 	
 		int bank;
 	
@@ -971,7 +971,7 @@ public class namcos1
 		mcu_patch_data = 0;
 	
 		berabohm_input_counter = 4; /* for berabohm pressure sensitive buttons */
-	}
+	} };
 	
 	
 	/*******************************************************************************

@@ -133,10 +133,10 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	static MACHINE_INIT( inufuku )
+	static public static MachineInitHandlerPtr machine_init_inufuku  = new MachineInitHandlerPtr() { public void handler()
 	{
 		;
-	}
+	} };
 	
 	static DRIVER_INIT( inufuku )
 	{

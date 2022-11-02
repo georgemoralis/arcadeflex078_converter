@@ -20,12 +20,12 @@ public class pitnrun
 	static unsigned char fromz80,toz80;
 	static int zaccept,zready;
 	
-	MACHINE_INIT( pitnrun )
+	public static MachineInitHandlerPtr machine_init_pitnrun  = new MachineInitHandlerPtr() { public void handler()
 	{
 		zaccept = 1;
 		zready = 0;
 		cpu_set_irq_line(2,0,CLEAR_LINE);
-	}
+	} };
 	
 	void pitnrun_mcu_real_data_r(int param)
 	{

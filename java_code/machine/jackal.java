@@ -23,12 +23,12 @@ public class jackal
 	unsigned char *jackal_spritebank = 0;
 	
 	
-	MACHINE_INIT( jackal )
+	public static MachineInitHandlerPtr machine_init_jackal  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1,&((memory_region(REGION_CPU1))[0x4000]));
 	 	jackal_rambank = &((memory_region(REGION_CPU1))[0]);
 		jackal_spritebank = &((memory_region(REGION_CPU1))[0]);
-	}
+	} };
 	
 	
 	

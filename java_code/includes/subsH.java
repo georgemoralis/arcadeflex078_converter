@@ -6,7 +6,6 @@
 
 /*----------- defined in machine/subs.c -----------*/
 
-MACHINE_INIT( subs );
 
 
 /*----------- defined in vidhrdw/subs.c -----------*/

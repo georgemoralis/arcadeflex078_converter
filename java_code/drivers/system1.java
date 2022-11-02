@@ -27,7 +27,7 @@ public class system1
 	
 	
 	
-	static MACHINE_INIT( system1 )
+	static public static MachineInitHandlerPtr machine_init_system1  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* skip the long IC CHECK in Teddyboy Blues and Choplifter */
 		/* this is not a ROM patch, the game checks a RAM location */
@@ -36,9 +36,9 @@ public class system1
 	//	memory_region(REGION_CPU1)[0xefff] = 0x4b;
 	
 		system1_define_background_memory(system1_BACKGROUND_MEMORY_SINGLE);
-	}
+	} };
 	
-	static MACHINE_INIT( wbml )
+	static public static MachineInitHandlerPtr machine_init_wbml  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* skip the long IC CHECK in Teddyboy Blues and Choplifter */
 		/* this is not a ROM patch, the game checks a RAM location */
@@ -47,7 +47,7 @@ public class system1
 	//	memory_region(REGION_CPU1)[0xefff] = 0x4b;
 	
 		system1_define_background_memory(system1_BACKGROUND_MEMORY_BANKED);
-	}
+	} };
 	
 	// Noboranka: there seems to be some protection? involving reads / writes to ports in the 2x region
 	

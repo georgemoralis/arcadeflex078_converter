@@ -67,10 +67,10 @@ public class orbit
 	}
 	
 	
-	static MACHINE_INIT( orbit )
+	static public static MachineInitHandlerPtr machine_init_orbit  = new MachineInitHandlerPtr() { public void handler()
 	{
 		update_misc_flags(0);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr orbit_note_w = new WriteHandlerPtr() {public void handler(int offset, int data)

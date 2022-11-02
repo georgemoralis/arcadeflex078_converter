@@ -22,7 +22,6 @@ public class ajax
 	
 	
 	/* from machine/ajax.c */
-	MACHINE_INIT( ajax );
 	
 	/* from vidhrdw/ajax.c */
 	

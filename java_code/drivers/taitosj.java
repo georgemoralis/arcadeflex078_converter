@@ -133,7 +133,6 @@ public class taitosj
 	
 	
 	
-	MACHINE_INIT( taitosj );
 	
 	
 	

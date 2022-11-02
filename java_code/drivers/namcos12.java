@@ -277,10 +277,10 @@ public class namcos12
 		}
 	}
 	
-	MACHINE_INIT( namcos12 )
+	public static MachineInitHandlerPtr machine_init_namcos12  = new MachineInitHandlerPtr() { public void handler()
 	{
 		psx_machine_init();
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( coh700 )
 		/* basic machine hardware */

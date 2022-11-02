@@ -326,10 +326,10 @@ public class metlclsh
 			cpu_set_nmi_line(1, ASSERT_LINE);
 	} };
 	
-	static MACHINE_INIT( metlclsh )
+	static public static MachineInitHandlerPtr machine_init_metlclsh  = new MachineInitHandlerPtr() { public void handler()
 	{
 		flip_screen_set(0);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( metlclsh )
 	

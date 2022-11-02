@@ -121,13 +121,13 @@ public class sprint8
 	} };
 	
 	
-	static MACHINE_INIT( sprint8 )
+	static public static MachineInitHandlerPtr machine_init_sprint8  = new MachineInitHandlerPtr() { public void handler()
 	{
 		collision_reset = 0;
 		collision_index = 0;
 	
 		timer_pulse(TIME_IN_HZ(60), 0, input_callback);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr sprint8_collision_r  = new ReadHandlerPtr() { public int handler(int offset)

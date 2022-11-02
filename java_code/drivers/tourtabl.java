@@ -111,13 +111,13 @@ public class tourtabl
 	};
 	
 	
-	static MACHINE_INIT( tourtabl )
+	static public static MachineInitHandlerPtr machine_init_tourtabl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		r6532_init(0, &r6532_interface_0);
 		r6532_init(1, &r6532_interface_1);
 	
 		tia_init();
-	}
+	} };
 	
 	
 	static InputPortPtr input_ports_tourtabl = new InputPortPtr(){ public void handler() { 

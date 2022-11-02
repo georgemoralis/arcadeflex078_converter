@@ -16,8 +16,7 @@ public class parodius
 {
 	
 	/* prototypes */
-	static MACHINE_INIT( parodius );
-	static void parodius_banking( int lines );
+	static static void parodius_banking( int lines );
 	
 	static int videobank;
 	static unsigned char *ram;
@@ -425,7 +424,7 @@ public class parodius
 		cpu_setbank( 1, &RAM[offs] );
 	}
 	
-	static MACHINE_INIT( parodius )
+	static public static MachineInitHandlerPtr machine_init_parodius  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -437,7 +436,7 @@ public class parodius
 	
 		/* init the default bank */
 		cpu_setbank(1,&RAM[0x10000]);
-	}
+	} };
 	
 	
 	static DRIVER_INIT( parodius )

@@ -113,7 +113,7 @@ public class tmp68301
 		}
 	}
 	
-	MACHINE_INIT( tmp68301 )
+	public static MachineInitHandlerPtr machine_init_tmp68301  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int i;
 		for (i = 0; i < 3; i++)
@@ -123,7 +123,7 @@ public class tmp68301
 			tmp68301_IE[i] = 0;
 	
 		cpu_set_irq_callback(0, tmp68301_irq_callback);
-	}
+	} };
 	
 	/* Update the IRQ state based on all possible causes */
 	static void update_irq_state(void)

@@ -198,7 +198,7 @@ public class pacman
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( pacman )
+	public static MachineInitHandlerPtr machine_init_pacman  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -208,10 +208,10 @@ public class pacman
 			speedcheat = 1;
 		else
 			speedcheat = 0;
-	}
+	} };
 	
 	
-	MACHINE_INIT( pacplus )
+	public static MachineInitHandlerPtr machine_init_pacplus  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -221,19 +221,19 @@ public class pacman
 			speedcheat = 1;
 		else
 			speedcheat = 0;
-	}
+	} };
 	
 	
-	MACHINE_INIT( mschamp )
+	public static MachineInitHandlerPtr machine_init_mschamp  = new MachineInitHandlerPtr() { public void handler()
 	{
 		data8_t *rom = memory_region(REGION_CPU1) + 0x10000;
 		int bankaddr = ((readinputport(3) & 1) * 0x8000);
 	
 		cpu_setbank(1,&rom[bankaddr]);
 		cpu_setbank(2,&rom[bankaddr+0x4000]);
-	}
+	} };
 	
-	MACHINE_INIT( piranha )
+	public static MachineInitHandlerPtr machine_init_piranha  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -243,7 +243,7 @@ public class pacman
 			speedcheat = 1;
 		else
 		speedcheat = 0;
-	}
+	} };
 	
 	/*************************************
 	 *

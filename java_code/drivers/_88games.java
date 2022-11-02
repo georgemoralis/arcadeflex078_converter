@@ -14,8 +14,7 @@ public class _88games
 {
 	
 	
-	static MACHINE_INIT( 88games );
-	static void k88games_banking( int lines );
+	static static void k88games_banking( int lines );
 	
 	static unsigned char *ram;
 	static int videobank;
@@ -543,11 +542,11 @@ public class _88games
 		k88games_priority = lines & 0x80;
 	}
 	
-	static MACHINE_INIT( 88games )
+	static public static MachineInitHandlerPtr machine_init_88games  = new MachineInitHandlerPtr() { public void handler()
 	{
 		konami_cpu_setlines_callback = k88games_banking;
 		paletteram = &memory_region(REGION_CPU1)[0x20000];
-	}
+	} };
 	
 	
 	

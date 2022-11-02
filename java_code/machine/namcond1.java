@@ -25,7 +25,7 @@ public class namcond1
 	static UINT8 coin_count[4];
 	int namcond1_gfxbank;
 	
-	MACHINE_INIT( namcond1 )
+	public static MachineInitHandlerPtr machine_init_namcond1  = new MachineInitHandlerPtr() { public void handler()
 	{
 	#ifdef MAME_DEBUG
 	    /*unsigned char   *ROM = memory_region(REGION_CPU1);*/
@@ -50,7 +50,7 @@ public class namcond1
 	    coin_state = 0;
 	    coin_count[0] = coin_count[1] =
 	    coin_count[2] = coin_count[3] = 0;
-	}
+	} };
 	
 	// instance of the shared ram pointer
 	data16_t *namcond1_shared_ram;

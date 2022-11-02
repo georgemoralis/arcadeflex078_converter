@@ -195,7 +195,6 @@ public class tnzs
 	DRIVER_INIT( tnzsb );
 	DRIVER_INIT( insectx );
 	DRIVER_INIT( kageki );
-	MACHINE_INIT( tnzs );
 	
 	
 	/* prototypes for functions in ../vidhrdw/tnzs.c */

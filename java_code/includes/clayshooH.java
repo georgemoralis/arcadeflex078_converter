@@ -8,7 +8,6 @@
 
 /* defined in machine/clayshoo.c */
 
-MACHINE_INIT( clayshoo );
 
 
 /* defined in vidhrdw/clayshoo.c */

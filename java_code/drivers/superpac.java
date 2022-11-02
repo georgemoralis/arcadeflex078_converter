@@ -46,7 +46,6 @@ public class superpac
 	
 	
 	
-	MACHINE_INIT( superpac );
 	
 	
 	

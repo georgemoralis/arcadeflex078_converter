@@ -29,8 +29,7 @@ public class blockhl
 {
 	
 	/* prototypes */
-	static MACHINE_INIT( blockhl );
-	static void blockhl_banking( int lines );
+	static static void blockhl_banking( int lines );
 	
 	
 	
@@ -352,14 +351,14 @@ public class blockhl
 		if ((lines & 0x84) != 0x80) logerror("%04x: setlines %02x\n",activecpu_get_pc(),lines);
 	}
 	
-	static MACHINE_INIT( blockhl )
+	static public static MachineInitHandlerPtr machine_init_blockhl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = blockhl_banking;
 	
 		paletteram = &RAM[0x18000];
-	}
+	} };
 	
 	
 	static DRIVER_INIT( blockhl )

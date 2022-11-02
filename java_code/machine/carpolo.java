@@ -510,7 +510,7 @@ public class carpolo
 	};
 	
 	
-	MACHINE_INIT( carpolo )
+	public static MachineInitHandlerPtr machine_init_carpolo  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* set up the priority encoder */
 		TTL74148_config(TTL74148_3S, &TTL74148_3S_intf);
@@ -581,5 +581,5 @@ public class carpolo
 		/* set up the PIA's */
 		pia_config(0, PIA_STANDARD_ORDERING, &pia_0_intf);
 		pia_config(1, PIA_STANDARD_ORDERING, &pia_1_intf);
-	}
+	} };
 }

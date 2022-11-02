@@ -25,9 +25,6 @@ public class mcrH
 	/************ Generic MCR routines ***************/
 	
 	
-	MACHINE_INIT( mcr );
-	MACHINE_INIT( mcr68 );
-	MACHINE_INIT( zwackery );
 	
 	
 	

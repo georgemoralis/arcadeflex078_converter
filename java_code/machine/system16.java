@@ -58,7 +58,7 @@ public class system16
 	void (*sys16_custom_irq)(void);
 	
 	
-	MACHINE_INIT( sys16_onetime ){
+	public static MachineInitHandlerPtr machine_init_sys16_onetime  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_wwfix = sys16_alienfix = 0;
 		sys16_bg1_trans=0;
 		sys16_rowscroll_scroll=0;
@@ -76,7 +76,7 @@ public class system16
 	#ifdef SPACEHARRIER_OFFSETS
 		spaceharrier_patternoffsets=0;
 	#endif
-	}
+	} };
 	
 	static struct GfxLayout charlayout =
 	{

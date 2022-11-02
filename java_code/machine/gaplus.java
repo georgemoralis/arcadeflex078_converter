@@ -23,11 +23,11 @@ public class gaplus
 	static int credits, coincounter1, coincounter2;
 	
 	
-	MACHINE_INIT( gaplus )
+	public static MachineInitHandlerPtr machine_init_gaplus  = new MachineInitHandlerPtr() { public void handler()
 	{
 	    int_enable_2 = int_enable_3 = 1;
 	    credits = coincounter1 = coincounter2 = 0;
-	}
+	} };
 	
 	/* shared ram functions */
 	public static ReadHandlerPtr gaplus_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)

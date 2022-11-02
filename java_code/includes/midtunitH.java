@@ -31,7 +31,6 @@ public class midtunitH
 	DRIVER_INIT( mk2r14 );
 	DRIVER_INIT( mk2r21 );
 	
-	MACHINE_INIT( midtunit );
 	
 	READ16_HANDLER( midtunit_sound_state_r );
 	READ16_HANDLER( midtunit_sound_r );

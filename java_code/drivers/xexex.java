@@ -73,7 +73,6 @@ public class xexex
 	
 	void xexex_set_alpha(int on);
 	
-	MACHINE_INIT( xexex );
 	
 	static data16_t *xexex_workram;
 	static data16_t cur_control2;
@@ -583,11 +582,11 @@ public class xexex
 		ROM_LOAD( "xex_b07.rom", 0x200000, 0x100000, CRC(ec87fe1b) SHA1(ec9823aea5a1fc5c47c8262e15e10b28be87231c) )
 	ROM_END(); }}; 
 	
-	MACHINE_INIT( xexex )
+	public static MachineInitHandlerPtr machine_init_xexex  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cur_sound_region = 0;
 		suspension_active = 0;
-	}
+	} };
 	
 	static DRIVER_INIT( xexex )
 	{

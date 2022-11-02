@@ -284,18 +284,18 @@ public class seibu
 	/***************************************************************************/
 	
 	/* Use this if the sound cpu is cpu 1 */
-	MACHINE_INIT( seibu_sound_1 )
+	public static MachineInitHandlerPtr machine_init_seibu_sound_1  = new MachineInitHandlerPtr() { public void handler()
 	{
 		sound_cpu=1;
 		update_irq_lines(VECTOR_INIT);
-	}
+	} };
 	
 	/* Use this if the sound cpu is cpu 2 */
-	MACHINE_INIT( seibu_sound_2 )
+	public static MachineInitHandlerPtr machine_init_seibu_sound_2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		sound_cpu=2;
 		update_irq_lines(VECTOR_INIT);
-	}
+	} };
 	
 	/***************************************************************************/
 	

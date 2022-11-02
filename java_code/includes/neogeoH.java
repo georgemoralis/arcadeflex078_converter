@@ -16,7 +16,6 @@ void neogeo_register_main_savestate(void);
 
 
 
-MACHINE_INIT( neogeo );
 DRIVER_INIT( neogeo );
 
 WRITE16_HANDLER( neogeo_sram16_lock_w );

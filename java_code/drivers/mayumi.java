@@ -41,10 +41,10 @@ public class mayumi
 		flip_screen_set(data & 2);
 	} };
 	
-	static MACHINE_INIT( mayumi )
+	static public static MachineInitHandlerPtr machine_init_mayumi  = new MachineInitHandlerPtr() { public void handler()
 	{
 		bank_sel_w(0,0);
-	}
+	} };
 	
 	public static WriteHandlerPtr input_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

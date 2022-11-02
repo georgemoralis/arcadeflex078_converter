@@ -564,10 +564,10 @@ public class nbmj9195
 		z80ctc_init(&ctc_intf);
 	}
 	
-	static MACHINE_INIT( sailorws )
+	static public static MachineInitHandlerPtr machine_init_sailorws  = new MachineInitHandlerPtr() { public void handler()
 	{
 		//
-	}
+	} };
 	
 	static void initialize_driver(void)
 	{

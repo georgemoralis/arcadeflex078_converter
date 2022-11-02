@@ -212,7 +212,7 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( atarisy2 )
+	static public static MachineInitHandlerPtr machine_init_atarisy2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		slapstic_reset();
@@ -226,7 +226,7 @@ public class atarisy2
 		p2portrd_state = 0;
 	
 		which_adc = 0;
-	}
+	} };
 	
 	
 	

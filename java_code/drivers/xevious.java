@@ -208,7 +208,6 @@ public class xevious
 	
 	
 	/* XEVIOUS */
-	MACHINE_INIT( xevious );
 	
 	
 	
@@ -218,7 +217,6 @@ public class xevious
 	
 	
 	
-	MACHINE_INIT( battles );
 	
 	
 	

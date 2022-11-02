@@ -732,10 +732,10 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	static MACHINE_INIT( karnov )
+	static public static MachineInitHandlerPtr machine_init_karnov  = new MachineInitHandlerPtr() { public void handler()
 	{
 		memset(karnov_ram,0,0x4000/2); /* Chelnov likes ram clear on reset.. */
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( karnov )
 	

@@ -74,7 +74,7 @@ public class videopin
 	}
 	
 	
-	static MACHINE_INIT( videopin )
+	static public static MachineInitHandlerPtr machine_init_videopin  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime(32), 32, interrupt_callback);
 	
@@ -82,7 +82,7 @@ public class videopin
 	
 		videopin_out1_w(0, 0);
 		videopin_out2_w(0, 0);
-	}
+	} };
 	
 	
 	static double calc_plunger_pos(void)

@@ -32,8 +32,6 @@ WRITE16_HANDLER( seibu_main_mustb_w );
 void seibu_ym3812_irqhandler(int linestate);
 void seibu_ym2151_irqhandler(int linestate);
 void seibu_ym2203_irqhandler(int linestate);
-MACHINE_INIT( seibu_sound_1 );
-MACHINE_INIT( seibu_sound_2 );
 void seibu_sound_decrypt(int cpu_region,int length);
 
 void seibu_adpcm_decrypt(int region);

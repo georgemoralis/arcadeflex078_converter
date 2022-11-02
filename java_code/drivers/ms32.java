@@ -1543,13 +1543,13 @@ public class ms32
 	
 	/********** MACHINE INIT **********/
 	
-	static MACHINE_INIT( ms32 )
+	static public static MachineInitHandlerPtr machine_init_ms32  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		cpu_setbank(4, memory_region(REGION_CPU2) + 0x14000);
 		cpu_setbank(5, memory_region(REGION_CPU2) + 0x18000);
 		irq_init();
-	}
+	} };
 	
 	/********** MACHINE DRIVER **********/
 	

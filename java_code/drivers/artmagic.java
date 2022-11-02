@@ -78,12 +78,12 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( artmagic )
+	static public static MachineInitHandlerPtr machine_init_artmagic  = new MachineInitHandlerPtr() { public void handler()
 	{
 		tms_irq = hack_irq = 0;
 		update_irq_state();
 		tlc34076_reset(6);
-	}
+	} };
 	
 	
 	

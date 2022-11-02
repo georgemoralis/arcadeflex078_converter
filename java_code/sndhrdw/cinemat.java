@@ -67,7 +67,7 @@ public class cinemat
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( cinemat_sound )
+	public static MachineInitHandlerPtr machine_init_cinemat_sound  = new MachineInitHandlerPtr() { public void handler()
 	{
 	    current_shift = 0xffff;
 	    last_shift = 0xffff;
@@ -77,7 +77,7 @@ public class cinemat
 	
 	// Pitch the Drone sound will start off at
 	
-	}
+	} };
 	
 	static void cinemat_shift(UINT8 sound_val, UINT8 bits_changed, UINT8 A1, UINT8 CLK)
 	{
@@ -803,11 +803,11 @@ public class cinemat
 	};
 	
 	
-	MACHINE_INIT( demon_sound )
+	public static MachineInitHandlerPtr machine_init_demon_sound  = new MachineInitHandlerPtr() { public void handler()
 	{
 		demon_z80ctc_interface.baseclock[0] = Machine.drv.cpu[1].cpu_clock;
 		z80ctc_init(&demon_z80ctc_interface);
-	}
+	} };
 	
 	
 	MEMORY_READ_START( demon_sound_readmem )

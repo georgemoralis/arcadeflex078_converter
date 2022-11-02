@@ -120,7 +120,6 @@ package arcadeflex.v078.drivers;
 public class digdug
 {
 	
-	MACHINE_INIT( digdig );
 	
 	
 	

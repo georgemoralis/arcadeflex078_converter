@@ -740,7 +740,7 @@ public class neogeo
 	/* information about the sma random number generator provided by razoola */
 	/* this RNG is correct for KOF99, other games might be different */
 	
-	int neogeo_rng = 0x2345;	/* this is reset in MACHINE_INIT() */
+	int neogeo_rng = 0x2345;	/* this is reset in public static MachineInitHandlerPtr machine_init_  = new MachineInitHandlerPtr() { public void handler() */
 	
 	static READ16_HANDLER( sma_random_r )
 	{
@@ -759,7 +759,7 @@ public class neogeo
 		neogeo_rng = ((neogeo_rng << 1) | newbit) & 0xffff;
 	
 		return old;
-	}
+	} };
 	
 	/******************************************************************************/
 	

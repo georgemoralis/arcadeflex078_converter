@@ -1546,223 +1546,223 @@ public class decocass
 		state_save_register_UINT8	("decocass", 0, "decocass_sound_ack", &decocass_sound_ack, 1);
 	}
 	
-	MACHINE_INIT( decocass )
+	public static MachineInitHandlerPtr machine_init_decocass  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
-	}
+	} };
 	
-	MACHINE_INIT( ctsttape )
+	public static MachineInitHandlerPtr machine_init_ctsttape  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061)\n"));
 		decocass_dongle_r = decocass_type1_map1_r;
-	}
+	} };
 	
-	MACHINE_INIT( clocknch )
+	public static MachineInitHandlerPtr machine_init_clocknch  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061 flip 2-3)\n"));
 		decocass_dongle_r = decocass_type1_r;
 		type1_inmap = MAKE_MAP(0,1,3,2,4,5,6,7);
 		type1_outmap = MAKE_MAP(0,1,3,2,4,5,6,7);
-	}
+	} };
 	
-	MACHINE_INIT( ctisland )
+	public static MachineInitHandlerPtr machine_init_ctisland  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061 flip 0-2)\n"));
 		decocass_dongle_r = decocass_type1_r;
 		type1_inmap = MAKE_MAP(2,1,0,3,4,5,6,7);
 		type1_outmap = MAKE_MAP(2,1,0,3,4,5,6,7);
-	}
+	} };
 	
-	MACHINE_INIT( csuperas )
+	public static MachineInitHandlerPtr machine_init_csuperas  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061 flip 4-5)\n"));
 		decocass_dongle_r = decocass_type1_r;
 		type1_inmap = MAKE_MAP(0,1,2,3,5,4,6,7);
 		type1_outmap = MAKE_MAP(0,1,2,3,5,4,6,7);
-	}
+	} };
 	
-	MACHINE_INIT( castfant )
+	public static MachineInitHandlerPtr machine_init_castfant  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061 flip 1-2)\n"));
 		decocass_dongle_r = decocass_type1_map3_r;
-	}
+	} };
 	
-	MACHINE_INIT( cluckypo )
+	public static MachineInitHandlerPtr machine_init_cluckypo  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061 flip 1-3)\n"));
 		decocass_dongle_r = decocass_type1_r;
 		type1_inmap = MAKE_MAP(0,3,2,1,4,5,6,7);
 		type1_outmap = MAKE_MAP(0,3,2,1,4,5,6,7);
-	}
+	} };
 	
-	MACHINE_INIT( cterrani )
+	public static MachineInitHandlerPtr machine_init_cterrani  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061 straight)\n"));
 		decocass_dongle_r = decocass_type1_r;
 		type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
 		type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
-	}
+	} };
 	
-	MACHINE_INIT( cexplore )
+	public static MachineInitHandlerPtr machine_init_cexplore  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061)\n"));
 		decocass_dongle_r = decocass_type1_map2_r;
-	}
+	} };
 	
-	MACHINE_INIT( cprogolf )
+	public static MachineInitHandlerPtr machine_init_cprogolf  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #1 (DE-0061 flip 0-1)\n"));
 		decocass_dongle_r = decocass_type1_r;
 		type1_inmap = MAKE_MAP(1,0,2,3,4,5,6,7);
 		type1_outmap = MAKE_MAP(1,0,2,3,4,5,6,7);
-	}
+	} };
 	
-	MACHINE_INIT( cmissnx )
+	public static MachineInitHandlerPtr machine_init_cmissnx  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #2 (CS82-007)\n"));
 		decocass_dongle_r = decocass_type2_r;
 		decocass_dongle_w = decocass_type2_w;
-	}
+	} };
 	
-	MACHINE_INIT( cdiscon1 )
+	public static MachineInitHandlerPtr machine_init_cdiscon1  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #2 (CS82-007)\n"));
 		decocass_dongle_r = decocass_type2_r;
 		decocass_dongle_w = decocass_type2_w;
-	}
+	} };
 	
-	MACHINE_INIT( cptennis )
+	public static MachineInitHandlerPtr machine_init_cptennis  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #2 (CS82-007)\n"));
 		decocass_dongle_r = decocass_type2_r;
 		decocass_dongle_w = decocass_type2_w;
-	}
+	} };
 	
-	MACHINE_INIT( ctornado )
+	public static MachineInitHandlerPtr machine_init_ctornado  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #2 (CS82-007)\n"));
 		decocass_dongle_r = decocass_type2_r;
 		decocass_dongle_w = decocass_type2_w;
-	}
+	} };
 	
-	MACHINE_INIT( cbnj )
+	public static MachineInitHandlerPtr machine_init_cbnj  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_67;
-	}
+	} };
 	
-	MACHINE_INIT( cburnrub )
+	public static MachineInitHandlerPtr machine_init_cburnrub  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_67;
-	}
+	} };
 	
-	MACHINE_INIT( cbtime )
+	public static MachineInitHandlerPtr machine_init_cbtime  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_12;
-	}
+	} };
 	
-	MACHINE_INIT( cgraplop )
+	public static MachineInitHandlerPtr machine_init_cgraplop  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_56;
-	}
+	} };
 	
-	MACHINE_INIT( clapapa )
+	public static MachineInitHandlerPtr machine_init_clapapa  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_34_7;
-	}
+	} };
 	
-	MACHINE_INIT( cfghtice )
+	public static MachineInitHandlerPtr machine_init_cfghtice  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_25;
-	}
+	} };
 	
-	MACHINE_INIT( cprobowl )
+	public static MachineInitHandlerPtr machine_init_cprobowl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_34_0;
-	}
+	} };
 	
-	MACHINE_INIT( cnightst )
+	public static MachineInitHandlerPtr machine_init_cnightst  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_13;
-	}
+	} };
 	
-	MACHINE_INIT( cprosocc )
+	public static MachineInitHandlerPtr machine_init_cprosocc  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_24;
-	}
+	} };
 	
-	MACHINE_INIT( cppicf )
+	public static MachineInitHandlerPtr machine_init_cppicf  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #3 (PAL)\n"));
 		decocass_dongle_r = decocass_type3_r;
 		decocass_dongle_w = decocass_type3_w;
 		type3_swap = TYPE3_SWAP_01;
-	}
+	} };
 	
-	MACHINE_INIT( cscrtry )
+	public static MachineInitHandlerPtr machine_init_cscrtry  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #4 (32K ROM)\n"));
 		decocass_dongle_r = decocass_type4_r;
 		decocass_dongle_w = decocass_type4_w;
-	}
+	} };
 	
-	MACHINE_INIT( cbdash )
+	public static MachineInitHandlerPtr machine_init_cbdash  = new MachineInitHandlerPtr() { public void handler()
 	{
 		decocass_init_common();
 		LOG(0,("dongle type #5 (NOP)\n"));
 		decocass_dongle_r = decocass_type5_r;
 		decocass_dongle_w = decocass_type5_w;
-	}
+	} };
 	
 	/***************************************************************************
 	 *

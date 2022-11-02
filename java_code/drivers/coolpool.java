@@ -192,10 +192,10 @@ public class coolpool
 	
 	static data16_t input_data;
 	
-	MACHINE_INIT( coolpool )
+	public static MachineInitHandlerPtr machine_init_coolpool  = new MachineInitHandlerPtr() { public void handler()
 	{
 		tlc34076_reset(6);
-	}
+	} };
 	
 	WRITE16_HANDLER( amerdart_input_w )
 	{

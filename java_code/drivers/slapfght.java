@@ -196,7 +196,6 @@ public class slapfght
 	/* VIDHRDW */
 	
 	/* MACHINE */
-	MACHINE_INIT( slapfight );
 	
 	
 	/* MCU */

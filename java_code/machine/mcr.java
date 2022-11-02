@@ -208,7 +208,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( mcr )
+	public static MachineInitHandlerPtr machine_init_mcr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* initialize the CTC */
 		ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
@@ -219,7 +219,7 @@ public class mcr
 	
 		/* initialize the sound */
 		mcr_sound_init();
-	}
+	} };
 	
 	
 	
@@ -259,7 +259,7 @@ public class mcr
 	}
 	
 	
-	MACHINE_INIT( mcr68 )
+	public static MachineInitHandlerPtr machine_init_mcr68  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* for the most part all MCR/68k games are the same */
 		mcr68_common_init();
@@ -268,10 +268,10 @@ public class mcr
 		/* vectors are 1 and 2 */
 		v493_irq_vector = 1;
 		m6840_irq_vector = 2;
-	}
+	} };
 	
 	
-	MACHINE_INIT( zwackery )
+	public static MachineInitHandlerPtr machine_init_zwackery  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* for the most part all MCR/68k games are the same */
 		mcr68_common_init();
@@ -286,7 +286,7 @@ public class mcr
 		/* vectors are 5 and 6 */
 		v493_irq_vector = 5;
 		m6840_irq_vector = 6;
-	}
+	} };
 	
 	
 	

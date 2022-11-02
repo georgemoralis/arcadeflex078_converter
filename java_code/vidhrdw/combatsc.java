@@ -430,7 +430,7 @@ public class combatsc
 		}
 	} };
 	
-	MACHINE_INIT( combasc )
+	public static MachineInitHandlerPtr machine_init_combasc  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unsigned char *MEM = memory_region(REGION_CPU1) + 0x38000;
 	
@@ -445,7 +445,7 @@ public class combatsc
 	
 		combasc_bank_select = -1;
 		combasc_bankselect_w( 0,0 );
-	}
+	} };
 	
 	public static WriteHandlerPtr combasc_pf_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

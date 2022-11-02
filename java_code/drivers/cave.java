@@ -1957,7 +1957,7 @@ public class cave
 	
 	***************************************************************************/
 	
-	MACHINE_INIT( cave )
+	public static MachineInitHandlerPtr machine_init_cave  = new MachineInitHandlerPtr() { public void handler()
 	{
 		soundbuf.len = 0;
 	
@@ -1965,14 +1965,14 @@ public class cave
 		   region factory set in eeprom */
 		if (cave_region_byte >= 0)
 			EEPROM_get_data_pointer(0)[cave_region_byte] =  readinputport(2);
-	}
+	} };
 	
 	/* start with the watchdog armed */
-	MACHINE_INIT( cave_watchdog )
+	public static MachineInitHandlerPtr machine_init_cave_watchdog  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_cave();
 		watchdog_reset16_w(0,0,0);
-	}
+	} };
 	
 	static struct YMZ280Binterface ymz280b_intf =
 	{

@@ -75,7 +75,6 @@ package arcadeflex.v078.drivers;
 public class bosco
 {
 	
-	MACHINE_INIT( bosco );
 	
 	
 	

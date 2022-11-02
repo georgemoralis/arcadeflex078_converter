@@ -38,10 +38,10 @@ public class dragrace
 	}
 	
 	
-	static MACHINE_INIT( dragrace )
+	static public static MachineInitHandlerPtr machine_init_dragrace  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_pulse(cpu_getscanlinetime(0), 0, dragrace_frame_callback);
-	}
+	} };
 	
 	static void dragrace_update_misc_flags(void)
 	{

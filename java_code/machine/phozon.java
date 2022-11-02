@@ -21,12 +21,12 @@ public class phozon
 	unsigned char *phozon_customio_1, *phozon_customio_2;
 	static int credits, coincounter1, coincounter2;
 	
-	MACHINE_INIT( phozon )
+	public static MachineInitHandlerPtr machine_init_phozon  = new MachineInitHandlerPtr() { public void handler()
 	{
 	    credits = coincounter1 = coincounter2 = 0;
 		cpu_set_halt_line(1, CLEAR_LINE);
 		cpu_set_halt_line(2, CLEAR_LINE);
-	}
+	} };
 	
 	/* memory handlers */
 	public static ReadHandlerPtr phozon_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){

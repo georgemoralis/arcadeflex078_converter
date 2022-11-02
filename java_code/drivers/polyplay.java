@@ -120,7 +120,7 @@ public class polyplay
 	};
 	
 	
-	static MACHINE_INIT( polyplay )
+	static public static MachineInitHandlerPtr machine_init_polyplay  = new MachineInitHandlerPtr() { public void handler()
 	{
 		channel1_active = 0;
 		channel1_const = 0;
@@ -133,7 +133,7 @@ public class polyplay
 		play_channel2(0);
 	
 		polyplay_timer = timer_alloc(timer_callback);
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr periodic_interrupt = new InterruptHandlerPtr() {public void handler()

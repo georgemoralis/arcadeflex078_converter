@@ -20,10 +20,6 @@ READ16_HANDLER ( vimana_input_port_5_word_r );
 
 WRITE16_HANDLER( samesame_coin_w );
 
-MACHINE_INIT( toaplan1 );
-MACHINE_INIT( demonwld );
-MACHINE_INIT( vimana );
-MACHINE_INIT( zerozone );	/* hack for ZeroWing/OutZone. See vidhrdw */
 
 
 

@@ -338,12 +338,12 @@ public class dynax
 		MSM5205_reset_w(0,~data & 1);
 	} };
 	
-	static MACHINE_INIT( adpcm )
+	static public static MachineInitHandlerPtr machine_init_adpcm  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* start with the MSM5205 reset */
 		resetkludge = 0;
 		MSM5205_reset_w(0,1);
-	}
+	} };
 	
 	public static WriteHandlerPtr yarunara_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

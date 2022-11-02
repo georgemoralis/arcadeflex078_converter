@@ -9,9 +9,6 @@
 
 
 
-MACHINE_INIT( turbo );
-MACHINE_INIT( subroc3d );
-MACHINE_INIT( buckrog );
 
 
 

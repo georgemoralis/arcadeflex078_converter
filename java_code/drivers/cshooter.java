@@ -139,10 +139,10 @@ public class cshooter
 	
 	static int cshooter_counter;
 	
-	static MACHINE_INIT( cshooter )
+	static public static MachineInitHandlerPtr machine_init_cshooter  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cshooter_counter = 0;
-	}
+	} };
 	
 	public static ReadHandlerPtr cshooter_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

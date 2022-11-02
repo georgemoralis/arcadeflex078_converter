@@ -55,12 +55,12 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( shuuz )
+	static public static MachineInitHandlerPtr machine_init_shuuz  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 1);
 		atarigen_interrupt_reset(update_interrupts);
-	}
+	} };
 	
 	
 	static WRITE16_HANDLER( latch_w )

@@ -208,7 +208,7 @@ public class gsword
 		{ input_port_7_r,input_port_6_r,gsword_8741_2_r,gsword_8741_3_r }    /* port handler */
 	};
 	
-	MACHINE_INIT( gsword )
+	public static MachineInitHandlerPtr machine_init_gsword  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -218,7 +218,7 @@ public class gsword
 		gsword_nmi_step  = 0;
 	
 		TAITO8741_start(&gsword_8741interface);
-	}
+	} };
 	
 	public static InterruptHandlerPtr gsword_snd_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

@@ -47,23 +47,22 @@ public class marineb
 	
 	
 	
-	MACHINE_INIT( espial );
 	
 	
 	
 	
 	
-	static MACHINE_INIT( marineb )
+	static public static MachineInitHandlerPtr machine_init_marineb  = new MachineInitHandlerPtr() { public void handler()
 	{
 		marineb_active_low_flipscreen = 0;
 		machine_init_espial();
-	}
+	} };
 	
-	static MACHINE_INIT( springer )
+	static public static MachineInitHandlerPtr machine_init_springer  = new MachineInitHandlerPtr() { public void handler()
 	{
 		marineb_active_low_flipscreen = 1;
 		machine_init_espial();
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

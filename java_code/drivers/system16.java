@@ -546,7 +546,7 @@ public class system16
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	static MACHINE_INIT( alexkidd ){
+	static public static MachineInitHandlerPtr machine_init_alexkidd  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
@@ -554,7 +554,7 @@ public class system16
 		sys16_bg_priority_mode=1;
 	
 		sys16_update_proc = alexkidd_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( alexkidd )
 	{
@@ -772,7 +772,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( aliensyn ){
+	static public static MachineInitHandlerPtr machine_init_aliensyn  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
@@ -787,7 +787,7 @@ public class system16
 		sys16_update_proc = aliensyn_update_proc;
 	
 		sys16_alienfix = 1; //*
-	}
+	} };
 	
 	static DRIVER_INIT( aliensyn )
 	{
@@ -975,11 +975,11 @@ public class system16
 		set_tile_bank( sys16_workingram[0x3094/2] );
 	}
 	
-	static MACHINE_INIT( altbeast ){
+	static public static MachineInitHandlerPtr machine_init_altbeast  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_update_proc = altbeast_update_proc;
-	}
+	} };
 	
-	static MACHINE_INIT( altbeas2 ){
+	static public static MachineInitHandlerPtr machine_init_altbeas2  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0x00,0x00,
 			0x01,0x00,
@@ -992,7 +992,7 @@ public class system16
 		};
 		sys16_obj_bank = bank;
 		sys16_update_proc = altbeast_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( altbeast )
 	{
@@ -1127,9 +1127,9 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( atomicp ){
+	static public static MachineInitHandlerPtr machine_init_atomicp  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_update_proc = atomicp_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( atomicp )
 	{
@@ -1381,13 +1381,13 @@ public class system16
 		set_tile_bank( sys16_extraram3[0x0002/2] );
 	}
 	
-	static MACHINE_INIT( aurail ){
+	static public static MachineInitHandlerPtr machine_init_aurail  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_spritesystem = sys16_sprite_aurail;
 		sys16_spritelist_end=0x8000;
 		sys16_bg_priority_mode=1;
 	
 		sys16_update_proc = aurail_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( aurail )
 	{
@@ -1612,7 +1612,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( bayroute ){
+	static public static MachineInitHandlerPtr machine_init_bayroute  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
@@ -1623,7 +1623,7 @@ public class system16
 		sys16_update_proc = bayroute_update_proc;
 		sys16_spritesystem = sys16_sprite_aurail;
 		sys16_spritelist_end=0xc000;
-	}
+	} };
 	
 	static DRIVER_INIT( bayroute ){
 		machine_init_sys16_onetime();
@@ -1806,7 +1806,7 @@ public class system16
 		set_bg_page1( sys16_textram[0x0e9c/2] );
 	}
 	
-	static MACHINE_INIT( bodyslam ){
+	static public static MachineInitHandlerPtr machine_init_bodyslam  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
@@ -1820,7 +1820,7 @@ public class system16
 		sys16_textlayer_hi_max=0xff;
 	
 		sys16_update_proc = bodyslam_update_proc;
-	}
+	} };
 	
 	// I have no idea if this is needed, but I cannot find any code for the countdown
 	// timer in the code and this seems to work ok.
@@ -2026,7 +2026,7 @@ public class system16
 		}
 	}
 	
-	static MACHINE_INIT( dduxbl ){
+	static public static MachineInitHandlerPtr machine_init_dduxbl  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = { //*
 			0,0,0,0,
 			0,0,0,4,
@@ -2050,7 +2050,7 @@ public class system16
 	
 		sys16_update_proc = dduxbl_update_proc;
 		sys16_sprxoffset = -0x48;
-	}
+	} };
 	
 	static DRIVER_INIT( dduxbl )
 	{
@@ -2216,7 +2216,7 @@ public class system16
 		sys16_tile_bank0 = eswat_tilebank0;
 	}
 	
-	static MACHINE_INIT( eswat ){
+	static public static MachineInitHandlerPtr machine_init_eswat  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[] = {
 			0,1,	4,5,
 			8,9,	12,13,
@@ -2229,7 +2229,7 @@ public class system16
 		sys16_patch_code( 0x3897, 0x11 );
 	
 		sys16_update_proc = eswat_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( eswat ){
 		machine_init_sys16_onetime();
@@ -2410,7 +2410,7 @@ public class system16
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	static MACHINE_INIT( fantzono ){
+	static public static MachineInitHandlerPtr machine_init_fantzono  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_fantzone;
 		sys16_sprxoffset = -0xbe;
@@ -2442,9 +2442,9 @@ public class system16
 	*/
 	
 		sys16_update_proc = fantzone_update_proc;
-	}
+	} };
 	
-	static MACHINE_INIT( fantzone ){
+	static public static MachineInitHandlerPtr machine_init_fantzone  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_fantzone;
 		sys16_sprxoffset = -0xbe;
@@ -2458,7 +2458,7 @@ public class system16
 		sys16_patch_code(0x35e9,0x00);
 	
 		sys16_update_proc = fantzone_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( fantzone )
 	{
@@ -2634,7 +2634,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( fpoint ){
+	static public static MachineInitHandlerPtr machine_init_fpoint  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_patch_code( 0x454, 0x33 );
 		sys16_patch_code( 0x455, 0xf8 );
 		sys16_patch_code( 0x456, 0xe0 );
@@ -2660,7 +2660,7 @@ public class system16
 		sys16_patch_code( 0x2c9, 0x75 );
 	
 		sys16_update_proc = fpoint_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( fpoint ){
 		machine_init_sys16_onetime();
@@ -2963,7 +2963,7 @@ public class system16
 		set_tile_bank( sys16_workingram[0x2c94/2] );
 	}
 	
-	static MACHINE_INIT( goldnaxe ){
+	static public static MachineInitHandlerPtr machine_init_goldnaxe  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,1,4,5,
 			8,9,0,0,
@@ -2978,7 +2978,7 @@ public class system16
 	
 		sys16_sprxoffset = -0xb8;
 		sys16_update_proc = goldnaxe_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( goldnaxe ){
 		machine_init_sys16_onetime();
@@ -3205,7 +3205,7 @@ public class system16
 		set_tile_bank( sys16_workingram[0x2c94/2] );
 	}
 	
-	static MACHINE_INIT( goldnaxa ){
+	static public static MachineInitHandlerPtr machine_init_goldnaxa  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,1,4,5,
 			8,9,0,0,
@@ -3218,7 +3218,7 @@ public class system16
 		sys16_patch_code( 0x3CA3, 0x1e );
 		sys16_sprxoffset = -0xb8;
 		sys16_update_proc = goldnaxa_update_proc;
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -3392,11 +3392,11 @@ public class system16
 		sys16_tile_bank1 = sys16_extraram[1]&0xf;
 	}
 	
-	static MACHINE_INIT( hwchamp ){
+	static public static MachineInitHandlerPtr machine_init_hwchamp  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_spritelist_end=0xc000;
 		sys16_update_proc = hwchamp_update_proc;
 		sys16_wwfix = 1; //*
-	}
+	} };
 	
 	static DRIVER_INIT( hwchamp )
 	{
@@ -3602,7 +3602,7 @@ public class system16
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	static MACHINE_INIT( mjleague ){
+	static public static MachineInitHandlerPtr machine_init_mjleague  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbd;
@@ -3612,7 +3612,7 @@ public class system16
 		sys16_patch_code( 0xBD42, 0x66 );
 	
 		sys16_update_proc = mjleague_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( mjleague )
 	{
@@ -3896,7 +3896,7 @@ public class system16
 		set_bg_page( sys16_textram[0x0ff4/2] );
 	}
 	
-	static MACHINE_INIT( passsht ){
+	static public static MachineInitHandlerPtr machine_init_passsht  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_sprxoffset = -0x48;
 		sys16_spritesystem = sys16_sprite_passshot;
 	
@@ -3904,9 +3904,9 @@ public class system16
 		sys16_patch_code( 0x13a8,0xc0);
 	
 		sys16_update_proc = passsht_update_proc;
-	}
+	} };
 	
-	static MACHINE_INIT( passht4b ){
+	static public static MachineInitHandlerPtr machine_init_passht4b  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_sprxoffset = -0xb8;
 		sys16_spritesystem = sys16_sprite_passshot;
 	
@@ -3914,7 +3914,7 @@ public class system16
 		sys16_patch_code( 0x138a,0xc0);
 	
 		sys16_update_proc = passht4b_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( passsht )
 	{
@@ -4215,14 +4215,14 @@ public class system16
 		set_bg_page1( sys16_workingram[0x0d1e/2] );
 	}
 	
-	static MACHINE_INIT( quartet ){
+	static public static MachineInitHandlerPtr machine_init_quartet  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
 		sys16_fgxoffset = sys16_bgxoffset = 7;
 	
 		sys16_update_proc = quartet_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( quartet )
 	{
@@ -4443,14 +4443,14 @@ public class system16
 		set_bg_page1( sys16_workingram[0x0d1e/2] );
 	}
 	
-	static MACHINE_INIT( quartet2 ){
+	static public static MachineInitHandlerPtr machine_init_quartet2  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
 		sys16_fgxoffset = sys16_bgxoffset = 7;
 	
 		sys16_update_proc = quartet2_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( quartet2 ){
 		machine_init_sys16_onetime();
@@ -4589,7 +4589,7 @@ public class system16
 		sys16_tile_bank0 = sys16_extraram3[0x0000/2] & 0xf;
 	}
 	
-	static MACHINE_INIT( riotcity ){
+	static public static MachineInitHandlerPtr machine_init_riotcity  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0x0,0x1,0x4,0x5,
 			0x8,0x9,0x0,0x0,
@@ -4602,7 +4602,7 @@ public class system16
 		sys16_bg_priority_mode=1;
 	
 		sys16_update_proc = riotcity_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( riotcity )
 	{
@@ -4768,7 +4768,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( sdi ){
+	static public static MachineInitHandlerPtr machine_init_sdi  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
@@ -4781,7 +4781,7 @@ public class system16
 		sys16_patch_code( 0x102f3, 0x02 );
 	
 		sys16_update_proc = sdi_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( sdi ){
 		machine_init_sys16_onetime();
@@ -4974,7 +4974,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( shinobi ){
+	static public static MachineInitHandlerPtr machine_init_shinobi  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
@@ -4984,7 +4984,7 @@ public class system16
 		sys16_obj_bank = bank;
 		sys16_dactype = 1;
 		sys16_update_proc = shinobi_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( shinobi )
 	{
@@ -5151,7 +5151,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x7fd] & 0x01ff;
 	}
 	
-	static MACHINE_INIT( shinobl ){
+	static public static MachineInitHandlerPtr machine_init_shinobl  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[] = {
 			0,2,4,6,
 			1,3,5,7
@@ -5165,7 +5165,7 @@ public class system16
 	
 		sys16_dactype = 1;
 		sys16_update_proc = shinobl_update_proc;
-	}
+	} };
 	
 	
 	
@@ -5285,13 +5285,13 @@ public class system16
 		set_bg_page( sys16_extraram2[0x28/2] );
 	}
 	
-	static MACHINE_INIT( tetris ){
+	static public static MachineInitHandlerPtr machine_init_tetris  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_patch_code( 0xba6, 0x4e );
 		sys16_patch_code( 0xba7, 0x71 );
 	
 		sys16_sprxoffset = -0x40;
 		sys16_update_proc = tetris_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( tetris )
 	{
@@ -5423,7 +5423,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( timscanr ){
+	static public static MachineInitHandlerPtr machine_init_timscanr  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
@@ -5435,7 +5435,7 @@ public class system16
 		sys16_textmode=1;
 		sys16_update_proc = timscanr_update_proc;
 		sys16_wwfix = -1; //*
-	}
+	} };
 	
 	static DRIVER_INIT( timscanr ){
 		machine_init_sys16_onetime();
@@ -5592,9 +5592,9 @@ public class system16
 		sys16_tile_bank1 = sys16_extraram[1]&0xf;
 	}
 	
-	static MACHINE_INIT( toryumon ){
+	static public static MachineInitHandlerPtr machine_init_toryumon  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_update_proc = toryumon_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( toryumon )
 	{
@@ -5749,14 +5749,14 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( tturf ){
+	static public static MachineInitHandlerPtr machine_init_tturf  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = { 0,0,1,0,2,0,3,0 };
 		sys16_obj_bank = bank;
 		sys16_spritelist_end=0xc000;
 		sys16_update_proc = tturf_update_proc;
-	}
+	} };
 	
-	static MACHINE_INIT( tturfu ){
+	static public static MachineInitHandlerPtr machine_init_tturfu  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,0,
@@ -5767,7 +5767,7 @@ public class system16
 		sys16_spritelist_end=0xc000;
 	
 		sys16_update_proc = tturf_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( tturf ){
 		machine_init_sys16_onetime();
@@ -5916,7 +5916,7 @@ public class system16
 		}
 	}
 	
-	static MACHINE_INIT( tturfbl ){
+	static public static MachineInitHandlerPtr machine_init_tturfbl  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
@@ -5928,7 +5928,7 @@ public class system16
 		sys16_spritelist_end=0xc000;
 	
 		sys16_update_proc = tturfbl_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( tturfbl )
 	{
@@ -6046,7 +6046,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	static MACHINE_INIT( wb3 ){
+	static public static MachineInitHandlerPtr machine_init_wb3  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			2,0,
 			1,0,
@@ -6059,7 +6059,7 @@ public class system16
 		};
 		sys16_obj_bank = bank;
 		sys16_update_proc = wb3_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( wb3 ){
 		machine_init_sys16_onetime();
@@ -6182,7 +6182,7 @@ public class system16
 		set_bg_page( sys16_textram[0x0ff4/2] );
 	}
 	
-	static MACHINE_INIT( wb3bl ){
+	static public static MachineInitHandlerPtr machine_init_wb3bl  = new MachineInitHandlerPtr() { public void handler(){
 		static int bank[16] = {
 			2,0,
 			1,0,
@@ -6218,7 +6218,7 @@ public class system16
 		sys16_patch_code( 0x23dff, 0x1c );
 	
 		sys16_update_proc = wb3bl_update_proc;
-	}
+	} };
 	
 	static DRIVER_INIT( wb3bl )
 	{
@@ -6357,12 +6357,12 @@ public class system16
 		set_tile_bank( sys16_extraram[1] );
 	}
 	
-	static MACHINE_INIT( wrestwar ){
+	static public static MachineInitHandlerPtr machine_init_wrestwar  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_bg_priority_mode=2;
 		sys16_bg_priority_value=0x0a00;
 		sys16_update_proc = wrestwar_update_proc;
 		sys16_wwfix = 1; //*
-	}
+	} };
 	
 	static DRIVER_INIT( wrestwar ){
 		machine_init_sys16_onetime();
@@ -6432,8 +6432,8 @@ public class system16
 		{ 0xff0000, 0xffffff, SYS16_MWA16_WORKINGRAM },
 	MEMORY_END
 	
-	static MACHINE_INIT( sys16_dummy ){
-	}
+	static public static MachineInitHandlerPtr machine_init_sys16_dummy  = new MachineInitHandlerPtr() { public void handler(){
+	} };
 	
 	static DRIVER_INIT( s16dummy )
 	{

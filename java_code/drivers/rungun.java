@@ -46,7 +46,6 @@ public class rungun
 {
 	
 	
-	MACHINE_INIT( rng );
 	READ16_HANDLER( ttl_ram_r );
 	WRITE16_HANDLER( ttl_ram_w );
 	WRITE16_HANDLER( rng_936_videoram_w );
@@ -574,14 +573,14 @@ public class rungun
 		K054539_init_flags(K054539_REVERSE_STEREO);
 	}
 	
-	MACHINE_INIT( rng )
+	public static MachineInitHandlerPtr machine_init_rng  = new MachineInitHandlerPtr() { public void handler()
 	{
 		memset(rng_sysreg, 0, 0x20);
 	
 		init_eeprom_count = 0;
 		rng_z80_control = 0;
 		rng_sound_status = 0;
-	}
+	} };
 	
 	GAMEX( 1993, rungun,   0,      rng, rng, rng, ROT0, "Konami", "Run and Gun (World ver. EAA)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
 	GAMEX( 1993, rungunu,  rungun, rng, rng, rng, ROT0, "Konami", "Run and Gun (US ver. UAB)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )

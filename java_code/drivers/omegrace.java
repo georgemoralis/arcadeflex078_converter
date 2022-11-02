@@ -233,11 +233,11 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( omegrace )
+	static public static MachineInitHandlerPtr machine_init_omegrace  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Omega Race expects the vector processor to be ready. */
 		avgdvg_reset_w (0, 0);
-	}
+	} };
 	
 	
 	

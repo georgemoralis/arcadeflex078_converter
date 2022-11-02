@@ -97,10 +97,10 @@ public class findout
 		{ sound_w,        NULL },			/* Port C write */
 	};
 	
-	MACHINE_INIT( findout )
+	public static MachineInitHandlerPtr machine_init_findout  = new MachineInitHandlerPtr() { public void handler()
 	{
 		ppi8255_init(&ppi8255_intf);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr catchall  = new ReadHandlerPtr() { public int handler(int offset)

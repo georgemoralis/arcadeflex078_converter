@@ -9,7 +9,6 @@
 
 
 
-MACHINE_INIT( asteroid );
 
 
 

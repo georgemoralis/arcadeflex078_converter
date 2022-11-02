@@ -86,10 +86,10 @@ public class exterm
 	WRITE16_HANDLER( gottlieb_sh_word_w );
 	
 	
-	static MACHINE_INIT( exterm )
+	static public static MachineInitHandlerPtr machine_init_exterm  = new MachineInitHandlerPtr() { public void handler()
 	{
 		gottlieb_sound_init();
-	}
+	} };
 	
 	
 	/*************************************

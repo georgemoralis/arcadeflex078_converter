@@ -415,12 +415,12 @@ public class redalert
 		{ 0, 0 }		/* Port B Write */
 	};
 	
-	MACHINE_INIT( demoneye )
+	public static MachineInitHandlerPtr machine_init_demoneye  = new MachineInitHandlerPtr() { public void handler()
 	{
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia_0_intf);
 		pia_reset();
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( demoneye )
 	

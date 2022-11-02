@@ -87,10 +87,10 @@ public class namcos10
 		cpu_setbank( 6, memory_region( REGION_USER2 ) );
 	}
 	
-	MACHINE_INIT( namcos10 )
+	public static MachineInitHandlerPtr machine_init_namcos10  = new MachineInitHandlerPtr() { public void handler()
 	{
 		psx_machine_init();
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( namcos10 )
 		/* basic machine hardware */

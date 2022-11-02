@@ -73,7 +73,7 @@ public class namcos2
 	/* Perform basic machine initialisation 					 */
 	/*************************************************************/
 	
-	MACHINE_INIT( namcos2 ){
+	public static MachineInitHandlerPtr machine_init_namcos2  = new MachineInitHandlerPtr() { public void handler(){
 		int loop;
 	
 		mFinalLapProtCount = 0;
@@ -92,7 +92,7 @@ public class namcos2
 			namcos2_68k_master_C148[loop]=0;
 			namcos2_68k_slave_C148[loop]=0;
 		}
-	}
+	} };
 	
 	/*************************************************************/
 	/* EEPROM Load/Save and read/write handling 				 */

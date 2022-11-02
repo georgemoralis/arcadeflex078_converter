@@ -952,7 +952,7 @@ public class djmain
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( djmain )
+	static public static MachineInitHandlerPtr machine_init_djmain  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset sound ram bank */
 		sndram_bank = 0;
@@ -965,7 +965,7 @@ public class djmain
 		set_led_status(0, 1);
 		set_led_status(1, 1);
 		set_led_status(2, 1);
-	}
+	} };
 	
 	
 	

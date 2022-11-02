@@ -330,13 +330,13 @@ public class r2dtank
 		/*irqs   : A/B             */ 0, 0
 	};
 	
-	MACHINE_INIT( r2dtank )
+	public static MachineInitHandlerPtr machine_init_r2dtank  = new MachineInitHandlerPtr() { public void handler()
 	{
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia_0_intf);
 		pia_config(1, PIA_STANDARD_ORDERING, &pia_1_intf);
 		pia_reset();
-	}
+	} };
 	
 	public static InterruptHandlerPtr r2dtank_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

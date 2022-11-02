@@ -2005,7 +2005,7 @@ public class halleys
 	//**************************************************************************
 	// Machine Definitions and Initializations
 	
-	static MACHINE_INIT( halleys )
+	static public static MachineInitHandlerPtr machine_init_halleys  = new MachineInitHandlerPtr() { public void handler()
 	{
 		mVectorType     = 0;
 		firq_level      = 0;
@@ -2019,7 +2019,7 @@ public class halleys
 		memset(render_layer[0], 0, SCREEN_BYTESIZE * MAX_LAYERS);
 	
 		fillbitmap(Machine.scrbitmap, bgcolor, Machine.visible_area);
-	}
+	} };
 	
 	
 	static struct AY8910interface ay8910_interface =

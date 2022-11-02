@@ -211,7 +211,6 @@ public class dkong
 		return (SND[2048+(page & 7)*256+offset]);
 	} };
 	
-	MACHINE_INIT( strtheat );
 	//
 	
 	

@@ -23,12 +23,12 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( kyugo )
+	public static MachineInitHandlerPtr machine_init_kyugo  = new MachineInitHandlerPtr() { public void handler()
 	{
 		// must start with interrupts and sub CPU disabled
 		cpu_interrupt_enable(0, 0);
 		kyugo_sub_cpu_control_w(0, 0);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr kyugo_sub_cpu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)

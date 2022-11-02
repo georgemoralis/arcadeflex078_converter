@@ -50,7 +50,6 @@ typedef struct
 
 
 
-MACHINE_INIT( kaneko16 );
 
 
 /* in drivers/galpani2.c */

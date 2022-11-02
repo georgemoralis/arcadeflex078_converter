@@ -118,10 +118,10 @@ public class iqblock
 		{ port_C_w },				/* Port C write */
 	};
 	
-	MACHINE_INIT( iqblock )
+	public static MachineInitHandlerPtr machine_init_iqblock  = new MachineInitHandlerPtr() { public void handler()
 	{
 		ppi8255_init(&ppi8255_intf);
-	}
+	} };
 	
 	
 	

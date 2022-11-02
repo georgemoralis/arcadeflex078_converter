@@ -223,7 +223,7 @@ public class toaplan1
 		}
 	}
 	
-	MACHINE_INIT( toaplan1 )
+	public static MachineInitHandlerPtr machine_init_toaplan1  = new MachineInitHandlerPtr() { public void handler()
 	{
 		toaplan1_intenable = 0;
 		toaplan1_coin_count = 0;
@@ -231,15 +231,15 @@ public class toaplan1
 		coin_lockout_global_w(0);
 		state_save_register_INT32("toaplan1", 0, "Int_enable", &toaplan1_intenable, 1);
 		state_save_register_INT32("toaplan1", 0, "Coin_counter", &toaplan1_coin_count, 1);
-	}
+	} };
 	
-	MACHINE_INIT( zerozone )	/* Hack for ZeroWing and OutZone. See the video driver */
+	public static MachineInitHandlerPtr machine_init_zerozone  = new MachineInitHandlerPtr() { public void handler()	/* Hack for ZeroWing and OutZone. See the video driver */
 	{
 		machine_init_toaplan1();
 		toaplan1_unk_reset_port = 1;
-	}
+	} };
 	
-	MACHINE_INIT( demonwld )
+	public static MachineInitHandlerPtr machine_init_demonwld  = new MachineInitHandlerPtr() { public void handler()
 	{
 		dsp_addr_w = 0;
 		dsp_execute = 0;
@@ -248,16 +248,16 @@ public class toaplan1
 		state_save_register_UINT32("demonwld", 0, "DSP_out_addr", &dsp_addr_w, 1);
 		state_save_register_UINT32("demonwld", 0, "DSP_to_68K_RAM_bank", &main_ram_seg, 1);
 		machine_init_toaplan1();
-	}
+	} };
 	
-	MACHINE_INIT( vimana )
+	public static MachineInitHandlerPtr machine_init_vimana  = new MachineInitHandlerPtr() { public void handler()
 	{
 		credits = 0;
 		latch = 0;
 		state_save_register_INT32("vimana", 0, "Credits count", &credits, 1);
 		state_save_register_INT32("vimana", 0, "MCU_latch", &latch, 1);
 		machine_init_toaplan1();
-	}
+	} };
 	
 	public static WriteHandlerPtr rallybik_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -20,10 +20,6 @@
 /* switches controlled by $c900 */
 
 /* initialization */
-MACHINE_INIT( defender );
-MACHINE_INIT( williams );
-MACHINE_INIT( williams2 );
-MACHINE_INIT( joust2 );
 
 /* banking */
 

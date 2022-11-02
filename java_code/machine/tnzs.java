@@ -607,7 +607,7 @@ public class tnzs
 		cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	MACHINE_INIT( tnzs )
+	public static MachineInitHandlerPtr machine_init_tnzs  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* initialize the mcu simulation */
 		switch (mcu_type)
@@ -633,7 +633,7 @@ public class tnzs
 			RAM = memory_region(REGION_CPU2);
 			cpu_setbank(2,&RAM[0x10000]);
 		}
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr tnzs_workram_r  = new ReadHandlerPtr() { public int handler(int offset)

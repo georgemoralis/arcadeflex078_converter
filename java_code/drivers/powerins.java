@@ -312,10 +312,10 @@ public class powerins
 	
 	***************************************************************************/
 	
-	MACHINE_INIT( powerins )
+	public static MachineInitHandlerPtr machine_init_powerins  = new MachineInitHandlerPtr() { public void handler()
 	{
 		oki_bank = -1;	// samples bank "unitialised"
-	}
+	} };
 	
 	static struct OKIM6295interface powerins_okim6295_interface =
 	{

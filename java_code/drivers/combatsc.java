@@ -129,7 +129,6 @@ public class combatsc
 	
 	/* from vidhrdw/combasc.c */
 	
-	MACHINE_INIT( combasc );
 	
 	
 	

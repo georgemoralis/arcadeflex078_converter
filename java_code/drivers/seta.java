@@ -6599,7 +6599,7 @@ public class seta
 		cpu_set_irq_line( 0, 2, HOLD_LINE );
 	} };
 	
-	MACHINE_INIT( wrofaero ) { uPD71054_timer_init(); }
+	public static MachineInitHandlerPtr machine_init_wrofaero  = new MachineInitHandlerPtr() { public void handler() { uPD71054_timer_init(); } };
 	MACHINE_STOP( wrofaero ) { uPD71054_timer_stop(); }
 	#endif	// __uPD71054_TIMER
 	

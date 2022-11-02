@@ -19,9 +19,6 @@ public class qixH
 	/*----------- defined in machine/qix.c -----------*/
 	
 	
-	MACHINE_INIT( qix );
-	MACHINE_INIT( qixmcu );
-	MACHINE_INIT( slither );
 	
 	
 	

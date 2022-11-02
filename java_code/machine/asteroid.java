@@ -186,10 +186,10 @@ public class asteroid
 	} };
 	
 	
-	MACHINE_INIT( asteroid )
+	public static MachineInitHandlerPtr machine_init_asteroid  = new MachineInitHandlerPtr() { public void handler()
 	{
 		asteroid_bank_switch_w (0,0);
-	}
+	} };
 	
 	
 	/*

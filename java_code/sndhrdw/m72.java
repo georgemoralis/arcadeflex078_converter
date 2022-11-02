@@ -110,13 +110,13 @@ public class m72
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 	}
 	
-	MACHINE_INIT( m72_sound )
+	public static MachineInitHandlerPtr machine_init_m72_sound  = new MachineInitHandlerPtr() { public void handler()
 	{
 		setvector_callback(VECTOR_INIT);
 	
 		state_save_register_int("sound", 0, "irqvector", &irqvector);
 		state_save_register_int("sound", 0, "sample_addr", &sample_addr);
-	}
+	} };
 	
 	void m72_ym2151_irq_handler(int irq)
 	{

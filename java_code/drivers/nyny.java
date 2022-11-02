@@ -114,13 +114,13 @@ public class nyny
 		/*irqs   : A/B             */ 0, 0
 	};
 	
-	MACHINE_INIT( nyny )
+	public static MachineInitHandlerPtr machine_init_nyny  = new MachineInitHandlerPtr() { public void handler()
 	{
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia0_intf);
 		pia_config(1, PIA_ALTERNATE_ORDERING, &pia1_intf);
 		pia_reset();
-	}
+	} };
 	
 	
 	

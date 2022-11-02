@@ -40,7 +40,6 @@ public class epos
 	
 	static int counter = 0;
 	
-	MACHINE_INIT( dealer );
 	
 	public static WriteHandlerPtr dealer_decrypt_rom = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -576,12 +575,12 @@ public class epos
 		ROM_LOAD( "82s123.u66",		0x0000, 0x0020, NO_DUMP )	/* missing */
 	ROM_END(); }}; 
 	
-	MACHINE_INIT( dealer )
+	public static MachineInitHandlerPtr machine_init_dealer  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000);
 	
 		ppi8255_init(&ppi8255_intf);
-	}
+	} };
 	
 	DRIVER_INIT( dealer )
 	{

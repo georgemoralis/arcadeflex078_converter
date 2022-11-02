@@ -191,12 +191,12 @@ public class hyprduel
 		update_irq_state();
 	} };
 	
-	MACHINE_INIT( hyprduel )
+	public static MachineInitHandlerPtr machine_init_hyprduel  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* start with cpu2 halted */
 		cpu_set_reset_line(1, ASSERT_LINE);
 		subcpu_resetline = 1;
-	}
+	} };
 	
 	
 	/***************************************************************************

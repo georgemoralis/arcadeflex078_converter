@@ -60,14 +60,14 @@ public class batman
 	}
 	
 	
-	static MACHINE_INIT( batman )
+	static public static MachineInitHandlerPtr machine_init_batman  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 2);
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(batman_scanline_update, 8);
 		atarijsa_reset();
-	}
+	} };
 	
 	
 	

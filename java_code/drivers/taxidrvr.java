@@ -108,10 +108,10 @@ public class taxidrvr
 		{ p0c_w, p1c_w, p2c_w, p3c_w, p4c_w }	/* Port C write */
 	};
 	
-	MACHINE_INIT( taxidrvr )
+	public static MachineInitHandlerPtr machine_init_taxidrvr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		ppi8255_init(&ppi8255_intf);
-	}
+	} };
 	
 	
 	

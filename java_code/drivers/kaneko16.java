@@ -83,7 +83,7 @@ public class kaneko16
 	
 	***************************************************************************/
 	
-	MACHINE_INIT( kaneko16 )
+	public static MachineInitHandlerPtr machine_init_kaneko16  = new MachineInitHandlerPtr() { public void handler()
 	{
 		kaneko16_sprite_type  = 0;
 	
@@ -109,16 +109,16 @@ public class kaneko16
 		kaneko16_priority.sprite[1] = 0xfff0;	// above tile[0-1], below the others
 		kaneko16_priority.sprite[2] = 0xff00;	// above tile[0-2], below the others
 		kaneko16_priority.sprite[3] = 0x0000;	// above all
-	}
+	} };
 	
-	static MACHINE_INIT( berlwall )
+	static public static MachineInitHandlerPtr machine_init_berlwall  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 2;	// like type 0, but using 16 instead of 8 bytes
-	}
+	} };
 	
-	static MACHINE_INIT( blazeon )
+	static public static MachineInitHandlerPtr machine_init_blazeon  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
@@ -138,9 +138,9 @@ public class kaneko16
 		kaneko16_priority.sprite[1] = 0xfff0;	// above tile[0-1], below the others
 		kaneko16_priority.sprite[2] = 0x0000;	// above all
 		kaneko16_priority.sprite[3] = 0x0000;	// ""
-	}
+	} };
 	
-	static MACHINE_INIT( bloodwar )
+	static public static MachineInitHandlerPtr machine_init_bloodwar  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Priorities unknown */
 		kaneko16_priority.tile[0] = 0;
@@ -156,9 +156,9 @@ public class kaneko16
 		kaneko16_sprite_type = 1;
 	
 		memset(gtmr_mcu_com, 0, 4 * sizeof( data16_t) );
-	}
+	} };
 	
-	static MACHINE_INIT( bakubrkr )
+	static public static MachineInitHandlerPtr machine_init_bakubrkr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
@@ -171,18 +171,18 @@ public class kaneko16
 		kaneko16_priority.sprite[1] = 0x0000;	// above all
 		kaneko16_priority.sprite[2] = 0x0000;	// above all
 		kaneko16_priority.sprite[3] = 0x0000;	// above all
-	}
+	} };
 	
-	static MACHINE_INIT( gtmr )
+	static public static MachineInitHandlerPtr machine_init_gtmr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 1;
 	
 		memset(gtmr_mcu_com, 0, 4 * sizeof( data16_t) );
-	}
+	} };
 	
-	static MACHINE_INIT( mgcrystl )
+	static public static MachineInitHandlerPtr machine_init_mgcrystl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	/*
@@ -210,24 +210,24 @@ public class kaneko16
 		kaneko16_priority.sprite[1] = 0xfffc;	// above tile[0], below the others
 		kaneko16_priority.sprite[2] = 0x0000;	// above all
 		kaneko16_priority.sprite[3] = 0x0000;	// ""
-	}
+	} };
 	
-	static MACHINE_INIT( sandscrp )
+	static public static MachineInitHandlerPtr machine_init_sandscrp  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 3;	// "different" sprites layout
 	
 		watchdog_reset16_r(0,0);	// start with an armed watchdog
-	}
+	} };
 	
-	static MACHINE_INIT( shogwarr )
+	static public static MachineInitHandlerPtr machine_init_shogwarr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_kaneko16();
 	
 		shogwarr_mcu_status = 0;
 		shogwarr_mcu_command_offset = 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -29,7 +29,7 @@ public class slapfght
 	static unsigned char mcu_val;
 	
 	/* Perform basic machine initialisation */
-	MACHINE_INIT( slapfight )
+	public static MachineInitHandlerPtr machine_init_slapfight  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* MAIN CPU */
 	
@@ -44,7 +44,7 @@ public class slapfght
 	
 		/* MCU */
 		mcu_val = 0;
-	}
+	} };
 	
 	/* Interrupt handlers cpu & sound */
 	

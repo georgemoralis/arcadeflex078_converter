@@ -137,7 +137,6 @@ public class darius
 	
 	
 	
-	MACHINE_INIT( darius );
 	
 	
 	static UINT16 cpua_ctrl;
@@ -1133,7 +1132,7 @@ public class darius
 	}
 	
 	
-	MACHINE_INIT( darius )
+	public static MachineInitHandlerPtr machine_init_darius  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int  i;
 	
@@ -1157,7 +1156,7 @@ public class darius
 			//logerror( "calc %d = %d\n", i, (int)(100.0f / (float)pow(10.0f, (32.0f - (i * (32.0f / (float)(0xf)))) / 20.0f)) );
 			darius_def_vol[i] = (int)(100.0f / (float)pow(10.0f, (32.0f - (i * (32.0f / (float)(0xf)))) / 20.0f));
 		}
-	}
+	} };
 	
 	
 	GAME( 1986, darius,   0,        darius,   darius,   darius,   ROT0, "Taito Corporation Japan", "Darius (World)" )

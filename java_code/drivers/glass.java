@@ -24,11 +24,11 @@ public class glass
 	
 	static int cause_interrupt;
 	
-	static MACHINE_INIT( glass )
+	static public static MachineInitHandlerPtr machine_init_glass  = new MachineInitHandlerPtr() { public void handler()
 	{
 		cause_interrupt = 1;
 		glass_current_bit = 0;
-	}
+	} };
 	
 	static WRITE16_HANDLER( clr_int_w )
 	{

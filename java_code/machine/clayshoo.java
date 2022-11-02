@@ -84,10 +84,10 @@ public class clayshoo
 	};
 	
 	
-	MACHINE_INIT( clayshoo )
+	public static MachineInitHandlerPtr machine_init_clayshoo  = new MachineInitHandlerPtr() { public void handler()
 	{
 		ppi8255_init(&ppi8255_intf);
-	}
+	} };
 	
 	
 	

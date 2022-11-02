@@ -66,13 +66,13 @@ public class atarigx2
 	}
 	
 	
-	static MACHINE_INIT( atarigx2 )
+	static public static MachineInitHandlerPtr machine_init_atarigx2  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(atarigx2_scanline_update, 8);
 		atarijsa_reset();
-	}
+	} };
 	
 	
 	

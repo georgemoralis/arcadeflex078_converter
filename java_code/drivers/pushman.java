@@ -127,10 +127,10 @@ public class pushman
 		shared_ram[offset]=data;
 	} };
 	
-	MACHINE_INIT( bballs )
+	public static MachineInitHandlerPtr machine_init_bballs  = new MachineInitHandlerPtr() { public void handler()
 	{
 		latch=0x400;
-	}
+	} };
 	
 	/******************************************************************************/
 	

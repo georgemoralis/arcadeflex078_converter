@@ -798,12 +798,12 @@ public class hal21
 		snk_gamegroup = 1;
 	}
 	
-	MACHINE_INIT( aso )
+	public static MachineInitHandlerPtr machine_init_aso  = new MachineInitHandlerPtr() { public void handler()
 	{
 		memset(hal21_vreg, 0, 8);
 		hal21_sound_scheduler(0, 0);
 		snk_sound_busy_bit = 0;
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( aso )
 	

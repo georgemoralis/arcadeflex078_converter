@@ -33,7 +33,7 @@ public class neogeo
 	
 	
 	/* This function is called on every reset */
-	MACHINE_INIT( neogeo )
+	public static MachineInitHandlerPtr machine_init_neogeo  = new MachineInitHandlerPtr() { public void handler()
 	{
 	#if 0
 		data16_t src, res, *mem16= (data16_t *)memory_region(REGION_USER1);
@@ -98,7 +98,7 @@ public class neogeo
 		}
 	
 		neogeo_rng = 0x2345;	/* seed for the protection RNG in KOF99 onwards */
-	}
+	} };
 	
 	
 	/* This function is only called once per game. */

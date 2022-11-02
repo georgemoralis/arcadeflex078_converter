@@ -645,10 +645,10 @@ public class unico
 	
 	***************************************************************************/
 	
-	MACHINE_INIT( unico )
+	public static MachineInitHandlerPtr machine_init_unico  = new MachineInitHandlerPtr() { public void handler()
 	{
 		unico_has_lightgun = 0;
-	}
+	} };
 	
 	static struct YM3812interface unico_ym3812_intf =
 	{
@@ -746,11 +746,11 @@ public class unico
 									Zero Point
 	***************************************************************************/
 	
-	MACHINE_INIT( zeropt )
+	public static MachineInitHandlerPtr machine_init_zeropt  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_unico();
 		unico_has_lightgun = 1;
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( zeropnt )
 	

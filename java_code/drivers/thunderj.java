@@ -60,7 +60,7 @@ public class thunderj
 	}
 	
 	
-	static MACHINE_INIT( thunderj )
+	static public static MachineInitHandlerPtr machine_init_thunderj  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 2);
@@ -70,7 +70,7 @@ public class thunderj
 		rom_base[0] = (data16_t *)memory_region(REGION_CPU1);
 		rom_base[1] = (data16_t *)memory_region(REGION_CPU2);
 		cpu_setbank(1, shared_ram);
-	}
+	} };
 	
 	
 	

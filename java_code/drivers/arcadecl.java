@@ -112,12 +112,12 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	static MACHINE_INIT( arcadecl )
+	static public static MachineInitHandlerPtr machine_init_arcadecl  = new MachineInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(scanline_update, 32);
-	}
+	} };
 	
 	
 	

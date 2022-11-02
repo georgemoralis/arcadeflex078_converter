@@ -132,14 +132,14 @@ public class toratora
 		/*irqs   : A/B             */ 0, 0,
 	};
 	
-	MACHINE_INIT( toratora )
+	public static MachineInitHandlerPtr machine_init_toratora  = new MachineInitHandlerPtr() { public void handler()
 	{
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia0_intf);
 		pia_config(1, PIA_STANDARD_ORDERING, &pia1_intf);
 		pia_config(2, PIA_STANDARD_ORDERING, &pia2_intf);
 		pia_reset();
-	}
+	} };
 	
 	
 	static int timer;

@@ -394,11 +394,11 @@ public class bwing
 	//****************************************************************************
 	// Hardware Definitions
 	
-	MACHINE_INIT( bwing )
+	public static MachineInitHandlerPtr machine_init_bwing  = new MachineInitHandlerPtr() { public void handler()
 	{
 		bwp3_nmimask = 0;
 		fftail = ffhead = ffcount = 0;
-	}
+	} };
 	
 	
 	static struct AY8910interface ay8910_interface =

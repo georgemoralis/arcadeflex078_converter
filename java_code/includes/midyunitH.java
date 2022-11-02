@@ -59,7 +59,6 @@ DRIVER_INIT( term2la1 );
 DRIVER_INIT( totcarn );
 DRIVER_INIT( totcarnp );
 
-MACHINE_INIT( midyunit );
 
 WRITE16_HANDLER( midyunit_sound_w );
 

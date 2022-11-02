@@ -611,7 +611,7 @@ public class midwunit
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( midwunit )
+	public static MachineInitHandlerPtr machine_init_midwunit  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -622,14 +622,14 @@ public class midwunit
 		/* reset I/O shuffling */
 		for (i = 0; i < 16; i++)
 			ioshuffle[i] = i % 8;
-	}
+	} };
 	
 	
-	MACHINE_INIT( midxunit )
+	public static MachineInitHandlerPtr machine_init_midxunit  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init_midwunit();
 		dcs_set_io_callbacks(midxunit_dcs_output_full, NULL);
-	}
+	} };
 	
 	
 	

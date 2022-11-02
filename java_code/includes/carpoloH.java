@@ -8,7 +8,6 @@
 
 /* defined in machine/carpolo.c */
 
-MACHINE_INIT( carpolo );
 
 
 

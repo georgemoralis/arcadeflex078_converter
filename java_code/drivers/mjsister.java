@@ -57,10 +57,10 @@ public class mjsister
 		dac_busy = 1;
 	} };
 	
-	static MACHINE_INIT( mjsister )
+	static public static MachineInitHandlerPtr machine_init_mjsister  = new MachineInitHandlerPtr() { public void handler()
 	{
 		dac_busy = 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr mjsister_banksel1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

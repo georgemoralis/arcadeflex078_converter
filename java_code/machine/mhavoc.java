@@ -84,7 +84,7 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( mhavoc )
+	public static MachineInitHandlerPtr machine_init_mhavoc  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* cache the base of memory region 1 */
 		ram_base = memory_region(REGION_CPU1);
@@ -114,7 +114,7 @@ public class mhavoc
 	
 		/* set a timer going for the CPU interrupt generators */
 		timer_pulse(TIME_IN_HZ(MHAVOC_CLOCK_5K), 0, cpu_irq_clock);
-	}
+	} };
 	
 	
 	

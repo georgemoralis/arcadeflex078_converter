@@ -165,96 +165,96 @@ public class taito_l
 	}
 	
 	
-	static MACHINE_INIT( fhawk )
+	static public static MachineInitHandlerPtr machine_init_fhawk  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
 		portf0_r = 0;
 		portf1_r = 0;
-	}
+	} };
 	
-	static MACHINE_INIT( raimais )
+	static public static MachineInitHandlerPtr machine_init_raimais  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
 		portf0_r = 0;
 		portf1_r = 0;
-	}
+	} };
 	
-	static MACHINE_INIT( champwr )
+	static public static MachineInitHandlerPtr machine_init_champwr  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
 		portf0_r = 0;
 		portf1_r = 0;
-	}
+	} };
 	
 	
-	static MACHINE_INIT( kurikint )
+	static public static MachineInitHandlerPtr machine_init_kurikint  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
 		portf0_r = 0;
 		portf1_r = 0;
-	}
+	} };
 	
-	static MACHINE_INIT( evilston )
+	static public static MachineInitHandlerPtr machine_init_evilston  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
 		portf0_r = 0;
 		portf1_r = 0;
-	}
+	} };
 	
-	static MACHINE_INIT( puzznic )
+	static public static MachineInitHandlerPtr machine_init_puzznic  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = input_port_1_r;
 		portf0_r = input_port_2_r;
 		portf1_r = input_port_3_r;
-	}
+	} };
 	
-	static MACHINE_INIT( plotting )
+	static public static MachineInitHandlerPtr machine_init_plotting  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = input_port_1_r;
 		portf0_r = input_port_2_r;
 		portf1_r = input_port_3_r;
-	}
+	} };
 	
-	static MACHINE_INIT( palamed )
+	static public static MachineInitHandlerPtr machine_init_palamed  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = 0;
 		portf0_r = input_port_1_r;
 		portf1_r = 0;
-	}
+	} };
 	
-	static MACHINE_INIT( cachat )
+	static public static MachineInitHandlerPtr machine_init_cachat  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = 0;
 		portf0_r = input_port_1_r;
 		portf1_r = 0;
-	}
+	} };
 	
-	static MACHINE_INIT( horshoes )
+	static public static MachineInitHandlerPtr machine_init_horshoes  = new MachineInitHandlerPtr() { public void handler()
 	{
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = input_port_1_r;
 		portf0_r = input_port_2_r;
 		portf1_r = input_port_3_r;
-	}
+	} };
 	
 	
 	

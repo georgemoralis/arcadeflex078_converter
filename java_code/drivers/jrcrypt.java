@@ -123,7 +123,7 @@ public class jrcrypt
 	};
 	#endif
 	
-	MACHINE_INIT( jrpacman )
+	public static MachineInitHandlerPtr machine_init_jrpacman  = new MachineInitHandlerPtr() { public void handler()
 	{
 	#ifndef PreDecryptedRoms
 		s0 = 1;
@@ -134,7 +134,7 @@ public class jrcrypt
 		memset(shadowROM,0,sizeof(shadowROM));
 		memset(used,0,sizeof(used));
 	#endif
-	}
+	} };
 	
 	
 	#ifdef PreDecryptedRoms

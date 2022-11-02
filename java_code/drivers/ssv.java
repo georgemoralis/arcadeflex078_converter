@@ -246,12 +246,12 @@ public class ssv
 		}
 	}
 	
-	MACHINE_INIT( ssv )
+	public static MachineInitHandlerPtr machine_init_ssv  = new MachineInitHandlerPtr() { public void handler()
 	{
 		requested_int = 0;
 		cpu_set_irq_callback(0, ssv_irq_callback);
 		cpu_setbank(1, memory_region(REGION_USER1));
-	}
+	} };
 	
 	
 	/***************************************************************************

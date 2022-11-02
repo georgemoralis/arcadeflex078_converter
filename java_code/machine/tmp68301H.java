@@ -11,7 +11,6 @@ public class tmp68301H
 {
 	
 	// Machine init
-	MACHINE_INIT( tmp68301 );
 	
 	// Hardware Registers
 	WRITE16_HANDLER( tmp68301_regs_w );

@@ -202,10 +202,10 @@ public class dribling
 		{ misc_w,       shr_w          }
 	};
 	
-	static MACHINE_INIT( dribling )
+	static public static MachineInitHandlerPtr machine_init_dribling  = new MachineInitHandlerPtr() { public void handler()
 	{
 		ppi8255_init(&ppi8255_intf);
-	}
+	} };
 	
 	
 	

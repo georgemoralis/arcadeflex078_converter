@@ -81,7 +81,6 @@ public class galaga
 	
 	
 	
-	MACHINE_INIT( galaga );
 	
 	
 	

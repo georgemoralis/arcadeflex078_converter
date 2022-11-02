@@ -177,14 +177,14 @@ public class tugboat
 		timer_set(cpu_getscanlinetime(1), 0, interrupt_gen);
 	}
 	
-	MACHINE_INIT( tugboat )
+	public static MachineInitHandlerPtr machine_init_tugboat  = new MachineInitHandlerPtr() { public void handler()
 	{
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia0_intf);
 		pia_config(1, PIA_STANDARD_ORDERING, &pia1_intf);
 		pia_reset();
 		timer_set(cpu_getscanlinetime(1), 0, interrupt_gen);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress tugboat_readmem[]={

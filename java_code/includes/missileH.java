@@ -6,7 +6,6 @@
 
 /*----------- defined in machine/missile.c -----------*/
 
-MACHINE_INIT( missile );
 
 
 /*----------- defined in vidhrdw/missile.c -----------*/

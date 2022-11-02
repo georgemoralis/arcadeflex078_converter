@@ -53,7 +53,7 @@ public class polepos
 	/* Interrupt handling																 */
 	/*************************************************************************************/
 	
-	MACHINE_INIT( polepos )
+	public static MachineInitHandlerPtr machine_init_polepos  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* reset all the interrupt states */
 		z80_irq_enabled = z8002_1_nvi_enabled = z8002_2_nvi_enabled = 0;
@@ -79,7 +79,7 @@ public class polepos
 	
 		/* start a timer for the Z80's interrupt */
 		timer_set(cpu_getscanlinetime(0), 0, z80_interrupt);
-	}
+	} };
 	
 	static void z80_interrupt(int scanline)
 	{

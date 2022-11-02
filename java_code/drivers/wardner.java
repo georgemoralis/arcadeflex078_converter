@@ -136,7 +136,6 @@ public class wardner
 	
 	
 	/******************** Machine stuff **********************/
-	MACHINE_INIT( wardner );
 	READ16_HANDLER( twincobr_dsp_r );
 	WRITE16_HANDLER( twincobr_dsp_w );
 	READ16_HANDLER( twincobr_BIO_r );

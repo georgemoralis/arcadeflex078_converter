@@ -778,7 +778,7 @@ public class _40love
 	
 	static int vol_ctrl[16];
 	
-	static MACHINE_INIT( ta7630 )
+	static public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -800,7 +800,7 @@ public class _40love
 	  channels 0-2 AY#0
 	  channels 3,4 MSM5232 group1,group2
 	*/
-	}
+	} };
 	
 	static UINT8 snd_ctrl0=0;
 	static UINT8 snd_ctrl1=0;

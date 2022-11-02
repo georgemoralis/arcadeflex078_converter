@@ -825,7 +825,7 @@ public class aburner
 	
 	/***************************************************************************/
 	
-	static MACHINE_INIT( aburner ){
+	static public static MachineInitHandlerPtr machine_init_aburner  = new MachineInitHandlerPtr() { public void handler(){
 		sys16_textmode = 2;
 		sys16_spritesystem = sys16_sprite_aburner;
 		sys16_sprxoffset = -0xc0;
@@ -835,7 +835,7 @@ public class aburner
 		sys16_textlayer_lo_max=0;
 		sys16_textlayer_hi_min=0;
 		sys16_textlayer_hi_max=0xff;
-	}
+	} };
 	
 	static DRIVER_INIT( thndrbdj ){
 		machine_init_sys16_onetime();

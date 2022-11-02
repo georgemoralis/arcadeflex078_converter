@@ -33,10 +33,10 @@ public class wolfpack
 	}
 	
 	
-	static MACHINE_INIT( wolfpack )
+	static public static MachineInitHandlerPtr machine_init_wolfpack  = new MachineInitHandlerPtr() { public void handler()
 	{
 		timer_set(cpu_getscanlinetime(0), 0, periodic_callback);
-	}
+	} };
 	
 	
 	static public static PaletteInitHandlerPtr palette_init_wolfpack  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)

@@ -26,11 +26,11 @@ public class galaga
 	
 	void galaga_nmi_generate (int param);
 	
-	MACHINE_INIT( galaga )
+	public static MachineInitHandlerPtr machine_init_galaga  = new MachineInitHandlerPtr() { public void handler()
 	{
 		nmi_timer = timer_alloc(galaga_nmi_generate);
 		galaga_halt_w (0, 0);
-	}
+	} };
 	
 	
 	

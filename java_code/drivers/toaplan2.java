@@ -313,12 +313,12 @@ public class toaplan2
 	***************************************************************************/
 	
 	
-	static MACHINE_INIT( toaplan2 )		/* machine_init_toaplan2(); */
+	static public static MachineInitHandlerPtr machine_init_toaplan2  = new MachineInitHandlerPtr() { public void handler()		/* machine_init_toaplan2(); */
 	{
 		mcu_data = 0;
-	}
+	} };
 	
-	static MACHINE_INIT( ghox )
+	static public static MachineInitHandlerPtr machine_init_ghox  = new MachineInitHandlerPtr() { public void handler()
 	{
 		old_p1_paddle_h = 0;
 		old_p1_paddle_v = 0;
@@ -326,14 +326,14 @@ public class toaplan2
 		old_p2_paddle_v = 0;
 	
 		machine_init_toaplan2();
-	}
+	} };
 	
-	static MACHINE_INIT( batrider )
+	static public static MachineInitHandlerPtr machine_init_batrider  = new MachineInitHandlerPtr() { public void handler()
 	{
 		current_bank = 2;
 	
 		machine_init_toaplan2();
-	}
+	} };
 	
 	static DRIVER_INIT( T2_Z80 )		/* init_t2_Z80(); */
 	{

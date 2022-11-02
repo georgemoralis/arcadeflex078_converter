@@ -98,10 +98,10 @@ public class firetrap
 	
 	static int i8751_return,i8751_current_command;
 	
-	static MACHINE_INIT( firetrap )
+	static public static MachineInitHandlerPtr machine_init_firetrap  = new MachineInitHandlerPtr() { public void handler()
 	{
 		i8751_current_command=0;
-	}
+	} };
 	
 	public static ReadHandlerPtr firetrap_8751_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

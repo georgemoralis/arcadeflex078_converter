@@ -159,7 +159,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( harddriv )
+	public static MachineInitHandlerPtr machine_init_harddriv  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* ensure invalid memory accesses return all 0xff's */
 		memory_set_unmap_value(0xffffffff);
@@ -218,7 +218,7 @@ public class harddriv
 		adsp_halt = 1;
 		adsp_br = 0;
 		adsp_xflag = 0;
-	}
+	} };
 	
 	
 	

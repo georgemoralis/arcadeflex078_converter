@@ -358,7 +358,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	MACHINE_INIT( leland )
+	public static MachineInitHandlerPtr machine_init_leland  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* set the odd data bank */
 		battery_ram = memory_region(REGION_USER2);
@@ -401,10 +401,10 @@ public class leland
 		/* if we have an I86 CPU, reset it */
 		if (Machine.drv.cpu[2].cpu_type == CPU_I186)
 			leland_i186_sound_init();
-	}
+	} };
 	
 	
-	MACHINE_INIT( ataxx )
+	public static MachineInitHandlerPtr machine_init_ataxx  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* set the odd data banks */
 		battery_ram = memory_region(REGION_USER2);
@@ -442,7 +442,7 @@ public class leland
 	
 		/* reset the I186 */
 		leland_i186_sound_init();
-	}
+	} };
 	
 	
 	

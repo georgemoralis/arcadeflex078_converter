@@ -545,11 +545,11 @@ public class afega
 		}
 	} };
 	
-	MACHINE_INIT( afega )
+	public static MachineInitHandlerPtr machine_init_afega  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* Sprites Mirror required due to bug in the game code ( movem.w instead of movem.l ) */
 		cpu_setbank( 1, spriteram16 );
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( stagger1 )
 	

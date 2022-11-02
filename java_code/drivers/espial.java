@@ -14,12 +14,12 @@ public class espial
 {
 	
 	
-	MACHINE_INIT( espial )
+	public static MachineInitHandlerPtr machine_init_espial  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* we must start with NMI interrupts disabled */
 		//interrupt_enable = 0;
 		cpu_interrupt_enable(0,0);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr zodiac_master_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -177,7 +177,7 @@ public class atarisy1
 	
 	static void delayed_joystick_int(int param);
 	
-	static MACHINE_INIT( atarisy1 )
+	static public static MachineInitHandlerPtr machine_init_atarisy1  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* initialize the system */
 		atarigen_eeprom_reset();
@@ -195,7 +195,7 @@ public class atarisy1
 		m6522_ddra = m6522_ddrb = 0xff;
 		m6522_dra = m6522_drb = 0xff;
 		memset(m6522_regs, 0xff, sizeof(m6522_regs));
-	}
+	} };
 	
 	
 	

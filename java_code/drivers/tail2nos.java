@@ -26,7 +26,7 @@ public class tail2nos
 	WRITE16_HANDLER( tail2nos_gfxbank_w );
 	
 	
-	static MACHINE_INIT( tail2nos )
+	static public static MachineInitHandlerPtr machine_init_tail2nos  = new MachineInitHandlerPtr() { public void handler()
 	{
 		/* point to the extra ROMs */
 		cpu_setbank(1,memory_region(REGION_USER1));
@@ -34,7 +34,7 @@ public class tail2nos
 	
 		/* initialize sound bank */
 		cpu_setbank(3,memory_region(REGION_CPU2) + 0x10000);
-	}
+	} };
 	
 	
 	static WRITE16_HANDLER( sound_command_w )
