@@ -295,7 +295,7 @@ public class wiz
 		draw_background(bitmap, 2 + ((char_bank[0] << 1) | char_bank[1]), 0);
 		draw_foreground(bitmap, 0);
 	
-		visible_area = flipx ? &spritevisibleareaflipx : &spritevisiblearea;
+		visible_area = flipx ? &spritevisibleareaflipx : spritevisiblearea;
 	
 	    bank = 7 + *wiz_sprite_bank;
 	

@@ -226,7 +226,7 @@ public class pacland
 	
 	#define DRAW_SPRITE( code, sx, sy ) \
 			{ drawgfx( bitmap, Machine.gfx[ 2+gfx ], code, color, flipx, flipy, sx, sy, \
-			&spritevisiblearea, TRANSPARENCY_COLOR,0xff); }
+			spritevisiblearea, TRANSPARENCY_COLOR,0xff); }
 	
 	static void pacland_draw_sprites( struct mame_bitmap *bitmap,int priority)
 	{

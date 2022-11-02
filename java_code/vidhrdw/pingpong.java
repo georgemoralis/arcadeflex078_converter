@@ -162,7 +162,7 @@ public class pingpong
 					color,
 					flipx,flipy,
 					sx,sy,
-					&spritevisiblearea,TRANSPARENCY_COLOR,0);
+					spritevisiblearea,TRANSPARENCY_COLOR,0);
 		}
 	}
 	

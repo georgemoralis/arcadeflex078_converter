@@ -229,7 +229,7 @@ public class zaccaria
 		if (flip_screen_x != 0)
 			sect_rect(&clip, &spritevisiblearea_flipx);
 		else
-			sect_rect(&clip, &spritevisiblearea);
+			sect_rect(&clip, spritevisiblearea);
 	
 		/*
 		  TODO: sprites have 32 color codes, but we are using only 8. In Jack

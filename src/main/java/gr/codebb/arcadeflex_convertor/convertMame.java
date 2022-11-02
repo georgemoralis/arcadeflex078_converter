@@ -829,6 +829,10 @@ public class convertMame {
                         sUtil.putString((new StringBuilder()).append("Machine").toString());
                         continue;
                     }
+                    if (sUtil.getToken("&spritevisiblearea")) {
+                        sUtil.putString((new StringBuilder()).append("spritevisiblearea").toString());
+                        continue;
+                    }
                     break;
                 }
                 case ')': {

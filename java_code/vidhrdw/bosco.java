@@ -337,7 +337,7 @@ public class bosco
 					spriteram_2.read(offs + 1)& 0x3f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
 					sx,sy,
-					flipscreen ? &spritevisibleareaflip : &spritevisiblearea,TRANSPARENCY_COLOR,0);
+					flipscreen ? &spritevisibleareaflip : spritevisiblearea,TRANSPARENCY_COLOR,0);
 		}
 	
 	

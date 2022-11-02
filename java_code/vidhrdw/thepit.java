@@ -330,7 +330,7 @@ public class thepit
 						spriteram.read(offs + 2)& 0x07,
 						flipx,flipy,
 						sx,sy,
-						flip_screen_x & 1 ? &spritevisibleareaflipx : &spritevisiblearea,TRANSPARENCY_PEN,0);
+						flip_screen_x & 1 ? &spritevisibleareaflipx : spritevisiblearea,TRANSPARENCY_PEN,0);
 			}
 		}
 	}

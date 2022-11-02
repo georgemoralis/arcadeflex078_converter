@@ -243,7 +243,7 @@ public class mermaid
 					flipx, flipy,
 					sx, sy,
 					(flip_screen_x ? &flip_spritevisiblearea :
-					    &spritevisiblearea),
+					    spritevisiblearea),
 					TRANSPARENCY_PEN,0);
 		}
 	} };
