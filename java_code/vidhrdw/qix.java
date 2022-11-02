@@ -41,7 +41,7 @@ public class qix
 	{
 		/* allocate memory for the full video RAM */
 		videoram = auto_malloc(256 * 256);
-		if (!videoram)
+		if (videoram == 0)
 			return 1;
 	
 		/* initialize the mask for games that don't use it */

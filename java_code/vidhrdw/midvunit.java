@@ -489,7 +489,7 @@ public class midvunit
 				scans = setup_triangle_0(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -524,7 +524,7 @@ public class midvunit
 				scans = setup_triangle_0(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -577,7 +577,7 @@ public class midvunit
 				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -629,7 +629,7 @@ public class midvunit
 				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -682,7 +682,7 @@ public class midvunit
 				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -742,7 +742,7 @@ public class midvunit
 				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -805,7 +805,7 @@ public class midvunit
 				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -869,7 +869,7 @@ public class midvunit
 				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
 	
 			/* skip if we're clipped out */
-			if (!scans)
+			if (scans == 0)
 				continue;
 	
 			/* loop over scanlines */
@@ -935,19 +935,19 @@ public class midvunit
 		straight = quad_is_straight();
 	
 		/* handle flat-shaded quads here */
-		if (!textured)
+		if (textured == 0)
 		{
 			/* two cases: straight on and arbitrary */
 			if (straight != 0)
 			{
-				if (!dithered)
+				if (dithered == 0)
 					render_straight_flat_quad();
 				else
 					render_straight_flat_dither_quad();
 			}
 			else
 			{
-				if (!dithered)
+				if (dithered == 0)
 					render_flat_quad();
 				else
 					render_flat_dither_quad();
@@ -976,7 +976,7 @@ public class midvunit
 				else
 					render_straight_flat_quad();
 			}
-			else if (!dithered)
+			else if (dithered == 0)
 			{
 				/* handle non-masked, non-transparent quads */
 				if ((dma_data[0] & 0xc00) == 0x000)

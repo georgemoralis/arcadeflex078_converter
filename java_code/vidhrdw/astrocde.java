@@ -185,7 +185,7 @@ public class astrocde
 	{
 		int i,next;
 	
-		if (!osd_skip_this_frame())
+		if (osd_skip_this_frame() == 0)
 			wow_update_line(Machine.scrbitmap,CurrentScan);
 	
 		next = (CurrentScan + 1) % MAX_INT_PER_FRAME;

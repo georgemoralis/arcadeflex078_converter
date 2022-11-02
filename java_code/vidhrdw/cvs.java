@@ -200,7 +200,7 @@ public class cvs
 	
 	public static WriteHandlerPtr cvs_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Colour Map
 	
@@ -216,7 +216,7 @@ public class cvs
 	
 	public static ReadHandlerPtr cvs_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Colour Map
 	
@@ -232,7 +232,7 @@ public class cvs
 	
 	public static WriteHandlerPtr cvs_bullet_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Bullet Ram
 	
@@ -248,7 +248,7 @@ public class cvs
 	
 	public static ReadHandlerPtr cvs_bullet_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Bullet Ram
 	
@@ -264,7 +264,7 @@ public class cvs
 	
 	public static WriteHandlerPtr cvs_2636_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// First 2636
 	
@@ -284,7 +284,7 @@ public class cvs
 	
 	public static ReadHandlerPtr cvs_2636_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// First 2636
 	
@@ -300,7 +300,7 @@ public class cvs
 	
 	public static WriteHandlerPtr cvs_2636_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Second 2636
 	
@@ -320,7 +320,7 @@ public class cvs
 	
 	public static ReadHandlerPtr cvs_2636_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Second 2636
 	
@@ -336,7 +336,7 @@ public class cvs
 	
 	public static WriteHandlerPtr cvs_2636_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Third 2636
 	
@@ -356,7 +356,7 @@ public class cvs
 	
 	public static ReadHandlerPtr cvs_2636_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if(!s2650_get_flag())
+		if (s2650_get_flag() == 0)
 	    {
 	    	// Third 2636
 	

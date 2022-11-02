@@ -684,7 +684,7 @@ public class atarig42
 		   +!MGEP*!AN.VID7*AN.0*PF.VID8			or if (mopri < pfpri) && (pfpix & 0x100) && (!alpha)
 		   +!AN.VID7*AN.0*MO.0*PF.VID8			or if ((pfpix & 0x100) != 0) && (!alpha)
 	
-		CRMUXB=!AN.VID7*AN.0					-- if (!alpha)
+		CRMUXB=!AN.VID7*AN.0					-- if (alpha == 0)
 	
 		CRMUXA=!MGEP							-- if (mopri < pfpri)
 		   +MO.0								or (mopix == 0)
@@ -738,7 +738,7 @@ public class atarig42
 		   +!MGEP*!AN.VID7*AN.0*PF.VID8			or if (mopri < pfpri) && (!alpha) && (pfpix & 0x100)
 		   +!AN.VID7*AN.0*MO.0*PF.VID8			or if (mopix == 0) && (!alpha) && (pfpix & 0x100)
 	
-		CRMUXB=!AN.VID7*AN.0					-- if (!alpha)
+		CRMUXB=!AN.VID7*AN.0					-- if (alpha == 0)
 	
 		CRMUXA=!MGEP							-- if (mopri < pfpri)
 		   +MO.0								or (mopix == 0)

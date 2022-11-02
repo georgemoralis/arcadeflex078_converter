@@ -254,7 +254,7 @@ public class deco32
 	//	logerror("%08x:Read prot %08x (%08x)\n",activecpu_get_pc(),offset<<1,mem_mask);
 	
 		static int strobe=0;
-		if (!strobe) strobe=8;
+		if (strobe == 0) strobe=8;
 		else strobe=0;
 	
 	//definitely vblank in locked load

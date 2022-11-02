@@ -144,7 +144,7 @@ public class bsmt2000
 		int v;
 	
 		/* skip if nothing to do */
-		if (!samples)
+		if (samples == 0)
 			return;
 	
 		/* clear out the accumulator */

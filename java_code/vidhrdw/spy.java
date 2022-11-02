@@ -80,7 +80,7 @@ public class spy
 	
 		fillbitmap(priority_bitmap, 0, cliprect);
 	
-		if (!spy_video_enable)
+		if (spy_video_enable == 0)
 		{
 			fillbitmap(bitmap,Machine.pens[16 * layer_colorbase[0]],cliprect);
 			return;

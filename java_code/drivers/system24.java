@@ -122,7 +122,7 @@ public class system24
 	
 	static READ16_HANDLER( fdc_r )
 	{
-		if(!track_size)
+		if (track_size == 0)
 			return 0xffff;
 	
 		switch(offset) {
@@ -157,7 +157,7 @@ public class system24
 	
 	static WRITE16_HANDLER( fdc_w )
 	{
-		if(!track_size)
+		if (track_size == 0)
 			return;
 	
 		if (ACCESSING_LSB != 0) {
@@ -226,7 +226,7 @@ public class system24
 					//				logerror("Write %02x (%d)\n", data, fdc_span);
 					*fdc_pt++ = data;
 					fdc_span--;
-					if(!fdc_span) {
+					if (fdc_span == 0) {
 						logerror("FDC: transfert complete\n");
 						fdc_drq = 0;
 						fdc_status = 0;
@@ -242,7 +242,7 @@ public class system24
 	
 	static READ16_HANDLER( fdc_status_r )
 	{
-		if(!track_size)
+		if (track_size == 0)
 			return 0xffff;
 	
 		return 0x90 | (fdc_irq ? 2 : 0) | (fdc_drq ? 1 : 0) | (fdc_phys_track ? 0x40 : 0) | (fdc_index_count ? 0x20 : 0);
@@ -556,7 +556,7 @@ public class system24
 		if (ACCESSING_LSB != 0) {
 			int i;
 			unsigned char mxor = 0;
-			if(!mlatch_table) {
+			if (mlatch_table == 0) {
 				logerror("Protection: magic latch accessed but no table loaded (%d:%x)\n", cpu_getactivecpu(), activecpu_get_pc());
 				return;
 			}
@@ -678,7 +678,7 @@ public class system24
 		if ((irq_allow1 & mask) != 0)
 			cpu_set_irq_line(1, 1+irq, HOLD_LINE);
 	
-		if(!cpu_getiloops()) {
+		if (cpu_getiloops() == 0) {
 			// Ensure one index pulse every 20 frames
 			// The is some code in bnzabros at 0x852 that makes it crash
 			// if the pulse train is too fast

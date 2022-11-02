@@ -229,7 +229,7 @@ public class spy
 	
 			// fail safe
 			if (loopend > MAX_SPRITES) loopend = MAX_SPRITES;
-			if (!nearplane) nearplane = DEF_NEAR_PLANE;
+			if (nearplane == 0) nearplane = DEF_NEAR_PLANE;
 	
 			loopend = (loopend<<1) + 4;
 	

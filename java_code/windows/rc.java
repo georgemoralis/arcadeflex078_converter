@@ -157,7 +157,7 @@ public class rc
 	   {
 	      struct rc_option *tmp = realloc(rc.option,
 	         (rc.option_size + BUF_SIZE) * sizeof(struct rc_option));
-	      if (!tmp)
+	      if (tmp == 0)
 	      {
 	         fprintf(stderr, "error: malloc failed in rc_register_option\n");
 	         return -1;
@@ -306,7 +306,7 @@ public class rc
 	
 	      /* get complete rest of line */
 	      arg = strtok(NULL, "\r\n");
-		  if (!arg)
+		  if (arg == 0)
 		  {
 			  fprintf(stderr, "error: garbage \"%s\" on line %d of file: %s\n",
 				  buf, line, description);
@@ -527,7 +527,7 @@ public class rc
 	         {
 	            char **tmp = realloc(rc.arg, (rc.arg_size + BUF_SIZE) *
 	               sizeof(char *));
-	            if (!tmp)
+	            if (tmp == 0)
 	            {
 	               fprintf(stderr,
 	                  "error: malloc failed in rc_parse_commadline\n");
@@ -772,7 +772,7 @@ public class rc
 	      case rc_file:
 	         {
 	            FILE *f = fopen(arg, (option.min)? "w":"r");
-	            if(!f)
+	            if (f == 0)
 	            {
 	               fprintf(stderr, "error: couldn't open file: %s\n", arg);
 	               return -1;

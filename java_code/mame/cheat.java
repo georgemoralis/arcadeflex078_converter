@@ -1588,7 +1588,7 @@ public class cheat
 		char	code = osd_readkey_unicode(0) & 0xFF;
 		UINT32	length;
 	
-		if(!buf)
+		if (buf == 0)
 			return;
 	
 		length = strlen(buf);
@@ -2197,7 +2197,7 @@ public class cheat
 		if(input_ui_pressed(IPT_UI_SELECT))
 		{
 			// ### redundant?? probably can be removed
-			if(!firstTime)
+			if (firstTime == 0)
 			{
 				int	i;
 	
@@ -2299,7 +2299,7 @@ public class cheat
 		int		sel;
 		const char	* comment;
 	
-		if(!entry)
+		if (entry == 0)
 			return 0;
 	
 		sel = selection - 1;
@@ -3034,7 +3034,7 @@ public class cheat
 		UINT8				dirty = 0;
 		static INT32		currentNameTemplate = 0;
 	
-		if(!entry)
+		if (entry == 0)
 			return 0;
 	
 		if(menuItemInfoLength < (kType_Max * entry.actionListLength) + 2)
@@ -3188,7 +3188,7 @@ public class cheat
 				total++;
 			}
 	
-			if(!wasCommentOrSelect)
+			if (wasCommentOrSelect == 0)
 			{
 				if(type != kType_Watch)
 				{
@@ -3799,7 +3799,7 @@ public class cheat
 						}
 					}
 	
-					if(!handled)
+					if (handled == 0)
 					{
 						UINT32	type = EXTRACT_FIELD(action.type, Type);
 	
@@ -4072,7 +4072,7 @@ public class cheat
 						}
 					}
 	
-					if(!handled)
+					if (handled == 0)
 					{
 						UINT32	type = EXTRACT_FIELD(action.type, Type);
 	
@@ -4660,7 +4660,7 @@ public class cheat
 		menu_item[kMenu_Max] =			NULL;
 		menu_subitem[kMenu_Max] =		NULL;
 	
-		if(!startNew)
+		if (startNew == 0)
 		{
 			if(search.oldOptions.delta & kSearchByteSignBitTable[search.bytes])
 			{
@@ -5614,7 +5614,7 @@ public class cheat
 			}
 		}
 	
-		if(!hadResults)
+		if (hadResults == 0)
 		{
 			if(search.numResults)
 				menu_item[total] = "no results for this region";
@@ -6043,7 +6043,7 @@ public class cheat
 		UINT32			increment = 1;
 		static UINT8	editActive = 0;
 	
-		if(!entry)
+		if (entry == 0)
 			return 0;
 	
 		RequestStrings(kMenu_Return + 2, kMenu_Return, 0, 20);
@@ -6533,7 +6533,7 @@ public class cheat
 		INT32			total = 0;
 		SearchRegion	* region;
 	
-		if(!search)
+		if (search == 0)
 			return 0;
 	
 		sel = selection - 1;
@@ -7592,7 +7592,7 @@ public class cheat
 			}
 		}
 	
-		if(!theWatch)
+		if (theWatch == 0)
 		{
 			AddWatchBefore(watchListLength);
 	
@@ -8452,7 +8452,7 @@ public class cheat
 	
 		theFile = mame_fopen(NULL, fileName, FILETYPE_CHEAT, 0);
 	
-		if(!theFile)
+		if (theFile == 0)
 			return;
 	
 		foundCheatDatabase = 1;
@@ -8627,7 +8627,7 @@ public class cheat
 		int		first = 1;
 		char	data;
 	
-		if(!cheatfile)
+		if (cheatfile == 0)
 			cheatfile = "cheat.dat";
 	
 		inTraverse = cheatfile;
@@ -8699,7 +8699,7 @@ public class cheat
 	
 		theFile = mame_fopen(NULL, mainDatabaseName, FILETYPE_CHEAT, 1);
 	
-		if(!theFile)
+		if (theFile == 0)
 			return;
 	
 		mame_fseek(theFile, 0, SEEK_END);
@@ -9333,7 +9333,7 @@ public class cheat
 	{
 		UINT32	data = 0;
 	
-		if(!info)
+		if (info == 0)
 		{
 			switch(bytes)
 			{
@@ -9452,7 +9452,7 @@ public class cheat
 	
 	static void DoMemoryWrite(UINT32 data, UINT8 * buf, UINT32 address, UINT8 bytes, UINT8 swap, CPUInfo * info)
 	{
-		if(!info)
+		if (info == 0)
 		{
 			switch(bytes)
 			{
@@ -9753,7 +9753,7 @@ public class cheat
 		if (associate != 0)
 			associateEntry = entry;
 	
-		if(!entry)
+		if (entry == 0)
 			return;
 	
 		for(i = 0; i < entry.actionListLength; i++)

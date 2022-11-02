@@ -69,7 +69,7 @@ public class info
 	/* Print a free format string */
 	static void print_free_string(int OUTPUT_XML, FILE* out, const char* s)
 	{
-		if (!OUTPUT_XML)
+		if (OUTPUT_XML == 0)
 		{
 			fprintf(out, "\"");
 			if (s != 0)
@@ -462,7 +462,7 @@ public class info
 				}
 	
 	
-				if (!is_disk)
+				if (is_disk == 0)
 					fprintf(out, SELECT(L1P "rom" L2B, "\t\t<rom"));
 				else
 					fprintf(out, SELECT(L1P "disk" L2B, "\t\t<disk"));
@@ -473,7 +473,7 @@ public class info
 					fprintf(out, SELECT(L2P "merge %s" L2N, " merge=\"%s\""), ROM_GETNAME(fprom));
 				if (!is_disk && found_bios)
 					fprintf(out, SELECT(L2P "bios %s" L2N, " bios=\"%s\""), bios_name);
-				if (!is_disk)
+				if (is_disk == 0)
 					fprintf(out, SELECT(L2P "size %d" L2N, " size=\"%d\""), length);
 	
 				/* dump checksum information only if there is a known dump */
@@ -531,7 +531,7 @@ public class info
 					default: fprintf(out, SELECT(L2P "region 0x%x" L2N, " region=\"0x%x\""), ROMREGION_GETTYPE(region));
 			}
 	
-			if (!is_disk)
+			if (is_disk == 0)
 			{
 				if (OUTPUT_XML != 0)
 				{

@@ -531,7 +531,7 @@ public class equites
 		for (i=0; i<0x7e; i+=2)
 		{
 			data = data_ptr[i];
-			if (!data) continue;
+			if (data == 0) continue;
 	
 			fx = data & 0x2000;
 			fy = data & 0x1000;
@@ -606,14 +606,14 @@ public class equites
 	
 	WRITE16_HANDLER(equites_bgcolor_w)
 	{
-		if (!ACCESSING_MSB) return;
+		if (ACCESSING_MSB == 0) return;
 	
 		data >>= 8;
 	
 		switch (equites_id)
 		{
 			case 0x8400:
-				if (!data) bgcolor[0] = 0;
+				if (data == 0) bgcolor[0] = 0;
 				else if (data==0x0e) bgcolor[0] = bgcolor[2];
 				else
 				{

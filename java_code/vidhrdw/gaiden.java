@@ -121,7 +121,7 @@ public class gaiden
 		/* set up sprites */
 		sprite_bitmap = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
 	
-		if (!sprite_bitmap)
+		if (sprite_bitmap == 0)
 			return 1;
 	
 		return 0;

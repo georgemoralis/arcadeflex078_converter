@@ -504,7 +504,7 @@ public class e132xs
 			}
 	
 	#define SET_LD(val,inc)										\
-			if( !D_CODE )										\
+			if (D_CODE == 0)										\
 				SET_L_REG(16 + inc, val);						\
 			else												\
 				SET_L_REG(D_CODE + inc, val);
@@ -1019,7 +1019,7 @@ public class e132xs
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if( !context )
+		if (context == 0)
 			r = &e132xs;
 	
 		switch (regnum)
@@ -1612,7 +1612,7 @@ public class e132xs
 		}
 		else
 		{
-			if( !GET_H )
+			if (GET_H == 0)
 			{
 				val = GET_G_REG(S_CODE);
 			}
@@ -2190,7 +2190,7 @@ public class e132xs
 			op2 = GET_G_REG(D_CODE);
 		}
 	
-		if( !N_VALUE )
+		if (N_VALUE == 0)
 			op1 = GET_C & ((GET_Z == 0 ? 1 : 0) | (op2 & 0x01));
 		else
 			op1 = immediate_value();
@@ -2221,7 +2221,7 @@ public class e132xs
 			op2 = GET_G_REG(D_CODE);
 		}
 	
-		if( !N_VALUE )
+		if (N_VALUE == 0)
 			op1 = GET_C & ((GET_Z == 0 ? 1 : 0) | (op2 & 0x01));
 		else
 			op1 = immediate_value();
@@ -3656,7 +3656,7 @@ public class e132xs
 					break;
 	
 				case 7:
-					if( !GET_N )
+					if (GET_N == 0)
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3704,7 +3704,7 @@ public class e132xs
 					break;
 	
 				case 11:
-					if( !GET_C )
+					if (GET_C == 0)
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3728,7 +3728,7 @@ public class e132xs
 					break;
 	
 				case 13:
-					if( !GET_Z )
+					if (GET_Z == 0)
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3752,7 +3752,7 @@ public class e132xs
 					break;
 	
 				case 15:
-					if( !GET_V )
+					if (GET_V == 0)
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3805,7 +3805,7 @@ public class e132xs
 					break;
 	
 				case 23:
-					if( !GET_N )
+					if (GET_N == 0)
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3853,7 +3853,7 @@ public class e132xs
 					break;
 	
 				case 27:
-					if( !GET_C )
+					if (GET_C == 0)
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3877,7 +3877,7 @@ public class e132xs
 					break;
 	
 				case 29:
-					if( !GET_Z )
+					if (GET_Z == 0)
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3901,7 +3901,7 @@ public class e132xs
 					break;
 	
 				case 31:
-					if( !GET_V )
+					if (GET_V == 0)
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -4403,7 +4403,7 @@ public class e132xs
 	
 	void e132xs_dbnv(void)
 	{
-		if( !GET_V )
+		if (GET_V == 0)
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4419,7 +4419,7 @@ public class e132xs
 	
 	void e132xs_dbne(void) //or DBNZ
 	{
-		if( !GET_Z )
+		if (GET_Z == 0)
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4435,7 +4435,7 @@ public class e132xs
 	
 	void e132xs_dbnc(void) //or DBHE
 	{
-		if( !GET_C )
+		if (GET_C == 0)
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4467,7 +4467,7 @@ public class e132xs
 	
 	void e132xs_dbnn(void) //or DBGE
 	{
-		if( !GET_N )
+		if (GET_N == 0)
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4593,7 +4593,7 @@ public class e132xs
 	
 	void e132xs_bnv(void)
 	{
-		if( !GET_V )
+		if (GET_V == 0)
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4609,7 +4609,7 @@ public class e132xs
 	
 	void e132xs_bne(void) //or BNZ
 	{
-		if( !GET_Z )
+		if (GET_Z == 0)
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4625,7 +4625,7 @@ public class e132xs
 	
 	void e132xs_bnc(void) //or BHE
 	{
-		if( !GET_C )
+		if (GET_C == 0)
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4657,7 +4657,7 @@ public class e132xs
 	
 	void e132xs_bnn(void) //or BGE
 	{
-		if( !GET_N )
+		if (GET_N == 0)
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4721,7 +4721,7 @@ public class e132xs
 				break;
 	
 			case TRAPGE:
-				if( !GET_N )
+				if (GET_N == 0)
 					execute_trap(addr);
 	
 				break;
@@ -4745,7 +4745,7 @@ public class e132xs
 				break;
 	
 			case TRAPHE:
-				if( !GET_C )
+				if (GET_C == 0)
 					execute_trap(addr);
 	
 				break;
@@ -4757,7 +4757,7 @@ public class e132xs
 				break;
 	
 			case TRAPNE:
-				if( !GET_Z )
+				if (GET_Z == 0)
 					execute_trap(addr);
 	
 				break;

@@ -584,7 +584,7 @@ public class stvcd
 	
 						// MP3 file
 	
-						if(!iso_mp3_init){
+						if (iso_mp3_init == 0){
 							// mp3_init();
 							iso_mp3_init = 1;
 						}

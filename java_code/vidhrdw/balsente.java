@@ -47,22 +47,22 @@ public class balsente
 		
 		/* allocate a bitmap */
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (!tmpbitmap)
+		if (tmpbitmap == 0)
 			return 1;
 	
 		/* allocate a local copy of video RAM */
 		local_videoram = auto_malloc(256 * 256);
-		if (!local_videoram)
+		if (local_videoram == 0)
 			return 1;
 	
 		/* allocate a scanline dirty array */
 		scanline_dirty = auto_malloc(256);
-		if (!scanline_dirty)
+		if (scanline_dirty == 0)
 			return 1;
 	
 		/* allocate a scanline palette array */
 		scanline_palette = auto_malloc(256);
-		if (!scanline_palette)
+		if (scanline_palette == 0)
 			return 1;
 	
 		/* mark everything dirty to start */

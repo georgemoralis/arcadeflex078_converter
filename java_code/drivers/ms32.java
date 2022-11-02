@@ -1433,7 +1433,7 @@ public class ms32
 		int i;
 		for(i=15; i>=0 && !(irqreq & (1<<i)); i--);
 		irqreq &= ~(1<<i);
-		if(!irqreq)
+		if (irqreq == 0)
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 		return i;
 	}
@@ -2111,7 +2111,7 @@ public class ms32
 		source_size = memory_region_length( REGION_GFX1 );
 	
 		result_data = malloc(source_size);
-		if (!result_data) return;
+		if (result_data == 0) return;
 	
 		for(i=0; i<source_size; i++)
 		{
@@ -2137,7 +2137,7 @@ public class ms32
 		source_size = memory_region_length( REGION_GFX4 );
 	
 		result_data = malloc(source_size);
-		if (!result_data) return;
+		if (result_data == 0) return;
 	
 		addr_xor ^= 0x1005d;
 	
@@ -2192,7 +2192,7 @@ public class ms32
 		source_size = memory_region_length( REGION_GFX3 );
 	
 		result_data = malloc(source_size);
-		if (!result_data) return;
+		if (result_data == 0) return;
 	
 		addr_xor ^= 0xc1c5b;
 	

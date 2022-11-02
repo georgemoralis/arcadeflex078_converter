@@ -398,7 +398,7 @@ public class liberate
 	
 			tile+=((deco16_io_ram[0]&0x30)<<6);
 	
-			if (!tile) continue;
+			if (tile == 0) continue;
 	
 			color=1;//(videoram.read(offs)&0x70)>>4;
 			my = (offs) % 32;
@@ -421,7 +421,7 @@ public class liberate
 			tilemap_draw(bitmap,cliprect,background_tilemap,TILEMAP_BACK,0);
 	
 		boomrang_drawsprites(bitmap,8);
-		if (!background_disable)
+		if (background_disable == 0)
 			tilemap_draw(bitmap,cliprect,background_tilemap,TILEMAP_FRONT,0);
 		boomrang_drawsprites(bitmap,0);
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);

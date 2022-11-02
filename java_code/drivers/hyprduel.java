@@ -109,7 +109,7 @@ public class hyprduel
 	
 		if ((data & 0x01) != 0)
 		{
-			if (!subcpu_resetline)
+			if (subcpu_resetline == 0)
 			{
 				if (pc != 0x95f2)
 				{

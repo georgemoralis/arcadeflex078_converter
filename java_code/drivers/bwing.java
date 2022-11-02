@@ -73,7 +73,7 @@ public class bwing
 	
 			case 1:
 				if (~readinputport(4) & 0x03)
-					{ if (!coin) { coin = 1; cpu_set_nmi_line(0, ASSERT_LINE); } }
+					{ if (coin == 0) { coin = 1; cpu_set_nmi_line(0, ASSERT_LINE); } }
 				else
 					coin = 0;
 			break;
@@ -85,7 +85,7 @@ public class bwing
 	}
 	
 	
-	INTERRUPT_GEN ( bwp3_interrupt ) { if (!bwp3_nmimask) cpu_set_nmi_line(2, ASSERT_LINE); }
+	INTERRUPT_GEN ( bwp3_interrupt ) { if (bwp3_nmimask == 0) cpu_set_nmi_line(2, ASSERT_LINE); }
 	
 	//****************************************************************************
 	// Memory and I/O Handlers

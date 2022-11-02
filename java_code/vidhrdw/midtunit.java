@@ -499,7 +499,7 @@ public class midtunit
 					sx = (sx + 1) & XPOSMASK;										\
 																					\
 				/* advance to the next pixel */										\
-				if (!scale)															\
+				if (scale == 0)															\
 				{																	\
 					ix += 0x100;													\
 					o += bpp;														\
@@ -519,7 +519,7 @@ public class midtunit
 				sy = (sy - 1) & YPOSMASK;											\
 			else																	\
 				sy = (sy + 1) & YPOSMASK;											\
-			if (!scale)																\
+			if (scale == 0)																\
 			{																		\
 				iy += 0x100;														\
 				width = dma_state.width;											\
@@ -537,7 +537,7 @@ public class midtunit
 				ty = iy >> 8;														\
 				iy += dma_state.ystep;												\
 				ty = (iy >> 8) - ty;												\
-				if (!skip)															\
+				if (skip == 0)															\
 					offset += ty * dma_state.width * bpp;							\
 				else if (ty--)														\
 				{																	\

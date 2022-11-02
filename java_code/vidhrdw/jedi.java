@@ -40,35 +40,35 @@ public class jedi
 	{
 		/* allocate dirty buffer for the foreground characters */
 		fgdirty = dirtybuffer = auto_malloc(videoram_size[0]);
-		if (!fgdirty)
+		if (fgdirty == 0)
 			return 1;
 		memset(fgdirty, 1, videoram_size[0]);
 	
 		/* allocate an 8bpp bitmap for the raw foreground characters */
 		fgbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (!fgbitmap)
+		if (fgbitmap == 0)
 			return 1;
 	
 		/* allocate an 8bpp bitmap for the motion objects */
 		mobitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (!mobitmap)
+		if (mobitmap == 0)
 			return 1;
 		fillbitmap(mobitmap, 0, Machine.visible_area);
 	
 		/* allocate dirty buffer for the background characters */
 		bgdirty = auto_malloc(jedi_backgroundram_size);
-		if (!bgdirty)
+		if (bgdirty == 0)
 			return 1;
 		memset(bgdirty, 1, jedi_backgroundram_size);
 	
 		/* the background area is 256x256, doubled by the hardware*/
 		bgbitmap = auto_bitmap_alloc(256, 256);
-		if (!bgbitmap)
+		if (bgbitmap == 0)
 			return 1;
 	
 		/* the expanded background area is 512x512 */
 		bgexbitmap = auto_bitmap_alloc(512, 512);
-		if (!bgexbitmap)
+		if (bgexbitmap == 0)
 			return 1;
 	
 		/* reserve color 1024 for black (disabled display) */

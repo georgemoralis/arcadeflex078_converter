@@ -87,7 +87,7 @@ public class spdodgeb
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,TILEMAP_OPAQUE,8,8,64,32);
 	
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap,32);
@@ -113,7 +113,7 @@ public class spdodgeb
 			scrollx[31-iloop] = lastscroll;
 			cpu_set_irq_line(0, M6502_IRQ_LINE, HOLD_LINE);
 		}
-		else if (!iloop)
+		else if (iloop == 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

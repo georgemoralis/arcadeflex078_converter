@@ -380,7 +380,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (!buf) return;
+	    if (buf == 0) return;
 	
 	    rom = (UINT16 *)memory_region(REGION_CPU1);
 	    memcpy (buf, rom, rom_size);
@@ -411,7 +411,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (!buf) return;
+	    if (buf == 0) return;
 	
 	    rom = memory_region(REGION_GFX1);
 	    memcpy (buf, rom, rom_size);
@@ -437,7 +437,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (!buf) return;
+	    if (buf == 0) return;
 	
 	    rom = memory_region(REGION_GFX2);
 	    memcpy (buf, rom, rom_size);
@@ -464,7 +464,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (!buf) return;
+	    if (buf == 0) return;
 	
 	    rom = memory_region(REGION_SOUND1);
 	    memcpy (buf, rom, rom_size);
@@ -491,7 +491,7 @@ public class pirates
 		rom[0x62c0/2] = 0x6006; // beq . bra
 	}
 	
-	static READ16_HANDLER( genix_prot_r ) {	if(!offset)	return 0x0004; else	return 0x0000; }
+	static READ16_HANDLER( genix_prot_r ) {	if (offset == 0)	return 0x0004; else	return 0x0000; }
 	
 	static DRIVER_INIT( genix )
 	{

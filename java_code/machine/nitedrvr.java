@@ -258,7 +258,7 @@ public class nitedrvr
 		discrete_sound_w(4, nitedrvr_crash_en);		// Crash enable
 		discrete_sound_w(5, (data & 0x02) ? 0 : 1);	// Attract enable (sound disable)
 	
-		if (!nitedrvr_crash_en)
+		if (nitedrvr_crash_en == 0)
 		{
 			/* Crash reset, set counter high and enable output */
 			nitedrvr_crash_data_en = 1;
@@ -277,7 +277,7 @@ public class nitedrvr
 		{
 			nitedrvr_crash_data--;
 			discrete_sound_w(0, nitedrvr_crash_data);	// Crash Volume
-			if (!nitedrvr_crash_data) nitedrvr_crash_data_en = 0;	// Done counting?
+			if (nitedrvr_crash_data == 0) nitedrvr_crash_data_en = 0;	// Done counting?
 			if ((nitedrvr_crash_data & 0x01) != 0)
 			{
 				/* Invert video */

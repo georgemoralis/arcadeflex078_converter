@@ -258,7 +258,7 @@ public class common
 		i = 0;
 		while (samplenames[i+skipfirst] != 0) i++;
 	
-		if (!i) return 0;
+		if (i == 0) return 0;
 	
 		if ((samples = auto_malloc(sizeof(struct GameSamples) + (i-1)*sizeof(struct GameSample))) == 0)
 			return 0;
@@ -560,7 +560,7 @@ public class common
 			bitmap.line = use_auto ? auto_malloc(linearraysize + bitmapsize) : malloc(linearraysize + bitmapsize);
 			if (bitmap.line == NULL)
 			{
-				if (!use_auto) free(bitmap);
+				if (use_auto == 0) free(bitmap);
 				return NULL;
 			}
 	
@@ -614,7 +614,7 @@ public class common
 	void bitmap_free(struct mame_bitmap *bitmap)
 	{
 		/* skip if NULL */
-		if (!bitmap)
+		if (bitmap == 0)
 			return;
 	
 		/* unadjust for the safety rows */
@@ -668,7 +668,7 @@ public class common
 	char *auto_strdup(const char *str)
 	{
 		char *new_str = auto_malloc(strlen(str) + 1);
-		if (!new_str)
+		if (new_str == 0)
 			return NULL;
 		strcpy(new_str, str);
 		return new_str;
@@ -1433,7 +1433,7 @@ public class common
 						*base = *bufptr++;
 	
 				/* grouped data -- non-reversed case */
-				else if (!reversed)
+				else if (reversed == 0)
 					while (bytesleft)
 					{
 						for (i = 0; i < groupsize && bytesleft; i++, bytesleft--)
@@ -1460,7 +1460,7 @@ public class common
 						*base = (*base & ~datamask) | ((*bufptr++ << datashift) & datamask);
 	
 				/* grouped data -- non-reversed case */
-				else if (!reversed)
+				else if (reversed == 0)
 					while (bytesleft)
 					{
 						for (i = 0; i < groupsize && bytesleft; i++, bytesleft--)
@@ -1540,7 +1540,7 @@ public class common
 	
 		/* make sure the source was valid */
 		srcbase = memory_region(srcregion);
-		if (!srcbase)
+		if (srcbase == 0)
 		{
 			printf("Error in RomModule definition: COPY from an invalid region\n");
 			return 0;
@@ -1708,7 +1708,7 @@ public class common
 				/* first open the source drive */
 				debugload("Opening disk image: %s\n", filename);
 				source = chd_open(filename, 0, NULL);
-				if (!source)
+				if (source == 0)
 				{
 					if (chd_get_last_error() == CHDERR_UNSUPPORTED_VERSION)
 						sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
@@ -1747,7 +1747,7 @@ public class common
 					/* try to open the diff */
 					debugload("Opening differencing image: %s\n", filename);
 					diff = chd_open(filename, 1, source);
-					if (!diff)
+					if (diff == 0)
 					{
 						/* didn't work; try creating it instead */
 						debugload("Creating differencing image: %s\n", filename);
@@ -1766,7 +1766,7 @@ public class common
 						/* open the newly-created diff file */
 						debugload("Opening differencing image: %s\n", filename);
 						diff = chd_open(filename, 1, source);
-						if (!diff)
+						if (diff == 0)
 						{
 							if (chd_get_last_error() == CHDERR_UNSUPPORTED_VERSION)
 								sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
@@ -1900,7 +1900,7 @@ public class common
 		const struct RomModule *region, *rom, *chunk;
 		char buf[512];
 	
-		if (!romp) return;
+		if (romp == 0) return;
 	
 	#ifdef MESS
 		if (!strcmp(basename,"nes")) return;

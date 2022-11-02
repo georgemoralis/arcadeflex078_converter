@@ -143,20 +143,20 @@ public class firetrap
 	
 		/* Init sequence command */
 		else if (data==0x13) {
-			if (!i8751_current_command)
+			if (i8751_current_command == 0)
 				i8751_init_ptr=0;
 			i8751_return=i8751_init_data[i8751_init_ptr++];
 		}
 	
 		/* Used to calculate a jump address when coins are inserted */
 		else if (data==0xbd) {
-			if (!i8751_current_command)
+			if (i8751_current_command == 0)
 				i8751_init_ptr=0;
 			i8751_return=i8751_coin_data[i8751_init_ptr++];
 		}
 	
 		else if (data==0x36) {
-			if (!i8751_current_command)
+			if (i8751_current_command == 0)
 				i8751_init_ptr=0;
 			i8751_return=i8751_36_data[i8751_init_ptr++];
 		}

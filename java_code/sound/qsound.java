@@ -275,7 +275,7 @@ public class qsound
 				qsound_channel[ch].bank=(value&0x7f)<<16;
 				qsound_channel[ch].bank /= LENGTH_DIV;
 	#ifdef MAME_DEBUG
-				if (!value & 0x8000)
+				if ((value & 0x8000) == 0)
 					usrintf_showmessage("Register3=%04x",value);
 	#endif
 	
@@ -294,7 +294,7 @@ public class qsound
 										  (float) Machine.sample_rate)*256.0;
 	
 	#endif
-				if (!value)
+				if (value == 0)
 				{
 					/* Key off */
 					qsound_channel[ch].key=0;

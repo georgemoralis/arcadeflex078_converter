@@ -564,7 +564,7 @@ public class atarimo
 				if (*dirtybase++)
 				{
 					/* if we can't add to an existing rect, create a new one */
-					if (!can_add_to_existing)
+					if (can_add_to_existing == 0)
 					{
 						/* advance pointers */
 						rectlist.numrects++;

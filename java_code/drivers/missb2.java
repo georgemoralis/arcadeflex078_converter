@@ -38,7 +38,7 @@ public class missb2
 		/* This clears & redraws the entire screen each pass */
 		fillbitmap(bitmap,Machine.pens[255],Machine.visible_area);
 	
-		if (!bublbobl_video_enable) return;
+		if (bublbobl_video_enable == 0) return;
 	
 		/* background map register */
 		//usrintf_showmessage("%02x",(*bg_vram) & 0x1f);

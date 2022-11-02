@@ -93,7 +93,7 @@ public class gyruss
 	{
 		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
 	
-		if (!sprite_mux_buffer)
+		if (sprite_mux_buffer == 0)
 			return 1;
 	
 		return video_start_generic.handler();

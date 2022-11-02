@@ -88,7 +88,7 @@ public class nycaptor
 	{
 		portC_in = 0;
 		if (main_sent != 0) portC_in |= 0x01;
-		if (!mcu_sent) portC_in |= 0x02;
+		if (mcu_sent == 0) portC_in |= 0x02;
 	
 		return (portC_out & ddrC) | (portC_in & ~ddrC);
 	} };

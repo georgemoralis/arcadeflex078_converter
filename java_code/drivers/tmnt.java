@@ -1108,7 +1108,7 @@ public class tmnt
 			 0x60 | 0x40/0x2f
 			 0x7b | 0x40/0x14
 		*/
-		if (!xlock)
+		if (xlock == 0)
 		{
 			i = xzoom - 0x4f00;
 			if (i > 0)
@@ -1122,7 +1122,7 @@ public class tmnt
 				xoffs = (i > 0) ? (xoffs * i / 0x4f00) : 0;
 			}
 		}
-		if (!ylock)
+		if (ylock == 0)
 		{
 			i = yzoom - 0x4f00;
 			if (i > 0)
@@ -1137,7 +1137,7 @@ public class tmnt
 			}
 	
 		}
-		if (!zlock) yoffs += zmod;
+		if (zlock == 0) yoffs += zmod;
 		xoffs += xmod;
 		yoffs += ymod;
 	
@@ -3879,7 +3879,7 @@ public class tmnt
 		}
 	
 		temp = malloc(len);
-		if (!temp) return;	/* bad thing! */
+		if (temp == 0) return;	/* bad thing! */
 		memcpy(temp,gfxdata,len);
 		for (A = 0;A < len/4;A++)
 		{
@@ -3975,7 +3975,7 @@ public class tmnt
 		}
 	
 		temp = malloc(len);
-		if (!temp) return;	/* bad thing! */
+		if (temp == 0) return;	/* bad thing! */
 		memcpy(temp,gfxdata,len);
 		for (A = 0;A < len/4;A++)
 		{

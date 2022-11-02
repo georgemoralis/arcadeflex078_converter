@@ -89,7 +89,7 @@ public class harddriv
 	
 		/* allocate the mask table */
 		mask_table = auto_malloc(sizeof(UINT32) * 4 * 65536);
-		if (!mask_table)
+		if (mask_table == 0)
 			return 1;
 	
 		/* fill in the mask table */
@@ -184,7 +184,7 @@ public class harddriv
 	
 	void hdgsp_read_from_shiftreg(UINT32 address, UINT16 *shiftreg)
 	{
-		if (!shiftreg_enable)
+		if (shiftreg_enable == 0)
 			return;
 	
 		/* access to the 1bpp/2bpp area */

@@ -99,14 +99,14 @@ public class memdbg
 		BeginCriticalSection();
 	
 		pData = NULL; /* default */
-		if( !numBytes )
+		if (numBytes == 0)
 		{
 			printf( "WARNING: attempt to memdbg_Alloc zero bytes!\n" );
 		}
 		else
 		{
 			MemPtr *pMemPtr = malloc(sizeof(MemPtr)+numBytes+sizeof(mGuardData));
-			if( !pMemPtr )
+			if (pMemPtr == 0)
 			{
 				printf( "memdbg_Alloc failure: insufficient memory!\n" );
 			}
@@ -133,7 +133,7 @@ public class memdbg
 	{
 		BeginCriticalSection();
 	
-		if( !pData )
+		if (pData == 0)
 		{
 			printf( "WARNING: attempt to memdbg_Free a NULL pointer!\n" );
 		}

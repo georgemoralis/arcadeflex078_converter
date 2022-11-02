@@ -52,7 +52,7 @@ public class x86drc
 	
 		/* allocate memory */
 		drc = malloc(sizeof(*drc));
-		if (!drc)
+		if (drc == 0)
 			return NULL;
 		memset(drc, 0, sizeof(*drc));
 	

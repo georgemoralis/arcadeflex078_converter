@@ -107,7 +107,7 @@ public class lethalj
 	{
 		/* allocate video RAM for screen */
 		screenram = auto_malloc(BLITTER_DEST_WIDTH * BLITTER_DEST_HEIGHT * sizeof(screenram[0]));
-		if (!screenram)
+		if (screenram == 0)
 			return 1;
 	
 		/* predetermine blitter info */

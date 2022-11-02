@@ -260,7 +260,7 @@ public class discrete
 		/* Reset all of the objects */
 		int loop=0,loop2=0;
 	
-		if(!init_ok) return;
+		if (init_ok == 0) return;
 	
 		for(loop=0;loop<node_count;loop++)
 		{
@@ -299,7 +299,7 @@ public class discrete
 		wav_file = wav_open("discrete.wav", Machine.sample_rate, ((Machine.drv.sound_attributes&SOUND_SUPPORTS_STEREO) == SOUND_SUPPORTS_STEREO) ? 2: 1);
 	#endif
 	#ifdef DISCRETE_DEBUGLOG
-		if(!disclogfile) disclogfile=fopen("discrete.log", "w");
+		if (disclogfile == 0) disclogfile=fopen("discrete.log", "w");
 	#endif
 	
 		/* Initialise */
@@ -488,7 +488,7 @@ public class discrete
 		}
 	
 		/* Report success or fail */
-		if(!failed) init_ok=1;
+		if (failed == 0) init_ok=1;
 	
 		/* Now reset the system to a sensible state */
 		discrete_sh_reset();
@@ -500,7 +500,7 @@ public class discrete
 	void discrete_sh_stop (void)
 	{
 		int loop=0;
-		if(!init_ok) return;
+		if (init_ok == 0) return;
 	
 	#ifdef DISCRETE_WAVELOG
 		wav_close(wav_file);
@@ -526,7 +526,7 @@ public class discrete
 	
 	void discrete_sh_update(void)
 	{
-		if(!init_ok) return;
+		if (init_ok == 0) return;
 	
 		/* Bring stream upto the present time */
 		stream_update(discrete_stream, 0);

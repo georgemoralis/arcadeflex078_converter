@@ -1064,7 +1064,7 @@ public class pic16c5x
 	
 		which = (which+1) % 18;
 		buffer[which][0] = '\0';
-		if (!context)
+		if (context == 0)
 			r = &R;
 	
 		switch (regnum)

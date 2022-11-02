@@ -254,8 +254,8 @@ public class macrossp
 				if (xpos > 0x1ff) xpos -=0x400;
 				if (ypos > 0x1ff) ypos -=0x400;
 	
-				if (!flipx) {
-					if (!flipy) { /* noxflip, noyflip */
+				if (flipx == 0) {
+					if (flipy == 0) { /* noxflip, noyflip */
 						yoffset = 0; /* I'm doing this so rounding errors are cumulative, still looks a touch crappy when multiple sprites used together */
 						for (ycnt = 0; ycnt <= high; ycnt++) {
 							xoffset = 0;
@@ -281,7 +281,7 @@ public class macrossp
 						}
 					}
 				}else{
-					if (!flipy) { /* xflip, noyflip */
+					if (flipy == 0) { /* xflip, noyflip */
 						yoffset = 0;
 						for (ycnt = 0; ycnt <= high; ycnt++) {
 							xoffset = ((wide*xzoom*16) >> 8);

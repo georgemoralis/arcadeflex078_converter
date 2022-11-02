@@ -286,7 +286,7 @@ public class cage
 	
 		/* allocate memory for our buffers */
 		sound_buffer = auto_malloc(DAC_BUFFER_SAMPLES * sizeof(INT16));
-		if (!sound_buffer)
+		if (sound_buffer == 0)
 			return 1;
 	
 	#if (LOG_WAVE)
@@ -581,7 +581,7 @@ public class cage
 		int result = 0;
 		if (cpu_to_cage_ready != 0)
 			result |= 0x80;
-		if (!cage_to_cpu_ready)
+		if (cage_to_cpu_ready == 0)
 			result |= 0x40;
 		return result;
 	}

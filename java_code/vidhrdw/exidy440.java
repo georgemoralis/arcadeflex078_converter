@@ -65,12 +65,12 @@ public class exidy440
 	
 		/* allocate a bitmap */
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (!tmpbitmap)
+		if (tmpbitmap == 0)
 			return 1;
 	
 		/* allocate a buffer for VRAM */
 		local_videoram = auto_malloc(256 * 256 * 2);
-		if (!local_videoram)
+		if (local_videoram == 0)
 			return 1;
 	
 		/* clear it */
@@ -78,7 +78,7 @@ public class exidy440
 	
 		/* allocate a buffer for palette RAM */
 		local_paletteram = auto_malloc(512 * 2);
-		if (!local_paletteram)
+		if (local_paletteram == 0)
 			return 1;
 	
 		/* clear it */
@@ -86,7 +86,7 @@ public class exidy440
 	
 		/* allocate a scanline dirty array */
 		scanline_dirty = auto_malloc(256);
-		if (!scanline_dirty)
+		if (scanline_dirty == 0)
 			return 1;
 	
 		/* mark everything dirty to start */
@@ -467,7 +467,7 @@ public class exidy440
 		draw_sprites(bitmap, cliprect, scroll_offset);
 	
 		/* draw the crosshair (but not for topsecret) */
-		if (!exidy440_topsecret)
+		if (exidy440_topsecret == 0)
 		{
 			beamx = ((input_port_4_r(0) & 0xff) * 320) >> 8;
 			beamy = ((input_port_5_r(0) & 0xff) * 240) >> 8;
@@ -522,7 +522,7 @@ public class exidy440
 	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* generate an interrupt once/frame for the beam */
-		if (!exidy440_topsecret)
+		if (exidy440_topsecret == 0)
 		{
 			double time, increment;
 			int beamx, beamy;

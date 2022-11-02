@@ -457,7 +457,7 @@ public class pengo
 	
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 	
-		if( !tilemap )
+		if (tilemap == 0)
 			return 1;
 	
 		colorram = auto_malloc(0x20);

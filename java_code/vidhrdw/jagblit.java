@@ -393,7 +393,7 @@ public class jagblit
 					}
 	
 					/* compute the write data and store */
-					if (!inhibit)
+					if (inhibit == 0)
 					{
 						/* handle patterns/additive/LFU */
 						if ((COMMAND & 0x00010000) != 0)

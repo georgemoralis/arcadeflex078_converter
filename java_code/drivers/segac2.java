@@ -445,7 +445,7 @@ public class segac2
 	static WRITE16_HANDLER( upd7759_w )
 	{
 		/* make sure we have a UPD chip */
-		if (!sound_banks)
+		if (sound_banks == 0)
 			return;
 	
 		/* only works if we're accessing the low byte */
@@ -639,7 +639,7 @@ public class segac2
 		int newbank;
 	
 		/* only LSB matters */
-		if (!ACCESSING_LSB)
+		if (ACCESSING_LSB == 0)
 			return;
 	
 		/* track what was written */
@@ -703,7 +703,7 @@ public class segac2
 	static WRITE16_HANDLER( control_w )
 	{
 		/* skip if not LSB */
-		if (!ACCESSING_LSB)
+		if (ACCESSING_LSB == 0)
 			return;
 		data &= 0xff;
 	
@@ -746,7 +746,7 @@ public class segac2
 		int table_index;
 	
 		/* only works for the LSB */
-		if (!ACCESSING_LSB)
+		if (ACCESSING_LSB == 0)
 			return;
 	
 		/* keep track of the last few writes */
@@ -1391,7 +1391,7 @@ public class segac2
 	static public static WriteHandlerPtr genesis_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data) /* note value will be meaningless unless all bits are correctly set in */
 	{
 		if (offset !=0 ) return;
-	//	if (!z80running) logerror("undead Z80 latch write!\n");
+	//	if (z80running == 0) logerror("undead Z80 latch write!\n");
 		if (z80_latch_bitcount == 0) z80_68000_latch = 0;
 	
 		z80_68000_latch = z80_68000_latch | ((( ((unsigned char)data) & 0x01) << (15+z80_latch_bitcount)));
@@ -1484,7 +1484,7 @@ public class segac2
 	{
 		int address = (z80_68000_latch) + (offset & 0x7fff);
 	
-		if (!z80running) logerror("undead Z80.68000 read!\n");
+		if (z80running == 0) logerror("undead Z80.68000 read!\n");
 	
 		if (z80_latch_bitcount != 0) logerror("reading whilst latch being set!\n");
 	

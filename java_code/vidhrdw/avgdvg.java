@@ -412,7 +412,7 @@ public class avgdvg
 					VGLOG(("%4x", a));
 					pc = a;
 	
-					if (!pc)
+					if (pc == 0)
 						done=1;
 					break;
 	

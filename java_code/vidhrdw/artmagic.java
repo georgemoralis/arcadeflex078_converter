@@ -123,7 +123,7 @@ public class artmagic
 					blitter_data[4], blitter_data[5],
 					blitter_data[6], blitter_data[7]);
 	
-		if (!f) f = fopen("artmagic.log", "w");
+		if (f == 0) f = fopen("artmagic.log", "w");
 	
 		for (i = 0; i < hit_index; i++)
 			if (hit_list[i] == offset)

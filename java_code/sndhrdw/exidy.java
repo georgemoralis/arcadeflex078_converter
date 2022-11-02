@@ -573,8 +573,8 @@ public class exidy
 					if (has_tms5220 != 0)
 					{
 						riot_portb_data &= ~0x0c;
-						if (!tms5220_ready_r()) riot_portb_data |= 0x04;
-						if (!tms5220_int_r()) riot_portb_data |= 0x08;
+						if (tms5220_ready_r() == 0) riot_portb_data |= 0x04;
+						if (tms5220_int_r() == 0) riot_portb_data |= 0x08;
 					}
 					return riot_portb_data;
 	

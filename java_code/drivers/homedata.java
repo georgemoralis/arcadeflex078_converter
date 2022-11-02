@@ -460,7 +460,7 @@ public class homedata
 	
 		int res = (homedata_visible_page ^ 1) << 7;
 	
-		if (!vblank) res |= 0x40;
+		if (vblank == 0) res |= 0x40;
 	
 		vblank = 0;
 	

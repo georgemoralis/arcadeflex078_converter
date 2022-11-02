@@ -72,14 +72,14 @@ public class mcr12
 	
 		/* allocate a dirty buffer */
 		dirtybuffer = auto_malloc(videoram_size);
-		if (!dirtybuffer)
+		if (dirtybuffer == 0)
 			return 1;
 	
 		/* allocate a temporary bitmap for the sprite rendering */
 		spritebitmap_width = Machine.drv.screen_width + 2 * 32;
 		spritebitmap_height = Machine.drv.screen_height + 2 * 32;
 		spritebitmap = auto_malloc(spritebitmap_width * spritebitmap_height);
-		if (!spritebitmap)
+		if (spritebitmap == 0)
 			return 1;
 		memset(spritebitmap, 0, spritebitmap_width * spritebitmap_height);
 	
@@ -113,7 +113,7 @@ public class mcr12
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcr1_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 		
 		/* handle the rest */
@@ -125,7 +125,7 @@ public class mcr12
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcr2_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 		
 		/* handle the rest */
@@ -137,7 +137,7 @@ public class mcr12
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(twotigra_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 		
 		/* handle the rest */
@@ -149,7 +149,7 @@ public class mcr12
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcr2_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 		return 0;
 	} };
@@ -244,7 +244,7 @@ public class mcr12
 			UINT8 *dst = spritebitmap + spritebitmap_width * sy + sx;
 	
 			/* redraw the line */
-			if (!hflip)
+			if (hflip == 0)
 			{
 				for (x = 0; x < 32; x++)
 					*dst++ |= *src++;

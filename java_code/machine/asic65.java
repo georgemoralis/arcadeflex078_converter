@@ -160,7 +160,7 @@ public class asic65
 	{
 		/* logging */
 	#if LOG_ASIC
-		if (!asic65_log) asic65_log = fopen("asic65.log", "w");
+		if (asic65_log == 0) asic65_log = fopen("asic65.log", "w");
 	#endif
 	
 		/* parameters go to offset 0 */
@@ -393,7 +393,7 @@ public class asic65
 		}
 	
 	#if LOG_ASIC
-		if (!asic65_log) asic65_log = fopen("asic65.log", "w");
+		if (asic65_log == 0) asic65_log = fopen("asic65.log", "w");
 	#endif
 		if (asic65_log != 0) fprintf(asic65_log, " (R=%04X)", result);
 	

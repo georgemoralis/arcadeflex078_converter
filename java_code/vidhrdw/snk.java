@@ -81,10 +81,10 @@ public class snk
 		snk_blink_parity = 0;
 	
 		dirtybuffer = auto_malloc( MAX_VRAM_SIZE );
-		if(!dirtybuffer) return 1;
+		if (dirtybuffer == 0) return 1;
 	
 		tmpbitmap = auto_bitmap_alloc( 512, 512 );
-		if(!tmpbitmap) return 1;
+		if (tmpbitmap == 0) return 1;
 	
 		memset( dirtybuffer, 0xff, MAX_VRAM_SIZE );
 	
@@ -275,9 +275,9 @@ public class snk
 	public static VideoUpdateHandlerPtr video_update_sgladiat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dirtybuffer = auto_malloc( MAX_VRAM_SIZE );
-		if(!dirtybuffer) return 1;
+		if (dirtybuffer == 0) return 1;
 		tmpbitmap = auto_bitmap_alloc( 512, 256 );
-		if(!tmpbitmap) return 1;
+		if (tmpbitmap == 0) return 1;
 		memset( dirtybuffer, 0xff, MAX_VRAM_SIZE );
 		return 0;
 	} };

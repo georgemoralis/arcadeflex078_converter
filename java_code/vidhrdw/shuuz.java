@@ -79,7 +79,7 @@ public class shuuz
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (!atarigen_playfield_tilemap)
+		if (atarigen_playfield_tilemap == 0)
 			return 1;
 	
 		/* initialize the motion objects */

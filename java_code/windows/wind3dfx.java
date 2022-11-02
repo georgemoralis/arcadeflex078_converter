@@ -758,7 +758,7 @@ public class wind3dfx
 			}
 		}
 	
-		if (!internal_pattern) {
+		if (internal_pattern == 0) {
 			FILE* fp = fopen(active_preset.pattern_name, "rb");
 			int filesize;
 	

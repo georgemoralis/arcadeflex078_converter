@@ -552,7 +552,7 @@ public class argus
 			int scrolly;
 			argus_bg0_scrolly[ offset ] = data;
 			scrolly = argus_bg0_scrolly[0] | ( (argus_bg0_scrolly[1] & 0x01) << 8);
-			if (!argus_flipscreen)
+			if (argus_flipscreen == 0)
 				tilemap_set_scrolly( bg0_tilemap, 0, scrolly );
 			else
 				tilemap_set_scrolly( bg0_tilemap, 0, (scrolly + 256) & 0x1ff );
@@ -566,7 +566,7 @@ public class argus
 			int scrollx;
 			argus_bg0_scrollx[ offset ] = data;
 			scrollx = argus_bg0_scrollx[0] | ( (argus_bg0_scrollx[1] & 0x01) << 8);
-			if (!argus_flipscreen)
+			if (argus_flipscreen == 0)
 				tilemap_set_scrollx( bg0_tilemap, 0, scrollx );
 			else
 				tilemap_set_scrollx( bg0_tilemap, 0, (scrollx + 256) & 0x1ff );
@@ -580,7 +580,7 @@ public class argus
 			int scrollx;
 			argus_bg1_scrollx[ offset ] = data;
 			scrollx = argus_bg1_scrollx[0] | ( (argus_bg1_scrollx[1] & 0x01) << 8);
-			if (!argus_flipscreen)
+			if (argus_flipscreen == 0)
 				tilemap_set_scrollx( bg1_tilemap, 0, scrollx );
 			else
 				tilemap_set_scrollx( bg1_tilemap, 0, (scrollx + 256) & 0x1ff );
@@ -594,7 +594,7 @@ public class argus
 			int scrolly;
 			argus_bg1_scrolly[ offset ] = data;
 			scrolly = argus_bg1_scrolly[0] | ( (argus_bg1_scrolly[1] & 0x01) << 8);
-			if (!argus_flipscreen)
+			if (argus_flipscreen == 0)
 				tilemap_set_scrolly( bg1_tilemap, 0, scrolly );
 			else
 				tilemap_set_scrolly( bg1_tilemap, 0, (scrolly + 256) & 0x1ff );
@@ -664,7 +664,7 @@ public class argus
 		{
 			argus_flipscreen = data >> 7;
 			tilemap_set_flip( ALL_TILEMAPS, (argus_flipscreen) ? TILEMAP_FLIPY | TILEMAP_FLIPX : 0);
-			if (!argus_flipscreen)
+			if (argus_flipscreen == 0)
 			{
 				int scrollx, scrolly;
 	
@@ -978,7 +978,7 @@ public class argus
 			}
 		}
 	
-		if (!argus_flipscreen)
+		if (argus_flipscreen == 0)
 			tilemap_set_scrollx(bg0_tilemap, 0, scrollx & 0x1ff);
 		else
 			tilemap_set_scrollx(bg0_tilemap, 0, (scrollx + 256) & 0x1ff);
@@ -1005,7 +1005,7 @@ public class argus
 					sy = 240 - sy;
 				}
 	
-				if (!argus_flipscreen)
+				if (argus_flipscreen == 0)
 				{
 					if (  spriteram.read(offs+2)& 0x01)  sx -= 256;
 					if (!(spriteram.read(offs+2)& 0x02)) sy -= 256;
@@ -1061,7 +1061,7 @@ public class argus
 					sy = 240 - sy;
 				}
 	
-				if (!argus_flipscreen)
+				if (argus_flipscreen == 0)
 				{
 					if (  spriteram.read(offs+2)& 0x01)  sx -= 256;
 					if (!(spriteram.read(offs+2)& 0x02)) sy -= 256;
@@ -1114,7 +1114,7 @@ public class argus
 			flipy	 = spriteram.read(offs + 0)& 0x04;
 			color	 = spriteram.read(offs + 1)& 0x0f;
 	
-			if (!argus_flipscreen)
+			if (argus_flipscreen == 0)
 			{
 				if ( (offs >= 0x100 && offs < 0x300) || (offs >= 0x400 && offs < 0x580) )
 				{
@@ -1155,7 +1155,7 @@ public class argus
 						{
 							int td;
 	
-							if ( !flipy )
+							if (flipy == 0)
 								td = (flipx) ? (i * 2) + 1 - j : i * 2 + j;
 							else
 								td = (flipx) ? ( (1 - i) * 2 ) + 1 - j : (1 - i) * 2 + j;
@@ -1180,7 +1180,7 @@ public class argus
 						{
 							int td;
 	
-							if ( !flipy )
+							if (flipy == 0)
 								td = (flipx) ? (i * 4) + 3 - j : i * 4 + j;
 							else
 								td = (flipx) ? ( (3 - i) * 4 ) + 3 - j : (3 - i) * 4 + j;
@@ -1242,7 +1242,7 @@ public class argus
 						{
 							int td;
 	
-							if ( !flipy )
+							if (flipy == 0)
 								td = (flipx) ? (1 - i) * 2 + j : ( (1 - i) * 2 ) + 1 - j;
 							else
 								td = (flipx) ? i * 2 + j : (i * 2) + 1 - j;
@@ -1267,7 +1267,7 @@ public class argus
 						{
 							int td;
 	
-							if ( !flipy )
+							if (flipy == 0)
 								td = (flipx) ? (3 - i) * 4 + j : ( (3 - i) * 4 ) + 3 - j;
 							else
 								td = (flipx) ? i * 4 + j : (i * 4) + 3 - j;

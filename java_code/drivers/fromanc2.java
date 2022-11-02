@@ -146,7 +146,7 @@ public class fromanc2
 	
 			usrintf_showmessage("PLAYER-%01X SIDE", fromanc2_playerside + 1);
 	
-			if (!fromanc2_playerside) {
+			if (fromanc2_playerside == 0) {
 				mixer_set_stereo_volume(3, 75, 75);	// 1P (LEFT)
 				mixer_set_stereo_volume(4,  0,  0);	// 2P (RIGHT)
 			}

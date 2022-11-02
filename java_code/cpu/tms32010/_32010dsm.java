@@ -250,7 +250,7 @@ public class _32010dsm
 		char *strtmp;
 		const char *cp;				/* character pointer in OpFormats */
 	
-		if (!OpInizialized) InitDasm32010();
+		if (OpInizialized == 0) InitDasm32010();
 	
 		op = -1;				/* no matching opcode */
 		code = READOP16(2*pc);

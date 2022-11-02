@@ -42,7 +42,7 @@ public class videopin
 			{
 				time_released = timer_get_time();
 	
-				if (!mask)
+				if (mask == 0)
 				{
 					cpu_set_nmi_line(0, ASSERT_LINE);
 				}

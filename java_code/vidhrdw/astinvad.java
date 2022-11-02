@@ -70,7 +70,7 @@ public class astinvad
 	
 		int col;
 	
-		if (!flip_screen)
+		if (flip_screen == 0)
 		{
 			col = memory_region(REGION_PROMS)[(~n + astinvad_adjust) & 0x3ff];
 		}

@@ -159,13 +159,13 @@ public class wilytowr
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if ( !bg_tilemap )
+		if (bg_tilemap == 0)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_scroll_cols(bg_tilemap, 32);

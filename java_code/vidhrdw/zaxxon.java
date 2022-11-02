@@ -234,7 +234,7 @@ public class zaxxon
 		fg_tilemap = tilemap_create(zaxxon_get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -257,7 +257,7 @@ public class zaxxon
 			if (Machine.orientation & ORIENTATION_SWAP_XY)
 			{
 				/* standard rotation - skew background horizontally */
-				if (!flip_screen)
+				if (flip_screen == 0)
 				{
 					if (zaxxon_vid_type == CONGO_VID)
 						scroll = 1023+63 - (zaxxon_background_position[0] + 256*zaxxon_background_position[1]);
@@ -294,7 +294,7 @@ public class zaxxon
 			else
 			{
 				/* skew background up one pixel every 2 horizontal pixels */
-				if (!flip_screen_y)
+				if (flip_screen_y == 0)
 				{
 					if (zaxxon_vid_type == CONGO_VID)
 						scroll = 2050 + 2*(zaxxon_background_position[0] + 256*zaxxon_background_position[1])
@@ -420,7 +420,7 @@ public class zaxxon
 		fg_tilemap = tilemap_create(razmataz_get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -470,7 +470,7 @@ public class zaxxon
 		fg_tilemap = tilemap_create(congo_get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);

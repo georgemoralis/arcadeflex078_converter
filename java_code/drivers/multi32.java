@@ -72,7 +72,7 @@ public class multi32
 	{
 		if (ACCESSING_MSB != 0) {
 			irq_status &= data >> 8;
-			if(!irq_status)
+			if (irq_status == 0)
 				cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
 	}

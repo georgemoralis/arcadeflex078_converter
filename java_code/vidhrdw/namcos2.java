@@ -548,7 +548,7 @@ public class namcos2
 				}
 	
 				// little zoom fix...
-				if( !bSmallSprite ) {
+				if (bSmallSprite == 0) {
 					if( sizex < 0x20 ) {
 						sx -= (0x20-sizex)/0x8;
 					}

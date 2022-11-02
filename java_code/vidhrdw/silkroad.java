@@ -55,7 +55,7 @@ public class silkroad
 	
 			if (priority == pri){
 	
-			if (!flipx) {
+			if (flipx == 0) {
 			for (wcount=0;wcount<width;wcount++) {
 			drawgfx(bitmap,gfx,tileno+wcount,color,0,0,xpos+wcount*16+8,ypos,cliprect,TRANSPARENCY_PEN,0);
 			}

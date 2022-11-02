@@ -150,7 +150,7 @@ public class drmicro
 	
 				col = (attr & 0x0f) + 0x00;
 	
-				if (!flipscreen)
+				if (flipscreen == 0)
 					y = (240-y) & 0xff;
 				else
 					x = (240-x) & 0xff;

@@ -249,7 +249,7 @@ public class fileio
 	
 		/* allocate a string of the appropriate length */
 		result = malloc(length + 1);
-		if (!result)
+		if (result == 0)
 			goto out_of_memory;
 	
 		/* now actually generate the string */
@@ -302,7 +302,7 @@ public class fileio
 	
 		// look for separators
 		token = strchr(rawpath, ';');
-		if (!token)
+		if (token == 0)
 			token = rawpath + strlen(rawpath);
 	
 		// loop until done
@@ -326,7 +326,7 @@ public class fileio
 	
 			// find the next separator
 			token = strchr(rawpath, ';');
-			if (!token)
+			if (token == 0)
 				token = rawpath + strlen(rawpath);
 		}
 	

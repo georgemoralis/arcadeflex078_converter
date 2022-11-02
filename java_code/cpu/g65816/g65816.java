@@ -181,7 +181,7 @@ public class g65816
 			REGISTER_S = (REGISTER_S & 0xff) | 0x100;
 			REGISTER_X &= 0xff;
 			REGISTER_Y &= 0xff;
-			if(!FLAG_M)
+			if (FLAG_M == 0)
 			{
 				REGISTER_B = REGISTER_A & 0xff00;
 				REGISTER_A &= 0xff;
@@ -321,7 +321,7 @@ public class g65816
 	
 		which = (which + 1) % 16;
 		buffer[which][0] = '\0';
-		if(!context)
+		if (context == 0)
 			r = &g65816i_cpu;
 	
 		switch(regnum)

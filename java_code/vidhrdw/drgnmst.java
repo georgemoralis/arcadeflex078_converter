@@ -94,8 +94,8 @@ public class drgnmst
 			if ((source[3] & 0xff00) == 0xff00) break;
 	
 	
-			if (!flipx) { incx = 16;} else { incx = -16; xpos += 16*wide; }
-			if (!flipy) { incy = 16;} else { incy = -16; ypos += 16*high; }
+			if (flipx == 0) { incx = 16;} else { incx = -16; xpos += 16*wide; }
+			if (flipy == 0) { incy = 16;} else { incy = -16; ypos += 16*high; }
 	
 	
 			for (y=0;y<=high;y++) {

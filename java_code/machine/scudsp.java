@@ -668,7 +668,7 @@ public class scudsp
 		if ((opcode & 0x08000000) != 0)
 		{
 			/*ENDI*/
-			if(!EF) stv_scu[32]^=0x00040000;
+			if (EF == 0) stv_scu[32]^=0x00040000;
 			if (EXF != 0) stv_scu[32]^=0x00100000;
 		}
 		else

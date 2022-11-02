@@ -166,7 +166,7 @@ public class neogeo
 	
 		/* Allocate ram banks */
 		neogeo_ram16 = auto_malloc (0x10000);
-		if (!neogeo_ram16)
+		if (neogeo_ram16 == 0)
 			return;
 		cpu_setbank(1, neogeo_ram16);
 	
@@ -184,7 +184,7 @@ public class neogeo
 	
 		/* Allocate and point to the memcard - bank 5 */
 		neogeo_memcard = auto_malloc(0x800);
-		if (!neogeo_memcard)
+		if (neogeo_memcard == 0)
 			return;
 		memset(neogeo_memcard, 0, 0x800);
 		memcard_status=0;

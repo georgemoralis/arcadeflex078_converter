@@ -242,7 +242,7 @@ public class xml2info
 	{
 		if (t == token_open) {
 			unsigned i;
-			if (!attributes) {
+			if (attributes == 0) {
 				process_error(state, state.level[1].tag, "missing runnable attrib");
 				return;
 			}
@@ -502,7 +502,7 @@ public class xml2info
 	{
 		if (t == token_open) {
 			unsigned i;
-			if (!attributes) {
+			if (attributes == 0) {
 				process_error(state, state.level[2].tag, "missing default attrib");
 				return;
 			}
@@ -730,7 +730,7 @@ public class xml2info
 		/* check the presence of any reference */
 		for(i=0;i<state.reference_mac;++i) {
 			void* p = bsearch(&state.reference_map[i], state.game_map, state.game_mac, sizeof(char*), container_compare);
-			if (!p) {
+			if (p == 0) {
 				fprintf(stderr, "::reference to a missing game %s\n", state.reference_map[i]);
 				return -1;
 			}

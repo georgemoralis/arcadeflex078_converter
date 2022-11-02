@@ -162,15 +162,15 @@ public class exidy
 	        return 1;
 	
 		motion_object_1_vid = auto_bitmap_alloc(16, 16);
-	    if (!motion_object_1_vid)
+	    if (motion_object_1_vid == 0)
 	        return 1;
 	
 		motion_object_2_vid = auto_bitmap_alloc(16, 16);
-	    if (!motion_object_2_vid)
+	    if (motion_object_2_vid == 0)
 	        return 1;
 	
 		motion_object_2_clip = auto_bitmap_alloc(16, 16);
-	    if (!motion_object_2_clip)
+	    if (motion_object_2_clip == 0)
 	        return 1;
 	
 	    return 0;
@@ -379,7 +379,7 @@ public class exidy
 		}
 	
 		/* update the background if necessary */
-		if (!update_complete)
+		if (update_complete == 0)
 			update_background();
 		update_complete = 0;
 	

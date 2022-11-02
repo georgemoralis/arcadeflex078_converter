@@ -244,7 +244,7 @@ public class irobot
 		logerror("status read. ");
 		IR_CPU_STATE;
 	
-		if (!irmb_running) d |= 0x20;
+		if (irmb_running == 0) d |= 0x20;
 		if (irvg_running != 0) d |= 0x40;
 	
 		//        d = (irmb_running * 0x20) | (irvg_running * 0x40);
@@ -379,7 +379,7 @@ public class irobot
 	
 		/* allocate RAM */
 		mbops = auto_malloc(sizeof(irmb_ops) * 1024);
-		if (!mbops) return;
+		if (mbops == 0) return;
 	
 		for (i = 0; i < 1024; i++)
 		{
@@ -570,8 +570,8 @@ public class irobot
 	
 	#define JUMP0 	curop++;
 	#define JUMP1	if (cflag != 0) curop = curop.nxtop; else curop++;
-	#define JUMP2	if (!zresult) curop = curop.nxtop; else curop++;
-	#define JUMP3	if (!nflag) curop = curop.nxtop; else curop++;
+	#define JUMP2	if (zresult == 0) curop = curop.nxtop; else curop++;
+	#define JUMP3	if (nflag == 0) curop = curop.nxtop; else curop++;
 	#define JUMP4	if (nflag != 0) curop = curop.nxtop; else curop++;
 	#define JUMP5	curop = curop.nxtop;
 	#define JUMP6	irmb_stack[SP] = curop + 1; SP = (SP + 1) & 15; curop = curop.nxtop;

@@ -245,7 +245,7 @@ public class pastelgl
 					dy = ((pastelgl_drawy + y) & 0xff);
 				}
 	
-				if (!readflag)
+				if (readflag == 0)
 				{
 					// 1st, 3rd, 5th, ... read
 					color = (color & 0x0f);
@@ -263,7 +263,7 @@ public class pastelgl
 	
 				if (pastelgl_paltbl[color] & 0xf0)
 				{
-					if (!color) tflag = 0;
+					if (color == 0) tflag = 0;
 					drawcolor = ((pastelgl_palbank * 0x10) + color);
 				}
 				else

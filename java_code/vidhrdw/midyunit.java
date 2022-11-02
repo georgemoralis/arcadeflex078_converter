@@ -282,7 +282,7 @@ public class midyunit
 			/* handle autoerase enable (bit 4)  */
 			else
 			{
-				if (!autoerase_enable)
+				if (autoerase_enable == 0)
 				{
 					logerror("autoerase on @ %d\n", cpu_getscanline());
 					update_partial(cpu_getscanline() - 1, 1);

@@ -415,7 +415,7 @@ public class _32025dsm
 		char *strtmp;
 		const char *cp;				/* character pointer in OpFormats */
 	
-		if (!OpInizialized) InitDasm32025();
+		if (OpInizialized == 0) InitDasm32025();
 	
 		op = -1;				/* no matching opcode */
 		code = READOP16(2*pc);

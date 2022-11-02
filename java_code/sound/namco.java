@@ -121,7 +121,7 @@ public class namco
 		if (region == -1)
 		{
 			/* We need waveform data. It fails if region is not specified. */
-			if (!namco_wavedata)
+			if (namco_wavedata == 0)
 				return 1;
 	
 			/* use full byte, first 4 high bits, then low 4 bits, 256 bytes */

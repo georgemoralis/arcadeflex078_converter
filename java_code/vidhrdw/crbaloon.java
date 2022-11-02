@@ -108,7 +108,7 @@ public class crbaloon
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_xy, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if ( !bg_tilemap )
+		if (bg_tilemap == 0)
 			return 1;
 	
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)

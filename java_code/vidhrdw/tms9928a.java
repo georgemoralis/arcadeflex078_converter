@@ -473,7 +473,7 @@ public class tms9928a
 	    int c;
 	
 	    if (tms.Change) {
-	        c = tms.Regs[7] & 15; if (!c) c=1;
+	        c = tms.Regs[7] & 15; if (c == 0) c=1;
 	        if (tms.BackColour != c) {
 	            tms.BackColour = c;
 	            palette_set_color (0,
@@ -826,7 +826,7 @@ public class tms9928a
 	        if (*attributeptr & 0x80) x -= 32;
 	        attributeptr++;
 	
-	        if (!large) {
+	        if (large == 0) {
 	            /* draw sprite (not enlarged) */
 	            for (yy=y;yy<(y+size);yy++) {
 	                if ( (yy < 0) || (yy > 191) ) continue;

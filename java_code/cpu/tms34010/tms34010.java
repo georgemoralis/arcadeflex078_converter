@@ -225,7 +225,7 @@ public class tms34010
 	INLINE tms34010_regs *FINDCONTEXT(int cpu)
 	{
 		tms34010_regs *context = cpunum_get_context_ptr(cpu);
-		if (!context)
+		if (context == 0)
 			context = &state;
 		return context;
 	}
@@ -652,7 +652,7 @@ public class tms34010
 	
 		/* early out if no interrupts pending */
 		irq = IOREG(REG_INTPEND);
-		if (!irq)
+		if (irq == 0)
 			return;
 	
 		/* check for NMI first */
@@ -1178,7 +1178,7 @@ public class tms34010
 	
 		which = (which+1) % 40;
 		buffer[which][0] = '\0';
-		if (!context)
+		if (context == 0)
 			r = &state;
 	
 		switch (regnum)
@@ -1591,7 +1591,7 @@ public class tms34010
 	
 			case REG_HSTCTLL:
 				/* the TMS34010 can change MSGOUT, can set INTOUT, and can clear INTIN */
-				if (!external_host_access)
+				if (external_host_access == 0)
 				{
 					newreg = (oldreg & 0xff8f) | (data & 0x0070);
 					newreg |= data & 0x0080;
@@ -1756,7 +1756,7 @@ public class tms34010
 	
 			case REG020_HSTCTLL:
 				/* the TMS34010 can change MSGOUT, can set INTOUT, and can clear INTIN */
-				if (!external_host_access)
+				if (external_host_access == 0)
 				{
 					newreg = (oldreg & 0xff8f) | (data & 0x0070);
 					newreg |= data & 0x0080;

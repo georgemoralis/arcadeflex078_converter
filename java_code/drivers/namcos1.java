@@ -368,7 +368,7 @@ public class namcos1
 	{
 		int ret;
 	
-		if (!num)
+		if (num == 0)
 			ret = (readinputport(0)&0x90) | strobe | (readinputport(4)&0x0f);
 		else
 			ret = (readinputport(0)&0x90) | strobe | (readinputport(5)&0x0f);
@@ -382,12 +382,12 @@ public class namcos1
 	{
 		int ret;
 	
-		if (!num)
+		if (num == 0)
 			ret = (readinputport(1)&0x90) | num | (readinputport(4)>>4);
 		else
 			ret = (readinputport(1)&0x90) | num | (readinputport(5)>>4);
 	
-		if (!strobe) num ^= 0x20;
+		if (strobe == 0) num ^= 0x20;
 	
 		return ret;
 	} };
@@ -396,7 +396,7 @@ public class namcos1
 	{
 		int ret;
 	
-		if (!num)
+		if (num == 0)
 			ret = (readinputport(0)&0x80) | (readinputport(4)&0x1f);
 		else if (num==3)
 			ret = (readinputport(0)&0x80) | (readinputport(5)&0x1f);
@@ -412,7 +412,7 @@ public class namcos1
 	
 		if (strobe != 0)
 		{
-			if (!num)
+			if (num == 0)
 				ret = (readinputport(1)&0x80) | strobe | ((readinputport(7)&0x07)<<3);
 			else
 				ret = (readinputport(1)&0x80) | strobe | (readinputport(7)&0x18);

@@ -648,7 +648,7 @@ public class tms32031
 		which = ( which + 1 ) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (!context)
+		if (context == 0)
 			r = &tms32031;
 	
 	    switch( regnum )

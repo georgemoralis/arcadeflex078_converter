@@ -308,7 +308,7 @@ public class berzerk
 	
 	public static ReadHandlerPtr berzerk_voiceboard_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	   if (!voice_playing)
+	   if (voice_playing == 0)
 	      return 0x00;
 	   else
 	      return 0x40;

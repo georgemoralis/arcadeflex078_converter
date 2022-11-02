@@ -136,7 +136,7 @@ public class karnov
 			 		0,TRANSPARENCY_NONE,0);
 		}
 	
-		if (!flipscreen) {
+		if (flipscreen == 0) {
 			scrolly=-scrolly;
 			scrollx=-scrollx;
 		} else {
@@ -245,13 +245,13 @@ public class karnov
 			return 1;
 	
 		dirty_f=auto_malloc(0x800);
-		if (!dirty_f)
+		if (dirty_f == 0)
 			return 1;
 		memset(dirty_f,1,0x800);
 	
 		fix_tilemap=tilemap_create(get_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (!fix_tilemap) return 1;
+		if (fix_tilemap == 0) return 1;
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
@@ -264,13 +264,13 @@ public class karnov
 			return 1;
 	
 		dirty_f=auto_malloc(0x800);
-		if (!dirty_f)
+		if (dirty_f == 0)
 			return 1;
 		memset(dirty_f,1,0x800);
 	
 		fix_tilemap=tilemap_create(get_fix_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (!fix_tilemap) return 1;
+		if (fix_tilemap == 0) return 1;
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;

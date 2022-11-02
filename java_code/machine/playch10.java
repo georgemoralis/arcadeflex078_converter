@@ -241,7 +241,7 @@ public class playch10
 			}
 	
 			/* now, add the trigger if not masked */
-			if ( !cntrl_mask )
+			if (cntrl_mask == 0)
 			{
 				ret |= ( trigger & 2 ) << 3;
 			}
@@ -399,7 +399,7 @@ public class playch10
 					{
 						int bank = ( mmc1_shiftreg & mmc1_rom_mask ) * 0x4000;
 	
-						if ( !size16k )
+						if (size16k == 0)
 						{
 							/* switch 32k */
 							memcpy( &memory_region( REGION_CPU2 )[0x08000], &memory_region( REGION_CPU2 )[0x010000+bank], 0x8000 );
@@ -740,7 +740,7 @@ public class playch10
 			break;
 	
 			case 0x2000: /* mirroring */
-				if( !gboard_4screen )
+				if (gboard_4screen == 0)
 				{
 					if ((data & 0x40) != 0)
 						ppu2c03b_set_mirroring( 0, PPU_MIRROR_HIGH );

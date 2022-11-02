@@ -74,7 +74,7 @@ public class bwing
 	
 	public static ReadHandlerPtr bwing_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (!srbank) offset = srxlat[offset];
+		if (srbank == 0) offset = srxlat[offset];
 	
 		return((srbase[srbank])[offset]);
 	} };
@@ -82,7 +82,7 @@ public class bwing
 	
 	public static WriteHandlerPtr bwing_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (!srbank)
+		if (srbank == 0)
 		{
 			offset = srxlat[offset];
 	

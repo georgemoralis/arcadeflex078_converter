@@ -222,7 +222,7 @@ public class meadows
 		/* check the fake coin input */
 		if (readinputport(3) & 0x01)
 		{
-			if (!coin1_state)
+			if (coin1_state == 0)
 			{
 				coin1_state = 1;
 				cpu_set_irq_line_and_vector(0, 0, PULSE_LINE, 0x82);

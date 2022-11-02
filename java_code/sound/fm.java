@@ -2227,7 +2227,7 @@ public class fm
 	/* shut down emulator */
 	void YM2203Shutdown(void)
 	{
-		if (!FM2203) return;
+		if (FM2203 == 0) return;
 	
 		FMCloseTable();
 		free(FM2203);
@@ -3505,7 +3505,7 @@ public class fm
 	/* shut down emulator */
 	void YM2608Shutdown()
 	{
-		if (!FM2608) return;
+		if (FM2608 == 0) return;
 	
 		FMCloseTable();
 		free(FM2608);
@@ -4211,7 +4211,7 @@ public class fm
 	/* shut down emulator */
 	void YM2610Shutdown()
 	{
-		if (!FM2610) return;
+		if (FM2610 == 0) return;
 	
 		FMCloseTable();
 		free(FM2610);
@@ -4712,7 +4712,7 @@ public class fm
 	/* shut down emulator */
 	void YM2612Shutdown()
 	{
-		if (!FM2612) return;
+		if (FM2612 == 0) return;
 	
 		FMCloseTable();
 		free(FM2612);
@@ -5392,7 +5392,7 @@ public class fm
 	/* ---------- shut down emulator ----------- */
 	void OPMShutdown()
 	{
-	    if (!FMOPM) return;
+	    if (FMOPM == 0) return;
 	
 		FMCloseTable();
 		free(FMOPM);
@@ -5436,7 +5436,7 @@ public class fm
 			/* LFO */
 			LFOCnt  = OPM.LFOCnt;
 			/*LFOIncr = OPM.LFOIncr;*/
-			if( !LFOIncr )
+			if (LFOIncr == 0)
 	          lfo_pmd = 0;
 			OPM_LFO_wave = OPM.wavetype;
 		}

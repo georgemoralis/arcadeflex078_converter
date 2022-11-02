@@ -670,7 +670,7 @@ public class xmlparse
 	    }
 	  }
 	
-	  if (!parser)
+	  if (parser == 0)
 	    return parser;
 	
 	  buffer = NULL;
@@ -860,7 +860,7 @@ public class xmlparse
 	    protocolEncodingName = NULL;
 	  else {
 	    protocolEncodingName = poolCopyString(&tempPool, encodingName);
-	    if (!protocolEncodingName)
+	    if (protocolEncodingName == 0)
 	      return XML_STATUS_ERROR;
 	  }
 	  return XML_STATUS_OK;
@@ -915,7 +915,7 @@ public class xmlparse
 	  XML_Bool oldns_triplets = ns_triplets;
 	
 	#ifdef XML_DTD
-	  if (!context)
+	  if (context == 0)
 	    newDtd = oldDtd;
 	#endif /* XML_DTD */
 	
@@ -933,7 +933,7 @@ public class xmlparse
 	    parser = parserCreate(encodingName, &parser.m_mem, NULL, newDtd);
 	  }
 	
-	  if (!parser)
+	  if (parser == 0)
 	    return NULL;
 	
 	  startElementHandler = oldStartElementHandler;
@@ -1001,7 +1001,7 @@ public class xmlparse
 	{
 	  for (;;) {
 	    BINDING *b = bindings;
-	    if (!b)
+	    if (b == 0)
 	      break;
 	    bindings = b.nextTagBinding;
 	    FREE(b.uri);
@@ -1095,7 +1095,7 @@ public class xmlparse
 	{
 	  if (p != 0) {
 	    p = poolCopyString(&_dtd.pool, p);
-	    if (!p)
+	    if (p == 0)
 	      return XML_STATUS_ERROR;
 	    curBase = p;
 	  }
@@ -1342,7 +1342,7 @@ public class xmlparse
 	XML_Parse(XML_Parser parser, const char *s, int len, int isFinal)
 	{
 	  if (len == 0) {
-	    if (!isFinal)
+	    if (isFinal == 0)
 	      return XML_STATUS_OK;
 	    positionPtr = bufferPtr;
 	    errorCode = processor(parser, bufferPtr, parseEndPtr = bufferEnd, 0);
@@ -1387,7 +1387,7 @@ public class xmlparse
 	          return XML_STATUS_ERROR;
 	        }
 	        buffer = temp;
-	        if (!buffer) {
+	        if (buffer == 0) {
 	          errorCode = XML_ERROR_NO_MEMORY;
 	          eventPtr = eventEndPtr = NULL;
 	          processor = errorProcessor;
@@ -1423,7 +1423,7 @@ public class xmlparse
 	  errorCode = processor(parser, start, parseEndPtr = bufferEnd,
 	                        isFinal ? (const char **)NULL : &bufferPtr);
 	  if (errorCode == XML_ERROR_NONE) {
-	    if (!isFinal) {
+	    if (isFinal == 0) {
 	      XmlUpdatePosition(encoding, positionPtr, bufferPtr, &position);
 	      positionPtr = bufferPtr;
 	    }
@@ -1952,7 +1952,7 @@ public class xmlparse
 	        name = poolStoreString(&dtd.pool, enc,
 	                                s + enc.minBytesPerChar,
 	                                next - enc.minBytesPerChar);
-	        if (!name)
+	        if (name == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        entity = (ENTITY *)lookup(&dtd.generalEntities, name, 0);
 	        poolDiscard(&dtd.pool);
@@ -1961,12 +1961,12 @@ public class xmlparse
 	           otherwise call the skipped entity or default handler.
 	        */
 	        if (!dtd.hasParamEntityRefs || dtd.standalone) {
-	          if (!entity)
+	          if (entity == 0)
 	            return XML_ERROR_UNDEFINED_ENTITY;
 	          else if (!entity.is_internal)
 	            return XML_ERROR_ENTITY_DECLARED_IN_PE;
 	        }
-	        else if (!entity) {
+	        else if (entity == 0) {
 	          if (skippedEntityHandler != 0)
 	            skippedEntityHandler(handlerArg, name, 0);
 	          else if (defaultHandler != 0)
@@ -1980,7 +1980,7 @@ public class xmlparse
 	        if (entity.textPtr) {
 	          enum XML_Error result;
 	          OPEN_INTERNAL_ENTITY openEntity;
-	          if (!defaultExpandInternalEntities) {
+	          if (defaultExpandInternalEntities == 0) {
 	            if (skippedEntityHandler != 0)
 	              skippedEntityHandler(handlerArg, entity.name, 0);
 	            else if (defaultHandler != 0)
@@ -2009,7 +2009,7 @@ public class xmlparse
 	          entity.open = XML_TRUE;
 	          context = getContext(parser);
 	          entity.open = XML_FALSE;
-	          if (!context)
+	          if (context == 0)
 	            return XML_ERROR_NO_MEMORY;
 	          if (!externalEntityRefHandler((XML_Parser)externalEntityRefHandlerArg,
 	                                        context,
@@ -2036,7 +2036,7 @@ public class xmlparse
 	        }
 	        else {
 	          tag = (TAG *)MALLOC(sizeof(TAG));
-	          if (!tag)
+	          if (tag == 0)
 	            return XML_ERROR_NO_MEMORY;
 	          tag.buf = (char *)MALLOC(INIT_TAG_BUF_SIZE);
 	          if (!tag.buf) {
@@ -2238,7 +2238,7 @@ public class xmlparse
 	        else if (defaultHandler != 0)
 	          reportDefault(parser, enc, s, next);
 	        result = doCdataSection(parser, enc, &next, end, nextPtr);
-	        if (!next) {
+	        if (next == 0) {
 	          processor = cdataSectionProcessor;
 	          return result;
 	        }
@@ -2342,13 +2342,13 @@ public class xmlparse
 	
 	  /* lookup the element type name */
 	  elementType = (ELEMENT_TYPE *)lookup(&dtd.elementTypes, tagNamePtr.str,0);
-	  if (!elementType) {
+	  if (elementType == 0) {
 	    const XML_Char *name = poolCopyString(&dtd.pool, tagNamePtr.str);
-	    if (!name)
+	    if (name == 0)
 	      return XML_ERROR_NO_MEMORY;
 	    elementType = (ELEMENT_TYPE *)lookup(&dtd.elementTypes, name,
 	                                         sizeof(ELEMENT_TYPE));
-	    if (!elementType)
+	    if (elementType == 0)
 	      return XML_ERROR_NO_MEMORY;
 	    if (ns && !setElementTypePrefix(parser, elementType))
 	      return XML_ERROR_NO_MEMORY;
@@ -2375,7 +2375,7 @@ public class xmlparse
 	    ATTRIBUTE_ID *attId = getAttributeId(parser, enc, atts[i].name,
 	                                         atts[i].name
 	                                         + XmlNameLength(enc, atts[i].name));
-	    if (!attId)
+	    if (attId == 0)
 	      return XML_ERROR_NO_MEMORY;
 	    /* detect duplicate attributes */
 	    if ((attId.name)[-1]) {
@@ -2527,7 +2527,7 @@ public class xmlparse
 	  /* expand the element type name */
 	  if (elementType.prefix) {
 	    binding = elementType.prefix.binding;
-	    if (!binding)
+	    if (binding == 0)
 	      return XML_ERROR_NONE;
 	    localPart = tagNamePtr.str;
 	    while (*localPart++ != XML_T(':'))
@@ -2554,7 +2554,7 @@ public class xmlparse
 	  if (n > binding.uriAlloc) {
 	    TAG *p;
 	    uri = (XML_Char *)MALLOC((n + EXPAND_SPARE) * sizeof(XML_Char));
-	    if (!uri)
+	    if (uri == 0)
 	      return XML_ERROR_NO_MEMORY;
 	    binding.uriAlloc = n + EXPAND_SPARE;
 	    memcpy(uri, binding.uri, binding.uriLen * sizeof(XML_Char));
@@ -2607,7 +2607,7 @@ public class xmlparse
 	  }
 	  else {
 	    b = (BINDING *)MALLOC(sizeof(BINDING));
-	    if (!b)
+	    if (b == 0)
 	      return XML_ERROR_NO_MEMORY;
 	    b.uri = (XML_Char *)MALLOC(sizeof(XML_Char) * (len + EXPAND_SPARE));
 	    if (!b.uri) {
@@ -2840,7 +2840,7 @@ public class xmlparse
 	  const char *s;
 	#ifdef XML_UNICODE
 	  char encodingBuf[128];
-	  if (!protocolEncodingName)
+	  if (protocolEncodingName == 0)
 	    s = NULL;
 	  else {
 	    int i;
@@ -2901,7 +2901,7 @@ public class xmlparse
 	                                      encodingName,
 	                                      encodingName
 	                                      + XmlNameLength(encoding, encodingName));
-	      if (!storedEncName)
+	      if (storedEncName == 0)
 	              return XML_ERROR_NO_MEMORY;
 	      poolFinish(&temp2Pool);
 	    }
@@ -2910,7 +2910,7 @@ public class xmlparse
 	                                      encoding,
 	                                      version,
 	                                      versionend - encoding.minBytesPerChar);
-	      if (!storedversion)
+	      if (storedversion == 0)
 	        return XML_ERROR_NO_MEMORY;
 	    }
 	    xmlDeclHandler(handlerArg, storedversion, storedEncName, standalone);
@@ -2927,11 +2927,11 @@ public class xmlparse
 	    }
 	    else if (encodingName != 0) {
 	      enum XML_Error result;
-	      if (!storedEncName) {
+	      if (storedEncName == 0) {
 	        storedEncName = poolStoreString(
 	          &temp2Pool, encoding, encodingName,
 	          encodingName + XmlNameLength(encoding, encodingName));
-	        if (!storedEncName)
+	        if (storedEncName == 0)
 	          return XML_ERROR_NO_MEMORY;
 	      }
 	      result = handleUnknownEncoding(parser, storedEncName);
@@ -2963,7 +2963,7 @@ public class xmlparse
 	                               &info)) {
 	      ENCODING *enc;
 	      unknownEncodingMem = MALLOC(XmlSizeOfUnknownEncoding());
-	      if (!unknownEncodingMem) {
+	      if (unknownEncodingMem == 0) {
 	        if (info.release)
 	          info.release(info.data);
 	        return XML_ERROR_NO_MEMORY;
@@ -3261,7 +3261,7 @@ public class xmlparse
 	    case XML_ROLE_DOCTYPE_NAME:
 	      if (startDoctypeDeclHandler != 0) {
 	        doctypeName = poolStoreString(&tempPool, enc, s, next);
-	        if (!doctypeName)
+	        if (doctypeName == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        poolFinish(&tempPool);
 	        doctypePubid = NULL;
@@ -3298,7 +3298,7 @@ public class xmlparse
 	        doctypePubid = poolStoreString(&tempPool, enc,
 	                                       s + enc.minBytesPerChar,
 	                                       next - enc.minBytesPerChar);
-	        if (!doctypePubid)
+	        if (doctypePubid == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        poolFinish(&tempPool);
 	        handleDefault = XML_FALSE;
@@ -3307,7 +3307,7 @@ public class xmlparse
 	      declEntity = (ENTITY *)lookup(&dtd.paramEntities,
 	                                    externalSubsetName,
 	                                    sizeof(ENTITY));
-	      if (!declEntity)
+	      if (declEntity == 0)
 	        return XML_ERROR_NO_MEMORY;
 	#endif /* XML_DTD */
 	      /* fall through */
@@ -3319,7 +3319,7 @@ public class xmlparse
 	                                        enc,
 	                                        s + enc.minBytesPerChar,
 	                                        next - enc.minBytesPerChar);
-	        if (!tem)
+	        if (tem == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        normalizePublicId(tem);
 	        declEntity.publicId = tem;
@@ -3346,7 +3346,7 @@ public class xmlparse
 	          ENTITY *entity = (ENTITY *)lookup(&dtd.paramEntities,
 	                                            externalSubsetName,
 	                                            sizeof(ENTITY));
-	          if (!entity)
+	          if (entity == 0)
 	            return XML_ERROR_NO_MEMORY;
 	          if (useForeignDTD != 0)
 	            entity.base = curBase;
@@ -3383,7 +3383,7 @@ public class xmlparse
 	          ENTITY *entity = (ENTITY *)lookup(&dtd.paramEntities,
 	                                            externalSubsetName,
 	                                            sizeof(ENTITY));
-	          if (!entity)
+	          if (entity == 0)
 	            return XML_ERROR_NO_MEMORY;
 	          entity.base = curBase;
 	          dtd.paramEntityRead = XML_FALSE;
@@ -3406,12 +3406,12 @@ public class xmlparse
 	      return contentProcessor(parser, s, end, nextPtr);
 	    case XML_ROLE_ATTLIST_ELEMENT_NAME:
 	      declElementType = getElementType(parser, enc, s, next);
-	      if (!declElementType)
+	      if (declElementType == 0)
 	        return XML_ERROR_NO_MEMORY;
 	      goto checkAttListDeclHandler;
 	    case XML_ROLE_ATTRIBUTE_NAME:
 	      declAttributeId = getAttributeId(parser, enc, s, next);
-	      if (!declAttributeId)
+	      if (declAttributeId == 0)
 	        return XML_ERROR_NO_MEMORY;
 	      declAttributeIsCdata = XML_FALSE;
 	      declAttributeType = NULL;
@@ -3587,11 +3587,11 @@ public class xmlparse
 	#ifndef XML_DTD
 	      break;
 	#else /* XML_DTD */
-	      if (!declEntity) {
+	      if (declEntity == 0) {
 	        declEntity = (ENTITY *)lookup(&dtd.paramEntities,
 	                                      externalSubsetName,
 	                                      sizeof(ENTITY));
-	        if (!declEntity)
+	        if (declEntity == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        declEntity.publicId = NULL;
 	      }
@@ -3661,11 +3661,11 @@ public class xmlparse
 	        }
 	        if (dtd.keepProcessing) {
 	          const XML_Char *name = poolStoreString(&dtd.pool, enc, s, next);
-	          if (!name)
+	          if (name == 0)
 	            return XML_ERROR_NO_MEMORY;
 	          declEntity = (ENTITY *)lookup(&dtd.generalEntities, name,
 	                                        sizeof(ENTITY));
-	          if (!declEntity)
+	          if (declEntity == 0)
 	            return XML_ERROR_NO_MEMORY;
 	          if (declEntity.name != name) {
 	            poolDiscard(&dtd.pool);
@@ -3693,11 +3693,11 @@ public class xmlparse
 	#ifdef XML_DTD
 	      if (dtd.keepProcessing) {
 	        const XML_Char *name = poolStoreString(&dtd.pool, enc, s, next);
-	        if (!name)
+	        if (name == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        declEntity = (ENTITY *)lookup(&dtd.paramEntities,
 	                                           name, sizeof(ENTITY));
-	        if (!declEntity)
+	        if (declEntity == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        if (declEntity.name != name) {
 	          poolDiscard(&dtd.pool);
@@ -3728,7 +3728,7 @@ public class xmlparse
 	      declNotationName = NULL;
 	      if (notationDeclHandler != 0) {
 	        declNotationName = poolStoreString(&tempPool, enc, s, next);
-	        if (!declNotationName)
+	        if (declNotationName == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        poolFinish(&tempPool);
 	        handleDefault = XML_FALSE;
@@ -3742,7 +3742,7 @@ public class xmlparse
 	                                        enc,
 	                                        s + enc.minBytesPerChar,
 	                                        next - enc.minBytesPerChar);
-	        if (!tem)
+	        if (tem == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        normalizePublicId(tem);
 	        declNotationPublicId = tem;
@@ -3756,7 +3756,7 @@ public class xmlparse
 	          = poolStoreString(&tempPool, enc,
 	                            s + enc.minBytesPerChar,
 	                            next - enc.minBytesPerChar);
-	        if (!systemId)
+	        if (systemId == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        *eventEndPP = s;
 	        notationDeclHandler(handlerArg,
@@ -3797,7 +3797,7 @@ public class xmlparse
 	          reportDefault(parser, enc, s, next);
 	        handleDefault = XML_FALSE;
 	        result = doIgnoreSection(parser, enc, &next, end, nextPtr);
-	        if (!next) {
+	        if (next == 0) {
 	          processor = ignoreSectionProcessor;
 	          return result;
 	        }
@@ -3821,7 +3821,7 @@ public class xmlparse
 	        }
 	        else {
 	          groupConnector = (char *)MALLOC(groupSize = 32);
-	          if (!groupConnector)
+	          if (groupConnector == 0)
 	            return XML_ERROR_NO_MEMORY;
 	        }
 	      }
@@ -3868,7 +3868,7 @@ public class xmlparse
 	          role == XML_ROLE_INNER_PARAM_ENTITY_REF)
 	        return XML_ERROR_PARAM_ENTITY_REF;
 	      dtd.hasParamEntityRefs = XML_TRUE;
-	      if (!paramEntityParsing)
+	      if (paramEntityParsing == 0)
 	        dtd.keepProcessing = dtd.standalone;
 	      else {
 	        const XML_Char *name;
@@ -3876,7 +3876,7 @@ public class xmlparse
 	        name = poolStoreString(&dtd.pool, enc,
 	                                s + enc.minBytesPerChar,
 	                                next - enc.minBytesPerChar);
-	        if (!name)
+	        if (name == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        entity = (ENTITY *)lookup(&dtd.paramEntities, name, 0);
 	        poolDiscard(&dtd.pool);
@@ -3888,12 +3888,12 @@ public class xmlparse
 	            (dtd.standalone
 	             ? !openInternalEntities
 	             : !dtd.hasParamEntityRefs)) {
-	          if (!entity)
+	          if (entity == 0)
 	            return XML_ERROR_UNDEFINED_ENTITY;
 	          else if (!entity.is_internal)
 	            return XML_ERROR_ENTITY_DECLARED_IN_PE;
 	        }
-	        else if (!entity) {
+	        else if (entity == 0) {
 	          dtd.keepProcessing = dtd.standalone;
 	          /* cannot report skipped entities in declarations */
 	          if ((role == XML_ROLE_PARAM_ENTITY_REF) && skippedEntityHandler) {
@@ -3947,7 +3947,7 @@ public class xmlparse
 	    case XML_ROLE_ELEMENT_NAME:
 	      if (elementDeclHandler != 0) {
 	        declElementType = getElementType(parser, enc, s, next);
-	        if (!declElementType)
+	        if (declElementType == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        dtd.scaffLevel = 0;
 	        dtd.scaffCount = 0;
@@ -3961,7 +3961,7 @@ public class xmlparse
 	      if (dtd.in_eldecl) {
 	        if (elementDeclHandler != 0) {
 	          XML_Content * content = (XML_Content *) MALLOC(sizeof(XML_Content));
-	          if (!content)
+	          if (content == 0)
 	            return XML_ERROR_NO_MEMORY;
 	          content.quant = XML_CQUANT_NONE;
 	          content.name = NULL;
@@ -4012,7 +4012,7 @@ public class xmlparse
 	        dtd.scaffold[myindex].type = XML_CTYPE_NAME;
 	        dtd.scaffold[myindex].quant = quant;
 	        el = getElementType(parser, enc, s, nxt);
-	        if (!el)
+	        if (el == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        name = el.name;
 	        dtd.scaffold[myindex].name = name;
@@ -4042,9 +4042,9 @@ public class xmlparse
 	        dtd.scaffLevel--;
 	        dtd.scaffold[dtd.scaffIndex[dtd.scaffLevel]].quant = quant;
 	        if (dtd.scaffLevel == 0) {
-	          if (!handleDefault) {
+	          if (handleDefault == 0) {
 	            XML_Content *model = build_model(parser);
-	            if (!model)
+	            if (model == 0)
 	              return XML_ERROR_NO_MEMORY;
 	            *eventEndPP = s;
 	            elementDeclHandler(handlerArg, declElementType.name, model);
@@ -4250,7 +4250,7 @@ public class xmlparse
 	            && (poolLength(pool) == 0 || poolLastChar(pool) == 0x20))
 	          break;
 	        n = XmlEncode(n, (ICHAR *)buf);
-	        if (!n) {
+	        if (n == 0) {
 	          if (enc == encoding)
 	            eventPtr = ptr;
 	          return XML_ERROR_BAD_CHAR_REF;
@@ -4291,7 +4291,7 @@ public class xmlparse
 	        name = poolStoreString(&temp2Pool, enc,
 	                               ptr + enc.minBytesPerChar,
 	                               next - enc.minBytesPerChar);
-	        if (!name)
+	        if (name == 0)
 	          return XML_ERROR_NO_MEMORY;
 	        entity = (ENTITY *)lookup(&dtd.generalEntities, name, 0);
 	        poolDiscard(&temp2Pool);
@@ -4310,12 +4310,12 @@ public class xmlparse
 	        else /* if (pool == &tempPool): we are called from content */
 	          checkEntityDecl = !dtd.hasParamEntityRefs || dtd.standalone;
 	        if (checkEntityDecl != 0) {
-	          if (!entity)
+	          if (entity == 0)
 	            return XML_ERROR_UNDEFINED_ENTITY;
 	          else if (!entity.is_internal)
 	            return XML_ERROR_ENTITY_DECLARED_IN_PE;
 	        }
-	        else if (!entity) {
+	        else if (entity == 0) {
 	          /* cannot report skipped entity here - see comments on
 	             skippedEntityHandler
 	          if (skippedEntityHandler != 0)
@@ -4396,13 +4396,13 @@ public class xmlparse
 	        name = poolStoreString(&tempPool, enc,
 	                               entityTextPtr + enc.minBytesPerChar,
 	                               next - enc.minBytesPerChar);
-	        if (!name) {
+	        if (name == 0) {
 	          result = XML_ERROR_NO_MEMORY;
 	          goto endEntityValue;
 	        }
 	        entity = (ENTITY *)lookup(&dtd.paramEntities, name, 0);
 	        poolDiscard(&tempPool);
-	        if (!entity) {
+	        if (entity == 0) {
 	          /* not a well-formedness error - see XML 1.0: WFC Entity Declared */
 	          /* cannot report skipped entity here - see comments on
 	             skippedEntityHandler
@@ -4489,7 +4489,7 @@ public class xmlparse
 	          goto endEntityValue;
 	        }
 	        n = XmlEncode(n, (ICHAR *)buf);
-	        if (!n) {
+	        if (n == 0) {
 	          if (enc == encoding)
 	            eventPtr = entityTextPtr;
 	          result = XML_ERROR_BAD_CHAR_REF;
@@ -4559,7 +4559,7 @@ public class xmlparse
 	  const XML_Char *target;
 	  XML_Char *data;
 	  const char *tem;
-	  if (!processingInstructionHandler) {
+	  if (processingInstructionHandler == 0) {
 	    if (defaultHandler != 0)
 	      reportDefault(parser, enc, start, end);
 	    return 1;
@@ -4567,13 +4567,13 @@ public class xmlparse
 	  start += enc.minBytesPerChar * 2;
 	  tem = start + XmlNameLength(enc, start);
 	  target = poolStoreString(&tempPool, enc, start, tem);
-	  if (!target)
+	  if (target == 0)
 	    return 0;
 	  poolFinish(&tempPool);
 	  data = poolStoreString(&tempPool, enc,
 	                        XmlSkipS(enc, tem),
 	                        end - enc.minBytesPerChar*2);
-	  if (!data)
+	  if (data == 0)
 	    return 0;
 	  normalizeLines(data);
 	  processingInstructionHandler(handlerArg, target, data);
@@ -4586,7 +4586,7 @@ public class xmlparse
 	              const char *start, const char *end)
 	{
 	  XML_Char *data;
-	  if (!commentHandler) {
+	  if (commentHandler == 0) {
 	    if (defaultHandler != 0)
 	      reportDefault(parser, enc, start, end);
 	    return 1;
@@ -4595,7 +4595,7 @@ public class xmlparse
 	                         enc,
 	                         start + enc.minBytesPerChar * 4,
 	                         end - enc.minBytesPerChar * 3);
-	  if (!data)
+	  if (data == 0)
 	    return 0;
 	  normalizeLines(data);
 	  commentHandler(handlerArg, data);
@@ -4669,7 +4669,7 @@ public class xmlparse
 	  att.id = attId;
 	  att.value = value;
 	  att.isCdata = isCdata;
-	  if (!isCdata)
+	  if (isCdata == 0)
 	    attId.maybeTokenized = XML_TRUE;
 	  type.nDefaultAtts += 1;
 	  return 1;
@@ -4692,7 +4692,7 @@ public class xmlparse
 	        return 0;
 	      prefix = (PREFIX *)lookup(&dtd.prefixes, poolStart(&dtd.pool),
 	                                sizeof(PREFIX));
-	      if (!prefix)
+	      if (prefix == 0)
 	        return 0;
 	      if (prefix.name == poolStart(&dtd.pool))
 	        poolFinish(&dtd.pool);
@@ -4715,17 +4715,17 @@ public class xmlparse
 	  if (!poolAppendChar(&dtd.pool, XML_T('\0')))
 	    return NULL;
 	  name = poolStoreString(&dtd.pool, enc, start, end);
-	  if (!name)
+	  if (name == 0)
 	    return NULL;
 	  ++name;
 	  id = (ATTRIBUTE_ID *)lookup(&dtd.attributeIds, name, sizeof(ATTRIBUTE_ID));
-	  if (!id)
+	  if (id == 0)
 	    return NULL;
 	  if (id.name != name)
 	    poolDiscard(&dtd.pool);
 	  else {
 	    poolFinish(&dtd.pool);
-	    if (!ns)
+	    if (ns == 0)
 	      ;
 	    else if (name[0] == XML_T('x')
 	        && name[1] == XML_T('m')
@@ -4793,7 +4793,7 @@ public class xmlparse
 	    int len;
 	    const XML_Char *s;
 	    PREFIX *prefix = (PREFIX *)hashTableIterNext(&iter);
-	    if (!prefix)
+	    if (prefix == 0)
 	      break;
 	    if (!prefix.binding)
 	      continue;
@@ -4818,7 +4818,7 @@ public class xmlparse
 	  for (;;) {
 	    const XML_Char *s;
 	    ENTITY *e = (ENTITY *)hashTableIterNext(&iter);
-	    if (!e)
+	    if (e == 0)
 	      break;
 	    if (!e.open)
 	      continue;
@@ -4863,7 +4863,7 @@ public class xmlparse
 	          return XML_FALSE;
 	        prefix = (PREFIX *)lookup(&dtd.prefixes, poolStart(&tempPool),
 	                                  sizeof(PREFIX));
-	        if (!prefix)
+	        if (prefix == 0)
 	          return XML_FALSE;
 	        if (prefix.name == poolStart(&tempPool)) {
 	          prefix.name = poolCopyString(&dtd.pool, prefix.name);
@@ -4960,7 +4960,7 @@ public class xmlparse
 	  hashTableIterInit(&iter, &(p.elementTypes));
 	  for (;;) {
 	    ELEMENT_TYPE *e = (ELEMENT_TYPE *)hashTableIterNext(&iter);
-	    if (!e)
+	    if (e == 0)
 	      break;
 	    if (e.allocDefaultAtts != 0)
 	      ms.free_fcn(e.defaultAtts);
@@ -5006,7 +5006,7 @@ public class xmlparse
 	  hashTableIterInit(&iter, &(p.elementTypes));
 	  for (;;) {
 	    ELEMENT_TYPE *e = (ELEMENT_TYPE *)hashTableIterNext(&iter);
-	    if (!e)
+	    if (e == 0)
 	      break;
 	    if (e.allocDefaultAtts != 0)
 	      ms.free_fcn(e.defaultAtts);
@@ -5045,10 +5045,10 @@ public class xmlparse
 	  for (;;) {
 	    const XML_Char *name;
 	    const PREFIX *oldP = (PREFIX *)hashTableIterNext(&iter);
-	    if (!oldP)
+	    if (oldP == 0)
 	      break;
 	    name = poolCopyString(&(newDtd.pool), oldP.name);
-	    if (!name)
+	    if (name == 0)
 	      return 0;
 	    if (!lookup(&(newDtd.prefixes), name, sizeof(PREFIX)))
 	      return 0;
@@ -5063,18 +5063,18 @@ public class xmlparse
 	    const XML_Char *name;
 	    const ATTRIBUTE_ID *oldA = (ATTRIBUTE_ID *)hashTableIterNext(&iter);
 	
-	    if (!oldA)
+	    if (oldA == 0)
 	      break;
 	    /* Remember to allocate the scratch byte before the name. */
 	    if (!poolAppendChar(&(newDtd.pool), XML_T('\0')))
 	      return 0;
 	    name = poolCopyString(&(newDtd.pool), oldA.name);
-	    if (!name)
+	    if (name == 0)
 	      return 0;
 	    ++name;
 	    newA = (ATTRIBUTE_ID *)lookup(&(newDtd.attributeIds), name,
 	                                  sizeof(ATTRIBUTE_ID));
-	    if (!newA)
+	    if (newA == 0)
 	      return 0;
 	    newA.maybeTokenized = oldA.maybeTokenized;
 	    if (oldA.prefix) {
@@ -5096,14 +5096,14 @@ public class xmlparse
 	    ELEMENT_TYPE *newE;
 	    const XML_Char *name;
 	    const ELEMENT_TYPE *oldE = (ELEMENT_TYPE *)hashTableIterNext(&iter);
-	    if (!oldE)
+	    if (oldE == 0)
 	      break;
 	    name = poolCopyString(&(newDtd.pool), oldE.name);
-	    if (!name)
+	    if (name == 0)
 	      return 0;
 	    newE = (ELEMENT_TYPE *)lookup(&(newDtd.elementTypes), name,
 	                                  sizeof(ELEMENT_TYPE));
-	    if (!newE)
+	    if (newE == 0)
 	      return 0;
 	    if (oldE.nDefaultAtts) {
 	      newE.defaultAtts = (DEFAULT_ATTRIBUTE *)
@@ -5179,17 +5179,17 @@ public class xmlparse
 	    ENTITY *newE;
 	    const XML_Char *name;
 	    const ENTITY *oldE = (ENTITY *)hashTableIterNext(&iter);
-	    if (!oldE)
+	    if (oldE == 0)
 	      break;
 	    name = poolCopyString(newPool, oldE.name);
-	    if (!name)
+	    if (name == 0)
 	      return 0;
 	    newE = (ENTITY *)lookup(newTable, name, sizeof(ENTITY));
-	    if (!newE)
+	    if (newE == 0)
 	      return 0;
 	    if (oldE.systemId) {
 	      const XML_Char *tem = poolCopyString(newPool, oldE.systemId);
-	      if (!tem)
+	      if (tem == 0)
 	        return 0;
 	      newE.systemId = tem;
 	      if (oldE.base) {
@@ -5198,14 +5198,14 @@ public class xmlparse
 	        else {
 	          cachedOldBase = oldE.base;
 	          tem = poolCopyString(newPool, cachedOldBase);
-	          if (!tem)
+	          if (tem == 0)
 	            return 0;
 	          cachedNewBase = newE.base = tem;
 	        }
 	      }
 	      if (oldE.publicId) {
 	        tem = poolCopyString(newPool, oldE.publicId);
-	        if (!tem)
+	        if (tem == 0)
 	          return 0;
 	        newE.publicId = tem;
 	      }
@@ -5213,14 +5213,14 @@ public class xmlparse
 	    else {
 	      const XML_Char *tem = poolCopyStringN(newPool, oldE.textPtr,
 	                                            oldE.textLen);
-	      if (!tem)
+	      if (tem == 0)
 	        return 0;
 	      newE.textPtr = tem;
 	      newE.textLen = oldE.textLen;
 	    }
 	    if (oldE.notation) {
 	      const XML_Char *tem = poolCopyString(newPool, oldE.notation);
-	      if (!tem)
+	      if (tem == 0)
 	        return 0;
 	      newE.notation = tem;
 	    }
@@ -5257,7 +5257,7 @@ public class xmlparse
 	  if (table.size == 0) {
 	    size_t tsize;
 	
-	    if (!createSize)
+	    if (createSize == 0)
 	      return NULL;
 	    tsize = INIT_SIZE * sizeof(NAMED *);
 	    table.v = (NAMED **)table.mem.malloc_fcn(tsize);
@@ -5276,14 +5276,14 @@ public class xmlparse
 	      if (keyeq(name, table.v[i].name))
 	        return table.v[i];
 	    }
-	    if (!createSize)
+	    if (createSize == 0)
 	      return NULL;
 	    if (table.used == table.usedLim) {
 	      /* check for overflow */
 	      size_t newSize = table.size * 2;
 	      size_t tsize = newSize * sizeof(NAMED *);
 	      NAMED **newV = (NAMED **)table.mem.malloc_fcn(tsize);
-	      if (!newV)
+	      if (newV == 0)
 	        return NULL;
 	      memset(newV, 0, tsize);
 	      for (i = 0; i < table.size; i++)
@@ -5531,7 +5531,7 @@ public class xmlparse
 	      blockSize *= 2;
 	    tem = (BLOCK *)pool.mem.malloc_fcn(offsetof(BLOCK, s)
 						+ blockSize * sizeof(XML_Char));
-	    if (!tem)
+	    if (tem == 0)
 	      return XML_FALSE;
 	    tem.size = blockSize;
 	    tem.next = pool.blocks;
@@ -5643,7 +5643,7 @@ public class xmlparse
 	                   + (dtd.contentStringLen * sizeof(XML_Char)));
 	
 	  ret = (XML_Content *)MALLOC(allocsize);
-	  if (!ret)
+	  if (ret == 0)
 	    return NULL;
 	
 	  str =  (XML_Char *) (&ret[dtd.scaffCount]);
@@ -5663,10 +5663,10 @@ public class xmlparse
 	  const XML_Char *name = poolStoreString(&dtd.pool, enc, ptr, end);
 	  ELEMENT_TYPE *ret;
 	
-	  if (!name)
+	  if (name == 0)
 	    return NULL;
 	  ret = (ELEMENT_TYPE *) lookup(&dtd.elementTypes, name, sizeof(ELEMENT_TYPE));
-	  if (!ret)
+	  if (ret == 0)
 	    return NULL;
 	  if (ret.name != name)
 	    poolDiscard(&dtd.pool);

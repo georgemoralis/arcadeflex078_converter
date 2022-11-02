@@ -218,7 +218,7 @@ public class taito_f2
 	public static VideoUpdateHandlerPtr video_update_taitof2_mjnquest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int failed = (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));	/* non-zero = failure */
-		if (!failed)  TC0100SCN_set_bg_tilemask(0x7fff);
+		if (failed == 0)  TC0100SCN_set_bg_tilemask(0x7fff);
 	
 		return failed;
 	} };

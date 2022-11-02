@@ -226,7 +226,7 @@ public class scsp
 			SCSP[0].Int68kCB(IrqMidi);
 			return;
 		}
-		if(!pend)
+		if (pend == 0)
 			return;
 		if ((pend & 0x40) != 0)
 			if ((en & 0x40) != 0)
@@ -389,7 +389,7 @@ public class scsp
 			SCSP = &SCSPs[i];
 			memset(SCSP,0,sizeof(SCSP));
 	
-			if (!i)
+			if (i == 0)
 			{
 				SCSP.Master=1;
 			}
@@ -878,7 +878,7 @@ public class scsp
 			signed int smpl=*bufl1>>2;
 			signed int smpr=*bufr1>>2;
 	
-			if (!chip)
+			if (chip == 0)
 			{
 				SCSP_TimersAddTicks(1);
 				CheckPendingIRQ();

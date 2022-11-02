@@ -1315,7 +1315,7 @@ public class make68k
 	
 				// Always read long
 			 fprintf(fp, "\t\t test  esi,2\n");
-	if (!ppro)
+	if (ppro == 0)
 	{
 				fprintf(fp, "\t\t mov   %s,dword [esi+ebp]\n",regnameslong[Dreg]);
 	
@@ -2043,7 +2043,7 @@ public class make68k
 				break;
 	
 			case 1:	/* F - Never */
-				if (!Condition)
+				if (Condition == 0)
 				{
 					fprintf(fp, "\t\t jmp   near %s\n",Label);
 				}
@@ -3106,7 +3106,7 @@ public class make68k
 	
 					/* No flags if Destination Ax */
 	
-					if (!SaveEDX)
+					if (SaveEDX == 0)
 					{
 						SetFlags(Size,EAX,TRUE,FALSE,TRUE);
 					}
@@ -3433,7 +3433,7 @@ public class make68k
 	
 						/* No Flags for Address Direct */
 	
-						if (!SaveEDX)
+						if (SaveEDX == 0)
 						{
 							/* Directly after ADD or SUB, so test not needed */
 	
@@ -8150,7 +8150,7 @@ public class make68k
 		for (dwLoop=0;dwLoop<65536;)  OpcodeArray[dwLoop++] = -2;
 	
 		codebuf=malloc(64);
-		if (!codebuf)
+		if (codebuf == 0)
 		{
 			printf ("Memory allocation error\n");
 			exit(3);
@@ -8158,7 +8158,7 @@ public class make68k
 	
 		/* Emit the code */
 		fp = fopen(argv[1], "w");
-		if (!fp)
+		if (fp == 0)
 		{
 			fprintf(stderr, "Can't open %s for writing\n", argv[1]);
 			exit(1);
@@ -8186,7 +8186,7 @@ public class make68k
 	
 		/* output Jump table to separate file */
 		fp = fopen(argv[2], "w");
-		if (!fp)
+		if (fp == 0)
 		{
 			fprintf(stderr, "Can't open %s for writing\n", argv[2]);
 			exit(1);

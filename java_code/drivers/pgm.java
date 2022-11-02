@@ -145,7 +145,7 @@ public class pgm
 		static struct tm *today;
 	
 		// initialize the time, otherwise it crashes
-		if( !ltime )
+		if (ltime == 0)
 		{
 			time(&ltime);
 			today = localtime(&ltime);

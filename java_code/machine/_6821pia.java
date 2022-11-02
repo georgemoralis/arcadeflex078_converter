@@ -204,7 +204,7 @@ public class _6821pia
 	{
 		if (which >= MAX_PIA) return;
 		memset(&pia[which], 0, sizeof(pia[0]));
-		if (!intf) return;
+		if (intf == 0) return;
 		pia[which].intf = intf;
 		pia[which].addr = addressing;
 		// set default read values.

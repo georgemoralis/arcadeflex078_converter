@@ -80,7 +80,7 @@ public class rohga
 		{
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult,pri=0;
 			sprite = spriteptr[offs+1];
-			if (!sprite) continue;
+			if (sprite == 0) continue;
 	
 			x = spriteptr[offs+2];
 	
@@ -148,7 +148,7 @@ public class rohga
 			int trans=TRANSPARENCY_PEN;
 	
 			sprite = spriteptr[offs+1];
-			if (!sprite) continue;
+			if (sprite == 0) continue;
 	
 			x = spriteptr[offs+2];
 	
@@ -278,7 +278,7 @@ public class rohga
 			int trans=TRANSPARENCY_PEN;
 	
 			sprite = spriteptr[offs+3];
-			if (!sprite) {
+			if (sprite == 0) {
 				offs+=inc;
 				continue;
 			}
@@ -386,7 +386,7 @@ public class rohga
 			fx = (spriteptr[offs+0]&0x4000);
 			fy = (spriteptr[offs+0]&0x8000);
 	
-			if (!flip_screen) { /* Inverted from Mutant Fighter! */
+			if (flip_screen == 0) { /* Inverted from Mutant Fighter! */
 				if (fx != 0) fx=0; else fx=1;
 				if (fy != 0) fy=0; else fy=1;
 	

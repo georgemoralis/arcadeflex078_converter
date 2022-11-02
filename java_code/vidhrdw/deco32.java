@@ -176,7 +176,7 @@ public class deco32
 			fx = !(spritedata[offs+0]&0x4000);
 			fy = !(spritedata[offs+0]&0x8000);
 	
-			if (!flip_screen) {
+			if (flip_screen == 0) {
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
 				if (sx>0x180) sx=-(0x200 - sx);
@@ -594,13 +594,13 @@ public class deco32
 			zoomx=scalex * 0x10000 / (w*16);
 			zoomy=scaley * 0x10000 / (h*16);
 	
-			if (!fy)
+			if (fy == 0)
 				ypos=(sy<<16) - (by*zoomy); /* The block offset scales with zoom, the base position does not */
 			else
 				ypos=(sy<<16) + (by*zoomy) - (16*zoomy);
 	
 			for (y=0; y<h; y++) {
-				if (!fx)
+				if (fx == 0)
 					xpos=(sx<<16) - (bx*zoomx); /* The block offset scales with zoom, the base position does not */
 				else
 					xpos=(sx<<16) + (bx*zoomx) - (16*zoomx);

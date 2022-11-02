@@ -61,7 +61,7 @@ public class crimfght
 	public static VideoUpdateHandlerPtr video_update_crimfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram = auto_malloc(0x400);
-		if (!paletteram) return 1;
+		if (paletteram == 0) return 1;
 	
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 4;

@@ -424,7 +424,7 @@ public class video
 		rgb_direct			= ((params.video_attributes & VIDEO_RGB_DIRECT) != 0);
 	
 		// create the window
-		if (!blit_swapxy)
+		if (blit_swapxy == 0)
 			aspect_ratio = (double)params.aspect_x / (double)params.aspect_y;
 		else
 			aspect_ratio = (double)params.aspect_y / (double)params.aspect_x;
@@ -933,7 +933,7 @@ public class video
 		w = blit_swapxy ? bitmap.height : bitmap.width;
 		h = blit_swapxy ? bitmap.width : bitmap.height;
 		copy = bitmap_alloc_depth(w, h, bitmap.depth);
-		if (!copy)
+		if (copy == 0)
 			return NULL;
 	
 		// populate the copy

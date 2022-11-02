@@ -794,7 +794,7 @@ public class sh2
 	
 		sh2.r[n] = (sh2.r[n] << 1) | (sh2.sr & T);
 	
-		if (!old_q)
+		if (old_q == 0)
 		{
 			if (!(sh2.sr & M))
 			{
@@ -2560,7 +2560,7 @@ public class sh2
 				src   = sh2.m[0x60+4*dma];
 				dst   = sh2.m[0x61+4*dma];
 				count = sh2.m[0x62+4*dma];
-				if(!count)
+				if (count == 0)
 					count = 0x1000000;
 	
 				LOG(("SH2: DMA %d start %x, %x, %x, %04x, %d, %d, %d\n", dma, src, dst, count, sh2.m[0x63+4*dma], incs, incd, size));
@@ -3018,7 +3018,7 @@ public class sh2
 	
 		which = (which + 1) % 8;
 		buffer[which][0] = '\0';
-		if( !context )
+		if (context == 0)
 			r = &sh2;
 	
 		switch( regnum )

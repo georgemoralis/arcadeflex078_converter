@@ -149,7 +149,7 @@ public class mcr2
 	
 	public static ReadHandlerPtr wacko_trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		if (!wacko_mux_select)
+		if (wacko_mux_select == 0)
 			return readinputport(1 + offset);
 		else
 			return readinputport(6 + offset);

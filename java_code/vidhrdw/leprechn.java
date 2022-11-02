@@ -45,7 +45,7 @@ public class leprechn
 	
 		/* allocate our own dirty buffer */
 		videoram = auto_malloc(videoram_size[0]);
-		if (!videoram)
+		if (videoram == 0)
 			return 1;
 	
 		return video_start_generic_bitmapped();

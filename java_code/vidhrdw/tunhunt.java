@@ -90,18 +90,18 @@ public class tunhunt
 		With max RLE expansion, bitmap size is 256x64.
 		*/
 		dirtybuffer = auto_malloc(64);
-		if (!dirtybuffer)
+		if (dirtybuffer == 0)
 			return 1;
 	
 		memset( dirtybuffer, 1, 64 );
 		tmpbitmap = auto_bitmap_alloc( 256, 64 );
-		if (!tmpbitmap)
+		if (tmpbitmap == 0)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);

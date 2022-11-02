@@ -128,11 +128,11 @@ public class timer
 		mame_timer *timer;
 	
 		/* remove an empty entry */
-		if (!timer_free_head)
+		if (timer_free_head == 0)
 			return NULL;
 		timer = timer_free_head;
 		timer_free_head = timer.next;
-		if (!timer_free_head)
+		if (timer_free_head == 0)
 			timer_free_tail = NULL;
 	
 		return timer;
@@ -346,7 +346,7 @@ public class timer
 			callback_timer = NULL;
 	
 			/* reset or remove the timer, but only if it wasn't modified during the callback */
-			if (!callback_timer_modified)
+			if (callback_timer_modified == 0)
 			{
 				/* if the timer is temporary, remove it now */
 				if (timer.temporary)
@@ -378,7 +378,7 @@ public class timer
 		mame_timer *timer = timer_new();
 	
 		/* fail if we can't allocate a new entry */
-		if (!timer)
+		if (timer == 0)
 			return NULL;
 	
 		/* fill in the record */
@@ -446,7 +446,7 @@ public class timer
 		mame_timer *timer = timer_alloc(callback);
 	
 		/* fail if we can't allocate */
-		if (!timer)
+		if (timer == 0)
 			return;
 	
 		/* adjust to our liking */
@@ -465,7 +465,7 @@ public class timer
 		mame_timer *timer = timer_alloc(callback);
 	
 		/* fail if we can't allocate */
-		if (!timer)
+		if (timer == 0)
 			return;
 	
 		/* mark the timer temporary */

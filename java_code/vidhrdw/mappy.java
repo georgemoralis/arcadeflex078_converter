@@ -285,7 +285,7 @@ public class mappy
 	
 					case 4:		/* 2x horizontal */
 						sprite &= ~1;
-						if (!flipx)
+						if (flipx == 0)
 						{
 							mappy_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y);
 							mappy_draw_sprite(bitmap,1+sprite,color,flipx,flipy,x+16,y);
@@ -299,7 +299,7 @@ public class mappy
 	
 					case 8:		/* 2x vertical */
 						sprite &= ~2;
-						if (!flipy)
+						if (flipy == 0)
 						{
 							mappy_draw_sprite(bitmap,2+sprite,color,flipx,flipy,x,y);
 							mappy_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y-16);

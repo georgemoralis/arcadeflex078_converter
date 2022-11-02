@@ -346,7 +346,7 @@ public class fcombat
 	
 		/* allocate some temporary space */
 		temp = malloc(0x10000);
-		if (!temp)
+		if (temp == 0)
 			return;
 	
 		/* make a temporary copy of the character data */

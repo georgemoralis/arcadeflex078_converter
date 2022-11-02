@@ -458,7 +458,7 @@ public class galaxian
 	{
 		tilemap = tilemap_create(get_tile_info,get_memory_offset,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (!tilemap)
+		if (tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(tilemap,0);
@@ -829,7 +829,7 @@ public class galaxian
 	{
 		tilemap = tilemap_create(drivfrcg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (!tilemap)
+		if (tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(tilemap,0);
@@ -973,7 +973,7 @@ public class galaxian
 	{
 		galaxian_stars_on = data & 0x01;
 	
-		if (!galaxian_stars_on)
+		if (galaxian_stars_on == 0)
 		{
 			stars_scrollpos = 0;
 		}
@@ -1559,7 +1559,7 @@ public class galaxian
 		int offs;
 	
 	
-		if (!timer_adjusted)
+		if (timer_adjusted == 0)
 		{
 			start_stars_scroll_timer();
 			timer_adjusted = 1;
@@ -1586,7 +1586,7 @@ public class galaxian
 		int offs;
 	
 	
-		if (!timer_adjusted)
+		if (timer_adjusted == 0)
 		{
 			start_stars_blink_timer(100000, 10000, 0.00001);
 			timer_adjusted = 1;
@@ -1632,7 +1632,7 @@ public class galaxian
 	
 		/* same as Scramble, but only top (left) half of screen */
 	
-		if (!timer_adjusted)
+		if (timer_adjusted == 0)
 		{
 			start_stars_blink_timer(100000, 10000, 0.00001);
 			timer_adjusted = 1;
@@ -1677,7 +1677,7 @@ public class galaxian
 		UINT8 *prom;
 	
 	
-		if (!timer_adjusted)
+		if (timer_adjusted == 0)
 		{
 			start_stars_scroll_timer();
 			timer_adjusted = 1;
@@ -1711,7 +1711,7 @@ public class galaxian
 		int offs;
 	
 	
-		if (!timer_adjusted)
+		if (timer_adjusted == 0)
 		{
 			start_stars_blink_timer(100000, 10000, 0.00001);
 			start_stars_scroll_timer();

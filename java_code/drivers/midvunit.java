@@ -176,7 +176,7 @@ public class midvunit
 	
 	static WRITE32_HANDLER( midvunit_cmos_w )
 	{
-		if (!cmos_protected)
+		if (cmos_protected == 0)
 		{
 			data32_t *cmos = (data32_t *)generic_nvram;
 			COMBINE_DATA(&cmos[offset]);

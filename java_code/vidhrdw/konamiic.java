@@ -1682,7 +1682,7 @@ public class konamiic
 		K007420_gfx = Machine.gfx[gfxnum];
 		K007420_callback = callback;
 		K007420_ram = auto_malloc(0x200);
-		if (!K007420_ram) return 1;
+		if (K007420_ram == 0) return 1;
 	
 		memset(K007420_ram,0,0x200);
 	
@@ -1748,7 +1748,7 @@ public class konamiic
 	
 			/* 0x080 = normal scale, 0x040 = double size, 0x100 half size */
 			zoom = K007420_ram[offs+5] | ((K007420_ram[offs+4] & 0x03) << 8);
-			if (!zoom) continue;
+			if (zoom == 0) continue;
 			zoom = 0x10000 * 128 / zoom;
 	
 			switch (K007420_ram[offs+4] & 0x70)
@@ -2481,7 +2481,7 @@ public class konamiic
 		K051960_gfx = Machine.gfx[gfx_index];
 		K051960_callback = callback;
 		K051960_ram = auto_malloc(0x400);
-		if (!K051960_ram) return 1;
+		if (K051960_ram == 0) return 1;
 		memset(K051960_ram,0,0x400);
 	
 		return 0;
@@ -2967,10 +2967,10 @@ public class konamiic
 		K053244_rombank = 0;
 		K053245_ramsize = 0x800;
 		K053245_ram = auto_malloc(K053245_ramsize);
-		if (!K053245_ram) return 1;
+		if (K053245_ram == 0) return 1;
 	
 		K053245_buffer = auto_malloc(K053245_ramsize);
-		if (!K053245_buffer)
+		if (K053245_buffer == 0)
 			return 1;
 	
 		memset(K053245_ram,0,K053245_ramsize);
@@ -3227,12 +3227,12 @@ public class konamiic
 			if (flipscreenX != 0)
 			{
 				ox = 512 - ox;
-				if (!mirrorx) flipx = !flipx;
+				if (mirrorx == 0) flipx = !flipx;
 			}
 			if (flipscreenY != 0)
 			{
 				oy = -oy;
-				if (!mirrory) flipy = !flipy;
+				if (mirrory == 0) flipy = !flipy;
 			}
 	
 			ox = (ox + 0x5d) & 0x3ff;
@@ -3458,7 +3458,7 @@ public class konamiic
 		K053247_callback = callback;
 		K053246_OBJCHA_line = CLEAR_LINE;
 		K053247_ram = auto_malloc(0x1000);
-		if (!K053247_ram) return 1;
+		if (K053247_ram == 0) return 1;
 	
 		memset(K053247_ram,  0, 0x1000);
 		memset(K053246_regs, 0, 8);
@@ -3614,7 +3614,7 @@ public class konamiic
 		K053247_callback = callback;
 		K053246_OBJCHA_line = CLEAR_LINE;
 		K053247_ram = auto_malloc(0x1000);
-		if (!K053247_ram) return 1;
+		if (K053247_ram == 0) return 1;
 	
 		memset(K053247_ram,  0, 0x1000);
 		memset(K053246_regs, 0, 8);
@@ -4116,12 +4116,12 @@ public class konamiic
 			if (flipscreenx != 0)
 			{
 				ox = -ox;
-				if (!mirrorx) flipx = !flipx;
+				if (mirrorx == 0) flipx = !flipx;
 			}
 			if (flipscreeny != 0)
 			{
 				oy = -oy;
-				if (!mirrory) flipy = !flipy;
+				if (mirrory == 0) flipy = !flipy;
 			}
 	
 			// apply wrapping and global offsets
@@ -4815,7 +4815,7 @@ public class konamiic
 					}
 				}
 	
-				if (!K053251_tilemaps_set)
+				if (K053251_tilemaps_set == 0)
 					tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 			}
 			else if (offset == 10)
@@ -4833,7 +4833,7 @@ public class konamiic
 					}
 				}
 	
-				if (!K053251_tilemaps_set)
+				if (K053251_tilemaps_set == 0)
 					tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 			}
 		}
@@ -6093,10 +6093,10 @@ public class konamiic
 		ofs16 += (K056832_CurGfxBank*5*1024);
 		ofs8 += (K056832_CurGfxBank*10*1024);
 	
-	//	if (!offset)
+	//	if (offset == 0)
 	//		printf("CurGfxBank = %x\n", K056832_CurGfxBank);
 	
-		if (!K056832_rombase)
+		if (K056832_rombase == 0)
 		{
 			K056832_rombase = memory_region(K056832_memory_region);
 		}
@@ -6355,7 +6355,7 @@ public class konamiic
 		UINT8 code_transparent, code_opaque;
 	
 		if (K056832_PageTileMode[page]) return(0);
-		if (!K056832_linemap_enabled) return(1);
+		if (K056832_linemap_enabled == 0) return(1);
 	
 		tilemap = K056832_tilemap[page];
 		pixmap  = K056832_pixmap[page];
@@ -6393,7 +6393,7 @@ public class konamiic
 	
 		for (line=0; line<256; xpr_ptr+=dst_pitch, dst_ptr+=dst_pitch, line++)
 		{
-			if (!all_dirty)
+			if (all_dirty == 0)
 			{
 				offs = line >> 5;
 				mask = 1 << (line & 0x1f);
@@ -6522,7 +6522,7 @@ public class konamiic
 			sy = ay;
 			ty = r * K056832_PAGE_HEIGHT;
 	
-			if (!flipy)
+			if (flipy == 0)
 			{
 				// handle bottom-edge wraparoundness and cull off-screen tilemaps
 				if ((r == 0) && (sy > height - K056832_PAGE_HEIGHT)) sy -= height;
@@ -6578,7 +6578,7 @@ public class konamiic
 			cliph = line_endy = K056832_PAGE_HEIGHT;
 			clipy = line_starty = 0;
 	
-			if (!flipy)
+			if (flipy == 0)
 				sdat_start = dy;
 			else
 				/*
@@ -6620,7 +6620,7 @@ public class konamiic
 				}
 			}
 			else
-				if (!pageIndex) K056832_ActiveLayer = 0;
+				if (pageIndex == 0) K056832_ActiveLayer = 0;
 	
 			if (K056832_update_linemap(bitmap, pageIndex, flags)) continue;
 	
@@ -6657,7 +6657,7 @@ public class konamiic
 					//tx = c * K056832_PAGE_WIDTH;
 					tx = c << 9;
 	
-					if (!flipx)
+					if (flipx == 0)
 					{
 						// handle right-edge wraparoundness and cull off-screen tilemaps
 						if ((c == 0) && (sx > width - K056832_PAGE_WIDTH)) sx -= width;
@@ -6877,7 +6877,7 @@ public class konamiic
 				}
 			}
 			else
-				if (!pageIndex) K056832_ActiveLayer = 0;
+				if (pageIndex == 0) K056832_ActiveLayer = 0;
 	
 			if (K056832_update_linemap(bitmap, pageIndex, flags)) continue;
 	
@@ -6914,7 +6914,7 @@ public class konamiic
 					//tx = c * K056832_PAGE_WIDTH;
 					tx = c << 9;
 	
-					if (!flipx)
+					if (flipx == 0)
 					{
 						// handle right-edge wraparoundness and cull off-screen tilemaps
 						if ((c == 0) && (sx > width - K056832_PAGE_WIDTH)) sx -= width;
@@ -7202,7 +7202,7 @@ public class konamiic
 		BGC_SET = 0;
 		pal_ptr = paletteram32;
 	
-		if (!mode)
+		if (mode == 0)
 		{
 			// single color output from CLTC
 			bgcolor = (int)(k54338_regs[K338_REG_BGC_R]&0xff)<<16 | (int)k54338_regs[K338_REG_BGC_GB];
@@ -7217,7 +7217,7 @@ public class konamiic
 			if (!(BGC_SET & 2)) { bgcolor = *pal_ptr; mode = 0; } else bgcolor = 0;
 		}
 	
-		if (!mode)
+		if (mode == 0)
 		{
 			// single color fill
 			dst_ptr += clipw;
@@ -7290,7 +7290,7 @@ public class konamiic
 	    }
 		else
 		{
-			if (!mixpri)
+			if (mixpri == 0)
 			{
 				// source x alpha  +  target (clipped at 255)
 			}
@@ -7984,7 +7984,7 @@ public class konamiic
 			src_fdx = zoom << (FIXPOINT_PRECISION-6);
 	
 			// pre-advance source for the clipped region
-			if (!flip)
+			if (flip == 0)
 				src_fx = (scroll + dst_min) * src_fdx + FIXPOINT_PRECISION_HALF;
 			else
 			{

@@ -315,7 +315,7 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_NO_INTERFACE);
 	
 		/* verify parameters */
-		if (!filename)
+		if (filename == 0)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 		if (compression >= CHDCOMPRESSION_MAX)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
@@ -366,7 +366,7 @@ public class chd
 		
 		/* attempt to create the file */
 		file = multi_open(filename, "wb");
-		if (!file)
+		if (file == 0)
 			SET_ERROR_AND_CLEANUP(CHDERR_CANT_CREATE_FILE);
 	
 		/* write the resulting header */
@@ -492,7 +492,7 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_NO_INTERFACE);
 	
 		/* verify parameters */
-		if (!filename)
+		if (filename == 0)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 	
 		/* punt if invalid parent */
@@ -568,7 +568,7 @@ public class chd
 	
 		/* okay, now allocate our entry and copy it */
 		finalchd = malloc(sizeof(chd));
-		if (!finalchd)
+		if (finalchd == 0)
 			SET_ERROR_AND_CLEANUP(CHDERR_OUT_OF_MEMORY);
 		*finalchd = chd;
 	
@@ -984,7 +984,7 @@ public class chd
 	
 		/* attempt to open the file */
 		file = multi_open(filename, "rb+");
-		if (!file)
+		if (file == 0)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 	
 		/* read the old header */
@@ -1050,7 +1050,7 @@ public class chd
 		
 		/* open the raw file */
 		sourcefile = multi_open(rawfile, "rb");
-		if (!sourcefile)
+		if (sourcefile == 0)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 	
 		/* mark the CHD writeable and write the updated header */
@@ -1169,7 +1169,7 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_NO_INTERFACE);
 	
 		/* verify parameters */
-		if (!chd)
+		if (chd == 0)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 	
 		/* if this is a writeable file image, we can't verify */
@@ -1532,11 +1532,11 @@ public class chd
 		UINT32 count;
 	
 		/* punt if NULL */
-		if (!header)
+		if (header == 0)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* punt if invalid file */
-		if (!file)
+		if (file == 0)
 			return CHDERR_INVALID_FILE;
 	
 		/* punt if no interface */
@@ -1616,11 +1616,11 @@ public class chd
 		UINT32 count;
 	
 		/* punt if NULL */
-		if (!header)
+		if (header == 0)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* punt if invalid file */
-		if (!file)
+		if (file == 0)
 			return CHDERR_INVALID_FILE;
 	
 		/* punt if no interface */
@@ -1939,7 +1939,7 @@ public class chd
 	
 		/* alloc a new one */
 		ptr = malloc(size + sizeof(UINT32));
-		if (!ptr)
+		if (ptr == 0)
 			return NULL;
 	
 		/* put it into the list */

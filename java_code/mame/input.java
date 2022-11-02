@@ -48,7 +48,7 @@ public class input
 	
 		/* allocate */
 		code_map = (struct code_info*)malloc( __code_max * sizeof(struct code_info) );
-		if (!code_map)
+		if (code_map == 0)
 			return -1;
 	
 		code_mac = 0;
@@ -630,7 +630,7 @@ public class input
 			}
 	
 			name = code_name((*code)[j]);
-			if (!name)
+			if (name == 0)
 				break;
 	
 			if (strlen(name) + 1 <= max)
@@ -730,7 +730,7 @@ public class input
 					operand = 0;
 					break;
 				default:
-					if (!pred_not)
+					if (pred_not == 0)
 						positive = 1;
 					pred_not = 0;
 					operand = 1;
@@ -755,7 +755,7 @@ public class input
 		if (record_count == SEQ_MAX
 			|| (record_count > 0 && clock() > record_last + RECORD_TIME))	{
 			int k = 0;
-			if (!first)
+			if (first == 0)
 			{
 				/* search the first space free */
 				while (k < SEQ_MAX && (*seq)[k] != CODE_NONE)

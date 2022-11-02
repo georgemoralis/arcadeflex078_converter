@@ -387,7 +387,7 @@ public class dec8
 			if (pri==1 && color==0) continue;
 	
 			code = buffered_spriteram[offs+3] + ( ( buffered_spriteram[offs+1] & 0xe0 ) << 3 );
-			if (!code) continue;
+			if (code == 0) continue;
 	
 			sy = buffered_spriteram[offs];
 			if (sy == 0xf8) continue;
@@ -430,7 +430,7 @@ public class dec8
 		for (offs = 0x800 - 2;offs >= 0;offs -= 2) {
 			tile=videoram.read(offs+1)+((videoram.read(offs)&0xf)<<8);
 	
-			if (!tile) continue;
+			if (tile == 0) continue;
 	
 			color=(videoram.read(offs)&mask)>>shift;
 			mx = (offs/2) % 32;

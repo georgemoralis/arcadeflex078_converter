@@ -1977,7 +1977,7 @@ public class psx
 		which++;
 		which %= 64;
 		buffer[ which ][ 0 ] = '\0';
-		if( !context )
+		if (context == 0)
 		{
 			static mips_cpu_context tmp;
 			mips_get_context( &tmp );

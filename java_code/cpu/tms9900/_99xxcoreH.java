@@ -1322,7 +1322,7 @@ public class _99xxcoreH
 		which = (which+1) % 32;
 		buffer[which][0] = '\0';
 	
-		if( !context )
+		if (context == 0)
 			r = &I;
 	
 		switch( regnum )

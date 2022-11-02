@@ -24,7 +24,7 @@ public class unzip
 	/* Print a error message */
 	void errormsg(const char* extmsg, const char* usermsg, const char* zipname) {
 		/* Output to the user with no internal detail */
-		if (!gUnzipQuiet)
+		if (gUnzipQuiet == 0)
 			printf("Error in zipfile %s\n%s\n", zipname, usermsg);
 		/* Output to log file with all informations */
 		logerror("Error in zipfile %s: %s\n", zipname, extmsg);
@@ -90,7 +90,7 @@ public class unzip
 	
 			/* allocate buffer */
 			buf = (char*)malloc( buf_length );
-			if (!buf) {
+			if (buf == 0) {
 				return -1;
 			}
 	
@@ -183,7 +183,7 @@ public class unzip
 	ZIP* openzip(int pathtype, int pathindex, const char* zipfile) {
 		/* allocate */
 		ZIP* zip = (ZIP*)malloc( sizeof(ZIP) );
-		if (!zip) {
+		if (zip == 0) {
 			return 0;
 		}
 	
@@ -486,7 +486,7 @@ public class unzip
 		}
 	
 		in_buffer = (unsigned char*)malloc(INFLATE_INPUT_BUFFER_MAX+1);
-		if (!in_buffer)
+		if (in_buffer == 0)
 			return -1;
 	
 	    for (;;)
@@ -663,7 +663,7 @@ public class unzip
 	
 		/* open the zip */
 		zip = openzip( pathtype, pathindex, zipfile );
-		if (!zip)
+		if (zip == 0)
 			return 0;
 	
 		/* close the oldest entry */
@@ -768,7 +768,7 @@ public class unzip
 		struct zipent* ent;
 	
 		zip = cache_openzip(pathtype, pathindex, zipfile);
-		if (!zip)
+		if (zip == 0)
 			return -1;
 	
 		while (readzip(zip)) {
@@ -784,7 +784,7 @@ public class unzip
 				*length = ent.uncompressed_size;
 				*buf = (unsigned char*)malloc( *length );
 				if (!*buf) {
-					if (!gUnzipQuiet)
+					if (gUnzipQuiet == 0)
 						printf("load_zipped_file(): Unable to allocate %d bytes of RAM\n",*length);
 					cache_closezip(zip);
 					return -1;
@@ -813,7 +813,7 @@ public class unzip
 		struct zipent* ent;
 	
 		zip = cache_openzip(pathtype, pathindex, zipfile);
-		if (!zip)
+		if (zip == 0)
 			return -1;
 	
 		while (readzip(zip)) {
@@ -832,7 +832,7 @@ public class unzip
 	
 		/* NS981003: support for "load by CRC" */
 		zip = cache_openzip(pathtype, pathindex, zipfile);
-		if (!zip)
+		if (zip == 0)
 			return -1;
 	
 		while (readzip(zip)) {

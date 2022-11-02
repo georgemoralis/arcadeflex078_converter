@@ -216,7 +216,7 @@ public class slapfght
 	public static ReadHandlerPtr tigerh_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		portC_in = 0;
-		if (!main_sent) portC_in |= 0x01;
+		if (main_sent == 0) portC_in |= 0x01;
 		if (mcu_sent != 0) portC_in |= 0x02;
 		return (portC_out & ddrC) | (portC_in & ~ddrC);
 	} };
@@ -248,8 +248,8 @@ public class slapfght
 	public static ReadHandlerPtr tigerh_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = 0;
-		if (!main_sent) res |= 0x02;
-		if (!mcu_sent) res |= 0x04;
+		if (main_sent == 0) res |= 0x02;
+		if (mcu_sent == 0) res |= 0x04;
 		return res;
 	} };
 	

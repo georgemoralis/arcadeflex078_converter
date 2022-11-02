@@ -78,7 +78,7 @@ public class suprslam
 				if (ypos > 0xff) ypos -=0x200;
 	
 				for (ycnt = 0; ycnt < high+1; ycnt ++) {
-					if (!flipx) {
+					if (flipx == 0) {
 						for (xcnt = 0; xcnt < wide+1; xcnt ++)	{
 							int tileno = suprslam_sp_videoram[word_offset+loopno];
 							drawgfxzoom(bitmap, gfx, tileno, col, 0, 0,xpos + xcnt * xzoom/2, ypos + ycnt * yzoom/2, cliprect, TRANSPARENCY_PEN, 15,xzoom << 11, yzoom << 11);

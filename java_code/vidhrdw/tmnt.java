@@ -315,7 +315,7 @@ public class tmnt
 	
 		roz_tilemap = tilemap_create(glfgreat_get_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,512,512);
 	
-		if (!roz_tilemap)
+		if (roz_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(roz_tilemap,0);
@@ -348,7 +348,7 @@ public class tmnt
 	
 		roz_tilemap = tilemap_create(prmrsocr_get_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,512,256);
 	
-		if (!roz_tilemap)
+		if (roz_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(roz_tilemap,0);

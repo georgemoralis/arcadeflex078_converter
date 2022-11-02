@@ -359,7 +359,7 @@ public class m62
 	int m62_start( void (*tile_get_info)( int memory_offset ), int rows, int cols, int x1, int y1, int x2, int y2 )
 	{
 		m62_background = tilemap_create( tile_get_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, x1, y1, x2, y2 );
-		if( !m62_background )
+		if (m62_background == 0)
 		{
 			return 1;
 		}
@@ -384,7 +384,7 @@ public class m62
 	int m62_textlayer( void (*tile_get_info)( int memory_offset ), int rows, int cols, int x1, int y1, int x2, int y2 )
 	{
 		m62_foreground = tilemap_create( tile_get_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, x1, y1, x2, y2 );
-		if( !m62_foreground )
+		if (m62_foreground == 0)
 		{
 			return 1;
 		}

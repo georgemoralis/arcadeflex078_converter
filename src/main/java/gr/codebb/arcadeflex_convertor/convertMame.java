@@ -762,12 +762,17 @@ public class convertMame {
                         }
                     }
                     if (sUtil.getToken("if")) {
+                        boolean is_zero = false;
                         sUtil.skipSpace();
                         if (sUtil.parseChar() != '(') {
                             Convertor.inpos = i;
                             break;
                         }
                         sUtil.skipSpace();
+                        if (sUtil.getChar() == '!') {
+                            is_zero = true;
+                            Convertor.inpos++;
+                        }
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();
                         if (sUtil.getChar() == '&') {
@@ -790,7 +795,13 @@ public class convertMame {
                             Convertor.inpos = i;
                             break;
                         }
-                        sUtil.putString((new StringBuilder()).append("if (").append(Convertor.token[0]).append(" != 0)").toString());
+                        if (!is_zero) {
+                            sUtil.putString((new StringBuilder()).append("if (").append(Convertor.token[0]).append(" != 0)").toString());
+                        }
+                        else
+                        {
+                            sUtil.putString((new StringBuilder()).append("if (").append(Convertor.token[0]).append(" == 0)").toString());
+                        }
                         continue;
                     }
                     break;

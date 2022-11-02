@@ -150,17 +150,17 @@ public class segaic24
 			return 1;
 	
 		sys24_char_ram = auto_malloc(0x80000);
-		if(!sys24_char_ram)
+		if (sys24_char_ram == 0)
 			return 1;
 	
 		sys24_tile_ram = auto_malloc(0x10000);
-		if(!sys24_tile_ram) {
+		if (sys24_tile_ram == 0) {
 			free(sys24_char_ram);
 			return 1;
 		}
 	
 		sys24_char_dirtymap = auto_malloc(SYS24_TILES);
-		if(!sys24_char_dirtymap) {
+		if (sys24_char_dirtymap == 0) {
 			free(sys24_tile_ram);
 			free(sys24_char_ram);
 			return 1;
@@ -272,7 +272,7 @@ public class segaic24
 				if(!cur_x && llx>=128) {
 					// Fast paths for the 128-pixels without side clipping case
 	
-					if(!m) {
+					if (m == 0) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x=0; x<128; x++) {
@@ -315,7 +315,7 @@ public class segaic24
 					// Clipped path
 					int llx1 = llx >= 128 ? 128 : llx;
 	
-					if(!m) {
+					if (m == 0) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x = cur_x; x<llx1; x++) {
@@ -404,7 +404,7 @@ public class segaic24
 				if(!cur_x && llx>=128) {
 					// Fast paths for the 128-pixels without side clipping case
 	
-					if(!m) {
+					if (m == 0) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x=0; x<128; x++) {
@@ -440,7 +440,7 @@ public class segaic24
 					// Clipped path
 					int llx1 = llx >= 128 ? 128 : llx;
 	
-					if(!m) {
+					if (m == 0) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x = cur_x; x<llx1; x++) {
@@ -651,7 +651,7 @@ public class segaic24
 	int sys24_sprite_vh_start(void)
 	{
 		sys24_sprite_ram = auto_malloc(0x40000);
-		if(!sys24_sprite_ram)
+		if (sys24_sprite_ram == 0)
 			return 1;
 	
 		state_save_register_UINT16("system24 sprite", 0, "ram", sys24_sprite_ram, 0x20000);
@@ -766,9 +766,9 @@ public class segaic24
 				zoomx = source[1] >> 8;
 				zoomy = source[1] & 0xff;
 			}
-			if(!zoomx)
+			if (zoomx == 0)
 				zoomx = 0x3f;
-			if(!zoomy)
+			if (zoomy == 0)
 				zoomy = 0x3f;
 	
 			zoomx++;

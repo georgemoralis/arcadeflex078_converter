@@ -26,7 +26,7 @@ public class homerun
 	  	tilemap_mark_all_tiles_dirty(homerun_tilemap);
 	
 		data>>=5;
-		if(!data)
+		if (data == 0)
 			cpu_setbank(1, memory_region(REGION_CPU1) );
 		else
 			cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000 + (((data-1)&0x7)*0x4000 ));	

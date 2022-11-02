@@ -285,7 +285,7 @@ public class atarirle
 			return 0;
 	
 		/* build and allocate the generic tables */
-		if (!build_rle_tables())
+		if (build_rle_tables() == 0)
 			return 0;
 	
 		/* determine the masks first */
@@ -550,7 +550,7 @@ public class atarirle
 	
 		/* allocate all 5 tables */
 		base = auto_malloc(0x500 * sizeof(UINT16));
-		if (!base)
+		if (base == 0)
 			return 0;
 	
 		/* assign the tables */
@@ -943,7 +943,7 @@ public class atarirle
 		/* 16-bit case */
 		if (bitmap.depth == 16)
 		{
-			if (!hflip)
+			if (hflip == 0)
 				draw_rle_zoom(bitmap, info, palettebase, x, y, xscale << 4, yscale << 4, clip);
 			else
 				draw_rle_zoom_hflip(bitmap, info, palettebase, x, y, xscale << 4, yscale << 4, clip);
@@ -1031,7 +1031,7 @@ public class atarirle
 			entry_count = *base++;
 	
 			/* non-clipped case */
-			if (!xclipped)
+			if (xclipped == 0)
 			{
 				/* decode the pixels */
 				for (j = 0; j < entry_count; j++)
@@ -1220,7 +1220,7 @@ public class atarirle
 			entry_count = *base++;
 	
 			/* non-clipped case */
-			if (!xclipped)
+			if (xclipped == 0)
 			{
 				/* decode the pixels */
 				for (j = 0; j < entry_count; j++)

@@ -42,7 +42,7 @@ public class skykid
 	
 	public static InterruptHandlerPtr skykid_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (!irq_disabled)
+		if (irq_disabled == 0)
 			cpu_set_irq_line(0, M6809_IRQ_LINE, HOLD_LINE);
 	} };
 	

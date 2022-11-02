@@ -154,7 +154,7 @@ public class lasso
 	{
 		bg_tilemap = tilemap_create(lasso_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		return 0;
@@ -176,7 +176,7 @@ public class lasso
 	{
 		bg_tilemap = tilemap_create(pinbo_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		return 0;

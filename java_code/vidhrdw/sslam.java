@@ -43,7 +43,7 @@ public class sslam
 			if (source[0]&0x2000) break;
 	
 	
-			if (!eightbyeight)
+			if (eightbyeight == 0)
 			{
 				if (flipx != 0)
 				{
@@ -130,15 +130,15 @@ public class sslam
 	VIDEO_START(sslam)
 	{
 		sslam_tx_tilemap = tilemap_create(get_sslam_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
-		if (!sslam_tx_tilemap) return 1;
+		if (sslam_tx_tilemap == 0) return 1;
 		tilemap_set_transparent_pen(sslam_tx_tilemap,0);
 	
 		sslam_md_tilemap = tilemap_create(get_sslam_md_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
-		if (!sslam_md_tilemap) return 1;
+		if (sslam_md_tilemap == 0) return 1;
 		tilemap_set_transparent_pen(sslam_md_tilemap,0);
 	
 		sslam_bg_tilemap = tilemap_create(get_sslam_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
-		if (!sslam_bg_tilemap) return 1;
+		if (sslam_bg_tilemap == 0) return 1;
 	
 		return 0;
 	}

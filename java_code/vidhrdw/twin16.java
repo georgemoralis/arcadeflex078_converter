@@ -501,7 +501,7 @@ public class twin16
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows_flip_y,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -514,7 +514,7 @@ public class twin16
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);

@@ -1141,7 +1141,7 @@ public class cps1
 		memset(empty_tile,0xff,sizeof(empty_tile));
 	
 		cps1_old_palette=auto_malloc(cps1_palette_size);
-		if (!cps1_old_palette)
+		if (cps1_old_palette == 0)
 			return 1;
 		memset(cps1_old_palette, 0x00, cps1_palette_size);
 		for (i = 0;i < cps1_palette_entries*16;i++)
@@ -1150,13 +1150,13 @@ public class cps1
 		}
 	
 	    cps1_buffered_obj = auto_malloc (cps1_obj_size);
-	    if (!cps1_buffered_obj)
+	    if (cps1_buffered_obj == 0)
 			return 1;
 	    memset(cps1_buffered_obj, 0x00, cps1_obj_size);
 	
 	    if (cps_version==2) {
 		cps2_buffered_obj = auto_malloc (cps2_obj_size);
-		if (!cps2_buffered_obj)
+		if (cps2_buffered_obj == 0)
 		    return 1;
 		memset(cps2_buffered_obj, 0x00, cps2_obj_size);
 	    }
@@ -1178,7 +1178,7 @@ public class cps1
 		cps1_output[CPS1_OTHER_BASE/2]   = 0x9100;
 		cps1_output[CPS1_PALETTE_BASE/2] = 0x90c0;
 	
-		if (!cps1_game_config)
+		if (cps1_game_config == 0)
 		{
 			logerror("cps1_game_config hasn't been set up yet");
 			return -1;

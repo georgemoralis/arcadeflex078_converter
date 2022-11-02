@@ -112,7 +112,7 @@ public class speedatk
 	{
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,34,32);
 	
-		if(!tilemap)
+		if (tilemap == 0)
 			return 1;
 	
 		return 0;

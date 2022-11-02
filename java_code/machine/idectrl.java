@@ -280,7 +280,7 @@ public class idectrl
 		const struct hard_disk_info *hdinfo;
 	
 		/* NULL interface is immediate failure */
-		if (!intf)
+		if (intf == 0)
 			return 1;
 	
 		/* reset the IDE state */

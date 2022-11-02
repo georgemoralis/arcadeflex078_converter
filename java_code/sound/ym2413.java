@@ -2125,7 +2125,7 @@ public class ym2413
 			chan_calc(&chip.P_CH[4]);
 			chan_calc(&chip.P_CH[5]);
 	
-			if(!rhythm)
+			if (rhythm == 0)
 			{
 				chan_calc(&chip.P_CH[6]);
 				chan_calc(&chip.P_CH[7]);

@@ -387,7 +387,7 @@ public class datafile
 	
 	        while ((c1 = tolower(*s1)) == (c2 = tolower(*s2)))
 	        {
-	                if (!c1)
+	                if (c1 == 0)
 	                        return 0;
 	
 	                s1++;
@@ -412,7 +412,7 @@ public class datafile
 	        {
 	                if ((c1 = tolower (*s1)) != (c2 = tolower (*s2)))
 	                        return (c1 - c2);
-	                else if (!c1)
+	                else if (c1 == 0)
 	                        break;
 	                --n;
 	
@@ -477,7 +477,7 @@ public class datafile
 											/* done = 1;  Not done, as we must process other clones in list */
 	
 										}
-										if (!done)
+										if (done == 0)
 										{
 											token = GetNextToken ((UINT8 **)&s, &tell);
 	
@@ -619,7 +619,7 @@ public class datafile
 	        *buffer = 0;
 	
 	
-	        if(!history_filename)
+	        if (history_filename == 0)
 	                history_filename = "history.dat";
 	
 	        /* try to open history datafile */
@@ -649,7 +649,7 @@ public class datafile
 	                ParseClose ();
 	        }
 	
-	        if(!mameinfo_filename)
+	        if (mameinfo_filename == 0)
 	                mameinfo_filename = "mameinfo.dat";
 	
 	        /* try to open mameinfo datafile */

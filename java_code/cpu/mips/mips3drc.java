@@ -580,7 +580,7 @@ public class mips3drc
 		
 	//	printf("recompile_callback @ PC=%08X\n", mips3.pc);
 	/*
-		if (!ram_read_table)
+		if (ram_read_table == 0)
 		{
 			ram_read_table = malloc(65536 * sizeof(void *));
 			ram_write_table = malloc(65536 * sizeof(void *));
@@ -675,7 +675,7 @@ public class mips3drc
 	#ifdef MAME_DEBUG
 	{
 		char temp[256];
-		if (!symfile) symfile = fopen("code.sym", "w");
+		if (symfile == 0) symfile = fopen("code.sym", "w");
 		mips3_dasm(temp, pc);
 		fprintf(symfile, "%08X   --------------------------------------------\n", drc.cache_top - drc.cache_base);
 		fprintf(symfile, "%08X   %08X: %s\n", drc.cache_top - drc.cache_base, pc, temp);
@@ -785,17 +785,17 @@ public class mips3drc
 		_mov_r32_m32abs(REG_EAX, &mips3.cpr[0][COP0_Cause]);				// mov	eax,[mips3.cpr[0][COP0_Cause]]
 		_and_r32_m32abs(REG_EAX, &mips3.cpr[0][COP0_Status]);				// and	eax,[mips3.cpr[0][COP0_Status]]
 		_and_r32_imm(REG_EAX, 0xff00);										// and	eax,0xff00
-		if (!inline_generate)
+		if (inline_generate == 0)
 			_jcc_short_link(COND_Z, &link1);								// jz	skip
 		else
 			_jcc_near_link(COND_Z, &link1);									// jz	skip
 		_test_m32abs_imm(&mips3.cpr[0][COP0_Status], SR_IE);				// test	[mips3.cpr[0][COP0_Status],SR_IE
-		if (!inline_generate)
+		if (inline_generate == 0)
 			_jcc_short_link(COND_Z, &link2);								// jz	skip
 		else
 			_jcc_near_link(COND_Z, &link2);									// jz	skip
 		_test_m32abs_imm(&mips3.cpr[0][COP0_Status], SR_EXL | SR_ERL);		// test	[mips3.cpr[0][COP0_Status],SR_EXL | SR_ERL
-		if (!inline_generate)
+		if (inline_generate == 0)
 			_jcc(COND_Z, mips3.generate_interrupt_exception);				// jz	generate_interrupt_exception
 		else
 		{
@@ -921,7 +921,7 @@ public class mips3drc
 		void *memory;
 		
 		/* if the next instruction is a load or store, see if we can consolidate */
-		if (!in_delay_slot)
+		if (in_delay_slot == 0)
 			switch (nextop >> 26)
 			{
 				case 0x08:	/* addi */
@@ -946,7 +946,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -966,7 +966,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -983,7 +983,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1003,7 +1003,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1023,7 +1023,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1040,7 +1040,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1057,7 +1057,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1072,7 +1072,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1087,7 +1087,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1102,7 +1102,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1117,7 +1117,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1136,7 +1136,7 @@ public class mips3drc
 						memory = memory_get_write_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1159,7 +1159,7 @@ public class mips3drc
 						memory = memory_get_write_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1179,7 +1179,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1199,7 +1199,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1214,7 +1214,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1229,7 +1229,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1244,7 +1244,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -1259,7 +1259,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (!memory)
+					if (memory == 0)
 						break;
 					
 					/* do the LUI anyway */
@@ -5696,7 +5696,7 @@ public class mips3drc
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (!context)
+		if (context == 0)
 			r = &mips3;
 	
 	    switch( regnum )
@@ -5765,7 +5765,7 @@ public class mips3drc
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (!context)
+		if (context == 0)
 			r = &mips3;
 	
 	    switch( regnum )
@@ -5787,7 +5787,7 @@ public class mips3drc
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (!context)
+		if (context == 0)
 			r = &mips3;
 	
 	    switch( regnum )

@@ -273,9 +273,9 @@ public class konamigx
 				if ((v & 0x4000) != 0)
 					color_rotate = v & 0x1f;
 	
-				if(!zoom_x)
+				if (zoom_x == 0)
 					zoom_x = 0x40;
-				if(!zoom_y)
+				if (zoom_y == 0)
 					zoom_y = 0x40;
 	
 				if(set >= 0x200000 && set < 0xd00000)
@@ -387,7 +387,7 @@ public class konamigx
 		unsigned int params;
 	
 		/* ignore NULL writes to the ESC (these appear to be "keepalives" on the real hardware) */
-		if (!data)
+		if (data == 0)
 		{
 			return;
 		}
@@ -750,7 +750,7 @@ public class konamigx
 	
 	static INTERRUPT_GEN(konamigx_hbinterrupt)
 	{
-		if (!cpu_getiloops())
+		if (cpu_getiloops() == 0)
 		{
 			konamigx_vbinterrupt_type4();
 		}
@@ -879,7 +879,7 @@ public class konamigx
 		cs = ((data >> 26)^1)&1;	// chip select
 	
 		// resync states if CS drops
-		if (!cs)
+		if (cs == 0)
 		{
 			analog_state = 0;
 			analog_prevclk = 0;

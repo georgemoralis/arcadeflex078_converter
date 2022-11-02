@@ -619,7 +619,7 @@ public class arm
 		static int which = 0;
 	
 		ARM_REGS *pRegs = context;
-		if( !context )
+		if (context == 0)
 			pRegs = &arm;
 	
 		which = (which + 1) % 32;

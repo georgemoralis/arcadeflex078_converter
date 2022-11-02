@@ -228,7 +228,7 @@ public class moo
 		if (!Machine.sample_rate) {
 			if (init_nosound_count < 10)
 			{
-				if (!init_nosound_count)
+				if (init_nosound_count == 0)
 					latch = 0xff;
 				else
 					latch = 0x80;

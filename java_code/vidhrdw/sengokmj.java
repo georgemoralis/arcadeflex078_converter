@@ -144,7 +144,7 @@ public class sengokmj
 	
 			for (ax=0; ax<dx; ax++)
 				for (ay=0; ay<dy; ay++) {
-					if (!fx)
+					if (fx == 0)
 						drawgfx(bitmap,Machine.gfx[0],
 							sprite++,
 							color,fx,fy,x+ax*16,y+ay*16,

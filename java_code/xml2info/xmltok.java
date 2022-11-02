@@ -879,7 +879,7 @@ public class xmltok
 	      c2 += ASCII_A - ASCII_a;
 	    if (c1 != c2)
 	      return 0;
-	    if (!c1)
+	    if (c1 == 0)
 	      break;
 	  }
 	  return 1;
@@ -1052,7 +1052,7 @@ public class xmltok
 	    return 0;
 	  }
 	  if (!XmlNameMatchesAscii(enc, name, nameEnd, KW_version)) {
-	    if (!isGeneralTextEntity) {
+	    if (isGeneralTextEntity == 0) {
 	      *badPtr = name;
 	      return 0;
 	    }
@@ -1066,7 +1066,7 @@ public class xmltok
 	      *badPtr = ptr;
 	      return 0;
 	    }
-	    if (!name) {
+	    if (name == 0) {
 	      if (isGeneralTextEntity != 0) {
 	        /* a TextDecl must have an EncodingDecl */
 	        *badPtr = ptr;
@@ -1089,7 +1089,7 @@ public class xmltok
 	      *badPtr = ptr;
 	      return 0;
 	    }
-	    if (!name)
+	    if (name == 0)
 	      return 1;
 	  }
 	  if (!XmlNameMatchesAscii(enc, name, nameEnd, KW_standalone)

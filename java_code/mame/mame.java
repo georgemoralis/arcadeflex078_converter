@@ -246,7 +246,7 @@ public class mame
 	
 	INLINE void bail_and_print(const char *message)
 	{
-		if (!bailing)
+		if (bailing == 0)
 		{
 			bailing = 1;
 			printf("%s\n", message);
@@ -409,7 +409,7 @@ public class mame
 		spriteram_size = spriteram_2_size = 0;
 	
 		/* initialize the memory system for this game */
-		if (!memory_init())
+		if (memory_init() == 0)
 		{
 			logerror("memory_init failed\n");
 			goto cant_init_memory;
@@ -1016,7 +1016,7 @@ public class mame
 	
 		/* allocate memory for the back buffer */
 		buffered_spriteram = auto_malloc(spriteram_size);
-		if (!buffered_spriteram)
+		if (buffered_spriteram == 0)
 			return 1;
 	
 		/* register for saving it */
@@ -1027,7 +1027,7 @@ public class mame
 		{
 			/* allocate memory */
 			buffered_spriteram_2 = auto_malloc(spriteram_2_size);
-			if (!buffered_spriteram_2)
+			if (buffered_spriteram_2 == 0)
 				return 1;
 	
 			/* register for saving it */
@@ -1199,7 +1199,7 @@ public class mame
 		/* set the main game bitmap */
 		current_display.game_bitmap = Machine.scrbitmap;
 		current_display.game_bitmap_update = Machine.absolute_visible_area;
-		if (!skipped_it)
+		if (skipped_it == 0)
 			current_display.changed_flags |= GAME_BITMAP_CHANGED;
 	
 		/* set the visible area */
@@ -1261,7 +1261,7 @@ public class mame
 	{
 		/* increment the frame counters */
 		frames_since_last_fps++;
-		if (!skipped_it)
+		if (skipped_it == 0)
 			rendered_frames_since_last_fps++;
 	
 		/* if we didn't skip this frame, we may be able to compute a new FPS */

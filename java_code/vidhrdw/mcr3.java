@@ -98,7 +98,7 @@ public class mcr3
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 		return 0;
 	} };
@@ -108,7 +108,7 @@ public class mcr3
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcrmono_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 		return 0;
 	} };
@@ -118,12 +118,12 @@ public class mcr3
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(spyhunt_get_bg_tile_info, spyhunt_bg_scan, TILEMAP_OPAQUE, 64,32, 64,32);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		/* initialize the text tilemap */
 		alpha_tilemap = tilemap_create(spyhunt_get_alpha_tile_info, tilemap_scan_cols, TILEMAP_TRANSPARENT, 16,16, 32,32);
-		if (!alpha_tilemap)
+		if (alpha_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(alpha_tilemap, 0);
 		tilemap_set_scrollx(alpha_tilemap, 0, 16);
@@ -225,7 +225,7 @@ public class mcr3
 	
 			/* sprites use color 0 for background pen and 8 for the 'under tile' pen.
 				The color 8 is used to cover over other sprites. */
-			if (!mcr_cocktail_flip)
+			if (mcr_cocktail_flip == 0)
 			{
 				/* first draw the sprite, visible */
 				pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, sx, sy,

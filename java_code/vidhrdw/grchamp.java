@@ -147,10 +147,10 @@ public class grchamp
 	public static VideoUpdateHandlerPtr video_update_grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		headlight_bitmap = auto_bitmap_alloc( 64,128 );
-		if( !headlight_bitmap )
+		if (headlight_bitmap == 0)
 			return 1;
 		work_bitmap = auto_bitmap_alloc( 32,32 );
-		if( !work_bitmap )
+		if (work_bitmap == 0)
 			return 1;
 			
 		tilemap[0] = tilemap_create(get_bg0_tile_info,get_memory_offset,TILEMAP_OPAQUE,8,8,64,32);
@@ -323,7 +323,7 @@ public class grchamp
 		int y0 = 240-grchamp_player_ypos-64;
 		const UINT8 *source = memory_region( REGION_GFX4 );
 		int x,y,bit;
-		if( !bFog ) source += 0x400;
+		if (bFog == 0) source += 0x400;
 		for( y=0; y<128; y++ )
 		{
 			for( x=0; x<64; x+=8 )

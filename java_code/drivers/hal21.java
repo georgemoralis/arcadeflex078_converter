@@ -103,7 +103,7 @@ public class hal21
 			return;
 	
 			case 3: // release
-				if (!busy)
+				if (busy == 0)
 				{
 					if (hold != 0) hold--; else
 					if (ffcount != 0)

@@ -350,7 +350,7 @@ public class atarigt
 		protaddr[ADDRSEQ_COUNT - 1] = offset;
 	
 		/* check for particular sequences */
-		if (!protmode)
+		if (protmode == 0)
 		{
 			/* this is from the code at $20f90 */
 			if (protaddr[1] == 0xdcc7c4 && protaddr[2] == 0xdcc7c4 && protaddr[3] == 0xdc4010)
@@ -592,13 +592,13 @@ public class atarigt
 	
 		if ((mem_mask & 0xffff0000) != 0xffff0000)
 		{
-			if (!ignore_writes)
+			if (ignore_writes == 0)
 				atarigt_colorram_w(address, data >> 16, mem_mask >> 16);
 			(*protection_w)(address, data >> 16);
 		}
 		if ((mem_mask & 0x0000ffff) != 0x0000ffff)
 		{
-			if (!ignore_writes)
+			if (ignore_writes == 0)
 				atarigt_colorram_w(address + 2, data, mem_mask);
 			(*protection_w)(address + 2, data);
 		}

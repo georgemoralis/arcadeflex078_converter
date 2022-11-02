@@ -89,7 +89,7 @@ public class battlane
 	
 	    orval = (~battlane_video_ctrl >> 1) & 0x07;
 	
-		if (!orval)
+		if (orval == 0)
 			orval = 7;
 	
 		for (i = 0; i < 8; i++)
@@ -155,12 +155,12 @@ public class battlane
 		bg_tilemap = tilemap_create(get_tile_info_bg, battlane_tilemap_scan_rows_2x2,
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
 		
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		screen_bitmap = auto_bitmap_alloc(32 * 8, 32 * 8);
 	
-		if (!screen_bitmap)
+		if (screen_bitmap == 0)
 			return 1;
 	
 		return 0;
@@ -199,7 +199,7 @@ public class battlane
 				flipx = attr & 0x04;
 				flipy = attr & 0x02;
 	
-				if (!flip_screen)
+				if (flip_screen == 0)
 	            {
 					sx = 240 - sx;
 					sy = 240 - sy;

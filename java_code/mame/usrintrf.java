@@ -2831,7 +2831,7 @@ public class usrintrf
 		maxcols -= 2;
 		maxrows -= 8;
 	
-		if (!buf)
+		if (buf == 0)
 		{
 			/* allocate a buffer for the text */
 			buf = malloc (bufsize);
@@ -3519,7 +3519,7 @@ public class usrintrf
 					}
 				}
 	
-				if (!overflow)
+				if (overflow == 0)
 				{
 					for (ch = 0; ch < MIXER_MAX_CHANNELS; ch++)
 					{
@@ -3911,7 +3911,7 @@ public class usrintrf
 	
 	void ui_show_fps_temp(double seconds)
 	{
-		if (!showfps)
+		if (showfps == 0)
 			showfpstemp = (int)(seconds * Machine.drv.frames_per_second);
 	}
 	
@@ -4033,7 +4033,7 @@ public class usrintrf
 		if (setup_selected != 0) setup_selected = setup_menu(bitmap, setup_selected);
 	
 	#ifdef MAME_DEBUG
-		if (!mame_debug)
+		if (mame_debug == 0)
 	#endif
 			if (osd_selected == 0 && input_ui_pressed(IPT_UI_ON_SCREEN_DISPLAY))
 			{
@@ -4162,7 +4162,7 @@ public class usrintrf
 				if (setup_selected != 0) setup_selected = setup_menu(bitmap, setup_selected);
 	
 	#ifdef MAME_DEBUG
-				if (!mame_debug)
+				if (mame_debug == 0)
 	#endif
 					if (osd_selected == 0 && input_ui_pressed(IPT_UI_ON_SCREEN_DISPLAY))
 					{

@@ -41,7 +41,7 @@ public class dassault
 				}
 	
 				sprite = spritebase[offs+1] & 0x7fff;
-				if (!sprite) continue;
+				if (sprite == 0) continue;
 	
 				x = spritebase[offs+2];
 	

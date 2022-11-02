@@ -399,7 +399,7 @@ public class k054539
 			if (code_pressed_memory(KEYCODE_DEL_PAD))
 			{
 				gc_active ^= 1;
-				if (!gc_active) usrintf_showmessage_secs(0, " ");
+				if (gc_active == 0) usrintf_showmessage_secs(0, " ");
 			}
 	
 			if (gc_active != 0)

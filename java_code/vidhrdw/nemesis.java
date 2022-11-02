@@ -284,42 +284,42 @@ public class nemesis
 		tilemap_set_scroll_rows( foreground, 256 );
 	
 		char_dirty = auto_malloc(2048);
-		if (!char_dirty)
+		if (char_dirty == 0)
 			return 1;
 		memset(char_dirty,1,2048);
 	
 		sprite_dirty = auto_malloc(512);
-		if (!sprite_dirty)
+		if (sprite_dirty == 0)
 			return 1;
 		memset(sprite_dirty,1,512);
 	
 		sprite3216_dirty = auto_malloc(256);
-		if (!sprite3216_dirty)
+		if (sprite3216_dirty == 0)
 			return 1;
 		memset(sprite3216_dirty,1,256);
 	
 		sprite1632_dirty = auto_malloc(256);
-		if (!sprite1632_dirty)
+		if (sprite1632_dirty == 0)
 			return 1;
 		memset(sprite1632_dirty,1,256);
 	
 		sprite3232_dirty = auto_malloc(128);
-		if (!sprite3232_dirty)
+		if (sprite3232_dirty == 0)
 			return 1;
 		memset(sprite3232_dirty,1,128);
 	
 		sprite168_dirty = auto_malloc(1024);
-		if (!sprite168_dirty)
+		if (sprite168_dirty == 0)
 			return 1;
 		memset(sprite168_dirty,1,1024);
 	
 		sprite816_dirty = auto_malloc(1024);
-		if (!sprite816_dirty)
+		if (sprite816_dirty == 0)
 			return 1;
 		memset(sprite816_dirty,1,32);
 	
 		sprite6464_dirty = auto_malloc(32);
-		if (!sprite6464_dirty)
+		if (sprite6464_dirty == 0)
 			return 1;
 		memset(sprite6464_dirty,1,32);
 	
@@ -327,7 +327,7 @@ public class nemesis
 	
 	
 		blank_characterdata = auto_malloc(32*8/8*(2048+1));
-		if (!blank_characterdata)
+		if (blank_characterdata == 0)
 			return 1;
 		memset(blank_characterdata,0x00,32*8/8*(2048+1));
 		decodechar(Machine.gfx[0],0x800,(unsigned char *)blank_characterdata,

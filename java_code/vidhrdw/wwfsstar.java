@@ -174,7 +174,7 @@ public class wwfsstar
 				{
 					if (flip_screen != 0)
 					{
-						if (!flipy)
+						if (flipy == 0)
 						{
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos+16*count,cliprect,TRANSPARENCY_PEN,0);
 						}
@@ -185,7 +185,7 @@ public class wwfsstar
 					}
 					else
 					{
-						if (!flipy)
+						if (flipy == 0)
 						{
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos-(16*(chain-1))+(16*count),cliprect,TRANSPARENCY_PEN,0);
 						}

@@ -451,7 +451,7 @@ public class dooyong
 		bluehawk_draw_layer(bitmap,1,lastday_bgscroll,memory_region(REGION_GFX2)+memory_region_length(REGION_GFX2)-0x8000,TRANSPARENCY_NONE);
 		if (tx_pri != 0) bluehawk_draw_tx(bitmap);
 		bluehawk_draw_layer(bitmap,2,lastday_fgscroll,memory_region(REGION_GFX3)+memory_region_length(REGION_GFX3)-0x8000,TRANSPARENCY_PEN);
-		if (!tx_pri) bluehawk_draw_tx(bitmap);
+		if (tx_pri == 0) bluehawk_draw_tx(bitmap);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_rshark  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

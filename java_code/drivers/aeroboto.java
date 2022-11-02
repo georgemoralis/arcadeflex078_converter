@@ -51,7 +51,7 @@ public class aeroboto
 	
 	public static InterruptHandlerPtr aeroboto_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (!disable_irq)
+		if (disable_irq == 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else
 			disable_irq--;

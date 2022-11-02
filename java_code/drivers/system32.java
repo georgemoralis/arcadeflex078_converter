@@ -446,7 +446,7 @@ public class system32
 	{
 		if (ACCESSING_MSB != 0) {
 			irq_status &= data >> 8;
-			if(!irq_status)
+			if (irq_status == 0)
 				cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
 	}
@@ -523,7 +523,7 @@ public class system32
 	// and can write things into work RAM.  we simulate that here for burning rival.
 	static READ16_HANDLER(brival_protection_r)
 	{
-		if (!mem_mask)	// only trap on word-wide reads
+		if (mem_mask == 0)	// only trap on word-wide reads
 		{
 			switch (offset)
 			{

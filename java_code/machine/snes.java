@@ -1626,7 +1626,7 @@ public class snes
 				{
 					if( !(snes_ram[SNES_DMA_BASE + dma] & 0x40) )	/* Absolute */
 					{
-						if( !contmode )
+						if (contmode == 0)
 						{
 							snes_ram[SNES_DMA_BASE + dma + 8] = abus & 0xff;
 							snes_ram[SNES_DMA_BASE + dma + 9] = (abus >> 8) & 0xff;
@@ -1670,7 +1670,7 @@ public class snes
 	
 				/* Number of bytes to transfer */
 				length = (snes_ram[SNES_DMA_BASE + dma + 6] << 8) + snes_ram[SNES_DMA_BASE + dma + 5];
-				if( !length )
+				if (length == 0)
 					length = 0x10000;	/* 0x0000 really means 0x10000 */
 	
 	#ifdef SNES_DBG_GDMA

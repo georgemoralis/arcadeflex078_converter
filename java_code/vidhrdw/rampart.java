@@ -148,13 +148,13 @@ public class rampart
 	
 		/* allocate dirty map */
 		pfdirty = auto_malloc(sizeof(pfdirty[0]) * ydim);
-		if (!pfdirty)
+		if (pfdirty == 0)
 			return 0;
 		memset(pfdirty, 1, sizeof(pfdirty[0]) * ydim);
 	
 		/* allocate playfield bitmap */
 		pfbitmap = auto_bitmap_alloc(xdim, ydim);
-		if (!pfbitmap)
+		if (pfbitmap == 0)
 			return 0;
 		return 1;
 	}

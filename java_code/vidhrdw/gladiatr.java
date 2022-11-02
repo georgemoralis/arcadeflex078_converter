@@ -89,10 +89,10 @@ public class gladiatr
 		sprite_bank = 2;
 	
 		dirtybuffer = auto_malloc(64*32);
-		if( !dirtybuffer )
+		if (dirtybuffer == 0)
 			return 1;
 		tmpbitmap = auto_bitmap_alloc(512,256);
-		if( !tmpbitmap )
+		if (tmpbitmap == 0)
 			return 1;
 		memset(dirtybuffer,1,64*32);
 		return 0;

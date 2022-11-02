@@ -736,7 +736,7 @@ public class voodoo
 		if (voodoo2 != 0)
 		{
 			cmdfifo = auto_malloc(CMDFIFO_SIZE);
-			if (!cmdfifo)
+			if (cmdfifo == 0)
 				return 1;
 		}
 		
@@ -1054,7 +1054,7 @@ public class voodoo
 				UINT16 *dest = &buffer[(fbz_invert_y ? (inverted_yorigin - y) : y) * FRAMEBUF_WIDTH + sx];
 	
 				/* if not dithered, it's easy */
-				if (!fbz_dithering)
+				if (fbz_dithering == 0)
 				{
 					UINT16 color = dither[0];
 					for (x = sx; x < ex; x++)
@@ -2148,7 +2148,7 @@ public class voodoo
 				fbz_dither_matrix = ((data >> 11) & 1) ? dither_matrix_2x2 : dither_matrix_4x4;
 				fbz_draw_buffer = buffer_access[(data >> 14) & 3];
 				fbz_invert_y = (data >> 17) & 1;
-				if (!voodoo2)
+				if (voodoo2 == 0)
 					voodoo_regs[fbzMode] &= ~(1 << 21);
 				break;
 			
@@ -2652,7 +2652,7 @@ public class voodoo
 				result = 0;
 				
 				/* FIFO free space */
-				if (!blocked_on_swap)
+				if (blocked_on_swap == 0)
 					result |= 0x3f;
 				
 				/* vertical retrace */
@@ -2671,7 +2671,7 @@ public class voodoo
 				result |= (frontbuf == framebuf[1]) << 10;
 				
 				/* memory FIFO free space */
-				if (!blocked_on_swap)
+				if (blocked_on_swap == 0)
 					result |= 0xffff << 12;
 				
 				/* swap buffers pending */

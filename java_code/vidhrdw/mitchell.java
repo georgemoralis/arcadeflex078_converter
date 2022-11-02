@@ -60,7 +60,7 @@ public class mitchell
 	
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap,15);
@@ -69,7 +69,7 @@ public class mitchell
 			OBJ RAM
 		*/
 		pang_objram=auto_malloc(pang_videoram_size);
-		if (!pang_objram)
+		if (pang_objram == 0)
 			return 1;
 		memset(pang_objram, 0, pang_videoram_size);
 	
@@ -77,7 +77,7 @@ public class mitchell
 			Palette RAM
 		*/
 		paletteram = auto_malloc(2*Machine.drv.total_colors);
-		if (!paletteram)
+		if (paletteram == 0)
 			return 1;
 		memset(paletteram, 0, 2*Machine.drv.total_colors);
 	

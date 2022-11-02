@@ -693,7 +693,7 @@ public class asmintf
 	
 		which = (which+1) % 32;
 		buffer[which][0] = '\0';
-		if( !context )
+		if (context == 0)
 			r = &M68000_regs;
 	
 		switch( regnum )
@@ -1092,7 +1092,7 @@ public class asmintf
 	
 		which = (which + 1) % 32;
 		buffer[which][0] = '\0';
-		if( !context )
+		if (context == 0)
 			r = &M68020_regs;
 	
 		switch( regnum )

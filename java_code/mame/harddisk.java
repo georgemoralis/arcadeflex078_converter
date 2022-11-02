@@ -47,7 +47,7 @@ public class harddisk
 		UINT32 count;
 	
 		/* punt if no CHD */
-		if (!chd)
+		if (chd == 0)
 			return NULL;
 		
 		/* read the hard disk metadata */
@@ -62,7 +62,7 @@ public class harddisk
 		
 		/* allocate memory for the hard disk file */
 		file = malloc(sizeof(struct hard_disk_file));
-		if (!file)
+		if (file == 0)
 			return NULL;
 		
 		/* fill in the data */

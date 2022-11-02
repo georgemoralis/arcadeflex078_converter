@@ -371,13 +371,13 @@ public class wind3d
 		int image_width = win_visible_width;
 		int image_height = win_visible_height;
 	
-		if (!image_width)
+		if (image_width == 0)
 			image_width = max_width;
-		if (!image_height)
+		if (image_height == 0)
 			image_height = max_height;
 	
 		// if prescale is disbled just set the levels to 1
-		if (!win_d3d_use_prescale)
+		if (win_d3d_use_prescale == 0)
 		{
 			current_prescalex = current_prescaley = 1;
 	#if SHOW_PRESCALE
@@ -789,7 +789,7 @@ public class wind3d
 		target_height = max_height * effect_min_yscale;
 		if (pixel_aspect_ratio == VIDEO_PIXEL_ASPECT_RATIO_1_2)
 		{
-			if (!blit_swapxy)
+			if (blit_swapxy == 0)
 				target_height *= 2;
 			else
 				target_width *= 2;
@@ -798,7 +798,7 @@ public class wind3d
 			target_width *= 2, target_height *= 2;
 		if (pixel_aspect_ratio == VIDEO_PIXEL_ASPECT_RATIO_2_1)
 		{
-			if (!blit_swapxy)
+			if (blit_swapxy == 0)
 				target_width *= 2;
 			else
 				target_height *= 2;
@@ -919,12 +919,12 @@ public class wind3d
 				}
 	
 				// force to the current width/height
-				if (!win_switch_res)
+				if (win_switch_res == 0)
 				{
 					win_gfx_width = currmode.dwWidth;
 					win_gfx_height = currmode.dwHeight;
 				}
-				if (!win_switch_bpp)
+				if (win_switch_bpp == 0)
 					win_gfx_depth = currmode.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
 			}
 	
@@ -1031,7 +1031,7 @@ public class wind3d
 		primary_desc.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 	
 		// for full screen mode, allocate flipping surfaces
-		if (!win_window_mode)
+		if (win_window_mode == 0)
 		{
 			int buffer_count = 1;
 			if (win_triple_buffer != 0)
@@ -1347,7 +1347,7 @@ public class wind3d
 		blit_desc.dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_PIXELFORMAT | DDSD_CAPS;
 	
 		// determine the preferred blit/texture surface colour format
-		if (!needs_6bpp_per_gun)
+		if (needs_6bpp_per_gun == 0)
 			IDirect3DDevice7_EnumTextureFormats(d3d_device7, &enum_textures_callback, (LPVOID)&preferred_pixelformat);
 		// if we have a preferred colour format, use it
 		if (preferred_pixelformat.dwSize)
@@ -1383,7 +1383,7 @@ public class wind3d
 		texture_surface = blit_surface;
 	
 		// modify the description of our texture surface, based on the blit surface
-		if (!win_d3d_tex_manage)
+		if (win_d3d_tex_manage == 0)
 		{
 			// fill in the differences
 			texture_desc.dwWidth = texture_width;
@@ -1472,7 +1472,7 @@ public class wind3d
 					IDirectDrawSurface7_Release(previous_target);
 				}
 			}
-			if (!can_render_to_texture)
+			if (can_render_to_texture == 0)
 	#else
 			// create the pre-processing surface
 			result = IDirectDraw7_CreateSurface(ddraw7, &preprocess_desc, &preprocess_surface, NULL);
@@ -1651,7 +1651,7 @@ public class wind3d
 	
 		win_d3d_effects_init_surfaces();
 	
-		if (!win_window_mode)
+		if (win_window_mode == 0)
 		{
 			// loop through enough to get all the back buffers
 			for (i = 0; i < 5; i++)
@@ -2016,7 +2016,7 @@ public class wind3d
 		IDirectDrawSurface7_Unlock(blit_surface, NULL);
 	
 		// blit the image to the texture surface when texture management in't used
-		if (!win_d3d_tex_manage)
+		if (win_d3d_tex_manage == 0)
 		{
 			RECT blt_src = { params.dstxoffs, params.dstyoffs, params.dstxoffs, params.dstyoffs };
 	
@@ -2080,7 +2080,7 @@ public class wind3d
 			}
 		} while ((render_and_flip_result = render_and_flip(&src, &dst, update, wait_for_lock)) == 2);
 	
-		if (!render_and_flip_result)
+		if (render_and_flip_result == 0)
 			return 0;
 	
 		return 1;
@@ -2093,7 +2093,7 @@ public class wind3d
 		win_adjust_window();
 	
 		// restore the surfaces
-		if (!restore_surfaces())
+		if (restore_surfaces() == 0)
 			goto tryagain;
 	
 		// otherwise, return failure
@@ -2389,7 +2389,7 @@ public class wind3d
 			profiler_mark(PROFILER_IDLE);
 	
 			result = IDirectDraw7_GetVerticalBlankStatus(ddraw7, &is_vblank);
-			if (!is_vblank)
+			if (is_vblank == 0)
 				result = IDirectDraw7_WaitForVerticalBlank(ddraw7, DDWAITVB_BLOCKBEGIN, 0);
 	
 			// idle time done
@@ -2466,7 +2466,7 @@ public class wind3d
 		win_adjust_window();
 	
 		// restore the surfaces
-		if (!restore_surfaces())
+		if (restore_surfaces() == 0)
 			goto tryagain;
 	
 		// otherwise, return failure

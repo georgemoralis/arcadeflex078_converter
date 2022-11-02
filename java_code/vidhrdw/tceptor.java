@@ -469,7 +469,7 @@ public class tceptor
 	
 		/* allocate temp bitmaps */
 		temp_bitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (!temp_bitmap)
+		if (temp_bitmap == 0)
 			return 1;
 	
 		if (namco_road_init(gfx_index))
@@ -478,7 +478,7 @@ public class tceptor
 		namco_road_set_transparent_color(Machine.remapped_colortable[0xfff]);
 	
 		tx_tilemap = tilemap_create(get_tx_tile_info, tilemap_scan_cols, TILEMAP_TRANSPARENT_COLOR, 8, 8, 34, 28);
-		if (!tx_tilemap)
+		if (tx_tilemap == 0)
 			return 1;
 	
 		tilemap_set_scrollx(tx_tilemap, 0, -2*8);
@@ -565,7 +565,7 @@ public class tceptor
 	
 				if (is_mask_spr[color])
 				{
-					if (!need_mask)
+					if (need_mask == 0)
 					{
 						// backup previous bitmap
 						copybitmap(temp_bitmap, bitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);

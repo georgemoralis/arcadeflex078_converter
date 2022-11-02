@@ -223,20 +223,20 @@ public class system32
 			dst_x += system32_screen_mode ? 52*8 : 40*8;
 		}
 	
-		if (!sys32sprite_8bpp)
+		if (sys32sprite_8bpp == 0)
 		{
 			src_pitch >>= 1;
-			if (!sys32sprite_draw_colour_f) transparent_pen = 0x0f;
+			if (sys32sprite_draw_colour_f == 0) transparent_pen = 0x0f;
 		}
 		else
-			if (!sys32sprite_draw_colour_f) transparent_pen = 0xff;
+			if (sys32sprite_draw_colour_f == 0) transparent_pen = 0xff;
 	
-		if (!sys32sprite_is_shadow)
+		if (sys32sprite_is_shadow == 0)
 		{
 			if (sys32sprite_indirect_palette != 0)
 			{
 				// update indirect palette cache if necessary
-				if (!sys32sprite_8bpp)
+				if (sys32sprite_8bpp == 0)
 				{
 					if (idb_old != idp_base || sys32mon_old4 != sys32sprite_monitor_select)
 					{
@@ -291,7 +291,7 @@ public class system32
 		src_ptr += ecx;
 		ecx = dst_w;
 	
-		if (!sys32sprite_8bpp)
+		if (sys32sprite_8bpp == 0)
 		{
 			// 4bpp
 			edx >>= FP+1;
@@ -328,7 +328,7 @@ public class system32
 	
 				} while (--dst_h);
 			}
-			else if (!sys32sprite_is_shadow)
+			else if (sys32sprite_is_shadow == 0)
 			{
 				do {
 					do {
@@ -417,7 +417,7 @@ public class system32
 	
 				} while (--dst_h);
 			}
-			else if (!sys32sprite_is_shadow)
+			else if (sys32sprite_is_shadow == 0)
 			{
 				do {
 					do {
@@ -497,7 +497,7 @@ public class system32
 			xsrc = 0;
 			xdst = 0;
 	
-			if (!sys32sprite_yflip) {
+			if (sys32sprite_yflip == 0) {
 				drawypos = sys32sprite_ypos+ydst; // no flip
 				if (drawypos > cliprect.max_y) ysrc = sys32sprite_rom_height<<16; // quit drawing if we've gone off the right
 			}
@@ -513,7 +513,7 @@ public class system32
 	
 					int drawxpos;
 	
-					if (!sys32sprite_xflip) {
+					if (sys32sprite_xflip == 0) {
 						drawxpos = sys32sprite_xpos+xdst; // no flip
 						if (drawxpos > cliprect.max_x) xsrc = sys32sprite_rom_width<<16; // quit drawing if we've gone off the right
 					}
@@ -528,7 +528,7 @@ public class system32
 						int r,g,b;
 	
 						if (sys32sprite_monitor_select != 0) drawxpos+=system32_screen_mode?52*8:40*8;
-						if (!sys32sprite_8bpp) { // 4bpp
+						if (sys32sprite_8bpp == 0) { // 4bpp
 							gfxdata = (sprite_gfxdata[sys32sprite_rom_offset+((xsrc>>16)/2)+(ysrc>>16)*(sys32sprite_rom_width/2)]);
 	
 							if ((xsrc & 0x10000) != 0) gfxdata = gfxdata & 0x0f;

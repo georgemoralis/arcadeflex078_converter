@@ -294,7 +294,7 @@ public class equites
 				if (pc == ruleptr.pc)
 				{
 					mode = ruleptr.mode;
-					if (!mode) return (ruleptr.data);
+					if (mode == 0) return (ruleptr.data);
 					switch (mode & 0xf)
 					{
 						case 1:

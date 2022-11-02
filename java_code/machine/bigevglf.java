@@ -106,8 +106,8 @@ public class bigevglf
 	{
 		int res = 0;
 	
-		if (!main_sent) res |= 0x08;
-		if (!mcu_sent) res |= 0x10;
+		if (main_sent == 0) res |= 0x08;
+		if (mcu_sent == 0) res |= 0x10;
 	
 		return res;
 	} };

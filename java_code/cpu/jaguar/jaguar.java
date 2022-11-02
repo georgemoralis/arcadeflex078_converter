@@ -283,7 +283,7 @@ public class jaguar
 				temp = jaguar.r[i], jaguar.r[i] = jaguar.a[i], jaguar.a[i] = temp;
 	
 			/* swap the bank pointers */
-			if (!bank)
+			if (bank == 0)
 			{
 				jaguar.b0 = jaguar.r;
 				jaguar.b1 = jaguar.a;
@@ -320,7 +320,7 @@ public class jaguar
 	
 		/* bail if nothing is available */
 		bits &= mask;
-		if (!bits)
+		if (bits == 0)
 			return;
 	
 		/* determine which interrupt */
@@ -436,7 +436,7 @@ public class jaguar
 		int i, j;
 	
 		/* allocate the mirror table */
-		if (!mirror_table)
+		if (mirror_table == 0)
 			mirror_table = malloc(65536 * sizeof(mirror_table[0]));
 	
 		/* fill in the mirror table */
@@ -452,7 +452,7 @@ public class jaguar
 				                  ((i << 13) & 0x4000) | ((i << 15) & 0x8000);
 	
 		/* allocate the condition table */
-		if (!condition_table)
+		if (condition_table == 0)
 			condition_table = malloc(32 * 8 * sizeof(condition_table[0]));
 	
 		/* fill in the condition table */
@@ -830,7 +830,7 @@ public class jaguar
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (!context)
+		if (context == 0)
 			r = &jaguar;
 	
 	    switch( regnum )

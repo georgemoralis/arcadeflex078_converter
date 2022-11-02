@@ -271,7 +271,7 @@ public class deniam
 					{
 						if ((rom[i] & 0x0f) == 0x0f)
 						{
-							if (!drawing) drawing = 1;
+							if (drawing == 0) drawing = 1;
 							else break;
 						}
 						else
@@ -291,7 +291,7 @@ public class deniam
 	
 						if ((rom[i] & 0xf0) == 0xf0)
 						{
-							if (!drawing) drawing = 1;
+							if (drawing == 0) drawing = 1;
 							else break;
 						}
 						else
@@ -315,7 +315,7 @@ public class deniam
 					{
 						if ((rom[i] & 0xf0) == 0xf0)
 						{
-							if (!drawing) drawing = 1;
+							if (drawing == 0) drawing = 1;
 							else break;
 						}
 						else
@@ -335,7 +335,7 @@ public class deniam
 	
 						if ((rom[i] & 0x0f) == 0x0f)
 						{
-							if (!drawing) drawing = 1;
+							if (drawing == 0) drawing = 1;
 							else break;
 						}
 						else
@@ -390,7 +390,7 @@ public class deniam
 		int page;
 	
 	
-		if (!display_enable) return;	/* don't update (freeze display) */
+		if (display_enable == 0) return;	/* don't update (freeze display) */
 	
 		bg_scrollx = deniam_textram[bg_scrollx_reg] - bg_scrollx_offs;
 		bg_scrolly = (deniam_textram[bg_scrolly_reg] & 0xff) - bg_scrolly_offs;

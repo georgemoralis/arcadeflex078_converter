@@ -918,7 +918,7 @@ public class harddriv
 		if (m68k_adsp_buffer_bank != data && keyboard_pressed(KEYCODE_L))
 		{
 			static FILE *commands;
-			if (!commands) commands = fopen("commands.log", "w");
+			if (commands == 0) commands = fopen("commands.log", "w");
 			if (commands != 0)
 			{
 				INT16 *base = (INT16 *)&som_memory[data * 0x2000];
@@ -1211,7 +1211,7 @@ public class harddriv
 		if (ds3_g68flag != 0) result ^= 0x8000;
 		if (ds3_gflag != 0) result ^= 0x4000;
 		if (ds3_g68irqs != 0) result ^= 0x2000;
-		if (!adsp_irq_state) result ^= 0x1000;
+		if (adsp_irq_state == 0) result ^= 0x1000;
 		return result;
 	}
 	

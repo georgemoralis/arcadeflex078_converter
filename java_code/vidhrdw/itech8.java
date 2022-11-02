@@ -162,7 +162,7 @@ public class itech8
 	
 	INLINE void draw_byte_trans4(offs_t addr, UINT8 val, UINT8 mask, UINT8 latch)
 	{
-		if (!val)
+		if (val == 0)
 			return;
 	
 		if ((val & 0xf0) != 0)
@@ -210,7 +210,7 @@ public class itech8
 	
 	INLINE void draw_byte_shift_trans4(offs_t addr, UINT8 val, UINT8 mask, UINT8 latch)
 	{
-		if (!val)
+		if (val == 0)
 			return;
 	
 		if ((val & 0xf0) != 0)
@@ -400,7 +400,7 @@ public class itech8
 			for (xleft = width + skip[0] + skip[1]; xleft > 0; )								\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (!count)																		\
+				if (count == 0)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -431,7 +431,7 @@ public class itech8
 			for (xleft = skip[y & 1]; xleft > 0; )												\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (!count)																		\
+				if (count == 0)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -451,7 +451,7 @@ public class itech8
 			for (xleft = width; xleft > 0; )													\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (!count)																		\
+				if (count == 0)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -483,7 +483,7 @@ public class itech8
 			for (xleft = skip[~y & 1]; xleft > 0; )												\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (!count)																		\
+				if (count == 0)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -665,7 +665,7 @@ public class itech8
 			if (BLIT_LOGGING != 0)
 			{
 				static FILE *blitlog;
-				if (!blitlog) blitlog = fopen("blitter.log", "w");
+				if (blitlog == 0) blitlog = fopen("blitter.log", "w");
 				if (blitlog != 0) fprintf(blitlog, "Blit: XY=%1X%02X%02X SRC=%02X%02X%02X SIZE=%3dx%3d FLAGS=%02x",
 							tms34061_r(14*4+2, 0, 0) & 0x0f, tms34061_r(15*4+2, 0, 0), tms34061_r(15*4+0, 0, 0),
 							*itech8_grom_bank, blitter_data[0], blitter_data[1],

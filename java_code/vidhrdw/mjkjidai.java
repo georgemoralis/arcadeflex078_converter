@@ -41,7 +41,7 @@ public class mjkjidai
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
-		if (!bg_tilemap) return 1;
+		if (bg_tilemap == 0) return 1;
 	
 		return 0;
 	} };
@@ -142,7 +142,7 @@ public class mjkjidai
 	
 	public static VideoUpdateHandlerPtr video_update_mjkjidai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (!display_enable)
+		if (display_enable == 0)
 		{
 			fillbitmap(bitmap,get_black_pen(),cliprect);
 		}

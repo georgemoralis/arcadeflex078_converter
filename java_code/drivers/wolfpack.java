@@ -107,7 +107,7 @@ public class wolfpack
 		/* BIT6 => UNUSED      */
 		/* BIT7 => VBLANK      */
 	
-		if (!wolfpack_collision)
+		if (wolfpack_collision == 0)
 		{
 			val |= 0x10;
 		}

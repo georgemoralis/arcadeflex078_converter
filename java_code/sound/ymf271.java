@@ -493,7 +493,7 @@ public class ymf271
 	{
 		YMF271Chip *chip = &YMF271[chipnum];
 	
-		if (!offset)
+		if (offset == 0)
 		{
 			return chip.status;
 		}

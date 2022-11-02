@@ -936,7 +936,7 @@ public class taitoic
 	{
 		UINT16 code,attr;
 	
-		if (!PC080SN_dblwidth)
+		if (PC080SN_dblwidth == 0)
 		{
 			code = (ram[2*tile_index + 1] & 0x3fff);
 			attr = ram[2*tile_index];
@@ -958,7 +958,7 @@ public class taitoic
 	{
 		UINT16 code,attr;
 	
-		if (!PC080SN_dblwidth)
+		if (PC080SN_dblwidth == 0)
 		{
 			code = (ram[2*tile_index + 1] & 0x3fff);
 			attr = ram[2*tile_index];
@@ -1051,7 +1051,7 @@ public class taitoic
 		{
 			int xd,yd;
 	
-			if (!PC080SN_dblwidth)	/* standard tilemaps */
+			if (PC080SN_dblwidth == 0)	/* standard tilemaps */
 			{
 				PC080SN_tilemap[i][0] = tilemap_create(PC080SN_get_tile_info[i][0],tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
 				PC080SN_tilemap[i][1] = tilemap_create(PC080SN_get_tile_info[i][1],tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
@@ -1099,7 +1099,7 @@ public class taitoic
 			tilemap_set_scrolldx(PC080SN_tilemap[i][1],-16 + xd,-16 - xd);
 			tilemap_set_scrolldy(PC080SN_tilemap[i][1],yd,-yd);
 	
-			if (!PC080SN_dblwidth)
+			if (PC080SN_dblwidth == 0)
 			{
 				tilemap_set_scroll_rows(PC080SN_tilemap[i][0],512);
 				tilemap_set_scroll_rows(PC080SN_tilemap[i][1],512);
@@ -1126,7 +1126,7 @@ public class taitoic
 		COMBINE_DATA(&PC080SN_ram[chip][offset]);
 		if (oldword != PC080SN_ram[chip][offset])
 		{
-			if (!PC080SN_dblwidth)
+			if (PC080SN_dblwidth == 0)
 			{
 				if (offset < 0x2000)
 					tilemap_mark_tile_dirty(PC080SN_tilemap[chip][0],offset / 2);
@@ -1269,7 +1269,7 @@ public class taitoic
 			tilemap_set_scrolly(PC080SN_tilemap[chip][0],0,PC080SN_bgscrolly[chip][0]);
 			tilemap_set_scrolly(PC080SN_tilemap[chip][1],0,PC080SN_bgscrolly[chip][1]);
 	
-			if (!PC080SN_dblwidth)
+			if (PC080SN_dblwidth == 0)
 			{
 				for (j = 0;j < 256;j++)
 					tilemap_set_scrollx(PC080SN_tilemap[chip][0],
@@ -1367,7 +1367,7 @@ public class taitoic
 		int screen_width = max_x - min_x + 1;
 		int width_mask = 0x1ff;	/* underlying tilemap */
 	
-		if (!flip)
+		if (flip == 0)
 		{
 			sx =       PC080SN_bgscrollx[chip][layer] + 16 - PC080SN_xoffs;
 			y_index =  PC080SN_bgscrolly[chip][layer] + min_y - PC080SN_yoffs;
@@ -1378,7 +1378,7 @@ public class taitoic
 			y_index = 0;
 		}
 	
-		if (!machine_flip) y = min_y; else y = max_y;
+		if (machine_flip == 0) y = min_y; else y = max_y;
 	
 		do
 		{
@@ -1435,7 +1435,7 @@ public class taitoic
 				taitoic_drawscanline(bitmap,0,y,scanline,1,rot,priority,cliprect);
 	
 			y_index++;
-			if (!machine_flip) y++; else y--;
+			if (machine_flip == 0) y++; else y--;
 		}
 		while ( (!machine_flip && y <= max_y) || (machine_flip && y >= min_y) );
 	}
@@ -1518,7 +1518,7 @@ public class taitoic
 		COMBINE_DATA(&PC090OJ_ram[offset]);
 	
 		/* If we're not buffering sprite ram, write it straight through... */
-		if (!PC090OJ_buffer)
+		if (PC090OJ_buffer == 0)
 			PC090OJ_ram_buffered[offset] = PC090OJ_ram[offset];
 	
 		if (offset == 0xdff)
@@ -1697,7 +1697,7 @@ public class taitoic
 	{
 		int tile;
 	
-		if (!TC0080VCO_flipscreen)
+		if (TC0080VCO_flipscreen == 0)
 		{
 			if ( (tile_index & 1) )
 				tile = (TC0080VCO_tx_ram_0[tile_index >> 1] & 0x00ff);
@@ -1922,7 +1922,7 @@ public class taitoic
 				TC0080VCO_char_dirty[offset / 8] = 1;
 				TC0080VCO_chars_dirty = 1;
 	#if 0
-				if (!TC0080VCO_has_tx)
+				if (TC0080VCO_has_tx == 0)
 				{
 					if (TC0080VCO_ram[offset])
 					usrintf_showmessage_secs(7,"Write non-zero to TC0080VCO char ram\nPlease report to MAMEDEV");
@@ -1934,7 +1934,7 @@ public class taitoic
 				tilemap_mark_tile_dirty( TC0080VCO_tilemap[2],(offset &0x07ff) * 2 );
 				tilemap_mark_tile_dirty( TC0080VCO_tilemap[2],(offset &0x07ff) * 2 + 1 );
 	#if 0
-				if (!TC0080VCO_has_tx)
+				if (TC0080VCO_has_tx == 0)
 				{
 					if (TC0080VCO_ram[offset])
 					usrintf_showmessage_secs(7,"Write non-zero to TC0080VCO fg0\nPlease report to MAMEDEV");
@@ -1954,7 +1954,7 @@ public class taitoic
 				TC0080VCO_char_dirty[(offset - 0x10000/2) / 8] = 1;
 				TC0080VCO_chars_dirty = 1;
 	#if 0
-				if (!TC0080VCO_has_tx)
+				if (TC0080VCO_has_tx == 0)
 				{
 					if (TC0080VCO_ram[offset])
 					usrintf_showmessage_secs(7,"Write non-zero to TC0080VCO char-hi ram\nPlease report to MAMEDEV");
@@ -1990,7 +1990,7 @@ public class taitoic
 	{
 		int j;
 	
-		if (!TC0080VCO_flipscreen)
+		if (TC0080VCO_flipscreen == 0)
 		{
 			for (j = 0;j < 0x400;j++)
 				tilemap_set_scrollx(TC0080VCO_tilemap[0],(j+0) & 0x3ff,
@@ -2118,7 +2118,7 @@ public class taitoic
 				zoomy = 0x10000 - ((zy - 0x7f) * 512);
 			}
 	
-			if (!flip)
+			if (flip == 0)
 			{
 				sx =       (-TC0080VCO_scroll_ram[1] - 1) << 16;
 				y_index = (( TC0080VCO_scroll_ram[3] - 1) << 16) + min_y * zoomy;
@@ -2137,7 +2137,7 @@ public class taitoic
 						+ min_y * zoomy - (max_y + min_y) * (zoomy-0x10000);
 			}
 	
-			if (!machine_flip) y = min_y; else y = max_y;
+			if (machine_flip == 0) y = min_y; else y = max_y;
 	
 			do
 			{
@@ -2205,7 +2205,7 @@ public class taitoic
 	/***********/
 	
 				y_index += zoomy;
-				if (!machine_flip) y++; else y--;
+				if (machine_flip == 0) y++; else y--;
 			}
 			while ( (!machine_flip && y <= max_y) || (machine_flip && y >= min_y) );
 	
@@ -2264,7 +2264,7 @@ public class taitoic
 				zy = 0x10000 - ((zoomy - 0x7f) * 512);
 			}
 	
-			if (!TC0080VCO_flipscreen)
+			if (TC0080VCO_flipscreen == 0)
 			{
 				sx = (-TC0080VCO_scroll_ram[layer+1] - 1) << 16;
 				sy = ( TC0080VCO_scroll_ram[layer+3] - 1) << 16;
@@ -2357,7 +2357,7 @@ public class taitoic
 	{
 		int code,attr;
 	
-		if (!dblwidth)
+		if (dblwidth == 0)
 		{
 			/* Mahjong Quest (F2 system) inexplicably has a banking feature */
 			code = (ram[2*tile_index + 1] & TC0100SCN_bg_tilemask) + (TC0100SCN_gfxbank << 15);
@@ -2379,7 +2379,7 @@ public class taitoic
 	{
 		int code,attr;
 	
-		if (!dblwidth)
+		if (dblwidth == 0)
 		{
 			/* Mahjong Quest (F2 system) inexplicably has a banking feature */
 			code = (ram[2*tile_index + 1] & TC0100SCN_bg_tilemask) + (TC0100SCN_gfxbank << 15);
@@ -3421,7 +3421,7 @@ public class taitoic
 	
 	void TC0480SCP_set_layer_ptrs(void)
 	{
-		if (!TC0480SCP_dblwidth)
+		if (TC0480SCP_dblwidth == 0)
 		{
 			TC0480SCP_bg_ram[0]	  = TC0480SCP_ram + 0x0000; //0000
 			TC0480SCP_bg_ram[1]	  = TC0480SCP_ram + 0x0800; //1000
@@ -3490,45 +3490,45 @@ public class taitoic
 		tilemap_set_flip(TC0480SCP_tilemap[4][1],flip);
 	
 		reg = TC0480SCP_ctrl[0];
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrollx[0] = reg;
 	
 		reg = TC0480SCP_ctrl[1] + 4;
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrollx[1] = reg;
 	
 		reg = TC0480SCP_ctrl[2] + 8;
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrollx[2] = reg;
 	
 		reg = TC0480SCP_ctrl[3] + 12;
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrollx[3] = reg;
 	
 		reg = TC0480SCP_ctrl[4];
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrolly[0] = reg;
 	
 		reg = TC0480SCP_ctrl[5];
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrolly[1] = reg;
 	
 		reg = TC0480SCP_ctrl[6];
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrolly[2] = reg;
 	
 		reg = TC0480SCP_ctrl[7];
-		if (!flip)  reg = -reg;
+		if (flip == 0)  reg = -reg;
 		TC0480SCP_bgscrolly[3] = reg;
 	
 		reg = TC0480SCP_ctrl[0x0c];
-		if (!flip)	reg -= TC0480SCP_text_xoffs;
+		if (flip == 0)	reg -= TC0480SCP_text_xoffs;
 		if (flip != 0)	reg += TC0480SCP_text_xoffs;
 		tilemap_set_scrollx(TC0480SCP_tilemap[4][0], 0, -reg);
 		tilemap_set_scrollx(TC0480SCP_tilemap[4][1], 0, -reg);
 	
 		reg = TC0480SCP_ctrl[0x0d];
-		if (!flip)	reg -= TC0480SCP_text_yoffs;
+		if (flip == 0)	reg -= TC0480SCP_text_yoffs;
 		if (flip != 0)	reg += TC0480SCP_text_yoffs;
 		tilemap_set_scrolly(TC0480SCP_tilemap[4][0], 0, -reg);
 		tilemap_set_scrolly(TC0480SCP_tilemap[4][1], 0, -reg);
@@ -3719,7 +3719,7 @@ public class taitoic
 	
 		if (oldword != TC0480SCP_ram[offset])
 		{
-			if (!TC0480SCP_dblwidth)
+			if (TC0480SCP_dblwidth == 0)
 			{
 				if (offset < 0x2000)
 				{
@@ -3786,25 +3786,25 @@ public class taitoic
 			/* The x offsets of the four bg layers are staggered by intervals of 4 pixels */
 	
 			case 0x00:   /* bg0 x */
-				if (!flip)  data = -data;
+				if (flip == 0)  data = -data;
 				TC0480SCP_bgscrollx[0] = data;
 				break;
 	
 			case 0x01:   /* bg1 x */
 				data += 4;
-				if (!flip)  data = -data;
+				if (flip == 0)  data = -data;
 				TC0480SCP_bgscrollx[1] = data;
 				break;
 	
 			case 0x02:   /* bg2 x */
 				data += 8;
-				if (!flip)  data = -data;
+				if (flip == 0)  data = -data;
 				TC0480SCP_bgscrollx[2] = data;
 				break;
 	
 			case 0x03:   /* bg3 x */
 				data += 12;
-				if (!flip)  data = -data;
+				if (flip == 0)  data = -data;
 				TC0480SCP_bgscrollx[3] = data;
 				break;
 	
@@ -3837,7 +3837,7 @@ public class taitoic
 			case 0x0c:   /* fg (text) x */
 	
 				/* Text layer can be offset from bg0 (e.g. Metalb) */
-				if (!flip)	data -= TC0480SCP_text_xoffs;
+				if (flip == 0)	data -= TC0480SCP_text_xoffs;
 				if (flip != 0)	data += TC0480SCP_text_xoffs;
 	
 				tilemap_set_scrollx(TC0480SCP_tilemap[4][0], 0, -data);
@@ -3847,7 +3847,7 @@ public class taitoic
 			case 0x0d:   /* fg (text) y */
 	
 				/* Text layer can be offset from bg0 (e.g. Slapshot) */
-				if (!flip)	data -= TC0480SCP_text_yoffs;
+				if (flip == 0)	data -= TC0480SCP_text_yoffs;
 				if (flip != 0)	data += TC0480SCP_text_yoffs;
 	
 				tilemap_set_scrolly(TC0480SCP_tilemap[4][0], 0, -data);
@@ -3920,7 +3920,7 @@ public class taitoic
 				{
 					i = TC0480SCP_bgscroll_ram[layer][j];
 	
-					if (!flip)
+					if (flip == 0)
 					tilemap_set_scrollx(TC0480SCP_tilemap[layer][TC0480SCP_dblwidth],
 							j & 0x1ff,
 							TC0480SCP_bgscrollx[layer] - i);
@@ -4029,7 +4029,7 @@ public class taitoic
 			if (TC0480SCP_dblwidth != 0)	width_mask=0x3ff;
 	
 	
-			if (!flip)
+			if (flip == 0)
 			{
 				sx = ((TC0480SCP_bgscrollx[layer] + 15 + layer*4) << 16)
 					+ ((255-(TC0480SCP_ctrl[0x10 + layer] & 0xff)) << 8);
@@ -4057,7 +4057,7 @@ public class taitoic
 			}
 	
 	
-			if (!machine_flip) y=min_y; else y=max_y;
+			if (machine_flip == 0) y=min_y; else y=max_y;
 	
 			do
 			{
@@ -4110,7 +4110,7 @@ public class taitoic
 					taitoic_drawscanline(bitmap,0,y,scanline,1,rot,priority,cliprect);
 	
 				y_index += zoomy;
-				if (!machine_flip) y++; else y--;
+				if (machine_flip == 0) y++; else y--;
 			}
 			while ( (!machine_flip && y<=max_y) || (machine_flip && y>=min_y) );
 	
@@ -4187,7 +4187,7 @@ public class taitoic
 		zoomx = 0x10000 - (TC0480SCP_ctrl[0x08 + layer] &0xff00);
 		zoomy = 0x10000 - (((TC0480SCP_ctrl[0x08 + layer] &0xff) - 0x7f) * 512);
 	
-		if (!flipscreen)
+		if (flipscreen == 0)
 		{
 			sx = ((TC0480SCP_bgscrollx[layer] + 15 + layer*4) << 16)
 				+ ((255-(TC0480SCP_ctrl[0x10 + layer] & 0xff)) << 8);
@@ -4215,11 +4215,11 @@ public class taitoic
 		}
 	
 	
-		if (!machine_flip) y=min_y; else y=max_y;
+		if (machine_flip == 0) y=min_y; else y=max_y;
 	
 		do
 		{
-			if (!flipscreen)
+			if (flipscreen == 0)
 				src_y_index = ((y_index>>16) + TC0480SCP_bgcolumn_ram[layer][(y -
 							TC0480SCP_y_offs) &0x1ff]) &0x1ff;
 			else	/* colscroll area is back to front in flipscreen */
@@ -4299,7 +4299,7 @@ public class taitoic
 				taitoic_drawscanline(bitmap,0,y,scanline,1,rot,priority,cliprect);
 	
 			y_index += zoomy;
-			if (!machine_flip) y++; else y--;
+			if (machine_flip == 0) y++; else y--;
 		}
 		while ( (!machine_flip && y<=max_y) || (machine_flip && y>=min_y) );
 	
@@ -4372,7 +4372,7 @@ public class taitoic
 	{
 		TC0150ROD_ram = auto_malloc(TC0150ROD_RAM_SIZE);
 	
-		if (!TC0150ROD_ram) return 1;
+		if (TC0150ROD_ram == 0) return 1;
 	
 		state_save_register_UINT16("TC0150ROD", 0, "memory", TC0150ROD_ram, TC0150ROD_RAM_SIZE/2);
 		return 0;

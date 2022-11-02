@@ -86,7 +86,7 @@ public class jailbrek
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if ( !bg_tilemap )
+		if (bg_tilemap == 0)
 			return 1;
 	
 		return 0;

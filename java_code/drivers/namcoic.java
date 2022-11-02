@@ -295,14 +295,14 @@ public class namcoic
 						TRANSPARENCY_PEN,0xff,
 						zoomx, zoomy/*, zpos*/ );
 				}
-				if( !flipx )
+				if (flipx == 0)
 				{
 					sx += tile_screen_width;
 				}
 				screen_width_remaining -= tile_screen_width;
 				source_width_remaining -= 16;
 			} /* next col */
-			if( !flipy )
+			if (flipy == 0)
 			{
 				sy += tile_screen_height;
 			}

@@ -121,7 +121,7 @@ public class atarisy2
 	
 		/* allocate banked memory */
 		vram = auto_malloc(0x8000);
-		if (!vram)
+		if (vram == 0)
 			return 1;
 		memset(vram, 0, 0x8000);
 		atarigen_alpha = &vram[0x0000];
@@ -130,7 +130,7 @@ public class atarisy2
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 128,64);
-		if (!atarigen_playfield_tilemap)
+		if (atarigen_playfield_tilemap == 0)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -139,7 +139,7 @@ public class atarisy2
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,48);
-		if (!atarigen_alpha_tilemap)
+		if (atarigen_alpha_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	

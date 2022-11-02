@@ -102,7 +102,7 @@ public class dribling
 	{
 		/* bit 7 = di */
 		di = (data >> 7) & 1;
-		if (!di)
+		if (di == 0)
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 	
 		/* bit 6 = parata */

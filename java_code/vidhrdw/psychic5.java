@@ -153,7 +153,7 @@ public class psychic5
 	
 				/* background intensity enable  TO DO BETTER !!! */
 	
-				if (!title_screen)
+				if (title_screen == 0)
 				{
 					r = (r>>4) * ir;
 		 		  	g = (g>>4) * ig;
@@ -187,7 +187,7 @@ public class psychic5
 	{
 		int val;
 	
-		if (!ps5_vram_page)
+		if (ps5_vram_page == 0)
 		{
 			if (offset < 0x1000)
 				return psychic5_bg_videoram[offset];
@@ -235,7 +235,7 @@ public class psychic5
 	
 	public static WriteHandlerPtr psychic5_paged_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (!ps5_vram_page)
+		if (ps5_vram_page == 0)
 		{
 			if (offset < 0x1000)
 				psychic5_bg_videoram_w(offset,data);
@@ -323,13 +323,13 @@ public class psychic5
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols, 
 			TILEMAP_OPAQUE, 16, 16, 64, 32);
 	
-		if ( !bg_tilemap )
+		if (bg_tilemap == 0)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if ( !fg_tilemap )
+		if (fg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 15);

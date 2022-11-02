@@ -188,7 +188,7 @@ public class upd7759
 		data   = ch.buffer;
 		count  = ch.buffer_ptr;
 	
-		if(!step)
+		if (step == 0)
 			step = 0x10000;
 	
 		for(i=0; i<length; i++) {
@@ -202,8 +202,8 @@ public class upd7759
 				while(pos & ~0xffff) {
 					int adpcm;
 				get_nibble:
-					if(!nibble) {
-						if(!count) {
+					if (nibble == 0) {
+						if (count == 0) {
 						no_more_data:
 							ch.nibble = nibble = 0;
 							ch.skip_last_nibble = 0;
@@ -468,7 +468,7 @@ public class upd7759
 		}
 	
 		ch.reset = data;
-		if(!data) {
+		if (data == 0) {
 			stream_update(ch.channel, 0);
 			ch.playing      = 0;
 			ch.drq          = 0;

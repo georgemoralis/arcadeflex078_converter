@@ -655,7 +655,7 @@ public class dsp32
 		which = ( which + 1 ) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (!context)
+		if (context == 0)
 			r = &dsp32;
 	
 	    switch (regnum)
@@ -765,7 +765,7 @@ public class dsp32
 	INLINE dsp32_regs *FINDCONTEXT(int cpu)
 	{
 		dsp32_regs *context = cpunum_get_context_ptr(cpu);
-		if (!context)
+		if (context == 0)
 			context = &dsp32;
 		return context;
 	}

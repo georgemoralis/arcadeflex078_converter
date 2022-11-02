@@ -60,7 +60,7 @@ public class aliens
 	public static VideoUpdateHandlerPtr video_update_aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram = auto_malloc(0x400);
-		if (!paletteram)
+		if (paletteram == 0)
 			return 1;
 	
 		layer_colorbase[0] = 0;

@@ -92,12 +92,12 @@ public class relief
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (!atarigen_playfield_tilemap)
+		if (atarigen_playfield_tilemap == 0)
 			return 1;
 	
 		/* initialize the second playfield */
 		atarigen_playfield2_tilemap = tilemap_create(get_playfield2_tile_info, tilemap_scan_cols, TILEMAP_TRANSPARENT, 8,8, 64,64);
-		if (!atarigen_playfield2_tilemap)
+		if (atarigen_playfield2_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_playfield2_tilemap, 0);
 	
@@ -174,7 +174,7 @@ public class relief
 							cs1 = 0;
 	
 						/* MO is displayed if cs1 == 0 */
-						if (!cs1)
+						if (cs1 == 0)
 							pf[x] = mo[x];
 	
 						/* erase behind ourselves */

@@ -626,12 +626,12 @@ public class deco16ic
 	
 		/* Toggle between 8x8 and 16x16 modes (and master enable bit) */
 		if ((control1 & 0x80) != 0) {
-			if (!tilemap_8x8) usrintf_showmessage("Deco16: Playfield switched into 8x8 mode but no tilemap defined");
+			if (tilemap_8x8 == 0) usrintf_showmessage("Deco16: Playfield switched into 8x8 mode but no tilemap defined");
 	
 			if (tilemap_8x8 != 0) tilemap_set_enable(tilemap_8x8,control0&0x80);
 			if (tilemap_16x16 != 0) tilemap_set_enable(tilemap_16x16,0);
 		} else {
-			if (!tilemap_16x16) usrintf_showmessage("Deco16: Playfield switched into 16x16 mode but no tilemap defined");
+			if (tilemap_16x16 == 0) usrintf_showmessage("Deco16: Playfield switched into 16x16 mode but no tilemap defined");
 	
 			if (tilemap_8x8 != 0) tilemap_set_enable(tilemap_8x8,0);
 			if (tilemap_16x16 != 0) tilemap_set_enable(tilemap_16x16,control0&0x80);
@@ -676,7 +676,7 @@ public class deco16ic
 	
 			/* Column scroll ranges from 8 pixel columns to 512 pixel columns */
 			cols=(8<<(control0&7))&0x3ff;
-			if (!cols) cols=1;
+			if (cols == 0) cols=1;
 			cols=1024 / cols;
 	
 			if (tilemap_16x16 != 0) {

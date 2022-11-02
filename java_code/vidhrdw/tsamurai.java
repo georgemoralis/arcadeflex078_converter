@@ -273,7 +273,7 @@ public class tsamurai
 	public static VideoUpdateHandlerPtr video_update_vsgongf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		foreground = tilemap_create(get_vsgongf_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
-		if (!foreground) return 1;
+		if (foreground == 0) return 1;
 		return 0;
 	} };
 	

@@ -2617,7 +2617,7 @@ public class ymf262
 				chan_calc(&chip.P_CH[5]);		/* standard 2op ch#5 */
 	
 	
-			if(!rhythm)
+			if (rhythm == 0)
 			{
 				chan_calc(&chip.P_CH[6]);
 				chan_calc(&chip.P_CH[7]);

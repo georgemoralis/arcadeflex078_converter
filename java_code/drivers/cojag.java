@@ -105,7 +105,7 @@ public class cojag
 	static MACHINE_INIT( cojag )
 	{
 		/* 68020 only: copy the interrupt vectors into RAM */
-		if (!cojag_is_r3000)
+		if (cojag_is_r3000 == 0)
 			memcpy(jaguar_shared_ram, rom_base, 0x10);
 	
 		/* set up main CPU RAM/ROM banks */

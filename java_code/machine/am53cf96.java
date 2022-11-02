@@ -206,7 +206,7 @@ public class am53cf96
 		if (interface.device == AM53CF96_DEVICE_HDD)
 		{
 			disk = hard_disk_open(get_disk_handle(0));
-			if (!disk)
+			if (disk == 0)
 			{
 				logerror("53cf96: no disk found!\n");
 			}

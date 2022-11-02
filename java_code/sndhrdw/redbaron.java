@@ -175,7 +175,7 @@ public class redbaron
 	    int i;
 	
 		vol_lookup = (INT16 *)auto_malloc(32768 * sizeof(INT16));
-		if( !vol_lookup )
+		if (vol_lookup == 0)
 	        return 1;
 	
 	    for( i = 0; i < 0x8000; i++ )

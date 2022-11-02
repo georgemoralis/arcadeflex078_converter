@@ -182,7 +182,7 @@ public class atarisy1
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (!atarigen_playfield_tilemap)
+		if (atarigen_playfield_tilemap == 0)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -191,7 +191,7 @@ public class atarisy1
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (!atarigen_alpha_tilemap)
+		if (atarigen_alpha_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -476,7 +476,7 @@ public class atarisy1
 		}
 	
 		/* if nothing was found, use scanline -1 */
-		if (!found)
+		if (found == 0)
 			best = -1;
 	
 		/* update the timer */

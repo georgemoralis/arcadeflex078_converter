@@ -167,7 +167,7 @@ public class victory
 	public static WriteHandlerPtr victory_sound_irq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound IRQ clear = %02X\n", activecpu_get_previouspc(), data);
-		if (!data) pia_0_ca1_w(0, 1);
+		if (data == 0) pia_0_ca1_w(0, 1);
 	} };
 	
 	

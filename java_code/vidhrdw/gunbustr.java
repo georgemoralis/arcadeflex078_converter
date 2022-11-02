@@ -25,7 +25,7 @@ public class gunbustr
 	public static VideoUpdateHandlerPtr video_update_gunbustr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
-		if (!spritelist)
+		if (spritelist == 0)
 			return 1;
 	
 		if (TC0480SCP_vh_start(TC0480SCP_GFX_NUM,0,0x20,0x07,-1,-1,-1,0,0))
@@ -114,7 +114,7 @@ public class gunbustr
 	
 			color |= 0x80;
 	
-			if (!tilenum) continue;
+			if (tilenum == 0) continue;
 	
 			flipy = !flipy;
 			zoomx += 1;

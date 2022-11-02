@@ -264,7 +264,7 @@ public class namcona
 		{
 			if( set&(1<<(7-i)) )
 			{
-				if( !bCommon )
+				if (bCommon == 0)
 				{
 					data = ReadMetaDataByte( pSequence.addr++ );
 				}

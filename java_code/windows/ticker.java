@@ -306,7 +306,7 @@ public class ticker
 		cycles_t actual_cycles;
 	
 		actual_cycles = (*cycle_counter)();
-		if (!enabled)
+		if (enabled == 0)
 		{
 			suspend_time = actual_cycles;
 		}

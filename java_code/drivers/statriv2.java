@@ -102,7 +102,7 @@ public class statriv2
 	VIDEO_START (statriv2)
 	{
 		statriv2_tilemap = tilemap_create(get_statriv2_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,16,64, 16);
-		if(!statriv2_tilemap)
+		if (statriv2_tilemap == 0)
 			return 1;
 		return 0;
 	}

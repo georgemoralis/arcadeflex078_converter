@@ -779,7 +779,7 @@ public class artwork
 			}
 	
 			/* artwork disabled case */
-			if (!global_artwork_enable)
+			if (global_artwork_enable == 0)
 			{
 				fillbitmap(final, MAKE_ARGB(0,0,0,0), NULL);
 				union_rect(&underlay_invalid, &screenrect);
@@ -2027,7 +2027,7 @@ public class artwork
 		{
 			result = parse_art_file(artfile);
 			mame_fclose(artfile);
-			if (!result)
+			if (result == 0)
 				return 0;
 		}
 	
@@ -2080,13 +2080,13 @@ public class artwork
 	
 		/* open the file */
 		file = mame_fopen(gamename, filename, FILETYPE_ARTWORK, 0);
-		if (!file)
+		if (file == 0)
 			return 0;
 	
 		/* read the PNG data */
 		result = png_read_file(file, png);
 		mame_fclose(file);
-		if (!result)
+		if (result == 0)
 			return 0;
 	
 		/* verify we can handle this PNG */
@@ -2602,7 +2602,7 @@ public class artwork
 	{
 		/* allocate a new piece */
 		struct artwork_piece *newpiece = auto_malloc(sizeof(struct artwork_piece));
-		if (!newpiece)
+		if (newpiece == 0)
 			return NULL;
 		num_pieces++;
 	
@@ -2899,7 +2899,7 @@ public class artwork
 		{
 			/* first create a new piece to use */
 			piece = create_new_piece(OVERLAY_TAG);
-			if (!piece)
+			if (piece == 0)
 				return 0;
 	
 			/* fill in the basics */
@@ -3054,7 +3054,7 @@ public class artwork
 	
 				/* create an entry for the new piece */
 				current = create_new_piece(tag);
-				if (!current)
+				if (current == 0)
 					return 0;
 				continue;
 			}
@@ -3121,7 +3121,7 @@ public class artwork
 	
 		/* allocate a palette lookup */
 		palette_lookup = auto_malloc(65536 * sizeof(palette_lookup[0]));
-		if (!palette_lookup)
+		if (palette_lookup == 0)
 			return 1;
 	
 		/* switch off the depth */

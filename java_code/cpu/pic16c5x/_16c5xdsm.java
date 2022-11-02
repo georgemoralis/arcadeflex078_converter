@@ -172,7 +172,7 @@ public class _16c5xdsm
 		char *strtmp;
 		const char *cp;				/* character pointer in OpFormats */
 	
-		if (!OpInizialized) InitDasm16C5x();
+		if (OpInizialized == 0) InitDasm16C5x();
 	
 		op = -1;				/* no matching opcode */
 		code = READOP16(2*pc);

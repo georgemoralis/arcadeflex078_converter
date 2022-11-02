@@ -974,7 +974,7 @@ public class _8080bw
 		x = 8 * (offset % 32);
 	
 		/* 32 x 32 colormap */
-		if (!screen_red)
+		if (screen_red == 0)
 		{
 			UINT16 colbase;
 	
@@ -1041,7 +1041,7 @@ public class _8080bw
 		x = 8 * (offset % 32);
 	
 		/* 16 x 32 colormap */
-		if (!screen_red)
+		if (screen_red == 0)
 		{
 			UINT16 colbase;
 	

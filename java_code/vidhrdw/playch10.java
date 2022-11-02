@@ -99,7 +99,7 @@ public class playch10
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if ( !bg_tilemap )
+		if (bg_tilemap == 0)
 			return 1;
 	
 		if ( ppu2c03b_init( &ppu_interface ) )
@@ -128,7 +128,7 @@ public class playch10
 		/* if the bit is not set, then we should display		*/
 		/* the PPU portion.										*/
 	
-		if ( !pc10_dispmask )
+		if (pc10_dispmask == 0)
 		{
 			/* render the ppu */
 			ppu2c03b_render( 0, bitmap, 0, 0, 0, 30*8 );
@@ -145,7 +145,7 @@ public class playch10
 	
 		/* When the bios is accessing vram, the video circuitry cant access it */
 	
-		if ( !pc10_sdcs )
+		if (pc10_sdcs == 0)
 		{
 			tilemap_draw(bitmap, &top_monitor, bg_tilemap, 0, 0);
 		}

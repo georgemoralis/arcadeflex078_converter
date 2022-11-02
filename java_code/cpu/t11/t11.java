@@ -537,7 +537,7 @@ public class t11
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if( !context )
+		if (context == 0)
 			r = &t11;
 	
 	    switch( regnum )

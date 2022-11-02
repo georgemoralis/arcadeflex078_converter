@@ -325,7 +325,7 @@ public class hyprduel
 		int code,i;
 	
 		empty_tiles = auto_malloc(16*16*16);
-		if (!empty_tiles) return;
+		if (empty_tiles == 0) return;
 	
 		for (code = 0;code < 0x10;code++)
 			for (i = 0;i < 16*16;i++)

@@ -418,7 +418,7 @@ public class segac2
 	/* set the display enable bit */
 	void segac2_enable_display(int enable)
 	{
-		if (!internal_vblank)
+		if (internal_vblank == 0)
 			force_partial_update((cpu_getscanline()) + scanbase);
 		display_enable = enable;
 	}
@@ -725,7 +725,7 @@ public class segac2
 			case 0x05:		/* VSRAM write */
 	
 				/* if the vscroll RAM is changing during screen refresh, force an update */
-				if (!internal_vblank)
+				if (internal_vblank == 0)
 					force_partial_update((cpu_getscanline()) + scanbase);
 	
 				/* write to VSRAM */
@@ -803,7 +803,7 @@ public class segac2
 	static void vdp_control_w(int data)
 	{
 		/* case 1: we're not expecting the 2nd half of a command */
-		if (!vdp_cmdpart)
+		if (vdp_cmdpart == 0)
 		{
 			/* if 10xxxxxx xxxxxxxx this is a register setting command */
 			if ((data & 0xc000) == 0x8000)
@@ -951,7 +951,7 @@ public class segac2
 		int count;
 	
 		/* length of 0 means 64k likely */
-		if (!length)
+		if (length == 0)
 			length = 0xffff;
 	
 		/* handle the DMA */
@@ -970,7 +970,7 @@ public class segac2
 		int count;
 	
 		/* length of 0 means 64k likely */
-		if (!length)
+		if (length == 0)
 			length = 0xffff;
 	
 		/* handle the DMA */
@@ -988,7 +988,7 @@ public class segac2
 		int count;
 	
 		/* length of 0 means 64k likely */
-		if (!length)
+		if (length == 0)
 			length = 0xffff;
 	
 		/* handle the fill */
@@ -1095,7 +1095,7 @@ public class segac2
 	
 			/* get the link; if 0, stop processing */
 			link = spritebase[3] & 0x7F;
-			if (!link)
+			if (link == 0)
 				break;
 		}
 	
@@ -1241,7 +1241,7 @@ public class segac2
 					mytile = tp[(tile >> 16) ^ 7];
 	
 				/* skip if all-transparent */
-				if (!mytile)
+				if (mytile == 0)
 					continue;
 	
 				/* non-clipped */
@@ -1324,7 +1324,7 @@ public class segac2
 		int col;
 	
 		/* skip if all-transparent */
-		if (!tile)
+		if (tile == 0)
 			return;
 	
 		/* non-transparent */
@@ -1402,7 +1402,7 @@ public class segac2
 		int col;
 	
 		/* skip if all-transparent */
-		if (!tile)
+		if (tile == 0)
 			return;
 	
 		/* non-transparent */

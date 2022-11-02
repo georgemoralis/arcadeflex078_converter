@@ -108,7 +108,7 @@ public class espial
 	{
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (!tilemap)
+		if (tilemap == 0)
 			return 1;
 	
 		tilemap_set_scroll_cols(tilemap, 32);
@@ -121,7 +121,7 @@ public class espial
 		/* Net Wars has a tile map that's twice as big as Espial's */
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,64);
 	
-		if (!tilemap)
+		if (tilemap == 0)
 			return 1;
 	
 		tilemap_set_scroll_cols(tilemap, 32);

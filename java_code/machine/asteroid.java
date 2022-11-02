@@ -51,7 +51,7 @@ public class asteroid
 	
 		if (activecpu_gettotalcycles() & 0x100)
 			res |= 0x02;
-		if (!avgdvg_done())
+		if (avgdvg_done() == 0)
 			res |= 0x04;
 	
 		if ((res & bitmask) != 0)
@@ -71,7 +71,7 @@ public class asteroid
 	
 	//	if (activecpu_gettotalcycles() & 0x100)
 	//		res |= 0x02;
-		if (!avgdvg_done())
+		if (avgdvg_done() == 0)
 			res |= 0x80;
 	
 		return res;
@@ -88,7 +88,7 @@ public class asteroid
 	
 		if (activecpu_gettotalcycles() & 0x100)
 			res |= 0x04;
-		if (!avgdvg_done())
+		if (avgdvg_done() == 0)
 			res |= 0x01;
 	
 		if ((res & bitmask) != 0)

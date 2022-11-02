@@ -112,7 +112,7 @@ public class xorworld
 	{
 		screen = tilemap_create(get_tile_info_xorworld_screen,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (!screen)
+		if (screen == 0)
 			return 1;
 	
 		return 0;

@@ -70,7 +70,7 @@ public class mcr68
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,16, 32,32);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(bg_tilemap, 0);
 		return 0;
@@ -81,12 +81,12 @@ public class mcr68
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(zwackery_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,32);
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		/* initialize the foreground tilemap */
 		fg_tilemap = tilemap_create(zwackery_get_fg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,16, 32,32);
-		if (!fg_tilemap)
+		if (fg_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
@@ -304,7 +304,7 @@ public class mcr68
 			color = ((~flags >> 2) & 0x0f) | ((flags & 0x02) << 3);
 	
 			/* for low priority, draw everything but color 7 */
-			if (!priority)
+			if (priority == 0)
 			{
 				if (color == 7)
 					continue;

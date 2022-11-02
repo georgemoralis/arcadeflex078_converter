@@ -178,7 +178,7 @@ public class neogeo
 	
 		/* 0x20000 bytes even though only 0x10c00 is used */
 		neogeo_vidram16 = auto_malloc(0x20000);
-		if (!neogeo_vidram16)
+		if (neogeo_vidram16 == 0)
 			return 1;
 		memset(neogeo_vidram16,0,0x20000);
 	

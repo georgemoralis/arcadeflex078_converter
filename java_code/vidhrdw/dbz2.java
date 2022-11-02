@@ -113,12 +113,12 @@ public class dbz2
 		K053936_set_offset(1, -46, -16);
 	
 		dbz2_bg_tilemap = tilemap_create(get_dbz2_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,64,32);
-		if (!dbz2_bg_tilemap) return 1;
+		if (dbz2_bg_tilemap == 0) return 1;
 	
 		tilemap_set_transparent_pen(dbz2_bg_tilemap,0);
 	
 		dbz2_bg2_tilemap = tilemap_create(get_dbz2_bg2_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 16, 16,64,32);
-		if (!dbz2_bg2_tilemap) return 1;
+		if (dbz2_bg2_tilemap == 0) return 1;
 	
 		return 0;
 	}
@@ -144,12 +144,12 @@ public class dbz2
 		K053936_set_offset(1, -46+34, -16);
 	
 		dbz2_bg_tilemap = tilemap_create(get_dbz2_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,64,32);
-		if (!dbz2_bg_tilemap) return 1;
+		if (dbz2_bg_tilemap == 0) return 1;
 	
 		tilemap_set_transparent_pen(dbz2_bg_tilemap,0);
 	
 		dbz2_bg2_tilemap = tilemap_create(get_dbz2_bg2_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 16, 16,64,32);
-		if (!dbz2_bg2_tilemap) return 1;
+		if (dbz2_bg2_tilemap == 0) return 1;
 	
 		return 0;
 	}

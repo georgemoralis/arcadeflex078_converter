@@ -244,7 +244,7 @@ public class djmain
 	
 		offset *= 2;
 	
-		if (!ACCESSING_MSB32)
+		if (ACCESSING_MSB32 == 0)
 			offset += 1;
 	
 		offset += bank * 0x800 * 4;

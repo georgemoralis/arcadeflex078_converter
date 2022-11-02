@@ -79,7 +79,7 @@ public class welltris
 			if (!xflip && !yflip) {
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
-						if (!zoomed)
+						if (zoomed == 0)
 							drawgfx(bitmap, Machine.gfx[1], code, color, 0, 0,
 									x + xt * 16, y + yt * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
@@ -98,7 +98,7 @@ public class welltris
 			else if (xflip && !yflip) {
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
-						if (!zoomed)
+						if (zoomed == 0)
 							drawgfx(bitmap, Machine.gfx[1], code, color, 1, 0,
 									x + (xtiles - 1 - xt) * 16, y + yt * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
@@ -117,7 +117,7 @@ public class welltris
 			else if (!xflip && yflip) {
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
-						if (!zoomed)
+						if (zoomed == 0)
 							drawgfx(bitmap, Machine.gfx[1], code, color, 0, 1,
 									x + xt * 16, y + (ytiles - 1 - yt) * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
@@ -136,7 +136,7 @@ public class welltris
 			else {
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
-						if (!zoomed)
+						if (zoomed == 0)
 							drawgfx(bitmap, Machine.gfx[1], code, color, 1, 1,
 									x + (xtiles - 1 - xt) * 16, y + (ytiles - 1 - yt) * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
@@ -222,7 +222,7 @@ public class welltris
 	public static VideoUpdateHandlerPtr video_update_welltris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		char_tilemap = tilemap_create(get_welltris_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 32);
-		if (!char_tilemap) return 1;
+		if (char_tilemap == 0) return 1;
 	
 		tilemap_set_transparent_pen(char_tilemap, 15);
 	

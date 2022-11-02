@@ -1181,7 +1181,7 @@ public class namcos22
 					i = *pSource++; i &= (MAX_CAMERA-1);
 					assert( i<0x80 );
 					pSource = LoadMatrix( pSource,mpMatrix[i].M );
-					if( !pSource ) return;
+					if (pSource == 0) return;
 					break;
 	
 				case 0x8009: /* matrix composition */

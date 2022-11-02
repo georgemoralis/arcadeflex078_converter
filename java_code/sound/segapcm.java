@@ -94,7 +94,7 @@ public class segapcm
 	
 		spcm.bankshift = (UINT8)(intf.bank);
 		mask = intf.bank >> 16;
-		if(!mask)
+		if (mask == 0)
 			mask = BANK_MASK7>>16;
 	
 		for(rom_mask = 1; rom_mask < memory_region_length(intf.region); rom_mask *= 2);

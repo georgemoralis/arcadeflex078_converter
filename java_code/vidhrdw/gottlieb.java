@@ -167,7 +167,7 @@ public class gottlieb
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if ( !bg_tilemap )
+		if (bg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap, 0);
@@ -202,7 +202,7 @@ public class gottlieb
 	
 	public static VideoUpdateHandlerPtr video_update_gottlieb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (!background_priority)
+		if (background_priority == 0)
 		{
 			tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0);
 		}

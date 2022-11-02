@@ -291,7 +291,7 @@ public class dynax
 					if ((dynax_blit_dest & 0x02) != 0)	dynax_pixmap[1][hanamai_layer_half][256*y+x] = pen;
 					if ((dynax_blit_dest & 0x04) != 0)	dynax_pixmap[2][hanamai_layer_half][256*y+x] = pen;
 					if ((dynax_blit_dest & 0x08) != 0)	dynax_pixmap[3][hanamai_layer_half][256*y+x] = pen;
-					if (!hnoridur_layer_half2) break;
+					if (hnoridur_layer_half2 == 0) break;
 					if ((dynax_blit_dest & 0x01) != 0)	dynax_pixmap[0][1-hanamai_layer_half][256*y+x] = pen;
 					if ((dynax_blit_dest & 0x02) != 0)	dynax_pixmap[1][1-hanamai_layer_half][256*y+x] = pen;
 					if ((dynax_blit_dest & 0x04) != 0)	dynax_pixmap[2][1-hanamai_layer_half][256*y+x] = pen;
@@ -360,7 +360,7 @@ public class dynax
 					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[1][hanamai_layer_half][start],pen,len);
 					if ((dynax_blit_dest & 0x04) != 0)	memset(&dynax_pixmap[2][hanamai_layer_half][start],pen,len);
 					if ((dynax_blit_dest & 0x08) != 0)	memset(&dynax_pixmap[3][hanamai_layer_half][start],pen,len);
-					if (!hnoridur_layer_half2) break;
+					if (hnoridur_layer_half2 == 0) break;
 					if ((dynax_blit_dest & 0x01) != 0)	memset(&dynax_pixmap[0][1-hanamai_layer_half][start],pen,len);
 					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[1][1-hanamai_layer_half][start],pen,len);
 					if ((dynax_blit_dest & 0x04) != 0)	memset(&dynax_pixmap[2][1-hanamai_layer_half][start],pen,len);

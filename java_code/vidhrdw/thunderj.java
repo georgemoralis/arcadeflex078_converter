@@ -111,12 +111,12 @@ public class thunderj
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (!atarigen_playfield_tilemap)
+		if (atarigen_playfield_tilemap == 0)
 			return 1;
 	
 		/* initialize the second playfield */
 		atarigen_playfield2_tilemap = tilemap_create(get_playfield2_tile_info, tilemap_scan_cols, TILEMAP_TRANSPARENT, 8,8, 64,64);
-		if (!atarigen_playfield2_tilemap)
+		if (atarigen_playfield2_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_playfield2_tilemap, 0);
 	
@@ -126,7 +126,7 @@ public class thunderj
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (!atarigen_alpha_tilemap)
+		if (atarigen_alpha_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -272,7 +272,7 @@ public class thunderj
 						}
 	
 						/* if pfm is low, we display the mo */
-						if (!pfm)
+						if (pfm == 0)
 							pf[x] = mo[x] & ATARIMO_DATA_MASK;
 	
 						/* don't erase yet -- we need to make another pass later */

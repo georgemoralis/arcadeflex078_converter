@@ -3900,7 +3900,7 @@ public class harddriv
 		install_mem_read16_handler(hdcpu_main, 0x908000, 0x908001, steeltal_dummy_r);
 	
 		/* set up the SLOOP */
-		if (!proto_sloop)
+		if (proto_sloop == 0)
 		{
 			hd68k_slapstic_base = install_mem_read16_handler(hdcpu_main, 0xe0000, 0xfffff, st68k_sloop_r);
 			hd68k_slapstic_base = install_mem_write16_handler(hdcpu_main, 0xe0000, 0xfffff, st68k_sloop_w);

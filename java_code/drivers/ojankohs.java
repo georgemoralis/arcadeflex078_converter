@@ -73,7 +73,7 @@ public class ojankohs
 		cpu_setbank(1, &ROM[0x10000 + (0x4000 * (data & 0x1f))]);
 	
 		ojankohs_adpcm_reset = ((data & 0x20) >> 5);
-		if (!ojankohs_adpcm_reset) ojankohs_vclk_left = 0;
+		if (ojankohs_adpcm_reset == 0) ojankohs_vclk_left = 0;
 	
 		MSM5205_reset_w(0, !ojankohs_adpcm_reset);
 	} };
@@ -95,7 +95,7 @@ public class ojankohs
 	static void ojankohs_adpcm_int(int irq)
 	{
 		/* skip if we're reset */
-		if (!ojankohs_adpcm_reset)
+		if (ojankohs_adpcm_reset == 0)
 			return;
 	
 		/* clock the data through */
@@ -106,7 +106,7 @@ public class ojankohs
 		}
 	
 		/* generate an NMI if we're out of data */
-		if (!ojankohs_vclk_left) 
+		if (ojankohs_vclk_left == 0) 
 			cpu_set_nmi_line(0, PULSE_LINE);
 	}
 	

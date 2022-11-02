@@ -320,7 +320,7 @@ public class atarigen
 	
 	WRITE16_HANDLER( atarigen_eeprom_w )
 	{
-		if (!eeprom_unlocked)
+		if (eeprom_unlocked == 0)
 			return;
 	
 		COMBINE_DATA(&atarigen_eeprom[offset]);
@@ -329,7 +329,7 @@ public class atarigen
 	
 	WRITE32_HANDLER( atarigen_eeprom32_w )
 	{
-		if (!eeprom_unlocked)
+		if (eeprom_unlocked == 0)
 			return;
 	
 		COMBINE_DATA(&atarigen_eeprom[offset * 2 + 1]);
@@ -1013,7 +1013,7 @@ public class atarigen
 		if (keyboard_pressed(KEYCODE_8))
 		{
 			static FILE *out;
-			if (!out) out = fopen("scroll.log", "w");
+			if (out == 0) out = fopen("scroll.log", "w");
 			if (out != 0)
 			{
 				for (i = 0; i < 64; i++)

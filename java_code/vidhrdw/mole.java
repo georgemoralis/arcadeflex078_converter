@@ -47,13 +47,13 @@ public class mole
 	{
 		tile_data = (UINT16 *)auto_malloc(NUM_TILES * sizeof(UINT16));
 	
-		if( !tile_data )
+		if (tile_data == 0)
 			return 1;
 	
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, TILE_SIZE, TILE_SIZE, NUM_COLS, NUM_ROWS);
 	
-		if ( !bg_tilemap )
+		if (bg_tilemap == 0)
 			return 1;
 	
 		return 0;

@@ -86,7 +86,7 @@ public class leland
 	
 		/* allocate memory */
 		ataxx_qram = auto_malloc(QRAM_SIZE);
-	    if (!ataxx_qram)
+	    if (ataxx_qram == 0)
 			return 1;
 	
 		/* reset QRAM */
@@ -161,7 +161,7 @@ public class leland
 	{
 		struct vram_state_data *state = vram_state + num;
 	
-		if (!offset)
+		if (offset == 0)
 			state.addr = (state.addr & 0xfe00) | ((data << 1) & 0x01fe);
 		else
 			state.addr = ((data << 9) & 0xfe00) | (state.addr & 0x01fe);

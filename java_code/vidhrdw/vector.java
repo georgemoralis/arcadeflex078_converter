@@ -390,7 +390,7 @@ public class vector
 				x1 >>= 16;
 				xx = x2 >> 16;
 				width = vec_mult(beam << 4, Tcosin(abs(sy) >> 5));
-				if (!beam_diameter_is_one)
+				if (beam_diameter_is_one == 0)
 					yy1 -= width >> 1; /* start back half the diameter */
 				for (;;)
 				{
@@ -418,7 +418,7 @@ public class vector
 				yy1 >>= 16;
 				yy = y2 >> 16;
 				width = vec_mult(beam << 4,Tcosin(abs(sx) >> 5));
-				if (!beam_diameter_is_one)
+				if (beam_diameter_is_one == 0)
 					x1 -= width >> 1; /* start back half the width */
 				for (;;)
 				{
@@ -667,7 +667,7 @@ public class vector
 				if (new.status == VCLIP)
 					newclip = *new;
 				clips_match = (newclip.x == oldclip.x) && (newclip.y == oldclip.y) && (newclip.arg1 == oldclip.arg1) && (newclip.arg2 == oldclip.arg2);
-				if (!clips_match)
+				if (clips_match == 0)
 					last_match = 0;
 	
 				/* fall through to erase the old line if this is not a clip */
@@ -729,7 +729,7 @@ public class vector
 			rv = vector_aux_renderer(new_list, new_index);
 	
 		/* if the aux renderer chooses, it can override the bitmap */
-		if (!rv)
+		if (rv == 0)
 		{
 			/* This prevents a crash in the artwork system */
 			vector_dirty_list[0] = VECTOR_PIXEL_END;

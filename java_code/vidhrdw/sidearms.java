@@ -177,12 +177,12 @@ public class sidearms
 	{
 		tilerom = memory_region(REGION_GFX4);
 	
-		if (!sidearms_gameid)
+		if (sidearms_gameid == 0)
 		{
 			bg_tilemap = tilemap_create(get_sidearms_bg_tile_info, sidearms_tilemap_scan,
 				TILEMAP_TRANSPARENT, 32, 32, 128, 128);
 	
-			if ( !bg_tilemap ) return 1;
+			if (bg_tilemap == 0) return 1;
 	
 			tilemap_set_transparent_pen(bg_tilemap, 15);
 		}
@@ -195,13 +195,13 @@ public class sidearms
 		
 			
 	
-			if ( !bg_tilemap ) return 1;
+			if (bg_tilemap == 0) return 1;
 		}
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 	
-		if ( !fg_tilemap ) return 1;
+		if (fg_tilemap == 0) return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 3);
 	
@@ -273,7 +273,7 @@ public class sidearms
 		sf_rom = memory_region(REGION_USER1);
 	
 	#if 0 // old loop (for reference; easier to read)
-		if (!flipon)
+		if (flipon == 0)
 		{
 			lineptr = (UINT16 *)bitmap.line[0];
 			pixadv  = 1;
@@ -316,7 +316,7 @@ public class sidearms
 			lineptr += lineadv;
 		}
 	#else // optimized loop
-		if (!flipon)
+		if (flipon == 0)
 		{
 			lineptr = (UINT16 *)bitmap.line[16] + 64;
 			pixadv  = 1;

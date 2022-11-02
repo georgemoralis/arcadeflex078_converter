@@ -785,7 +785,7 @@ public class ssv
 		/* The background color is the first one in the palette */
 		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
-		if (!enable_video)	return;
+		if (enable_video == 0)	return;
 	
 		ssv_draw_layer(bitmap);		// "background layer"
 		ssv_draw_sprites(bitmap);	// sprites list

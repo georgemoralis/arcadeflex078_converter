@@ -538,7 +538,7 @@ public class vlm5030
 	{
 		if (pin_RST != 0)
 		{
-			if( !pin )
+			if (pin == 0)
 			{	/* H . L : latch parameters */
 				pin_RST = 0;
 				VLM5030_setup_parameter(latch_data);
@@ -573,7 +573,7 @@ public class vlm5030
 		if( pin_ST != pin )
 		{
 			/* pin level is change */
-			if( !pin )
+			if (pin == 0)
 			{	/* H . L */
 				pin_ST = 0;
 	

@@ -8195,7 +8195,7 @@ public class seta
 		rom_size = 0x80000;
 		buf = malloc(rom_size);
 	
-		if (!buf) return;
+		if (buf == 0) return;
 	
 		rom = memory_region(REGION_GFX2) + 0x40000;
 	

@@ -35,7 +35,7 @@ public class othunder
 		   which are what actually get put in the structure. */
 	
 		spritelist = auto_malloc(0x2000 * sizeof(*spritelist));
-		if (!spritelist)
+		if (spritelist == 0)
 			return 1;
 	
 		if (TC0100SCN_vh_start(1,TC0100SCN_GFX_NUM,taito_hide_pixels,0,0,0,0,0,0))
@@ -142,7 +142,7 @@ public class othunder
 			tilenum = data & 0x1fff;	// $80000 spritemap rom maps up to $2000 64x64 sprites
 			flipy = (data & 0x8000) >> 15;
 	
-			if (!tilenum) continue;
+			if (tilenum == 0) continue;
 	
 			map_offset = tilenum << 5;
 	

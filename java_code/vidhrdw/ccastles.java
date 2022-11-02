@@ -171,7 +171,7 @@ public class ccastles
 			j = 2*addr;
 			x = j%256;
 			y = j/256;
-			if (!flip_screen)
+			if (flip_screen == 0)
 			{
 				plot_pixel.handler(tmpbitmap, x  , y, Machine.pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
 				plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[16 +  (videoram.read(addr)& 0x0f)      ]);

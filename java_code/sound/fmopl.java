@@ -2136,7 +2136,7 @@ public class fmopl
 			OPL_CALC_CH(&OPL.P_CH[4]);
 			OPL_CALC_CH(&OPL.P_CH[5]);
 	
-			if(!rhythm)
+			if (rhythm == 0)
 			{
 				OPL_CALC_CH(&OPL.P_CH[6]);
 				OPL_CALC_CH(&OPL.P_CH[7]);
@@ -2287,7 +2287,7 @@ public class fmopl
 			OPL_CALC_CH(&OPL.P_CH[4]);
 			OPL_CALC_CH(&OPL.P_CH[5]);
 	
-			if(!rhythm)
+			if (rhythm == 0)
 			{
 				OPL_CALC_CH(&OPL.P_CH[6]);
 				OPL_CALC_CH(&OPL.P_CH[7]);
@@ -2468,7 +2468,7 @@ public class fmopl
 			OPL_CALC_CH(&OPL.P_CH[4]);
 			OPL_CALC_CH(&OPL.P_CH[5]);
 	
-			if(!rhythm)
+			if (rhythm == 0)
 			{
 				OPL_CALC_CH(&OPL.P_CH[6]);
 				OPL_CALC_CH(&OPL.P_CH[7]);

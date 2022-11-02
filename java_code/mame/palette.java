@@ -514,21 +514,21 @@ public class palette
 	
 		/* allocate memory for the raw game palette */
 		game_palette = auto_malloc(max_total_colors * sizeof(game_palette[0]));
-		if (!game_palette)
+		if (game_palette == 0)
 			return 1;
 		for (i = 0; i < max_total_colors; i++)
 			game_palette[i] = MAKE_RGB((i & 1) * 0xff, ((i >> 1) & 1) * 0xff, ((i >> 2) & 1) * 0xff);
 	
 		/* allocate memory for the adjusted game palette */
 		adjusted_palette = auto_malloc(max_total_colors * sizeof(adjusted_palette[0]));
-		if (!adjusted_palette)
+		if (adjusted_palette == 0)
 			return 1;
 		for (i = 0; i < max_total_colors; i++)
 			adjusted_palette[i] = game_palette[i];
 	
 		/* allocate memory for the dirty palette array */
 		dirty_palette = auto_malloc((max_total_colors + 31) / 32 * sizeof(dirty_palette[0]));
-		if (!dirty_palette)
+		if (dirty_palette == 0)
 			return 1;
 		for (i = 0; i < max_total_colors; i++)
 			mark_pen_dirty(i);
@@ -542,7 +542,7 @@ public class palette
 	
 		/* allocate memory for the per-entry brightness table */
 		pen_brightness = auto_malloc(Machine.drv.total_colors * sizeof(pen_brightness[0]));
-		if (!pen_brightness)
+		if (pen_brightness == 0)
 			return 1;
 		for (i = 0; i < Machine.drv.total_colors; i++)
 			pen_brightness[i] = 1 << PEN_BRIGHTNESS_BITS;
@@ -597,7 +597,7 @@ public class palette
 			 * (e.g. Machine.uifont.colortable[0] as returned by get_black_pen())
 			 */
 			palette_shadow_table = auto_malloc(65536 * sizeof(palette_shadow_table[0]));
-			if (!palette_shadow_table)
+			if (palette_shadow_table == 0)
 				return 1;
 	
 			/* map entries up to the total_colors so they point to the next block of colors */

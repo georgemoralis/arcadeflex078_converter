@@ -441,7 +441,7 @@ public class chdman
 	
 		/* open the new hard drive */
 		chd = chd_open(outputfile, 1, NULL);
-		if (!chd)
+		if (chd == 0)
 		{
 			printf("Error opening new CHD file: %s\n", error_string(chd_get_last_error()));
 			remove(outputfile);
@@ -504,7 +504,7 @@ public class chdman
 	
 		/* get the header */
 		infile = chd_open(inputfile, 0, NULL);
-		if (!infile)
+		if (infile == 0)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(chd_get_last_error()));
 			goto error;
@@ -513,7 +513,7 @@ public class chdman
 	
 		/* allocate memory to hold a hunk */
 		hunk = malloc(header.hunkbytes);
-		if (!hunk)
+		if (hunk == 0)
 		{
 			printf("Out of memory allocating hunk buffer!\n");
 			goto error;
@@ -521,7 +521,7 @@ public class chdman
 	
 		/* create the output file */
 		outfile = (*chdman_interface.open)(outputfile, "wb");
-		if (!outfile)
+		if (outfile == 0)
 		{
 			printf("Error opening output file '%s'\n", outputfile);
 			goto error;
@@ -601,7 +601,7 @@ public class chdman
 	
 		/* open the new hard drive */
 		chd = chd_open(inputfile, 0, NULL);
-		if (!chd)
+		if (chd == 0)
 		{
 			printf("Error opening CHD file: %s\n", error_string(chd_get_last_error()));
 			return;
@@ -718,7 +718,7 @@ public class chdman
 	
 		/* get the header */
 		chd = chd_open(inputfile, 0, NULL);
-		if (!chd)
+		if (chd == 0)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(chd_get_last_error()));
 			return;
@@ -805,7 +805,7 @@ public class chdman
 		const struct chd_header *header = chd_get_header(chd);
 		int sectors_per_hunk = (header.hunkbytes / IDE_SECTOR_SIZE);
 		UINT8 *temp = malloc(header.hunkbytes);
-		if (!temp)
+		if (temp == 0)
 			return CHDERR_OUT_OF_MEMORY;
 	
 		/* check for midway */
@@ -936,7 +936,7 @@ public class chdman
 		if (parentfile != 0)
 		{
 			parentchd = chd_open(parentfile, 0, NULL);
-			if (!parentchd)
+			if (parentchd == 0)
 			{
 				printf("Error opening CHD file '%s': %s\n", parentfile, error_string(err = chd_get_last_error()));
 				goto error;
@@ -945,7 +945,7 @@ public class chdman
 	
 		/* open the diff CHD */
 		inputchd = chd_open(inputfile, 0, parentchd);
-		if (!inputchd)
+		if (inputchd == 0)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(err = chd_get_last_error()));
 			goto error;
@@ -969,7 +969,7 @@ public class chdman
 	
 		/* open the new CHD */
 		outputchd = chd_open(outputfile, 1, NULL);
-		if (!outputchd)
+		if (outputchd == 0)
 		{
 			printf("Error opening new CHD file: %s\n", error_string(chd_get_last_error()));
 			goto error;
@@ -1044,7 +1044,7 @@ public class chdman
 	
 		/* open the soon-to-be-parent CHD */
 		parentchd = chd_open(parentfile, 0, NULL);
-		if (!parentchd)
+		if (parentchd == 0)
 		{
 			printf("Error opening CHD file '%s': %s\n", parentfile, error_string(err = chd_get_last_error()));
 			goto error;
@@ -1052,7 +1052,7 @@ public class chdman
 	
 		/* open the input CHD */
 		inputchd = chd_open(inputfile, 0, NULL);
-		if (!inputchd)
+		if (inputchd == 0)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(err = chd_get_last_error()));
 			goto error;
@@ -1068,7 +1068,7 @@ public class chdman
 	
 		/* open the new CHD */
 		outputchd = chd_open(outputfile, 1, parentchd);
-		if (!outputchd)
+		if (outputchd == 0)
 		{
 			printf("Error opening new CHD file: %s\n", error_string(chd_get_last_error()));
 			goto error;
@@ -1131,7 +1131,7 @@ public class chdman
 	
 		/* open the file read-only and get the header */
 		chd = chd_open(inoutfile, 0, NULL);
-		if (!chd)
+		if (chd == 0)
 		{
 			printf("Error opening CHD file '%s' read-only: %s\n", inoutfile, error_string(chd_get_last_error()));
 			return;
@@ -1156,7 +1156,7 @@ public class chdman
 	
 		/* open the file read/write */
 		chd = chd_open(inoutfile, 1, NULL);
-		if (!chd)
+		if (chd == 0)
 		{
 			printf("Error opening CHD file '%s' read/write: %s\n", inoutfile, error_string(chd_get_last_error()));
 			return;
@@ -1251,7 +1251,7 @@ public class chdman
 	
 		/* attempt to open the file */
 		f = fopen(file, "rb");
-		if (!f)
+		if (f == 0)
 			return 0;
 	
 		/* get the size */

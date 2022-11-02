@@ -242,7 +242,7 @@ public class config
 		int i;
 	
 		cfg = malloc(sizeof(struct _config_file));
-		if (!cfg)
+		if (cfg == 0)
 			goto error;
 		memset(cfg, 0, sizeof(*cfg));
 	

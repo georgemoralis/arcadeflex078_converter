@@ -85,7 +85,7 @@ public class cyberbal
 		sound_data_from_6502 = data;
 		sound_data_from_6502_ready = 1;
 	
-		if (!io_68k_int)
+		if (io_68k_int == 0)
 		{
 			io_68k_int = 1;
 			update_sound_68k_interrupts();
@@ -118,7 +118,7 @@ public class cyberbal
 	
 	public static InterruptHandlerPtr cyberbal_sound_68k_irq_gen = new InterruptHandlerPtr() {public void handler()
 	{
-		if (!fast_68k_int)
+		if (fast_68k_int == 0)
 		{
 			fast_68k_int = 1;
 			update_sound_68k_interrupts();

@@ -697,7 +697,7 @@ public class tms5220
 				RDB_flag = FALSE;
 	
 	            /* according to the datasheet, this will cause an interrupt due to a BE condition */
-	            if (!buffer_empty)
+	            if (buffer_empty == 0)
 	            {
 	                buffer_empty = 1;
 	                set_interrupt_state(1);
@@ -951,7 +951,7 @@ public class tms5220
 	    if (fifo_count <= 8)
 	    {
 	        /* generate an interrupt if necessary */
-	        if (!buffer_low)
+	        if (buffer_low == 0)
 	            set_interrupt_state(1);
 	        buffer_low = 1;
 	

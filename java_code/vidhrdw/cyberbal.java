@@ -181,7 +181,7 @@ public class cyberbal
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,8, 64,64);
-		if (!atarigen_playfield_tilemap)
+		if (atarigen_playfield_tilemap == 0)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -190,7 +190,7 @@ public class cyberbal
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,8, 64,32);
-		if (!atarigen_alpha_tilemap)
+		if (atarigen_alpha_tilemap == 0)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -199,7 +199,7 @@ public class cyberbal
 		{
 			/* initialize the playfield */
 			atarigen_playfield2_tilemap = tilemap_create(get_playfield2_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,8, 64,64);
-			if (!atarigen_playfield2_tilemap)
+			if (atarigen_playfield2_tilemap == 0)
 				return 1;
 			tilemap_set_scrollx(atarigen_playfield2_tilemap, 0, -SCREEN2_SCROLL_OFFSET);
 	
@@ -209,7 +209,7 @@ public class cyberbal
 	
 			/* initialize the alphanumerics */
 			atarigen_alpha2_tilemap = tilemap_create(get_alpha2_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,8, 64,32);
-			if (!atarigen_alpha2_tilemap)
+			if (atarigen_alpha2_tilemap == 0)
 				return 1;
 			tilemap_set_scrollx(atarigen_alpha2_tilemap, 0, -SCREEN2_SCROLL_OFFSET);
 			tilemap_set_transparent_pen(atarigen_alpha2_tilemap, 0);
@@ -227,7 +227,7 @@ public class cyberbal
 	public static VideoUpdateHandlerPtr video_update_cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_cyberbal_common(2);
-		if (!result)
+		if (result == 0)
 		{
 			/* adjust the sprite positions */
 			atarimo_set_xscroll(0, 4);
@@ -240,7 +240,7 @@ public class cyberbal
 	public static VideoUpdateHandlerPtr video_update_cyberb2p  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_cyberbal_common(1);
-		if (!result)
+		if (result == 0)
 		{
 			/* adjust the sprite positions */
 			atarimo_set_xscroll(0, 5);

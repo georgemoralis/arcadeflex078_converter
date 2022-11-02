@@ -749,7 +749,7 @@ public class jaguar
 			return 1;
 	
 		pen_table = auto_malloc(65536 * sizeof(pen_t));
-		if (!pen_table)
+		if (pen_table == 0)
 			return 1;
 	
 		vi_timer = timer_alloc(vi_callback);

@@ -229,12 +229,12 @@ public class turbo
 	
 		/* allocate the expanded sprite data */
 		sprite_expanded_data = auto_malloc(sprite_length * 2 * sizeof(UINT32));
-		if (!sprite_expanded_data)
+		if (sprite_expanded_data == 0)
 			return 1;
 	
 		/* allocate the expanded sprite enable array */
 		sprite_expanded_enable = auto_malloc(sprite_length * 2 * sizeof(UINT8));
-		if (!sprite_expanded_enable)
+		if (sprite_expanded_enable == 0)
 			return 1;
 	
 		/* expand the sprite ROMs */
@@ -284,7 +284,7 @@ public class turbo
 	
 		/* allocate the expanded foreground data */
 		fore_expanded_data = auto_malloc(fore_length);
-		if (!fore_expanded_data)
+		if (fore_expanded_data == 0)
 			return 1;
 	
 		/* expand the foreground ROMs */
@@ -360,7 +360,7 @@ public class turbo
 	
 		/* allocate the expanded road palette */
 		road_expanded_palette = auto_malloc(0x40 * sizeof(UINT16));
-		if (!road_expanded_palette)
+		if (road_expanded_palette == 0)
 			return 1;
 	
 		/* expand the road palette */
@@ -405,7 +405,7 @@ public class turbo
 	
 		/* allocate the expanded sprite priority map */
 		sprite_expanded_priority = auto_malloc(1 << 12);
-		if (!sprite_expanded_priority)
+		if (sprite_expanded_priority == 0)
 			return 1;
 	
 		/* expand the sprite priority map */
@@ -453,7 +453,7 @@ public class turbo
 	
 		/* allocate the expanded sprite priority map */
 		sprite_expanded_priority = auto_malloc(1 << 8);
-		if (!sprite_expanded_priority)
+		if (sprite_expanded_priority == 0)
 			return 1;
 	
 		/* expand the sprite priority map */
@@ -473,7 +473,7 @@ public class turbo
 	
 		/* allocate the bitmap RAM */
 		buckrog_bitmap_ram = auto_malloc(0xe000);
-		if (!buckrog_bitmap_ram)
+		if (buckrog_bitmap_ram == 0)
 			return 1;
 	
 		/* other stuff */
@@ -965,7 +965,7 @@ public class turbo
 	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* only do collision checking if we didn't draw */
-		if (!drew_frame)
+		if (drew_frame == 0)
 			turbo_render(NULL);
 		drew_frame = 0;
 	} };

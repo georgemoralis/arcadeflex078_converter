@@ -3663,7 +3663,7 @@ public class stv
 	static void scsp_irq(int irq)
 	{
 		// don't bother the 68k if it's off
-		if (!en_68k)
+		if (en_68k == 0)
 		{
 			return;
 		}

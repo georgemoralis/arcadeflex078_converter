@@ -51,7 +51,7 @@ public class aeroboto
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,64);
 	
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap,0);
@@ -169,7 +169,7 @@ public class aeroboto
 		sky_color = star_color = *aeroboto_bgcolor << 2;
 	
 		// the star field is supposed to be seen through tile pen 0 when active
-		if (!aeroboto_starsoff)
+		if (aeroboto_starsoff == 0)
 		{
 			if (star_color < 0xd0) { star_color = 0xd0; sky_color = 0; }
 			star_color += 2;

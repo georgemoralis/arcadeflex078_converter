@@ -133,10 +133,10 @@ public class brkthru
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,16);
 	
-		if (!fg_tilemap)
+		if (fg_tilemap == 0)
 			return 1;
 	
-		if (!bg_tilemap)
+		if (bg_tilemap == 0)
 			return 1;
 	
 		tilemap_set_transparent_pen( fg_tilemap, 0 );

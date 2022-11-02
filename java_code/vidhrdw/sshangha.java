@@ -70,7 +70,7 @@ public class sshangha
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult;
 	
 			sprite = spritesrc[offs+1] & 0x3fff;
-			if (!sprite) continue;
+			if (sprite == 0) continue;
 	
 			if ((spritesrc[offs+2]&pmask)!=pval)
 				continue;

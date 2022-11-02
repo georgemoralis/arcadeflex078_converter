@@ -421,7 +421,7 @@ public class tiasound
 	            }
 	        }
 	
-			if (!oversampling)
+			if (oversampling == 0)
 			{
 				/* decrement the sample counter - value is 256 since the lower
 				 * byte contains the fractional part */

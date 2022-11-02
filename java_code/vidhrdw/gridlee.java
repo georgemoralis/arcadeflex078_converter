@@ -72,7 +72,7 @@ public class gridlee
 	{
 		/* allocate a local copy of video RAM */
 		local_videoram = auto_malloc(256 * 256);
-		if (!local_videoram)
+		if (local_videoram == 0)
 			return 1;
 	
 		/* reset the palette */
@@ -149,7 +149,7 @@ public class gridlee
 		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			/* non-flipped: draw directly from the bitmap */
-			if (!gridlee_cocktail_flip)
+			if (gridlee_cocktail_flip == 0)
 				draw_scanline8(bitmap, 0, y, 256, &local_videoram[y * 256], pens + 16, -1);
 	
 			/* flipped: x-flip the scanline into a temp buffer and draw that */

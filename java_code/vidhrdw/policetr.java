@@ -54,7 +54,7 @@ public class policetr
 	
 		/* the destination bitmap is not directly accessible to the CPU */
 		dstbitmap = auto_malloc(DSTBITMAP_WIDTH * DSTBITMAP_HEIGHT);
-		if (!dstbitmap)
+		if (dstbitmap == 0)
 			return 1;
 	
 		return 0;

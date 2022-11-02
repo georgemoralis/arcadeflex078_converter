@@ -494,7 +494,7 @@ public class winmain
 	
 		// open the map file
 		map = fopen(mapfile_name, "r");
-		if (!map)
+		if (map == 0)
 			return;
 	
 		// parse out the various symbols into map entries
@@ -637,7 +637,7 @@ public class winmain
 	
 		/* start the thread */
 		profiler_thread = CreateThread(NULL, 0, profiler_thread_entry, (LPVOID)currentThread, 0, &profiler_thread_id);
-		if (!profiler_thread)
+		if (profiler_thread == 0)
 			fprintf(stderr, "Failed to create profiler thread\n");
 	
 		/* max out the priority */

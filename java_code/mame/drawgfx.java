@@ -838,7 +838,7 @@ public class drawgfx
 			const struct rectangle *clip,int transparency,int transparent_color,
 			struct mame_bitmap *pri_buffer,UINT32 pri_mask)
 	{
-		if (!gfx)
+		if (gfx == 0)
 		{
 			usrintf_showmessage("drawgfx() gfx == 0");
 			return;
@@ -3524,7 +3524,7 @@ public class drawgfx
 		unsigned short black,white;
 		int i;
 	
-		if (!crosshair_enable)
+		if (crosshair_enable == 0)
 			return;
 	
 		black = Machine.uifont.colortable[0];

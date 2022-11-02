@@ -43,7 +43,7 @@ public class ltcasino
 	{
 		ltcasino_tilemap = tilemap_create(get_ltcasino_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,64,32);
 		
-		if( !ltcasino_tilemap )
+		if (ltcasino_tilemap == 0)
 			return 1;
 	
 		return 0;

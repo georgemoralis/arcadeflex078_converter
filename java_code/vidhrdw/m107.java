@@ -263,7 +263,7 @@ public class m107
 		pf1_rowscroll=pf2_rowscroll=pf3_rowscroll=pf4_rowscroll=0;
 	
 		m107_spriteram = auto_malloc(0x1000);
-		if (!m107_spriteram)
+		if (m107_spriteram == 0)
 			return 1;
 		memset(m107_spriteram,0,0x1000);
 	
@@ -306,7 +306,7 @@ public class m107
 				y_multi=1 << y_multi; /* 1, 2, 4 or 8 */
 	
 				s_ptr = 0;
-				if (!fy) s_ptr+=y_multi-1;
+				if (fy == 0) s_ptr+=y_multi-1;
 	
 				for (i=0; i<y_multi; i++)
 				{
@@ -336,7 +336,7 @@ public class m107
 						y_multi=1<<((rom[rom_offs+3]>>1)&0x3);
 						if (fx != 0) xdisp = -xdisp;
 						if (fy != 0) ydisp = -ydisp - (16*y_multi-1);
-						if (!ffy) sprite+=y_multi-1;
+						if (ffy == 0) sprite+=y_multi-1;
 						for (i=0; i<y_multi; i++)
 						{
 							drawgfx(bitmap,Machine.gfx[1],

@@ -661,7 +661,7 @@ public class namcos3d
 			pv[i].p[0] = v[i].z;
 		}
 		scans = setup_triangle_1(&pv[0], &pv[1], &pv[2], &cliprect);
-		if (!scans)
+		if (scans == 0)
 			return;
 		curscan = scans.scanline;
 		for (y = scans.sy; y <= scans.ey; y++, curscan++)

@@ -338,7 +338,7 @@ public class halleys
 		command = code & COMMAND;
 		if (game_id == GAME_HALLEYS)
 		{
-			if (!layer) flags |= PPCD_ON;
+			if (layer == 0) flags |= PPCD_ON;
 			if (offset >= HALLEYS_SPLIT) flags |= AD_HIGH; else
 			if ((offset & 1) != 0) memcpy(param-0x10, param, 0x10); else group = param[0x15] & GROUP;
 	
@@ -353,7 +353,7 @@ public class halleys
 		x = (int)param[0x9];
 		h = (int)param[0xa];
 		w = (int)param[0xb] + 1;
-		if (!h) return;
+		if (h == 0) return;
 	
 	
 		// translate source addresses
@@ -715,7 +715,7 @@ public class halleys
 			else
 			{
 				WARP_WIPE_COMMON
-				if (!command) { dst_base = render_layer[layer&1]; WARP_WIPE_COMMON }
+				if (command == 0) { dst_base = render_layer[layer&1]; WARP_WIPE_COMMON }
 			}
 	
 		} else
@@ -917,7 +917,7 @@ public class halleys
 				{
 					eax = (DWORD)*src1_ptr;
 					src1_ptr += src_dx;
-					if (!eax) continue;
+					if (eax == 0) continue;
 					eax = eax | (eax<<16) | ((BG_RGB<<16)|BG_RGB);
 					edi = dst_base + ((yclip & YMASK) << SCREEN_WIDTH_L2);
 	
@@ -1189,7 +1189,7 @@ public class halleys
 		int dst, src, c;
 	
 		// abort if DRIVER_INIT failed
-		if (!init_success) return(1);
+		if (init_success == 0) return(1);
 	
 		// abort on unsupported bit depths
 		if (Machine.scrbitmap.depth != 15 && Machine.scrbitmap.depth != 16) return(1);
@@ -1623,7 +1623,7 @@ public class halleys
 			case 2:
 			case 3:
 				// FIRQ must not happen when the blitter is being updated or it'll cause serious screen artifacts
-				if (!blitter_busy) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); else firq_level++;
+				if (blitter_busy == 0) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); else firq_level++;
 			break;
 		}
 	} };
