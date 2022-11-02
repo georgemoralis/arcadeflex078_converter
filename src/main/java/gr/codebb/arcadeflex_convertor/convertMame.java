@@ -26,6 +26,7 @@ public class convertMame {
     static final int VIDEO_EOF = 13;
     static final int MACHINE_INIT = 14;
     static final int DRIVER_INIT = 15;
+    static final int MACHINE_STOP = 16;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -103,6 +104,22 @@ public class convertMame {
                             } else {
                                 sUtil.putString("public static MachineInitHandlerPtr machine_init_" + Convertor.token[0] + "  = new MachineInitHandlerPtr() { public void handler()");
                                 type = MACHINE_INIT;
+                                i3 = -1;
+                                Convertor.inpos += 1;
+                                continue;
+                            }
+                        }
+                        if (sUtil.getToken("MACHINE_STOP(")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.getToken(");"))//if it is a front function skip it
+                            {
+                                sUtil.skipLine();
+                                continue;
+                            } else {
+                                sUtil.putString("public static MachineStopHandlerPtr machine_stop_" + Convertor.token[0] + "  = new MachineStopHandlerPtr() { public void handler()");
+                                type = MACHINE_STOP;
                                 i3 = -1;
                                 Convertor.inpos += 1;
                                 continue;
@@ -588,7 +605,7 @@ public class convertMame {
                     }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
                             || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
-                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT) {
+                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT || type == MACHINE_STOP) {
                         i3++;
                     }
                 }
@@ -606,7 +623,7 @@ public class convertMame {
                     }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
                             || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
-                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT) {
+                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT || type == MACHINE_STOP) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");
@@ -641,6 +658,22 @@ public class convertMame {
                         } else {
                             sUtil.putString("public static MachineInitHandlerPtr machine_init_" + Convertor.token[0] + "  = new MachineInitHandlerPtr() { public void handler()");
                             type = MACHINE_INIT;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
+                    if (sUtil.getToken("MACHINE_STOP(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static MachineStopHandlerPtr machine_stop_" + Convertor.token[0] + "  = new MachineStopHandlerPtr() { public void handler()");
+                            type = MACHINE_STOP;
                             i3 = -1;
                             Convertor.inpos += 1;
                             continue;
@@ -972,7 +1005,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    Convertor.inpos=i;
+                    Convertor.inpos = i;
                     if (type2 == INPUTPORTS) {
                         if (sUtil.getToken("DEF_STR(")) {
                             sUtil.skipSpace();

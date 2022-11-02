@@ -6600,7 +6600,7 @@ public class seta
 	} };
 	
 	public static MachineInitHandlerPtr machine_init_wrofaero  = new MachineInitHandlerPtr() { public void handler() { uPD71054_timer_init(); } };
-	MACHINE_STOP( wrofaero ) { uPD71054_timer_stop(); }
+	public static MachineStopHandlerPtr machine_stop_wrofaero  = new MachineStopHandlerPtr() { public void handler() { uPD71054_timer_stop(); } };
 	#endif	// __uPD71054_TIMER
 	
 	

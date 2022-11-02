@@ -157,12 +157,12 @@ public class snes
 	} };
 	
 	#ifdef MESS
-	MACHINE_STOP( snes )
+	public static MachineStopHandlerPtr machine_stop_snes  = new MachineStopHandlerPtr() { public void handler()
 	{
 		/* Save SRAM */
 		if( cart.sram > 0 )
 			snes_save_sram();
-	}
+	} };
 	#endif	/* MESS */
 	
 	/* Handle reading of Mode 20 SRAM */
