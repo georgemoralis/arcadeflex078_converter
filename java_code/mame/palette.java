@@ -1237,12 +1237,12 @@ public class palette
 	
 	public static ReadHandlerPtr paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return paletteram[offset];
+		return paletteram.read(offset);
 	} };
 	
 	public static ReadHandlerPtr paletteram_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return paletteram_2[offset];
+		return paletteram_2.read(offset);
 	} };
 	
 	READ16_HANDLER( paletteram16_word_r )

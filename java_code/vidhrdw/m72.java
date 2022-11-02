@@ -315,7 +315,7 @@ public class m72
 		/* A9 isn't connected, so 0x200-0x3ff mirrors 0x000-0x1ff etc. */
 		offset &= ~0x200;
 	
-		return paletteram[offset] | 0xe0;	/* only D0-D4 are connected */
+		return paletteram.read(offset)| 0xe0;	/* only D0-D4 are connected */
 	} };
 	
 	public static ReadHandlerPtr m72_palette2_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -326,7 +326,7 @@ public class m72
 		/* A9 isn't connected, so 0x200-0x3ff mirrors 0x000-0x1ff etc. */
 		offset &= ~0x200;
 	
-		return paletteram_2[offset] | 0xe0;	/* only D0-D4 are connected */
+		return paletteram_2.read(offset)| 0xe0;	/* only D0-D4 are connected */
 	} };
 	
 	INLINE void changecolor(int color,int r,int g,int b)

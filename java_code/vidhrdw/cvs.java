@@ -258,7 +258,7 @@ public class cvs
 	    {
 	    	// Pallette Ram
 	
-	        return (paletteram[offset] ^ 0xff);
+	        return (paletteram.read(offset)^ 0xff);
 	    }
 	} };
 	

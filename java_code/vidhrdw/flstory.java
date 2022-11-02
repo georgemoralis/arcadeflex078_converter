@@ -65,7 +65,7 @@ public class flstory
 	public static ReadHandlerPtr flstory_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((offset & 0x100) != 0)
-			return paletteram_2[ (offset & 0xff) + (palette_bank << 8) ];
+			return paletteram_2.read( (offset & 0xff) + (palette_bank << 8) );
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];
 	} };

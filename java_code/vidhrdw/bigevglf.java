@@ -31,8 +31,8 @@ public class bigevglf
 	{
 		int color;
 	
-		paletteram[offset] = data;
-		color = paletteram[offset&0x3ff] | (paletteram[0x400+(offset&0x3ff)] << 8);
+		paletteram.write(offset,data);
+		color = paletteram.read(offset&0x3ff)| (paletteram.read(0x400+(offset&0x3ff))<< 8);
 		palette_set_color(offset&0x3ff, color&0xf0, (color&0xf)<<4, (color&0xf00)>>4);
 	}
 	

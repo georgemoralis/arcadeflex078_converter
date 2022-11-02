@@ -108,7 +108,7 @@ public class suna8
 	public static ReadHandlerPtr suna8_banked_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset += suna8_palettebank * 0x200;
-		return paletteram[offset];
+		return paletteram.read(offset);
 	} };
 	
 	public static ReadHandlerPtr suna8_banked_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)

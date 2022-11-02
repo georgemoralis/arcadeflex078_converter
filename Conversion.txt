@@ -30,4 +30,5 @@ videoram_size to videoram_size[0]
 spriteram_2,spriteram_3 (from generic vidhrdw) , reads-writes
 soundlatch_w ,1,2,3,4 handler
 videoram_w converts to videoram_w.handler
-plotpixel convertso to plotpixel.handler
+plotpixel converts to plotpixel.handler
+paletteram,paletteram_2 read/write conversion
