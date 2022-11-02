@@ -776,11 +776,11 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	VIDEO_EOF( midyunit )
+	public static VideoEofHandlerPtr video_eof_midyunit  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* finish updating/autoerasing, even if we skipped a frame */
 		update_partial(Machine.visible_area.max_y, 0);
-	}
+	} };
 	
 	
 	static void scanline0_callback(int param)

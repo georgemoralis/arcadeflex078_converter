@@ -630,10 +630,10 @@ public class nmk16
 		draw_sprites(bitmap,cliprect,0,0);
 	} };
 	
-	VIDEO_EOF( nmk )
+	public static VideoEofHandlerPtr video_eof_nmk  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* looks like sprites are *two* frames ahead */
-		memcpy(spriteram_old2,spriteram_old,spriteram_size);
-		memcpy(spriteram_old,spriteram16,spriteram_size);
-	}
+		memcpy(spriteram_old2,spriteram_old,spriteram_size[0]);
+		memcpy(spriteram_old,spriteram16,spriteram_size[0]);
+	} };
 }

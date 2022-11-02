@@ -65,10 +65,10 @@ public class cinemat
 	} };
 	
 	
-	VIDEO_EOF( cinemat )
+	public static VideoEofHandlerPtr video_eof_cinemat  = new VideoEofHandlerPtr() { public void handler()
 	{
 		vector_clear_list();
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_spacewar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

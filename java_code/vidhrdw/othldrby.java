@@ -227,10 +227,10 @@ public class othldrby
 		draw_sprites(bitmap,cliprect,3);
 	} };
 	
-	VIDEO_EOF( othldrby )
+	public static VideoEofHandlerPtr video_eof_othldrby  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* sprites need to be delayed two frames */
 	    memcpy(buf_spriteram,buf_spriteram2,SPRITERAM_SIZE*sizeof(buf_spriteram[0]));
 	    memcpy(buf_spriteram2,&vram[SPRITERAM_START],SPRITERAM_SIZE*sizeof(buf_spriteram[0]));
-	}
+	} };
 }

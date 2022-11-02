@@ -276,8 +276,8 @@ public class sspeedr
 	} };
 	
 	
-	VIDEO_EOF( sspeedr )
+	public static VideoEofHandlerPtr video_eof_sspeedr  = new VideoEofHandlerPtr() { public void handler()
 	{
 		toggle ^= 1;
-	}
+	} };
 }

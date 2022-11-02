@@ -855,8 +855,8 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	VIDEO_EOF( detatwin )
+	public static VideoEofHandlerPtr video_eof_detatwin  = new VideoEofHandlerPtr() { public void handler()
 	{
 		K053245_clear_buffer();
-	}
+	} };
 }

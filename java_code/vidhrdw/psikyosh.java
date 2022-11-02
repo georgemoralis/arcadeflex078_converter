@@ -1157,10 +1157,10 @@ public class psikyosh
 			}
 	} };
 	
-	VIDEO_EOF( psikyosh )
+	public static VideoEofHandlerPtr video_eof_psikyosh  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram32_w(0,0,0);
-	}
+	} };
 	
 	/*usrintf_showmessage	("Regs %08x %08x %08x\n     %08x %08x %08x",
 		psikyosh_bgram[0x17f0/4], psikyosh_bgram[0x17f4/4], psikyosh_bgram[0x17f8/4],

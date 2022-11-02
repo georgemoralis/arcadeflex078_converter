@@ -143,7 +143,7 @@ public class sprint2
 	} };
 	
 	
-	VIDEO_EOF( sprint2 )
+	public static VideoEofHandlerPtr video_eof_sprint2  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int i;
 		int j;
@@ -214,5 +214,5 @@ public class sprint2
 	
 			collision[i] |= collision_check(&rect);
 		}
-	}
+	} };
 }

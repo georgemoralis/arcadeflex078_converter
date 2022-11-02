@@ -305,7 +305,7 @@ public class wolfpack
 	} };
 	
 	
-	VIDEO_EOF( wolfpack )
+	public static VideoEofHandlerPtr video_eof_wolfpack  = new VideoEofHandlerPtr() { public void handler()
 	{
 		struct rectangle rect;
 	
@@ -341,5 +341,5 @@ public class wolfpack
 		}
 	
 		current_index += 0x300 * 262;
-	}
+	} };
 }

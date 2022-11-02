@@ -1632,21 +1632,21 @@ public class toaplan2
 	} };
 	
 	
-	VIDEO_EOF( toaplan2_0 )
+	public static VideoEofHandlerPtr video_eof_toaplan2_0  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/** Shift sprite RAM buffers  ***  Used to fix sprite lag **/
 		memcpy(spriteram16_now[0],spriteram16_new[0],TOAPLAN2_SPRITERAM_SIZE);
-	}
+	} };
 	
-	VIDEO_EOF( toaplan2_1 )
+	public static VideoEofHandlerPtr video_eof_toaplan2_1  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/** Shift sprite RAM buffers  ***  Used to fix sprite lag **/
 		memcpy(spriteram16_now[0],spriteram16_new[0],TOAPLAN2_SPRITERAM_SIZE);
 		memcpy(spriteram16_now[1],spriteram16_new[1],TOAPLAN2_SPRITERAM_SIZE);
-	}
+	} };
 	
-	VIDEO_EOF( batrider_0 )
+	public static VideoEofHandlerPtr video_eof_batrider_0  = new VideoEofHandlerPtr() { public void handler()
 	{
 		cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);  /* Frame done */
-	}
+	} };
 }

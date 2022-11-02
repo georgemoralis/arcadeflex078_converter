@@ -301,8 +301,8 @@ public class lwings
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 	
-	VIDEO_EOF( lwings )
+	public static VideoEofHandlerPtr video_eof_lwings  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

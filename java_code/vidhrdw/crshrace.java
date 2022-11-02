@@ -226,9 +226,9 @@ public class crshrace
 		}
 	} };
 	
-	VIDEO_EOF( crshrace )
+	public static VideoEofHandlerPtr video_eof_crshrace  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
-	}
+	} };
 }

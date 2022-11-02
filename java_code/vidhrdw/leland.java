@@ -482,14 +482,14 @@ public class leland
 	}
 	
 	
-	VIDEO_EOF( leland )
+	public static VideoEofHandlerPtr video_eof_leland  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* update anything remaining */
 		update_for_scanline(VIDEO_HEIGHT * 8);
 	
 		/* set a timer to go off at the top of the frame */
 		timer_set(cpu_getscanlinetime(0), 0, scanline_reset);
-	}
+	} };
 	
 	
 	

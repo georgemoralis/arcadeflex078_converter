@@ -628,7 +628,7 @@ public class carpolo
 	}
 	
 	
-	VIDEO_EOF( carpolo )
+	public static VideoEofHandlerPtr video_eof_carpolo  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int col_x, col_y;
 		int car1_x, car2_x, car3_x, car4_x, ball_x;
@@ -833,5 +833,5 @@ public class carpolo
 			}
 		}
 		}
-	}
+	} };
 }

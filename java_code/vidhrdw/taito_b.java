@@ -675,7 +675,7 @@ public class taito_b
 	
 	
 	
-	VIDEO_EOF( taitob )
+	public static VideoEofHandlerPtr video_eof_taitob  = new VideoEofHandlerPtr() { public void handler()
 	{
 	  if (~video_control & 0x01)
 	    fillbitmap(framebuffer[framebuffer_page],0,Machine.visible_area);
@@ -684,6 +684,6 @@ public class taito_b
 	    framebuffer_page ^= 1;
 	
 	  taitob_draw_sprites(framebuffer[framebuffer_page],Machine.visible_area);
-	}
+	} };
 	
 }

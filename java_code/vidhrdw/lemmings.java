@@ -130,11 +130,11 @@ public class lemmings
 			free(sprite_triple_buffer_1);
 	} };
 	
-	VIDEO_EOF( lemmings )
+	public static VideoEofHandlerPtr video_eof_lemmings  = new VideoEofHandlerPtr() { public void handler()
 	{
 		memcpy(sprite_triple_buffer_0,buffered_spriteram16,0x800);
 		memcpy(sprite_triple_buffer_1,buffered_spriteram16_2,0x800);
-	}
+	} };
 	
 	/******************************************************************************/
 	

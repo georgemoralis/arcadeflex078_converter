@@ -1185,7 +1185,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	VIDEO_EOF( victory )
+	public static VideoEofHandlerPtr video_eof_victory  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int bgcollmask = (video_control & 4) ? 4 : 7;
 		int count = 0;
@@ -1219,7 +1219,7 @@ public class victory
 					timer_set(pixel_time(x, y), x | (y << 8), bgcoll_irq_callback);
 			}
 		}
-	}
+	} };
 	
 	
 	

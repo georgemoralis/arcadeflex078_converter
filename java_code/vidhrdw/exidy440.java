@@ -519,7 +519,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	VIDEO_EOF( exidy440 )
+	public static VideoEofHandlerPtr video_eof_exidy440  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* generate an interrupt once/frame for the beam */
 		if (exidy440_topsecret == 0)
@@ -542,5 +542,5 @@ public class exidy440
 			for (i = 0; i <= 12; i++, time += increment)
 				timer_set(time, beamx, beam_firq_callback);
 		}
-	}
+	} };
 }

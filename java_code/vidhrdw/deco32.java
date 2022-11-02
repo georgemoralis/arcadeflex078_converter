@@ -906,16 +906,16 @@ public class deco32
 	
 	/******************************************************************************/
 	
-	VIDEO_EOF( captaven )
+	public static VideoEofHandlerPtr video_eof_captaven  = new VideoEofHandlerPtr() { public void handler()
 	{
-		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
+		memcpy(buffered_spriteram32,spriteram32,spriteram_size[0]);
 		deco32_raster_display_position=0;
-	}
+	} };
 	
-	VIDEO_EOF( dragngun )
+	public static VideoEofHandlerPtr video_eof_dragngun  = new VideoEofHandlerPtr() { public void handler()
 	{
 		deco32_raster_display_position=0;
-	}
+	} };
 	
 	#if 0
 	static void print_debug_info()

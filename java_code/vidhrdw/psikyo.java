@@ -574,9 +574,9 @@ public class psikyo
 	
 	} };
 	
-	VIDEO_EOF( psikyo )
+	public static VideoEofHandlerPtr video_eof_psikyo  = new VideoEofHandlerPtr() { public void handler()
 	{
 		memcpy(spritebuf2, spritebuf1, 0x2000);
 		memcpy(spritebuf1, spriteram32, 0x2000);
-	}
+	} };
 }

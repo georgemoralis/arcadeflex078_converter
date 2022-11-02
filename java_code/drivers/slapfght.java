@@ -794,10 +794,10 @@ public class slapfght
 		{ 0, 0 }
 	};
 	
-	static VIDEO_EOF( perfrman )
+	static public static VideoEofHandlerPtr video_eof_perfrman  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( perfrman )
 	

@@ -180,8 +180,8 @@ public class tigeroad
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 2);
 	} };
 	
-	VIDEO_EOF( tigeroad )
+	public static VideoEofHandlerPtr video_eof_tigeroad  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

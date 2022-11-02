@@ -33,7 +33,6 @@ public static VideoStartHandlerPtr video_start_seta_2_layers  = new VideoStartHa
 
 WRITE16_HANDLER( seta2_vregs_w );
 
-VIDEO_EOF( seta2 );
 
 
 /* Variables and functions defined in sndhrdw/seta.c */

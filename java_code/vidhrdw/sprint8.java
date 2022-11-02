@@ -154,7 +154,7 @@ public class sprint8
 	} };
 	
 	
-	VIDEO_EOF( sprint8 )
+	public static VideoEofHandlerPtr video_eof_sprint8  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int x;
 		int y;
@@ -180,5 +180,5 @@ public class sprint8
 				}
 			}
 		}
-	}
+	} };
 }

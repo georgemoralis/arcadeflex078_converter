@@ -329,9 +329,9 @@ public class pgm
 		tilemap_draw(bitmap,cliprect,pgm_tx_tilemap,0,0);
 	} };
 	
-	VIDEO_EOF( pgm )
+	public static VideoEofHandlerPtr video_eof_pgm  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* first 0xa00 of main ram = sprites, seems to be buffered, DMA? */
 		memcpy(pgm_spritebufferram,pgm_mainram,0xa00);
-	}
+	} };
 }

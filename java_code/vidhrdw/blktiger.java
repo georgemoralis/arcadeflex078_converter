@@ -251,8 +251,8 @@ public class blktiger
 			tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	VIDEO_EOF( blktiger )
+	public static VideoEofHandlerPtr video_eof_blktiger  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

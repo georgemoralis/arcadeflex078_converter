@@ -390,9 +390,9 @@ public class seta2
 		seta2_draw_sprites(bitmap,cliprect);
 	} };
 	
-	VIDEO_EOF( seta2 )
+	public static VideoEofHandlerPtr video_eof_seta2  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* Buffer sprites by 1 frame */
-		memcpy(buffered_spriteram16,spriteram16,spriteram_size);
-	}
+		memcpy(buffered_spriteram16,spriteram16,spriteram_size[0]);
+	} };
 }

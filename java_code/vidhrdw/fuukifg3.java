@@ -377,13 +377,13 @@ public class fuukifg3
 			fuuki32_draw_sprites(bitmap,Machine.visible_area);
 	} };
 	
-	VIDEO_EOF( fuuki32 )
+	public static VideoEofHandlerPtr video_eof_fuuki32  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* Buffer sprites and tilebank by 2 frames */
 	
 		spr_buffered_tilebank[1] = spr_buffered_tilebank[0];
 		spr_buffered_tilebank[0] = fuuki32_tilebank[0];
-		memcpy(buffered_spriteram32_2,buffered_spriteram32,spriteram_size);
-		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
-	}
+		memcpy(buffered_spriteram32_2,buffered_spriteram32,spriteram_size[0]);
+		memcpy(buffered_spriteram32,spriteram32,spriteram_size[0]);
+	} };
 }

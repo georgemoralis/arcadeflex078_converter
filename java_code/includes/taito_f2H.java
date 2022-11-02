@@ -1,10 +1,5 @@
 
 
-VIDEO_EOF( taitof2_no_buffer );
-VIDEO_EOF( taitof2_full_buffer_delayed );
-VIDEO_EOF( taitof2_partial_buffer_delayed );
-VIDEO_EOF( taitof2_partial_buffer_delayed_thundfox );
-VIDEO_EOF( taitof2_partial_buffer_delayed_qzchikyu );
 
 
 WRITE16_HANDLER( taitof2_spritebank_w );

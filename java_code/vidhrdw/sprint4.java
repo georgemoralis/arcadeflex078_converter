@@ -99,7 +99,7 @@ public class sprint4
 	} };
 	
 	
-	VIDEO_EOF( sprint4 )
+	public static VideoEofHandlerPtr video_eof_sprint4  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -158,5 +158,5 @@ public class sprint4
 				}
 			}
 		}
-	}
+	} };
 }

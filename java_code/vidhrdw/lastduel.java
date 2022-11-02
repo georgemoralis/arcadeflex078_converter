@@ -268,11 +268,11 @@ public class lastduel
 	} };
 	
 	
-	VIDEO_EOF( lastduel )
+	public static VideoEofHandlerPtr video_eof_lastduel  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* Spriteram is always 1 frame ahead, suggesting buffering.  I can't find
 			a register to control this so I assume it happens automatically
 			every frame at the end of vblank */
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

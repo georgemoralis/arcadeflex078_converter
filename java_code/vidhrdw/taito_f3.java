@@ -541,7 +541,7 @@ public class taito_f3
 	
 	/******************************************************************************/
 	
-	VIDEO_EOF( f3 )
+	public static VideoEofHandlerPtr video_eof_f3  = new VideoEofHandlerPtr() { public void handler()
 	{
 		if (sprite_lag==2)
 		{
@@ -549,7 +549,7 @@ public class taito_f3
 			{
 				get_sprite_info(spriteram32_buffered);
 			}
-			memcpy(spriteram32_buffered,spriteram32,spriteram_size);
+			memcpy(spriteram32_buffered,spriteram32,spriteram_size[0]);
 		}
 		else if (sprite_lag==1)
 		{
@@ -558,7 +558,7 @@ public class taito_f3
 				get_sprite_info(spriteram32);
 			}
 		}
-	}
+	} };
 	
 	public static VideoStopHandlerPtr video_stop_f3  = new VideoStopHandlerPtr() { public void handler()
 	{

@@ -188,9 +188,9 @@ public class shadfrce
 	
 	} };
 	
-	VIDEO_EOF( shadfrce )
+	public static VideoEofHandlerPtr video_eof_shadfrce  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* looks like sprites are *two* frames ahead */
-		memcpy(shadfrce_spvideoram_old,shadfrce_spvideoram,spriteram_size);
-	}
+		memcpy(shadfrce_spvideoram_old,shadfrce_spvideoram,spriteram_size[0]);
+	} };
 }

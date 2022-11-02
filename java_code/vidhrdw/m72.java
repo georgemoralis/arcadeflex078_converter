@@ -718,7 +718,7 @@ public class m72
 	} };
 	
 	
-	VIDEO_EOF( m72 )
+	public static VideoEofHandlerPtr video_eof_m72  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -729,5 +729,5 @@ public class m72
 			scrollx2[i] = scrollx2[255];
 			scrolly2[i] = scrolly2[255];
 		}
-	}
+	} };
 }

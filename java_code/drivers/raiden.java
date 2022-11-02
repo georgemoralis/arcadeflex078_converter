@@ -277,10 +277,10 @@ public class raiden
 		cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc8/4);	/* VBL */
 	} };
 	
-	static VIDEO_EOF( raiden )
+	static public static VideoEofHandlerPtr video_eof_raiden  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram_w(0,0); /* Could be a memory location instead */
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( raiden )
 	

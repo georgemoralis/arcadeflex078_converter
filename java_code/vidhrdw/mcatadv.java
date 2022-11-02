@@ -249,9 +249,9 @@ public class mcatadv
 		return 0;
 	} };
 	
-	VIDEO_EOF( mcatadv )
+	public static VideoEofHandlerPtr video_eof_mcatadv  = new VideoEofHandlerPtr() { public void handler()
 	{
-		memcpy(spriteram_old,spriteram16,spriteram_size);
+		memcpy(spriteram_old,spriteram16,spriteram_size[0]);
 		memcpy(vidregs_old,mcatadv_vidregs,0xf);
-	}
+	} };
 }

@@ -504,12 +504,12 @@ public class slapshot
 		}
 	}
 	
-	VIDEO_EOF( taito_no_buffer )
+	public static VideoEofHandlerPtr video_eof_taito_no_buffer  = new VideoEofHandlerPtr() { public void handler()
 	{
 		taito_update_sprites_active_area();
 	
 		prepare_sprites = 1;
-	}
+	} };
 	
 	
 	/**************************************************************

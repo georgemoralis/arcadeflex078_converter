@@ -837,11 +837,11 @@ public class kaneko16
 	} };
 	
 	
-	static VIDEO_EOF( sandscrp )
+	static public static VideoEofHandlerPtr video_eof_sandscrp  = new VideoEofHandlerPtr() { public void handler()
 	{
 		sprite_irq = 1;
 		update_irq_state();
-	}
+	} };
 	
 	/* Reads the cause of the interrupt */
 	static READ16_HANDLER( sandscrp_irq_cause_r )

@@ -653,12 +653,12 @@ public class tubep
 		}
 	} };
 	
-	VIDEO_EOF( tubep_eof )
+	public static VideoEofHandlerPtr video_eof_tubep_eof  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* clear displayed frame */
 		memset(spritemap+DISP*256*256, 0x0f, 256*256);
 		DISP = DISP ^ 1;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

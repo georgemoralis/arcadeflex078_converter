@@ -1943,7 +1943,7 @@ public class cps1
 	#endif
 	} };
 	
-	VIDEO_EOF( cps1 )
+	public static VideoEofHandlerPtr video_eof_cps1  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* Get video memory base registers */
 		cps1_get_video_base();
@@ -1953,7 +1953,7 @@ public class cps1
 			/* CPS1 sprites have to be delayed one frame */
 			memcpy(cps1_buffered_obj, cps1_obj, cps1_obj_size);
 		}
-	}
+	} };
 	
 	void cps2_set_sprite_priorities(void)
 	{

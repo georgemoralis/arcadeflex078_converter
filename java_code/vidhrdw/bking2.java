@@ -309,7 +309,7 @@ public class bking2
 	} };
 	
 	
-	VIDEO_EOF( bking2 )
+	public static VideoEofHandlerPtr video_eof_bking2  = new VideoEofHandlerPtr() { public void handler()
 	{
 		static struct rectangle rect = { 0, 7, 0, 15 };
 	
@@ -388,5 +388,5 @@ public class bking2
 				}
 			}
 		}
-	}
+	} };
 }

@@ -399,8 +399,8 @@ public class sidearms
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 	} };
 	
-	VIDEO_EOF( sidearms )
+	public static VideoEofHandlerPtr video_eof_sidearms  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram_w(0, 0);
-	}
+	} };
 }

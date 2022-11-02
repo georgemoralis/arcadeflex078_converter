@@ -76,7 +76,6 @@ int atarirle_init(int map, const struct atarirle_desc *desc);
 /* control handlers */
 void atarirle_control_w(int map, UINT8 bits);
 void atarirle_command_w(int map, UINT8 command);
-VIDEO_EOF( atarirle );
 
 /* write handlers */
 WRITE16_HANDLER( atarirle_0_spriteram_w );

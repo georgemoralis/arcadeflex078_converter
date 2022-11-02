@@ -58,7 +58,7 @@ public class toki
 	}
 	
 	/* At EOF clear the previous frames scroll registers */
-	VIDEO_EOF( toki )
+	public static VideoEofHandlerPtr video_eof_toki  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -73,12 +73,12 @@ public class toki
 			toki_background_xscroll[i]=toki_foreground_xscroll[i]=0xffff;
 	
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 	
-	VIDEO_EOF( tokib )
+	public static VideoEofHandlerPtr video_eof_tokib  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 	
 	static void get_text_tile_info(int tile_index)
 	{

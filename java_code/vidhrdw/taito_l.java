@@ -354,10 +354,10 @@ public class taito_l
 	
 	
 	
-	VIDEO_EOF( taitol )
+	public static VideoEofHandlerPtr video_eof_taitol  = new VideoEofHandlerPtr() { public void handler()
 	{
 		unsigned char *spriteram = taitol_rambanks + 0x7000;
 	
 		memcpy(buffered_spriteram,spriteram,SPRITERAM_SIZE);
-	}
+	} };
 }

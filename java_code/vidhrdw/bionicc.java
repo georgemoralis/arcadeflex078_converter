@@ -241,8 +241,8 @@ public class bionicc
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	VIDEO_EOF( bionicc )
+	public static VideoEofHandlerPtr video_eof_bionicc  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

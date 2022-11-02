@@ -162,7 +162,6 @@ public class nmk16
 	WRITE16_HANDLER( mustang_scroll_w );
 	WRITE16_HANDLER( vandyke_scroll_w );
 	
-	VIDEO_EOF( nmk );
 	
 	static int respcount; // used with mcu function
 	

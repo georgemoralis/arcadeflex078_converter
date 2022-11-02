@@ -322,8 +322,8 @@ public class armedf
 		}
 	} };
 	
-	VIDEO_EOF( armedf )
+	public static VideoEofHandlerPtr video_eof_armedf  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

@@ -271,8 +271,8 @@ public class exedexes
 		}
 	} };
 	
-	VIDEO_EOF( exedexes )
+	public static VideoEofHandlerPtr video_eof_exedexes  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 }

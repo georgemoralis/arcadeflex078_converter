@@ -448,7 +448,7 @@ public class atarirle
 		video_eof_atarirle: Flush remaining changes.
 	---------------------------------------------------------------*/
 	
-	VIDEO_EOF( atarirle )
+	public static VideoEofHandlerPtr video_eof_atarirle  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -479,7 +479,7 @@ public class atarirle
 			/* reset the partial scanline to -1 so we can detect full updates */
 			mo.partial_scanline = -1;
 		}
-	}
+	} };
 	
 	
 	

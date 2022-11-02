@@ -425,7 +425,7 @@ public class firetrk
 	} };
 	
 	
-	VIDEO_EOF( firetrk )
+	public static VideoEofHandlerPtr video_eof_firetrk  = new VideoEofHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -492,5 +492,5 @@ public class firetrk
 		{
 			firetrk_set_blink(0);
 		}
-	}
+	} };
 }

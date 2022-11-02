@@ -357,7 +357,7 @@ public class exidy
 		return (!(*exidy_sprite_enable & 0x40));
 	}
 	
-	VIDEO_EOF( exidy )
+	public static VideoEofHandlerPtr video_eof_exidy  = new VideoEofHandlerPtr() { public void handler()
 	{
 		UINT8 enable_set = ((*exidy_sprite_enable & 0x20) != 0);
 	    struct rectangle clip = { 0, 15, 0, 15 };
@@ -446,7 +446,7 @@ public class exidy
 							timer_set(pixel_time(org_2_x + sx, org_2_y + sy), 0x08, collision_irq_callback);
 	            }
 			}
-	}
+	} };
 	
 	
 	

@@ -919,8 +919,8 @@ public class homedata
 	} };
 	
 	
-	VIDEO_EOF( homedata )
+	public static VideoEofHandlerPtr video_eof_homedata  = new VideoEofHandlerPtr() { public void handler()
 	{
 		homedata_visible_page ^= 1;
-	}
+	} };
 }

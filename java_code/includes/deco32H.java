@@ -1,7 +1,5 @@
 
 
-VIDEO_EOF( captaven );
-VIDEO_EOF( dragngun );
 
 
 

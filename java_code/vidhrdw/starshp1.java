@@ -416,7 +416,7 @@ public class starshp1
 	} };
 	
 	
-	VIDEO_EOF( starshp1 )
+	public static VideoEofHandlerPtr video_eof_starshp1  = new VideoEofHandlerPtr() { public void handler()
 	{
 		struct rectangle rect;
 	
@@ -455,5 +455,5 @@ public class starshp1
 		{
 			starshp1_collision_latch |= 8;
 		}
-	}
+	} };
 }

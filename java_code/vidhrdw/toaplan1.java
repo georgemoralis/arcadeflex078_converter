@@ -1247,21 +1247,21 @@ public class toaplan1
 		assume it happens automatically every frame, at the end of vblank
 	****************************************************************************/
 	
-	VIDEO_EOF( rallybik )
+	public static VideoEofHandlerPtr video_eof_rallybik  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0, 0, 0);
-	}
+	} };
 	
-	VIDEO_EOF( toaplan1 )
+	public static VideoEofHandlerPtr video_eof_toaplan1  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
-	}
+	} };
 	
-	VIDEO_EOF( samesame )
+	public static VideoEofHandlerPtr video_eof_samesame  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
 		cpu_set_irq_line(0, MC68000_IRQ_2, HOLD_LINE);	/* Frame done */
-	}
+	} };
 }

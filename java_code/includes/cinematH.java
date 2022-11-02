@@ -31,5 +31,4 @@ MACHINE_DRIVER_EXTERN( demon_sound );
 
 void CinemaVectorData(int fromx, int fromy, int tox, int toy, int color);
 
-VIDEO_EOF( cinemat );
 

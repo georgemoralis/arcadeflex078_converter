@@ -962,13 +962,13 @@ public class turbo
 	
 	***************************************************************************/
 	
-	VIDEO_EOF( turbo )
+	public static VideoEofHandlerPtr video_eof_turbo  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* only do collision checking if we didn't draw */
 		if (drew_frame == 0)
 			turbo_render(NULL);
 		drew_frame = 0;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

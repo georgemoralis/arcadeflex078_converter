@@ -466,11 +466,11 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	VIDEO_EOF( harddriv )
+	public static VideoEofHandlerPtr video_eof_harddriv  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* reset the display offset */
 		gfx_offsetscan = 0;
-	}
+	} };
 	
 	
 	

@@ -381,7 +381,7 @@ public class segac2
 	
 	
 	/* end-of-frame callback to mark the start of VBLANK */
-	VIDEO_EOF( segac2 )
+	public static VideoEofHandlerPtr video_eof_segac2  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* set VBLANK flag */
 		internal_vblank = 1;
@@ -398,7 +398,7 @@ public class segac2
 		}
 	#endif
 	
-	}
+	} };
 	
 	
 	

@@ -620,9 +620,9 @@ public class gaelco2
 	
 	#endif
 	
-	VIDEO_EOF( gaelco2 )
+	public static VideoEofHandlerPtr video_eof_gaelco2  = new VideoEofHandlerPtr() { public void handler()
 	{
 		/* sprites are one frame ahead */
 		buffer_spriteram16_w(0, 0, 0);
-	}
+	} };
 }

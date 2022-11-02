@@ -463,13 +463,13 @@ public class dooyong
 		rshark_draw_sprites(bitmap);
 	} };
 	
-	VIDEO_EOF( dooyong )
+	public static VideoEofHandlerPtr video_eof_dooyong  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram_w(0,0);
-	}
+	} };
 	
-	VIDEO_EOF( rshark )
+	public static VideoEofHandlerPtr video_eof_rshark  = new VideoEofHandlerPtr() { public void handler()
 	{
 		buffer_spriteram16_w(0,0,0);
-	}
+	} };
 }

@@ -119,10 +119,10 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	VIDEO_EOF( cninja )
+	public static VideoEofHandlerPtr video_eof_cninja  = new VideoEofHandlerPtr() { public void handler()
 	{
 		deco16_raster_display_position=0;
-	}
+	} };
 	
 	static void raster_pf3_draw(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int flags, int pri)
 	{
