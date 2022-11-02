@@ -714,10 +714,10 @@ public class shanghai
 		}
 	} };
 	
-	VIDEO_START( shanghai )
+	public static VideoStartHandlerPtr video_start_shanghai  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return HD63484_start();
-	}
+	} };
 	
 	VIDEO_STOP( shanghai )
 	{

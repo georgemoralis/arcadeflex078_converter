@@ -86,18 +86,18 @@ public class jrpacman
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( jrpacman )
+	public static VideoStartHandlerPtr video_start_jrpacman  = new VideoStartHandlerPtr() { public int handler()
 	{
-		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size);
+		memset(dirtybuffer,1,videoram_size[0]);
 	
 		/* Jr. Pac Man has a virtual screen twice as large as the visible screen */
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,2*Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

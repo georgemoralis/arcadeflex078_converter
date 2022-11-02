@@ -6,4 +6,3 @@
 
 /*----------- defined in vidhrdw/relief.c -----------*/
 
-VIDEO_START( relief );

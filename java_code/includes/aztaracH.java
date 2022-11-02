@@ -17,5 +17,4 @@ WRITE16_HANDLER( aztarac_sound_w );
 
 WRITE16_HANDLER( aztarac_ubr_w );
 
-VIDEO_START( aztarac );
 

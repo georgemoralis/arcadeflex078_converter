@@ -117,7 +117,7 @@ public class equites
 		SET_TILE_INFO(0, tile, color, 0);
 	}
 	
-	VIDEO_START( equites )
+	public static VideoStartHandlerPtr video_start_equites  = new VideoStartHandlerPtr() { public int handler()
 	{
 		charmap0 = tilemap_create(equites_charinfo, tilemap_scan_cols, TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 		tilemap_set_transparent_pen(charmap0, 0);
@@ -127,7 +127,7 @@ public class equites
 		video_init_common();
 	
 		return (0);
-	}
+	} };
 	
 	// Splendor Blast Hardware
 	public static PaletteInitHandlerPtr palette_init_splndrbt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
@@ -231,7 +231,7 @@ public class equites
 		}
 	}
 	
-	VIDEO_START( splndrbt )
+	public static VideoStartHandlerPtr video_start_splndrbt  = new VideoStartHandlerPtr() { public int handler()
 	{
 	#define BMW (1<<BMW_l2)
 	
@@ -256,9 +256,9 @@ public class equites
 		tilemap_set_scrolldx(charmap1, 8, 8);
 		tilemap_set_scrolldy(charmap1, 32, 32);
 	
-		if ((buf8ptr = auto_malloc(videoram_size * 2)) == NULL) return(-1);
+		if ((buf8ptr = auto_malloc(videoram_size[0] * 2)) == NULL) return(-1);
 		charram0 = (data16_t*)buf8ptr;
-		charram1 = (data16_t*)(buf8ptr + videoram_size);
+		charram1 = (data16_t*)(buf8ptr + videoram_size[0]);
 	
 		if ((dirtybuf = auto_malloc(0x800)) == NULL) return(-1);
 		memset(dirtybuf, 1, 0x800);
@@ -266,13 +266,13 @@ public class equites
 		if ((prestep = (struct PRESTEP_TYPE *)auto_malloc(i * sizeof(struct PRESTEP_TYPE))) == NULL) return(-1);
 		splndrbt_prestep(prestep, Machine.visible_area, BMW, 434, 96, 480);
 	
-		defcharram = videoram16 + videoram_size / 2;
+		defcharram = videoram16 + videoram_size[0] / 2;
 	
 		video_init_common();
 		splndrbt_video_reset();
 	
 		return (0);
-	}
+	} };
 	
 	MACHINE_INIT( splndrbt )
 	{

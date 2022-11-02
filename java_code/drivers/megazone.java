@@ -24,7 +24,6 @@ public class megazone
 	
 	static int i8039_status;
 	
-	VIDEO_START( megazone );
 	
 	
 	

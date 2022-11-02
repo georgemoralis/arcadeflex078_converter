@@ -132,7 +132,7 @@ public class mario
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( mario )
+	public static VideoStartHandlerPtr video_start_mario  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -141,7 +141,7 @@ public class mario
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void mario_draw_sprites( struct mame_bitmap *bitmap )
 	{

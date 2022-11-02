@@ -57,8 +57,6 @@ public class travrusa
 {
 	
 	
-	VIDEO_START( travrusa );
-	VIDEO_START( shtrider );
 	
 	
 	

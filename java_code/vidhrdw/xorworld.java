@@ -108,7 +108,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	VIDEO_START( xorworld )
+	public static VideoStartHandlerPtr video_start_xorworld  = new VideoStartHandlerPtr() { public int handler()
 	{
 		screen = tilemap_create(get_tile_info_xorworld_screen,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -116,7 +116,7 @@ public class xorworld
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/*
 		Sprite Format

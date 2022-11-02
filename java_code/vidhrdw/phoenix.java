@@ -167,7 +167,7 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	VIDEO_START( phoenix )
+	public static VideoStartHandlerPtr video_start_phoenix  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((videoram_pg1 = auto_malloc(0x1000)) == 0)
 			return 1;
@@ -192,7 +192,7 @@ public class phoenix
 		tilemap_set_scrolldy(bg_tilemap,0,48);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -44,7 +44,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	VIDEO_START( cninja )
+	public static VideoStartHandlerPtr video_start_cninja  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -54,9 +54,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( stoneage )
+	public static VideoStartHandlerPtr video_start_stoneage  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -71,9 +71,9 @@ public class cninja
 		tilemap_set_scrolldx(deco16_get_tilemap(0,1),2,2);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( edrandy )
+	public static VideoStartHandlerPtr video_start_edrandy  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -83,9 +83,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( robocop2 )
+	public static VideoStartHandlerPtr video_start_robocop2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -96,9 +96,9 @@ public class cninja
 		deco16_set_tilemap_colour_base(3,48);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( mutantf )
+	public static VideoStartHandlerPtr video_start_mutantf  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -115,7 +115,7 @@ public class cninja
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

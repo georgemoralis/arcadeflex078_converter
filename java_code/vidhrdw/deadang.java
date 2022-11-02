@@ -74,7 +74,7 @@ public class deadang
 		SET_TILE_INFO(0,tile,color,0)
 	}
 	
-	VIDEO_START( deadang )
+	public static VideoStartHandlerPtr video_start_deadang  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf3_layer = tilemap_create(get_pf3_tile_info,bg_scan,          TILEMAP_OPAQUE,     16,16,128,256);
 		pf2_layer = tilemap_create(get_pf2_tile_info,bg_scan,          TILEMAP_TRANSPARENT,16,16,128,256);
@@ -89,7 +89,7 @@ public class deadang
 		tilemap_set_transparent_pen(text_layer, 15);
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap)
 	{

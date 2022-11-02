@@ -20,7 +20,6 @@ public class labyrunr
 	
 	
 	/* from vidhrdw/labyrunr.c */
-	VIDEO_START( labyrunr );
 	
 	public static InterruptHandlerPtr labyrunr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

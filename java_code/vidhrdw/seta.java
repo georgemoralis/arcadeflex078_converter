@@ -409,7 +409,7 @@ public class seta
 	}
 	
 	/* 2 layers */
-	VIDEO_START( seta_2_layers )
+	public static VideoStartHandlerPtr video_start_seta_2_layers  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -444,11 +444,11 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	/* 1 layer */
-	VIDEO_START( seta_1_layer )
+	public static VideoStartHandlerPtr video_start_seta_1_layer  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -478,9 +478,9 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
-	VIDEO_START( twineagl_1_layer )
+	public static VideoStartHandlerPtr video_start_twineagl_1_layer  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -510,11 +510,11 @@ public class seta
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	/* NO layers, only sprites */
-	VIDEO_START( seta_no_layers )
+	public static VideoStartHandlerPtr video_start_seta_no_layers  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap_0 = 0;
 		tilemap_1 = 0;
@@ -523,15 +523,15 @@ public class seta
 		find_offsets();
 		seta_samples_bank = -1;	// set the samples bank to an out of range value at start-up
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( oisipuzl_2_layers )
+	public static VideoStartHandlerPtr video_start_oisipuzl_2_layers  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (video_start_seta_2_layers() != 0)
 			return 1;
 		tilemaps_flip = 1;
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

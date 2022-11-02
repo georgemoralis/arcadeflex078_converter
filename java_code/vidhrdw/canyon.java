@@ -37,13 +37,13 @@ public class canyon
 	}
 	
 	
-	VIDEO_START( canyon )
+	public static VideoStartHandlerPtr video_start_canyon  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
 		return (tilemap == NULL) ? 1 : 0;
-	}
+	} };
 	
 	
 	static void canyon_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle* cliprect)

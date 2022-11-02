@@ -105,7 +105,7 @@ public class tehkanwc
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( tehkanwc )
+	public static VideoStartHandlerPtr video_start_tehkanwc  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 16, 8, 32, 32);
@@ -122,7 +122,7 @@ public class tehkanwc
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	/*
 	   Gridiron Fight has a LED display on the control panel, to let each player

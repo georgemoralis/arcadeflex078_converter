@@ -35,7 +35,6 @@ public class skykid
 	static unsigned char *sharedram;
 	
 	/* from vidhrdw/skykid.c */
-	VIDEO_START( skykid );
 	
 	
 	static int irq_disabled = 1;

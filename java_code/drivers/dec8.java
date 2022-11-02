@@ -45,14 +45,6 @@ package arcadeflex.v078.drivers;
 public class dec8
 {
 	
-	VIDEO_START( cobracom );
-	VIDEO_START( oscar );
-	VIDEO_START( ghostb );
-	VIDEO_START( lastmiss );
-	VIDEO_START( shackled );
-	VIDEO_START( srdarwin );
-	VIDEO_START( gondo );
-	VIDEO_START( garyoret );
 	
 	
 	/******************************************************************************/

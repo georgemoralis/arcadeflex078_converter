@@ -1026,58 +1026,58 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	VIDEO_START( dvg )
+	public static VideoStartHandlerPtr video_start_dvg  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_DVG);
-	}
+	} };
 	
 	
-	VIDEO_START( avg )
+	public static VideoStartHandlerPtr video_start_avg  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_starwars )
+	public static VideoStartHandlerPtr video_start_avg_starwars  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG_SWARS);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_tempest )
+	public static VideoStartHandlerPtr video_start_avg_tempest  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG_TEMPEST);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_mhavoc )
+	public static VideoStartHandlerPtr video_start_avg_mhavoc  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG_MHAVOC);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_alphaone )
+	public static VideoStartHandlerPtr video_start_avg_alphaone  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG_ALPHAONE);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_bzone )
+	public static VideoStartHandlerPtr video_start_avg_bzone  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG_BZONE);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_quantum )
+	public static VideoStartHandlerPtr video_start_avg_quantum  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG_QUANTUM);
-	}
+	} };
 	
 	
-	VIDEO_START( avg_redbaron )
+	public static VideoStartHandlerPtr video_start_avg_redbaron  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return avgdvg_init(USE_AVG_RBARON);
-	}
+	} };
 	
 	
 	

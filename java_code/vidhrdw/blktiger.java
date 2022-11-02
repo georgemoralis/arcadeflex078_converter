@@ -75,7 +75,7 @@ public class blktiger
 	
 	***************************************************************************/
 	
-	VIDEO_START( blktiger )
+	public static VideoStartHandlerPtr video_start_blktiger  = new VideoStartHandlerPtr() { public int handler()
 	{
 		scroll_ram = auto_malloc(BGRAM_BANK_SIZE * BGRAM_BANKS);
 	
@@ -98,7 +98,7 @@ public class blktiger
 		tilemap_set_transmask(bg_tilemap4x8,3,0xf000,0x8fff);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

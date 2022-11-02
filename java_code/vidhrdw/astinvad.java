@@ -100,23 +100,23 @@ public class astinvad
 	} };
 	
 	
-	VIDEO_START( astinvad )
+	public static VideoStartHandlerPtr video_start_astinvad  = new VideoStartHandlerPtr() { public int handler()
 	{
 		astinvad_adjust = 0x80;
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
-	VIDEO_START( spcking2 )
+	public static VideoStartHandlerPtr video_start_spcking2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		astinvad_adjust = 0;
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
-	VIDEO_START( spaceint )
+	public static VideoStartHandlerPtr video_start_spaceint  = new VideoStartHandlerPtr() { public int handler()
 	{
 		colorram = auto_malloc(0x2000);
 	
@@ -128,7 +128,7 @@ public class astinvad
 		memset(colorram, 0, 0x2000);
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

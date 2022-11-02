@@ -112,7 +112,7 @@ public class gberet
 	
 	***************************************************************************/
 	
-	VIDEO_START( gberet )
+	public static VideoStartHandlerPtr video_start_gberet  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,64,32);
 	
@@ -123,7 +123,7 @@ public class gberet
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

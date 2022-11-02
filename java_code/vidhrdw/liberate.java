@@ -128,7 +128,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	VIDEO_START( prosoccr )
+	public static VideoStartHandlerPtr video_start_prosoccr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -139,9 +139,9 @@ public class liberate
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( boomrang )
+	public static VideoStartHandlerPtr video_start_boomrang  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_SPLIT,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -153,9 +153,9 @@ public class liberate
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( liberate )
+	public static VideoStartHandlerPtr video_start_liberate  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -166,7 +166,7 @@ public class liberate
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************/
 	

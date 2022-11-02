@@ -64,25 +64,15 @@ public class m62
 	
 	
 	
-	VIDEO_START( kungfum );
 	
-	VIDEO_START( ldrun );
 	
-	VIDEO_START( battroad );
 	
-	VIDEO_START( ldrun4 );
 	
-	VIDEO_START( lotlot );
 	
-	VIDEO_START( kidniki );
 	
-	VIDEO_START( spelunkr );
 	
-	VIDEO_START( spelunk2 );
 	
-	VIDEO_START( youjyudn );
 	
-	VIDEO_START( horizon );
 	
 	static int bankaddress;
 	static int bankaddress2;

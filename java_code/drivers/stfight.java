@@ -244,7 +244,6 @@ public class stfight
 	void stfight_adpcm_int( int data );
 	
 	// vidhrdw
-	VIDEO_START( stfight );
 	
 	// vidhrdw
 	

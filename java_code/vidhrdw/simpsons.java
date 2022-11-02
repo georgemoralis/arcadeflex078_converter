@@ -49,7 +49,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	VIDEO_START( simpsons )
+	public static VideoStartHandlerPtr video_start_simpsons  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -59,7 +59,7 @@ public class simpsons
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

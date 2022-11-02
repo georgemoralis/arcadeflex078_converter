@@ -473,13 +473,13 @@ public class cave
 		return 0;
 	}
 	
-	VIDEO_START( cave_1_layer )		{	return cave_vh_start(1);	}
-	VIDEO_START( cave_2_layers )	{	return cave_vh_start(2);	}
-	VIDEO_START( cave_3_layers )	{	return cave_vh_start(3);	}
-	VIDEO_START( cave_4_layers )	{	return cave_vh_start(4);	}
+	public static VideoStartHandlerPtr video_start_cave_1_layer  = new VideoStartHandlerPtr() { public int handler()		{	return cave_vh_start(1);	} };
+	public static VideoStartHandlerPtr video_start_cave_2_layers  = new VideoStartHandlerPtr() { public int handler()	{	return cave_vh_start(2);	} };
+	public static VideoStartHandlerPtr video_start_cave_3_layers  = new VideoStartHandlerPtr() { public int handler()	{	return cave_vh_start(3);	} };
+	public static VideoStartHandlerPtr video_start_cave_4_layers  = new VideoStartHandlerPtr() { public int handler()	{	return cave_vh_start(4);	} };
 	
 	
-	VIDEO_START( sailormn_3_layers )
+	public static VideoStartHandlerPtr video_start_sailormn_3_layers  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (cave_vh_start(2))
 			return 1;
@@ -493,7 +493,7 @@ public class cave
 		tilemap_set_scroll_cols(tilemap_2, 1);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

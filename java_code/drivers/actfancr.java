@@ -24,8 +24,6 @@ package arcadeflex.v078.drivers;
 public class actfancr
 {
 	
-	VIDEO_START( actfancr );
-	VIDEO_START( triothep );
 	
 	static unsigned char *actfancr_ram;
 	

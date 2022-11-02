@@ -26,20 +26,20 @@ public class asuka
 		return 0;
 	}
 	
-	VIDEO_START( asuka )
+	public static VideoStartHandlerPtr video_start_asuka  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (asuka_core_video_start(0,0));
-	}
+	} };
 	
-	VIDEO_START( galmedes )
+	public static VideoStartHandlerPtr video_start_galmedes  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (asuka_core_video_start(1,0));
-	}
+	} };
 	
-	VIDEO_START( cadash )
+	public static VideoStartHandlerPtr video_start_cadash  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (asuka_core_video_start(1,1));
-	}
+	} };
 	
 	/**************************************************************
 	                 SPRITE READ AND WRITE HANDLERS

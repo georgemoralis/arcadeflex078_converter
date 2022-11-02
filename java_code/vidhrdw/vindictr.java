@@ -59,7 +59,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	VIDEO_START( vindictr )
+	public static VideoStartHandlerPtr video_start_vindictr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -114,7 +114,7 @@ public class vindictr
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

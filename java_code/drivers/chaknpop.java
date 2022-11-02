@@ -22,7 +22,6 @@ public class chaknpop
 	/* vidhrdw/chaknpop.c */
 	
 	
-	VIDEO_START( chaknpop );
 	
 	
 	

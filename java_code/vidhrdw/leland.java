@@ -62,7 +62,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	VIDEO_START( leland )
+	public static VideoStartHandlerPtr video_start_leland  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* allocate memory */
 	    leland_video_ram = auto_malloc(VRAM_SIZE);
@@ -75,10 +75,10 @@ public class leland
 		/* reset videoram */
 	    memset(leland_video_ram, 0, VRAM_SIZE);
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( ataxx )
+	public static VideoStartHandlerPtr video_start_ataxx  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* first do the standard stuff */
 		if (video_start_leland() != 0)
@@ -92,7 +92,7 @@ public class leland
 		/* reset QRAM */
 		memset(ataxx_qram, 0, QRAM_SIZE);
 		return 0;
-	}
+	} };
 	
 	
 	

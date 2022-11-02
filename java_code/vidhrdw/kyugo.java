@@ -64,7 +64,7 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	VIDEO_START( kyugo )
+	public static VideoStartHandlerPtr video_start_kyugo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		color_codes = memory_region(REGION_PROMS) + 0x300;
 	
@@ -81,7 +81,7 @@ public class kyugo
 		tilemap_set_scrolldx(bg_tilemap, -32, 32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*************************************

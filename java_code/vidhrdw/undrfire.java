@@ -26,7 +26,7 @@ public class undrfire
 	
 	/******************************************************************/
 	
-	VIDEO_START( undrfire )
+	public static VideoStartHandlerPtr video_start_undrfire  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -43,7 +43,7 @@ public class undrfire
 		for (i=0; i<16384; i++) /* Fix later - some weird colours in places */
 			palette_set_color(i,0,0,0);
 		return 0;
-	}
+	} };
 	
 	/***************************************************************
 				SPRITE DRAW ROUTINES

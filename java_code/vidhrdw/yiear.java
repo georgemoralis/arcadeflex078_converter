@@ -112,7 +112,7 @@ public class yiear
 		SET_TILE_INFO(0, code, 0, flags)
 	}
 	
-	VIDEO_START( yiear )
+	public static VideoStartHandlerPtr video_start_yiear  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -121,7 +121,7 @@ public class yiear
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void yiear_draw_sprites( struct mame_bitmap *bitmap )
 	{

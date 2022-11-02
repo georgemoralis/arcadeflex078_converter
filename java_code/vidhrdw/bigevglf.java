@@ -66,7 +66,7 @@ public class bigevglf
 		return vidram[ 0x10000 * plane_selected + vidram_bank + offset];
 	} };
 	
-	VIDEO_START( bigevglf )
+	public static VideoStartHandlerPtr video_start_bigevglf  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tmp_bitmap[0] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 		tmp_bitmap[1] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
@@ -74,7 +74,7 @@ public class bigevglf
 		tmp_bitmap[3] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 		vidram = auto_malloc(0x100*0x100 * 4);
 		return 0;
-	}
+	} };
 	
 	void beg_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{

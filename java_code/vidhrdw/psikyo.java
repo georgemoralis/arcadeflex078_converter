@@ -175,7 +175,7 @@ public class psikyo
 	}
 	
 	
-	VIDEO_START( psikyo )
+	public static VideoStartHandlerPtr video_start_psikyo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* The Hardware is Capable of Changing the Dimensions of the Tilemaps, its safer to create
 		   the various sized tilemaps now as opposed to later */
@@ -261,7 +261,7 @@ public class psikyo
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	

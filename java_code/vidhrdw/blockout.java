@@ -65,14 +65,14 @@ public class blockout
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( blockout )
+	public static VideoStartHandlerPtr video_start_blockout  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* Allocate temporary bitmaps */
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

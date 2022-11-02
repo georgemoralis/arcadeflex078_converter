@@ -84,16 +84,6 @@ public class tmnt
 	WRITE16_HANDLER( prmrsocr_122000_w );
 	WRITE16_HANDLER( tmnt_priority_w );
 	READ16_HANDLER( glfgreat_ball_r );
-	VIDEO_START( sunsetbl );
-	VIDEO_START( cuebrckj );
-	VIDEO_START( mia );
-	VIDEO_START( tmnt );
-	VIDEO_START( punkshot );
-	VIDEO_START( lgtnfght );
-	VIDEO_START( detatwin );
-	VIDEO_START( glfgreat );
-	VIDEO_START( thndrx2 );
-	VIDEO_START( prmrsocr );
 	VIDEO_EOF( detatwin );
 	
 	static int tmnt_soundlatch;

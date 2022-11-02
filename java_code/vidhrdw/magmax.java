@@ -252,7 +252,7 @@ public class magmax
 	
 	} };
 	
-	VIDEO_START( magmax )
+	public static VideoStartHandlerPtr video_start_magmax  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i,v;
 		unsigned char * prom14D = memory_region(REGION_USER2);
@@ -273,7 +273,7 @@ public class magmax
 		set_custom_blit();
 	
 		return 0;
-	}
+	} };
 	
 	
 	

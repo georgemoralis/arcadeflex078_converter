@@ -90,7 +90,7 @@ public class gaelco
 	
 	***************************************************************************/
 	
-	VIDEO_START( bigkarnk )
+	public static VideoStartHandlerPtr video_start_bigkarnk  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -111,9 +111,9 @@ public class gaelco
 		}
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( maniacsq )
+	public static VideoStartHandlerPtr video_start_maniacsq  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -134,7 +134,7 @@ public class gaelco
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

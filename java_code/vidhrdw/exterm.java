@@ -83,10 +83,10 @@ public class exterm
 	 *
 	 *************************************/
 	
-	VIDEO_START( exterm )
+	public static VideoStartHandlerPtr video_start_exterm  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return 0;
-	}
+	} };
 	
 	
 	

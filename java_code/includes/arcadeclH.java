@@ -16,5 +16,4 @@ public class arcadeclH
 	
 	/*----------- defined in vidhrdw/arcadecl.c -----------*/
 	
-	VIDEO_START( arcadecl );
 	}

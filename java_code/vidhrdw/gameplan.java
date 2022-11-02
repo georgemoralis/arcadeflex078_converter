@@ -38,7 +38,7 @@ public class gameplan
 	***************************************************************************/
 	
 	
-	VIDEO_START( gameplan )
+	public static VideoStartHandlerPtr video_start_gameplan  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (strcmp(Machine.gamedrv.name, "kaos") == 0)
 			gameplan_this_is_kaos = 1;
@@ -51,7 +51,7 @@ public class gameplan
 			gameplan_this_is_megatack = 0;
 	
 		return video_start_generic_bitmapped();
-	}
+	} };
 	
 	
 	static int port_b;

@@ -21,7 +21,6 @@ public class glass
 	/* from vidhrdw/glass.c */
 	WRITE16_HANDLER( glass_vram_w );
 	WRITE16_HANDLER( glass_blitter_w );
-	VIDEO_START( glass );
 	
 	static int cause_interrupt;
 	

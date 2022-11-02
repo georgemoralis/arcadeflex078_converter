@@ -176,8 +176,6 @@ public class bbusters
 	#define BBUSTERS_HACK	0
 	#define MECHATT_HACK	0
 	
-	VIDEO_START( bbuster );
-	VIDEO_START( mechatt );
 	
 	static data16_t *bbuster_ram, *eprom_data;
 	

@@ -84,7 +84,7 @@ public class snk68
 	
 	***************************************************************************/
 	
-	VIDEO_START( pow )
+	public static VideoStartHandlerPtr video_start_pow  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fix_tilemap = tilemap_create(get_pow_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -94,9 +94,9 @@ public class snk68
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( searchar )
+	public static VideoStartHandlerPtr video_start_searchar  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fix_tilemap = tilemap_create(get_sar_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -106,9 +106,9 @@ public class snk68
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( ikari3 )
+	public static VideoStartHandlerPtr video_start_ikari3  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fix_tilemap = tilemap_create(get_ikari3_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -118,7 +118,7 @@ public class snk68
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

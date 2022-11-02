@@ -79,7 +79,6 @@ public class mustache
 {
 	
 	public static WriteHandlerPtr mustache_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data);
-	VIDEO_START( mustache );
 	
 	
 	static int read_coins=0;

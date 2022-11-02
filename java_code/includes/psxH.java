@@ -7,9 +7,6 @@
 #if !defined( PSX_H )
 
 /* vidhrdw */
-VIDEO_START( psx_type1_1024x1024 );
-VIDEO_START( psx_type2_1024x512 );
-VIDEO_START( psx_type2_1024x1024 );
 VIDEO_STOP( psx );
 READ32_HANDLER( psx_gpu_r );
 WRITE32_HANDLER( psx_gpu_w );

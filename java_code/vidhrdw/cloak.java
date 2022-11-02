@@ -173,7 +173,7 @@ public class cloak
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( cloak )
+	public static VideoStartHandlerPtr video_start_cloak  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -194,7 +194,7 @@ public class cloak
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	#if 0
 	static void refresh_bitmaps(void)

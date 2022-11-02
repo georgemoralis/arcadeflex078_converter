@@ -64,7 +64,7 @@ public class kangaroo
 	
 	***************************************************************************/
 	
-	VIDEO_START( kangaroo )
+	public static VideoStartHandlerPtr video_start_kangaroo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -76,7 +76,7 @@ public class kangaroo
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

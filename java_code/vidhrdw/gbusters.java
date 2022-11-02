@@ -44,7 +44,7 @@ public class gbusters
 	
 	***************************************************************************/
 	
-	VIDEO_START( gbusters )
+	public static VideoStartHandlerPtr video_start_gbusters  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
@@ -57,7 +57,7 @@ public class gbusters
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_gbusters  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

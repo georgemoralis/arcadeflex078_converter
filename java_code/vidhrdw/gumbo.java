@@ -47,14 +47,14 @@ public class gumbo
 	}
 	
 	
-	VIDEO_START( gumbo )
+	public static VideoStartHandlerPtr video_start_gumbo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		gumbo_bg_tilemap = tilemap_create(get_gumbo_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,      8, 8, 64,32);
 		gumbo_fg_tilemap = tilemap_create(get_gumbo_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 4, 4,128,64);
 		tilemap_set_transparent_pen(gumbo_fg_tilemap,0xff);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_gumbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

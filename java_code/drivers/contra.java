@@ -25,7 +25,6 @@ public class contra
 	
 	
 	
-	VIDEO_START( contra );
 	
 	
 	public static WriteHandlerPtr contra_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)

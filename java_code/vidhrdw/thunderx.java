@@ -54,7 +54,7 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	VIDEO_START( scontra )
+	public static VideoStartHandlerPtr video_start_scontra  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
@@ -67,7 +67,7 @@ public class thunderx
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

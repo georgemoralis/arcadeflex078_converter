@@ -48,7 +48,6 @@ public class flower
 	
 	data8_t *flower_sharedram;
 	
-	VIDEO_START( flower );
 	
 	
 	int flower_sh_start(const struct MachineSound *msound);

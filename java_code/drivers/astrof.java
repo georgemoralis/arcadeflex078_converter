@@ -45,7 +45,6 @@ public class astrof
 {
 	
 	
-	VIDEO_START( astrof );
 	
 	
 	public static Memory_ReadAddress readmem[]={

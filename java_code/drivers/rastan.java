@@ -19,7 +19,6 @@ public class rastan
 	
 	WRITE16_HANDLER( rastan_spritectrl_w );
 	
-	VIDEO_START( rastan );
 	
 	
 	

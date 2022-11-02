@@ -87,7 +87,7 @@ public class sprint8
 	} };
 	
 	
-	VIDEO_START( sprint8 )
+	public static VideoStartHandlerPtr video_start_sprint8  = new VideoStartHandlerPtr() { public int handler()
 	{
 		helper1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		helper2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
@@ -117,7 +117,7 @@ public class sprint8
 		tilemap_set_scrolly(tilemap2, 0, +24);
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void draw_sprites(struct mame_bitmap* bitmap, const struct rectangle* rect)

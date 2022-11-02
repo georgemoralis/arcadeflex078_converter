@@ -116,7 +116,7 @@ public class appoooh
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( appoooh )
+	public static VideoStartHandlerPtr video_start_appoooh  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
@@ -129,7 +129,7 @@ public class appoooh
 		tilemap_set_scrolldy(bg_tilemap,8,8);
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr appoooh_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

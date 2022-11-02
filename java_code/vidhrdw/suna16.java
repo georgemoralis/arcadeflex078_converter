@@ -87,12 +87,12 @@ public class suna16
 	
 	***************************************************************************/
 	
-	VIDEO_START( suna16 )
+	public static VideoStartHandlerPtr video_start_suna16  = new VideoStartHandlerPtr() { public int handler()
 	{
 		paletteram16_2 = auto_malloc( 0x100 * sizeof(data16_t) );
 		if (paletteram16_2 != NULL)	return 0;
 		else						return 1;
-	}
+	} };
 	
 	READ16_HANDLER( suna16_paletteram16_r )
 	{

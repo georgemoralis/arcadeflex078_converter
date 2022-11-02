@@ -23,7 +23,6 @@ public class sidepckt
 {
 	
 	/* from vidhrdw */
-	VIDEO_START( sidepckt );
 	
 	static int i8751_return;
 	

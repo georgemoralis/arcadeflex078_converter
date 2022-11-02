@@ -21,11 +21,10 @@ WRITE16_HANDLER( seta_vram_2_w );
 WRITE16_HANDLER( seta_vregs_w );
 
 
-VIDEO_START( seta_no_layers);
-VIDEO_START( twineagl_1_layer);
-VIDEO_START( seta_1_layer);
-VIDEO_START( seta_2_layers);
-VIDEO_START( oisipuzl_2_layers );
+public static VideoStartHandlerPtr video_start_seta_no_layers  = new VideoStartHandlerPtr() { public int handler();
+public static VideoStartHandlerPtr video_start_twineagl_1_layer  = new VideoStartHandlerPtr() { public int handler();
+public static VideoStartHandlerPtr video_start_seta_1_layer  = new VideoStartHandlerPtr() { public int handler();
+public static VideoStartHandlerPtr video_start_seta_2_layers  = new VideoStartHandlerPtr() { public int handler();
 
 
 
@@ -34,8 +33,6 @@ VIDEO_START( oisipuzl_2_layers );
 
 WRITE16_HANDLER( seta2_vregs_w );
 
-VIDEO_START( seta2 );
-VIDEO_START( seta2_offset );
 VIDEO_EOF( seta2 );
 
 
@@ -54,4 +51,3 @@ WRITE16_HANDLER( ssv_scroll_w );
 WRITE16_HANDLER( paletteram16_xrgb_swap_word_w );
 void ssv_enable_video(int enable);
 
-VIDEO_START( ssv );

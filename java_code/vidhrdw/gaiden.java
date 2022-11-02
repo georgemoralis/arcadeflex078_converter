@@ -81,7 +81,7 @@ public class gaiden
 	
 	***************************************************************************/
 	
-	VIDEO_START( gaiden )
+	public static VideoStartHandlerPtr video_start_gaiden  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* set up tile layers */
 		background = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 64, 32);
@@ -96,9 +96,9 @@ public class gaiden
 		tilemap_set_transparent_pen(text_layer, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( raiga )
+	public static VideoStartHandlerPtr video_start_raiga  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* set up tile layers */
 		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
@@ -125,7 +125,7 @@ public class gaiden
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

@@ -199,7 +199,7 @@ public class bwing
 	}
 	
 	
-	VIDEO_START( bwing )
+	public static VideoStartHandlerPtr video_start_bwing  = new VideoStartHandlerPtr() { public int handler()
 	{
 		UINT32 *dwptr;
 		int i;
@@ -232,7 +232,7 @@ public class bwing
 		}
 	
 		return(0);
-	}
+	} };
 	
 	//****************************************************************************
 	// Realtime

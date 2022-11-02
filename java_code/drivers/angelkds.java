@@ -140,7 +140,6 @@ public class angelkds
 	
 	
 	
-	VIDEO_START( angelkds );
 	
 	/*** CPU Banking
 	

@@ -21,6 +21,7 @@ public class convertMame {
     static final int INTERRUPT = 8;
     static final int PALETTE_INIT = 9;
     static final int VIDEO_UPDATE = 10;
+    static final int VIDEO_START = 11;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -65,7 +66,7 @@ public class convertMame {
                         sUtil.putString(" * using automatic conversion tool v" + Convertor.convertorversion + "\r\n");
                         /*sUtil.putString(" * converted at : " + Convertor.timenow() + "\r\n");*/
                         sUtil.putString(" */ \r\n");
-                        sUtil.putString("package arcadeflex.v"+ Convertor.mameversion.replace(".", "") + "."+ Convertor.packageName + ";\r\n");
+                        sUtil.putString("package arcadeflex.v" + Convertor.mameversion.replace(".", "") + "." + Convertor.packageName + ";\r\n");
                         sUtil.putString("\r\n");
                         sUtil.putString((new StringBuilder()).append("public class ").append(Convertor.className).append("\r\n").toString());
                         sUtil.putString("{\r\n");
@@ -82,7 +83,7 @@ public class convertMame {
                 }
                 case 's': {
                     i = Convertor.inpos;
-                    if (type == WRITE_HANDLER8 || type == VIDEO_UPDATE) {
+                    if (type == WRITE_HANDLER8 || type == VIDEO_UPDATE || type == VIDEO_START) {
                         if (sUtil.getToken("spriteram_size")) {
                             sUtil.putString((new StringBuilder()).append("spriteram_size[0]").toString());
                             continue;
@@ -411,6 +412,22 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (sUtil.getToken("VIDEO_START(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static VideoStartHandlerPtr video_start_" + Convertor.token[0] + "  = new VideoStartHandlerPtr() { public int handler()");
+                            type = VIDEO_START;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
                     Convertor.inpos = i;
                     break;
                 }
@@ -420,7 +437,7 @@ public class convertMame {
                         sUtil.putString((new StringBuilder()).append("video_start_generic.handler").toString());
                         continue;
                     }
-                    if (type == VIDEO_UPDATE) {
+                    if (type == VIDEO_UPDATE || type == VIDEO_START) {
                         if (sUtil.getToken("videoram_size")) {
                             sUtil.putString((new StringBuilder()).append("videoram_size[0]").toString());
                             continue;
@@ -495,7 +512,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT || type == VIDEO_UPDATE) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT || type == VIDEO_UPDATE || type == VIDEO_START) {
                         i3++;
                     }
                 }
@@ -511,7 +528,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT || type == VIDEO_UPDATE) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT || type == VIDEO_UPDATE || type == VIDEO_START) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");
@@ -524,7 +541,7 @@ public class convertMame {
                 }
                 case 'm':
                     i = Convertor.inpos;
-                    if (type == VIDEO_UPDATE || type == WRITE_HANDLER8) {
+                    if (type == VIDEO_UPDATE || type == VIDEO_START || type == WRITE_HANDLER8) {
                         Convertor.token[0] = sUtil.parseToken();
                         if (Convertor.token[0].endsWith("_videoram_w")) {
                             sUtil.putString((new StringBuilder()).append(Convertor.token[0]).append(".handler").toString());
@@ -606,7 +623,7 @@ public class convertMame {
                 }
                 case 'p':
                     i = Convertor.inpos;
-                    if (type == VIDEO_UPDATE || type == WRITE_HANDLER8) {
+                    if (type == VIDEO_UPDATE || type == VIDEO_START || type == WRITE_HANDLER8) {
                         Convertor.token[0] = sUtil.parseToken();
                         if (Convertor.token[0].startsWith("plot_pixel")) {
                             sUtil.putString((new StringBuilder()).append(Convertor.token[0]).append(".handler").toString());
@@ -797,9 +814,7 @@ public class convertMame {
                         }
                         if (!is_zero) {
                             sUtil.putString((new StringBuilder()).append("if (").append(Convertor.token[0]).append(" != 0)").toString());
-                        }
-                        else
-                        {
+                        } else {
                             sUtil.putString((new StringBuilder()).append("if (").append(Convertor.token[0]).append(" == 0)").toString());
                         }
                         continue;

@@ -20,7 +20,6 @@ public class surpratk
 	/* prototypes */
 	static MACHINE_INIT( surpratk );
 	static void surpratk_banking( int lines );
-	VIDEO_START( surpratk );
 	
 	
 	static int videobank;

@@ -73,20 +73,20 @@ public class finalizr
 		}
 	} };
 	
-	VIDEO_START( finalizr )
+	public static VideoStartHandlerPtr video_start_finalizr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dirtybuffer = 0;
 		tmpbitmap = 0;
 	
-		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size);
+		memset(dirtybuffer,1,videoram_size[0]);
 	
 		if ((tmpbitmap = auto_bitmap_alloc(256,256)) == 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

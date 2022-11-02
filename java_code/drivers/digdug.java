@@ -122,7 +122,6 @@ public class digdug
 	
 	MACHINE_INIT( digdig );
 	
-	VIDEO_START( digdug );
 	
 	
 	

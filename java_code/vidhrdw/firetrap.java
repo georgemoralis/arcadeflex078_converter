@@ -141,7 +141,7 @@ public class firetrap
 	
 	***************************************************************************/
 	
-	VIDEO_START( firetrap )
+	public static VideoStartHandlerPtr video_start_firetrap  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fg_tilemap  = tilemap_create(get_fg_tile_info, get_fg_memory_offset,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg1_tilemap = tilemap_create(get_bg1_tile_info,get_bg_memory_offset,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -154,7 +154,7 @@ public class firetrap
 		tilemap_set_transparent_pen(bg1_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

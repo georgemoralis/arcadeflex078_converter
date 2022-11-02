@@ -139,7 +139,7 @@ public class glass
 	
 	***************************************************************************/
 	
-	VIDEO_START( glass )
+	public static VideoStartHandlerPtr video_start_glass  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pant[0] = tilemap_create(get_tile_info_glass_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		pant[1] = tilemap_create(get_tile_info_glass_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -152,7 +152,7 @@ public class glass
 		tilemap_set_transparent_pen(pant[1],0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

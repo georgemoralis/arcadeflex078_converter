@@ -36,7 +36,7 @@ public class sprint4
 	}
 	
 	
-	VIDEO_START( sprint4 )
+	public static VideoStartHandlerPtr video_start_sprint4  = new VideoStartHandlerPtr() { public int handler()
 	{
 		helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
@@ -53,7 +53,7 @@ public class sprint4
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr sprint4_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

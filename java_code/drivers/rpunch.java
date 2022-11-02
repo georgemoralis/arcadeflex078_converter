@@ -119,7 +119,6 @@ public class rpunch
 	
 	
 	/* video driver data & functions */
-	VIDEO_START( rpunch );
 	
 	
 	static UINT8 sound_data;

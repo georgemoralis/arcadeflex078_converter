@@ -190,7 +190,7 @@ public class ashnojoe
 		}
 	}
 	
-	VIDEO_START( ashnojoe )
+	public static VideoStartHandlerPtr video_start_ashnojoe  = new VideoStartHandlerPtr() { public int handler()
 	{
 		joetilemap  =  tilemap_create(get_joe_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		joetilemap2 =  tilemap_create(get_joe_tile_info_2,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -210,7 +210,7 @@ public class ashnojoe
 		tilemap_set_transparent_pen(joetilemap5,15);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_ashnojoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

@@ -90,7 +90,7 @@ public class lastduel
 	
 	***************************************************************************/
 	
-	VIDEO_START( lastduel )
+	public static VideoStartHandlerPtr video_start_lastduel  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(ld_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,64);
 		fg_tilemap = tilemap_create(ld_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,64,64);
@@ -107,9 +107,9 @@ public class lastduel
 		sprite_pri_mask = 0x00;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( madgear )
+	public static VideoStartHandlerPtr video_start_madgear  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,16,16,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,16,16,64,32);
@@ -126,7 +126,7 @@ public class lastduel
 		sprite_pri_mask = 0x10;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

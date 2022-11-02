@@ -277,7 +277,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	VIDEO_START( gaelco2 )
+	public static VideoStartHandlerPtr video_start_gaelco2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -299,11 +299,11 @@ public class gaelco2
 		dual_monitor = 0;
 	
 		return 0;
-	}
+	} };
 	
 	#ifdef ONE_MONITOR
 	
-	VIDEO_START( gaelco2_dual )
+	public static VideoStartHandlerPtr video_start_gaelco2_dual  = new VideoStartHandlerPtr() { public int handler()
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -322,11 +322,11 @@ public class gaelco2
 		dual_monitor = 1;
 	
 		return 0;
-	}
+	} };
 	
 	#else
 	
-	VIDEO_START( gaelco2_dual )
+	public static VideoStartHandlerPtr video_start_gaelco2_dual  = new VideoStartHandlerPtr() { public int handler()
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -348,7 +348,7 @@ public class gaelco2
 		dual_monitor = 1;
 	
 		return 0;
-	}
+	} };
 	
 	#endif
 	/***************************************************************************

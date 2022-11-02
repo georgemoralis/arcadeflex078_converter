@@ -211,7 +211,7 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	VIDEO_START( mia )
+	public static VideoStartHandlerPtr video_start_mia  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -222,9 +222,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,mia_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( cuebrckj )
+	public static VideoStartHandlerPtr video_start_cuebrckj  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -235,9 +235,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,mia_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( tmnt )
+	public static VideoStartHandlerPtr video_start_tmnt  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -248,9 +248,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,REVERSE_PLANE_ORDER,tmnt_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( punkshot )
+	public static VideoStartHandlerPtr video_start_punkshot  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -259,9 +259,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,punkshot_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( lgtnfght )	/* also tmnt2, ssriders */
+	public static VideoStartHandlerPtr video_start_lgtnfght  = new VideoStartHandlerPtr() { public int handler()	/* also tmnt2, ssriders */
 	{
 		K053251_vh_start();
 	
@@ -280,9 +280,9 @@ public class tmnt
 		state_save_register_int  ("TMNT2", 0, "lasten",  &lasten);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( sunsetbl )
+	public static VideoStartHandlerPtr video_start_sunsetbl  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -291,9 +291,9 @@ public class tmnt
 		if (K053245_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,lgtnfght_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( detatwin )
+	public static VideoStartHandlerPtr video_start_detatwin  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -302,9 +302,9 @@ public class tmnt
 		if (K053245_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,detatwin_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( glfgreat )
+	public static VideoStartHandlerPtr video_start_glfgreat  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -324,9 +324,9 @@ public class tmnt
 		K053936_set_offset(0, 85, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( thndrx2 )
+	public static VideoStartHandlerPtr video_start_thndrx2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -335,9 +335,9 @@ public class tmnt
 		if (K051960_vh_start(REGION_GFX2,NORMAL_PLANE_ORDER,thndrx2_sprite_callback))
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( prmrsocr )
+	public static VideoStartHandlerPtr video_start_prmrsocr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -357,7 +357,7 @@ public class tmnt
 		K053936_set_offset(0, 85, 1);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

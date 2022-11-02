@@ -28,7 +28,7 @@ public class othunder
 	
 	/**********************************************************/
 	
-	static VIDEO_START( othunder_core )
+	static public static VideoStartHandlerPtr video_start_othunder_core  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* Up to $800/8 big sprites, requires 0x100 * sizeof(*spritelist)
 		   Multiply this by 32 to give room for the number of small sprites,
@@ -46,16 +46,16 @@ public class othunder
 				return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( othunder )
+	public static VideoStartHandlerPtr video_start_othunder  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* There is a problem here. 4 is correct for text layer/sprite
 		   alignment, but the bg layers [or one of them] are wrong */
 	
 		taito_hide_pixels = 4;
 		return video_start_othunder_core();
-	}
+	} };
 	
 	
 	/************************************************************

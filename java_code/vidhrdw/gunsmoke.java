@@ -99,7 +99,7 @@ public class gunsmoke
 	
 	
 	
-	VIDEO_START( gunsmoke )
+	public static VideoStartHandlerPtr video_start_gunsmoke  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((bgbitmap = auto_bitmap_alloc(9*32,9*32)) == 0)
 			return 1;
@@ -110,7 +110,7 @@ public class gunsmoke
 		memset (bgmap, 0xff, sizeof (bgmap));
 	
 		return 0;
-	}
+	} };
 	
 	
 	

@@ -20,7 +20,6 @@ public class retofinv
 	/* in machine */
 	
 	/* in vidhrdw */
-	VIDEO_START( retofinv );
 	
 	
 	static unsigned char cpu2_m6000=0;

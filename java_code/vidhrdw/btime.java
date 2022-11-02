@@ -140,7 +140,7 @@ public class btime
 	Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( bnj )
+	public static VideoStartHandlerPtr video_start_bnj  = new VideoStartHandlerPtr() { public int handler()
 	{
 	    if (video_start_generic.handler() != 0)
 	        return 1;
@@ -157,15 +157,15 @@ public class btime
 	    bnj_scroll2 = 0;
 	
 	    return 0;
-	}
+	} };
 	
-	VIDEO_START( btime )
+	public static VideoStartHandlerPtr video_start_btime  = new VideoStartHandlerPtr() { public int handler()
 	{
 	    bnj_scroll1 = 0;
 	    bnj_scroll2 = 0;
 	
 	    return video_start_generic.handler();
-	}
+	} };
 	
 	
 	

@@ -70,7 +70,6 @@ public class _1942
 	
 	
 	
-	VIDEO_START( 1942 );
 	
 	
 	

@@ -118,7 +118,7 @@ public class hanaawas
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}
 	
-	VIDEO_START( hanaawas )
+	public static VideoStartHandlerPtr video_start_hanaawas  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -127,7 +127,7 @@ public class hanaawas
 			return 1;
 		
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_hanaawas  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

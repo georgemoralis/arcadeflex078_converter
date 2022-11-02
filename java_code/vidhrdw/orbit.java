@@ -60,7 +60,7 @@ public class orbit
 	}
 	
 	
-	VIDEO_START( orbit )
+	public static VideoStartHandlerPtr video_start_orbit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap = tilemap_create(get_tile_info, get_memory_offset, 0, 16, 16, 32, 30);
 	
@@ -68,7 +68,7 @@ public class orbit
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void orbit_draw_sprites(struct mame_bitmap* bitmap, const struct rectangle* cliprect)

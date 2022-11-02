@@ -116,7 +116,7 @@ public class _1943
 	
 	
 	
-	VIDEO_START( 1943 )
+	public static VideoStartHandlerPtr video_start_1943  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((sc2bitmap = auto_bitmap_alloc(9*32,8*32)) == 0)
 			return 1;
@@ -131,7 +131,7 @@ public class _1943
 		memset (sc1map, 0xff, sizeof (sc1map));
 	
 		return 0;
-	}
+	} };
 	
 	
 	

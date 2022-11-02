@@ -8,7 +8,4 @@
 
 
 
-VIDEO_START( lasso );
-VIDEO_START( wwjgtin );
-VIDEO_START( pinbo );
 

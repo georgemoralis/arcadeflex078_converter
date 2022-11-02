@@ -77,7 +77,7 @@ public class taito_l
 	
 	***************************************************************************/
 	
-	VIDEO_START( taitol )
+	public static VideoStartHandlerPtr video_start_taitol  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -103,7 +103,7 @@ public class taito_l
 		tilemap_set_scrolldx(bg19_tilemap,38,-21);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

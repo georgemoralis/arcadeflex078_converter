@@ -183,7 +183,7 @@ public class gsword
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( gsword )
+	public static VideoStartHandlerPtr video_start_gsword  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 64);
@@ -192,7 +192,7 @@ public class gsword
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	void gsword_draw_sprites(struct mame_bitmap *bitmap)
 	{

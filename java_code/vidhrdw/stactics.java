@@ -229,7 +229,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	VIDEO_START( stactics )
+	public static VideoStartHandlerPtr video_start_stactics  = new VideoStartHandlerPtr() { public int handler()
 	{
 	    int i,j;
 	    const unsigned char *firebeam_data;
@@ -243,19 +243,19 @@ public class stactics
 	    if ((bitmap_F = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)   return 1;
 	
 		/* Allocate dirty buffers */
-		if ((dirty_videoram_b = (unsigned char *)auto_malloc(videoram_size)) == 0)       return 1;
-		if ((dirty_videoram_d = (unsigned char *)auto_malloc(videoram_size)) == 0)       return 1;
-		if ((dirty_videoram_e = (unsigned char *)auto_malloc(videoram_size)) == 0)       return 1;
-		if ((dirty_videoram_f = (unsigned char *)auto_malloc(videoram_size)) == 0)       return 1;
+		if ((dirty_videoram_b = (unsigned char *)auto_malloc(videoram_size[0])) == 0)       return 1;
+		if ((dirty_videoram_d = (unsigned char *)auto_malloc(videoram_size[0])) == 0)       return 1;
+		if ((dirty_videoram_e = (unsigned char *)auto_malloc(videoram_size[0])) == 0)       return 1;
+		if ((dirty_videoram_f = (unsigned char *)auto_malloc(videoram_size[0])) == 0)       return 1;
 		if ((dirty_chardata_b = (unsigned char *)auto_malloc(DIRTY_CHARDATA_SIZE)) == 0) return 1;
 		if ((dirty_chardata_d = (unsigned char *)auto_malloc(DIRTY_CHARDATA_SIZE)) == 0) return 1;
 		if ((dirty_chardata_e = (unsigned char *)auto_malloc(DIRTY_CHARDATA_SIZE)) == 0) return 1;
 		if ((dirty_chardata_f = (unsigned char *)auto_malloc(DIRTY_CHARDATA_SIZE)) == 0) return 1;
 	
-	    memset(dirty_videoram_b,1,videoram_size);
-	    memset(dirty_videoram_d,1,videoram_size);
-	    memset(dirty_videoram_e,1,videoram_size);
-	    memset(dirty_videoram_f,1,videoram_size);
+	    memset(dirty_videoram_b,1,videoram_size[0]);
+	    memset(dirty_videoram_d,1,videoram_size[0]);
+	    memset(dirty_videoram_e,1,videoram_size[0]);
+	    memset(dirty_videoram_f,1,videoram_size[0]);
 	    memset(dirty_chardata_b,1,DIRTY_CHARDATA_SIZE);
 	    memset(dirty_chardata_d,1,DIRTY_CHARDATA_SIZE);
 	    memset(dirty_chardata_e,1,DIRTY_CHARDATA_SIZE);
@@ -331,7 +331,7 @@ public class stactics
 	    *stactics_motor_on = 0;
 	
 	    return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr stactics_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)

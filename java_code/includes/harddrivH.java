@@ -179,7 +179,6 @@ READ16_HANDLER( hdsnddsp_compare_r );
 /*----------- defined in vidhrdw/harddriv.c -----------*/
 
 
-VIDEO_START( harddriv );
 void hdgsp_write_to_shiftreg(UINT32 address, UINT16 *shiftreg);
 void hdgsp_read_from_shiftreg(UINT32 address, UINT16 *shiftreg);
 void hdgsp_display_update(UINT32 offs, int rowbytes, int scanline);

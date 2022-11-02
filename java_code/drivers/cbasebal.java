@@ -26,7 +26,6 @@ public class cbasebal
 	void pang_decode(void);
 	
 	
-	VIDEO_START( cbasebal );
 	
 	
 	static int rambank;

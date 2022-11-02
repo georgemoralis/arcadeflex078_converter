@@ -44,7 +44,7 @@ public class crshrace
 	
 	***************************************************************************/
 	
-	VIDEO_START( crshrace )
+	public static VideoStartHandlerPtr video_start_crshrace  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		tilemap2 = tilemap_create(get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
@@ -59,7 +59,7 @@ public class crshrace
 		tilemap_set_transparent_pen(tilemap2,0xff);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

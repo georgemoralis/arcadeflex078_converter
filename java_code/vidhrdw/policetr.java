@@ -44,7 +44,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	VIDEO_START( policetr )
+	public static VideoStartHandlerPtr video_start_policetr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* the source bitmap is in ROM */
 		srcbitmap = memory_region(REGION_GFX1);
@@ -58,7 +58,7 @@ public class policetr
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

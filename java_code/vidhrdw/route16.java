@@ -51,7 +51,7 @@ public class route16
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( route16 )
+	public static VideoStartHandlerPtr video_start_route16  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -68,7 +68,7 @@ public class route16
 		video_remap_2 = 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -82,7 +82,7 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	VIDEO_START( speedbal )
+	public static VideoStartHandlerPtr video_start_speedbal  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((bg_dirtybuffer = auto_malloc (speedbal_background_videoram_size)) == 0)
 			return 1;
@@ -102,7 +102,7 @@ public class speedbal
 		memset (bg_dirtybuffer,1,speedbal_background_videoram_size / 2);
 		return 0;
 	
-	}
+	} };
 	
 	
 	

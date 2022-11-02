@@ -73,7 +73,6 @@ public class vastar
 	
 	
 	
-	VIDEO_START( vastar );
 	
 	static unsigned char *vastar_sharedram;
 	

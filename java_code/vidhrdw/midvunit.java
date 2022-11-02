@@ -61,11 +61,11 @@ public class midvunit
 	}
 	
 	
-	VIDEO_START( midvunit )
+	public static VideoStartHandlerPtr video_start_midvunit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		scanline_timer = timer_alloc(scanline_timer_cb);
 		return 0;
-	}
+	} };
 	
 	
 	

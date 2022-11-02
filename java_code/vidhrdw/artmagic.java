@@ -59,12 +59,12 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	VIDEO_START( artmagic )
+	public static VideoStartHandlerPtr video_start_artmagic  = new VideoStartHandlerPtr() { public int handler()
 	{
 		blitter_base = (UINT16 *)memory_region(REGION_GFX1);
 		blitter_mask = memory_region_length(REGION_GFX1)/2 - 1;
 		return 0;
-	}
+	} };
 	
 	
 	

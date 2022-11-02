@@ -81,7 +81,7 @@ public class shootout
 		}
 	} };
 	
-	VIDEO_START( shootout ){
+	public static VideoStartHandlerPtr video_start_shootout  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		foreground = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		if( background && foreground ){
@@ -89,7 +89,7 @@ public class shootout
 			return 0;
 		}
 		return 1; /* error */
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int bank_bits ){
 		static int bFlicker;

@@ -42,7 +42,6 @@ package arcadeflex.v078.drivers;
 public class superchs
 {
 	
-	VIDEO_START( superchs );
 	
 	static UINT16 coin_word;
 	static data32_t *superchs_ram;

@@ -116,7 +116,7 @@ public class circus
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( circus )
+	public static VideoStartHandlerPtr video_start_circus  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -125,7 +125,7 @@ public class circus
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_line(struct mame_bitmap *bitmap, int x1, int y1, int x2, int y2, int dotted)
 	{

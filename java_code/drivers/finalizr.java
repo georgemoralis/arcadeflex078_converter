@@ -22,7 +22,6 @@ public class finalizr
 	
 	int finalizr_T1_line;
 	
-	VIDEO_START( finalizr );
 	
 	
 	

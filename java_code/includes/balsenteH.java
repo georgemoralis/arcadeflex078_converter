@@ -39,6 +39,5 @@ public class balsenteH
 	
 	/*----------- defined in vidhrdw/balsente.c -----------*/
 	
-	VIDEO_START( balsente );
 	
 	}

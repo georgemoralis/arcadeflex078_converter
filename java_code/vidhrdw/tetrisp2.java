@@ -193,7 +193,7 @@ public class tetrisp2
 	}
 	
 	
-	VIDEO_START( tetrisp2 )
+	public static VideoStartHandlerPtr video_start_tetrisp2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
@@ -214,9 +214,9 @@ public class tetrisp2
 		tilemap_set_transparent_pen(tilemap_rot,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( rockntread )
+	public static VideoStartHandlerPtr video_start_rockntread  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
@@ -237,7 +237,7 @@ public class tetrisp2
 		tilemap_set_transparent_pen(tilemap_rot, 0);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

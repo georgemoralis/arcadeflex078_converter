@@ -43,14 +43,14 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	VIDEO_START( capbowl )
+	public static VideoStartHandlerPtr video_start_capbowl  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* initialize TMS34061 emulation */
 	    if (tms34061_start(&tms34061intf))
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

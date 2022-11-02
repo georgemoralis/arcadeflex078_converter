@@ -19,7 +19,6 @@ public class bottom9
 	
 	
 	
-	VIDEO_START( bottom9 );
 	
 	
 	

@@ -192,7 +192,6 @@ public class topspeed
 	WRITE16_HANDLER( rainbow_spritectrl_w );
 	WRITE16_HANDLER( rastan_spriteflip_w );
 	
-	VIDEO_START( topspeed );
 	
 	
 	static UINT16 cpua_ctrl = 0xff;

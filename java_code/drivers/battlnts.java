@@ -17,7 +17,6 @@ public class battlnts
 {
 	
 	/* from vidhrdw */
-	VIDEO_START( battlnts );
 	
 	public static InterruptHandlerPtr battlnts_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

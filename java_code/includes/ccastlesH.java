@@ -8,5 +8,4 @@
 
 
 
-VIDEO_START( ccastles );
 

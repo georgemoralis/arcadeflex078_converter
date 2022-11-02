@@ -42,7 +42,7 @@ public class wiz
 	static int palette_bank;
 	
 	
-	VIDEO_START( wiz )
+	public static VideoStartHandlerPtr video_start_wiz  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (video_start_generic() != 0)
 			return 1;
@@ -54,7 +54,7 @@ public class wiz
 		state_save_register_int  ("wiz", 0, "bgpen",       &bgpen);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

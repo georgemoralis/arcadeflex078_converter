@@ -126,7 +126,7 @@ public class galaga
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( galaga )
+	public static VideoStartHandlerPtr video_start_galaga  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int generator;
 		int x,y;
@@ -177,7 +177,7 @@ public class galaga
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	

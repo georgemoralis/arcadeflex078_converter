@@ -48,7 +48,7 @@ public class surpratk
 	
 	***************************************************************************/
 	
-	VIDEO_START( surpratk )
+	public static VideoStartHandlerPtr video_start_surpratk  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -58,7 +58,7 @@ public class surpratk
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/* useful function to sort the three tile layers by priority order */
 	static void sortlayers(int *layer,int *pri)

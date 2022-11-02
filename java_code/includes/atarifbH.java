@@ -22,4 +22,3 @@
 
 
 
-VIDEO_START( atarifb );

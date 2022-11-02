@@ -28,7 +28,6 @@ public class toki
 {
 	
 	
-	VIDEO_START( toki );
 	VIDEO_EOF( toki );
 	VIDEO_EOF( tokib );
 	WRITE16_HANDLER( toki_background1_videoram16_w );

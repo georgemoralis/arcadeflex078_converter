@@ -24,7 +24,6 @@ public class chqflag
 	
 	
 	/* from vidhrdw/chqflag.c */
-	VIDEO_START( chqflag );
 	
 	
 	public static InterruptHandlerPtr chqflag_interrupt = new InterruptHandlerPtr() {public void handler()

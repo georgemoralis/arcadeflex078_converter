@@ -8,7 +8,6 @@
 
 MACHINE_INIT( capbowl );
 
-VIDEO_START( capbowl );
 
 
 

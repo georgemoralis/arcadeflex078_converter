@@ -573,37 +573,37 @@ public class nbmj8688
 		return 0;
 	}
 	
-	VIDEO_START( mbmj8688_8bit )
+	public static VideoStartHandlerPtr video_start_mbmj8688_8bit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mjsikaku_gfxmode = GFXTYPE_8BIT;
 		return common_video_start();
-	}
+	} };
 	
-	VIDEO_START( mbmj8688_hybrid_12bit )
+	public static VideoStartHandlerPtr video_start_mbmj8688_hybrid_12bit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_12BIT;
 		return common_video_start();
-	}
+	} };
 	
-	VIDEO_START( mbmj8688_pure_12bit )
+	public static VideoStartHandlerPtr video_start_mbmj8688_pure_12bit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_12BIT;
 		return common_video_start();
-	}
+	} };
 	
-	VIDEO_START( mbmj8688_hybrid_16bit )
+	public static VideoStartHandlerPtr video_start_mbmj8688_hybrid_16bit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_16BIT;
 		return common_video_start();
-	}
+	} };
 	
-	VIDEO_START( mbmj8688_pure_16bit )
+	public static VideoStartHandlerPtr video_start_mbmj8688_pure_16bit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 		return common_video_start();
-	}
+	} };
 	
-	VIDEO_START( mbmj8688_pure_16bit_LCD )
+	public static VideoStartHandlerPtr video_start_mbmj8688_pure_16bit_LCD  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 	
@@ -611,7 +611,7 @@ public class nbmj8688
 		if ((HD61830B_ram[1] = auto_malloc(0x10000)) == 0) return 1;
 	
 		return common_video_start();
-	}
+	} };
 	
 	
 	/******************************************************************************

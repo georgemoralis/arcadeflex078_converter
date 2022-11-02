@@ -94,7 +94,7 @@ public class thoop2
 	
 	***************************************************************************/
 	
-	VIDEO_START( thoop2 )
+	public static VideoStartHandlerPtr video_start_thoop2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -115,7 +115,7 @@ public class thoop2
 		}
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

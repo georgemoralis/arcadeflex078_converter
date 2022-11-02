@@ -227,7 +227,7 @@ public class mcatadv
 		profiler_mark(PROFILER_END);
 	} };
 	
-	VIDEO_START( mcatadv )
+	public static VideoStartHandlerPtr video_start_mcatadv  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mcatadv_tilemap1 = tilemap_create(get_mcatadv_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		tilemap_set_transparent_pen(mcatadv_tilemap1,0);
@@ -235,19 +235,19 @@ public class mcatadv
 		mcatadv_tilemap2 = tilemap_create(get_mcatadv_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		tilemap_set_transparent_pen(mcatadv_tilemap2,0);
 	
-		spriteram_old = auto_malloc(spriteram_size);
+		spriteram_old = auto_malloc(spriteram_size[0]);
 		vidregs_old = auto_malloc(0xf);
 	
 		if(!mcatadv_tilemap1 || !mcatadv_tilemap2 || !spriteram_old || !vidregs_old)
 			return 1;
 	
-		memset(spriteram_old,0,spriteram_size);
+		memset(spriteram_old,0,spriteram_size[0]);
 	
 		palette_bank1 = 0;
 		palette_bank2 = 0;
 	
 		return 0;
-	}
+	} };
 	
 	VIDEO_EOF( mcatadv )
 	{

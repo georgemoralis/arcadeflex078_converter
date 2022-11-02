@@ -19,7 +19,6 @@ public class drmicro
 	
 	#define MCLK 18432000
 	
-	VIDEO_START( drmicro );
 	
 	
 	

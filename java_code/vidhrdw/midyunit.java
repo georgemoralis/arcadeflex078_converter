@@ -80,7 +80,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	static VIDEO_START( common )
+	static public static VideoStartHandlerPtr video_start_common  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* allocate memory */
 		midyunit_cmos_ram = auto_malloc(0x2000 * 4);
@@ -106,10 +106,10 @@ public class midyunit
 		/* set up scanline 0 timer */
 		timer_set(cpu_getscanlinetime(0), 0, scanline0_callback);
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midyunit_4bit )
+	public static VideoStartHandlerPtr video_start_midyunit_4bit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int result = video_start_common();
 		int i;
@@ -124,10 +124,10 @@ public class midyunit
 		palette_mask = 0x00ff;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midyunit_6bit )
+	public static VideoStartHandlerPtr video_start_midyunit_6bit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int result = video_start_common();
 		int i;
@@ -142,10 +142,10 @@ public class midyunit
 		palette_mask = 0x0fff;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midzunit )
+	public static VideoStartHandlerPtr video_start_midzunit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int result = video_start_common();
 		int i;
@@ -160,7 +160,7 @@ public class midyunit
 		palette_mask = 0x1fff;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

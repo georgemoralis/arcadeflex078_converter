@@ -50,10 +50,10 @@ public class vamphalf
 	INPUT_PORTS_END(); }}; 
 	
 	
-	VIDEO_START( vamphalf )
+	public static VideoStartHandlerPtr video_start_vamphalf  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_vamphalf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

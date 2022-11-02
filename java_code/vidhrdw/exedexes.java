@@ -185,7 +185,7 @@ public class exedexes
 		return ((col * 16 & 0xf0) >> 4) + (row * 16 & 0xf0) + (col * 16 & 0x700) + ((row * 16 & 0x700) << 3);
 	}
 	
-	VIDEO_START( exedexes )
+	public static VideoStartHandlerPtr video_start_exedexes  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, exedexes_bg_tilemap_scan, 
 			TILEMAP_OPAQUE, 32, 32, 64, 64);
@@ -209,7 +209,7 @@ public class exedexes
 		tilemap_set_transparent_pen(tx_tilemap, 207);
 	
 		return 0;
-	}
+	} };
 	
 	static void exedexes_draw_sprites(struct mame_bitmap *bitmap, int priority)
 	{

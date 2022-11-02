@@ -301,7 +301,7 @@ public class firetrk
 	} };
 	
 	
-	VIDEO_START( firetrk )
+	public static VideoStartHandlerPtr video_start_firetrk  = new VideoStartHandlerPtr() { public int handler()
 	{
 		helper1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		helper2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
@@ -339,7 +339,7 @@ public class firetrk
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void calc_car_positions(void)

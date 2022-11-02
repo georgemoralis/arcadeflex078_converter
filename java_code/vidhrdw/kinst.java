@@ -80,13 +80,13 @@ public class kinst
 	 *
 	 *************************************/
 	
-	VIDEO_START( kinst )
+	public static VideoStartHandlerPtr video_start_kinst  = new VideoStartHandlerPtr() { public int handler()
 	{
 		vram_buffer = auto_malloc(320 * 240 * sizeof(UINT16));
 		if (vram_buffer == 0)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	

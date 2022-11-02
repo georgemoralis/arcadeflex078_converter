@@ -22,7 +22,7 @@ public class gunbustr
 	
 	/************************************************************/
 	
-	VIDEO_START( gunbustr )
+	public static VideoStartHandlerPtr video_start_gunbustr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
 		if (spritelist == 0)
@@ -32,7 +32,7 @@ public class gunbustr
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/************************************************************
 				SPRITE DRAW ROUTINES

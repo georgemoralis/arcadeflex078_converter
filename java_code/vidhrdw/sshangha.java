@@ -182,7 +182,7 @@ public class sshangha
 		SET_TILE_INFO(0,(tile&0xfff)|sshangha_pf1_bank,tile>>12,0)
 	}
 	
-	VIDEO_START( sshangha )
+	public static VideoStartHandlerPtr video_start_sshangha  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_8x8_tilemap   = tilemap_create(get_pf1_8x8_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1_16x16_tilemap = tilemap_create(get_pf1_16x16_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -195,7 +195,7 @@ public class sshangha
 		tilemap_set_transparent_pen(pf1_16x16_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

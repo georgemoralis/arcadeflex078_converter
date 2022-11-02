@@ -370,7 +370,7 @@ public class cvs
 	    }
 	} };
 	
-	VIDEO_START( cvs )
+	public static VideoStartHandlerPtr video_start_cvs  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int generator = 0;
 	    int x,y;
@@ -433,7 +433,7 @@ public class cvs
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static InterruptHandlerPtr cvs_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

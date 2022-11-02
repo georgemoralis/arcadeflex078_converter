@@ -77,9 +77,7 @@ public class bosco
 	
 	MACHINE_INIT( bosco );
 	
-	VIDEO_START( bosco );
 	
-	VIDEO_START( bosco );
 	
 	int  bosco_sh_start(const struct MachineSound *msound);
 	void bosco_sh_stop(void);

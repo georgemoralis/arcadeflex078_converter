@@ -178,7 +178,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	VIDEO_START( carpolo )
+	public static VideoStartHandlerPtr video_start_carpolo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((sprite_sprite_collision_bitmap1 = auto_bitmap_alloc(SPRITE_WIDTH*2,SPRITE_HEIGHT*2)) == 0)
 			return 1;
@@ -196,7 +196,7 @@ public class carpolo
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*************************************

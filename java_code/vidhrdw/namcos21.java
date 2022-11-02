@@ -395,7 +395,7 @@ public class namcos21
 		return code;
 	}
 	
-	VIDEO_START( namcos21 )
+	public static VideoStartHandlerPtr video_start_namcos21  = new VideoStartHandlerPtr() { public int handler()
 	{
 		namcos3d_Init( kScreenWidth, kScreenHeight, NULL, NULL );
 	
@@ -405,7 +405,7 @@ public class namcos21
 			objcode2tile );
 	
 		return 0;
-	}
+	} };
 	
 	static void
 	update_palette( void )

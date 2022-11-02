@@ -203,7 +203,7 @@ public class mpatrol
 	  Stop the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( mpatrol )
+	public static VideoStartHandlerPtr video_start_mpatrol  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i,j;
 	
@@ -235,7 +235,7 @@ public class mpatrol
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	

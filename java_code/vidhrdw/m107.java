@@ -221,7 +221,7 @@ public class m107
 	
 	/*****************************************************************************/
 	
-	VIDEO_START( m107 )
+	public static VideoStartHandlerPtr video_start_m107  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_layer = tilemap_create(
 			get_pf1_tile_info,tilemap_scan_rows,
@@ -270,7 +270,7 @@ public class m107
 		m107_sprite_list=0;
 	
 		return 0;
-	}
+	} };
 	
 	/*****************************************************************************/
 	

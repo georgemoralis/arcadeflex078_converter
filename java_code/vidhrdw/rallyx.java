@@ -160,20 +160,20 @@ public class rallyx
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( rallyx )
+	public static VideoStartHandlerPtr video_start_rallyx  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (video_start_generic.handler() != 0)
 			return 1;
 	
-		if ((dirtybuffer2 = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer2 = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer2,1,videoram_size);
+		memset(dirtybuffer2,1,videoram_size[0]);
 	
 		if ((tmpbitmap1 = auto_bitmap_alloc(32*8,32*8)) == 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

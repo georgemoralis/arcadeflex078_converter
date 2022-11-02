@@ -83,7 +83,7 @@ public class spdodgeb
 	
 	***************************************************************************/
 	
-	VIDEO_START( spdodgeb )
+	public static VideoStartHandlerPtr video_start_spdodgeb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,TILEMAP_OPAQUE,8,8,64,32);
 	
@@ -93,7 +93,7 @@ public class spdodgeb
 		tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

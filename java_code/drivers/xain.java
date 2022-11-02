@@ -25,7 +25,6 @@ public class xain
 	
 	static unsigned char *xain_sharedram;
 	
-	VIDEO_START( xain );
 	
 	
 	

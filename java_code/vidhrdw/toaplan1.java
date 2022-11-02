@@ -359,7 +359,7 @@ public class toaplan1
 	}
 	
 	
-	VIDEO_START( rallybik )
+	public static VideoStartHandlerPtr video_start_rallybik  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (toaplan1_create_tilemaps() != 0)  return 1;
 		if (toaplan1_paletteram_alloc() != 0) return 1;
@@ -402,9 +402,9 @@ public class toaplan1
 		state_save_register_func_postload(rallybik_flipscreen);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( toaplan1 )
+	public static VideoStartHandlerPtr video_start_toaplan1  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (toaplan1_create_tilemaps() != 0)  return 1;
 		if (toaplan1_paletteram_alloc() != 0) return 1;
@@ -454,7 +454,7 @@ public class toaplan1
 		state_save_register_func_postload(toaplan1_flipscreen);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

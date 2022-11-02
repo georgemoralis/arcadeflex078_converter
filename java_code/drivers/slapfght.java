@@ -194,8 +194,6 @@ public class slapfght
 {
 	
 	/* VIDHRDW */
-	VIDEO_START( slapfight );
-	VIDEO_START( perfrman );
 	
 	/* MACHINE */
 	MACHINE_INIT( slapfight );

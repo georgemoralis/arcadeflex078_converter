@@ -230,7 +230,7 @@ public class namcona1
 		}
 	} /* update_gfx */
 	
-	VIDEO_START( namcona1 )
+	public static VideoStartHandlerPtr video_start_namcona1  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 		struct GfxElement *gfx0,*gfx1;
@@ -270,7 +270,7 @@ public class namcona1
 			}
 		}
 		return -1; /* error */
-	} /* namcona1_vh_start */
+	} }; /* namcona1_vh_start */
 	
 	/*************************************************************************/
 	

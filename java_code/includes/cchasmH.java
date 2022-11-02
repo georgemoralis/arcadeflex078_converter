@@ -26,5 +26,4 @@ void cchasm_sh_update(void);
 
 
 WRITE16_HANDLER( cchasm_refresh_control_w );
-VIDEO_START( cchasm );
 

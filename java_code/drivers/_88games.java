@@ -20,7 +20,6 @@ public class _88games
 	static unsigned char *ram;
 	static int videobank;
 	
-	VIDEO_START( 88games );
 	
 	
 	public static InterruptHandlerPtr k88games_interrupt = new InterruptHandlerPtr() {public void handler()

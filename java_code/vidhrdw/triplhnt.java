@@ -41,7 +41,7 @@ public class triplhnt
 	}
 	
 	
-	VIDEO_START( triplhnt )
+	public static VideoStartHandlerPtr video_start_triplhnt  = new VideoStartHandlerPtr() { public int handler()
 	{
 		helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
@@ -54,7 +54,7 @@ public class triplhnt
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void triplhnt_draw_sprites(struct mame_bitmap* bitmap, const struct rectangle* cliprect)

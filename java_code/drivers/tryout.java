@@ -164,14 +164,14 @@ public class tryout
 		return (row ^ 0x1f) + (col << 5);
 	}
 	
-	VIDEO_START( tryout )
+	public static VideoStartHandlerPtr video_start_tryout  = new VideoStartHandlerPtr() { public int handler()
 	{	
 		fg_tilemap = tilemap_create(get_tile_info,get_fg_memory_offset_tryout,TILEMAP_OPAQUE,8,8,32,32);
 	
 	//	tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

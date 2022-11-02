@@ -9,4 +9,3 @@
 
 
 
-VIDEO_START( crgolf );

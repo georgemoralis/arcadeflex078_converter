@@ -138,14 +138,14 @@ package arcadeflex.v078.vidhrdw;
 public class ssv
 {
 	
-	VIDEO_START( ssv )
+	public static VideoStartHandlerPtr video_start_ssv  = new VideoStartHandlerPtr() { public int handler()
 	{
 		Machine.gfx[0].color_granularity = 64; /* 256 colour sprites with palette selectable on 64 colour boundaries */
 	
 		alpha_set_level(0x80);	// until proper shadows are implemented
 	
 		return 0;
-	}
+	} };
 	
 	/* Scroll values + CRT controller registers */
 	data16_t *ssv_scroll;

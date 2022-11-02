@@ -149,7 +149,7 @@ public class tigeroad
 		return 2 * (col % 8) + 16 * ((127 - row) % 8) + 128 * (col / 8) + 2048 * ((127 - row) / 8);
 	}
 	
-	VIDEO_START( tigeroad )
+	public static VideoStartHandlerPtr video_start_tigeroad  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tigeroad_tilemap_scan, 
 			TILEMAP_SPLIT, 32, 32, 128, 128);
@@ -169,7 +169,7 @@ public class tigeroad
 		tilemap_set_transparent_pen(fg_tilemap, 3);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

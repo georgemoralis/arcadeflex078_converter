@@ -33,7 +33,6 @@ public class tbowl
 	WRITE_HANDLER (tbowl_bgxscroll_lo);  WRITE_HANDLER (tbowl_bgxscroll_hi);
 	WRITE_HANDLER (tbowl_bgyscroll_lo);  WRITE_HANDLER (tbowl_bgyscroll_hi);
 	
-	VIDEO_START( tbowl );
 	
 	/*** Banking
 	

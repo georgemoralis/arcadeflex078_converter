@@ -90,7 +90,7 @@ public class rpunch
 	}
 	
 	
-	VIDEO_START( rpunch )
+	public static VideoStartHandlerPtr video_start_rpunch  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -117,7 +117,7 @@ public class rpunch
 		/* reset the timer */
 		crtc_timer = timer_alloc(crtc_interrupt_gen);
 		return 0;
-	}
+	} };
 	
 	
 	

@@ -32,7 +32,6 @@ public class pushman
 	
 	WRITE16_HANDLER( pushman_scroll_w );
 	WRITE16_HANDLER( pushman_videoram_w );
-	VIDEO_START( pushman );
 	
 	static UINT8 shared_ram[8];
 	static UINT16 latch,new_latch=0;

@@ -121,8 +121,6 @@ public class warriorb
 	
 	MACHINE_INIT( taito_dualscreen );
 	
-	VIDEO_START( darius2d );
-	VIDEO_START( warriorb );
 	
 	
 	/***********************************************************

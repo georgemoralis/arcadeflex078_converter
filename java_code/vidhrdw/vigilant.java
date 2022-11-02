@@ -45,7 +45,7 @@ public class vigilant
 	static struct mame_bitmap *bg_bitmap;
 	
 	
-	VIDEO_START( vigilant )
+	public static VideoStartHandlerPtr video_start_vigilant  = new VideoStartHandlerPtr() { public int handler()
 	{
 		video_start_generic.handler();
 	
@@ -53,7 +53,7 @@ public class vigilant
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

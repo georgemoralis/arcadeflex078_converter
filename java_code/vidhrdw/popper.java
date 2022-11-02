@@ -172,7 +172,7 @@ public class popper
 				flags)
 	}
 	
-	VIDEO_START( popper )
+	public static VideoStartHandlerPtr video_start_popper  = new VideoStartHandlerPtr() { public int handler()
 	{
 		popper_p123_tilemap    = tilemap_create( get_popper_p123_tile_info,   tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
 		popper_p0_tilemap      = tilemap_create( get_popper_p0_tile_info,     tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
@@ -198,7 +198,7 @@ public class popper
 		state_save_register_int ("video", 0, "gfx_bank",   &popper_gfx_bank);
 	
 		return 0;
-	}
+	} };
 	
 	static void popper_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{

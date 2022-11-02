@@ -42,7 +42,7 @@ public class blockhl
 	
 	***************************************************************************/
 	
-	VIDEO_START( blockhl )
+	public static VideoStartHandlerPtr video_start_blockhl  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 16;
@@ -55,7 +55,7 @@ public class blockhl
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_blockhl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

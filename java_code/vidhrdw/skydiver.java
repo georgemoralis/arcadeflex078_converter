@@ -58,12 +58,12 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	VIDEO_START( skydiver )
+	public static VideoStartHandlerPtr video_start_skydiver  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
 		return !bg_tilemap;
-	}
+	} };
 	
 	
 	/*************************************

@@ -180,7 +180,7 @@ public class spbactn
 	}
 	
 	
-	VIDEO_START( spbactn )
+	public static VideoStartHandlerPtr video_start_spbactn  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* allocate bitmaps */
 		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
@@ -190,7 +190,7 @@ public class spbactn
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_spbactn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

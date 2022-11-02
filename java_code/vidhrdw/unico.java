@@ -149,7 +149,7 @@ public class unico
 	
 	static int sprites_scrolldx, sprites_scrolldy;
 	
-	VIDEO_START( unico )
+	public static VideoStartHandlerPtr video_start_unico  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
@@ -177,9 +177,9 @@ public class unico
 		tilemap_set_transparent_pen(tilemap_1,0x00);
 		tilemap_set_transparent_pen(tilemap_2,0x00);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( zeropnt2 )
+	public static VideoStartHandlerPtr video_start_zeropnt2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap_0 = tilemap_create(	get_tile_info32_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
@@ -207,7 +207,7 @@ public class unico
 		tilemap_set_transparent_pen(tilemap_1,0x00);
 		tilemap_set_transparent_pen(tilemap_2,0x00);
 		return 0;
-	}
+	} };
 	
 	
 	

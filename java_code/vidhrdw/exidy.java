@@ -156,7 +156,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	VIDEO_START( exidy )
+	public static VideoStartHandlerPtr video_start_exidy  = new VideoStartHandlerPtr() { public int handler()
 	{
 	    if (video_start_generic() != 0)
 	        return 1;
@@ -174,7 +174,7 @@ public class exidy
 	        return 1;
 	
 	    return 0;
-	}
+	} };
 	
 	
 	

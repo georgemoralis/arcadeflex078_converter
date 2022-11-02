@@ -21,7 +21,6 @@ public class thunderx
 	static MACHINE_INIT( thunderx );
 	static void thunderx_banking(int lines);
 	
-	VIDEO_START( scontra );
 	
 	static int unknown_enable = 0;
 	

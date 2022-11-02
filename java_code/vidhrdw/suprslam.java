@@ -147,7 +147,7 @@ public class suprslam
 	}
 	
 	
-	VIDEO_START( suprslam )
+	public static VideoStartHandlerPtr video_start_suprslam  = new VideoStartHandlerPtr() { public int handler()
 	{
 		suprslam_bg_tilemap = tilemap_create(get_suprslam_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 16, 16,64,64);
 		suprslam_screen_tilemap = tilemap_create(get_suprslam_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -161,7 +161,7 @@ public class suprslam
 		tilemap_set_transparent_pen(suprslam_screen_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_suprslam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

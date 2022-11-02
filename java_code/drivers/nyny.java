@@ -42,7 +42,6 @@ package arcadeflex.v078.drivers;
 public class nyny
 {
 	
-	VIDEO_START( nyny );
 	
 	unsigned char *nyny_videoram ;
 	unsigned char *nyny_colourram ;

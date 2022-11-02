@@ -285,17 +285,17 @@ public class cloud9
 		}
 	} };
 	
-	VIDEO_START( cloud9 )
+	public static VideoStartHandlerPtr video_start_cloud9  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
-		cloud9_vram2 = auto_malloc(videoram_size);
+		cloud9_vram2 = auto_malloc(videoram_size[0]);
 	
 		if (!tmpbitmap || !cloud9_vram2)
 			return 1;
 	
-		memset(cloud9_vram2, 0, videoram_size);
+		memset(cloud9_vram2, 0, videoram_size[0]);
 	
 		return 0;
-	}
+	} };
 	
 }

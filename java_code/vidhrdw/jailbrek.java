@@ -81,7 +81,7 @@ public class jailbrek
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( jailbrek )
+	public static VideoStartHandlerPtr video_start_jailbrek  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -90,7 +90,7 @@ public class jailbrek
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void jailbrek_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

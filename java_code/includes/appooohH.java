@@ -2,5 +2,4 @@
 
 
 /* vidhrdw */
-VIDEO_START( appoooh );
 

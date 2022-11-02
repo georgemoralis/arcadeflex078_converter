@@ -65,7 +65,7 @@ public class citycon
 	
 	***************************************************************************/
 	
-	VIDEO_START( citycon )
+	public static VideoStartHandlerPtr video_start_citycon  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,citycon_scan,TILEMAP_TRANSPARENT,8,8,128,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,citycon_scan,TILEMAP_OPAQUE,     8,8,128,32);
@@ -77,7 +77,7 @@ public class citycon
 		tilemap_set_scroll_rows(fg_tilemap,32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

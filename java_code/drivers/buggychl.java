@@ -91,7 +91,6 @@ public class buggychl
 	
 	/* in vidhrdw */
 	
-	VIDEO_START( buggychl );
 	
 	
 	

@@ -74,7 +74,7 @@ public class oneshot
 		}
 	}
 	
-	VIDEO_START( oneshot )
+	public static VideoStartHandlerPtr video_start_oneshot  = new VideoStartHandlerPtr() { public int handler()
 	{
 		oneshot_bg_tilemap = tilemap_create(get_oneshot_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		oneshot_mid_tilemap = tilemap_create(get_oneshot_mid_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
@@ -85,7 +85,7 @@ public class oneshot
 		tilemap_set_transparent_pen(oneshot_fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	static void oneshot_drawcrosshairs( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

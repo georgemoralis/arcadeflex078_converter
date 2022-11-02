@@ -50,7 +50,7 @@ public class cbasebal
 	
 	***************************************************************************/
 	
-	VIDEO_START( cbasebal )
+	public static VideoStartHandlerPtr video_start_cbasebal  = new VideoStartHandlerPtr() { public int handler()
 	{
 		cbasebal_textram = auto_malloc(0x1000);
 		cbasebal_scrollram = auto_malloc(0x1000);
@@ -69,7 +69,7 @@ public class cbasebal
 	#define GFX_ELEM_COLORS(gfxn) Machine.gfx[gfxn].color_granularity
 	
 		return 0;
-	}
+	} };
 	
 	
 	

@@ -43,7 +43,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	VIDEO_START( rampart )
+	public static VideoStartHandlerPtr video_start_rampart  = new VideoStartHandlerPtr() { public int handler()
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -93,7 +93,7 @@ public class rampart
 		/* set the intial scroll offset */
 		atarimo_set_xscroll(0, -4);
 		return 0;
-	}
+	} };
 	
 	
 	

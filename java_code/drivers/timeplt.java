@@ -51,7 +51,6 @@ public class timeplt
 	
 	
 	
-	VIDEO_START( timeplt );
 	
 	
 	

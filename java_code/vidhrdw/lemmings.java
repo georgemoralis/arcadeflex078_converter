@@ -97,7 +97,7 @@ public class lemmings
 				0)
 	}
 	
-	VIDEO_START( lemmings )
+	public static VideoStartHandlerPtr video_start_lemmings  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bitmap0 = bitmap_alloc(2048,256);
 		vram_tilemap = tilemap_create(get_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -114,7 +114,7 @@ public class lemmings
 		fillbitmap(bitmap0,0x100,0);
 	
 		return 0;
-	}
+	} };
 	
 	VIDEO_STOP( lemmings )
 	{

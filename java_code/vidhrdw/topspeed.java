@@ -12,14 +12,14 @@ public class topspeed
 	
 	/****************************************************************************/
 	
-	VIDEO_START( topspeed )
+	public static VideoStartHandlerPtr video_start_topspeed  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(2,1,0,8,0,0,0))
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/********************************************************************************

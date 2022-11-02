@@ -144,7 +144,7 @@ public class dcon
 				0)
 	}
 	
-	VIDEO_START( dcon )
+	public static VideoStartHandlerPtr video_start_dcon  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -161,7 +161,7 @@ public class dcon
 		dcon_gfx_bank_select = 0;
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int pri)
 	{

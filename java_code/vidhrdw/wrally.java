@@ -83,7 +83,7 @@ public class wrally
 	
 	***************************************************************************/
 	
-	VIDEO_START( wrally )
+	public static VideoStartHandlerPtr video_start_wrally  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pant[0] = tilemap_create(get_tile_info_wrally_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pant[1] = tilemap_create(get_tile_info_wrally_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -95,7 +95,7 @@ public class wrally
 		tilemap_set_transparent_pen(pant[1],0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

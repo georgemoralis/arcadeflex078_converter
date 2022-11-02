@@ -25,10 +25,7 @@ void turbo_update_segments(void);
 /*----------- defined in vidhrdw/turbo.c -----------*/
 
 
-VIDEO_START( turbo );
 VIDEO_EOF( turbo );
 
-VIDEO_START( subroc3d );
 
-VIDEO_START( buckrog );
 

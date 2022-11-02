@@ -17,7 +17,6 @@ package arcadeflex.v078.drivers;
 public class magmax
 {
 	
-	VIDEO_START( magmax );
 	
 	
 	

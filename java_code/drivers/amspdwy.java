@@ -25,7 +25,6 @@ public class amspdwy
 	/* Variables & functions defined in vidhrdw: */
 	
 	
-	VIDEO_START( amspdwy );
 	
 	
 	/***************************************************************************

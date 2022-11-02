@@ -115,7 +115,6 @@ public class naughtyb
 	
 	
 	
-	VIDEO_START( naughtyb );
 	
 	int naughtyb_sh_start(const struct MachineSound *msound);
 	int popflame_sh_start(const struct MachineSound *msound);

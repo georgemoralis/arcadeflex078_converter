@@ -511,7 +511,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( cobracom )
+	public static VideoStartHandlerPtr video_start_cobracom  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
 		dec8_pf1_tilemap = tilemap_create(get_bac1_tile_info,bac0_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -527,7 +527,7 @@ public class dec8
 		gfx_mask=0x3;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -563,7 +563,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( ghostb )
+	public static VideoStartHandlerPtr video_start_ghostb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_ghostb_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -576,7 +576,7 @@ public class dec8
 		gfx_mask=0xf;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -607,7 +607,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( oscar )
+	public static VideoStartHandlerPtr video_start_oscar  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_oscar_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -622,7 +622,7 @@ public class dec8
 		gfx_mask=0x7;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -683,7 +683,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( lastmiss )
+	public static VideoStartHandlerPtr video_start_lastmiss  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_pf0_tilemap = tilemap_create(get_lastmiss_tile_info,lastmiss_scan_rows,0,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_lastmiss_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -695,9 +695,9 @@ public class dec8
 		game_uses_priority=0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( shackled )
+	public static VideoStartHandlerPtr video_start_shackled  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_pf0_tilemap = tilemap_create(get_lastmiss_tile_info,lastmiss_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_lastmiss_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -710,7 +710,7 @@ public class dec8
 		game_uses_priority=1;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -757,7 +757,7 @@ public class dec8
 				flag)
 	}
 	
-	VIDEO_START( srdarwin )
+	public static VideoStartHandlerPtr video_start_srdarwin  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_pf0_tilemap = tilemap_create(get_srdarwin_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,16);
 		dec8_fix_tilemap = tilemap_create(get_srdarwin_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -772,7 +772,7 @@ public class dec8
 		tilemap_set_transmask(dec8_pf0_tilemap,3,0x0000,0xffff); //* draw as foreground only
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -827,7 +827,7 @@ public class dec8
 				0)
 	}
 	
-	VIDEO_START( gondo )
+	public static VideoStartHandlerPtr video_start_gondo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_fix_tilemap=tilemap_create(get_gondo_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		dec8_pf0_tilemap=tilemap_create(get_gondo_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
@@ -840,9 +840,9 @@ public class dec8
 		game_uses_priority=0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( garyoret )
+	public static VideoStartHandlerPtr video_start_garyoret  = new VideoStartHandlerPtr() { public int handler()
 	{
 		dec8_fix_tilemap=tilemap_create(get_gondo_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		dec8_pf0_tilemap=tilemap_create(get_gondo_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
@@ -854,7 +854,7 @@ public class dec8
 		game_uses_priority=1;
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 }

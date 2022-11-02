@@ -91,7 +91,6 @@ package arcadeflex.v078.drivers;
 public class cvs
 {
 	
-	VIDEO_START( cvs );
 	int  s2650_get_flag(void);
 	
 	

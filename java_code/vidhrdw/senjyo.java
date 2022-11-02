@@ -124,7 +124,7 @@ public class senjyo
 	
 	***************************************************************************/
 	
-	VIDEO_START( senjyo )
+	public static VideoStartHandlerPtr video_start_senjyo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bgbitmap = auto_bitmap_alloc(256,256);
 		if (bgbitmap == 0)
@@ -157,7 +157,7 @@ public class senjyo
 		set_vh_global_attribute(NULL,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

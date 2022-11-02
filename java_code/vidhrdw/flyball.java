@@ -54,13 +54,13 @@ public class flyball
 	}
 	
 	
-	VIDEO_START( flyball )
+	public static VideoStartHandlerPtr video_start_flyball  = new VideoStartHandlerPtr() { public int handler()
 	{
 		flyball_tilemap = tilemap_create(flyball_get_tile_info,
 			flyball_get_memory_offset, TILEMAP_OPAQUE, 8, 16, 32, 16);
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_flyball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

@@ -209,8 +209,6 @@ package arcadeflex.v078.drivers;
 public class rainbow
 {
 	
-	VIDEO_START( rainbow );
-	VIDEO_START( jumping );
 	
 	
 	WRITE16_HANDLER( jumping_spritectrl_w );

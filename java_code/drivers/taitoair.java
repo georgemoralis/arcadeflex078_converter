@@ -192,7 +192,6 @@ public class taitoair
 	data16_t *taitoair_line_ram;
 	static data16_t *dsp_ram;	/* Shared 68000/TMS32025 RAM */
 	
-	VIDEO_START( taitoair );
 	
 	
 	/***********************************************************

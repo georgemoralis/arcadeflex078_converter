@@ -65,7 +65,7 @@ public class msisaac
 	
 	***************************************************************************/
 	
-	VIDEO_START( msisaac )
+	public static VideoStartHandlerPtr video_start_msisaac  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background  = tilemap_create(get_bg_tile_info, tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
 		background2 = tilemap_create(get_bg2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -78,7 +78,7 @@ public class msisaac
 		tilemap_set_transparent_pen(foreground,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

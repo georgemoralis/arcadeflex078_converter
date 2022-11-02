@@ -32,7 +32,7 @@ public class poolshrk
 	}
 	
 	
-	VIDEO_START( poolshrk )
+	public static VideoStartHandlerPtr video_start_poolshrk  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap = tilemap_create(get_tile_info, get_memory_offset,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
@@ -43,7 +43,7 @@ public class poolshrk
 		tilemap_set_transparent_pen(tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_poolshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

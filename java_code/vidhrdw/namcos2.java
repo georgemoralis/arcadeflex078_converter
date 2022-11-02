@@ -643,7 +643,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	VIDEO_START( namcos2 )
+	public static VideoStartHandlerPtr video_start_namcos2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -656,7 +656,7 @@ public class namcos2
 			}
 		}
 		return -1;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_namcos2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -683,7 +683,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	VIDEO_START( finallap )
+	public static VideoStartHandlerPtr video_start_finallap  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -692,7 +692,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -712,7 +712,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	VIDEO_START( luckywld )
+	public static VideoStartHandlerPtr video_start_luckywld  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -728,7 +728,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -753,7 +753,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	VIDEO_START( sgunner )
+	public static VideoStartHandlerPtr video_start_sgunner  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -761,7 +761,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
@@ -781,7 +781,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	VIDEO_START( metlhawk )
+	public static VideoStartHandlerPtr video_start_metlhawk  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -789,7 +789,7 @@ public class namcos2
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

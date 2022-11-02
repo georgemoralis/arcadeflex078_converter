@@ -154,7 +154,7 @@ public class wilytowr
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( wilytowr )
+	public static VideoStartHandlerPtr video_start_wilytowr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -172,7 +172,7 @@ public class wilytowr
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void wilytowr_draw_sprites( struct mame_bitmap *bitmap )
 	{

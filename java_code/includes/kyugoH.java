@@ -14,5 +14,4 @@ MACHINE_INIT( kyugo );
 
 
 
-VIDEO_START( kyugo );
 

@@ -60,7 +60,7 @@ public class _88games
 	
 	***************************************************************************/
 	
-	VIDEO_START( 88games )
+	public static VideoStartHandlerPtr video_start_88games  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 64;
 		layer_colorbase[1] = 0;
@@ -75,7 +75,7 @@ public class _88games
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

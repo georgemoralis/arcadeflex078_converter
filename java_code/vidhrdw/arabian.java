@@ -166,7 +166,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	VIDEO_START( arabian )
+	public static VideoStartHandlerPtr video_start_arabian  = new VideoStartHandlerPtr() { public int handler()
 	{
 		UINT8 *gfxbase = memory_region(REGION_GFX1);
 		int offs;
@@ -226,7 +226,7 @@ public class arabian
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	

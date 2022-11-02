@@ -160,7 +160,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	VIDEO_START( paradise )
+	public static VideoStartHandlerPtr video_start_paradise  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 8,8, 0x20,0x20 );
@@ -186,7 +186,7 @@ public class paradise
 		tilemap_set_transparent_pen(tilemap_1,0xff);
 		tilemap_set_transparent_pen(tilemap_2,0xff);
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

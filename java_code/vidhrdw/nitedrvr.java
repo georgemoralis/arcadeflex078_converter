@@ -41,7 +41,7 @@ public class nitedrvr
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	VIDEO_START( nitedrvr )
+	public static VideoStartHandlerPtr video_start_nitedrvr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -50,7 +50,7 @@ public class nitedrvr
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void nitedrvr_draw_block(struct mame_bitmap *bitmap, int bx, int by, int ex, int ey)
 	{

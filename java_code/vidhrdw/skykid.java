@@ -101,7 +101,7 @@ public class skykid
 	
 	***************************************************************************/
 	
-	VIDEO_START( skykid )
+	public static VideoStartHandlerPtr video_start_skykid  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background = tilemap_create(get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
@@ -114,11 +114,11 @@ public class skykid
 			spriteram	= &RAM[0x4f80];
 			spriteram_2	= &RAM[0x4f80+0x0800];
 			spriteram_3	= &RAM[0x4f80+0x0800+0x0800];
-			spriteram_size = 0x80;
+			spriteram_size[0] = 0x80;
 	
 			return 0;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -230,7 +230,6 @@ package arcadeflex.v078.drivers;
 public class ninjakd2
 {
 	
-	VIDEO_START( ninjakd2 );
 	
 	
 	static int ninjakd2_bank_latch = 255;

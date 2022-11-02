@@ -93,7 +93,7 @@ public class exprraid
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( exprraid )
+	public static VideoStartHandlerPtr video_start_exprraid  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
@@ -111,7 +111,7 @@ public class exprraid
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void exprraid_draw_sprites( struct mame_bitmap *bitmap )
 	{

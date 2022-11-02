@@ -136,7 +136,6 @@ public class spbactn
 	
 	data16_t *spbactn_bgvideoram, *spbactn_fgvideoram, *spbactn_spvideoram;
 	
-	VIDEO_START( spbactn );
 	
 	static WRITE16_HANDLER( soundcommand_w )
 	{

@@ -30,7 +30,6 @@ package arcadeflex.v078.drivers;
 public class dynduke
 {
 	
-	VIDEO_START( dynduke );
 	
 	static unsigned char *dynduke_shared_ram;
 	

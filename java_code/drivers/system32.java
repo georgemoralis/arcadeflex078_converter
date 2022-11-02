@@ -387,7 +387,6 @@ public class system32
 	WRITE16_HANDLER ( sys32_ramtile_w );
 	WRITE16_HANDLER ( sys32_spriteram_w );
 	READ16_HANDLER ( sys32_videoram_r );
-	VIDEO_START( system32 );
 	
 	int system32_use_default_eeprom;
 	

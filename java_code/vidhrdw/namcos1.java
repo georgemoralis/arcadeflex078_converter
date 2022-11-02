@@ -570,7 +570,7 @@ public class namcos1
 	}
 	
 	
-	VIDEO_START( namcos1 )
+	public static VideoStartHandlerPtr video_start_namcos1  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -686,7 +686,7 @@ public class namcos1
 	#endif
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr namcos1_main_update_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

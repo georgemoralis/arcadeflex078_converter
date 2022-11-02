@@ -52,7 +52,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	VIDEO_START( bladestl )
+	public static VideoStartHandlerPtr video_start_bladestl  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 1;
@@ -64,7 +64,7 @@ public class bladestl
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

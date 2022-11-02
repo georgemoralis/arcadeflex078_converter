@@ -21,7 +21,6 @@ public class fastlane
 {
 	
 	/* from vidhrdw/fastlane.c */
-	VIDEO_START( fastlane );
 	
 	public static InterruptHandlerPtr fastlane_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

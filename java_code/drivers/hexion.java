@@ -88,7 +88,6 @@ public class hexion
 {
 	
 	
-	VIDEO_START( hexion );
 	
 	
 	

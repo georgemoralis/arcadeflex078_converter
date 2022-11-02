@@ -103,7 +103,7 @@ public class ddragon3
 		SET_TILE_INFO(0, code, color, flags);
 	}
 	
-	VIDEO_START( ddragon3 )
+	public static VideoStartHandlerPtr video_start_ddragon3  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
@@ -120,7 +120,7 @@ public class ddragon3
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	/*
 	 * Sprite Format

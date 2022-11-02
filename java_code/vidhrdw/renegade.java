@@ -75,7 +75,7 @@ public class renegade
 				0)
 	}
 	
-	VIDEO_START( renegade )
+	public static VideoStartHandlerPtr video_start_renegade  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tilemap_info,tilemap_scan_rows,TILEMAP_OPAQUE,   16,16,64,16);
 		fg_tilemap = tilemap_create(get_fg_tilemap_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -86,7 +86,7 @@ public class renegade
 		tilemap_set_transparent_pen(fg_tilemap,0);
 		tilemap_set_scrolldx( bg_tilemap, 256, 0 );
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

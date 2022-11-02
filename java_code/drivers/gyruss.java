@@ -67,7 +67,6 @@ public class gyruss
 	
 	void konami1_decode_cpu2(void);
 	
-	VIDEO_START( gyruss );
 	
 	
 	

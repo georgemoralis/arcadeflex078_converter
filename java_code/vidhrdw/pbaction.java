@@ -90,7 +90,7 @@ public class pbaction
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( pbaction )
+	public static VideoStartHandlerPtr video_start_pbaction  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -107,7 +107,7 @@ public class pbaction
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void pbaction_draw_sprites( struct mame_bitmap *bitmap )
 	{

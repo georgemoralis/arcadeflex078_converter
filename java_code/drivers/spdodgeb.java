@@ -28,7 +28,6 @@ public class spdodgeb
 	
 	
 	
-	VIDEO_START( spdodgeb );
 	
 	
 	/* private globals */

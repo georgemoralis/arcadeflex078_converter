@@ -82,7 +82,6 @@ public class taotaido
 	WRITE16_HANDLER( taotaido_sprite_character_bank_select_w );
 	WRITE16_HANDLER( taotaido_tileregs_w );
 	WRITE16_HANDLER( taotaido_bgvideoram_w );
-	VIDEO_START( taotaido );
 	VIDEO_EOF( taotaido );
 	
 	int pending_command;

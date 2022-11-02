@@ -883,7 +883,7 @@ public class dec0
 		SET_TILE_INFO(2,tile&0xfff,tile>>12,TILE_SPLIT(pri))
 	}
 	
-	VIDEO_START( dec0_nodma )
+	public static VideoStartHandlerPtr video_start_dec0_nodma  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_tilemap_0 = tilemap_create(get_pf1_tile_info,tile_shape0_8x8_scan,TILEMAP_TRANSPARENT, 8, 8,128, 32);
 		pf1_tilemap_1 = tilemap_create(get_pf1_tile_info,tile_shape1_8x8_scan,TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -925,15 +925,15 @@ public class dec0
 		dec0_spriteram=spriteram16;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( dec0 )
+	public static VideoStartHandlerPtr video_start_dec0  = new VideoStartHandlerPtr() { public int handler()
 	{
 		video_start_dec0_nodma();
 		dec0_spriteram=auto_malloc(0x800);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 }

@@ -48,15 +48,15 @@ public class vsnes
 		{ ppu_irq, ppu_irq }					/* irq */
 	};
 	
-	VIDEO_START( vsnes )
+	public static VideoStartHandlerPtr video_start_vsnes  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return ppu2c03b_init( &ppu_interface );
-	}
+	} };
 	
-	VIDEO_START( vsdual )
+	public static VideoStartHandlerPtr video_start_vsdual  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return ppu2c03b_init( &ppu_dual_interface );
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -31,7 +31,6 @@ package arcadeflex.v078.drivers;
 public class supbtime
 {
 	
-	VIDEO_START( supbtime );
 	
 	WRITE16_HANDLER( supbtime_pf2_data_w );
 	WRITE16_HANDLER( supbtime_pf1_data_w );

@@ -154,7 +154,7 @@ public class dassault
 		return ((bank>>4)&0xf)<<12;
 	}
 	
-	VIDEO_START( dassault )
+	public static VideoStartHandlerPtr video_start_dassault  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -167,7 +167,7 @@ public class dassault
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

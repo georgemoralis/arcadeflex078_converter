@@ -18,7 +18,6 @@ public class simpsons
 {
 	
 	/* from vidhrdw */
-	VIDEO_START( simpsons );
 	
 	/* from machine */
 	MACHINE_INIT( simpsons );

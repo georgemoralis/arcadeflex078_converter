@@ -11,10 +11,10 @@ public class avengrgs
 	
 	/******************************************************************************/
 	
-	VIDEO_START( avengrgs )
+	public static VideoStartHandlerPtr video_start_avengrgs  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{

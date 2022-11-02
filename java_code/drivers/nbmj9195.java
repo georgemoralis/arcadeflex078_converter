@@ -106,9 +106,6 @@ public class nbmj9195
 	#define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 	
 	
-	VIDEO_START( sailorws );
-	VIDEO_START( mjkoiura );
-	VIDEO_START( mscoutm );
 	
 	
 	

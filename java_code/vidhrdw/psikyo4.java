@@ -183,10 +183,10 @@ public class psikyo4
 	#endif
 	} };
 	
-	VIDEO_START( psikyo4 )
+	public static VideoStartHandlerPtr video_start_psikyo4  = new VideoStartHandlerPtr() { public int handler()
 	{
 		Machine.gfx[0].color_granularity=32; /* 256 colour sprites with palette selectable on 32 colour boundaries */
 		screen = 0;
 		return 0;
-	}
+	} };
 }

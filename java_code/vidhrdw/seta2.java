@@ -359,26 +359,26 @@ public class seta2
 	
 	***************************************************************************/
 	
-	VIDEO_START( seta2 )
+	public static VideoStartHandlerPtr video_start_seta2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		Machine.gfx[2].color_granularity = 16;
 		Machine.gfx[3].color_granularity = 16;
 		Machine.gfx[4].color_granularity = 16;
 		Machine.gfx[5].color_granularity = 16;
 	
-		buffered_spriteram16 = auto_malloc(spriteram_size);
+		buffered_spriteram16 = auto_malloc(spriteram_size[0]);
 	
 		yoffset = 0;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( seta2_offset )
+	public static VideoStartHandlerPtr video_start_seta2_offset  = new VideoStartHandlerPtr() { public int handler()
 	{
 		video_start_seta2();
 	
 		yoffset = 0x10;
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

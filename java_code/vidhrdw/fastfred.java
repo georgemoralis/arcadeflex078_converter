@@ -134,7 +134,7 @@ public class fastfred
 	 *
 	 *************************************/
 	
-	VIDEO_START( fastfred )
+	public static VideoStartHandlerPtr video_start_fastfred  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -144,7 +144,7 @@ public class fastfred
 		tilemap_set_scroll_cols(bg_tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*************************************
@@ -384,7 +384,7 @@ public class fastfred
 		}
 	} };
 	
-	VIDEO_START( imago )
+	public static VideoStartHandlerPtr video_start_imago  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(imago_get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		fg_tilemap = tilemap_create(imago_get_tile_info_fg,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -395,7 +395,7 @@ public class fastfred
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_imago  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

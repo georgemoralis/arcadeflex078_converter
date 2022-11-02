@@ -232,7 +232,7 @@ public class strvmstr
 		SET_TILE_INFO(1,code,0,0)
 	}
 	
-	VIDEO_START( strvmstr )
+	public static VideoStartHandlerPtr video_start_strvmstr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create( get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32 );
 		fg_tilemap = tilemap_create( get_tile_info_fg,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32 );
@@ -243,7 +243,7 @@ public class strvmstr
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_strvmstr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

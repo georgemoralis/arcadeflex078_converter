@@ -86,7 +86,7 @@ public class digdug
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( digdug )
+	public static VideoStartHandlerPtr video_start_digdug  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (video_start_generic.handler() != 0)
 			return 1;
@@ -95,7 +95,7 @@ public class digdug
 		pflastcolor = -1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr digdug_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)

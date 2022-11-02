@@ -428,7 +428,7 @@ public class tubep
 	
 	
 	
-	VIDEO_START( tubep )
+	public static VideoStartHandlerPtr video_start_tubep  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((dirtybuff = auto_malloc(0x800/2)) == 0)
 			return 1;
@@ -443,7 +443,7 @@ public class tubep
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	public static WriteHandlerPtr tubep_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

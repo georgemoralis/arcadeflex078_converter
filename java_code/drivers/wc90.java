@@ -65,8 +65,6 @@ public class wc90
 	
 	
 	
-	VIDEO_START( wc90 );
-	VIDEO_START( wc90t );
 	
 	
 	static data8_t *wc90_shared;

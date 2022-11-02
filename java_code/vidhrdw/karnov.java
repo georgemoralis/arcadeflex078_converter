@@ -238,7 +238,7 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	VIDEO_START( karnov )
+	public static VideoStartHandlerPtr video_start_karnov  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* Allocate bitmaps */
 		if ((bitmap_f = auto_bitmap_alloc(512,512)) == 0)
@@ -255,9 +255,9 @@ public class karnov
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( wndrplnt )
+	public static VideoStartHandlerPtr video_start_wndrplnt  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* Allocate bitmaps */
 		if ((bitmap_f = auto_bitmap_alloc(512,512)) == 0)
@@ -274,7 +274,7 @@ public class karnov
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 }

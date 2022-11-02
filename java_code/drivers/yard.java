@@ -19,7 +19,6 @@ public class yard
 	
 	
 	
-	VIDEO_START( yard );
 	
 	
 	

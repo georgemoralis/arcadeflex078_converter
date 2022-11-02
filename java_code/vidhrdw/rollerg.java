@@ -52,7 +52,7 @@ public class rollerg
 	
 	***************************************************************************/
 	
-	VIDEO_START( rollerg )
+	public static VideoStartHandlerPtr video_start_rollerg  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_colorbase = 16;
 		sprite_colorbase = 16;
@@ -65,7 +65,7 @@ public class rollerg
 	
 		K051316_set_offset(0, 22, 1);
 		return 0;
-	}
+	} };
 	
 	
 	

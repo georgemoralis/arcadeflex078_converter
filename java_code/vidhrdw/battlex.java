@@ -89,7 +89,7 @@ public class battlex
 		SET_TILE_INFO(0,tile,color,0)
 	}
 	
-	VIDEO_START( battlex )
+	public static VideoStartHandlerPtr video_start_battlex  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -98,7 +98,7 @@ public class battlex
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void battlex_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

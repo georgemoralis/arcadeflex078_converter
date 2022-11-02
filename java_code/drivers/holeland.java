@@ -20,8 +20,6 @@ package arcadeflex.v078.drivers;
 public class holeland
 {
 	
-	VIDEO_START( holeland );
-	VIDEO_START( crzrally );
 	
 	
 	

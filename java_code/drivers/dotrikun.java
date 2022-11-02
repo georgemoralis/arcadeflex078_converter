@@ -30,7 +30,6 @@ public class dotrikun
 {
 	
 	
-	VIDEO_START( dotrikun );
 	
 	
 	

@@ -98,7 +98,6 @@ public class vball
 	
 	/* from vidhrdw */
 	
-	VIDEO_START( vb );
 	
 	
 	/* end of 

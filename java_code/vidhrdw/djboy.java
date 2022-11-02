@@ -50,7 +50,7 @@ public class djboy
 		}
 	} };
 	
-	VIDEO_START( djboy )
+	public static VideoStartHandlerPtr video_start_djboy  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,32);
 		if (background != 0)
@@ -58,7 +58,7 @@ public class djboy
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	static void
 	draw_sprites( struct mame_bitmap *bitmap,const struct rectangle *cliprect )

@@ -8,7 +8,6 @@
 
 
 
-VIDEO_START( artmagic );
 
 void artmagic_to_shiftreg(offs_t address, data16_t *data);
 void artmagic_from_shiftreg(offs_t address, data16_t *data);

@@ -96,7 +96,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	VIDEO_START( atarig42 )
+	public static VideoStartHandlerPtr video_start_atarig42  = new VideoStartHandlerPtr() { public int handler()
 	{
 		static const struct atarirle_desc modesc =
 		{
@@ -149,7 +149,7 @@ public class atarig42
 		playfield_xscroll = 0;
 		playfield_yscroll = 0;
 		return 0;
-	}
+	} };
 	
 	
 	

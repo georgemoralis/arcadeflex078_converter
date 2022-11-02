@@ -94,27 +94,27 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	VIDEO_START( mcr3 )
+	public static VideoStartHandlerPtr video_start_mcr3  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
 		if (bg_tilemap == 0)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( mcrmono )
+	public static VideoStartHandlerPtr video_start_mcrmono  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcrmono_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
 		if (bg_tilemap == 0)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( spyhunt )
+	public static VideoStartHandlerPtr video_start_spyhunt  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(spyhunt_get_bg_tile_info, spyhunt_bg_scan, TILEMAP_OPAQUE, 64,32, 64,32);
@@ -128,7 +128,7 @@ public class mcr3
 		tilemap_set_transparent_pen(alpha_tilemap, 0);
 		tilemap_set_scrollx(alpha_tilemap, 0, 16);
 		return 0;
-	}
+	} };
 	
 	
 	

@@ -1,2 +1,1 @@
 
-VIDEO_START( iqblock );

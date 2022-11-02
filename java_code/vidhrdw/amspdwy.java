@@ -89,14 +89,14 @@ public class amspdwy
 	}
 	
 	
-	VIDEO_START( amspdwy )
+	public static VideoStartHandlerPtr video_start_amspdwy  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap	=	tilemap_create(	get_tile_info,	tilemap_scan_cols_back,
 									TILEMAP_OPAQUE,	8,8,	0x20, 0x20 );
 	
 		if (tilemap != 0)	return 0;
 		else			return 1;
-	}
+	} };
 	
 	
 	

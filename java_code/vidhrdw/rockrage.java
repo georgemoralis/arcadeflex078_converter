@@ -70,7 +70,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	VIDEO_START( rockrage )
+	public static VideoStartHandlerPtr video_start_rockrage  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 0x00;
 		layer_colorbase[1] = 0x10;
@@ -84,7 +84,7 @@ public class rockrage
 		K007420_set_banklimit(0x3ff); // bladestl and battlnts may also need this
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

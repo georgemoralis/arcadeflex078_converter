@@ -6,5 +6,4 @@
 
 
 
-VIDEO_START( paradise );
 

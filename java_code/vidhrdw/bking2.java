@@ -259,7 +259,7 @@ public class bking2
 	}
 	
 	
-	VIDEO_START( bking2 )
+	public static VideoStartHandlerPtr video_start_bking2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((tilemap = tilemap_create(get_tile_info, get_memory_offset, 0, 8, 8, 32, 32)) == NULL)
 		{
@@ -275,7 +275,7 @@ public class bking2
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

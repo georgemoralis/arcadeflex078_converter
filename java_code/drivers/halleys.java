@@ -1179,7 +1179,7 @@ public class halleys
 	} };
 	
 	
-	static VIDEO_START( halleys )
+	static public static VideoStartHandlerPtr video_start_halleys  = new VideoStartHandlerPtr() { public int handler()
 	{
 	#define HALLEYS_Y0  0x8e
 	#define HALLEYS_X0  0x9a
@@ -1213,7 +1213,7 @@ public class halleys
 		}
 	
 		return(0);
-	}
+	} };
 	
 	
 	static void copy_scroll_op(struct mame_bitmap *bitmap, WORD *source, int sx, int sy)

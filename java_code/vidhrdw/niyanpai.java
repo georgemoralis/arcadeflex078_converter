@@ -465,7 +465,7 @@ public class niyanpai
 	
 	
 	******************************************************************************/
-	VIDEO_START( niyanpai )
+	public static VideoStartHandlerPtr video_start_niyanpai  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((niyanpai_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((niyanpai_tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
@@ -481,7 +481,7 @@ public class niyanpai
 		memset(niyanpai_videoram1, 0x0000, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short)));
 		memset(niyanpai_videoram2, 0x0000, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short)));
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************
 	

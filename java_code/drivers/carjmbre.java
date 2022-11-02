@@ -50,7 +50,6 @@ public class carjmbre
 {
 	
 	
-	VIDEO_START( carjmbre );
 	
 	
 	public static Memory_ReadAddress carjmbre_readmem[]={

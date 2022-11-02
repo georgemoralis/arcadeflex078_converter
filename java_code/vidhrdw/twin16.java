@@ -496,7 +496,7 @@ public class twin16
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( twin16 )
+	public static VideoStartHandlerPtr video_start_twin16  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows_flip_y,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -507,9 +507,9 @@ public class twin16
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( fround )
+	public static VideoStartHandlerPtr video_start_fround  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -520,7 +520,7 @@ public class twin16
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	VIDEO_EOF( twin16 )
 	{

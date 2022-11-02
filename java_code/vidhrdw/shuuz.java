@@ -38,7 +38,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	VIDEO_START( shuuz )
+	public static VideoStartHandlerPtr video_start_shuuz  = new VideoStartHandlerPtr() { public int handler()
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -86,7 +86,7 @@ public class shuuz
 		if (!atarimo_init(0, &modesc))
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	

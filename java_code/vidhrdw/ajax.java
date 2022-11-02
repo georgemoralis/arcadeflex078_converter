@@ -74,7 +74,7 @@ public class ajax
 	
 	***************************************************************************/
 	
-	VIDEO_START( ajax )
+	public static VideoStartHandlerPtr video_start_ajax  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 64;
 		layer_colorbase[1] = 0;
@@ -89,7 +89,7 @@ public class ajax
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

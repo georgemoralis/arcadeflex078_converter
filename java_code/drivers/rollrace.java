@@ -16,7 +16,6 @@ public class rollrace
 {
 	
 	
-	VIDEO_START( rollrace );
 	
 	public static WriteHandlerPtr rollrace_backgroundpage_w = new WriteHandlerPtr() {public void handler(int offset, int data);
 	public static WriteHandlerPtr rollrace_backgroundcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data);

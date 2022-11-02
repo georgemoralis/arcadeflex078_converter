@@ -44,7 +44,6 @@ public class phoenix
 	
 	
 	
-	VIDEO_START( phoenix );
 	
 	int phoenix_sh_start(const struct MachineSound *msound);
 	void phoenix_sh_stop(void);

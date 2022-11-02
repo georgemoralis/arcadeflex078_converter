@@ -181,12 +181,12 @@ public class hal21
 		gfx_drawmode_table[7] = DRAWMODE_NONE;
 	} };
 	
-	VIDEO_START( aso )
+	public static VideoStartHandlerPtr video_start_aso  = new VideoStartHandlerPtr() { public int handler()
 	{
 		snk_blink_parity = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void hal21_draw_background( struct mame_bitmap *bitmap, int scrollx, int scrolly, int attrs,

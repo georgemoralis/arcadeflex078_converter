@@ -98,7 +98,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	VIDEO_START( labyrunr )
+	public static VideoStartHandlerPtr video_start_labyrunr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		layer1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
@@ -114,7 +114,7 @@ public class labyrunr
 		clip1.min_x = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

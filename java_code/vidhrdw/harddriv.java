@@ -74,7 +74,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	VIDEO_START( harddriv )
+	public static VideoStartHandlerPtr video_start_harddriv  = new VideoStartHandlerPtr() { public int handler()
 	{
 		UINT32 *destmask, mask;
 		int i;
@@ -146,7 +146,7 @@ public class harddriv
 		vram_mask = hdgsp_vram_size - 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

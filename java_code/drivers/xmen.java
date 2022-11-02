@@ -14,7 +14,6 @@ package arcadeflex.v078.drivers;
 public class xmen
 {
 	
-	VIDEO_START( xmen );
 	
 	
 	/***************************************************************************

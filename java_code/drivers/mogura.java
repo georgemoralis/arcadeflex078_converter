@@ -59,11 +59,11 @@ public class mogura
 	}
 	
 	
-	VIDEO_START( mogura )
+	public static VideoStartHandlerPtr video_start_mogura  = new VideoStartHandlerPtr() { public int handler()
 	{
 		mogura_tilemap = tilemap_create(get_mogura_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64, 32);
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_mogura  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

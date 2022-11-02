@@ -47,7 +47,6 @@ public class multi32
 	READ16_HANDLER ( sys32_videoram_r );
 	WRITE32_HANDLER( sys32_videoram_long_w );
 	READ32_HANDLER ( sys32_videoram_long_r );
-	VIDEO_START( system32 );
 	
 	
 	static data16_t controlB[256];

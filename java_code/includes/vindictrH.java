@@ -8,6 +8,5 @@
 
 WRITE16_HANDLER( vindictr_paletteram_w );
 
-VIDEO_START( vindictr );
 
 void vindictr_scanline_update(int scanline);

@@ -618,23 +618,23 @@ public class psx
 		return 0;
 	}
 	
-	VIDEO_START( psx_type1_1024x1024 )
+	public static VideoStartHandlerPtr video_start_psx_type1_1024x1024  = new VideoStartHandlerPtr() { public int handler()
 	{
 		m_n_gputype = 1;
 		return psx_gpu_init( 1024, 1024 );
-	}
+	} };
 	
-	VIDEO_START( psx_type2_1024x512 )
+	public static VideoStartHandlerPtr video_start_psx_type2_1024x512  = new VideoStartHandlerPtr() { public int handler()
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 512 );
-	}
+	} };
 	
-	VIDEO_START( psx_type2_1024x1024 )
+	public static VideoStartHandlerPtr video_start_psx_type2_1024x1024  = new VideoStartHandlerPtr() { public int handler()
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 1024 );
-	}
+	} };
 	
 	VIDEO_STOP( psx )
 	{

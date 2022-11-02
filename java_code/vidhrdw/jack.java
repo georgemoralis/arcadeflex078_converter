@@ -66,7 +66,7 @@ public class jack
 		return (col * num_rows) + (num_rows - 1 - row);
 	}
 	
-	VIDEO_START( jack )
+	public static VideoStartHandlerPtr video_start_jack  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flipy, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -75,7 +75,7 @@ public class jack
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void jack_draw_sprites( struct mame_bitmap *bitmap )
 	{

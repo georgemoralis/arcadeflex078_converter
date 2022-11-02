@@ -120,18 +120,18 @@ public class timeplt
 	
 	***************************************************************************/
 	
-	VIDEO_START( timeplt )
+	public static VideoStartHandlerPtr video_start_timeplt  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		sprite_mux_buffer = auto_malloc(256 * spriteram_size);
-		sprite_mux_buffer_2 = auto_malloc(256 * spriteram_size);
+		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
+		sprite_mux_buffer_2 = auto_malloc(256 * spriteram_size[0]);
 	
 		if (!bg_tilemap || !sprite_mux_buffer || !sprite_mux_buffer_2)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

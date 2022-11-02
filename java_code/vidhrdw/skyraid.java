@@ -22,13 +22,13 @@ public class skyraid
 	static struct mame_bitmap *helper;
 	
 	
-	VIDEO_START( skyraid )
+	public static VideoStartHandlerPtr video_start_skyraid  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((helper = auto_bitmap_alloc(128, 240)) == NULL)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void draw_text(struct mame_bitmap* bitmap, const struct rectangle* cliprect)

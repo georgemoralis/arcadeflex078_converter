@@ -87,7 +87,7 @@ public class tankbust
 	
 	***************************************************************************/
 	
-	VIDEO_START( tankbust )
+	public static VideoStartHandlerPtr video_start_tankbust  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* not scrollable */
 		txt_tilemap = tilemap_create(get_txt_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -102,7 +102,7 @@ public class tankbust
 		tilemap_set_transparent_pen(txt_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

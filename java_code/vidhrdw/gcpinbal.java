@@ -97,10 +97,10 @@ public class gcpinbal
 		return 0;
 	}
 	
-	VIDEO_START( gcpinbal )
+	public static VideoStartHandlerPtr video_start_gcpinbal  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (gcpinbal_core_vh_start());
-	}
+	} };
 	
 	VIDEO_STOP (void)
 	{

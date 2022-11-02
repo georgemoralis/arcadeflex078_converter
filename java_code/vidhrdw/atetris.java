@@ -53,13 +53,13 @@ public class atetris
 	 *
 	 *************************************/
 	
-	VIDEO_START( atetris )
+	public static VideoStartHandlerPtr video_start_atetris  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap = tilemap_create(get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,32);
 		if (tilemap == 0)
 			return 1;
 		return 0;
-	}
+	} };
 	
 	
 	

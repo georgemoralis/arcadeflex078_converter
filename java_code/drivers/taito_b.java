@@ -178,10 +178,6 @@ public class taito_b
 	
 	
 	
-	VIDEO_START( taitob_color_order0 );
-	VIDEO_START( taitob_color_order1 );
-	VIDEO_START( taitob_color_order2 );
-	VIDEO_START( hitice );
 	VIDEO_EOF( taitob );
 	
 	

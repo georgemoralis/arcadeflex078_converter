@@ -113,7 +113,6 @@ public class pass
 	
 	/* in vidhrdw */
 	
-	VIDEO_START( pass );
 	WRITE16_HANDLER( pass_fg_videoram_w );
 	WRITE16_HANDLER( pass_bg_videoram_w );
 	

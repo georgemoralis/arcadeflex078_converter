@@ -227,7 +227,7 @@ public class combatsc
 	
 	***************************************************************************/
 	
-	VIDEO_START( combasc )
+	public static VideoStartHandlerPtr video_start_combasc  = new VideoStartHandlerPtr() { public int handler()
 	{
 		combasc_vreg = -1;
 	
@@ -252,9 +252,9 @@ public class combatsc
 		}
 	
 		return 1;
-	}
+	} };
 	
-	VIDEO_START( combascb )
+	public static VideoStartHandlerPtr video_start_combascb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		combasc_vreg = -1;
 	
@@ -280,7 +280,7 @@ public class combatsc
 		}
 	
 		return 1;
-	}
+	} };
 	
 	/***************************************************************************
 	

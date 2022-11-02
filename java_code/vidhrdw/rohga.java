@@ -20,7 +20,7 @@ public class rohga
 		return ((bank>>4)&0x3)<<12;
 	}
 	
-	VIDEO_START( rohga )
+	public static VideoStartHandlerPtr video_start_rohga  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -31,9 +31,9 @@ public class rohga
 		deco16_set_tilemap_bank_callback(3,wizdfire_bank_callback);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( wizdfire )
+	public static VideoStartHandlerPtr video_start_wizdfire  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -48,9 +48,9 @@ public class rohga
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( nitrobal )
+	public static VideoStartHandlerPtr video_start_nitrobal  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -68,7 +68,7 @@ public class rohga
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

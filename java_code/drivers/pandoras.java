@@ -30,7 +30,6 @@ public class pandoras
 	static unsigned char *pandoras_sharedram2;
 	
 	/* from vidhrdw */
-	VIDEO_START( pandoras );
 	
 	public static InterruptHandlerPtr pandoras_interrupt_a = new InterruptHandlerPtr() {public void handler(){
 		if (irq_enable_a != 0)

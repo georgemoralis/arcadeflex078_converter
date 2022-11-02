@@ -220,7 +220,7 @@ public class kingobox
 		SET_TILE_INFO(bank, code, color, 0)
 	}
 	
-	VIDEO_START( kingofb )
+	public static VideoStartHandlerPtr video_start_kingofb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -237,7 +237,7 @@ public class kingobox
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void kingofb_draw_sprites( struct mame_bitmap *bitmap )
 	{
@@ -287,7 +287,7 @@ public class kingobox
 		SET_TILE_INFO(4, code, color, 0)
 	}
 	
-	VIDEO_START( ringking )
+	public static VideoStartHandlerPtr video_start_ringking  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(ringking_get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -304,7 +304,7 @@ public class kingobox
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void ringking_draw_sprites( struct mame_bitmap *bitmap )
 	{

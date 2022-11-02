@@ -49,7 +49,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	VIDEO_START( exidy440 )
+	public static VideoStartHandlerPtr video_start_exidy440  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* reset the system */
 		firq_enable = 0;
@@ -92,7 +92,7 @@ public class exidy440
 		/* mark everything dirty to start */
 		memset(scanline_dirty, 1, 256);
 		return 0;
-	}
+	} };
 	
 	
 	

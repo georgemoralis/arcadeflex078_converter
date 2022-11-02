@@ -41,9 +41,6 @@ public class ojankohs
 {
 	
 	
-	VIDEO_START( ojankohs );
-	VIDEO_START( ojankoy );
-	VIDEO_START( ojankoc );
 	void ojankoc_flipscreen(int data);
 	
 	

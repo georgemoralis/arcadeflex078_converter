@@ -161,7 +161,7 @@ public class stlforce
 	//usrintf_showmessage	("Regs %04x, %04x, %04x, %04x, %04", stlforce_vidattrram[0tlforce_tx_scrollram], stlforce_vidattrram[4],stlforce_vidattrram[5],stlforce_vidattrram[6],stlforce_vidattrram[7] );
 	} };
 	
-	VIDEO_START( stlforce )
+	public static VideoStartHandlerPtr video_start_stlforce  = new VideoStartHandlerPtr() { public int handler()
 	{
 		stlforce_bg_tilemap = tilemap_create(get_stlforce_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE, 16, 16,64,16);
 	
@@ -175,5 +175,5 @@ public class stlforce
 		tilemap_set_transparent_pen(stlforce_tx_tilemap,0);
 	
 		return 0;
-	}
+	} };
 }

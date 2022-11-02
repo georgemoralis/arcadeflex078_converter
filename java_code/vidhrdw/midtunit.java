@@ -101,7 +101,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	VIDEO_START( midtunit )
+	public static VideoStartHandlerPtr video_start_midtunit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
 	
@@ -126,25 +126,25 @@ public class midtunit
 	
 		midtunit_using_34020 = 0;
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_START( midwunit )
+	public static VideoStartHandlerPtr video_start_midwunit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
 		return result;
-	}
+	} };
 	
 	
-	VIDEO_START( midxunit )
+	public static VideoStartHandlerPtr video_start_midxunit  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
 		midtunit_using_34020 = 1;
 		videobank_select = 1;
 		return result;
-	}
+	} };
 	
 	
 	

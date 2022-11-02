@@ -76,7 +76,7 @@ public class flkatck
 	
 	***************************************************************************/
 	
-	VIDEO_START( flkatck )
+	public static VideoStartHandlerPtr video_start_flkatck  = new VideoStartHandlerPtr() { public int handler()
 	{
 		k007121_tilemap[0] = tilemap_create(get_tile_info_A,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		k007121_tilemap[1] = tilemap_create(get_tile_info_B,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
@@ -92,7 +92,7 @@ public class flkatck
 		k007121_clip[1].min_x = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -211,7 +211,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	VIDEO_START( segar )
+	public static VideoStartHandlerPtr video_start_segar  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (video_start_generic.handler()!=0)
 			return 1;
@@ -220,7 +220,7 @@ public class segar
 		memset(&sv, 0, sizeof(SEGAR_VID_STRUCT));
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	This is the refresh code that is common across all the G80 games.  This
@@ -311,7 +311,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	VIDEO_START( spaceod )
+	public static VideoStartHandlerPtr video_start_spaceod  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (video_start_segar() != 0)
 			return 1;
@@ -323,7 +323,7 @@ public class segar
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -523,14 +523,14 @@ public class segar
 	 ---------------------------------------------------------------------------
 	***************************************************************************/
 	
-	VIDEO_START( monsterb )
+	public static VideoStartHandlerPtr video_start_monsterb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (video_start_segar() != 0)
 			return 1;
 	
 		sv.has_bcolorRAM = 1;
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	This port controls which background to draw for Monster Bash.  The tempscene

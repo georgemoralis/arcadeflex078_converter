@@ -33,7 +33,6 @@ public class qixH
 	/*----------- defined in vidhrdw/qix.c -----------*/
 	
 	
-	VIDEO_START( qix );
 	
 	void qix_scanline_callback(int scanline);
 	

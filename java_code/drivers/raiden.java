@@ -46,8 +46,6 @@ package arcadeflex.v078.drivers;
 public class raiden
 {
 	
-	VIDEO_START( raiden );
-	VIDEO_START( raidena );
 	
 	static unsigned char *raiden_shared_ram;
 	

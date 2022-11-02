@@ -15,13 +15,13 @@ public class funkyjet
 	
 	/******************************************************************************/
 	
-	VIDEO_START( funkyjet )
+	public static VideoStartHandlerPtr video_start_funkyjet  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (deco16_1_video_init() != 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void funkyjet_drawsprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{

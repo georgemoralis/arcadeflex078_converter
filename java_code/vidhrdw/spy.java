@@ -52,7 +52,7 @@ public class spy
 	
 	***************************************************************************/
 	
-	VIDEO_START( spy )
+	public static VideoStartHandlerPtr video_start_spy  = new VideoStartHandlerPtr() { public int handler()
 	{
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
@@ -64,7 +64,7 @@ public class spy
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

@@ -258,12 +258,12 @@ public class sspeedr
 	}
 	
 	
-	VIDEO_START( sspeedr )
+	public static VideoStartHandlerPtr video_start_sspeedr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		toggle = 0;
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_sspeedr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

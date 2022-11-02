@@ -15,7 +15,6 @@ public class _1943
 	
 	
 	
-	VIDEO_START( 1943 );
 	
 	
 	

@@ -91,9 +91,9 @@ public class mrflea
 		}
 	}
 	
-	VIDEO_START( mrflea ){
+	public static VideoStartHandlerPtr video_start_mrflea  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_mrflea  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

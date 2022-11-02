@@ -17,7 +17,6 @@ public class vigilant
 {
 	
 	/* vidhrdw/vigilant.c */
-	VIDEO_START( vigilant );
 	
 	
 	public static WriteHandlerPtr vigilant_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)

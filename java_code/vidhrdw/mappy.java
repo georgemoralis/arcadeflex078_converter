@@ -76,35 +76,35 @@ public class mappy
 	} };
 	
 	
-	static VIDEO_START( common )
+	static public static VideoStartHandlerPtr video_start_common  = new VideoStartHandlerPtr() { public int handler()
 	{
-		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset (dirtybuffer, 1, videoram_size);
+		memset (dirtybuffer, 1, videoram_size[0]);
 	
 		if ((tmpbitmap = auto_bitmap_alloc (36*8,60*8)) == 0)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( mappy )
+	public static VideoStartHandlerPtr video_start_mappy  = new VideoStartHandlerPtr() { public int handler()
 	{
 		special_display = 0;
 		return video_start_common();
-	}
+	} };
 	
-	VIDEO_START( motos )
+	public static VideoStartHandlerPtr video_start_motos  = new VideoStartHandlerPtr() { public int handler()
 	{
 		special_display = 1;
 		return video_start_common();
-	}
+	} };
 	
-	VIDEO_START( todruaga )
+	public static VideoStartHandlerPtr video_start_todruaga  = new VideoStartHandlerPtr() { public int handler()
 	{
 		special_display = 2;
 		return video_start_common();
-	}
+	} };
 	
 	
 	

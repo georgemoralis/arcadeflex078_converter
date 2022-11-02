@@ -106,7 +106,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	VIDEO_START( itech8 )
+	public static VideoStartHandlerPtr video_start_itech8  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* initialize TMS34061 emulation */
 	    if (tms34061_start(&tms34061intf))
@@ -123,14 +123,14 @@ public class itech8
 		grom_size = memory_region_length(REGION_GFX1);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( slikshot )
+	public static VideoStartHandlerPtr video_start_slikshot  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int result = video_start_itech8();
 		slikshot = 1;
 		return result;
-	}
+	} };
 	
 	
 	

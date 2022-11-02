@@ -71,7 +71,6 @@ package arcadeflex.v078.drivers;
 public class groundfx
 {
 	
-	VIDEO_START( groundfx );
 	
 	/* F3 sound */
 	READ16_HANDLER(f3_68000_share_r);

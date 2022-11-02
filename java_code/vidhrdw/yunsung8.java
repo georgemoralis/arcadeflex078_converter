@@ -175,7 +175,7 @@ public class yunsung8
 	
 	***************************************************************************/
 	
-	VIDEO_START( yunsung8 )
+	public static VideoStartHandlerPtr video_start_yunsung8  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_OPAQUE, 8,8, DIM_NX_0, DIM_NY_0 );
@@ -189,7 +189,7 @@ public class yunsung8
 			return 0;
 		}
 		else return 1;
-	}
+	} };
 	
 	
 	

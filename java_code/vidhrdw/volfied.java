@@ -26,7 +26,7 @@ public class volfied
 	          INITIALISATION AND CLEAN-UP
 	******************************************************/
 	
-	VIDEO_START( volfied )
+	public static VideoStartHandlerPtr video_start_volfied  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pixel_layer = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		if (pixel_layer == NULL)
@@ -47,7 +47,7 @@ public class volfied
 		state_save_register_func_postload (mark_all_dirty);
 	
 		return PC090OJ_vh_start(0, 0, 0, 0);
-	}
+	} };
 	
 	
 	/*******************************************************

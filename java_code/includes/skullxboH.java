@@ -11,6 +11,5 @@ WRITE16_HANDLER( skullxbo_xscroll_w );
 WRITE16_HANDLER( skullxbo_yscroll_w );
 WRITE16_HANDLER( skullxbo_mobmsb_w );
 
-VIDEO_START( skullxbo );
 
 void skullxbo_scanline_update(int param);

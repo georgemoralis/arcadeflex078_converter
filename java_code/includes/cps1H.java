@@ -20,7 +20,6 @@ READ16_HANDLER( cps2_objram2_r );
 WRITE16_HANDLER( cps2_objram1_w );
 WRITE16_HANDLER( cps2_objram2_w );
 
-VIDEO_START( cps1 );
 VIDEO_EOF( cps1 );
 DRIVER_INIT( cps1 );
 DRIVER_INIT( cps2 );

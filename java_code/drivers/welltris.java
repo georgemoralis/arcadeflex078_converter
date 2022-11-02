@@ -332,7 +332,6 @@ public class welltris
 	WRITE16_HANDLER( welltris_gfxbank_w );
 	WRITE16_HANDLER( welltris_charvideoram_w );
 	WRITE16_HANDLER( welltris_scrollreg_w );
-	VIDEO_START( welltris );
 	
 	
 	

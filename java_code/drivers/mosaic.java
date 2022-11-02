@@ -17,7 +17,6 @@ public class mosaic
 {
 	
 	
-	VIDEO_START( mosaic );
 	
 	
 	

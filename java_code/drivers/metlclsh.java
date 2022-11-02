@@ -46,7 +46,6 @@ public class metlclsh
 	/* Functions defined in vidhrdw: */
 	
 	
-	VIDEO_START( metlclsh );
 	
 	/***************************************************************************
 	

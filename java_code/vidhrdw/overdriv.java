@@ -55,7 +55,7 @@ public class overdriv
 	
 	***************************************************************************/
 	
-	VIDEO_START( overdriv )
+	public static VideoStartHandlerPtr video_start_overdriv  = new VideoStartHandlerPtr() { public int handler()
 	{
 		K053251_vh_start();
 	
@@ -73,7 +73,7 @@ public class overdriv
 		K051316_set_offset(1,15,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

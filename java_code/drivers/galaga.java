@@ -84,7 +84,6 @@ public class galaga
 	MACHINE_INIT( galaga );
 	
 	
-	VIDEO_START( galaga );
 	
 	
 	

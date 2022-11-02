@@ -94,7 +94,7 @@ public class mustache
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( mustache )
+	public static VideoStartHandlerPtr video_start_mustache  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_x,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -102,7 +102,7 @@ public class mustache
 		tilemap_set_scroll_rows(bg_tilemap, 4);
 	
 		return 0;
-	}
+	} };
 	
 	static void mustache_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

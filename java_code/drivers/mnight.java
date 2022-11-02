@@ -17,7 +17,6 @@ package arcadeflex.v078.drivers;
 public class mnight
 {
 	
-	VIDEO_START( mnight );
 	
 	
 	static int mnight_bank_latch = 255, main_cpu_num;

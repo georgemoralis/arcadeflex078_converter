@@ -58,11 +58,11 @@ public class cinemat
 	
 	***************************************************************************/
 	
-	VIDEO_START( cinemat )
+	public static VideoStartHandlerPtr video_start_cinemat  = new VideoStartHandlerPtr() { public int handler()
 	{
 		cinemat_screenh = Machine.visible_area.max_y - Machine.visible_area.min_y;
 		return video_start_vector();
-	}
+	} };
 	
 	
 	VIDEO_EOF( cinemat )

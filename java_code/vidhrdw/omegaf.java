@@ -275,7 +275,7 @@ public class omegaf
 		return 0;
 	}
 	
-	VIDEO_START( omegaf )
+	public static VideoStartHandlerPtr video_start_omegaf  = new VideoStartHandlerPtr() { public int handler()
 	{
 		scrollx_mask = 0x07ff;
 		bank_mask = 7;
@@ -298,9 +298,9 @@ public class omegaf
 		tilemap_set_transparent_pen( bg2_tilemap, 15 );
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( robokid )
+	public static VideoStartHandlerPtr video_start_robokid  = new VideoStartHandlerPtr() { public int handler()
 	{
 		scrollx_mask = 0x01ff;
 		bank_mask = 1;
@@ -323,7 +323,7 @@ public class omegaf
 		tilemap_set_transparent_pen( bg2_tilemap, 15 );
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

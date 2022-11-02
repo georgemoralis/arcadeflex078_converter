@@ -1236,7 +1236,7 @@ public class system32
 		get_system32_tile_info(tile_index,3);
 	}
 	
-	VIDEO_START( system32 ) {
+	public static VideoStartHandlerPtr video_start_system32  = new VideoStartHandlerPtr() { public int handler() {
 		int i;
 	
 		system32_layer_tilemap[0] = tilemap_create(get_system32_layer0_tile_info,sys32_bg_map,TILEMAP_TRANSPARENT, 16, 16,64,32);
@@ -1264,7 +1264,7 @@ public class system32
 			system32_dirty_window[i] = 1;
 	
 		return 0;
-	}
+	} };
 	
 	void system32_set_colour (int offset);
 	void multi32_set_colour (int offset, int monitor);

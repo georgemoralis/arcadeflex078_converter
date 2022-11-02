@@ -38,7 +38,7 @@ public class nyny
 	
 	***************************************************************************/
 	
-	VIDEO_START( nyny )
+	public static VideoStartHandlerPtr video_start_nyny  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -50,7 +50,7 @@ public class nyny
 		nyny_colourram = auto_malloc(0x4000);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	  Stop the video hardware emulation.

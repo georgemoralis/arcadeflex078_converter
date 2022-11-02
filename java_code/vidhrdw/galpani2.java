@@ -148,7 +148,7 @@ public class galpani2
 		}
 	} };
 	
-	VIDEO_START( galpani2 )
+	public static VideoStartHandlerPtr video_start_galpani2  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((galpani2_bg15_bitmap  = auto_bitmap_alloc_depth(256*8, 256, 16)) == 0)	return 1;
 	
@@ -156,7 +156,7 @@ public class galpani2
 		if ((galpani2_bg8_bitmap_1 = auto_bitmap_alloc_depth(512, 256, 16)) == 0)	return 1;
 	
 		return video_start_kaneko16_sprites();
-	}
+	} };
 	
 	
 	/***************************************************************************

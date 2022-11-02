@@ -83,11 +83,6 @@ public class m72
 	MACHINE_INIT( m72 );
 	MACHINE_INIT( xmultipl );
 	MACHINE_INIT( kengo );
-	VIDEO_START( m72 );
-	VIDEO_START( rtype2 );
-	VIDEO_START( majtitle );
-	VIDEO_START( hharry );
-	VIDEO_START( poundfor );
 	VIDEO_EOF( m72 );
 	
 	

@@ -306,7 +306,7 @@ public class liberatr
 	
 	***************************************************************************/
 	
-	VIDEO_START( liberatr )
+	public static VideoStartHandlerPtr video_start_liberatr  = new VideoStartHandlerPtr() { public int handler()
 	{
 	    liberatr_videoram = 0;
 	    liberatr_planet_segs[0] = 0;
@@ -332,7 +332,7 @@ public class liberatr
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

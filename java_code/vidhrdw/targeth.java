@@ -82,7 +82,7 @@ public class targeth
 	
 	***************************************************************************/
 	
-	VIDEO_START( targeth )
+	public static VideoStartHandlerPtr video_start_targeth  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pant[0] = tilemap_create(get_tile_info_targeth_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pant[1] = tilemap_create(get_tile_info_targeth_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -93,7 +93,7 @@ public class targeth
 		tilemap_set_transparent_pen(pant[0],0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -27,7 +27,6 @@ public class bking2
 {
 	
 	
-	VIDEO_START( bking2 );
 	VIDEO_EOF( bking2 );
 	
 	

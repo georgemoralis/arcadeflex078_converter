@@ -6,6 +6,5 @@
 
 /*----------- defined in vidhrdw/exerion.c -----------*/
 
-VIDEO_START( exerion );
 
 

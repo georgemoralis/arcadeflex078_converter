@@ -692,8 +692,6 @@ package arcadeflex.v078.drivers;
 public class taito_z
 {
 	
-	VIDEO_START( taitoz );
-	VIDEO_START( spacegun );
 	
 	
 	READ16_HANDLER ( sci_spriteframe_r );

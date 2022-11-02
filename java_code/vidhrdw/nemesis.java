@@ -261,13 +261,13 @@ public class nemesis
 	
 	
 	/* claim a palette dirty array */
-	VIDEO_START( nemesis )
+	public static VideoStartHandlerPtr video_start_nemesis  = new VideoStartHandlerPtr() { public int handler()
 	{
 	#ifdef LSB_FIRST
 		nemesis_lsbify_gfx();
 	#endif
 	
-		spriteram_words = spriteram_size / 2;
+		spriteram_words = spriteram_size[0] / 2;
 	
 		background = tilemap_create(
 			get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32 );
@@ -337,7 +337,7 @@ public class nemesis
 		tilemap_flip = 0;
 	
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{

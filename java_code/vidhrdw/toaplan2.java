@@ -509,20 +509,20 @@ public class toaplan2
 		return error_level;
 	}
 	
-	VIDEO_START( toaplan2_0 )
+	public static VideoStartHandlerPtr video_start_toaplan2_0  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return toaplan2_vh_start(0);
-	}
+	} };
 	
-	VIDEO_START( toaplan2_1 )
+	public static VideoStartHandlerPtr video_start_toaplan2_1  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int error_level = 0;
 		error_level |= toaplan2_vh_start(0);
 		error_level |= toaplan2_vh_start(1);
 		return error_level;
-	}
+	} };
 	
-	VIDEO_START( truxton2_0 )
+	public static VideoStartHandlerPtr video_start_truxton2_0  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (toaplan2_vram_alloc(0))
 		{
@@ -534,9 +534,9 @@ public class toaplan2
 		}
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4 +1, 0x2a);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( battleg_0 )
+	public static VideoStartHandlerPtr video_start_battleg_0  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if (toaplan2_vram_alloc(0))
 		{
@@ -548,9 +548,9 @@ public class toaplan2
 		}
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4, 0x2a);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( batrider_0 )
+	public static VideoStartHandlerPtr video_start_batrider_0  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if ((raizing_tx_gfxram16 = (data16_t *)auto_malloc(RAIZING_TX_GFXRAM_SIZE)) == 0)
 			return 1;
@@ -565,7 +565,7 @@ public class toaplan2
 	
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4, 0x2a);
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

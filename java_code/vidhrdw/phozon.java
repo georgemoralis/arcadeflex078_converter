@@ -70,15 +70,15 @@ public class phozon
 			COLOR(2,i) = (*(color_prom++) & 0x0f) + 0x10;
 	} };
 	
-	VIDEO_START( phozon ) {
+	public static VideoStartHandlerPtr video_start_phozon  = new VideoStartHandlerPtr() { public int handler() {
 		/* set up spriteram area */
-		spriteram_size = 0x80;
+		spriteram_size[0] = 0x80;
 		spriteram = &phozon_spriteram[0x780];
 		spriteram_2 = &phozon_spriteram[0x780+0x800];
 		spriteram_3 = &phozon_spriteram[0x780+0x800+0x800];
 	
 		return video_start_generic.handler();
-	}
+	} };
 	
 	void phozon_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)

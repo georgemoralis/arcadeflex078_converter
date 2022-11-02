@@ -153,7 +153,6 @@ package arcadeflex.v078.drivers;
 public class nycaptor
 {
 	
-	VIDEO_START( nycaptor );
 	
 	
 	UINT8 *nycaptor_sharedram;

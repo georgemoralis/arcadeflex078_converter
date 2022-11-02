@@ -31,7 +31,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	VIDEO_START( starfire )
+	public static VideoStartHandlerPtr video_start_starfire  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* make a temporary bitmap */
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
@@ -49,7 +49,7 @@ public class starfire
 		memset(scanline_dirty, 1, 256);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

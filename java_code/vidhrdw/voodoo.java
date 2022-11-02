@@ -881,40 +881,40 @@ public class voodoo
 	}
 	
 	
-	VIDEO_START( voodoo_1x4mb )
+	public static VideoStartHandlerPtr video_start_voodoo_1x4mb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tmus = 1;
 		voodoo2 = 0;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	}
+	} };
 	
 	
-	VIDEO_START( voodoo_2x4mb )
+	public static VideoStartHandlerPtr video_start_voodoo_2x4mb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tmus = 2;
 		voodoo2 = 0;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	}
+	} };
 	
 	
-	VIDEO_START( voodoo2_1x4mb )
+	public static VideoStartHandlerPtr video_start_voodoo2_1x4mb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tmus = 1;
 		voodoo2 = 1;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	}
+	} };
 	
 	
-	VIDEO_START( voodoo2_2x4mb )
+	public static VideoStartHandlerPtr video_start_voodoo2_2x4mb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tmus = 2;
 		voodoo2 = 1;
 		texram_mask = 4 * 1024 * 1024 - 1;
 		return voodoo_start_common();
-	}
+	} };
 	
 	
 	VIDEO_STOP( voodoo )

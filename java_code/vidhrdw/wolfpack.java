@@ -108,7 +108,7 @@ public class wolfpack
 	} };
 	
 	
-	VIDEO_START( wolfpack )
+	public static VideoStartHandlerPtr video_start_wolfpack  = new VideoStartHandlerPtr() { public int handler()
 	{
 		UINT16 val = 0;
 	
@@ -138,7 +138,7 @@ public class wolfpack
 		current_index = 0x80;
 	
 		return 0;
-	}
+	} };
 	
 	
 	static void draw_ship(struct mame_bitmap* bitmap, const struct rectangle* cliprect)

@@ -22,7 +22,6 @@ package arcadeflex.v078.drivers;
 public class cbuster
 {
 	
-	VIDEO_START( twocrude );
 	
 	WRITE16_HANDLER( twocrude_pf1_data_w );
 	WRITE16_HANDLER( twocrude_pf2_data_w );

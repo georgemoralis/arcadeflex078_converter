@@ -114,7 +114,7 @@ public class rocnrope
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( rocnrope )
+	public static VideoStartHandlerPtr video_start_rocnrope  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -123,7 +123,7 @@ public class rocnrope
 			return 1;
 		
 		return 0;
-	}
+	} };
 	
 	static void rocnrope_draw_sprites( struct mame_bitmap *bitmap )
 	{

@@ -35,7 +35,6 @@ public class blmbycar
 	WRITE16_HANDLER( blmbycar_vram_0_w );
 	WRITE16_HANDLER( blmbycar_vram_1_w );
 	
-	VIDEO_START( blmbycar );
 	
 	
 	/***************************************************************************

@@ -78,7 +78,6 @@ public class psikyo
 	WRITE32_HANDLER( psikyo_vram_0_w );
 	WRITE32_HANDLER( psikyo_vram_1_w );
 	
-	VIDEO_START( psikyo );
 	VIDEO_EOF( psikyo );
 	
 	

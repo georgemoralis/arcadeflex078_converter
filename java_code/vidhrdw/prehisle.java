@@ -105,7 +105,7 @@ public class prehisle
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( prehisle )
+	public static VideoStartHandlerPtr video_start_prehisle  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg2_tilemap = tilemap_create(get_bg2_tile_info, tilemap_scan_cols, 
 			TILEMAP_OPAQUE, 16, 16, 1024, 32);
@@ -129,7 +129,7 @@ public class prehisle
 		tilemap_set_transparent_pen(fg_tilemap, 15);
 	
 		return 0;
-	}
+	} };
 	
 	static void prehisle_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

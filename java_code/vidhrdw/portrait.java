@@ -63,7 +63,7 @@ public class portrait
 		get_tile_info( portrait_fgvideoram, tile_index );
 	}
 	
-	VIDEO_START( portrait )
+	public static VideoStartHandlerPtr video_start_portrait  = new VideoStartHandlerPtr() { public int handler()
 	{
 		background = tilemap_create( get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32 );
 		foreground = tilemap_create( get_fg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 32, 32 );
@@ -73,7 +73,7 @@ public class portrait
 			return 0;
 		}
 		return -1;
-	}
+	} };
 	
 	
 	public static PaletteInitHandlerPtr palette_init_portrait  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)

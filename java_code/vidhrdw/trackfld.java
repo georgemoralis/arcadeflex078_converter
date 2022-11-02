@@ -120,7 +120,7 @@ public class trackfld
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	VIDEO_START( trackfld )
+	public static VideoStartHandlerPtr video_start_trackfld  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -131,7 +131,7 @@ public class trackfld
 		tilemap_set_scroll_rows(bg_tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
 	static void trackfld_draw_sprites( struct mame_bitmap *bitmap )
 	{

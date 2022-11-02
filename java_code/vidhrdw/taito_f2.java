@@ -155,75 +155,75 @@ public class taito_f2
 	/*    ( spritetype, hide, hideflip, xoffs, yoffs, flipx, flipy, textflipx, textflipy) */
 	/**************************************************************************************/
 	
-	VIDEO_START( taitof2_default )
+	public static VideoStartHandlerPtr video_start_taitof2_default  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_megab )   /* Megab, Liquidk */
+	public static VideoStartHandlerPtr video_start_taitof2_megab  = new VideoStartHandlerPtr() { public int handler()   /* Megab, Liquidk */
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_quiz )   /* Quiz Crayons, Quiz Jinsei */
+	public static VideoStartHandlerPtr video_start_taitof2_quiz  = new VideoStartHandlerPtr() { public int handler()   /* Quiz Crayons, Quiz Jinsei */
 	{
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_finalb )
+	public static VideoStartHandlerPtr video_start_taitof2_finalb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,1,1,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_ssi )
+	public static VideoStartHandlerPtr video_start_taitof2_ssi  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_growl )
+	public static VideoStartHandlerPtr video_start_taitof2_growl  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_ninjak )
+	public static VideoStartHandlerPtr video_start_taitof2_ninjak  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,1,2));
-	}
+	} };
 	
-	VIDEO_START( taitof2_qzchikyu )
+	public static VideoStartHandlerPtr video_start_taitof2_qzchikyu  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,0,4,0,0,-4,0,-11,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_solfigtr )
+	public static VideoStartHandlerPtr video_start_taitof2_solfigtr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,3,-3,0,0,6,0,6,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_koshien )
+	public static VideoStartHandlerPtr video_start_taitof2_koshien  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,1,-1,0,0,2,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_gunfront )
+	public static VideoStartHandlerPtr video_start_taitof2_gunfront  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_thundfox )
+	public static VideoStartHandlerPtr video_start_taitof2_thundfox  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,3,-3,0,0,5,0,4,1));
-	}
+	} };
 	
-	VIDEO_START( taitof2_mjnquest )
+	public static VideoStartHandlerPtr video_start_taitof2_mjnquest  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int failed = (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));	/* non-zero = failure */
 		if (failed == 0)  TC0100SCN_set_bg_tilemask(0x7fff);
 	
 		return failed;
-	}
+	} };
 	
-	VIDEO_START( taitof2_footchmp )
+	public static VideoStartHandlerPtr video_start_taitof2_footchmp  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int failed;
 		f2_tilemap_xoffs = 0x1d;
@@ -234,9 +234,9 @@ public class taito_f2
 	
 		f2_game = FOOTCHMP;
 		return failed;
-	}
+	} };
 	
-	VIDEO_START( taitof2_hthero )
+	public static VideoStartHandlerPtr video_start_taitof2_hthero  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int failed;
 		f2_tilemap_xoffs = 0x33;
@@ -247,70 +247,70 @@ public class taito_f2
 	
 		f2_game = FOOTCHMP;
 		return failed;
-	}
+	} };
 	
-	VIDEO_START( taitof2_deadconx )
+	public static VideoStartHandlerPtr video_start_taitof2_deadconx  = new VideoStartHandlerPtr() { public int handler()
 	{
 		f2_tilemap_xoffs = 0x1e;
 		f2_tilemap_yoffs = 0x08;
 		f2_text_xoffs = -1;
 		f2_tilemap_col_base = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_deadconj )
+	public static VideoStartHandlerPtr video_start_taitof2_deadconj  = new VideoStartHandlerPtr() { public int handler()
 	{
 		f2_tilemap_xoffs = 0x34;
 		f2_tilemap_yoffs = - 0x05;
 		f2_text_xoffs = -1;
 		f2_tilemap_col_base = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_metalb )
+	public static VideoStartHandlerPtr video_start_taitof2_metalb  = new VideoStartHandlerPtr() { public int handler()
 	{
 		f2_tilemap_xoffs = 0x32;
 		f2_tilemap_yoffs = - 0x04;
 		f2_text_xoffs = 1;	/* not the usual -1 */
 		f2_tilemap_col_base = 256;   /* separate palette area for tilemaps */
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_yuyugogo )
+	public static VideoStartHandlerPtr video_start_taitof2_yuyugogo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(1,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_yesnoj )
+	public static VideoStartHandlerPtr video_start_taitof2_yesnoj  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_dinorex )
+	public static VideoStartHandlerPtr video_start_taitof2_dinorex  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_dondokod )	/* dondokod, cameltry */
+	public static VideoStartHandlerPtr video_start_taitof2_dondokod  = new VideoStartHandlerPtr() { public int handler()	/* dondokod, cameltry */
 	{
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_pulirula )
+	public static VideoStartHandlerPtr video_start_taitof2_pulirula  = new VideoStartHandlerPtr() { public int handler()
 	{
 		f2_pivot_xdisp = -10;	/* alignment seems correct (see level 2, falling */
 		f2_pivot_ydisp = 16;	/* block of ice after armour man) */
 		return (taitof2_core_vh_start(2,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
-	VIDEO_START( taitof2_driftout )
+	public static VideoStartHandlerPtr video_start_taitof2_driftout  = new VideoStartHandlerPtr() { public int handler()
 	{
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 16;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
-	}
+	} };
 	
 	
 	/********************************************************

@@ -114,9 +114,6 @@ public class asuka
 	WRITE16_HANDLER( asuka_spritectrl_w );
 	
 	
-	VIDEO_START( asuka );
-	VIDEO_START( galmedes );
-	VIDEO_START( cadash );
 	
 	
 	WRITE16_HANDLER( bonzeadv_c_chip_w );

@@ -25,7 +25,6 @@ public class ddrible
 	/* video hardware memory handlers */
 	
 	/* video hardware functions */
-	VIDEO_START( ddrible );
 	
 	
 	public static InterruptHandlerPtr ddrible_interrupt_0 = new InterruptHandlerPtr() {public void handler()

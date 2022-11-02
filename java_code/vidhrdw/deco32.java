@@ -783,7 +783,7 @@ public class deco32
 		SET_TILE_INFO(2,(tile&0x0fff)|deco32_pf4_bank,(tile >> 12)&3,flags)
 	}
 	
-	VIDEO_START( captaven )
+	public static VideoStartHandlerPtr video_start_captaven  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1a_tilemap =tilemap_create(get_pf1a_tile_info,   deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -803,9 +803,9 @@ public class deco32
 		deco32_pf4_colourbank=0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( fghthist ) //unused
+	public static VideoStartHandlerPtr video_start_fghthist  = new VideoStartHandlerPtr() { public int handler() //unused
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -824,9 +824,9 @@ public class deco32
 		deco32_pf2_colourbank=deco32_pf4_colourbank=0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( dragngun )
+	public static VideoStartHandlerPtr video_start_dragngun  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -851,9 +851,9 @@ public class deco32
 		state_save_register_int("deco32", 0, "SCTRL", &dragngun_sprite_ctrl);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( lockload )
+	public static VideoStartHandlerPtr video_start_lockload  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -878,9 +878,9 @@ public class deco32
 		state_save_register_int("deco32", 0, "SCTRL", &dragngun_sprite_ctrl);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( tattass )
+	public static VideoStartHandlerPtr video_start_tattass  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -902,7 +902,7 @@ public class deco32
 		alpha_set_level(0x80);
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

@@ -60,7 +60,7 @@ public class m90
 	static void get_pf2w_tile_info(int tile_index) { get_tile_info(tile_index,1,2); }
 	
 	
-	VIDEO_START( m90 )
+	public static VideoStartHandlerPtr video_start_m90  = new VideoStartHandlerPtr() { public int handler()
 	{
 		pf1_layer =      tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
 		pf1_wide_layer = tilemap_create(get_pf1w_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,128,64);
@@ -76,7 +76,7 @@ public class m90
 		state_save_register_UINT32("video", 0, "m90_video_control_data", (UINT32*) m90_video_control_data, 16);
 	
 		return 0;
-	}
+	} };
 	
 	static void m90_drawsprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{

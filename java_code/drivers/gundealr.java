@@ -57,7 +57,6 @@ public class gundealr
 	
 	
 	
-	VIDEO_START( gundealr );
 	
 	
 	static int input_ports_hack;

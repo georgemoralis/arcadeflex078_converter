@@ -100,7 +100,7 @@ public class higemaru
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( higemaru )
+	public static VideoStartHandlerPtr video_start_higemaru  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -109,7 +109,7 @@ public class higemaru
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static void higemaru_draw_sprites( struct mame_bitmap *bitmap )
 	{

@@ -94,7 +94,7 @@ public class lwings
 	
 	***************************************************************************/
 	
-	VIDEO_START( lwings )
+	public static VideoStartHandlerPtr video_start_lwings  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fg_tilemap  = tilemap_create(get_fg_tile_info,        tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg1_tilemap = tilemap_create(lwings_get_bg1_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
@@ -105,9 +105,9 @@ public class lwings
 		tilemap_set_transparent_pen(fg_tilemap,3);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( trojan )
+	public static VideoStartHandlerPtr video_start_trojan  = new VideoStartHandlerPtr() { public int handler()
 	{
 		fg_tilemap  = tilemap_create(get_fg_tile_info,        tilemap_scan_rows,    TILEMAP_TRANSPARENT,8, 8,32,32);
 		bg1_tilemap = tilemap_create(trojan_get_bg1_tile_info,tilemap_scan_cols,    TILEMAP_SPLIT,     16,16,32,32);
@@ -123,14 +123,14 @@ public class lwings
 			return 0;
 		}
 		return 1; /* error */
-	}
+	} };
 	
-	VIDEO_START( avengers )
+	public static VideoStartHandlerPtr video_start_avengers  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int result = video_start_trojan();
 		bAvengersHardware = 1;
 		return result;
-	}
+	} };
 	
 	/***************************************************************************
 	

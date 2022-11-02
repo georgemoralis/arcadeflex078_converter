@@ -63,7 +63,7 @@ public class malzak
 	unsigned char s2636_1_dirty[4];
 	unsigned char s2636_2_dirty[4];
 	
-	VIDEO_START( malzak )
+	public static VideoStartHandlerPtr video_start_malzak  = new VideoStartHandlerPtr() { public int handler()
 	{
 		video_start_generic.handler();
 	
@@ -75,7 +75,7 @@ public class malzak
 		s2636_2_ram = auto_malloc(0x100);
 	
 		return 0;
-	}
+	} };
 	
 	public static VideoUpdateHandlerPtr video_update_malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{

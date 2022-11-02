@@ -176,7 +176,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	VIDEO_START( marvins )
+	public static VideoStartHandlerPtr video_start_marvins  = new VideoStartHandlerPtr() { public int handler()
 	{
 		flipscreen = -1; old_bg_color = old_fg_color = -1;
 	
@@ -249,7 +249,7 @@ public class marvins
 	
 			return 0;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	**

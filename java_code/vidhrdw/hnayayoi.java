@@ -43,15 +43,15 @@ public class hnayayoi
 		return 0;
 	}
 	
-	VIDEO_START( hnayayoi )
+	public static VideoStartHandlerPtr video_start_hnayayoi  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return common_vh_start(4);	/* 4 bitmaps . 2 layers */
-	}
+	} };
 	
-	VIDEO_START( untoucha )
+	public static VideoStartHandlerPtr video_start_untoucha  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return common_vh_start(8);	/* 8 bitmaps . 4 layers */
-	}
+	} };
 	
 	
 	

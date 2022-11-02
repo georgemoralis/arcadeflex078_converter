@@ -37,9 +37,7 @@ package arcadeflex.v078.drivers;
 public class galivan
 {
 	
-	VIDEO_START( galivan );
 	
-	VIDEO_START( ninjemak );
 	
 	
 	

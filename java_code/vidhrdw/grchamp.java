@@ -144,7 +144,7 @@ public class grchamp
 		return offset;
 	}
 	
-	VIDEO_START( grchamp )
+	public static VideoStartHandlerPtr video_start_grchamp  = new VideoStartHandlerPtr() { public int handler()
 	{
 		headlight_bitmap = auto_bitmap_alloc( 64,128 );
 		if (headlight_bitmap == 0)
@@ -163,7 +163,7 @@ public class grchamp
 			return 0;
 		}
 		return 1;
-	}
+	} };
 	
 	static void draw_text( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

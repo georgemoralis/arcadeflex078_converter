@@ -96,10 +96,10 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	VIDEO_START( fuuki32 )
+	public static VideoStartHandlerPtr video_start_fuuki32  = new VideoStartHandlerPtr() { public int handler()
 	{
-		buffered_spriteram32   = auto_malloc(spriteram_size);
-		buffered_spriteram32_2 = auto_malloc(spriteram_size);
+		buffered_spriteram32   = auto_malloc(spriteram_size[0]);
+		buffered_spriteram32_2 = auto_malloc(spriteram_size[0]);
 	
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 16, 16, 64,32);
@@ -125,7 +125,7 @@ public class fuukifg3
 		Machine.gfx[2].color_granularity=16;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -37,7 +37,6 @@ public class volfied
 	READ16_HANDLER( volfied_cchip_r );
 	
 	
-	VIDEO_START( volfied );
 	
 	void volfied_cchip_init(void);
 	

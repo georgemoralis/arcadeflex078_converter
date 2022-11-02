@@ -43,7 +43,6 @@ void kof2000_neogeo_gfx_decrypt(int extra_xor);
 
 /*----------- defined in vidhrdw/neogeo.c -----------*/
 
-VIDEO_START( neogeo_mvs );
 
 WRITE16_HANDLER( neogeo_setpalbank0_16_w );
 WRITE16_HANDLER( neogeo_setpalbank1_16_w );

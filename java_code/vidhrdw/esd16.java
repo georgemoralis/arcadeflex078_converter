@@ -53,7 +53,6 @@ public class esd16
 	WRITE16_HANDLER( esd16_vram_0_w );
 	WRITE16_HANDLER( esd16_vram_1_w );
 	
-	VIDEO_START( esd16 );
 	
 	
 	/***************************************************************************
@@ -129,7 +128,7 @@ public class esd16
 	***************************************************************************/
 	
 	
-	VIDEO_START( esd16 )
+	public static VideoStartHandlerPtr video_start_esd16  = new VideoStartHandlerPtr() { public int handler()
 	{
 		esdtilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_OPAQUE,			8,8,	0x80,0x40);
@@ -153,7 +152,7 @@ public class esd16
 		tilemap_set_transparent_pen(esdtilemap_1_16x16,0x00);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

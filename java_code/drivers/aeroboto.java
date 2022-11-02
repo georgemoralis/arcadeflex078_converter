@@ -32,7 +32,6 @@ public class aeroboto
 	
 	
 	
-	VIDEO_START( aeroboto );
 	
 	
 	static data8_t *aeroboto_mainram;

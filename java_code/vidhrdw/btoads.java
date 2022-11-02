@@ -51,13 +51,13 @@ public class btoads
 	 *
 	 *************************************/
 	
-	VIDEO_START( btoads )
+	public static VideoStartHandlerPtr video_start_btoads  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* initialize the swapped pointers */
 		vram_fg_draw = (UINT8 *)btoads_vram_fg0;
 		vram_fg_display = (UINT8 *)btoads_vram_fg1;
 		return 0;
-	}
+	} };
 	
 	
 	

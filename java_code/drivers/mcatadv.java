@@ -66,9 +66,7 @@ package arcadeflex.v078.drivers;
 public class mcatadv
 {
 	
-	VIDEO_START( mcatadv );
 	VIDEO_EOF( mcatadv );
-	VIDEO_START( nost );
 	
 	WRITE16_HANDLER( mcatadv_videoram1_w );
 	WRITE16_HANDLER( mcatadv_videoram2_w );

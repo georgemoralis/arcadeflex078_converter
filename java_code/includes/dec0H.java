@@ -1,6 +1,4 @@
 /* Video emulation definitions */
-VIDEO_START( dec0 );
-VIDEO_START( dec0_nodma );
 
 
 WRITE16_HANDLER( dec0_pf1_control_0_w );

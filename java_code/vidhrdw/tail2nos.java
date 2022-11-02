@@ -56,7 +56,7 @@ public class tail2nos
 	
 	***************************************************************************/
 	
-	VIDEO_START( tail2nos )
+	public static VideoStartHandlerPtr video_start_tail2nos  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -77,7 +77,7 @@ public class tail2nos
 		zoomdata = (data16_t *)memory_region(REGION_GFX3);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

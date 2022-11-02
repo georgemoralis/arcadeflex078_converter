@@ -57,7 +57,6 @@ package arcadeflex.v078.drivers;
 public class _4enraya
 {
 	
-	VIDEO_START( 4enraya );
 	
 	
 	static int soundlatch;

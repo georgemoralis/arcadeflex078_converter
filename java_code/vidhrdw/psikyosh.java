@@ -1054,7 +1054,7 @@ public class psikyosh
 		}
 	}
 	
-	VIDEO_START( psikyosh )
+	public static VideoStartHandlerPtr video_start_psikyosh  = new VideoStartHandlerPtr() { public int handler()
 	{
 		zoom_bitmap = 0, z_bitmap = 0;
 		if ((zoom_bitmap = auto_bitmap_alloc_depth(16*16, 16*16,8)) == 0) /* hw can do 16-tile wide sprites */
@@ -1077,7 +1077,7 @@ public class psikyosh
 		}
 	
 		return 0;
-	}
+	} };
 	
 	static void psikyosh_prelineblend( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

@@ -45,8 +45,5 @@ MACHINE_INIT( joust2 );
 
 
 
-VIDEO_START( williams );
 
-VIDEO_START( blaster );
-VIDEO_START( williams2 );
 

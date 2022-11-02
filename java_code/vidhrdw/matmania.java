@@ -133,11 +133,11 @@ public class matmania
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	VIDEO_START( matmania )
+	public static VideoStartHandlerPtr video_start_matmania  = new VideoStartHandlerPtr() { public int handler()
 	{
-		if ((dirtybuffer = auto_malloc(videoram_size)) == 0)
+		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		memset(dirtybuffer,1,videoram_size);
+		memset(dirtybuffer,1,videoram_size[0]);
 	
 		if ((dirtybuffer2 = auto_malloc(matmania_videoram3_size)) == 0)
 			return 1;
@@ -152,7 +152,7 @@ public class matmania
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	

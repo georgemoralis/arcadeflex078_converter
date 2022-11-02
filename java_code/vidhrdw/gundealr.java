@@ -64,7 +64,7 @@ public class gundealr
 	
 	***************************************************************************/
 	
-	VIDEO_START( gundealr )
+	public static VideoStartHandlerPtr video_start_gundealr  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,      8, 8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,gundealr_scan,    TILEMAP_TRANSPARENT,16,16,64,32);
@@ -75,7 +75,7 @@ public class gundealr
 		tilemap_set_transparent_pen(fg_tilemap,15);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

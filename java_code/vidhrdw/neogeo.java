@@ -157,7 +157,7 @@ public class neogeo
 	
 	/******************************************************************************/
 	
-	VIDEO_START( neogeo_mvs )
+	public static VideoStartHandlerPtr video_start_neogeo_mvs  = new VideoStartHandlerPtr() { public int handler()
 	{
 		no_of_tiles=Machine.gfx[2].total_elements;
 		if (no_of_tiles>0x10000) high_tile=1; else high_tile=0;
@@ -192,7 +192,7 @@ public class neogeo
 		register_savestate();
 	
 		return 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

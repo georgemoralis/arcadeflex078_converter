@@ -85,20 +85,20 @@ public class runaway
 	
 	
 	
-	VIDEO_START( runaway )
+	public static VideoStartHandlerPtr video_start_runaway  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap = tilemap_create(runaway_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 8, 32, 30);
 	
 		return tilemap == NULL;
-	}
+	} };
 	
 	
-	VIDEO_START( qwak )
+	public static VideoStartHandlerPtr video_start_qwak  = new VideoStartHandlerPtr() { public int handler()
 	{
 		tilemap = tilemap_create(qwak_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 8, 32, 30);
 	
 		return tilemap == NULL;
-	}
+	} };
 	
 	
 	

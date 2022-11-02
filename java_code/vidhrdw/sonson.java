@@ -138,7 +138,7 @@ public class sonson
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	VIDEO_START( sonson )
+	public static VideoStartHandlerPtr video_start_sonson  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -149,7 +149,7 @@ public class sonson
 		tilemap_set_scroll_rows(bg_tilemap, 32);
 	
 		return 0;
-	}
+	} };
 	
 	static void sonson_draw_sprites( struct mame_bitmap *bitmap )
 	{

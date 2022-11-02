@@ -60,7 +60,5 @@ WRITE16_HANDLER( toaplan1_spriteram_offs_w );
 VIDEO_EOF( rallybik );
 VIDEO_EOF( toaplan1 );
 VIDEO_EOF( samesame );
-VIDEO_START( rallybik );
-VIDEO_START( toaplan1 );
 
 

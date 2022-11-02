@@ -51,7 +51,7 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	VIDEO_START( iqblock )
+	public static VideoStartHandlerPtr video_start_iqblock  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8, 8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,32,64, 8);
@@ -63,7 +63,7 @@ public class iqblock
 		tilemap_set_scroll_cols(fg_tilemap,64);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

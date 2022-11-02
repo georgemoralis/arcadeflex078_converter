@@ -16,7 +16,6 @@ WRITE16_HANDLER( asic65_data_w );
 /*----------- defined in vidhrdw/atarig42.c -----------*/
 
 
-VIDEO_START( atarig42 );
 
 WRITE16_HANDLER( atarig42_mo_control_w );
 

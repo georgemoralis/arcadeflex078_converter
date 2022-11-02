@@ -213,7 +213,7 @@ public class travrusa
 	
 	***************************************************************************/
 	
-	VIDEO_START( travrusa )
+	public static VideoStartHandlerPtr video_start_travrusa  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,32);
 	
@@ -226,7 +226,7 @@ public class travrusa
 		tilemap_set_scroll_rows(bg_tilemap,4);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

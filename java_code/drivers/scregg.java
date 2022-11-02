@@ -22,7 +22,6 @@ public class scregg
 	
 	
 	/* from vidhrdw/btime.c */
-	VIDEO_START( btime );
 	
 	
 	public static Memory_ReadAddress dommy_readmem[]={

@@ -102,7 +102,7 @@ public class deniam
 	
 	***************************************************************************/
 	
-	VIDEO_START( deniam )
+	public static VideoStartHandlerPtr video_start_deniam  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info,scan_pages,       TILEMAP_OPAQUE,     8,8,128,64);
 		fg_tilemap = tilemap_create(get_fg_tile_info,scan_pages,       TILEMAP_TRANSPARENT,8,8,128,64);
@@ -115,7 +115,7 @@ public class deniam
 		tilemap_set_transparent_pen(tx_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	

@@ -150,7 +150,7 @@ public class lasso
 	 *
 	 *************************************/
 	
-	VIDEO_START( lasso )
+	public static VideoStartHandlerPtr video_start_lasso  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(lasso_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
@@ -158,9 +158,9 @@ public class lasso
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( wwjgtin )
+	public static VideoStartHandlerPtr video_start_wwjgtin  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap =    tilemap_create(lasso_get_bg_tile_info,      tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8,  32,  32);
 		track_tilemap = tilemap_create(wwjgtin_get_track_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16,16, 0x80,0x40);
@@ -170,9 +170,9 @@ public class lasso
 	
 		tilemap_set_transparent_pen(bg_tilemap,0);
 		return 0;
-	}
+	} };
 	
-	VIDEO_START( pinbo )
+	public static VideoStartHandlerPtr video_start_pinbo  = new VideoStartHandlerPtr() { public int handler()
 	{
 		bg_tilemap = tilemap_create(pinbo_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
@@ -180,7 +180,7 @@ public class lasso
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
 	/*************************************

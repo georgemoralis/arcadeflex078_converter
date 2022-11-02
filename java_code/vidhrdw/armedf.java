@@ -96,7 +96,7 @@ public class armedf
 	
 	***************************************************************************/
 	
-	VIDEO_START( armedf )
+	public static VideoStartHandlerPtr video_start_armedf  = new VideoStartHandlerPtr() { public int handler()
 	{
 		if( scroll_type == 4 || /* cclimbr2 */
 			scroll_type == 3 )  /* legion */
@@ -124,7 +124,7 @@ public class armedf
 		}
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

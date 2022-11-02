@@ -91,14 +91,14 @@ public class tickee
 	 *
 	 *************************************/
 	
-	VIDEO_START( tickee )
+	public static VideoStartHandlerPtr video_start_tickee  = new VideoStartHandlerPtr() { public int handler()
 	{
 		/* start a timer going on the first scanline of every frame */
 		setup_gun_timer = timer_alloc(setup_gun_interrupts);
 		timer_adjust(setup_gun_timer, cpu_getscanlinetime(0), 0, 0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
