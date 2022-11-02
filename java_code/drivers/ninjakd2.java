@@ -223,9 +223,8 @@ The first sprite data is located at fa0b,then fa1b and so on.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class ninjakd2
 {

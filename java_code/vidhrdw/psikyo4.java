@@ -28,9 +28,8 @@ HgKairak: 86010000 1f201918 a0000000 Large Screen
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package vidhrdw;
 
 public class psikyo4
 {

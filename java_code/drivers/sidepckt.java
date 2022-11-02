@@ -15,9 +15,8 @@ i8751 protection simluation and other fixes by Bryan McPhail, 15/10/00.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class sidepckt
 {

@@ -24,9 +24,8 @@ down hardware (it doesn't write any good sound data btw, mostly zeros).
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class supbtime
 {

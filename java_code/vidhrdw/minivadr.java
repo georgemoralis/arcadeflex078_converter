@@ -9,9 +9,8 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/12/19 -
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package vidhrdw;
 
 public class minivadr
 {

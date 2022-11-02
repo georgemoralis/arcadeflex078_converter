@@ -65,7 +65,7 @@ public class convertMame {
                         sUtil.putString(" * using automatic conversion tool v" + Convertor.convertorversion + "\r\n");
                         /*sUtil.putString(" * converted at : " + Convertor.timenow() + "\r\n");*/
                         sUtil.putString(" */ \r\n");
-                        sUtil.putString("package " + Convertor.packageName + ";\r\n");
+                        //sUtil.putString("package arcadeflex.v"+ Convertor.convertorversion.replace(".", "") + Convertor.packageName + ";\r\n");
                         sUtil.putString("\r\n");
                         sUtil.putString((new StringBuilder()).append("public class ").append(Convertor.className).append("\r\n").toString());
                         sUtil.putString("{\r\n");

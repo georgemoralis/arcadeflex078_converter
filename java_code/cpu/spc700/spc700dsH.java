@@ -23,9 +23,8 @@ unsigned int spc700_read_8_disassembler(unsigned int address);
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package cpu.spc700;
 
 public class spc700dsH
 {

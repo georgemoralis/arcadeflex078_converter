@@ -78,9 +78,8 @@ Compared to the real PCB, MAME is too fast, so 60fps needs to be changed to 58fp
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class metro
 {

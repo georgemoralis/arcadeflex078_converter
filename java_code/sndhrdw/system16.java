@@ -1,9 +1,8 @@
 // system 16 - 7751 emulation, based on monster bash code.
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package sndhrdw;
 
 public class system16
 {

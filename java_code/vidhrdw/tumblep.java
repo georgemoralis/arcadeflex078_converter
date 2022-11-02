@@ -15,9 +15,8 @@ to switch between 8*8 tiles and 16*16 tiles.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package vidhrdw;
 
 public class tumblep
 {

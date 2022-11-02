@@ -102,9 +102,8 @@ z:      xxxx address bits a19 .. a16 for memory accesses with a15 1 ?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package cpu.m6502;
 
 public class m4510
 {

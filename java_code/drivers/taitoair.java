@@ -179,9 +179,8 @@ cpu #2 (PC=0000060E): unmapped memory word read from 0000683A & FFFF
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class taitoair
 {

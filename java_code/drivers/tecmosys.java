@@ -94,9 +94,8 @@ ae500w07.ad1 - M6295 Samples (23c4001)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class tecmosys
 {

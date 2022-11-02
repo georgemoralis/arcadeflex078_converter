@@ -91,9 +91,8 @@ sol divide doesn't seem to make much use of tilemaps at all, it uses them to fad
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package vidhrdw;
 
 public class psikyosh
 {

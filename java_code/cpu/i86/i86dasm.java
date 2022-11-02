@@ -58,9 +58,8 @@ Any comments/updates/bug reports to:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package cpu.i86;
 
 public class i86dasm
 {

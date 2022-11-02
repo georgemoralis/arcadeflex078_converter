@@ -132,9 +132,8 @@ Add in cpuintrf.c
 #if (HAS_E132XS)
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package cpu.e132xs;
 
 public class e132xs
 {

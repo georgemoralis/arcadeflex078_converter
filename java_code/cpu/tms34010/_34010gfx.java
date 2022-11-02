@@ -720,9 +720,8 @@ static void (*fill_op_table[])(int) =
 	#define FUNCTION_NAME(base)				base##_1_op0
 	/*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package cpu.tms34010;
 
 public class _34010gfx
 {

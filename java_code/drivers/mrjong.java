@@ -44,9 +44,8 @@ ROMs 6A, 7A, 8A, 9A: 2764
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class mrjong
 {

@@ -35,9 +35,8 @@ So this is the correct behavior of real hardware, not an emulation bug.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class nemesis
 {

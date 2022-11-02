@@ -25,9 +25,8 @@ added external port callback, and functions to set the volume of the channels
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package sound;
 
 public class k007232
 {

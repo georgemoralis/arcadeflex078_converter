@@ -159,9 +159,8 @@ Video sync   6 F   Video sync                 Post   6 F   Post
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class halleys
 {

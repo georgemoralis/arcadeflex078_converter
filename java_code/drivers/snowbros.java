@@ -59,9 +59,8 @@ example, the protection data for that game was extracted from the bootleg.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class snowbros
 {

@@ -49,9 +49,8 @@ and 2764 eprom (swapped D3/D4 and D5/D6 data lines)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class travrusa
 {

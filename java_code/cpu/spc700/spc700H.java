@@ -133,9 +133,8 @@ void spc700_branching(unsigned int new_pc);
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package cpu.spc700;
 
 public class spc700H
 {

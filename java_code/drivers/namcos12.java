@@ -39,9 +39,8 @@ X101: M53.693 KDS 745 (near CXD8654Q)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class namcos12
 {

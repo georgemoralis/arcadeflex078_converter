@@ -11,9 +11,8 @@ The blitter reads compressed data from ROM and copies it to the bitmap RAM.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package vidhrdw;
 
 public class hnayayoi
 {

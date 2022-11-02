@@ -13,9 +13,8 @@ a 68000 to create the background image.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class toypop
 {

@@ -70,9 +70,8 @@ Tons of thanks to the guy who posted these, whoever he is...
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package cpu.tms9900;
 
 public class _99xxcoreH
 {

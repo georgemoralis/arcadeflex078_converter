@@ -22,9 +22,8 @@ sub68k is performing not only processing of sound but assistance of main68k.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class hyprduel
 {

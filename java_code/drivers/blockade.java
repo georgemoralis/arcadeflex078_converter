@@ -32,9 +32,8 @@ Notes:  Support is complete with the exception of the square wave generator
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class blockade
 {

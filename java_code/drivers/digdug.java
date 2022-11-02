@@ -113,9 +113,8 @@ CPU #3 NMI (@120Hz)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class digdug
 {

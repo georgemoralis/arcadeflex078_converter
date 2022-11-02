@@ -551,9 +551,8 @@ CUSTOM: 304 (x4, 120 PIN PQFP)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class namcos22
 {

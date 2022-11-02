@@ -28,9 +28,8 @@ Take the following observations with a grain of salt (might not be true):
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class lkage
 {

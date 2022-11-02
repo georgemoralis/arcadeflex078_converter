@@ -27,9 +27,8 @@ a6: Check for the Color RAM.Print "Video RAM N/G!!!" otherwise.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class yumefuda
 {

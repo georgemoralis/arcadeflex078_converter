@@ -91,9 +91,8 @@ FG-3J ROM-J 507KA0301P04       Rev:1.3
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.01
+ * using automatic conversion tool v0.02
  */ 
-package drivers;
 
 public class fuukifg3
 {
