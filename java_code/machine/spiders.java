@@ -33,7 +33,7 @@ public class spiders
 	
 	public static WriteHandlerPtr soundcmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,M6802_IRQ_LINE,(~data & 0x80) ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	

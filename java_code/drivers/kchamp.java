@@ -131,7 +131,7 @@ public class kchamp
 	} };
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
-		soundlatch_w( 0, data );
+		soundlatch_w.handler( 0, data );
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
 	} };
 	

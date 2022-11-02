@@ -455,7 +455,7 @@ public class airbustr
 	
 	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		soundlatch_status = 1;				// soundlatch has been written
 		cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);	// cause a nmi to sub cpu
 	} };
@@ -543,7 +543,7 @@ public class airbustr
 	public static WriteHandlerPtr soundcommand2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch2_status = 1;		// soundlatch2 has been written
-		soundlatch2_w(0,data);
+		soundlatch2_w.handler(0,data);
 	} };
 	
 	

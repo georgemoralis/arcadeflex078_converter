@@ -186,12 +186,12 @@ public class dkong
 	public static WriteHandlerPtr dkong_sh_sound3_w = new WriteHandlerPtr() {public void handler(int offset, int data)     { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
 	public static WriteHandlerPtr dkong_sh_sound4_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[1] = ~data & 1; } };
 	public static WriteHandlerPtr dkong_sh_sound5_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[0] = ~data & 1; } };
-	public static WriteHandlerPtr dkong_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w(offset,data ^ 0x0f); } };
+	public static WriteHandlerPtr dkong_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w.handler(offset,data ^ 0x0f); } };
 	
 	public static WriteHandlerPtr dkongjr_sh_test6_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],6,data); } };
 	public static WriteHandlerPtr dkongjr_sh_test5_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
 	public static WriteHandlerPtr dkongjr_sh_test4_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],4,data); } };
-	public static WriteHandlerPtr dkongjr_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w(offset,data); } };
+	public static WriteHandlerPtr dkongjr_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w.handler(offset,data); } };
 	
 	
 	public static ReadHandlerPtr dkong_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };

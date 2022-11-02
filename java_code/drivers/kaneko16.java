@@ -1652,7 +1652,7 @@ public class kaneko16
 	public static WriteHandlerPtr sandscrp_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		latch2_full = 1;
-		soundlatch2_w(0,data);
+		soundlatch2_w.handler(0,data);
 	} };
 	
 	public static Memory_ReadAddress sandscrp_sound_readmem[]={

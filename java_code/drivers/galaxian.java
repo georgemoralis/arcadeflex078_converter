@@ -133,7 +133,7 @@ public class galaxian
 	/* Send sound data to the sound cpu and cause an nmi */
 	public static WriteHandlerPtr checkman_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w (0,data);
+		soundlatch_w.handler (0,data);
 		cpu_set_irq_line (1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

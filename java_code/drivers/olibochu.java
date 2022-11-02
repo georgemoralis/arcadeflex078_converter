@@ -194,7 +194,7 @@ public class olibochu
 		for (c = 15;c >= 0;c--)
 			if (cmd & (1 << c)) break;
 	
-		if (c >= 0) soundlatch_w(0,15-c);
+		if (c >= 0) soundlatch_w.handler(0,15-c);
 	} };
 	
 	

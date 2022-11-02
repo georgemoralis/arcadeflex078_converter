@@ -133,7 +133,7 @@ public class capbowl
 	public static WriteHandlerPtr capbowl_sndcmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
-		soundlatch_w(offset, data);
+		soundlatch_w.handler(offset, data);
 	} };
 	
 	

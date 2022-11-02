@@ -591,7 +591,7 @@ public class hal21
 	public static WriteHandlerPtr aso_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snk_sound_busy_bit = 0x20;
-		soundlatch_w(0, data);
+		soundlatch_w.handler(0, data);
 		cpu_set_irq_line( 2, 0, HOLD_LINE );
 	} };
 	

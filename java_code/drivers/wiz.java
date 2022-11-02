@@ -176,7 +176,7 @@ public class wiz
 		{
 			// 0x90 triggers a jump to non-existant address(development system?) and must be filtered
 			case 0x00:
-				if (data != 0x90) soundlatch_w(0, data);
+				if (data != 0x90) soundlatch_w.handler(0, data);
 			break;
 	
 			// explosion sound trigger(analog?)

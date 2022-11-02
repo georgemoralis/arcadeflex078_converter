@@ -1045,7 +1045,7 @@ public class suna8
 		if (data & ~0x02) 	logerror("CPU #0 - PC %04X: unknown palettebank bits: %02X\n",activecpu_get_pc(),data);
 	
 		/* Also used as soundlatch - depending on c0c0? */
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 	} };
 	
 	/*

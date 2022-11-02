@@ -70,7 +70,7 @@ public class blueprnt
 	
 	public static WriteHandlerPtr blueprnt_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(offset,data);
+		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	

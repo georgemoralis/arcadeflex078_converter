@@ -419,7 +419,7 @@ public class scramble
 	public static WriteHandlerPtr kingball_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		kingball_sound = (kingball_sound & ~0x02) | (data << 1);
-		soundlatch_w (0, kingball_sound | 0xf0);
+		soundlatch_w.handler (0, kingball_sound | 0xf0);
 	} };
 	
 	

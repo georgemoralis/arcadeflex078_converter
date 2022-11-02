@@ -137,7 +137,7 @@ public class chinagat
 	
 	public static WriteHandlerPtr chinagat_cpu_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w( offset, data );
+		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( 2, sound_irq, (sound_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
 	} };
 	

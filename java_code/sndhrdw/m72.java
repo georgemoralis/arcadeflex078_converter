@@ -130,7 +130,7 @@ public class m72
 	{
 		if (offset == 0)
 		{
-			soundlatch_w(offset,data);
+			soundlatch_w.handler(offset,data);
 			timer_set(TIME_NOW,Z80_ASSERT,setvector_callback);
 		}
 	} };

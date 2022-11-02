@@ -116,7 +116,7 @@ public class nbmj8991
 	
 	public static WriteHandlerPtr pstadium_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0, data);
+		soundlatch_w.handler(0, data);
 	} };
 	
 	public static ReadHandlerPtr pstadium_sound_r  = new ReadHandlerPtr() { public int handler(int offset)

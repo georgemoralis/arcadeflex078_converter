@@ -86,7 +86,7 @@ public class bladestl
 	
 	public static WriteHandlerPtr bladestl_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(offset, data);
+		soundlatch_w.handler(offset, data);
 		cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 		//logerror("(sound) write %02x\n", data);
 	} };

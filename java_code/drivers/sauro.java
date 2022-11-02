@@ -90,7 +90,7 @@ public class sauro
 	public static WriteHandlerPtr sauro_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data |= 0x80;
-		soundlatch_w(offset, data);
+		soundlatch_w.handler(offset, data);
 	} };
 	
 	public static ReadHandlerPtr sauro_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)

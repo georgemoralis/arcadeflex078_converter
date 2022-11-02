@@ -147,7 +147,7 @@ public class taitosj
 	
 	public static WriteHandlerPtr taitosj_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(offset,data);
+		soundlatch_w.handler(offset,data);
 		if (!sndnmi_disable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	

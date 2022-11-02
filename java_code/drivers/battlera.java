@@ -39,7 +39,7 @@ public class battlera
 	public static WriteHandlerPtr battlera_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset==0) {
-			soundlatch_w(0,data);
+			soundlatch_w.handler(0,data);
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 		}
 	} };

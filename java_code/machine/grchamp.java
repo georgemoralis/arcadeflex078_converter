@@ -70,7 +70,7 @@ public class grchamp
 	
 	public static WriteHandlerPtr grchamp_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* *OUT14 - Page 42 */
-		soundlatch_w( 0, data );
+		soundlatch_w.handler( 0, data );
 		cpu_set_nmi_line( 2, PULSE_LINE );
 	} };
 	

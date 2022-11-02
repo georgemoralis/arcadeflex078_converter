@@ -49,7 +49,7 @@ public class pbaction
 	
 	public static WriteHandlerPtr pbaction_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(offset,data);
+		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0x00);
 	} };
 	

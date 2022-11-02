@@ -223,7 +223,7 @@ public class ddragon
 			cpu_set_irq_line(0,M6809_IRQ_LINE,CLEAR_LINE);
 			break;
 		case 3: /* 380e - SND irq */
-			soundlatch_w( 0, data );
+			soundlatch_w.handler( 0, data );
 			cpu_set_irq_line( snd_cpu, sound_irq, (sound_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
 			break;
 		case 4: /* 380f - ? */
@@ -286,7 +286,7 @@ public class ddragon
 	
 	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w( offset, data );
+		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( snd_cpu, sound_irq, (sound_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
 	} };
 	

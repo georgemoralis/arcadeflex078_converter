@@ -151,7 +151,7 @@ public class nbmj9195
 	
 	public static WriteHandlerPtr sailorws_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0, data);
+		soundlatch_w.handler(0, data);
 	} };
 	
 	static void sailorws_soundclr_w(int offset, int data)

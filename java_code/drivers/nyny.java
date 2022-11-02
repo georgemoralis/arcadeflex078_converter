@@ -96,7 +96,7 @@ public class nyny
 		/* bit 4 enables the starfield? */
 	
 		/* bits 5-7 go to the music board */
-		soundlatch2_w(0,(data & 0x60) >> 5);
+		soundlatch2_w.handler(0,(data & 0x60) >> 5);
 		cpu_set_irq_line(2,M6802_IRQ_LINE,(data & 0x80) ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
@@ -142,7 +142,7 @@ public class nyny
 	
 	public static WriteHandlerPtr shared_w_irq = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,M6802_IRQ_LINE,HOLD_LINE);
 	} };
 	

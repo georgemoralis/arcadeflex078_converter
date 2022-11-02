@@ -72,7 +72,7 @@ public class retofinv
 	
 	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	      soundlatch_w(0, data);
+	      soundlatch_w.handler(0, data);
 	      cpu_set_irq_line(2, 0, HOLD_LINE);
 	} };
 	

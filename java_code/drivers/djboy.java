@@ -335,7 +335,7 @@ public class djboy
 	
 	public static WriteHandlerPtr cpu3_nmi_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

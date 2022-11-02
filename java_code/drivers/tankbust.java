@@ -89,7 +89,7 @@ public class tankbust
 			interrupt_enable_w(0,data);
 		break;
 	
-		case 1:	/* 0xe001 (value 0 then 1) written right after the soundlatch_w */
+		case 1:	/* 0xe001 (value 0 then 1) written right after the soundlatch_w.handler */
 			timer_set(TIME_NOW,data,soundirqline_callback);
 		break;
 	

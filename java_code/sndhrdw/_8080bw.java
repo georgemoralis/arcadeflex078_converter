@@ -844,7 +844,7 @@ public class _8080bw
 					 ((data & 0x08) << 2) |		/* P1.5 */
 					 ((data & 0x20) << 2);		/* P1.7 */
 	
-		soundlatch_w(0, sheriff_p1);
+		soundlatch_w.handler(0, sheriff_p1);
 	
 		cpu_set_irq_line(1, 0, ((sheriff_p1 & 0x70) == 0x70) ? ASSERT_LINE : CLEAR_LINE);
 	
@@ -872,7 +872,7 @@ public class _8080bw
 					 ((data & 0x08) >> 3) |		/* P1.0 */
 					 ((data & 0x10) << 2);		/* P1.6 */
 	
-		soundlatch_w(0, sheriff_p1);
+		soundlatch_w.handler(0, sheriff_p1);
 	
 		cpu_set_irq_line(1, 0, ((sheriff_p1 & 0x70) == 0x70) ? ASSERT_LINE : CLEAR_LINE);
 	} };

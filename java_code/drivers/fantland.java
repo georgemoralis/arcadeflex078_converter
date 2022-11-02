@@ -56,7 +56,7 @@ public class fantland
 	
 	public static WriteHandlerPtr fantland_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		cpu_set_nmi_line(1,PULSE_LINE);
 	} };
 	

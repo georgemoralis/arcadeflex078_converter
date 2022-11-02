@@ -84,7 +84,7 @@ public class flower
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		if (sn_nmi_enable != 0)
 			cpu_set_nmi_line(2, PULSE_LINE);
 	} };

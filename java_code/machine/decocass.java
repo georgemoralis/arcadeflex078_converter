@@ -96,7 +96,7 @@ public class decocass
 	public static WriteHandlerPtr decocass_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		LOG(2,("CPU #%d sound command . $%02x\n", cpu_getactivecpu(), data));
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		decocass_sound_ack |= 0x80;
 		/* remove snd cpu data ack bit. i don't see it in the schems, but... */
 		decocass_sound_ack &= ~0x40;
@@ -120,7 +120,7 @@ public class decocass
 	public static WriteHandlerPtr decocass_sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		LOG(2,("CPU #%d sound data    . $%02x\n", cpu_getactivecpu(), data));
-		soundlatch2_w(0, data);
+		soundlatch2_w.handler(0, data);
 		decocass_sound_ack |= 0x40;
 	} };
 	

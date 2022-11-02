@@ -96,7 +96,7 @@ public class sgladiat
 	public static WriteHandlerPtr sgladiat_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snk_sound_busy_bit = 0x20;
-		soundlatch_w( offset, data );
+		soundlatch_w.handler( offset, data );
 	
 		/* trigger NMI on sound CPU */
 	//	cpu_set_nmi_line(2, PULSE_LINE);

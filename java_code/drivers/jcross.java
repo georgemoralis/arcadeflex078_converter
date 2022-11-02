@@ -59,7 +59,7 @@ public class jcross
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_cpu_busy = 0x20;
-		soundlatch_w(0, data);
+		soundlatch_w.handler(0, data);
 		cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

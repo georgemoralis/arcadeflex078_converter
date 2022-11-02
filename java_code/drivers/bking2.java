@@ -54,7 +54,7 @@ public class bking2
 		for (i = 0;i < 8;i++)
 			if (data & (1 << i)) code |= 0x80 >> i;
 	
-		soundlatch_w(offset,code);
+		soundlatch_w.handler(offset,code);
 		if (sndnmi_enable != 0) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	

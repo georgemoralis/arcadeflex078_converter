@@ -152,7 +152,7 @@ public class ajax
 				cpu_set_irq_line(2, 0, HOLD_LINE);
 				break;
 			case 0x02:	/* Sound command number */
-				soundlatch_w(offset,data);
+				soundlatch_w.handler(offset,data);
 				break;
 			case 0x03:	/* Bankswitch + coin counters + priority*/
 				ajax_bankswitch_w(0, data);

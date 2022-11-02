@@ -135,7 +135,7 @@ public class lwings
 		else if( pc == 0x0445 )
 		{
 			avengers_soundstate = 0x80;
-			soundlatch_w( 0, data );
+			soundlatch_w.handler( 0, data );
 		}
 	} };
 	

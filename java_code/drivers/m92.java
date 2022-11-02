@@ -204,8 +204,8 @@ public class m92
 		if (offset==0)
 		{
 			timer_set(TIME_NOW,V30_ASSERT,setvector_callback);
-			soundlatch_w(0,data);
-	//		logerror("soundlatch_w %02x\n",data);
+			soundlatch_w.handler(0,data);
+	//		logerror("soundlatch_w.handler %02x\n",data);
 		}
 	} };
 	

@@ -136,7 +136,7 @@ public class system1
 	
 	public static WriteHandlerPtr system1_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		/* spin for a while to let the Z80 read the command (fixes hanging sound in Regulus) */
 		cpu_spinuntil_time(TIME_IN_USEC(50));

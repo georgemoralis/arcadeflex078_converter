@@ -66,12 +66,12 @@ public class cchasm
 	        break;
 	
 	    case 0x40:
-	        soundlatch3_w (offset, data);
+	        soundlatch3_w.handler (offset, data);
 	        break;
 	
 	    case 0x41:
 	        sound_flags |= 0x40;
-	        soundlatch4_w (offset, data);
+	        soundlatch4_w.handler (offset, data);
 	        cpu_set_irq_line(0, 1, HOLD_LINE);
 	        break;
 	

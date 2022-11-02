@@ -110,7 +110,7 @@ public class funybubl
 	
 	public static WriteHandlerPtr funybubl_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,0, PULSE_LINE);
 	} };
 	

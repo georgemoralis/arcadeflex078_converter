@@ -95,7 +95,7 @@ public class mario
 	public static WriteHandlerPtr mario_sh_crab_w = new WriteHandlerPtr() {public void handler(int offset, int data)       { p[1] = ACTIVEHIGH_PORT_BIT(p[1],0,data); } };
 	public static WriteHandlerPtr mario_sh_turtle_w = new WriteHandlerPtr() {public void handler(int offset, int data)     { p[1] = ACTIVEHIGH_PORT_BIT(p[1],1,data); } };
 	public static WriteHandlerPtr mario_sh_fly_w = new WriteHandlerPtr() {public void handler(int offset, int data)        { p[1] = ACTIVEHIGH_PORT_BIT(p[1],2,data); } };
-	public static WriteHandlerPtr mario_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w(offset,data); } };
+	public static WriteHandlerPtr mario_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w.handler(offset,data); } };
 	
 	public static ReadHandlerPtr mario_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };
 	public static ReadHandlerPtr mario_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[2]; } };

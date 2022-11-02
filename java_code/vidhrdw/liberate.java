@@ -114,7 +114,7 @@ public class liberate
 				cpu_set_irq_line(0,DECO16_IRQ_LINE,CLEAR_LINE);
 				break;
 			case 9: /* Sound */
-				soundlatch_w(0,data);
+				soundlatch_w.handler(0,data);
 				cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 				break;
 		}

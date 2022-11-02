@@ -248,14 +248,14 @@ public class zaccaria
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(0,data);
+		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(2,0,(data & 0x80) ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
 	public static WriteHandlerPtr sound1_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pia_0_ca1_w(0,data & 0x80);
-		soundlatch2_w(0,data);
+		soundlatch2_w.handler(0,data);
 	} };
 	
 	public static WriteHandlerPtr mc1408_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -119,7 +119,7 @@ public class marvins
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_cpu_busy = snk_sound_busy_bit;
-		soundlatch_w(0, data);
+		soundlatch_w.handler(0, data);
 		cpu_set_irq_line(2, 0, HOLD_LINE);
 	} };
 	

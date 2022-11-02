@@ -2738,7 +2738,7 @@ public class seta
 	
 	public static WriteHandlerPtr calibr50_soundlatch2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch2_w(0,data);
+		soundlatch2_w.handler(0,data);
 		cpu_spinuntil_time(TIME_IN_USEC(50));	// Allow the other cpu to reply
 	} };
 	

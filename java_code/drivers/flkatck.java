@@ -77,7 +77,7 @@ public class flkatck
 				flkatck_bankswitch_w(0, data);
 				break;
 			case 0x05:	/* sound code number */
-				soundlatch_w(0, data);
+				soundlatch_w.handler(0, data);
 				break;
 			case 0x06:	/* Cause interrupt on audio CPU */
 				cpu_set_irq_line(1,0,HOLD_LINE);

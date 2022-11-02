@@ -72,7 +72,7 @@ public class skyfox
 		switch (offset)
 		{
 			case 0:	skyfox_bg_ctrl = data;	break;
-			case 1:	soundlatch_w(0,data);	break;
+			case 1:	soundlatch_w.handler(0,data);	break;
 			case 2:	break;
 			case 3:	break;
 			case 4:	break;

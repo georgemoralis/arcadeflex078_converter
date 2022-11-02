@@ -681,7 +681,7 @@ public class williams
 	
 	public static WriteHandlerPtr narc_command2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch2_w(0, data & 0xff);
+		soundlatch2_w.handler(0, data & 0xff);
 		cpu_set_irq_line(soundalt_cpunum, M6809_FIRQ_LINE, ASSERT_LINE);
 	} };
 }

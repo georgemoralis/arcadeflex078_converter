@@ -414,7 +414,7 @@ public class snk
 	
 	public static WriteHandlerPtr snk_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snk_sound_register |= 0x08 | 0x04;
-		soundlatch_w( offset, data );
+		soundlatch_w.handler( offset, data );
 	} };
 	
 	public static ReadHandlerPtr snk_soundlatch_clear_r  = new ReadHandlerPtr() { public int handler(int offset){ /* TNK3 */

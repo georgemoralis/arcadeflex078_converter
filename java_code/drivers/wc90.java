@@ -101,7 +101,7 @@ public class wc90
 	
 	public static WriteHandlerPtr wc90_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		soundlatch_w(offset,data);
+		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
