@@ -4,4 +4,7 @@
 
 machine/berzerk.java
 
+sndhrdw/redalert.java
+
 vidhrdw/minivadr.java
+
