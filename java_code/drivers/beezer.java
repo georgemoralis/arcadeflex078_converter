@@ -18,7 +18,6 @@ public class beezer
 	/* from vidhrdw/beezer.c */
 	
 	/* from machine/beezer.c */
-	DRIVER_INIT( beezer );
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

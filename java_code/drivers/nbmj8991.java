@@ -127,37 +127,37 @@ public class nbmj8991
 		return data;
 	} };
 	
-	static DRIVER_INIT( pstadium )
+	public static DriverInitHandlerPtr init_pstadium  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_PSTADIUM;
-	}
+	} };
 	
-	static DRIVER_INIT( triplew1 )
+	public static DriverInitHandlerPtr init_triplew1  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_TRIPLEW1;
-	}
+	} };
 	
-	static DRIVER_INIT( triplew2 )
+	public static DriverInitHandlerPtr init_triplew2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_TRIPLEW2;
-	}
+	} };
 	
-	static DRIVER_INIT( ntopstar )
+	public static DriverInitHandlerPtr init_ntopstar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_NTOPSTAR;
-	}
+	} };
 	
-	static DRIVER_INIT( mjlstory )
+	public static DriverInitHandlerPtr init_mjlstory  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_MJLSTORY;
-	}
+	} };
 	
-	static DRIVER_INIT( vanilla )
+	public static DriverInitHandlerPtr init_vanilla  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_VANILLA;
-	}
+	} };
 	
-	static DRIVER_INIT( finalbny )
+	public static DriverInitHandlerPtr init_finalbny  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *ROM = memory_region(REGION_CPU1);
 		int i;
@@ -165,24 +165,24 @@ public class nbmj8991
 		for (i = 0xf800; i < 0x10000; i++) ROM[i] = 0x00;
 	
 		nb1413m3_type = NB1413M3_FINALBNY;
-	}
+	} };
 	
-	static DRIVER_INIT( qmhayaku )
+	public static DriverInitHandlerPtr init_qmhayaku  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_QMHAYAKU;
-	}
+	} };
 	
-	static DRIVER_INIT( galkoku )
+	public static DriverInitHandlerPtr init_galkoku  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_GALKOKU;
-	}
+	} };
 	
-	static DRIVER_INIT( hyouban )
+	public static DriverInitHandlerPtr init_hyouban  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_HYOUBAN;
-	}
+	} };
 	
-	static DRIVER_INIT( galkaika )
+	public static DriverInitHandlerPtr init_galkaika  = new DriverInitHandlerPtr() { public void handler()
 	{
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
@@ -191,9 +191,9 @@ public class nbmj8991
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_GALKAIKA;
-	}
+	} };
 	
-	static DRIVER_INIT( tokyogal )
+	public static DriverInitHandlerPtr init_tokyogal  = new DriverInitHandlerPtr() { public void handler()
 	{
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
@@ -202,9 +202,9 @@ public class nbmj8991
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_TOKYOGAL;
-	}
+	} };
 	
-	static DRIVER_INIT( tokimbsj )
+	public static DriverInitHandlerPtr init_tokimbsj  = new DriverInitHandlerPtr() { public void handler()
 	{
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
@@ -213,27 +213,27 @@ public class nbmj8991
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_TOKIMBSJ;
-	}
+	} };
 	
-	static DRIVER_INIT( mcontest )
+	public static DriverInitHandlerPtr init_mcontest  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_MCONTEST;
-	}
+	} };
 	
-	static DRIVER_INIT( uchuuai )
+	public static DriverInitHandlerPtr init_uchuuai  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_UCHUUAI;
-	}
+	} };
 	
-	static DRIVER_INIT( av2mj1bb )
+	public static DriverInitHandlerPtr init_av2mj1bb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_AV2MJ1BB;
-	}
+	} };
 	
-	static DRIVER_INIT( av2mj2rg )
+	public static DriverInitHandlerPtr init_av2mj2rg  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_AV2MJ2RG;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem_pstadium[]={

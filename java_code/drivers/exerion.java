@@ -453,7 +453,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( exerion )
+	public static DriverInitHandlerPtr init_exerion  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT32 oldaddr, newaddr, length;
 		UINT8 *src, *dst, *temp;
@@ -501,10 +501,10 @@ public class exerion
 		}
 	
 		free(temp);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( exerionb )
+	public static DriverInitHandlerPtr init_exerionb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *ram = memory_region(REGION_CPU1);
 		int addr;
@@ -515,7 +515,7 @@ public class exerion
 	
 		/* also convert the gfx as in Exerion */
 		init_exerion();
-	}
+	} };
 	
 	
 	

@@ -4213,71 +4213,71 @@ public class namcos2
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( assault ){
+	public static DriverInitHandlerPtr init_assault  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_ASSAULT;
-	}
+	} };
 	
-	DRIVER_INIT( assaultj ){
+	public static DriverInitHandlerPtr init_assaultj  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_ASSAULT_JP;
-	}
+	} };
 	
-	DRIVER_INIT( assaultp ){
+	public static DriverInitHandlerPtr init_assaultp  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_ASSAULT_PLUS;
-	}
+	} };
 	
-	DRIVER_INIT( burnforc ){
+	public static DriverInitHandlerPtr init_burnforc  = new DriverInitHandlerPtr() { public void handler(){
 	    namcos2_gametype=NAMCOS2_BURNING_FORCE;
-	}
+	} };
 	
-	DRIVER_INIT( cosmogng ){
+	public static DriverInitHandlerPtr init_cosmogng  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_COSMO_GANG;
-	}
+	} };
 	
-	DRIVER_INIT( dsaber ){
+	public static DriverInitHandlerPtr init_dsaber  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_DRAGON_SABER;
-	}
+	} };
 	
-	DRIVER_INIT( dsaberj ){
+	public static DriverInitHandlerPtr init_dsaberj  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_DRAGON_SABER;
-	}
+	} };
 	
-	DRIVER_INIT( dirtfoxj ){
+	public static DriverInitHandlerPtr init_dirtfoxj  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_DIRT_FOX_JP;
-	}
+	} };
 	
-	DRIVER_INIT( finallap ){
+	public static DriverInitHandlerPtr init_finallap  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_FINAL_LAP;
-	}
+	} };
 	
-	DRIVER_INIT( finalap2 ){
+	public static DriverInitHandlerPtr init_finalap2  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_FINAL_LAP_2;
-	}
+	} };
 	
-	DRIVER_INIT( finalap3 ){
+	public static DriverInitHandlerPtr init_finalap3  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_FINAL_LAP_3;
-	}
+	} };
 	
-	DRIVER_INIT( finehour ){
+	public static DriverInitHandlerPtr init_finehour  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_FINEST_HOUR;
-	}
+	} };
 	
-	DRIVER_INIT( fourtrax ){
+	public static DriverInitHandlerPtr init_fourtrax  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_FOUR_TRAX;
-	}
+	} };
 	
-	DRIVER_INIT( kyukaidk ){
+	public static DriverInitHandlerPtr init_kyukaidk  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_KYUUKAI_DOUCHUUKI;
-	}
+	} };
 	
-	DRIVER_INIT( marvlanj ){
+	public static DriverInitHandlerPtr init_marvlanj  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_MARVEL_LAND;
-	}
+	} };
 	
-	DRIVER_INIT( marvland ){
+	public static DriverInitHandlerPtr init_marvland  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_MARVEL_LAND;
-	}
+	} };
 	
-	DRIVER_INIT( metlhawk ){
+	public static DriverInitHandlerPtr init_metlhawk  = new DriverInitHandlerPtr() { public void handler(){
 		/* unscramble sprites */
 		int i, j, k, l;
 		unsigned char *data = memory_region(REGION_GFX1);
@@ -4330,62 +4330,62 @@ public class namcos2
 			}
 		}
 		namcos2_gametype=NAMCOS2_METAL_HAWK;
-	}
+	} };
 	
 	
-	DRIVER_INIT( mirninja ){
+	public static DriverInitHandlerPtr init_mirninja  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_MIRAI_NINJA;
-	}
+	} };
 	
-	DRIVER_INIT( ordyne ){
+	public static DriverInitHandlerPtr init_ordyne  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_ORDYNE;
-	}
+	} };
 	
-	DRIVER_INIT( phelios ){
+	public static DriverInitHandlerPtr init_phelios  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_PHELIOS;
-	}
+	} };
 	
-	DRIVER_INIT( rthun2 ){
+	public static DriverInitHandlerPtr init_rthun2  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_ROLLING_THUNDER_2;
-	}
+	} };
 	
-	DRIVER_INIT( rthun2j ){
+	public static DriverInitHandlerPtr init_rthun2j  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_ROLLING_THUNDER_2;
-	}
+	} };
 	
-	DRIVER_INIT( sgunner2 ){
+	public static DriverInitHandlerPtr init_sgunner2  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_STEEL_GUNNER_2;
-	}
+	} };
 	
-	DRIVER_INIT( sws92 ){
+	public static DriverInitHandlerPtr init_sws92  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_SUPER_WSTADIUM_92;
-	}
+	} };
 	
-	DRIVER_INIT( sws92g ){
+	public static DriverInitHandlerPtr init_sws92g  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_SUPER_WSTADIUM_92T;
-	}
+	} };
 	
-	DRIVER_INIT( sws93 ){
+	public static DriverInitHandlerPtr init_sws93  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_SUPER_WSTADIUM_93;
-	}
+	} };
 	
-	DRIVER_INIT( suzuka8h ){
+	public static DriverInitHandlerPtr init_suzuka8h  = new DriverInitHandlerPtr() { public void handler(){
 	        namcos2_gametype=NAMCOS2_SUZUKA_8_HOURS;
-	}
+	} };
 	
-	DRIVER_INIT( suzuk8h2 ){
+	public static DriverInitHandlerPtr init_suzuk8h2  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_SUZUKA_8_HOURS_2;
-	}
+	} };
 	
-	DRIVER_INIT( valkyrie ){
+	public static DriverInitHandlerPtr init_valkyrie  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_VALKYRIE;
-	}
+	} };
 	
-	DRIVER_INIT( gollygho ){
+	public static DriverInitHandlerPtr init_gollygho  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype=NAMCOS2_GOLLY_GHOST;
-	}
+	} };
 	
-	DRIVER_INIT( luckywld ){
+	public static DriverInitHandlerPtr init_luckywld  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *pData = (UINT8 *)memory_region( REGION_GFX5 );
 		int i;
 		for( i=0; i<32*0x4000; i++ )
@@ -4403,7 +4403,7 @@ public class namcos2
 			pData[i] = out;
 		}
 		namcos2_gametype=NAMCOS2_LUCKY_AND_WILD;
-	}
+	} };
 	
 	/* Based on the dumped BIOS versions it looks like Namco changed the BIOS rom */
 	/* from sys2c65b to sys2c65c sometime between 1988 and 1990 as mirai ninja	  */

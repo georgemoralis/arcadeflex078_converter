@@ -3819,13 +3819,13 @@ public class tmnt
 		ROM_LOAD( "101a06.1d",    0x0000, 0x200000, CRC(4f48e043) SHA1(f50e8642d9d3a028c243777640e7cd13da1abf86) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( gfx )
+	public static DriverInitHandlerPtr init_gfx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
-	static DRIVER_INIT( mia )
+	public static DriverInitHandlerPtr init_mia  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *gfxdata;
 		int len;
@@ -3918,10 +3918,10 @@ public class tmnt
 			gfxdata[4*A+3] = temp[4*B+3];
 		}
 		free(temp);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( tmnt )
+	public static DriverInitHandlerPtr init_tmnt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *gfxdata;
 		int len;
@@ -4028,7 +4028,7 @@ public class tmnt
 			gfxdata[4*A+3] = temp[4*B+3];
 		}
 		free(temp);
-	}
+	} };
 	
 	static void shuffle(UINT8 *buf,int len)
 	{
@@ -4052,14 +4052,14 @@ public class tmnt
 		shuffle(buf + len,len);
 	}
 	
-	static DRIVER_INIT( glfgreat )
+	public static DriverInitHandlerPtr init_glfgreat  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* ROMs are interleaved at byte level */
 		shuffle(memory_region(REGION_GFX1),memory_region_length(REGION_GFX1));
 		shuffle(memory_region(REGION_GFX2),memory_region_length(REGION_GFX2));
-	}
+	} };
 	
-	static DRIVER_INIT( cuebrckj )
+	public static DriverInitHandlerPtr init_cuebrckj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		generic_nvram = (data8_t *)cbj_nvram;
 		generic_nvram_size = 0x400*0x20;
@@ -4067,7 +4067,7 @@ public class tmnt
 		/* ROMs are interleaved at byte level */
 		shuffle(memory_region(REGION_GFX1),memory_region_length(REGION_GFX1));
 		shuffle(memory_region(REGION_GFX2),memory_region_length(REGION_GFX2));
-	}
+	} };
 	
 	GAME( 1989, cuebrckj, cuebrick, cuebrckj, mia,      cuebrckj, ROT0,  "Konami", "Cue Brick (World version D)" )
 	

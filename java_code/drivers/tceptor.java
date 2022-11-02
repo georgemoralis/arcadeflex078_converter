@@ -606,12 +606,12 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	static DRIVER_INIT( tceptor )
+	public static DriverInitHandlerPtr init_tceptor  = new DriverInitHandlerPtr() { public void handler()
 	{
 		state_save_register_int("tceptor", 0, "m6809_irq_enable",  &m6809_irq_enable);
 		state_save_register_int("tceptor", 0, "m68k_irq_enable",   &m68k_irq_enable);
 		state_save_register_int("tceptor", 0, "mcu_irq_enable",    &mcu_irq_enable);
-	}
+	} };
 	
 	
 	/***************************************************************************

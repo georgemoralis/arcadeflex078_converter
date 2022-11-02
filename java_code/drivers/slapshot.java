@@ -718,7 +718,7 @@ public class slapshot
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( slapshot )
+	public static DriverInitHandlerPtr init_slapshot  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned int offset,i;
 		UINT8 *gfx = memory_region(REGION_GFX2);
@@ -746,7 +746,7 @@ public class slapshot
 	
 		state_save_register_int("sound1", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
-	}
+	} };
 	
 	GAME( 1994, slapshot, 0,       slapshot, slapshot, slapshot, ROT0, "Taito Corporation",         "Slap Shot (Japan)" )
 	GAME( 1994, opwolf3,  0,       opwolf3,  opwolf3,  slapshot, ROT0, "Taito Corporation Japan",   "Operation Wolf 3 (World)" )

@@ -421,52 +421,52 @@ public class midwunit
 		midway_serial_pic_init(528);
 	}
 	
-	DRIVER_INIT( mk3 )
+	public static DriverInitHandlerPtr init_mk3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x1069bd0, 0xff926810, 0x105dc10, 0x105dc30, 0x105dc50);
-	}
+	} };
 	
-	DRIVER_INIT( mk3r20 )
+	public static DriverInitHandlerPtr init_mk3r20  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x1069bd0, 0xff926790, 0x105dc10, 0x105dc30, 0x105dc50);
-	}
+	} };
 	
-	DRIVER_INIT( mk3r10 )
+	public static DriverInitHandlerPtr init_mk3r10  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x1078e50, 0xff923e30, 0x105d490, 0x105d4b0, 0x105d4d0);
-	}
+	} };
 	
-	DRIVER_INIT( umk3 )
+	public static DriverInitHandlerPtr init_umk3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x106a0e0, 0xff9696a0, 0x105dc10, 0x105dc30, 0x105dc50);
-	}
+	} };
 	
-	DRIVER_INIT( umk3r11 )
+	public static DriverInitHandlerPtr init_umk3r11  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x106a0e0, 0xff969680, 0x105dc10, 0x105dc30, 0x105dc50);
-	}
+	} };
 	
 	
 	/********************** 2 On 2 Open Ice Challenge **********************/
 	
-	DRIVER_INIT( openice )
+	public static DriverInitHandlerPtr init_openice  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* common init */
 		init_wunit_generic();
 	
 		/* serial prefixes 438, 528 */
 		midway_serial_pic_init(528);
-	}
+	} };
 	
 	
 	/********************** NBA Hangtime & NBA Maximum Hangtime **********************/
 	
-	DRIVER_INIT( nbahangt )
+	public static DriverInitHandlerPtr init_nbahangt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* common init */
 		init_wunit_generic();
@@ -475,7 +475,7 @@ public class midwunit
 		midway_serial_pic_init(528);
 	
 		INSTALL_SPEEDUP_1_16BIT(0x10731f0, 0xff8a5510, 0x1002040, 0xd0, 0xb0);
-	}
+	} };
 	
 	
 	/********************** WWF Wrestlemania **********************/
@@ -544,7 +544,7 @@ public class midwunit
 		logerror("Changed I/O swiching to %d\n", data);
 	}
 	
-	DRIVER_INIT( wwfmania )
+	public static DriverInitHandlerPtr init_wwfmania  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* common init */
 		init_wunit_generic();
@@ -556,24 +556,24 @@ public class midwunit
 		midway_serial_pic_init(528);
 	
 		INSTALL_SPEEDUP_1_ADDRESS(0x105c250, 0xff8189d0);
-	}
+	} };
 	
 	
 	/********************** Rampage World Tour **********************/
 	
-	DRIVER_INIT( rmpgwt )
+	public static DriverInitHandlerPtr init_rmpgwt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* common init */
 		init_wunit_generic();
 	
 		/* serial prefixes 465, 528 */
 		midway_serial_pic_init(528);
-	}
+	} };
 	
 	
 	/********************** Revolution X **********************/
 	
-	DRIVER_INIT( revx )
+	public static DriverInitHandlerPtr init_revx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *base;
 		int i, j;
@@ -601,7 +601,7 @@ public class midwunit
 	
 		/* serial prefixes 419, 420 */
 		midway_serial_pic_init(419);
-	}
+	} };
 	
 	
 	

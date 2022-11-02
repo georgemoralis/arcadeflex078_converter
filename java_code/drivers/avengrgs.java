@@ -346,10 +346,10 @@ public class avengrgs
 		return a;
 	}
 	
-	static DRIVER_INIT( avengrgs )
+	public static DriverInitHandlerPtr init_avengrgs  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x01089a0, 0x01089a3, avengrgs_speedup_r );
-	}
+	} };
 	
 	/***************************************************************************/
 	

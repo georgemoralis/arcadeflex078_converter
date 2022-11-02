@@ -37,18 +37,18 @@ public class sprint2
 	static int game;
 	
 	
-	static DRIVER_INIT( sprint1 )
+	public static DriverInitHandlerPtr init_sprint1  = new DriverInitHandlerPtr() { public void handler()
 	{
 		game = 1;
-	}
-	static DRIVER_INIT( sprint2 )
+	} };
+	public static DriverInitHandlerPtr init_sprint2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		game = 2;
-	}
-	static DRIVER_INIT( dominos )
+	} };
+	public static DriverInitHandlerPtr init_dominos  = new DriverInitHandlerPtr() { public void handler()
 	{
 		game = 3;
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr sprint2 = new InterruptHandlerPtr() {public void handler()

@@ -635,15 +635,15 @@ public class actfancr
 		return ret;
 	} };
 	
-	static DRIVER_INIT( actfancr )
+	public static DriverInitHandlerPtr init_actfancr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x1f0026, 0x1f0027, cycle_r);
-	}
+	} };
 	
-	static DRIVER_INIT( actfancj )
+	public static DriverInitHandlerPtr init_actfancj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x1f0026, 0x1f0027, cyclej_r);
-	}
+	} };
 	
 	
 	

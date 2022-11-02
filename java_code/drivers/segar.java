@@ -1626,34 +1626,34 @@ public class segar
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( astrob )
+	public static DriverInitHandlerPtr init_astrob  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0062 security chip */
 		sega_security(62);
 	
 		install_port_write_handler(0, 0x38, 0x38, sega_sh_speechboard_w);
 		install_port_write_handler(0, 0x3e, 0x3f, astrob_audio_ports_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( 005 )
+	public static DriverInitHandlerPtr init_005  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0070 security chip */
 		sega_security(70);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( monsterb )
+	public static DriverInitHandlerPtr init_monsterb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0082 security chip */
 		sega_security(82);
 	
 		install_port_write_handler(0, 0x0c, 0x0f, monsterb_audio_8255_w);
 		install_port_write_handler(0, 0xbc, 0xbc, monsterb_back_port_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( spaceod )
+	public static DriverInitHandlerPtr init_spaceod  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0063 security chip */
 		sega_security(63);
@@ -1664,10 +1664,10 @@ public class segar
 		install_port_write_handler(0, 0x0b, 0x0c, spaceod_nobackfill_w);
 		install_port_write_handler(0, 0x0d, 0x0d, spaceod_backfill_w);
 		install_port_write_handler(0, 0x0e, 0x0f, spaceod_audio_ports_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( pignewt )
+	public static DriverInitHandlerPtr init_pignewt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0063? security chip */
 		sega_security(63);
@@ -1675,14 +1675,14 @@ public class segar
 		install_port_write_handler(0, 0xb4, 0xb5, pignewt_back_color_w);  /* Just guessing */
 		install_port_write_handler(0, 0xb8, 0xbc, pignewt_back_ports_w);   /* Just guessing */
 		install_port_write_handler(0, 0xbe, 0xbe, MWA_NOP);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( sindbadm )
+	public static DriverInitHandlerPtr init_sindbadm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses an encrypted CPU */
 		sindbadm_decode();
-	}
+	} };
 	
 	
 	

@@ -387,10 +387,10 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( shuuz )
+	public static DriverInitHandlerPtr init_shuuz  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
-	}
+	} };
 	
 	
 	

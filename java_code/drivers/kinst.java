@@ -453,7 +453,7 @@ public class kinst
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( kinst )
+	public static DriverInitHandlerPtr init_kinst  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT8 kinst_control_map[8] = { 0,1,2,3,4,5,6,7 };
 		UINT8 *features;
@@ -485,10 +485,10 @@ public class kinst
 	
 		/* set the fastest DRC options */
 		mips3drc_set_options(0, MIPS3DRC_FASTEST_OPTIONS);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( kinst2 )
+	public static DriverInitHandlerPtr init_kinst2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT8 kinst2_control_map[8] = { 2,4,1,0,3,5,6,7 };
 		UINT8 *features;
@@ -527,7 +527,7 @@ public class kinst
 	
 		/* set the fastest DRC options */
 		mips3drc_set_options(0, MIPS3DRC_FASTEST_OPTIONS);
-	}
+	} };
 	
 	
 	

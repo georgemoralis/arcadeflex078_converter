@@ -1007,7 +1007,7 @@ public class cojag
 	}
 	
 	
-	static DRIVER_INIT( area51 )
+	public static DriverInitHandlerPtr init_area51  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(1, 0x5c4, 0x5a0);
 	
@@ -1015,10 +1015,10 @@ public class cojag
 		/* install speedup for main CPU */
 		main_speedup = install_mem_write32_handler(0, 0xa02030, 0xa02033, area51_main_speedup_w);
 	#endif
-	}
+	} };
 	
 	
-	static DRIVER_INIT( maxforce )
+	public static DriverInitHandlerPtr init_maxforce  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(1, 0x0c0, 0x09e);
 	
@@ -1030,10 +1030,10 @@ public class cojag
 		main_speedup_max_cycles = 120;
 		main_speedup = install_mem_read32_handler(0, 0x1000865c, 0x1000865f, cojagr3k_main_speedup_r);
 	#endif
-	}
+	} };
 	
 	
-	static DRIVER_INIT( area51mx )
+	public static DriverInitHandlerPtr init_area51mx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(1, 0x0c0, 0x09e);
 	
@@ -1044,10 +1044,10 @@ public class cojag
 		/* install speedup for main CPU */
 		main_speedup = install_mem_write32_handler(0, 0xa19550, 0xa19557, area51mx_main_speedup_w);
 	#endif
-	}
+	} };
 	
 	
-	static DRIVER_INIT( a51mxr3k )
+	public static DriverInitHandlerPtr init_a51mxr3k  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(1, 0x0c0, 0x09e);
 	
@@ -1059,10 +1059,10 @@ public class cojag
 		main_speedup_max_cycles = 120;
 		main_speedup = install_mem_read32_handler(0, 0x10006f0c, 0x10006f0f, cojagr3k_main_speedup_r);
 	#endif
-	}
+	} };
 	
 	
-	static DRIVER_INIT( vcircle )
+	public static DriverInitHandlerPtr init_vcircle  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(0, 0x5c0, 0x5a0);
 	
@@ -1071,7 +1071,7 @@ public class cojag
 		main_speedup_max_cycles = 50;
 		main_speedup = install_mem_read32_handler(0, 0x12005b34, 0x12005b37, cojagr3k_main_speedup_r);
 	#endif
-	}
+	} };
 	
 	
 	

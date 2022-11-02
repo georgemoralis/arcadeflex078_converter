@@ -340,11 +340,11 @@ public class sprcros2
 		MDRV_SOUND_ADD(SN76496, sprcros2_sn76496_interface)
 	MACHINE_DRIVER_END
 	
-	static DRIVER_INIT( sprcros2 )
+	public static DriverInitHandlerPtr init_sprcros2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		state_save_register_int("main", 0, "m_cpu_port7", &sprcros2_m_port7);
 		state_save_register_int("main", 0, "s_cpu_port3", &sprcros2_s_port3);
-	}
+	} };
 	
 	static RomLoadPtr rom_sprcros2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x14000, REGION_CPU1, 0 )

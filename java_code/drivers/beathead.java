@@ -540,7 +540,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( beathead )
+	public static DriverInitHandlerPtr init_beathead  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the common systems */
 		atarigen_eeprom_default = NULL;
@@ -554,7 +554,7 @@ public class beathead
 		/* prepare the speedups */
 		speedup_data = install_mem_read32_handler(0, 0x00000ae8, 0x00000aeb, speedup_r);
 		movie_speedup_data = install_mem_read32_handler(0, 0x00000804, 0x00000807, movie_speedup_r);
-	}
+	} };
 	
 	
 	

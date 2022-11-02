@@ -785,20 +785,20 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( pipedrm )
+	public static DriverInitHandlerPtr init_pipedrm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* sprite RAM lives at the end of palette RAM */
 		spriteram = install_mem_read_handler(0, 0xcc00, 0xcfff, MRA_RAM);
 		spriteram = install_mem_write_handler(0, 0xcc00, 0xcfff, MWA_RAM);
 		spriteram_size = 0x400;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( hatris )
+	public static DriverInitHandlerPtr init_hatris  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_write_handler(0, 0x20, 0x20, sound_command_nonmi_w);
 		install_port_write_handler(0, 0x21, 0x21, fromance_gfxreg_w);
-	}
+	} };
 	
 	
 	

@@ -1159,7 +1159,7 @@ public class sega
 	 *
 	 *************************************/
 	
-	DRIVER_INIT( spacfury )
+	public static DriverInitHandlerPtr init_spacfury  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0064 security chip */
 		sega_security(64);
@@ -1170,10 +1170,10 @@ public class sega
 		install_port_write_handler(0, 0x3e, 0x3e, spacfury1_sh_w);
 		install_port_write_handler(0, 0x3f, 0x3f, spacfury2_sh_w);
 		install_port_write_handler(0, 0xf8, 0xf8, IOWP_NOP);
-	}
+	} };
 	
 	
-	DRIVER_INIT( zektor )
+	public static DriverInitHandlerPtr init_zektor  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0082 security chip */
 		sega_security(82);
@@ -1183,10 +1183,10 @@ public class sega
 		install_port_write_handler(0, 0x38, 0x38, sega_sh_speechboard_w);
 		install_port_write_handler(0, 0x3e, 0x3e, zektor1_sh_w);
 		install_port_write_handler(0, 0x3f, 0x3f, zektor2_sh_w);
-	}
+	} };
 	
 	
-	DRIVER_INIT( elim2 )
+	public static DriverInitHandlerPtr init_elim2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0070 security chip */
 		sega_security(70);
@@ -1195,10 +1195,10 @@ public class sega
 	
 		install_port_write_handler(0, 0x3e, 0x3e, elim1_sh_w);
 		install_port_write_handler(0, 0x3f, 0x3f, elim2_sh_w);
-	}
+	} };
 	
 	
-	DRIVER_INIT( elim4 )
+	public static DriverInitHandlerPtr init_elim4  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0076 security chip */
 		sega_security(76);
@@ -1207,10 +1207,10 @@ public class sega
 	
 		install_port_write_handler(0, 0x3e, 0x3e, elim1_sh_w);
 		install_port_write_handler(0, 0x3f, 0x3f, elim2_sh_w);
-	}
+	} };
 	
 	
-	DRIVER_INIT( startrek )
+	public static DriverInitHandlerPtr init_startrek  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0064 security chip */
 		sega_security(64);
@@ -1219,10 +1219,10 @@ public class sega
 	
 		install_port_write_handler(0, 0x38, 0x38, sega_sh_speechboard_w);
 		install_port_write_handler(0, 0x3f, 0x3f, startrek_sh_w);
-	}
+	} };
 	
 	
-	DRIVER_INIT( tacscan )
+	public static DriverInitHandlerPtr init_tacscan  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* This game uses the 315-0076 security chip */
 		sega_security(76);
@@ -1230,7 +1230,7 @@ public class sega
 		install_port_read_handler(0, 0xfc, 0xfc, sega_IN4_r);
 	
 		install_port_write_handler(0, 0x3f, 0x3f, tacscan_sh_w);
-	}
+	} };
 	
 	
 	

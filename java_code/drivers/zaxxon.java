@@ -1581,7 +1581,7 @@ public class zaxxon
 	
 	/* Driver Initialization */
 	
-	static DRIVER_INIT( zaxxonb )
+	public static DriverInitHandlerPtr init_zaxxonb  = new DriverInitHandlerPtr() { public void handler()
 	{
 	/*
 		the values vary, but the translation mask is always laid out like this:
@@ -1654,27 +1654,27 @@ public class zaxxon
 			i = ((A >> 0) & 1) + (((A >> 4) & 1) << 1) + (((A >> 8) & 1) << 2);
 			rom[A + diff] = src ^ opcode_xortable[i][j];
 		}
-	}
+	} };
 	
-	static DRIVER_INIT( szaxxon )
+	public static DriverInitHandlerPtr init_szaxxon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		szaxxon_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( futspy )
+	public static DriverInitHandlerPtr init_futspy  = new DriverInitHandlerPtr() { public void handler()
 	{
 		futspy_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( razmataz )
+	public static DriverInitHandlerPtr init_razmataz  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nprinces_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( ixion )
+	public static DriverInitHandlerPtr init_ixion  = new DriverInitHandlerPtr() { public void handler()
 	{
 		szaxxon_decode();
-	}
+	} };
 	
 	/* Game Drivers */
 	

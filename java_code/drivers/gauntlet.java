@@ -1602,25 +1602,25 @@ public class gauntlet
 	}
 	
 	
-	static DRIVER_INIT( gauntlet )
+	public static DriverInitHandlerPtr init_gauntlet  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(104, 0);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( gaunt2p )
+	public static DriverInitHandlerPtr init_gaunt2p  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(107, 0);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( gauntlet2 )
+	public static DriverInitHandlerPtr init_gauntlet2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		common_init(106, 0);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( vindctr2 )
+	public static DriverInitHandlerPtr init_vindctr2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *gfx2_base = memory_region(REGION_GFX2);
 		UINT8 *data = malloc(0x8000);
@@ -1643,7 +1643,7 @@ public class gauntlet
 			}
 			free(data);
 		}
-	}
+	} };
 	
 	
 	

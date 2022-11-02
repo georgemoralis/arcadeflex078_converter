@@ -285,14 +285,14 @@ public class tryout
 		ROM_LOAD( "ch14.bpr",     0x00000, 0x0020, CRC(8ce19925) SHA1(12f8f6022f1148b6ba1d019a34247452637063a7) ) 
 	ROM_END(); }}; 
 	
-	DRIVER_INIT( tryout )
+	public static DriverInitHandlerPtr init_tryout  = new DriverInitHandlerPtr() { public void handler()
 	{
 		// ?
 		install_mem_write_handler( 0, 0xc800, 0xcfff, MWA_NOP );
 	
 		// interrupt_enable_w ?
 		install_mem_write_handler( 1, 0xd000, 0xd000, MWA_NOP );
-	}
+	} };
 	
 	GAMEX( 1985, tryout, 0, tryout, tryout, tryout, ROT90, "Data East", "Pro Yakyuu Nyuudan Test Tryout (JPN Ver.)", GAME_NOT_WORKING | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

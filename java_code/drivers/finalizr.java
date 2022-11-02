@@ -519,10 +519,10 @@ public class finalizr
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( finalizr )
+	public static DriverInitHandlerPtr init_finalizr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami1_decode();
-	}
+	} };
 	
 	
 	GAMEX( 1985, finalizr, 0,        finalizr, finalizr, finalizr, ROT90, "Konami", "Finalizer - Super Transformation", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )

@@ -706,7 +706,7 @@ public class playmark
 	}
 	
 	
-	static DRIVER_INIT( bigtwin )
+	public static DriverInitHandlerPtr init_bigtwin  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *playmark_PICROM_HEX = memory_region(REGION_USER1);
 		data8_t *playmark_PICROM = memory_region(REGION_CPU2);
@@ -762,7 +762,7 @@ public class playmark
 			}
 			src_pos += 1;
 		} while (src_pos < 0x2d4c);		/* 0x2d4c is the size of the HEX rom loaded */
-	}
+	} };
 	
 	
 	

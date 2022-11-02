@@ -610,14 +610,14 @@ public class baraduke
 		ROM_LOAD( "mc1-2.2m",	0x0800, 0x0800, CRC(6f4dca7b) SHA1(781134c02853aded2cba63719c0e4c78b227da1c) )	/* Red palette */
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( metrocrs )
+	public static DriverInitHandlerPtr init_metrocrs  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 		unsigned char *rom = memory_region(REGION_GFX2);
 	
 		for(i = 0x8000;i < memory_region_length(REGION_GFX2);i++)
 			rom[i] = 0xff;
-	}
+	} };
 	
 	
 	

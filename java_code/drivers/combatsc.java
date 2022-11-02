@@ -900,20 +900,20 @@ public class combatsc
 		combasc_interleave_timer = timer_alloc(NULL);
 	}
 	
-	static DRIVER_INIT( combasct )
+	public static DriverInitHandlerPtr init_combasct  = new DriverInitHandlerPtr() { public void handler()
 	{
 		combasc_init_common();
-	}
+	} };
 	
-	static DRIVER_INIT( combasc )
+	public static DriverInitHandlerPtr init_combasc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* joystick instead of trackball */
 		install_mem_read_handler(0,0x0404,0x0404,input_port_4_r);
 	
 		combasc_init_common();
-	}
+	} };
 	
-	static DRIVER_INIT( combascb )
+	public static DriverInitHandlerPtr init_combascb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *gfx;
 		int i;
@@ -927,7 +927,7 @@ public class combatsc
 			gfx[i] = ~gfx[i];
 	
 		combasc_init_common();
-	}
+	} };
 	
 	
 	

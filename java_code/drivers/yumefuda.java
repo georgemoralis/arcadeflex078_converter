@@ -347,7 +347,7 @@ public class yumefuda
 		ROM_LOAD("zg001003.u3", 0xc000, 0x4000, CRC(5822ff27) SHA1(d40fa0790de3c912f770ef8f610bd8c42bc3500f))
 	ROM_END(); }}; 
 	
-	DRIVER_INIT( yumefuda )
+	public static DriverInitHandlerPtr init_yumefuda  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *ROM = memory_region(REGION_CPU1);
 		UINT32 bankaddress;
@@ -356,7 +356,7 @@ public class yumefuda
 		bankaddress = 0x10000;
 		cpu_setbank(1, &ROM[bankaddress]);
 	
-	}
+	} };
 	
 	
 	GAMEX( 199?, yumefuda, 0, 		yumefuda, yumefuda, yumefuda,	ROT0, "Alba", "(Medal) Yumefuda", GAME_NO_SOUND | GAME_NOT_WORKING )

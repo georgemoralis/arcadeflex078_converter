@@ -2049,7 +2049,7 @@ public class legionna
 		ROM_LOAD( "seibu8.7a",    0x000000, 0x040000, CRC(6f594808) SHA1(218aa12068aa587c7656355f6a6b86d97c868774) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( legionna )
+	public static DriverInitHandlerPtr init_legionna  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Unscramble gfx: quarters 1&2 swapped, quarters 3&4 swapped */
 	
@@ -2067,7 +2067,7 @@ public class legionna
 			gfx[i+len] = gfx[i + len/2 + len];
 			gfx[i + len/2 +len] = a;
 		}
-	}
+	} };
 	
 	
 	

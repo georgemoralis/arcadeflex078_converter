@@ -3083,16 +3083,16 @@ public class kaneko16
 		}
 	}
 	
-	DRIVER_INIT( kaneko16 )
+	public static DriverInitHandlerPtr init_kaneko16  = new DriverInitHandlerPtr() { public void handler()
 	{
 		kaneko16_unscramble_tiles(REGION_GFX2);
 		kaneko16_unscramble_tiles(REGION_GFX3);
-	}
+	} };
 	
-	DRIVER_INIT( berlwall )
+	public static DriverInitHandlerPtr init_berlwall  = new DriverInitHandlerPtr() { public void handler()
 	{
 		kaneko16_unscramble_tiles(REGION_GFX2);
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -3930,7 +3930,7 @@ public class kaneko16
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( shogwarr )
+	public static DriverInitHandlerPtr init_shogwarr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Code patches */
 	#if 0
@@ -3953,7 +3953,7 @@ public class kaneko16
 		So, there's probably the MCU's code in there, though
 		I can't id what kind of CPU should run it :-(
 	*/
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -4025,7 +4025,7 @@ public class kaneko16
 		ROM_LOAD( "fb003.u45",   0x080000, 0x080000, CRC(405722e9) SHA1(92e51093d50f74f650ba137f5fc2910e0f85337e) )	// 2 x $40000
 	ROM_END(); }}; 
 	
-	DRIVER_INIT( fjbuster )
+	public static DriverInitHandlerPtr init_fjbuster  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Code patches */
 	#if 0
@@ -4040,7 +4040,7 @@ public class kaneko16
 	#endif
 	
 		init_kaneko16();
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -138,11 +138,11 @@ public class inufuku
 		;
 	} };
 	
-	static DRIVER_INIT( inufuku )
+	public static DriverInitHandlerPtr init_inufuku  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pending_command = 1;
 		inufuku_soundrombank_w(0, 0);
-	}
+	} };
 	
 	
 	/******************************************************************************

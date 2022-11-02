@@ -604,10 +604,10 @@ public class gyruss
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( gyruss )
+	public static DriverInitHandlerPtr init_gyruss  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami1_decode_cpu2();
-	}
+	} };
 	
 	
 	GAME( 1983, gyruss,   0,      gyruss, gyruss,   gyruss, ROT90, "Konami", "Gyruss (Konami)" )

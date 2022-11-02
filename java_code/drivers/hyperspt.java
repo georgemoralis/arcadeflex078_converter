@@ -644,10 +644,10 @@ public class hyperspt
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( hyperspt )
+	public static DriverInitHandlerPtr init_hyperspt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami1_decode();
-	}
+	} };
 	
 	
 	GAME( 1984, hyperspt, 0,		hyperspt, hyperspt, hyperspt, ROT0,  "Konami (Centuri license)", "Hyper Sports" )

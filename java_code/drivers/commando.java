@@ -553,7 +553,7 @@ public class commando
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( commando )
+	public static DriverInitHandlerPtr init_commando  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -571,9 +571,9 @@ public class commando
 			src = rom[A];
 			rom[A+diff] = (src & 0x11) | ((src & 0xe0) >> 4) | ((src & 0x0e) << 4);
 		}
-	}
+	} };
 	
-	static DRIVER_INIT( spaceinv )
+	public static DriverInitHandlerPtr init_spaceinv  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -590,7 +590,7 @@ public class commando
 			src = rom[A];
 			rom[A+diff] = (src & 0x11) | ((src & 0xe0) >> 4) | ((src & 0x0e) << 4);
 		}
-	}
+	} };
 	
 	
 	

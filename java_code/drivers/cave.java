@@ -3544,7 +3544,7 @@ public class cave
 		}
 	}
 	
-	DRIVER_INIT( agallet )
+	public static DriverInitHandlerPtr init_agallet  = new DriverInitHandlerPtr() { public void handler()
 	{
 		sailormn_unpack_tiles( REGION_GFX4 );
 	
@@ -3559,9 +3559,9 @@ public class cave
 	
 	//	Speed Hack
 		install_mem_read16_handler(0, 0xb80000, 0xb80001, agallet_irq_cause_r);
-	}
+	} };
 	
-	DRIVER_INIT( dfeveron )
+	public static DriverInitHandlerPtr init_dfeveron  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cave_default_eeprom = cave_default_eeprom_type1;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type1);
@@ -3571,9 +3571,9 @@ public class cave
 		cave_spritetype = 0;	// "normal" sprites
 		cave_kludge = 2;
 		time_vblank_irq = 100;
-	}
+	} };
 	
-	DRIVER_INIT( ddonpach )
+	public static DriverInitHandlerPtr init_ddonpach  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cave_default_eeprom = cave_default_eeprom_type2;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type2);
@@ -3583,9 +3583,9 @@ public class cave
 		cave_spritetype = 1;	// "different" sprites (no zooming?)
 		cave_kludge = 0;
 		time_vblank_irq = 90;
-	}
+	} };
 	
-	DRIVER_INIT( esprade )
+	public static DriverInitHandlerPtr init_esprade  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cave_default_eeprom = cave_default_eeprom_type2;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type2);
@@ -3602,9 +3602,9 @@ public class cave
 			rom[0x118A/2] = 0x4e71;			//palette fix	118A: 5548				SUBQ.W	#2,A0		-. NOP
 		}
 	#endif
-	}
+	} };
 	
-	DRIVER_INIT( gaia )
+	public static DriverInitHandlerPtr init_gaia  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* No EEPROM */
 	
@@ -3612,9 +3612,9 @@ public class cave
 		cave_spritetype = 2;	// "normal" sprites with different position handling
 		cave_kludge = 0;
 		time_vblank_irq = 2000;	/**/
-	}
+	} };
 	
-	DRIVER_INIT( guwange )
+	public static DriverInitHandlerPtr init_guwange  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cave_default_eeprom = cave_default_eeprom_type1;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type1);
@@ -3624,9 +3624,9 @@ public class cave
 		cave_spritetype = 0;	// "normal" sprites
 		cave_kludge = 0;
 		time_vblank_irq = 2000;	/**/
-	}
+	} };
 	
-	DRIVER_INIT( hotdogst )
+	public static DriverInitHandlerPtr init_hotdogst  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cave_default_eeprom = cave_default_eeprom_type4;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type4);
@@ -3636,9 +3636,9 @@ public class cave
 		cave_spritetype = 2;	// "normal" sprites with different position handling
 		cave_kludge = 0;
 		time_vblank_irq = 2000;	/**/
-	}
+	} };
 	
-	DRIVER_INIT( mazinger )
+	public static DriverInitHandlerPtr init_mazinger  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *buffer;
 		data8_t *src = memory_region(REGION_GFX1);
@@ -3665,10 +3665,10 @@ public class cave
 	
 		/* setup extra ROM */
 		cpu_setbank(1,memory_region(REGION_USER1));
-	}
+	} };
 	
 	
-	DRIVER_INIT( metmqstr )
+	public static DriverInitHandlerPtr init_metmqstr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cave_default_eeprom = 0;
 		cave_default_eeprom_length = 0;
@@ -3678,10 +3678,10 @@ public class cave
 		cave_spritetype = 2;	// "normal" sprites with different position handling
 		cave_kludge = 3;
 		time_vblank_irq = 17376;
-	}
+	} };
 	
 	
-	DRIVER_INIT( pwrinst2 )
+	public static DriverInitHandlerPtr init_pwrinst2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *buffer;
 		data8_t *src = memory_region(REGION_GFX1);
@@ -3716,9 +3716,9 @@ public class cave
 			rom[0xD46C/2] = 0xD482;			// kurara dash fix  0xd400 . 0xd482
 		}
 	#endif
-	}
+	} };
 	
-	DRIVER_INIT( sailormn )
+	public static DriverInitHandlerPtr init_sailormn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *buffer;
 		data8_t *src = memory_region(REGION_GFX1);
@@ -3744,9 +3744,9 @@ public class cave
 		cave_spritetype = 2;	// "normal" sprites with different position handling
 		cave_kludge = 1;
 		time_vblank_irq = 2000;
-	}
+	} };
 	
-	DRIVER_INIT( uopoko )
+	public static DriverInitHandlerPtr init_uopoko  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cave_default_eeprom = cave_default_eeprom_type3;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type4);
@@ -3756,7 +3756,7 @@ public class cave
 		cave_spritetype = 0;	// "normal" sprites
 		cave_kludge = 2;
 		time_vblank_irq = 2000;	/**/
-	}
+	} };
 	
 	
 	/***************************************************************************

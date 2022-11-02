@@ -785,16 +785,16 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	DRIVER_INIT( narc )
+	public static DriverInitHandlerPtr init_narc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* common init */
 		init_generic(8, SOUND_NARC, 0xcdff, 0xce29);
 	
 		/* speedups */
 		INSTALL_SPEEDUP_1_32BIT(0x0101b310, 0xffde33e0, 0x1000040, 0xc0, 0xa0);
-	}
+	} };
 	
-	DRIVER_INIT( narc3 )
+	public static DriverInitHandlerPtr init_narc3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT32 bank, offset;
 	
@@ -808,7 +808,7 @@ public class midyunit
 	
 		/* speedups */
 		INSTALL_SPEEDUP_1_32BIT(0x0101b310, 0xffae30c0, 0x1000040, 0xc0, 0xa0);
-	}
+	} };
 	
 	
 	
@@ -840,28 +840,28 @@ public class midyunit
 		init_generic(4, SOUND_CVSD_SMALL, 0x9eaf, 0x9ed9);
 	}
 	
-	DRIVER_INIT( trog )
+	public static DriverInitHandlerPtr init_trog  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a20a0, 0xffe20630, 0x1000040, 0xc0, 0xa0);
-	}
+	} };
 	
-	DRIVER_INIT( trog3 )
+	public static DriverInitHandlerPtr init_trog3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a2090, 0xffe20660, 0x1000040, 0xc0, 0xa0);
-	}
+	} };
 	
-	DRIVER_INIT( trogpa6 )
+	public static DriverInitHandlerPtr init_trogpa6  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a1f80, 0xffe21200, 0x1000040, 0xc0, 0xa0);
-	}
-	DRIVER_INIT( trogp )
+	} };
+	public static DriverInitHandlerPtr init_trogp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a1ee0, 0xffe210d0, 0x1000040, 0xc0, 0xa0);
-	}
+	} };
 	
 	
 	/********************** Smash TV **********************/
@@ -872,17 +872,17 @@ public class midyunit
 		init_generic(6, SOUND_CVSD_SMALL, 0x9cf6, 0x9d21);
 	}
 	
-	DRIVER_INIT( smashtv )
+	public static DriverInitHandlerPtr init_smashtv  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_smashtv_common();
 		INSTALL_SPEEDUP_1_MIXEDBITS(0x01086760, 0xffe0a340, 0x1000040, 0xa0, 0x80);
-	}
+	} };
 	
-	DRIVER_INIT( smashtv4 )
+	public static DriverInitHandlerPtr init_smashtv4  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_smashtv_common();
 		INSTALL_SPEEDUP_1_MIXEDBITS(0x01086790, 0xffe0a320, 0x1000040, 0xa0, 0x80);
-	}
+	} };
 	
 	
 	/********************** High Impact Football **********************/
@@ -902,11 +902,11 @@ public class midyunit
 		init_generic(6, SOUND_CVSD, 0x9b79, 0x9ba3);
 	}
 	
-	DRIVER_INIT( hiimpact )
+	public static DriverInitHandlerPtr init_hiimpact  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_hiimpact_common();
 		INSTALL_SPEEDUP_3(0x01053150, 0xffe28bb0, 0x1000080, 0x10000a0, 0x10000c0);
-	}
+	} };
 	
 	
 	/********************** Super High Impact Football **********************/
@@ -926,17 +926,17 @@ public class midyunit
 		init_generic(6, SOUND_CVSD, 0x9c06, 0x9c15);
 	}
 	
-	DRIVER_INIT( shimpact )
+	public static DriverInitHandlerPtr init_shimpact  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_shimpact_common();
 		INSTALL_SPEEDUP_3(0x01052070, 0xffe27f00, 0x1000000, 0x1000020, 0x1000040);
-	}
+	} };
 	
-	DRIVER_INIT( shimpacp )
+	public static DriverInitHandlerPtr init_shimpacp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_shimpact_common();
 		INSTALL_SPEEDUP_3(0x01052050, 0xffe27950, 0x1000000, 0x1000020, 0x1000040);
-	}
+	} };
 	
 	
 	/********************** Strike Force **********************/
@@ -954,11 +954,11 @@ public class midyunit
 		init_generic(4, SOUND_CVSD_SMALL, 0x9f7d, 0x9fa7);
 	}
 	
-	DRIVER_INIT( strkforc )
+	public static DriverInitHandlerPtr init_strkforc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_strkforc_common();
 		INSTALL_SPEEDUP_1_32BIT(0x01071dd0, 0xffe0a290, 0x1000060, 0xc0, 0xa0);
-	}
+	} };
 	
 	
 	
@@ -989,35 +989,35 @@ public class midyunit
 		init_generic(6, SOUND_ADPCM, 0xfb9c, 0xfbc6);
 	}
 	
-	DRIVER_INIT( mkprot9 )
+	public static DriverInitHandlerPtr init_mkprot9  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104ef90, 0xffcdb3f0, 0x104b6b0, 0x104b6f0, 0x104b710);
-	}
+	} };
 	
-	DRIVER_INIT( mkla1 )
+	public static DriverInitHandlerPtr init_mkla1  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f000, 0xffcddc00, 0x104b6b0, 0x104b6f0, 0x104b710);
-	}
+	} };
 	
-	DRIVER_INIT( mkla2 )
+	public static DriverInitHandlerPtr init_mkla2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f020, 0xffcde000, 0x104b6b0, 0x104b6f0, 0x104b710);
-	}
+	} };
 	
-	DRIVER_INIT( mkla3 )
+	public static DriverInitHandlerPtr init_mkla3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f040, 0xffce1ec0, 0x104b6b0, 0x104b6f0, 0x104b710);
-	}
+	} };
 	
-	DRIVER_INIT( mkla4 )
+	public static DriverInitHandlerPtr init_mkla4  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f050, 0xffce21d0, 0x104b6b0, 0x104b6f0, 0x104b710);
-	}
+	} };
 	
 	
 	/********************** Terminator 2 **********************/
@@ -1040,7 +1040,7 @@ public class midyunit
 		install_mem_write16_handler(0, TOBYTE(0x01e00000), TOBYTE(0x01e0001f), term2_sound_w);
 	}
 	
-	DRIVER_INIT( term2 )
+	public static DriverInitHandlerPtr init_term2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_term2_common();
 		install_mem_read16_handler(0, TOBYTE(0x010aa040), TOBYTE(0x010aa05f), term2_speedup_r);
@@ -1048,9 +1048,9 @@ public class midyunit
 		/* HACK: this prevents the freeze on the movies */
 		/* until we figure whats causing it, this is better than nothing */
 		t2_hack_mem = install_mem_write16_handler(0, TOBYTE(0x010aa0e0), TOBYTE(0x010aa0ff), term2_hack_w);
-	}
+	} };
 	
-	DRIVER_INIT( term2la2 )
+	public static DriverInitHandlerPtr init_term2la2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_term2_common();
 		install_mem_read16_handler(0, TOBYTE(0x010aa040), TOBYTE(0x010aa05f), term2_speedup_r);
@@ -1058,9 +1058,9 @@ public class midyunit
 		/* HACK: this prevents the freeze on the movies */
 		/* until we figure whats causing it, this is better than nothing */
 		t2_hack_mem = install_mem_write16_handler(0, TOBYTE(0x010aa0e0), TOBYTE(0x010aa0ff), term2la2_hack_w);
-	}
+	} };
 	
-	DRIVER_INIT( term2la1 )
+	public static DriverInitHandlerPtr init_term2la1  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_term2_common();
 		install_mem_read16_handler(0, TOBYTE(0x010aa040), TOBYTE(0x010aa05f), term2_speedup_r);
@@ -1068,7 +1068,7 @@ public class midyunit
 		/* HACK: this prevents the freeze on the movies */
 		/* until we figure whats causing it, this is better than nothing */
 		t2_hack_mem = install_mem_write16_handler(0, TOBYTE(0x010aa0e0), TOBYTE(0x010aa0ff), term2la1_hack_w);
-	}
+	} };
 	
 	
 	/********************** Total Carnage **********************/
@@ -1088,17 +1088,17 @@ public class midyunit
 		init_generic(6, SOUND_ADPCM, 0xfc04, 0xfc2e);
 	}
 	
-	DRIVER_INIT( totcarn )
+	public static DriverInitHandlerPtr init_totcarn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_totcarn_common();
 		INSTALL_SPEEDUP_1_16BIT(0x0107dde0, 0xffc0c970, 0x1000040, 0xa0, 0x90);
-	}
+	} };
 	
-	DRIVER_INIT( totcarnp )
+	public static DriverInitHandlerPtr init_totcarnp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_totcarn_common();
 		INSTALL_SPEEDUP_1_16BIT(0x0107dde0, 0xffc0c970, 0x1000040, 0xa0, 0x90);
-	}
+	} };
 	
 	
 	

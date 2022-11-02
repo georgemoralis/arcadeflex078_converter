@@ -1023,11 +1023,11 @@ public class mainevt
 	
 	
 	
-	static DRIVER_INIT( mainevt )
+	public static DriverInitHandlerPtr init_mainevt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

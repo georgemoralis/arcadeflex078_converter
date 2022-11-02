@@ -751,13 +751,13 @@ public class ninjakd2
 	
 	
 	
-	DRIVER_INIT( ninjak2a )
+	public static DriverInitHandlerPtr init_ninjak2a  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU2);
 		int diff = memory_region_length(REGION_CPU2) / 2;
 	
 		memory_set_opcode_base(1,rom+diff);
-	}
+	} };
 	
 	
 	

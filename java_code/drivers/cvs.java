@@ -1247,31 +1247,31 @@ public class cvs
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( spacefrt )
+	public static DriverInitHandlerPtr init_spacefrt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Patch out 2nd Character Mode Change */
 	
 	    memory_region(REGION_CPU1)[0x0260] = 0xc0;
 	    memory_region(REGION_CPU1)[0x0261] = 0xc0;
-	}
+	} };
 	
-	static DRIVER_INIT( cosmos )
+	public static DriverInitHandlerPtr init_cosmos  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Patch out 2nd Character Mode Change */
 	
 	    memory_region(REGION_CPU1)[0x0357] = 0xc0;
 	    memory_region(REGION_CPU1)[0x0358] = 0xc0;
-	}
+	} };
 	
-	static DRIVER_INIT( goldbug )
+	public static DriverInitHandlerPtr init_goldbug  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Redirect calls to real memory bank */
 	
 	    memory_region(REGION_CPU1)[0x4347] = 0x1e;
 	    memory_region(REGION_CPU1)[0x436a] = 0x1e;
-	}
+	} };
 	
-	static DRIVER_INIT( huncholy )
+	public static DriverInitHandlerPtr init_huncholy  = new DriverInitHandlerPtr() { public void handler()
 	{
 	    /* Patch out protection */
 	
@@ -1287,9 +1287,9 @@ public class cvs
 	    memory_region(REGION_CPU1)[0x4456] = 0xc0;
 	    memory_region(REGION_CPU1)[0x4457] = 0xc0;
 	    memory_region(REGION_CPU1)[0x4458] = 0xc0;
-	}
+	} };
 	
-	static DRIVER_INIT( superbik )
+	public static DriverInitHandlerPtr init_superbik  = new DriverInitHandlerPtr() { public void handler()
 	{
 	    /* Patch out protection */
 	
@@ -1314,9 +1314,9 @@ public class cvs
 	    memory_region(REGION_CPU1)[0x00bb] = 0xc0;
 	    memory_region(REGION_CPU1)[0x00bc] = 0xc0;
 	    memory_region(REGION_CPU1)[0x00bd] = 0xc0;
-	}
+	} };
 	
-	static DRIVER_INIT( hero )
+	public static DriverInitHandlerPtr init_hero  = new DriverInitHandlerPtr() { public void handler()
 	{
 	    /* Patch out protection */
 	
@@ -1334,7 +1334,7 @@ public class cvs
 	    memory_region(REGION_CPU1)[0x4de0] = 0xc0;
 	    memory_region(REGION_CPU1)[0x4de1] = 0xc0;
 	    memory_region(REGION_CPU1)[0x4de2] = 0xc0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

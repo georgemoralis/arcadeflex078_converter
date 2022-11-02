@@ -336,10 +336,10 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( sbrkout )
+	public static DriverInitHandlerPtr init_sbrkout  = new DriverInitHandlerPtr() { public void handler()
 	{
 		artwork_set_overlay(sbrkout_overlay);
-	}
+	} };
 	
 	
 	

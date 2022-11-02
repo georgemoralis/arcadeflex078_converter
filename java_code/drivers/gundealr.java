@@ -582,16 +582,16 @@ public class gundealr
 	
 	
 	
-	static DRIVER_INIT( gundealr )
+	public static DriverInitHandlerPtr init_gundealr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		input_ports_hack = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( yamyam )
+	public static DriverInitHandlerPtr init_yamyam  = new DriverInitHandlerPtr() { public void handler()
 	{
 		input_ports_hack = 1;
 		install_mem_write_handler(0, 0xe000, 0xe000, yamyam_protection_w);
-	}
+	} };
 	
 	
 	

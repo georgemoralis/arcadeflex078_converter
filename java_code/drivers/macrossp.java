@@ -914,7 +914,7 @@ public class macrossp
 		if (activecpu_get_pc()==0x001810A) cpu_spinuntil_int();
 	}
 	
-	static DRIVER_INIT( macrossp )
+	public static DriverInitHandlerPtr init_macrossp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Expand top half of sound ROM into second banked sound area */
 		const data8_t* src=memory_region(REGION_SOUND1);
@@ -923,9 +923,9 @@ public class macrossp
 		memcpy(dst,src+0x400000,0x400000);
 	
 		install_mem_write32_handler(0, 0xf10158, 0xf1015b, macrossp_speedup_w );
-	}
+	} };
 	
-	static DRIVER_INIT( quizmoon )
+	public static DriverInitHandlerPtr init_quizmoon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Expand top half of sound ROM into second banked sound area */
 		const data8_t* src=memory_region(REGION_SOUND1);
@@ -936,7 +936,7 @@ public class macrossp
 		src=memory_region(REGION_SOUND3);
 		dst=memory_region(REGION_SOUND4);
 		memcpy(dst,src+0x400000,0x400000);
-	}
+	} };
 	
 	GAMEX( 1996, macrossp, 0, macrossp, macrossp, macrossp, ROT270, "Banpresto", "Macross Plus", GAME_IMPERFECT_GRAPHICS )
 	GAMEX( 1997, quizmoon, 0, quizmoon, quizmoon, quizmoon, ROT0,   "Banpresto", "Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un", GAME_IMPERFECT_GRAPHICS )

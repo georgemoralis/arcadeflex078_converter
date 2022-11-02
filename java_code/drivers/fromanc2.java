@@ -99,30 +99,30 @@ public class fromanc2
 	} };
 	
 	
-	static DRIVER_INIT( fromanc2 )
+	public static DriverInitHandlerPtr init_fromanc2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		fromanc2_subcpu_nmi_flag = 1;
 		fromanc2_subcpu_int_flag = 1;
 		fromanc2_sndcpu_nmi_flag = 1;
 	
 		fromanc2_playerside = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( fromancr )
+	public static DriverInitHandlerPtr init_fromancr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		fromanc2_subcpu_nmi_flag = 1;
 		fromanc2_subcpu_int_flag = 1;
 		fromanc2_sndcpu_nmi_flag = 1;
 	
 		fromanc2_playerside = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( fromanc4 )
+	public static DriverInitHandlerPtr init_fromanc4  = new DriverInitHandlerPtr() { public void handler()
 	{
 		fromanc2_sndcpu_nmi_flag = 1;
 	
 		fromanc2_playerside = 0;
-	}
+	} };
 	
 	
 	// ----------------------------------------------------------------------------

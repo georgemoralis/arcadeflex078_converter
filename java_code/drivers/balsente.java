@@ -2251,67 +2251,67 @@ public class balsente
 		}
 	}
 	
-	static DRIVER_INIT( sentetst ) { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
-	static DRIVER_INIT( cshift )   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
-	static DRIVER_INIT( gghost )   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; }
-	static DRIVER_INIT( hattrick ) { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
-	static DRIVER_INIT( otwalls )  { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; }
-	static DRIVER_INIT( snakepit ) { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; }
-	static DRIVER_INIT( snakjack ) { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; }
-	static DRIVER_INIT( stocker )  { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; }
-	static DRIVER_INIT( triviag1 ) { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
-	static DRIVER_INIT( triviag2 )
+	public static DriverInitHandlerPtr init_sentetst  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_cshift  = new DriverInitHandlerPtr() { public void handler()   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_gghost  = new DriverInitHandlerPtr() { public void handler()   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
+	public static DriverInitHandlerPtr init_hattrick  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_otwalls  = new DriverInitHandlerPtr() { public void handler()  { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; } };
+	public static DriverInitHandlerPtr init_snakepit  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
+	public static DriverInitHandlerPtr init_snakjack  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
+	public static DriverInitHandlerPtr init_stocker  = new DriverInitHandlerPtr() { public void handler()  { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; } };
+	public static DriverInitHandlerPtr init_triviag1  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_triviag2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		memcpy(&memory_region(REGION_CPU1)[0x20000], &memory_region(REGION_CPU1)[0x28000], 0x4000);
 		memcpy(&memory_region(REGION_CPU1)[0x24000], &memory_region(REGION_CPU1)[0x28000], 0x4000);
 		expand_roms(EXPAND_NONE); balsente_shooter = 0; /* noanalog */
-	}
-	static DRIVER_INIT( gimeabrk ) { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; }
-	static DRIVER_INIT( minigolf ) { expand_roms(EXPAND_NONE); balsente_shooter = 0; balsente_adc_shift = 2; }
-	static DRIVER_INIT( minigol2 ) { expand_roms(0x0c);        balsente_shooter = 0; balsente_adc_shift = 2; }
-	static DRIVER_INIT( toggle )   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
-	static DRIVER_INIT( nametune )
+	} };
+	public static DriverInitHandlerPtr init_gimeabrk  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
+	public static DriverInitHandlerPtr init_minigolf  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_NONE); balsente_shooter = 0; balsente_adc_shift = 2; } };
+	public static DriverInitHandlerPtr init_minigol2  = new DriverInitHandlerPtr() { public void handler() { expand_roms(0x0c);        balsente_shooter = 0; balsente_adc_shift = 2; } };
+	public static DriverInitHandlerPtr init_toggle  = new DriverInitHandlerPtr() { public void handler()   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_nametune  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_NONE | SWAP_HALVES); balsente_shooter = 0; /* noanalog */
-	}
-	static DRIVER_INIT( nstocker )
+	} };
+	public static DriverInitHandlerPtr init_nstocker  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x9902, 0x9902, nstocker_port2_r);
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_NONE | SWAP_HALVES); balsente_shooter = 1; balsente_adc_shift = 1;
-	}
-	static DRIVER_INIT( sfootbal )
+	} };
+	public static DriverInitHandlerPtr init_sfootbal  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_ALL  | SWAP_HALVES); balsente_shooter = 0; balsente_adc_shift = 0;
-	}
-	static DRIVER_INIT( spiker )
+	} };
+	public static DriverInitHandlerPtr init_spiker  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0x9f80, 0x9f8f, spiker_expand_w);
 		install_mem_read_handler(0, 0x9f80, 0x9f8f, spiker_expand_r);
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_ALL  | SWAP_HALVES); balsente_shooter = 0; balsente_adc_shift = 1;
-	}
-	static DRIVER_INIT( stompin )
+	} };
+	public static DriverInitHandlerPtr init_stompin  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(0x0c | SWAP_HALVES); balsente_shooter = 0; balsente_adc_shift = 32;
-	}
-	static DRIVER_INIT( rescraid ) { expand_roms(EXPAND_NONE); balsente_shooter = 0; /* noanalog */ }
-	static DRIVER_INIT( grudge )
+	} };
+	public static DriverInitHandlerPtr init_rescraid  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_NONE); balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_grudge  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x9400, 0x9400, grudge_steering_r);
 		expand_roms(EXPAND_NONE); balsente_shooter = 0;
-	}
-	static DRIVER_INIT( shrike )
+	} };
+	public static DriverInitHandlerPtr init_shrike  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x9e00, 0x9fff, MRA_RAM);
 		install_mem_write_handler(0, 0x9e00, 0x9fff, MWA_RAM);
 		install_mem_read_handler(0, 0x9e00, 0x9e0f, shrike_shared_6809_r);
 		install_mem_write_handler(0, 0x9e00, 0x9e0f, shrike_shared_6809_w);
 		expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 32;
-	}
+	} };
 	
 	
 	

@@ -2921,60 +2921,60 @@ public class taito_f3
 	F3_IRQ_SPEEDUP_1_R(twinqix,  0xe9a52,  0x0134/4, 0x000000ff )
 	F3_IRQ_SPEEDUP_2_R(kirameki, 0x12fc6,  0x0414/4, 0x0000ff00 )
 	
-	static DRIVER_INIT( ringrage )
+	public static DriverInitHandlerPtr init_ringrage  = new DriverInitHandlerPtr() { public void handler()
 	{
 		f3_game=RINGRAGE;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( arabianm )
+	public static DriverInitHandlerPtr init_arabianm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x408124, 0x408127, irq_speedup_r_arabianm );
 		f3_game=ARABIANM;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( ridingf )
+	public static DriverInitHandlerPtr init_ridingf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		f3_game=RIDINGF;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( gseeker )
+	public static DriverInitHandlerPtr init_gseeker  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x40ad94, 0x40ad97, irq_speedup_r_gseeker );
 		f3_game=GSEEKER;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( gunlock )
+	public static DriverInitHandlerPtr init_gunlock  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400004, 0x400007, irq_speedup_r_gunlock );
 		f3_game=GUNLOCK;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( elvactr )
+	public static DriverInitHandlerPtr init_elvactr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x4007a0, 0x4007a3, irq_speedup_r_eaction2 );
 		f3_game=EACTION2;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( cupfinal )
+	public static DriverInitHandlerPtr init_cupfinal  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_cupfinal );
 		f3_game=SCFINALS;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( trstaroj )
+	public static DriverInitHandlerPtr init_trstaroj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		f3_game=TRSTAR;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( scfinals )
+	public static DriverInitHandlerPtr init_scfinals  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data32_t *RAM = (UINT32 *)memory_region(REGION_CPU1);
 	
@@ -2987,99 +2987,99 @@ public class taito_f3
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_scfinals );
 		f3_game=SCFINALS;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( lightbr )
+	public static DriverInitHandlerPtr init_lightbr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400130, 0x400133, irq_speedup_r_lightbr );
 		f3_game=LIGHTBR;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( kaiserkn )
+	public static DriverInitHandlerPtr init_kaiserkn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x408110, 0x408113, irq_speedup_r_kaiserkn );
 		f3_game=KAISERKN;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( dariusg )
+	public static DriverInitHandlerPtr init_dariusg  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x406ba8, 0x406bab, irq_speedup_r_dariusg );
 		f3_game=DARIUSG;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( spcinvdj )
+	public static DriverInitHandlerPtr init_spcinvdj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400230, 0x400233, irq_speedup_r_spcinvdj );
 		f3_game=SPCINVDX;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( qtheater )
+	public static DriverInitHandlerPtr init_qtheater  = new DriverInitHandlerPtr() { public void handler()
 	{
 		f3_game=QTHEATER;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( spcinv95 )
+	public static DriverInitHandlerPtr init_spcinv95  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_spcinv95 );
 		f3_game=SPCINV95;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( gekirido )
+	public static DriverInitHandlerPtr init_gekirido  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x406bb0, 0x406bb3, irq_speedup_r_gekirido );
 		f3_game=GEKIRIDO;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( ktiger2 )
+	public static DriverInitHandlerPtr init_ktiger2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400570, 0x400573, irq_speedup_r_ktiger2 );
 		f3_game=KTIGER2;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( bubsymph )
+	public static DriverInitHandlerPtr init_bubsymph  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400134, 0x400137, irq_speedup_r_bubsymph );
 		f3_game=BUBSYMPH;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( bubblem )
+	public static DriverInitHandlerPtr init_bubblem  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400134, 0x400137, irq_speedup_r_bubblem );
 		f3_game=BUBBLEM;
 		tile_decode(1);
-	}
+	} };
 	
-	static DRIVER_INIT( cleopatr )
+	public static DriverInitHandlerPtr init_cleopatr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_cleopatr );
 		f3_game=CLEOPATR;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( popnpop )
+	public static DriverInitHandlerPtr init_popnpop  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x401cf8, 0x401cfb, irq_speedup_r_popnpop );
 		f3_game=POPNPOP;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( landmakr )
+	public static DriverInitHandlerPtr init_landmakr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400824, 0x400827, irq_speedup_r_landmakr );
 		f3_game=LANDMAKR;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( landmkrp )
+	public static DriverInitHandlerPtr init_landmkrp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data32_t *RAM = (UINT32 *)memory_region(REGION_CPU1);
 	
@@ -3093,82 +3093,82 @@ public class taito_f3
 		install_mem_read32_handler(0, 0x400824, 0x400827, irq_speedup_r_landmakr );
 		f3_game=LANDMAKR;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( pbobble3 )
+	public static DriverInitHandlerPtr init_pbobble3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x405af4, 0x405af7, irq_speedup_r_pbobble3 );
 		f3_game=PBOBBLE3;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( pbobble4 )
+	public static DriverInitHandlerPtr init_pbobble4  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x4058f4, 0x4058f7, irq_speedup_r_pbobble4 );
 		f3_game=PBOBBLE4;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( quizhuhu )
+	public static DriverInitHandlerPtr init_quizhuhu  = new DriverInitHandlerPtr() { public void handler()
 	{
 		f3_game=QUIZHUHU;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( pbobble2 )
+	public static DriverInitHandlerPtr init_pbobble2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x404a50, 0x404a53, irq_speedup_r_pbobble2 );
 		f3_game=PBOBBLE2;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( pbobbl2x )
+	public static DriverInitHandlerPtr init_pbobbl2x  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x405c58, 0x405c5b, irq_speedup_r_pbobbl2x );
 		f3_game=PBOBBLE2;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( hthero95 )
+	public static DriverInitHandlerPtr init_hthero95  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_pwrgoal );
 		f3_game=HTHERO95;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( kirameki )
+	public static DriverInitHandlerPtr init_kirameki  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400414, 0x400417, irq_speedup_r_kirameki );
 		f3_game=KIRAMEKI;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( puchicar )
+	public static DriverInitHandlerPtr init_puchicar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x4024d8, 0x4024db, irq_speedup_r_puchicar );
 		f3_game=PUCHICAR;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( twinqix )
+	public static DriverInitHandlerPtr init_twinqix  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x400134, 0x400137, irq_speedup_r_twinqix );
 		f3_game=TWINQIX;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( arkretrn )
+	public static DriverInitHandlerPtr init_arkretrn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x402154, 0x402157, irq_speedup_r_arkretrn );
 		f3_game=ARKRETRN;
 		tile_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( intcup94 )
+	public static DriverInitHandlerPtr init_intcup94  = new DriverInitHandlerPtr() { public void handler()
 	{
 		f3_game=SCFINALS;
 		tile_decode(1);
-	}
+	} };
 	
 	/******************************************************************************/
 	

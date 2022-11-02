@@ -526,11 +526,11 @@ public class naughtyb
 	
 	
 	
-	DRIVER_INIT( popflame )
+	public static DriverInitHandlerPtr init_popflame  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install a handler to catch protection checks */
 		install_mem_read_handler(0, 0x9000, 0x9000, popflame_protection_r);
-	}
+	} };
 	
 	
 	GAMEX( 1982, naughtyb, 0,		 naughtyb, naughtyb, 0,        ROT90, "Jaleco", "Naughty Boy", GAME_NO_COCKTAIL )

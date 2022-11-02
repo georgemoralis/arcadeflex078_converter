@@ -987,11 +987,11 @@ public class thunderx
 		pmcram = &RAM[0x28800];
 	} };
 	
-	static DRIVER_INIT( scontra )
+	public static DriverInitHandlerPtr init_scontra  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

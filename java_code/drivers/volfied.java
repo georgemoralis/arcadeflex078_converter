@@ -324,10 +324,10 @@ public class volfied
 					MACHINE DRIVERS
 	***********************************************************/
 	
-	static DRIVER_INIT( volfied )
+	public static DriverInitHandlerPtr init_volfied  = new DriverInitHandlerPtr() { public void handler()
 	{
 		volfied_cchip_init();
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( volfied )
 	

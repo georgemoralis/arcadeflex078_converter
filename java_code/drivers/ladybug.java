@@ -692,7 +692,7 @@ public class ladybug
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( dorodon )
+	public static DriverInitHandlerPtr init_dorodon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Decode the opcodes */
 	
@@ -707,7 +707,7 @@ public class ladybug
 		{
 			rom[i + diff] = table[rom[i]];
 		}
-	}
+	} };
 	
 	GAME( 1981, cavenger, 0,       ladybug, cavenger, 0,       ROT0,   "Universal", "Cosmic Avenger" )
 	GAME( 1981, ladybug,  0,       ladybug, ladybug,  0,       ROT270, "Universal", "Lady Bug" )

@@ -1325,7 +1325,7 @@ public class wecleman
 	}
 	
 	/* Unpack sprites data and do some patching */
-	DRIVER_INIT( wecleman )
+	public static DriverInitHandlerPtr init_wecleman  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 		unsigned char *RAM;
@@ -1363,7 +1363,7 @@ public class wecleman
 				20,19,18,17,16,15,14,7,12,4,2,5,6,13,8,9,11,3,10,1,0);
 	
 		spr_color_offs = 0x40;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -1468,7 +1468,7 @@ public class wecleman
 	}
 	
 	/* Unpack sprites data and do some patching */
-	DRIVER_INIT( hotchase )
+	public static DriverInitHandlerPtr init_hotchase  = new DriverInitHandlerPtr() { public void handler()
 	{
 	//	data16_t *RAM1 = (data16_t) memory_region(REGION_CPU1);	/* Main CPU patches */
 	//	RAM[0x1140/2] = 0x0015; RAM[0x195c/2] = 0x601A;	// faster self test
@@ -1488,7 +1488,7 @@ public class wecleman
 		memcpy(&RAM[0], &RAM[0x10000/2], 0x10000/2);
 	
 		spr_color_offs = 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

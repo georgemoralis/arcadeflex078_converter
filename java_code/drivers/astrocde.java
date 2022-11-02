@@ -902,30 +902,30 @@ public class astrocde
 	
 	
 	
-	static DRIVER_INIT( seawolf2 )
+	public static DriverInitHandlerPtr init_seawolf2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_read_handler(0, 0x10, 0x10, seawolf2_controller2_r);
 		install_port_read_handler(0, 0x11, 0x11, seawolf2_controller1_r);
-	}
-	static DRIVER_INIT( ebases )
+	} };
+	public static DriverInitHandlerPtr init_ebases  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_read_handler (0, 0x13, 0x13, ebases_trackball_r);
 		install_port_write_handler(0, 0x28, 0x28, ebases_trackball_select_w);
-	}
-	static DRIVER_INIT( wow )
+	} };
+	public static DriverInitHandlerPtr init_wow  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_read_handler(0, 0x12, 0x12, wow_port_2_r);
 		install_port_read_handler(0, 0x15, 0x15, wow_io_r);
 		install_port_read_handler(0, 0x17, 0x17, wow_speech_r);
-	}
-	static DRIVER_INIT( gorf )
+	} };
+	public static DriverInitHandlerPtr init_gorf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler (0, 0xd0a5, 0xd0a5, gorf_timer_r);
 	
 		install_port_read_handler(0, 0x12, 0x12, gorf_port_2_r);
 		install_port_read_handler(0, 0x15, 0x16, gorf_io_r);
 		install_port_read_handler(0, 0x17, 0x17, gorf_speech_r);
-	}
+	} };
 	
 	
 	GAMEX(1978, seawolf2, 0,    seawolf2, seawolf2, seawolf2, ROT0,   "Midway", "Sea Wolf II", GAME_NO_SOUND )

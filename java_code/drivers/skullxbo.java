@@ -618,12 +618,12 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( skullxbo )
+	public static DriverInitHandlerPtr init_skullxbo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 2, 1, 0x0080);
 		memset(memory_region(REGION_GFX1) + 0x170000, 0, 0x20000);
-	}
+	} };
 	
 	
 	

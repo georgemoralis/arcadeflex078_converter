@@ -755,7 +755,7 @@ public class undrfire
 		return undrfire_ram[0x4f8/4];
 	}
 	
-	DRIVER_INIT( undrfire )
+	public static DriverInitHandlerPtr init_undrfire  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned int offset,i;
 		UINT8 *gfx = memory_region(REGION_GFX3);
@@ -784,7 +784,7 @@ public class undrfire
 			gfx[offset] = (d3<<2) | (d4<<6);
 			offset++;
 		}
-	}
+	} };
 	
 	
 	GAME( 1993, undrfire, 0,        undrfire, undrfire, undrfire, ROT0, "Taito Corporation Japan", "Under Fire (World)" )

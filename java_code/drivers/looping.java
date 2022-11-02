@@ -567,7 +567,7 @@ public class looping
 		ROM_LOAD( "vid.clr",		0x0000, 0x0020, CRC(6a0c7d87) SHA1(140335d85c67c75b65689d4e76d29863c209cf32) )
 	ROM_END(); }}; 
 	
-	DRIVER_INIT( looping ){
+	public static DriverInitHandlerPtr init_looping  = new DriverInitHandlerPtr() { public void handler(){
 		/* unscramble the TMS9995 ROMs */
 		UINT8 *pMem = memory_region( REGION_CPU1 );
 		UINT8 raw,code;
@@ -586,7 +586,7 @@ public class looping
 			if ((raw & 0x80) != 0) code |= 0x01;
 			pMem[i] = code;
 		}
-	}
+	} };
 	
 	/*          rom       parent    machine   inp       init */
 	GAME( 1982, looping,  0,        looping, looping, looping, ROT90, "Venture Line", "Looping (set 1)" )

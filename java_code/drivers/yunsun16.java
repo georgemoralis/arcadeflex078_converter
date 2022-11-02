@@ -120,11 +120,11 @@ public class yunsun16
 		}
 	}
 	
-	DRIVER_INIT( magicbub )
+	public static DriverInitHandlerPtr init_magicbub  = new DriverInitHandlerPtr() { public void handler()
 	{
 	//	remove_mem_write16_handler (0, 0x800180, 0x800181 );
 		install_mem_write16_handler(0, 0x800188, 0x800189, magicbub_sound_command_w);
-	}
+	} };
 	
 	/***************************************************************************
 	

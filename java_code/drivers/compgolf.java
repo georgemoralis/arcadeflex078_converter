@@ -407,10 +407,10 @@ public class compgolf
 		}
 	}
 	
-	DRIVER_INIT( compgolf )
+	public static DriverInitHandlerPtr init_compgolf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		compgolf_expand_bg();
-	}
+	} };
 	
 	GAMEX( 1985, compgolf, 0, compgolf, compgolf, compgolf, ROT0, "Data East", "Competition Golf Final Round (Japan)", GAME_NOT_WORKING )
 }

@@ -304,10 +304,10 @@ public class safarir
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( safarir )
+	public static DriverInitHandlerPtr init_safarir  = new DriverInitHandlerPtr() { public void handler()
 	{
 		safarir_ram = safarir_ram1;
-	}
+	} };
 	
 	
 	GAMEX( 1979, safarir, 0, safarir, safarir, safarir, ROT90, "SNK", "Safari Rally (Japan)", GAME_NO_SOUND | GAME_WRONG_COLORS )

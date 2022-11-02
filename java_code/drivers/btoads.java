@@ -457,14 +457,14 @@ public class btoads
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( btoads )
+	public static DriverInitHandlerPtr init_btoads  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
 		/* install main CPU speedup */
 		main_speedup = install_mem_read16_handler(0, TOBYTE(0x22410), TOBYTE(0x2241f), main_speedup_r);
-	}
+	} };
 	
 	
 	

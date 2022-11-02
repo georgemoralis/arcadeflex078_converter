@@ -521,7 +521,7 @@ public class zn
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static DRIVER_INIT( zn )
+	public static DriverInitHandlerPtr init_zn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank( 1, memory_region( REGION_USER1 ) ); /* game rom */
 		cpu_setbank( 3, memory_region( REGION_CPU1 ) + 0x0480000 ); /* scratch pad */
@@ -606,13 +606,13 @@ public class zn
 		}
 	#endif
 		psx_driver_init();
-	}
+	} };
 	
-	static DRIVER_INIT( fx1b )
+	public static DriverInitHandlerPtr init_fx1b  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank( 10, memory_region( REGION_CPU2 ) );
 		init_zn();
-	}
+	} };
 	
 	/* sound player */
 	

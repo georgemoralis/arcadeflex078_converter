@@ -885,19 +885,19 @@ public class bbusters
 	}
 	#endif
 	
-	DRIVER_INIT( bbusters )
+	public static DriverInitHandlerPtr init_bbusters  = new DriverInitHandlerPtr() { public void handler()
 	{
 		#if BBUSTERS_HACK
 		bbusters_patch_code(0x00234c);
 		#endif
-	}
+	} };
 	
-	DRIVER_INIT( mechatt )
+	public static DriverInitHandlerPtr init_mechatt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		#if MECHATT_HACK
 		bbusters_patch_code(0x003306);
 		#endif
-	}
+	} };
 	
 	/******************************************************************************/
 	

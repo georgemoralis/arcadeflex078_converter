@@ -394,12 +394,12 @@ public class xybots
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( xybots )
+	public static DriverInitHandlerPtr init_xybots  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x008000, 107);
 		atarijsa_init(1, 2, 1, 0x0100);
-	}
+	} };
 	
 	
 	

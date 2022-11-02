@@ -876,7 +876,7 @@ public class snowbros
 		ROM_LOAD( "cookbib2.03", 0x100000, 0x40000, CRC(e1604821) SHA1(bede6bdd8331128b9f2b229d718133470bf407c9) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( cookbib2 )
+	public static DriverInitHandlerPtr init_cookbib2  = new DriverInitHandlerPtr() { public void handler()
 	{
 	//	data16_t *HCROM = (data16_t*)memory_region(REGION_CPU1);
 		data16_t *PROTDATA = (data16_t*)memory_region(REGION_USER1);
@@ -1216,10 +1216,10 @@ public class snowbros
 			}
 		}
 	#endif
-	}
+	} };
 	
 	
-	static DRIVER_INIT( hyperpac )
+	public static DriverInitHandlerPtr init_hyperpac  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* simulate RAM initialization done by the protection MCU */
 		/* not verified on real hardware */
@@ -1231,7 +1231,7 @@ public class snowbros
 		hyperpac_ram[0xe082/2] = 0xba98;
 		hyperpac_ram[0xe084/2] = 0x7654;
 		hyperpac_ram[0xe086/2] = 0x3210;
-	}
+	} };
 	
 	READ16_HANDLER ( _4in1_02_read )
 	{

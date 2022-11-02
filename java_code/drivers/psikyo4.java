@@ -891,27 +891,27 @@ public class psikyo4
 		return ps4_ram[0x00001c/4];
 	}
 	
-	static DRIVER_INIT( hotgmck )
+	public static DriverInitHandlerPtr init_hotgmck  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&RAM[0x100000]);
 		install_mem_read32_handler (0, 0x5800000, 0x5800007, hotgmck_io32_r ); // Different Inputs
-	}
+	} };
 	
-	static DRIVER_INIT( loderndf )
+	public static DriverInitHandlerPtr init_loderndf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x6000020, 0x6000023, loderndf_speedup_r );
-	}
+	} };
 	
-	static DRIVER_INIT( loderdfa )
+	public static DriverInitHandlerPtr init_loderdfa  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x6000020, 0x6000023, loderdfa_speedup_r );
-	}
+	} };
 	
-	static DRIVER_INIT( hotdebut )
+	public static DriverInitHandlerPtr init_hotdebut  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x600001c, 0x600001f, hotdebut_speedup_r );
-	}
+	} };
 	
 	
 	/*     YEAR  NAME      PARENT    MACHINE    INPUT     INIT      MONITOR COMPANY   FULLNAME FLAGS */

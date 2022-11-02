@@ -680,12 +680,12 @@ public class arkanoid
 	
 	
 	
-	static DRIVER_INIT( paddle2 )
+	public static DriverInitHandlerPtr init_paddle2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler (0, 0xf002, 0xf002, paddle2_prot_r);
 		install_mem_write_handler(0, 0xd018, 0xd018, paddle2_prot_w);
 		install_mem_read_handler (0, 0xd008, 0xd008, track_kludge_r );
-	}
+	} };
 	
 	
 	GAME( 1986, arkanoid, 0,        arkanoid, arkanoid, 0,       ROT90, "Taito Corporation Japan", "Arkanoid (World)" )

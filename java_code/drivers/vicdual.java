@@ -1895,12 +1895,12 @@ public class vicdual
 	
 	
 	
-	static DRIVER_INIT( nosamples )
+	public static DriverInitHandlerPtr init_nosamples  = new DriverInitHandlerPtr() { public void handler()
 	{
 		vicdual_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( depthch )
+	public static DriverInitHandlerPtr init_depthch  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_read_handler(0, 0x08, 0x08, depthch_input_port_1_r);
 	
@@ -1908,68 +1908,68 @@ public class vicdual
 		install_port_write_handler(0, 0x04, 0x04, depthch_sh_port1_w);
 	
 		vicdual_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( samurai )
+	public static DriverInitHandlerPtr init_samurai  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install protection handlers */
 		install_mem_write_handler(0, 0x7f00, 0x7f00, samurai_protection_w);
 		install_port_read_handler(0, 0x01, 0x03, samurai_input_r);
 	
 		vicdual_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( carnival )
+	public static DriverInitHandlerPtr init_carnival  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install sample triggers */
 		install_port_write_handler(0, 0x01, 0x01, carnival_sh_port1_w);
 		install_port_write_handler(0, 0x02, 0x02, carnival_sh_port2_w);
 	
 		vicdual_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( invinco )
+	public static DriverInitHandlerPtr init_invinco  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install sample trigger */
 		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( invho2 )
+	public static DriverInitHandlerPtr init_invho2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install sample trigger */
 		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( invds )
+	public static DriverInitHandlerPtr init_invds  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install sample trigger */
 		install_port_write_handler(0, 0x01, 0x01, invinco_sh_port2_w);
 	
 		vicdual_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( pulsar )
+	public static DriverInitHandlerPtr init_pulsar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install sample triggers */
 		install_port_write_handler(0, 0x01, 0x01, pulsar_sh_port1_w);
 		install_port_write_handler(0, 0x02, 0x02, pulsar_sh_port2_w);
 	
 		vicdual_decode();
-	}
+	} };
 	
 	#if 0
-	static DRIVER_INIT( alphaho )
+	public static DriverInitHandlerPtr init_alphaho  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* install sample trigger */
 		install_port_write_handler(0, 0x01, 0x01, invinco_sh_port2_w);
 		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
-	}
+	} };
 	#endif
 	
 	

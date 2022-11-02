@@ -327,11 +327,11 @@ public class ninjakid
 	 Init
 	*******************************************************************************/
 	
-	static DRIVER_INIT( ninjakid )
+	public static DriverInitHandlerPtr init_ninjakid  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Save State Stuff */
 		state_save_register_UINT8 ("NK_Main", 0, "ninjakun_io_a002_ctrl", &ninjakun_io_a002_ctrl, 1);
-	}
+	} };
 	
 	/*******************************************************************************
 	 Game Drivers

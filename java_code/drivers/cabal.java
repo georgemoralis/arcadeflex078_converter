@@ -720,11 +720,11 @@ public class cabal
 	
 	
 	
-	static DRIVER_INIT( cabal )
+	public static DriverInitHandlerPtr init_cabal  = new DriverInitHandlerPtr() { public void handler()
 	{
 		seibu_sound_decrypt(REGION_CPU2,0x2000);
 		seibu_adpcm_decrypt(REGION_SOUND1);
-	}
+	} };
 	
 	
 	GAME( 1988, cabal,   0,     cabal,   cabal,   cabal, ROT0, "Tad (Fabtek license)", "Cabal (US set 1)" )

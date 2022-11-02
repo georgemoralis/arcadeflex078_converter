@@ -296,7 +296,7 @@ public class wallc
 		{ -1 } /* end of array */
 	};
 	
-	static DRIVER_INIT( wallc )
+	public static DriverInitHandlerPtr init_wallc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char c;
 		unsigned int i;
@@ -309,7 +309,7 @@ public class wallc
 			c = BITSWAP8(c, 4,2,6,0,7,1,3,5); /* also swapped inside of the bigger module */
 			ROM[ i ] = c;
 		}
-	}
+	} };
 	
 	
 	

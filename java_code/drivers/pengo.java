@@ -473,13 +473,13 @@ public class pengo
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( pengo )
+	public static DriverInitHandlerPtr init_pengo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pengo_decode();
-	}
+	} };
 	
 	
-	static DRIVER_INIT( penta )
+	public static DriverInitHandlerPtr init_penta  = new DriverInitHandlerPtr() { public void handler()
 	{
 	/*
 		the values vary, but the translation mask is always laid out like this:
@@ -552,7 +552,7 @@ public class pengo
 			i = ((A >> 4) & 1) + (((A >> 8) & 1) << 1) + (((A >> 12) & 1) << 2);
 			rom[A + diff] = src ^ opcode_xortable[i][j];
 		}
-	}
+	} };
 	
 	
 	

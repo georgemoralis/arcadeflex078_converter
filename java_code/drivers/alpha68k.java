@@ -2943,109 +2943,109 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	static DRIVER_INIT( sstingry )
+	public static DriverInitHandlerPtr init_sstingry  = new DriverInitHandlerPtr() { public void handler()
 	{
 		invert_controls=0;
 		microcontroller_id=0x00ff;
 		coin_id=0x22|(0x22<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( kyros )
+	public static DriverInitHandlerPtr init_kyros  = new DriverInitHandlerPtr() { public void handler()
 	{
 		invert_controls=0;
 		microcontroller_id=0x0012;
 		coin_id=0x22|(0x22<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( paddlema )
+	public static DriverInitHandlerPtr init_paddlema  = new DriverInitHandlerPtr() { public void handler()
 	{
 		microcontroller_id=0;
 		coin_id=0;				// Not needed !
-	}
+	} };
 	
-	static DRIVER_INIT( timesold )
+	public static DriverInitHandlerPtr init_timesold  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40008, 0x40009, timesold_cycle_r);
 		invert_controls=0;
 		microcontroller_id=0;
 		coin_id=0x22|(0x22<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( timesol1 )
+	public static DriverInitHandlerPtr init_timesol1  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40008, 0x40009, timesol1_cycle_r);
 		invert_controls=1;
 		microcontroller_id=0;
 		coin_id=0x22|(0x22<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( btlfield )
+	public static DriverInitHandlerPtr init_btlfield  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40008, 0x40009, btlfield_cycle_r);
 		invert_controls=1;
 		microcontroller_id=0;
 		coin_id=0x22|(0x22<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( skysoldr )
+	public static DriverInitHandlerPtr init_skysoldr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40008, 0x40009, skysoldr_cycle_r);
 		cpu_setbank(8, (memory_region(REGION_USER1))+0x40000);
 		invert_controls=0;
 		microcontroller_id=0;
 		coin_id=0x22|(0x22<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( goldmedl )
+	public static DriverInitHandlerPtr init_goldmedl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		invert_controls=0;
 		microcontroller_id=0x8803; //AT
 		coin_id=0x23|(0x24<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( goldmedb )
+	public static DriverInitHandlerPtr init_goldmedb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(8, memory_region(REGION_USER1));
 		invert_controls=0;
 		microcontroller_id=0x8803; //Guess - routine to handle coinage is the same as in 'goldmedl'
 		coin_id=0x23|(0x24<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( skyadvnt )
+	public static DriverInitHandlerPtr init_skyadvnt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40008, 0x40009, skyadvnt_cycle_r);
 		invert_controls=0;
 		microcontroller_id=0x8814;
 		coin_id=0x22|(0x22<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( skyadvnu )
+	public static DriverInitHandlerPtr init_skyadvnu  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40008, 0x40009, skyadvnt_cycle_r);
 		invert_controls=0;
 		microcontroller_id=0x8814;
 		coin_id=0x23|(0x24<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( gangwars )
+	public static DriverInitHandlerPtr init_gangwars  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40206, 0x40207, gangwars_cycle_r);
 		cpu_setbank(8, memory_region(REGION_USER1));
 		invert_controls=0;
 		microcontroller_id=0x8512;
 		coin_id=0x23|(0x24<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( gangwarb )
+	public static DriverInitHandlerPtr init_gangwarb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x40206, 0x40207, gangwarb_cycle_r);
 		cpu_setbank(8, memory_region(REGION_USER1));
 		invert_controls=0;
 		microcontroller_id=0x8512;
 		coin_id=0x23|(0x24<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( sbasebal )
+	public static DriverInitHandlerPtr init_sbasebal  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -3066,14 +3066,14 @@ public class alpha68k
 		invert_controls=0;
 		microcontroller_id=0x8512;	// Same as 'gangwars' ?
 		coin_id=0x23|(0x24<<8);
-	}
+	} };
 	
-	static DRIVER_INIT( tnexspce )
+	public static DriverInitHandlerPtr init_tnexspce  = new DriverInitHandlerPtr() { public void handler()
 	{
 		invert_controls=0;
 		microcontroller_id=0x890a;
 		coin_id=0;				// Not needed !
-	}
+	} };
 	
 	/******************************************************************************/
 	

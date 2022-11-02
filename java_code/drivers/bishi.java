@@ -279,10 +279,10 @@ public class bishi
 		ROM_LOAD( "575jaa.a04", 0x180000, 0x080000, CRC(0120967f) SHA1(14cc2b9269f46859d1de418c8d4c76a6bdb09d16) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( bishi )
+	public static DriverInitHandlerPtr init_bishi  = new DriverInitHandlerPtr() { public void handler()
 	{
 		state_save_register_INT32("bishi", 0, "control2", (INT32 *)&cur_control, 1);
-	}
+	} };
 	
 	GAMEX( 1996, bishi,     0,       bishi,     bishi,     bishi,      ROT0, "Konami", "Bishi Bashi Championship Mini Game Senshuken", GAME_IMPERFECT_GRAPHICS)
 }

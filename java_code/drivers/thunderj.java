@@ -462,12 +462,12 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( thunderj )
+	public static DriverInitHandlerPtr init_thunderj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(2, 3, 2, 0x0002);
 		atarigen_init_6502_speedup(2, 0x4159, 0x4171);
-	}
+	} };
 	
 	
 	

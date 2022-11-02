@@ -4219,19 +4219,19 @@ public class nmk16
 	}
 	
 	
-	static DRIVER_INIT( nmk )
+	public static DriverInitHandlerPtr init_nmk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decode_gfx();
-	}
+	} };
 	
-	static DRIVER_INIT( hachamf )
+	public static DriverInitHandlerPtr init_hachamf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
 		rom[0x0006/2] = 0x7dc2;	/* replace reset vector with the "real" one */
-	}
+	} };
 	
-	static DRIVER_INIT( acrobatm )
+	public static DriverInitHandlerPtr init_acrobatm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -4243,9 +4243,9 @@ public class nmk16
 		RAM[0x9da/2] = 0x0;
 		RAM[0x97c/2] = 0x3e3C;
 		RAM[0x97e/2] = 0x0;
-	}
+	} };
 	
-	static DRIVER_INIT( tdragonb )
+	public static DriverInitHandlerPtr init_tdragonb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *ROM = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -4254,23 +4254,23 @@ public class nmk16
 		/* The Following Patch is taken from Raine, Otherwise the game has no Sprites in Attract Mode or After Level 1
 		   which is rather odd considering its a bootleg.. */
 		ROM[0x00308/2] = 0x4e71; /* Sprite Problem */
-	}
+	} };
 	
-	static DRIVER_INIT( tdragon )
+	public static DriverInitHandlerPtr init_tdragon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
 		RAM[0x94b0/2] = 0; /* Patch out JMP to shared memory (protection) */
 		RAM[0x94b2/2] = 0x92f4;
-	}
+	} };
 	
-	static DRIVER_INIT( ssmissin )
+	public static DriverInitHandlerPtr init_ssmissin  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decode_ssmissin();
-	}
+	} };
 	
 	
-	static DRIVER_INIT( strahl )
+	public static DriverInitHandlerPtr init_strahl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -4282,9 +4282,9 @@ public class nmk16
 		RAM[0x96a/2] = 0x4e71;
 		RAM[0x8e0/2] = 0x4e71; /* Checksum error */
 		RAM[0x8e2/2] = 0x4e71;
-	}
+	} };
 	
-	static DRIVER_INIT( bioship )
+	public static DriverInitHandlerPtr init_bioship  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -4293,7 +4293,7 @@ public class nmk16
 	
 		RAM[0xe798/2] = 0x4e71; /* Checksum */
 		RAM[0xe79a/2] = 0x4e71;
-	}
+	} };
 	
 	
 	int is_blkheart;
@@ -4325,7 +4325,7 @@ public class nmk16
 	
 	}
 	
-	static DRIVER_INIT( blkheart )
+	public static DriverInitHandlerPtr init_blkheart  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -4341,9 +4341,9 @@ public class nmk16
 	   	RAM[0x3dea/2] = 0x0300;
 	
 		install_mem_write16_handler(0, 0xf902a, 0xf902b, test_2a_w );
-	}
+	} };
 	
-	static DRIVER_INIT( mustang )
+	public static DriverInitHandlerPtr init_mustang  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -4358,9 +4358,9 @@ public class nmk16
 	  	RAM[0x30b2/2] = 0x0300;
 	
 		install_mem_write16_handler(0, 0xf902a, 0xf902b, test_2a_mustang_w );
-	}
+	} };
 	
-	static DRIVER_INIT( bjtwin )
+	public static DriverInitHandlerPtr init_bjtwin  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_nmk();
 	
@@ -4383,7 +4383,7 @@ public class nmk16
 	//	data 16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	//	rom[0x09172/2] = 0x6006;	/* patch checksum error */
 	//	rom[0x08f74/2] = 0x4e71);
-	}
+	} };
 	
 	
 	

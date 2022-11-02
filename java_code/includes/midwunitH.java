@@ -34,17 +34,7 @@ public class midwunitH
 	READ16_HANDLER( midxunit_uart_r );
 	WRITE16_HANDLER( midxunit_uart_w );
 	
-	DRIVER_INIT( mk3 );
-	DRIVER_INIT( mk3r20 );
-	DRIVER_INIT( mk3r10 );
-	DRIVER_INIT( umk3 );
-	DRIVER_INIT( umk3r11 );
 	
-	DRIVER_INIT( openice );
-	DRIVER_INIT( nbahangt );
-	DRIVER_INIT( wwfmania );
-	DRIVER_INIT( rmpgwt );
-	DRIVER_INIT( revx );
 	
 	
 	READ16_HANDLER( midwunit_security_r );

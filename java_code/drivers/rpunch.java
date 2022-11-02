@@ -862,19 +862,19 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( rabiolep )
+	public static DriverInitHandlerPtr init_rabiolep  = new DriverInitHandlerPtr() { public void handler()
 	{
 		rpunch_sprite_palette = 0x300;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( svolley )
+	public static DriverInitHandlerPtr init_svolley  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* the main differences between Super Volleyball and Rabbit Punch are */
 		/* the lack of direct-mapped bitmap and a different palette base for sprites */
 		rpunch_sprite_palette = 0x080;
 		rpunch_bitmapram = NULL;
-	}
+	} };
 	
 	
 	

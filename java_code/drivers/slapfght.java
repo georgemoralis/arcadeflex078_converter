@@ -1400,12 +1400,12 @@ public class slapfght
 		ROM_LOAD( "rom19",        0x0200, 0x0100, CRC(513224f0) SHA1(15b34612206138f6fc5f7478925b1fff2ed56aa8) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( tigerh )
+	public static DriverInitHandlerPtr init_tigerh  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0,  0xe803, 0xe803, tigerh_mcu_r );
 		install_mem_write_handler(0, 0xe803, 0xe803, tigerh_mcu_w  );
 	
-	}
+	} };
 	
 	
 	

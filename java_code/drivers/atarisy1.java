@@ -2149,27 +2149,27 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( marble )
+	public static DriverInitHandlerPtr init_marble  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 103);
 	
 		joystick_type = 0;	/* none */
 		trackball_type = 1;	/* rotated */
-	}
+	} };
 	
 	
-	static DRIVER_INIT( peterpak )
+	public static DriverInitHandlerPtr init_peterpak  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 107);
 	
 		joystick_type = 1;	/* digital */
 		trackball_type = 0;	/* none */
-	}
+	} };
 	
 	
-	static DRIVER_INIT( indytemp )
+	public static DriverInitHandlerPtr init_indytemp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 105);
@@ -2179,37 +2179,37 @@ public class atarisy1
 	
 		joystick_type = 1;	/* digital */
 		trackball_type = 0;	/* none */
-	}
+	} };
 	
 	
-	static DRIVER_INIT( roadrunn )
+	public static DriverInitHandlerPtr init_roadrunn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 108);
 	
 		joystick_type = 2;	/* analog */
 		trackball_type = 0;	/* none */
-	}
+	} };
 	
 	
-	static DRIVER_INIT( roadb109 )
+	public static DriverInitHandlerPtr init_roadb109  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 109);
 	
 		joystick_type = 3;	/* pedal */
 		trackball_type = 2;	/* steering wheel */
-	}
+	} };
 	
 	
-	static DRIVER_INIT( roadb110 )
+	public static DriverInitHandlerPtr init_roadb110  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 110);
 	
 		joystick_type = 3;	/* pedal */
 		trackball_type = 2;	/* steering wheel */
-	}
+	} };
 	
 	
 	

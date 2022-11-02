@@ -1409,7 +1409,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	DRIVER_INIT( sidetrac )
+	public static DriverInitHandlerPtr init_sidetrac  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= sidetrac_palette;
 		exidy_colortable 		= exidy_1bpp_colortable;
@@ -1422,9 +1422,9 @@ public class exidy
 	
 		/* sound is handled directly instead of via a PIA */
 		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
-	}
+	} };
 	
-	DRIVER_INIT( targ )
+	public static DriverInitHandlerPtr init_targ  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= targ_palette;
 		exidy_colortable 		= exidy_1bpp_colortable;
@@ -1437,9 +1437,9 @@ public class exidy
 	
 		/* sound is handled directly instead of via a PIA */
 		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
-	}
+	} };
 	
-	DRIVER_INIT( spectar )
+	public static DriverInitHandlerPtr init_spectar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= spectar_palette;
 		exidy_colortable 		= exidy_1bpp_colortable;
@@ -1452,25 +1452,25 @@ public class exidy
 	
 		/* sound is handled directly instead of via a PIA */
 		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
-	}
+	} };
 	
-	DRIVER_INIT( mtrap )
+	public static DriverInitHandlerPtr init_mtrap  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_1bpp_colortable;
 		exidy_collision_mask 	= 0x14;
 		exidy_collision_invert	= 0x00;
-	}
+	} };
 	
-	DRIVER_INIT( venture )
+	public static DriverInitHandlerPtr init_venture  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_1bpp_colortable;
 		exidy_collision_mask 	= 0x04;
 		exidy_collision_invert	= 0x04;
-	}
+	} };
 	
-	DRIVER_INIT( pepper2 )
+	public static DriverInitHandlerPtr init_pepper2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_2bpp_colortable;
@@ -1480,9 +1480,9 @@ public class exidy
 		/* two 6116 character RAMs */
 		install_mem_write_handler(0, 0x4800, 0x4fff, MWA_NOP);
 		exidy_characterram = install_mem_write_handler(0, 0x6000, 0x6fff, exidy_characterram_w);
-	}
+	} };
 	
-	DRIVER_INIT( fax )
+	public static DriverInitHandlerPtr init_fax  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_2bpp_colortable;
@@ -1491,9 +1491,9 @@ public class exidy
 	
 		/* Initialize our ROM question bank */
 		fax_bank_select_w(0,0);
-	}
+	} };
 	
-	DRIVER_INIT( phantoma )
+	public static DriverInitHandlerPtr init_phantoma  = new DriverInitHandlerPtr() { public void handler()
 	{
 		exidy_palette 			= spectar_palette;
 		exidy_colortable 		= exidy_2bpp_colortable;
@@ -1506,7 +1506,7 @@ public class exidy
 	
 		/* sound is handled directly instead of via a PIA */
 		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
-	}
+	} };
 	
 	/*************************************
 	 *

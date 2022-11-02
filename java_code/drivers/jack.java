@@ -1023,21 +1023,21 @@ public class jack
 		}
 	}
 	
-	static DRIVER_INIT( jack )
+	public static DriverInitHandlerPtr init_jack  = new DriverInitHandlerPtr() { public void handler()
 	{
 		timer_rate = 128;
-	}
+	} };
 	
-	static DRIVER_INIT( treahunt )
+	public static DriverInitHandlerPtr init_treahunt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		timer_rate = 128;
 		treahunt_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( zzyzzyxx )
+	public static DriverInitHandlerPtr init_zzyzzyxx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		timer_rate = 16;
-	}
+	} };
 	
 	
 	

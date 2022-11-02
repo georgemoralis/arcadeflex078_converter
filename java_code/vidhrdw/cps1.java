@@ -748,12 +748,12 @@ public class cps1
 	}
 	
 	
-	DRIVER_INIT( cps1 )
+	public static DriverInitHandlerPtr init_cps1  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cps1_gfx_decode();
-	}
+	} };
 	
-	DRIVER_INIT( cps2 )
+	public static DriverInitHandlerPtr init_cps2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 		data16_t *xor = (data16_t *)memory_region(REGION_USER1);
@@ -771,7 +771,7 @@ public class cps1
 		scanline1 = 262;
 		scanline2 = 262;
 		scancalls = 0;
-	}
+	} };
 	
 	
 	

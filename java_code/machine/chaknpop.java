@@ -160,13 +160,13 @@ public class chaknpop
 	  Initialize mcu emulation
 	***************************************************************************/
 	
-	DRIVER_INIT( chaknpop )
+	public static DriverInitHandlerPtr init_chaknpop  = new DriverInitHandlerPtr() { public void handler()
 	{
 		state_save_register_UINT8("chankpop", 0, "mcu_seed",    &mcu_seed,    1);
 		state_save_register_UINT8("chankpop", 0, "mcu_result",  &mcu_result,  1);
 		state_save_register_UINT8("chankpop", 0, "mcu_select",  &mcu_select,  1);
 		state_save_register_UINT8("chankpop", 0, "mcu_wait",    &mcu_wait,    1);
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_chaknpop  = new MachineInitHandlerPtr() { public void handler()
 	{

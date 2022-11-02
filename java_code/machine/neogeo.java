@@ -102,7 +102,7 @@ public class neogeo
 	
 	
 	/* This function is only called once per game. */
-	DRIVER_INIT( neogeo )
+	public static DriverInitHandlerPtr init_neogeo  = new DriverInitHandlerPtr() { public void handler()
 	{
 			data16_t *mem16 = (data16_t *)memory_region(REGION_CPU1);
 		int tileno,numtiles;
@@ -260,7 +260,7 @@ public class neogeo
 		/* register state save */
 		neogeo_register_main_savestate();
 		neogeo_register_sub_savestate();
-	}
+	} };
 	
 	/******************************************************************************/
 	

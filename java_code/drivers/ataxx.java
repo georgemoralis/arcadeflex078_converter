@@ -734,7 +734,7 @@ public class ataxx
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( ataxx )
+	public static DriverInitHandlerPtr init_ataxx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the default EEPROM state */
 		static const UINT16 ataxx_eeprom_data[] =
@@ -758,10 +758,10 @@ public class ataxx
 	
 		/* optimize the sound */
 		leland_i86_optimize_address(0x612);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( ataxxj )
+	public static DriverInitHandlerPtr init_ataxxj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the default EEPROM state */
 		static const UINT16 ataxxj_eeprom_data[] =
@@ -784,10 +784,10 @@ public class ataxx
 	
 		/* optimize the sound */
 		leland_i86_optimize_address(0x612);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( wsf )
+	public static DriverInitHandlerPtr init_wsf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the default EEPROM state */
 		static const UINT16 wsf_eeprom_data[] =
@@ -812,10 +812,10 @@ public class ataxx
 	
 		/* optimize the sound */
 		leland_i86_optimize_address(0x612);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( indyheat )
+	public static DriverInitHandlerPtr init_indyheat  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the default EEPROM state */
 		static const UINT16 indyheat_eeprom_data[] =
@@ -845,10 +845,10 @@ public class ataxx
 	
 		/* optimize the sound */
 		leland_i86_optimize_address(0x613);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( brutforc )
+	public static DriverInitHandlerPtr init_brutforc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the default EEPROM state */
 		static const UINT16 brutforc_eeprom_data[] =
@@ -873,10 +873,10 @@ public class ataxx
 	
 		/* optimize the sound */
 		leland_i86_optimize_address(0x613);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( asylum )
+	public static DriverInitHandlerPtr init_asylum  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the default EEPROM state */
 		static const UINT16 asylum_eeprom_data[] =
@@ -901,7 +901,7 @@ public class ataxx
 	
 		/* optimize the sound */
 		leland_i86_optimize_address(0x613);
-	}
+	} };
 	
 	
 	

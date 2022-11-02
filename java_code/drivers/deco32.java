@@ -2574,16 +2574,16 @@ public class deco32
 	
 	/**********************************************************************************/
 	
-	static DRIVER_INIT( captaven )
+	public static DriverInitHandlerPtr init_captaven  = new DriverInitHandlerPtr() { public void handler()
 	{
 		deco56_decrypt(REGION_GFX1);
 		deco56_decrypt(REGION_GFX2);
 	
 		raster_offset=-1;
 		install_mem_read32_handler(0, 0x12748c, 0x12748f, captaven_skip);
-	}
+	} };
 	
-	static DRIVER_INIT( dragngun )
+	public static DriverInitHandlerPtr init_dragngun  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data32_t *ROM = (UINT32 *)memory_region(REGION_CPU1);
 		const data8_t *SRC_RAM = memory_region(REGION_GFX1);
@@ -2600,15 +2600,15 @@ public class deco32
 	
 		raster_offset=0;
 		install_mem_read32_handler(0, 0x11f15c, 0x11f15f, dragngun_skip);
-	}
+	} };
 	
-	static DRIVER_INIT( fghthist )
+	public static DriverInitHandlerPtr init_fghthist  = new DriverInitHandlerPtr() { public void handler()
 	{
 		deco56_decrypt(REGION_GFX1);
 		deco74_decrypt(REGION_GFX2);
-	}
+	} };
 	
-	static DRIVER_INIT( lockload )
+	public static DriverInitHandlerPtr init_lockload  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *RAM = memory_region(REGION_CPU1);
 	//	data32_t *ROM = (UINT32 *)memory_region(REGION_CPU1);
@@ -2624,9 +2624,9 @@ public class deco32
 	//	ROM[0x3fe3c0/4]=0xe1a00000;//  NOP test switch lock
 	//	ROM[0x3fe3cc/4]=0xe1a00000;//  NOP test switch lock
 	//	ROM[0x3fe40c/4]=0xe1a00000;//  NOP test switch lock
-	}
+	} };
 	
-	static DRIVER_INIT( tattass )
+	public static DriverInitHandlerPtr init_tattass  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *RAM = memory_region(REGION_GFX1);
 		data8_t *tmp = (data8_t *)malloc(0x80000);
@@ -2647,9 +2647,9 @@ public class deco32
 		deco56_decrypt(REGION_GFX2); /* 141 */
 	
 		install_mem_read32_handler(0, 0x100000, 0x100003, tattass_skip);
-	}
+	} };
 	
-	static DRIVER_INIT( nslasher )
+	public static DriverInitHandlerPtr init_nslasher  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *RAM = memory_region(REGION_GFX1);
 		data8_t *tmp = (data8_t *)malloc(0x80000);
@@ -2671,7 +2671,7 @@ public class deco32
 	
 		/* The board for Night Slashers is very close to the Fighter's History and
 		Tattoo Assassins boards, but has an encrypted ARM cpu. */
-	}
+	} };
 	
 	/**********************************************************************************/
 	

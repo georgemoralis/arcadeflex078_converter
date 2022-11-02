@@ -947,21 +947,21 @@ public class terracre
 		ROM_LOAD( "kid_prom.4e",  0x400, 0x100, CRC(e4fb54ee) SHA1(aba89d347b24dc6680e6f25b4a6c0d6657bb6a83) ) /* ctable */
 	ROM_END(); }}; 
 	
-	DRIVER_INIT( amazon )
+	public static DriverInitHandlerPtr init_amazon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		mpProtData = mAmazonProtData;
-	}
+	} };
 	
-	DRIVER_INIT( amatelas )
+	public static DriverInitHandlerPtr init_amatelas  = new DriverInitHandlerPtr() { public void handler()
 	{
 		mpProtData = mAmatelasProtData;
-	}
+	} };
 	
-	DRIVER_INIT( horekid )
+	public static DriverInitHandlerPtr init_horekid  = new DriverInitHandlerPtr() { public void handler()
 	{
 		mpProtData = mHoreKidProtData;
 		install_mem_read16_handler(0, 0x44004, 0x44005, horekid_IN2_r);
-	}
+	} };
 	
 	/*    YEAR, NAME,   PARENT,     MACHINE, INPUT,    INIT,     MONITOR,  COMPANY,      FULLNAME, FLAGS */
 	GAME( 1985, terracre, 0,        ym3526,  terracre, 0,        ROT270,  "Nichibutsu", "Terra Cresta (YM3526 set 1)" )

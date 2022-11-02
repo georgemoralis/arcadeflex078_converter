@@ -392,10 +392,10 @@ public class dynduke
 	/***************************************************************************/
 	
 	
-	static DRIVER_INIT( dynduke )
+	public static DriverInitHandlerPtr init_dynduke  = new DriverInitHandlerPtr() { public void handler()
 	{
 		seibu_sound_decrypt(REGION_CPU3,0x20000);
-	}
+	} };
 	
 	
 	GAME( 1989, dynduke, 0,       dynduke, dynduke, dynduke, ROT0, "Seibu Kaihatsu (Fabtek license)", "Dynamite Duke" )

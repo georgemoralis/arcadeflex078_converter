@@ -1264,99 +1264,99 @@ public class cinemat
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( spacewar )
+	public static DriverInitHandlerPtr init_spacewar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(0, CCPU_MEMSIZE_4K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = spacewar_sound_w;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( barrier )
+	public static DriverInitHandlerPtr init_barrier  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_4K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( starhawk )
+	public static DriverInitHandlerPtr init_starhawk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_4K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( starcas )
+	public static DriverInitHandlerPtr init_starcas  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = starcas_sound_w;
 		artwork_set_overlay(starcas_overlay);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( tailg )
+	public static DriverInitHandlerPtr init_tailg  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(0, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
 		artwork_set_overlay(tailg_overlay);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( ripoff )
+	public static DriverInitHandlerPtr init_ripoff  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = ripoff_sound_w;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( speedfrk )
+	public static DriverInitHandlerPtr init_speedfrk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(0, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
 	
 		install_port_read16_handler(0, CCPU_PORT_IOINPUTS, CCPU_PORT_IOINPUTS+1, speedfrk_input_port_1_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( sundance )
+	public static DriverInitHandlerPtr init_sundance  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_16LEV);
 		cinemat_sound_handler = sundance_sound_w;
 		artwork_set_overlay(sundance_overlay);
 	
 		install_port_read16_handler(0, CCPU_PORT_IOINPUTS, CCPU_PORT_IOINPUTS+1, sundance_input_port_1_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( warrior )
+	public static DriverInitHandlerPtr init_warrior  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = warrior_sound_w;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( armora )
+	public static DriverInitHandlerPtr init_armora  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_16K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = armora_sound_w;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( armorar )
+	public static DriverInitHandlerPtr init_armorar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = armora_sound_w;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( solarq )
+	public static DriverInitHandlerPtr init_solarq  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_16K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = solarq_sound_w;
 		artwork_set_overlay(solarq_overlay);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( demon )
+	public static DriverInitHandlerPtr init_demon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -1371,23 +1371,23 @@ public class cinemat
 		RAM[0x0096]=0xc3;	/* jp $00fd */
 		RAM[0x0097]=0xfd;
 		RAM[0x0098]=0x00;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( wotw )
+	public static DriverInitHandlerPtr init_wotw  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_16K, CCPU_MONITOR_WOWCOL);
 		cinemat_sound_handler = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( boxingb )
+	public static DriverInitHandlerPtr init_boxingb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ccpu_Config(1, CCPU_MEMSIZE_32K, CCPU_MONITOR_WOWCOL);
 		cinemat_sound_handler = 0;
 	
 		install_port_read16_handler(0, CCPU_PORT_IOINPUTS, CCPU_PORT_IOINPUTS+1, boxingb_input_port_1_r);
-	}
+	} };
 	
 	
 	

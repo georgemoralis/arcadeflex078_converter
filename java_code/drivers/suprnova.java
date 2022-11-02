@@ -1192,24 +1192,24 @@ public class suprnova
 		return skns_main_ram[0xb7380/4];
 	}
 	
-	static DRIVER_INIT( skns )     { install_mem_read32_handler(0, 0x6000028, 0x600002b, bios_skip_r );  }
-	static DRIVER_INIT( galpani4 ) { skns_sprite_kludge(-5,-1); init_skns();  } // Idle Loop caught by sh-2 core
-	static DRIVER_INIT( galpanis ) { skns_sprite_kludge(-5,-1); init_skns();  } // Idle Loop caught by sh-2 core
-	static DRIVER_INIT( cyvern )   { skns_sprite_kludge(+0,+2); init_skns(); install_mem_read32_handler(0, 0x604d3c8, 0x604d3cb, cyvern_speedup_r );   }
-	static DRIVER_INIT( galpans2 ) { skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60fb6bc, 0x60fb6bf, galpans2_speedup_r );  }
-	static DRIVER_INIT( gutsn )    { skns_sprite_kludge(+0,+0); init_skns(); install_mem_read32_handler(0, 0x600c780, 0x600c783, gutsn_speedup_r );  }
-	static DRIVER_INIT( panicstr ) { skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60f19e4, 0x60f19e7, panicstr_speedup_r );  }
-	static DRIVER_INIT( senknow )  { skns_sprite_kludge(+1,+1); init_skns(); install_mem_read32_handler(0, 0x60000dc, 0x60000df, senknow_speedup_r );  }
-	static DRIVER_INIT( puzzloop ) { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6081d38, 0x6081d3b, puzzloop_speedup_r ); }
-	static DRIVER_INIT( puzloopj ) { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6086714, 0x6086717, puzloopj_speedup_r ); }
-	static DRIVER_INIT( puzloopu ) { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6085cec, 0x6085cef, puzloopu_speedup_r ); }
-	static DRIVER_INIT( jjparads ) { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000994, 0x6000997, jjparads_speedup_r );  }
-	static DRIVER_INIT( jjparad2 ) { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000984, 0x6000987, jjparad2_speedup_r );  }
-	static DRIVER_INIT( ryouran )  { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000a14, 0x6000a17, ryouran_speedup_r );  }
-	static DRIVER_INIT( teljan )   { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6002fb4, 0x6002fb7, teljan_speedup_r );  }
-	static DRIVER_INIT( sengekis ) { skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b74bc, 0x60b74bf, sengekis_speedup_r ); }
-	static DRIVER_INIT( sengekij ) { skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b7380, 0x60b7383, sengekij_speedup_r ); }
-	static DRIVER_INIT( sarukani ) { skns_sprite_kludge(-1,-1); init_skns();  } // Speedup is in skns_io_w()
+	public static DriverInitHandlerPtr init_skns  = new DriverInitHandlerPtr() { public void handler()     { install_mem_read32_handler(0, 0x6000028, 0x600002b, bios_skip_r );  } };
+	public static DriverInitHandlerPtr init_galpani4  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-5,-1); init_skns();  } }; // Idle Loop caught by sh-2 core
+	public static DriverInitHandlerPtr init_galpanis  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-5,-1); init_skns();  } }; // Idle Loop caught by sh-2 core
+	public static DriverInitHandlerPtr init_cyvern  = new DriverInitHandlerPtr() { public void handler()   { skns_sprite_kludge(+0,+2); init_skns(); install_mem_read32_handler(0, 0x604d3c8, 0x604d3cb, cyvern_speedup_r );   } };
+	public static DriverInitHandlerPtr init_galpans2  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60fb6bc, 0x60fb6bf, galpans2_speedup_r );  } };
+	public static DriverInitHandlerPtr init_gutsn  = new DriverInitHandlerPtr() { public void handler()    { skns_sprite_kludge(+0,+0); init_skns(); install_mem_read32_handler(0, 0x600c780, 0x600c783, gutsn_speedup_r );  } };
+	public static DriverInitHandlerPtr init_panicstr  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60f19e4, 0x60f19e7, panicstr_speedup_r );  } };
+	public static DriverInitHandlerPtr init_senknow  = new DriverInitHandlerPtr() { public void handler()  { skns_sprite_kludge(+1,+1); init_skns(); install_mem_read32_handler(0, 0x60000dc, 0x60000df, senknow_speedup_r );  } };
+	public static DriverInitHandlerPtr init_puzzloop  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6081d38, 0x6081d3b, puzzloop_speedup_r ); } };
+	public static DriverInitHandlerPtr init_puzloopj  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6086714, 0x6086717, puzloopj_speedup_r ); } };
+	public static DriverInitHandlerPtr init_puzloopu  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6085cec, 0x6085cef, puzloopu_speedup_r ); } };
+	public static DriverInitHandlerPtr init_jjparads  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000994, 0x6000997, jjparads_speedup_r );  } };
+	public static DriverInitHandlerPtr init_jjparad2  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000984, 0x6000987, jjparad2_speedup_r );  } };
+	public static DriverInitHandlerPtr init_ryouran  = new DriverInitHandlerPtr() { public void handler()  { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000a14, 0x6000a17, ryouran_speedup_r );  } };
+	public static DriverInitHandlerPtr init_teljan  = new DriverInitHandlerPtr() { public void handler()   { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6002fb4, 0x6002fb7, teljan_speedup_r );  } };
+	public static DriverInitHandlerPtr init_sengekis  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b74bc, 0x60b74bf, sengekis_speedup_r ); } };
+	public static DriverInitHandlerPtr init_sengekij  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b7380, 0x60b7383, sengekij_speedup_r ); } };
+	public static DriverInitHandlerPtr init_sarukani  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-1,-1); init_skns();  } }; // Speedup is in skns_io_w()
 	
 	
 	

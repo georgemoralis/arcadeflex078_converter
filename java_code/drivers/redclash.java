@@ -496,7 +496,7 @@ public class redclash
 		ROM_LOAD( "6331-3.11e",   0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* 6331.6w */
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( redclash )
+	public static DriverInitHandlerPtr init_redclash  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i,j;
 	
@@ -506,7 +506,7 @@ public class redclash
 			j = (i & ~0x003e) | ((i & 0x0e) << 2) | ((i & 0x30) >> 3);
 			memory_region(REGION_GFX3)[i] = memory_region(REGION_GFX2)[j];
 		}
-	}
+	} };
 	
 	
 	

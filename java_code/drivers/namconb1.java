@@ -339,40 +339,40 @@ public class namconb1
 		}
 	}
 	
-	static DRIVER_INIT( nebulray )
+	public static DriverInitHandlerPtr init_nebulray  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB1_NEBULRAY;
-	}
+	} };
 	
-	static DRIVER_INIT( gslgr94u )
+	public static DriverInitHandlerPtr init_gslgr94u  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB1_GSLGR94U;
-	}
+	} };
 	
-	static DRIVER_INIT( sws95 )
+	public static DriverInitHandlerPtr init_sws95  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB1_SWS95;
-	}
+	} };
 	
-	static DRIVER_INIT( sws96 )
+	public static DriverInitHandlerPtr init_sws96  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB1_SWS96;
-	}
+	} };
 	
-	static DRIVER_INIT( sws97 )
+	public static DriverInitHandlerPtr init_sws97  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB1_SWS97;
-	}
+	} };
 	
-	static DRIVER_INIT( gunbulet )
+	public static DriverInitHandlerPtr init_gunbulet  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB1_GUNBULET;
-	}
+	} };
 	
-	static DRIVER_INIT( vshoot )
+	public static DriverInitHandlerPtr init_vshoot  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB1_VSHOOT;
-	}
+	} };
 	
 	static void
 	ShuffleDataROMs( void )
@@ -390,17 +390,17 @@ public class namconb1
 		cpu_setbank( 1, pMem32 );
 	}
 	
-	static DRIVER_INIT( machbrkr )
+	public static DriverInitHandlerPtr init_machbrkr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB2_MACH_BREAKERS;
 		ShuffleDataROMs();
-	}
+	} };
 	
-	static DRIVER_INIT( outfxies )
+	public static DriverInitHandlerPtr init_outfxies  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos2_gametype = NAMCONB2_OUTFOXIES;
 		ShuffleDataROMs();
-	}
+	} };
 	
 	static READ32_HANDLER( custom_key_r )
 	{

@@ -2176,31 +2176,31 @@ public class itech8
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( viasound )
+	public static DriverInitHandlerPtr init_viasound  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* some games with a YM3812 use a VIA(6522) for timing and communication */
 		install_mem_read_handler (1, 0x5000, 0x500f, via6522_r);
 		via6522 = install_mem_write_handler(1, 0x5000, 0x500f, via6522_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( slikshot )
+	public static DriverInitHandlerPtr init_slikshot  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler (0, 0x0180, 0x0180, slikshot_z80_r);
 		install_mem_read_handler (0, 0x01cf, 0x01cf, slikshot_z80_control_r);
 		install_mem_write_handler(0, 0x01cf, 0x01cf, slikshot_z80_control_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( sstrike )
+	public static DriverInitHandlerPtr init_sstrike  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler (0, 0x1180, 0x1180, slikshot_z80_r);
 		install_mem_read_handler (0, 0x11cf, 0x11cf, slikshot_z80_control_r);
 		install_mem_write_handler(0, 0x11cf, 0x11cf, slikshot_z80_control_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( rimrockn )
+	public static DriverInitHandlerPtr init_rimrockn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* additional input ports */
 		install_mem_read_handler (0, 0x0161, 0x0161, input_port_3_r);
@@ -2215,7 +2215,7 @@ public class itech8
 	
 		/* VIA-based sound timing */
 		init_viasound();
-	}
+	} };
 	
 	
 	

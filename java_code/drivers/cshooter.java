@@ -550,7 +550,7 @@ public class cshooter
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( cshooter )
+	public static DriverInitHandlerPtr init_cshooter  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* temp so it boots */
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -559,9 +559,9 @@ public class cshooter
 		rom[0xa3] = 0x00;
 		rom[0xa4] = 0x00;
 	
-	}
+	} };
 	
-	DRIVER_INIT( cshootre )
+	public static DriverInitHandlerPtr init_cshootre  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -596,7 +596,7 @@ public class cshooter
 	
 	
 		seibu_sound_decrypt(REGION_CPU2,0x2000);
-	}
+	} };
 	
 	
 	

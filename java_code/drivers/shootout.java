@@ -452,7 +452,7 @@ public class shootout
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( shootout )
+	public static DriverInitHandlerPtr init_shootout  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -462,7 +462,7 @@ public class shootout
 	
 		for (A = 0;A < diff;A++)
 			rom[A+diff] = (rom[A] & 0x9f) | ((rom[A] & 0x40) >> 1) | ((rom[A] & 0x20) << 1);
-	}
+	} };
 	
 	
 	GAME( 1985, shootout, 0,		shootout, shootout, shootout, ROT0, "Data East USA", "Shoot Out (US)")

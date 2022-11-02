@@ -582,22 +582,22 @@ public class policetr
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( policetr )
+	public static DriverInitHandlerPtr init_policetr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		speedup_data = install_mem_write32_handler(0, 0x00000fc8, 0x00000fcb, speedup_w);
 		speedup_pc = 0x1fc028ac;
 	
 		memcpy(rom_base, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
-	}
+	} };
 	
 	
-	static DRIVER_INIT( sshooter )
+	public static DriverInitHandlerPtr init_sshooter  = new DriverInitHandlerPtr() { public void handler()
 	{
 		speedup_data = install_mem_write32_handler(0, 0x00018fd8, 0x00018fdb, speedup_w);
 		speedup_pc = 0x1fc03470;
 	
 		memcpy(rom_base, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
-	}
+	} };
 	
 	
 	

@@ -445,7 +445,7 @@ public class irobot
 	
 	
 	/* Init mathbox (only called once) */
-	DRIVER_INIT( irobot )
+	public static DriverInitHandlerPtr init_irobot  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 		for (i = 0; i < 16; i++)
@@ -455,7 +455,7 @@ public class irobot
 		}
 		irmb_latch=0;
 		load_oproms();
-	}
+	} };
 	
 	static void irmb_done_callback (int param)
 	{

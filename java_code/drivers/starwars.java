@@ -562,15 +562,15 @@ public class starwars
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( starwars )
+	public static DriverInitHandlerPtr init_starwars  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* prepare the mathbox */
 		is_esb = 0;
 		swmathbox_init();
-	}
+	} };
 	
 	
-	static DRIVER_INIT( esb )
+	public static DriverInitHandlerPtr init_esb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* init the slapstic */
 		slapstic_init(101);
@@ -590,7 +590,7 @@ public class starwars
 		/* prepare the mathbox */
 		is_esb = 1;
 		swmathbox_init();
-	}
+	} };
 	
 	
 	

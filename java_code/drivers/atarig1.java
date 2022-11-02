@@ -859,12 +859,12 @@ public class atarig1
 		atarig1_pitfight = is_pitfight;
 	}
 	
-	static DRIVER_INIT( hydra )    { init_g1_common(0x078000, 116, 0); }
-	static DRIVER_INIT( hydrap )   { init_g1_common(0x000000,   0, 0); }
+	public static DriverInitHandlerPtr init_hydra  = new DriverInitHandlerPtr() { public void handler()    { init_g1_common(0x078000, 116, 0); } };
+	public static DriverInitHandlerPtr init_hydrap  = new DriverInitHandlerPtr() { public void handler()   { init_g1_common(0x000000,   0, 0); } };
 	
-	static DRIVER_INIT( pitfight ) { init_g1_common(0x038000, 111, 1); }
-	static DRIVER_INIT( pitfighj ) { init_g1_common(0x038000, 113, 1); }
-	static DRIVER_INIT( pitfighb ) { init_g1_common(0x038000,  -1, 1); }
+	public static DriverInitHandlerPtr init_pitfight  = new DriverInitHandlerPtr() { public void handler() { init_g1_common(0x038000, 111, 1); } };
+	public static DriverInitHandlerPtr init_pitfighj  = new DriverInitHandlerPtr() { public void handler() { init_g1_common(0x038000, 113, 1); } };
+	public static DriverInitHandlerPtr init_pitfighb  = new DriverInitHandlerPtr() { public void handler() { init_g1_common(0x038000,  -1, 1); } };
 	
 	
 	

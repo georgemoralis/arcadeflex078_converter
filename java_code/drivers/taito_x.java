@@ -1356,17 +1356,17 @@ public class taito_x
 		ROM_LOAD( "m-8-4.u1",     0x00000, 0x20000, CRC(d3f6047a) SHA1(0db6d762bbe2d68cddf30e06125b904e1021b96d) )
 	ROM_END(); }}; 
 	
-	DRIVER_INIT( taitox )
+	public static DriverInitHandlerPtr init_taitox  = new DriverInitHandlerPtr() { public void handler()
 	{
 		state_save_register_int("taitof2", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
-	}
+	} };
 	
-	DRIVER_INIT( kyustrkr )
+	public static DriverInitHandlerPtr init_kyustrkr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_taitox();
 		install_mem_write16_handler (0, 0x900000, 0x90000f, kyustrkr_input_w);
-	}
+	} };
 	
 	GAME( 1988, superman, 0,        superman, superman, taitox,   ROT0,   "Taito Corporation", "Superman" )
 	GAME( 1989, twinhawk, 0,        daisenpu, twinhawk, taitox,   ROT270, "Taito Corporation Japan", "Twin Hawk (World)" )

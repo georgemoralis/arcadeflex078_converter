@@ -752,14 +752,14 @@ public class gsword
 	
 	
 	
-	static DRIVER_INIT( gsword )
+	public static DriverInitHandlerPtr init_gsword  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *ROM2 = memory_region(REGION_CPU2);
 	
 		ROM2[0x1da] = 0xc3; /* patch for rom self check */
 		ROM2[0x726] = 0;    /* patch for sound protection or time out function */
 		ROM2[0x727] = 0;
-	}
+	} };
 	
 	
 	GAMEX( 1983, josvolly, 0, josvolly, gsword, 0,      ROT90, "Taito Corporation", "Joshi Volleyball", GAME_NOT_WORKING )

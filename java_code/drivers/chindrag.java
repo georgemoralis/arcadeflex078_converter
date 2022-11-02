@@ -151,10 +151,10 @@ public class chindrag
 		}
 	}
 	
-	static DRIVER_INIT( chindrag )
+	public static DriverInitHandlerPtr init_chindrag  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dw_decrypt();
-	}
+	} };
 	
 	
 	static RomLoadPtr rom_chindrag = new RomLoadPtr(){ public void handler(){ 

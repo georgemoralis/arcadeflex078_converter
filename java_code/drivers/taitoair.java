@@ -769,13 +769,13 @@ public class taitoair
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( taitoair )
+	public static DriverInitHandlerPtr init_taitoair  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dsp_HOLD_signal = ASSERT_LINE;
 	
 		state_save_register_int("sound1", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
-	}
+	} };
 	
 	
 	

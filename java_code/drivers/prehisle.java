@@ -374,10 +374,10 @@ public class prehisle
 		return ret;
 	}
 	
-	static DRIVER_INIT( prehisle )
+	public static DriverInitHandlerPtr init_prehisle  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x70024, 0x70025, world_cycle_r);
-	}
+	} };
 	
 	static READ16_HANDLER( usa_cycle_r )
 	{
@@ -391,10 +391,10 @@ public class prehisle
 		return ret;
 	}
 	
-	static DRIVER_INIT( prehislu )
+	public static DriverInitHandlerPtr init_prehislu  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x70024, 0x70025, usa_cycle_r);
-	}
+	} };
 	
 	static READ16_HANDLER( jap_cycle_r )
 	{
@@ -408,10 +408,10 @@ public class prehisle
 		return ret;
 	}
 	
-	static DRIVER_INIT( gensitou )
+	public static DriverInitHandlerPtr init_gensitou  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x70024, 0x70025, jap_cycle_r);
-	}
+	} };
 	
 	/******************************************************************************/
 	

@@ -277,7 +277,7 @@ public class glass
 		}
 	}
 	
-	static DRIVER_INIT( glass )
+	public static DriverInitHandlerPtr init_glass  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/*
 		For REGION_GFX2 we have this memory map:
@@ -296,7 +296,7 @@ public class glass
 	
 		/* split ROM H11 */
 		glass_ROM16_split(REGION_GFX2, REGION_GFX1, 0x0200000, 0x0200000, 0x0200000, 0x0300000);
-	}
+	} };
 	
 	GAMEX( 1993, glass, 0, glass,glass, glass, ROT0, "Gaelco", "Glass", GAME_UNEMULATED_PROTECTION )
 }

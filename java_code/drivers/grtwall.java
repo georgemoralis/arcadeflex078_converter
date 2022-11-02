@@ -119,10 +119,10 @@ public class grtwall
 		}
 	}
 	
-	static DRIVER_INIT( grtwall )
+	public static DriverInitHandlerPtr init_grtwall  = new DriverInitHandlerPtr() { public void handler()
 	{
 		gw_decrypt();
-	}
+	} };
 	
 	
 	static RomLoadPtr rom_grtwall = new RomLoadPtr(){ public void handler(){ 

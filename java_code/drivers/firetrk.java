@@ -21,18 +21,18 @@ public class firetrk
 	static int gear;
 	
 	
-	static DRIVER_INIT( firetrk )
+	public static DriverInitHandlerPtr init_firetrk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		firetrk_game = 1;
-	}
-	static DRIVER_INIT( superbug )
+	} };
+	public static DriverInitHandlerPtr init_superbug  = new DriverInitHandlerPtr() { public void handler()
 	{
 		firetrk_game = 2;
-	}
-	static DRIVER_INIT( montecar )
+	} };
+	public static DriverInitHandlerPtr init_montecar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		firetrk_game = 3;
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr firetrk_interrupt = new InterruptHandlerPtr() {public void handler()

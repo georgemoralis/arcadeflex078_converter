@@ -372,10 +372,10 @@ public class klax
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( klax )
+	public static DriverInitHandlerPtr init_klax  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
-	}
+	} };
 	
 	
 	

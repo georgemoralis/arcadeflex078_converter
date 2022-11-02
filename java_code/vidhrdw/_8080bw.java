@@ -109,7 +109,7 @@ public class _8080bw
 	OVERLAY_END
 	
 	
-	DRIVER_INIT( 8080bw )
+	public static DriverInitHandlerPtr init_8080bw  = new DriverInitHandlerPtr() { public void handler()
 	{
 		videoram_w_p = bw_videoram_w;
 		video_update_p = video_update_8080bw_common;
@@ -117,129 +117,129 @@ public class _8080bw
 		screen_red_enabled = 0;
 		color_map_select = 0;
 		flip_screen_set(0);
-	}
+	} };
 	
-	DRIVER_INIT( invaders )
+	public static DriverInitHandlerPtr init_invaders  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		artwork_set_overlay(invaders_overlay);
-	}
+	} };
 	
-	DRIVER_INIT( invaddlx )
+	public static DriverInitHandlerPtr init_invaddlx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 	/*	artwork_set_overlay(invdpt2m_overlay);*/
-	}
+	} };
 	
-	DRIVER_INIT( invrvnge )
+	public static DriverInitHandlerPtr init_invrvnge  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		artwork_set_overlay(invrvnge_overlay);
-	}
+	} };
 	
-	DRIVER_INIT( invad2ct )
+	public static DriverInitHandlerPtr init_invad2ct  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		artwork_set_overlay(invad2ct_overlay);
-	}
+	} };
 	
-	DRIVER_INIT( sstrngr2 )
+	public static DriverInitHandlerPtr init_sstrngr2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = sstrngr2_videoram_w;
 		screen_red_enabled = 1;
-	}
+	} };
 	
-	DRIVER_INIT( schaser )
+	public static DriverInitHandlerPtr init_schaser  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = schaser_videoram_w;
 		background_color = 2;	/* blue */
-	}
+	} };
 	
-	DRIVER_INIT( rollingc )
+	public static DriverInitHandlerPtr init_rollingc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = schaser_videoram_w;
 		background_color = 0;	/* black */
-	}
+	} };
 	
-	DRIVER_INIT( helifire )
+	public static DriverInitHandlerPtr init_helifire  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = helifire_videoram_w;
 		video_update_p = video_update_helifire;
 		helifire_mv2_offset = 0;
 		helifire_star_rng = 0;
-	}
+	} };
 	
-	DRIVER_INIT( polaris )
+	public static DriverInitHandlerPtr init_polaris  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = polaris_videoram_w;
-	}
+	} };
 	
-	DRIVER_INIT( lupin3 )
+	public static DriverInitHandlerPtr init_lupin3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = lupin3_videoram_w;
-	}
+	} };
 	
-	DRIVER_INIT( invadpt2 )
+	public static DriverInitHandlerPtr init_invadpt2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = invadpt2_videoram_w;
 		screen_red_enabled = 1;
-	}
+	} };
 	
-	DRIVER_INIT( cosmo )
+	public static DriverInitHandlerPtr init_cosmo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = cosmo_videoram_w;
-	}
+	} };
 	
-	DRIVER_INIT( seawolf )
+	public static DriverInitHandlerPtr init_seawolf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		video_update_p = video_update_seawolf;
-	}
+	} };
 	
-	DRIVER_INIT( blueshrk )
+	public static DriverInitHandlerPtr init_blueshrk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		video_update_p = video_update_blueshrk;
-	}
+	} };
 	
-	DRIVER_INIT( desertgu )
+	public static DriverInitHandlerPtr init_desertgu  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		video_update_p = video_update_desertgu;
-	}
+	} };
 	
-	DRIVER_INIT( bowler )
+	public static DriverInitHandlerPtr init_bowler  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		video_update_p = video_update_bowler;
-	}
+	} };
 	
-	DRIVER_INIT( phantom2 )
+	public static DriverInitHandlerPtr init_phantom2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		videoram_w_p = phantom2_videoram_w;
 		artwork_set_overlay(phantom2_overlay);
-	}
+	} };
 	
-	DRIVER_INIT( gunfight )
+	public static DriverInitHandlerPtr init_gunfight  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		artwork_set_overlay(gunfight_overlay);
-	}
+	} };
 	
-	DRIVER_INIT( bandido )
+	public static DriverInitHandlerPtr init_bandido  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_8080bw();
 		artwork_set_overlay(bandido_overlay);
-	}
+	} };
 	
 	
 	

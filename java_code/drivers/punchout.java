@@ -105,10 +105,6 @@ public class punchout
 	
 	
 	
-	DRIVER_INIT( punchout );
-	DRIVER_INIT( spnchout );
-	DRIVER_INIT( spnchotj );
-	DRIVER_INIT( armwrest );
 	
 	
 	

@@ -1114,26 +1114,26 @@ public class fitfight
 	
 	/* INIT */
 	
-	static DRIVER_INIT( fitfight )
+	public static DriverInitHandlerPtr init_fitfight  = new DriverInitHandlerPtr() { public void handler()
 	{
 	//	data16_t *mem16 = (data16_t *)memory_region(REGION_CPU1);
 	//	mem16[0x0165B2/2]=0x4e71; // for now so it boots
 		install_mem_read16_handler (0, 0x700000, 0x700001, fitfight_700000_r);
 		bbprot_kludge = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( histryma )
+	public static DriverInitHandlerPtr init_histryma  = new DriverInitHandlerPtr() { public void handler()
 	{
 	//	data16_t *mem16 = (data16_t *)memory_region(REGION_CPU1);
 	//	mem16[0x017FDC/2]=0x4e71; // for now so it boots
 		install_mem_read16_handler (0, 0x700000, 0x700001, histryma_700000_r);
 		bbprot_kludge = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( bbprot )
+	public static DriverInitHandlerPtr init_bbprot  = new DriverInitHandlerPtr() { public void handler()
 	{
 		bbprot_kludge = 1;
-	}
+	} };
 	
 	/* GAME */
 	

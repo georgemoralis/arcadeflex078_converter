@@ -406,42 +406,42 @@ public class m72
 		protection_ram = &memory_region(REGION_CPU1)[0xb0000];
 	}
 	
-	static DRIVER_INIT( bchopper )
+	public static DriverInitHandlerPtr init_bchopper  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(bchopper_code,bchopper_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,bchopper_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( mrheli )
+	public static DriverInitHandlerPtr init_mrheli  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(bchopper_code,mrheli_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,bchopper_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( nspirit )
+	public static DriverInitHandlerPtr init_nspirit  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(nspirit_code,nspirit_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,nspirit_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( nspiritj )
+	public static DriverInitHandlerPtr init_nspiritj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(nspirit_code,nspiritj_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,nspirit_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( imgfight )
+	public static DriverInitHandlerPtr init_imgfight  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(imgfight_code,imgfight_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,imgfight_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( loht )
+	public static DriverInitHandlerPtr init_loht  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(loht_code,loht_crc);
 	
@@ -449,40 +449,40 @@ public class m72
 	
 		/* since we skip the startup tests, clear video RAM to prevent garbage on title screen */
 		memset(m72_videoram2,0,0x4000);
-	}
+	} };
 	
-	static DRIVER_INIT( xmultipl )
+	public static DriverInitHandlerPtr init_xmultipl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(xmultipl_code,xmultipl_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,xmultipl_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( dbreed )
+	public static DriverInitHandlerPtr init_dbreed  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(dbreed_code,dbreed_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,dbreed_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( airduel )
+	public static DriverInitHandlerPtr init_airduel  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(airduel_code,airduel_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,airduel_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( dkgenm72 )
+	public static DriverInitHandlerPtr init_dkgenm72  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_protection_handler(dkgenm72_code,dkgenm72_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,dkgenm72_sample_trigger_w);
-	}
+	} };
 	
-	static DRIVER_INIT( gallop )
+	public static DriverInitHandlerPtr init_gallop  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_write_handler(0,0xc0,0xc0,gallop_sample_trigger_w);
-	}
+	} };
 	
 	
 	
@@ -3233,10 +3233,10 @@ public class m72
 	
 	
 	
-	static DRIVER_INIT( kengo )
+	public static DriverInitHandlerPtr init_kengo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		irem_cpu_decrypt(0,gunforce_decryption_table);
-	}
+	} };
 	
 	
 	

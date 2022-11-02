@@ -881,13 +881,13 @@ public class bzone
 	} };
 	
 	
-	static DRIVER_INIT( bzone )
+	public static DriverInitHandlerPtr init_bzone  = new DriverInitHandlerPtr() { public void handler()
 	{
 		artwork_set_overlay(bzone_overlay);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( bradley )
+	public static DriverInitHandlerPtr init_bradley  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x400, 0x7ff, MRA_RAM);
 		install_mem_write_handler(0, 0x400, 0x7ff, MWA_RAM);
@@ -896,17 +896,17 @@ public class bzone
 		install_mem_read_handler(0, 0x1809, 0x1809, input_port_5_r);
 		install_mem_read_handler(0, 0x180a, 0x180a, analog_data_r);
 		install_mem_write_handler(0, 0x1848, 0x1850, analog_select_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( redbaron )
+	public static DriverInitHandlerPtr init_redbaron  = new DriverInitHandlerPtr() { public void handler()
 	{
 		OVERLAY_START( redbaron_overlay )
 			OVERLAY_RECT( 0.0, 0.0, 1.0, 1.0, MAKE_ARGB(0x04,0x88,0xff,0xff) )
 		OVERLAY_END
 	
 		artwork_set_overlay(redbaron_overlay);
-	}
+	} };
 	
 	
 	

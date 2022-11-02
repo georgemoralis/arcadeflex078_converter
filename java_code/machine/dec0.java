@@ -544,7 +544,7 @@ public class dec0
 			RAM[i]=(RAM[i] & 0x7e) | ((RAM[i] & 0x1) << 7) | ((RAM[i] & 0x80) >> 7);
 	}
 	
-	DRIVER_INIT( hippodrm )
+	public static DriverInitHandlerPtr init_hippodrm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU3);
 	
@@ -559,9 +559,9 @@ public class dec0
 		RAM[0x1af]=0x60; /* RTS prot area */
 		RAM[0x1db]=0x60; /* RTS prot area */
 		RAM[0x21a]=0x60; /* RTS prot area */
-	}
+	} };
 	
-	DRIVER_INIT( slyspy )
+	public static DriverInitHandlerPtr init_slyspy  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -570,39 +570,39 @@ public class dec0
 		/* Slyspy sound cpu has some protection */
 		RAM[0xf2d]=0xea;
 		RAM[0xf2e]=0xea;
-	}
+	} };
 	
-	DRIVER_INIT( robocop )
+	public static DriverInitHandlerPtr init_robocop  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler( 0, 0x180000, 0x180fff, robocop_68000_share_r);
 		install_mem_write16_handler(0, 0x180000, 0x180fff, robocop_68000_share_w);
-	}
+	} };
 	
-	DRIVER_INIT( baddudes )
+	public static DriverInitHandlerPtr init_baddudes  = new DriverInitHandlerPtr() { public void handler()
 	{
 		GAME=2;
-	}
+	} };
 	
-	DRIVER_INIT( hbarrel )
+	public static DriverInitHandlerPtr init_hbarrel  = new DriverInitHandlerPtr() { public void handler()
 	{
 		GAME=1;
 	{ /* Remove this patch once processing time of i8751 is simulated */
 	data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	rom[0xb68/2] = 0x8008;
 	}
-	}
+	} };
 	
-	DRIVER_INIT( hbarrelw )
+	public static DriverInitHandlerPtr init_hbarrelw  = new DriverInitHandlerPtr() { public void handler()
 	{
 		GAME=1;
 	{ /* Remove this patch once processing time of i8751 is simulated */
 	data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	rom[0xb3e/2] = 0x8008;
 	}
-	}
+	} };
 	
-	DRIVER_INIT( birdtry )
+	public static DriverInitHandlerPtr init_birdtry  = new DriverInitHandlerPtr() { public void handler()
 	{
 		GAME=3;
-	}
+	} };
 }

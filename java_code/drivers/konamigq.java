@@ -413,7 +413,7 @@ public class konamigq
 		&scsi_irq,		/* command completion IRQ */
 	};
 	
-	static DRIVER_INIT( konamigq )
+	public static DriverInitHandlerPtr init_konamigq  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank( 1, memory_region( REGION_USER1 ) );
 		cpu_setbank( 2, memory_region( REGION_USER2 ) );
@@ -436,7 +436,7 @@ public class konamigq
 		state_save_register_UINT8( "konamigq", 0, "sndto000", sndto000, 16 );
 		state_save_register_UINT8( "konamigq", 0, "sndtor3k", sndtor3k, 16 );
 		state_save_register_UINT8( "konamigq", 0, "sector buffer", sector_buffer, 512);
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_konamigq  = new MachineInitHandlerPtr() { public void handler()
 	{

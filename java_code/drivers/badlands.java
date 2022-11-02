@@ -549,7 +549,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( badlands )
+	public static DriverInitHandlerPtr init_badlands  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarigen_init_6502_speedup(1, 0x4155, 0x416d);
@@ -557,7 +557,7 @@ public class badlands
 		/* initialize the audio system */
 		bank_base = &memory_region(REGION_CPU2)[0x03000];
 		bank_source_data = &memory_region(REGION_CPU2)[0x10000];
-	}
+	} };
 	
 	
 	

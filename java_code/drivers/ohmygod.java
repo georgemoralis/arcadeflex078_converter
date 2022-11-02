@@ -438,15 +438,15 @@ public class ohmygod
 	
 	
 	
-	static DRIVER_INIT( ohmygod )
+	public static DriverInitHandlerPtr init_ohmygod  = new DriverInitHandlerPtr() { public void handler()
 	{
 		adpcm_bank_shift = 4;
-	}
+	} };
 	
-	static DRIVER_INIT( naname )
+	public static DriverInitHandlerPtr init_naname  = new DriverInitHandlerPtr() { public void handler()
 	{
 		adpcm_bank_shift = 0;
-	}
+	} };
 	
 	
 	GAMEX( 1993, ohmygod, 0, ohmygod, ohmygod, ohmygod, ROT0, "Atlus", "Oh My God! (Japan)", GAME_NO_COCKTAIL )

@@ -746,10 +746,10 @@ public class afega
 		ROM_LOAD( "5", 0x00000, 0x40000, CRC(e911ce33) SHA1(a29c4dea98a22235122303325c63c15fadd3431d) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( redhawk )
+	public static DriverInitHandlerPtr init_redhawk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decryptcode( 23, 22, 21, 20, 19, 18, 16, 15, 14, 17, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 );
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -803,10 +803,10 @@ public class afega
 		ROM_LOAD( "gst-02.u95", 0x00000, 0x40000, CRC(e911ce33) SHA1(a29c4dea98a22235122303325c63c15fadd3431d) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( grdnstrm )
+	public static DriverInitHandlerPtr init_grdnstrm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decryptcode( 23, 22, 21, 20, 19, 18, 16, 17, 14, 15, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 );
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -876,10 +876,10 @@ public class afega
 		ROM_LOAD( "rom02.95", 0x00000, 0x40000, CRC(859a86e5) SHA1(7b51964227411a40aac54b9cd9ff64f091bdf2b0) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( bubl2000 )
+	public static DriverInitHandlerPtr init_bubl2000  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decryptcode( 23, 22, 21, 20, 19, 18, 13, 14, 15, 16, 17, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 );
-	}
+	} };
 	
 	/***************************************************************************
 	

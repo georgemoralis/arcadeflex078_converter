@@ -484,12 +484,12 @@ public class mcatadv
 	MACHINE_DRIVER_END
 	
 	
-	static DRIVER_INIT( mcatadv )
+	public static DriverInitHandlerPtr init_mcatadv  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *z80rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1, z80rom + 0x4000);
-	}
+	} };
 	
 	
 	static RomLoadPtr rom_mcatadv = new RomLoadPtr(){ public void handler(){ 

@@ -1507,7 +1507,7 @@ public class ddragon
 	
 	*/
 	
-	static DRIVER_INIT( toffy )
+	public static DriverInitHandlerPtr init_toffy  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* the program rom has a simple bitswap encryption */
 		data8_t *rom=memory_region(REGION_CPU1);
@@ -1539,7 +1539,7 @@ public class ddragon
 	
 		/* should the sound rom be bitswapped too? */
 	
-	}
+	} };
 	
 	GAME( 1987, ddragon,  0,        ddragon,  ddragon,  0, ROT0, "Technos", "Double Dragon (Japan)" )
 	GAME( 1987, ddragonw, ddragon,  ddragon,  ddragon,  0, ROT0, "[Technos] (Taito license)", "Double Dragon (World)" )

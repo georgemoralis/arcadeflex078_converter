@@ -1088,7 +1088,7 @@ public class decocass
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( decocass )
+	public static DriverInitHandlerPtr init_decocass  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -1099,7 +1099,7 @@ public class decocass
 		/* Swap bits 5 & 6 for opcodes */
 		for (A = 0;A < diff;A++)
 			rom[A+diff] = swap_bits_5_6(rom[A]);
-	}
+	} };
 	
 	GAMEX( 1981, decocass, 0,		 decocass, decocass, decocass, ROT270, "DECO", "Cassette System", NOT_A_DRIVER )
 	GAME ( 1981, ctsttape, decocass, ctsttape, decocass, decocass, ROT270, "DECO", "Cassette: Test Tape" )

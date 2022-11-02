@@ -4216,14 +4216,14 @@ public class pacman
 		rom[0x3aef + diff] = 0xb0;
 	}
 	
-	static DRIVER_INIT( maketrax )
+	public static DriverInitHandlerPtr init_maketrax  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* set up protection handlers */
 		install_mem_read_handler(0, 0x5080, 0x50bf, maketrax_special_port2_r);
 		install_mem_read_handler(0, 0x50c0, 0x50ff, maketrax_special_port3_r);
 	
 		maketrax_rom_decode();
-	}
+	} };
 	
 	static void korosuke_rom_decode(void)
 	{
@@ -4248,16 +4248,16 @@ public class pacman
 		rom[0x3af3 + diff] = 0xb0;
 	}
 	
-	static DRIVER_INIT( korosuke )
+	public static DriverInitHandlerPtr init_korosuke  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* set up protection handlers */
 		install_mem_read_handler(0, 0x5080, 0x5080, korosuke_special_port2_r);
 		install_mem_read_handler(0, 0x50c0, 0x50ff, korosuke_special_port3_r);
 	
 		korosuke_rom_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( ponpoko )
+	public static DriverInitHandlerPtr init_ponpoko  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i, j;
 		unsigned char *RAM, temp;
@@ -4290,7 +4290,7 @@ public class pacman
 				RAM[i+j+0x00] = temp;
 			}
 		}
-	}
+	} };
 	
 	static void eyes_decode(unsigned char *data)
 	{
@@ -4311,7 +4311,7 @@ public class pacman
 		}
 	}
 	
-	static DRIVER_INIT( eyes )
+	public static DriverInitHandlerPtr init_eyes  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 		unsigned char *RAM;
@@ -4336,20 +4336,20 @@ public class pacman
 		RAM = memory_region(REGION_GFX2);
 		for (i = 0;i < memory_region_length(REGION_GFX2);i += 8)
 			eyes_decode(&RAM[i]);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( pacplus )
+	public static DriverInitHandlerPtr init_pacplus  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pacplus_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( jumpshot )
+	public static DriverInitHandlerPtr init_jumpshot  = new DriverInitHandlerPtr() { public void handler()
 	{
 		jumpshot_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( 8bpm )
+	public static DriverInitHandlerPtr init_8bpm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int i;
@@ -4359,9 +4359,9 @@ public class pacman
 		{
 			RAM[i] = BITSWAP8(RAM[i],7,0,5,4,3,2,1,6);
 		}
-	}
+	} };
 	
-	static DRIVER_INIT( porky )
+	public static DriverInitHandlerPtr init_porky  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int i;
@@ -4372,7 +4372,7 @@ public class pacman
 			RAM[i] = BITSWAP8(RAM[i],7,6,5,0,3,2,1,4);
 		}
 	
-	}
+	} };
 	
 	
 	/*************************************

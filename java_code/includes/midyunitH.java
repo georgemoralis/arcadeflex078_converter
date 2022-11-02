@@ -29,35 +29,13 @@ READ16_HANDLER( midyunit_generic_speedup_1_mixedbits );
 READ16_HANDLER( midyunit_generic_speedup_1_32bit );
 READ16_HANDLER( midyunit_generic_speedup_3 );
 
-DRIVER_INIT( narc );
-DRIVER_INIT( narc3 );
 
-DRIVER_INIT( trog );
-DRIVER_INIT( trog3 );
-DRIVER_INIT( trogpa6 );
-DRIVER_INIT( trogp );
 
-DRIVER_INIT( smashtv );
-DRIVER_INIT( smashtv4 );
 
-DRIVER_INIT( hiimpact );
-DRIVER_INIT( shimpact );
-DRIVER_INIT( shimpacp );
 
-DRIVER_INIT( strkforc );
 
-DRIVER_INIT( mkprot9 );
-DRIVER_INIT( mkla1 );
-DRIVER_INIT( mkla2 );
-DRIVER_INIT( mkla3 );
-DRIVER_INIT( mkla4 );
 
-DRIVER_INIT( term2 );
-DRIVER_INIT( term2la2 );
-DRIVER_INIT( term2la1 );
 
-DRIVER_INIT( totcarn );
-DRIVER_INIT( totcarnp );
 
 
 WRITE16_HANDLER( midyunit_sound_w );

@@ -551,12 +551,12 @@ public class lkage
 		return res;
 	} };
 	
-	DRIVER_INIT( lkageb )
+	public static DriverInitHandlerPtr init_lkageb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler (0,0xf062,0xf062,fake_mcu_r);
 		install_mem_read_handler (0,0xf087,0xf087,fake_status_r);
 		install_mem_write_handler(0,0xf062,0xf062,fake_mcu_w );
-	}
+	} };
 	
 	
 	GAME( 1984, lkage,   0,     lkage,  lkage, 0,       ROT0, "Taito Corporation", "The Legend of Kage" )

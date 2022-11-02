@@ -2492,7 +2492,7 @@ public class ddenlovr
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( rongrong )
+	public static DriverInitHandlerPtr init_rongrong  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Rong Rong seems to have a protection that works this way:
 			- write 01 to port c2
@@ -2508,7 +2508,7 @@ public class ddenlovr
 		   patched.
 		 */
 		install_mem_read_handler(0, 0x60d4, 0x60d4, MRA_NOP);
-	}
+	} };
 	
 	
 	GAMEX(1992, mmpanic,  0,       mmpanic,  mmpanic,  0,        ROT0, "Nakanihon + East Technology (Taito license)", "Monkey Mole Panic (USA)",                    GAME_NO_COCKTAIL )

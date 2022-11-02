@@ -3367,7 +3367,7 @@ public class megasys1
 	
 	
 	
-	static DRIVER_INIT( 64street )
+	public static DriverInitHandlerPtr init_64street  = new DriverInitHandlerPtr() { public void handler()
 	{
 	//	data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	//	RAM[0x006b8/2] = 0x6004;		// d8001 test
@@ -3378,9 +3378,9 @@ public class megasys1
 		ip_select_values[2] = 0x54;
 		ip_select_values[3] = 0x55;
 		ip_select_values[4] = 0x56;
-	}
+	} };
 	
-	static DRIVER_INIT( astyanax )
+	public static DriverInitHandlerPtr init_astyanax  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM;
 	
@@ -3388,9 +3388,9 @@ public class megasys1
 	
 		RAM = (data16_t *) memory_region(REGION_CPU1);
 		RAM[0x0004e6/2] = 0x6040;	// protection
-	}
+	} };
 	
-	static DRIVER_INIT( avspirit )
+	public static DriverInitHandlerPtr init_avspirit  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ip_select_values[0] = 0x37;
 		ip_select_values[1] = 0x35;
@@ -3402,18 +3402,18 @@ public class megasys1
 		/* following is needed to make vh_start() pick the correct address */
 		/* for spriteram16. */
 		megasys1_ram += 0x10000/2;
-	}
+	} };
 	
-	static DRIVER_INIT( bigstrik )
+	public static DriverInitHandlerPtr init_bigstrik  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ip_select_values[0] = 0x58;
 		ip_select_values[1] = 0x54;
 		ip_select_values[2] = 0x55;
 		ip_select_values[3] = 0x56;
 		ip_select_values[4] = 0x57;
-	}
+	} };
 	
-	static DRIVER_INIT( chimerab )
+	public static DriverInitHandlerPtr init_chimerab  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* same as cybattlr */
 		ip_select_values[0] = 0x56;
@@ -3421,27 +3421,27 @@ public class megasys1
 		ip_select_values[2] = 0x53;
 		ip_select_values[3] = 0x54;
 		ip_select_values[4] = 0x55;
-	}
+	} };
 	
-	static DRIVER_INIT( cybattlr )
+	public static DriverInitHandlerPtr init_cybattlr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ip_select_values[0] = 0x56;
 		ip_select_values[1] = 0x52;
 		ip_select_values[2] = 0x53;
 		ip_select_values[3] = 0x54;
 		ip_select_values[4] = 0x55;
-	}
+	} };
 	
-	static DRIVER_INIT( edf )
+	public static DriverInitHandlerPtr init_edf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		ip_select_values[0] = 0x20;
 		ip_select_values[1] = 0x21;
 		ip_select_values[2] = 0x22;
 		ip_select_values[3] = 0x23;
 		ip_select_values[4] = 0x24;
-	}
+	} };
 	
-	static DRIVER_INIT( hachoo )
+	public static DriverInitHandlerPtr init_hachoo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM;
 	
@@ -3449,9 +3449,9 @@ public class megasys1
 	
 		RAM  = (data16_t *) memory_region(REGION_CPU1);
 		RAM[0x0006da/2] = 0x6000;	// protection
-	}
+	} };
 	
-	static DRIVER_INIT( iganinju )
+	public static DriverInitHandlerPtr init_iganinju  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM;
 	
@@ -3462,7 +3462,7 @@ public class megasys1
 	
 		RAM[0x00006e/2] = 0x0420;	// the only game that does
 									// not like lev 3 interrupts
-	}
+	} };
 	
 	static WRITE16_HANDLER( OKIM6295_data_0_both_w )
 	{
@@ -3475,7 +3475,7 @@ public class megasys1
 		else				OKIM6295_data_1_w(0, (data >> 8) & 0xff );
 	}
 	
-	static DRIVER_INIT( jitsupro )
+	public static DriverInitHandlerPtr init_jitsupro  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM  = (data16_t *) memory_region(REGION_CPU1);
 	
@@ -3490,20 +3490,20 @@ public class megasys1
 		/* the sound code writes oki commands to both the lsb and msb */
 		install_mem_write16_handler(1, 0xa0000, 0xa0003, OKIM6295_data_0_both_w);
 		install_mem_write16_handler(1, 0xc0000, 0xc0003, OKIM6295_data_1_both_w);
-	}
+	} };
 	
-	static DRIVER_INIT( peekaboo )
+	public static DriverInitHandlerPtr init_peekaboo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler (0, 0x100000, 0x100001, protection_peekaboo_r);
 		install_mem_write16_handler(0, 0x100000, 0x100001, protection_peekaboo_w);
-	}
+	} };
 	
-	static DRIVER_INIT( phantasm )
+	public static DriverInitHandlerPtr init_phantasm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		phantasm_rom_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( plusalph )
+	public static DriverInitHandlerPtr init_plusalph  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM;
 	
@@ -3511,31 +3511,31 @@ public class megasys1
 	
 		RAM  = (data16_t *) memory_region(REGION_CPU1);
 		RAM[0x0012b6/2] = 0x0000;	// protection
-	}
+	} };
 	
-	static DRIVER_INIT( rodland )
+	public static DriverInitHandlerPtr init_rodland  = new DriverInitHandlerPtr() { public void handler()
 	{
 		rodland_rom_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( rodlandj )
+	public static DriverInitHandlerPtr init_rodlandj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		rodlandj_gfx_unmangle(0);
 		rodlandj_gfx_unmangle(3);
 	
 		astyanax_rom_decode(0);
-	}
+	} };
 	
-	static DRIVER_INIT( soldam )
+	public static DriverInitHandlerPtr init_soldam  = new DriverInitHandlerPtr() { public void handler()
 	{
 		astyanax_rom_decode(0);
 	
 		/* Sprite RAM is mirrored. Why? */
 		install_mem_read16_handler (0, 0x8c000, 0x8cfff, soldamj_spriteram16_r);
 		install_mem_write16_handler(0, 0x8c000, 0x8cfff, soldamj_spriteram16_w);
-	}
+	} };
 	
-	static DRIVER_INIT( stdragon )
+	public static DriverInitHandlerPtr init_stdragon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM;
 	
@@ -3543,7 +3543,7 @@ public class megasys1
 	
 		RAM  = (data16_t *) memory_region(REGION_CPU1);
 		RAM[0x00045e/2] = 0x0098;	// protection
-	}
+	} };
 	
 	
 	

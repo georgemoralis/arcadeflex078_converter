@@ -922,25 +922,25 @@ public class rohga
 	
 	/**********************************************************************************/
 	
-	static DRIVER_INIT( rohga )
+	public static DriverInitHandlerPtr init_rohga  = new DriverInitHandlerPtr() { public void handler()
 	{
 		deco56_decrypt(REGION_GFX1);
 		deco56_decrypt(REGION_GFX2);
-	}
+	} };
 	
-	static DRIVER_INIT( wizdfire )
+	public static DriverInitHandlerPtr init_wizdfire  = new DriverInitHandlerPtr() { public void handler()
 	{
 		deco74_decrypt(REGION_GFX1);
 		deco74_decrypt(REGION_GFX2);
 		deco74_decrypt(REGION_GFX3);
-	}
+	} };
 	
-	static DRIVER_INIT( nitrobal )
+	public static DriverInitHandlerPtr init_nitrobal  = new DriverInitHandlerPtr() { public void handler()
 	{
 		deco56_decrypt(REGION_GFX1);
 		deco56_decrypt(REGION_GFX2);
 		deco74_decrypt(REGION_GFX3);
-	}
+	} };
 	
 	GAMEX(1991, rohga,    0,       rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (Asia/Europe v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
 	GAMEX(1991, rohgah,   rohga,   rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (Hong Kong v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )

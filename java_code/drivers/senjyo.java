@@ -80,9 +80,6 @@ public class senjyo
 	
 	
 	
-	DRIVER_INIT( starforc );
-	DRIVER_INIT( starfore );
-	DRIVER_INIT( senjyo );
 	
 	
 	int senjyo_sh_start(const struct MachineSound *msound);

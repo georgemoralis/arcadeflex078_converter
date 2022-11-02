@@ -947,32 +947,32 @@ public class atarifb
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( atarifb )
+	public static DriverInitHandlerPtr init_atarifb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 1;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( atarifb4 )
+	public static DriverInitHandlerPtr init_atarifb4  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 2;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( abaseb )
+	public static DriverInitHandlerPtr init_abaseb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 3;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( soccer )
+	public static DriverInitHandlerPtr init_soccer  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 4;
-	}
+	} };
 	
 	
 	

@@ -15,7 +15,6 @@ public class chaknpop
 {
 	
 	/* machine/chaknpop.c */
-	DRIVER_INIT( chaknpop );
 	
 	
 	/* vidhrdw/chaknpop.c */

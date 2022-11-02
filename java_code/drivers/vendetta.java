@@ -806,11 +806,11 @@ public class vendetta
 	} };
 	
 	
-	static DRIVER_INIT( vendetta )
+	public static DriverInitHandlerPtr init_vendetta  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_4(REGION_GFX2);
-	}
+	} };
 	
 	
 	

@@ -443,8 +443,8 @@ public class pbillian
 		ROM_LOAD( "b18-03",  0x14000, 0x04000, CRC(1c82717d) SHA1(6942c8877e24ac51ed71036e771a1655d82f3491) )
 	ROM_END(); }}; 	
 	
-	static DRIVER_INIT( pbillian ){	is_pbillian=1;}
-	static DRIVER_INIT( hotsmash ){	is_pbillian=0;}
+	public static DriverInitHandlerPtr init_pbillian  = new DriverInitHandlerPtr() { public void handler(){	is_pbillian=1;} };
+	public static DriverInitHandlerPtr init_hotsmash  = new DriverInitHandlerPtr() { public void handler(){	is_pbillian=0;} };
 	
 	GAMEX( 1986, pbillian, 0, pbillian, pbillian, pbillian, ROT0, "Taito", "Prebillian",GAME_IMPERFECT_SOUND)
 	GAMEX( 1987, hotsmash, 0, pbillian, hotsmash, hotsmash, ROT90, "Taito", "Hot Smash",GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )

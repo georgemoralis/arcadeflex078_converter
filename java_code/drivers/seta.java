@@ -8107,7 +8107,7 @@ public class seta
 			xram[offset] = data & 0xff;
 	}
 	
-	DRIVER_INIT( twineagl )
+	public static DriverInitHandlerPtr init_twineagl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* debug? */
 		install_mem_read16_handler (0, 0x800000, 0x8000ff, twineagl_debug_r);
@@ -8115,7 +8115,7 @@ public class seta
 		/* This allows 2 simultaneous players and the use of the "Copyright" Dip Switch. */
 		install_mem_read16_handler (0, 0x200100, 0x20010f, twineagl_200100_r);
 		install_mem_write16_handler(0, 0x200100, 0x20010f, twineagl_200100_w);
-	}
+	} };
 	
 	
 	/* Protection? NVRAM is handled writing commands here */
@@ -8142,11 +8142,11 @@ public class seta
 		COMBINE_DATA(&downtown_protection[offset]);
 	}
 	
-	DRIVER_INIT( downtown )
+	public static DriverInitHandlerPtr init_downtown  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler (0, 0x200000, 0x2001ff, downtown_protection_r);
 		install_mem_write16_handler(0, 0x200000, 0x2001ff, downtown_protection_w);
-	}
+	} };
 	
 	
 	READ16_HANDLER( arbalest_debug_r )
@@ -8163,13 +8163,13 @@ public class seta
 		return 0;
 	}
 	
-	DRIVER_INIT( arbalest )
+	public static DriverInitHandlerPtr init_arbalest  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x80000, 0x8000f, arbalest_debug_r);
-	}
+	} };
 	
 	
-	DRIVER_INIT( metafox )
+	public static DriverInitHandlerPtr init_metafox  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	
@@ -8180,7 +8180,7 @@ public class seta
 		RAM[0x8ab1c/2] = 0x4e71;	// patch protection test: "cp error"
 		RAM[0x8ab1e/2] = 0x4e71;
 		RAM[0x8ab20/2] = 0x4e71;
-	}
+	} };
 	
 	
 	DRIVER_INIT ( blandia )
@@ -8219,20 +8219,20 @@ public class seta
 	}
 	
 	
-	DRIVER_INIT( eightfrc )
+	public static DriverInitHandlerPtr init_eightfrc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x500004, 0x500005, MRA16_NOP);	// watchdog??
-	}
+	} };
 	
 	
-	DRIVER_INIT( zombraid )
+	public static DriverInitHandlerPtr init_zombraid  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler (0, 0xf00002, 0xf00003, zombraid_gun_r);
 		install_mem_write16_handler(0, 0xf00000, 0xf00001, zombraid_gun_w);
-	}
+	} };
 	
 	
-	DRIVER_INIT( kiwame )
+	public static DriverInitHandlerPtr init_kiwame  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	
@@ -8241,13 +8241,13 @@ public class seta
 	
 		RAM[0x64/2] = 0x0000;
 		RAM[0x66/2] = 0x0dca;
-	}
+	} };
 	
 	
-	DRIVER_INIT( rezon )
+	public static DriverInitHandlerPtr init_rezon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x500006, 0x500007, MRA16_NOP);	// irq ack?
-	}
+	} };
 	
 	
 	

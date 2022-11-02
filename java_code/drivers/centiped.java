@@ -1486,20 +1486,20 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( centipdb )
+	public static DriverInitHandlerPtr init_centipdb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0x1000, 0x100f, centipdb_AY8910_w);
 		install_mem_read_handler(0, 0x1000, 0x100f, centipdb_AY8910_r);
 		install_mem_read_handler(0, 0x1780, 0x1780, centipdb_rand_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( magworm )
+	public static DriverInitHandlerPtr init_magworm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0x1001, 0x1001, AY8910_control_port_0_w);
 		install_mem_write_handler(0, 0x1003, 0x1003, AY8910_write_port_0_w);
 		install_mem_read_handler(0, 0x1003, 0x1003, AY8910_read_port_0_r);
-	}
+	} };
 	
 	
 	

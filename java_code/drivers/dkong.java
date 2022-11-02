@@ -2608,7 +2608,7 @@ public class dkong
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( herodk )
+	public static DriverInitHandlerPtr init_herodk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		UINT8 *rom = memory_region(REGION_CPU1);
@@ -2625,10 +2625,10 @@ public class dkong
 				rom[A] = (v & 0xe7) | ((v & 0x10) >> 1) | ((v & 0x08) << 1);
 			}
 		}
-	}
+	} };
 	
 	
-	static DRIVER_INIT( radarscp )
+	public static DriverInitHandlerPtr init_radarscp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
@@ -2638,7 +2638,7 @@ public class dkong
 		/* For now, we comment it out. */
 		RAM[0x1e9c] = 0xc3;
 		RAM[0x1e9d] = 0xbd;
-	}
+	} };
 	
 	
 	

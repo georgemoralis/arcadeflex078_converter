@@ -531,7 +531,7 @@ public class travrusa
 	
 	
 	
-	DRIVER_INIT( motorace )
+	public static DriverInitHandlerPtr init_motorace  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A,j;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -550,9 +550,9 @@ public class travrusa
 	
 			free(buffer);
 		}
-	}
+	} };
 	
-	static DRIVER_INIT( shtrider )
+	public static DriverInitHandlerPtr init_shtrider  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -560,7 +560,7 @@ public class travrusa
 		/* D3/D4  and  D5/D6 swapped */
 		for (A = 0; A < 0x2000; A++)
 			rom[A] = BITSWAP8(rom[A],7,5,6,3,4,2,1,0);
-	}
+	} };
 	
 	
 	

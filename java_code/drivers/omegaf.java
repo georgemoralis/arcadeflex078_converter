@@ -67,7 +67,7 @@ public class omegaf
 	  Initializers
 	**************************************************************************/
 	
-	static DRIVER_INIT( omegaf )
+	public static DriverInitHandlerPtr init_omegaf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
@@ -94,7 +94,7 @@ public class omegaf
 		RAM[0x0b8d] = 0x00;
 		RAM[0x0b8e] = 0x00;
 		RAM[0x0b8f] = 0x00;
-	}
+	} };
 	
 	
 	/**************************************************************************

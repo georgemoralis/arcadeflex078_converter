@@ -3731,7 +3731,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( harddriv )
+	public static DriverInitHandlerPtr init_harddriv  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the boards */
 		init_driver();
@@ -3751,10 +3751,10 @@ public class harddriv
 	
 		/* set up adsp speedup handlers */
 		install_mem_read16_handler(hdcpu_adsp, ADSP_DATA_ADDR_RANGE(0x1fff, 0x1fff), hdadsp_speedup_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( harddrvc )
+	public static DriverInitHandlerPtr init_harddrvc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the boards */
 		init_multisync(1);
@@ -3774,10 +3774,10 @@ public class harddriv
 	
 		/* set up adsp speedup handlers */
 		install_mem_read16_handler(hdcpu_adsp, ADSP_DATA_ADDR_RANGE(0x1fff, 0x1fff), hdadsp_speedup_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( stunrun )
+	public static DriverInitHandlerPtr init_stunrun  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the boards */
 		init_multisync(0);
@@ -3792,7 +3792,7 @@ public class harddriv
 	
 		/* set up adsp speedup handlers */
 		install_mem_read16_handler(hdcpu_adsp, ADSP_DATA_ADDR_RANGE(0x1fff, 0x1fff), hdadsp_speedup_r);
-	}
+	} };
 	
 	
 	data32_t *rddsp32_speedup;
@@ -3818,7 +3818,7 @@ public class harddriv
 	}
 	
 	
-	static DRIVER_INIT( racedriv )
+	public static DriverInitHandlerPtr init_racedriv  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the boards */
 		init_driver();
@@ -3841,7 +3841,7 @@ public class harddriv
 		/* set up dsp32 speedup handlers */
 		rddsp32_speedup = install_mem_read32_handler(hdcpu_dsp32, 0x613e04, 0x613e07, rddsp32_speedup_r);
 		rddsp32_speedup_pc = 0x6054b0;
-	}
+	} };
 	
 	
 	static void racedrvc_init_common(offs_t gsp_protection)
@@ -3877,8 +3877,8 @@ public class harddriv
 		rddsp32_speedup_pc = 0x6054b0;
 	}
 	
-	static DRIVER_INIT( racedrvc ) { racedrvc_init_common(0xfff95cd0); }
-	static DRIVER_INIT( racedrc1 ) { racedrvc_init_common(0xfff7ecd0); }
+	public static DriverInitHandlerPtr init_racedrvc  = new DriverInitHandlerPtr() { public void handler() { racedrvc_init_common(0xfff95cd0); } };
+	public static DriverInitHandlerPtr init_racedrc1  = new DriverInitHandlerPtr() { public void handler() { racedrvc_init_common(0xfff7ecd0); } };
 	
 	
 	static READ16_HANDLER( steeltal_dummy_r )
@@ -3935,12 +3935,12 @@ public class harddriv
 	}
 	
 	
-	static DRIVER_INIT( steeltal ) { steeltal_init_common(0x4fc18, 0); }
-	static DRIVER_INIT( steelta1 ) { steeltal_init_common(0x4f9c6, 0); }
-	static DRIVER_INIT( steeltap ) { steeltal_init_common(0x52290, 1); }
+	public static DriverInitHandlerPtr init_steeltal  = new DriverInitHandlerPtr() { public void handler() { steeltal_init_common(0x4fc18, 0); } };
+	public static DriverInitHandlerPtr init_steelta1  = new DriverInitHandlerPtr() { public void handler() { steeltal_init_common(0x4f9c6, 0); } };
+	public static DriverInitHandlerPtr init_steeltap  = new DriverInitHandlerPtr() { public void handler() { steeltal_init_common(0x52290, 1); } };
 	
 	
-	static DRIVER_INIT( hdrivair )
+	public static DriverInitHandlerPtr init_hdrivair  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the boards */
 		init_multisync(1);
@@ -3962,10 +3962,10 @@ public class harddriv
 		hdds3_speedup_addr = (data16_t *)(memory_region(REGION_CPU1 + hdcpu_adsp) + ADSP2100_DATA_OFFSET) + 0x1f99;
 		hdds3_speedup_pc = 0x2da;
 		hdds3_transfer_pc = 0x407b8;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( hdrivaip )
+	public static DriverInitHandlerPtr init_hdrivaip  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* initialize the boards */
 		init_multisync(1);
@@ -3987,7 +3987,7 @@ public class harddriv
 		hdds3_speedup_addr = (data16_t *)(memory_region(REGION_CPU1 + hdcpu_adsp) + ADSP2100_DATA_OFFSET) + 0x1f9a;
 		hdds3_speedup_pc = 0x2d9;
 		hdds3_transfer_pc = 0X407da;
-	}
+	} };
 	
 	
 	

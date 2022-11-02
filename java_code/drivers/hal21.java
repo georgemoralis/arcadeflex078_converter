@@ -785,18 +785,18 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	DRIVER_INIT( aso )
+	public static DriverInitHandlerPtr init_aso  = new DriverInitHandlerPtr() { public void handler()
 	{
 		hal21_vreg = auto_malloc(16);
 		snk_gamegroup = 0;
-	}
+	} };
 	
-	DRIVER_INIT( hal21 )
+	public static DriverInitHandlerPtr init_hal21  = new DriverInitHandlerPtr() { public void handler()
 	{
 		hal21_vreg = auto_malloc(24);
 		hal21_sndfifo = hal21_vreg + 8;
 		snk_gamegroup = 1;
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_aso  = new MachineInitHandlerPtr() { public void handler()
 	{

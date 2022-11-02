@@ -463,11 +463,11 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	static DRIVER_INIT( simpsons )
+	public static DriverInitHandlerPtr init_simpsons  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_4(REGION_GFX2);
-	}
+	} };
 	
 	GAME( 1991, simpsons, 0,        simpsons, simpsons, simpsons, ROT0, "Konami", "The Simpsons (4 Players)" )
 	GAME( 1991, simpsn2p, simpsons, simpsons, simpsn2p, simpsons, ROT0, "Konami", "The Simpsons (2 Players)" )

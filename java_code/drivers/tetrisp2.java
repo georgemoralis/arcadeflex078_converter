@@ -707,17 +707,17 @@ public class tetrisp2
 		cpu_set_irq_line(0, 1, HOLD_LINE);
 	}
 	
-	DRIVER_INIT( rockn_timer )
+	public static DriverInitHandlerPtr init_rockn_timer  = new DriverInitHandlerPtr() { public void handler()
 	{
 		timer_pulse(TIME_IN_MSEC(32), 0, rockn_timer_level1_callback);
 		rockn_timer_l4 = timer_alloc(rockn_timer_level4_callback);
-	}
+	} };
 	
-	DRIVER_INIT( rockn )
+	public static DriverInitHandlerPtr init_rockn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_rockn_timer();
 		rockn_protectdata = 1;
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( tetrisp2 )

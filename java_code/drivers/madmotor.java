@@ -383,7 +383,7 @@ public class madmotor
 	
 	/******************************************************************************/
 	
-	static DRIVER_INIT( madmotor )
+	public static DriverInitHandlerPtr init_madmotor  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int i;
@@ -393,7 +393,7 @@ public class madmotor
 			rom[i] = (rom[i] & 0xdb) | ((rom[i] & 0x04) << 3) | ((rom[i] & 0x20) >> 3);
 			rom[i] = (rom[i] & 0x7e) | ((rom[i] & 0x01) << 7) | ((rom[i] & 0x80) >> 7);
 		}
-	}
+	} };
 	
 	
 	 /* The title screen is undated, but it's (c) 1989 Data East at 0xefa0 */

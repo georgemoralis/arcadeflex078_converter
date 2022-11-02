@@ -568,10 +568,10 @@ public class rungun
 		ROM_LOAD( "247-a07", 0x200000, 0x200000, CRC(0108142d) SHA1(4dc6a36d976dad9c0da5a5b1f01f2eb3b369c99d) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( rng )
+	public static DriverInitHandlerPtr init_rng  = new DriverInitHandlerPtr() { public void handler()
 	{
 		K054539_init_flags(K054539_REVERSE_STEREO);
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_rng  = new MachineInitHandlerPtr() { public void handler()
 	{

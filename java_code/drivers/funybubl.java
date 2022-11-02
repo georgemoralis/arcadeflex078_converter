@@ -276,7 +276,7 @@ public class funybubl
 		{ 100 }
 	};
 	
-	DRIVER_INIT( funybubl )
+	public static DriverInitHandlerPtr init_funybubl  = new DriverInitHandlerPtr() { public void handler()
 	{
 	
 	
@@ -286,7 +286,7 @@ public class funybubl
 	
 		cpu_setbank(1,&banked_videoram[0x000000]);
 	
-	}
+	} };
 	
 	
 	VIDEO_START(funybubl)

@@ -971,16 +971,16 @@ public class turbo
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( decode_turbo )
+	public static DriverInitHandlerPtr init_decode_turbo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		turbo_rom_decode();
-	}
+	} };
 	
 	
-	static DRIVER_INIT( decode_buckrog )
+	public static DriverInitHandlerPtr init_decode_buckrog  = new DriverInitHandlerPtr() { public void handler()
 	{
 		buckrog_decode();
-	}
+	} };
 	
 	
 	

@@ -447,7 +447,7 @@ public class ginganin
 	
 	
 	
-	DRIVER_INIT( ginganin )
+	public static DriverInitHandlerPtr init_ginganin  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom;
 	
@@ -461,7 +461,7 @@ public class ginganin
 		/* sound cpu patches */
 		/* let's clear the RAM: ROM starts at 0x4000 */
 		memset(memory_region(REGION_CPU2),0,0x800);
-	}
+	} };
 	
 	
 	GAME( 1987, ginganin, 0, ginganin, ginganin, ginganin, ROT0, "Jaleco", "Ginga NinkyouDen" )

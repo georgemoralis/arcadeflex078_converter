@@ -1013,25 +1013,25 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	static DRIVER_INIT( karnov )
+	public static DriverInitHandlerPtr init_karnov  = new DriverInitHandlerPtr() { public void handler()
 	{
 		microcontroller_id=KARNOV;
 		coin_mask=0;
-	}
+	} };
 	
-	static DRIVER_INIT( karnovj )
+	public static DriverInitHandlerPtr init_karnovj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		microcontroller_id=KARNOVJ;
 		coin_mask=0;
-	}
+	} };
 	
-	static DRIVER_INIT( wndrplnt )
+	public static DriverInitHandlerPtr init_wndrplnt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		microcontroller_id=WNDRPLNT;
 		coin_mask=0;
-	}
+	} };
 	
-	static DRIVER_INIT( chelnov )
+	public static DriverInitHandlerPtr init_chelnov  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (UINT16 *)memory_region(REGION_CPU1);
 	
@@ -1039,9 +1039,9 @@ public class karnov
 		coin_mask=0xe0;
 		RAM[0x0A26/2]=0x4E71;  /* removes a protection lookup table */
 		RAM[0x062a/2]=0x4E71;  /* hangs waiting on i8751 int */
-	}
+	} };
 	
-	static DRIVER_INIT( chelnovw )
+	public static DriverInitHandlerPtr init_chelnovw  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (UINT16 *)memory_region(REGION_CPU1);
 	
@@ -1049,9 +1049,9 @@ public class karnov
 		coin_mask=0xe0;
 		RAM[0x0A26/2]=0x4E71;  /* removes a protection lookup table */
 		RAM[0x062a/2]=0x4E71;  /* hangs waiting on i8751 int */
-	}
+	} };
 	
-	static DRIVER_INIT( chelnovj )
+	public static DriverInitHandlerPtr init_chelnovj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (UINT16 *)memory_region(REGION_CPU1);
 	
@@ -1059,7 +1059,7 @@ public class karnov
 		coin_mask=0xe0;
 		RAM[0x0a2e/2]=0x4E71;  /* removes a protection lookup table */
 		RAM[0x062a/2]=0x4E71;  /* hangs waiting on i8751 int */
-	}
+	} };
 	
 	/******************************************************************************/
 	

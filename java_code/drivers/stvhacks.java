@@ -16,7 +16,7 @@ public class stvhacks
 	DRIVER_INIT ( stv );
 	
 	/* Hack the boot vectors .. not right but allows several IC13 games (which fail the checksums before hacking) to boot */
-	DRIVER_INIT( ic13 )
+	public static DriverInitHandlerPtr init_ic13  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* this is WRONG but works for some games */
 		data32_t *rom = (data32_t *)memory_region(REGION_USER1);
@@ -25,7 +25,7 @@ public class stvhacks
 		rom[0xf30/4] = (rom[0xf30/4] & 0xff000000)|((rom[0xf30/4]/2)&0x00ffffff);
 	
 		init_stv();
-	}
+	} };
 	
 	/*
 	

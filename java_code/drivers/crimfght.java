@@ -537,11 +537,11 @@ public class crimfght
 		cpu_setbank( 2, &RAM[0x10000] );
 	} };
 	
-	static DRIVER_INIT( crimfght )
+	public static DriverInitHandlerPtr init_crimfght  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

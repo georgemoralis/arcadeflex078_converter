@@ -397,15 +397,15 @@ public class starfire
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( starfire )
+	public static DriverInitHandlerPtr init_starfire  = new DriverInitHandlerPtr() { public void handler()
 	{
 		input_read = starfire_input_r;
-	}
+	} };
 	
-	static DRIVER_INIT( fireone )
+	public static DriverInitHandlerPtr init_fireone  = new DriverInitHandlerPtr() { public void handler()
 	{
 		input_read = fireone_input_r;
-	}
+	} };
 	
 	
 	

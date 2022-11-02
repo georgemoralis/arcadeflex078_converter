@@ -466,7 +466,7 @@ public class goindol
 	
 	
 	
-	DRIVER_INIT( goindol )
+	public static DriverInitHandlerPtr init_goindol  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *rom = memory_region(REGION_CPU1);
 	
@@ -493,7 +493,7 @@ public class goindol
 		rom[0x0c13] = 0xc9;
 		rom[0x134e] = 0xc9;
 		rom[0x333d] = 0xc9;
-	}
+	} };
 	
 	
 	

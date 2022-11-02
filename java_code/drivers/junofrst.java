@@ -457,10 +457,10 @@ public class junofrst
 	
 	
 	
-	static DRIVER_INIT( junofrst )
+	public static DriverInitHandlerPtr init_junofrst  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami1_decode();
-	}
+	} };
 	
 	
 	GAME( 1983, junofrst, 0,        junofrst, junofrst, junofrst, ROT90, "Konami", "Juno First" )

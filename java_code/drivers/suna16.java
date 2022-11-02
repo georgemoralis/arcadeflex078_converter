@@ -825,7 +825,7 @@ public class suna16
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( uballoon )
+	public static DriverInitHandlerPtr init_uballoon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	
@@ -836,7 +836,7 @@ public class suna16
 		RAM[0x018e2/2] = 0x600c;	// beq $18f0
 		RAM[0x03c54/2] = 0x600C;	// beq $3c62
 		RAM[0x126a0/2] = 0x4e71;	// bne $1267a (ROM test)
-	}
+	} };
 	
 	
 	

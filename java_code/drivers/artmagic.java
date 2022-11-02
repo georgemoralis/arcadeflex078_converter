@@ -994,7 +994,7 @@ public class artmagic
 	}
 	
 	
-	static DRIVER_INIT( ultennis )
+	public static DriverInitHandlerPtr init_ultennis  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decrypt_ultennis();
 		artmagic_is_stoneball = 0;
@@ -1002,23 +1002,23 @@ public class artmagic
 	
 		/* additional (protection?) hack */
 		install_mem_read16_handler(0, 0x300000, 0x300001, ultennis_hack_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( cheesech )
+	public static DriverInitHandlerPtr init_cheesech  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decrypt_cheesech();
 		artmagic_is_stoneball = 0;
 		protection_handler = cheesech_protection;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( stonebal )
+	public static DriverInitHandlerPtr init_stonebal  = new DriverInitHandlerPtr() { public void handler()
 	{
 		decrypt_ultennis();
 		artmagic_is_stoneball = 1;	/* blits 1 line high are NOT encrypted, also different first pixel decrypt */
 		protection_handler = stonebal_protection;
-	}
+	} };
 	
 	
 	

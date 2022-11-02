@@ -440,14 +440,14 @@ public class wc90b
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( wc90b )
+	public static DriverInitHandlerPtr init_wc90b  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 	
 		/* sprite graphics are inverted */
 		for (i = 0; i < memory_region_length(REGION_GFX3); i++)
 			memory_region(REGION_GFX3)[i] ^= 0xff;
-	}
+	} };
 	
 	
 	GAMEX( 1989, wc90b, wc90, wc90b, wc90b, wc90b, ROT0, "bootleg", "Euro League", GAME_NO_COCKTAIL )

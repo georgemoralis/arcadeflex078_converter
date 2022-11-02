@@ -38,7 +38,7 @@ public class stfight
 	
 	*/
 	
-	DRIVER_INIT( empcity )
+	public static DriverInitHandlerPtr init_empcity  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -67,9 +67,9 @@ public class stfight
 					( ( ( src ^ A ) >> 1 ) & 0x08 ) |
 					( ~( ( src >> 6 ) ^ A ) & 0x01 );
 		}
-	}
+	} };
 	
-	DRIVER_INIT( stfight )
+	public static DriverInitHandlerPtr init_stfight  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -84,7 +84,7 @@ public class stfight
 		rom[0xb3 + diff] = 0x00;
 		rom[0xb4 + diff] = 0x00;
 		rom[0xb5 + diff] = 0x00;
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_stfight  = new MachineInitHandlerPtr() { public void handler()
 	{

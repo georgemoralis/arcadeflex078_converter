@@ -446,14 +446,14 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	static DRIVER_INIT( vaportra )
+	public static DriverInitHandlerPtr init_vaportra  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int i;
 	
 		for (i=0x00000; i<0x80000; i++)
 			RAM[i]=(RAM[i] & 0x7e) | ((RAM[i] & 0x01) << 7) | ((RAM[i] & 0x80) >> 7);
-	}
+	} };
 	
 	/******************************************************************************/
 	

@@ -339,7 +339,7 @@ public class fcombat
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( fcombat )
+	public static DriverInitHandlerPtr init_fcombat  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT32 oldaddr, newaddr, length;
 		UINT8 *src, *dst, *temp;
@@ -387,7 +387,7 @@ public class fcombat
 		}
 	
 		free(temp);
-	}
+	} };
 	
 	static RomLoadPtr rom_fcombat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */

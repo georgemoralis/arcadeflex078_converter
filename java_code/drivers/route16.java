@@ -77,9 +77,6 @@ public class route16
 {
 	
 	
-	DRIVER_INIT( route16 );
-	DRIVER_INIT( route16b );
-	DRIVER_INIT( stratvox );
 	
 	public static ReadHandlerPtr routex_prot_read  = new ReadHandlerPtr() { public int handler(int offset)
 	{
@@ -636,12 +633,12 @@ public class route16
 	  Set hardware dependent flag.
 	
 	***************************************************************************/
-	DRIVER_INIT( route16b )
+	public static DriverInitHandlerPtr init_route16b  = new DriverInitHandlerPtr() { public void handler()
 	{
 	    route16_hardware = 1;
-	}
+	} };
 	
-	DRIVER_INIT( route16 )
+	public static DriverInitHandlerPtr init_route16  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		/* Is this actually a bootleg? some of the protection has
@@ -655,9 +652,9 @@ public class route16
 		rom[0x0756] = 0x07;
 	
 		init_route16b();
-	}
+	} };
 	
-	DRIVER_INIT( route16a )
+	public static DriverInitHandlerPtr init_route16a  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *ROM = memory_region(REGION_CPU1);
 		/* TO DO : Replace these patches with simulation of the protection device */
@@ -678,13 +675,13 @@ public class route16
 		ROM[0x0749] = 0x07;
 	
 		init_route16b();
-	}
+	} };
 	
 	
-	DRIVER_INIT( stratvox )
+	public static DriverInitHandlerPtr init_stratvox  = new DriverInitHandlerPtr() { public void handler()
 	{
 	    route16_hardware = 0;
-	}
+	} };
 	
 	
 	

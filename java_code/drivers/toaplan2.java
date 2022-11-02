@@ -335,35 +335,35 @@ public class toaplan2
 		machine_init_toaplan2();
 	} };
 	
-	static DRIVER_INIT( T2_Z80 )		/* init_t2_Z80(); */
+	public static DriverInitHandlerPtr init_T2_Z80  = new DriverInitHandlerPtr() { public void handler()		/* init_t2_Z80(); */
 	{
 		toaplan2_sub_cpu = CPU_2_Z80;
-	}
+	} };
 	
-	static DRIVER_INIT( T2_Z180 )
+	public static DriverInitHandlerPtr init_T2_Z180  = new DriverInitHandlerPtr() { public void handler()
 	{
 		toaplan2_sub_cpu = CPU_2_HD647180;
-	}
+	} };
 	
-	static DRIVER_INIT( T2_Zx80 )
+	public static DriverInitHandlerPtr init_T2_Zx80  = new DriverInitHandlerPtr() { public void handler()
 	{
 		toaplan2_sub_cpu = CPU_2_Zx80;
-	}
+	} };
 	
-	static DRIVER_INIT( T2_noZ80 )
+	public static DriverInitHandlerPtr init_T2_noZ80  = new DriverInitHandlerPtr() { public void handler()
 	{
 		toaplan2_sub_cpu = CPU_2_NONE;
-	}
+	} };
 	
-	static DRIVER_INIT( fixeight )
+	public static DriverInitHandlerPtr init_fixeight  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler(0, 0x28f002, 0x28fbff, MRA16_RAM );
 		install_mem_write16_handler(0, 0x28f002, 0x28fbff, MWA16_RAM );
 	
 		toaplan2_sub_cpu = CPU_2_Zx80;
-	}
+	} };
 	
-	static DRIVER_INIT( pipibibi )
+	public static DriverInitHandlerPtr init_pipibibi  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		int oldword, newword;
@@ -442,9 +442,9 @@ public class toaplan2
 		}
 	
 		toaplan2_sub_cpu = CPU_2_Z80;
-	}
+	} };
 	
-	static DRIVER_INIT( battleg )
+	public static DriverInitHandlerPtr init_battleg  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *Z80 = (data8_t *)memory_region(REGION_CPU2);
 	
@@ -452,19 +452,19 @@ public class toaplan2
 		cpu_setbank(1, &Z80[0x10000]);		/* Default bank is 2 */
 	
 		toaplan2_sub_cpu = CPU_2_Z80;
-	}
+	} };
 	
-	static DRIVER_INIT( bbakraid )
+	public static DriverInitHandlerPtr init_bbakraid  = new DriverInitHandlerPtr() { public void handler()
 	{
 		bbakraid_unlimited_ver = 1;
 		toaplan2_sub_cpu = CPU_2_Z80;
-	}
+	} };
 	
-	static DRIVER_INIT( bbakrada )
+	public static DriverInitHandlerPtr init_bbakrada  = new DriverInitHandlerPtr() { public void handler()
 	{
 		bbakraid_unlimited_ver = 0;
 		toaplan2_sub_cpu = CPU_2_Z80;
-	}
+	} };
 	
 	
 	/***************************************************************************

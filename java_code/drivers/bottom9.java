@@ -612,11 +612,11 @@ public class bottom9
 	
 	
 	
-	static DRIVER_INIT( bottom9 )
+	public static DriverInitHandlerPtr init_bottom9  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

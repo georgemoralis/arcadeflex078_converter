@@ -444,10 +444,10 @@ public class yamato
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( yamato )
+	public static DriverInitHandlerPtr init_yamato  = new DriverInitHandlerPtr() { public void handler()
 	{
 		yamato_decode();
-	}
+	} };
 	
 	
 	GAME( 1983, yamato,  0,      yamato, yamato, yamato, ROT90, "Sega", "Yamato (US)" )

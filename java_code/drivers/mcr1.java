@@ -489,7 +489,7 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( solarfox )
+	public static DriverInitHandlerPtr init_solarfox  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT8 hiscore_init[] = { 0,0,1,1,1,1,1,3,3,3,7 };
 		nvram_init = hiscore_init;
@@ -501,10 +501,10 @@ public class mcr1
 	
 		mcr12_sprite_xoffs = 16;
 		mcr12_sprite_xoffs_flip = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( kick )
+	public static DriverInitHandlerPtr init_kick  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nvram_init = NULL;
 	
@@ -514,7 +514,7 @@ public class mcr1
 	
 		mcr12_sprite_xoffs = 0;
 		mcr12_sprite_xoffs_flip = 16;
-	}
+	} };
 	
 	
 	

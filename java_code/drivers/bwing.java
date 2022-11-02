@@ -632,14 +632,14 @@ public class bwing
 	}
 	
 	
-	static DRIVER_INIT( bwing )
+	public static DriverInitHandlerPtr init_bwing  = new DriverInitHandlerPtr() { public void handler()
 	{
 		bwp123_membase[0] = memory_region(REGION_CPU1);
 		bwp123_membase[1] = memory_region(REGION_CPU2);
 		bwp123_membase[2] = memory_region(REGION_CPU3);
 	
 		fix_bwp3();
-	}
+	} };
 	
 	//****************************************************************************
 	// Game Entries

@@ -1105,13 +1105,13 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( gyrodine )
+	public static DriverInitHandlerPtr init_gyrodine  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* add watchdog */
 		install_mem_write_handler(0, 0xe000, 0xe000, watchdog_reset_w);
-	}
+	} };
 	
-	static DRIVER_INIT( srdmissn )
+	public static DriverInitHandlerPtr init_srdmissn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* shared RAM is mapped at 0xe000 as well  */
 		install_mem_read_handler (0, 0xe000, 0xe7ff, kyugo_sharedram_r);
@@ -1120,7 +1120,7 @@ public class kyugo
 		/* extra RAM on sub CPU  */
 		install_mem_read_handler (1, 0x8800, 0x8fff, MRA_RAM);
 		install_mem_write_handler(1, 0x8800, 0x8fff, MWA_RAM);
-	}
+	} };
 	
 	
 	/*************************************

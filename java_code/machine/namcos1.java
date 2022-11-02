@@ -1062,7 +1062,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Shadowland / Youkai Douchuuki specific                                     *
 	*******************************************************************************/
-	DRIVER_INIT( shadowld )
+	public static DriverInitHandlerPtr init_shadowld  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific shadowld_specific=
 		{
@@ -1072,12 +1072,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&shadowld_specific);
 		namcos1_game_id = 0x0487;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Dragon Spirit specific                                                     *
 	*******************************************************************************/
-	DRIVER_INIT( dspirit )
+	public static DriverInitHandlerPtr init_dspirit  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific dspirit_specific=
 		{
@@ -1087,12 +1087,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&dspirit_specific);
 		namcos1_game_id = 0x0136;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Quester specific                                                           *
 	*******************************************************************************/
-	DRIVER_INIT( quester )
+	public static DriverInitHandlerPtr init_quester  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific quester_specific=
 		{
@@ -1102,12 +1102,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&quester_specific);
 		namcos1_game_id = 0x0987;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Blazer specific                                                            *
 	*******************************************************************************/
-	DRIVER_INIT( blazer )
+	public static DriverInitHandlerPtr init_blazer  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific blazer_specific=
 		{
@@ -1117,12 +1117,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&blazer_specific);
 		namcos1_game_id = 0x0787;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Pac-Mania / Pac-Mania (Japan) specific                                     *
 	*******************************************************************************/
-	DRIVER_INIT( pacmania )
+	public static DriverInitHandlerPtr init_pacmania  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific pacmania_specific=
 		{
@@ -1132,12 +1132,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&pacmania_specific);
 		namcos1_game_id = 0x0151;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Galaga '88 / Galaga '88 (Japan) specific                                   *
 	*******************************************************************************/
-	DRIVER_INIT( galaga88 )
+	public static DriverInitHandlerPtr init_galaga88  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific galaga88_specific=
 		{
@@ -1147,12 +1147,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&galaga88_specific);
 		namcos1_game_id = 0x0153;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   World Stadium specific                                                     *
 	*******************************************************************************/
-	DRIVER_INIT( ws )
+	public static DriverInitHandlerPtr init_ws  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific ws_specific=
 		{
@@ -1162,7 +1162,7 @@ public class namcos1
 		};
 		namcos1_driver_init(&ws_specific);
 		namcos1_game_id = 0x0154;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Beraboh Man specific                                                       *
@@ -1219,7 +1219,7 @@ public class namcos1
 	
 		return res;
 	} };
-	DRIVER_INIT( berabohm )
+	public static DriverInitHandlerPtr init_berabohm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific berabohm_specific=
 		{
@@ -1230,12 +1230,12 @@ public class namcos1
 		namcos1_driver_init(&berabohm_specific);
 		install_mem_read_handler(3,0x1400,0x1401,berabohm_buttons_r);
 		namcos1_game_id = 0x0588;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Alice in Wonderland / Marchen Maze specific                                *
 	*******************************************************************************/
-	DRIVER_INIT( alice )
+	public static DriverInitHandlerPtr init_alice  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific alice_specific=
 		{
@@ -1245,12 +1245,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&alice_specific);
 		namcos1_game_id = 0x0152;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Bakutotsu Kijuutei specific                                                *
 	*******************************************************************************/
-	DRIVER_INIT( bakutotu )
+	public static DriverInitHandlerPtr init_bakutotu  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific bakutotu_specific=
 		{
@@ -1283,12 +1283,12 @@ public class namcos1
 					srcptr = scanptr + 1;
 			}
 		}
-	}
+	} };
 	
 	/*******************************************************************************
 	*   World Court specific                                                       *
 	*******************************************************************************/
-	DRIVER_INIT( wldcourt )
+	public static DriverInitHandlerPtr init_wldcourt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific worldcourt_specific=
 		{
@@ -1298,12 +1298,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&worldcourt_specific);
 		namcos1_game_id = 0x0143;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Splatter House specific                                                    *
 	*******************************************************************************/
-	DRIVER_INIT( splatter )
+	public static DriverInitHandlerPtr init_splatter  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific splatter_specific=
 		{
@@ -1319,12 +1319,12 @@ public class namcos1
 		seedMT(mame_rand());
 	#endif
 	
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Face Off specific                                                          *
 	*******************************************************************************/
-	DRIVER_INIT( faceoff )
+	public static DriverInitHandlerPtr init_faceoff  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific faceoff_specific=
 		{
@@ -1334,12 +1334,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&faceoff_specific);
 		namcos1_game_id = 0x1288;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Rompers specific                                                           *
 	*******************************************************************************/
-	DRIVER_INIT( rompers )
+	public static DriverInitHandlerPtr init_rompers  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific rompers_specific=
 		{
@@ -1350,12 +1350,12 @@ public class namcos1
 		namcos1_driver_init(&rompers_specific);
 		key[0x70] = 0xb6;
 		namcos1_game_id = 0x0182;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Blast Off specific                                                         *
 	*******************************************************************************/
-	DRIVER_INIT( blastoff )
+	public static DriverInitHandlerPtr init_blastoff  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific blastoff_specific=
 		{
@@ -1366,12 +1366,12 @@ public class namcos1
 		namcos1_driver_init(&blastoff_specific);
 		key[0] = 0xb7;
 		namcos1_game_id = 0x0183;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   World Stadium '89 specific                                                 *
 	*******************************************************************************/
-	DRIVER_INIT( ws89 )
+	public static DriverInitHandlerPtr init_ws89  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific ws89_specific=
 		{
@@ -1383,12 +1383,12 @@ public class namcos1
 	
 		key[0x20] = 0xb8;
 		namcos1_game_id = 0x0184;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Dangerous Seed specific                                                    *
 	*******************************************************************************/
-	DRIVER_INIT( dangseed )
+	public static DriverInitHandlerPtr init_dangseed  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific dangseed_specific=
 		{
@@ -1398,12 +1398,12 @@ public class namcos1
 		};
 		namcos1_driver_init(&dangseed_specific);
 		namcos1_game_id = 0x0308;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   World Stadium '90 specific                                                 *
 	*******************************************************************************/
-	DRIVER_INIT( ws90 )
+	public static DriverInitHandlerPtr init_ws90  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific ws90_specific=
 		{
@@ -1416,12 +1416,12 @@ public class namcos1
 		key[0x47] = 0x36;
 		key[0x40] = 0x36;
 		namcos1_game_id = 0x0310;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Pistol Daimyo no Bouken specific                                           *
 	*******************************************************************************/
-	DRIVER_INIT( pistoldm )
+	public static DriverInitHandlerPtr init_pistoldm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific pistoldm_specific=
 		{
@@ -1434,12 +1434,12 @@ public class namcos1
 		//key[0x07] = ;
 		key[0x43] = 0x35;
 		namcos1_game_id = 0x0309;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Souko Ban DX specific                                                      *
 	*******************************************************************************/
-	DRIVER_INIT( soukobdx )
+	public static DriverInitHandlerPtr init_soukobdx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific soukobdx_specific=
 		{
@@ -1452,12 +1452,12 @@ public class namcos1
 		//key[0x07] = ;
 		key[0x43] = 0x37;
 		namcos1_game_id = 0x0311;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Puzzle Club specific                                                       *
 	*******************************************************************************/
-	DRIVER_INIT( puzlclub )
+	public static DriverInitHandlerPtr init_puzlclub  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific puzlclub_specific=
 		{
@@ -1468,12 +1468,12 @@ public class namcos1
 		namcos1_driver_init(&puzlclub_specific);
 		key[0x03] = 0x35;
 		namcos1_game_id = 0xff90;
-	}
+	} };
 	
 	/*******************************************************************************
 	*   Tank Force specific                                                        *
 	*******************************************************************************/
-	DRIVER_INIT( tankfrce )
+	public static DriverInitHandlerPtr init_tankfrce  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const struct namcos1_specific tankfrce_specific=
 		{
@@ -1487,5 +1487,5 @@ public class namcos1
 		key[0x2b] = 0xb9;
 		key[0x50] = 0xb9;
 		namcos1_game_id = 0x0185;
-	}
+	} };
 }

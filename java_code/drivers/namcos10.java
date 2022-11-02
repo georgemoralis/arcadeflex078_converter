@@ -67,7 +67,7 @@ public class namcos10
 		{ 0xbfc00000, 0xbfffffff, MRA32_BANK6 },  /* bios */
 	MEMORY_END
 	
-	static DRIVER_INIT( namcos10 )
+	public static DriverInitHandlerPtr init_namcos10  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 		data16_t *RAM = (data16_t *)memory_region( REGION_USER2 );
@@ -85,7 +85,7 @@ public class namcos10
 		cpu_setbank( 4, memory_region( REGION_USER2 ) );
 		cpu_setbank( 5, memory_region( REGION_CPU1 ) );
 		cpu_setbank( 6, memory_region( REGION_USER2 ) );
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_namcos10  = new MachineInitHandlerPtr() { public void handler()
 	{

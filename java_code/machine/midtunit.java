@@ -483,17 +483,17 @@ public class midtunit
 		install_mem_write_handler(1, 0xfb9c, 0xfbc6, MWA_RAM);
 	}
 	
-	DRIVER_INIT( mk )
+	public static DriverInitHandlerPtr init_mk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk_tunit_common();
 		INSTALL_SPEEDUP_3(0x01053360, 0xffce2100, 0x104f9d0, 0x104fa10, 0x104fa30);
-	}
+	} };
 	
-	DRIVER_INIT( mkr4 )
+	public static DriverInitHandlerPtr init_mkr4  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk_tunit_common();
 		INSTALL_SPEEDUP_3(0x01053360, 0xffce2190, 0x104f9d0, 0x104fa10, 0x104fa30);
-	}
+	} };
 	
 	static void init_nbajam_common(int te_protection)
 	{
@@ -523,25 +523,25 @@ public class midtunit
 			install_mem_write_handler(1, 0xfbec, 0xfc16, MWA_RAM);
 	}
 	
-	DRIVER_INIT( nbajam )
+	public static DriverInitHandlerPtr init_nbajam  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_nbajam_common(0);
 		INSTALL_SPEEDUP_1_16BIT(0x010754c0, 0xff833480, 0x1008040, 0xd0, 0xb0);
-	}
+	} };
 	
-	DRIVER_INIT( nbajam20 )
+	public static DriverInitHandlerPtr init_nbajam20  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_nbajam_common(0);
 		INSTALL_SPEEDUP_1_16BIT(0x010754c0, 0xff833520, 0x1008040, 0xd0, 0xb0);
-	}
+	} };
 	
-	DRIVER_INIT( nbajamte )
+	public static DriverInitHandlerPtr init_nbajamte  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_nbajam_common(1);
 		INSTALL_SPEEDUP_1_16BIT(0x0106d480, 0xff84e480, 0x1000040, 0xd0, 0xb0);
-	}
+	} };
 	
-	DRIVER_INIT( jdreddp )
+	public static DriverInitHandlerPtr init_jdreddp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* common init */
 		init_tunit_generic(SOUND_ADPCM_LARGE);
@@ -565,7 +565,7 @@ public class midtunit
 	#endif
 	
 		/* no obvious speedups */
-	}
+	} };
 	
 	
 	
@@ -593,23 +593,23 @@ public class midtunit
 		install_mem_read16_handler (0, TOBYTE(0x01def920), TOBYTE(0x01def93f), mk2_prot_const_r);
 	}
 	
-	DRIVER_INIT( mk2 )
+	public static DriverInitHandlerPtr init_mk2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk2_common();
 		INSTALL_SPEEDUP_3(0x01068e70, 0xff80db70, 0x105d480, 0x105d4a0, 0x105d4c0);
-	}
+	} };
 	
-	DRIVER_INIT( mk2r21 )
+	public static DriverInitHandlerPtr init_mk2r21  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk2_common();
 		INSTALL_SPEEDUP_3(0x01068e40, 0xff80db70, 0x105d480, 0x105d4a0, 0x105d4c0);
-	}
+	} };
 	
-	DRIVER_INIT( mk2r14 )
+	public static DriverInitHandlerPtr init_mk2r14  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_mk2_common();
 		INSTALL_SPEEDUP_3(0x01068de0, 0xff80d960, 0x105d480, 0x105d4a0, 0x105d4c0);
-	}
+	} };
 	
 	
 	

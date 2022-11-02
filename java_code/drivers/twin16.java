@@ -1466,32 +1466,32 @@ public class twin16
 		}
 	}
 	
-	static DRIVER_INIT( twin16 )
+	public static DriverInitHandlerPtr init_twin16  = new DriverInitHandlerPtr() { public void handler()
 	{
 		gfx_untangle();
 		twin16_custom_vidhrdw = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( fround )
+	public static DriverInitHandlerPtr init_fround  = new DriverInitHandlerPtr() { public void handler()
 	{
 		gfx_untangle();
 		twin16_custom_vidhrdw = 1;
-	}
+	} };
 	
-	static DRIVER_INIT( hpuncher )
+	public static DriverInitHandlerPtr init_hpuncher  = new DriverInitHandlerPtr() { public void handler()
 	{
 		gfx_untangle();
 		twin16_custom_vidhrdw = 2;
-	}
+	} };
 	
-	static DRIVER_INIT( cuebrick )
+	public static DriverInitHandlerPtr init_cuebrick  = new DriverInitHandlerPtr() { public void handler()
 	{
 		gfx_untangle();
 		twin16_custom_vidhrdw = 2;
 	
 		generic_nvram = (UINT8 *)cuebrick_nvram;
 		generic_nvram_size = 0x400*0x20;
-	}
+	} };
 	
 	/* Game Drivers */
 	

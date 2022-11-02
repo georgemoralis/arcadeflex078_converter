@@ -126,7 +126,6 @@ public class galaxian
 {
 	
 	
-	DRIVER_INIT( cclimbrj );
 	
 	
 	

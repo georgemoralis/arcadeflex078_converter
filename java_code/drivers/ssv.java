@@ -2635,59 +2635,59 @@ public class ssv
 	}
 	
 	
-	DRIVER_INIT( drifto94 )		{	init_ssv();
+	public static DriverInitHandlerPtr init_drifto94  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = -8;	ssv_sprites_offsy = +0xf0;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	}
-	DRIVER_INIT( eaglshot )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	} };
+	public static DriverInitHandlerPtr init_eaglshot  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xe8;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef; }
-	DRIVER_INIT( hypreact )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef; } };
+	public static DriverInitHandlerPtr init_hypreact  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xf0;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf7;	}
-	DRIVER_INIT( hypreac2 )		{	hypreac2_init();	// different
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf7;	} };
+	public static DriverInitHandlerPtr init_hypreac2  = new DriverInitHandlerPtr() { public void handler()		{	hypreac2_init();	// different
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xf0;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf8;	}
-	DRIVER_INIT( janjans1 )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf8;	} };
+	public static DriverInitHandlerPtr init_janjans1  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xe8;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	}
-	DRIVER_INIT( keithlcy )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	} };
+	public static DriverInitHandlerPtr init_keithlcy  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = -8;	ssv_sprites_offsy = +0xf1;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	}
-	DRIVER_INIT( meosism )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	} };
+	public static DriverInitHandlerPtr init_meosism  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xe8;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef;	}
-	DRIVER_INIT( mslider )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef;	} };
+	public static DriverInitHandlerPtr init_mslider  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx =-16;	ssv_sprites_offsy = +0xf0;
-									ssv_tilemap_offsx = +8;	ssv_tilemap_offsy = -0xf1;	}
-	DRIVER_INIT( ryorioh )		{	init_ssv();
+									ssv_tilemap_offsx = +8;	ssv_tilemap_offsy = -0xf1;	} };
+	public static DriverInitHandlerPtr init_ryorioh  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xe8;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	}
-	DRIVER_INIT( srmp4 )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	} };
+	public static DriverInitHandlerPtr init_srmp4  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = -8;	ssv_sprites_offsy = +0xf0;
 									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;
 	//	((data16_t *)memory_region(REGION_USER1))[0x2b38/2] = 0x037a;	/* patch to see gal test mode */
-								}
-	DRIVER_INIT( srmp7 )		{	init_ssv();
+								} };
+	public static DriverInitHandlerPtr init_srmp7  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = -0xf;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	}
-	DRIVER_INIT( stmblade )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	} };
+	public static DriverInitHandlerPtr init_stmblade  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = -8; ssv_sprites_offsy = +0xef;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	}
-	DRIVER_INIT( survarts )		{	init_ssv();
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf0;	} };
+	public static DriverInitHandlerPtr init_survarts  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xe8;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef;	}
-	DRIVER_INIT( sxyreact )		{	hypreac2_init();	// different
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef;	} };
+	public static DriverInitHandlerPtr init_sxyreact  = new DriverInitHandlerPtr() { public void handler()		{	hypreac2_init();	// different
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xe8;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef;	}
-	DRIVER_INIT( twineag2 )		{	init_ssv();interrupt_ultrax=1;
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xef;	} };
+	public static DriverInitHandlerPtr init_twineag2  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();interrupt_ultrax=1;
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = 0;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = 0;	}
-	DRIVER_INIT( ultrax )		{	init_ssv();interrupt_ultrax=1;
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = 0;	} };
+	public static DriverInitHandlerPtr init_ultrax  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv();interrupt_ultrax=1;
 									ssv_sprites_offsx = -8;	ssv_sprites_offsy = 0;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = 0;	}
-	DRIVER_INIT( vasara )		{	init_ssv(); ssv_special = 2;
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = 0;	} };
+	public static DriverInitHandlerPtr init_vasara  = new DriverInitHandlerPtr() { public void handler()		{	init_ssv(); ssv_special = 2;
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xf0;
-									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf8;	}
+									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf8;	} };
 	
 	static MACHINE_DRIVER_START( ssv )
 	

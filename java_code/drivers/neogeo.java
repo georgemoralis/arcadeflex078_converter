@@ -5686,7 +5686,7 @@ public class neogeo
 	
 	
 	
-	DRIVER_INIT( kof99 )
+	public static DriverInitHandlerPtr init_kof99  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom;
 		int i,j;
@@ -5721,9 +5721,9 @@ public class neogeo
 		init_neogeo();
 		install_mem_read16_handler(0, 0x2ffff8, 0x2ffff9, sma_random_r);
 		install_mem_read16_handler(0, 0x2ffffa, 0x2ffffb, sma_random_r);
-	}
+	} };
 	
-	DRIVER_INIT( garou )
+	public static DriverInitHandlerPtr init_garou  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom;
 		int i,j;
@@ -5760,9 +5760,9 @@ public class neogeo
 		init_neogeo();
 		install_mem_read16_handler(0, 0x2fffcc, 0x2fffcd, sma_random_r);
 		install_mem_read16_handler(0, 0x2ffff0, 0x2ffff1, sma_random_r);
-	}
+	} };
 	
-	DRIVER_INIT( garouo )
+	public static DriverInitHandlerPtr init_garouo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom;
 		int i,j;
@@ -5799,9 +5799,9 @@ public class neogeo
 		init_neogeo();
 		install_mem_read16_handler(0, 0x2fffcc, 0x2fffcd, sma_random_r);
 		install_mem_read16_handler(0, 0x2ffff0, 0x2ffff1, sma_random_r);
-	}
+	} };
 	
-	DRIVER_INIT( mslug3 )
+	public static DriverInitHandlerPtr init_mslug3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom;
 		int i,j;
@@ -5836,9 +5836,9 @@ public class neogeo
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0xad);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( kof2000 )
+	public static DriverInitHandlerPtr init_kof2000  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom;
 		int i,j;
@@ -5874,64 +5874,64 @@ public class neogeo
 		init_neogeo();
 		install_mem_read16_handler(0, 0x2fffd8, 0x2fffd9, sma_random_r);
 		install_mem_read16_handler(0, 0x2fffda, 0x2fffdb, sma_random_r);
-	}
+	} };
 	
 	
-	DRIVER_INIT( kof99n )
+	public static DriverInitHandlerPtr init_kof99n  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x00);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( ganryu )
+	public static DriverInitHandlerPtr init_ganryu  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x07);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( s1945p )
+	public static DriverInitHandlerPtr init_s1945p  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x05);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( preisle2 )
+	public static DriverInitHandlerPtr init_preisle2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x9f);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( mslug3n )
+	public static DriverInitHandlerPtr init_mslug3n  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0xad);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( kof2000n )
+	public static DriverInitHandlerPtr init_kof2000n  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 2;
 		kof2000_neogeo_gfx_decrypt(0x00);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( bangbead )
+	public static DriverInitHandlerPtr init_bangbead  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0xf8);
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( nitd )
+	public static DriverInitHandlerPtr init_nitd  = new DriverInitHandlerPtr() { public void handler()
 	{
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0xff);
 		init_neogeo();
-	}
+	} };
 	
 	static void kof98P1decode(void)
 	{
@@ -6015,21 +6015,21 @@ public class neogeo
 	
 	}
 	
-	DRIVER_INIT( mjneogeo )
+	public static DriverInitHandlerPtr init_mjneogeo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler (0, 0x300000, 0x300001, mjneogeo_r);
 		install_mem_write16_handler(0, 0x380000, 0x380001, mjneogeo_w);
 	
 		init_neogeo();
-	}
+	} };
 	
-	DRIVER_INIT( popbounc )
+	public static DriverInitHandlerPtr init_popbounc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read16_handler (0, 0x300000, 0x300001, popbounc1_16_r);
 		install_mem_read16_handler (0, 0x340000, 0x340001, popbounc2_16_r);
 	
 		init_neogeo();
-	}
+	} };
 	
 	/******************************************************************************/
 	

@@ -841,13 +841,13 @@ public class coolpool
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( amerdart )
+	public static DriverInitHandlerPtr init_amerdart  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
-	}
+	} };
 	
-	DRIVER_INIT( coolpool )
+	public static DriverInitHandlerPtr init_coolpool  = new DriverInitHandlerPtr() { public void handler()
 	{
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
@@ -860,7 +860,7 @@ public class coolpool
 	
 		/* patch a loop during IOP test which doesn't get through... */
 		code_rom[TOWORD(0xffe02ff0-0xffe00000)] = 0x0300;
-	}
+	} };
 	
 	static void decode_9ballsht(void)
 	{
@@ -900,7 +900,7 @@ public class coolpool
 		}
 	}
 	
-	DRIVER_INIT( 9ballsht )
+	public static DriverInitHandlerPtr init_9ballsht  = new DriverInitHandlerPtr() { public void handler()
 	{
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
@@ -911,9 +911,9 @@ public class coolpool
 	
 		/* patch out a part of the vblank interrupt handler that would cause a crash... */
 		code_rom[TOWORD(0xffe55430-0xffc00000)] = 0xc059;
-	}
+	} };
 	
-	DRIVER_INIT( 9ballsh2 )
+	public static DriverInitHandlerPtr init_9ballsh2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
@@ -924,9 +924,9 @@ public class coolpool
 	
 		/* patch out a part of the vblank interrupt handler that would cause a crash... */
 		code_rom[TOWORD(0xffe54030-0xffc00000)] = 0xc059;
-	}
+	} };
 	
-	DRIVER_INIT( 9ballsh3 )
+	public static DriverInitHandlerPtr init_9ballsh3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
@@ -937,7 +937,7 @@ public class coolpool
 	
 		/* patch out a part of the vblank interrupt handler that would cause a crash... */
 		code_rom[TOWORD(0xffe53630-0xffc00000)] = 0xc059;
-	}
+	} };
 	
 	
 	

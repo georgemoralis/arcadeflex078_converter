@@ -861,7 +861,7 @@ public class tehkanwc
 	
 	
 	
-	static DRIVER_INIT( teedoff )
+	public static DriverInitHandlerPtr init_teedoff  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Patch to avoid the game jumping in shared memory */
 	
@@ -885,7 +885,7 @@ public class tehkanwc
 		ROM[0x0238] = 0x00;
 		ROM[0x0239] = 0x00;
 		ROM[0x023a] = 0x00;
-	}
+	} };
 	
 	
 	

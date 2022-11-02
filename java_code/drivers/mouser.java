@@ -300,7 +300,7 @@ public class mouser
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( mouser )
+	public static DriverInitHandlerPtr init_mouser  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Decode the opcodes */
 	
@@ -315,7 +315,7 @@ public class mouser
 		{
 			rom[i + diff] = table[rom[i]];
 		}
-	}
+	} };
 	
 	
 	GAME( 1983, mouser,   0,      mouser, mouser, mouser, ROT90, "UPL", "Mouser" )

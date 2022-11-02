@@ -48,7 +48,7 @@ public class blockade
 	static int coin_latch;  /* Active Low */
 	static int just_been_reset;
 	
-	DRIVER_INIT( blockade )
+	public static DriverInitHandlerPtr init_blockade  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
@@ -64,9 +64,9 @@ public class blockade
 		/* Initialize the coin latch state here */
 		coin_latch = 1;
 		just_been_reset = 0;
-	}
+	} };
 	
-	DRIVER_INIT( comotion )
+	public static DriverInitHandlerPtr init_comotion  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
@@ -90,7 +90,7 @@ public class blockade
 		/* Initialize the coin latch state here */
 		coin_latch = 1;
 		just_been_reset = 0;
-	}
+	} };
 	
 	/*************************************************************/
 	/*                                                           */

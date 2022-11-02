@@ -4052,19 +4052,19 @@ public class segac2
 		state_save_register_UINT16 ("C2 Protection", 0, "Read Buffer", &prot_read_buf, 1);
 	}
 	
-	static DRIVER_INIT( segac2 )
+	public static DriverInitHandlerPtr init_segac2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( bloxeedc )
+	public static DriverInitHandlerPtr init_bloxeedc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_saves();
 		bloxeed_sound = 1;
-	}
+	} };
 	
-	static DRIVER_INIT( columns )
+	public static DriverInitHandlerPtr init_columns  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 columns_table[256/8] =
 		{
@@ -4080,9 +4080,9 @@ public class segac2
 		prot_table = columns_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( columns2 )
+	public static DriverInitHandlerPtr init_columns2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 columns2_table[256/8] =
 		{
@@ -4098,9 +4098,9 @@ public class segac2
 		prot_table = columns2_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( borench )
+	public static DriverInitHandlerPtr init_borench  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 borench_table[256/8] =
 		{
@@ -4116,9 +4116,9 @@ public class segac2
 		prot_table = borench_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( tfrceac )
+	public static DriverInitHandlerPtr init_tfrceac  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 tfrceac_table[256/8] =
 		{
@@ -4134,15 +4134,15 @@ public class segac2
 		prot_table = tfrceac_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( tfrceacb )
+	public static DriverInitHandlerPtr init_tfrceacb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* disable the palette bank switching from the protection chip */
 		install_mem_write16_handler(0, 0x800000, 0x800001, MWA16_NOP);
-	}
+	} };
 	
-	static DRIVER_INIT( ribbit )
+	public static DriverInitHandlerPtr init_ribbit  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 ribbit_table[256/8] =
 		{
@@ -4166,9 +4166,9 @@ public class segac2
 		install_mem_read16_handler(0, 0x8c0000, 0x8c0fff, ribbit_palette_r);
 		install_mem_write16_handler(0, 0x8c0000, 0x8c0fff, ribbit_palette_w);
 		ribbit_palette_select = install_mem_read16_handler(0, 0x2000, 0x27ff, ribbit_palette_select_r);
-	}
+	} };
 	
-	static DRIVER_INIT( tantr )
+	public static DriverInitHandlerPtr init_tantr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 tantr_table[256/8] =
 		{
@@ -4184,9 +4184,9 @@ public class segac2
 		prot_table = tantr_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( ichidant )
+	public static DriverInitHandlerPtr init_ichidant  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 ichidant_table[256/8] =
 		{
@@ -4202,9 +4202,9 @@ public class segac2
 		prot_table = ichidant_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( ichidnte )
+	public static DriverInitHandlerPtr init_ichidnte  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 ichidnte_table[256/8] =
 		{
@@ -4220,10 +4220,10 @@ public class segac2
 		prot_table = ichidnte_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
 	
-	static DRIVER_INIT( potopoto )
+	public static DriverInitHandlerPtr init_potopoto  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* note: this is not the real table; Poto Poto only tests one  */
 		/* very specific case, so we don't have enough data to provide */
@@ -4242,9 +4242,9 @@ public class segac2
 		prot_table = potopoto_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( puyopuyo )
+	public static DriverInitHandlerPtr init_puyopuyo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 puyopuyo_table[256/8] =
 		{
@@ -4260,9 +4260,9 @@ public class segac2
 		prot_table = puyopuyo_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( puyopuy2 )
+	public static DriverInitHandlerPtr init_puyopuy2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* note: this is not the real table; Puyo Puyo 2 doesn't  */
 		/* store the original table; instead it loops through all */
@@ -4284,9 +4284,9 @@ public class segac2
 	
 		install_mem_read16_handler(0, 0x800000, 0x800001, puyopuy2_prot_r);
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( stkclmns )
+	public static DriverInitHandlerPtr init_stkclmns  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 stkclmns_table[256/8] =
 		{
@@ -4311,9 +4311,9 @@ public class segac2
 				main_ram[i] = mame_rand();
 		}
 		init_saves();
-	}
+	} };
 	
-	static DRIVER_INIT( zunkyou )
+	public static DriverInitHandlerPtr init_zunkyou  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 zunkyou_table[256/8] =
 		{
@@ -4329,7 +4329,7 @@ public class segac2
 		prot_table = zunkyou_table;
 		bloxeed_sound = 0;
 		init_saves();
-	}
+	} };
 	
 	/* Print Club hardware (C2 with a printer) */
 	
@@ -4345,7 +4345,7 @@ public class segac2
 		cam_data = data;
 	}
 	
-	static DRIVER_INIT( pclub )
+	public static DriverInitHandlerPtr init_pclub  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const UINT32 printc1_table[256/8] =
 		{
@@ -4365,11 +4365,11 @@ public class segac2
 		install_mem_read16_handler(0,  0x880120, 0x880121, printer_r );/*Print Club Vol.1*/
 		install_mem_read16_handler(0,  0x880124, 0x880125, printer_r );/*Print Club Vol.2*/
 		install_mem_write16_handler(0, 0x880124, 0x880125, print_club_camera_w);
-	}
+	} };
 	
 	/* Genie's Hardware (contains no real sega parts) */
 	
-	DRIVER_INIT( puckpkmn )
+	public static DriverInitHandlerPtr init_puckpkmn  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *rom	=	memory_region(REGION_CPU1);
 		size_t len		=	memory_region_length(REGION_CPU1);
@@ -4381,7 +4381,7 @@ public class segac2
 		cpu_setbank(2, main_ram );						// VDP reads the ram from here
 	
 		init_segac2();
-	}
+	} };
 	
 	
 	/******************************************************************************

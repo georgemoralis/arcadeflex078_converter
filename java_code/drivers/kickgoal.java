@@ -263,13 +263,13 @@ public class kickgoal
 	
 	/* GAME drivers **************************************************************/
 	
-	DRIVER_INIT( kickgoal )
+	public static DriverInitHandlerPtr init_kickgoal  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
 		/* fix "bug" that prevents game from writing to EEPROM */
 		rom[0x12b0/2] = 0x0001;
-	}
+	} };
 	
 	
 	GAMEX( 1995, kickgoal,0, kickgoal, kickgoal, kickgoal, ROT0, "TCH", "Kick Goal", GAME_NO_SOUND )

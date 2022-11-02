@@ -240,7 +240,7 @@ public class kopunch
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( kopunch )
+	public static DriverInitHandlerPtr init_kopunch  = new DriverInitHandlerPtr() { public void handler()
 	{
 	//	UINT8 *rom = memory_region(REGION_CPU1);
 	
@@ -256,7 +256,7 @@ public class kopunch
 		rom[0x381] = 0;
 		rom[0xf0b] = 0;
 		rom[0xf33] = 0;*/
-	}
+	} };
 	
 	
 	GAMEX( 1981, kopunch, 0, kopunch, kopunch, kopunch, ROT270, "Sega", "KO Punch", GAME_NO_SOUND | GAME_NOT_WORKING)

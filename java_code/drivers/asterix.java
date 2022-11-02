@@ -396,7 +396,7 @@ public class asterix
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( asterix )
+	public static DriverInitHandlerPtr init_asterix  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
@@ -405,7 +405,7 @@ public class asterix
 		*(data16_t *)(memory_region(REGION_CPU1) + 0x07f34) = 0x602a;
 		*(data16_t *)(memory_region(REGION_CPU1) + 0x00008) = 0x0400;
 	#endif
-	}
+	} };
 	
 	
 	GAMEX( 1992, asterix,  0,       asterix, asterix, asterix, ROT0, "Konami", "Asterix (World ver. EAD)", GAME_IMPERFECT_GRAPHICS )

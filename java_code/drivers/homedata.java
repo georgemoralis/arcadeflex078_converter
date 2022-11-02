@@ -1845,31 +1845,31 @@ public class homedata
 	
 	
 	
-	static DRIVER_INIT( jogakuen )
+	public static DriverInitHandlerPtr init_jogakuen  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* it seems that Mahjong Jogakuen runs on the same board as the others,
 		   but with just these two addresses swapped. Instead of creating a new
 		   MachineDriver, I just fix them here. */
 		install_mem_write_handler(0, 0x8007, 0x8007, pteacher_blitter_bank_w);
 		install_mem_write_handler(0, 0x8005, 0x8005, pteacher_gfx_bank_w);
-	}
+	} };
 	
-	static DRIVER_INIT( mjikaga )
+	public static DriverInitHandlerPtr init_mjikaga  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Mahjong Ikagadesuka is different as well. */
 		install_mem_read_handler(0, 0x7802, 0x7802, pteacher_snd_r);
 		install_mem_write_handler(1, 0x0123, 0x0123, pteacher_snd_answer_w);
-	}
+	} };
 	
-	static DRIVER_INIT( reikaids )
+	public static DriverInitHandlerPtr init_reikaids  = new DriverInitHandlerPtr() { public void handler()
 	{
 		homedata_priority=0;
-	}
+	} };
 	
-	static DRIVER_INIT( battlcry )
+	public static DriverInitHandlerPtr init_battlcry  = new DriverInitHandlerPtr() { public void handler()
 	{
 		homedata_priority=1; /* priority and initial value for bank write */
-	}
+	} };
 	
 	GAMEX(1987, hourouki, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Part 1 - Seisyun Hen (Japan)", GAME_IMPERFECT_GRAPHICS )
 	GAME( 1987, mhgaiden, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Gaiden (Japan)" )

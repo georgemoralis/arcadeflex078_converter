@@ -1699,7 +1699,7 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( spclords )
+	public static DriverInitHandlerPtr init_spclords  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x0040);
@@ -1710,10 +1710,10 @@ public class atarigx2
 		atarigx2_motion_object_mask = 0x3ff;
 		
 		memory_set_unmap_value(~0);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( motofren )
+	public static DriverInitHandlerPtr init_motofren  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x0040);
@@ -1746,14 +1746,14 @@ public class atarigx2
 	    +68.A23*E.A22*!E.A21*!68.A20*68.A19							= 1100 1xxx = c80000-cfffff
 	    +!68.A23*!E.A22*!E.A21										= 000x xxxx = 000000-1fffff
 	*/
-	}
+	} };
 	
 	static READ32_HANDLER( rrreveng_prot_r )
 	{
 		return 0;
 	}
 	
-	static DRIVER_INIT( rrreveng )
+	public static DriverInitHandlerPtr init_rrreveng  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x0040);
@@ -1764,7 +1764,7 @@ public class atarigx2
 		atarigx2_motion_object_mask = 0x3ff;
 	
 		install_mem_read32_handler(0, 0xca0fc0, 0xca0fc3, rrreveng_prot_r);
-	}
+	} };
 	
 	
 	

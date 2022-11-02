@@ -2417,15 +2417,15 @@ public class namcos22
 		PutPolyData( 0x0077d0+24, 0x000000 );
 	}
 	
-	DRIVER_INIT( alpiner )
+	public static DriverInitHandlerPtr init_alpiner  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos22_gametype = NAMCOS22_ALPINE_RACER;
 		DecryptPointROMs();
-	}
+	} };
 	
 	/*****************************************************************************************************/
 	
-	DRIVER_INIT( airco22 )
+	public static DriverInitHandlerPtr init_airco22  = new DriverInitHandlerPtr() { public void handler()
 	{ /* patch DSP RAM test */
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 		pROM[0x6d74/4] &= 0x0000ffff;
@@ -2439,9 +2439,9 @@ public class namcos22
 		/* int5 rte */
 		/* int6 700004, 700014, proc */
 		/* int7 rte */
-	}
+	} };
 	
-	DRIVER_INIT( propcycl )
+	public static DriverInitHandlerPtr init_propcycl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 	
@@ -2461,34 +2461,34 @@ public class namcos22
 		pROM[0x22296/4] |= 0x00004e75;
 	
 		namcos22_gametype = NAMCOS22_PROP_CYCLE;
-	}
+	} };
 	
-	DRIVER_INIT( ridgeraj )
+	public static DriverInitHandlerPtr init_ridgeraj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos22_gametype = NAMCOS22_RIDGE_RACER;
-	}
+	} };
 	
-	DRIVER_INIT( ridger2j )
+	public static DriverInitHandlerPtr init_ridger2j  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos22_gametype = NAMCOS22_RIDGE_RACER;
-	}
+	} };
 	
-	DRIVER_INIT( acedrvr )
+	public static DriverInitHandlerPtr init_acedrvr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos22_gametype = NAMCOS22_ACE_DRIVER;
-	}
+	} };
 	
-	DRIVER_INIT( victlap )
+	public static DriverInitHandlerPtr init_victlap  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos22_gametype = NAMCOS22_VICTORY_LAP;
-	}
+	} };
 	
-	DRIVER_INIT( raveracw )
+	public static DriverInitHandlerPtr init_raveracw  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos22_gametype = NAMCOS22_RAVE_RACER;
-	}
+	} };
 	
-	DRIVER_INIT( cybrcomm )
+	public static DriverInitHandlerPtr init_cybrcomm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 		pROM[0x18ade8/4] = 0x4e714e71;
@@ -2498,21 +2498,21 @@ public class namcos22
 		pROM[0x18aefc/4] = 0x4e714e71;
 	
 		namcos22_gametype = NAMCOS22_CYBER_COMMANDO;
-	}
+	} };
 	
-	DRIVER_INIT( cybrcyc )
+	public static DriverInitHandlerPtr init_cybrcyc  = new DriverInitHandlerPtr() { public void handler()
 	{ /* patch DSP RAM test */
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 		pROM[0x355C/4] &= 0x0000ffff;
 		pROM[0x355C/4] |= 0x4e710000;
 	
 		namcos22_gametype = NAMCOS22_CYBER_CYCLES;
-	}
+	} };
 	
-	DRIVER_INIT( timecris )
+	public static DriverInitHandlerPtr init_timecris  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos22_gametype = NAMCOS22_TIME_CRISIS;
-	}
+	} };
 	
 	/*     YEAR, NAME,    PARENT,    MACHINE,   INPUT,    INIT,     MNTR,  COMPANY, FULLNAME,                                    FLAGS */
 	/* System22 games */

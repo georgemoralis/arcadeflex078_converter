@@ -626,10 +626,10 @@ public class geebee
 	
 	
 	
-	static DRIVER_INIT( geebee )
+	public static DriverInitHandlerPtr init_geebee  = new DriverInitHandlerPtr() { public void handler()
 	{
 		artwork_set_overlay(geebee_overlay);
-	}
+	} };
 	
 	
 	GAME ( 1978, geebee,   0,        geebee,   geebee,   geebee, ROT90, "Namco", "Gee Bee" )

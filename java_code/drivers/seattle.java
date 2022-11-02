@@ -2146,7 +2146,7 @@ public class seattle
 	}
 	
 	
-	static DRIVER_INIT( wg3dh )
+	public static DriverInitHandlerPtr init_wg3dh  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x3839);
 		init_common(MIDWAY_IOASIC_STANDARD, 310/* others? */, 80);
@@ -2154,19 +2154,19 @@ public class seattle
 		/* speedups */
 		install_mem_read32_handler(0, 0x80115e00, 0x80115e03, generic_speedup_r);
 		generic_speedup = &rambase[0x115e00/4];
-	}
+	} };
 	
 	
-	static DRIVER_INIT( mace )
+	public static DriverInitHandlerPtr init_mace  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x3839);
 		init_common(MIDWAY_IOASIC_MACE, 450/* unknown */, 80);
 	
 		/* no obvious speedups */
-	}
+	} };
 	
 	
-	static DRIVER_INIT( sfrush )
+	public static DriverInitHandlerPtr init_sfrush  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cage_init(REGION_USER2, 0x5236);
 		init_common(MIDWAY_IOASIC_STANDARD, 315/* no alternates */, 100);
@@ -2180,10 +2180,10 @@ public class seattle
 		generic_speedup = &rambase[0x12498c/4];
 		install_mem_read32_handler(0, 0x80120000, 0x80120003, generic_speedup2_r);
 		generic_speedup2 = &rambase[0x120000/4];
-	}
+	} };
 	
 	
-	static DRIVER_INIT( calspeed )
+	public static DriverInitHandlerPtr init_calspeed  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x39c0);
 		init_common(MIDWAY_IOASIC_CALSPEED, 450/* unknown */, 100);
@@ -2197,10 +2197,10 @@ public class seattle
 		/* speedups */
 		install_mem_read32_handler(0, 0x802e6480, 0x802e6483, generic_speedup_r);
 		generic_speedup = &rambase[0x2e6480/4];
-	}
+	} };
 	
 	
-	static DRIVER_INIT( biofreak )
+	public static DriverInitHandlerPtr init_biofreak  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x3835);
 		init_common(MIDWAY_IOASIC_STANDARD, 231/* no alternates */, 80);
@@ -2208,10 +2208,10 @@ public class seattle
 		/* speedups */
 	//	install_mem_write32_handler(0, 0x802502bc, 0x802502bf, generic_speedup_w);
 	//	generic_speedup = &rambase[0x2502bc/4];
-	}
+	} };
 	
 	
-	static DRIVER_INIT( blitz )
+	public static DriverInitHandlerPtr init_blitz  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x39c2);
 		init_common(MIDWAY_IOASIC_BLITZ99, 528/* or 444 */, 80);
@@ -2222,10 +2222,10 @@ public class seattle
 		/* speedups */
 		install_mem_write32_handler(0, 0x80243d58, 0x80243d5b, generic_speedup_w);
 		generic_speedup = &rambase[0x243d58/4];
-	}
+	} };
 	
 	
-	static DRIVER_INIT( blitz99 )
+	public static DriverInitHandlerPtr init_blitz99  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x0afb);
 		init_common(MIDWAY_IOASIC_BLITZ99, 520/* or 481 or 484 */, 80);
@@ -2233,10 +2233,10 @@ public class seattle
 		/* speedups */
 		install_mem_write32_handler(0, 0x802502bc, 0x802502bf, generic_speedup_w);
 		generic_speedup = &rambase[0x2502bc/4];
-	}
+	} };
 	
 	
-	static DRIVER_INIT( blitz2k )
+	public static DriverInitHandlerPtr init_blitz2k  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x0b5d);
 		init_common(MIDWAY_IOASIC_BLITZ99, 498/* or 494 */, 80);
@@ -2244,10 +2244,10 @@ public class seattle
 		/* speedups */
 		install_mem_write32_handler(0, 0x8024e8d8, 0x8024e8db, generic_speedup_w);
 		generic_speedup = &rambase[0x24e8d8/4];
-	}
+	} };
 	
 	
-	static DRIVER_INIT( carnevil )
+	public static DriverInitHandlerPtr init_carnevil  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs2_init(0x0af7);
 		init_common(MIDWAY_IOASIC_CARNEVIL, 528/* or 469 or 486 */, 80);
@@ -2259,7 +2259,7 @@ public class seattle
 		/* speedups */
 		install_mem_write32_handler(0, 0x801a2bac, 0x801a2baf, generic_speedup_w);
 		generic_speedup = &rambase[0x1a2bac/4];
-	}
+	} };
 	
 	
 	

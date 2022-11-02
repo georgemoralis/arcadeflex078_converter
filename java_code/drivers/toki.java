@@ -687,13 +687,13 @@ public class toki
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( toki )
+	public static DriverInitHandlerPtr init_toki  = new DriverInitHandlerPtr() { public void handler()
 	{
 		seibu_sound_decrypt(REGION_CPU2,0x2000);
-	}
+	} };
 	
 	
-	DRIVER_INIT( tokib )
+	public static DriverInitHandlerPtr init_tokib  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *temp = malloc (65536 * 2);
 		int i, offs;
@@ -732,7 +732,7 @@ public class toki
 	
 			free (temp);
 		}
-	}
+	} };
 	
 	
 	

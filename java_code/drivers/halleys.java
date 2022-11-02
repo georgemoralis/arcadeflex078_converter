@@ -2271,22 +2271,22 @@ public class halleys
 	}
 	
 	
-	static DRIVER_INIT( benberob )
+	public static DriverInitHandlerPtr init_benberob  = new DriverInitHandlerPtr() { public void handler()
 	{
 		game_id = GAME_BENBEROB;
 	
 		init_success = init_common();
 	
 		if (!(blitter_reset_timer = timer_alloc(blitter_reset))) init_success = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( halleys )
+	public static DriverInitHandlerPtr init_halleys  = new DriverInitHandlerPtr() { public void handler()
 	{
 		game_id = GAME_HALLEYS;
 	
 		init_success = init_common();
-	}
+	} };
 	
 	
 	//**************************************************************************

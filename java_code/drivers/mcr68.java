@@ -1286,16 +1286,16 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( zwackery )
+	public static DriverInitHandlerPtr init_zwackery  = new DriverInitHandlerPtr() { public void handler()
 	{
 		MCR_CONFIGURE_SOUND(MCR_CHIP_SQUEAK_DELUXE);
 	
 		/* Zwackery doesn't care too much about this value; currently taken from Blasted */
 		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( xenophob )
+	public static DriverInitHandlerPtr init_xenophob  = new DriverInitHandlerPtr() { public void handler()
 	{
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 	
@@ -1307,10 +1307,10 @@ public class mcr68
 	
 		/* install control port handler */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, xenophobe_control_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( spyhunt2 )
+	public static DriverInitHandlerPtr init_spyhunt2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		MCR_CONFIGURE_SOUND(MCR_TURBO_CHIP_SQUEAK | MCR_SOUNDS_GOOD);
 	
@@ -1324,10 +1324,10 @@ public class mcr68
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, spyhunt2_control_w);
 		install_mem_read16_handler(0, 0x0d0000, 0x0dffff, spyhunt2_port_0_r);
 		install_mem_read16_handler(0, 0x0e0000, 0x0effff, spyhunt2_port_1_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( blasted )
+	public static DriverInitHandlerPtr init_blasted  = new DriverInitHandlerPtr() { public void handler()
 	{
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 	
@@ -1345,10 +1345,10 @@ public class mcr68
 		/* 6840 is mapped to the lower 8 bits */
 		install_mem_write16_handler(0, 0x0a0000, 0x0a000f, mcr68_6840_lower_w);
 		install_mem_read16_handler(0, 0x0a0000, 0x0a000f, mcr68_6840_lower_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( archrivl )
+	public static DriverInitHandlerPtr init_archrivl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		MCR_CONFIGURE_SOUND(MCR_WILLIAMS_SOUND);
 	
@@ -1375,10 +1375,10 @@ public class mcr68
 		memcpy(&memory_region(REGION_CPU2)[0x40000], &memory_region(REGION_CPU2)[0x30000], 0x10000);
 		memcpy(&memory_region(REGION_CPU2)[0x58000], &memory_region(REGION_CPU2)[0x50000], 0x08000);
 		memcpy(&memory_region(REGION_CPU2)[0x60000], &memory_region(REGION_CPU2)[0x50000], 0x10000);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( pigskin )
+	public static DriverInitHandlerPtr init_pigskin  = new DriverInitHandlerPtr() { public void handler()
 	{
 		MCR_CONFIGURE_SOUND(MCR_WILLIAMS_SOUND);
 	
@@ -1392,10 +1392,10 @@ public class mcr68
 		memcpy(&memory_region(REGION_CPU2)[0x20000], &memory_region(REGION_CPU2)[0x10000], 0x10000);
 		memcpy(&memory_region(REGION_CPU2)[0x40000], &memory_region(REGION_CPU2)[0x30000], 0x10000);
 		memcpy(&memory_region(REGION_CPU2)[0x60000], &memory_region(REGION_CPU2)[0x50000], 0x10000);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( trisport )
+	public static DriverInitHandlerPtr init_trisport  = new DriverInitHandlerPtr() { public void handler()
 	{
 		MCR_CONFIGURE_SOUND(MCR_WILLIAMS_SOUND);
 	
@@ -1412,7 +1412,7 @@ public class mcr68
 		memcpy(&memory_region(REGION_CPU2)[0x40000], &memory_region(REGION_CPU2)[0x30000], 0x10000);
 		memcpy(&memory_region(REGION_CPU2)[0x58000], &memory_region(REGION_CPU2)[0x50000], 0x08000);
 		memcpy(&memory_region(REGION_CPU2)[0x60000], &memory_region(REGION_CPU2)[0x50000], 0x10000);
-	}
+	} };
 	
 	
 	

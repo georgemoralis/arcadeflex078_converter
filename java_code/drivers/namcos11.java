@@ -607,7 +607,7 @@ public class namcos11
 		{ NULL, NULL }
 	};
 	
-	static DRIVER_INIT( namcos11 )
+	public static DriverInitHandlerPtr init_namcos11  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int n_game;
 	
@@ -662,7 +662,7 @@ public class namcos11
 		}
 	
 		psx_driver_init();
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_namcos11  = new MachineInitHandlerPtr() { public void handler()
 	{

@@ -550,11 +550,11 @@ public class _88games
 	
 	
 	
-	static DRIVER_INIT( 88games )
+	public static DriverInitHandlerPtr init_88games  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

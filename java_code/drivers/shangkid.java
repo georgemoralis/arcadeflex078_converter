@@ -87,15 +87,15 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	static DRIVER_INIT( chinhero )
+	public static DriverInitHandlerPtr init_chinhero  = new DriverInitHandlerPtr() { public void handler()
 	{
 		shangkid_gfx_type = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( shangkid )
+	public static DriverInitHandlerPtr init_shangkid  = new DriverInitHandlerPtr() { public void handler()
 	{
 		shangkid_gfx_type = 1;
-	}
+	} };
 	
 	/***************************************************************************************/
 	

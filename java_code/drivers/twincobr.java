@@ -1142,7 +1142,7 @@ public class twincobr
 		ROM_LOAD( "82s123.b24",	0x240, 0x020, CRC(4fb5df2a) SHA1(506ef2c8e4cf45c256d6831a0a5760732f2de422) )	/* tile to sprite priority ?? */
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( fshark )
+	public static DriverInitHandlerPtr init_fshark  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *source = memory_region(REGION_USER1);
 		data16_t *dest = (data16_t *)&memory_region(REGION_CPU3)[TMS32010_PGM_OFFSET];
@@ -1151,7 +1151,7 @@ public class twincobr
 		/* The ROM loader fixes the nibble images. Here we fix the byte ordering. */
 		for (A = 0;A < 0x0800;A++)
 			dest[A] = (source[A] << 8) | source[A + 0x800];
-	}
+	} };
 	
 	
 	

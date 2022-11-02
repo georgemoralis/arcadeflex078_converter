@@ -25,6 +25,7 @@ public class convertMame {
     static final int VIDEO_STOP = 12;
     static final int VIDEO_EOF = 13;
     static final int MACHINE_INIT = 14;
+    static final int DRIVER_INIT = 15;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -102,6 +103,22 @@ public class convertMame {
                             } else {
                                 sUtil.putString("public static MachineInitHandlerPtr machine_init_" + Convertor.token[0] + "  = new MachineInitHandlerPtr() { public void handler()");
                                 type = MACHINE_INIT;
+                                i3 = -1;
+                                Convertor.inpos += 1;
+                                continue;
+                            }
+                        }
+                        if (sUtil.getToken("DRIVER_INIT(")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.getToken(");"))//if it is a front function skip it
+                            {
+                                sUtil.skipLine();
+                                continue;
+                            } else {
+                                sUtil.putString("public static DriverInitHandlerPtr init_" + Convertor.token[0] + "  = new DriverInitHandlerPtr() { public void handler()");
+                                type = DRIVER_INIT;
                                 i3 = -1;
                                 Convertor.inpos += 1;
                                 continue;
@@ -570,7 +587,8 @@ public class convertMame {
                         }
                     }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
-                            || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP || type == VIDEO_EOF || type == MACHINE_INIT) {
+                            || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
+                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT) {
                         i3++;
                     }
                 }
@@ -587,7 +605,8 @@ public class convertMame {
                         }
                     }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
-                            || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP || type == VIDEO_EOF || type == MACHINE_INIT) {
+                            || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
+                            || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");
@@ -936,6 +955,24 @@ public class convertMame {
                 }
                 break;
                 case 'D':
+                    i = Convertor.inpos;
+                    if (sUtil.getToken("DRIVER_INIT(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static DriverInitHandlerPtr init_" + Convertor.token[0] + "  = new DriverInitHandlerPtr() { public void handler()");
+                            type = DRIVER_INIT;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
+                    Convertor.inpos=i;
                     if (type2 == INPUTPORTS) {
                         if (sUtil.getToken("DEF_STR(")) {
                             sUtil.skipSpace();

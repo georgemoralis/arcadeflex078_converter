@@ -281,7 +281,7 @@ public class aquarium
 		128*8	/* every sprite takes 128 consecutive bytes */
 	};
 	
-	static DRIVER_INIT( aquarium )
+	public static DriverInitHandlerPtr init_aquarium  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* The BG tiles are 5bpp, this rearranges the data from
 		   the roms containing the 1bpp data so we can decode it
@@ -320,7 +320,7 @@ public class aquarium
 	
 		/* reset the sound bank */
 		aquarium_z80_bank_w(0, 0);
-	}
+	} };
 	
 	
 	struct GfxDecodeInfo gfxdecodeinfo[] =

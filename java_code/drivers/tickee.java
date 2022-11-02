@@ -285,11 +285,11 @@ public class tickee
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( tickee )
+	public static DriverInitHandlerPtr init_tickee  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
-	}
+	} };
 	
 	
 	

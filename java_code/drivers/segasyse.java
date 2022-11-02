@@ -768,14 +768,14 @@ public class segasyse
 	 for Save State support
 	*******************************************************************************/
 	
-	static DRIVER_INIT( segasyse )
+	public static DriverInitHandlerPtr init_segasyse  = new DriverInitHandlerPtr() { public void handler()
 	{
 		state_save_register_UINT8 ( "SEGASYSE-MAIN", 0, "8000 Write Bank",		&segae_8000bank, 1);
 		state_save_register_UINT8 ( "SEGASYSE-MAIN", 0, "Vertical Int Pending",	&vintpending, 1);
 		state_save_register_UINT8 ( "SEGASYSE-MAIN", 0, "Line Int Pending",		&hintpending, 1);
 		state_save_register_UINT8 ( "SEGASYSE-MAIN", 0, "Main Rom Bank",		&rombank, 1);
 		state_save_register_func_postload(segae_bankswitch);
-	}
+	} };
 	
 	/*******************************************************************************
 	 Game Inits
@@ -784,7 +784,7 @@ public class segasyse
 	 we need for the controls
 	*******************************************************************************/
 	
-	static DRIVER_INIT( hangonjr )
+	public static DriverInitHandlerPtr init_hangonjr  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_read_handler (0, 0xf8, 0xf8, segae_hangonjr_port_f8_r);
 		install_port_write_handler(0, 0xfa, 0xfa, segae_hangonjr_port_fa_w);
@@ -792,22 +792,22 @@ public class segasyse
 		state_save_register_UINT8 ( "SEGASYSE-HOJ", 0, "port_fa_last",			&port_fa_last, 1);
 	
 		init_segasyse();
-	}
+	} };
 	
-	static DRIVER_INIT( ridleofp )
+	public static DriverInitHandlerPtr init_ridleofp  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_port_read_handler (0, 0xf8, 0xf8, segae_ridleofp_port_f8_r);
 		install_port_write_handler(0, 0xfa, 0xfa, segae_ridleofp_port_fa_w);
 	
 		init_segasyse();
-	}
+	} };
 	
-	static DRIVER_INIT( astrofl )
+	public static DriverInitHandlerPtr init_astrofl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		astrofl_decode();
 	
 		init_segasyse();
-	}
+	} };
 	
 	/*******************************************************************************
 	 Rom Loaders / Game Drivers

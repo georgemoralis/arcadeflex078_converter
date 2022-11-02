@@ -147,7 +147,7 @@ public class wrally
 	
 	***************************************************************************/
 	
-	DRIVER_INIT( wrally )
+	public static DriverInitHandlerPtr init_wrally  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -158,5 +158,5 @@ public class wrally
 			wrally_encr_table[0][i] = wrally_decode_vram(i);
 			wrally_encr_table[1][i] = wrally_decode_vram(i);
 		}
-	}
+	} };
 }

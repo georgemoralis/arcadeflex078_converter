@@ -543,7 +543,7 @@ public class groundfx
 	}
 	
 	
-	DRIVER_INIT( groundfx )
+	public static DriverInitHandlerPtr init_groundfx  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned int offset,i;
 		UINT8 *gfx = memory_region(REGION_GFX3);
@@ -572,7 +572,7 @@ public class groundfx
 			gfx[offset] = (d3<<2) | (d4<<6);
 			offset++;
 		}
-	}
+	} };
 	
 	
 	GAME( 1992, groundfx, 0, groundfx, groundfx, groundfx, ROT0, "Taito Corporation", "Ground Effects / Super Ground Effects (Japan)" )

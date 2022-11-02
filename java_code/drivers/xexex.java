@@ -588,7 +588,7 @@ public class xexex
 		suspension_active = 0;
 	} };
 	
-	static DRIVER_INIT( xexex )
+	public static DriverInitHandlerPtr init_xexex  = new DriverInitHandlerPtr() { public void handler()
 	{
 		if (!strcmp(Machine.gamedrv.name, "xexex"))
 		{
@@ -612,7 +612,7 @@ public class xexex
 		dmadelay_timer = timer_alloc(dmaend_callback);
 	
 		K054539_init_flags(K054539_REVERSE_STEREO);
-	}
+	} };
 	
 	
 	GAME( 1991, xexex,  0,     xexex, xexex, xexex, ROT0, "Konami", "Xexex (World)" )

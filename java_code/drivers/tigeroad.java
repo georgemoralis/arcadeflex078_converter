@@ -760,15 +760,15 @@ public class tigeroad
 	
 	
 	
-	DRIVER_INIT( tigeroad )
+	public static DriverInitHandlerPtr init_tigeroad  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write16_handler(0, 0xfe4002, 0xfe4003, tigeroad_soundcmd_w);
-	}
+	} };
 	
-	DRIVER_INIT( f1dream )
+	public static DriverInitHandlerPtr init_f1dream  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write16_handler(0, 0xfe4002, 0xfe4003, f1dream_control_w);
-	}
+	} };
 	
 	
 	

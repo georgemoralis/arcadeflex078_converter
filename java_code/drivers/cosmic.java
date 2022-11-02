@@ -1477,7 +1477,7 @@ public class cosmic
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( cosmicg )
+	public static DriverInitHandlerPtr init_cosmicg  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Program ROMs have data pins connected different from normal */
 	
@@ -1501,21 +1501,21 @@ public class cosmic
 	    /* from different sources with the same problem!           */
 	    memory_region(REGION_CPU1)[0x1e9e] = 0x04;
 	    memory_region(REGION_CPU1)[0x1e9f] = 0xc0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( devzone )
+	public static DriverInitHandlerPtr init_devzone  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0x4807, 0x4807, cosmic_background_enable_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( nomnlnd )
+	public static DriverInitHandlerPtr init_nomnlnd  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x5000, 0x5001, nomnlnd_port_0_1_r);
 	
 		install_mem_write_handler(0, 0x4807, 0x4807, cosmic_background_enable_w);
-	}
+	} };
 	
 	
 	GAMEX(1979, cosmicg,  0,       cosmicg,  cosmicg,  cosmicg, ROT270, "Universal", "Cosmic Guerilla", GAME_NO_COCKTAIL )

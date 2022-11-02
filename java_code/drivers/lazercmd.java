@@ -831,7 +831,7 @@ public class lazercmd
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( lazercmd )
+	public static DriverInitHandlerPtr init_lazercmd  = new DriverInitHandlerPtr() { public void handler()
 	{
 	int i, y;
 	
@@ -869,9 +869,9 @@ public class lazercmd
 				d++;
 			}
 		}
-	}
+	} };
 	
-	DRIVER_INIT( medlanes )
+	public static DriverInitHandlerPtr init_medlanes  = new DriverInitHandlerPtr() { public void handler()
 	{
 	int i, y;
 	
@@ -907,9 +907,9 @@ public class lazercmd
 				d++;
 			}
 		}
-	}
+	} };
 	
-	DRIVER_INIT( bbonk )
+	public static DriverInitHandlerPtr init_bbonk  = new DriverInitHandlerPtr() { public void handler()
 	{
 	int i, y;
 	
@@ -945,7 +945,7 @@ public class lazercmd
 				d++;
 			}
 		}
-	}
+	} };
 	
 	
 	

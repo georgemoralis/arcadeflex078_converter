@@ -439,11 +439,11 @@ public class parodius
 	} };
 	
 	
-	static DRIVER_INIT( parodius )
+	public static DriverInitHandlerPtr init_parodius  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

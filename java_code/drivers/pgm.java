@@ -591,7 +591,7 @@ public class pgm
 		return pgm_mainram[0x00a70e/2];
 	}
 	
-	static DRIVER_INIT( orlegend )
+	public static DriverInitHandlerPtr init_orlegend  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pgm_basic_init();
 	
@@ -599,9 +599,9 @@ public class pgm
 		install_mem_write16_handler(0, 0xC04000, 0xC04001, pgm_asic3_reg_w);
 		install_mem_write16_handler(0, 0xC0400e, 0xC0400f, pgm_asic3_w);
 		install_mem_read16_handler (0, 0x80a70e, 0x80a70f, orlegend_speedup);
-	}
+	} };
 	
-	static DRIVER_INIT( dragwld2 )
+	public static DriverInitHandlerPtr init_dragwld2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *mem16 = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -631,9 +631,9 @@ public class pgm
 	*/
 		install_mem_read16_handler(0, 0xd80000, 0xd80003, dw2_d80000_r);
 	
-	}
+	} };
 	
-	static DRIVER_INIT( kov )
+	public static DriverInitHandlerPtr init_kov  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pgm_basic_init();
 	
@@ -645,9 +645,9 @@ public class pgm
 		install_mem_read16_handler(0, 0x4f0000, 0x4fffff, sango_protram_r);
 	
 	 	pgm_kov_decrypt();
-	}
+	} };
 	
-	static DRIVER_INIT( kovsh )
+	public static DriverInitHandlerPtr init_kovsh  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pgm_basic_init();
 	
@@ -659,9 +659,9 @@ public class pgm
 		install_mem_read16_handler(0, 0x4f0000, 0x4fffff, sango_protram_r);
 	
 	 	pgm_kovsh_decrypt();
-	}
+	} };
 	
-	static DRIVER_INIT( djlzz )
+	public static DriverInitHandlerPtr init_djlzz  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pgm_basic_init();
 	
@@ -673,7 +673,7 @@ public class pgm
 		install_mem_read16_handler(0, 0x4f0000, 0x4fffff, sango_protram_r);
 	
 	 	pgm_djlzz_decrypt();
-	}
+	} };
 	
 	
 	/*** Rom Loading *************************************************************/

@@ -46,7 +46,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	DRIVER_INIT( alighunt )
+	public static DriverInitHandlerPtr init_alighunt  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/*
 		For REGION_GFX2 we have this memory map:
@@ -77,10 +77,10 @@ public class gaelco2
 	
 		/* split ROM u49 */
 		gaelco2_ROM16_split(REGION_GFX2, REGION_GFX1, 0x0c00000, 0x0400000, 0x0a00000, 0x0e00000);
-	}
+	} };
 	
 	
-	DRIVER_INIT( touchgo )
+	public static DriverInitHandlerPtr init_touchgo  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/*
 		For REGION_GFX2 we have this memory map:
@@ -105,10 +105,10 @@ public class gaelco2
 	
 		/* split ROM ic67 */
 		gaelco2_ROM16_split(REGION_GFX2, REGION_GFX1, 0x0800000, 0x0400000, 0x0800000, 0x0c00000);
-	}
+	} };
 	
 	
-	DRIVER_INIT( snowboar )
+	public static DriverInitHandlerPtr init_snowboar  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/*
 		For REGION_GFX2 we have this memory map:
@@ -133,7 +133,7 @@ public class gaelco2
 	
 		/* split ROM sb46 */
 		gaelco2_ROM16_split(REGION_GFX2, REGION_GFX1, 0x0800000, 0x0400000, 0x0800000, 0x0c00000);
-	}
+	} };
 	
 	/***************************************************************************
 	

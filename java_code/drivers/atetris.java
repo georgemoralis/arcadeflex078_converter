@@ -423,12 +423,12 @@ public class atetris
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( atetris )
+	public static DriverInitHandlerPtr init_atetris  = new DriverInitHandlerPtr() { public void handler()
 	{
 		slapstic_init(101);
 		slapstic_source = &memory_region(REGION_CPU1)[0x10000];
 		slapstic_base = &memory_region(REGION_CPU1)[0x04000];
-	}
+	} };
 	
 	
 	

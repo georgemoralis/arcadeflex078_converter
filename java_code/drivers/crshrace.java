@@ -749,19 +749,19 @@ public class crshrace
 	}
 	
 	
-	DRIVER_INIT( crshrace )
+	public static DriverInitHandlerPtr init_crshrace  = new DriverInitHandlerPtr() { public void handler()
 	{
 		#if CRSHRACE_3P_HACK
 		crshrace_patch_code(0x003778);
 		#endif
-	}
+	} };
 	
-	DRIVER_INIT( crshrac2 )
+	public static DriverInitHandlerPtr init_crshrac2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		#if CRSHRACE_3P_HACK
 		crshrace_patch_code(0x003796);
 		#endif
-	}
+	} };
 	
 	
 	GAMEX( 1993, crshrace, 0,        crshrace, crshrace, crshrace, ROT270, "Video System Co.", "Lethal Crash Race (set 1)", GAME_NO_COCKTAIL )

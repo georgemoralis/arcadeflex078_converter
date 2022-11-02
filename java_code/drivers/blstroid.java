@@ -430,11 +430,11 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( blstroid )
+	public static DriverInitHandlerPtr init_blstroid  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x80);
-	}
+	} };
 	
 	
 	

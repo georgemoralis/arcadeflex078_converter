@@ -467,11 +467,11 @@ public class aliens
 	
 	
 	
-	static DRIVER_INIT( aliens )
+	public static DriverInitHandlerPtr init_aliens  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

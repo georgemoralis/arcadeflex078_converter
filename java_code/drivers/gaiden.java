@@ -1140,29 +1140,29 @@ public class gaiden
 	
 	
 	
-	static DRIVER_INIT( shadoww )
+	public static DriverInitHandlerPtr init_shadoww  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* sprite size Y = sprite size X */
 		gaiden_sprite_sizey = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( wildfang )
+	public static DriverInitHandlerPtr init_wildfang  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* sprite size Y = sprite size X */
 		gaiden_sprite_sizey = 0;
 	
 		install_mem_read16_handler (0, 0x07a006, 0x07a007, wildfang_protection_r);
 		install_mem_write16_handler(0, 0x07a804, 0x07a805, wildfang_protection_w);
-	}
+	} };
 	
-	static DRIVER_INIT( raiga )
+	public static DriverInitHandlerPtr init_raiga  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* sprite size Y independent from sprite size X */
 		gaiden_sprite_sizey = 2;
 	
 		install_mem_read16_handler (0, 0x07a006, 0x07a007, raiga_protection_r);
 		install_mem_write16_handler(0, 0x07a804, 0x07a805, raiga_protection_w);
-	}
+	} };
 	
 	
 	

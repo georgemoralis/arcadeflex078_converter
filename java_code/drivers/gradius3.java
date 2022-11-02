@@ -561,10 +561,10 @@ public class gradius3
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( gradius3 )
+	public static DriverInitHandlerPtr init_gradius3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_2(REGION_GFX2);
-	}
+	} };
 	
 	
 	

@@ -618,7 +618,7 @@ public class cop01
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( mightguy )
+	public static DriverInitHandlerPtr init_mightguy  = new DriverInitHandlerPtr() { public void handler()
 	{
 	#if MIGHTGUY_HACK
 		/* This is a hack to fix the game code to get a fully working
@@ -631,7 +631,7 @@ public class cop01
 		RAM[0x027f] = 0x00;
 		RAM[0x0280] = 0x00;
 	#endif
-	}
+	} };
 	
 	
 	GAME( 1985, cop01,    0,     cop01,    cop01,    0,        ROT0,   "Nichibutsu", "Cop 01 (set 1)" )

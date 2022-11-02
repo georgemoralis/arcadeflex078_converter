@@ -855,36 +855,36 @@ public class fastfred
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( flyboy )
+	public static DriverInitHandlerPtr init_flyboy  = new DriverInitHandlerPtr() { public void handler()
 	{
 		fastfred_hardware_type = 1;
-	}
+	} };
 	
-	static DRIVER_INIT( fastfred )
+	public static DriverInitHandlerPtr init_fastfred  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0xc800, 0xcfff, MWA_NOP );
 		install_mem_read_handler( 0, 0xc800, 0xcfff, fastfred_custom_io_r);
 		fastfred_hardware_type = 1;
-	}
+	} };
 	
-	static DRIVER_INIT( jumpcoas )
+	public static DriverInitHandlerPtr init_jumpcoas  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0xc800, 0xcfff, MWA_NOP );
 		install_mem_read_handler(0,  0xc800, 0xcfff, jumpcoas_custom_io_r);
 		fastfred_hardware_type = 0;
-	}
+	} };
 	
-	static DRIVER_INIT( boggy84 )
+	public static DriverInitHandlerPtr init_boggy84  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(0, 0xc800, 0xcfff, MWA_NOP );
 		install_mem_read_handler(0,  0xc800, 0xcfff, jumpcoas_custom_io_r);
 		fastfred_hardware_type = 2;
-	}
+	} };
 	
-	static DRIVER_INIT( imago )
+	public static DriverInitHandlerPtr init_imago  = new DriverInitHandlerPtr() { public void handler()
 	{
 		fastfred_hardware_type = 3;
-	}
+	} };
 	
 	GAMEX(1982, flyboy,   0,      fastfred, flyboy,   flyboy,   ROT90, "Kaneko", "Fly-Boy", GAME_NOT_WORKING )	/* protection */
 	GAME( 1982, flyboyb,  flyboy, fastfred, flyboy,   flyboy,   ROT90, "Kaneko", "Fly-Boy (bootleg)" )

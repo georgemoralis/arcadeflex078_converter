@@ -104,7 +104,6 @@ public class stv
 	#define USE_SLAVE 1
 	
 	/* stvhacks.c */
-	DRIVER_INIT( ic13 );
 	void install_stvbios_speedups(void);
 	DRIVER_INIT(bakubaku);
 	DRIVER_INIT(mausuke);
@@ -4513,7 +4512,7 @@ public class stv
 	
 	
 	
-	DRIVER_INIT( sfish2 )
+	public static DriverInitHandlerPtr init_sfish2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* this is WRONG but works for some games */
 		data32_t *rom = (data32_t *)memory_region(REGION_USER1);
@@ -4523,9 +4522,9 @@ public class stv
 		cdb_reset();
 		timer_pulse(TIME_IN_USEC(7000), 0, CD_refresh_timer);
 		init_stv();
-	}
+	} };
 	
-	DRIVER_INIT( sfish2j )
+	public static DriverInitHandlerPtr init_sfish2j  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* this is WRONG but works for some games */
 		data32_t *rom = (data32_t *)memory_region(REGION_USER1);
@@ -4534,7 +4533,7 @@ public class stv
 		rom[0xf30/4] = (rom[0xf30/4] & 0xff000000)|((rom[0xf30/4]/2)&0x00ffffff);
 		cdb_reset();
 		init_stv();
-	}
+	} };
 	
 	
 	/* TODO: add country codes */

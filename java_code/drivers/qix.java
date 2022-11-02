@@ -1179,25 +1179,25 @@ public class qix
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( kram )
+	public static DriverInitHandlerPtr init_kram  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* we need to override one PIA handler to prevent controls from getting disabled */
 		install_mem_write_handler(0, 0x9400, 0x97ff, zookeep_pia_0_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( zookeep )
+	public static DriverInitHandlerPtr init_zookeep  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* we need to override two PIA handlers to prevent controls from getting disabled */
 		install_mem_write_handler(0, 0x1400, 0x17ff, zookeep_pia_0_w);
 		install_mem_write_handler(0, 0x1c00, 0x1fff, zookeep_pia_2_w);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( slither )
+	public static DriverInitHandlerPtr init_slither  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write_handler(1, 0x9401, 0x9401, slither_vram_mask_w);
-	}
+	} };
 	
 	
 	

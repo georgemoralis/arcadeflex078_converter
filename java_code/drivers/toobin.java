@@ -619,11 +619,11 @@ public class toobin
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( toobin )
+	public static DriverInitHandlerPtr init_toobin  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 2, 1, 0x1000);
-	}
+	} };
 	
 	
 	

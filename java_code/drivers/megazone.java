@@ -456,10 +456,10 @@ public class megazone
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( megazone )
+	public static DriverInitHandlerPtr init_megazone  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami1_decode();
-	}
+	} };
 	
 	
 	GAME( 1983, megazone, 0,        megazone, megazone, megazone, ROT90, "Konami", "Mega Zone" )

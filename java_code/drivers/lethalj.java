@@ -434,11 +434,11 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( lethalj )
+	public static DriverInitHandlerPtr init_lethalj  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
-	}
+	} };
 	
 	
 	

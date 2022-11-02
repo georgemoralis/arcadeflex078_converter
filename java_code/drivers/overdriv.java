@@ -498,10 +498,10 @@ public class overdriv
 	
 	
 	
-	static DRIVER_INIT( overdriv )
+	public static DriverInitHandlerPtr init_overdriv  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami_rom_deinterleave_4(REGION_GFX1);
-	}
+	} };
 	
 	
 	

@@ -275,7 +275,7 @@ public class battlex
 		ROM_LOAD( "2732.e",    0x0000, 0x1000, CRC(126842b7) SHA1(2da4f64e077232c1dd0853d07d801f9781517850) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( battlex )
+	public static DriverInitHandlerPtr init_battlex  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *cold    = memory_region       ( REGION_USER1 );
 		UINT8 *mskd    = memory_region       ( REGION_USER2 );
@@ -305,7 +305,7 @@ public class battlex
 				}
 			}
 		}
-	}
+	} };
 	
 	/*** GAME DRIVERS ************************************************************/
 	

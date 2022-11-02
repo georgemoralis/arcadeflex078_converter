@@ -44,17 +44,17 @@ public class nbmj8688
 	
 	
 	
-	static DRIVER_INIT( mjsikaku )
+	public static DriverInitHandlerPtr init_mjsikaku  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_MJSIKAKU;
-	}
+	} };
 	
-	static DRIVER_INIT( otonano )
+	public static DriverInitHandlerPtr init_otonano  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_OTONANO;
-	}
+	} };
 	
-	static DRIVER_INIT( mjcamera )
+	public static DriverInitHandlerPtr init_mjcamera  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *rom = memory_region(REGION_SOUND1) + 0x20000;
 		UINT8 *prot = memory_region(REGION_USER1);
@@ -71,9 +71,9 @@ public class nbmj8688
 		}
 	
 		nb1413m3_type = NB1413M3_MJCAMERA;
-	}
+	} };
 	
-	static DRIVER_INIT( kanatuen )
+	public static DriverInitHandlerPtr init_kanatuen  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* uses the same protection data as mjcamer, but a different check */
 		UINT8 *rom = memory_region(REGION_SOUND1) + 0x30000;
@@ -84,9 +84,9 @@ public class nbmj8688
 		rom[0x0301] = 0xdc;
 	
 		nb1413m3_type = NB1413M3_KANATUEN;
-	}
+	} };
 	
-	static DRIVER_INIT( idhimitu )
+	public static DriverInitHandlerPtr init_idhimitu  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 *rom = memory_region(REGION_SOUND1) + 0x20000;
 		UINT8 *prot = memory_region(REGION_USER1);
@@ -103,87 +103,87 @@ public class nbmj8688
 		}
 	
 		nb1413m3_type = NB1413M3_IDHIMITU;
-	}
+	} };
 	
-	static DRIVER_INIT( kaguya )
+	public static DriverInitHandlerPtr init_kaguya  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_KAGUYA;
-	}
+	} };
 	
-	static DRIVER_INIT( secolove )
+	public static DriverInitHandlerPtr init_secolove  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_SECOLOVE;
-	}
+	} };
 	
-	static DRIVER_INIT( citylove )
+	public static DriverInitHandlerPtr init_citylove  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_CITYLOVE;
-	}
+	} };
 	
-	static DRIVER_INIT( seiha )
+	public static DriverInitHandlerPtr init_seiha  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_SEIHA;
-	}
+	} };
 	
-	static DRIVER_INIT( seiham )
+	public static DriverInitHandlerPtr init_seiham  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_SEIHAM;
-	}
+	} };
 	
-	static DRIVER_INIT( korinai )
+	public static DriverInitHandlerPtr init_korinai  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_KORINAI;
-	}
+	} };
 	
-	static DRIVER_INIT( iemoto )
+	public static DriverInitHandlerPtr init_iemoto  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_IEMOTO;
-	}
+	} };
 	
-	static DRIVER_INIT( ojousan )
+	public static DriverInitHandlerPtr init_ojousan  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_OJOUSAN;
-	}
+	} };
 	
-	static DRIVER_INIT( bijokkoy )
+	public static DriverInitHandlerPtr init_bijokkoy  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_BIJOKKOY;
-	}
+	} };
 	
-	static DRIVER_INIT( bijokkog )
+	public static DriverInitHandlerPtr init_bijokkog  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_BIJOKKOG;
-	}
+	} };
 	
-	static DRIVER_INIT( housemnq )
+	public static DriverInitHandlerPtr init_housemnq  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_HOUSEMNQ;
-	}
+	} };
 	
-	static DRIVER_INIT( housemn2 )
+	public static DriverInitHandlerPtr init_housemn2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_HOUSEMN2;
-	}
+	} };
 	
-	static DRIVER_INIT( orangec )
+	public static DriverInitHandlerPtr init_orangec  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_ORANGEC;
-	}
+	} };
 	
-	static DRIVER_INIT( crystalg )
+	public static DriverInitHandlerPtr init_crystalg  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_CRYSTALG;
-	}
+	} };
 	
-	static DRIVER_INIT( crystal2 )
+	public static DriverInitHandlerPtr init_crystal2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_CRYSTAL2;
-	}
+	} };
 	
-	static DRIVER_INIT( apparel )
+	public static DriverInitHandlerPtr init_apparel  = new DriverInitHandlerPtr() { public void handler()
 	{
 		nb1413m3_type = NB1413M3_APPAREL;
-	}
+	} };
 	
 	
 	

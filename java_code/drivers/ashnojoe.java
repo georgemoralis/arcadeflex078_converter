@@ -344,10 +344,10 @@ public class ashnojoe
 		{ irqhandler }
 	};
 	
-	static DRIVER_INIT( ashnojoe )
+	public static DriverInitHandlerPtr init_ashnojoe  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(4, memory_region(REGION_SOUND1));
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( ashnojoe )
 	

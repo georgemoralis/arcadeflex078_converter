@@ -7,7 +7,6 @@
 /*----------- defined in machine/irobot.c -----------*/
 
 
-DRIVER_INIT( irobot );
 
 
 

@@ -4139,7 +4139,7 @@ public class metro
 	
 	***************************************************************************/
 	
-	static DRIVER_INIT( metro )
+	public static DriverInitHandlerPtr init_metro  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int i;
 	
@@ -4170,10 +4170,10 @@ public class metro
 		blitter_bit	=	2;
 	
 		*metro_irq_enable = 0;
-	}
+	} };
 	
 	
-	DRIVER_INIT( karatour )
+	public static DriverInitHandlerPtr init_karatour  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *) memory_region( REGION_USER1 );
 	int i;
@@ -4183,10 +4183,10 @@ public class metro
 	for (i = 0;i < memory_region_length(REGION_USER1)/2;i++)
 		RAM[i] = rand();
 		init_metro();
-	}
+	} };
 	
 	/* Unscramble the GFX ROMs */
-	static DRIVER_INIT( balcube )
+	public static DriverInitHandlerPtr init_balcube  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const int region	=	REGION_GFX1;
 	
@@ -4208,28 +4208,28 @@ public class metro
 	
 		init_metro();
 		irq_line = 1;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( blzntrnd )
+	public static DriverInitHandlerPtr init_blzntrnd  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_metro();
 		irq_line = 1;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( mouja )
+	public static DriverInitHandlerPtr init_mouja  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_metro();
 		irq_line = -1;	/* split interrupt handlers */
-	}
+	} };
 	
-	static DRIVER_INIT( gakusai )
+	public static DriverInitHandlerPtr init_gakusai  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_metro();
 		irq_line = -1;
 		blitter_bit = 3;
-	}
+	} };
 	
 	/***************************************************************************
 	

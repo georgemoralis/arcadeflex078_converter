@@ -90,7 +90,6 @@ public class wrally
 	WRITE16_HANDLER( wrally_vram_w );
 	
 	/* from machine/wrally.c */
-	DRIVER_INIT( wrally );
 	WRITE16_HANDLER( OKIM6295_bankswitch_w );
 	WRITE16_HANDLER( wrally_coin_counter_w );
 	WRITE16_HANDLER( wrally_coin_lockout_w );

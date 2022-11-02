@@ -2268,37 +2268,37 @@ public class itech32
 	}
 	
 	
-	static DRIVER_INIT( timekill )
+	public static DriverInitHandlerPtr init_timekill  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_program_rom();
 		init_sound_speedup(0x2010, 0x8c54);
 		itech32_vram_height = 512;
 		itech32_planes = 2;
 		is_drivedge = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( hardyard )
+	public static DriverInitHandlerPtr init_hardyard  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_program_rom();
 		init_sound_speedup(0x2010, 0x8e16);
 		itech32_vram_height = 1024;
 		itech32_planes = 1;
 		is_drivedge = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( bloodstm )
+	public static DriverInitHandlerPtr init_bloodstm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_program_rom();
 		init_sound_speedup(0x2011, 0x8ebf);
 		itech32_vram_height = 1024;
 		itech32_planes = 1;
 		is_drivedge = 0;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( wcbowl )
+	public static DriverInitHandlerPtr init_wcbowl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_program_rom();
 		init_sound_speedup(0x2011, 0x8f93);
@@ -2310,17 +2310,17 @@ public class itech32
 		install_mem_read16_handler(0, 0x578000, 0x57ffff, MRA16_NOP);
 		install_mem_read16_handler(0, 0x680080, 0x680081, wcbowl_prot_result_r);
 		install_mem_write16_handler(0, 0x680080, 0x680081, MWA16_NOP);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( drivedge )
+	public static DriverInitHandlerPtr init_drivedge  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_program_rom();
 	//	init_sound_speedup(0x2011, 0x8ebf);
 		itech32_vram_height = 1024;
 		itech32_planes = 1;
 		is_drivedge = 1;
-	}
+	} };
 	
 	
 	static void init_sftm_common(int prot_addr, int sound_pc)
@@ -2338,16 +2338,16 @@ public class itech32
 	}
 	
 	
-	static DRIVER_INIT( sftm )
+	public static DriverInitHandlerPtr init_sftm  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_sftm_common(0x7a6a, 0x905f);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( sftm110 )
+	public static DriverInitHandlerPtr init_sftm110  = new DriverInitHandlerPtr() { public void handler()
 	{
 		init_sftm_common(0x7a66, 0x9059);
-	}
+	} };
 	
 	
 	static void init_shuffle_bowl_common(int prot_addr, int sound_pc)
@@ -2371,16 +2371,16 @@ public class itech32
 		install_mem_read32_handler(0, 0x181000, 0x181003, trackball32_4bit_p2_r);
 	}
 	
-	static DRIVER_INIT( shufshot )	/* PIC 16C54 labeled as ITSHF-1 */
+	public static DriverInitHandlerPtr init_shufshot  = new DriverInitHandlerPtr() { public void handler()	/* PIC 16C54 labeled as ITSHF-1 */
 	{
 		init_shuffle_bowl_common(0x111a, 0x906c);
-	}
+	} };
 	
-	static DRIVER_INIT( wcbowln )	/* PIC 16C54 labeled as ITBWL-3 */
+	public static DriverInitHandlerPtr init_wcbowln  = new DriverInitHandlerPtr() { public void handler()	/* PIC 16C54 labeled as ITBWL-3 */
 	{
 		/* The security PROM is NOT interchangable between the Deluxe and "normal" versions. */
 		init_shuffle_bowl_common(0x1116, 0x9067);
-	}
+	} };
 	
 	
 	

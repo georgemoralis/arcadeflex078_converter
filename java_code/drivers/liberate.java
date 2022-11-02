@@ -897,7 +897,7 @@ public class liberate
 		memory_set_opcode_base(1,RAM+0x10000);
 	}
 	
-	static DRIVER_INIT( prosport )
+	public static DriverInitHandlerPtr init_prosport  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int i;
@@ -907,9 +907,9 @@ public class liberate
 			RAM[i]=((RAM[i] & 0x0f) << 4) | ((RAM[i] & 0xf0) >> 4);
 	
 		sound_cpu_decrypt();
-	}
+	} };
 	
-	static DRIVER_INIT( liberate )
+	public static DriverInitHandlerPtr init_liberate  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		unsigned char *ROM = memory_region(REGION_CPU1);
@@ -925,7 +925,7 @@ public class liberate
 		}
 	
 		sound_cpu_decrypt();
-	}
+	} };
 	
 	/***************************************************************************/
 	

@@ -906,14 +906,14 @@ public class outrun
 		sys16_gr_second_road = &sys16_extraram[0x10000];
 	} };
 	
-	static DRIVER_INIT( outrun )
+	public static DriverInitHandlerPtr init_outrun  = new DriverInitHandlerPtr() { public void handler()
 	{
 		machine_init_sys16_onetime();
 		sys16_interleave_sprite_data( 0x100000 );
 		generate_gr_screen(512,2048,0,0,3,0x8000);
-	}
+	} };
 	
-	static DRIVER_INIT( outrunb )
+	public static DriverInitHandlerPtr init_outrunb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int i;
@@ -997,7 +997,7 @@ public class outrun
 				if( (mem[i]&0x60) == 0x20 || (mem[i]&0x60) == 0x40 ) mem[i]^=0x60;
 			}
 		}
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -1240,18 +1240,18 @@ public class outrun
 		sys16_gr_colorflip[1][3]=0x02 / 2;
 	} };
 	
-	static DRIVER_INIT( shangon ){
+	public static DriverInitHandlerPtr init_shangon  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		generate_gr_screen(512,1024,0,0,4,0x8000);
 	
 		sys16_patch_z80code( 0x1087, 0x20);
 		sys16_patch_z80code( 0x1088, 0x01);
-	}
+	} };
 	
-	static DRIVER_INIT( shangonb ){
+	public static DriverInitHandlerPtr init_shangonb  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		generate_gr_screen(512,1024,8,0,4,0x8000);
-	}
+	} };
 	/***************************************************************************/
 	
 	static InputPortPtr input_ports_shangon = new InputPortPtr(){ public void handler() { 

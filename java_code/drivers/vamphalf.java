@@ -360,10 +360,10 @@ public class vamphalf
 		ROM_LOAD16_WORD_SWAP("u10.bin", 0x00000000,    0x400000,   CRC(f2ef1eb9) SHA1(d033d140fce6716d7d78509aa5387829f0a1404c) )
 	ROM_END(); }}; 
 	
-	DRIVER_INIT( vamphalf )
+	public static DriverInitHandlerPtr init_vamphalf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank(1, memory_region(REGION_USER1));
-	}
+	} };
 	
 	/*           rom       parent    machine   inp       init */
 	GAMEX( 19??, vamphalf, 0,        vamphalf, vamphalf, vamphalf, ROT0, "Danbi", "Vamp 1/2", GAME_NO_SOUND | GAME_NOT_WORKING )

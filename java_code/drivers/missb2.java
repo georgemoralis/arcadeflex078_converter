@@ -497,7 +497,7 @@ public class missb2
 		ROM_LOAD( "a71-25.bin",  0x0000, 0x0100, CRC(2d0f8545) SHA1(089c31e2f614145ef2743164f7b52ae35bc06808) )	/* video timing - taken from bublbobl */
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( missb2 )
+	public static DriverInitHandlerPtr init_missb2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
@@ -505,7 +505,7 @@ public class missb2
 		/* so I have to copy it there because bank switching wouldn't catch it */
 		memcpy(ROM+0x08000,ROM+0x10000,0x4000);
 	
-	}
+	} };
 	
 	GAMEX( 1996, missb2, bublbobl, missb2, missb2, missb2, ROT0,  "Alpha Co", "Miss Bubble 2", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

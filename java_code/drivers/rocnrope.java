@@ -316,7 +316,7 @@ public class rocnrope
 	
 	
 	
-	static DRIVER_INIT( rocnrope )
+	public static DriverInitHandlerPtr init_rocnrope  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami1_decode();
 	
@@ -326,12 +326,12 @@ public class rocnrope
 	
 			rom[0x703d + diff] = 0x98;	/* fix one instruction */
 		}
-	}
+	} };
 	
-	static DRIVER_INIT( rocnropk )
+	public static DriverInitHandlerPtr init_rocnropk  = new DriverInitHandlerPtr() { public void handler()
 	{
 		konami1_decode();
-	}
+	} };
 	
 	
 	

@@ -1451,7 +1451,7 @@ public class wgp
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT( wgp )
+	public static DriverInitHandlerPtr init_wgp  = new DriverInitHandlerPtr() { public void handler()
 	{
 	#if 0
 		/* Patch for coding error that causes corrupt data in
@@ -1468,9 +1468,9 @@ public class wgp
 	
 		state_save_register_int("sound1", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
-	}
+	} };
 	
-	DRIVER_INIT( wgp2 )
+	public static DriverInitHandlerPtr init_wgp2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Code patches to prevent failure in memory checks */
 		data16_t *ROM = (data16_t *)memory_region(REGION_CPU3);
@@ -1478,7 +1478,7 @@ public class wgp
 		ROM[0x8010 / 2] = 0x0;
 	
 		init_wgp();
-	}
+	} };
 	
 	/* Working Games with some graphics problems - e.g. missing rotation */
 	

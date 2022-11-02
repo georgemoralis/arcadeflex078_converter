@@ -1050,7 +1050,7 @@ public class wiz
 	
 	
 	
-	static DRIVER_INIT( stinger )
+	public static DriverInitHandlerPtr init_stinger  = new DriverInitHandlerPtr() { public void handler()
 	{
 		static const unsigned char swap_xor_table[4][4] =
 		{
@@ -1090,13 +1090,13 @@ public class wiz
 				rom[A+diff] = BITSWAP8(src,tbl[0],6,tbl[1],4,tbl[2],2,1,0) ^ tbl[3];
 			}
 		}
-	}
+	} };
 	
 	
-	static DRIVER_INIT( wiz )
+	public static DriverInitHandlerPtr init_wiz  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0xd400, 0xd400, wiz_protection_r);
-	}
+	} };
 	
 	
 	GAMEX(1983, stinger,  0,       stinger, stinger,  stinger, ROT90,  "Seibu Denshi", "Stinger", GAME_IMPERFECT_SOUND )

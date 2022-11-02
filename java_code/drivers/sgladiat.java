@@ -357,10 +357,10 @@ public class sgladiat
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static DRIVER_INIT( sgladiat )
+	public static DriverInitHandlerPtr init_sgladiat  = new DriverInitHandlerPtr() { public void handler()
 	{
 		snk_irq_delay = 2000;
-	}
+	} };
 	
 	GAMEX( 1984, sgladiat, 0, sgladiat, sgladiat, sgladiat, 0, "SNK", "Gladiator 1984", GAME_NO_COCKTAIL )
 }

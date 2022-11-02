@@ -381,7 +381,7 @@ public class subs
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( subs )
+	public static DriverInitHandlerPtr init_subs  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int i;
@@ -391,7 +391,7 @@ public class subs
 	
 		for(i=0;i<0x100;i++)
 			rom[0x2000+i] = (rom[0x8000+i]<<4)+rom[0x9000+i];
-	}
+	} };
 	
 	
 	

@@ -1362,9 +1362,9 @@ public class midvunit
 		/* speedups */
 		generic_speedup = install_mem_read32_handler(0, ADDR_RANGE(speedup, speedup + 1), generic_speedup_r);
 	}
-	static DRIVER_INIT( crusnusa ) { init_crusnusa_common(0xc93e); }
-	static DRIVER_INIT( crusnu40 ) { init_crusnusa_common(0xc957); }
-	static DRIVER_INIT( crusnu21 ) { init_crusnusa_common(0xc051); }
+	public static DriverInitHandlerPtr init_crusnusa  = new DriverInitHandlerPtr() { public void handler() { init_crusnusa_common(0xc93e); } };
+	public static DriverInitHandlerPtr init_crusnu40  = new DriverInitHandlerPtr() { public void handler() { init_crusnusa_common(0xc957); } };
+	public static DriverInitHandlerPtr init_crusnu21  = new DriverInitHandlerPtr() { public void handler() { init_crusnusa_common(0xc051); } };
 	
 	
 	static void init_crusnwld_common(offs_t speedup)
@@ -1389,12 +1389,12 @@ public class midvunit
 		if (speedup != 0)
 			generic_speedup = install_mem_read32_handler(0, ADDR_RANGE(speedup, speedup + 1), generic_speedup_r);
 	}
-	static DRIVER_INIT( crusnwld ) { init_crusnwld_common(0xd4c0); }
-	static DRIVER_INIT( crusnw20 ) { init_crusnwld_common(0xd49c); }
-	static DRIVER_INIT( crusnw13 ) { init_crusnwld_common(0); }
+	public static DriverInitHandlerPtr init_crusnwld  = new DriverInitHandlerPtr() { public void handler() { init_crusnwld_common(0xd4c0); } };
+	public static DriverInitHandlerPtr init_crusnw20  = new DriverInitHandlerPtr() { public void handler() { init_crusnwld_common(0xd49c); } };
+	public static DriverInitHandlerPtr init_crusnw13  = new DriverInitHandlerPtr() { public void handler() { init_crusnwld_common(0); } };
 	
 	
-	static DRIVER_INIT( offroadc )
+	public static DriverInitHandlerPtr init_offroadc  = new DriverInitHandlerPtr() { public void handler()
 	{
 		dcs_init();
 		adc_shift = 16;
@@ -1410,7 +1410,7 @@ public class midvunit
 	
 		/* speedups */
 		generic_speedup = install_mem_read32_handler(0, ADDR_RANGE(0x195aa, 0x195aa), generic_speedup_r);
-	}
+	} };
 	
 	
 	static struct ide_interface ide_intf =
@@ -1418,7 +1418,7 @@ public class midvunit
 		0
 	};
 	
-	static DRIVER_INIT( wargods )
+	public static DriverInitHandlerPtr init_wargods  = new DriverInitHandlerPtr() { public void handler()
 	{
 		UINT8 default_nvram[256];
 	
@@ -1441,7 +1441,7 @@ public class midvunit
 	
 		/* speedups */
 		generic_speedup = install_mem_read32_handler(0, ADDR_RANGE(0x2f4c, 0x2f4c), generic_speedup_r);
-	}
+	} };
 	
 	
 	

@@ -893,53 +893,53 @@ public class psikyosh
 		return psh_ram[0x006000C/4];
 	}
 	
-	static DRIVER_INIT( soldivid )
+	public static DriverInitHandlerPtr init_soldivid  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x600000c, 0x600000f, soldivid_speedup_r );
 		use_factory_eeprom=EEPROM_0;
-	}
+	} };
 	
-	static DRIVER_INIT( s1945ii )
+	public static DriverInitHandlerPtr init_s1945ii  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x600000c, 0x600000f, s1945ii_speedup_r );
 		use_factory_eeprom=EEPROM_DEFAULT;
-	}
+	} };
 	
-	static DRIVER_INIT( daraku )
+	public static DriverInitHandlerPtr init_daraku  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&RAM[0x100000]);
 		install_mem_read32_handler(0, 0x600000c, 0x600000f, daraku_speedup_r );
 		use_factory_eeprom=EEPROM_DARAKU;
-	}
+	} };
 	
-	static DRIVER_INIT( sbomberb )
+	public static DriverInitHandlerPtr init_sbomberb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x600000c, 0x600000f, sbomberb_speedup_r );
 		use_factory_eeprom=EEPROM_DEFAULT;
-	}
+	} };
 	
-	static DRIVER_INIT( gunbird2 )
+	public static DriverInitHandlerPtr init_gunbird2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&RAM[0x100000]);
 		install_mem_read32_handler(0, 0x604000c, 0x604000f, gunbird2_speedup_r );
 		use_factory_eeprom=EEPROM_DEFAULT;
-	}
+	} };
 	
-	static DRIVER_INIT( s1945iii )
+	public static DriverInitHandlerPtr init_s1945iii  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&RAM[0x100000]);
 		install_mem_read32_handler(0, 0x606000c, 0x606000f, s1945iii_speedup_r );
 		use_factory_eeprom=EEPROM_S1945III;
-	}
+	} };
 	
-	static DRIVER_INIT( dragnblz )
+	public static DriverInitHandlerPtr init_dragnblz  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read32_handler(0, 0x606000c, 0x606000f, dragnblz_speedup_r );
 		use_factory_eeprom=EEPROM_DRAGNBLZ;
-	}
+	} };
 	
 	/*     YEAR  NAME      PARENT    MACHINE    INPUT     INIT      MONITOR COMPANY   FULLNAME FLAGS */
 	

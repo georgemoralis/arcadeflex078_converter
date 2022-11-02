@@ -584,30 +584,30 @@ public class nbmj9195
 	}
 	
 	
-	static DRIVER_INIT( mjuraden ) { initialize_driver(); }
-	static DRIVER_INIT( koinomp ) { initialize_driver(); }
-	static DRIVER_INIT( patimono ) { initialize_driver(); }
-	static DRIVER_INIT( mmehyou ) { initialize_driver(); }
-	static DRIVER_INIT( gal10ren ) { initialize_driver(); }
-	static DRIVER_INIT( mjlaman ) { initialize_driver(); }
-	static DRIVER_INIT( mkeibaou ) { initialize_driver(); }
-	static DRIVER_INIT( pachiten ) { initialize_driver(); }
-	static DRIVER_INIT( mjanbari ) { initialize_driver(); }
-	static DRIVER_INIT( ultramhm ) { initialize_driver(); }
-	static DRIVER_INIT( sailorws ) { initialize_driver(); }
-	static DRIVER_INIT( sailorwr ) { initialize_driver(); }
-	static DRIVER_INIT( psailor1 ) { initialize_driver(); }
-	static DRIVER_INIT( psailor2 ) { initialize_driver(); }
-	static DRIVER_INIT( otatidai ) { initialize_driver(); }
-	static DRIVER_INIT( renaiclb ) { initialize_driver(); }
-	static DRIVER_INIT( ngpgal ) { initialize_driver(); }
-	static DRIVER_INIT( mjgottsu ) { initialize_driver(); }
-	static DRIVER_INIT( bakuhatu ) { initialize_driver(); }
-	static DRIVER_INIT( cmehyou ) { initialize_driver(); }
-	static DRIVER_INIT( mjkoiura ) { initialize_driver(); }
-	static DRIVER_INIT( mscoutm ) { initialize_driver(); }
-	static DRIVER_INIT( imekura ) { initialize_driver(); }
-	static DRIVER_INIT( mjegolf ) { initialize_driver(); }
+	public static DriverInitHandlerPtr init_mjuraden  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_koinomp  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_patimono  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mmehyou  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_gal10ren  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mjlaman  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mkeibaou  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_pachiten  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mjanbari  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_ultramhm  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_sailorws  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_sailorwr  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_psailor1  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_psailor2  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_otatidai  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_renaiclb  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_ngpgal  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mjgottsu  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_bakuhatu  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_cmehyou  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mjkoiura  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mscoutm  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_imekura  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mjegolf  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
 	
 	
 	public static Memory_ReadAddress readmem_sailorws[]={

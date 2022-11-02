@@ -33,12 +33,5 @@ WRITE16_HANDLER( slyspy_24c000_w );
 WRITE16_HANDLER( slyspy_24e000_w );
 
 
-DRIVER_INIT( slyspy );
-DRIVER_INIT( hippodrm );
-DRIVER_INIT( robocop );
-DRIVER_INIT( baddudes );
-DRIVER_INIT( hbarrel );
-DRIVER_INIT( hbarrelw );
-DRIVER_INIT( birdtry );
 
 

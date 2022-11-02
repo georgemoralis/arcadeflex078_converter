@@ -1043,17 +1043,17 @@ public class namcona1
 		mEnableInterrupts = 0;
 	}
 	
-	DRIVER_INIT( bkrtmaq ){		init_namcona1(); namcona1_gametype = NAMCO_BKRTMAQ; }
-	DRIVER_INIT( cgangpzl ){	init_namcona1(); namcona1_gametype = NAMCO_CGANGPZL; }
-	DRIVER_INIT( emeralda ){	init_namcona1(); namcona1_gametype = NAMCO_EMERALDA; }
-	DRIVER_INIT( exbania ){		init_namcona1(); namcona1_gametype = NAMCO_EXBANIA; }
-	DRIVER_INIT( fa ){			init_namcona1(); namcona1_gametype = NAMCO_FA; }
-	DRIVER_INIT( knckhead ){	init_namcona1(); namcona1_gametype = NAMCO_KNCKHEAD; }
-	DRIVER_INIT( numanath ){	init_namcona1(); namcona1_gametype = NAMCO_NUMANATH; }
-	DRIVER_INIT( quiztou ){		init_namcona1(); namcona1_gametype = NAMCO_QUIZTOU; }
-	DRIVER_INIT( swcourt ){		init_namcona1(); namcona1_gametype = NAMCO_SWCOURT; }
-	DRIVER_INIT( tinklpit ){	init_namcona1(); namcona1_gametype = NAMCO_TINKLPIT; }
-	DRIVER_INIT( xday2 ){		init_namcona1(); namcona1_gametype = NAMCO_XDAY2; }
+	public static DriverInitHandlerPtr init_bkrtmaq  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_BKRTMAQ; } };
+	public static DriverInitHandlerPtr init_cgangpzl  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_CGANGPZL; } };
+	public static DriverInitHandlerPtr init_emeralda  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_EMERALDA; } };
+	public static DriverInitHandlerPtr init_exbania  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_EXBANIA; } };
+	public static DriverInitHandlerPtr init_fa  = new DriverInitHandlerPtr() { public void handler(){			init_namcona1(); namcona1_gametype = NAMCO_FA; } };
+	public static DriverInitHandlerPtr init_knckhead  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_KNCKHEAD; } };
+	public static DriverInitHandlerPtr init_numanath  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_NUMANATH; } };
+	public static DriverInitHandlerPtr init_quiztou  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_QUIZTOU; } };
+	public static DriverInitHandlerPtr init_swcourt  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_SWCOURT; } };
+	public static DriverInitHandlerPtr init_tinklpit  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_TINKLPIT; } };
+	public static DriverInitHandlerPtr init_xday2  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_XDAY2; } };
 	
 	static RomLoadPtr rom_bkrtmaq = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xa80000, REGION_CPU1, 0 )

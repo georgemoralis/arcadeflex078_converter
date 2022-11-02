@@ -31,9 +31,6 @@ public class gaelco2
 	//#define ONE_MONITOR
 	
 	/* from machine/gaelco2.c */
-	DRIVER_INIT( alighunt );
-	DRIVER_INIT( touchgo );
-	DRIVER_INIT( snowboar );
 	WRITE16_HANDLER( gaelco2_coin_w );
 	WRITE16_HANDLER( gaelco2_coin2_w );
 	WRITE16_HANDLER( wrally2_coin_w );
@@ -237,10 +234,10 @@ public class gaelco2
 	
 	static int clr_gun_int;
 	
-	static DRIVER_INIT( bang )
+	public static DriverInitHandlerPtr init_bang  = new DriverInitHandlerPtr() { public void handler()
 	{
 		clr_gun_int = 0;
-	}
+	} };
 	
 	static WRITE16_HANDLER( clr_gun_int_w )
 	{

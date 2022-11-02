@@ -2626,7 +2626,7 @@ public class dynax
 		ROM_LOAD( "prom1.6b",  0x200, 0x200, CRC(e38eb360) SHA1(739960dd57ec3305edd57aa63816a81ddfbebf3e) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( maya )
+	public static DriverInitHandlerPtr init_maya  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Address lines scrambling on 1 z80 rom */
 		int i;
@@ -2648,7 +2648,7 @@ public class dynax
 	
 		for (i = 0; i < 0xc0000; i++)
 			gfx[i] = rom[BITSWAP24(i,23,22,21,20,19,18,14,15, 16,17,13,12,11,10,9,8, 7,6,5,4,3,2,1,0)];
-	}
+	} };
 	
 	
 	/***************************************************************************

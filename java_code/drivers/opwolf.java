@@ -598,7 +598,7 @@ public class opwolf
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( opwolf )
+	public static DriverInitHandlerPtr init_opwolf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		opwolf_gun_xoffs = 0;
 		opwolf_gun_yoffs = 0;
@@ -606,9 +606,9 @@ public class opwolf
 		/* (there are other sound vars that may need saving too) */
 		state_save_register_UINT8("sound2", 0, "registers", adpcm_b, 8);
 		state_save_register_UINT8("sound3", 0, "registers", adpcm_c, 8);
-	}
+	} };
 	
-	static DRIVER_INIT( opwolfb )
+	public static DriverInitHandlerPtr init_opwolfb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* bootleg needs different range of raw gun coords */
 		opwolf_gun_xoffs = -2;
@@ -617,7 +617,7 @@ public class opwolf
 		/* (there are other sound vars that may need saving too) */
 		state_save_register_UINT8("sound2", 0, "registers", adpcm_b, 8);
 		state_save_register_UINT8("sound3", 0, "registers", adpcm_c, 8);
-	}
+	} };
 	
 	
 	

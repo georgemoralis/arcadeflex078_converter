@@ -439,17 +439,17 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( arcadecl )
+	public static DriverInitHandlerPtr init_arcadecl  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
-	}
+	} };
 	
 	
-	static DRIVER_INIT( sparkz )
+	public static DriverInitHandlerPtr init_sparkz  = new DriverInitHandlerPtr() { public void handler()
 	{
 		atarigen_eeprom_default = NULL;
 		memset(memory_region(REGION_GFX1), 0, memory_region_length(REGION_GFX1));
-	}
+	} };
 	
 	
 	

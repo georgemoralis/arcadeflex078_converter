@@ -246,7 +246,7 @@ public class namcos12
 		{ 0xbfc00000, 0xbfffffff, MRA32_BANK6 },  /* bios */
 	MEMORY_END
 	
-	static DRIVER_INIT( namcos12 )
+	public static DriverInitHandlerPtr init_namcos12  = new DriverInitHandlerPtr() { public void handler()
 	{
 		cpu_setbank( 1, memory_region( REGION_USER1 ) );
 		cpu_setbank( 2, memory_region( REGION_USER2 ) );
@@ -275,7 +275,7 @@ public class namcos12
 			*( (data32_t *)&RAM[ 0x20284 ] ) = 0;
 			*( (data32_t *)&RAM[ 0x20288 ] ) = 0;
 		}
-	}
+	} };
 	
 	public static MachineInitHandlerPtr machine_init_namcos12  = new MachineInitHandlerPtr() { public void handler()
 	{

@@ -1719,18 +1719,18 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	static DRIVER_INIT( cninja )
+	public static DriverInitHandlerPtr init_cninja  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write16_handler(0, 0x1bc0a8, 0x1bc0a9, cninja_sound_w);
 		cninja_patch();
-	}
+	} };
 	
-	static DRIVER_INIT( stoneage )
+	public static DriverInitHandlerPtr init_stoneage  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_write16_handler(0, 0x1bc0a8, 0x1bc0a9, stoneage_sound_w);
-	}
+	} };
 	
-	static DRIVER_INIT( mutantf )
+	public static DriverInitHandlerPtr init_mutantf  = new DriverInitHandlerPtr() { public void handler()
 	{
 		const data8_t *src = memory_region(REGION_GFX2);
 		data8_t *dst = memory_region(REGION_GFX1);
@@ -1742,7 +1742,7 @@ public class cninja
 	
 		deco56_decrypt(REGION_GFX1);
 		deco56_decrypt(REGION_GFX2);
-	}
+	} };
 	
 	/**********************************************************************************/
 	

@@ -668,14 +668,14 @@ public class shangha3
 	
 	
 	
-	static DRIVER_INIT( shangha3 )
+	public static DriverInitHandlerPtr init_shangha3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		shangha3_do_shadows = 1;
-	}
-	static DRIVER_INIT( heberpop )
+	} };
+	public static DriverInitHandlerPtr init_heberpop  = new DriverInitHandlerPtr() { public void handler()
 	{
 		shangha3_do_shadows = 0;
-	}
+	} };
 	
 	GAME( 1993, shangha3, 0, shangha3, shangha3, shangha3, ROT0, "Sunsoft", "Shanghai III (Japan)" )
 	GAME( 1994, heberpop, 0, heberpop, heberpop, heberpop, ROT0, "Sunsoft / Atlus", "Hebereke no Popoon (Japan)" )

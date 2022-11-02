@@ -1762,16 +1762,16 @@ public class exidy440
 		mirror_trigger_bit 		= mt;\
 		copy_protection_read 	= cpr
 	
-	static DRIVER_INIT( crossbow ) { SET_PARAMS(0, 0x00, 0x00, 0x00, 0, 0, 0x00); }
-	static DRIVER_INIT( cheyenne ) { SET_PARAMS(0, 0xff, 0x00, 0x00, 0, 0, 0x00); }
-	static DRIVER_INIT( combat )   { SET_PARAMS(0, 0xff, 0xff, 0x00, 0, 0, 0x00); }
-	static DRIVER_INIT( cracksht ) { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); }
-	static DRIVER_INIT( claypign ) { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x76); }
-	static DRIVER_INIT( chiller )  { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); }
-	static DRIVER_INIT( topsecex ) { SET_PARAMS(1, 0xff, 0xff, 0x04, 0, 0, 0x00); }
-	static DRIVER_INIT( hitnmiss ) { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 1, 0x00); }
-	static DRIVER_INIT( whodunit ) { SET_PARAMS(0, 0xff, 0xff, 0x04, 1, 0, 0x00); }
-	static DRIVER_INIT( showdown )
+	public static DriverInitHandlerPtr init_crossbow  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0x00, 0x00, 0x00, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_cheyenne  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0x00, 0x00, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_combat  = new DriverInitHandlerPtr() { public void handler()   { SET_PARAMS(0, 0xff, 0xff, 0x00, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_cracksht  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_claypign  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x76); } };
+	public static DriverInitHandlerPtr init_chiller  = new DriverInitHandlerPtr() { public void handler()  { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_topsecex  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(1, 0xff, 0xff, 0x04, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_hitnmiss  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 1, 0x00); } };
+	public static DriverInitHandlerPtr init_whodunit  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 1, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_showdown  = new DriverInitHandlerPtr() { public void handler()
 	{
 		SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00);
 	
@@ -1785,7 +1785,7 @@ public class exidy440
 		exidy440_bank = 0;
 		showdown_pld_trigger_r(0);
 		showdown_pld_select1_r(0);
-	}
+	} };
 	
 	
 	

@@ -3938,28 +3938,28 @@ public class system1
 		ROM_LOAD( "nobo_pr.13a", 0x0300, 0x0100, CRC(648350b8) SHA1(c7986aa9127ef5b50b845434cb4e81dff9861cd2) ) /* timing? (not used) */
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT( regulus )	{ regulus_decode(); }
-	static DRIVER_INIT( mrviking )	{ mrviking_decode(); }
-	static DRIVER_INIT( swat )		{ swat_decode(); }
-	static DRIVER_INIT( flicky )	{ flicky_decode(); }
-	static DRIVER_INIT( wmatch )	{ wmatch_decode(); }
-	static DRIVER_INIT( bullfgtj )	{ bullfgtj_decode(); }
-	static DRIVER_INIT( spatter )	{ spatter_decode(); }
-	static DRIVER_INIT( pitfall2 )	{ pitfall2_decode(); }
-	static DRIVER_INIT( nprinces )	{ nprinces_decode(); }
-	static DRIVER_INIT( seganinj )	{ seganinj_decode(); }
-	static DRIVER_INIT( imsorry )	{ imsorry_decode(); }
-	static DRIVER_INIT( teddybb )	{ teddybb_decode(); }
-	static DRIVER_INIT( hvymetal )	{ hvymetal_decode(); }
-	static DRIVER_INIT( myheroj )	{ myheroj_decode(); }
-	static DRIVER_INIT( 4dwarrio )	{ fdwarrio_decode(); }
-	static DRIVER_INIT( wboy )		{ astrofl_decode(); }
-	static DRIVER_INIT( wboy2 )		{ wboy2_decode(); }
-	static DRIVER_INIT( gardia )	{ gardia_decode(); }
-	static DRIVER_INIT( gardiab )	{ gardiab_decode(); }
+	public static DriverInitHandlerPtr init_regulus  = new DriverInitHandlerPtr() { public void handler()	{ regulus_decode(); } };
+	public static DriverInitHandlerPtr init_mrviking  = new DriverInitHandlerPtr() { public void handler()	{ mrviking_decode(); } };
+	public static DriverInitHandlerPtr init_swat  = new DriverInitHandlerPtr() { public void handler()		{ swat_decode(); } };
+	public static DriverInitHandlerPtr init_flicky  = new DriverInitHandlerPtr() { public void handler()	{ flicky_decode(); } };
+	public static DriverInitHandlerPtr init_wmatch  = new DriverInitHandlerPtr() { public void handler()	{ wmatch_decode(); } };
+	public static DriverInitHandlerPtr init_bullfgtj  = new DriverInitHandlerPtr() { public void handler()	{ bullfgtj_decode(); } };
+	public static DriverInitHandlerPtr init_spatter  = new DriverInitHandlerPtr() { public void handler()	{ spatter_decode(); } };
+	public static DriverInitHandlerPtr init_pitfall2  = new DriverInitHandlerPtr() { public void handler()	{ pitfall2_decode(); } };
+	public static DriverInitHandlerPtr init_nprinces  = new DriverInitHandlerPtr() { public void handler()	{ nprinces_decode(); } };
+	public static DriverInitHandlerPtr init_seganinj  = new DriverInitHandlerPtr() { public void handler()	{ seganinj_decode(); } };
+	public static DriverInitHandlerPtr init_imsorry  = new DriverInitHandlerPtr() { public void handler()	{ imsorry_decode(); } };
+	public static DriverInitHandlerPtr init_teddybb  = new DriverInitHandlerPtr() { public void handler()	{ teddybb_decode(); } };
+	public static DriverInitHandlerPtr init_hvymetal  = new DriverInitHandlerPtr() { public void handler()	{ hvymetal_decode(); } };
+	public static DriverInitHandlerPtr init_myheroj  = new DriverInitHandlerPtr() { public void handler()	{ myheroj_decode(); } };
+	public static DriverInitHandlerPtr init_4dwarrio  = new DriverInitHandlerPtr() { public void handler()	{ fdwarrio_decode(); } };
+	public static DriverInitHandlerPtr init_wboy  = new DriverInitHandlerPtr() { public void handler()		{ astrofl_decode(); } };
+	public static DriverInitHandlerPtr init_wboy2  = new DriverInitHandlerPtr() { public void handler()		{ wboy2_decode(); } };
+	public static DriverInitHandlerPtr init_gardia  = new DriverInitHandlerPtr() { public void handler()	{ gardia_decode(); } };
+	public static DriverInitHandlerPtr init_gardiab  = new DriverInitHandlerPtr() { public void handler()	{ gardiab_decode(); } };
 	
 	
-	DRIVER_INIT( myherok )
+	public static DriverInitHandlerPtr init_myherok  = new DriverInitHandlerPtr() { public void handler()
 	{
 		int A;
 		unsigned char *rom;
@@ -4001,17 +4001,17 @@ public class system1
 		}
 	
 		myheroj_decode();
-	}
+	} };
 	
-	static DRIVER_INIT( bootleg )
+	public static DriverInitHandlerPtr init_bootleg  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
 		memory_set_opcode_base(0,rom+diff);
-	}
+	} };
 	
-	static DRIVER_INIT( noboranb )
+	public static DriverInitHandlerPtr init_noboranb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* Patch to get PRG ROMS ('T', 'R' and 'S) status as "GOOD" in the "test mode" */
 		/* not really needed */
@@ -4031,7 +4031,7 @@ public class system1
 		data8_t *ROM2 = memory_region(REGION_CPU2);
 	
 		ROM2[0x02f9] = 0x28;//'jr z' instead of 'jr'
-	}
+	} };
 	
 	
 	

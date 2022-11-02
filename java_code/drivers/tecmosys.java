@@ -535,7 +535,7 @@ public class tecmosys
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( deroon )
+	public static DriverInitHandlerPtr init_deroon  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *ROM = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -546,7 +546,7 @@ public class tecmosys
 	
 	//	ROM[0x448/2] = 0x4E71;
 	//	ROM[0x44A/2] = 0x4E71;
-	}
+	} };
 	
 	GAMEX( 1996, deroon,      0, deroon, deroon, deroon,     ROT0, "Tecmo", "Deroon DeroDero", GAME_NOT_WORKING | GAME_NO_SOUND )
 	GAMEX( 1996, tkdensho,    0, deroon, deroon, 0,          ROT0, "Tecmo", "Touki Denshou -Angel Eyes-", GAME_NOT_WORKING | GAME_NO_SOUND )

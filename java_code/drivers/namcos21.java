@@ -845,12 +845,12 @@ public class namcos21
 		mpDataROM = (data16_t *)memory_region( REGION_USER1 );
 	} /* namcos21_init */
 	
-	static DRIVER_INIT( winrun )
+	public static DriverInitHandlerPtr init_winrun  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos21_init( NAMCOS21_WINRUN91 );
-	}
+	} };
 	
-	static DRIVER_INIT( aircombt )
+	public static DriverInitHandlerPtr init_aircombt  = new DriverInitHandlerPtr() { public void handler()
 	{
 	#if 0
 		/* replace first four tests of aircombj with special "hidden" tests */
@@ -862,20 +862,20 @@ public class namcos21
 	#endif
 	
 		namcos21_init( NAMCOS21_AIRCOMBAT );
-	}
+	} };
 	
-	DRIVER_INIT( starblad )
+	public static DriverInitHandlerPtr init_starblad  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos21_init( NAMCOS21_STARBLADE );
-	}
+	} };
 	
 	
-	DRIVER_INIT( cybsled )
+	public static DriverInitHandlerPtr init_cybsled  = new DriverInitHandlerPtr() { public void handler()
 	{
 		namcos21_init( NAMCOS21_CYBERSLED );
-	}
+	} };
 	
-	DRIVER_INIT( solvalou )
+	public static DriverInitHandlerPtr init_solvalou  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *pMem = (data16_t *)memory_region( REGION_CPU1 );
 	
@@ -888,7 +888,7 @@ public class namcos21
 		pMem[0x1FDA8/2] = 0x4E71;
 	
 		namcos21_init( NAMCOS21_SOLVALOU );
-	}
+	} };
 	
 	/*************************************************************/
 	/*															 */

@@ -290,7 +290,7 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( avalnche )
+	public static DriverInitHandlerPtr init_avalnche  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int i;
@@ -305,7 +305,7 @@ public class avalnche
 		}
 		
 		artwork_set_overlay(avalnche_overlay);
-	}
+	} };
 	
 	
 	

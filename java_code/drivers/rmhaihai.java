@@ -742,7 +742,7 @@ public class rmhaihai
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT( rmhaihai )
+	public static DriverInitHandlerPtr init_rmhaihai  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *rom = memory_region(REGION_GFX1);
 		int size = memory_region_length(REGION_GFX1);
@@ -761,7 +761,7 @@ public class rmhaihai
 				rom[a + b + 0x2000] = rom[a + b] >> 4;
 			}
 		}
-	}
+	} };
 	
 	
 	GAME( 1985, rmhaihai, 0,        rmhaihai, rmhaihai, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai (Japan)" )

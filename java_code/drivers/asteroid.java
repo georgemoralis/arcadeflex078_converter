@@ -859,28 +859,28 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	static DRIVER_INIT( asteroib )
+	public static DriverInitHandlerPtr init_asteroib  = new DriverInitHandlerPtr() { public void handler()
 	{
 		install_mem_read_handler(0, 0x2000, 0x2000, asteroib_IN0_r);
 		install_mem_read_handler(0, 0x2003, 0x2003, input_port_3_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( asterock )
+	public static DriverInitHandlerPtr init_asterock  = new DriverInitHandlerPtr() { public void handler()
 	{
 	
 		install_mem_read_handler(0, 0x2000, 0x2007, asterock_IN0_r);
-	}
+	} };
 	
 	
-	static DRIVER_INIT( astdelux )
+	public static DriverInitHandlerPtr init_astdelux  = new DriverInitHandlerPtr() { public void handler()
 	{
 		OVERLAY_START( astdelux_overlay )
 			OVERLAY_RECT( 0.0, 0.0, 1.0, 1.0, MAKE_ARGB(0x04,0x88,0xff,0xff) )
 		OVERLAY_END
 	
 		artwork_set_overlay(astdelux_overlay);
-	}
+	} };
 	
 	
 	

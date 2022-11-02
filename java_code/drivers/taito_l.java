@@ -2838,7 +2838,7 @@ public class taito_l
 	
 	
 	// bits 7..0 => bits 0..7
-	static DRIVER_INIT( plotting )
+	public static DriverInitHandlerPtr init_plotting  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char tab[256];
 		unsigned char *p;
@@ -2858,14 +2858,14 @@ public class taito_l
 			*p = tab[*p];
 			p++;
 		}
-	}
+	} };
 	
-	static DRIVER_INIT( evilston )
+	public static DriverInitHandlerPtr init_evilston  = new DriverInitHandlerPtr() { public void handler()
 	{
 		unsigned char *ROM = memory_region(REGION_CPU2);
 		ROM[0x72]=0x45;	/* reti . retn  ('dead' loop @ $1104 )*/
 		install_mem_write_handler( 0, 0xa7fe, 0xa7fe, evilston_snd_w);
-	}
+	} };
 	
 	
 	GAME( 1988, raimais,  0,        raimais,  raimais,  0,        ROT0,   "Taito Corporation", "Raimais (Japan)" )

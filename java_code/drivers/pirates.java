@@ -478,7 +478,7 @@ public class pirates
 	}
 	
 	
-	static DRIVER_INIT( pirates )
+	public static DriverInitHandlerPtr init_pirates  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
@@ -489,11 +489,11 @@ public class pirates
 	
 		/* patch out protection check */
 		rom[0x62c0/2] = 0x6006; // beq . bra
-	}
+	} };
 	
 	static READ16_HANDLER( genix_prot_r ) {	if (offset == 0)	return 0x0004; else	return 0x0000; }
 	
-	static DRIVER_INIT( genix )
+	public static DriverInitHandlerPtr init_genix  = new DriverInitHandlerPtr() { public void handler()
 	{
 		pirates_decrypt_68k();
 		pirates_decrypt_p();
@@ -503,7 +503,7 @@ public class pirates
 		/* If this value is increased then something has gone wrong and the protection failed */
 		/* Write-protect it for now */
 		install_mem_read16_handler (0, 0x109e98, 0x109e9b, genix_prot_r );
-	}
+	} };
 	
 	
 	/* GAME */

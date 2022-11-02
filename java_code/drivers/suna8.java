@@ -63,7 +63,7 @@ public class suna8
 									Hard Head
 	***************************************************************************/
 	
-	DRIVER_INIT( hardhead )
+	public static DriverInitHandlerPtr init_hardhead  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int i;
@@ -85,14 +85,14 @@ public class suna8
 			}
 			RAM[i] = x;
 		}
-	}
+	} };
 	
 	/* Non encrypted bootleg */
-	static DRIVER_INIT( hardhedb )
+	public static DriverInitHandlerPtr init_hardhedb  = new DriverInitHandlerPtr() { public void handler()
 	{
 		/* patch ROM checksum (ROM1 fails self test) */
 		memory_region( REGION_CPU1 )[0x1e5b] = 0xAF;
-	}
+	} };
 	
 	/***************************************************************************
 									Brick Zone
@@ -124,7 +124,7 @@ public class suna8
 		}
 	}
 	
-	DRIVER_INIT( brickzn3 )
+	public static DriverInitHandlerPtr init_brickzn3  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
@@ -366,7 +366,7 @@ public class suna8
 	RAM[0x1406+size] = 0x00;	// HALT . NOP (NMI source??)
 	RAM[0x2487+size] = 0x00;	// HALT . NOP
 	RAM[0x256c+size] = 0x00;	// HALT . NOP
-	}
+	} };
 	
 	
 	
@@ -414,7 +414,7 @@ public class suna8
 			}
 	}
 	
-	DRIVER_INIT( hardhea2 )
+	public static DriverInitHandlerPtr init_hardhea2  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
@@ -561,7 +561,7 @@ public class suna8
 				}
 			}
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -609,7 +609,7 @@ public class suna8
 			}
 	}
 	
-	DRIVER_INIT( starfigh )
+	public static DriverInitHandlerPtr init_starfigh  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
@@ -696,14 +696,14 @@ public class suna8
 	
 			RAM[i] = starfigh_decrypt(x,encry,mask);
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************
 									Spark Man
 	***************************************************************************/
 	
-	static DRIVER_INIT( sparkman )
+	public static DriverInitHandlerPtr init_sparkman  = new DriverInitHandlerPtr() { public void handler()
 	{
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
@@ -806,7 +806,7 @@ public class suna8
 					RAM[i] = BITSWAP8(RAM[i] ^ 0x44,5,6,7,4,3,2,1,0);
 			}
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	

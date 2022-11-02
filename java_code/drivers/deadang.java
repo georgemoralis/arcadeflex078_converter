@@ -445,20 +445,20 @@ public class deadang
 	
 	/* Driver Initialization */
 	
-	static DRIVER_INIT( deadang )
+	public static DriverInitHandlerPtr init_deadang  = new DriverInitHandlerPtr() { public void handler()
 	{
 		seibu_sound_decrypt(REGION_CPU3, 0x2000);
 		seibu_adpcm_decrypt(REGION_SOUND1);
-	}
+	} };
 	
-	static DRIVER_INIT( ghunter )
+	public static DriverInitHandlerPtr init_ghunter  = new DriverInitHandlerPtr() { public void handler()
 	{
 		seibu_sound_decrypt(REGION_CPU3, 0x2000);
 		seibu_adpcm_decrypt(REGION_SOUND1);
 	
 		install_mem_read_handler(0, 0x80000, 0x80001, ghunter_trackball_low_r);
 		install_mem_read_handler(0, 0xb0000, 0xb0001, ghunter_trackball_high_r);
-	}
+	} };
 	
 	/* Game Drivers */
 	
