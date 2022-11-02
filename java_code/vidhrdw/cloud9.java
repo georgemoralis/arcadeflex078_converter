@@ -201,7 +201,7 @@ public class cloud9
 			}
 	
 			/* If color_bank is set, add 0x20 to the color */
-			plot_pixel(tmpbitmap, x, y, Machine.pens[(data & 0x0f) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x, y, Machine.pens[(data & 0x0f) + ((*cloud9_color_bank & 0x80) >> 2)]);
 	
 			if ((*cloud9_auto_inc_x) < 0x80)
 				cloud9_bitmap_regs[0]++;
@@ -226,24 +226,24 @@ public class cloud9
 			videoram.write(offset,data);
 			cloud9_vram2[offset] = data;
 	
-			plot_pixel(tmpbitmap, x,   y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel(tmpbitmap, x+1, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel(tmpbitmap, x+2, y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel(tmpbitmap, x+3, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x,   y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x+2, y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x+3, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
 		}
 		else if (*cloud9_vram_bank & 0x80)
 		{
 			cloud9_vram2[offset] = data;
 	
-			plot_pixel(tmpbitmap, x+2, y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel(tmpbitmap, x+3, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x+2, y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x+3, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
 		}
 		else
 		{
 			videoram.write(offset,data);
 	
-			plot_pixel(tmpbitmap, x  , y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel(tmpbitmap, x+1, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x  , y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
 		}
 	} };
 	

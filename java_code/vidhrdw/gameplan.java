@@ -232,7 +232,7 @@ public class gameplan
 						xpos++;
 				}
 	
-				plot_pixel(tmpbitmap, xpos, ypos, Machine.pens[colour]);
+				plot_pixel.handler(tmpbitmap, xpos, ypos, Machine.pens[colour]);
 			}
 			else if (r0 == 1)
 			{

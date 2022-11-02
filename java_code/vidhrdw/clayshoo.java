@@ -46,7 +46,7 @@ public class clayshoo
 	
 		for (i = 0; i < 8; i++)
 		{
-			plot_pixel(tmpbitmap, x, y, (data & 0x80) ? Machine.pens[1] : Machine.pens[0]);
+			plot_pixel.handler(tmpbitmap, x, y, (data & 0x80) ? Machine.pens[1] : Machine.pens[0]);
 	
 			x++;
 			data <<= 1;

@@ -71,7 +71,7 @@ public class leprechn
 	
 		if (pending != 0)
 		{
-			plot_pixel(tmpbitmap, x, y, Machine.pens[color]);
+			plot_pixel.handler(tmpbitmap, x, y, Machine.pens[color]);
 	        videoram.write(y * Machine->drv->screen_width + x,color);
 	
 	        pending = 0;
@@ -122,7 +122,7 @@ public class leprechn
 	        {
 		        for (sy = 0; sy < Machine.drv.screen_height; sy++)
 		        {
-					plot_pixel(tmpbitmap, sx, sy, Machine.pens[data]);
+					plot_pixel.handler(tmpbitmap, sx, sy, Machine.pens[data]);
 				}
 			}
 	

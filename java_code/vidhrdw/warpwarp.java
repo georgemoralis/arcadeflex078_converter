@@ -158,7 +158,7 @@ public class warpwarp
 				{
 					for (j = 0;j < 4;j++)
 					{
-						plot_pixel(bitmap, x+j, y+i, colour);
+						plot_pixel.handler(bitmap, x+j, y+i, colour);
 					}
 				}
 			}

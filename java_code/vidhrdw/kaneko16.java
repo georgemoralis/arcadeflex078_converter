@@ -309,7 +309,7 @@ public class kaneko16
 				if ((r & 0x10) && (b & 0x10))
 					g = (g - 1) & 0x1f;		/* decrease with wraparound */
 	
-				plot_pixel( kaneko16_bg15_bitmap,
+				plot_pixel.handler( kaneko16_bg15_bitmap,
 							sx * 256 + x, y,
 							Machine.pens[2048 + ((g << 10) | (r << 5) | b)] );
 		  }

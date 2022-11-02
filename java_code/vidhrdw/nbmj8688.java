@@ -738,7 +738,7 @@ public class nbmj8688
 				int data = HD61830B_ram[0][y * 60 + x];
 	
 				for (b = 0;b < 8;b++)
-					plot_pixel(bitmap,16 + 480-1-(8*x+b),224+16 + 64*2-1-y,(data & (1<<b)) ? 0x0000 : 0x18ff);
+					plot_pixel.handler(bitmap,16 + 480-1-(8*x+b),224+16 + 64*2-1-y,(data & (1<<b)) ? 0x0000 : 0x18ff);
 			}
 		}
 	
@@ -749,7 +749,7 @@ public class nbmj8688
 				int data = HD61830B_ram[1][y * 60 + x];
 	
 				for (b = 0;b < 8;b++)
-					plot_pixel(bitmap,16 + (8*x+b),16+y,(data & (1<<b)) ? 0x0000 : 0x18ff);
+					plot_pixel.handler(bitmap,16 + (8*x+b),16+y,(data & (1<<b)) ? 0x0000 : 0x18ff);
 			}
 		}
 	} };

@@ -505,13 +505,13 @@ public class niyanpai
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = niyanpai_videoram0[(y * Machine.drv.screen_width) + x];
-					plot_pixel(niyanpai_tmpbitmap0, x, y, Machine.pens[color]);
+					plot_pixel.handler(niyanpai_tmpbitmap0, x, y, Machine.pens[color]);
 	
 					color = niyanpai_videoram1[(y * Machine.drv.screen_width) + x];
-					plot_pixel(niyanpai_tmpbitmap1, x, y, Machine.pens[color]);
+					plot_pixel.handler(niyanpai_tmpbitmap1, x, y, Machine.pens[color]);
 	
 					color = niyanpai_videoram2[(y * Machine.drv.screen_width) + x];
-					plot_pixel(niyanpai_tmpbitmap2, x, y, Machine.pens[color]);
+					plot_pixel.handler(niyanpai_tmpbitmap2, x, y, Machine.pens[color]);
 				}
 			}
 		}

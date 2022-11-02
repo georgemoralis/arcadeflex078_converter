@@ -138,12 +138,12 @@ public class cloak
 	
 				if (bmap != 0)
 				{
-					plot_pixel(tmpbitmap, (x-6)&0xff, y, Machine.pens[16 + color]);
+					plot_pixel.handler(tmpbitmap, (x-6)&0xff, y, Machine.pens[16 + color]);
 					tmpvideoram[y*256+x] = color;
 				}
 				else
 				{
-					plot_pixel(tmpbitmap2, (x-6)&0xff, y, Machine.pens[16 + color]);
+					plot_pixel.handler(tmpbitmap2, (x-6)&0xff, y, Machine.pens[16 + color]);
 					tmpvideoram2[y*256+x] = color;
 				}
 	

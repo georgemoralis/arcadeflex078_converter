@@ -382,7 +382,7 @@ public class dday
 						src_pixel += Machine.drv.total_colors;
 					}
 	
-					plot_pixel(bitmap, x, y, src_pixel);
+					plot_pixel.handler(bitmap, x, y, src_pixel);
 				}
 			}
 		}

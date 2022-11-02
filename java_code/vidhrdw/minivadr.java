@@ -57,7 +57,7 @@ public class minivadr
 			{
 				color = Machine.pens[((data >> i) & 0x01)];
 	
-				plot_pixel(tmpbitmap, x + (7 - i), y, color);
+				plot_pixel.handler(tmpbitmap, x + (7 - i), y, color);
 			}
 		}
 	} };

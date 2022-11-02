@@ -33,7 +33,7 @@ public class beaminv
 	
 		for (i = 0; i < 8; i++)
 		{
-			plot_pixel(tmpbitmap, x, y, data & 0x01);
+			plot_pixel.handler(tmpbitmap, x, y, data & 0x01);
 	
 			y--;
 			data >>= 1;

@@ -149,8 +149,8 @@ public class paradise
 		x = (offset & 0x7f) << 1;
 		y = (offset >> 7);
 	
-		plot_pixel(tmpbitmap, x+0,y, 0x80f - (data >> 4));
-		plot_pixel(tmpbitmap, x+1,y, 0x80f - (data & 0x0f));
+		plot_pixel.handler(tmpbitmap, x+0,y, 0x80f - (data >> 4));
+		plot_pixel.handler(tmpbitmap, x+1,y, 0x80f - (data & 0x0f));
 	} };
 	
 	

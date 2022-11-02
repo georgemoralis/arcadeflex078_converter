@@ -46,14 +46,14 @@ public class findout
 	//if (mask != bits)
 	//	usrintf_showmessage("color %02x bits %02x mask %02x\n",fg,bits,mask);
 	
-		if ((mask & 0x80) != 0) plot_pixel(tmpbitmap,sx+0,sy,(bits & 0x80) ? fg : bg);
-		if ((mask & 0x40) != 0) plot_pixel(tmpbitmap,sx+1,sy,(bits & 0x40) ? fg : bg);
-		if ((mask & 0x20) != 0) plot_pixel(tmpbitmap,sx+2,sy,(bits & 0x20) ? fg : bg);
-		if ((mask & 0x10) != 0) plot_pixel(tmpbitmap,sx+3,sy,(bits & 0x10) ? fg : bg);
-		if ((mask & 0x08) != 0) plot_pixel(tmpbitmap,sx+4,sy,(bits & 0x08) ? fg : bg);
-		if ((mask & 0x04) != 0) plot_pixel(tmpbitmap,sx+5,sy,(bits & 0x04) ? fg : bg);
-		if ((mask & 0x02) != 0) plot_pixel(tmpbitmap,sx+6,sy,(bits & 0x02) ? fg : bg);
-		if ((mask & 0x01) != 0) plot_pixel(tmpbitmap,sx+7,sy,(bits & 0x01) ? fg : bg);
+		if ((mask & 0x80) != 0) plot_pixel.handler(tmpbitmap,sx+0,sy,(bits & 0x80) ? fg : bg);
+		if ((mask & 0x40) != 0) plot_pixel.handler(tmpbitmap,sx+1,sy,(bits & 0x40) ? fg : bg);
+		if ((mask & 0x20) != 0) plot_pixel.handler(tmpbitmap,sx+2,sy,(bits & 0x20) ? fg : bg);
+		if ((mask & 0x10) != 0) plot_pixel.handler(tmpbitmap,sx+3,sy,(bits & 0x10) ? fg : bg);
+		if ((mask & 0x08) != 0) plot_pixel.handler(tmpbitmap,sx+4,sy,(bits & 0x08) ? fg : bg);
+		if ((mask & 0x04) != 0) plot_pixel.handler(tmpbitmap,sx+5,sy,(bits & 0x04) ? fg : bg);
+		if ((mask & 0x02) != 0) plot_pixel.handler(tmpbitmap,sx+6,sy,(bits & 0x02) ? fg : bg);
+		if ((mask & 0x01) != 0) plot_pixel.handler(tmpbitmap,sx+7,sy,(bits & 0x01) ? fg : bg);
 	} };
 	
 	

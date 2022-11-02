@@ -35,7 +35,7 @@ public class embargo
 	
 		for (i = 0; i < 8; i++)
 		{
-			plot_pixel(tmpbitmap, 8 * col + i, row, (data >> i) & 1);
+			plot_pixel.handler(tmpbitmap, 8 * col + i, row, (data >> i) & 1);
 		}
 	
 		videoram.write(offset,data);

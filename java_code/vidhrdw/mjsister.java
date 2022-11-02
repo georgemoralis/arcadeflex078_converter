@@ -112,7 +112,7 @@ public class mjsister
 			for (i=0; i<256; i++)
 			{
 				for (j=0; j<4; j++)
-					plot_pixel(bitmap, 256+j, i, Machine.pens[colorbank * 0x20] );
+					plot_pixel.handler(bitmap, 256+j, i, Machine.pens[colorbank * 0x20] );
 			}
 	
 			copybitmap(bitmap,mjsister_tmpbitmap0,f,f,0,0,cliprect,TRANSPARENCY_NONE,0);

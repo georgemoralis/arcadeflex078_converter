@@ -232,7 +232,7 @@ public class popeye
 			{
 				for (x = 0; x < 8; x++)
 				{
-					plot_pixel(tmpbitmap2, sx+x, sy+y, colour);
+					plot_pixel.handler(tmpbitmap2, sx+x, sy+y, colour);
 				}
 			}
 		}
@@ -249,7 +249,7 @@ public class popeye
 			{
 				for (x = 0; x < 8; x++)
 				{
-					plot_pixel(tmpbitmap2, sx+x, sy+y, colour);
+					plot_pixel.handler(tmpbitmap2, sx+x, sy+y, colour);
 				}
 			}
 		}

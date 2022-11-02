@@ -96,7 +96,7 @@ public class flyball
 				    y >= Machine.visible_area.min_y &&
 				    y <= Machine.visible_area.max_y)
 				{
-					plot_pixel(bitmap, x, y, Machine.pens[1]);
+					plot_pixel.handler(bitmap, x, y, Machine.pens[1]);
 				}
 			}
 		}

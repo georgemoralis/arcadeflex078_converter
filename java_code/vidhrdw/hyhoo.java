@@ -383,7 +383,7 @@ public class hyhoo
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = hyhoo_videoram[(y * Machine.drv.screen_width) + x];
-					plot_pixel(hyhoo_tmpbitmap, x, y, Machine.pens[color]);
+					plot_pixel.handler(hyhoo_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}

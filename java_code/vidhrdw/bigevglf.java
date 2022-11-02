@@ -58,7 +58,7 @@ public class bigevglf
 		vidram[ o+0x10000*plane_selected ] = data;
 		y = o >>8;
 		x = (o & 255);
-		plot_pixel(tmp_bitmap[plane_selected],x,y,data );
+		plot_pixel.handler(tmp_bitmap[plane_selected],x,y,data );
 	} };
 	
 	public static ReadHandlerPtr bigevglf_vidram_r  = new ReadHandlerPtr() { public int handler(int offset)

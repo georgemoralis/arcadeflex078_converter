@@ -118,7 +118,7 @@ public class spiders
 					x=((loop%0x20)<<3)+i;
 					col=((data2&0x01)<<2)+((data1&0x01)<<1)+(data0&0x01);
 	
-					plot_pixel(tmpbitmap, x, y, Machine.pens[col]);
+					plot_pixel.handler(tmpbitmap, x, y, Machine.pens[col]);
 	
 					data0 >>= 1;
 					data1 >>= 1;

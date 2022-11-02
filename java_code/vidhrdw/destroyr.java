@@ -91,7 +91,7 @@ public class destroyr
 		for (i = 0; i < 256; i++)
 		{
 			if ((i & 4) != 0)
-				plot_pixel(bitmap, i, destroyr_cursor ^ 0xff, Machine.pens[7]);
+				plot_pixel.handler(bitmap, i, destroyr_cursor ^ 0xff, Machine.pens[7]);
 		}
 	} };
 }

@@ -66,10 +66,10 @@ public class dotrikun
 				color = Machine.pens[((data >> i) & 0x01)];
 	
 				/* I think the video hardware doubles pixels, screen would be too small otherwise */
-				plot_pixel(tmpbitmap, x + 2*(7 - i),   y,   color);
-				plot_pixel(tmpbitmap, x + 2*(7 - i)+1, y,   color);
-				plot_pixel(tmpbitmap, x + 2*(7 - i),   y+1, color);
-				plot_pixel(tmpbitmap, x + 2*(7 - i)+1, y+1, color);
+				plot_pixel.handler(tmpbitmap, x + 2*(7 - i),   y,   color);
+				plot_pixel.handler(tmpbitmap, x + 2*(7 - i)+1, y,   color);
+				plot_pixel.handler(tmpbitmap, x + 2*(7 - i),   y+1, color);
+				plot_pixel.handler(tmpbitmap, x + 2*(7 - i)+1, y+1, color);
 			}
 		}
 	} };

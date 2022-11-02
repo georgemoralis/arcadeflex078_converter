@@ -73,8 +73,8 @@ public class epos
 		x = (offset % 136) * 2;
 		y = (offset / 136);
 	
-		plot_pixel(tmpbitmap, x,     y, Machine.pens[current_palette | (data & 0x0f)]);
-		plot_pixel(tmpbitmap, x + 1, y, Machine.pens[current_palette | (data >> 4)]);
+		plot_pixel.handler(tmpbitmap, x,     y, Machine.pens[current_palette | (data & 0x0f)]);
+		plot_pixel.handler(tmpbitmap, x + 1, y, Machine.pens[current_palette | (data >> 4)]);
 	} };
 	
 	

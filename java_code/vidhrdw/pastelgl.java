@@ -315,7 +315,7 @@ public class pastelgl
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = pastelgl_videoram[(y * Machine.drv.screen_width) + x];
-					plot_pixel(pastelgl_tmpbitmap, x, y, Machine.pens[color]);
+					plot_pixel.handler(pastelgl_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}

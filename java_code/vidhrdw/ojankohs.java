@@ -281,7 +281,7 @@ public class ojankohs
 			px = x + (i ^ xx);
 			py = y;
 	
-			plot_pixel(ojankoc_tmpbitmap, px, py, Machine.pens[color]);
+			plot_pixel.handler(ojankoc_tmpbitmap, px, py, Machine.pens[color]);
 	
 			color1 >>= 1;
 			color2 >>= 1;

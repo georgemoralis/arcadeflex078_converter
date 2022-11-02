@@ -78,7 +78,7 @@ public class taxidrvr
 					if (color != 0)
 					{
 						if (sx > 0 && sx < 256 && sy > 0 && sy < 256)
-							plot_pixel(bitmap,sx,sy,color);
+							plot_pixel.handler(bitmap,sx,sy,color);
 					}
 				}
 			}
@@ -96,7 +96,7 @@ public class taxidrvr
 					if (color != 0)
 					{
 						if (sx > 0 && sx < 256 && sy > 0 && sy < 256)
-							plot_pixel(bitmap,sx,sy,color);
+							plot_pixel.handler(bitmap,sx,sy,color);
 					}
 				}
 			}
@@ -114,7 +114,7 @@ public class taxidrvr
 					if (color != 0)
 					{
 						if (sx > 0 && sx < 256 && sy > 0 && sy < 256)
-							plot_pixel(bitmap,sx,sy,color);
+							plot_pixel.handler(bitmap,sx,sy,color);
 					}
 				}
 			}
@@ -142,7 +142,7 @@ public class taxidrvr
 				color = (taxidrvr_vram4[offs/4]>>(2*(offs&3)))&0x03;
 				if (color != 0)
 				{
-					plot_pixel(bitmap,sx,sy,2*color);
+					plot_pixel.handler(bitmap,sx,sy,2*color);
 				}
 			}
 		}

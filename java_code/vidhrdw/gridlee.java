@@ -202,12 +202,12 @@ public class gridlee
 	
 						/* left pixel */
 						if (left && currx >= 0 && currx < 256)
-							plot_pixel(bitmap, currx ^ currxor, ypos, pens[left]);
+							plot_pixel.handler(bitmap, currx ^ currxor, ypos, pens[left]);
 						currx++;
 	
 						/* right pixel */
 						if (right && currx >= 0 && currx < 256)
-							plot_pixel(bitmap, currx ^ currxor, ypos, pens[right]);
+							plot_pixel.handler(bitmap, currx ^ currxor, ypos, pens[right]);
 						currx++;
 					}
 				}

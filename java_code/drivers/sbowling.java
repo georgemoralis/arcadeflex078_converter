@@ -89,7 +89,7 @@ public class sbowling
 		
 		for(i = 0; i < 8; i++)
 		{
-			plot_pixel_sbw(x++, y, color_prom_address | ( ((v1&1)*0x20) | ((v2&1)*0x40) ) );
+			plot_pixel_sbw.handler(x++, y, color_prom_address | ( ((v1&1)*0x20) | ((v2&1)*0x40) ) );
 			v1 >>= 1;
 			v2 >>= 1;
 		}

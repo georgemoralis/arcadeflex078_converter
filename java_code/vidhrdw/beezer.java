@@ -28,8 +28,8 @@ public class beezer
 			{
 				for (x = Machine.visible_area.min_x; x <= Machine.visible_area.max_x; x++)
 				{
-					plot_pixel (tmpbitmap, x, y+1, Machine.pens[videoram.read(0x80*y+x)& 0x0f]);
-					plot_pixel (tmpbitmap, x, y, Machine.pens[(videoram.read(0x80*y+x)>> 4)& 0x0f]);
+					plot_pixel.handler (tmpbitmap, x, y+1, Machine.pens[videoram.read(0x80*y+x)& 0x0f]);
+					plot_pixel.handler (tmpbitmap, x, y, Machine.pens[(videoram.read(0x80*y+x)>> 4)& 0x0f]);
 				}
 			}
 		
@@ -77,8 +77,8 @@ public class beezer
 	
 		if( (y >= Machine.visible_area.min_y) && (y <= Machine.visible_area.max_y) )
 		{
-			plot_pixel (tmpbitmap, x, y+1, Machine.pens[data & 0x0f]);
-			plot_pixel (tmpbitmap, x, y, Machine.pens[(data >> 4)& 0x0f]);
+			plot_pixel.handler (tmpbitmap, x, y+1, Machine.pens[data & 0x0f]);
+			plot_pixel.handler (tmpbitmap, x, y, Machine.pens[(data >> 4)& 0x0f]);
 		}
 	
 		videoram.write(offset,data);

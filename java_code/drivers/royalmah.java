@@ -155,7 +155,7 @@ public class royalmah
 		{
 			int col = ((col1 & 0x01) >> 0) | ((col1 & 0x10) >> 3) | ((col2 & 0x01) << 2) | ((col2 & 0x10) >> 1);
 	
-			plot_pixel(tmpbitmap, (x+i) ^ 0xff, y ^ 0xff, 16*palette_base + col );
+			plot_pixel.handler(tmpbitmap, (x+i) ^ 0xff, y ^ 0xff, 16*palette_base + col );
 	
 			col1 >>= 1;
 			col2 >>= 1;

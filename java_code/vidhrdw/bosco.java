@@ -413,7 +413,7 @@ public class bosco
 				{
 					if (read_pixel(bitmap, x, y) == bpen)
 					{
-						plot_pixel(bitmap, x, y, stars[offs].col);
+						plot_pixel.handler(bitmap, x, y, stars[offs].col);
 					}
 				}
 			}

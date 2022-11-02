@@ -345,7 +345,7 @@ public class magmax
 						/* not possible on the surface*/
 						//if ((map_v_scr_100) && ((graph_data & 0x0c)==0x0c))
 						//{
-						//	plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
+						//	plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						//}
 					}
 					for (h = 0x80; h < 0x100; h++)
@@ -379,7 +379,7 @@ public class magmax
 						/* not possible on the surface*/
 						//if ((map_v_scr_100) && ((graph_data & 0x0c)==0x0c))
 						//{
-						//	plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
+						//	plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						//}
 					}
 				}
@@ -416,7 +416,7 @@ public class magmax
 						/*priority: background over sprites*/
 						if (/*(map_v_scr_100) &&*/ ((graph_data & 0x0c)==0x0c))
 						{
-							plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
+							plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						}
 					}
 					for (h = 0x80; h < 0x100; h++)
@@ -449,7 +449,7 @@ public class magmax
 						/*priority: background over sprites*/
 						if (/*(map_v_scr_100) &&*/ ((graph_data & 0x0c)==0x0c))
 						{
-							plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
+							plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						}
 					}
 				}

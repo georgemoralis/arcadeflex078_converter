@@ -57,7 +57,7 @@ public class dorachan
 			x+=offset&7;
 			for (i = 0; i < 8; i++)
 			{
-				plot_pixel(tmpbitmap, y, 255-x, (data&1)?Machine.pens[col]:Machine.pens[0]);
+				plot_pixel.handler(tmpbitmap, y, 255-x, (data&1)?Machine.pens[col]:Machine.pens[0]);
 				y--;
 				data >>= 1;
 			}

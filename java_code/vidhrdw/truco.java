@@ -52,7 +52,7 @@ public class truco
 					pixel = ( vid[x>>1] >> 4 ) & 0x0f;
 				}
 	
-				plot_pixel(bitmap,x,y,Machine.pens[pixel]);
+				plot_pixel.handler(bitmap,x,y,Machine.pens[pixel]);
 			}
 	
 			vid += 0x80;

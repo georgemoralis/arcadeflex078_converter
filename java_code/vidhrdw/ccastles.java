@@ -173,14 +173,14 @@ public class ccastles
 			y = j/256;
 			if (!flip_screen)
 			{
-				plot_pixel(tmpbitmap, x  , y, Machine.pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
-				plot_pixel(tmpbitmap, x+1, y, Machine.pens[16 +  (videoram.read(addr)& 0x0f)      ]);
+				plot_pixel.handler(tmpbitmap, x  , y, Machine.pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
+				plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[16 +  (videoram.read(addr)& 0x0f)      ]);
 	
 				/* if bit 3 of the pixel is set, background has priority over sprites when */
 				/* the sprite has the priority bit set. We use a second bitmap to remember */
 				/* which pixels have priority. */
-				plot_pixel(maskbitmap, x  , y, videoram.read(addr)& 0x80);
-				plot_pixel(maskbitmap, x+1, y, videoram.read(addr)& 0x08);
+				plot_pixel.handler(maskbitmap, x  , y, videoram.read(addr)& 0x80);
+				plot_pixel.handler(maskbitmap, x+1, y, videoram.read(addr)& 0x08);
 			}
 			else
 			{
@@ -188,14 +188,14 @@ public class ccastles
 				x = 254-x;
 				if (y >= 0)
 				{
-					plot_pixel(tmpbitmap, x+1, y, Machine.pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
-					plot_pixel(tmpbitmap, x  , y, Machine.pens[16 +  (videoram.read(addr)& 0x0f)      ]);
+					plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
+					plot_pixel.handler(tmpbitmap, x  , y, Machine.pens[16 +  (videoram.read(addr)& 0x0f)      ]);
 	
 					/* if bit 3 of the pixel is set, background has priority over sprites when */
 					/* the sprite has the priority bit set. We use a second bitmap to remember */
 					/* which pixels have priority. */
-					plot_pixel(maskbitmap, x+1, y, videoram.read(addr)& 0x80);
-					plot_pixel(maskbitmap, x  , y, videoram.read(addr)& 0x08);
+					plot_pixel.handler(maskbitmap, x+1, y, videoram.read(addr)& 0x80);
+					plot_pixel.handler(maskbitmap, x  , y, videoram.read(addr)& 0x08);
 				}
 			}
 		}
@@ -332,7 +332,7 @@ public class ccastles
 							/* if background has priority over sprite, make the */
 							/* temporary bitmap transparent */
 							if (pixb != 0 && (pixa != Machine.pens[0]))
-								plot_pixel(sprite_bm, i, j, Machine.pens[7]);
+								plot_pixel.handler(sprite_bm, i, j, Machine.pens[7]);
 						}
 					}
 				}

@@ -735,7 +735,7 @@ public class shanghai
 			for (x = 0;x < 384;x++)
 			{
 				b &= (HD63484_RAM_SIZE-1);
-				plot_pixel(bitmap,x,y,Machine.pens[HD63484_ram[b]]);
+				plot_pixel.handler(bitmap,x,y,Machine.pens[HD63484_ram[b]]);
 				b++;
 			}
 		}
@@ -755,7 +755,7 @@ public class shanghai
 				{
 					b &= (HD63484_RAM_SIZE-1);
 					if (x <= w && x + sx >= 0 && x+sx < 384)
-						plot_pixel(bitmap,x+sx,y,Machine.pens[HD63484_ram[b]]);
+						plot_pixel.handler(bitmap,x+sx,y,Machine.pens[HD63484_ram[b]]);
 					b++;
 				}
 			}

@@ -587,7 +587,7 @@ public class cvs
 	                    	CollisionRegister |= 0x80;
 	                }
 	
-		            plot_pixel(bitmap,bx,offs,Machine.pens[7]);
+		            plot_pixel.handler(bitmap,bx,offs,Machine.pens[7]);
 	            }
 	        }
 	    }

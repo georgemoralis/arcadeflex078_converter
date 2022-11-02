@@ -517,7 +517,7 @@ public class marinedt
 	if (coll != 0)
 	{
 	--i;--j;
-	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[2]);
+	//	plot_pixel.handler(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[2]);
 	
 	//determine collision registers
 	{
@@ -547,8 +547,8 @@ public class marinedt
 	
 	}
 	//{
-	//	plot_pixel(bitmap, 256-28-marinedt_obj1_x+i, 256-2-marinedt_obj1_y+j,Machine.pens[1]);
-	//			plot_pixel(bitmap, 256+i, 32+j,Machine.pens[1]);
+	//	plot_pixel.handler(bitmap, 256-28-marinedt_obj1_x+i, 256-2-marinedt_obj1_y+j,Machine.pens[1]);
+	//			plot_pixel.handler(bitmap, 256+i, 32+j,Machine.pens[1]);
 	//}
 	
 	//	drawgfx(bitmap,Machine.gfx[1],
@@ -605,7 +605,7 @@ public class marinedt
 	
 	
 	//if (coll != 0)
-	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[1]);
+	//	plot_pixel.handler(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[1]);
 	} };
 	
 	static MACHINE_DRIVER_START( marinedt )

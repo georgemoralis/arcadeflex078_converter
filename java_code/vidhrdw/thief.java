@@ -170,7 +170,7 @@ public class thief
 				int bit;
 				if (flipscreen != 0){
 					for( bit=0; bit<8; bit++ ){
-						plot_pixel( page, 0xff - (xpos+bit), 0xff - ypos,
+						plot_pixel.handler( page, 0xff - (xpos+bit), 0xff - ypos,
 							pal_data[
 								(((plane0<<bit)&0x80)>>7) |
 								(((plane1<<bit)&0x80)>>6) |
@@ -182,7 +182,7 @@ public class thief
 				}
 				else {
 					for( bit=0; bit<8; bit++ ){
-						plot_pixel( page, xpos+bit, ypos,
+						plot_pixel.handler( page, xpos+bit, ypos,
 							pal_data[
 								(((plane0<<bit)&0x80)>>7) |
 								(((plane1<<bit)&0x80)>>6) |

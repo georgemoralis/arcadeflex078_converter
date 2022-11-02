@@ -575,6 +575,17 @@ public class convertMame {
                     Convertor.inpos = i;
                     break;
                 }
+                case 'p':
+                    i = Convertor.inpos;
+                    if (type == VIDEO_UPDATE || type == WRITE_HANDLER8) {
+                        Convertor.token[0] = sUtil.parseToken();
+                        if (Convertor.token[0].startsWith("plot_pixel")) {
+                            sUtil.putString((new StringBuilder()).append(Convertor.token[0]).append(".handler").toString());
+                            continue;
+                        }
+                    }
+                    Convertor.inpos=i;
+                    break;
                 case 'I':
                     i = Convertor.inpos;
                     if (sUtil.getToken("INPUT_PORTS_START")) {

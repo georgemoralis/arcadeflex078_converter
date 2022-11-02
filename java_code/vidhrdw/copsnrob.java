@@ -160,7 +160,7 @@ public class copsnrob
 	                {
 	                    if (copsnrob_bulletsram[y] & mask2)
 	                    {
-	                        plot_pixel(bitmap, 256-x, y, Machine.pens[1]);
+	                        plot_pixel.handler(bitmap, 256-x, y, Machine.pens[1]);
 	                    }
 	                }
 	            }

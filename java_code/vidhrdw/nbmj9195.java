@@ -763,7 +763,7 @@ public class nbmj9195
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = sailorws_videoram0[(y * Machine.drv.screen_width) + x];
-					plot_pixel(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
+					plot_pixel.handler(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
 				}
 			}
 			if (gfxdraw_mode != 0)
@@ -773,7 +773,7 @@ public class nbmj9195
 					for (x = 0; x < Machine.drv.screen_width; x++)
 					{
 						color = sailorws_videoram1[(y * Machine.drv.screen_width) + x];
-						plot_pixel(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
+						plot_pixel.handler(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
 					}
 				}
 			}
@@ -848,7 +848,7 @@ public class nbmj9195
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = sailorws_videoram0[(y * Machine.drv.screen_width) + x];
-					plot_pixel(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
+					plot_pixel.handler(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
 				}
 			}
 			if (gfxdraw_mode != 0)
@@ -858,7 +858,7 @@ public class nbmj9195
 					for (x = 0; x < Machine.drv.screen_width; x++)
 					{
 						color = sailorws_videoram1[(y * Machine.drv.screen_width) + x];
-						plot_pixel(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
+						plot_pixel.handler(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
 					}
 				}
 			}

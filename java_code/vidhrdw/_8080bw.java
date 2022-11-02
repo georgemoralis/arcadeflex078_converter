@@ -433,7 +433,7 @@ public class _8080bw
 					col = (memory_region(REGION_USER1)[offs] & bit) ? 7 : back_color;
 				}
 	
-				plot_pixel_8080(x, y, col);
+				plot_pixel_8080.handler(x, y, col);
 	
 				x++;
 				data >>= 1;
@@ -534,7 +534,7 @@ public class _8080bw
 				}
 			}
 	
-			plot_pixel_8080(x, y, col);
+			plot_pixel_8080.handler(x, y, col);
 	
 			x++;
 			cloud_x++;

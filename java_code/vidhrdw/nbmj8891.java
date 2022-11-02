@@ -441,7 +441,7 @@ public class nbmj8891
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = gionbana_videoram0[(y * Machine.drv.screen_width) + x];
-					plot_pixel(gionbana_tmpbitmap0, x, y, Machine.pens[color]);
+					plot_pixel.handler(gionbana_tmpbitmap0, x, y, Machine.pens[color]);
 				}
 			}
 			if (gfxdraw_mode != 0)
@@ -451,7 +451,7 @@ public class nbmj8891
 					for (x = 0; x < Machine.drv.screen_width; x++)
 					{
 						color = gionbana_videoram1[(y * Machine.drv.screen_width) + x];
-						plot_pixel(gionbana_tmpbitmap1, x, y, Machine.pens[color]);
+						plot_pixel.handler(gionbana_tmpbitmap1, x, y, Machine.pens[color]);
 					}
 				}
 			}

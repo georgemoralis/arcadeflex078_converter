@@ -168,7 +168,7 @@ public class supertnk
 			col2 = (supertnk_videoram[0x4000 + offset] >> (7-i)) & 0x01;
 			col = ( (col0 << 2) | (col1 << 1) | (col2 << 0) );
 	
-			plot_pixel(tmpbitmap, x+i, y, Machine.pens[col]);
+			plot_pixel.handler(tmpbitmap, x+i, y, Machine.pens[col]);
 		}
 	} };
 	

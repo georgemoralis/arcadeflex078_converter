@@ -154,7 +154,7 @@ public class gomoku
 				if ((bgdata & 0x01) != 0) color = 0x21;	// íÉ(î’)
 				if ((bgdata & 0x02) != 0) color = 0x20;	// çï(ògê¸)
 	
-				plot_pixel(gomoku_bg_bitmap, (255 - x + 7), (255 - y - 1), color);
+				plot_pixel.handler(gomoku_bg_bitmap, (255 - x + 7), (255 - y - 1), color);
 			}
 		}
 	
@@ -207,7 +207,7 @@ public class gomoku
 						}
 						else continue;
 	
-						plot_pixel(bitmap, (255 - x + 7), (255 - y - 1), color);
+						plot_pixel.handler(bitmap, (255 - x + 7), (255 - y - 1), color);
 					}
 				}
 			}
@@ -237,7 +237,7 @@ public class gomoku
 						}
 						else continue;
 	
-						plot_pixel(bitmap, (255 - x + 7), (255 - y - 1), color);
+						plot_pixel.handler(bitmap, (255 - x + 7), (255 - y - 1), color);
 	
 					}
 				}

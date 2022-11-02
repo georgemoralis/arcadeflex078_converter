@@ -390,7 +390,7 @@ public class nbmj8991
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
-					plot_pixel(pstadium_tmpbitmap, x, y, Machine.pens[color]);
+					plot_pixel.handler(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
@@ -422,7 +422,7 @@ public class nbmj8991
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
-					plot_pixel(pstadium_tmpbitmap, x, y, Machine.pens[color]);
+					plot_pixel.handler(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}

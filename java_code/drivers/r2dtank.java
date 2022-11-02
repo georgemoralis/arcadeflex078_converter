@@ -302,7 +302,7 @@ public class r2dtank
 	
 				col = (data0 & 0x80) ? ((data1 & 0xe0) >> 5) : ((data1 & 0x0e)>> 1);
 	
-				plot_pixel(tmpbitmap, x, y, Machine.pens[col]);
+				plot_pixel.handler(tmpbitmap, x, y, Machine.pens[col]);
 				data0 <<= 1;
 	
 			}
