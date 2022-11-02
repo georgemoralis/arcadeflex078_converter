@@ -43,18 +43,18 @@ public class bogeyman
 		{
 			/* bit 4 goes to the 8910 #0 BC1 pin */
 			if ((last & 0x10) != 0)
-				AY8910_control_port_0_w(0,psg_latch);
+				AY8910_control_port_0_w.handler(0,psg_latch);
 			else
-				AY8910_write_port_0_w(0,psg_latch);
+				AY8910_write_port_0_w.handler(0,psg_latch);
 		}
 		/* bit 7 goes to 8910 #1 BDIR pin  */
 		if ((last & 0x80) == 0x80 && (data & 0x80) == 0x00)
 		{
 			/* bit 6 goes to the 8910 #1 BC1 pin */
 			if ((last & 0x40) != 0)
-				AY8910_control_port_1_w(0,psg_latch);
+				AY8910_control_port_1_w.handler(0,psg_latch);
 			else
-				AY8910_write_port_1_w(0,psg_latch);
+				AY8910_write_port_1_w.handler(0,psg_latch);
 		}
 	
 		last = data;

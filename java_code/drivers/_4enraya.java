@@ -72,9 +72,9 @@ public class _4enraya
 		if ((last & 0x04) == 0x04 && (data & 0x4) == 0x00)
 		{
 			if ((last & 0x01) != 0)
-				AY8910_control_port_0_w(0,soundlatch);
+				AY8910_control_port_0_w.handler(0,soundlatch);
 			else
-				AY8910_write_port_0_w(0,soundlatch);
+				AY8910_write_port_0_w.handler(0,soundlatch);
 		}
 		last=data;
 	} };

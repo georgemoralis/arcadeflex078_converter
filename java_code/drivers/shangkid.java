@@ -129,7 +129,7 @@ public class shangkid
 	public static WriteHandlerPtr shangkid_bbx_AY8910_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bbx_AY8910_control = data;
-		AY8910_control_port_0_w( offset, data );
+		AY8910_control_port_0_w.handler( offset, data );
 	} };
 	
 	public static WriteHandlerPtr shangkid_bbx_AY8910_write_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -156,7 +156,7 @@ public class shangkid
 			break;
 	
 		default:
-			AY8910_write_port_0_w( offset, data );
+			AY8910_write_port_0_w.handler( offset, data );
 			break;
 		}
 	} };

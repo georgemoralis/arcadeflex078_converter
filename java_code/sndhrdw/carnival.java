@@ -271,11 +271,11 @@ public class carnival
 				break;
 	
 			case PSG_BC_WRITE:
-				AY8910_write_port_0_w( 0, psgData );
+				AY8910_write_port_0_w.handler( 0, psgData );
 				break;
 	
 			case PSG_BC_LATCH_ADDRESS:
-				AY8910_control_port_0_w( 0, psgData );
+				AY8910_control_port_0_w.handler( 0, psgData );
 				break;
 			}
 		}

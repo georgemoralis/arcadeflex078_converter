@@ -633,7 +633,7 @@ public class nbmj8891
 	
 		switch (offset & 0xff00)
 		{
-			case	0x8100:	return AY8910_read_port_0_r(0);
+			case	0x8100:	return AY8910_read_port_0_r.handler(0);
 			case	0x9000:	return nb1413m3_inputport0_r(0);
 			case	0xa000:	return nb1413m3_inputport1_r(0);
 			case	0xb000:	return nb1413m3_inputport2_r(0);
@@ -673,8 +673,8 @@ public class nbmj8891
 			case	0x1000:	gionbana_romsel_w(data); break;
 			case	0x2000:	gionbana_paltblnum_w(data); break;
 			case	0x5000:	gionbana_scrolly_w(data); break;
-			case	0x8200:	AY8910_write_port_0_w(0, data); break;
-			case	0x8300:	AY8910_control_port_0_w(0, data); break;
+			case	0x8200:	AY8910_write_port_0_w.handler(0, data); break;
+			case	0x8300:	AY8910_control_port_0_w.handler(0, data); break;
 			case	0xa000:	nb1413m3_inputportsel_w(0,data); break;
 			case	0xb000:	nb1413m3_sndrombank1_w(0,data); break;
 			case	0xc000:	nb1413m3_nmi_clock_w(0,data); break;

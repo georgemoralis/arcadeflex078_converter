@@ -1151,7 +1151,7 @@ public class leland
 	
 			case 0x03:	/* /IGID */
 			case 0x13:
-				result = AY8910_read_port_0_r(offset);
+				result = AY8910_read_port_0_r.handler(offset);
 				break;
 	
 			case 0x10:	/* /GIN0 */
@@ -1190,11 +1190,11 @@ public class leland
 				break;
 	
 			case 0x0a:	/* /OGIA */
-				AY8910_control_port_0_w(0, data);
+				AY8910_control_port_0_w.handler(0, data);
 				break;
 	
 			case 0x0b:	/* /OGID */
-				AY8910_write_port_0_w(0, data);
+				AY8910_write_port_0_w.handler(0, data);
 				break;
 	
 			case 0x0c:	/* /BKXL */

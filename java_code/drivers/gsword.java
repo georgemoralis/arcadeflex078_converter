@@ -253,12 +253,12 @@ public class gsword
 	
 	public static WriteHandlerPtr gsword_AY8910_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		AY8910_control_port_0_w(offset,data);
+		AY8910_control_port_0_w.handler(offset,data);
 		fake8910_0 = data;
 	} };
 	public static WriteHandlerPtr gsword_AY8910_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		AY8910_control_port_1_w(offset,data);
+		AY8910_control_port_1_w.handler(offset,data);
 		fake8910_1 = data;
 	} };
 	

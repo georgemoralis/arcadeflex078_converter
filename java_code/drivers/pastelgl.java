@@ -94,7 +94,7 @@ public class pastelgl
 	
 		switch (offset & 0xff00)
 		{
-			case	0x8100:	return AY8910_read_port_0_r(0);
+			case	0x8100:	return AY8910_read_port_0_r.handler(0);
 			case	0x9000:	return nb1413m3_inputport0_r(0);
 			case	0xa000:	return nb1413m3_inputport1_r(0);
 			case	0xb000:	return nb1413m3_inputport2_r(0);
@@ -125,8 +125,8 @@ public class pastelgl
 		switch (offset & 0xff00)
 		{
 			case	0x0000:	break;
-			case	0x8200:	AY8910_write_port_0_w(0, data); break;
-			case	0x8300:	AY8910_control_port_0_w(0, data); break;
+			case	0x8200:	AY8910_write_port_0_w.handler(0, data); break;
+			case	0x8300:	AY8910_control_port_0_w.handler(0, data); break;
 			case	0x9000:	pastelgl_radrx_w(data);
 					pastelgl_voiradr_l_w(data); break;
 			case	0x9100:	pastelgl_radry_w(data);

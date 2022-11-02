@@ -27,10 +27,10 @@ public class cchasm
 	        return sound_flags | coin;
 	
 	    case 0x01:
-	        return AY8910_read_port_0_r (offset);
+	        return AY8910_read_port_0_r.handler (offset);
 	
 	    case 0x21:
-	        return AY8910_read_port_1_r (offset);
+	        return AY8910_read_port_1_r.handler (offset);
 	
 	    case 0x40:
 	        return soundlatch_r (offset);
@@ -50,19 +50,19 @@ public class cchasm
 	    switch (offset & 0x61 )
 	    {
 	    case 0x00:
-	        AY8910_control_port_0_w (offset, data);
+	        AY8910_control_port_0_w.handler (offset, data);
 	        break;
 	
 	    case 0x01:
-	        AY8910_write_port_0_w (offset, data);
+	        AY8910_write_port_0_w.handler (offset, data);
 	        break;
 	
 	    case 0x20:
-	        AY8910_control_port_1_w (offset, data);
+	        AY8910_control_port_1_w.handler (offset, data);
 	        break;
 	
 	    case 0x21:
-	        AY8910_write_port_1_w (offset, data);
+	        AY8910_write_port_1_w.handler (offset, data);
 	        break;
 	
 	    case 0x40:

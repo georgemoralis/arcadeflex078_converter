@@ -101,9 +101,9 @@ public class zaccaria
 	public static ReadHandlerPtr zaccaria_port0a_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (active_8910 == 0)
-			return AY8910_read_port_0_r(0);
+			return AY8910_read_port_0_r.handler(0);
 		else
-			return AY8910_read_port_1_r(0);
+			return AY8910_read_port_1_r.handler(0);
 	} };
 	
 	public static WriteHandlerPtr zaccaria_port0a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -121,9 +121,9 @@ public class zaccaria
 		{
 			/* bit 0 goes to the 8910 #0 BC1 pin */
 			if ((last & 0x01) != 0)
-				AY8910_control_port_0_w(0,port0a);
+				AY8910_control_port_0_w.handler(0,port0a);
 			else
-				AY8910_write_port_0_w(0,port0a);
+				AY8910_write_port_0_w.handler(0,port0a);
 		}
 		else if ((last & 0x02) == 0x00 && (data & 0x02) == 0x02)
 		{
@@ -136,9 +136,9 @@ public class zaccaria
 		{
 			/* bit 2 goes to the 8910 #1 BC1 pin */
 			if ((last & 0x04) != 0)
-				AY8910_control_port_1_w(0,port0a);
+				AY8910_control_port_1_w.handler(0,port0a);
 			else
-				AY8910_write_port_1_w(0,port0a);
+				AY8910_write_port_1_w.handler(0,port0a);
 		}
 		else if ((last & 0x08) == 0x00 && (data & 0x08) == 0x08)
 		{

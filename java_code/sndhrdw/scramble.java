@@ -264,12 +264,12 @@ public class scramble
 	
 	public static WriteHandlerPtr zigzag_8910_data_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		AY8910_write_port_0_w(0,latch);
+		AY8910_write_port_0_w.handler(0,latch);
 	} };
 	
 	public static WriteHandlerPtr zigzag_8910_control_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		AY8910_control_port_0_w(0,latch);
+		AY8910_control_port_0_w.handler(0,latch);
 	} };
 	
 }

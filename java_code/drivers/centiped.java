@@ -431,15 +431,15 @@ public class centiped
 	
 	public static WriteHandlerPtr centipdb_AY8910_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		AY8910_control_port_0_w(0, offset);
-		AY8910_write_port_0_w(0, data);
+		AY8910_control_port_0_w.handler(0, offset);
+		AY8910_write_port_0_w.handler(0, data);
 	} };
 	
 	
 	public static ReadHandlerPtr centipdb_AY8910_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		AY8910_control_port_0_w(0, offset);
-		return AY8910_read_port_0_r(0);
+		AY8910_control_port_0_w.handler(0, offset);
+		return AY8910_read_port_0_r.handler(0);
 	} };
 	
 	

@@ -74,7 +74,7 @@ public class ninjakid
 	public static ReadHandlerPtr ninjakun_io_8000_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch( offset ){
 		case 0: /* control */
-			return AY8910_read_port_0_r( 0 );
+			return AY8910_read_port_0_r.handler( 0 );
 	
 		case 1: /* input read */
 			switch( ninjakun_io_8000_ctrl[0] ){
@@ -88,7 +88,7 @@ public class ninjakid
 			break;
 	
 		case 2: /* control */
-			return AY8910_read_port_1_r( 0 );
+			return AY8910_read_port_1_r.handler( 0 );
 	
 		case 3: /* data */
 			return ninjakun_io_8000_ctrl[3];
@@ -139,21 +139,21 @@ public class ninjakid
 		switch( offset ){
 		case 0x0: /* control#1 */
 			ninjakun_io_8000_ctrl[0] = data;
-			AY8910_control_port_0_w( 0, data );
+			AY8910_control_port_0_w.handler( 0, data );
 			break;
 	
 		case 0x1: /* data#1 */
 			ninjakun_io_8000_ctrl[1] = data;
 			switch( ninjakun_io_8000_ctrl[0] ){
 			default:
-				AY8910_write_port_0_w( 0,data );
+				AY8910_write_port_0_w.handler( 0,data );
 				break;
 			}
 			break;
 	
 		case 0x2: /* control#2 */
 			ninjakun_io_8000_ctrl[2] = data;
-			AY8910_control_port_1_w( 0, data );
+			AY8910_control_port_1_w.handler( 0, data );
 			break;
 	
 		case 0x3: /* data#2 */
@@ -171,7 +171,7 @@ public class ninjakid
 					ninjakun_xscroll = data;
 				break;
 			default:
-				AY8910_write_port_1_w( 0,data );
+				AY8910_write_port_1_w.handler( 0,data );
 			}
 			break;
 		}

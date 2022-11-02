@@ -48,3 +48,4 @@ colorprom read/write conversion
 input_port_*_r (1-10) to input_port_*_r.handler
 if(!something) will become if(something==0)
 &spritevisiblearea to spritevisiblearea
+AY8910 r/w handlers

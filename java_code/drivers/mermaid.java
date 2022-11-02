@@ -24,14 +24,14 @@ public class mermaid
 	
 	public static WriteHandlerPtr mermaid_AY8910_write_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (mermaid_AY8910_enable[0])  AY8910_write_port_0_w(offset, data);
-		if (mermaid_AY8910_enable[1])  AY8910_write_port_1_w(offset, data);
+		if (mermaid_AY8910_enable[0])  AY8910_write_port_0_w.handler(offset, data);
+		if (mermaid_AY8910_enable[1])  AY8910_write_port_1_w.handler(offset, data);
 	} };
 	
 	public static WriteHandlerPtr mermaid_AY8910_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (mermaid_AY8910_enable[0])  AY8910_control_port_0_w(offset, data);
-		if (mermaid_AY8910_enable[1])  AY8910_control_port_1_w(offset, data);
+		if (mermaid_AY8910_enable[0])  AY8910_control_port_0_w.handler(offset, data);
+		if (mermaid_AY8910_enable[1])  AY8910_control_port_1_w.handler(offset, data);
 	} };
 	
 	#if 0

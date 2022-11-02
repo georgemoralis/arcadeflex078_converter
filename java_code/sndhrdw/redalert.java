@@ -84,15 +84,15 @@ public class redalert
 				break;
 			case 0x01:
 				/* BC1=1, BDIR=0 : READ FROM PSG */
-				sound_register_IC1 = AY8910_read_port_0_r(offset);
+				sound_register_IC1 = AY8910_read_port_0_r.handler(offset);
 				break;
 			case 0x02:
 				/* BC1=0, BDIR=1 : WRITE TO PSG */
-				AY8910_write_port_0_w(offset,sound_register_IC2);
+				AY8910_write_port_0_w.handler(offset,sound_register_IC2);
 				break;
 			case 0x03:
 				/* BC1=1, BDIR=1 : LATCH ADDRESS */
-				AY8910_control_port_0_w(offset,sound_register_IC2);
+				AY8910_control_port_0_w.handler(offset,sound_register_IC2);
 				break;
 			default:
 				logerror("Invalid Sound Command: %02X\n",data);

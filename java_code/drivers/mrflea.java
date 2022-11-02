@@ -259,21 +259,21 @@ public class mrflea
 	};
 	
 	public static WriteHandlerPtr mrflea_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-		AY8910_control_port_0_w( offset, mrflea_select0 );
-		AY8910_write_port_0_w( offset, data );
+		AY8910_control_port_0_w.handler( offset, mrflea_select0 );
+		AY8910_write_port_0_w.handler( offset, data );
 	} };
 	
 	public static WriteHandlerPtr mrflea_data1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	public static WriteHandlerPtr mrflea_data2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-		AY8910_control_port_1_w( offset, mrflea_select2 );
-		AY8910_write_port_1_w( offset, data );
+		AY8910_control_port_1_w.handler( offset, mrflea_select2 );
+		AY8910_write_port_1_w.handler( offset, data );
 	} };
 	
 	public static WriteHandlerPtr mrflea_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-		AY8910_control_port_2_w( offset, mrflea_select3 );
-		AY8910_write_port_2_w( offset, data );
+		AY8910_control_port_2_w.handler( offset, mrflea_select3 );
+		AY8910_write_port_2_w.handler( offset, data );
 	} };
 	
 	public static IO_WritePort writeport_io[]={
