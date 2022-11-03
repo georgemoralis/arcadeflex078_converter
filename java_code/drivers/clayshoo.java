@@ -185,5 +185,5 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	GAMEX( 1979, clayshoo, 0, clayshoo, clayshoo, 0, ROT0, "Allied Leisure", "Clay Shoot", GAME_NO_SOUND )
+	public static GameDriver driver_clayshoo	   = new GameDriver("1979"	,"clayshoo"	,"clayshoo.java"	,rom_clayshoo,null	,machine_driver_clayshoo	,input_ports_clayshoo	,null	,ROT0	,	"Allied Leisure", "Clay Shoot", GAME_NO_SOUND )
 }

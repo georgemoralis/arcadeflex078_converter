@@ -447,6 +447,6 @@ public class parodius
 	
 	
 	
-	GAME( 1990, parodius, 0,        parodius, parodius, parodius, ROT0, "Konami", "Parodius DA! (World)" )
-	GAME( 1990, parodisj, parodius, parodius, parodius, parodius, ROT0, "Konami", "Parodius DA! (Japan)" )
+	public static GameDriver driver_parodius	   = new GameDriver("1990"	,"parodius"	,"parodius.java"	,rom_parodius,null	,machine_driver_parodius	,input_ports_parodius	,init_parodius	,ROT0	,	"Konami", "Parodius DA! (World)" )
+	public static GameDriver driver_parodisj	   = new GameDriver("1990"	,"parodisj"	,"parodius.java"	,rom_parodisj,driver_parodius	,machine_driver_parodius	,input_ports_parodius	,init_parodius	,ROT0	,	"Konami", "Parodius DA! (Japan)" )
 }

@@ -294,5 +294,5 @@ public class tryout
 		install_mem_write_handler( 1, 0xd000, 0xd000, MWA_NOP );
 	} };
 	
-	GAMEX( 1985, tryout, 0, tryout, tryout, tryout, ROT90, "Data East", "Pro Yakyuu Nyuudan Test Tryout (JPN Ver.)", GAME_NOT_WORKING | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_tryout	   = new GameDriver("1985"	,"tryout"	,"tryout.java"	,rom_tryout,null	,machine_driver_tryout	,input_ports_tryout	,init_tryout	,ROT90	,	"Data East", "Pro Yakyuu Nyuudan Test Tryout (JPN Ver.)", GAME_NOT_WORKING | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

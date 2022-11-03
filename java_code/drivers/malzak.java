@@ -426,5 +426,5 @@ public class malzak
 	
 	ROM_END(); }}; 
 	
-	GAMEX( 19??, malzak,   0,       malzak, malzak, 0,        ROT0, "Kitronix", "Malzak", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_malzak	   = new GameDriver("19??"	,"malzak"	,"malzak.java"	,rom_malzak,null	,machine_driver_malzak	,input_ports_malzak	,null	,ROT0	,	"Kitronix", "Malzak", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

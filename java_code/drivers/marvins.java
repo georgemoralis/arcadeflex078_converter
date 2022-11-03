@@ -814,7 +814,7 @@ public class marvins
 	} };
 	
 	
-	GAMEX(1983, marvins,  0, marvins,  marvins,  marvins,  ROT270, "SNK", "Marvin's Maze", GAME_NO_COCKTAIL )
-	GAMEX(1984, madcrash, 0, madcrash, madcrash, madcrash, ROT0,   "SNK", "Mad Crasher", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1984, vangrd2,  0, vangrd2,  vangrd2,  vangrd2,  ROT270, "SNK", "Vanguard II", GAME_NO_COCKTAIL )
+	public static GameDriver driver_marvins	   = new GameDriver("1983"	,"marvins"	,"marvins.java"	,rom_marvins,null	,machine_driver_marvins	,input_ports_marvins	,init_marvins	,ROT270	,	"SNK", "Marvin's Maze", GAME_NO_COCKTAIL )
+	public static GameDriver driver_madcrash	   = new GameDriver("1984"	,"madcrash"	,"marvins.java"	,rom_madcrash,null	,machine_driver_madcrash	,input_ports_madcrash	,init_madcrash	,ROT0	,	"SNK", "Mad Crasher", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_vangrd2	   = new GameDriver("1984"	,"vangrd2"	,"marvins.java"	,rom_vangrd2,null	,machine_driver_vangrd2	,input_ports_vangrd2	,init_vangrd2	,ROT270	,	"SNK", "Vanguard II", GAME_NO_COCKTAIL )
 }

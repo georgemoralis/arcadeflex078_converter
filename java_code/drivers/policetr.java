@@ -607,8 +607,8 @@ public class policetr
 	 *
 	 *************************************/
 	
-	GAME( 1996, policetr, 0,        policetr, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.3)" )
-	GAME( 1996, policeto, policetr, policetr, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.1)" )
-	GAME( 1996, plctr13b, policetr, sshooter, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.3B)" )
-	GAME( 1998, sshooter, 0,        sshooter, policetr, sshooter, ROT0, "P&P Marketing", "Sharpshooter (Rev 1.7)" )
+	public static GameDriver driver_policetr	   = new GameDriver("1996"	,"policetr"	,"policetr.java"	,rom_policetr,null	,machine_driver_policetr	,input_ports_policetr	,init_policetr	,ROT0	,	"P&P Marketing", "Police Trainer (Rev 1.3)" )
+	public static GameDriver driver_policeto	   = new GameDriver("1996"	,"policeto"	,"policetr.java"	,rom_policeto,driver_policetr	,machine_driver_policetr	,input_ports_policetr	,init_policetr	,ROT0	,	"P&P Marketing", "Police Trainer (Rev 1.1)" )
+	public static GameDriver driver_plctr13b	   = new GameDriver("1996"	,"plctr13b"	,"policetr.java"	,rom_plctr13b,driver_policetr	,machine_driver_sshooter	,input_ports_policetr	,init_policetr	,ROT0	,	"P&P Marketing", "Police Trainer (Rev 1.3B)" )
+	public static GameDriver driver_sshooter	   = new GameDriver("1998"	,"sshooter"	,"policetr.java"	,rom_sshooter,null	,machine_driver_sshooter	,input_ports_policetr	,init_sshooter	,ROT0	,	"P&P Marketing", "Sharpshooter (Rev 1.7)" )
 }

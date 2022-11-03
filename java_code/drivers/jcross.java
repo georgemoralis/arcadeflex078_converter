@@ -372,7 +372,7 @@ public class jcross
 		ROM_LOAD( "jcrossp0.j9",  0x800, 0x400, CRC(99f54d48) SHA1(9bd20eaa9706d28eaca9f5e195204d89e302272f) )
 	ROM_END(); }}; 
 	
-	GAMEX(1984, jcross, 0, jcross, jcross, 0, ROT270,   "SNK", "Jumping Cross",GAME_NO_COCKTAIL|GAME_IMPERFECT_GRAPHICS)
+	public static GameDriver driver_jcross	   = new GameDriver("1984"	,"jcross"	,"jcross.java"	,rom_jcross,null	,machine_driver_jcross	,input_ports_jcross	,null	,ROT270	,	"SNK", "Jumping Cross",GAME_NO_COCKTAIL|GAME_IMPERFECT_GRAPHICS)
 	
 	
 }

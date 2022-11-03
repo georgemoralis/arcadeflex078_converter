@@ -368,6 +368,6 @@ public class pitnrun
 		ROM_LOAD( "clr.3",  0x0040, 0x0020, CRC(25e70e5e) SHA1(fdb9c69e9568a725dd0e3ac25835270fb4f49280) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1984, pitnrun, 0, pitnrun, pitnrun, 0, ROT90, "Taito Corporation", "Pit & Run", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_pitnrun	   = new GameDriver("1984"	,"pitnrun"	,"pitnrun.java"	,rom_pitnrun,null	,machine_driver_pitnrun	,input_ports_pitnrun	,null	,ROT90	,	"Taito Corporation", "Pit & Run", GAME_IMPERFECT_SOUND )
 	
 }

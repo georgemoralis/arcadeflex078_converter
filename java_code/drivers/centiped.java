@@ -1509,14 +1509,14 @@ public class centiped
 	 *
 	 *************************************/
 	
-	GAME( 1980, centiped, 0,        centiped, centiped, 0,        ROT270, "Atari", "Centipede (revision 3)" )
-	GAME( 1980, centipd2, centiped, centiped, centiped, 0,        ROT270, "Atari", "Centipede (revision 2)" )
-	GAME( 1980, centtime, centiped, centiped, centtime, 0,        ROT270, "Atari", "Centipede (1 player, timed)" )
-	GAME( 1980, centipdb, centiped, centipdb, centipdb, centipdb, ROT270, "bootleg", "Centipede (bootleg set 1)" )
-	GAME( 1980, centipb2, centiped, centipb2, centiped, 0,        ROT270, "bootleg", "Centipede (bootleg set 2)" )
-	GAME( 1980, millpac,  centiped, centipb2, centiped,  0, 	  ROT270, "Valadon Automation", "Millpac" )
-	GAME( 1980, magworm,  centiped, magworm,  magworm,  magworm,  ROT270, "bootleg", "Magic Worm (bootleg)" )
-	GAME( 1982, milliped, 0,        milliped, milliped, 0,        ROT270, "Atari", "Millipede" )
+	public static GameDriver driver_centiped	   = new GameDriver("1980"	,"centiped"	,"centiped.java"	,rom_centiped,null	,machine_driver_centiped	,input_ports_centiped	,null	,ROT270	,	"Atari", "Centipede (revision 3)" )
+	public static GameDriver driver_centipd2	   = new GameDriver("1980"	,"centipd2"	,"centiped.java"	,rom_centipd2,driver_centiped	,machine_driver_centiped	,input_ports_centiped	,null	,ROT270	,	"Atari", "Centipede (revision 2)" )
+	public static GameDriver driver_centtime	   = new GameDriver("1980"	,"centtime"	,"centiped.java"	,rom_centtime,driver_centiped	,machine_driver_centiped	,input_ports_centtime	,null	,ROT270	,	"Atari", "Centipede (1 player, timed)" )
+	public static GameDriver driver_centipdb	   = new GameDriver("1980"	,"centipdb"	,"centiped.java"	,rom_centipdb,driver_centiped	,machine_driver_centipdb	,input_ports_centipdb	,init_centipdb	,ROT270	,	"bootleg", "Centipede (bootleg set 1)" )
+	public static GameDriver driver_centipb2	   = new GameDriver("1980"	,"centipb2"	,"centiped.java"	,rom_centipb2,driver_centiped	,machine_driver_centipb2	,input_ports_centiped	,null	,ROT270	,	"bootleg", "Centipede (bootleg set 2)" )
+	public static GameDriver driver_millpac	   = new GameDriver("1980"	,"millpac"	,"centiped.java"	,rom_millpac,driver_centiped	,machine_driver_centipb2	,input_ports_centiped	,null	,ROT270	,	"Valadon Automation", "Millpac" )
+	public static GameDriver driver_magworm	   = new GameDriver("1980"	,"magworm"	,"centiped.java"	,rom_magworm,driver_centiped	,machine_driver_magworm	,input_ports_magworm	,init_magworm	,ROT270	,	"bootleg", "Magic Worm (bootleg)" )
+	public static GameDriver driver_milliped	   = new GameDriver("1982"	,"milliped"	,"centiped.java"	,rom_milliped,null	,machine_driver_milliped	,input_ports_milliped	,null	,ROT270	,	"Atari", "Millipede" )
 	
-	GAME( 1980, warlords, 0,        warlords, warlords, 0,        ROT0,   "Atari", "Warlords" )
+	public static GameDriver driver_warlords	   = new GameDriver("1980"	,"warlords"	,"centiped.java"	,rom_warlords,null	,machine_driver_warlords	,input_ports_warlords	,null	,ROT0	,	"Atari", "Warlords" )
 }

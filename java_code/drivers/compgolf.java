@@ -412,5 +412,5 @@ public class compgolf
 		compgolf_expand_bg();
 	} };
 	
-	GAMEX( 1985, compgolf, 0, compgolf, compgolf, compgolf, ROT0, "Data East", "Competition Golf Final Round (Japan)", GAME_NOT_WORKING )
+	public static GameDriver driver_compgolf	   = new GameDriver("1985"	,"compgolf"	,"compgolf.java"	,rom_compgolf,null	,machine_driver_compgolf	,input_ports_compgolf	,init_compgolf	,ROT0	,	"Data East", "Competition Golf Final Round (Japan)", GAME_NOT_WORKING )
 }

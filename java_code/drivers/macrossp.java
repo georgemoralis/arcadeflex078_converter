@@ -938,6 +938,6 @@ public class macrossp
 		memcpy(dst,src+0x400000,0x400000);
 	} };
 	
-	GAMEX( 1996, macrossp, 0, macrossp, macrossp, macrossp, ROT270, "Banpresto", "Macross Plus", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1997, quizmoon, 0, quizmoon, quizmoon, quizmoon, ROT0,   "Banpresto", "Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_macrossp	   = new GameDriver("1996"	,"macrossp"	,"macrossp.java"	,rom_macrossp,null	,machine_driver_macrossp	,input_ports_macrossp	,init_macrossp	,ROT270	,	"Banpresto", "Macross Plus", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_quizmoon	   = new GameDriver("1997"	,"quizmoon"	,"macrossp.java"	,rom_quizmoon,null	,machine_driver_quizmoon	,input_ports_quizmoon	,init_quizmoon	,ROT0	,	"Banpresto", "Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un", GAME_IMPERFECT_GRAPHICS )
 }

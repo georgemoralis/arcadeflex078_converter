@@ -284,5 +284,5 @@ public class bishi
 		state_save_register_INT32("bishi", 0, "control2", (INT32 *)&cur_control, 1);
 	} };
 	
-	GAMEX( 1996, bishi,     0,       bishi,     bishi,     bishi,      ROT0, "Konami", "Bishi Bashi Championship Mini Game Senshuken", GAME_IMPERFECT_GRAPHICS)
+	public static GameDriver driver_bishi	   = new GameDriver("1996"	,"bishi"	,"bishi.java"	,rom_bishi,null	,machine_driver_bishi	,input_ports_bishi	,init_bishi	,ROT0	,	"Konami", "Bishi Bashi Championship Mini Game Senshuken", GAME_IMPERFECT_GRAPHICS)
 }

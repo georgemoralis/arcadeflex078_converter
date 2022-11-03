@@ -404,6 +404,6 @@ public class sbowling
 		ROM_LOAD( "kb09.6m",        0x0400, 0x0400, CRC(e29191a6) SHA1(9a2c78a96ef6d118f4dacbea0b7d454b66a452ae))
 	ROM_END(); }}; 
 	
-	GAMEX( 1982, sbowling, 0, sbowling, sbowling, 0, ROT90, "Taito Corporation", "Strike Bowling",GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS)
+	public static GameDriver driver_sbowling	   = new GameDriver("1982"	,"sbowling"	,"sbowling.java"	,rom_sbowling,null	,machine_driver_sbowling	,input_ports_sbowling	,null	,ROT90	,	"Taito Corporation", "Strike Bowling",GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS)
 	
 }

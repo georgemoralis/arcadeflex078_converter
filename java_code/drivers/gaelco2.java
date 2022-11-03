@@ -1324,13 +1324,13 @@ public class gaelco2
 	
 	
 	
-	GAMEX(1994, aligator, 0,        alighunt, alighunt, alighunt, ROT0, "Gaelco", "Alligator Hunt", GAME_UNEMULATED_PROTECTION )
-	GAME( 1994, aligatun, aligator, alighunt, alighunt, alighunt, ROT0, "Gaelco", "Alligator Hunt (unprotected)" )
-	GAMEX(1995, touchgo,  0,        touchgo,  touchgo,  touchgo,  ROT0, "Gaelco", "Touch & Go", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX(1995, wrally2,  0,        wrally2,  wrally2,  0,        ROT0, "Gaelco", "World Rally 2: Twin Racing", GAME_UNEMULATED_PROTECTION )
-	GAME( 1996, maniacsq, 0,        maniacsq, maniacsq, 0,        ROT0, "Gaelco", "Maniac Square (unprotected)" )
-	GAMEX(1996, snowboar, 0,        snowboar, snowboar, snowboar, ROT0, "Gaelco", "Snow Board Championship (set 1)", GAME_UNEMULATED_PROTECTION )
-	GAMEX(1996, snowbalt, snowboar, snowboar, snowboar, 0,        ROT0, "Gaelco", "Snow Board Championship (set 2)", GAME_UNEMULATED_PROTECTION )
-	GAME( 1998, bang,     0,        bang,     bang,     bang,     ROT0, "Gaelco", "Bang!" )
-	GAME( 1998, bangj,    bang,     bang,     bang,     bang,     ROT0, "Gaelco", "Gun Gabacho (Japan)" )
+	public static GameDriver driver_aligator	   = new GameDriver("1994"	,"aligator"	,"gaelco2.java"	,rom_aligator,null	,machine_driver_alighunt	,input_ports_alighunt	,init_alighunt	,ROT0	,	"Gaelco", "Alligator Hunt", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_aligatun	   = new GameDriver("1994"	,"aligatun"	,"gaelco2.java"	,rom_aligatun,driver_aligator	,machine_driver_alighunt	,input_ports_alighunt	,init_alighunt	,ROT0	,	"Gaelco", "Alligator Hunt (unprotected)" )
+	public static GameDriver driver_touchgo	   = new GameDriver("1995"	,"touchgo"	,"gaelco2.java"	,rom_touchgo,null	,machine_driver_touchgo	,input_ports_touchgo	,init_touchgo	,ROT0	,	"Gaelco", "Touch & Go", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_wrally2	   = new GameDriver("1995"	,"wrally2"	,"gaelco2.java"	,rom_wrally2,null	,machine_driver_wrally2	,input_ports_wrally2	,null	,ROT0	,	"Gaelco", "World Rally 2: Twin Racing", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_maniacsq	   = new GameDriver("1996"	,"maniacsq"	,"gaelco2.java"	,rom_maniacsq,null	,machine_driver_maniacsq	,input_ports_maniacsq	,null	,ROT0	,	"Gaelco", "Maniac Square (unprotected)" )
+	public static GameDriver driver_snowboar	   = new GameDriver("1996"	,"snowboar"	,"gaelco2.java"	,rom_snowboar,null	,machine_driver_snowboar	,input_ports_snowboar	,init_snowboar	,ROT0	,	"Gaelco", "Snow Board Championship (set 1)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_snowbalt	   = new GameDriver("1996"	,"snowbalt"	,"gaelco2.java"	,rom_snowbalt,driver_snowboar	,machine_driver_snowboar	,input_ports_snowboar	,null	,ROT0	,	"Gaelco", "Snow Board Championship (set 2)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_bang	   = new GameDriver("1998"	,"bang"	,"gaelco2.java"	,rom_bang,null	,machine_driver_bang	,input_ports_bang	,init_bang	,ROT0	,	"Gaelco", "Bang!" )
+	public static GameDriver driver_bangj	   = new GameDriver("1998"	,"bangj"	,"gaelco2.java"	,rom_bangj,driver_bang	,machine_driver_bang	,input_ports_bang	,init_bang	,ROT0	,	"Gaelco", "Gun Gabacho (Japan)" )
 }

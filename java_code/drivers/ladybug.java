@@ -709,10 +709,10 @@ public class ladybug
 		}
 	} };
 	
-	GAME( 1981, cavenger, 0,       ladybug, cavenger, 0,       ROT0,   "Universal", "Cosmic Avenger" )
-	GAME( 1981, ladybug,  0,       ladybug, ladybug,  0,       ROT270, "Universal", "Lady Bug" )
-	GAME( 1981, ladybugb, ladybug, ladybug, ladybug,  0,       ROT270, "bootleg",   "Lady Bug (bootleg)" )
-	GAME( 1982, dorodon,  0,       ladybug, dorodon,  dorodon, ROT270, "Falcon",    "Dorodon (set 1)" )
-	GAME( 1982, dorodon2, dorodon, ladybug, dorodon,  dorodon, ROT270, "Falcon",    "Dorodon (set 2)" )
-	GAME( 1982, snapjack, 0,       ladybug, snapjack, 0,       ROT0,   "Universal", "Snap Jack" )
+	public static GameDriver driver_cavenger	   = new GameDriver("1981"	,"cavenger"	,"ladybug.java"	,rom_cavenger,null	,machine_driver_ladybug	,input_ports_cavenger	,null	,ROT0	,	"Universal", "Cosmic Avenger" )
+	public static GameDriver driver_ladybug	   = new GameDriver("1981"	,"ladybug"	,"ladybug.java"	,rom_ladybug,null	,machine_driver_ladybug	,input_ports_ladybug	,null	,ROT270	,	"Universal", "Lady Bug" )
+	public static GameDriver driver_ladybugb	   = new GameDriver("1981"	,"ladybugb"	,"ladybug.java"	,rom_ladybugb,driver_ladybug	,machine_driver_ladybug	,input_ports_ladybug	,null	,ROT270	,	"bootleg",   "Lady Bug (bootleg)" )
+	public static GameDriver driver_dorodon	   = new GameDriver("1982"	,"dorodon"	,"ladybug.java"	,rom_dorodon,null	,machine_driver_ladybug	,input_ports_dorodon	,init_dorodon	,ROT270	,	"Falcon",    "Dorodon (set 1)" )
+	public static GameDriver driver_dorodon2	   = new GameDriver("1982"	,"dorodon2"	,"ladybug.java"	,rom_dorodon2,driver_dorodon	,machine_driver_ladybug	,input_ports_dorodon	,init_dorodon	,ROT270	,	"Falcon",    "Dorodon (set 2)" )
+	public static GameDriver driver_snapjack	   = new GameDriver("1982"	,"snapjack"	,"ladybug.java"	,rom_snapjack,null	,machine_driver_ladybug	,input_ports_snapjack	,null	,ROT0	,	"Universal", "Snap Jack" )
 }

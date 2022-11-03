@@ -561,5 +561,5 @@ public class drgnmst
 	} };
 	
 	
-	GAME( 1994, drgnmst, 0, drgnmst,  drgnmst, drgnmst, ROT0, "Unico", "Dragon Master" )
+	public static GameDriver driver_drgnmst	   = new GameDriver("1994"	,"drgnmst"	,"drgnmst.java"	,rom_drgnmst,null	,machine_driver_drgnmst	,input_ports_drgnmst	,init_drgnmst	,ROT0	,	"Unico", "Dragon Master" )
 }

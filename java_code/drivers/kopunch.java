@@ -259,5 +259,5 @@ public class kopunch
 	} };
 	
 	
-	GAMEX( 1981, kopunch, 0, kopunch, kopunch, kopunch, ROT270, "Sega", "KO Punch", GAME_NO_SOUND | GAME_NOT_WORKING)
+	public static GameDriver driver_kopunch	   = new GameDriver("1981"	,"kopunch"	,"kopunch.java"	,rom_kopunch,null	,machine_driver_kopunch	,input_ports_kopunch	,init_kopunch	,ROT270	,	"Sega", "KO Punch", GAME_NO_SOUND | GAME_NOT_WORKING)
 }

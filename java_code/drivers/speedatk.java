@@ -332,5 +332,5 @@ public class speedatk
 		ROM_LOAD( "cb2.bpr",      0x0020, 0x0100, CRC(a604cf96) SHA1(a4ef6e77dcd3abe4c27e8e636222a5ee711a51f5) ) /* lookup table */
 	ROM_END(); }}; 
 	
-	GAME( 1984, speedatk, 0, speedatk, speedatk, 0, ROT0, "Seta Kikaku Corp.", "Speed Attack!" )
+	public static GameDriver driver_speedatk	   = new GameDriver("1984"	,"speedatk"	,"speedatk.java"	,rom_speedatk,null	,machine_driver_speedatk	,input_ports_speedatk	,null	,ROT0	,	"Seta Kikaku Corp.", "Speed Attack!" )
 }

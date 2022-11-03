@@ -325,6 +325,6 @@ public class funkybee
 	
 	
 	
-	GAME( 1982, funkybee, 0, funkybee, funkybee, 0, ROT90, "Orca", "Funky Bee" )
-	GAME( 1983, skylancr, 0, funkybee, skylancr, 0, ROT90, "Orca (Esco Trading Co license)", "Sky Lancer" )
+	public static GameDriver driver_funkybee	   = new GameDriver("1982"	,"funkybee"	,"funkybee.java"	,rom_funkybee,null	,machine_driver_funkybee	,input_ports_funkybee	,null	,ROT90	,	"Orca", "Funky Bee" )
+	public static GameDriver driver_skylancr	   = new GameDriver("1983"	,"skylancr"	,"funkybee.java"	,rom_skylancr,null	,machine_driver_funkybee	,input_ports_skylancr	,null	,ROT90	,	"Orca (Esco Trading Co license)", "Sky Lancer" )
 }

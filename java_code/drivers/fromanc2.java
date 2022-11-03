@@ -969,7 +969,7 @@ public class fromanc2
 	ROM_END(); }}; 
 	
 	
-	GAME( 1995, fromanc2, 0, fromanc2, fromanc2, fromanc2, ROT0, "Video System Co.", "Taisen Idol-Mahjong Final Romance 2 (Japan)" )
-	GAME( 1995, fromancr, 0, fromancr, fromanc2, fromancr, ROT0, "Video System Co.", "Taisen Mahjong FinalRomance R (Japan)" )
-	GAME( 1998, fromanc4, 0, fromanc4, fromanc4, fromanc4, ROT0, "Video System Co.", "Taisen Mahjong FinalRomance 4 (Japan)" )
+	public static GameDriver driver_fromanc2	   = new GameDriver("1995"	,"fromanc2"	,"fromanc2.java"	,rom_fromanc2,null	,machine_driver_fromanc2	,input_ports_fromanc2	,init_fromanc2	,ROT0	,	"Video System Co.", "Taisen Idol-Mahjong Final Romance 2 (Japan)" )
+	public static GameDriver driver_fromancr	   = new GameDriver("1995"	,"fromancr"	,"fromanc2.java"	,rom_fromancr,null	,machine_driver_fromancr	,input_ports_fromanc2	,init_fromancr	,ROT0	,	"Video System Co.", "Taisen Mahjong FinalRomance R (Japan)" )
+	public static GameDriver driver_fromanc4	   = new GameDriver("1998"	,"fromanc4"	,"fromanc2.java"	,rom_fromanc4,null	,machine_driver_fromanc4	,input_ports_fromanc4	,init_fromanc4	,ROT0	,	"Video System Co.", "Taisen Mahjong FinalRomance 4 (Japan)" )
 }

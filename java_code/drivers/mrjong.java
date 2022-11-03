@@ -274,7 +274,7 @@ public class mrjong
 		ROM_LOAD( "clr.g5", 0x0020, 0x0100, CRC(bcb1e2e3) SHA1(c09731836a9d4e50316a84b86f61b599a1ef944d) )
 	ROM_END(); }}; 
 	
-	GAME( 1983, mrjong,   0,      mrjong, mrjong, 0, ROT90, "Kiwako", "Mr. Jong (Japan)" )
-	GAME( 1983, crazyblk, mrjong, mrjong, mrjong, 0, ROT90, "Kiwako (ECI license)", "Crazy Blocks" )
-	GAME( 1983, blkbustr, mrjong, mrjong, mrjong, 0, ROT90, "Kiwako (ECI license)", "BlockBuster" )
+	public static GameDriver driver_mrjong	   = new GameDriver("1983"	,"mrjong"	,"mrjong.java"	,rom_mrjong,null	,machine_driver_mrjong	,input_ports_mrjong	,null	,ROT90	,	"Kiwako", "Mr. Jong (Japan)" )
+	public static GameDriver driver_crazyblk	   = new GameDriver("1983"	,"crazyblk"	,"mrjong.java"	,rom_crazyblk,driver_mrjong	,machine_driver_mrjong	,input_ports_mrjong	,null	,ROT90	,	"Kiwako (ECI license)", "Crazy Blocks" )
+	public static GameDriver driver_blkbustr	   = new GameDriver("1983"	,"blkbustr"	,"mrjong.java"	,rom_blkbustr,driver_mrjong	,machine_driver_mrjong	,input_ports_mrjong	,null	,ROT90	,	"Kiwako (ECI license)", "BlockBuster" )
 }

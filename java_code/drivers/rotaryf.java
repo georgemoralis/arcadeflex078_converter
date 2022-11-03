@@ -170,5 +170,5 @@ public class rotaryf
 		ROM_LOAD( "krf-6.bin",            0x5400, 0x0400, CRC(e28b3713) SHA1(428f73891125f80c722357f1029b18fa9416bcfd) )
 	ROM_END(); }}; 
 	
-	GAMEX(19??, rotaryf, 0,        rotaryf, rotaryf, 8080bw,	ROT270,   "<unknown>", "Rotary Fighter", GAME_NO_SOUND )
+	public static GameDriver driver_rotaryf	   = new GameDriver("19??"	,"rotaryf"	,"rotaryf.java"	,rom_rotaryf,null	,machine_driver_rotaryf	,input_ports_rotaryf	,init_8080bw	,ROT270	,	"<unknown>", "Rotary Fighter", GAME_NO_SOUND )
 }

@@ -902,13 +902,13 @@ public class bbusters
 	/******************************************************************************/
 	
 	#if !MECHATT_HACK
-	GAME( 1989, bbusters, 0, bbusters, bbusters, bbusters, ROT0,  "SNK", "Beast Busters (World ?)" )
+	public static GameDriver driver_bbusters	   = new GameDriver("1989"	,"bbusters"	,"bbusters.java"	,rom_bbusters,null	,machine_driver_bbusters	,input_ports_bbusters	,init_bbusters	,ROT0	,	"SNK", "Beast Busters (World ?)" )
 	#else
-	GAME( 1989, bbusters, 0, bbusters, bbusters, bbusters, ROT0,  "SNK", "Beast Busters" )
+	public static GameDriver driver_bbusters	   = new GameDriver("1989"	,"bbusters"	,"bbusters.java"	,rom_bbusters,null	,machine_driver_bbusters	,input_ports_bbusters	,init_bbusters	,ROT0	,	"SNK", "Beast Busters" )
 	#endif
 	#if !MECHATT_HACK
-	GAME( 1989, mechatt,  0, mechatt,  mechatt,  mechatt,  ROT0,  "SNK", "Mechanized Attack (World)" )
+	public static GameDriver driver_mechatt	   = new GameDriver("1989"	,"mechatt"	,"bbusters.java"	,rom_mechatt,null	,machine_driver_mechatt	,input_ports_mechatt	,init_mechatt	,ROT0	,	"SNK", "Mechanized Attack (World)" )
 	#else
-	GAME( 1989, mechatt,  0, mechatt,  mechatt,  mechatt,  ROT0,  "SNK", "Mechanized Attack" )
+	public static GameDriver driver_mechatt	   = new GameDriver("1989"	,"mechatt"	,"bbusters.java"	,rom_mechatt,null	,machine_driver_mechatt	,input_ports_mechatt	,init_mechatt	,ROT0	,	"SNK", "Mechanized Attack" )
 	#endif
 }

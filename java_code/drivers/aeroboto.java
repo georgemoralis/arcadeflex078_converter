@@ -355,6 +355,6 @@ public class aeroboto
 	
 	
 	
-	GAMEX( 1984, formatz,  0,       formatz, formatz, 0, ROT0, "Jaleco", "Formation Z", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1984, aeroboto, formatz, formatz, formatz, 0, ROT0, "[Jaleco] (Williams license)", "Aeroboto", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_formatz	   = new GameDriver("1984"	,"formatz"	,"aeroboto.java"	,rom_formatz,null	,machine_driver_formatz	,input_ports_formatz	,null	,ROT0	,	"Jaleco", "Formation Z", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_aeroboto	   = new GameDriver("1984"	,"aeroboto"	,"aeroboto.java"	,rom_aeroboto,driver_formatz	,machine_driver_formatz	,input_ports_formatz	,null	,ROT0	,	"[Jaleco] (Williams license)", "Aeroboto", GAME_IMPERFECT_GRAPHICS )
 }

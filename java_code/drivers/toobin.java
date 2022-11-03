@@ -633,10 +633,10 @@ public class toobin
 	 *
 	 *************************************/
 	
-	GAME( 1988, toobin,   0,      toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (rev 3)" )
-	GAME( 1988, toobine,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (Europe, rev 3)" )
-	GAME( 1988, toobing,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (German, rev 3)" )
-	GAME( 1988, toobin2,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (rev 2)" )
-	GAME( 1988, toobin2e, toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (Europe, rev 2)" )
-	GAME( 1988, toobin1,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (rev 1)" )
+	public static GameDriver driver_toobin	   = new GameDriver("1988"	,"toobin"	,"toobin.java"	,rom_toobin,null	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (rev 3)" )
+	public static GameDriver driver_toobine	   = new GameDriver("1988"	,"toobine"	,"toobin.java"	,rom_toobine,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (Europe, rev 3)" )
+	public static GameDriver driver_toobing	   = new GameDriver("1988"	,"toobing"	,"toobin.java"	,rom_toobing,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (German, rev 3)" )
+	public static GameDriver driver_toobin2	   = new GameDriver("1988"	,"toobin2"	,"toobin.java"	,rom_toobin2,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (rev 2)" )
+	public static GameDriver driver_toobin2e	   = new GameDriver("1988"	,"toobin2e"	,"toobin.java"	,rom_toobin2e,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (Europe, rev 2)" )
+	public static GameDriver driver_toobin1	   = new GameDriver("1988"	,"toobin1"	,"toobin.java"	,rom_toobin1,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (rev 1)" )
 }

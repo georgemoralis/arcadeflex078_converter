@@ -375,5 +375,5 @@ public class popper
 	ROM_END(); }}; 
 	
 	
-	GAMEX(1983, popper, 0, popper, popper, 0, ROT90, "Omori Electric Co., Ltd.", "Popper", GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_popper	   = new GameDriver("1983"	,"popper"	,"popper.java"	,rom_popper,null	,machine_driver_popper	,input_ports_popper	,null	,ROT90	,	"Omori Electric Co., Ltd.", "Popper", GAME_IMPERFECT_COLORS )
 }

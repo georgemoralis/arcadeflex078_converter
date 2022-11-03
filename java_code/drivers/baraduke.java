@@ -621,8 +621,8 @@ public class baraduke
 	
 	
 	
-	GAME( 1985, baraduke, 0,        baraduke, baraduke, 0,        ROT0, "Namco", "Baraduke (set 1)" )
-	GAME( 1985, baraduka, baraduke, baraduke, baraduke, 0,        ROT0, "Namco", "Baraduke (set 2)" )
-	GAME( 1985, metrocrs, 0,        metrocrs, metrocrs, metrocrs, ROT0, "Namco", "Metro-Cross (set 1)" )
-	GAME( 1985, metrocra, metrocrs, metrocrs, metrocrs, metrocrs, ROT0, "Namco", "Metro-Cross (set 2)" )
+	public static GameDriver driver_baraduke	   = new GameDriver("1985"	,"baraduke"	,"baraduke.java"	,rom_baraduke,null	,machine_driver_baraduke	,input_ports_baraduke	,null	,ROT0	,	"Namco", "Baraduke (set 1)" )
+	public static GameDriver driver_baraduka	   = new GameDriver("1985"	,"baraduka"	,"baraduke.java"	,rom_baraduka,driver_baraduke	,machine_driver_baraduke	,input_ports_baraduke	,null	,ROT0	,	"Namco", "Baraduke (set 2)" )
+	public static GameDriver driver_metrocrs	   = new GameDriver("1985"	,"metrocrs"	,"baraduke.java"	,rom_metrocrs,null	,machine_driver_metrocrs	,input_ports_metrocrs	,init_metrocrs	,ROT0	,	"Namco", "Metro-Cross (set 1)" )
+	public static GameDriver driver_metrocra	   = new GameDriver("1985"	,"metrocra"	,"baraduke.java"	,rom_metrocra,driver_metrocrs	,machine_driver_metrocrs	,input_ports_metrocrs	,init_metrocrs	,ROT0	,	"Namco", "Metro-Cross (set 2)" )
 }

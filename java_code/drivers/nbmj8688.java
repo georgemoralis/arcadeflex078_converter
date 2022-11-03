@@ -2751,38 +2751,38 @@ public class nbmj8688
 	
 	
 	/* 8-bit palette */
-	GAMEX(1986, crystalg, 0,        crystalg,        crystalg, crystalg, ROT0, "Nichibutsu", "Crystal Gal (Japan 860512)", GAME_NOT_WORKING )
-	GAMEX(1986, crystal2, 0,        crystalg,        crystal2, crystal2, ROT0, "Nichibutsu", "Crystal Gal 2 (Japan 860620)", GAME_NOT_WORKING )
-	GAME( 1986, apparel,  0,        apparel,         apparel,  apparel,  ROT0, "Central Denshi", "Apparel Night (Japan 860929)" )
+	public static GameDriver driver_crystalg	   = new GameDriver("1986"	,"crystalg"	,"nbmj8688.java"	,rom_crystalg,null	,machine_driver_crystalg	,input_ports_crystalg	,init_crystalg	,ROT0	,	"Nichibutsu", "Crystal Gal (Japan 860512)", GAME_NOT_WORKING )
+	public static GameDriver driver_crystal2	   = new GameDriver("1986"	,"crystal2"	,"nbmj8688.java"	,rom_crystal2,null	,machine_driver_crystalg	,input_ports_crystal2	,init_crystal2	,ROT0	,	"Nichibutsu", "Crystal Gal 2 (Japan 860620)", GAME_NOT_WORKING )
+	public static GameDriver driver_apparel	   = new GameDriver("1986"	,"apparel"	,"nbmj8688.java"	,rom_apparel,null	,machine_driver_apparel	,input_ports_apparel	,init_apparel	,ROT0	,	"Central Denshi", "Apparel Night (Japan 860929)" )
 	
 	/* hybrid 12-bit palette */
-	GAME( 1986, citylove, 0,        mbmj_h12bit,     citylove, citylove, ROT0, "Nichibutsu", "City Love (Japan 860908)" )
-	GAME( 1986, secolove, 0,        mbmj_h12bit,     secolove, secolove, ROT0, "Nichibutsu", "Second Love (Japan 861201)" )
+	public static GameDriver driver_citylove	   = new GameDriver("1986"	,"citylove"	,"nbmj8688.java"	,rom_citylove,null	,machine_driver_mbmj_h12bit	,input_ports_citylove	,init_citylove	,ROT0	,	"Nichibutsu", "City Love (Japan 860908)" )
+	public static GameDriver driver_secolove	   = new GameDriver("1986"	,"secolove"	,"nbmj8688.java"	,rom_secolove,null	,machine_driver_mbmj_h12bit	,input_ports_secolove	,init_secolove	,ROT0	,	"Nichibutsu", "Second Love (Japan 861201)" )
 	
 	/* hybrid 16-bit palette */
-	GAME( 1987, seiha,    0,        seiha,           seiha,    seiha,    ROT0, "Nichibutsu", "Seiha (Japan 870725)" )
-	GAME( 1987, seiham,   seiha,    seiha,           seiham,   seiham,   ROT0, "Nichibutsu", "Seiha [BET] (Japan 870723)" )
-	GAME( 1987, iemoto,   0,        iemoto,          iemoto,   iemoto,   ROT0, "Nichibutsu", "Iemoto (Japan 871020)" )
-	GAME( 1987, ojousan,  0,        ojousan,         ojousan,  ojousan,  ROT0, "Nichibutsu", "Ojousan (Japan 871204)" )
-	GAME( 1988, korinai,  0,        ojousan,         korinai,  korinai,  ROT0, "Nichibutsu", "Mahjong-zukino Korinai Menmen (Japan 880425)" )
+	public static GameDriver driver_seiha	   = new GameDriver("1987"	,"seiha"	,"nbmj8688.java"	,rom_seiha,null	,machine_driver_seiha	,input_ports_seiha	,init_seiha	,ROT0	,	"Nichibutsu", "Seiha (Japan 870725)" )
+	public static GameDriver driver_seiham	   = new GameDriver("1987"	,"seiham"	,"nbmj8688.java"	,rom_seiham,driver_seiha	,machine_driver_seiha	,input_ports_seiham	,init_seiham	,ROT0	,	"Nichibutsu", "Seiha [BET] (Japan 870723)" )
+	public static GameDriver driver_iemoto	   = new GameDriver("1987"	,"iemoto"	,"nbmj8688.java"	,rom_iemoto,null	,machine_driver_iemoto	,input_ports_iemoto	,init_iemoto	,ROT0	,	"Nichibutsu", "Iemoto (Japan 871020)" )
+	public static GameDriver driver_ojousan	   = new GameDriver("1987"	,"ojousan"	,"nbmj8688.java"	,rom_ojousan,null	,machine_driver_ojousan	,input_ports_ojousan	,init_ojousan	,ROT0	,	"Nichibutsu", "Ojousan (Japan 871204)" )
+	public static GameDriver driver_korinai	   = new GameDriver("1988"	,"korinai"	,"nbmj8688.java"	,rom_korinai,null	,machine_driver_ojousan	,input_ports_korinai	,init_korinai	,ROT0	,	"Nichibutsu", "Mahjong-zukino Korinai Menmen (Japan 880425)" )
 	
 	/* pure 16-bit palette (+ LCD in some) */
-	GAME( 1987, housemnq, 0,        mbmj_p16bit_LCD, housemnq, housemnq, ROT0, "Nichibutsu", "House Mannequin (Japan 870217)" )
-	GAME( 1987, housemn2, 0,        mbmj_p16bit_LCD, housemn2, housemn2, ROT0, "Nichibutsu", "House Mannequin Roppongi Live hen (Japan 870418)" )
-	GAME( 1987, bijokkoy, 0,        mbmj_p16bit_LCD, bijokkoy, bijokkoy, ROT0, "Nichibutsu", "Bijokko Yume Monogatari (Japan 870925)" )
-	GAME( 1988, bijokkog, 0,        mbmj_p16bit_LCD, bijokkog, bijokkog, ROT0, "Nichibutsu", "Bijokko Gakuen (Japan 880116)" )
-	GAME( 1988, orangec,  0,        mbmj_p16bit,     orangec,  orangec,  ROT0, "Daiichi Denshi", "Orange Club - Maruhi Kagai Jugyou (Japan 880213)" )
-	GAME( 1988, vipclub,  orangec,  mbmj_p16bit,     vipclub,  orangec,  ROT0, "Daiichi Denshi", "Vip Club [BET] (Japan 880310)" )
+	public static GameDriver driver_housemnq	   = new GameDriver("1987"	,"housemnq"	,"nbmj8688.java"	,rom_housemnq,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_housemnq	,init_housemnq	,ROT0	,	"Nichibutsu", "House Mannequin (Japan 870217)" )
+	public static GameDriver driver_housemn2	   = new GameDriver("1987"	,"housemn2"	,"nbmj8688.java"	,rom_housemn2,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_housemn2	,init_housemn2	,ROT0	,	"Nichibutsu", "House Mannequin Roppongi Live hen (Japan 870418)" )
+	public static GameDriver driver_bijokkoy	   = new GameDriver("1987"	,"bijokkoy"	,"nbmj8688.java"	,rom_bijokkoy,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_bijokkoy	,init_bijokkoy	,ROT0	,	"Nichibutsu", "Bijokko Yume Monogatari (Japan 870925)" )
+	public static GameDriver driver_bijokkog	   = new GameDriver("1988"	,"bijokkog"	,"nbmj8688.java"	,rom_bijokkog,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_bijokkog	,init_bijokkog	,ROT0	,	"Nichibutsu", "Bijokko Gakuen (Japan 880116)" )
+	public static GameDriver driver_orangec	   = new GameDriver("1988"	,"orangec"	,"nbmj8688.java"	,rom_orangec,null	,machine_driver_mbmj_p16bit	,input_ports_orangec	,init_orangec	,ROT0	,	"Daiichi Denshi", "Orange Club - Maruhi Kagai Jugyou (Japan 880213)" )
+	public static GameDriver driver_vipclub	   = new GameDriver("1988"	,"vipclub"	,"nbmj8688.java"	,rom_vipclub,driver_orangec	,machine_driver_mbmj_p16bit	,input_ports_vipclub	,init_orangec	,ROT0	,	"Daiichi Denshi", "Vip Club [BET] (Japan 880310)" )
 	
 	/* pure 12-bit palette */
-	GAME( 1988, kaguya,   0,        mbmj_p12bit,     kaguya,   kaguya,   ROT0, "MIKI SYOUJI", "Mahjong Kaguyahime [BET] (Japan 880521)" )
-	GAME( 1988, kanatuen, 0,        mbmj_p12bit,     kanatuen, kanatuen, ROT0, "Panac", "Kanatsuen no Onna [BET] (Japan 880905)" )
-	GAME( 1989, idhimitu, 0,        mbmj_p12bit,     idhimitu, idhimitu, ROT0, "Digital Soft", "Idol no Himitsu [BET] (Japan 890304)" )
+	public static GameDriver driver_kaguya	   = new GameDriver("1988"	,"kaguya"	,"nbmj8688.java"	,rom_kaguya,null	,machine_driver_mbmj_p12bit	,input_ports_kaguya	,init_kaguya	,ROT0	,	"MIKI SYOUJI", "Mahjong Kaguyahime [BET] (Japan 880521)" )
+	public static GameDriver driver_kanatuen	   = new GameDriver("1988"	,"kanatuen"	,"nbmj8688.java"	,rom_kanatuen,null	,machine_driver_mbmj_p12bit	,input_ports_kanatuen	,init_kanatuen	,ROT0	,	"Panac", "Kanatsuen no Onna [BET] (Japan 880905)" )
+	public static GameDriver driver_idhimitu	   = new GameDriver("1989"	,"idhimitu"	,"nbmj8688.java"	,rom_idhimitu,null	,machine_driver_mbmj_p12bit	,input_ports_idhimitu	,init_idhimitu	,ROT0	,	"Digital Soft", "Idol no Himitsu [BET] (Japan 890304)" )
 	
 	/* pure 12-bit palette + YM3812 instead of AY-3-8910 */
-	GAME( 1988, mjsikaku, 0,        mjsikaku,        mjsikaku, mjsikaku, ROT0, "Nichibutsu", "Mahjong Shikaku (Japan 880908)" )
-	GAME( 1988, mjsikakb, mjsikaku, mjsikaku,        mjsikaku, mjsikaku, ROT0, "Nichibutsu", "Mahjong Shikaku (Japan 880722)" )
-	GAME( 1988, otonano,  0,        otonano,         otonano,  otonano,  ROT0, "Apple", "Otona no Mahjong (Japan 880628)" )
-	GAME( 1988, mjcamera, 0,        otonano,         mjcamera, mjcamera, ROT0, "MIKI SYOUJI", "Mahjong Camera Kozou (Japan 881109)" )
+	public static GameDriver driver_mjsikaku	   = new GameDriver("1988"	,"mjsikaku"	,"nbmj8688.java"	,rom_mjsikaku,null	,machine_driver_mjsikaku	,input_ports_mjsikaku	,init_mjsikaku	,ROT0	,	"Nichibutsu", "Mahjong Shikaku (Japan 880908)" )
+	public static GameDriver driver_mjsikakb	   = new GameDriver("1988"	,"mjsikakb"	,"nbmj8688.java"	,rom_mjsikakb,driver_mjsikaku	,machine_driver_mjsikaku	,input_ports_mjsikaku	,init_mjsikaku	,ROT0	,	"Nichibutsu", "Mahjong Shikaku (Japan 880722)" )
+	public static GameDriver driver_otonano	   = new GameDriver("1988"	,"otonano"	,"nbmj8688.java"	,rom_otonano,null	,machine_driver_otonano	,input_ports_otonano	,init_otonano	,ROT0	,	"Apple", "Otona no Mahjong (Japan 880628)" )
+	public static GameDriver driver_mjcamera	   = new GameDriver("1988"	,"mjcamera"	,"nbmj8688.java"	,rom_mjcamera,null	,machine_driver_otonano	,input_ports_mjcamera	,init_mjcamera	,ROT0	,	"MIKI SYOUJI", "Mahjong Camera Kozou (Japan 881109)" )
 	
 }

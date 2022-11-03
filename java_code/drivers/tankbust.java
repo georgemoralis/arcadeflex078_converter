@@ -460,5 +460,5 @@ public class tankbust
 	ROM_END(); }}; 
 	
 	
-	GAME(1985, tankbust,	 0, 	  tankbust, tankbust,  0, ROT90, "Valadon Automation", "Tank Busters" )
+	public static GameDriver driver_tankbust	   = new GameDriver("1985"	,"tankbust"	,"tankbust.java"	,rom_tankbust,null	,machine_driver_tankbust	,input_ports_tankbust	,null	,ROT90	,	"Valadon Automation", "Tank Busters" )
 }

@@ -382,8 +382,8 @@ public class hitme
 	   ROM_LOAD( "barricad.7h", 0x0000, 0x0200, CRC(c676fd22) SHA1(c37bf92f5a146a93bd977b2a05485addc00ab066) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1976, hitme,    0,        hitme,    hitme,    0, ROT0, "RamTek", "Hit Me", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 197?, mblkjack, hitme,    hitme,    hitme,    0, ROT0, "Mirco", "Black Jack (Mirco)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1976, barricad, 0,        brickyrd, brickyrd, 0, ROT0, "RamTek", "Barricade", GAME_NO_SOUND  )
-	GAMEX( 1976, brickyrd, barricad, brickyrd, brickyrd, 0, ROT0, "RamTek", "Brickyard", GAME_NO_SOUND  )
+	public static GameDriver driver_hitme	   = new GameDriver("1976"	,"hitme"	,"hitme.java"	,rom_hitme,null	,machine_driver_hitme	,input_ports_hitme	,null	,ROT0	,	"RamTek", "Hit Me", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mblkjack	   = new GameDriver("197?"	,"mblkjack"	,"hitme.java"	,rom_mblkjack,driver_hitme	,machine_driver_hitme	,input_ports_hitme	,null	,ROT0	,	"Mirco", "Black Jack (Mirco)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_barricad	   = new GameDriver("1976"	,"barricad"	,"hitme.java"	,rom_barricad,null	,machine_driver_brickyrd	,input_ports_brickyrd	,null	,ROT0	,	"RamTek", "Barricade", GAME_NO_SOUND  )
+	public static GameDriver driver_brickyrd	   = new GameDriver("1976"	,"brickyrd"	,"hitme.java"	,rom_brickyrd,driver_barricad	,machine_driver_brickyrd	,input_ports_brickyrd	,null	,ROT0	,	"RamTek", "Brickyard", GAME_NO_SOUND  )
 }

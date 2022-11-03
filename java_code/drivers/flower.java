@@ -332,5 +332,5 @@ public class flower
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1986, flower, 0, flower, flower, 0, ROT0, "Komax", "Flower", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	public static GameDriver driver_flower	   = new GameDriver("1986"	,"flower"	,"flower.java"	,rom_flower,null	,machine_driver_flower	,input_ports_flower	,null	,ROT0	,	"Komax", "Flower", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

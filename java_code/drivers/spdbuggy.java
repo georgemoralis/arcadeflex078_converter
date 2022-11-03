@@ -508,7 +508,7 @@ public class spdbuggy
 	
 	ROM_END(); }}; 
 	
-	GAMEX( 1986, spdbuggy, 0, spdbuggy, spdbuggy, 0, ROT0, "Tatsumi", "Speed Buggy", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_spdbuggy	   = new GameDriver("1986"	,"spdbuggy"	,"spdbuggy.java"	,rom_spdbuggy,null	,machine_driver_spdbuggy	,input_ports_spdbuggy	,null	,ROT0	,	"Tatsumi", "Speed Buggy", GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 	
 	

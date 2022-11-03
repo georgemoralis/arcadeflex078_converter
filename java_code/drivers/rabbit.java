@@ -184,6 +184,6 @@ public class rabbit
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1997, rabbit, 0, rabbit, rabbit, 0, ROT0, "Electronic Arts", "Rabbit", GAME_NOT_WORKING | GAME_NO_SOUND )
-	GAMEX( 1997, tmmjprd, 0, rabbit, rabbit, 0, ROT0, "Media / Sonnet", "Tokimeki Mahjong Paradise - Dear My Love", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_rabbit	   = new GameDriver("1997"	,"rabbit"	,"rabbit.java"	,rom_rabbit,null	,machine_driver_rabbit	,input_ports_rabbit	,null	,ROT0	,	"Electronic Arts", "Rabbit", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_tmmjprd	   = new GameDriver("1997"	,"tmmjprd"	,"rabbit.java"	,rom_tmmjprd,null	,machine_driver_rabbit	,input_ports_rabbit	,null	,ROT0	,	"Media / Sonnet", "Tokimeki Mahjong Paradise - Dear My Love", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

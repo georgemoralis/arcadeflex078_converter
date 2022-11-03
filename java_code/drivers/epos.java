@@ -744,12 +744,12 @@ public class epos
 	 *
 	 *************************************/
 	
-	GAME ( 1982, megadon,  0,        epos,  megadon,  0,	  ROT270, "Epos Corporation (Photar Industries license)", "Megadon" )
-	GAMEX( 1982, catapult, 0,        epos,  igmo,     0,	  ROT270, "Epos Corporation", "Catapult", GAME_NOT_WORKING) /* bad rom, hold f2 for test mode */
-	GAME ( 1983, suprglob, 0,        epos,  suprglob, 0,	  ROT270, "Epos Corporation", "Super Glob" )
-	GAME ( 1983, theglob,  suprglob, epos,  suprglob, 0,	  ROT270, "Epos Corporation", "The Glob" )
-	GAME ( 1983, theglob2, suprglob, epos,  suprglob, 0,	  ROT270, "Epos Corporation", "The Glob (earlier)" )
-	GAME ( 1983, theglob3, suprglob, epos,  suprglob, 0,	  ROT270, "Epos Corporation", "The Glob (set 3)" )
-	GAMEX( 1984, igmo,     0,        epos,  igmo,     0,	  ROT270, "Epos Corporation", "IGMO", GAME_WRONG_COLORS )
-	GAMEX( 19??, dealer,   0,        dealer, dealer,  dealer, ROT270, "Epos Corporation", "The Dealer", GAME_NOT_WORKING)
+	public static GameDriver driver_megadon	   = new GameDriver("1982"	,"megadon"	,"epos.java"	,rom_megadon,null	,machine_driver_epos	,input_ports_megadon	,null	,ROT270	,	"Epos Corporation (Photar Industries license)", "Megadon" )
+	public static GameDriver driver_catapult	   = new GameDriver("1982"	,"catapult"	,"epos.java"	,rom_catapult,null	,machine_driver_epos	,input_ports_igmo	,null	,ROT270	,	"Epos Corporation", "Catapult", GAME_NOT_WORKING) /* bad rom, hold f2 for test mode */
+	public static GameDriver driver_suprglob	   = new GameDriver("1983"	,"suprglob"	,"epos.java"	,rom_suprglob,null	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "Super Glob" )
+	public static GameDriver driver_theglob	   = new GameDriver("1983"	,"theglob"	,"epos.java"	,rom_theglob,driver_suprglob	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "The Glob" )
+	public static GameDriver driver_theglob2	   = new GameDriver("1983"	,"theglob2"	,"epos.java"	,rom_theglob2,driver_suprglob	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "The Glob (earlier)" )
+	public static GameDriver driver_theglob3	   = new GameDriver("1983"	,"theglob3"	,"epos.java"	,rom_theglob3,driver_suprglob	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "The Glob (set 3)" )
+	public static GameDriver driver_igmo	   = new GameDriver("1984"	,"igmo"	,"epos.java"	,rom_igmo,null	,machine_driver_epos	,input_ports_igmo	,null	,ROT270	,	"Epos Corporation", "IGMO", GAME_WRONG_COLORS )
+	public static GameDriver driver_dealer	   = new GameDriver("19??"	,"dealer"	,"epos.java"	,rom_dealer,null	,machine_driver_dealer	,input_ports_dealer	,init_dealer	,ROT270	,	"Epos Corporation", "The Dealer", GAME_NOT_WORKING)
 }

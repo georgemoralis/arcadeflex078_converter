@@ -1348,10 +1348,10 @@ public class srmp2
 	ROM_END(); }}; 
 	
 	
-	GAME( 1987, srmp2,     0,        srmp2,    srmp2,    srmp2,   ROT0, "Seta", "Super Real Mahjong Part 2 (Japan)" )
-	GAME( 1988, srmp3,     0,        srmp3,    srmp3,    srmp3,   ROT0, "Seta", "Super Real Mahjong Part 3 (Japan)" )
-	GAME( 1990, mjyuugi,   0,        mjyuugi,  mjyuugi,  0,       ROT0, "Visco", "Mahjong Yuugi (Japan set 1)" )
-	GAME( 1990, mjyuugia,  mjyuugi,  mjyuugi,  mjyuugi,  0,       ROT0, "Visco", "Mahjong Yuugi (Japan set 2)" )
-	GAME( 1991, ponchin,   0,        mjyuugi,  ponchin,  0,       ROT0, "Visco", "Mahjong Pon Chin Kan (Japan set 1)" )
-	GAME( 1991, ponchina,  ponchin,  mjyuugi,  ponchin,  0,       ROT0, "Visco", "Mahjong Pon Chin Kan (Japan set 2)" )
+	public static GameDriver driver_srmp2	   = new GameDriver("1987"	,"srmp2"	,"srmp2.java"	,rom_srmp2,null	,machine_driver_srmp2	,input_ports_srmp2	,init_srmp2	,ROT0	,	"Seta", "Super Real Mahjong Part 2 (Japan)" )
+	public static GameDriver driver_srmp3	   = new GameDriver("1988"	,"srmp3"	,"srmp2.java"	,rom_srmp3,null	,machine_driver_srmp3	,input_ports_srmp3	,init_srmp3	,ROT0	,	"Seta", "Super Real Mahjong Part 3 (Japan)" )
+	public static GameDriver driver_mjyuugi	   = new GameDriver("1990"	,"mjyuugi"	,"srmp2.java"	,rom_mjyuugi,null	,machine_driver_mjyuugi	,input_ports_mjyuugi	,null	,ROT0	,	"Visco", "Mahjong Yuugi (Japan set 1)" )
+	public static GameDriver driver_mjyuugia	   = new GameDriver("1990"	,"mjyuugia"	,"srmp2.java"	,rom_mjyuugia,driver_mjyuugi	,machine_driver_mjyuugi	,input_ports_mjyuugi	,null	,ROT0	,	"Visco", "Mahjong Yuugi (Japan set 2)" )
+	public static GameDriver driver_ponchin	   = new GameDriver("1991"	,"ponchin"	,"srmp2.java"	,rom_ponchin,null	,machine_driver_mjyuugi	,input_ports_ponchin	,null	,ROT0	,	"Visco", "Mahjong Pon Chin Kan (Japan set 1)" )
+	public static GameDriver driver_ponchina	   = new GameDriver("1991"	,"ponchina"	,"srmp2.java"	,rom_ponchina,driver_ponchin	,machine_driver_mjyuugi	,input_ports_ponchin	,null	,ROT0	,	"Visco", "Mahjong Pon Chin Kan (Japan set 2)" )
 }

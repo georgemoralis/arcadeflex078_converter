@@ -417,5 +417,5 @@ public class ashnojoe
 		ROM_LOAD( "sj401-nw.bin", 0x00000, 0x80000, CRC(25dfab59) SHA1(7d50159204ba05323a2442778f35192e66117dda) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1990, ashnojoe, 0, ashnojoe, ashnojoe, ashnojoe, ROT0, "WAVE / Taito Corporation", "Ashita no Joe (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_ashnojoe	   = new GameDriver("1990"	,"ashnojoe"	,"ashnojoe.java"	,rom_ashnojoe,null	,machine_driver_ashnojoe	,input_ports_ashnojoe	,init_ashnojoe	,ROT0	,	"WAVE / Taito Corporation", "Ashita no Joe (Japan)", GAME_IMPERFECT_SOUND )
 }

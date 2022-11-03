@@ -907,11 +907,11 @@ public class bwidow
 	 *
 	 *************************************/
 	
-	GAME( 1980, spacduel, 0,        spacduel, spacduel, 0, ROT0, "Atari", "Space Duel" )
-	GAME( 1982, bwidow,   0,        bwidow,   bwidow,   0, ROT0, "Atari", "Black Widow" )
-	GAME( 1982, gravitar, 0,        gravitar, gravitar, 0, ROT0, "Atari", "Gravitar (version 3)" )
-	GAME( 1982, gravitr2, gravitar, gravitar, gravitar, 0, ROT0, "Atari", "Gravitar (version 2)" )
-	GAME( 1982, gravp,    gravitar, gravitar, gravitar, 0, ROT0, "Atari", "Gravitar (prototype)" )
-	GAME( 1982, lunarbat, gravitar, gravitar, gravitar, 0, ROT0, "Atari", "Lunar Battle (prototype, later)" )
-	GAME( 1982, lunarba1, gravitar, lunarbat, lunarbat, 0, ROT0, "Atari", "Lunar Battle (prototype, earlier)" )
+	public static GameDriver driver_spacduel	   = new GameDriver("1980"	,"spacduel"	,"bwidow.java"	,rom_spacduel,null	,machine_driver_spacduel	,input_ports_spacduel	,null	,ROT0	,	"Atari", "Space Duel" )
+	public static GameDriver driver_bwidow	   = new GameDriver("1982"	,"bwidow"	,"bwidow.java"	,rom_bwidow,null	,machine_driver_bwidow	,input_ports_bwidow	,null	,ROT0	,	"Atari", "Black Widow" )
+	public static GameDriver driver_gravitar	   = new GameDriver("1982"	,"gravitar"	,"bwidow.java"	,rom_gravitar,null	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Gravitar (version 3)" )
+	public static GameDriver driver_gravitr2	   = new GameDriver("1982"	,"gravitr2"	,"bwidow.java"	,rom_gravitr2,driver_gravitar	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Gravitar (version 2)" )
+	public static GameDriver driver_gravp	   = new GameDriver("1982"	,"gravp"	,"bwidow.java"	,rom_gravp,driver_gravitar	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Gravitar (prototype)" )
+	public static GameDriver driver_lunarbat	   = new GameDriver("1982"	,"lunarbat"	,"bwidow.java"	,rom_lunarbat,driver_gravitar	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Lunar Battle (prototype, later)" )
+	public static GameDriver driver_lunarba1	   = new GameDriver("1982"	,"lunarba1"	,"bwidow.java"	,rom_lunarba1,driver_gravitar	,machine_driver_lunarbat	,input_ports_lunarbat	,null	,ROT0	,	"Atari", "Lunar Battle (prototype, earlier)" )
 }

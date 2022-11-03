@@ -1166,12 +1166,12 @@ public class gaiden
 	
 	
 	
-	GAME( 1988, shadoww,  0,        shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Shadow Warriors (World set 1)" )
-	GAME( 1988, shadowwa, shadoww,  shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Shadow Warriors (World set 2)" )
-	GAME( 1988, gaiden,   shadoww,  shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Ninja Gaiden (US)" )
-	GAME( 1989, ryukendn, shadoww,  shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Ninja Ryukenden (Japan)" )
-	GAME( 1989, wildfang, 0,        shadoww, wildfang, wildfang, ROT0, "Tecmo", "Wild Fang / Tecmo Knight" )
-	GAME( 1989, tknight,  wildfang, shadoww, tknight,  wildfang, ROT0, "Tecmo", "Tecmo Knight" )
-	GAMEX(1991, stratof,  0,        raiga,	 raiga,    raiga,    ROT0, "Tecmo", "Raiga - Strato Fighter (US)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1991, raiga,    stratof,  raiga,	 raiga,    raiga,    ROT0, "Tecmo", "Raiga - Strato Fighter (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_shadoww	   = new GameDriver("1988"	,"shadoww"	,"gaiden.java"	,rom_shadoww,null	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Shadow Warriors (World set 1)" )
+	public static GameDriver driver_shadowwa	   = new GameDriver("1988"	,"shadowwa"	,"gaiden.java"	,rom_shadowwa,driver_shadoww	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Shadow Warriors (World set 2)" )
+	public static GameDriver driver_gaiden	   = new GameDriver("1988"	,"gaiden"	,"gaiden.java"	,rom_gaiden,driver_shadoww	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Ninja Gaiden (US)" )
+	public static GameDriver driver_ryukendn	   = new GameDriver("1989"	,"ryukendn"	,"gaiden.java"	,rom_ryukendn,driver_shadoww	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Ninja Ryukenden (Japan)" )
+	public static GameDriver driver_wildfang	   = new GameDriver("1989"	,"wildfang"	,"gaiden.java"	,rom_wildfang,null	,machine_driver_shadoww	,input_ports_wildfang	,init_wildfang	,ROT0	,	"Tecmo", "Wild Fang / Tecmo Knight" )
+	public static GameDriver driver_tknight	   = new GameDriver("1989"	,"tknight"	,"gaiden.java"	,rom_tknight,driver_wildfang	,machine_driver_shadoww	,input_ports_tknight	,init_wildfang	,ROT0	,	"Tecmo", "Tecmo Knight" )
+	public static GameDriver driver_stratof	   = new GameDriver("1991"	,"stratof"	,"gaiden.java"	,rom_stratof,null	,machine_driver_raiga	,input_ports_raiga	,init_raiga	,ROT0	,	"Tecmo", "Raiga - Strato Fighter (US)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_raiga	   = new GameDriver("1991"	,"raiga"	,"gaiden.java"	,rom_raiga,driver_stratof	,machine_driver_raiga	,input_ports_raiga	,init_raiga	,ROT0	,	"Tecmo", "Raiga - Strato Fighter (Japan)", GAME_IMPERFECT_GRAPHICS )
 }

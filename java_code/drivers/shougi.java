@@ -456,6 +456,6 @@ public class shougi
 		ROM_LOAD( "pr.2l",   0x0000, 0x0020, CRC(cd3559ff) SHA1(a1291b06a8a337943660b2ef62c94c49d58a6fb5) )
 	ROM_END(); }}; 
 	
-	GAMEX( 198?, shougi,  0,        shougi,  shougi,  0, ROT0, "Alpha Denshi", "Shougi", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 198?, shougi2, shougi,   shougi,  shougi,  0, ROT0, "Alpha Denshi", "Shougi 2", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_shougi	   = new GameDriver("198?"	,"shougi"	,"shougi.java"	,rom_shougi,null	,machine_driver_shougi	,input_ports_shougi	,null	,ROT0	,	"Alpha Denshi", "Shougi", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_shougi2	   = new GameDriver("198?"	,"shougi2"	,"shougi.java"	,rom_shougi2,driver_shougi	,machine_driver_shougi	,input_ports_shougi	,null	,ROT0	,	"Alpha Denshi", "Shougi 2", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

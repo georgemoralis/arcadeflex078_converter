@@ -987,7 +987,7 @@ public class hal21
 		ROM_LOAD( "up02_f14.rom",  0x800, 0x00400, CRC(c3fd1dd3) SHA1(c48030cc458f0bebea0ffccf3d3c43260da6a7fb) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1985, aso,    0,     aso,   aso,   aso,   ROT270, "SNK", "ASO - Armored Scrum Object", GAME_NO_COCKTAIL )
-	GAMEX( 1985, hal21,  0,     hal21, hal21, hal21, ROT270, "SNK", "HAL21", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
-	GAMEX( 1985, hal21j, hal21, hal21, hal21, hal21, ROT270, "SNK", "HAL21 (Japan)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_aso	   = new GameDriver("1985"	,"aso"	,"hal21.java"	,rom_aso,null	,machine_driver_aso	,input_ports_aso	,init_aso	,ROT270	,	"SNK", "ASO - Armored Scrum Object", GAME_NO_COCKTAIL )
+	public static GameDriver driver_hal21	   = new GameDriver("1985"	,"hal21"	,"hal21.java"	,rom_hal21,null	,machine_driver_hal21	,input_ports_hal21	,init_hal21	,ROT270	,	"SNK", "HAL21", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_hal21j	   = new GameDriver("1985"	,"hal21j"	,"hal21.java"	,rom_hal21j,driver_hal21	,machine_driver_hal21	,input_ports_hal21	,init_hal21	,ROT270	,	"SNK", "HAL21 (Japan)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
 }

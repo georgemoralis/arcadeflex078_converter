@@ -2270,15 +2270,15 @@ public class seattle
 	 *************************************/
 	
 	/* Atari */
-	GAME ( 1996, wg3dh,    0,        seattle150, wg3dh,    wg3dh,    ROT0, "Atari Games",  "Wayne Gretzky's 3D Hockey" )
-	GAME ( 1996, mace,     0,        seattle200, mace,     mace,     ROT0, "Atari Games",  "Mace: The Dark Age" )
-	GAMEX( 1996, sfrush,   0,        flagstaff,  sfrush,   sfrush,   ROT0, "Atari Games",  "San Francisco Rush", GAME_NOT_WORKING )
-	GAME ( 1998, calspeed, 0,        seattle150, calspeed, calspeed, ROT0, "Atari Games",  "California Speed" )
+	public static GameDriver driver_wg3dh	   = new GameDriver("1996"	,"wg3dh"	,"seattle.java"	,rom_wg3dh,null	,machine_driver_seattle150	,input_ports_wg3dh	,init_wg3dh	,ROT0	,	"Atari Games",  "Wayne Gretzky's 3D Hockey" )
+	public static GameDriver driver_mace	   = new GameDriver("1996"	,"mace"	,"seattle.java"	,rom_mace,null	,machine_driver_seattle200	,input_ports_mace	,init_mace	,ROT0	,	"Atari Games",  "Mace: The Dark Age" )
+	public static GameDriver driver_sfrush	   = new GameDriver("1996"	,"sfrush"	,"seattle.java"	,rom_sfrush,null	,machine_driver_flagstaff	,input_ports_sfrush	,init_sfrush	,ROT0	,	"Atari Games",  "San Francisco Rush", GAME_NOT_WORKING )
+	public static GameDriver driver_calspeed	   = new GameDriver("1998"	,"calspeed"	,"seattle.java"	,rom_calspeed,null	,machine_driver_seattle150	,input_ports_calspeed	,init_calspeed	,ROT0	,	"Atari Games",  "California Speed" )
 	
 	/* Midway */
-	GAME ( 1997, biofreak, 0,        seattle150, biofreak, biofreak, ROT0, "Midway Games", "BioFreaks (prototype)" )
-	GAME ( 1997, blitz,    0,        seattle150, blitz,    blitz,    ROT0, "Midway Games", "NFL Blitz" )
-	GAME ( 1998, blitz99,  0,        seattle150, blitz99,  blitz99,  ROT0, "Midway Games", "NFL Blitz '99" )
-	GAME ( 1999, blitz2k,  0,        seattle150, blitz99,  blitz2k,  ROT0, "Midway Games", "NFL Blitz 2000" )
-	GAME ( 1998, carnevil, 0,        carnevil,   carnevil, carnevil, ROT0, "Midway Games", "CarnEvil" )
+	public static GameDriver driver_biofreak	   = new GameDriver("1997"	,"biofreak"	,"seattle.java"	,rom_biofreak,null	,machine_driver_seattle150	,input_ports_biofreak	,init_biofreak	,ROT0	,	"Midway Games", "BioFreaks (prototype)" )
+	public static GameDriver driver_blitz	   = new GameDriver("1997"	,"blitz"	,"seattle.java"	,rom_blitz,null	,machine_driver_seattle150	,input_ports_blitz	,init_blitz	,ROT0	,	"Midway Games", "NFL Blitz" )
+	public static GameDriver driver_blitz99	   = new GameDriver("1998"	,"blitz99"	,"seattle.java"	,rom_blitz99,null	,machine_driver_seattle150	,input_ports_blitz99	,init_blitz99	,ROT0	,	"Midway Games", "NFL Blitz '99" )
+	public static GameDriver driver_blitz2k	   = new GameDriver("1999"	,"blitz2k"	,"seattle.java"	,rom_blitz2k,null	,machine_driver_seattle150	,input_ports_blitz99	,init_blitz2k	,ROT0	,	"Midway Games", "NFL Blitz 2000" )
+	public static GameDriver driver_carnevil	   = new GameDriver("1998"	,"carnevil"	,"seattle.java"	,rom_carnevil,null	,machine_driver_carnevil	,input_ports_carnevil	,init_carnevil	,ROT0	,	"Midway Games", "CarnEvil" )
 }

@@ -564,7 +564,7 @@ public class travrusa
 	
 	
 	
-	GAME( 1983, travrusa, 0,        travrusa, travrusa, 0,        ROT270, "Irem", "Traverse USA / Zippy Race" )
-	GAME( 1983, motorace, travrusa, travrusa, motorace, motorace, ROT270, "Irem (Williams license)", "MotoRace USA" )
-	GAMEX(1984, shtrider, 0,        shtrider, shtrider, shtrider, ROT270|ORIENTATION_FLIP_X, "Seibu Kaihatsu (Sigma license)", "Shot Rider", GAME_NO_COCKTAIL )
+	public static GameDriver driver_travrusa	   = new GameDriver("1983"	,"travrusa"	,"travrusa.java"	,rom_travrusa,null	,machine_driver_travrusa	,input_ports_travrusa	,null	,ROT270	,	"Irem", "Traverse USA / Zippy Race" )
+	public static GameDriver driver_motorace	   = new GameDriver("1983"	,"motorace"	,"travrusa.java"	,rom_motorace,driver_travrusa	,machine_driver_travrusa	,input_ports_motorace	,init_motorace	,ROT270	,	"Irem (Williams license)", "MotoRace USA" )
+	public static GameDriver driver_shtrider	   = new GameDriver("1984"	,"shtrider"	,"travrusa.java"	,rom_shtrider,null	,machine_driver_shtrider	,input_ports_shtrider	,init_shtrider	,ROT270	,	ORIENTATION_FLIP_X, "Seibu Kaihatsu (Sigma license)", "Shot Rider", GAME_NO_COCKTAIL )
 }

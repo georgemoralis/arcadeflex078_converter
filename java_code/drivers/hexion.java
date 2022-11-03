@@ -351,5 +351,5 @@ public class hexion
 	ROM_END(); }}; 
 	
 	
-	GAME( 1992, hexion, 0, hexion, hexion, 0, ROT0, "Konami", "Hexion (Japan)" )
+	public static GameDriver driver_hexion	   = new GameDriver("1992"	,"hexion"	,"hexion.java"	,rom_hexion,null	,machine_driver_hexion	,input_ports_hexion	,null	,ROT0	,	"Konami", "Hexion (Japan)" )
 }

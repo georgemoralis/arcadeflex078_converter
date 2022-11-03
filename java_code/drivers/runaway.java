@@ -432,6 +432,6 @@ public class runaway
 	ROM_END(); }}; 
 	
 	
-	GAME( 1982, qwak,    0, qwak,    qwak,    0, ROT270, "Atari", "Qwak (prototype)" )
-	GAME( 1982, runaway, 0, runaway, runaway, 0, ROT0,   "Atari", "Runaway (prototype)" )
+	public static GameDriver driver_qwak	   = new GameDriver("1982"	,"qwak"	,"runaway.java"	,rom_qwak,null	,machine_driver_qwak	,input_ports_qwak	,null	,ROT270	,	"Atari", "Qwak (prototype)" )
+	public static GameDriver driver_runaway	   = new GameDriver("1982"	,"runaway"	,"runaway.java"	,rom_runaway,null	,machine_driver_runaway	,input_ports_runaway	,null	,ROT0	,	"Atari", "Runaway (prototype)" )
 }

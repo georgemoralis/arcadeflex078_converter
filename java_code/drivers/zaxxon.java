@@ -1678,13 +1678,13 @@ public class zaxxon
 	
 	/* Game Drivers */
 	
-	GAME( 1982, zaxxon,   0,      zaxxon,   zaxxon,   0,        ROT90,  "Sega",    "Zaxxon (set 1)" )
-	GAME( 1982, zaxxon2,  zaxxon, zaxxon,   zaxxon,   0,        ROT90,  "Sega",    "Zaxxon (set 2)" )
-	GAME( 1982, zaxxonb,  zaxxon, zaxxon,   zaxxon,   zaxxonb,  ROT90,  "bootleg", "Jackson" )
-	GAME( 1982, szaxxon,  0,      zaxxon,   szaxxon,  szaxxon,  ROT90,  "Sega",    "Super Zaxxon" )
-	GAMEX(1983, razmataz, 0,      razmataz, razmataz, razmataz, ROT270, "Sega",    "Razzmatazz", GAME_NO_SOUND )
-	GAMEX(1983, ixion,    0,      ixion,    ixion,    ixion,    ROT270, "Sega",    "Ixion (prototype)", GAME_NO_SOUND )
-	GAME( 1983, congo,    0,	  congo,    congo,    0,        ROT90,  "Sega",    "Congo Bongo" )
-	GAME( 1983, tiptop,   congo,  congo,    tiptop,   0,        ROT90,  "Sega",    "Tip Top" )
-	GAME( 1984, futspy,   0,      futspy,   futspy,   futspy,   ROT270, "Sega",    "Future Spy" )
+	public static GameDriver driver_zaxxon	   = new GameDriver("1982"	,"zaxxon"	,"zaxxon.java"	,rom_zaxxon,null	,machine_driver_zaxxon	,input_ports_zaxxon	,null	,ROT90	,	"Sega",    "Zaxxon (set 1)" )
+	public static GameDriver driver_zaxxon2	   = new GameDriver("1982"	,"zaxxon2"	,"zaxxon.java"	,rom_zaxxon2,driver_zaxxon	,machine_driver_zaxxon	,input_ports_zaxxon	,null	,ROT90	,	"Sega",    "Zaxxon (set 2)" )
+	public static GameDriver driver_zaxxonb	   = new GameDriver("1982"	,"zaxxonb"	,"zaxxon.java"	,rom_zaxxonb,driver_zaxxon	,machine_driver_zaxxon	,input_ports_zaxxon	,init_zaxxonb	,ROT90	,	"bootleg", "Jackson" )
+	public static GameDriver driver_szaxxon	   = new GameDriver("1982"	,"szaxxon"	,"zaxxon.java"	,rom_szaxxon,null	,machine_driver_zaxxon	,input_ports_szaxxon	,init_szaxxon	,ROT90	,	"Sega",    "Super Zaxxon" )
+	public static GameDriver driver_razmataz	   = new GameDriver("1983"	,"razmataz"	,"zaxxon.java"	,rom_razmataz,null	,machine_driver_razmataz	,input_ports_razmataz	,init_razmataz	,ROT270	,	"Sega",    "Razzmatazz", GAME_NO_SOUND )
+	public static GameDriver driver_ixion	   = new GameDriver("1983"	,"ixion"	,"zaxxon.java"	,rom_ixion,null	,machine_driver_ixion	,input_ports_ixion	,init_ixion	,ROT270	,	"Sega",    "Ixion (prototype)", GAME_NO_SOUND )
+	public static GameDriver driver_congo	   = new GameDriver("1983"	,"congo"	,"zaxxon.java"	,rom_congo,null	,machine_driver_congo	,input_ports_congo	,null	,ROT90	,	"Sega",    "Congo Bongo" )
+	public static GameDriver driver_tiptop	   = new GameDriver("1983"	,"tiptop"	,"zaxxon.java"	,rom_tiptop,driver_congo	,machine_driver_congo	,input_ports_tiptop	,null	,ROT90	,	"Sega",    "Tip Top" )
+	public static GameDriver driver_futspy	   = new GameDriver("1984"	,"futspy"	,"zaxxon.java"	,rom_futspy,null	,machine_driver_futspy	,input_ports_futspy	,init_futspy	,ROT270	,	"Sega",    "Future Spy" )
 }

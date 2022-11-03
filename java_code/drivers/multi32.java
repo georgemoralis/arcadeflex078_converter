@@ -1206,11 +1206,11 @@ public class multi32
 	ROM_END(); }}; 
 	
 	// boot, and are playable, some gfx problems
-	GAMEX( 1992, orunners,     0,        multi32, orunners, orunners, ROT0, "Sega", "Outrunners (US)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1994, harddunk,     0,        multi32, harddunk, harddunk, ROT0, "Sega", "Hard Dunk (World)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1994, harddunj,     harddunk, multi32, harddunk, harddunk, ROT0, "Sega", "Hard Dunk (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1992, scross,       0,        scross,  scross,   orunners, ROT0, "Sega", "Stadium Cross (World)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_orunners	   = new GameDriver("1992"	,"orunners"	,"multi32.java"	,rom_orunners,null	,machine_driver_multi32	,input_ports_orunners	,init_orunners	,ROT0	,	"Sega", "Outrunners (US)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_harddunk	   = new GameDriver("1994"	,"harddunk"	,"multi32.java"	,rom_harddunk,null	,machine_driver_multi32	,input_ports_harddunk	,init_harddunk	,ROT0	,	"Sega", "Hard Dunk (World)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_harddunj	   = new GameDriver("1994"	,"harddunj"	,"multi32.java"	,rom_harddunj,driver_harddunk	,machine_driver_multi32	,input_ports_harddunk	,init_harddunk	,ROT0	,	"Sega", "Hard Dunk (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_scross	   = new GameDriver("1992"	,"scross"	,"multi32.java"	,rom_scross,null	,machine_driver_scross	,input_ports_scross	,init_orunners	,ROT0	,	"Sega", "Stadium Cross (World)", GAME_IMPERFECT_GRAPHICS )
 	
 	// doesn't boot (needs v60 fixing, modeler has a hack in the cpu core)
-	GAMEX( 199?, titlef,       0, multi32, titlef,   titlef,   ROT0, "Sega", "Title Fight", GAME_NOT_WORKING )
+	public static GameDriver driver_titlef	   = new GameDriver("199?"	,"titlef"	,"multi32.java"	,rom_titlef,null	,machine_driver_multi32	,input_ports_titlef	,init_titlef	,ROT0	,	"Sega", "Title Fight", GAME_NOT_WORKING )
 }

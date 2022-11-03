@@ -668,5 +668,5 @@ public class marinedt
 		ROM_LOAD( "mg17.bpr", 0x0060, 0x0020, CRC(13261a02) SHA1(050edd18e4f79d19d5206f55f329340432fd4099) )	//?? table of increasing values
 	ROM_END(); }}; 
 	
-	GAMEX( 1981, marinedt, 0, marinedt, marinedt, 0, ROT270, "Taito", "Marine Date", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_marinedt	   = new GameDriver("1981"	,"marinedt"	,"marinedt.java"	,rom_marinedt,null	,machine_driver_marinedt	,input_ports_marinedt	,null	,ROT270	,	"Taito", "Marine Date", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

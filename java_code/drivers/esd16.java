@@ -675,6 +675,6 @@ public class esd16
 	
 	***************************************************************************/
 	
-	GAME( 1998, multchmp, 0, multchmp, multchmp, 0, ROT0, "ESD", "Multi Champ (Korea)" )
-	GAME( 2000, hedpanic, 0, hedpanic, hedpanic, 0, ROT0, "ESD / Fuuki", "Head Panic (Korea?)" )
+	public static GameDriver driver_multchmp	   = new GameDriver("1998"	,"multchmp"	,"esd16.java"	,rom_multchmp,null	,machine_driver_multchmp	,input_ports_multchmp	,null	,ROT0	,	"ESD", "Multi Champ (Korea)" )
+	public static GameDriver driver_hedpanic	   = new GameDriver("2000"	,"hedpanic"	,"esd16.java"	,rom_hedpanic,null	,machine_driver_hedpanic	,input_ports_hedpanic	,null	,ROT0	,	"ESD / Fuuki", "Head Panic (Korea?)" )
 }

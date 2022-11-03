@@ -403,7 +403,7 @@ public class jchan
 	
 	
 	/* game drivers */
-	GAMEX( 1995, jchan, 0, jchan, jchan, 0, ROT0, "Kaneko", "Jackie Chan - Kung Fu Master", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_jchan	   = new GameDriver("1995"	,"jchan"	,"jchan.java"	,rom_jchan,null	,machine_driver_jchan	,input_ports_jchan	,null	,ROT0	,	"Kaneko", "Jackie Chan - Kung Fu Master", GAME_NOT_WORKING | GAME_NO_SOUND )
 	
 	/* other jchan copy / paste bits
 	

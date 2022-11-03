@@ -1274,19 +1274,19 @@ public class snowbros
 	
 	}
 	
-	GAME( 1990, snowbros, 0,        snowbros, snowbros, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (set 1)" )
-	GAME( 1990, snowbroa, snowbros, snowbros, snowbros, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (set 2)" )
-	GAME( 1990, snowbrob, snowbros, snowbros, snowbros, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (set 3)" )
-	GAME( 1990, snowbroj, snowbros, snowbros, snowbroj, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (Japan)" )
-	GAME( 1990, wintbob,  snowbros, wintbob,  snowbros, 0, ROT0, "bootleg", "The Winter Bobble" )
+	public static GameDriver driver_snowbros	   = new GameDriver("1990"	,"snowbros"	,"snowbros.java"	,rom_snowbros,null	,machine_driver_snowbros	,input_ports_snowbros	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (set 1)" )
+	public static GameDriver driver_snowbroa	   = new GameDriver("1990"	,"snowbroa"	,"snowbros.java"	,rom_snowbroa,driver_snowbros	,machine_driver_snowbros	,input_ports_snowbros	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (set 2)" )
+	public static GameDriver driver_snowbrob	   = new GameDriver("1990"	,"snowbrob"	,"snowbros.java"	,rom_snowbrob,driver_snowbros	,machine_driver_snowbros	,input_ports_snowbros	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (set 3)" )
+	public static GameDriver driver_snowbroj	   = new GameDriver("1990"	,"snowbroj"	,"snowbros.java"	,rom_snowbroj,driver_snowbros	,machine_driver_snowbros	,input_ports_snowbroj	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (Japan)" )
+	public static GameDriver driver_wintbob	   = new GameDriver("1990"	,"wintbob"	,"snowbros.java"	,rom_wintbob,driver_snowbros	,machine_driver_wintbob	,input_ports_snowbros	,null	,ROT0	,	"bootleg", "The Winter Bobble" )
 	/* SemiCom Games */
-	GAME( 1995, hyperpac, 0,        hyperpac, hyperpac, hyperpac, ROT0, "SemiCom", "Hyper Pacman" )
-	GAME( 1995, hyperpcb, hyperpac, hyperpac, hyperpac, 0,        ROT0, "bootleg", "Hyper Pacman (bootleg)" )
-	GAME (1996, cookbib2, 0,        hyperpac, cookbib2, cookbib2, ROT0, "SemiCom", "Cookie and Bibi 2" ) // sound cuts out in later levels? (investigate)
+	public static GameDriver driver_hyperpac	   = new GameDriver("1995"	,"hyperpac"	,"snowbros.java"	,rom_hyperpac,null	,machine_driver_hyperpac	,input_ports_hyperpac	,init_hyperpac	,ROT0	,	"SemiCom", "Hyper Pacman" )
+	public static GameDriver driver_hyperpcb	   = new GameDriver("1995"	,"hyperpcb"	,"snowbros.java"	,rom_hyperpcb,driver_hyperpac	,machine_driver_hyperpac	,input_ports_hyperpac	,null	,ROT0	,	"bootleg", "Hyper Pacman (bootleg)" )
+	public static GameDriver driver_cookbib2	   = new GameDriver("1996"	,"cookbib2"	,"snowbros.java"	,rom_cookbib2,null	,machine_driver_hyperpac	,input_ports_cookbib2	,init_cookbib2	,ROT0	,	"SemiCom", "Cookie and Bibi 2" ) // sound cuts out in later levels? (investigate)
 	/* the following don't work, they either point the interrupts at an area of ram probably shared by
 	   some kind of mcu which puts 68k code there, or jump to the area in the interrupts */
-	GAMEX(199?, moremorp, 0,        hyperpac, hyperpac, 0,        ROT0, "SemiCom", "More More +", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX(1997, 3in1semi, 0,        hyperpac, hyperpac, 0,        ROT0, "SemiCom", "3-in-1 (SemiCom)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_moremorp	   = new GameDriver("199?"	,"moremorp"	,"snowbros.java"	,rom_moremorp,null	,machine_driver_hyperpac	,input_ports_hyperpac	,null	,ROT0	,	"SemiCom", "More More +", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_3in1semi	   = new GameDriver("1997"	,"3in1semi"	,"snowbros.java"	,rom_3in1semi,null	,machine_driver_hyperpac	,input_ports_hyperpac	,null	,ROT0	,	"SemiCom", "3-in-1 (SemiCom)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	/* bad dump */
-	GAMEX(199?, 4in1boot, 0,        _4in1,    snowbros, 4in1boot, ROT0, "bootleg", "4-in-1 bootleg", GAME_NOT_WORKING ) // gfx rom is half the size it should be, pacman 2 and snowbros are playable tho
+	public static GameDriver driver_4in1boot	   = new GameDriver("199?"	,"4in1boot"	,"snowbros.java"	,rom_4in1boot,null	,machine_driver__4in1	,input_ports_snowbros	,init_4in1boot	,ROT0	,	"bootleg", "4-in-1 bootleg", GAME_NOT_WORKING ) // gfx rom is half the size it should be, pacman 2 and snowbros are playable tho
 }

@@ -401,5 +401,5 @@ public class raiden2
 	
 	/* GAME DRIVERS */
 	
-	GAMEX( 1993, raiden2,  0,      raiden2,  raiden2, raiden2,  ROT270, "Seibu Kaihatsu", "Raiden 2", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_raiden2	   = new GameDriver("1993"	,"raiden2"	,"raiden2.java"	,rom_raiden2,null	,machine_driver_raiden2	,input_ports_raiden2	,init_raiden2	,ROT270	,	"Seibu Kaihatsu", "Raiden 2", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

@@ -310,5 +310,5 @@ public class safarir
 	} };
 	
 	
-	GAMEX( 1979, safarir, 0, safarir, safarir, safarir, ROT90, "SNK", "Safari Rally (Japan)", GAME_NO_SOUND | GAME_WRONG_COLORS )
+	public static GameDriver driver_safarir	   = new GameDriver("1979"	,"safarir"	,"safarir.java"	,rom_safarir,null	,machine_driver_safarir	,input_ports_safarir	,init_safarir	,ROT90	,	"SNK", "Safari Rally (Japan)", GAME_NO_SOUND | GAME_WRONG_COLORS )
 }

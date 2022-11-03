@@ -3430,42 +3430,42 @@ public class konamigx
 	/*     year  ROM       parent    machine   inp    	 init */
 	
 	/* dummy parent for the BIOS */
-	GAMEX(1994, konamigx, 0, konamigx, konamigx, konamigx, ROT0, "Konami", "System GX", NOT_A_DRIVER )
+	public static GameDriver driver_konamigx	   = new GameDriver("1994"	,"konamigx"	,"konamigx.java"	,rom_konamigx,null	,machine_driver_konamigx	,input_ports_konamigx	,init_konamigx	,ROT0	,	"Konami", "System GX", NOT_A_DRIVER )
 	
 	
 	/* Type 1: standard with an add-on 53936 on the ROM board, analog inputs, and LAN (link) capability */
 	/* needs the 53936 to be playable */
-	GAMEX( 1994, racinfrc, konamigx, racinfrc, racinfrc, konamigx, ROT0, "Konami", "Racin' Force (ver UAB)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
-	GAMEX( 1994, opengolf, konamigx, opengolf,  racinfrc, konamigx, ROT0, "Konami", "Konami's Open Golf Championship (ver EAD)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
-	GAMEX( 1994, ggreats2, opengolf, opengolf,  racinfrc, konamigx, ROT0, "Konami", "Golfing Greats 2 (ver JAC)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
+	public static GameDriver driver_racinfrc	   = new GameDriver("1994"	,"racinfrc"	,"konamigx.java"	,rom_racinfrc,driver_konamigx	,machine_driver_racinfrc	,input_ports_racinfrc	,init_konamigx	,ROT0	,	"Konami", "Racin' Force (ver UAB)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
+	public static GameDriver driver_opengolf	   = new GameDriver("1994"	,"opengolf"	,"konamigx.java"	,rom_opengolf,driver_konamigx	,machine_driver_opengolf	,input_ports_racinfrc	,init_konamigx	,ROT0	,	"Konami", "Konami's Open Golf Championship (ver EAD)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
+	public static GameDriver driver_ggreats2	   = new GameDriver("1994"	,"ggreats2"	,"konamigx.java"	,rom_ggreats2,driver_opengolf	,machine_driver_opengolf	,input_ports_racinfrc	,init_konamigx	,ROT0	,	"Konami", "Golfing Greats 2 (ver JAC)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
 	
 	
 	/* Type 2: totally stock, sometimes with funny protection chips on the ROM board */
 	/* these games work and are playable with minor graphics glitches */
-	GAMEX( 1994, le2,      konamigx, le2,      le2,      konamigx, ROT0, "Konami", "Lethal Enforcers II: Gun Fighters (ver EAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1994, le2u,     le2,      le2,      le2,      konamigx, ROT0, "Konami", "Lethal Enforcers II: Gun Fighters (ver UAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1994, gokuparo, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Gokujyou Parodius (ver JAD)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1994, puzldama, konamigx, konamigx, puzldama, konamigx, ROT0, "Konami", "Taisen Puzzle-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1995, tbyahhoo, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Twin Bee Yahhoo! (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1995, tkmmpzdm, konamigx, konamigx_6bpp, puzldama, konamigx, ROT0, "Konami", "Tokimeki Memorial Taisen Puzzle-dama (ver JAB)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1995, dragoonj, konamigx, dragoonj, dragoonj, konamigx, ROT0, "Konami", "Dragoon Might (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1996, sexyparo, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Sexy Parodius (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1996, daiskiss, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Daisu-Kiss (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1996, tokkae,   konamigx, konamigx_6bpp, puzldama, konamigx, ROT0, "Konami", "Taisen Tokkae-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1996, salmndr2, konamigx, konamigx_6bpp_2, gokuparo, konamigx, ROT0, "Konami", "Salamander 2 (ver JAA)", GAME_IMPERFECT_GRAPHICS|GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_le2	   = new GameDriver("1994"	,"le2"	,"konamigx.java"	,rom_le2,driver_konamigx	,machine_driver_le2	,input_ports_le2	,init_konamigx	,ROT0	,	"Konami", "Lethal Enforcers II: Gun Fighters (ver EAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_le2u	   = new GameDriver("1994"	,"le2u"	,"konamigx.java"	,rom_le2u,driver_le2	,machine_driver_le2	,input_ports_le2	,init_konamigx	,ROT0	,	"Konami", "Lethal Enforcers II: Gun Fighters (ver UAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_gokuparo	   = new GameDriver("1994"	,"gokuparo"	,"konamigx.java"	,rom_gokuparo,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Gokujyou Parodius (ver JAD)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_puzldama	   = new GameDriver("1994"	,"puzldama"	,"konamigx.java"	,rom_puzldama,driver_konamigx	,machine_driver_konamigx	,input_ports_puzldama	,init_konamigx	,ROT0	,	"Konami", "Taisen Puzzle-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_tbyahhoo	   = new GameDriver("1995"	,"tbyahhoo"	,"konamigx.java"	,rom_tbyahhoo,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Twin Bee Yahhoo! (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_tkmmpzdm	   = new GameDriver("1995"	,"tkmmpzdm"	,"konamigx.java"	,rom_tkmmpzdm,driver_konamigx	,machine_driver_konamigx_6bpp	,input_ports_puzldama	,init_konamigx	,ROT0	,	"Konami", "Tokimeki Memorial Taisen Puzzle-dama (ver JAB)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_dragoonj	   = new GameDriver("1995"	,"dragoonj"	,"konamigx.java"	,rom_dragoonj,driver_konamigx	,machine_driver_dragoonj	,input_ports_dragoonj	,init_konamigx	,ROT0	,	"Konami", "Dragoon Might (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_sexyparo	   = new GameDriver("1996"	,"sexyparo"	,"konamigx.java"	,rom_sexyparo,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Sexy Parodius (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_daiskiss	   = new GameDriver("1996"	,"daiskiss"	,"konamigx.java"	,rom_daiskiss,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Daisu-Kiss (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_tokkae	   = new GameDriver("1996"	,"tokkae"	,"konamigx.java"	,rom_tokkae,driver_konamigx	,machine_driver_konamigx_6bpp	,input_ports_puzldama	,init_konamigx	,ROT0	,	"Konami", "Taisen Tokkae-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_salmndr2	   = new GameDriver("1996"	,"salmndr2"	,"konamigx.java"	,rom_salmndr2,driver_konamigx	,machine_driver_konamigx_6bpp_2	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Salamander 2 (ver JAA)", GAME_IMPERFECT_GRAPHICS|GAME_UNEMULATED_PROTECTION )
 	
 	/* these games are unplayable due to protection (winspike has the same FPGA protection as the type 4 games) */
-	GAMEX( 1994, fantjour, gokuparo, konamigx, gokuparo, konamigx, ROT0, "Konami", "Fantastic Journey", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1997, winspike, konamigx, winspike, konamigx, konamigx, ROT0, "Konami", "Winning Spike (ver JAA)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
+	public static GameDriver driver_fantjour	   = new GameDriver("1994"	,"fantjour"	,"konamigx.java"	,rom_fantjour,driver_gokuparo	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Fantastic Journey", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_winspike	   = new GameDriver("1997"	,"winspike"	,"konamigx.java"	,rom_winspike,driver_konamigx	,machine_driver_winspike	,input_ports_konamigx	,init_konamigx	,ROT0	,	"Konami", "Winning Spike (ver JAA)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
 	
 	
 	/* Type 3: dual monitor output and 53936 on the ROM board, external palette RAM */
-	GAMEX( 1994, soccerss, konamigx, gxtype3,  type3, konamigx, ROT0, "Konami", "Soccer Superstars (ver JAA)", GAME_NOT_WORKING )
+	public static GameDriver driver_soccerss	   = new GameDriver("1994"	,"soccerss"	,"konamigx.java"	,rom_soccerss,driver_konamigx	,machine_driver_gxtype3	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Soccer Superstars (ver JAA)", GAME_NOT_WORKING )
 	
 	
 	/* Type 4: dual monitor output and 53936 on the ROM board, external palette RAM, DMA protection */
-	GAMEX( 1996, vsnetscr, konamigx, gxtype4, type3, konamigx, ROT0, "Konami", "Versus Net Soccer (ver UAB)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1996, rungun2,  konamigx, gxtype4, type3, konamigx, ROT0, "Konami", "Run and Gun 2 (ver UAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1996, slamdnk2, rungun2,  gxtype4, type3, konamigx, ROT0, "Konami", "Slam Dunk 2 (ver JAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1996, rushhero, konamigx, gxtype4, type3, konamigx, ROT0, "Konami", "Rushing Heroes (ver UAB)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
+	public static GameDriver driver_vsnetscr	   = new GameDriver("1996"	,"vsnetscr"	,"konamigx.java"	,rom_vsnetscr,driver_konamigx	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Versus Net Soccer (ver UAB)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_rungun2	   = new GameDriver("1996"	,"rungun2"	,"konamigx.java"	,rom_rungun2,driver_konamigx	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Run and Gun 2 (ver UAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_slamdnk2	   = new GameDriver("1996"	,"slamdnk2"	,"konamigx.java"	,rom_slamdnk2,driver_rungun2	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Slam Dunk 2 (ver JAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_rushhero	   = new GameDriver("1996"	,"rushhero"	,"konamigx.java"	,rom_rushhero,driver_konamigx	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Rushing Heroes (ver UAB)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
 }

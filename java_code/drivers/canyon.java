@@ -551,6 +551,6 @@ public class canyon
 	 *
 	 *************************************/
 	
-	GAME( 1977, canyon,  0,      canyon, canyon, 0, ROT0, "Atari", "Canyon Bomber" )
-	GAME( 1977, canyonp, canyon, canyon, canyon, 0, ROT0, "Atari", "Canyon Bomber (prototype)" )
+	public static GameDriver driver_canyon	   = new GameDriver("1977"	,"canyon"	,"canyon.java"	,rom_canyon,null	,machine_driver_canyon	,input_ports_canyon	,null	,ROT0	,	"Atari", "Canyon Bomber" )
+	public static GameDriver driver_canyonp	   = new GameDriver("1977"	,"canyonp"	,"canyon.java"	,rom_canyonp,driver_canyon	,machine_driver_canyon	,input_ports_canyon	,null	,ROT0	,	"Atari", "Canyon Bomber (prototype)" )
 }

@@ -729,6 +729,6 @@ public class tceptor
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR   COMPANY FULLNAME ) */
-	GAME( 1986, tceptor,  0,        tceptor,  tceptor,  tceptor,  ROT0,     "Namco",  "Thunder Ceptor")
-	GAME( 1986, tceptor2, tceptor,  tceptor,  tceptor2, tceptor,  ROT0,     "Namco",  "Thunder Ceptor II")
+	public static GameDriver driver_tceptor	   = new GameDriver("1986"	,"tceptor"	,"tceptor.java"	,rom_tceptor,null	,machine_driver_tceptor	,input_ports_tceptor	,init_tceptor	,ROT0	,	"Namco",  "Thunder Ceptor")
+	public static GameDriver driver_tceptor2	   = new GameDriver("1986"	,"tceptor2"	,"tceptor.java"	,rom_tceptor2,driver_tceptor	,machine_driver_tceptor	,input_ports_tceptor2	,init_tceptor	,ROT0	,	"Namco",  "Thunder Ceptor II")
 }

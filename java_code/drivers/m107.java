@@ -730,7 +730,7 @@ public class m107
 	
 	/***************************************************************************/
 	
-	GAMEX(1993, firebarr, 0, firebarr, firebarr, firebarr, ROT270, "Irem", "Fire Barrel (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	GAME( 1994, dsoccr94, 0, dsoccr94, dsoccr94, dsoccr94, ROT0,   "Irem (Data East Corporation license)", "Dream Soccer '94" )
-	GAMEX(1995, wpksoc,   0, firebarr, wpksoc,	 wpksoc,   ROT0,   "Jaleco", "World PK Soccer", GAME_NOT_WORKING | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_firebarr	   = new GameDriver("1993"	,"firebarr"	,"m107.java"	,rom_firebarr,null	,machine_driver_firebarr	,input_ports_firebarr	,init_firebarr	,ROT270	,	"Irem", "Fire Barrel (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_dsoccr94	   = new GameDriver("1994"	,"dsoccr94"	,"m107.java"	,rom_dsoccr94,null	,machine_driver_dsoccr94	,input_ports_dsoccr94	,init_dsoccr94	,ROT0	,	"Irem (Data East Corporation license)", "Dream Soccer '94" )
+	public static GameDriver driver_wpksoc	   = new GameDriver("1995"	,"wpksoc"	,"m107.java"	,rom_wpksoc,null	,machine_driver_firebarr	,input_ports_wpksoc	,init_wpksoc	,ROT0	,	"Jaleco", "World PK Soccer", GAME_NOT_WORKING | GAME_IMPERFECT_GRAPHICS )
 }

@@ -599,5 +599,5 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	GAMEX( 1998, asurabld,	0, fuuki32, asurabld, 0, ROT0, "Fuuki", "Asura Blade - Sword of Dynasty (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_asurabld	   = new GameDriver("1998"	,"asurabld"	,"fuukifg3.java"	,rom_asurabld,null	,machine_driver_fuuki32	,input_ports_asurabld	,null	,ROT0	,	"Fuuki", "Asura Blade - Sword of Dynasty (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

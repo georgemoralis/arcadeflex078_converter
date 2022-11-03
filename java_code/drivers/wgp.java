@@ -1482,10 +1482,10 @@ public class wgp
 	
 	/* Working Games with some graphics problems - e.g. missing rotation */
 	
-	GAMEX( 1989, wgp,      0,      wgp,    wgp,    wgp,    ROT0, "Taito America Corporation", "World Grand Prix (US)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1989, wgpj,     wgp,    wgp,    wgpj,   wgp,    ROT0, "Taito Corporation", "World Grand Prix (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1989, wgpjoy,   wgp,    wgp,    wgpjoy, wgp,    ROT0, "Taito Corporation", "World Grand Prix (joystick version set 1) (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1989, wgpjoya,  wgp,    wgp,    wgpjoy, wgp,    ROT0, "Taito Corporation", "World Grand Prix (joystick version set 2) (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1990, wgp2,     wgp,    wgp2,   wgp2,   wgp2,   ROT0, "Taito Corporation", "World Grand Prix 2 (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_wgp	   = new GameDriver("1989"	,"wgp"	,"wgp.java"	,rom_wgp,null	,machine_driver_wgp	,input_ports_wgp	,init_wgp	,ROT0	,	"Taito America Corporation", "World Grand Prix (US)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_wgpj	   = new GameDriver("1989"	,"wgpj"	,"wgp.java"	,rom_wgpj,driver_wgp	,machine_driver_wgp	,input_ports_wgpj	,init_wgp	,ROT0	,	"Taito Corporation", "World Grand Prix (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_wgpjoy	   = new GameDriver("1989"	,"wgpjoy"	,"wgp.java"	,rom_wgpjoy,driver_wgp	,machine_driver_wgp	,input_ports_wgpjoy	,init_wgp	,ROT0	,	"Taito Corporation", "World Grand Prix (joystick version set 1) (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_wgpjoya	   = new GameDriver("1989"	,"wgpjoya"	,"wgp.java"	,rom_wgpjoya,driver_wgp	,machine_driver_wgp	,input_ports_wgpjoy	,init_wgp	,ROT0	,	"Taito Corporation", "World Grand Prix (joystick version set 2) (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_wgp2	   = new GameDriver("1990"	,"wgp2"	,"wgp.java"	,rom_wgp2,driver_wgp	,machine_driver_wgp2	,input_ports_wgp2	,init_wgp2	,ROT0	,	"Taito Corporation", "World Grand Prix 2 (Japan)", GAME_IMPERFECT_GRAPHICS )
 	
 }

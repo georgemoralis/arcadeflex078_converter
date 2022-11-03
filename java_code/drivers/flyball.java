@@ -332,5 +332,5 @@ public class flyball
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1976, flyball, 0, flyball, flyball, 0, 0, "Atari", "Flyball", GAME_NO_SOUND )
+	public static GameDriver driver_flyball	   = new GameDriver("1976"	,"flyball"	,"flyball.java"	,rom_flyball,null	,machine_driver_flyball	,input_ports_flyball	,null	,0	,	"Atari", "Flyball", GAME_NO_SOUND )
 }

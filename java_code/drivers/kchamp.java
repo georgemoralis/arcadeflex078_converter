@@ -761,8 +761,8 @@ public class kchamp
 	
 	
 	
-	GAME( 1984, kchamp,   0,      kchamp,   kchamp,   0,        ROT90, "Data East USA", "Karate Champ (US)" )
-	GAME( 1984, karatedo, kchamp, kchamp,   kchamp,   0,        ROT90, "Data East Corporation", "Karate Dou (Japan)" )
-	GAME( 1984, kchampvs, kchamp, kchampvs, kchampvs, kchampvs, ROT90, "Data East USA", "Karate Champ (US VS version)" )
-	GAME( 1984, karatevs, kchamp, kchampvs, kchampvs, kchampvs, ROT90, "Data East Corporation", "Taisen Karate Dou (Japan VS version)" )
+	public static GameDriver driver_kchamp	   = new GameDriver("1984"	,"kchamp"	,"kchamp.java"	,rom_kchamp,null	,machine_driver_kchamp	,input_ports_kchamp	,null	,ROT90	,	"Data East USA", "Karate Champ (US)" )
+	public static GameDriver driver_karatedo	   = new GameDriver("1984"	,"karatedo"	,"kchamp.java"	,rom_karatedo,driver_kchamp	,machine_driver_kchamp	,input_ports_kchamp	,null	,ROT90	,	"Data East Corporation", "Karate Dou (Japan)" )
+	public static GameDriver driver_kchampvs	   = new GameDriver("1984"	,"kchampvs"	,"kchamp.java"	,rom_kchampvs,driver_kchamp	,machine_driver_kchampvs	,input_ports_kchampvs	,init_kchampvs	,ROT90	,	"Data East USA", "Karate Champ (US VS version)" )
+	public static GameDriver driver_karatevs	   = new GameDriver("1984"	,"karatevs"	,"kchamp.java"	,rom_karatevs,driver_kchamp	,machine_driver_kchampvs	,input_ports_kchampvs	,init_kchampvs	,ROT90	,	"Data East Corporation", "Taisen Karate Dou (Japan VS version)" )
 }

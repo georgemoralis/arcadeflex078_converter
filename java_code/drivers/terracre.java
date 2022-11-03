@@ -964,11 +964,11 @@ public class terracre
 	} };
 	
 	/*    YEAR, NAME,   PARENT,     MACHINE, INPUT,    INIT,     MONITOR,  COMPANY,      FULLNAME, FLAGS */
-	GAME( 1985, terracre, 0,        ym3526,  terracre, 0,        ROT270,  "Nichibutsu", "Terra Cresta (YM3526 set 1)" )
-	GAME( 1985, terracrb, terracre, ym3526,  terracre, 0,        ROT270,  "Nichibutsu", "Terra Cresta (YM3526 set 2)" )
-	GAME( 1985, terracra, terracre, ym2203,  terracre, 0,        ROT270,  "Nichibutsu", "Terra Cresta (YM2203)" )
-	GAME( 1986, amazon,   0,        amazon,  amazon,   amazon,   ROT270,  "Nichibutsu", "Soldier Girl Amazon" )
-	GAME( 1986, amatelas, amazon,   amazon,  amazon,   amatelas, ROT270,  "Nichibutsu", "Sei Senshi Amatelass" )
-	GAME( 1987, horekid,  0,        amazon,  horekid,  horekid,  ROT270,  "Nichibutsu", "Kid no Hore Hore Daisakusen" )
-	GAME( 1987, horekidb, horekid,  amazon,  horekid,  horekid,  ROT270,  "bootleg", "Kid no Hore Hore Daisakusen (bootleg)" )
+	public static GameDriver driver_terracre	   = new GameDriver("1985"	,"terracre"	,"terracre.java"	,rom_terracre,null	,machine_driver_ym3526	,input_ports_terracre	,null	,ROT270	,	"Nichibutsu", "Terra Cresta (YM3526 set 1)" )
+	public static GameDriver driver_terracrb	   = new GameDriver("1985"	,"terracrb"	,"terracre.java"	,rom_terracrb,driver_terracre	,machine_driver_ym3526	,input_ports_terracre	,null	,ROT270	,	"Nichibutsu", "Terra Cresta (YM3526 set 2)" )
+	public static GameDriver driver_terracra	   = new GameDriver("1985"	,"terracra"	,"terracre.java"	,rom_terracra,driver_terracre	,machine_driver_ym2203	,input_ports_terracre	,null	,ROT270	,	"Nichibutsu", "Terra Cresta (YM2203)" )
+	public static GameDriver driver_amazon	   = new GameDriver("1986"	,"amazon"	,"terracre.java"	,rom_amazon,null	,machine_driver_amazon	,input_ports_amazon	,init_amazon	,ROT270	,	"Nichibutsu", "Soldier Girl Amazon" )
+	public static GameDriver driver_amatelas	   = new GameDriver("1986"	,"amatelas"	,"terracre.java"	,rom_amatelas,driver_amazon	,machine_driver_amazon	,input_ports_amazon	,init_amatelas	,ROT270	,	"Nichibutsu", "Sei Senshi Amatelass" )
+	public static GameDriver driver_horekid	   = new GameDriver("1987"	,"horekid"	,"terracre.java"	,rom_horekid,null	,machine_driver_amazon	,input_ports_horekid	,init_horekid	,ROT270	,	"Nichibutsu", "Kid no Hore Hore Daisakusen" )
+	public static GameDriver driver_horekidb	   = new GameDriver("1987"	,"horekidb"	,"terracre.java"	,rom_horekidb,driver_horekid	,machine_driver_amazon	,input_ports_horekid	,init_horekid	,ROT270	,	"bootleg", "Kid no Hore Hore Daisakusen (bootleg)" )
 }

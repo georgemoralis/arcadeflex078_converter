@@ -1613,12 +1613,12 @@ public class seta2
 		ROM[0x0f98/2] = 0x4e71;
 	} };
 	
-	GAME(  1994, gundamex, 0, gundamex, gundamex, gundamex, ROT0, "Banpresto",           "Mobile Suit Gundam EX Revue" )
-	GAMEX( 1995, grdians,  0, grdians,  grdians,  0,  		ROT0, "Banpresto",           "Guardians / Denjin Makai II",                  GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )	// Displays (c) Winky Soft at game's end.
-	GAMEX( 1996, mj4simai, 0, mj4simai, mj4simai, 0,        ROT0, "Maboroshi Ware",      "Wakakusamonogatari Mahjong Yonshimai (Japan)", GAME_NO_COCKTAIL )
-	GAMEX( 1996, myangel,  0, myangel,  myangel,  0,        ROT0, "Namco",               "Kosodate Quiz My Angel (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1997, myangel2, 0, myangel2, myangel2, 0,        ROT0, "Namco",               "Kosodate Quiz My Angel 2 (Japan)",             GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1999, pzlbowl,  0, pzlbowl,  pzlbowl,  0,		ROT0, "Nihon System / Moss", "Puzzle De Bowling (Japan)",                    GAME_NO_COCKTAIL )
-	GAMEX( 2000, penbros,  0, penbros,  penbros,  0,  		ROT0, "Subsino",             "Penguin Brothers (Japan)",                     GAME_NO_COCKTAIL )
+	public static GameDriver driver_gundamex	   = new GameDriver("1994"	,"gundamex"	,"seta2.java"	,rom_gundamex,null	,machine_driver_gundamex	,input_ports_gundamex	,init_gundamex	,ROT0	,	"Banpresto",           "Mobile Suit Gundam EX Revue" )
+	public static GameDriver driver_grdians	   = new GameDriver("1995"	,"grdians"	,"seta2.java"	,rom_grdians,null	,machine_driver_grdians	,input_ports_grdians	,null	,ROT0	,	"Banpresto",           "Guardians / Denjin Makai II",                  GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )	// Displays (c) Winky Soft at game's end.
+	public static GameDriver driver_mj4simai	   = new GameDriver("1996"	,"mj4simai"	,"seta2.java"	,rom_mj4simai,null	,machine_driver_mj4simai	,input_ports_mj4simai	,null	,ROT0	,	"Maboroshi Ware",      "Wakakusamonogatari Mahjong Yonshimai (Japan)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_myangel	   = new GameDriver("1996"	,"myangel"	,"seta2.java"	,rom_myangel,null	,machine_driver_myangel	,input_ports_myangel	,null	,ROT0	,	"Namco",               "Kosodate Quiz My Angel (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_myangel2	   = new GameDriver("1997"	,"myangel2"	,"seta2.java"	,rom_myangel2,null	,machine_driver_myangel2	,input_ports_myangel2	,null	,ROT0	,	"Namco",               "Kosodate Quiz My Angel 2 (Japan)",             GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_pzlbowl	   = new GameDriver("1999"	,"pzlbowl"	,"seta2.java"	,rom_pzlbowl,null	,machine_driver_pzlbowl	,input_ports_pzlbowl	,null	,ROT0	,	"Nihon System / Moss", "Puzzle De Bowling (Japan)",                    GAME_NO_COCKTAIL )
+	public static GameDriver driver_penbros	   = new GameDriver("2000"	,"penbros"	,"seta2.java"	,rom_penbros,null	,machine_driver_penbros	,input_ports_penbros	,null	,ROT0	,	"Subsino",             "Penguin Brothers (Japan)",                     GAME_NO_COCKTAIL )
 	
 }

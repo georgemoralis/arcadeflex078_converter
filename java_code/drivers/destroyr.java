@@ -405,5 +405,5 @@ public class destroyr
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1977, destroyr, 0, destroyr, destroyr, 0, ORIENTATION_FLIP_X, "Atari", "Destroyer", GAME_NO_SOUND )
+	public static GameDriver driver_destroyr	   = new GameDriver("1977"	,"destroyr"	,"destroyr.java"	,rom_destroyr,null	,machine_driver_destroyr	,input_ports_destroyr	,null	,ORIENTATION_FLIP_X	,	"Atari", "Destroyer", GAME_NO_SOUND )
 }

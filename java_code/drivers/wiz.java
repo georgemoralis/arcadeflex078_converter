@@ -1099,11 +1099,11 @@ public class wiz
 	} };
 	
 	
-	GAMEX(1983, stinger,  0,       stinger, stinger,  stinger, ROT90,  "Seibu Denshi", "Stinger", GAME_IMPERFECT_SOUND )
-	GAMEX(1983, stinger2, stinger, stinger, stinger2, stinger, ROT90,  "Seibu Denshi", "Stinger (prototype?)", GAME_IMPERFECT_SOUND )
-	GAMEX(1984, scion,    0,       scion,   scion,    0,       ROT0,   "Seibu Denshi", "Scion", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
-	GAMEX(1984, scionc,   scion,   scion,   scion,    0,       ROT0,   "Seibu Denshi (Cinematronics license)", "Scion (Cinematronics)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
-	GAME( 1984, kungfut,  0,       kungfut, kungfut,  0,       ROT0,   "Seibu Kaihatsu Inc.", "Kung-Fu Taikun" )
-	GAME( 1985, wiz,      0,       wiz,     wiz,      wiz,     ROT270, "Seibu Kaihatsu Inc.", "Wiz" )
-	GAME( 1985, wizt,     wiz,     wiz,     wiz,      wiz,     ROT270, "[Seibu] (Taito license)", "Wiz (Taito)" )
+	public static GameDriver driver_stinger	   = new GameDriver("1983"	,"stinger"	,"wiz.java"	,rom_stinger,null	,machine_driver_stinger	,input_ports_stinger	,init_stinger	,ROT90	,	"Seibu Denshi", "Stinger", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_stinger2	   = new GameDriver("1983"	,"stinger2"	,"wiz.java"	,rom_stinger2,driver_stinger	,machine_driver_stinger	,input_ports_stinger2	,init_stinger	,ROT90	,	"Seibu Denshi", "Stinger (prototype?)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_scion	   = new GameDriver("1984"	,"scion"	,"wiz.java"	,rom_scion,null	,machine_driver_scion	,input_ports_scion	,null	,ROT0	,	"Seibu Denshi", "Scion", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_scionc	   = new GameDriver("1984"	,"scionc"	,"wiz.java"	,rom_scionc,driver_scion	,machine_driver_scion	,input_ports_scion	,null	,ROT0	,	"Seibu Denshi (Cinematronics license)", "Scion (Cinematronics)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_kungfut	   = new GameDriver("1984"	,"kungfut"	,"wiz.java"	,rom_kungfut,null	,machine_driver_kungfut	,input_ports_kungfut	,null	,ROT0	,	"Seibu Kaihatsu Inc.", "Kung-Fu Taikun" )
+	public static GameDriver driver_wiz	   = new GameDriver("1985"	,"wiz"	,"wiz.java"	,rom_wiz,null	,machine_driver_wiz	,input_ports_wiz	,init_wiz	,ROT270	,	"Seibu Kaihatsu Inc.", "Wiz" )
+	public static GameDriver driver_wizt	   = new GameDriver("1985"	,"wizt"	,"wiz.java"	,rom_wizt,driver_wiz	,machine_driver_wiz	,input_ports_wiz	,init_wiz	,ROT270	,	"[Seibu] (Taito license)", "Wiz (Taito)" )
 }

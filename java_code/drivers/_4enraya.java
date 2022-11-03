@@ -232,5 +232,5 @@ public class _4enraya
 		ROM_LOAD( "1.bpr",   0x0000, 0x0020, CRC(dcbd2352) SHA1(ce72e84129ed1b455aaf648e1dfaa4333e7e7628) )	/* not used */
 	ROM_END(); }}; 
 	
-	GAME( 1990, 4enraya,  0,       4enraya,  4enraya,  0, ROT0, "IDSA", "4 En Raya" )
+	public static GameDriver driver_4enraya	   = new GameDriver("1990"	,"4enraya"	,"_4enraya.java"	,rom_4enraya,null	,machine_driver_4enraya	,input_ports_4enraya	,null	,ROT0	,	"IDSA", "4 En Raya" )
 }

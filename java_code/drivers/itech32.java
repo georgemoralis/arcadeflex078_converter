@@ -2391,25 +2391,25 @@ public class itech32
 	 *
 	 *************************************/
 	
-	GAME( 1992, timekill, 0,        timekill, timekill, timekill, ROT0, "Strata/Incredible Technologies", "Time Killers (v1.32)" )
-	GAME( 1992, timek131, timekill, timekill, timekill, timekill, ROT0, "Strata/Incredible Technologies", "Time Killers (v1.31)" )
-	GAME( 1993, hardyard, 0,        bloodstm, hardyard, hardyard, ROT0, "Strata/Incredible Technologies", "Hard Yardage (v1.20)" )
-	GAME( 1993, hardyd10, hardyard, bloodstm, hardyard, hardyard, ROT0, "Strata/Incredible Technologies", "Hard Yardage (v1.00)" )
-	GAME( 1994, bloodstm, 0,        bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v2.22)" )
-	GAME( 1994, bloods22, bloodstm, bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v2.20)" )
-	GAME( 1994, bloods21, bloodstm, bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v2.10)" )
-	GAME( 1994, bloods11, bloodstm, bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v1.10)" )
-	GAME( 1994, pairs,    0,        pairs,    pairs,    bloodstm, ROT0, "Strata/Incredible Technologies", "Pairs (V1.2, 09/30/94)" )
-	GAME( 1994, pairsa,   pairs,    pairs,    pairs,    bloodstm, ROT0, "Strata/Incredible Technologies", "Pairs (09/07/94)" )
-	GAMEX(1994, drivedge, 0,        drivedge, drivedge, drivedge, ROT0, "Strata/Incredible Technologies", "Driver's Edge", GAME_NOT_WORKING )
-	GAME( 1995, wcbowl,   0,        sftm,     wcbowln,  wcbowln,  ROT0, "Incredible Technologies", "World Class Bowling (v1.66)" ) /* PIC 16C54 labeled as ITBWL-3 */
-	GAME( 1995, wcbwl165, wcbowl,   sftm,     shufbowl, wcbowln,  ROT0, "Incredible Technologies", "World Class Bowling (v1.65)" ) /* PIC 16C54 labeled as ITBWL-3 */
-	GAME( 1995, wcbwl161, wcbowl,   sftm,     shufbowl, wcbowln,  ROT0, "Incredible Technologies", "World Class Bowling (v1.61)" ) /* PIC 16C54 labeled as ITBWL-3 */
-	GAME( 1995, wcbwl12,  wcbowl,   wcbowl,   wcbowl,   wcbowl,   ROT0, "Incredible Technologies", "World Class Bowling (v1.2)" ) /* PIC 16C54 labeled as ITBWL-1 */
-	GAME( 1995, sftm,     0,        sftm,     sftm,     sftm,     ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12)" )	/* PIC 16C54 labeled as ITSF-1 */
-	GAME( 1995, sftm111,  sftm,     sftm,     sftm,     sftm110,  ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.11)" )	/* PIC 16C54 labeled as ITSF-1 */
-	GAME( 1995, sftm110,  sftm,     sftm,     sftm,     sftm110,  ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.10)" )	/* PIC 16C54 labeled as ITSF-1 */
-	GAME( 1995, sftmj,    sftm,     sftm,     sftm,     sftm,     ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12N, Japan)" )	/* PIC 16C54 labeled as ITSF-1 */
-	GAME( 1997, shufshot, 0,        sftm,     shufshot, shufshot, ROT0, "Strata/Incredible Technologies", "Shuffleshot (v1.39)" ) /* PIC 16C54 labeled as ITSHF-1 */
-	GAME( 1997, sshot137, shufshot, sftm,     shufbowl, shufshot, ROT0, "Strata/Incredible Technologies", "Shuffleshot (v1.37)" ) /* PIC 16C54 labeled as ITSHF-1 */
+	public static GameDriver driver_timekill	   = new GameDriver("1992"	,"timekill"	,"itech32.java"	,rom_timekill,null	,machine_driver_timekill	,input_ports_timekill	,init_timekill	,ROT0	,	"Strata/Incredible Technologies", "Time Killers (v1.32)" )
+	public static GameDriver driver_timek131	   = new GameDriver("1992"	,"timek131"	,"itech32.java"	,rom_timek131,driver_timekill	,machine_driver_timekill	,input_ports_timekill	,init_timekill	,ROT0	,	"Strata/Incredible Technologies", "Time Killers (v1.31)" )
+	public static GameDriver driver_hardyard	   = new GameDriver("1993"	,"hardyard"	,"itech32.java"	,rom_hardyard,null	,machine_driver_bloodstm	,input_ports_hardyard	,init_hardyard	,ROT0	,	"Strata/Incredible Technologies", "Hard Yardage (v1.20)" )
+	public static GameDriver driver_hardyd10	   = new GameDriver("1993"	,"hardyd10"	,"itech32.java"	,rom_hardyd10,driver_hardyard	,machine_driver_bloodstm	,input_ports_hardyard	,init_hardyard	,ROT0	,	"Strata/Incredible Technologies", "Hard Yardage (v1.00)" )
+	public static GameDriver driver_bloodstm	   = new GameDriver("1994"	,"bloodstm"	,"itech32.java"	,rom_bloodstm,null	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v2.22)" )
+	public static GameDriver driver_bloods22	   = new GameDriver("1994"	,"bloods22"	,"itech32.java"	,rom_bloods22,driver_bloodstm	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v2.20)" )
+	public static GameDriver driver_bloods21	   = new GameDriver("1994"	,"bloods21"	,"itech32.java"	,rom_bloods21,driver_bloodstm	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v2.10)" )
+	public static GameDriver driver_bloods11	   = new GameDriver("1994"	,"bloods11"	,"itech32.java"	,rom_bloods11,driver_bloodstm	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v1.10)" )
+	public static GameDriver driver_pairs	   = new GameDriver("1994"	,"pairs"	,"itech32.java"	,rom_pairs,null	,machine_driver_pairs	,input_ports_pairs	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Pairs (V1.2, 09/30/94)" )
+	public static GameDriver driver_pairsa	   = new GameDriver("1994"	,"pairsa"	,"itech32.java"	,rom_pairsa,driver_pairs	,machine_driver_pairs	,input_ports_pairs	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Pairs (09/07/94)" )
+	public static GameDriver driver_drivedge	   = new GameDriver("1994"	,"drivedge"	,"itech32.java"	,rom_drivedge,null	,machine_driver_drivedge	,input_ports_drivedge	,init_drivedge	,ROT0	,	"Strata/Incredible Technologies", "Driver's Edge", GAME_NOT_WORKING )
+	public static GameDriver driver_wcbowl	   = new GameDriver("1995"	,"wcbowl"	,"itech32.java"	,rom_wcbowl,null	,machine_driver_sftm	,input_ports_wcbowln	,init_wcbowln	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.66)" ) /* PIC 16C54 labeled as ITBWL-3 */
+	public static GameDriver driver_wcbwl165	   = new GameDriver("1995"	,"wcbwl165"	,"itech32.java"	,rom_wcbwl165,driver_wcbowl	,machine_driver_sftm	,input_ports_shufbowl	,init_wcbowln	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.65)" ) /* PIC 16C54 labeled as ITBWL-3 */
+	public static GameDriver driver_wcbwl161	   = new GameDriver("1995"	,"wcbwl161"	,"itech32.java"	,rom_wcbwl161,driver_wcbowl	,machine_driver_sftm	,input_ports_shufbowl	,init_wcbowln	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.61)" ) /* PIC 16C54 labeled as ITBWL-3 */
+	public static GameDriver driver_wcbwl12	   = new GameDriver("1995"	,"wcbwl12"	,"itech32.java"	,rom_wcbwl12,driver_wcbowl	,machine_driver_wcbowl	,input_ports_wcbowl	,init_wcbowl	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.2)" ) /* PIC 16C54 labeled as ITBWL-1 */
+	public static GameDriver driver_sftm	   = new GameDriver("1995"	,"sftm"	,"itech32.java"	,rom_sftm,null	,machine_driver_sftm	,input_ports_sftm	,init_sftm	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12)" )	/* PIC 16C54 labeled as ITSF-1 */
+	public static GameDriver driver_sftm111	   = new GameDriver("1995"	,"sftm111"	,"itech32.java"	,rom_sftm111,driver_sftm	,machine_driver_sftm	,input_ports_sftm	,init_sftm110	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.11)" )	/* PIC 16C54 labeled as ITSF-1 */
+	public static GameDriver driver_sftm110	   = new GameDriver("1995"	,"sftm110"	,"itech32.java"	,rom_sftm110,driver_sftm	,machine_driver_sftm	,input_ports_sftm	,init_sftm110	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.10)" )	/* PIC 16C54 labeled as ITSF-1 */
+	public static GameDriver driver_sftmj	   = new GameDriver("1995"	,"sftmj"	,"itech32.java"	,rom_sftmj,driver_sftm	,machine_driver_sftm	,input_ports_sftm	,init_sftm	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12N, Japan)" )	/* PIC 16C54 labeled as ITSF-1 */
+	public static GameDriver driver_shufshot	   = new GameDriver("1997"	,"shufshot"	,"itech32.java"	,rom_shufshot,null	,machine_driver_sftm	,input_ports_shufshot	,init_shufshot	,ROT0	,	"Strata/Incredible Technologies", "Shuffleshot (v1.39)" ) /* PIC 16C54 labeled as ITSHF-1 */
+	public static GameDriver driver_sshot137	   = new GameDriver("1997"	,"sshot137"	,"itech32.java"	,rom_sshot137,driver_shufshot	,machine_driver_sftm	,input_ports_shufbowl	,init_shufshot	,ROT0	,	"Strata/Incredible Technologies", "Shuffleshot (v1.37)" ) /* PIC 16C54 labeled as ITSHF-1 */
 }

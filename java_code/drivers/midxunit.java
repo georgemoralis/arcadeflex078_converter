@@ -314,5 +314,5 @@ public class midxunit
 	 *
 	 *************************************/
 	
-	GAME( 1994, revx,   0,         midxunit, revx, revx, ROT0, "Midway",   "Revolution X (Rev. 1.0 6/16/94)" )
+	public static GameDriver driver_revx	   = new GameDriver("1994"	,"revx"	,"midxunit.java"	,rom_revx,null	,machine_driver_midxunit	,input_ports_revx	,init_revx	,ROT0	,	"Midway",   "Revolution X (Rev. 1.0 6/16/94)" )
 }

@@ -438,7 +438,7 @@ public class volfied
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1989, volfied,  0,       volfied, volfied,  volfied, ROT270, "Taito Corporation Japan", "Volfied (World)", GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1989, volfiedu, volfied, volfied, volfiedu, volfied, ROT270, "Taito America Corporation", "Volfied (US)", GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1989, volfiedj, volfied, volfied, volfiedj, volfied, ROT270, "Taito Corporation", "Volfied (Japan)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_volfied	   = new GameDriver("1989"	,"volfied"	,"volfied.java"	,rom_volfied,null	,machine_driver_volfied	,input_ports_volfied	,init_volfied	,ROT270	,	"Taito Corporation Japan", "Volfied (World)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_volfiedu	   = new GameDriver("1989"	,"volfiedu"	,"volfied.java"	,rom_volfiedu,driver_volfied	,machine_driver_volfied	,input_ports_volfiedu	,init_volfied	,ROT270	,	"Taito America Corporation", "Volfied (US)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_volfiedj	   = new GameDriver("1989"	,"volfiedj"	,"volfied.java"	,rom_volfiedj,driver_volfied	,machine_driver_volfied	,input_ports_volfiedj	,init_volfied	,ROT270	,	"Taito Corporation", "Volfied (Japan)", GAME_UNEMULATED_PROTECTION )
 }

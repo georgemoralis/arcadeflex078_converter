@@ -429,8 +429,8 @@ public class shisen
 		/* no samples on this board */
 	ROM_END(); }}; 
 	
-	GAME( 1989, sichuan2, 0,        shisen, shisen, 0, ROT0, "Tamtex", "Sichuan II (hack?) (set 1)" )
-	GAME( 1989, sichuana, sichuan2, shisen, shisen, 0, ROT0, "Tamtex", "Sichuan II (hack?) (set 2)" )
-	GAME( 1989, shisen,   sichuan2, shisen, shisen, 0, ROT0, "Tamtex", "Shisensho - Joshiryo-Hen (Japan)" )
-	GAME( 1989, matchit,  sichuan2, shisen, shisen, 0, ROT0, "Tamtex", "Match It" )
+	public static GameDriver driver_sichuan2	   = new GameDriver("1989"	,"sichuan2"	,"shisen.java"	,rom_sichuan2,null	,machine_driver_shisen	,input_ports_shisen	,null	,ROT0	,	"Tamtex", "Sichuan II (hack?) (set 1)" )
+	public static GameDriver driver_sichuana	   = new GameDriver("1989"	,"sichuana"	,"shisen.java"	,rom_sichuana,driver_sichuan2	,machine_driver_shisen	,input_ports_shisen	,null	,ROT0	,	"Tamtex", "Sichuan II (hack?) (set 2)" )
+	public static GameDriver driver_shisen	   = new GameDriver("1989"	,"shisen"	,"shisen.java"	,rom_shisen,driver_sichuan2	,machine_driver_shisen	,input_ports_shisen	,null	,ROT0	,	"Tamtex", "Shisensho - Joshiryo-Hen (Japan)" )
+	public static GameDriver driver_matchit	   = new GameDriver("1989"	,"matchit"	,"shisen.java"	,rom_matchit,driver_sichuan2	,machine_driver_shisen	,input_ports_shisen	,null	,ROT0	,	"Tamtex", "Match It" )
 }

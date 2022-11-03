@@ -772,10 +772,10 @@ public class tigeroad
 	
 	
 	
-	GAME ( 1987, tigeroad, 0,        tigeroad, tigeroad, tigeroad, ROT0, "Capcom (Romstar license)", "Tiger Road (US)" )
-	GAME ( 1987, toramich, tigeroad, toramich, toramich, tigeroad, ROT0, "Capcom", "Tora-he no Michi (Japan)" )
+	public static GameDriver driver_tigeroad	   = new GameDriver("1987"	,"tigeroad"	,"tigeroad.java"	,rom_tigeroad,null	,machine_driver_tigeroad	,input_ports_tigeroad	,init_tigeroad	,ROT0	,	"Capcom (Romstar license)", "Tiger Road (US)" )
+	public static GameDriver driver_toramich	   = new GameDriver("1987"	,"toramich"	,"tigeroad.java"	,rom_toramich,driver_tigeroad	,machine_driver_toramich	,input_ports_toramich	,init_tigeroad	,ROT0	,	"Capcom", "Tora-he no Michi (Japan)" )
 	
 	/* F1 Dream has an Intel 8751 microcontroller for protection */
-	GAME ( 1988, f1dream,  0,        tigeroad, f1dream,  f1dream,  ROT0, "Capcom (Romstar license)", "F-1 Dream" )
-	GAME ( 1988, f1dreamb, f1dream,  tigeroad, f1dream,  tigeroad, ROT0, "bootleg", "F-1 Dream (bootleg)" )
+	public static GameDriver driver_f1dream	   = new GameDriver("1988"	,"f1dream"	,"tigeroad.java"	,rom_f1dream,null	,machine_driver_tigeroad	,input_ports_f1dream	,init_f1dream	,ROT0	,	"Capcom (Romstar license)", "F-1 Dream" )
+	public static GameDriver driver_f1dreamb	   = new GameDriver("1988"	,"f1dreamb"	,"tigeroad.java"	,rom_f1dreamb,driver_f1dream	,machine_driver_tigeroad	,input_ports_f1dream	,init_tigeroad	,ROT0	,	"bootleg", "F-1 Dream (bootleg)" )
 }

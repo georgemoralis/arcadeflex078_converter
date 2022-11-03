@@ -946,18 +946,18 @@ public class pgm
 	
 	/*** GAME ********************************************************************/
 	
-	GAMEX( 1997, pgm,      0,          pgm, pgm,   0,          ROT0, "IGS", "PGM (Polygame Master) System BIOS", NOT_A_DRIVER )
+	public static GameDriver driver_pgm	   = new GameDriver("1997"	,"pgm"	,"pgm.java"	,rom_pgm,null	,machine_driver_pgm	,input_ports_pgm	,null	,ROT0	,	"IGS", "PGM (Polygame Master) System BIOS", NOT_A_DRIVER )
 	
-	GAMEX( 1997, orlegend, pgm,        pgm, pgm,   orlegend,   ROT0, "IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 126)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
-	GAMEX( 1997, orlegnde, orlegend,   pgm, pgm,   orlegend,   ROT0, "IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
-	GAMEX( 1997, orlegndc, orlegend,   pgm, pgm,   orlegend,   ROT0, "IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112, Chinese Board)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
-	GAMEX( 1997, dragwld2, pgm,        pgm, pgm,   dragwld2,   ROT0, "IGS", "Zhong Guo Long II (ver. 100C, China)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	GAMEX( 1999, kov,      pgm,        pgm, sango, kov, 	   ROT0, "IGS", "Knights of Valour / Sangoku Senki (ver. 117)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
-	GAMEX( 1999, kov115,   kov,        pgm, sango, kov, 	   ROT0, "IGS", "Knights of Valour / Sangoku Senki (ver. 115)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
-	GAMEX( 1999, kovplus,  kov,        pgm, sango, kov, 	   ROT0, "IGS", "Knights of Valour Plus / Sangoku Senki Plus (ver. 119)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_orlegend	   = new GameDriver("1997"	,"orlegend"	,"pgm.java"	,rom_orlegend,driver_pgm	,machine_driver_pgm	,input_ports_pgm	,init_orlegend	,ROT0	,	"IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 126)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
+	public static GameDriver driver_orlegnde	   = new GameDriver("1997"	,"orlegnde"	,"pgm.java"	,rom_orlegnde,driver_orlegend	,machine_driver_pgm	,input_ports_pgm	,init_orlegend	,ROT0	,	"IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
+	public static GameDriver driver_orlegndc	   = new GameDriver("1997"	,"orlegndc"	,"pgm.java"	,rom_orlegndc,driver_orlegend	,machine_driver_pgm	,input_ports_pgm	,init_orlegend	,ROT0	,	"IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112, Chinese Board)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
+	public static GameDriver driver_dragwld2	   = new GameDriver("1997"	,"dragwld2"	,"pgm.java"	,rom_dragwld2,driver_pgm	,machine_driver_pgm	,input_ports_pgm	,init_dragwld2	,ROT0	,	"IGS", "Zhong Guo Long II (ver. 100C, China)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_kov	   = new GameDriver("1999"	,"kov"	,"pgm.java"	,rom_kov,driver_pgm	,machine_driver_pgm	,input_ports_sango	,init_kov	,ROT0	,	"IGS", "Knights of Valour / Sangoku Senki (ver. 117)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
+	public static GameDriver driver_kov115	   = new GameDriver("1999"	,"kov115"	,"pgm.java"	,rom_kov115,driver_kov	,machine_driver_pgm	,input_ports_sango	,init_kov	,ROT0	,	"IGS", "Knights of Valour / Sangoku Senki (ver. 115)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
+	public static GameDriver driver_kovplus	   = new GameDriver("1999"	,"kovplus"	,"pgm.java"	,rom_kovplus,driver_kov	,machine_driver_pgm	,input_ports_sango	,init_kov	,ROT0	,	"IGS", "Knights of Valour Plus / Sangoku Senki Plus (ver. 119)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 	
 	/* not working */
 	
-	GAMEX( 1999, photoy2k, pgm,        pgm, sango, djlzz, 	   ROT0, "IGS", "Photo Y2K", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_NOT_WORKING )
-	GAMEX( 1999, kovsh,    kov,        pgm, sango, kovsh,	   ROT0, "IGS", "Knights of Valour Superheroes / Sangoku Senki Superheroes (ver. 322)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_photoy2k	   = new GameDriver("1999"	,"photoy2k"	,"pgm.java"	,rom_photoy2k,driver_pgm	,machine_driver_pgm	,input_ports_sango	,init_djlzz	,ROT0	,	"IGS", "Photo Y2K", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_kovsh	   = new GameDriver("1999"	,"kovsh"	,"pgm.java"	,rom_kovsh,driver_kov	,machine_driver_pgm	,input_ports_sango	,init_kovsh	,ROT0	,	"IGS", "Knights of Valour Superheroes / Sangoku Senki Superheroes (ver. 322)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

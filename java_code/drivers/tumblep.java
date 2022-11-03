@@ -1445,12 +1445,12 @@ public class tumblep
 	
 	/******************************************************************************/
 	
-	GAME( 1991, tumblep,  0,       tumblep,   tumblep,  tumblep,  ROT0, "Data East Corporation", "Tumble Pop (World)" )
-	GAME( 1991, tumblepj, tumblep, tumblep,   tumblep,  tumblep,  ROT0, "Data East Corporation", "Tumble Pop (Japan)" )
-	GAMEX(1991, tumblepb, tumblep, tumblepb,  tumblep,  tumblepb, ROT0, "bootleg", "Tumble Pop (bootleg set 1)", GAME_IMPERFECT_SOUND )
-	GAMEX(1991, tumblep2, tumblep, tumblepb,  tumblep,  tumblepb, ROT0, "bootleg", "Tumble Pop (bootleg set 2)", GAME_IMPERFECT_SOUND )
-	GAMEX(1993, jumpkids, 0,       jumpkids,  tumblep,  jumpkids, ROT0, "Comad", "Jump Kids", GAME_NO_SOUND )
-	GAME (1996, fncywld,  0,       fncywld,   fncywld,  fncywld,  ROT0, "Unico", "Fancy World - Earth of Crisis" ) // game says 1996, testmode 1995?
-	GAME (1995, htchctch, 0,       htchctch,  htchctch, htchctch, ROT0, "SemiCom", "Hatch Catch" )
-	GAMEX(1997, bcstry,   0,       htchctch,  htchctch, htchctch, ROT0, "SemiCom", "BC Story", GAME_NOT_WORKING)
+	public static GameDriver driver_tumblep	   = new GameDriver("1991"	,"tumblep"	,"tumblep.java"	,rom_tumblep,null	,machine_driver_tumblep	,input_ports_tumblep	,init_tumblep	,ROT0	,	"Data East Corporation", "Tumble Pop (World)" )
+	public static GameDriver driver_tumblepj	   = new GameDriver("1991"	,"tumblepj"	,"tumblep.java"	,rom_tumblepj,driver_tumblep	,machine_driver_tumblep	,input_ports_tumblep	,init_tumblep	,ROT0	,	"Data East Corporation", "Tumble Pop (Japan)" )
+	public static GameDriver driver_tumblepb	   = new GameDriver("1991"	,"tumblepb"	,"tumblep.java"	,rom_tumblepb,driver_tumblep	,machine_driver_tumblepb	,input_ports_tumblep	,init_tumblepb	,ROT0	,	"bootleg", "Tumble Pop (bootleg set 1)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_tumblep2	   = new GameDriver("1991"	,"tumblep2"	,"tumblep.java"	,rom_tumblep2,driver_tumblep	,machine_driver_tumblepb	,input_ports_tumblep	,init_tumblepb	,ROT0	,	"bootleg", "Tumble Pop (bootleg set 2)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_jumpkids	   = new GameDriver("1993"	,"jumpkids"	,"tumblep.java"	,rom_jumpkids,null	,machine_driver_jumpkids	,input_ports_tumblep	,init_jumpkids	,ROT0	,	"Comad", "Jump Kids", GAME_NO_SOUND )
+	public static GameDriver driver_fncywld	   = new GameDriver("1996"	,"fncywld"	,"tumblep.java"	,rom_fncywld,null	,machine_driver_fncywld	,input_ports_fncywld	,init_fncywld	,ROT0	,	"Unico", "Fancy World - Earth of Crisis" ) // game says 1996, testmode 1995?
+	public static GameDriver driver_htchctch	   = new GameDriver("1995"	,"htchctch"	,"tumblep.java"	,rom_htchctch,null	,machine_driver_htchctch	,input_ports_htchctch	,init_htchctch	,ROT0	,	"SemiCom", "Hatch Catch" )
+	public static GameDriver driver_bcstry	   = new GameDriver("1997"	,"bcstry"	,"tumblep.java"	,rom_bcstry,null	,machine_driver_htchctch	,input_ports_htchctch	,init_htchctch	,ROT0	,	"SemiCom", "BC Story", GAME_NOT_WORKING)
 }

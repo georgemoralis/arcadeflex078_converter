@@ -349,7 +349,7 @@ public class blockout
 		ROM_LOAD( "mb7114h.25",   0x0000, 0x0100, CRC(b25bbda7) SHA1(840f1470886bd0019db3cd29e3d1d80205a65f48) )	/* unknown */
 	ROM_END(); }}; 
 	
-	GAME( 1989, blockout, 0,        blockout, blockout, 0, ROT0, "Technos + California Dreams", "Block Out (set 1)" )
-	GAME( 1989, blckout2, blockout, blockout, blockout, 0, ROT0, "Technos + California Dreams", "Block Out (set 2)" )
-	GAME( 1989, blckoutj, blockout, blockout, blckoutj, 0, ROT0, "Technos + California Dreams", "Block Out (Japan)" )
+	public static GameDriver driver_blockout	   = new GameDriver("1989"	,"blockout"	,"blockout.java"	,rom_blockout,null	,machine_driver_blockout	,input_ports_blockout	,null	,ROT0	,	"Technos + California Dreams", "Block Out (set 1)" )
+	public static GameDriver driver_blckout2	   = new GameDriver("1989"	,"blckout2"	,"blockout.java"	,rom_blckout2,driver_blockout	,machine_driver_blockout	,input_ports_blockout	,null	,ROT0	,	"Technos + California Dreams", "Block Out (set 2)" )
+	public static GameDriver driver_blckoutj	   = new GameDriver("1989"	,"blckoutj"	,"blockout.java"	,rom_blckoutj,driver_blockout	,machine_driver_blockout	,input_ports_blckoutj	,null	,ROT0	,	"Technos + California Dreams", "Block Out (Japan)" )
 }

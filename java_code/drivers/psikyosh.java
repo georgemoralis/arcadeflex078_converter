@@ -944,15 +944,15 @@ public class psikyosh
 	/*     YEAR  NAME      PARENT    MACHINE    INPUT     INIT      MONITOR COMPANY   FULLNAME FLAGS */
 	
 	/* ps3-v1 */
-	GAMEX( 1997, soldivid, 0,        psikyo3v1, soldivid, soldivid, ROT0,   "Psikyo", "Sol Divide - The Sword Of Darkness", GAME_IMPERFECT_SOUND ) // Music Tempo
-	GAMEX( 1997, s1945ii,  0,        psikyo3v1, s1945ii,  s1945ii,  ROT270, "Psikyo", "Strikers 1945 II", GAME_IMPERFECT_GRAPHICS ) // linescroll/zoom
-	GAME ( 1998, daraku,   0,        psikyo3v1, daraku,   daraku,   ROT0,   "Psikyo", "Daraku Tenshi - The Fallen Angels" )
-	GAME ( 1998, sbomberb, 0,        psikyo3v1, sbomberb, sbomberb, ROT270, "Psikyo", "Space Bomber (ver. B)" )
+	public static GameDriver driver_soldivid	   = new GameDriver("1997"	,"soldivid"	,"psikyosh.java"	,rom_soldivid,null	,machine_driver_psikyo3v1	,input_ports_soldivid	,init_soldivid	,ROT0	,	"Psikyo", "Sol Divide - The Sword Of Darkness", GAME_IMPERFECT_SOUND ) // Music Tempo
+	public static GameDriver driver_s1945ii	   = new GameDriver("1997"	,"s1945ii"	,"psikyosh.java"	,rom_s1945ii,null	,machine_driver_psikyo3v1	,input_ports_s1945ii	,init_s1945ii	,ROT270	,	"Psikyo", "Strikers 1945 II", GAME_IMPERFECT_GRAPHICS ) // linescroll/zoom
+	public static GameDriver driver_daraku	   = new GameDriver("1998"	,"daraku"	,"psikyosh.java"	,rom_daraku,null	,machine_driver_psikyo3v1	,input_ports_daraku	,init_daraku	,ROT0	,	"Psikyo", "Daraku Tenshi - The Fallen Angels" )
+	public static GameDriver driver_sbomberb	   = new GameDriver("1998"	,"sbomberb"	,"psikyosh.java"	,rom_sbomberb,null	,machine_driver_psikyo3v1	,input_ports_sbomberb	,init_sbomberb	,ROT270	,	"Psikyo", "Space Bomber (ver. B)" )
 	
 	/* ps5 */
-	GAME ( 1998, gunbird2, 0,        psikyo5,   gunbird2, gunbird2, ROT270, "Psikyo", "Gunbird 2" )
-	GAMEX( 1999, s1945iii, 0,        psikyo5,   s1945iii, s1945iii, ROT270, "Psikyo", "Strikers 1945 III (World) / Strikers 1999 (Japan)", GAME_IMPERFECT_GRAPHICS ) // linescroll/zoom
+	public static GameDriver driver_gunbird2	   = new GameDriver("1998"	,"gunbird2"	,"psikyosh.java"	,rom_gunbird2,null	,machine_driver_psikyo5	,input_ports_gunbird2	,init_gunbird2	,ROT270	,	"Psikyo", "Gunbird 2" )
+	public static GameDriver driver_s1945iii	   = new GameDriver("1999"	,"s1945iii"	,"psikyosh.java"	,rom_s1945iii,null	,machine_driver_psikyo5	,input_ports_s1945iii	,init_s1945iii	,ROT270	,	"Psikyo", "Strikers 1945 III (World) / Strikers 1999 (Japan)", GAME_IMPERFECT_GRAPHICS ) // linescroll/zoom
 	
 	/* ps5v2 */
-	GAMEX( 2000, dragnblz, 0,        psikyo5,   dragnblz, dragnblz, ROT270, "Psikyo", "Dragon Blaze", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_dragnblz	   = new GameDriver("2000"	,"dragnblz"	,"psikyosh.java"	,rom_dragnblz,null	,machine_driver_psikyo5	,input_ports_dragnblz	,init_dragnblz	,ROT270	,	"Psikyo", "Dragon Blaze", GAME_IMPERFECT_GRAPHICS )
 }

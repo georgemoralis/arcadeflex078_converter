@@ -506,7 +506,7 @@ public class oneshot
 	
 	
 	
-	GAMEX(199?, oneshot,  0,        oneshot,  oneshot , 0, ROT0, "<unknown>", "One Shot One Kill", GAME_IMPERFECT_GRAPHICS )
-	GAME (1995, maddonna, 0,        maddonna, maddonna, 0, ROT0, "Tuning",  "Mad Donna (set 1)" )
-	GAMEX(1995, maddonnb, maddonna, maddonna, maddonna, 0, ROT0, "Tuning",  "Mad Donna (set 2)", GAME_NOT_WORKING )
+	public static GameDriver driver_oneshot	   = new GameDriver("199?"	,"oneshot"	,"oneshot.java"	,rom_oneshot,null	,machine_driver_oneshot	,input_ports_oneshot	,init_	,0	,	ROT0, "<unknown>", "One Shot One Kill", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_maddonna	   = new GameDriver("1995"	,"maddonna"	,"oneshot.java"	,rom_maddonna,null	,machine_driver_maddonna	,input_ports_maddonna	,null	,ROT0	,	"Tuning",  "Mad Donna (set 1)" )
+	public static GameDriver driver_maddonnb	   = new GameDriver("1995"	,"maddonnb"	,"oneshot.java"	,rom_maddonnb,driver_maddonna	,machine_driver_maddonna	,input_ports_maddonna	,null	,ROT0	,	"Tuning",  "Mad Donna (set 2)", GAME_NOT_WORKING )
 }

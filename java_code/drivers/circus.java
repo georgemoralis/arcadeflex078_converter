@@ -483,8 +483,8 @@ public class circus
 	} };
 	
 	
-	GAME( 1977, circus,   0, circus,   circus,   circus, ROT0, "Exidy", "Circus" )
-	GAMEX( 1977, robotbwl, 0, robotbwl, robotbwl, 0,      ROT0, "Exidy", "Robot Bowl", GAME_NO_SOUND )
-	GAMEX( 1979, crash,    0, crash,    crash,    0,      ROT0, "Exidy", "Crash", GAME_IMPERFECT_SOUND )
-	GAMEX( 1979, ripcord,  0, ripcord,  ripcord,  0,      ROT0, "Exidy", "Rip Cord", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_circus	   = new GameDriver("1977"	,"circus"	,"circus.java"	,rom_circus,null	,machine_driver_circus	,input_ports_circus	,init_circus	,ROT0	,	"Exidy", "Circus" )
+	public static GameDriver driver_robotbwl	   = new GameDriver("1977"	,"robotbwl"	,"circus.java"	,rom_robotbwl,null	,machine_driver_robotbwl	,input_ports_robotbwl	,null	,ROT0	,	"Exidy", "Robot Bowl", GAME_NO_SOUND )
+	public static GameDriver driver_crash	   = new GameDriver("1979"	,"crash"	,"circus.java"	,rom_crash,null	,machine_driver_crash	,input_ports_crash	,null	,ROT0	,	"Exidy", "Crash", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_ripcord	   = new GameDriver("1979"	,"ripcord"	,"circus.java"	,rom_ripcord,null	,machine_driver_ripcord	,input_ports_ripcord	,null	,ROT0	,	"Exidy", "Rip Cord", GAME_IMPERFECT_SOUND )
 }

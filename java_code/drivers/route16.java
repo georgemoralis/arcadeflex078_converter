@@ -685,11 +685,11 @@ public class route16
 	
 	
 	
-	GAME( 1981, route16,  0,        route16,  route16,  route16,  ROT270, "Tehkan/Sun (Centuri license)", "Route 16" )
-	GAME( 1981, route16a, route16,  route16,  route16,  route16a, ROT270, "Tehkan/Sun (Centuri license)", "Route 16 (set 2)" )
-	GAME( 1981, route16b, route16,  route16,  route16,  route16b, ROT270, "bootleg", "Route 16 (bootleg)" )
-	GAME( 1981, routex,   route16,  routex,   route16,  route16b, ROT270, "bootleg", "Route X (bootleg)" )
-	GAME( 1980, speakres, 0,        speakres, speakres, stratvox, ROT270, "Sun Electronics", "Speak & Rescue" )
-	GAME( 1980, stratvox, speakres, stratvox, stratvox, stratvox, ROT270, "[Sun Electronics] (Taito license)", "Stratovox" )
-	GAME( 1980, spacecho, speakres, spacecho, spacecho, stratvox, ROT270, "bootleg", "Space Echo" )
+	public static GameDriver driver_route16	   = new GameDriver("1981"	,"route16"	,"route16.java"	,rom_route16,null	,machine_driver_route16	,input_ports_route16	,init_route16	,ROT270	,	"Tehkan/Sun (Centuri license)", "Route 16" )
+	public static GameDriver driver_route16a	   = new GameDriver("1981"	,"route16a"	,"route16.java"	,rom_route16a,driver_route16	,machine_driver_route16	,input_ports_route16	,init_route16a	,ROT270	,	"Tehkan/Sun (Centuri license)", "Route 16 (set 2)" )
+	public static GameDriver driver_route16b	   = new GameDriver("1981"	,"route16b"	,"route16.java"	,rom_route16b,driver_route16	,machine_driver_route16	,input_ports_route16	,init_route16b	,ROT270	,	"bootleg", "Route 16 (bootleg)" )
+	public static GameDriver driver_routex	   = new GameDriver("1981"	,"routex"	,"route16.java"	,rom_routex,driver_route16	,machine_driver_routex	,input_ports_route16	,init_route16b	,ROT270	,	"bootleg", "Route X (bootleg)" )
+	public static GameDriver driver_speakres	   = new GameDriver("1980"	,"speakres"	,"route16.java"	,rom_speakres,null	,machine_driver_speakres	,input_ports_speakres	,init_stratvox	,ROT270	,	"Sun Electronics", "Speak & Rescue" )
+	public static GameDriver driver_stratvox	   = new GameDriver("1980"	,"stratvox"	,"route16.java"	,rom_stratvox,driver_speakres	,machine_driver_stratvox	,input_ports_stratvox	,init_stratvox	,ROT270	,	"[Sun Electronics] (Taito license)", "Stratovox" )
+	public static GameDriver driver_spacecho	   = new GameDriver("1980"	,"spacecho"	,"route16.java"	,rom_spacecho,driver_speakres	,machine_driver_spacecho	,input_ports_spacecho	,init_stratvox	,ROT270	,	"bootleg", "Space Echo" )
 }

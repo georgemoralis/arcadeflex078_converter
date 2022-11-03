@@ -221,5 +221,5 @@ public class gomoku
 	
 	
 	//     YEAR,     NAME,   PARENT,  MACHINE,    INPUT,     INIT,    MONITOR, COMPANY, FULLNAME, FLAGS
-	GAMEX( 1981,   gomoku,        0,   gomoku,   gomoku,        0,      ROT90, "Nichibutsu", "Gomoku Narabe Renju", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_gomoku	   = new GameDriver("1981"	,"gomoku"	,"gomoku.java"	,rom_gomoku,null	,machine_driver_gomoku	,input_ports_gomoku	,null	,ROT90	,	"Nichibutsu", "Gomoku Narabe Renju", GAME_IMPERFECT_SOUND )
 }

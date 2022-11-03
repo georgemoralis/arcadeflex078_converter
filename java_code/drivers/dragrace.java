@@ -570,5 +570,5 @@ public class dragrace
 	ROM_END(); }}; 
 	
 	
-	GAME( 1977, dragrace, 0, dragrace, dragrace, 0, 0, "Atari", "Drag Race" )
+	public static GameDriver driver_dragrace	   = new GameDriver("1977"	,"dragrace"	,"dragrace.java"	,rom_dragrace,null	,machine_driver_dragrace	,input_ports_dragrace	,null	,0	,	"Atari", "Drag Race" )
 }

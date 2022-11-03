@@ -294,5 +294,5 @@ public class sslam
 		ROM_LOAD( "it_20.bin", 0x00000, 0x80000, CRC(d0a9245f) SHA1(2e840cdd7bdfe7c6f986daf88576de0559597499) )
 	ROM_END(); }}; 
 	
-	GAMEX(1993, sslam, 0, sslam, sslam, 0, ROT0, "Playmark", "Super Slam", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_sslam	   = new GameDriver("1993"	,"sslam"	,"sslam.java"	,rom_sslam,null	,machine_driver_sslam	,input_ports_sslam	,null	,ROT0	,	"Playmark", "Super Slam", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

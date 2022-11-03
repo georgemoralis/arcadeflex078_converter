@@ -281,5 +281,5 @@ public class xorworld
 	
 	
 	
-	GAME( 1990, xorworld, 0, xorworld, xorworld, xorworld, ROT0, "Gaelco", "Xor World (prototype)" )
+	public static GameDriver driver_xorworld	   = new GameDriver("1990"	,"xorworld"	,"xorworld.java"	,rom_xorworld,null	,machine_driver_xorworld	,input_ports_xorworld	,init_xorworld	,ROT0	,	"Gaelco", "Xor World (prototype)" )
 }

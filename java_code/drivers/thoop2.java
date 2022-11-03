@@ -243,5 +243,5 @@ public class thoop2
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched */
 	ROM_END(); }}; 
 	
-	GAMEX( 1994, thoop2,  0, thoop2, thoop2,  0, ROT0, "Gaelco", "TH Strikes Back", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_thoop2	   = new GameDriver("1994"	,"thoop2"	,"thoop2.java"	,rom_thoop2,null	,machine_driver_thoop2	,input_ports_thoop2	,null	,ROT0	,	"Gaelco", "TH Strikes Back", GAME_UNEMULATED_PROTECTION )
 }

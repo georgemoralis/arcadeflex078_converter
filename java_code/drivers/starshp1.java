@@ -458,6 +458,6 @@ public class starshp1
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1977, starshp1, 0,        starshp1, starshp1, 0, ORIENTATION_FLIP_X, "Atari", "Starship 1",              GAME_NO_SOUND )
-	GAMEX( 1977, starshpp, starshp1, starshp1, starshp1, 0, ORIENTATION_FLIP_X, "Atari", "Starship 1 (prototype?)", GAME_NO_SOUND )
+	public static GameDriver driver_starshp1	   = new GameDriver("1977"	,"starshp1"	,"starshp1.java"	,rom_starshp1,null	,machine_driver_starshp1	,input_ports_starshp1	,null	,ORIENTATION_FLIP_X	,	"Atari", "Starship 1",              GAME_NO_SOUND )
+	public static GameDriver driver_starshpp	   = new GameDriver("1977"	,"starshpp"	,"starshp1.java"	,rom_starshpp,driver_starshp1	,machine_driver_starshp1	,input_ports_starshp1	,null	,ORIENTATION_FLIP_X	,	"Atari", "Starship 1 (prototype?)", GAME_NO_SOUND )
 }

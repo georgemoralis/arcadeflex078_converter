@@ -1028,8 +1028,8 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	GAME( 1993, ultennis, 0,        artmagic, ultennis, ultennis, ROT0, "Art & Magic", "Ultimate Tennis" )
-	GAME( 1994, cheesech, 0,        artmagic, cheesech, cheesech, ROT0, "Art & Magic", "Cheese Chase" )
-	GAME( 1994, stonebal, 0,        stonebal, stonebal, stonebal, ROT0, "Art & Magic", "Stone Ball (4 Players)" )
-	GAME( 1994, stoneba2, stonebal, stonebal, stonebal, stonebal, ROT0, "Art & Magic", "Stone Ball (2 Players)" )
+	public static GameDriver driver_ultennis	   = new GameDriver("1993"	,"ultennis"	,"artmagic.java"	,rom_ultennis,null	,machine_driver_artmagic	,input_ports_ultennis	,init_ultennis	,ROT0	,	"Art & Magic", "Ultimate Tennis" )
+	public static GameDriver driver_cheesech	   = new GameDriver("1994"	,"cheesech"	,"artmagic.java"	,rom_cheesech,null	,machine_driver_artmagic	,input_ports_cheesech	,init_cheesech	,ROT0	,	"Art & Magic", "Cheese Chase" )
+	public static GameDriver driver_stonebal	   = new GameDriver("1994"	,"stonebal"	,"artmagic.java"	,rom_stonebal,null	,machine_driver_stonebal	,input_ports_stonebal	,init_stonebal	,ROT0	,	"Art & Magic", "Stone Ball (4 Players)" )
+	public static GameDriver driver_stoneba2	   = new GameDriver("1994"	,"stoneba2"	,"artmagic.java"	,rom_stoneba2,driver_stonebal	,machine_driver_stonebal	,input_ports_stonebal	,init_stonebal	,ROT0	,	"Art & Magic", "Stone Ball (2 Players)" )
 }

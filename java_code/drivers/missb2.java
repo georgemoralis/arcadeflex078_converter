@@ -507,5 +507,5 @@ public class missb2
 	
 	} };
 	
-	GAMEX( 1996, missb2, bublbobl, missb2, missb2, missb2, ROT0,  "Alpha Co", "Miss Bubble 2", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_missb2	   = new GameDriver("1996"	,"missb2"	,"missb2.java"	,rom_missb2,driver_bublbobl	,machine_driver_missb2	,input_ports_missb2	,init_missb2	,ROT0	,	"Alpha Co", "Miss Bubble 2", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

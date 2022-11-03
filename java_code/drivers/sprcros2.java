@@ -382,5 +382,5 @@ public class sprcros2
 		ROM_LOAD( "sc-60.4k",    0x0320, 0x0100, CRC(d7a4e57d) SHA1(6db02ec6aa55b05422cb505e63c71e36b4b11b4a) )	//fg clut
 	ROM_END(); }}; 
 	
-	GAME( 1986, sprcros2, 0, sprcros2, sprcros2, sprcros2, ROT0, "GM Shoji", "Super Cross 2 (Japan)" )
+	public static GameDriver driver_sprcros2	   = new GameDriver("1986"	,"sprcros2"	,"sprcros2.java"	,rom_sprcros2,null	,machine_driver_sprcros2	,input_ports_sprcros2	,init_sprcros2	,ROT0	,	"GM Shoji", "Super Cross 2 (Japan)" )
 }

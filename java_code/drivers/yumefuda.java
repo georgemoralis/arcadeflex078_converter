@@ -359,5 +359,5 @@ public class yumefuda
 	} };
 	
 	
-	GAMEX( 199?, yumefuda, 0, 		yumefuda, yumefuda, yumefuda,	ROT0, "Alba", "(Medal) Yumefuda", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_yumefuda	   = new GameDriver("199?"	,"yumefuda"	,"yumefuda.java"	,rom_yumefuda,null	,machine_driver_yumefuda	,input_ports_yumefuda	,init_yumefuda	,ROT0	,	"Alba", "(Medal) Yumefuda", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

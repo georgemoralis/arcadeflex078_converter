@@ -1103,16 +1103,16 @@ public class cyberbal
 	 *
 	 *************************************/
 	
-	GAME( 1988, cyberbal, 0,        cyberbal, cyberbal, cyberbal, ROT0, "Atari Games", "Cyberball (rev 4)" )
-	GAME( 1988, cyberba2, cyberbal, cyberbal, cyberbal, cyberbal, ROT0, "Atari Games", "Cyberball (rev 2)" )
-	GAME( 1988, cyberbap, cyberbal, cyberbal, cyberbal, cyberbal, ROT0, "Atari Games", "Cyberball (prototype)" )
+	public static GameDriver driver_cyberbal	   = new GameDriver("1988"	,"cyberbal"	,"cyberbal.java"	,rom_cyberbal,null	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbal	,ROT0	,	"Atari Games", "Cyberball (rev 4)" )
+	public static GameDriver driver_cyberba2	   = new GameDriver("1988"	,"cyberba2"	,"cyberbal.java"	,rom_cyberba2,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbal	,ROT0	,	"Atari Games", "Cyberball (rev 2)" )
+	public static GameDriver driver_cyberbap	   = new GameDriver("1988"	,"cyberbap"	,"cyberbal.java"	,rom_cyberbap,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbal	,ROT0	,	"Atari Games", "Cyberball (prototype)" )
 	
-	GAME( 1989, cyberb2p, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 4)" )
-	GAME( 1989, cyberb23, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 3)" )
-	GAME( 1989, cyberb22, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 2)" )
-	GAME( 1989, cyberb21, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 1)" )
+	public static GameDriver driver_cyberb2p	   = new GameDriver("1989"	,"cyberb2p"	,"cyberbal.java"	,rom_cyberb2p,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 4)" )
+	public static GameDriver driver_cyberb23	   = new GameDriver("1989"	,"cyberb23"	,"cyberbal.java"	,rom_cyberb23,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 3)" )
+	public static GameDriver driver_cyberb22	   = new GameDriver("1989"	,"cyberb22"	,"cyberbal.java"	,rom_cyberb22,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 2)" )
+	public static GameDriver driver_cyberb21	   = new GameDriver("1989"	,"cyberb21"	,"cyberbal.java"	,rom_cyberb21,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 1)" )
 	
-	GAME( 1989, cyberbt,  cyberbal, cyberbal, cyberbal, cyberbt,  ROT0, "Atari Games", "Tournament Cyberball 2072 (rev 2)" )
-	GAME( 1989, cyberbt1, cyberbal, cyberbal, cyberbal, cyberbt,  ROT0, "Atari Games", "Tournament Cyberball 2072 (rev 1)" )
+	public static GameDriver driver_cyberbt	   = new GameDriver("1989"	,"cyberbt"	,"cyberbal.java"	,rom_cyberbt,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbt	,ROT0	,	"Atari Games", "Tournament Cyberball 2072 (rev 2)" )
+	public static GameDriver driver_cyberbt1	   = new GameDriver("1989"	,"cyberbt1"	,"cyberbal.java"	,rom_cyberbt1,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbt	,ROT0	,	"Atari Games", "Tournament Cyberball 2072 (rev 1)" )
 	
 }

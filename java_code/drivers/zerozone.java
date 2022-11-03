@@ -287,6 +287,6 @@ public class zerozone
 	ROM_END(); }}; 
 	
 	
-	GAME( 1993, zerozone, 0, zerozone, zerozone, 0, ROT0, "Comad", "Zero Zone" )
-	GAME( 1994, lvgirl94, 0, zerozone, zerozone, 0, ROT0, "Comad", "Las Vegas Girl (Girl '94)" )
+	public static GameDriver driver_zerozone	   = new GameDriver("1993"	,"zerozone"	,"zerozone.java"	,rom_zerozone,null	,machine_driver_zerozone	,input_ports_zerozone	,null	,ROT0	,	"Comad", "Zero Zone" )
+	public static GameDriver driver_lvgirl94	   = new GameDriver("1994"	,"lvgirl94"	,"zerozone.java"	,rom_lvgirl94,null	,machine_driver_zerozone	,input_ports_zerozone	,null	,ROT0	,	"Comad", "Las Vegas Girl (Girl '94)" )
 }

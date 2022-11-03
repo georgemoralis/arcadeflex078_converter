@@ -507,5 +507,5 @@ public class plygonet
 	ROM_END(); }}; 
 	
 	/*          ROM        parent   machine    inp        init */
-	GAMEX( 1993, plygonet, 0,       plygonet, polygonet, polygonet, ROT90, "Konami", "Polygonet Commanders (ver UAA)", GAME_NOT_WORKING )
+	public static GameDriver driver_plygonet	   = new GameDriver("1993"	,"plygonet"	,"plygonet.java"	,rom_plygonet,null	,machine_driver_plygonet	,input_ports_polygonet	,init_polygonet	,ROT90	,	"Konami", "Polygonet Commanders (ver UAA)", GAME_NOT_WORKING )
 }

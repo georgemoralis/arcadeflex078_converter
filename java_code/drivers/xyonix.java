@@ -300,5 +300,5 @@ public class xyonix
 	
 	/* GAME drivers **************************************************************/
 	
-	GAME( 1989, xyonix, 0, xyonix, xyonix, 0, ROT0, "Philko", "Xyonix" )
+	public static GameDriver driver_xyonix	   = new GameDriver("1989"	,"xyonix"	,"xyonix.java"	,rom_xyonix,null	,machine_driver_xyonix	,input_ports_xyonix	,null	,ROT0	,	"Philko", "Xyonix" )
 }

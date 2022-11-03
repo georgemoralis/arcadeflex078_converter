@@ -171,5 +171,5 @@ public class chindrag
 		ROM_LOAD( "sp",         0x00000, 0x40000, CRC(fde63ce1) SHA1(cc32d2cace319fe4d5d0aa96d7addb2d1def62f2) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1994, chindrag, 0, chindrag, chindrag, chindrag, ROT0, "IGS", "China Dragon / Dragon World", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_chindrag	   = new GameDriver("1994"	,"chindrag"	,"chindrag.java"	,rom_chindrag,null	,machine_driver_chindrag	,input_ports_chindrag	,init_chindrag	,ROT0	,	"IGS", "China Dragon / Dragon World", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

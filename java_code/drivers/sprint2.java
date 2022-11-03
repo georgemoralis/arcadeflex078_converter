@@ -995,8 +995,8 @@ public class sprint2
 	ROM_END(); }}; 
 	
 	
-	GAME( 1978, sprint1,  0,       sprint1, sprint1, sprint1, ROT0, "Atari", "Sprint 1" )
-	GAME( 1976, sprint2,  sprint1, sprint2, sprint2, sprint2, ROT0, "Atari", "Sprint 2 (set 1)" )
-	GAME( 1976, sprint2a, sprint1, sprint2, sprint2, sprint2, ROT0, "Atari", "Sprint 2 (set 2)" )
-	GAME( 1977, dominos,  0,       dominos, dominos, dominos, ROT0, "Atari", "Dominos" )
+	public static GameDriver driver_sprint1	   = new GameDriver("1978"	,"sprint1"	,"sprint2.java"	,rom_sprint1,null	,machine_driver_sprint1	,input_ports_sprint1	,init_sprint1	,ROT0	,	"Atari", "Sprint 1" )
+	public static GameDriver driver_sprint2	   = new GameDriver("1976"	,"sprint2"	,"sprint2.java"	,rom_sprint2,driver_sprint1	,machine_driver_sprint2	,input_ports_sprint2	,init_sprint2	,ROT0	,	"Atari", "Sprint 2 (set 1)" )
+	public static GameDriver driver_sprint2a	   = new GameDriver("1976"	,"sprint2a"	,"sprint2.java"	,rom_sprint2a,driver_sprint1	,machine_driver_sprint2	,input_ports_sprint2	,init_sprint2	,ROT0	,	"Atari", "Sprint 2 (set 2)" )
+	public static GameDriver driver_dominos	   = new GameDriver("1977"	,"dominos"	,"sprint2.java"	,rom_dominos,null	,machine_driver_dominos	,input_ports_dominos	,init_dominos	,ROT0	,	"Atari", "Dominos" )
 }

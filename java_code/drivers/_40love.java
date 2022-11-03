@@ -1365,7 +1365,7 @@ public class _40love
 		ROM_LOAD( "a17-18.23v", 0x0c00, 0x0400, CRC(3023a1da) SHA1(08ce4c6e99d04b358d66f0588852311d07183619) )	/* ??? */
 	ROM_END(); }}; 
 	
-	GAMEX( 1984, 40love,   0,        40love,   40love,   40love,   ROT0, "Taito Corporation", "Forty-Love", GAME_IMPERFECT_GRAPHICS )
-	GAME ( 1984, fieldday, 0,        undoukai, undoukai, undoukai, ROT0, "Taito Corporation", "Field Day" )
-	GAME ( 1984, undoukai, fieldday, undoukai, undoukai, undoukai, ROT0, "Taito Corporation", "The Undoukai (Japan)" )
+	public static GameDriver driver_40love	   = new GameDriver("1984"	,"40love"	,"_40love.java"	,rom_40love,null	,machine_driver_40love	,input_ports_40love	,init_40love	,ROT0	,	"Taito Corporation", "Forty-Love", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_fieldday	   = new GameDriver("1984"	,"fieldday"	,"_40love.java"	,rom_fieldday,null	,machine_driver_undoukai	,input_ports_undoukai	,init_undoukai	,ROT0	,	"Taito Corporation", "Field Day" )
+	public static GameDriver driver_undoukai	   = new GameDriver("1984"	,"undoukai"	,"_40love.java"	,rom_undoukai,driver_fieldday	,machine_driver_undoukai	,input_ports_undoukai	,init_undoukai	,ROT0	,	"Taito Corporation", "The Undoukai (Japan)" )
 }

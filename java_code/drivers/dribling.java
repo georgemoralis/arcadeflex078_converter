@@ -381,6 +381,6 @@ public class dribling
 	 *
 	 *************************************/
 	
-	GAMEX( 1983, dribling, 0,        dribling, dribling, 0, ROT0, "Model Racing", "Dribbling", GAME_NO_SOUND )
-	GAMEX( 1983, driblino, dribling, dribling, dribling, 0, ROT0, "Model Racing (Olympia license)", "Dribbling (Olympia)", GAME_NO_SOUND )
+	public static GameDriver driver_dribling	   = new GameDriver("1983"	,"dribling"	,"dribling.java"	,rom_dribling,null	,machine_driver_dribling	,input_ports_dribling	,null	,ROT0	,	"Model Racing", "Dribbling", GAME_NO_SOUND )
+	public static GameDriver driver_driblino	   = new GameDriver("1983"	,"driblino"	,"dribling.java"	,rom_driblino,driver_dribling	,machine_driver_dribling	,input_ports_dribling	,null	,ROT0	,	"Model Racing (Olympia license)", "Dribbling (Olympia)", GAME_NO_SOUND )
 }

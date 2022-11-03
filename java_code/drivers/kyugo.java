@@ -1129,15 +1129,15 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	GAME( 1984, gyrodine, 0,        gyrodine, gyrodine, gyrodine, ROT90, "Taito Corporation", "Gyrodine" )
-	GAME( 1985, sonofphx, 0,        sonofphx, sonofphx, 0,        ROT90, "Associated Overseas MFR, Inc", "Son of Phoenix" )
-	GAME( 1985, repulse,  sonofphx, sonofphx, sonofphx, 0,        ROT90, "Sega", "Repulse" )
-	GAME( 1985, 99lstwar, sonofphx, sonofphx, sonofphx, 0,        ROT90, "Proma", "'99: The Last War" )
-	GAME( 1985, 99lstwra, sonofphx, sonofphx, sonofphx, 0,        ROT90, "Proma", "'99: The Last War (alternate)" )
-	GAME( 1985, flashgal, 0,        flashgal, flashgal, 0,        ROT0,  "Sega", "Flashgal" )
-	GAME( 1986, srdmissn, 0,        srdmissn, srdmissn, srdmissn, ROT90, "Taito Corporation", "S.R.D. Mission" )
-	GAME( 1986?,legend,   0,        legend,   legend,   srdmissn, ROT0,  "Sega / Coreland ?", "Legend" )
-	GAME( 1987, airwolf,  0,        srdmissn, airwolf,  srdmissn, ROT0,  "Kyugo", "Airwolf" )
-	GAME( 1987, skywolf,  airwolf,  srdmissn, skywolf,  srdmissn, ROT0,  "bootleg", "Sky Wolf (set 1)" )
-	GAME( 1987, skywolf2, airwolf,  srdmissn, airwolf,  srdmissn, ROT0,  "bootleg", "Sky Wolf (set 2)" )
+	public static GameDriver driver_gyrodine	   = new GameDriver("1984"	,"gyrodine"	,"kyugo.java"	,rom_gyrodine,null	,machine_driver_gyrodine	,input_ports_gyrodine	,init_gyrodine	,ROT90	,	"Taito Corporation", "Gyrodine" )
+	public static GameDriver driver_sonofphx	   = new GameDriver("1985"	,"sonofphx"	,"kyugo.java"	,rom_sonofphx,null	,machine_driver_sonofphx	,input_ports_sonofphx	,null	,ROT90	,	"Associated Overseas MFR, Inc", "Son of Phoenix" )
+	public static GameDriver driver_repulse	   = new GameDriver("1985"	,"repulse"	,"kyugo.java"	,rom_repulse,driver_sonofphx	,machine_driver_sonofphx	,input_ports_sonofphx	,null	,ROT90	,	"Sega", "Repulse" )
+	public static GameDriver driver_99lstwar	   = new GameDriver("1985"	,"99lstwar"	,"kyugo.java"	,rom_99lstwar,driver_sonofphx	,machine_driver_sonofphx	,input_ports_sonofphx	,null	,ROT90	,	"Proma", "'99: The Last War" )
+	public static GameDriver driver_99lstwra	   = new GameDriver("1985"	,"99lstwra"	,"kyugo.java"	,rom_99lstwra,driver_sonofphx	,machine_driver_sonofphx	,input_ports_sonofphx	,null	,ROT90	,	"Proma", "'99: The Last War (alternate)" )
+	public static GameDriver driver_flashgal	   = new GameDriver("1985"	,"flashgal"	,"kyugo.java"	,rom_flashgal,null	,machine_driver_flashgal	,input_ports_flashgal	,null	,ROT0	,	"Sega", "Flashgal" )
+	public static GameDriver driver_srdmissn	   = new GameDriver("1986"	,"srdmissn"	,"kyugo.java"	,rom_srdmissn,null	,machine_driver_srdmissn	,input_ports_srdmissn	,init_srdmissn	,ROT90	,	"Taito Corporation", "S.R.D. Mission" )
+	public static GameDriver driver_legend	   = new GameDriver("1986?"	,"legend"	,"kyugo.java"	,rom_legend,null	,machine_driver_legend	,input_ports_legend	,init_srdmissn	,ROT0	,	"Sega / Coreland ?", "Legend" )
+	public static GameDriver driver_airwolf	   = new GameDriver("1987"	,"airwolf"	,"kyugo.java"	,rom_airwolf,null	,machine_driver_srdmissn	,input_ports_airwolf	,init_srdmissn	,ROT0	,	"Kyugo", "Airwolf" )
+	public static GameDriver driver_skywolf	   = new GameDriver("1987"	,"skywolf"	,"kyugo.java"	,rom_skywolf,driver_airwolf	,machine_driver_srdmissn	,input_ports_skywolf	,init_srdmissn	,ROT0	,	"bootleg", "Sky Wolf (set 1)" )
+	public static GameDriver driver_skywolf2	   = new GameDriver("1987"	,"skywolf2"	,"kyugo.java"	,rom_skywolf2,driver_airwolf	,machine_driver_srdmissn	,input_ports_airwolf	,init_srdmissn	,ROT0	,	"bootleg", "Sky Wolf (set 2)" )
 }

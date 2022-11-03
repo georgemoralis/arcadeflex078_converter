@@ -331,5 +331,5 @@ public class strvmstr
 		ROM_LOAD( "entrtn.hi3",   0x38000, 0x8000, CRC(a8cf603b) SHA1(6efa5753d8d252452b3f5be8635a28364e4d8de1) ) 
 	ROM_END(); }}; 
 	
-	GAMEX( 1986, strvmstr, 0, strvmstr, strvmstr, 0, ROT90, "Enerdyne Technologies Inc.", "Super Trivia Master", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	public static GameDriver driver_strvmstr	   = new GameDriver("1986"	,"strvmstr"	,"strvmstr.java"	,rom_strvmstr,null	,machine_driver_strvmstr	,input_ports_strvmstr	,null	,ROT90	,	"Enerdyne Technologies Inc.", "Super Trivia Master", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

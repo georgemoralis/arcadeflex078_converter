@@ -401,5 +401,5 @@ public class subs
 	 *
 	 *************************************/
 	
-	GAMEX( 1977, subs, 0, subs, subs, subs, ROT0, "Atari", "Subs", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_subs	   = new GameDriver("1977"	,"subs"	,"subs.java"	,rom_subs,null	,machine_driver_subs	,input_ports_subs	,init_subs	,ROT0	,	"Atari", "Subs", GAME_IMPERFECT_SOUND )
 }

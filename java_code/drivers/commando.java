@@ -594,9 +594,9 @@ public class commando
 	
 	
 	
-	GAME( 1985, commando, 0,        commando, commando, commando, ROT90, "Capcom", "Commando (World)" )
-	GAME( 1985, commandu, commando, commando, commandu, commando, ROT90, "Capcom (Data East USA license)", "Commando (US)" )
-	GAME( 1985, commandj, commando, commando, commando, commando, ROT90, "Capcom", "Senjou no Ookami" )
-	GAME( 1985, sinvasn,  commando, commando, commando, commando, ROT90, "Capcom", "Space Invasion (Europe)" )
-	GAME( 1985, sinvasnb, commando, commando, commando, spaceinv, ROT90, "bootleg", "Space Invasion (bootleg)" )
+	public static GameDriver driver_commando	   = new GameDriver("1985"	,"commando"	,"commando.java"	,rom_commando,null	,machine_driver_commando	,input_ports_commando	,init_commando	,ROT90	,	"Capcom", "Commando (World)" )
+	public static GameDriver driver_commandu	   = new GameDriver("1985"	,"commandu"	,"commando.java"	,rom_commandu,driver_commando	,machine_driver_commando	,input_ports_commandu	,init_commando	,ROT90	,	"Capcom (Data East USA license)", "Commando (US)" )
+	public static GameDriver driver_commandj	   = new GameDriver("1985"	,"commandj"	,"commando.java"	,rom_commandj,driver_commando	,machine_driver_commando	,input_ports_commando	,init_commando	,ROT90	,	"Capcom", "Senjou no Ookami" )
+	public static GameDriver driver_sinvasn	   = new GameDriver("1985"	,"sinvasn"	,"commando.java"	,rom_sinvasn,driver_commando	,machine_driver_commando	,input_ports_commando	,init_commando	,ROT90	,	"Capcom", "Space Invasion (Europe)" )
+	public static GameDriver driver_sinvasnb	   = new GameDriver("1985"	,"sinvasnb"	,"commando.java"	,rom_sinvasnb,driver_commando	,machine_driver_commando	,input_ports_commando	,init_spaceinv	,ROT90	,	"bootleg", "Space Invasion (bootleg)" )
 }

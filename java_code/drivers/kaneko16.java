@@ -4280,23 +4280,23 @@ public class kaneko16
 	
 	/* Working games */
 	
-	GAME( 1991, berlwall, 0,        berlwall, berlwall, berlwall, ROT0,  "Kaneko", "The Berlin Wall (set 1)" )
-	GAME( 1991, berlwalt, berlwall, berlwall, berlwalt, berlwall, ROT0,  "Kaneko", "The Berlin Wall (set 2)" )
-	GAME( 1991, mgcrystl, 0,        mgcrystl, mgcrystl, kaneko16, ROT0,  "Kaneko", "Magical Crystals (World)" )
-	GAME( 1991, mgcrystj, mgcrystl, mgcrystl, mgcrystl, kaneko16, ROT0,  "Kaneko (Atlus license)", "Magical Crystals (Japan)" )
-	GAME( 1992, blazeon,  0,        blazeon,  blazeon,  kaneko16, ROT0,  "Atlus",  "Blaze On (Japan)" )
-	GAME( 1992, sandscrp, 0,        sandscrp, sandscrp, 0,        ROT90, "Face",   "Sand Scorpion" )
-	GAME( 1994, gtmr,     0,        gtmr,     gtmr,     kaneko16, ROT0,  "Kaneko", "Great 1000 Miles Rally" )
-	GAME( 1994, gtmre,    gtmr,     gtmr,     gtmr,     kaneko16, ROT0,  "Kaneko", "Great 1000 Miles Rally (Evolution Model)" )
-	GAME( 1994, gtmrusa,  gtmr,     gtmr,     gtmr,     kaneko16, ROT0,  "Kaneko", "Great 1000 Miles Rally (USA)" )
-	GAME( 1995, gtmr2,    0,        gtmr2,    gtmr2,    kaneko16, ROT0,  "Kaneko", "Mille Miglia 2: Great 1000 Miles Rally" )
+	public static GameDriver driver_berlwall	   = new GameDriver("1991"	,"berlwall"	,"kaneko16.java"	,rom_berlwall,null	,machine_driver_berlwall	,input_ports_berlwall	,init_berlwall	,ROT0	,	"Kaneko", "The Berlin Wall (set 1)" )
+	public static GameDriver driver_berlwalt	   = new GameDriver("1991"	,"berlwalt"	,"kaneko16.java"	,rom_berlwalt,driver_berlwall	,machine_driver_berlwall	,input_ports_berlwalt	,init_berlwall	,ROT0	,	"Kaneko", "The Berlin Wall (set 2)" )
+	public static GameDriver driver_mgcrystl	   = new GameDriver("1991"	,"mgcrystl"	,"kaneko16.java"	,rom_mgcrystl,null	,machine_driver_mgcrystl	,input_ports_mgcrystl	,init_kaneko16	,ROT0	,	"Kaneko", "Magical Crystals (World)" )
+	public static GameDriver driver_mgcrystj	   = new GameDriver("1991"	,"mgcrystj"	,"kaneko16.java"	,rom_mgcrystj,driver_mgcrystl	,machine_driver_mgcrystl	,input_ports_mgcrystl	,init_kaneko16	,ROT0	,	"Kaneko (Atlus license)", "Magical Crystals (Japan)" )
+	public static GameDriver driver_blazeon	   = new GameDriver("1992"	,"blazeon"	,"kaneko16.java"	,rom_blazeon,null	,machine_driver_blazeon	,input_ports_blazeon	,init_kaneko16	,ROT0	,	"Atlus",  "Blaze On (Japan)" )
+	public static GameDriver driver_sandscrp	   = new GameDriver("1992"	,"sandscrp"	,"kaneko16.java"	,rom_sandscrp,null	,machine_driver_sandscrp	,input_ports_sandscrp	,null	,ROT90	,	"Face",   "Sand Scorpion" )
+	public static GameDriver driver_gtmr	   = new GameDriver("1994"	,"gtmr"	,"kaneko16.java"	,rom_gtmr,null	,machine_driver_gtmr	,input_ports_gtmr	,init_kaneko16	,ROT0	,	"Kaneko", "Great 1000 Miles Rally" )
+	public static GameDriver driver_gtmre	   = new GameDriver("1994"	,"gtmre"	,"kaneko16.java"	,rom_gtmre,driver_gtmr	,machine_driver_gtmr	,input_ports_gtmr	,init_kaneko16	,ROT0	,	"Kaneko", "Great 1000 Miles Rally (Evolution Model)" )
+	public static GameDriver driver_gtmrusa	   = new GameDriver("1994"	,"gtmrusa"	,"kaneko16.java"	,rom_gtmrusa,driver_gtmr	,machine_driver_gtmr	,input_ports_gtmr	,init_kaneko16	,ROT0	,	"Kaneko", "Great 1000 Miles Rally (USA)" )
+	public static GameDriver driver_gtmr2	   = new GameDriver("1995"	,"gtmr2"	,"kaneko16.java"	,rom_gtmr2,null	,machine_driver_gtmr2	,input_ports_gtmr2	,init_kaneko16	,ROT0	,	"Kaneko", "Mille Miglia 2: Great 1000 Miles Rally" )
 	
 	/* Non-working games (mainly due to protection) */
 	
-	GAMEX(1992, bakubrkr, 0,        bakubrkr, bakubrkr, kaneko16, ROT90, "Kaneko", "Bakuretsu Breaker",       GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1992, shogwarr, 0,        shogwarr, shogwarr, shogwarr, ROT0,  "Kaneko", "Shogun Warriors",         GAME_NOT_WORKING )
-	GAMEX(1992, fjbuster, shogwarr, shogwarr, shogwarr, fjbuster, ROT0,  "Kaneko", "Fujiyama Buster (Japan)", GAME_NOT_WORKING )
-	GAMEX(1992, brapboys, 0,        shogwarr, shogwarr, 0,        ROT0,  "Kaneko", "B.Rap Boys",              GAME_NOT_WORKING )
-	GAMEX(1994, bloodwar, 0,        bloodwar, bloodwar, kaneko16, ROT0,  "Kaneko", "Blood Warrior",           GAME_NOT_WORKING )
-	GAMEX(1994, bonkadv,  0,        bonkadv,  bakubrkr, 0,		  ROT0,  "Kaneko", "Bonks Adventure",		  GAME_NOT_WORKING )
+	public static GameDriver driver_bakubrkr	   = new GameDriver("1992"	,"bakubrkr"	,"kaneko16.java"	,rom_bakubrkr,null	,machine_driver_bakubrkr	,input_ports_bakubrkr	,init_kaneko16	,ROT90	,	"Kaneko", "Bakuretsu Breaker",       GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_shogwarr	   = new GameDriver("1992"	,"shogwarr"	,"kaneko16.java"	,rom_shogwarr,null	,machine_driver_shogwarr	,input_ports_shogwarr	,init_shogwarr	,ROT0	,	"Kaneko", "Shogun Warriors",         GAME_NOT_WORKING )
+	public static GameDriver driver_fjbuster	   = new GameDriver("1992"	,"fjbuster"	,"kaneko16.java"	,rom_fjbuster,driver_shogwarr	,machine_driver_shogwarr	,input_ports_shogwarr	,init_fjbuster	,ROT0	,	"Kaneko", "Fujiyama Buster (Japan)", GAME_NOT_WORKING )
+	public static GameDriver driver_brapboys	   = new GameDriver("1992"	,"brapboys"	,"kaneko16.java"	,rom_brapboys,null	,machine_driver_shogwarr	,input_ports_shogwarr	,null	,ROT0	,	"Kaneko", "B.Rap Boys",              GAME_NOT_WORKING )
+	public static GameDriver driver_bloodwar	   = new GameDriver("1994"	,"bloodwar"	,"kaneko16.java"	,rom_bloodwar,null	,machine_driver_bloodwar	,input_ports_bloodwar	,init_kaneko16	,ROT0	,	"Kaneko", "Blood Warrior",           GAME_NOT_WORKING )
+	public static GameDriver driver_bonkadv	   = new GameDriver("1994"	,"bonkadv"	,"kaneko16.java"	,rom_bonkadv,null	,machine_driver_bonkadv	,input_ports_bakubrkr	,null	,ROT0	,	"Kaneko", "Bonks Adventure",		  GAME_NOT_WORKING )
 }

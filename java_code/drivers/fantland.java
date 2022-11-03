@@ -563,7 +563,7 @@ public class fantland
 		ROMX_LOAD( "gg30.bin", 0x180002, 0x10000, CRC(ded7cacf) SHA1(adbfaa8f46e5ce8df264d5b5a201d75ca2b3dbeb) , ROM_SKIP(2) )
 	ROM_END(); }}; 
 	
-	GAME( 19??, fantland, 0, fantland, fantland, 0, ROT0,  "Electronic Devices Italy", "Fantasy Land"   )
-	GAME( 1989, galaxygn, 0, galaxygn, galaxygn, 0, ROT90, "Electronic Devices Italy", "Galaxy Gunners" )
+	public static GameDriver driver_fantland	   = new GameDriver("19??"	,"fantland"	,"fantland.java"	,rom_fantland,null	,machine_driver_fantland	,input_ports_fantland	,null	,ROT0	,	"Electronic Devices Italy", "Fantasy Land"   )
+	public static GameDriver driver_galaxygn	   = new GameDriver("1989"	,"galaxygn"	,"fantland.java"	,rom_galaxygn,null	,machine_driver_galaxygn	,input_ports_galaxygn	,null	,ROT90	,	"Electronic Devices Italy", "Galaxy Gunners" )
 	
 }

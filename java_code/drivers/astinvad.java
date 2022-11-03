@@ -370,8 +370,8 @@ public class astinvad
 	ROM_END(); }}; 
 	
 	
-	GAME ( 1980, astinvad, 0,        astinvad, astinvad, 0, ROT270, "Stern",  "Astro Invader" )
-	GAME ( 1979, kamikaze, astinvad, astinvad, kamikaze, 0, ROT270, "Leijac", "Kamikaze" )
-	GAME ( 1979, spcking2, 0,        spcking2, spcking2, 0, ROT270, "Konami", "Space King 2" )
-	GAMEX( 1980, spaceint, 0,        spaceint, spaceint, 0, ROT90,  "Shoei",  "Space Intruder", GAME_WRONG_COLORS )
+	public static GameDriver driver_astinvad	   = new GameDriver("1980"	,"astinvad"	,"astinvad.java"	,rom_astinvad,null	,machine_driver_astinvad	,input_ports_astinvad	,null	,ROT270	,	"Stern",  "Astro Invader" )
+	public static GameDriver driver_kamikaze	   = new GameDriver("1979"	,"kamikaze"	,"astinvad.java"	,rom_kamikaze,driver_astinvad	,machine_driver_astinvad	,input_ports_kamikaze	,null	,ROT270	,	"Leijac", "Kamikaze" )
+	public static GameDriver driver_spcking2	   = new GameDriver("1979"	,"spcking2"	,"astinvad.java"	,rom_spcking2,null	,machine_driver_spcking2	,input_ports_spcking2	,null	,ROT270	,	"Konami", "Space King 2" )
+	public static GameDriver driver_spaceint	   = new GameDriver("1980"	,"spaceint"	,"astinvad.java"	,rom_spaceint,null	,machine_driver_spaceint	,input_ports_spaceint	,null	,ROT90	,	"Shoei",  "Space Intruder", GAME_WRONG_COLORS )
 }

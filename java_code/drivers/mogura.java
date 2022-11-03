@@ -267,5 +267,5 @@ public class mogura
 		ROM_LOAD( "gx141.7j", 0x00, 0x20,  CRC(b21c5d5f) SHA1(6913c840dd69a7d4687f4c4cbe3ff12300f62bc2) )
 	ROM_END(); }}; 
 	
-	GAME( 1991, mogura, 0, mogura, mogura, 0, ROT0, "Konami", "Mogura Desse" )
+	public static GameDriver driver_mogura	   = new GameDriver("1991"	,"mogura"	,"mogura.java"	,rom_mogura,null	,machine_driver_mogura	,input_ports_mogura	,null	,ROT0	,	"Konami", "Mogura Desse" )
 }

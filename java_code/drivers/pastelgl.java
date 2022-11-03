@@ -321,5 +321,5 @@ public class pastelgl
 	ROM_END(); }}; 
 	
 	
-	GAME( 1985, pastelgl, 0, pastelgl, pastelgl, pastelgl, ROT0, "Nichibutsu", "Pastel Gal (Japan 851224)" )
+	public static GameDriver driver_pastelgl	   = new GameDriver("1985"	,"pastelgl"	,"pastelgl.java"	,rom_pastelgl,null	,machine_driver_pastelgl	,input_ports_pastelgl	,init_pastelgl	,ROT0	,	"Nichibutsu", "Pastel Gal (Japan 851224)" )
 }

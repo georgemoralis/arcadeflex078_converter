@@ -491,8 +491,8 @@ public class deniam
 	
 	
 	
-	GAME( 1996, logicpro, 0,        deniam16b, logicpr2, logicpro, ROT0, "Deniam", "Logic Pro (Japan)" )
-	GAME( 1996, croquis,  logicpro, deniam16b, logicpr2, logicpro, ROT0, "Deniam", "Croquis (Germany)" )
-	GAME( 1996, karianx,  0,        deniam16b, karianx,  karianx,  ROT0, "Deniam", "Karian Cross (Rev. 1.0)" )
-	GAMEX(1997, logicpr2, 0,        deniam16c, logicpr2, logicpro, ROT0, "Deniam", "Logic Pro 2 (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_logicpro	   = new GameDriver("1996"	,"logicpro"	,"deniam.java"	,rom_logicpro,null	,machine_driver_deniam16b	,input_ports_logicpr2	,init_logicpro	,ROT0	,	"Deniam", "Logic Pro (Japan)" )
+	public static GameDriver driver_croquis	   = new GameDriver("1996"	,"croquis"	,"deniam.java"	,rom_croquis,driver_logicpro	,machine_driver_deniam16b	,input_ports_logicpr2	,init_logicpro	,ROT0	,	"Deniam", "Croquis (Germany)" )
+	public static GameDriver driver_karianx	   = new GameDriver("1996"	,"karianx"	,"deniam.java"	,rom_karianx,null	,machine_driver_deniam16b	,input_ports_karianx	,init_karianx	,ROT0	,	"Deniam", "Karian Cross (Rev. 1.0)" )
+	public static GameDriver driver_logicpr2	   = new GameDriver("1997"	,"logicpr2"	,"deniam.java"	,rom_logicpr2,null	,machine_driver_deniam16c	,input_ports_logicpr2	,init_logicpro	,ROT0	,	"Deniam", "Logic Pro 2 (Japan)", GAME_IMPERFECT_SOUND )
 }

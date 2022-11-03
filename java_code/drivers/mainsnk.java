@@ -301,6 +301,6 @@ public class mainsnk
 		ROM_LOAD( "main1.bin",    0x001000, 0x000800, CRC(deb895c4) SHA1(f1281dcb3471d9627565706ff09ba72f09dc62a4) ) 
 	ROM_END(); }}; 
 	
-	GAME( 1984, mainsnk,      0,          mainsnk, mainsnk, 0,          ROT0, "SNK", "Main Event (1984)")
+	public static GameDriver driver_mainsnk	   = new GameDriver("1984"	,"mainsnk"	,"mainsnk.java"	,rom_mainsnk,null	,machine_driver_mainsnk	,input_ports_mainsnk	,null	,ROT0	,	"SNK", "Main Event (1984)")
 	
 }

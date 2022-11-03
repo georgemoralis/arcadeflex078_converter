@@ -800,10 +800,10 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	GAME( 1983, mhavoc,   0,      mhavoc,   mhavoc,   0, ROT0, "Atari", "Major Havoc (rev 3)" )
-	GAME( 1983, mhavoc2,  mhavoc, mhavoc,   mhavoc,   0, ROT0, "Atari", "Major Havoc (rev 2)" )
-	GAME( 1983, mhavocrv, mhavoc, mhavoc,   mhavoc,   0, ROT0, "hack",  "Major Havoc (Return to Vax)" )
-	GAME( 1983, mhavocp,  mhavoc, mhavoc,   mhavocp,  0, ROT0, "Atari", "Major Havoc (prototype)" )
-	GAME( 1983, alphaone, mhavoc, alphaone, alphaone, 0, ROT0, "Atari", "Alpha One (prototype, 3 lives)" )
-	GAME( 1983, alphaona, mhavoc, alphaone, alphaone, 0, ROT0, "Atari", "Alpha One (prototype, 5 lives)" )
+	public static GameDriver driver_mhavoc	   = new GameDriver("1983"	,"mhavoc"	,"mhavoc.java"	,rom_mhavoc,null	,machine_driver_mhavoc	,input_ports_mhavoc	,null	,ROT0	,	"Atari", "Major Havoc (rev 3)" )
+	public static GameDriver driver_mhavoc2	   = new GameDriver("1983"	,"mhavoc2"	,"mhavoc.java"	,rom_mhavoc2,driver_mhavoc	,machine_driver_mhavoc	,input_ports_mhavoc	,null	,ROT0	,	"Atari", "Major Havoc (rev 2)" )
+	public static GameDriver driver_mhavocrv	   = new GameDriver("1983"	,"mhavocrv"	,"mhavoc.java"	,rom_mhavocrv,driver_mhavoc	,machine_driver_mhavoc	,input_ports_mhavoc	,null	,ROT0	,	"hack",  "Major Havoc (Return to Vax)" )
+	public static GameDriver driver_mhavocp	   = new GameDriver("1983"	,"mhavocp"	,"mhavoc.java"	,rom_mhavocp,driver_mhavoc	,machine_driver_mhavoc	,input_ports_mhavocp	,null	,ROT0	,	"Atari", "Major Havoc (prototype)" )
+	public static GameDriver driver_alphaone	   = new GameDriver("1983"	,"alphaone"	,"mhavoc.java"	,rom_alphaone,driver_mhavoc	,machine_driver_alphaone	,input_ports_alphaone	,null	,ROT0	,	"Atari", "Alpha One (prototype, 3 lives)" )
+	public static GameDriver driver_alphaona	   = new GameDriver("1983"	,"alphaona"	,"mhavoc.java"	,rom_alphaona,driver_mhavoc	,machine_driver_alphaone	,input_ports_alphaone	,null	,ROT0	,	"Atari", "Alpha One (prototype, 5 lives)" )
 }

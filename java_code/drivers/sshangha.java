@@ -455,6 +455,6 @@ public class sshangha
 	} };
 	
 	
-	GAMEX( 1992, sshangha, 0,        sshangha, sshangha, sshangha, ROT0, "Hot-B.",   "Super Shanghai Dragon's Eye (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND )
-	GAMEX( 1992, sshanghb, sshangha, sshangha, sshangha, sshangha, ROT0, "bootleg", "Super Shanghai Dragon's Eye (World, bootleg)", GAME_NO_SOUND )
+	public static GameDriver driver_sshangha	   = new GameDriver("1992"	,"sshangha"	,"sshangha.java"	,rom_sshangha,null	,machine_driver_sshangha	,input_ports_sshangha	,init_sshangha	,ROT0	,	"Hot-B.",   "Super Shanghai Dragon's Eye (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND )
+	public static GameDriver driver_sshanghb	   = new GameDriver("1992"	,"sshanghb"	,"sshangha.java"	,rom_sshanghb,driver_sshangha	,machine_driver_sshangha	,input_ports_sshangha	,init_sshangha	,ROT0	,	"bootleg", "Super Shanghai Dragon's Eye (World, bootleg)", GAME_NO_SOUND )
 }

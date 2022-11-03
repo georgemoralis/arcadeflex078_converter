@@ -440,5 +440,5 @@ public class funybubl
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1999, funybubl, 0, funybubl, funybubl, funybubl, ROT0, "Comad", "Funny Bubble", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_funybubl	   = new GameDriver("1999"	,"funybubl"	,"funybubl.java"	,rom_funybubl,null	,machine_driver_funybubl	,input_ports_funybubl	,init_funybubl	,ROT0	,	"Comad", "Funny Bubble", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 }

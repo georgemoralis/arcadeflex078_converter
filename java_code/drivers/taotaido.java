@@ -468,6 +468,6 @@ public class taotaido
 		ROM_LOAD( "u15.bin", 0x000000, 0x200000, CRC(e95823e9) SHA1(362583944ad4fdde4f9e29928cf34376c7ad931f) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1993, taotaido, 0,        taotaido, taotaido, 0, ROT0, "Video System Co.", "Tao Taido (set 1)", GAME_NO_COCKTAIL )
-	GAMEX( 1993, taotaida, taotaido, taotaido, taotaido, 0, ROT0, "Video System Co.", "Tao Taido (set 2)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_taotaido	   = new GameDriver("1993"	,"taotaido"	,"taotaido.java"	,rom_taotaido,null	,machine_driver_taotaido	,input_ports_taotaido	,null	,ROT0	,	"Video System Co.", "Tao Taido (set 1)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_taotaida	   = new GameDriver("1993"	,"taotaida"	,"taotaido.java"	,rom_taotaida,driver_taotaido	,machine_driver_taotaido	,input_ports_taotaido	,null	,ROT0	,	"Video System Co.", "Tao Taido (set 2)", GAME_NO_COCKTAIL )
 }

@@ -2292,8 +2292,8 @@ public class halleys
 	//**************************************************************************
 	// Game Definitions
 	
-	GAMEX( 1984, benberob, 0,       benberob, benberob, benberob, ROT0, "Taito", "Ben Bero Beh (Japan)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
-	GAMEX( 1986, halleys,  0,       halleys, halleys, halleys,  ROT90, "Taito America Corporation (Coin-It license)", "Halley's Comet (US)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
-	GAMEX( 1986, halleysc, halleys, halleys, halleys, halleys,  ROT90, "Taito Corporation", "Halley's Comet (Japan set 1)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
-	GAMEX( 1986, halleycj, halleys, halleys, halleys, halleys,  ROT90, "Taito Corporation", "Halley's Comet (Japan set 2)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_benberob	   = new GameDriver("1984"	,"benberob"	,"halleys.java"	,rom_benberob,null	,machine_driver_benberob	,input_ports_benberob	,init_benberob	,ROT0	,	"Taito", "Ben Bero Beh (Japan)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_halleys	   = new GameDriver("1986"	,"halleys"	,"halleys.java"	,rom_halleys,null	,machine_driver_halleys	,input_ports_halleys	,init_halleys	,ROT90	,	"Taito America Corporation (Coin-It license)", "Halley's Comet (US)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_halleysc	   = new GameDriver("1986"	,"halleysc"	,"halleys.java"	,rom_halleysc,driver_halleys	,machine_driver_halleys	,input_ports_halleys	,init_halleys	,ROT90	,	"Taito Corporation", "Halley's Comet (Japan set 1)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_halleycj	   = new GameDriver("1986"	,"halleycj"	,"halleys.java"	,rom_halleycj,driver_halleys	,machine_driver_halleys	,input_ports_halleys	,init_halleys	,ROT90	,	"Taito Corporation", "Halley's Comet (Japan set 2)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 }

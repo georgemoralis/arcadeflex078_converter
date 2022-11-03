@@ -405,6 +405,6 @@ public class realbrk
 		ROM_LOAD( "52303.2e", 0x000000, 0x400000, CRC(d3005b1e) SHA1(3afd10cdbc3aa7605083a9fcf3c4b8276937c2c4) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1998, realbrk, 0, realbrk, realbrk, 0, ROT0, "Nakanihon", "Billiard Academy Real Break (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_realbrk	   = new GameDriver("1998"	,"realbrk"	,"realbrk.java"	,rom_realbrk,null	,machine_driver_realbrk	,input_ports_realbrk	,null	,ROT0	,	"Nakanihon", "Billiard Academy Real Break (Japan)", GAME_IMPERFECT_GRAPHICS )
 	
 }

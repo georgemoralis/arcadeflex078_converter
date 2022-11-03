@@ -644,10 +644,10 @@ public class bwing
 	//****************************************************************************
 	// Game Entries
 	
-	GAME ( 1984, bwing,        0, bwing, bwing, bwing, ROT90, "Data East Corporation", "B-Wings (Japan)" )
-	GAME ( 1984, bwings,   bwing, bwing, bwing, bwing, ROT90, "Data East Corporation", "Battle Wings" )
-	GAMEX( 1984, batwings, bwing, bwing, bwing, bwing, ROT90, "Data East Corporation", "Battle Wings (alt)", GAME_NOT_WORKING )
+	public static GameDriver driver_bwing	   = new GameDriver("1984"	,"bwing"	,"bwing.java"	,rom_bwing,null	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "B-Wings (Japan)" )
+	public static GameDriver driver_bwings	   = new GameDriver("1984"	,"bwings"	,"bwing.java"	,rom_bwings,driver_bwing	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Battle Wings" )
+	public static GameDriver driver_batwings	   = new GameDriver("1984"	,"batwings"	,"bwing.java"	,rom_batwings,driver_bwing	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Battle Wings (alt)", GAME_NOT_WORKING )
 	
-	GAME ( 1984, zaviga,       0, bwing, bwing, bwing, ROT90, "Data East Corporation", "Zaviga" )
-	GAME ( 1984, zavigaj, zaviga, bwing, bwing, bwing, ROT90, "Data East Corporation", "Zaviga (Japan)" )
+	public static GameDriver driver_zaviga	   = new GameDriver("1984"	,"zaviga"	,"bwing.java"	,rom_zaviga,null	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Zaviga" )
+	public static GameDriver driver_zavigaj	   = new GameDriver("1984"	,"zavigaj"	,"bwing.java"	,rom_zavigaj,driver_zaviga	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Zaviga (Japan)" )
 }

@@ -389,5 +389,5 @@ public class xxmissio
 		ROM_LOAD16_BYTE( "xx11.4b", 0x0001,  0x8000, CRC(d9dd827c) SHA1(aea3a5abd871adf7f75ad4d6cc57eff0833135c7) )
 	ROM_END(); }}; 
 	
-	GAME( 1986, xxmissio, 0, xxmissio, xxmissio, 0, ROT90, "UPL", "XX Mission" )
+	public static GameDriver driver_xxmissio	   = new GameDriver("1986"	,"xxmissio"	,"xxmissio.java"	,rom_xxmissio,null	,machine_driver_xxmissio	,input_ports_xxmissio	,null	,ROT90	,	"UPL", "XX Mission" )
 }

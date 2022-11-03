@@ -381,5 +381,5 @@ public class tugboat
 	
 	
 	
-	GAMEX( 1982, tugboat, 0, tugboat, tugboat, 0, ROT90, "ETM", "Tugboat", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_tugboat	   = new GameDriver("1982"	,"tugboat"	,"tugboat.java"	,rom_tugboat,null	,machine_driver_tugboat	,input_ports_tugboat	,null	,ROT90	,	"ETM", "Tugboat", GAME_IMPERFECT_GRAPHICS )
 }

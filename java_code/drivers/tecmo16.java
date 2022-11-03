@@ -467,6 +467,6 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	GAMEX( 1992, fstarfrc, 0, fstarfrc, fstarfrc, 0, ROT90, "Tecmo", "Final Star Force (US)", GAME_NO_COCKTAIL )
-	GAMEX( 1995, ginkun,   0, ginkun,   ginkun,   0, ROT0,  "Tecmo", "Ganbare Ginkun", GAME_NO_COCKTAIL )
+	public static GameDriver driver_fstarfrc	   = new GameDriver("1992"	,"fstarfrc"	,"tecmo16.java"	,rom_fstarfrc,null	,machine_driver_fstarfrc	,input_ports_fstarfrc	,null	,ROT90	,	"Tecmo", "Final Star Force (US)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_ginkun	   = new GameDriver("1995"	,"ginkun"	,"tecmo16.java"	,rom_ginkun,null	,machine_driver_ginkun	,input_ports_ginkun	,null	,ROT0	,	"Tecmo", "Ganbare Ginkun", GAME_NO_COCKTAIL )
 }

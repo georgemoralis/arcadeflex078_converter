@@ -190,5 +190,5 @@ public class gumbo
 		ROM_LOAD( "u511.bin", 0x20000, 0x20000, CRC(1411451b) SHA1(941d5f311f727e3a8d41ecbbe35b687d48cc2cef) )
 	ROM_END(); }}; 
 	
-	GAME( 1994, gumbo, 0, gumbo, gumbo, 0, ROT0, "Min Corp.", "Gumbo" )
+	public static GameDriver driver_gumbo	   = new GameDriver("1994"	,"gumbo"	,"gumbo.java"	,rom_gumbo,null	,machine_driver_gumbo	,input_ports_gumbo	,null	,ROT0	,	"Min Corp.", "Gumbo" )
 }

@@ -1949,16 +1949,16 @@ public class mystwarr
 	
 	
 	/*           ROM       parent    machine   inp       init */
-	GAMEX( 1993, mystwarr, 0,        mystwarr, mystwarr, mystwarr, ROT0,  "Konami", "Mystic Warriors (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, mystwaru, mystwarr, mystwarr, mystwarr, mystwarr, ROT0,  "Konami", "Mystic Warriors (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, dadandrn, 0,        dadandrn, dadandrn, dadandrn, ROT0,  "Konami", "Kyukyoku Sentai Dadandarn (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, viostorm, 0,        viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (Europe ver EAB)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, viostrmu, viostorm, viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (US ver UAB)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, viostrmj, viostorm, viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (Japan ver JAC)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, viostrma, viostorm, viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (Asia ver AAC)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, metamrph, 0,        metamrph, metamrph, metamrph, ROT0,  "Konami", "Metamorphic Force (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, metamrpj, metamrph, metamrph, metamrph, metamrph, ROT0,  "Konami", "Metamorphic Force (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, mtlchamp, 0,        martchmp, martchmp, martchmp, ROT0,  "Konami", "Martial Champion (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, mtlchmpj, mtlchamp, martchmp, martchmp, martchmp, ROT0,  "Konami", "Martial Champion (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, gaiapols, 0,        gaiapols, dadandrn, gaiapols, ROT90, "Konami", "Gaiapolis (Japan ver JAF)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mystwarr	   = new GameDriver("1993"	,"mystwarr"	,"mystwarr.java"	,rom_mystwarr,null	,machine_driver_mystwarr	,input_ports_mystwarr	,init_mystwarr	,ROT0	,	"Konami", "Mystic Warriors (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mystwaru	   = new GameDriver("1993"	,"mystwaru"	,"mystwarr.java"	,rom_mystwaru,driver_mystwarr	,machine_driver_mystwarr	,input_ports_mystwarr	,init_mystwarr	,ROT0	,	"Konami", "Mystic Warriors (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_dadandrn	   = new GameDriver("1993"	,"dadandrn"	,"mystwarr.java"	,rom_dadandrn,null	,machine_driver_dadandrn	,input_ports_dadandrn	,init_dadandrn	,ROT0	,	"Konami", "Kyukyoku Sentai Dadandarn (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_viostorm	   = new GameDriver("1993"	,"viostorm"	,"mystwarr.java"	,rom_viostorm,null	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (Europe ver EAB)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_viostrmu	   = new GameDriver("1993"	,"viostrmu"	,"mystwarr.java"	,rom_viostrmu,driver_viostorm	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (US ver UAB)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_viostrmj	   = new GameDriver("1993"	,"viostrmj"	,"mystwarr.java"	,rom_viostrmj,driver_viostorm	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (Japan ver JAC)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_viostrma	   = new GameDriver("1993"	,"viostrma"	,"mystwarr.java"	,rom_viostrma,driver_viostorm	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (Asia ver AAC)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_metamrph	   = new GameDriver("1993"	,"metamrph"	,"mystwarr.java"	,rom_metamrph,null	,machine_driver_metamrph	,input_ports_metamrph	,init_metamrph	,ROT0	,	"Konami", "Metamorphic Force (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_metamrpj	   = new GameDriver("1993"	,"metamrpj"	,"mystwarr.java"	,rom_metamrpj,driver_metamrph	,machine_driver_metamrph	,input_ports_metamrph	,init_metamrph	,ROT0	,	"Konami", "Metamorphic Force (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mtlchamp	   = new GameDriver("1993"	,"mtlchamp"	,"mystwarr.java"	,rom_mtlchamp,null	,machine_driver_martchmp	,input_ports_martchmp	,init_martchmp	,ROT0	,	"Konami", "Martial Champion (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mtlchmpj	   = new GameDriver("1993"	,"mtlchmpj"	,"mystwarr.java"	,rom_mtlchmpj,driver_mtlchamp	,machine_driver_martchmp	,input_ports_martchmp	,init_martchmp	,ROT0	,	"Konami", "Martial Champion (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_gaiapols	   = new GameDriver("1993"	,"gaiapols"	,"mystwarr.java"	,rom_gaiapols,null	,machine_driver_gaiapols	,input_ports_dadandrn	,init_gaiapols	,ROT90	,	"Konami", "Gaiapolis (Japan ver JAF)", GAME_IMPERFECT_GRAPHICS )
 }

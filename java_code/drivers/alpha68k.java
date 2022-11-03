@@ -3077,26 +3077,26 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	GAMEX(1986, sstingry, 0,        sstingry,      sstingry, sstingry, ROT90, "Alpha Denshi Co.",   "Super Stingray", GAME_NO_COCKTAIL | GAME_WRONG_COLORS )
-	GAMEX(1987, kyros,    0,        kyros,         kyros,    kyros,    ROT90, "World Games Inc",    "Kyros", GAME_NO_COCKTAIL )
-	GAMEX(1986, kyrosj,   kyros,    kyros,         kyros,    kyros,    ROT90, "Alpha Denshi Co.",    "Kyros No Yakata (Japan)", GAME_NO_COCKTAIL )
-	GAME( 1988, paddlema, 0,        alpha68k_I,    paddlema, paddlema, ROT90, "SNK",                "Paddle Mania" )
-	GAME( 1987, timesold, 0,        alpha68k_II,   timesold, timesold, ROT90, "[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 3)" )
-	GAME( 1987, timesol1, timesold, alpha68k_II,   timesold, timesol1, ROT90, "[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 1)" )
-	GAME( 1987, btlfield, timesold, alpha68k_II,   btlfield, btlfield, ROT90, "[Alpha Denshi Co.] (SNK license)", "Battle Field (Japan)" )
-	GAME( 1988, skysoldr, 0,        alpha68k_II,   skysoldr, skysoldr, ROT90, "[Alpha Denshi Co.] (SNK of America/Romstar license)", "Sky Soldiers (US)" )
-	GAME( 1988, goldmedl, 0,        alpha68k_II_gm,goldmedl, goldmedl, ROT0,  "SNK",                "Gold Medalist" )
-	GAMEX(1988, goldmedb, goldmedl, alpha68k_II_gm,goldmedl, goldmedb, ROT0,  "bootleg",            "Gold Medalist (bootleg)", GAME_NOT_WORKING )
-	GAME( 1989, skyadvnt, 0,        alpha68k_V,    skyadvnt, skyadvnt, ROT90, "Alpha Denshi Co.",   "Sky Adventure (World)" )
-	GAME( 1989, skyadvnu, skyadvnt, alpha68k_V,    skyadvnu, skyadvnu, ROT90, "Alpha Denshi Co. (SNK of America license)", "Sky Adventure (US)" )
-	GAME( 1989, skyadvnj, skyadvnt, alpha68k_V,    skyadvnt, skyadvnt, ROT90, "Alpha Denshi Co.",   "Sky Adventure (Japan)" )
-	GAME( 1989, gangwars, 0,        alpha68k_V,    gangwars, gangwars, ROT0,  "Alpha Denshi Co.",   "Gang Wars (US)" )
-	GAME( 1989, gangwarb, gangwars, alpha68k_V,    gangwarb, gangwarb, ROT0,  "bootleg",            "Gang Wars (bootleg)" )
+	public static GameDriver driver_sstingry	   = new GameDriver("1986"	,"sstingry"	,"alpha68k.java"	,rom_sstingry,null	,machine_driver_sstingry	,input_ports_sstingry	,init_sstingry	,ROT90	,	"Alpha Denshi Co.",   "Super Stingray", GAME_NO_COCKTAIL | GAME_WRONG_COLORS )
+	public static GameDriver driver_kyros	   = new GameDriver("1987"	,"kyros"	,"alpha68k.java"	,rom_kyros,null	,machine_driver_kyros	,input_ports_kyros	,init_kyros	,ROT90	,	"World Games Inc",    "Kyros", GAME_NO_COCKTAIL )
+	public static GameDriver driver_kyrosj	   = new GameDriver("1986"	,"kyrosj"	,"alpha68k.java"	,rom_kyrosj,driver_kyros	,machine_driver_kyros	,input_ports_kyros	,init_kyros	,ROT90	,	"Alpha Denshi Co.",    "Kyros No Yakata (Japan)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_paddlema	   = new GameDriver("1988"	,"paddlema"	,"alpha68k.java"	,rom_paddlema,null	,machine_driver_alpha68k_I	,input_ports_paddlema	,init_paddlema	,ROT90	,	"SNK",                "Paddle Mania" )
+	public static GameDriver driver_timesold	   = new GameDriver("1987"	,"timesold"	,"alpha68k.java"	,rom_timesold,null	,machine_driver_alpha68k_II	,input_ports_timesold	,init_timesold	,ROT90	,	"[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 3)" )
+	public static GameDriver driver_timesol1	   = new GameDriver("1987"	,"timesol1"	,"alpha68k.java"	,rom_timesol1,driver_timesold	,machine_driver_alpha68k_II	,input_ports_timesold	,init_timesol1	,ROT90	,	"[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 1)" )
+	public static GameDriver driver_btlfield	   = new GameDriver("1987"	,"btlfield"	,"alpha68k.java"	,rom_btlfield,driver_timesold	,machine_driver_alpha68k_II	,input_ports_btlfield	,init_btlfield	,ROT90	,	"[Alpha Denshi Co.] (SNK license)", "Battle Field (Japan)" )
+	public static GameDriver driver_skysoldr	   = new GameDriver("1988"	,"skysoldr"	,"alpha68k.java"	,rom_skysoldr,null	,machine_driver_alpha68k_II	,input_ports_skysoldr	,init_skysoldr	,ROT90	,	"[Alpha Denshi Co.] (SNK of America/Romstar license)", "Sky Soldiers (US)" )
+	public static GameDriver driver_goldmedl	   = new GameDriver("1988"	,"goldmedl"	,"alpha68k.java"	,rom_goldmedl,null	,machine_driver_alpha68k_II_gm	,input_ports_goldmedl	,init_goldmedl	,ROT0	,	"SNK",                "Gold Medalist" )
+	public static GameDriver driver_goldmedb	   = new GameDriver("1988"	,"goldmedb"	,"alpha68k.java"	,rom_goldmedb,driver_goldmedl	,machine_driver_alpha68k_II_gm	,input_ports_goldmedl	,init_goldmedb	,ROT0	,	"bootleg",            "Gold Medalist (bootleg)", GAME_NOT_WORKING )
+	public static GameDriver driver_skyadvnt	   = new GameDriver("1989"	,"skyadvnt"	,"alpha68k.java"	,rom_skyadvnt,null	,machine_driver_alpha68k_V	,input_ports_skyadvnt	,init_skyadvnt	,ROT90	,	"Alpha Denshi Co.",   "Sky Adventure (World)" )
+	public static GameDriver driver_skyadvnu	   = new GameDriver("1989"	,"skyadvnu"	,"alpha68k.java"	,rom_skyadvnu,driver_skyadvnt	,machine_driver_alpha68k_V	,input_ports_skyadvnu	,init_skyadvnu	,ROT90	,	"Alpha Denshi Co. (SNK of America license)", "Sky Adventure (US)" )
+	public static GameDriver driver_skyadvnj	   = new GameDriver("1989"	,"skyadvnj"	,"alpha68k.java"	,rom_skyadvnj,driver_skyadvnt	,machine_driver_alpha68k_V	,input_ports_skyadvnt	,init_skyadvnt	,ROT90	,	"Alpha Denshi Co.",   "Sky Adventure (Japan)" )
+	public static GameDriver driver_gangwars	   = new GameDriver("1989"	,"gangwars"	,"alpha68k.java"	,rom_gangwars,null	,machine_driver_alpha68k_V	,input_ports_gangwars	,init_gangwars	,ROT0	,	"Alpha Denshi Co.",   "Gang Wars (US)" )
+	public static GameDriver driver_gangwarb	   = new GameDriver("1989"	,"gangwarb"	,"alpha68k.java"	,rom_gangwarb,driver_gangwars	,machine_driver_alpha68k_V	,input_ports_gangwarb	,init_gangwarb	,ROT0	,	"bootleg",            "Gang Wars (bootleg)" )
 	#if SBASEBAL_HACK
-	GAME( 1989, sbasebal, 0,        alpha68k_V_sb, sbasebal, sbasebal, ROT0,  "Alpha Denshi Co.",   "Super Champion Baseball (Japan)" )
+	public static GameDriver driver_sbasebal	   = new GameDriver("1989"	,"sbasebal"	,"alpha68k.java"	,rom_sbasebal,null	,machine_driver_alpha68k_V_sb	,input_ports_sbasebal	,init_sbasebal	,ROT0	,	"Alpha Denshi Co.",   "Super Champion Baseball (Japan)" )
 	#else
-	GAME( 1989, sbasebal, 0,        alpha68k_V_sb, sbasebal, sbasebal, ROT0,  "Alpha Denshi Co. (SNK of America license)", "Super Champion Baseball (US)" )
+	public static GameDriver driver_sbasebal	   = new GameDriver("1989"	,"sbasebal"	,"alpha68k.java"	,rom_sbasebal,null	,machine_driver_alpha68k_V_sb	,input_ports_sbasebal	,init_sbasebal	,ROT0	,	"Alpha Denshi Co. (SNK of America license)", "Super Champion Baseball (US)" )
 	#endif
-	GAMEX(1989, tnexspce, 0,        tnexspce,      tnexspce, tnexspce, ROT90, "SNK",                "The Next Space", GAME_NO_COCKTAIL )
+	public static GameDriver driver_tnexspce	   = new GameDriver("1989"	,"tnexspce"	,"alpha68k.java"	,rom_tnexspce,null	,machine_driver_tnexspce	,input_ports_tnexspce	,init_tnexspce	,ROT90	,	"SNK",                "The Next Space", GAME_NO_COCKTAIL )
 	
 }

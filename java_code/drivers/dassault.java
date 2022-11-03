@@ -879,7 +879,7 @@ public class dassault
 	
 	/**********************************************************************************/
 	
-	GAME(1991, thndzone, 0,        dassault, thndzone, thndzone, ROT0, "Data East Corporation", "Thunder Zone (World)" )
-	GAME(1991, dassault, thndzone, dassault, dassault, dassault, ROT0, "Data East Corporation", "Desert Assault (US)" )
-	GAME(1991, dassaul4, thndzone, dassault, dassaul4, dassault, ROT0, "Data East Corporation", "Desert Assault (US 4 Players)" )
+	public static GameDriver driver_thndzone	   = new GameDriver("1991"	,"thndzone"	,"dassault.java"	,rom_thndzone,null	,machine_driver_dassault	,input_ports_thndzone	,init_thndzone	,ROT0	,	"Data East Corporation", "Thunder Zone (World)" )
+	public static GameDriver driver_dassault	   = new GameDriver("1991"	,"dassault"	,"dassault.java"	,rom_dassault,driver_thndzone	,machine_driver_dassault	,input_ports_dassault	,init_dassault	,ROT0	,	"Data East Corporation", "Desert Assault (US)" )
+	public static GameDriver driver_dassaul4	   = new GameDriver("1991"	,"dassaul4"	,"dassault.java"	,rom_dassaul4,driver_thndzone	,machine_driver_dassault	,input_ports_dassaul4	,init_dassault	,ROT0	,	"Data East Corporation", "Desert Assault (US 4 Players)" )
 }

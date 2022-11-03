@@ -392,7 +392,7 @@ public class mosaic
 	
 	
 	
-	GAME( 1990, mosaic,  0,      mosaic, mosaic, 0, ROT0, "Space", "Mosaic" )
-	GAME( 1990, mosaica, mosaic, mosaic, mosaic, 0, ROT0, "Space (Fuuki license)", "Mosaic (Fuuki)" )
-	GAME( 1992, gfire2,  0,      gfire2, gfire2, 0, ROT0, "Topis Corp", "Golden Fire II" )
+	public static GameDriver driver_mosaic	   = new GameDriver("1990"	,"mosaic"	,"mosaic.java"	,rom_mosaic,null	,machine_driver_mosaic	,input_ports_mosaic	,null	,ROT0	,	"Space", "Mosaic" )
+	public static GameDriver driver_mosaica	   = new GameDriver("1990"	,"mosaica"	,"mosaic.java"	,rom_mosaica,driver_mosaic	,machine_driver_mosaic	,input_ports_mosaic	,null	,ROT0	,	"Space (Fuuki license)", "Mosaic (Fuuki)" )
+	public static GameDriver driver_gfire2	   = new GameDriver("1992"	,"gfire2"	,"mosaic.java"	,rom_gfire2,null	,machine_driver_gfire2	,input_ports_gfire2	,null	,ROT0	,	"Topis Corp", "Golden Fire II" )
 }

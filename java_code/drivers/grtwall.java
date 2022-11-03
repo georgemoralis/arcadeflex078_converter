@@ -136,5 +136,5 @@ public class grtwall
 		ROM_LOAD( "040-c3c2.snd",         0x00000, 0x100000, CRC(220949aa) SHA1(1e0dba168a0687d32aaaed42714ae24358f4a3e7) )  // 1ST+2ND IDENTICAL
 	ROM_END(); }}; 
 	
-	GAMEX( 1994, grtwall, 0, grtwall, grtwall, grtwall, ROT0, "IGS", "The Great Wall", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_grtwall	   = new GameDriver("1994"	,"grtwall"	,"grtwall.java"	,rom_grtwall,null	,machine_driver_grtwall	,input_ports_grtwall	,init_grtwall	,ROT0	,	"IGS", "The Great Wall", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

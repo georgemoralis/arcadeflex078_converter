@@ -241,6 +241,6 @@ public class tourtabl
 	ROM_END(); }}; 
 	
 	
-	GAME( 1978, tourtabl, 0,        tourtabl, tourtabl, NULL, ROT0, "Atari", "Tournament Table (set 1)" )
-	GAME( 1978, tourtab2, tourtabl, tourtabl, tourtabl, NULL, ROT0, "Atari", "Tournament Table (set 2)" )
+	public static GameDriver driver_tourtabl	   = new GameDriver("1978"	,"tourtabl"	,"tourtabl.java"	,rom_tourtabl,null	,machine_driver_tourtabl	,input_ports_tourtabl	,init_NULL	,ROT0	,	"Atari", "Tournament Table (set 1)" )
+	public static GameDriver driver_tourtab2	   = new GameDriver("1978"	,"tourtab2"	,"tourtabl.java"	,rom_tourtab2,driver_tourtabl	,machine_driver_tourtabl	,input_ports_tourtabl	,init_NULL	,ROT0	,	"Atari", "Tournament Table (set 2)" )
 }

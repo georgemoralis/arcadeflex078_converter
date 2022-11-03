@@ -491,8 +491,8 @@ public class xmen
 	
 	
 	
-	GAME ( 1992, xmen,    0,    xmen, xmen,   xmen,   ROT0, "Konami", "X-Men (US 4 Players)" )
-	GAME ( 1992, xmen2p,  xmen, xmen, xmen2p, xmen,   ROT0, "Konami", "X-Men (World 2 Players)" )
-	GAME ( 1992, xmen2pj, xmen, xmen, xmen2p, xmen,   ROT0, "Konami", "X-Men (Japan 2 Players)" )
-	GAMEX( 1992, xmen6p,  xmen, xmen, xmen,   xmen6p, ROT0, "Konami", "X-Men (US 6 Players)", GAME_NOT_WORKING )
+	public static GameDriver driver_xmen	   = new GameDriver("1992"	,"xmen"	,"xmen.java"	,rom_xmen,null	,machine_driver_xmen	,input_ports_xmen	,init_xmen	,ROT0	,	"Konami", "X-Men (US 4 Players)" )
+	public static GameDriver driver_xmen2p	   = new GameDriver("1992"	,"xmen2p"	,"xmen.java"	,rom_xmen2p,driver_xmen	,machine_driver_xmen	,input_ports_xmen2p	,init_xmen	,ROT0	,	"Konami", "X-Men (World 2 Players)" )
+	public static GameDriver driver_xmen2pj	   = new GameDriver("1992"	,"xmen2pj"	,"xmen.java"	,rom_xmen2pj,driver_xmen	,machine_driver_xmen	,input_ports_xmen2p	,init_xmen	,ROT0	,	"Konami", "X-Men (Japan 2 Players)" )
+	public static GameDriver driver_xmen6p	   = new GameDriver("1992"	,"xmen6p"	,"xmen.java"	,rom_xmen6p,driver_xmen	,machine_driver_xmen	,input_ports_xmen	,init_xmen6p	,ROT0	,	"Konami", "X-Men (US 6 Players)", GAME_NOT_WORKING )
 }

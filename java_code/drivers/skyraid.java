@@ -335,5 +335,5 @@ public class skyraid
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1978, skyraid, 0, skyraid, skyraid, 0, ORIENTATION_FLIP_Y, "Atari", "Sky Raider", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_skyraid	   = new GameDriver("1978"	,"skyraid"	,"skyraid.java"	,rom_skyraid,null	,machine_driver_skyraid	,input_ports_skyraid	,null	,ORIENTATION_FLIP_Y	,	"Atari", "Sky Raider", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
 }

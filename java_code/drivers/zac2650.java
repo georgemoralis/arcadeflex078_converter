@@ -405,7 +405,7 @@ public class zac2650
 	} };
 	
 	
-	GAMEX( 1978, sia2650,  0,       tinvader, sinvader, 0,        ROT270, "Zaccaria/Zelco", "Super Invader Attack", GAME_NO_SOUND )
-	GAMEX( 1978, tinv2650, sia2650, tinvader, tinvader, tinvader, ROT270, "Zaccaria/Zelco", "The Invaders",			GAME_NO_SOUND )
-	GAMEX( 1979, dodgem,   0,       tinvader, dodgem,   0,        ROT0,   "Zaccaria",		"Dodgem",				GAME_NO_SOUND )
+	public static GameDriver driver_sia2650	   = new GameDriver("1978"	,"sia2650"	,"zac2650.java"	,rom_sia2650,null	,machine_driver_tinvader	,input_ports_sinvader	,null	,ROT270	,	"Zaccaria/Zelco", "Super Invader Attack", GAME_NO_SOUND )
+	public static GameDriver driver_tinv2650	   = new GameDriver("1978"	,"tinv2650"	,"zac2650.java"	,rom_tinv2650,driver_sia2650	,machine_driver_tinvader	,input_ports_tinvader	,init_tinvader	,ROT270	,	"Zaccaria/Zelco", "The Invaders",			GAME_NO_SOUND )
+	public static GameDriver driver_dodgem	   = new GameDriver("1979"	,"dodgem"	,"zac2650.java"	,rom_dodgem,null	,machine_driver_tinvader	,input_ports_dodgem	,null	,ROT0	,	"Zaccaria",		"Dodgem",				GAME_NO_SOUND )
 }

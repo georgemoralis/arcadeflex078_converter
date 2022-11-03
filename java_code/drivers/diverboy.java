@@ -269,5 +269,5 @@ public class diverboy
 	
 	
 	
-	GAMEX(1992, diverboy, 0, diverboy, diverboy, 0, ORIENTATION_FLIP_X, "Electronic Devices Italy", "Diver Boy", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_diverboy	   = new GameDriver("1992"	,"diverboy"	,"diverboy.java"	,rom_diverboy,null	,machine_driver_diverboy	,input_ports_diverboy	,null	,ORIENTATION_FLIP_X	,	"Electronic Devices Italy", "Diver Boy", GAME_IMPERFECT_SOUND )
 }

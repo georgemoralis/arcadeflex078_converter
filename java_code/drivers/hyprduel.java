@@ -749,7 +749,7 @@ public class hyprduel
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1993, hyprduel, 0,        hyprduel, hyprduel, hyprduel, ROT0, "Technosoft", "Hyper Duel (World)", GAME_NOT_WORKING )
-	GAME ( 1993, hyprdelj, hyprduel, hyprduel, hyprduel, hyprduel, ROT0, "Technosoft", "Hyper Duel (Japan)" )
+	public static GameDriver driver_hyprduel	   = new GameDriver("1993"	,"hyprduel"	,"hyprduel.java"	,rom_hyprduel,null	,machine_driver_hyprduel	,input_ports_hyprduel	,init_hyprduel	,ROT0	,	"Technosoft", "Hyper Duel (World)", GAME_NOT_WORKING )
+	public static GameDriver driver_hyprdelj	   = new GameDriver("1993"	,"hyprdelj"	,"hyprduel.java"	,rom_hyprdelj,driver_hyprduel	,machine_driver_hyprduel	,input_ports_hyprduel	,init_hyprduel	,ROT0	,	"Technosoft", "Hyper Duel (Japan)" )
 	
 }

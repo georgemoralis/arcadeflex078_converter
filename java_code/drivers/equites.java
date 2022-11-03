@@ -1266,14 +1266,14 @@ public class equites
 	// Game Entries
 	
 	// Equites Hardware
-	GAMEX( 1984, equites,  0,        equites,  equites,  equites,  ROT90, "Alpha Denshi Co.",                "Equites", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
-	GAMEX( 1984, equitess, equites,  equites,  equites,  equites,  ROT90, "Alpha Denshi Co. (Sega license)", "Equites (Sega)", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
-	GAMEX( 1984, bullfgtr, 0,        equites,  bullfgtr, bullfgtr, ROT90, "Alpha Denshi Co. (Sega license)", "Bull Fighter", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS )
-	GAMEX( 1985, kouyakyu, 0,        equites,  kouyakyu, kouyakyu, ROT0,  "Alpha Denshi Co.",                "The Koukouyakyuh", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_equites	   = new GameDriver("1984"	,"equites"	,"equites.java"	,rom_equites,null	,machine_driver_equites	,input_ports_equites	,init_equites	,ROT90	,	"Alpha Denshi Co.",                "Equites", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
+	public static GameDriver driver_equitess	   = new GameDriver("1984"	,"equitess"	,"equites.java"	,rom_equitess,driver_equites	,machine_driver_equites	,input_ports_equites	,init_equites	,ROT90	,	"Alpha Denshi Co. (Sega license)", "Equites (Sega)", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
+	public static GameDriver driver_bullfgtr	   = new GameDriver("1984"	,"bullfgtr"	,"equites.java"	,rom_bullfgtr,null	,machine_driver_equites	,input_ports_bullfgtr	,init_bullfgtr	,ROT90	,	"Alpha Denshi Co. (Sega license)", "Bull Fighter", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS )
+	public static GameDriver driver_kouyakyu	   = new GameDriver("1985"	,"kouyakyu"	,"equites.java"	,rom_kouyakyu,null	,machine_driver_equites	,input_ports_kouyakyu	,init_kouyakyu	,ROT0	,	"Alpha Denshi Co.",                "The Koukouyakyuh", GAME_UNEMULATED_PROTECTION )
 	
 	// Splendor Blast Hardware
-	GAMEX( 1985, splndrbt, 0,        splndrbt, splndrbt, splndrbt, ROT0,  "Alpha Denshi Co.", "Splendor Blast", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
-	GAMEX( 1985, hvoltage, 0,        splndrbt, hvoltage, hvoltage, ROT0,  "Alpha Denshi Co.", "High Voltage", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_splndrbt	   = new GameDriver("1985"	,"splndrbt"	,"equites.java"	,rom_splndrbt,null	,machine_driver_splndrbt	,input_ports_splndrbt	,init_splndrbt	,ROT0	,	"Alpha Denshi Co.", "Splendor Blast", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
+	public static GameDriver driver_hvoltage	   = new GameDriver("1985"	,"hvoltage"	,"equites.java"	,rom_hvoltage,null	,machine_driver_splndrbt	,input_ports_hvoltage	,init_hvoltage	,ROT0	,	"Alpha Denshi Co.", "High Voltage", GAME_UNEMULATED_PROTECTION )
 	
 	/******************************************************************************/
 }

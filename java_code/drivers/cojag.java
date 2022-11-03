@@ -1081,10 +1081,10 @@ public class cojag
 	 *
 	 *************************************/
 	
-	GAME( 1995, area51,   0,        cojag68k,  area51,   area51,   ROT0, "Atari Games", "Area 51" )
-	GAME( 1996, maxforce, 0,        r3knarrow, area51,   maxforce, ROT0, "Atari Games", "Maximum Force v1.05" )
-	GAME( 1996, maxf_102, maxforce, r3knarrow, area51,   maxforce, ROT0, "Atari Games", "Maximum Force v1.02" )
-	GAME( 1998, area51mx, 0,        cojag68k,  area51,   area51mx, ROT0, "Atari Games", "Area 51 / Maximum Force Duo v2.0" )
-	GAME( 1998, a51mxr3k, area51mx, r3knarrow, area51,   a51mxr3k, ROT0, "Atari Games", "Area 51 / Maximum Force Duo (R3000)" )
-	GAME( 1996, vcircle,  0,        cojagr3k,  vcircle,  vcircle,  ROT0, "Atari Games", "Vicious Circle (prototype)" )
+	public static GameDriver driver_area51	   = new GameDriver("1995"	,"area51"	,"cojag.java"	,rom_area51,null	,machine_driver_cojag68k	,input_ports_area51	,init_area51	,ROT0	,	"Atari Games", "Area 51" )
+	public static GameDriver driver_maxforce	   = new GameDriver("1996"	,"maxforce"	,"cojag.java"	,rom_maxforce,null	,machine_driver_r3knarrow	,input_ports_area51	,init_maxforce	,ROT0	,	"Atari Games", "Maximum Force v1.05" )
+	public static GameDriver driver_maxf_102	   = new GameDriver("1996"	,"maxf_102"	,"cojag.java"	,rom_maxf_102,driver_maxforce	,machine_driver_r3knarrow	,input_ports_area51	,init_maxforce	,ROT0	,	"Atari Games", "Maximum Force v1.02" )
+	public static GameDriver driver_area51mx	   = new GameDriver("1998"	,"area51mx"	,"cojag.java"	,rom_area51mx,null	,machine_driver_cojag68k	,input_ports_area51	,init_area51mx	,ROT0	,	"Atari Games", "Area 51 / Maximum Force Duo v2.0" )
+	public static GameDriver driver_a51mxr3k	   = new GameDriver("1998"	,"a51mxr3k"	,"cojag.java"	,rom_a51mxr3k,driver_area51mx	,machine_driver_r3knarrow	,input_ports_area51	,init_a51mxr3k	,ROT0	,	"Atari Games", "Area 51 / Maximum Force Duo (R3000)" )
+	public static GameDriver driver_vcircle	   = new GameDriver("1996"	,"vcircle"	,"cojag.java"	,rom_vcircle,null	,machine_driver_cojagr3k	,input_ports_vcircle	,init_vcircle	,ROT0	,	"Atari Games", "Vicious Circle (prototype)" )
 }

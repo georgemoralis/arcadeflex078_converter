@@ -325,6 +325,6 @@ public class mystston
 	ROM_END(); }}; 
 	
 	
-	GAME( 1984, mystston, 0,        mystston, mystston, 0, ROT270, "Technos", "Mysterious Stones - Dr. John's Adventure" )
-	GAME( 1984, myststno, mystston, mystston, mystston, 0, ROT270, "Technos", "Mysterious Stones - Dr. Kick in Adventure" )
+	public static GameDriver driver_mystston	   = new GameDriver("1984"	,"mystston"	,"mystston.java"	,rom_mystston,null	,machine_driver_mystston	,input_ports_mystston	,null	,ROT270	,	"Technos", "Mysterious Stones - Dr. John's Adventure" )
+	public static GameDriver driver_myststno	   = new GameDriver("1984"	,"myststno"	,"mystston.java"	,rom_myststno,driver_mystston	,machine_driver_mystston	,input_ports_mystston	,null	,ROT270	,	"Technos", "Mysterious Stones - Dr. Kick in Adventure" )
 }

@@ -372,5 +372,5 @@ public class mjkjidai
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1986, mjkjidai, 0, mjkjidai, mjkjidai, 0, ROT0, "Sanritsu",  "Mahjong Kyou Jidai (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mjkjidai	   = new GameDriver("1986"	,"mjkjidai"	,"mjkjidai.java"	,rom_mjkjidai,null	,machine_driver_mjkjidai	,input_ports_mjkjidai	,null	,ROT0	,	"Sanritsu",  "Mahjong Kyou Jidai (Japan)", GAME_IMPERFECT_GRAPHICS )
 }

@@ -1193,9 +1193,9 @@ public class ojankohs
 	ROM_END(); }}; 
 	
 	
-	GAME( 1986, ojankoc,  0, ojankoc,  ojankoc,  0, ROT0, "V-System Co.", "Ojanko Club (Japan)" )
-	GAME( 1986, ojankoy,  0, ojankoy,  ojankoy,  0, ROT0, "V-System Co.", "Ojanko Yakata (Japan)" )
-	GAME( 1987, ojanko2,  0, ojankoy,  ojankoy,  0, ROT0, "V-System Co.", "Ojanko Yakata 2bankan (Japan)" )
-	GAME( 1987, ccasino,  0, ccasino,  ccasino,  0, ROT0, "V-System Co.", "Chinese Casino [BET] (Japan)" )
-	GAME( 1988, ojankohs, 0, ojankohs, ojankohs, 0, ROT0, "V-System Co.", "Ojanko High School (Japan)" )
+	public static GameDriver driver_ojankoc	   = new GameDriver("1986"	,"ojankoc"	,"ojankohs.java"	,rom_ojankoc,null	,machine_driver_ojankoc	,input_ports_ojankoc	,null	,ROT0	,	"V-System Co.", "Ojanko Club (Japan)" )
+	public static GameDriver driver_ojankoy	   = new GameDriver("1986"	,"ojankoy"	,"ojankohs.java"	,rom_ojankoy,null	,machine_driver_ojankoy	,input_ports_ojankoy	,null	,ROT0	,	"V-System Co.", "Ojanko Yakata (Japan)" )
+	public static GameDriver driver_ojanko2	   = new GameDriver("1987"	,"ojanko2"	,"ojankohs.java"	,rom_ojanko2,null	,machine_driver_ojankoy	,input_ports_ojankoy	,null	,ROT0	,	"V-System Co.", "Ojanko Yakata 2bankan (Japan)" )
+	public static GameDriver driver_ccasino	   = new GameDriver("1987"	,"ccasino"	,"ojankohs.java"	,rom_ccasino,null	,machine_driver_ccasino	,input_ports_ccasino	,null	,ROT0	,	"V-System Co.", "Chinese Casino [BET] (Japan)" )
+	public static GameDriver driver_ojankohs	   = new GameDriver("1988"	,"ojankohs"	,"ojankohs.java"	,rom_ojankohs,null	,machine_driver_ojankohs	,input_ports_ojankohs	,null	,ROT0	,	"V-System Co.", "Ojanko High School (Japan)" )
 }

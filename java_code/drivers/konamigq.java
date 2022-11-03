@@ -592,5 +592,5 @@ public class konamigq
 		DISK_IMAGE( "420uaa04", 0, MD5(179464886f58a2e14b284e3813227a86) SHA1(18fe867c44982bacf0d3ff8453487cd06425a6b7) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1995, cryptklr, 0, konamigq, konamigq, konamigq, ROT0, "Konami", "Crypt Killer (ver. UAA)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_cryptklr	   = new GameDriver("1995"	,"cryptklr"	,"konamigq.java"	,rom_cryptklr,null	,machine_driver_konamigq	,input_ports_konamigq	,init_konamigq	,ROT0	,	"Konami", "Crypt Killer (ver. UAA)", GAME_IMPERFECT_GRAPHICS )
 }

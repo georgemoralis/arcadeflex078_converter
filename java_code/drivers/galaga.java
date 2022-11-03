@@ -736,12 +736,12 @@ public class galaga
 		install_mem_write_handler(0, 0x1000, 0x1000, gatsbee_bank_w);
 	}
 	
-	GAMEX( 1981, galaga,   0,      galaga, galaganm, 0, ROT90, "Namco", "Galaga (Namco)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1981, galagamw, galaga, galaga, galaga,   0, ROT90, "[Namco] (Midway license)", "Galaga (Midway)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1981, galagads, galaga, galaga, galaga,   0, ROT90, "hack", "Galaga (fast shoot)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1982, gallag,   galaga, galaga, galaganm, 0, ROT90, "bootleg", "Gallag", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1981, galagab2, galaga, galaga, galaganm, 0, ROT90, "bootleg", "Galaga (bootleg)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1984, galaga84, galaga, galaga, galaganm, 0, ROT90, "hack", "Galaga '84", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1984, nebulbee, galaga, galaga, galaganm, 0, ROT90, "hack", "Nebulous Bee", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1984, gatsbee,  galaga, galaga, galaganm, gatsbee, ROT90, "Uchida", "Gatsbee", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_galaga	   = new GameDriver("1981"	,"galaga"	,"galaga.java"	,rom_galaga,null	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"Namco", "Galaga (Namco)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_galagamw	   = new GameDriver("1981"	,"galagamw"	,"galaga.java"	,rom_galagamw,driver_galaga	,machine_driver_galaga	,input_ports_galaga	,null	,ROT90	,	"[Namco] (Midway license)", "Galaga (Midway)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_galagads	   = new GameDriver("1981"	,"galagads"	,"galaga.java"	,rom_galagads,driver_galaga	,machine_driver_galaga	,input_ports_galaga	,null	,ROT90	,	"hack", "Galaga (fast shoot)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_gallag	   = new GameDriver("1982"	,"gallag"	,"galaga.java"	,rom_gallag,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"bootleg", "Gallag", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_galagab2	   = new GameDriver("1981"	,"galagab2"	,"galaga.java"	,rom_galagab2,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"bootleg", "Galaga (bootleg)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_galaga84	   = new GameDriver("1984"	,"galaga84"	,"galaga.java"	,rom_galaga84,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"hack", "Galaga '84", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_nebulbee	   = new GameDriver("1984"	,"nebulbee"	,"galaga.java"	,rom_nebulbee,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"hack", "Nebulous Bee", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_gatsbee	   = new GameDriver("1984"	,"gatsbee"	,"galaga.java"	,rom_gatsbee,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,init_gatsbee	,ROT90	,	"Uchida", "Gatsbee", GAME_IMPERFECT_GRAPHICS )
 }

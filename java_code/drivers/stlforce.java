@@ -246,5 +246,5 @@ public class stlforce
 		ROM_LOAD( "stlforce.u36", 0x00000, 0x40000, CRC(037dfa9f) SHA1(224f5cd1a95d55b065aef5c0bd03b50cabcb619b) )
 	ROM_END(); }}; 
 	
-	GAMEX(1994, stlforce, 0, stlforce, stlforce, 0, ROT0, "Electronic Devices Italy / Ecogames S.L. Spain", "Steel Force", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_stlforce	   = new GameDriver("1994"	,"stlforce"	,"stlforce.java"	,rom_stlforce,null	,machine_driver_stlforce	,input_ports_stlforce	,null	,ROT0	,	"Electronic Devices Italy / Ecogames S.L. Spain", "Steel Force", GAME_IMPERFECT_SOUND )
 }

@@ -486,5 +486,5 @@ public class silkroad
 	ROM_END(); }}; 
 	
 	
-	GAME( 1999, silkroad, 0, silkroad, silkroad, silkroad, ROT0, "Unico", "The Legend of Silkroad" )
+	public static GameDriver driver_silkroad	   = new GameDriver("1999"	,"silkroad"	,"silkroad.java"	,rom_silkroad,null	,machine_driver_silkroad	,input_ports_silkroad	,init_silkroad	,ROT0	,	"Unico", "The Legend of Silkroad" )
 }

@@ -448,7 +448,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	GAME( 1996, lethalj,  0,        lethalj,  lethalj,  lethalj, ROT0, "The Game Room", "Lethal Justice" )
-	GAME( 1997, eggventr, 0,        eggventr, eggventr, lethalj, ROT0, "The Game Room", "Egg Venture" )
-	GAME( 1997, eggvntdx, eggventr, eggventr, eggventdx, lethalj, ROT0, "The Game Room", "Egg Venture Deluxe" )
+	public static GameDriver driver_lethalj	   = new GameDriver("1996"	,"lethalj"	,"lethalj.java"	,rom_lethalj,null	,machine_driver_lethalj	,input_ports_lethalj	,init_lethalj	,ROT0	,	"The Game Room", "Lethal Justice" )
+	public static GameDriver driver_eggventr	   = new GameDriver("1997"	,"eggventr"	,"lethalj.java"	,rom_eggventr,null	,machine_driver_eggventr	,input_ports_eggventr	,init_lethalj	,ROT0	,	"The Game Room", "Egg Venture" )
+	public static GameDriver driver_eggvntdx	   = new GameDriver("1997"	,"eggvntdx"	,"lethalj.java"	,rom_eggvntdx,driver_eggventr	,machine_driver_eggventr	,input_ports_eggventdx	,init_lethalj	,ROT0	,	"The Game Room", "Egg Venture Deluxe" )
 }

@@ -602,6 +602,6 @@ public class sprint8
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1977, sprint8,  0,       sprint8, sprint8,  0, ROT0, "Atari", "Sprint 8",             GAME_NO_SOUND )
-	GAMEX( 1977, sprint8a, sprint8, sprint8, sprint8p, 0, ROT0, "Atari", "Sprint 8 (play tag & chase)", GAME_NO_SOUND )
+	public static GameDriver driver_sprint8	   = new GameDriver("1977"	,"sprint8"	,"sprint8.java"	,rom_sprint8,null	,machine_driver_sprint8	,input_ports_sprint8	,null	,ROT0	,	"Atari", "Sprint 8",             GAME_NO_SOUND )
+	public static GameDriver driver_sprint8a	   = new GameDriver("1977"	,"sprint8a"	,"sprint8.java"	,rom_sprint8a,driver_sprint8	,machine_driver_sprint8	,input_ports_sprint8p	,null	,ROT0	,	"Atari", "Sprint 8 (play tag & chase)", GAME_NO_SOUND )
 }

@@ -588,7 +588,7 @@ public class statriv2
 		ROM_LOAD( "astq2-8.rom", 0x38000, 0x08000, CRC(cd2674d5) SHA1(7fb6513172ffe8e3b9e0f4dc9ecdb42d954b1ff0) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1984, trivquiz, 0, trivquiz, statriv2, 0, ROT0, "Status Games", "Triv Quiz", GAME_WRONG_COLORS )
-	GAMEX( 1984, statriv2, 0, statriv2, statriv2, 0, ROT0, "Status Games", "(Status) Triv Two", GAME_WRONG_COLORS )
-	GAMEX( 1986, supertr2, 0, supertr2, supertr2, 0, ROT0, "Status Games", "Super Triv II", GAME_WRONG_COLORS )
+	public static GameDriver driver_trivquiz	   = new GameDriver("1984"	,"trivquiz"	,"statriv2.java"	,rom_trivquiz,null	,machine_driver_trivquiz	,input_ports_statriv2	,null	,ROT0	,	"Status Games", "Triv Quiz", GAME_WRONG_COLORS )
+	public static GameDriver driver_statriv2	   = new GameDriver("1984"	,"statriv2"	,"statriv2.java"	,rom_statriv2,null	,machine_driver_statriv2	,input_ports_statriv2	,null	,ROT0	,	"Status Games", "(Status) Triv Two", GAME_WRONG_COLORS )
+	public static GameDriver driver_supertr2	   = new GameDriver("1986"	,"supertr2"	,"statriv2.java"	,rom_supertr2,null	,machine_driver_supertr2	,input_ports_supertr2	,null	,ROT0	,	"Status Games", "Super Triv II", GAME_WRONG_COLORS )
 }

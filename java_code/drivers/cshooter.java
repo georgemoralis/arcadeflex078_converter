@@ -600,7 +600,7 @@ public class cshooter
 	
 	
 	
-	GAMEX( 1987, cshooter, 0,        cshooter, cshooter, cshooter, ROT270, "[Seibu Kaihatsu] (Taito license)",  "Cross Shooter (not encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	GAMEX( 1987, cshootre, cshooter, cshooter, cshooter, cshootre, ROT270, "[Seibu Kaihatsu] (J.K.H. license)", "Cross Shooter (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	GAMEX( 1987, airraid,  cshooter, cshooter, cshooter, cshootre, ROT270, "Seibu Kaihatsu",                    "Air Raid (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_cshooter	   = new GameDriver("1987"	,"cshooter"	,"cshooter.java"	,rom_cshooter,null	,machine_driver_cshooter	,input_ports_cshooter	,init_cshooter	,ROT270	,	"[Seibu Kaihatsu] (Taito license)",  "Cross Shooter (not encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_cshootre	   = new GameDriver("1987"	,"cshootre"	,"cshooter.java"	,rom_cshootre,driver_cshooter	,machine_driver_cshooter	,input_ports_cshooter	,init_cshootre	,ROT270	,	"[Seibu Kaihatsu] (J.K.H. license)", "Cross Shooter (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_airraid	   = new GameDriver("1987"	,"airraid"	,"cshooter.java"	,rom_airraid,driver_cshooter	,machine_driver_cshooter	,input_ports_cshooter	,init_cshootre	,ROT270	,	"Seibu Kaihatsu",                    "Air Raid (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

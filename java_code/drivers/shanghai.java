@@ -1100,6 +1100,6 @@ public class shanghai
 	
 	
 	
-	GAMEX(1988, shanghai, 0, shanghai, shanghai, 0, ROT0, "Sunsoft", "Shanghai (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAME( 1989, shangha2, 0, shangha2, shangha2, 0, ROT0, "Sunsoft", "Shanghai II (Japan)" )
+	public static GameDriver driver_shanghai	   = new GameDriver("1988"	,"shanghai"	,"shanghai.java"	,rom_shanghai,null	,machine_driver_shanghai	,input_ports_shanghai	,null	,ROT0	,	"Sunsoft", "Shanghai (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_shangha2	   = new GameDriver("1989"	,"shangha2"	,"shanghai.java"	,rom_shangha2,null	,machine_driver_shangha2	,input_ports_shangha2	,null	,ROT0	,	"Sunsoft", "Shanghai II (Japan)" )
 }

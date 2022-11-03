@@ -241,5 +241,5 @@ public class higemaru
 	ROM_END(); }}; 
 	
 	
-	GAME( 1984, higemaru, 0, higemaru, higemaru, 0, ROT0, "Capcom", "Pirate Ship Higemaru" )
+	public static GameDriver driver_higemaru	   = new GameDriver("1984"	,"higemaru"	,"higemaru.java"	,rom_higemaru,null	,machine_driver_higemaru	,input_ports_higemaru	,null	,ROT0	,	"Capcom", "Pirate Ship Higemaru" )
 }

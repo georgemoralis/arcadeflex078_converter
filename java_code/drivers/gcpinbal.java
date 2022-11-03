@@ -452,5 +452,5 @@ public class gcpinbal
 	
 	
 	
-	GAMEX( 1994, gcpinbal, 0, gcpinbal, gcpinbal, 0, ROT270, "Excellent System", "Grand Cross", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	public static GameDriver driver_gcpinbal	   = new GameDriver("1994"	,"gcpinbal"	,"gcpinbal.java"	,rom_gcpinbal,null	,machine_driver_gcpinbal	,input_ports_gcpinbal	,null	,ROT270	,	"Excellent System", "Grand Cross", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

@@ -365,6 +365,6 @@ public class dogfgt
 	
 	
 	
-	GAME( 1984, dogfgt,  0,      dogfgt, dogfgt, 0, ROT0, "Technos", "Acrobatic Dog-Fight" )
-	GAME( 1984, dogfgtj, dogfgt, dogfgt, dogfgt, 0, ROT0, "Technos", "Dog-Fight (Japan) " )
+	public static GameDriver driver_dogfgt	   = new GameDriver("1984"	,"dogfgt"	,"dogfgt.java"	,rom_dogfgt,null	,machine_driver_dogfgt	,input_ports_dogfgt	,null	,ROT0	,	"Technos", "Acrobatic Dog-Fight" )
+	public static GameDriver driver_dogfgtj	   = new GameDriver("1984"	,"dogfgtj"	,"dogfgt.java"	,rom_dogfgtj,driver_dogfgt	,machine_driver_dogfgt	,input_ports_dogfgt	,null	,ROT0	,	"Technos", "Dog-Fight (Japan) " )
 }

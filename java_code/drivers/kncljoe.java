@@ -307,7 +307,7 @@ public class kncljoe
 	
 	
 	
-	GAME( 1985, kncljoe,  0,       kncljoe, kncljoe, 0, ROT0, "[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 1)" )
-	GAME( 1985, kncljoea, kncljoe, kncljoe, kncljoe, 0, ROT0, "[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 2)" )
-	GAME( 1985, bcrusher, kncljoe, kncljoe, kncljoe, 0, ROT0, "bootleg",                          "Bone Crusher" )
+	public static GameDriver driver_kncljoe	   = new GameDriver("1985"	,"kncljoe"	,"kncljoe.java"	,rom_kncljoe,null	,machine_driver_kncljoe	,input_ports_kncljoe	,null	,ROT0	,	"[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 1)" )
+	public static GameDriver driver_kncljoea	   = new GameDriver("1985"	,"kncljoea"	,"kncljoe.java"	,rom_kncljoea,driver_kncljoe	,machine_driver_kncljoe	,input_ports_kncljoe	,null	,ROT0	,	"[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 2)" )
+	public static GameDriver driver_bcrusher	   = new GameDriver("1985"	,"bcrusher"	,"kncljoe.java"	,rom_bcrusher,driver_kncljoe	,machine_driver_kncljoe	,input_ports_kncljoe	,null	,ROT0	,	"bootleg",                          "Bone Crusher" )
 }

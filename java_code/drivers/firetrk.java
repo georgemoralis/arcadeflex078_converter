@@ -1806,7 +1806,7 @@ public class firetrk
 	ROM_END(); }}; 
 	
 	
-	GAME( 1977, superbug, 0, superbug, superbug, superbug, ROT270, "Atari", "Super Bug" )
-	GAME( 1978, firetrk,  0, firetrk,  firetrk,  firetrk,  ROT270, "Atari", "Fire Truck" )
-	GAME( 1979, montecar, 0, montecar, montecar, montecar, ROT270, "Atari", "Monte Carlo" )
+	public static GameDriver driver_superbug	   = new GameDriver("1977"	,"superbug"	,"firetrk.java"	,rom_superbug,null	,machine_driver_superbug	,input_ports_superbug	,init_superbug	,ROT270	,	"Atari", "Super Bug" )
+	public static GameDriver driver_firetrk	   = new GameDriver("1978"	,"firetrk"	,"firetrk.java"	,rom_firetrk,null	,machine_driver_firetrk	,input_ports_firetrk	,init_firetrk	,ROT270	,	"Atari", "Fire Truck" )
+	public static GameDriver driver_montecar	   = new GameDriver("1979"	,"montecar"	,"firetrk.java"	,rom_montecar,null	,machine_driver_montecar	,input_ports_montecar	,init_montecar	,ROT270	,	"Atari", "Monte Carlo" )
 }

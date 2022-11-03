@@ -357,8 +357,8 @@ public class champbas
 	
 	
 	
-	GAME(1983, champbas, 0,        champbas, champbas, 0, ROT0, "Sega", "Champion Baseball" )
-	GAMEX(1983, champbbj, champbas, champbas, champbas, 0, ROT0, "Alpha Denshi Co.", "Champion Baseball (Japan set 1)", GAME_NOT_WORKING )
-	GAMEX(1983, champbja, champbas, champbas, champbas, 0, ROT0, "Alpha Denshi Co.", "Champion Baseball (Japan set 2)", GAME_NOT_WORKING )
-	GAMEX(1983, champbb2, 0,        champbas, champbas, 0, ROT0, "Sega", "Champion Baseball II", GAME_NOT_WORKING )
+	public static GameDriver driver_champbas	   = new GameDriver("1983"	,"champbas"	,"champbas.java"	,rom_champbas,null	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Sega", "Champion Baseball" )
+	public static GameDriver driver_champbbj	   = new GameDriver("1983"	,"champbbj"	,"champbas.java"	,rom_champbbj,driver_champbas	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Alpha Denshi Co.", "Champion Baseball (Japan set 1)", GAME_NOT_WORKING )
+	public static GameDriver driver_champbja	   = new GameDriver("1983"	,"champbja"	,"champbas.java"	,rom_champbja,driver_champbas	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Alpha Denshi Co.", "Champion Baseball (Japan set 2)", GAME_NOT_WORKING )
+	public static GameDriver driver_champbb2	   = new GameDriver("1983"	,"champbb2"	,"champbas.java"	,rom_champbb2,null	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Sega", "Champion Baseball II", GAME_NOT_WORKING )
 }

@@ -272,5 +272,5 @@ public class kickgoal
 	} };
 	
 	
-	GAMEX( 1995, kickgoal,0, kickgoal, kickgoal, kickgoal, ROT0, "TCH", "Kick Goal", GAME_NO_SOUND )
+	public static GameDriver driver_kickgoal	   = new GameDriver("1995"	,"kickgoal"	,"kickgoal.java"	,rom_kickgoal,null	,machine_driver_kickgoal	,input_ports_kickgoal	,init_kickgoal	,ROT0	,	"TCH", "Kick Goal", GAME_NO_SOUND )
 }

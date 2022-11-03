@@ -438,6 +438,6 @@ public class sprint4
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1977, sprint4,  0,       sprint4, sprint4, 0, ROT0, "Atari", "Sprint 4 (set 1)", GAME_NO_SOUND )
-	GAMEX( 1977, sprint4a, sprint4, sprint4, sprint4, 0, ROT0, "Atari", "Sprint 4 (set 2)", GAME_NO_SOUND )
+	public static GameDriver driver_sprint4	   = new GameDriver("1977"	,"sprint4"	,"sprint4.java"	,rom_sprint4,null	,machine_driver_sprint4	,input_ports_sprint4	,null	,ROT0	,	"Atari", "Sprint 4 (set 1)", GAME_NO_SOUND )
+	public static GameDriver driver_sprint4a	   = new GameDriver("1977"	,"sprint4a"	,"sprint4.java"	,rom_sprint4a,driver_sprint4	,machine_driver_sprint4	,input_ports_sprint4	,null	,ROT0	,	"Atari", "Sprint 4 (set 2)", GAME_NO_SOUND )
 }

@@ -798,10 +798,10 @@ public class trackfld
 	} };
 	
 	
-	GAME( 1983, trackfld, 0,        trackfld, trackfld, trackfld, ROT0, "Konami", "Track & Field" )
-	GAME( 1983, trackflc, trackfld, trackfld, trackfld, trackfld, ROT0, "Konami (Centuri license)", "Track & Field (Centuri)" )
-	GAME( 1983, hyprolym, trackfld, trackfld, trackfld, trackfld, ROT0, "Konami", "Hyper Olympic" )
-	GAME( 1983, hyprolyb, trackfld, hyprolyb, trackfld, trackfld, ROT0, "bootleg", "Hyper Olympic (bootleg)" )
-	GAMEX(1985, whizquiz, 0,        trackfld, trackfld, mastkin,  ROT0, "Zilec-Zenitone", "Whiz Quiz", GAME_NOT_WORKING )
-	GAMEX(1988, mastkin,  0,        mastkin,  mastkin,  mastkin,  ROT0, "Du Tech", "The Masters of Kin", GAME_WRONG_COLORS )
+	public static GameDriver driver_trackfld	   = new GameDriver("1983"	,"trackfld"	,"trackfld.java"	,rom_trackfld,null	,machine_driver_trackfld	,input_ports_trackfld	,init_trackfld	,ROT0	,	"Konami", "Track & Field" )
+	public static GameDriver driver_trackflc	   = new GameDriver("1983"	,"trackflc"	,"trackfld.java"	,rom_trackflc,driver_trackfld	,machine_driver_trackfld	,input_ports_trackfld	,init_trackfld	,ROT0	,	"Konami (Centuri license)", "Track & Field (Centuri)" )
+	public static GameDriver driver_hyprolym	   = new GameDriver("1983"	,"hyprolym"	,"trackfld.java"	,rom_hyprolym,driver_trackfld	,machine_driver_trackfld	,input_ports_trackfld	,init_trackfld	,ROT0	,	"Konami", "Hyper Olympic" )
+	public static GameDriver driver_hyprolyb	   = new GameDriver("1983"	,"hyprolyb"	,"trackfld.java"	,rom_hyprolyb,driver_trackfld	,machine_driver_hyprolyb	,input_ports_trackfld	,init_trackfld	,ROT0	,	"bootleg", "Hyper Olympic (bootleg)" )
+	public static GameDriver driver_whizquiz	   = new GameDriver("1985"	,"whizquiz"	,"trackfld.java"	,rom_whizquiz,null	,machine_driver_trackfld	,input_ports_trackfld	,init_mastkin	,ROT0	,	"Zilec-Zenitone", "Whiz Quiz", GAME_NOT_WORKING )
+	public static GameDriver driver_mastkin	   = new GameDriver("1988"	,"mastkin"	,"trackfld.java"	,rom_mastkin,null	,machine_driver_mastkin	,input_ports_mastkin	,init_mastkin	,ROT0	,	"Du Tech", "The Masters of Kin", GAME_WRONG_COLORS )
 }

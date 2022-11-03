@@ -172,5 +172,5 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	GAMEX(19??, beaminv, 0, beaminv, beaminv, 0, ROT0, "Tekunon Kougyou", "Beam Invader", GAME_NO_SOUND)
+	public static GameDriver driver_beaminv	   = new GameDriver("19??"	,"beaminv"	,"beaminv.java"	,rom_beaminv,null	,machine_driver_beaminv	,input_ports_beaminv	,null	,ROT0	,	"Tekunon Kougyou", "Beam Invader", GAME_NO_SOUND)
 }

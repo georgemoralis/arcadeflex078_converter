@@ -778,7 +778,7 @@ public class hnayayoi
 	} };
 	
 	
-	GAME( 1987, hnayayoi, 0,        hnayayoi, hnayayoi, 0,        ROT0, "Dyna Electronics", "Hana Yayoi (Japan)" )
-	GAME( 1987, hnfubuki, hnayayoi, hnfubuki, hnfubuki, hnfubuki, ROT0, "Dynax", "Hana Fubuki [BET] (Japan)" )
-	GAME( 1987, untoucha, 0,        untoucha, untoucha, 0,        ROT0, "Dynax", "Untouchable (Japan)" )
+	public static GameDriver driver_hnayayoi	   = new GameDriver("1987"	,"hnayayoi"	,"hnayayoi.java"	,rom_hnayayoi,null	,machine_driver_hnayayoi	,input_ports_hnayayoi	,null	,ROT0	,	"Dyna Electronics", "Hana Yayoi (Japan)" )
+	public static GameDriver driver_hnfubuki	   = new GameDriver("1987"	,"hnfubuki"	,"hnayayoi.java"	,rom_hnfubuki,driver_hnayayoi	,machine_driver_hnfubuki	,input_ports_hnfubuki	,init_hnfubuki	,ROT0	,	"Dynax", "Hana Fubuki [BET] (Japan)" )
+	public static GameDriver driver_untoucha	   = new GameDriver("1987"	,"untoucha"	,"hnayayoi.java"	,rom_untoucha,null	,machine_driver_untoucha	,input_ports_untoucha	,null	,ROT0	,	"Dynax", "Untouchable (Japan)" )
 }

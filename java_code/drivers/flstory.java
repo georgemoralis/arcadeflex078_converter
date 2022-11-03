@@ -751,8 +751,8 @@ public class flstory
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1985, flstory,  0,        flstory,  flstory,  0, ROT180, "Taito", "The FairyLand Story", GAME_IMPERFECT_SOUND )
-	GAMEX( 1985, flstoryj, flstory,  flstory,  flstory,  0, ROT180, "Taito", "The FairyLand Story (Japan)", GAME_IMPERFECT_SOUND )
-	GAMEX( 1985, onna34ro, 0,        onna34ro, onna34ro, 0, ROT0,   "Taito", "Onna Sansirou - Typhoon Gal (set 1)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
-	GAMEX( 1985, onna34ra, onna34ro, onna34ro, onna34ro, 0, ROT0,   "Taito", "Onna Sansirou - Typhoon Gal (set 2)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_flstory	   = new GameDriver("1985"	,"flstory"	,"flstory.java"	,rom_flstory,null	,machine_driver_flstory	,input_ports_flstory	,null	,ROT180	,	"Taito", "The FairyLand Story", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_flstoryj	   = new GameDriver("1985"	,"flstoryj"	,"flstory.java"	,rom_flstoryj,driver_flstory	,machine_driver_flstory	,input_ports_flstory	,null	,ROT180	,	"Taito", "The FairyLand Story (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_onna34ro	   = new GameDriver("1985"	,"onna34ro"	,"flstory.java"	,rom_onna34ro,null	,machine_driver_onna34ro	,input_ports_onna34ro	,null	,ROT0	,	"Taito", "Onna Sansirou - Typhoon Gal (set 1)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_onna34ra	   = new GameDriver("1985"	,"onna34ra"	,"flstory.java"	,rom_onna34ra,driver_onna34ro	,machine_driver_onna34ro	,input_ports_onna34ro	,null	,ROT0	,	"Taito", "Onna Sansirou - Typhoon Gal (set 2)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
 }

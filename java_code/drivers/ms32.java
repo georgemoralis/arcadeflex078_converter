@@ -2304,20 +2304,20 @@ public class ms32
 	
 	/********** GAME DRIVERS **********/
 	
-	GAMEX( 1994, hayaosi1, 0,        ms32, hayaosi1, ss92046_01, ROT0,   "Jaleco", "Hayaoshi Quiz Ouza Ketteisen", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1994, bbbxing,  0,        ms32, bbbxing,  ss92046_01, ROT0,   "Jaleco", "Best Bout Boxing", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1994, 47pie2,   0,        ms32, kirarast, 47pie2,     ROT0,   "Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.1)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1994, 47pie2o,  47pie2,   ms32, kirarast, 47pie2,     ROT0,   "Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.0)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1995, desertwr, 0,        ms32, desertwr, ss91022_10, ROT270, "Jaleco", "Desert War / Wangan Sensou", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND  )
-	GAMEX( 1995, gametngk, 0,        ms32, gametngk, ss91022_10, ROT270, "Jaleco", "The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1995, tetrisp,  0,        ms32, tetrisp,  ss92046_01, ROT0,   "Jaleco / BPS", "Tetris Plus", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1995, p47aces,  0,        ms32, p47aces,  ss92048_01, ROT0,   "Jaleco", "P-47 Aces", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1995, akiss,    0,        ms32, kirarast, kirarast,   ROT0,   "Jaleco", "Mahjong Angel Kiss", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1996, gratia,   0,        ms32, gratia,   ss92047_01, ROT0,   "Jaleco", "Gratia - Second Earth (92047-01 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1996, gratiaa,  gratia,   ms32, gratia,   ss91022_10, ROT0,   "Jaleco", "Gratia - Second Earth (91022-10 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1996, kirarast, 0,        ms32, kirarast, kirarast,   ROT0,   "Jaleco", "Ryuusei Janshi Kirara Star", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1997, tp2m32,   tetrisp2, ms32, tp2m32,   tp2m32,     ROT0,   "Jaleco", "Tetris Plus 2 (MegaSystem 32 Version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_hayaosi1	   = new GameDriver("1994"	,"hayaosi1"	,"ms32.java"	,rom_hayaosi1,null	,machine_driver_ms32	,input_ports_hayaosi1	,init_ss92046_01	,ROT0	,	"Jaleco", "Hayaoshi Quiz Ouza Ketteisen", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_bbbxing	   = new GameDriver("1994"	,"bbbxing"	,"ms32.java"	,rom_bbbxing,null	,machine_driver_ms32	,input_ports_bbbxing	,init_ss92046_01	,ROT0	,	"Jaleco", "Best Bout Boxing", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_47pie2	   = new GameDriver("1994"	,"47pie2"	,"ms32.java"	,rom_47pie2,null	,machine_driver_ms32	,input_ports_kirarast	,init_47pie2	,ROT0	,	"Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.1)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_47pie2o	   = new GameDriver("1994"	,"47pie2o"	,"ms32.java"	,rom_47pie2o,driver_47pie2	,machine_driver_ms32	,input_ports_kirarast	,init_47pie2	,ROT0	,	"Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.0)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_desertwr	   = new GameDriver("1995"	,"desertwr"	,"ms32.java"	,rom_desertwr,null	,machine_driver_ms32	,input_ports_desertwr	,init_ss91022_10	,ROT270	,	"Jaleco", "Desert War / Wangan Sensou", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND  )
+	public static GameDriver driver_gametngk	   = new GameDriver("1995"	,"gametngk"	,"ms32.java"	,rom_gametngk,null	,machine_driver_ms32	,input_ports_gametngk	,init_ss91022_10	,ROT270	,	"Jaleco", "The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_tetrisp	   = new GameDriver("1995"	,"tetrisp"	,"ms32.java"	,rom_tetrisp,null	,machine_driver_ms32	,input_ports_tetrisp	,init_ss92046_01	,ROT0	,	"Jaleco / BPS", "Tetris Plus", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_p47aces	   = new GameDriver("1995"	,"p47aces"	,"ms32.java"	,rom_p47aces,null	,machine_driver_ms32	,input_ports_p47aces	,init_ss92048_01	,ROT0	,	"Jaleco", "P-47 Aces", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_akiss	   = new GameDriver("1995"	,"akiss"	,"ms32.java"	,rom_akiss,null	,machine_driver_ms32	,input_ports_kirarast	,init_kirarast	,ROT0	,	"Jaleco", "Mahjong Angel Kiss", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_gratia	   = new GameDriver("1996"	,"gratia"	,"ms32.java"	,rom_gratia,null	,machine_driver_ms32	,input_ports_gratia	,init_ss92047_01	,ROT0	,	"Jaleco", "Gratia - Second Earth (92047-01 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_gratiaa	   = new GameDriver("1996"	,"gratiaa"	,"ms32.java"	,rom_gratiaa,driver_gratia	,machine_driver_ms32	,input_ports_gratia	,init_ss91022_10	,ROT0	,	"Jaleco", "Gratia - Second Earth (91022-10 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_kirarast	   = new GameDriver("1996"	,"kirarast"	,"ms32.java"	,rom_kirarast,null	,machine_driver_ms32	,input_ports_kirarast	,init_kirarast	,ROT0	,	"Jaleco", "Ryuusei Janshi Kirara Star", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_tp2m32	   = new GameDriver("1997"	,"tp2m32"	,"ms32.java"	,rom_tp2m32,driver_tetrisp2	,machine_driver_ms32	,input_ports_tp2m32	,init_tp2m32	,ROT0	,	"Jaleco", "Tetris Plus 2 (MegaSystem 32 Version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 	
 	/* these boot and show something */
-	GAMEX( 1994, f1superb, 0,        ms32, f1superb, f1superb, ROT0,   "Jaleco", "F1 Super Battle", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_f1superb	   = new GameDriver("1994"	,"f1superb"	,"ms32.java"	,rom_f1superb,null	,machine_driver_ms32	,input_ports_f1superb	,init_f1superb	,ROT0	,	"Jaleco", "F1 Super Battle", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

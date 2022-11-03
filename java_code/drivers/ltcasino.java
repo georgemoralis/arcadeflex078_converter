@@ -573,6 +573,6 @@ public class ltcasino
 		ROM_LOAD( "lc2_rv.bin", 0x0000, 0x1000, CRC(84cbee7b) SHA1(742831d5ae0db6c7c644a18a837831ee0474d472) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1982, ltcasino, 0, ltcasino, ltcasino, 0, ROT0, "Digital Controls Inc.", "Little Casino", GAME_NOT_WORKING )
-	GAMEX( 1984, ltcasin2, 0, ltcasino, ltcasin2, 0, ROT0, "Digital Controls Inc.", "Little Casino 2", GAME_NOT_WORKING )
+	public static GameDriver driver_ltcasino	   = new GameDriver("1982"	,"ltcasino"	,"ltcasino.java"	,rom_ltcasino,null	,machine_driver_ltcasino	,input_ports_ltcasino	,null	,ROT0	,	"Digital Controls Inc.", "Little Casino", GAME_NOT_WORKING )
+	public static GameDriver driver_ltcasin2	   = new GameDriver("1984"	,"ltcasin2"	,"ltcasino.java"	,rom_ltcasin2,null	,machine_driver_ltcasino	,input_ports_ltcasin2	,null	,ROT0	,	"Digital Controls Inc.", "Little Casino 2", GAME_NOT_WORKING )
 }

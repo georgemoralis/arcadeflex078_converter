@@ -331,5 +331,5 @@ public class carpolo
 			ROM[i] ^= 0x0f;
 	} };
 	
-	GAMEX(1977, carpolo, 0, carpolo, carpolo, carpolo, ROT0, "Exidy", "Car Polo", GAME_NO_SOUND)
+	public static GameDriver driver_carpolo	   = new GameDriver("1977"	,"carpolo"	,"carpolo.java"	,rom_carpolo,null	,machine_driver_carpolo	,input_ports_carpolo	,init_carpolo	,ROT0	,	"Exidy", "Car Polo", GAME_NO_SOUND)
 }

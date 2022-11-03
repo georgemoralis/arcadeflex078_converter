@@ -1401,12 +1401,12 @@ public class royalmah
 	
 	
 	
-	GAME( 1982, royalmah, 0, royalmah, royalmah, 0, ROT0, "Falcon", "Royal Mahjong (Japan)" )
-	GAMEX(1986, suzume,   0, suzume,   majs101b, 0, ROT0, "Dyna Electronics", "Watashiha Suzumechan (Japan)", GAME_NOT_WORKING )
-	GAME( 1986, dondenmj, 0, dondenmj, majs101b, 0, ROT0, "Dyna Electronics", "Don Den Mahjong [BET] (Japan)" )
-	GAME( 1987, mjdiplob, 0, mjdiplob, mjdiplob, 0, ROT0, "Dynax", "Mahjong Diplomat [BET] (Japan)" )
-	GAME( 1987, tontonb,  0, tontonb,  tontonb,  0, ROT0, "Dynax", "Tonton [BET] (Japan)" )
-	GAME( 1988, majs101b, 0, majs101b, majs101b, 0, ROT0, "Dynax", "Mahjong Studio 101 [BET] (Japan)" )
-	GAME( 1989, mjderngr, 0, mjderngr, majs101b, 0, ROT0, "Dynax", "Mahjong Derringer (Japan)" )
-	GAMEX(1990, mjifb,    0, mjderngr, majs101b, 0, ROT0, "Dynax", "Mahjong If [BET] (Japan)", GAME_NOT_WORKING )
+	public static GameDriver driver_royalmah	   = new GameDriver("1982"	,"royalmah"	,"royalmah.java"	,rom_royalmah,null	,machine_driver_royalmah	,input_ports_royalmah	,null	,ROT0	,	"Falcon", "Royal Mahjong (Japan)" )
+	public static GameDriver driver_suzume	   = new GameDriver("1986"	,"suzume"	,"royalmah.java"	,rom_suzume,null	,machine_driver_suzume	,input_ports_majs101b	,null	,ROT0	,	"Dyna Electronics", "Watashiha Suzumechan (Japan)", GAME_NOT_WORKING )
+	public static GameDriver driver_dondenmj	   = new GameDriver("1986"	,"dondenmj"	,"royalmah.java"	,rom_dondenmj,null	,machine_driver_dondenmj	,input_ports_majs101b	,null	,ROT0	,	"Dyna Electronics", "Don Den Mahjong [BET] (Japan)" )
+	public static GameDriver driver_mjdiplob	   = new GameDriver("1987"	,"mjdiplob"	,"royalmah.java"	,rom_mjdiplob,null	,machine_driver_mjdiplob	,input_ports_mjdiplob	,null	,ROT0	,	"Dynax", "Mahjong Diplomat [BET] (Japan)" )
+	public static GameDriver driver_tontonb	   = new GameDriver("1987"	,"tontonb"	,"royalmah.java"	,rom_tontonb,null	,machine_driver_tontonb	,input_ports_tontonb	,null	,ROT0	,	"Dynax", "Tonton [BET] (Japan)" )
+	public static GameDriver driver_majs101b	   = new GameDriver("1988"	,"majs101b"	,"royalmah.java"	,rom_majs101b,null	,machine_driver_majs101b	,input_ports_majs101b	,null	,ROT0	,	"Dynax", "Mahjong Studio 101 [BET] (Japan)" )
+	public static GameDriver driver_mjderngr	   = new GameDriver("1989"	,"mjderngr"	,"royalmah.java"	,rom_mjderngr,null	,machine_driver_mjderngr	,input_ports_majs101b	,null	,ROT0	,	"Dynax", "Mahjong Derringer (Japan)" )
+	public static GameDriver driver_mjifb	   = new GameDriver("1990"	,"mjifb"	,"royalmah.java"	,rom_mjifb,null	,machine_driver_mjderngr	,input_ports_majs101b	,null	,ROT0	,	"Dynax", "Mahjong If [BET] (Japan)", GAME_NOT_WORKING )
 }

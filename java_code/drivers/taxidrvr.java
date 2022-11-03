@@ -453,5 +453,5 @@ public class taxidrvr
 	
 	
 	
-	GAMEX( 1984, taxidrvr, 0, taxidrvr, taxidrvr, 0, ROT90, "Graphic Techno", "Taxi Driver", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_taxidrvr	   = new GameDriver("1984"	,"taxidrvr"	,"taxidrvr.java"	,rom_taxidrvr,null	,machine_driver_taxidrvr	,input_ports_taxidrvr	,null	,ROT90	,	"Graphic Techno", "Taxi Driver", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 }

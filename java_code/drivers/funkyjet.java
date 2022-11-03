@@ -400,6 +400,6 @@ public class funkyjet
 	
 	/******************************************************************************/
 	
-	GAME( 1992, funkyjet, 0, funkyjet, funkyjet, funkyjet, ROT0, "[Data East] (Mitchell license)", "Funky Jet" )
-	GAME( 1995, sotsugyo, 0, funkyjet, sotsugyo, funkyjet, ROT0, "Mitchell (Atlus license)", "Sotsugyo Shousho" )
+	public static GameDriver driver_funkyjet	   = new GameDriver("1992"	,"funkyjet"	,"funkyjet.java"	,rom_funkyjet,null	,machine_driver_funkyjet	,input_ports_funkyjet	,init_funkyjet	,ROT0	,	"[Data East] (Mitchell license)", "Funky Jet" )
+	public static GameDriver driver_sotsugyo	   = new GameDriver("1995"	,"sotsugyo"	,"funkyjet.java"	,rom_sotsugyo,null	,machine_driver_funkyjet	,input_ports_sotsugyo	,init_funkyjet	,ROT0	,	"Mitchell (Atlus license)", "Sotsugyo Shousho" )
 }

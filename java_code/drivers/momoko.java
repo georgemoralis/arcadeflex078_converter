@@ -331,5 +331,5 @@ public class momoko
 		ROM_LOAD( "momoko-b.bin", 0x0100,  0x0020, CRC(427b0e5c) SHA1(aa2797b899571527cc96013fd3420b841954ee67) )
 	ROM_END(); }}; 
 	
-	GAME( 1986, momoko, 0, momoko, momoko, 0, ROT0, "Jaleco", "Momoko 120%" )
+	public static GameDriver driver_momoko	   = new GameDriver("1986"	,"momoko"	,"momoko.java"	,rom_momoko,null	,machine_driver_momoko	,input_ports_momoko	,null	,ROT0	,	"Jaleco", "Momoko 120%" )
 }

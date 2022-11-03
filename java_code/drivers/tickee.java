@@ -299,5 +299,5 @@ public class tickee
 	 *
 	 *************************************/
 	
-	GAME( 1994, tickee, 0, tickee, tickee, tickee, ROT0, "Raster Elite", "Tickee Tickats" )
+	public static GameDriver driver_tickee	   = new GameDriver("1994"	,"tickee"	,"tickee.java"	,rom_tickee,null	,machine_driver_tickee	,input_ports_tickee	,init_tickee	,ROT0	,	"Raster Elite", "Tickee Tickats" )
 }

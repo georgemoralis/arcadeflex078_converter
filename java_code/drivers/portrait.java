@@ -299,6 +299,6 @@ public class portrait
 		/* proms? */
 	ROM_END(); }}; 
 	
-	GAMEX( 1983, portrait,  0,    portrait, portrait,  0, ROT270, "Olympia", "Portraits", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS | GAME_NOT_WORKING )
+	public static GameDriver driver_portrait	   = new GameDriver("1983"	,"portrait"	,"portrait.java"	,rom_portrait,null	,machine_driver_portrait	,input_ports_portrait	,null	,ROT270	,	"Olympia", "Portraits", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS | GAME_NOT_WORKING )
 	
 }

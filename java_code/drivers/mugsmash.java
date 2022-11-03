@@ -500,5 +500,5 @@ public class mugsmash
 		ROM_LOAD( "mugs_15.bin", 0x180000, 0x080000, CRC(82e8187c) SHA1(c7a0e1b3d90dbbe2588886a27a07a9c336447ae3) )
 	ROM_END(); }}; 
 	
-	GAME( 1990?, mugsmash, 0, mugsmash, mugsmash, 0, ROT0, "Electronic Devices Italy / 3D Games England", "Mug Smashers" )
+	public static GameDriver driver_mugsmash	   = new GameDriver("1990?"	,"mugsmash"	,"mugsmash.java"	,rom_mugsmash,null	,machine_driver_mugsmash	,input_ports_mugsmash	,null	,ROT0	,	"Electronic Devices Italy / 3D Games England", "Mug Smashers" )
 }

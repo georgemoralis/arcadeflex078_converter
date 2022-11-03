@@ -1671,6 +1671,6 @@ public class mazerbla
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1983, mazerbla, 0, mazerbla,  mazerbla, 0, ROT0, "Stern", "Mazer Blazer", GAME_IMPERFECT_GRAPHICS |GAME_NO_SOUND | GAME_NOT_WORKING )
-	GAMEX( 1983, greatgun, 0, greatgun,  greatgun, 0, ROT0, "Stern", "Great Guns", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mazerbla	   = new GameDriver("1983"	,"mazerbla"	,"mazerbla.java"	,rom_mazerbla,null	,machine_driver_mazerbla	,input_ports_mazerbla	,null	,ROT0	,	"Stern", "Mazer Blazer", GAME_IMPERFECT_GRAPHICS |GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_greatgun	   = new GameDriver("1983"	,"greatgun"	,"mazerbla.java"	,rom_greatgun,null	,machine_driver_greatgun	,input_ports_greatgun	,null	,ROT0	,	"Stern", "Great Guns", GAME_IMPERFECT_GRAPHICS )
 }

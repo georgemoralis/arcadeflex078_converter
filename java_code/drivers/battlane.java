@@ -395,7 +395,7 @@ public class battlane
 	ROM_END(); }}; 
 	
 	
-	GAME( 1986, battlane, 0,        battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 1)" )
-	GAME( 1986, battlan2, battlane, battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 2)" )
-	GAME( 1986, battlan3, battlane, battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 3)" )
+	public static GameDriver driver_battlane	   = new GameDriver("1986"	,"battlane"	,"battlane.java"	,rom_battlane,null	,machine_driver_battlane	,input_ports_battlane	,null	,ROT90	,	"Technos (Taito license)", "Battle Lane! Vol. 5 (set 1)" )
+	public static GameDriver driver_battlan2	   = new GameDriver("1986"	,"battlan2"	,"battlane.java"	,rom_battlan2,driver_battlane	,machine_driver_battlane	,input_ports_battlane	,null	,ROT90	,	"Technos (Taito license)", "Battle Lane! Vol. 5 (set 2)" )
+	public static GameDriver driver_battlan3	   = new GameDriver("1986"	,"battlan3"	,"battlane.java"	,rom_battlan3,driver_battlane	,machine_driver_battlane	,input_ports_battlane	,null	,ROT90	,	"Technos (Taito license)", "Battle Lane! Vol. 5 (set 3)" )
 }

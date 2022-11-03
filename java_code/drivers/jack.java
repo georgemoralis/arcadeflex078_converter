@@ -1041,15 +1041,15 @@ public class jack
 	
 	
 	
-	GAME( 1982, jack,     0,        jack, jack,     jack,     ROT90, "Cinematronics", "Jack the Giantkiller (set 1)" )
-	GAME( 1982, jack2,    jack,     jack, jack2,    jack,     ROT90, "Cinematronics", "Jack the Giantkiller (set 2)" )
-	GAME( 1982, jack3,    jack,     jack, jack3,    jack,     ROT90, "Cinematronics", "Jack the Giantkiller (set 3)" )
-	GAME( 1982, treahunt, jack,     jack, treahunt, treahunt, ROT90, "Hara Industries", "Treasure Hunt (Japan?)" )
-	GAME( 1982, zzyzzyxx, 0,        jack, zzyzzyxx, zzyzzyxx, ROT90, "Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 1)" )
-	GAME( 1982, zzyzzyx2, zzyzzyxx, jack, zzyzzyxx, zzyzzyxx, ROT90, "Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 2)" )
-	GAME( 1982, brix,     zzyzzyxx, jack, zzyzzyxx, zzyzzyxx, ROT90, "Cinematronics + Advanced Microcomputer Systems", "Brix" )
-	GAME( 1984, freeze,   0,        jack, freeze,   jack,     ROT90, "Cinematronics", "Freeze" )
-	GAME( 1984, sucasino, 0,        jack, sucasino, jack,     ROT90, "Data Amusement", "Super Casino" )
-	GAME( 1981, tripool,  0,        tripool, tripool,  jack,     ROT90, "Noma (Casino Tech license)", "Tri-Pool (Casino Tech)" )
-	GAME( 1981, tripoola, tripool,  tripool, tripool,  jack,     ROT90, "Noma (Costal Games license)", "Tri-Pool (Costal Games)" )
+	public static GameDriver driver_jack	   = new GameDriver("1982"	,"jack"	,"jack.java"	,rom_jack,null	,machine_driver_jack	,input_ports_jack	,init_jack	,ROT90	,	"Cinematronics", "Jack the Giantkiller (set 1)" )
+	public static GameDriver driver_jack2	   = new GameDriver("1982"	,"jack2"	,"jack.java"	,rom_jack2,driver_jack	,machine_driver_jack	,input_ports_jack2	,init_jack	,ROT90	,	"Cinematronics", "Jack the Giantkiller (set 2)" )
+	public static GameDriver driver_jack3	   = new GameDriver("1982"	,"jack3"	,"jack.java"	,rom_jack3,driver_jack	,machine_driver_jack	,input_ports_jack3	,init_jack	,ROT90	,	"Cinematronics", "Jack the Giantkiller (set 3)" )
+	public static GameDriver driver_treahunt	   = new GameDriver("1982"	,"treahunt"	,"jack.java"	,rom_treahunt,driver_jack	,machine_driver_jack	,input_ports_treahunt	,init_treahunt	,ROT90	,	"Hara Industries", "Treasure Hunt (Japan?)" )
+	public static GameDriver driver_zzyzzyxx	   = new GameDriver("1982"	,"zzyzzyxx"	,"jack.java"	,rom_zzyzzyxx,null	,machine_driver_jack	,input_ports_zzyzzyxx	,init_zzyzzyxx	,ROT90	,	"Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 1)" )
+	public static GameDriver driver_zzyzzyx2	   = new GameDriver("1982"	,"zzyzzyx2"	,"jack.java"	,rom_zzyzzyx2,driver_zzyzzyxx	,machine_driver_jack	,input_ports_zzyzzyxx	,init_zzyzzyxx	,ROT90	,	"Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 2)" )
+	public static GameDriver driver_brix	   = new GameDriver("1982"	,"brix"	,"jack.java"	,rom_brix,driver_zzyzzyxx	,machine_driver_jack	,input_ports_zzyzzyxx	,init_zzyzzyxx	,ROT90	,	"Cinematronics + Advanced Microcomputer Systems", "Brix" )
+	public static GameDriver driver_freeze	   = new GameDriver("1984"	,"freeze"	,"jack.java"	,rom_freeze,null	,machine_driver_jack	,input_ports_freeze	,init_jack	,ROT90	,	"Cinematronics", "Freeze" )
+	public static GameDriver driver_sucasino	   = new GameDriver("1984"	,"sucasino"	,"jack.java"	,rom_sucasino,null	,machine_driver_jack	,input_ports_sucasino	,init_jack	,ROT90	,	"Data Amusement", "Super Casino" )
+	public static GameDriver driver_tripool	   = new GameDriver("1981"	,"tripool"	,"jack.java"	,rom_tripool,null	,machine_driver_tripool	,input_ports_tripool	,init_jack	,ROT90	,	"Noma (Casino Tech license)", "Tri-Pool (Casino Tech)" )
+	public static GameDriver driver_tripoola	   = new GameDriver("1981"	,"tripoola"	,"jack.java"	,rom_tripoola,driver_tripool	,machine_driver_tripool	,input_ports_tripool	,init_jack	,ROT90	,	"Noma (Costal Games license)", "Tri-Pool (Costal Games)" )
 }

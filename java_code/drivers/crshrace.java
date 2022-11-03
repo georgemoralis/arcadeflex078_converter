@@ -764,6 +764,6 @@ public class crshrace
 	} };
 	
 	
-	GAMEX( 1993, crshrace, 0,        crshrace, crshrace, crshrace, ROT270, "Video System Co.", "Lethal Crash Race (set 1)", GAME_NO_COCKTAIL )
-	GAMEX( 1993, crshrac2, crshrace, crshrace, crshrac2, crshrac2, ROT270, "Video System Co.", "Lethal Crash Race (set 2)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_crshrace	   = new GameDriver("1993"	,"crshrace"	,"crshrace.java"	,rom_crshrace,null	,machine_driver_crshrace	,input_ports_crshrace	,init_crshrace	,ROT270	,	"Video System Co.", "Lethal Crash Race (set 1)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_crshrac2	   = new GameDriver("1993"	,"crshrac2"	,"crshrace.java"	,rom_crshrac2,driver_crshrace	,machine_driver_crshrace	,input_ports_crshrac2	,init_crshrac2	,ROT270	,	"Video System Co.", "Lethal Crash Race (set 2)", GAME_NO_COCKTAIL )
 }

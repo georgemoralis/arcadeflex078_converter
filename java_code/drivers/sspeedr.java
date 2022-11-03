@@ -269,5 +269,5 @@ public class sspeedr
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1979, sspeedr, 0, sspeedr, sspeedr, 0, ROT270, "Midway", "Super Speed Race", GAME_NO_SOUND )
+	public static GameDriver driver_sspeedr	   = new GameDriver("1979"	,"sspeedr"	,"sspeedr.java"	,rom_sspeedr,null	,machine_driver_sspeedr	,input_ports_sspeedr	,null	,ROT270	,	"Midway", "Super Speed Race", GAME_NO_SOUND )
 }

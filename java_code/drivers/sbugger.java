@@ -243,6 +243,6 @@ public class sbugger
 	
 	/* game drivers */
 	
-	GAMEX( 1981, sbugger, 0, sbugger, sbugger, 0, ROT270, "Game-A-Tron", "Space Bugger", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_sbugger	   = new GameDriver("1981"	,"sbugger"	,"sbugger.java"	,rom_sbugger,null	,machine_driver_sbugger	,input_ports_sbugger	,null	,ROT270	,	"Game-A-Tron", "Space Bugger", GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 }

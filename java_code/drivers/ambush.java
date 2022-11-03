@@ -263,6 +263,6 @@ public class ambush
 		ROM_LOAD( "14.bpr",		  0x0300, 0x0100, CRC(622a8ce7) SHA1(6834f67874251f2ef3a33aec893311f5d10e496f) )  /* They don't look like color PROMs */
 	ROM_END(); }}; 
 	
-	GAME( 1983, ambush, 0,      ambush, ambush, 0, ROT0, "Nippon Amuse Co-Ltd", "Ambush" )
-	GAME( 1983, ambusht,ambush, ambush, ambush, 0, ROT0, "Tecfri", "Ambush (Tecfri)" )
+	public static GameDriver driver_ambush	   = new GameDriver("1983"	,"ambush"	,"ambush.java"	,rom_ambush,null	,machine_driver_ambush	,input_ports_ambush	,null	,ROT0	,	"Nippon Amuse Co-Ltd", "Ambush" )
+	public static GameDriver driver_ambusht	   = new GameDriver("1983"	,"ambusht"	,"ambush.java"	,rom_ambusht,driver_ambush	,machine_driver_ambush	,input_ports_ambush	,null	,ROT0	,	"Tecfri", "Ambush (Tecfri)" )
 }

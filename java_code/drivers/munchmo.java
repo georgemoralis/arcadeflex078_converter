@@ -376,6 +376,6 @@ public class munchmo
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1983, joyfulr,  0,       munchmo, mnchmobl, 0, ROT270, "SNK", "Joyful Road (Japan)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	GAMEX( 1983, mnchmobl, joyfulr, munchmo, mnchmobl, 0, ROT270, "SNK (Centuri license)", "Munch Mobile (US)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	public static GameDriver driver_joyfulr	   = new GameDriver("1983"	,"joyfulr"	,"munchmo.java"	,rom_joyfulr,null	,machine_driver_munchmo	,input_ports_mnchmobl	,null	,ROT270	,	"SNK", "Joyful Road (Japan)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	public static GameDriver driver_mnchmobl	   = new GameDriver("1983"	,"mnchmobl"	,"munchmo.java"	,rom_mnchmobl,driver_joyfulr	,machine_driver_munchmo	,input_ports_mnchmobl	,null	,ROT270	,	"SNK (Centuri license)", "Munch Mobile (US)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

@@ -609,6 +609,6 @@ public class dbz2
 		ROM[0x990/2] = 0x4e71;
 	}
 	
-	GAMEX( 1993, dbz,  0, dbz,  dbz, dbz, ROT0, "Banpresto", "Dragonball Z" , GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1994, dbz2, 0, dbz2, dbz2, dbz2, ROT0, "Banpresto", "Dragonball Z 2 Super Battle" , GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_dbz	   = new GameDriver("1993"	,"dbz"	,"dbz2.java"	,rom_dbz,null	,machine_driver_dbz	,input_ports_dbz	,init_dbz	,ROT0	,	"Banpresto", "Dragonball Z" , GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_dbz2	   = new GameDriver("1994"	,"dbz2"	,"dbz2.java"	,rom_dbz2,null	,machine_driver_dbz2	,input_ports_dbz2	,init_dbz2	,ROT0	,	"Banpresto", "Dragonball Z 2 Super Battle" , GAME_IMPERFECT_GRAPHICS )
 }

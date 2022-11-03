@@ -307,6 +307,6 @@ public class enigma2
 	static DRIVER_INIT(enigma2) {	cmap=1;}
 	static DRIVER_INIT(enigma2a){	cmap=0;}
 	
-	GAMEX( 1981, enigma2,  0,		enigma2, enigma2,  enigma2, ROT90, "GamePlan (Zilec Electronics license)", "Enigma 2", GAME_NO_SOUND | GAME_WRONG_COLORS )
-	GAMEX( 1984, enigma2a, enigma2, enigma2a, enigma2a, enigma2a, ROT90, "Zilec Electronics", "Enigma 2 (Space Invaders Hardware)", GAME_NO_SOUND | GAME_WRONG_COLORS )
+	public static GameDriver driver_enigma2	   = new GameDriver("1981"	,"enigma2"	,"enigma2.java"	,rom_enigma2,null	,machine_driver_enigma2	,input_ports_enigma2	,init_enigma2	,ROT90	,	"GamePlan (Zilec Electronics license)", "Enigma 2", GAME_NO_SOUND | GAME_WRONG_COLORS )
+	public static GameDriver driver_enigma2a	   = new GameDriver("1984"	,"enigma2a"	,"enigma2.java"	,rom_enigma2a,driver_enigma2	,machine_driver_enigma2a	,input_ports_enigma2a	,init_enigma2a	,ROT90	,	"Zilec Electronics", "Enigma 2 (Space Invaders Hardware)", GAME_NO_SOUND | GAME_WRONG_COLORS )
 }

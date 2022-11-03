@@ -839,6 +839,6 @@ public class nycaptor
 	ROM_END(); }}; 
 	
 	
-	GAMEX(1985, nycaptor, 0,       nycaptor,  nycaptor, 0, ROT0,  "Taito", "N.Y. Captor", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX(1986, cyclshtg, 0,       cyclshtg,  cyclshtg, 0, ROT90, "Taito", "Cycle Shooting", GAME_NOT_WORKING)
+	public static GameDriver driver_nycaptor	   = new GameDriver("1985"	,"nycaptor"	,"nycaptor.java"	,rom_nycaptor,null	,machine_driver_nycaptor	,input_ports_nycaptor	,null	,ROT0	,	"Taito", "N.Y. Captor", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_cyclshtg	   = new GameDriver("1986"	,"cyclshtg"	,"nycaptor.java"	,rom_cyclshtg,null	,machine_driver_cyclshtg	,input_ports_cyclshtg	,null	,ROT90	,	"Taito", "Cycle Shooting", GAME_NOT_WORKING)
 }

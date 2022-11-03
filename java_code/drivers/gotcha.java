@@ -326,5 +326,5 @@ public class gotcha
 	
 	
 	
-	GAME( 1997, gotcha, 0, gotcha, gotcha, 0, ROT0, "Dongsung", "Got-cha" )
+	public static GameDriver driver_gotcha	   = new GameDriver("1997"	,"gotcha"	,"gotcha.java"	,rom_gotcha,null	,machine_driver_gotcha	,input_ports_gotcha	,null	,ROT0	,	"Dongsung", "Got-cha" )
 }

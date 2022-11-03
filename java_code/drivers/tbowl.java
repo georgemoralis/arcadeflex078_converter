@@ -747,6 +747,6 @@ public class tbowl
 		ROM_LOAD( "6206a.3",	0x10000, 0x10000, CRC(3aa24744) SHA1(06de3f9a2431777218cc67f59230fddbfa01cf2d) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1987, tbowl,    0,        tbowl,    tbowl,    0, ROT0,  "Tecmo", "Tecmo Bowl (World?)", GAME_IMPERFECT_SOUND )
-	GAMEX( 1987, tbowlj,   tbowl,    tbowl,    tbowlj,   0, ROT0,  "Tecmo", "Tecmo Bowl (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_tbowl	   = new GameDriver("1987"	,"tbowl"	,"tbowl.java"	,rom_tbowl,null	,machine_driver_tbowl	,input_ports_tbowl	,null	,ROT0	,	"Tecmo", "Tecmo Bowl (World?)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_tbowlj	   = new GameDriver("1987"	,"tbowlj"	,"tbowl.java"	,rom_tbowlj,driver_tbowl	,machine_driver_tbowl	,input_ports_tbowlj	,null	,ROT0	,	"Tecmo", "Tecmo Bowl (Japan)", GAME_IMPERFECT_SOUND )
 }

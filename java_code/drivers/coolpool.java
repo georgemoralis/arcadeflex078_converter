@@ -948,9 +948,9 @@ public class coolpool
 	 *
 	 *************************************/
 	
-	GAMEX( 1989, amerdart, 0,        amerdart, amerdart, amerdart, ROT0, "Ameri",   "AmeriDarts", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS | GAME_NO_SOUND | GAME_NOT_WORKING )
-	GAMEX( 1992, coolpool, 0,        coolpool, 9ballsht, coolpool, ROT0, "Catalina", "Cool Pool", GAME_NOT_WORKING | GAME_NO_SOUND )
-	GAMEX( 1993, 9ballsht, coolpool, 9ballsht, 9ballsht, 9ballsht, ROT0, "E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 1)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	GAMEX( 1993, 9ballsh2, coolpool, 9ballsht, 9ballsht, 9ballsh2, ROT0, "E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 2)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	GAMEX( 1993, 9ballsh3, coolpool, 9ballsht, 9ballsht, 9ballsh3, ROT0, "E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 3)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_amerdart	   = new GameDriver("1989"	,"amerdart"	,"coolpool.java"	,rom_amerdart,null	,machine_driver_amerdart	,input_ports_amerdart	,init_amerdart	,ROT0	,	"Ameri",   "AmeriDarts", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS | GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_coolpool	   = new GameDriver("1992"	,"coolpool"	,"coolpool.java"	,rom_coolpool,null	,machine_driver_coolpool	,input_ports_9ballsht	,init_coolpool	,ROT0	,	"Catalina", "Cool Pool", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_9ballsht	   = new GameDriver("1993"	,"9ballsht"	,"coolpool.java"	,rom_9ballsht,driver_coolpool	,machine_driver_9ballsht	,input_ports_9ballsht	,init_9ballsht	,ROT0	,	"E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 1)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_9ballsh2	   = new GameDriver("1993"	,"9ballsh2"	,"coolpool.java"	,rom_9ballsh2,driver_coolpool	,machine_driver_9ballsht	,input_ports_9ballsht	,init_9ballsh2	,ROT0	,	"E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 2)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_9ballsh3	   = new GameDriver("1993"	,"9ballsh3"	,"coolpool.java"	,rom_9ballsh3,driver_coolpool	,machine_driver_9ballsht	,input_ports_9ballsht	,init_9ballsh3	,ROT0	,	"E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 3)", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

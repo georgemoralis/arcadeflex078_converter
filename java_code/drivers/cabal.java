@@ -727,7 +727,7 @@ public class cabal
 	} };
 	
 	
-	GAME( 1988, cabal,   0,     cabal,   cabal,   cabal, ROT0, "Tad (Fabtek license)", "Cabal (US set 1)" )
-	GAME( 1988, cabal2,  cabal, cabal,   cabal,   cabal, ROT0, "Tad (Fabtek license)", "Cabal (US set 2)" )
-	GAMEX( 1988, cabalbl, cabal, cabalbl, cabalbl, 0,     ROT0, "bootleg", "Cabal (bootleg)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_cabal	   = new GameDriver("1988"	,"cabal"	,"cabal.java"	,rom_cabal,null	,machine_driver_cabal	,input_ports_cabal	,init_cabal	,ROT0	,	"Tad (Fabtek license)", "Cabal (US set 1)" )
+	public static GameDriver driver_cabal2	   = new GameDriver("1988"	,"cabal2"	,"cabal.java"	,rom_cabal2,driver_cabal	,machine_driver_cabal	,input_ports_cabal	,init_cabal	,ROT0	,	"Tad (Fabtek license)", "Cabal (US set 2)" )
+	public static GameDriver driver_cabalbl	   = new GameDriver("1988"	,"cabalbl"	,"cabal.java"	,rom_cabalbl,driver_cabal	,machine_driver_cabalbl	,input_ports_cabalbl	,null	,ROT0	,	"bootleg", "Cabal (bootleg)", GAME_IMPERFECT_SOUND )
 }

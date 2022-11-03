@@ -990,10 +990,10 @@ public class turbo
 	 *
 	 *************************************/
 	
-	GAMEX( 1981, turbo,    0,       turbo,    turbo,    0,              ROT270,             "Sega", "Turbo", GAME_NO_COCKTAIL )
-	GAMEX( 1981, turboa,   turbo,   turbo,    turbo,    decode_turbo,   ROT270,             "Sega", "Turbo (encrypted set 1)", GAME_NO_COCKTAIL )
-	GAMEX( 1981, turbob,   turbo,   turbo,    turbo,    decode_turbo,   ROT270,             "Sega", "Turbo (encrypted set 2)", GAME_NO_COCKTAIL )
-	GAME ( 1982, subroc3d, 0,       subroc3d, subroc3d, 0,              ORIENTATION_FLIP_X, "Sega", "Subroc-3D" )
-	GAME ( 1982, buckrog,  0,       buckrog,  buckrog,  decode_buckrog, ROT0,               "Sega", "Buck Rogers: Planet of Zoom" )
-	GAME ( 1982, buckrogn, buckrog, buckrog,  buckrog,  0,              ROT0,               "Sega", "Buck Rogers: Planet of Zoom (not encrypted)" )
+	public static GameDriver driver_turbo	   = new GameDriver("1981"	,"turbo"	,"turbo.java"	,rom_turbo,null	,machine_driver_turbo	,input_ports_turbo	,null	,ROT270	,	"Sega", "Turbo", GAME_NO_COCKTAIL )
+	public static GameDriver driver_turboa	   = new GameDriver("1981"	,"turboa"	,"turbo.java"	,rom_turboa,driver_turbo	,machine_driver_turbo	,input_ports_turbo	,init_decode_turbo	,ROT270	,	"Sega", "Turbo (encrypted set 1)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_turbob	   = new GameDriver("1981"	,"turbob"	,"turbo.java"	,rom_turbob,driver_turbo	,machine_driver_turbo	,input_ports_turbo	,init_decode_turbo	,ROT270	,	"Sega", "Turbo (encrypted set 2)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_subroc3d	   = new GameDriver("1982"	,"subroc3d"	,"turbo.java"	,rom_subroc3d,null	,machine_driver_subroc3d	,input_ports_subroc3d	,null	,ORIENTATION_FLIP_X	,	"Sega", "Subroc-3D" )
+	public static GameDriver driver_buckrog	   = new GameDriver("1982"	,"buckrog"	,"turbo.java"	,rom_buckrog,null	,machine_driver_buckrog	,input_ports_buckrog	,init_decode_buckrog	,ROT0	,	"Sega", "Buck Rogers: Planet of Zoom" )
+	public static GameDriver driver_buckrogn	   = new GameDriver("1982"	,"buckrogn"	,"turbo.java"	,rom_buckrogn,driver_buckrog	,machine_driver_buckrog	,input_ports_buckrog	,null	,ROT0	,	"Sega", "Buck Rogers: Planet of Zoom (not encrypted)" )
 }

@@ -442,7 +442,7 @@ public class espial
 	
 	
 	
-	GAME( 1983, espial,  0,      espial,  espial,  0, ROT0,  "[Orca] Thunderbolt", "Espial (US?)" )
-	GAME( 1983, espiale, espial, espial,  espial,  0, ROT0,  "[Orca] Thunderbolt", "Espial (Europe)" )
-	GAME( 1983, netwars, 0,      netwars, netwars, 0, ROT90, "Orca (Esco Trading Co license)", "Net Wars" )
+	public static GameDriver driver_espial	   = new GameDriver("1983"	,"espial"	,"espial.java"	,rom_espial,null	,machine_driver_espial	,input_ports_espial	,null	,ROT0	,	"[Orca] Thunderbolt", "Espial (US?)" )
+	public static GameDriver driver_espiale	   = new GameDriver("1983"	,"espiale"	,"espial.java"	,rom_espiale,driver_espial	,machine_driver_espial	,input_ports_espial	,null	,ROT0	,	"[Orca] Thunderbolt", "Espial (Europe)" )
+	public static GameDriver driver_netwars	   = new GameDriver("1983"	,"netwars"	,"espial.java"	,rom_netwars,null	,machine_driver_netwars	,input_ports_netwars	,null	,ROT90	,	"Orca (Esco Trading Co license)", "Net Wars" )
 }

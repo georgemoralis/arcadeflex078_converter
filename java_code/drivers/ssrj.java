@@ -230,5 +230,5 @@ public class ssrj
 	
 	ROM_END(); }}; 
 	
-	GAMEX( 1985, ssrj,  0,       ssrj,  ssrj,  0, ORIENTATION_FLIP_X, "Taito Corporation", "Super Speed Race Junior (Japan)",GAME_WRONG_COLORS|GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_ssrj	   = new GameDriver("1985"	,"ssrj"	,"ssrj.java"	,rom_ssrj,null	,machine_driver_ssrj	,input_ports_ssrj	,null	,ORIENTATION_FLIP_X	,	"Taito Corporation", "Super Speed Race Junior (Japan)",GAME_WRONG_COLORS|GAME_IMPERFECT_GRAPHICS )
 }

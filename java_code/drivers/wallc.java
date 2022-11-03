@@ -369,5 +369,5 @@ public class wallc
 		ROM_LOAD( "74s288.c2",  0x0000, 0x0020, CRC(83e3e293) SHA1(a98c5e63b688de8d175adb6539e0cdc668f313fd) )
 	ROM_END(); }}; 
 	
-	GAME( 1984, wallc, 0,      wallc,  wallc, wallc, ROT0, "Midcoin", "Wall Crash" )
+	public static GameDriver driver_wallc	   = new GameDriver("1984"	,"wallc"	,"wallc.java"	,rom_wallc,null	,machine_driver_wallc	,input_ports_wallc	,init_wallc	,ROT0	,	"Midcoin", "Wall Crash" )
 }

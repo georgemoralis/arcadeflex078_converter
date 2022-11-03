@@ -262,5 +262,5 @@ public class poolshrk
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1977, poolshrk, 0, poolshrk, poolshrk, poolshrk, 0, "Atari", "Poolshark", GAME_NO_SOUND )
+	public static GameDriver driver_poolshrk	   = new GameDriver("1977"	,"poolshrk"	,"poolshrk.java"	,rom_poolshrk,null	,machine_driver_poolshrk	,input_ports_poolshrk	,init_poolshrk	,0	,	"Atari", "Poolshark", GAME_NO_SOUND )
 }

@@ -4402,83 +4402,83 @@ public class segac2
 	******************************************************************************/
 	
 	/* System C Games */
-	GAME ( 1989, bloxeedc, bloxeed,  segac,    bloxeedc, bloxeedc, ROT0, "Sega / Elorg",           "Bloxeed (C System)" )
-	GAME ( 1990, columns,  0,        segac,    columns,  columns,  ROT0, "Sega",                   "Columns (US)" )
-	GAME ( 1990, columnsj, columns,  segac,    columns,  columns,  ROT0, "Sega",                   "Columns (Japan)" )
-	GAME ( 1990, columns2, 0,        segac,    columns2, columns2, ROT0, "Sega",                   "Columns II - The Voyage Through Time (Japan)" )
+	public static GameDriver driver_bloxeedc	   = new GameDriver("1989"	,"bloxeedc"	,"segac2.java"	,rom_bloxeedc,driver_bloxeed	,machine_driver_segac	,input_ports_bloxeedc	,init_bloxeedc	,ROT0	,	"Sega / Elorg",           "Bloxeed (C System)" )
+	public static GameDriver driver_columns	   = new GameDriver("1990"	,"columns"	,"segac2.java"	,rom_columns,null	,machine_driver_segac	,input_ports_columns	,init_columns	,ROT0	,	"Sega",                   "Columns (US)" )
+	public static GameDriver driver_columnsj	   = new GameDriver("1990"	,"columnsj"	,"segac2.java"	,rom_columnsj,driver_columns	,machine_driver_segac	,input_ports_columns	,init_columns	,ROT0	,	"Sega",                   "Columns (Japan)" )
+	public static GameDriver driver_columns2	   = new GameDriver("1990"	,"columns2"	,"segac2.java"	,rom_columns2,null	,machine_driver_segac	,input_ports_columns2	,init_columns2	,ROT0	,	"Sega",                   "Columns II - The Voyage Through Time (Japan)" )
 	
 	/* System C-2 Games */
-	GAME ( 1990, borench,  0,        segac2,   borench,  borench,  ROT0, "Sega",                   "Borench" )
-	GAME ( 1990, tfrceac,  0,        segac2,   tfrceac,  tfrceac,  ROT0, "Sega / Technosoft",      "ThunderForce AC" )
-	GAME ( 1990, tfrceacj, tfrceac,  segac2,   tfrceac,  tfrceac,  ROT0, "Sega / Technosoft",      "ThunderForce AC (Japan)" )
-	GAME ( 1990, tfrceacb, tfrceac,  segac2,   tfrceac,  tfrceacb, ROT0, "bootleg",                "ThunderForce AC (bootleg)" )
-	GAME ( 1991, ribbit,   0,        segac2,   ribbit,   ribbit,   ROT0, "Sega",                   "Ribbit!" )
-	GAME ( 1992, tantr,    0,        segac2,   ichidant, tantr,    ROT0, "Sega",                   "Tant-R (Puzzle & Action) (Japan)" )
-	GAME ( 1992, tantrbl,  tantr,    segac2,   ichidant, segac2,   ROT0, "bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 1)" )
-	GAME ( 1994, tantrbl2, tantr,    segac,    ichidant, tantr,    ROT0, "bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 2)" )
-	GAME ( 1992, puyopuyo, 0,        segac2,   puyopuyo, puyopuyo, ROT0, "Sega / Compile",         "Puyo Puyo (Japan)" )
-	GAME ( 1992, puyopuya, puyopuyo, segac2,   puyopuyo, puyopuyo, ROT0, "Sega / Compile",         "Puyo Puyo (Japan) (Rev A)" )
-	GAME ( 1992, puyopuyb, puyopuyo, segac2,   puyopuyo, puyopuyo, ROT0, "bootleg",                "Puyo Puyo (English) (bootleg)" )
-	GAME ( 1994, ichidant, 0,        segac2,   ichidant, ichidant, ROT0, "Sega",                   "Ichidant-R (Puzzle & Action 2) (Japan)" )
-	GAME ( 1994, ichidnte, ichidant, segac2,   ichidant, ichidnte, ROT0, "Sega",                   "Ichidant-R (Puzzle & Action 2) (English)" )
-	GAME ( 1994, ichidntb, ichidant, segac,    ichidant, segac2,   ROT0, "bootleg",                "Ichidant-R (Puzzle & Action 2) (Japan) (bootleg)" )
-	GAME ( 1994, stkclmns, 0,        segac2,   stkclmns, stkclmns, ROT0, "Sega",                   "Stack Columns (Japan)" )
-	GAME ( 1994, puyopuy2, 0,        segac2,   puyopuy2, puyopuy2, ROT0, "Compile (Sega license)", "Puyo Puyo 2 (Japan)" )
-	GAME ( 1994, potopoto, 0,        segac2,   potopoto, potopoto, ROT0, "Sega",                   "Poto Poto (Japan)" )
-	GAME ( 1994, zunkyou,  0,        segac2,   zunkyou,  zunkyou,  ROT0, "Sega",                   "Zunzunkyou No Yabou (Japan)" )
+	public static GameDriver driver_borench	   = new GameDriver("1990"	,"borench"	,"segac2.java"	,rom_borench,null	,machine_driver_segac2	,input_ports_borench	,init_borench	,ROT0	,	"Sega",                   "Borench" )
+	public static GameDriver driver_tfrceac	   = new GameDriver("1990"	,"tfrceac"	,"segac2.java"	,rom_tfrceac,null	,machine_driver_segac2	,input_ports_tfrceac	,init_tfrceac	,ROT0	,	"Sega / Technosoft",      "ThunderForce AC" )
+	public static GameDriver driver_tfrceacj	   = new GameDriver("1990"	,"tfrceacj"	,"segac2.java"	,rom_tfrceacj,driver_tfrceac	,machine_driver_segac2	,input_ports_tfrceac	,init_tfrceac	,ROT0	,	"Sega / Technosoft",      "ThunderForce AC (Japan)" )
+	public static GameDriver driver_tfrceacb	   = new GameDriver("1990"	,"tfrceacb"	,"segac2.java"	,rom_tfrceacb,driver_tfrceac	,machine_driver_segac2	,input_ports_tfrceac	,init_tfrceacb	,ROT0	,	"bootleg",                "ThunderForce AC (bootleg)" )
+	public static GameDriver driver_ribbit	   = new GameDriver("1991"	,"ribbit"	,"segac2.java"	,rom_ribbit,null	,machine_driver_segac2	,input_ports_ribbit	,init_ribbit	,ROT0	,	"Sega",                   "Ribbit!" )
+	public static GameDriver driver_tantr	   = new GameDriver("1992"	,"tantr"	,"segac2.java"	,rom_tantr,null	,machine_driver_segac2	,input_ports_ichidant	,init_tantr	,ROT0	,	"Sega",                   "Tant-R (Puzzle & Action) (Japan)" )
+	public static GameDriver driver_tantrbl	   = new GameDriver("1992"	,"tantrbl"	,"segac2.java"	,rom_tantrbl,driver_tantr	,machine_driver_segac2	,input_ports_ichidant	,init_segac2	,ROT0	,	"bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 1)" )
+	public static GameDriver driver_tantrbl2	   = new GameDriver("1994"	,"tantrbl2"	,"segac2.java"	,rom_tantrbl2,driver_tantr	,machine_driver_segac	,input_ports_ichidant	,init_tantr	,ROT0	,	"bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 2)" )
+	public static GameDriver driver_puyopuyo	   = new GameDriver("1992"	,"puyopuyo"	,"segac2.java"	,rom_puyopuyo,null	,machine_driver_segac2	,input_ports_puyopuyo	,init_puyopuyo	,ROT0	,	"Sega / Compile",         "Puyo Puyo (Japan)" )
+	public static GameDriver driver_puyopuya	   = new GameDriver("1992"	,"puyopuya"	,"segac2.java"	,rom_puyopuya,driver_puyopuyo	,machine_driver_segac2	,input_ports_puyopuyo	,init_puyopuyo	,ROT0	,	"Sega / Compile",         "Puyo Puyo (Japan) (Rev A)" )
+	public static GameDriver driver_puyopuyb	   = new GameDriver("1992"	,"puyopuyb"	,"segac2.java"	,rom_puyopuyb,driver_puyopuyo	,machine_driver_segac2	,input_ports_puyopuyo	,init_puyopuyo	,ROT0	,	"bootleg",                "Puyo Puyo (English) (bootleg)" )
+	public static GameDriver driver_ichidant	   = new GameDriver("1994"	,"ichidant"	,"segac2.java"	,rom_ichidant,null	,machine_driver_segac2	,input_ports_ichidant	,init_ichidant	,ROT0	,	"Sega",                   "Ichidant-R (Puzzle & Action 2) (Japan)" )
+	public static GameDriver driver_ichidnte	   = new GameDriver("1994"	,"ichidnte"	,"segac2.java"	,rom_ichidnte,driver_ichidant	,machine_driver_segac2	,input_ports_ichidant	,init_ichidnte	,ROT0	,	"Sega",                   "Ichidant-R (Puzzle & Action 2) (English)" )
+	public static GameDriver driver_ichidntb	   = new GameDriver("1994"	,"ichidntb"	,"segac2.java"	,rom_ichidntb,driver_ichidant	,machine_driver_segac	,input_ports_ichidant	,init_segac2	,ROT0	,	"bootleg",                "Ichidant-R (Puzzle & Action 2) (Japan) (bootleg)" )
+	public static GameDriver driver_stkclmns	   = new GameDriver("1994"	,"stkclmns"	,"segac2.java"	,rom_stkclmns,null	,machine_driver_segac2	,input_ports_stkclmns	,init_stkclmns	,ROT0	,	"Sega",                   "Stack Columns (Japan)" )
+	public static GameDriver driver_puyopuy2	   = new GameDriver("1994"	,"puyopuy2"	,"segac2.java"	,rom_puyopuy2,null	,machine_driver_segac2	,input_ports_puyopuy2	,init_puyopuy2	,ROT0	,	"Compile (Sega license)", "Puyo Puyo 2 (Japan)" )
+	public static GameDriver driver_potopoto	   = new GameDriver("1994"	,"potopoto"	,"segac2.java"	,rom_potopoto,null	,machine_driver_segac2	,input_ports_potopoto	,init_potopoto	,ROT0	,	"Sega",                   "Poto Poto (Japan)" )
+	public static GameDriver driver_zunkyou	   = new GameDriver("1994"	,"zunkyou"	,"segac2.java"	,rom_zunkyou,null	,machine_driver_segac2	,input_ports_zunkyou	,init_zunkyou	,ROT0	,	"Sega",                   "Zunzunkyou No Yabou (Japan)" )
 	
 	/* Genie Hardware (uses Genesis VDP) also has 'Sun Mixing Co' put into tile ram */
-	GAME ( 2000, puckpkmn, 0,        puckpkmn, puckpkmn, puckpkmn, ROT0, "Genie",                  "Puckman Pockimon" )
+	public static GameDriver driver_puckpkmn	   = new GameDriver("2000"	,"puckpkmn"	,"segac2.java"	,rom_puckpkmn,null	,machine_driver_puckpkmn	,input_ports_puckpkmn	,init_puckpkmn	,ROT0	,	"Genie",                  "Puckman Pockimon" )
 	
 	/* Atlus Print Club 'Games' (C-2 Hardware, might not be possible to support them because they use camera + printer, really just put here for reference) */
-	GAMEX( 1995, pclubj,   0,        segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.1)", GAME_NOT_WORKING )
-	GAMEX( 1995, pclubjv2, pclubj,   segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.2)", GAME_NOT_WORKING )
-	GAMEX( 1996, pclubjv4, pclubj,   segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.4)", GAME_NOT_WORKING )
-	GAMEX( 1996, pclubjv5, pclubj,   segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.5)", GAME_NOT_WORKING )
+	public static GameDriver driver_pclubj	   = new GameDriver("1995"	,"pclubj"	,"segac2.java"	,rom_pclubj,null	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.1)", GAME_NOT_WORKING )
+	public static GameDriver driver_pclubjv2	   = new GameDriver("1995"	,"pclubjv2"	,"segac2.java"	,rom_pclubjv2,driver_pclubj	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.2)", GAME_NOT_WORKING )
+	public static GameDriver driver_pclubjv4	   = new GameDriver("1996"	,"pclubjv4"	,"segac2.java"	,rom_pclubjv4,driver_pclubj	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.4)", GAME_NOT_WORKING )
+	public static GameDriver driver_pclubjv5	   = new GameDriver("1996"	,"pclubjv5"	,"segac2.java"	,rom_pclubjv5,driver_pclubj	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.5)", GAME_NOT_WORKING )
 	
 	
 	/* nn */ /* nn is part of the instruction rom name, should there be a game for each number? */
-	/* -- */ GAMEX( 1989, megatech, 0,        megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Bios", NOT_A_DRIVER )
-	/* 01 */ GAMEX( 1989, mt_beast, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Altered Beast", GAME_NOT_WORKING )
-	/* 02 */ GAMEX( 1989, mt_shar2, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Space Harrier 2.", GAME_NOT_WORKING )
-	/* 03 */ GAMEX( 1989, mt_stbld, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Super Thunder Blade", GAME_NOT_WORKING )
-	/* 04 */ GAMEX( 1989, mt_ggolf, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Great Golf", GAME_NOT_WORKING ) /* sms! also bad */
-	/* 05 */ GAMEX( 1989, mt_gsocr, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Great Soccer", GAME_NOT_WORKING ) /* sms! also bad */
+	/* -- */ public static GameDriver driver_megatech	   = new GameDriver("1989"	,"megatech"	,"segac2.java"	,rom_megatech,null	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Bios", NOT_A_DRIVER )
+	/* 01 */ public static GameDriver driver_mt_beast	   = new GameDriver("1989"	,"mt_beast"	,"segac2.java"	,rom_mt_beast,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Altered Beast", GAME_NOT_WORKING )
+	/* 02 */ public static GameDriver driver_mt_shar2	   = new GameDriver("1989"	,"mt_shar2"	,"segac2.java"	,rom_mt_shar2,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Space Harrier 2.", GAME_NOT_WORKING )
+	/* 03 */ public static GameDriver driver_mt_stbld	   = new GameDriver("1989"	,"mt_stbld"	,"segac2.java"	,rom_mt_stbld,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Super Thunder Blade", GAME_NOT_WORKING )
+	/* 04 */ public static GameDriver driver_mt_ggolf	   = new GameDriver("1989"	,"mt_ggolf"	,"segac2.java"	,rom_mt_ggolf,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Great Golf", GAME_NOT_WORKING ) /* sms! also bad */
+	/* 05 */ public static GameDriver driver_mt_gsocr	   = new GameDriver("1989"	,"mt_gsocr"	,"segac2.java"	,rom_mt_gsocr,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Great Soccer", GAME_NOT_WORKING ) /* sms! also bad */
 	/* 06 */ // unknown
 	/* 07 */ // unknown
-	/* 08 */ GAMEX( 1989, mt_shnbi, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Shinobi", GAME_NOT_WORKING) /* sms */
+	/* 08 */ public static GameDriver driver_mt_shnbi	   = new GameDriver("1989"	,"mt_shnbi"	,"segac2.java"	,rom_mt_shnbi,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Shinobi", GAME_NOT_WORKING) /* sms */
 	/* 09 */ // unknown
-	/* 10 */ GAMEX( 1989, mt_aftrb, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Afterburner", GAME_NOT_WORKING) /* sms */
-	/* 11 */ GAMEX( 1989, mt_tfor2, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Thunder Force 2", GAME_NOT_WORKING )
+	/* 10 */ public static GameDriver driver_mt_aftrb	   = new GameDriver("1989"	,"mt_aftrb"	,"segac2.java"	,rom_mt_aftrb,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Afterburner", GAME_NOT_WORKING) /* sms */
+	/* 11 */ public static GameDriver driver_mt_tfor2	   = new GameDriver("1989"	,"mt_tfor2"	,"segac2.java"	,rom_mt_tfor2,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Thunder Force 2", GAME_NOT_WORKING )
 	/* 12 */ // unknown
-	/* 13 */ GAMEX( 1989, mt_astro, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Astro Warrior", GAME_NOT_WORKING ) /* sms! */
+	/* 13 */ public static GameDriver driver_mt_astro	   = new GameDriver("1989"	,"mt_astro"	,"segac2.java"	,rom_mt_astro,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Astro Warrior", GAME_NOT_WORKING ) /* sms! */
 	/* 14 */ // unknown
 	/* 15 */ // unknown
 	/* 16 */ // unknown
 	/* 17 */ // unknown
 	/* 18 */ // unknown
 	/* 19 */ // unknown
-	/* 20 */ GAMEX( 1989, mt_lastb, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Last Battle.", GAME_NOT_WORKING )
-	/* 21 */ GAMEX( 1989, mt_wcsoc, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: World Cup Soccer", GAME_NOT_WORKING )
-	/* 22 */ GAMEX( 1989, mt_tetri, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Tetris", GAME_NOT_WORKING ) /* bad dump */
-	/* 23 */ GAMEX( 1989, mt_gng,   megatech, megatech, megatech, segac2, ROT0, "Capcom / Sega",         "MegaTech: Ghouls and Ghosts", GAME_NOT_WORKING ) /* bad dump */
+	/* 20 */ public static GameDriver driver_mt_lastb	   = new GameDriver("1989"	,"mt_lastb"	,"segac2.java"	,rom_mt_lastb,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Last Battle.", GAME_NOT_WORKING )
+	/* 21 */ public static GameDriver driver_mt_wcsoc	   = new GameDriver("1989"	,"mt_wcsoc"	,"segac2.java"	,rom_mt_wcsoc,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: World Cup Soccer", GAME_NOT_WORKING )
+	/* 22 */ public static GameDriver driver_mt_tetri	   = new GameDriver("1989"	,"mt_tetri"	,"segac2.java"	,rom_mt_tetri,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Tetris", GAME_NOT_WORKING ) /* bad dump */
+	/* 23 */ public static GameDriver driver_mt_gng	   = new GameDriver("1989"	,"mt_gng"	,"segac2.java"	,rom_mt_gng,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Capcom / Sega",         "MegaTech: Ghouls and Ghosts", GAME_NOT_WORKING ) /* bad dump */
 	/* 24 */ // unknown
-	/* 25 */ GAMEX( 1989, mt_gaxe,  megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Golden Axe", GAME_NOT_WORKING )
+	/* 25 */ public static GameDriver driver_mt_gaxe	   = new GameDriver("1989"	,"mt_gaxe"	,"segac2.java"	,rom_mt_gaxe,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Golden Axe", GAME_NOT_WORKING )
 	/* 26 */ // unknown
-	/* 27 */ GAMEX( 1989, mt_mystd, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Mystic Defender", GAME_NOT_WORKING )
-	/* 28 */ GAMEX( 1989, mt_revsh, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: The Revenge Of Shinobi", GAME_NOT_WORKING )
-	/* 29 */ GAMEX( 1989, mt_parlg, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Parlour Games", GAME_NOT_WORKING ) /* sms! */
+	/* 27 */ public static GameDriver driver_mt_mystd	   = new GameDriver("1989"	,"mt_mystd"	,"segac2.java"	,rom_mt_mystd,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Mystic Defender", GAME_NOT_WORKING )
+	/* 28 */ public static GameDriver driver_mt_revsh	   = new GameDriver("1989"	,"mt_revsh"	,"segac2.java"	,rom_mt_revsh,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: The Revenge Of Shinobi", GAME_NOT_WORKING )
+	/* 29 */ public static GameDriver driver_mt_parlg	   = new GameDriver("1989"	,"mt_parlg"	,"segac2.java"	,rom_mt_parlg,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Parlour Games", GAME_NOT_WORKING ) /* sms! */
 	/* 30 */ // unknown
-	/* 31 */ GAMEX( 1989, mt_tgolf, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Arnold Palmer Tournament Golf", GAME_NOT_WORKING )
+	/* 31 */ public static GameDriver driver_mt_tgolf	   = new GameDriver("1989"	,"mt_tgolf"	,"segac2.java"	,rom_mt_tgolf,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Arnold Palmer Tournament Golf", GAME_NOT_WORKING )
 	/* 32 */ // unknown
 	/* 33 */ // unknown
 	/* 34 */ // unknown
-	/* 35 */ GAMEX( 1989, mt_tlbba, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Tommy Lasorda Baseball", GAME_NOT_WORKING )
+	/* 35 */ public static GameDriver driver_mt_tlbba	   = new GameDriver("1989"	,"mt_tlbba"	,"segac2.java"	,rom_mt_tlbba,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Tommy Lasorda Baseball", GAME_NOT_WORKING )
 	/* 36 */ // unknown
 	/* 37 */ // unknown
-	/* 38 */ GAMEX( 1989, mt_eswat, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: E-Swat", GAME_NOT_WORKING )
-	/* 39 */ GAMEX( 1990, mt_smgp,  megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Super Monaco Grand Prix", GAME_NOT_WORKING )
-	/* 40 */ GAMEX( 1989, mt_mwalk, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Moonwalker", GAME_NOT_WORKING )
+	/* 38 */ public static GameDriver driver_mt_eswat	   = new GameDriver("1989"	,"mt_eswat"	,"segac2.java"	,rom_mt_eswat,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: E-Swat", GAME_NOT_WORKING )
+	/* 39 */ public static GameDriver driver_mt_smgp	   = new GameDriver("1990"	,"mt_smgp"	,"segac2.java"	,rom_mt_smgp,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Super Monaco Grand Prix", GAME_NOT_WORKING )
+	/* 40 */ public static GameDriver driver_mt_mwalk	   = new GameDriver("1989"	,"mt_mwalk"	,"segac2.java"	,rom_mt_mwalk,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Moonwalker", GAME_NOT_WORKING )
 	/* 41 */ // unknown
 	/* 42 */ // unknown
 	/* 43 */ // unknown
@@ -4487,18 +4487,18 @@ public class segac2
 	/* 46 */ // unknown
 	/* 47 */ // unknown
 	/* 48 */ // unknown
-	/* 49 */ GAMEX( 1989, mt_bbros, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Bonanza Bros.", GAME_NOT_WORKING )
+	/* 49 */ public static GameDriver driver_mt_bbros	   = new GameDriver("1989"	,"mt_bbros"	,"segac2.java"	,rom_mt_bbros,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Bonanza Bros.", GAME_NOT_WORKING )
 	/* 50 */ // unknown
 	/* 51 */ // unknown
-	/* 52 */ GAMEX( 1989, mt_sonic, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Sonic the Hedgehog", GAME_NOT_WORKING )
-	/* 53 */ GAMEX( 1989, mt_fshrk, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Fire Shark", GAME_NOT_WORKING )
+	/* 52 */ public static GameDriver driver_mt_sonic	   = new GameDriver("1989"	,"mt_sonic"	,"segac2.java"	,rom_mt_sonic,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Sonic the Hedgehog", GAME_NOT_WORKING )
+	/* 53 */ public static GameDriver driver_mt_fshrk	   = new GameDriver("1989"	,"mt_fshrk"	,"segac2.java"	,rom_mt_fshrk,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Fire Shark", GAME_NOT_WORKING )
 	/* 54 */ // unknown
 	/* 55 */ // unknown
 	/* 56 */ // unknown
-	/* 57 */ GAMEX( 1989, mt_gaxe2, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Golden Axe 2", GAME_NOT_WORKING )
+	/* 57 */ public static GameDriver driver_mt_gaxe2	   = new GameDriver("1989"	,"mt_gaxe2"	,"segac2.java"	,rom_mt_gaxe2,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Golden Axe 2", GAME_NOT_WORKING )
 	/* 58 */ // unknown
 	/* 59 */ // unknown
-	/* 60 */ GAMEX( 1989, mt_kcham, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Kid Chameleon", GAME_NOT_WORKING )
+	/* 60 */ public static GameDriver driver_mt_kcham	   = new GameDriver("1989"	,"mt_kcham"	,"segac2.java"	,rom_mt_kcham,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Kid Chameleon", GAME_NOT_WORKING )
 	/* more? */
 	
 	/* Mega Play - needs kludge to boot, 68k side of things not working yet, communication not complete. */

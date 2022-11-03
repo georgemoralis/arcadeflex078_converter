@@ -474,7 +474,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	GAME( 1982, foodf,  0,     foodf, foodf, 0, ROT0, "Atari", "Food Fight (rev 3)" )
-	GAME( 1982, foodf2, foodf, foodf, foodf, 0, ROT0, "Atari", "Food Fight (rev 2)" )
-	GAME( 1982, foodfc, foodf, foodf, foodf, 0, ROT0, "Atari", "Food Fight (cocktail)" )
+	public static GameDriver driver_foodf	   = new GameDriver("1982"	,"foodf"	,"foodf.java"	,rom_foodf,null	,machine_driver_foodf	,input_ports_foodf	,null	,ROT0	,	"Atari", "Food Fight (rev 3)" )
+	public static GameDriver driver_foodf2	   = new GameDriver("1982"	,"foodf2"	,"foodf.java"	,rom_foodf2,driver_foodf	,machine_driver_foodf	,input_ports_foodf	,null	,ROT0	,	"Atari", "Food Fight (rev 2)" )
+	public static GameDriver driver_foodfc	   = new GameDriver("1982"	,"foodfc"	,"foodf.java"	,rom_foodfc,driver_foodf	,machine_driver_foodf	,input_ports_foodf	,null	,ROT0	,	"Atari", "Food Fight (cocktail)" )
 }

@@ -508,6 +508,6 @@ public class pirates
 	
 	/* GAME */
 	
-	GAME( 1994, pirates, 0, pirates, pirates, pirates, 0, "NIX", "Pirates" )
-	GAME( 1994, genix,   0, pirates, pirates, genix,   0, "NIX", "Genix Family" )
+	public static GameDriver driver_pirates	   = new GameDriver("1994"	,"pirates"	,"pirates.java"	,rom_pirates,null	,machine_driver_pirates	,input_ports_pirates	,init_pirates	,0	,	"NIX", "Pirates" )
+	public static GameDriver driver_genix	   = new GameDriver("1994"	,"genix"	,"pirates.java"	,rom_genix,null	,machine_driver_pirates	,input_ports_pirates	,init_genix	,0	,	"NIX", "Genix Family" )
 }

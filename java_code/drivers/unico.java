@@ -1146,9 +1146,9 @@ public class unico
 	
 	***************************************************************************/
 	
-	GAME( 1997, burglarx, 0,       burglarx, burglarx, 0, ROT0, "Unico", "Burglar X"  )
-	GAME( 1998, zeropnt,  0,       zeropnt,  zeropnt,  0, ROT0, "Unico", "Zero Point (set 1)" )
-	GAME( 1998, zeropnta, zeropnt, zeropnt,  zeropnt,  0, ROT0, "Unico", "Zero Point (set 2)" )
-	GAME( 1999, zeropnt2, 0,       zeropnt2, zeropnt2, 0, ROT0, "Unico", "Zero Point 2" )
+	public static GameDriver driver_burglarx	   = new GameDriver("1997"	,"burglarx"	,"unico.java"	,rom_burglarx,null	,machine_driver_burglarx	,input_ports_burglarx	,null	,ROT0	,	"Unico", "Burglar X"  )
+	public static GameDriver driver_zeropnt	   = new GameDriver("1998"	,"zeropnt"	,"unico.java"	,rom_zeropnt,null	,machine_driver_zeropnt	,input_ports_zeropnt	,null	,ROT0	,	"Unico", "Zero Point (set 1)" )
+	public static GameDriver driver_zeropnta	   = new GameDriver("1998"	,"zeropnta"	,"unico.java"	,rom_zeropnta,driver_zeropnt	,machine_driver_zeropnt	,input_ports_zeropnt	,null	,ROT0	,	"Unico", "Zero Point (set 2)" )
+	public static GameDriver driver_zeropnt2	   = new GameDriver("1999"	,"zeropnt2"	,"unico.java"	,rom_zeropnt2,null	,machine_driver_zeropnt2	,input_ports_zeropnt2	,null	,ROT0	,	"Unico", "Zero Point 2" )
 	
 }

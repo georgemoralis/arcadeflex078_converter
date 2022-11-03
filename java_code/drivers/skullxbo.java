@@ -633,9 +633,9 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	GAME( 1989, skullxbo, 0,        skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 5)" )
-	GAME( 1989, skullxb4, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 4)" )
-	GAME( 1989, skullxb3, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 3)" )
-	GAME( 1989, skullxb2, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 2)" )
-	GAME( 1989, skullxb1, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 1)" )
+	public static GameDriver driver_skullxbo	   = new GameDriver("1989"	,"skullxbo"	,"skullxbo.java"	,rom_skullxbo,null	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 5)" )
+	public static GameDriver driver_skullxb4	   = new GameDriver("1989"	,"skullxb4"	,"skullxbo.java"	,rom_skullxb4,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 4)" )
+	public static GameDriver driver_skullxb3	   = new GameDriver("1989"	,"skullxb3"	,"skullxbo.java"	,rom_skullxb3,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 3)" )
+	public static GameDriver driver_skullxb2	   = new GameDriver("1989"	,"skullxb2"	,"skullxbo.java"	,rom_skullxb2,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 2)" )
+	public static GameDriver driver_skullxb1	   = new GameDriver("1989"	,"skullxb1"	,"skullxbo.java"	,rom_skullxb1,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 1)" )
 }

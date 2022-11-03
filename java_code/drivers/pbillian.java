@@ -446,6 +446,6 @@ public class pbillian
 	public static DriverInitHandlerPtr init_pbillian  = new DriverInitHandlerPtr() { public void handler(){	is_pbillian=1;} };
 	public static DriverInitHandlerPtr init_hotsmash  = new DriverInitHandlerPtr() { public void handler(){	is_pbillian=0;} };
 	
-	GAMEX( 1986, pbillian, 0, pbillian, pbillian, pbillian, ROT0, "Taito", "Prebillian",GAME_IMPERFECT_SOUND)
-	GAMEX( 1987, hotsmash, 0, pbillian, hotsmash, hotsmash, ROT90, "Taito", "Hot Smash",GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_pbillian	   = new GameDriver("1986"	,"pbillian"	,"pbillian.java"	,rom_pbillian,null	,machine_driver_pbillian	,input_ports_pbillian	,init_pbillian	,ROT0	,	"Taito", "Prebillian",GAME_IMPERFECT_SOUND)
+	public static GameDriver driver_hotsmash	   = new GameDriver("1987"	,"hotsmash"	,"pbillian.java"	,rom_hotsmash,null	,machine_driver_pbillian	,input_ports_hotsmash	,init_hotsmash	,ROT90	,	"Taito", "Hot Smash",GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
 }

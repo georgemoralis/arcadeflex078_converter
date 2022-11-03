@@ -764,9 +764,9 @@ public class rmhaihai
 	} };
 	
 	
-	GAME( 1985, rmhaihai, 0,        rmhaihai, rmhaihai, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai (Japan)" )
-	GAME( 1985, rmhaihib, rmhaihai, rmhaihai, rmhaihib, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai [BET] (Japan)" )
-	GAME( 1986, rmhaijin, 0,        rmhaihai, rmhaihai, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai Jinji Idou Hen (Japan)" )
-	GAME( 1986, rmhaisei, 0,        rmhaisei, rmhaihai, rmhaihai, ROT0, "Visco", "Real Mahjong Haihai Seichouhen (Japan)" )
-	GAME( 1987, themj,    0,        themj,    rmhaihai, rmhaihai, ROT0, "Visco", "The Mah-jong (Japan)" )
+	public static GameDriver driver_rmhaihai	   = new GameDriver("1985"	,"rmhaihai"	,"rmhaihai.java"	,rom_rmhaihai,null	,machine_driver_rmhaihai	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Alba",  "Real Mahjong Haihai (Japan)" )
+	public static GameDriver driver_rmhaihib	   = new GameDriver("1985"	,"rmhaihib"	,"rmhaihai.java"	,rom_rmhaihib,driver_rmhaihai	,machine_driver_rmhaihai	,input_ports_rmhaihib	,init_rmhaihai	,ROT0	,	"Alba",  "Real Mahjong Haihai [BET] (Japan)" )
+	public static GameDriver driver_rmhaijin	   = new GameDriver("1986"	,"rmhaijin"	,"rmhaihai.java"	,rom_rmhaijin,null	,machine_driver_rmhaihai	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Alba",  "Real Mahjong Haihai Jinji Idou Hen (Japan)" )
+	public static GameDriver driver_rmhaisei	   = new GameDriver("1986"	,"rmhaisei"	,"rmhaihai.java"	,rom_rmhaisei,null	,machine_driver_rmhaisei	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Visco", "Real Mahjong Haihai Seichouhen (Japan)" )
+	public static GameDriver driver_themj	   = new GameDriver("1987"	,"themj"	,"rmhaihai.java"	,rom_themj,null	,machine_driver_themj	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Visco", "The Mah-jong (Japan)" )
 }

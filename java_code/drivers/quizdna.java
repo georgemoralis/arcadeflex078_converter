@@ -601,7 +601,7 @@ public class quizdna
 	
 	ROM_END(); }}; 
 	
-	GAME( 1991, gakupara, 0, gakupara, gakupara, 0, ROT0, "NMK",  "Quiz Gakuen Paradise (Japan)" )
-	GAME( 1992, quizdna,  0, quizdna,  quizdna,  0, ROT0, "Face", "Quiz DNA no Hanran (Japan)" )
-	GAME( 1992, gekiretu, 0, gekiretu, gekiretu, 0, ROT0, "Face", "Quiz Gekiretsu Scramble (Japan)" )
+	public static GameDriver driver_gakupara	   = new GameDriver("1991"	,"gakupara"	,"quizdna.java"	,rom_gakupara,null	,machine_driver_gakupara	,input_ports_gakupara	,null	,ROT0	,	"NMK",  "Quiz Gakuen Paradise (Japan)" )
+	public static GameDriver driver_quizdna	   = new GameDriver("1992"	,"quizdna"	,"quizdna.java"	,rom_quizdna,null	,machine_driver_quizdna	,input_ports_quizdna	,null	,ROT0	,	"Face", "Quiz DNA no Hanran (Japan)" )
+	public static GameDriver driver_gekiretu	   = new GameDriver("1992"	,"gekiretu"	,"quizdna.java"	,rom_gekiretu,null	,machine_driver_gekiretu	,input_ports_gekiretu	,null	,ROT0	,	"Face", "Quiz Gekiretsu Scramble (Japan)" )
 }

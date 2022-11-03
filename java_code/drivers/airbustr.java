@@ -948,6 +948,6 @@ public class airbustr
 	
 	
 	
-	GAME( 1990, airbustr, 0,        airbustr, airbustr, airbustr, ROT0, "Kaneko (Namco license)", "Air Buster" )	// 891220
-	GAME( 1990, airbustj, airbustr, airbustr, airbustj, airbustj, ROT0, "Kaneko (Namco license)", "Air Buster (Japan)" )	// 891229
+	public static GameDriver driver_airbustr	   = new GameDriver("1990"	,"airbustr"	,"airbustr.java"	,rom_airbustr,null	,machine_driver_airbustr	,input_ports_airbustr	,init_airbustr	,ROT0	,	"Kaneko (Namco license)", "Air Buster" )	// 891220
+	public static GameDriver driver_airbustj	   = new GameDriver("1990"	,"airbustj"	,"airbustr.java"	,rom_airbustj,driver_airbustr	,machine_driver_airbustr	,input_ports_airbustj	,init_airbustj	,ROT0	,	"Kaneko (Namco license)", "Air Buster (Japan)" )	// 891229
 }

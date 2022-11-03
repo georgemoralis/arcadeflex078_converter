@@ -552,6 +552,6 @@ public class redalert
 		ROM_LOAD( "demoneye.1a2", 0x0200, 0x0200, CRC(eaf5a66e) SHA1(d8ebe05ba5d75fbf6ad45f710e5bd27b6afad44b) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1981, redalert, 0, redalert, redalert, 0, ROT270, "Irem + GDI",	"Red Alert",  GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1981, demoneye, 0, demoneye, demoneye, 0, ROT270, "Irem",		"Demoneye-X", GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_redalert	   = new GameDriver("1981"	,"redalert"	,"redalert.java"	,rom_redalert,null	,machine_driver_redalert	,input_ports_redalert	,null	,ROT270	,	"Irem + GDI",	"Red Alert",  GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_demoneye	   = new GameDriver("1981"	,"demoneye"	,"redalert.java"	,rom_demoneye,null	,machine_driver_demoneye	,input_ports_demoneye	,null	,ROT270	,	"Irem",		"Demoneye-X", GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

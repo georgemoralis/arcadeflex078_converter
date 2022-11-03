@@ -303,6 +303,6 @@ public class wrally
 	
 	
 	
-	GAMEX( 1993, wrally,  0, 	  wrally, wrally, wrally, ROT0, "Gaelco", "World Rally (set 1)", GAME_NOT_WORKING )
-	GAMEX( 1993, wrallya, wrally, wrally, wrally, wrally, ROT0, "Gaelco", "World Rally (set 2)", GAME_NOT_WORKING )
+	public static GameDriver driver_wrally	   = new GameDriver("1993"	,"wrally"	,"wrally.java"	,rom_wrally,null	,machine_driver_wrally	,input_ports_wrally	,init_wrally	,ROT0	,	"Gaelco", "World Rally (set 1)", GAME_NOT_WORKING )
+	public static GameDriver driver_wrallya	   = new GameDriver("1993"	,"wrallya"	,"wrally.java"	,rom_wrallya,driver_wrally	,machine_driver_wrally	,input_ports_wrally	,init_wrally	,ROT0	,	"Gaelco", "World Rally (set 2)", GAME_NOT_WORKING )
 }

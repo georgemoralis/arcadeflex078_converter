@@ -1143,12 +1143,12 @@ public class galpanic
 		ROM_LOAD( "galhstl5.u5", 0x00000, 0x80000, CRC(44a18f15) SHA1(1217cf7fbbb442358b15016099efeface5dcbd22) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1990, galpanic, 0,        galpanic, galpanic, 0, ROT90, "Kaneko", "Gals Panic (set 1)", GAME_NO_COCKTAIL )
-	GAMEX( 1990, galpanib, galpanic, galpanib, galpanib, 0, ROT90, "Kaneko", "Gals Panic (set 2)", GAME_NO_COCKTAIL )
-	GAMEX( 1994, fantasia, 0,        comad,    fantasia, 0, ROT90, "Comad & New Japan System", "Fantasia", GAME_NO_COCKTAIL )
-	GAMEX( 1995, newfant,  0,        comad,    fantasia, 0, ROT90, "Comad & New Japan System", "New Fantasia", GAME_NO_COCKTAIL )
-	GAMEX( 1995, fantsy95, 0,        comad,    fantasia, 0, ROT90, "Hi-max Technology Inc.", "Fantasy '95", GAME_NO_COCKTAIL )
-	GAMEX( 1996, missw96,  0,        comad,    missw96,  0, ROT0,  "Comad", "Miss World '96 Nude", GAME_NO_COCKTAIL )
-	GAMEX( 1997, fantsia2, 0,        fantsia2, missw96,  0, ROT0,  "Comad", "Fantasia II", GAME_NO_COCKTAIL )
-	GAME(  1997, galhustl, 0,        galhustl, galhustl, 0, ROT0,  "ACE International", "Gals Hustler" )
+	public static GameDriver driver_galpanic	   = new GameDriver("1990"	,"galpanic"	,"galpanic.java"	,rom_galpanic,null	,machine_driver_galpanic	,input_ports_galpanic	,null	,ROT90	,	"Kaneko", "Gals Panic (set 1)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_galpanib	   = new GameDriver("1990"	,"galpanib"	,"galpanic.java"	,rom_galpanib,driver_galpanic	,machine_driver_galpanib	,input_ports_galpanib	,null	,ROT90	,	"Kaneko", "Gals Panic (set 2)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_fantasia	   = new GameDriver("1994"	,"fantasia"	,"galpanic.java"	,rom_fantasia,null	,machine_driver_comad	,input_ports_fantasia	,null	,ROT90	,	"Comad & New Japan System", "Fantasia", GAME_NO_COCKTAIL )
+	public static GameDriver driver_newfant	   = new GameDriver("1995"	,"newfant"	,"galpanic.java"	,rom_newfant,null	,machine_driver_comad	,input_ports_fantasia	,null	,ROT90	,	"Comad & New Japan System", "New Fantasia", GAME_NO_COCKTAIL )
+	public static GameDriver driver_fantsy95	   = new GameDriver("1995"	,"fantsy95"	,"galpanic.java"	,rom_fantsy95,null	,machine_driver_comad	,input_ports_fantasia	,null	,ROT90	,	"Hi-max Technology Inc.", "Fantasy '95", GAME_NO_COCKTAIL )
+	public static GameDriver driver_missw96	   = new GameDriver("1996"	,"missw96"	,"galpanic.java"	,rom_missw96,null	,machine_driver_comad	,input_ports_missw96	,null	,ROT0	,	"Comad", "Miss World '96 Nude", GAME_NO_COCKTAIL )
+	public static GameDriver driver_fantsia2	   = new GameDriver("1997"	,"fantsia2"	,"galpanic.java"	,rom_fantsia2,null	,machine_driver_fantsia2	,input_ports_missw96	,null	,ROT0	,	"Comad", "Fantasia II", GAME_NO_COCKTAIL )
+	public static GameDriver driver_galhustl	   = new GameDriver("1997"	,"galhustl"	,"galpanic.java"	,rom_galhustl,null	,machine_driver_galhustl	,input_ports_galhustl	,null	,ROT0	,	"ACE International", "Gals Hustler" )
 }

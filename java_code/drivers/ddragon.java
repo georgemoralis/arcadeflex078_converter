@@ -1541,19 +1541,19 @@ public class ddragon
 	
 	} };
 	
-	GAME( 1987, ddragon,  0,        ddragon,  ddragon,  0, ROT0, "Technos", "Double Dragon (Japan)" )
-	GAME( 1987, ddragonw, ddragon,  ddragon,  ddragon,  0, ROT0, "[Technos] (Taito license)", "Double Dragon (World)" )
-	GAME( 1987, ddragonu, ddragon,  ddragon,  ddragon,  0, ROT0, "[Technos] (Taito America license)", "Double Dragon (US)" )
-	GAME( 1987, ddragonb, ddragon,  ddragonb, ddragon,  0, ROT0, "bootleg", "Double Dragon (bootleg)" )
-	GAME( 1988, ddragon2, 0,        ddragon2, ddragon2, 0, ROT0, "Technos", "Double Dragon II - The Revenge (World)" )
-	GAME( 1988, ddragn2u, ddragon2, ddragon2, ddragon2, 0, ROT0, "Technos", "Double Dragon II - The Revenge (US)" )
+	public static GameDriver driver_ddragon	   = new GameDriver("1987"	,"ddragon"	,"ddragon.java"	,rom_ddragon,null	,machine_driver_ddragon	,input_ports_ddragon	,null	,ROT0	,	"Technos", "Double Dragon (Japan)" )
+	public static GameDriver driver_ddragonw	   = new GameDriver("1987"	,"ddragonw"	,"ddragon.java"	,rom_ddragonw,driver_ddragon	,machine_driver_ddragon	,input_ports_ddragon	,null	,ROT0	,	"[Technos] (Taito license)", "Double Dragon (World)" )
+	public static GameDriver driver_ddragonu	   = new GameDriver("1987"	,"ddragonu"	,"ddragon.java"	,rom_ddragonu,driver_ddragon	,machine_driver_ddragon	,input_ports_ddragon	,null	,ROT0	,	"[Technos] (Taito America license)", "Double Dragon (US)" )
+	public static GameDriver driver_ddragonb	   = new GameDriver("1987"	,"ddragonb"	,"ddragon.java"	,rom_ddragonb,driver_ddragon	,machine_driver_ddragonb	,input_ports_ddragon	,null	,ROT0	,	"bootleg", "Double Dragon (bootleg)" )
+	public static GameDriver driver_ddragon2	   = new GameDriver("1988"	,"ddragon2"	,"ddragon.java"	,rom_ddragon2,null	,machine_driver_ddragon2	,input_ports_ddragon2	,null	,ROT0	,	"Technos", "Double Dragon II - The Revenge (World)" )
+	public static GameDriver driver_ddragn2u	   = new GameDriver("1988"	,"ddragn2u"	,"ddragon.java"	,rom_ddragn2u,driver_ddragon2	,machine_driver_ddragon2	,input_ports_ddragon2	,null	,ROT0	,	"Technos", "Double Dragon II - The Revenge (US)" )
 	
 	/* these were conversions of double dragon */
-	GAME( 1992, ddungeon,  0,        darktowr,  ddungeon,  0, ROT0, "East Coast Coin Company (Melbourne)", "Dangerous Dungeons" )
-	GAME( 1992, darktowr,  0,        darktowr,  darktowr,  0, ROT0, "Game Room", "Dark Tower" )
-	GAMEX( 19??, tstrike,   0,        darktowr,  darktowr,  0, ROT0, "Game Room", "Thunder Strike", GAME_NOT_WORKING )
+	public static GameDriver driver_ddungeon	   = new GameDriver("1992"	,"ddungeon"	,"ddragon.java"	,rom_ddungeon,null	,machine_driver_darktowr	,input_ports_ddungeon	,null	,ROT0	,	"East Coast Coin Company (Melbourne)", "Dangerous Dungeons" )
+	public static GameDriver driver_darktowr	   = new GameDriver("1992"	,"darktowr"	,"ddragon.java"	,rom_darktowr,null	,machine_driver_darktowr	,input_ports_darktowr	,null	,ROT0	,	"Game Room", "Dark Tower" )
+	public static GameDriver driver_tstrike	   = new GameDriver("19??"	,"tstrike"	,"ddragon.java"	,rom_tstrike,null	,machine_driver_darktowr	,input_ports_darktowr	,null	,ROT0	,	"Game Room", "Thunder Strike", GAME_NOT_WORKING )
 	
 	/* these run on their own board, but are basically the same game. Toffy even has 'dangerous dungeons' text in it */
-	GAME( 1993, toffy,  0, toffy, toffy, toffy, ROT0, "Midas",                 "Toffy" )
-	GAME( 1994, stoffy, 0, toffy, toffy, toffy, ROT0, "Midas (Unico license)", "Super Toffy" )
+	public static GameDriver driver_toffy	   = new GameDriver("1993"	,"toffy"	,"ddragon.java"	,rom_toffy,null	,machine_driver_toffy	,input_ports_toffy	,init_toffy	,ROT0	,	"Midas",                 "Toffy" )
+	public static GameDriver driver_stoffy	   = new GameDriver("1994"	,"stoffy"	,"ddragon.java"	,rom_stoffy,null	,machine_driver_toffy	,input_ports_toffy	,init_toffy	,ROT0	,	"Midas (Unico license)", "Super Toffy" )
 }

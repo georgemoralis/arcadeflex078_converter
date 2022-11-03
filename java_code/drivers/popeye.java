@@ -709,9 +709,9 @@ public class popeye
 	} };
 	
 	
-	GAME( 1981, skyskipr, 0,      skyskipr, skyskipr, skyskipr, ROT0, "Nintendo", "Sky Skipper" )
-	GAME( 1982, popeye,   0,      popeye,   popeye,   popeye,   ROT0, "Nintendo", "Popeye (revision D)" )
-	GAME( 1982, popeyeu,  popeye, popeye,   popeye,   popeye,   ROT0, "Nintendo", "Popeye (revision D not protected)" )
-	GAME( 1982, popeyef,  popeye, popeye,   popeyef,  popeye,   ROT0, "Nintendo", "Popeye (revision F)" )
-	GAME( 1982, popeyebl, popeye, popeyebl, popeye,   0,        ROT0, "bootleg",  "Popeye (bootleg)" )
+	public static GameDriver driver_skyskipr	   = new GameDriver("1981"	,"skyskipr"	,"popeye.java"	,rom_skyskipr,null	,machine_driver_skyskipr	,input_ports_skyskipr	,init_skyskipr	,ROT0	,	"Nintendo", "Sky Skipper" )
+	public static GameDriver driver_popeye	   = new GameDriver("1982"	,"popeye"	,"popeye.java"	,rom_popeye,null	,machine_driver_popeye	,input_ports_popeye	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision D)" )
+	public static GameDriver driver_popeyeu	   = new GameDriver("1982"	,"popeyeu"	,"popeye.java"	,rom_popeyeu,driver_popeye	,machine_driver_popeye	,input_ports_popeye	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision D not protected)" )
+	public static GameDriver driver_popeyef	   = new GameDriver("1982"	,"popeyef"	,"popeye.java"	,rom_popeyef,driver_popeye	,machine_driver_popeye	,input_ports_popeyef	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision F)" )
+	public static GameDriver driver_popeyebl	   = new GameDriver("1982"	,"popeyebl"	,"popeye.java"	,rom_popeyebl,driver_popeye	,machine_driver_popeyebl	,input_ports_popeye	,null	,ROT0	,	"bootleg",  "Popeye (bootleg)" )
 }

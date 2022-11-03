@@ -280,6 +280,6 @@ public class gotya
 		ROM_LOAD( "gb-07.bin",	0x3000, 0x1000, CRC(92a9f8bf) SHA1(9231cd86f24f1e6a585c3a919add50c1f8e42a4c) )
 	ROM_END(); }}; 
 	
-	GAME( 1981, thehand, 0,       gotya, gotya, 0, ROT270, "T.I.C."     , "The Hand" )
-	GAME( 1981, gotya,   thehand, gotya, gotya, 0, ROT270, "Game-A-Tron", "Got-Ya (12/24/1981, prototype?)" )
+	public static GameDriver driver_thehand	   = new GameDriver("1981"	,"thehand"	,"gotya.java"	,rom_thehand,null	,machine_driver_gotya	,input_ports_gotya	,null	,ROT270	,	"T.I.C."     , "The Hand" )
+	public static GameDriver driver_gotya	   = new GameDriver("1981"	,"gotya"	,"gotya.java"	,rom_gotya,driver_thehand	,machine_driver_gotya	,input_ports_gotya	,null	,ROT270	,	"Game-A-Tron", "Got-Ya (12/24/1981, prototype?)" )
 }

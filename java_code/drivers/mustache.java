@@ -326,5 +326,5 @@ public class mustache
 	} };
 	
 	
-	GAMEX( 1987, mustache, 0, mustache, mustache, mustache, ROT90, "[Seibu Kaihatsu] (March license)", "Mustache Boy", GAME_NO_SOUND )
+	public static GameDriver driver_mustache	   = new GameDriver("1987"	,"mustache"	,"mustache.java"	,rom_mustache,null	,machine_driver_mustache	,input_ports_mustache	,init_mustache	,ROT90	,	"[Seibu Kaihatsu] (March license)", "Mustache Boy", GAME_NO_SOUND )
 }

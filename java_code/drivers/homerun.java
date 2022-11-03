@@ -212,6 +212,6 @@ public class homerun
 		
 	ROM_END(); }}; 
 	
-	GAMEX( 1988, homerun, 0, homerun, homerun, 0, ROT0, "Jaleco", "Moero Pro Yakyuu Homerun",GAME_IMPERFECT_GRAPHICS)
+	public static GameDriver driver_homerun	   = new GameDriver("1988"	,"homerun"	,"homerun.java"	,rom_homerun,null	,machine_driver_homerun	,input_ports_homerun	,null	,ROT0	,	"Jaleco", "Moero Pro Yakyuu Homerun",GAME_IMPERFECT_GRAPHICS)
 	
 }

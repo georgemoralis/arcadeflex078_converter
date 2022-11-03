@@ -353,5 +353,5 @@ public class pass
 	ROM_END(); }}; 
 	
 	
-	GAME( 1992, pass, 0, pass, pass, 0, ROT0, "Oksan", "Pass")
+	public static GameDriver driver_pass	   = new GameDriver("1992"	,"pass"	,"pass.java"	,rom_pass,null	,machine_driver_pass	,input_ports_pass	,null	,ROT0	,	"Oksan", "Pass")
 }

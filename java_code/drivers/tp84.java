@@ -568,6 +568,6 @@ public class tp84
 	
 	
 	
-	GAME( 1984, tp84,  0,    tp84, tp84, 0, ROT90, "Konami", "Time Pilot '84 (set 1)" )
-	GAME( 1984, tp84a, tp84, tp84, tp84a,0, ROT90, "Konami", "Time Pilot '84 (set 2)" )
+	public static GameDriver driver_tp84	   = new GameDriver("1984"	,"tp84"	,"tp84.java"	,rom_tp84,null	,machine_driver_tp84	,input_ports_tp84	,null	,ROT90	,	"Konami", "Time Pilot '84 (set 1)" )
+	public static GameDriver driver_tp84a	   = new GameDriver("1984"	,"tp84a"	,"tp84.java"	,rom_tp84a,driver_tp84	,machine_driver_tp84	,input_ports_tp84a	,null	,ROT90	,	"Konami", "Time Pilot '84 (set 2)" )
 }

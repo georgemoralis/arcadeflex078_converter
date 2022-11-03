@@ -1054,14 +1054,14 @@ public class namcos21
 	
 	
 	/*    YEAR, NAME,     PARENT,   MACHINE,          INPUT,        INIT,     MONITOR,    COMPANY, FULLNAME,	    	FLAGS */
-	GAMEX( 1992, aircombj, 0,	    poly_c140_typeB,  aircombt, 	aircombt, ROT0,		  "Namco", "Air Combat (Japan)",	GAME_NOT_WORKING ) /* mostly working */
-	GAMEX( 1992, aircombu, aircombj,poly_c140_typeB,  aircombt, 	aircombt, ROT0, 	  "Namco", "Air Combat (US)",	GAME_NOT_WORKING ) /* mostly working */
-	GAMEX( 1993, cybsled,  0,       poly_c140_typeA,  default,      cybsled,  ROT0,       "Namco", "Cyber Sled",		GAME_NOT_WORKING ) /* mostly working */
+	public static GameDriver driver_aircombj	   = new GameDriver("1992"	,"aircombj"	,"namcos21.java"	,rom_aircombj,null	,machine_driver_poly_c140_typeB	,input_ports_aircombt	,init_aircombt	,ROT0	,	"Namco", "Air Combat (Japan)",	GAME_NOT_WORKING ) /* mostly working */
+	public static GameDriver driver_aircombu	   = new GameDriver("1992"	,"aircombu"	,"namcos21.java"	,rom_aircombu,driver_aircombj	,machine_driver_poly_c140_typeB	,input_ports_aircombt	,init_aircombt	,ROT0	,	"Namco", "Air Combat (US)",	GAME_NOT_WORKING ) /* mostly working */
+	public static GameDriver driver_cybsled	   = new GameDriver("1993"	,"cybsled"	,"namcos21.java"	,rom_cybsled,null	,machine_driver_poly_c140_typeA	,input_ports_default	,init_cybsled	,ROT0	,	"Namco", "Cyber Sled",		GAME_NOT_WORKING ) /* mostly working */
 	/* 199?, Driver's Eyes */
 	/* 1992, ShimDrive */
-	GAMEX( 1991, solvalou, 0, 	    poly_c140_typeA,  default,	    solvalou, ROT0, 	  "Namco", "Solvalou (Japan)",	GAME_IMPERFECT_GRAPHICS ) /* working and playable */
-	GAMEX( 1991, starblad, 0, 	    poly_c140_typeA,  default,  	starblad, ROT0, 	  "Namco", "Starblade",			GAME_IMPERFECT_GRAPHICS ) /* working and playable */
+	public static GameDriver driver_solvalou	   = new GameDriver("1991"	,"solvalou"	,"namcos21.java"	,rom_solvalou,null	,machine_driver_poly_c140_typeA	,input_ports_default	,init_solvalou	,ROT0	,	"Namco", "Solvalou (Japan)",	GAME_IMPERFECT_GRAPHICS ) /* working and playable */
+	public static GameDriver driver_starblad	   = new GameDriver("1991"	,"starblad"	,"namcos21.java"	,rom_starblad,null	,machine_driver_poly_c140_typeA	,input_ports_default	,init_starblad	,ROT0	,	"Namco", "Starblade",			GAME_IMPERFECT_GRAPHICS ) /* working and playable */
 	/* 1988, Winning Run */
 	/* 1989, Winning Run Suzuka Grand Prix */
-	GAMEX( 1991, winrun91, 0, 	    poly_c140_typeB,  default,	    winrun,	  ROT0, 	  "Namco", "Winning Run 91", 	GAME_NOT_WORKING ) /* not working */
+	public static GameDriver driver_winrun91	   = new GameDriver("1991"	,"winrun91"	,"namcos21.java"	,rom_winrun91,null	,machine_driver_poly_c140_typeB	,input_ports_default	,init_winrun	,ROT0	,	"Namco", "Winning Run 91", 	GAME_NOT_WORKING ) /* not working */
 }

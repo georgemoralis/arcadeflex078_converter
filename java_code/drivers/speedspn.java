@@ -372,5 +372,5 @@ public class speedspn
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	GAMEX( 1994, speedspn, 0, speedspn, speedspn, 0, ROT180, "TCH", "Speed Spin", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_speedspn	   = new GameDriver("1994"	,"speedspn"	,"speedspn.java"	,rom_speedspn,null	,machine_driver_speedspn	,input_ports_speedspn	,null	,ROT180	,	"TCH", "Speed Spin", GAME_IMPERFECT_GRAPHICS )
 }

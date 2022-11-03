@@ -780,6 +780,6 @@ public class taitoair
 	
 	
 	/*   ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR  COMPANY  FULLNAME */
-	GAMEX( 1988, topland,  0,        airsys,   topland,  taitoair, ROT0,    "Taito Corporation Japan", "Top Landing (World)", GAME_NOT_WORKING )
-	GAMEX( 1990, ainferno, 0,        airsys,   ainferno, taitoair, ROT0,    "Taito America Corporation", "Air Inferno (US)", GAME_NOT_WORKING )
+	public static GameDriver driver_topland	   = new GameDriver("1988"	,"topland"	,"taitoair.java"	,rom_topland,null	,machine_driver_airsys	,input_ports_topland	,init_taitoair	,ROT0	,	"Taito Corporation Japan", "Top Landing (World)", GAME_NOT_WORKING )
+	public static GameDriver driver_ainferno	   = new GameDriver("1990"	,"ainferno"	,"taitoair.java"	,rom_ainferno,null	,machine_driver_airsys	,input_ports_ainferno	,init_taitoair	,ROT0	,	"Taito America Corporation", "Air Inferno (US)", GAME_NOT_WORKING )
 }

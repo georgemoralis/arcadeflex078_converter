@@ -272,5 +272,5 @@ public class toratora
 	
 	
 	
-	GAMEX( 1980, toratora, 0, toratora, toratora, 0, ROT90, "GamePlan", "Tora Tora", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_toratora	   = new GameDriver("1980"	,"toratora"	,"toratora.java"	,rom_toratora,null	,machine_driver_toratora	,input_ports_toratora	,null	,ROT90	,	"GamePlan", "Tora Tora", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

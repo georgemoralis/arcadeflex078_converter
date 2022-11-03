@@ -409,9 +409,9 @@ public class xybots
 	 *
 	 *************************************/
 	
-	GAME( 1987, xybots,  0,      xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (rev 2)" )
-	GAME( 1987, xybotsg, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (German, rev 3)" )
-	GAME( 1987, xybotsf, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (French, rev 3)" )
-	GAME( 1987, xybots1, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (rev 1)" )
-	GAME( 1987, xybots0, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (rev 0)" )
+	public static GameDriver driver_xybots	   = new GameDriver("1987"	,"xybots"	,"xybots.java"	,rom_xybots,null	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (rev 2)" )
+	public static GameDriver driver_xybotsg	   = new GameDriver("1987"	,"xybotsg"	,"xybots.java"	,rom_xybotsg,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (German, rev 3)" )
+	public static GameDriver driver_xybotsf	   = new GameDriver("1987"	,"xybotsf"	,"xybots.java"	,rom_xybotsf,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (French, rev 3)" )
+	public static GameDriver driver_xybots1	   = new GameDriver("1987"	,"xybots1"	,"xybots.java"	,rom_xybots1,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (rev 1)" )
+	public static GameDriver driver_xybots0	   = new GameDriver("1987"	,"xybots0"	,"xybots.java"	,rom_xybots0,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (rev 0)" )
 }

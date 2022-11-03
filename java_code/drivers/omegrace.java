@@ -631,6 +631,6 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	GAMEX( 1981, omegrace, 0,        omegrace, omegrace, omegrace, ROT0, "Midway",         "Omega Race", GAME_NO_COCKTAIL )
-	GAMEX( 1981, deltrace, omegrace, omegrace, omegrace, omegrace, ROT0, "Allied Leisure", "Delta Race", GAME_NO_COCKTAIL )
+	public static GameDriver driver_omegrace	   = new GameDriver("1981"	,"omegrace"	,"omegrace.java"	,rom_omegrace,null	,machine_driver_omegrace	,input_ports_omegrace	,init_omegrace	,ROT0	,	"Midway",         "Omega Race", GAME_NO_COCKTAIL )
+	public static GameDriver driver_deltrace	   = new GameDriver("1981"	,"deltrace"	,"omegrace.java"	,rom_deltrace,driver_omegrace	,machine_driver_omegrace	,input_ports_omegrace	,init_omegrace	,ROT0	,	"Allied Leisure", "Delta Race", GAME_NO_COCKTAIL )
 }

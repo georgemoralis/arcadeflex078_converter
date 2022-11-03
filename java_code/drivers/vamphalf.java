@@ -366,9 +366,9 @@ public class vamphalf
 	} };
 	
 	/*           rom       parent    machine   inp       init */
-	GAMEX( 19??, vamphalf, 0,        vamphalf, vamphalf, vamphalf, ROT0, "Danbi", "Vamp 1/2", GAME_NO_SOUND | GAME_NOT_WORKING )
-	GAMEX( 19??, hidnctch, 0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Hidden Catch", GAME_NO_SOUND | GAME_NOT_WORKING )
-	GAMEX( 19??, landbrk,  0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Land Breaker", GAME_NO_SOUND | GAME_NOT_WORKING )
-	GAMEX( 19??, racoon,   0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Racoon World", GAME_NO_SOUND | GAME_NOT_WORKING )
-	GAMEX( 19??, xfiles,   0,        xfiles,   vamphalf, vamphalf, ROT0, "dfPIX Entertainment Inc.", "X-Files", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_vamphalf	   = new GameDriver("19??"	,"vamphalf"	,"vamphalf.java"	,rom_vamphalf,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Danbi", "Vamp 1/2", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_hidnctch	   = new GameDriver("19??"	,"hidnctch"	,"vamphalf.java"	,rom_hidnctch,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Eolith", "Hidden Catch", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_landbrk	   = new GameDriver("19??"	,"landbrk"	,"vamphalf.java"	,rom_landbrk,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Eolith", "Land Breaker", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_racoon	   = new GameDriver("19??"	,"racoon"	,"vamphalf.java"	,rom_racoon,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Eolith", "Racoon World", GAME_NO_SOUND | GAME_NOT_WORKING )
+	public static GameDriver driver_xfiles	   = new GameDriver("19??"	,"xfiles"	,"vamphalf.java"	,rom_xfiles,null	,machine_driver_xfiles	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"dfPIX Entertainment Inc.", "X-Files", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

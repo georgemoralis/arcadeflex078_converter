@@ -388,10 +388,10 @@ public class usgames
 	
 	
 	
-	GAME( 1987, usg32,  0,     usg,    usg, 0, ROT0, "U.S. Games", "Super Duper Casino (California V3.2)" )
-	GAME( 1988, usg83,  0,     usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.3" )
-	GAME( 1988, usg83x, usg83, usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.3X" )
-	GAME( 1988, usg82,  usg83, usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.2" )	// "Feb.08,1988"
-	GAME( 1991, usg185, 0,     usg185, usg, 0, ROT0, "U.S. Games", "Games V18.7C" )
-	GAME( 1992, usg252, 0,     usg185, usg, 0, ROT0, "U.S. Games", "Games V25.4X" )
+	public static GameDriver driver_usg32	   = new GameDriver("1987"	,"usg32"	,"usgames.java"	,rom_usg32,null	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Duper Casino (California V3.2)" )
+	public static GameDriver driver_usg83	   = new GameDriver("1988"	,"usg83"	,"usgames.java"	,rom_usg83,null	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Ten V8.3" )
+	public static GameDriver driver_usg83x	   = new GameDriver("1988"	,"usg83x"	,"usgames.java"	,rom_usg83x,driver_usg83	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Ten V8.3X" )
+	public static GameDriver driver_usg82	   = new GameDriver("1988"	,"usg82"	,"usgames.java"	,rom_usg82,driver_usg83	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Ten V8.2" )	// "Feb.08,1988"
+	public static GameDriver driver_usg185	   = new GameDriver("1991"	,"usg185"	,"usgames.java"	,rom_usg185,null	,machine_driver_usg185	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Games V18.7C" )
+	public static GameDriver driver_usg252	   = new GameDriver("1992"	,"usg252"	,"usgames.java"	,rom_usg252,null	,machine_driver_usg185	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Games V25.4X" )
 }

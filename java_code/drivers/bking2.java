@@ -695,7 +695,7 @@ public class bking2
 	
 	ROM_END(); }}; 
 	
-	GAME( 1982, bking,  0, bking2, bking,  0, ROT270, "Taito Corporation", "Birdie King" )
-	GAME( 1983, bking2, 0, bking2, bking2, 0, ROT90,  "Taito Corporation", "Birdie King 2" )
-	GAME( 1984, bking3, 0, bking2, bking2, 0, ROT90,  "Taito Corporation", "Birdie King 3" )
+	public static GameDriver driver_bking	   = new GameDriver("1982"	,"bking"	,"bking2.java"	,rom_bking,null	,machine_driver_bking2	,input_ports_bking	,null	,ROT270	,	"Taito Corporation", "Birdie King" )
+	public static GameDriver driver_bking2	   = new GameDriver("1983"	,"bking2"	,"bking2.java"	,rom_bking2,null	,machine_driver_bking2	,input_ports_bking2	,null	,ROT90	,	"Taito Corporation", "Birdie King 2" )
+	public static GameDriver driver_bking3	   = new GameDriver("1984"	,"bking3"	,"bking2.java"	,rom_bking3,null	,machine_driver_bking2	,input_ports_bking2	,null	,ROT90	,	"Taito Corporation", "Birdie King 3" )
 }

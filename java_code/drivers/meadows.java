@@ -847,7 +847,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	GAME( 1978, deadeye,  0, meadows,  meadows,  deadeye,  ROT0, "Meadows", "Dead Eye" )
-	GAME( 1978, gypsyjug, 0, meadows,  meadows,  gypsyjug, ROT0, "Meadows", "Gypsy Juggler" )
-	GAMEX(1978, minferno, 0, minferno, minferno, minferno, ROT0, "Meadows", "Inferno (S2650)", GAME_NO_SOUND )
+	public static GameDriver driver_deadeye	   = new GameDriver("1978"	,"deadeye"	,"meadows.java"	,rom_deadeye,null	,machine_driver_meadows	,input_ports_meadows	,init_deadeye	,ROT0	,	"Meadows", "Dead Eye" )
+	public static GameDriver driver_gypsyjug	   = new GameDriver("1978"	,"gypsyjug"	,"meadows.java"	,rom_gypsyjug,null	,machine_driver_meadows	,input_ports_meadows	,init_gypsyjug	,ROT0	,	"Meadows", "Gypsy Juggler" )
+	public static GameDriver driver_minferno	   = new GameDriver("1978"	,"minferno"	,"meadows.java"	,rom_minferno,null	,machine_driver_minferno	,input_ports_minferno	,init_minferno	,ROT0	,	"Meadows", "Inferno (S2650)", GAME_NO_SOUND )
 }

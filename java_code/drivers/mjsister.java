@@ -367,5 +367,5 @@ public class mjsister
 		ROM_LOAD( "ms08.bpr", 0x0300,  0x0100, CRC(da2b3b38) SHA1(4de99c17b227653bc1b904f1309f447f5a0ab516) ) // ?
 	ROM_END(); }}; 
 	
-	GAME( 1986, mjsister, 0, mjsister, mjsister, 0, ROT0, "Toaplan", "Mahjong Sisters (Japan)" )
+	public static GameDriver driver_mjsister	   = new GameDriver("1986"	,"mjsister"	,"mjsister.java"	,rom_mjsister,null	,machine_driver_mjsister	,input_ports_mjsister	,null	,ROT0	,	"Toaplan", "Mahjong Sisters (Japan)" )
 }

@@ -362,5 +362,5 @@ public class sgladiat
 		snk_irq_delay = 2000;
 	} };
 	
-	GAMEX( 1984, sgladiat, 0, sgladiat, sgladiat, sgladiat, 0, "SNK", "Gladiator 1984", GAME_NO_COCKTAIL )
+	public static GameDriver driver_sgladiat	   = new GameDriver("1984"	,"sgladiat"	,"sgladiat.java"	,rom_sgladiat,null	,machine_driver_sgladiat	,input_ports_sgladiat	,init_sgladiat	,0	,	"SNK", "Gladiator 1984", GAME_NO_COCKTAIL )
 }

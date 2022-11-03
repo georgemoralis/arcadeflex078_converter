@@ -1451,13 +1451,13 @@ public class midvunit
 	 *
 	 *************************************/
 	
-	GAME( 1994, crusnusa, 0,        midvunit, crusnusa, crusnusa, ROT0, "Midway", "Cruis'n USA (rev L4.1)" )
-	GAME( 1994, crusnu40, crusnusa, midvunit, crusnusa, crusnu40, ROT0, "Midway", "Cruis'n USA (rev L4.0)" )
-	GAME( 1994, crusnu21, crusnusa, midvunit, crusnusa, crusnu21, ROT0, "Midway", "Cruis'n USA (rev L2.1)" )
-	GAME( 1996, crusnwld, 0,        midvunit, crusnwld, crusnwld, ROT0, "Midway", "Cruis'n World (rev L2.3)" )
-	GAME( 1996, crusnw20, crusnwld, midvunit, crusnwld, crusnwld, ROT0, "Midway", "Cruis'n World (rev L2.0)" )
-	GAME( 1996, crusnw13, crusnwld, midvunit, crusnwld, crusnwld, ROT0, "Midway", "Cruis'n World (rev L1.3)" )
-	GAMEX( 1997, offroadc, 0,        midvunit, offroadc, offroadc, ROT0, "Midway", "Off Road Challenge", GAME_NOT_WORKING )
+	public static GameDriver driver_crusnusa	   = new GameDriver("1994"	,"crusnusa"	,"midvunit.java"	,rom_crusnusa,null	,machine_driver_midvunit	,input_ports_crusnusa	,init_crusnusa	,ROT0	,	"Midway", "Cruis'n USA (rev L4.1)" )
+	public static GameDriver driver_crusnu40	   = new GameDriver("1994"	,"crusnu40"	,"midvunit.java"	,rom_crusnu40,driver_crusnusa	,machine_driver_midvunit	,input_ports_crusnusa	,init_crusnu40	,ROT0	,	"Midway", "Cruis'n USA (rev L4.0)" )
+	public static GameDriver driver_crusnu21	   = new GameDriver("1994"	,"crusnu21"	,"midvunit.java"	,rom_crusnu21,driver_crusnusa	,machine_driver_midvunit	,input_ports_crusnusa	,init_crusnu21	,ROT0	,	"Midway", "Cruis'n USA (rev L2.1)" )
+	public static GameDriver driver_crusnwld	   = new GameDriver("1996"	,"crusnwld"	,"midvunit.java"	,rom_crusnwld,null	,machine_driver_midvunit	,input_ports_crusnwld	,init_crusnwld	,ROT0	,	"Midway", "Cruis'n World (rev L2.3)" )
+	public static GameDriver driver_crusnw20	   = new GameDriver("1996"	,"crusnw20"	,"midvunit.java"	,rom_crusnw20,driver_crusnwld	,machine_driver_midvunit	,input_ports_crusnwld	,init_crusnwld	,ROT0	,	"Midway", "Cruis'n World (rev L2.0)" )
+	public static GameDriver driver_crusnw13	   = new GameDriver("1996"	,"crusnw13"	,"midvunit.java"	,rom_crusnw13,driver_crusnwld	,machine_driver_midvunit	,input_ports_crusnwld	,init_crusnwld	,ROT0	,	"Midway", "Cruis'n World (rev L1.3)" )
+	public static GameDriver driver_offroadc	   = new GameDriver("1997"	,"offroadc"	,"midvunit.java"	,rom_offroadc,null	,machine_driver_midvunit	,input_ports_offroadc	,init_offroadc	,ROT0	,	"Midway", "Off Road Challenge", GAME_NOT_WORKING )
 	
-	GAME( 1995, wargods,  0,        midvplus, wargods,  wargods,  ROT0, "Midway", "War Gods" )
+	public static GameDriver driver_wargods	   = new GameDriver("1995"	,"wargods"	,"midvunit.java"	,rom_wargods,null	,machine_driver_midvplus	,input_ports_wargods	,init_wargods	,ROT0	,	"Midway", "War Gods" )
 }

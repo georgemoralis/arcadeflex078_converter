@@ -483,5 +483,5 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	GAMEX( 1998, inufuku, 0, inufuku, inufuku, inufuku, ROT0, "Video System Co.", "Quiz & Variety Sukusuku Inufuku (Japan)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_inufuku	   = new GameDriver("1998"	,"inufuku"	,"inufuku.java"	,rom_inufuku,null	,machine_driver_inufuku	,input_ports_inufuku	,init_inufuku	,ROT0	,	"Video System Co.", "Quiz & Variety Sukusuku Inufuku (Japan)", GAME_NO_COCKTAIL )
 }

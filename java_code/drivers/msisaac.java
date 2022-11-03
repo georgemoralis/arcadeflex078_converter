@@ -596,5 +596,5 @@ public class msisaac
 	
 	ROM_END(); }}; 
 	
-	GAMEX( 1985, msisaac, 0,        msisaac, msisaac, 0, ROT270, "Taito Corporation", "Metal Soldier Isaac II", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL)
+	public static GameDriver driver_msisaac	   = new GameDriver("1985"	,"msisaac"	,"msisaac.java"	,rom_msisaac,null	,machine_driver_msisaac	,input_ports_msisaac	,null	,ROT270	,	"Taito Corporation", "Metal Soldier Isaac II", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL)
 }

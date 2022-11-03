@@ -353,5 +353,5 @@ public class avengrgs
 	
 	/***************************************************************************/
 	
-	GAMEX( 1995, avengrgs, 0, avengrgs, avengrgs, avengrgs, ROT0, "Data East Corporation", "Avengers In Galactic Storm (Japan)", GAME_NOT_WORKING )
+	public static GameDriver driver_avengrgs	   = new GameDriver("1995"	,"avengrgs"	,"avengrgs.java"	,rom_avengrgs,null	,machine_driver_avengrgs	,input_ports_avengrgs	,init_avengrgs	,ROT0	,	"Data East Corporation", "Avengers In Galactic Storm (Japan)", GAME_NOT_WORKING )
 }

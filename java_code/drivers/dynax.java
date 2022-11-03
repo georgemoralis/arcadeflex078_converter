@@ -3012,22 +3012,22 @@ public class dynax
 	
 	***************************************************************************/
 	
-	GAME ( 1988, hanamai,  0,        hanamai,  hanamai,  0,    ROT180, "Dynax",                  "Hana no Mai (Japan)"                                   )
-	GAME ( 1989, hnkochou, hanamai,  hanamai,  hnkochou, 0,    ROT180, "Dynax",                  "Hana Kochou [BET] (Japan)"                             )
-	GAMEX( 1989, hnoridur, 0,        hnoridur, hnoridur, 0,    ROT180, "Dynax",                  "Hana Oriduru (Japan)",                                 GAME_IMPERFECT_GRAPHICS ) // 1 rom is bad
-	GAME ( 1989, drgpunch, 0,        sprtmtch, sprtmtch, 0,    ROT0,   "Dynax",                  "Dragon Punch (Japan)"                                  )
-	GAME ( 1989, sprtmtch, drgpunch, sprtmtch, sprtmtch, 0,    ROT0,   "Dynax (Fabtek license)", "Sports Match"                                          )
-	GAME ( 1989, mjfriday, 0,        mjfriday, mjfriday, 0,    ROT180, "Dynax",                  "Mahjong Friday (Japan)"                                )
-	GAME ( 1990, mcnpshnt, 0,        mcnpshnt, mcnpshnt, 0,    ROT0,   "Dynax",                  "Mahjong Campus Hunting (Japan)"                        )
-	GAMEX( 1990, 7jigen,   0,        nanajign, nanajign, 0,    ROT180, "Dynax",                  "7jigen no Youseitachi - Mahjong 7 Dimensions (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1991, mjdialq2, 0,        mjdialq2, mjdialq2, 0,    ROT180, "Dynax",                  "Mahjong Dial Q2 (Japan)",                              GAME_IMPERFECT_GRAPHICS )
-	GAME ( 1991, yarunara, 0,        yarunara, yarunara, 0,    ROT180, "Dynax",                  "Mahjong Yarunara (Japan)"                              )
-	GAMEX( 1991, mjangels, 0,        yarunara, yarunara, 0,    ROT180, "Dynax",                  "Mahjong Angels - Comic Theater Vol.2 (Japan)",         GAME_IMPERFECT_GRAPHICS )
-	GAME ( 1992, quiztvqq, 0,        yarunara, quiztvqq, 0,    ROT180, "Dynax",                  "Quiz TV Gassyuukoku Q&Q (Japan)"                       )
-	GAME ( 1994, maya,     0,        sprtmtch, sprtmtch, maya, ROT0,   "Promat",                 "Maya"                                                  )
+	public static GameDriver driver_hanamai	   = new GameDriver("1988"	,"hanamai"	,"dynax.java"	,rom_hanamai,null	,machine_driver_hanamai	,input_ports_hanamai	,null	,ROT180	,	"Dynax",                  "Hana no Mai (Japan)"                                   )
+	public static GameDriver driver_hnkochou	   = new GameDriver("1989"	,"hnkochou"	,"dynax.java"	,rom_hnkochou,driver_hanamai	,machine_driver_hanamai	,input_ports_hnkochou	,null	,ROT180	,	"Dynax",                  "Hana Kochou [BET] (Japan)"                             )
+	public static GameDriver driver_hnoridur	   = new GameDriver("1989"	,"hnoridur"	,"dynax.java"	,rom_hnoridur,null	,machine_driver_hnoridur	,input_ports_hnoridur	,null	,ROT180	,	"Dynax",                  "Hana Oriduru (Japan)",                                 GAME_IMPERFECT_GRAPHICS ) // 1 rom is bad
+	public static GameDriver driver_drgpunch	   = new GameDriver("1989"	,"drgpunch"	,"dynax.java"	,rom_drgpunch,null	,machine_driver_sprtmtch	,input_ports_sprtmtch	,null	,ROT0	,	"Dynax",                  "Dragon Punch (Japan)"                                  )
+	public static GameDriver driver_sprtmtch	   = new GameDriver("1989"	,"sprtmtch"	,"dynax.java"	,rom_sprtmtch,driver_drgpunch	,machine_driver_sprtmtch	,input_ports_sprtmtch	,null	,ROT0	,	"Dynax (Fabtek license)", "Sports Match"                                          )
+	public static GameDriver driver_mjfriday	   = new GameDriver("1989"	,"mjfriday"	,"dynax.java"	,rom_mjfriday,null	,machine_driver_mjfriday	,input_ports_mjfriday	,null	,ROT180	,	"Dynax",                  "Mahjong Friday (Japan)"                                )
+	public static GameDriver driver_mcnpshnt	   = new GameDriver("1990"	,"mcnpshnt"	,"dynax.java"	,rom_mcnpshnt,null	,machine_driver_mcnpshnt	,input_ports_mcnpshnt	,null	,ROT0	,	"Dynax",                  "Mahjong Campus Hunting (Japan)"                        )
+	public static GameDriver driver_7jigen	   = new GameDriver("1990"	,"7jigen"	,"dynax.java"	,rom_7jigen,null	,machine_driver_nanajign	,input_ports_nanajign	,null	,ROT180	,	"Dynax",                  "7jigen no Youseitachi - Mahjong 7 Dimensions (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mjdialq2	   = new GameDriver("1991"	,"mjdialq2"	,"dynax.java"	,rom_mjdialq2,null	,machine_driver_mjdialq2	,input_ports_mjdialq2	,null	,ROT180	,	"Dynax",                  "Mahjong Dial Q2 (Japan)",                              GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_yarunara	   = new GameDriver("1991"	,"yarunara"	,"dynax.java"	,rom_yarunara,null	,machine_driver_yarunara	,input_ports_yarunara	,null	,ROT180	,	"Dynax",                  "Mahjong Yarunara (Japan)"                              )
+	public static GameDriver driver_mjangels	   = new GameDriver("1991"	,"mjangels"	,"dynax.java"	,rom_mjangels,null	,machine_driver_yarunara	,input_ports_yarunara	,null	,ROT180	,	"Dynax",                  "Mahjong Angels - Comic Theater Vol.2 (Japan)",         GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_quiztvqq	   = new GameDriver("1992"	,"quiztvqq"	,"dynax.java"	,rom_quiztvqq,null	,machine_driver_yarunara	,input_ports_quiztvqq	,null	,ROT180	,	"Dynax",                  "Quiz TV Gassyuukoku Q&Q (Japan)"                       )
+	public static GameDriver driver_maya	   = new GameDriver("1994"	,"maya"	,"dynax.java"	,rom_maya,null	,machine_driver_sprtmtch	,input_ports_sprtmtch	,init_maya	,ROT0	,	"Promat",                 "Maya"                                                  )
 	
 	
 	// should move these to splash.c, its a protected bootleg of splash, not dynax stuff */
-	GAMEX(1993, roldfrog, 0,        roldfrog, sprtmtch, 0,    ROT0,   "Microhard", "The Return of Lady Frog", GAME_NOT_WORKING )
-	GAMEX(1993, roldfrga, roldfrog, roldfrog, sprtmtch, 0,    ROT0,   "Microhard", "The Return of Lady Frog (set 2)", GAME_NOT_WORKING )
+	public static GameDriver driver_roldfrog	   = new GameDriver("1993"	,"roldfrog"	,"dynax.java"	,rom_roldfrog,null	,machine_driver_roldfrog	,input_ports_sprtmtch	,null	,ROT0	,	"Microhard", "The Return of Lady Frog", GAME_NOT_WORKING )
+	public static GameDriver driver_roldfrga	   = new GameDriver("1993"	,"roldfrga"	,"dynax.java"	,rom_roldfrga,driver_roldfrog	,machine_driver_roldfrog	,input_ports_sprtmtch	,null	,ROT0	,	"Microhard", "The Return of Lady Frog (set 2)", GAME_NOT_WORKING )
 }

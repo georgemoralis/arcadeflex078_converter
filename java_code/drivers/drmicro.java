@@ -297,5 +297,5 @@ public class drmicro
 		ROM_LOAD( "dm-60.6e", 0x0120,  0x0100, CRC(540a3953) SHA1(bc65388a1019dadf8c71705e234763f5c735e282) )
 	ROM_END(); }}; 
 	
-	GAME( 1983, drmicro, 0, drmicro, drmicro, 0, ROT270, "Sanritsu", "Dr. Micro" )
+	public static GameDriver driver_drmicro	   = new GameDriver("1983"	,"drmicro"	,"drmicro.java"	,rom_drmicro,null	,machine_driver_drmicro	,input_ports_drmicro	,null	,ROT270	,	"Sanritsu", "Dr. Micro" )
 }

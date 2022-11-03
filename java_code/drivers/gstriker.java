@@ -586,10 +586,10 @@ public class gstriker
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	GAMEX(1993, gstriker, 0,        gstriker, gstriker, 0,        ROT0, "Human", "Grand Striker", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_gstriker	   = new GameDriver("1993"	,"gstriker"	,"gstriker.java"	,rom_gstriker,null	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Human", "Grand Striker", GAME_IMPERFECT_GRAPHICS )
 	
 	/* Similar, but not identical hardware, appear to be protected by an MCU :-( */
-	GAMEX(199?, vgoalsoc, 0,        gstriker, gstriker, 0,        ROT0, "Tecmo", "V Goal Soccer", GAME_NOT_WORKING )
-	GAMEX(199?, vgoalsca, vgoalsoc, gstriker, gstriker, 0,        ROT0, "Tecmo", "V Goal Soccer (alt)", GAME_NOT_WORKING )
-	GAMEX(199?, worldc94, 0,        gstriker, gstriker, 0,        ROT0, "Tecmo", "World Cup '94", GAME_NOT_WORKING )
+	public static GameDriver driver_vgoalsoc	   = new GameDriver("199?"	,"vgoalsoc"	,"gstriker.java"	,rom_vgoalsoc,null	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Tecmo", "V Goal Soccer", GAME_NOT_WORKING )
+	public static GameDriver driver_vgoalsca	   = new GameDriver("199?"	,"vgoalsca"	,"gstriker.java"	,rom_vgoalsca,driver_vgoalsoc	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Tecmo", "V Goal Soccer (alt)", GAME_NOT_WORKING )
+	public static GameDriver driver_worldc94	   = new GameDriver("199?"	,"worldc94"	,"gstriker.java"	,rom_worldc94,null	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Tecmo", "World Cup '94", GAME_NOT_WORKING )
 }

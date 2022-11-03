@@ -318,6 +318,6 @@ public class mouser
 	} };
 	
 	
-	GAME( 1983, mouser,   0,      mouser, mouser, mouser, ROT90, "UPL", "Mouser" )
-	GAME( 1983, mouserc,  mouser, mouser, mouser, mouser, ROT90, "[UPL] (Cosmos license)", "Mouser (Cosmos)" )
+	public static GameDriver driver_mouser	   = new GameDriver("1983"	,"mouser"	,"mouser.java"	,rom_mouser,null	,machine_driver_mouser	,input_ports_mouser	,init_mouser	,ROT90	,	"UPL", "Mouser" )
+	public static GameDriver driver_mouserc	   = new GameDriver("1983"	,"mouserc"	,"mouser.java"	,rom_mouserc,driver_mouser	,machine_driver_mouser	,input_ports_mouser	,init_mouser	,ROT90	,	"[UPL] (Cosmos license)", "Mouser (Cosmos)" )
 }

@@ -902,11 +902,11 @@ public class mappy
 	
 	
 	
-	GAME( 1983, mappy,    0,        mappy,    mappy,    0, ROT90, "Namco", "Mappy (US)" )
-	GAME( 1983, mappyj,   mappy,    mappy,    mappy,    0, ROT90, "Namco", "Mappy (Japan)" )
-	GAME( 1985, digdug2,  0,        digdug2,  digdug2,  0, ROT90, "Namco", "Dig Dug II (New Ver.)" )
-	GAME( 1985, digdug2o, digdug2,  digdug2,  digdug2,  0, ROT90, "Namco", "Dig Dug II (Old Ver.)" )
-	GAME( 1985, motos,    0,        motos,    motos,    0, ROT90, "Namco", "Motos" )
-	GAME( 1984, todruaga, 0,        todruaga, todruaga, 0, ROT90, "Namco", "Tower of Druaga (New Ver.)" )
-	GAME( 1984, todruago, todruaga, todruaga, todruaga, 0, ROT90, "Namco", "Tower of Druaga (Old Ver.)" )
+	public static GameDriver driver_mappy	   = new GameDriver("1983"	,"mappy"	,"mappy.java"	,rom_mappy,null	,machine_driver_mappy	,input_ports_mappy	,null	,ROT90	,	"Namco", "Mappy (US)" )
+	public static GameDriver driver_mappyj	   = new GameDriver("1983"	,"mappyj"	,"mappy.java"	,rom_mappyj,driver_mappy	,machine_driver_mappy	,input_ports_mappy	,null	,ROT90	,	"Namco", "Mappy (Japan)" )
+	public static GameDriver driver_digdug2	   = new GameDriver("1985"	,"digdug2"	,"mappy.java"	,rom_digdug2,null	,machine_driver_digdug2	,input_ports_digdug2	,null	,ROT90	,	"Namco", "Dig Dug II (New Ver.)" )
+	public static GameDriver driver_digdug2o	   = new GameDriver("1985"	,"digdug2o"	,"mappy.java"	,rom_digdug2o,driver_digdug2	,machine_driver_digdug2	,input_ports_digdug2	,null	,ROT90	,	"Namco", "Dig Dug II (Old Ver.)" )
+	public static GameDriver driver_motos	   = new GameDriver("1985"	,"motos"	,"mappy.java"	,rom_motos,null	,machine_driver_motos	,input_ports_motos	,null	,ROT90	,	"Namco", "Motos" )
+	public static GameDriver driver_todruaga	   = new GameDriver("1984"	,"todruaga"	,"mappy.java"	,rom_todruaga,null	,machine_driver_todruaga	,input_ports_todruaga	,null	,ROT90	,	"Namco", "Tower of Druaga (New Ver.)" )
+	public static GameDriver driver_todruago	   = new GameDriver("1984"	,"todruago"	,"mappy.java"	,rom_todruago,driver_todruaga	,machine_driver_todruaga	,input_ports_todruaga	,null	,ROT90	,	"Namco", "Tower of Druaga (Old Ver.)" )
 }

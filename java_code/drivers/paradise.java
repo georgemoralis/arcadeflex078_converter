@@ -384,7 +384,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	GAME( 1994+, paradise, 0, paradise, paradise, 0, ROT90, "Yun Sung", "Paradise" )
-	GAMEX(199?,  tgtball,  0, paradise, paradise, tgtball, ROT0,  "Yun Sung", "Target Ball", GAME_NOT_WORKING )
+	public static GameDriver driver_	   = new GameDriver("1994"	,""	,"paradise.java"	,rom_,driver_paradise	,machine_driver_0	,input_ports_paradise	,init_paradise	,0	,	ROT90, "Yun Sung", "Paradise" )
+	public static GameDriver driver_tgtball	   = new GameDriver("199?"	,"tgtball"	,"paradise.java"	,rom_tgtball,null	,machine_driver_paradise	,input_ports_paradise	,init_tgtball	,ROT0	,	"Yun Sung", "Target Ball", GAME_NOT_WORKING )
 	
 }

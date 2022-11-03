@@ -748,7 +748,7 @@ public class slapshot
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	GAME( 1994, slapshot, 0,       slapshot, slapshot, slapshot, ROT0, "Taito Corporation",         "Slap Shot (Japan)" )
-	GAME( 1994, opwolf3,  0,       opwolf3,  opwolf3,  slapshot, ROT0, "Taito Corporation Japan",   "Operation Wolf 3 (World)" )
-	GAME( 1994, opwolf3u, opwolf3, opwolf3,  opwolf3,  slapshot, ROT0, "Taito America Corporation", "Operation Wolf 3 (US)" )
+	public static GameDriver driver_slapshot	   = new GameDriver("1994"	,"slapshot"	,"slapshot.java"	,rom_slapshot,null	,machine_driver_slapshot	,input_ports_slapshot	,init_slapshot	,ROT0	,	"Taito Corporation",         "Slap Shot (Japan)" )
+	public static GameDriver driver_opwolf3	   = new GameDriver("1994"	,"opwolf3"	,"slapshot.java"	,rom_opwolf3,null	,machine_driver_opwolf3	,input_ports_opwolf3	,init_slapshot	,ROT0	,	"Taito Corporation Japan",   "Operation Wolf 3 (World)" )
+	public static GameDriver driver_opwolf3u	   = new GameDriver("1994"	,"opwolf3u"	,"slapshot.java"	,rom_opwolf3u,driver_opwolf3	,machine_driver_opwolf3	,input_ports_opwolf3	,init_slapshot	,ROT0	,	"Taito America Corporation", "Operation Wolf 3 (US)" )
 }

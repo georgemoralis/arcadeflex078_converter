@@ -298,5 +298,5 @@ public class glass
 		glass_ROM16_split(REGION_GFX2, REGION_GFX1, 0x0200000, 0x0200000, 0x0200000, 0x0300000);
 	} };
 	
-	GAMEX( 1993, glass, 0, glass,glass, glass, ROT0, "Gaelco", "Glass", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_glass	   = new GameDriver("1993"	,"glass"	,"glass.java"	,rom_glass,null	,machine_driver_glass	,input_ports_glass	,init_glass	,ROT0	,	"Gaelco", "Glass", GAME_UNEMULATED_PROTECTION )
 }

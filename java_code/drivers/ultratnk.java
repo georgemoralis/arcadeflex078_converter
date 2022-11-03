@@ -706,5 +706,5 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	GAME( 1978, ultratnk, 0, ultratnk, ultratnk, 0, 0, "Atari", "Ultra Tank" )
+	public static GameDriver driver_ultratnk	   = new GameDriver("1978"	,"ultratnk"	,"ultratnk.java"	,rom_ultratnk,null	,machine_driver_ultratnk	,input_ports_ultratnk	,null	,0	,	"Atari", "Ultra Tank" )
 }

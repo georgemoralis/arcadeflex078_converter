@@ -592,6 +592,6 @@ public class pushman
 	ROM_END(); }}; 
 	
 	
-	GAME( 1990, pushman, 0, pushman, pushman, 0, ROT0, "Comad (American Sammy license)", "Pushman" )
-	GAME( 1991, bballs,  0, bballs,  bballs,  0, ROT0, "Comad", "Bouncing Balls" )
+	public static GameDriver driver_pushman	   = new GameDriver("1990"	,"pushman"	,"pushman.java"	,rom_pushman,null	,machine_driver_pushman	,input_ports_pushman	,null	,ROT0	,	"Comad (American Sammy license)", "Pushman" )
+	public static GameDriver driver_bballs	   = new GameDriver("1991"	,"bballs"	,"pushman.java"	,rom_bballs,null	,machine_driver_bballs	,input_ports_bballs	,null	,ROT0	,	"Comad", "Bouncing Balls" )
 }

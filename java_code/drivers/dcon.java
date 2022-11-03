@@ -418,6 +418,6 @@ public class dcon
 	} };
 	
 	
-	GAMEX( 1991, sdgndmps, 0, sdgndmps, sdgndmps, sdgndmps, ROT0, "Banpresto / Bandai", "SD Gundam Psycho Salamander no Kyoui", GAME_NO_COCKTAIL )
-	GAMEX( 1992, dcon,     0, dcon,     dcon,     0, ROT0, "Success",            "D-Con", GAME_NO_COCKTAIL )
+	public static GameDriver driver_sdgndmps	   = new GameDriver("1991"	,"sdgndmps"	,"dcon.java"	,rom_sdgndmps,null	,machine_driver_sdgndmps	,input_ports_sdgndmps	,init_sdgndmps	,ROT0	,	"Banpresto / Bandai", "SD Gundam Psycho Salamander no Kyoui", GAME_NO_COCKTAIL )
+	public static GameDriver driver_dcon	   = new GameDriver("1992"	,"dcon"	,"dcon.java"	,rom_dcon,null	,machine_driver_dcon	,input_ports_dcon	,null	,ROT0	,	"Success",            "D-Con", GAME_NO_COCKTAIL )
 }

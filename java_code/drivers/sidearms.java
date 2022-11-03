@@ -1016,12 +1016,12 @@ public class sidearms
 	public static DriverInitHandlerPtr init_dyger  = new DriverInitHandlerPtr() { public void handler() { sidearms_gameid = 2; } };
 	public static DriverInitHandlerPtr init_whizz  = new DriverInitHandlerPtr() { public void handler() { sidearms_gameid = 3; } };
 	
-	GAMEX(1986, sidearms, 0,        sidearms, sidearms, sidearms, ROT0,   "Capcom", "Side Arms - Hyper Dyne (World)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1986, sidearmr, sidearms, sidearms, sidearms, sidearms, ROT0,   "Capcom (Romstar license)", "Side Arms - Hyper Dyne (US)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1986, sidearjp, sidearms, sidearms, sidearms, sidearms, ROT0,   "Capcom", "Side Arms - Hyper Dyne (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAME( 1988, turtship, 0,        turtship, turtship, turtship, ROT0,   "Philko", "Turtle Ship" )
-	GAME( 1989, dyger,    0,        turtship, dyger,    dyger,    ROT270, "Philko", "Dyger (Korea set 1)" )
-	GAME( 1989, dygera,   dyger,    turtship, dyger,    dyger,    ROT270, "Philko", "Dyger (Korea set 2)" )
-	GAMEX(1989, whizz,    0,        whizz, 	  whizz,    whizz,    ROT0,   "Philko", "Whizz", GAME_NOT_WORKING )
+	public static GameDriver driver_sidearms	   = new GameDriver("1986"	,"sidearms"	,"sidearms.java"	,rom_sidearms,null	,machine_driver_sidearms	,input_ports_sidearms	,init_sidearms	,ROT0	,	"Capcom", "Side Arms - Hyper Dyne (World)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_sidearmr	   = new GameDriver("1986"	,"sidearmr"	,"sidearms.java"	,rom_sidearmr,driver_sidearms	,machine_driver_sidearms	,input_ports_sidearms	,init_sidearms	,ROT0	,	"Capcom (Romstar license)", "Side Arms - Hyper Dyne (US)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_sidearjp	   = new GameDriver("1986"	,"sidearjp"	,"sidearms.java"	,rom_sidearjp,driver_sidearms	,machine_driver_sidearms	,input_ports_sidearms	,init_sidearms	,ROT0	,	"Capcom", "Side Arms - Hyper Dyne (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_turtship	   = new GameDriver("1988"	,"turtship"	,"sidearms.java"	,rom_turtship,null	,machine_driver_turtship	,input_ports_turtship	,init_turtship	,ROT0	,	"Philko", "Turtle Ship" )
+	public static GameDriver driver_dyger	   = new GameDriver("1989"	,"dyger"	,"sidearms.java"	,rom_dyger,null	,machine_driver_turtship	,input_ports_dyger	,init_dyger	,ROT270	,	"Philko", "Dyger (Korea set 1)" )
+	public static GameDriver driver_dygera	   = new GameDriver("1989"	,"dygera"	,"sidearms.java"	,rom_dygera,driver_dyger	,machine_driver_turtship	,input_ports_dyger	,init_dyger	,ROT270	,	"Philko", "Dyger (Korea set 2)" )
+	public static GameDriver driver_whizz	   = new GameDriver("1989"	,"whizz"	,"sidearms.java"	,rom_whizz,null	,machine_driver_whizz	,input_ports_whizz	,init_whizz	,ROT0	,	"Philko", "Whizz", GAME_NOT_WORKING )
 	
 }

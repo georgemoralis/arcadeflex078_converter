@@ -384,5 +384,5 @@ public class boxer
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1978, boxer, 0, boxer, boxer, 0, 0, "Atari", "Boxer (prototype)", GAME_NO_SOUND )
+	public static GameDriver driver_boxer	   = new GameDriver("1978"	,"boxer"	,"boxer.java"	,rom_boxer,null	,machine_driver_boxer	,input_ports_boxer	,null	,0	,	"Atari", "Boxer (prototype)", GAME_NO_SOUND )
 }

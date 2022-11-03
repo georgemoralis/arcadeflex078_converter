@@ -916,10 +916,10 @@ public class psikyo4
 	
 	/*     YEAR  NAME      PARENT    MACHINE    INPUT     INIT      MONITOR COMPANY   FULLNAME FLAGS */
 	
-	GAMEX( 1997, hotgmck,  0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick (Japan)", GAME_IMPERFECT_SOUND )
-	GAMEX( 1998, hgkairak, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick Kairakuten (Japan)", GAME_IMPERFECT_SOUND )
-	GAMEX( 1999, hotgmck3, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan)", GAME_IMPERFECT_SOUND )
-	GAME ( 2000, loderndf, 0,        ps4small,  loderndf, loderndf, ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan)" )
-	GAME ( 2000, loderdfa, loderndf, ps4small,  loderndf, loderdfa, ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. A) (Japan)" )
-	GAME ( 2000, hotdebut, 0,        ps4small,  hotdebut, hotdebut, ROT0,   "Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan)" )
+	public static GameDriver driver_hotgmck	   = new GameDriver("1997"	,"hotgmck"	,"psikyo4.java"	,rom_hotgmck,null	,machine_driver_ps4big	,input_ports_hotgmck	,init_hotgmck	,ROT0	,	"Psikyo", "Taisen Hot Gimmick (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_hgkairak	   = new GameDriver("1998"	,"hgkairak"	,"psikyo4.java"	,rom_hgkairak,null	,machine_driver_ps4big	,input_ports_hotgmck	,init_hotgmck	,ROT0	,	"Psikyo", "Taisen Hot Gimmick Kairakuten (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_hotgmck3	   = new GameDriver("1999"	,"hotgmck3"	,"psikyo4.java"	,rom_hotgmck3,null	,machine_driver_ps4big	,input_ports_hotgmck	,init_hotgmck	,ROT0	,	"Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_loderndf	   = new GameDriver("2000"	,"loderndf"	,"psikyo4.java"	,rom_loderndf,null	,machine_driver_ps4small	,input_ports_loderndf	,init_loderndf	,ROT0	,	"Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan)" )
+	public static GameDriver driver_loderdfa	   = new GameDriver("2000"	,"loderdfa"	,"psikyo4.java"	,rom_loderdfa,driver_loderndf	,machine_driver_ps4small	,input_ports_loderndf	,init_loderdfa	,ROT0	,	"Psikyo", "Lode Runner - The Dig Fight (ver. A) (Japan)" )
+	public static GameDriver driver_hotdebut	   = new GameDriver("2000"	,"hotdebut"	,"psikyo4.java"	,rom_hotdebut,null	,machine_driver_ps4small	,input_ports_hotdebut	,init_hotdebut	,ROT0	,	"Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan)" )
 }

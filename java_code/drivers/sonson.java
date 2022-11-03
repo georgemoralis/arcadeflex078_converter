@@ -352,6 +352,6 @@ public class sonson
 	ROM_END(); }}; 
 	
 	
-	GAME( 1984, sonson,  0,      sonson, sonson, 0, ROT0, "Capcom", "Son Son" )
-	GAME( 1984, sonsonj, sonson, sonson, sonson, 0, ROT0, "Capcom", "Son Son (Japan)" )
+	public static GameDriver driver_sonson	   = new GameDriver("1984"	,"sonson"	,"sonson.java"	,rom_sonson,null	,machine_driver_sonson	,input_ports_sonson	,null	,ROT0	,	"Capcom", "Son Son" )
+	public static GameDriver driver_sonsonj	   = new GameDriver("1984"	,"sonsonj"	,"sonson.java"	,rom_sonsonj,driver_sonson	,machine_driver_sonson	,input_ports_sonson	,null	,ROT0	,	"Capcom", "Son Son (Japan)" )
 }

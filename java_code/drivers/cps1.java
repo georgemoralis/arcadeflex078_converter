@@ -7425,117 +7425,117 @@ public class cps1
 	
 	
 	
-	GAME( 1988, forgottn, 0,        forgottn, forgottn, cps1,     ROT0,   "Capcom", "Forgotten Worlds (US)" )
-	GAME( 1988, lostwrld, forgottn, forgottn, forgottn, cps1,     ROT0,   "Capcom", "Lost Worlds (Japan)" )
-	GAME( 1988, ghouls,   0,        cps1,     ghouls,   cps1,     ROT0,   "Capcom", "Ghouls'n Ghosts (World)" )						// Wed.26.10.1988 in the ROMS
-	GAME( 1988, ghoulsu,  ghouls,   cps1,     ghoulsu,  cps1,     ROT0,   "Capcom", "Ghouls'n Ghosts (US)" )						// Wed.26.10.1988 in the ROMS
-	GAME( 1988, daimakai, ghouls,   cps1,     daimakai, cps1,     ROT0,   "Capcom", "Dai Makai-Mura (Japan)" )						// Wed.26.10.1988 in the ROMS
-	GAME( 1989, strider,  0,        cps1,     strider,  cps1,     ROT0,   "Capcom", "Strider (US set 1)" )
-	GAME( 1989, stridrua, strider,  cps1,     stridrua, cps1,     ROT0,   "Capcom", "Strider (US set 2)" )
-	GAME( 1989, striderj, strider,  cps1,     strider,  cps1,     ROT0,   "Capcom", "Strider Hiryu (Japan set 1)" )
-	GAME( 1989, stridrja, strider,  cps1,     strider,  cps1,     ROT0,   "Capcom", "Strider Hiryu (Japan set 2)" )
-	GAME( 1989, dw,       0,        cps1,     dw,       cps1,     ROT0,   "Capcom", "Dynasty Wars (World)" )						// (c) Capcom U.S.A.
-	GAME( 1989, dwj,      dw,       cps1,     dw,       cps1,     ROT0,   "Capcom", "Tenchi wo Kurau (Japan)" )
-	GAME( 1989, willow,   0,        cps1,     willow,   cps1,     ROT0,   "Capcom", "Willow (US)" )
-	GAME( 1989, willowj,  willow,   cps1,     willow,   cps1,     ROT0,   "Capcom", "Willow (Japan, Japanese)" )					// Japan "warning"
-	GAME( 1989, willowje, willow,   cps1,     willow,   cps1,     ROT0,   "Capcom", "Willow (Japan, English)" )						// (c) Capcom U.S.A. but Japan "warning"
-	GAME( 1989, unsquad,  0,        cps1,     unsquad,  cps1,     ROT0,   "Capcom", "U.N. Squadron (US)" )
-	GAME( 1989, area88,   unsquad,  cps1,     unsquad,  cps1,     ROT0,   "Capcom", "Area 88 (Japan)" )
-	GAME( 1989, ffight,   0,        cps1,     ffight,   cps1,     ROT0,   "Capcom", "Final Fight (World)" )
-	GAME( 1989, ffightu,  ffight,   cps1,     ffight,   cps1,     ROT0,   "Capcom", "Final Fight (US 900112)" )
-	GAME( 1989, ffightj,  ffight,   cps1,     ffight,   cps1,     ROT0,   "Capcom", "Final Fight (Japan set 1)" )
-	GAME( 1989, ffightj1, ffight,   cps1,     ffight,   cps1,     ROT0,   "Capcom", "Final Fight (Japan set 2)" )
-	GAME( 1990, 1941,     0,        cps1,     1941,     cps1,     ROT270, "Capcom", "1941 - Counter Attack (World)" )
-	GAME( 1990, 1941j,    1941,     cps1,     1941,     cps1,     ROT270, "Capcom", "1941 - Counter Attack (Japan)" )
-	GAME( 1990, mercs,    0,        cps1,     mercs,    cps1,     ROT270, "Capcom", "Mercs (World 900302)" )						// "ETC"
-	GAME( 1990, mercsu,   mercs,    cps1,     mercs,    cps1,     ROT270, "Capcom", "Mercs (US 900302)" )
-	GAME( 1990, mercsua,  mercs,    cps1,     mercs,    cps1,     ROT270, "Capcom", "Mercs (US 900608)" )
-	GAME( 1990, mercsj,   mercs,    cps1,     mercs,    cps1,     ROT270, "Capcom", "Senjou no Ookami II (Japan 900302)" )
-	GAME( 1990, mtwins,   0,        cps1,     mtwins,   cps1,     ROT0,   "Capcom", "Mega Twins (World 900619)" )					// "ETC" - (c) Capcom U.S.A. with World "warning"
-	GAME( 1990, chikij,   mtwins,   cps1,     mtwins,   cps1,     ROT0,   "Capcom", "Chiki Chiki Boys (Japan 900619)" )
-	GAME( 1990, msword,   0,        cps1,     msword,   cps1,     ROT0,   "Capcom", "Magic Sword - Heroic Fantasy (World 900725)" )		// 25.07.1990  "Other Country"
-	GAME( 1990, mswordr1, msword,   cps1,     msword,   cps1,     ROT0,   "Capcom", "Magic Sword - Heroic Fantasy (World 900623)" )		// 23.06.1990  "Other Country"
-	GAME( 1990, mswordu,  msword,   cps1,     msword,   cps1,     ROT0,   "Capcom", "Magic Sword - Heroic Fantasy (US 900725)" )			// 25.07.1990  "U.S.A."
-	GAME( 1990, mswordj,  msword,   cps1,     msword,   cps1,     ROT0,   "Capcom", "Magic Sword (Japan 900623)" )					// 23.06.1990  "Japan"
-	GAME( 1990, cawing,   0,        cps1,     cawing,   cps1,     ROT0,   "Capcom", "Carrier Air Wing (World 901012)" )				// "ETC"
-	GAME( 1990, cawingu,  cawing,   cps1,     cawing,   cps1,     ROT0,   "Capcom", "Carrier Air Wing (US 901012)" )
-	GAME( 1990, cawingj,  cawing,   cps1,     cawing,   cps1,     ROT0,   "Capcom", "U.S. Navy (Japan 901012)" )
-	GAME( 1990, nemo,     0,        cps1,     nemo,     cps1,     ROT0,   "Capcom", "Nemo (World 901130)" )						// "ETC"
-	GAME( 1990, nemoj,    nemo,     cps1,     nemo,     cps1,     ROT0,   "Capcom", "Nemo (Japan 901120)" )
-	GAME( 1991, sf2,      0,        sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (World 910522)" )	// "ETC"
-	GAME( 1991, sf2eb,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (World 910214)" )	// "ETC"
-	GAME( 1991, sf2ua,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (US 910206)" )
-	GAME( 1991, sf2ub,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (US 910214)" )
-	GAME( 1991, sf2ud,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (US 910318)" )
-	GAME( 1991, sf2ue,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (US 910228)" )
-	GAME( 1991, sf2uf,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (US 910411)" )
-	GAME( 1991, sf2ui,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (US 910522)" )
-	GAME( 1991, sf2uk,    sf2,      sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (US 911101)" )
-	GAME( 1991, sf2j,     sf2,      sf2,      sf2j,     cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (Japan 911210)" )
-	GAME( 1991, sf2ja,    sf2,      sf2,      sf2j,     cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (Japan 910214)" )
-	GAME( 1991, sf2jc,    sf2,      sf2,      sf2j,     cps1,     ROT0,   "Capcom", "Street Fighter II - The World Warrior (Japan 910306)" )
-	GAME( 1991, 3wonders, 0,        cps1,     3wonders, cps1,     ROT0,   "Capcom", "Three Wonders (World 910520)" )					// "ETC"
-	GAME( 1991, 3wonderu, 3wonders, cps1,     3wonders, cps1,     ROT0,   "Capcom", "Three Wonders (US 910520)" )
-	GAME( 1991, wonder3,  3wonders, cps1,     3wonders, cps1,     ROT0,   "Capcom", "Wonder 3 (Japan 910520)" )
-	GAME( 1991, kod,      0,        cps1,     kod,      cps1,     ROT0,   "Capcom", "The King of Dragons (World 910711)" )				// "ETC"
-	GAME( 1991, kodu,     kod,      cps1,     kodj,     cps1,     ROT0,   "Capcom", "The King of Dragons (US 910910)" )
-	GAME( 1991, kodj,     kod,      cps1,     kodj,     cps1,     ROT0,   "Capcom", "The King of Dragons (Japan 910805)" )
-	GAMEX(1991, kodb,     kod,      cps1,     kod,      cps1,     ROT0,   "Capcom", "The King of Dragons (bootleg)", GAME_NOT_WORKING )		// 910731  "ETC"
-	GAME( 1991, captcomm, 0,        cps1,     captcomm, cps1,     ROT0,   "Capcom", "Captain Commando (World 911014)" )				// "OTHER COUNTRY"
-	GAME( 1991, captcomu, captcomm, cps1,     captcomm, cps1,     ROT0,   "Capcom", "Captain Commando (US 910928)" )
-	GAME( 1991, captcomj, captcomm, cps1,     captcomm, cps1,     ROT0,   "Capcom", "Captain Commando (Japan 911202)" )
-	GAME( 1991, knights,  0,        cps1,     knights,  cps1,     ROT0,   "Capcom", "Knights of the Round (World 911127)" )				// "ETC"
-	GAME( 1991, knightsu, knights,  cps1,     knights,  cps1,     ROT0,   "Capcom", "Knights of the Round (US 911127)" )
-	GAME( 1991, knightsj, knights,  cps1,     knights,  cps1,     ROT0,   "Capcom", "Knights of the Round (Japan 911127)" )
-	GAME( 1992, sf2ce,    0,        sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II' - Champion Edition (World 920313)" )	// "ETC"
-	GAME( 1992, sf2ceua,  sf2ce,    sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II' - Champion Edition (US 920313)" )
-	GAME( 1992, sf2ceub,  sf2ce,    sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II' - Champion Edition (US 920513)" )
-	GAME( 1992, sf2ceuc,  sf2ce,    sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II' - Champion Edition (US 920803)" )
-	GAME( 1992, sf2cej,   sf2ce,    sf2,      sf2j,     cps1,     ROT0,   "Capcom", "Street Fighter II' - Champion Edition (Japan 920513)" )
-	GAME( 1992, sf2rb,    sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (Rainbow set 1)" )	// 920322 - based on World version
-	GAME( 1992, sf2rb2,   sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (Rainbow set 2)" )	// 920322 - based on World version
-	GAME( 1992, sf2red,   sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (Red Wave)" )		// 920313 - based on World version
-	GAME( 1992, sf2v004,  sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II! - Champion Edition (V004)" )		// "102092" !!! - based on (heavily modified) World version
-	GAME( 1992, sf2accp2, sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (Accelerator Pt.II)" )  // 920313 - based on USA version
-	GAMEX(1992, sf2m1,    sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (M1)", GAME_NOT_WORKING )
-	GAMEX(1992, sf2m2,    sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (M2)", GAME_NOT_WORKING )
-	GAMEX(1992, sf2m3,    sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (M3)", GAME_NOT_WORKING )
-	GAME (1992, sf2m4,    sf2ce,    sf2,      sf2j,     cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (M4)" )
-	GAME (1992, sf2m5,    sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (M5)" )
-	GAME (1992, sf2m6,    sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (M6)" )
-	GAME (1992, sf2m7,    sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (M7)" )
-	GAME (1992, sf2yyc,   sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (YYC)" )
-	GAME (1992, sf2koryu, sf2ce,    sf2,      sf2,      cps1,     ROT0,   "bootleg","Street Fighter II' - Champion Edition (Kouryu)" )
-	GAME( 1992, varth,    0,        cps1,     varth,    cps1,     ROT270, "Capcom", "Varth - Operation Thunderstorm (World 920612)" )		// "ETC"
-	GAME( 1992, varthu,   varth,    cps1,     varth,    cps1,     ROT270, "Capcom (Romstar license)", "Varth - Operation Thunderstorm (US 920612)" )
-	GAME( 1992, varthj,   varth,    cps1,     varth,    cps1,     ROT270, "Capcom", "Varth - Operation Thunderstorm (Japan 920714)" )
-	GAME( 1992, cworld2j, 0,        cps1,     cworld2j, cps1,     ROT0,   "Capcom", "Capcom World 2 (Japan 920611)" )
-	GAME( 1992, sf2t,     sf2ce,    sf2,      sf2,      cps1,     ROT0,   "Capcom", "Street Fighter II' - Hyper Fighting (US 921209)" )
-	GAME( 1992, sf2tj,    sf2ce,    sf2,      sf2j,     cps1,     ROT0,   "Capcom", "Street Fighter II' Turbo - Hyper Fighting (Japan 921209)" )
-	GAME( 1992, qad,      0,        cps1,     qad,      cps1,     ROT0,   "Capcom", "Quiz & Dragons (US 920701)" )
-	GAME( 1994, qadj,     qad,      cps1,     qadj,     cps1,     ROT0,   "Capcom", "Quiz & Dragons (Japan 940921)" )
-	GAME( 1995, qtono2,   0,        cps1,     qtono2,   cps1,     ROT0,   "Capcom", "Quiz Tonosama no Yabou 2 Zenkoku-ban (Japan 950123)" )
-	GAME( 1995, megaman,  0,        cps1,     megaman,  cps1,     ROT0,   "Capcom", "Mega Man - The Power Battle (CPS1 Asia 951006)" )
-	GAME( 1995, rockmanj, megaman,  cps1,     megaman,  cps1,     ROT0,   "Capcom", "Rockman - The Power Battle (CPS1 Japan 950922)" )
+	public static GameDriver driver_forgottn	   = new GameDriver("1988"	,"forgottn"	,"cps1.java"	,rom_forgottn,null	,machine_driver_forgottn	,input_ports_forgottn	,init_cps1	,ROT0	,	"Capcom", "Forgotten Worlds (US)" )
+	public static GameDriver driver_lostwrld	   = new GameDriver("1988"	,"lostwrld"	,"cps1.java"	,rom_lostwrld,driver_forgottn	,machine_driver_forgottn	,input_ports_forgottn	,init_cps1	,ROT0	,	"Capcom", "Lost Worlds (Japan)" )
+	public static GameDriver driver_ghouls	   = new GameDriver("1988"	,"ghouls"	,"cps1.java"	,rom_ghouls,null	,machine_driver_cps1	,input_ports_ghouls	,init_cps1	,ROT0	,	"Capcom", "Ghouls'n Ghosts (World)" )						// Wed.26.10.1988 in the ROMS
+	public static GameDriver driver_ghoulsu	   = new GameDriver("1988"	,"ghoulsu"	,"cps1.java"	,rom_ghoulsu,driver_ghouls	,machine_driver_cps1	,input_ports_ghoulsu	,init_cps1	,ROT0	,	"Capcom", "Ghouls'n Ghosts (US)" )						// Wed.26.10.1988 in the ROMS
+	public static GameDriver driver_daimakai	   = new GameDriver("1988"	,"daimakai"	,"cps1.java"	,rom_daimakai,driver_ghouls	,machine_driver_cps1	,input_ports_daimakai	,init_cps1	,ROT0	,	"Capcom", "Dai Makai-Mura (Japan)" )						// Wed.26.10.1988 in the ROMS
+	public static GameDriver driver_strider	   = new GameDriver("1989"	,"strider"	,"cps1.java"	,rom_strider,null	,machine_driver_cps1	,input_ports_strider	,init_cps1	,ROT0	,	"Capcom", "Strider (US set 1)" )
+	public static GameDriver driver_stridrua	   = new GameDriver("1989"	,"stridrua"	,"cps1.java"	,rom_stridrua,driver_strider	,machine_driver_cps1	,input_ports_stridrua	,init_cps1	,ROT0	,	"Capcom", "Strider (US set 2)" )
+	public static GameDriver driver_striderj	   = new GameDriver("1989"	,"striderj"	,"cps1.java"	,rom_striderj,driver_strider	,machine_driver_cps1	,input_ports_strider	,init_cps1	,ROT0	,	"Capcom", "Strider Hiryu (Japan set 1)" )
+	public static GameDriver driver_stridrja	   = new GameDriver("1989"	,"stridrja"	,"cps1.java"	,rom_stridrja,driver_strider	,machine_driver_cps1	,input_ports_strider	,init_cps1	,ROT0	,	"Capcom", "Strider Hiryu (Japan set 2)" )
+	public static GameDriver driver_dw	   = new GameDriver("1989"	,"dw"	,"cps1.java"	,rom_dw,null	,machine_driver_cps1	,input_ports_dw	,init_cps1	,ROT0	,	"Capcom", "Dynasty Wars (World)" )						// (c) Capcom U.S.A.
+	public static GameDriver driver_dwj	   = new GameDriver("1989"	,"dwj"	,"cps1.java"	,rom_dwj,driver_dw	,machine_driver_cps1	,input_ports_dw	,init_cps1	,ROT0	,	"Capcom", "Tenchi wo Kurau (Japan)" )
+	public static GameDriver driver_willow	   = new GameDriver("1989"	,"willow"	,"cps1.java"	,rom_willow,null	,machine_driver_cps1	,input_ports_willow	,init_cps1	,ROT0	,	"Capcom", "Willow (US)" )
+	public static GameDriver driver_willowj	   = new GameDriver("1989"	,"willowj"	,"cps1.java"	,rom_willowj,driver_willow	,machine_driver_cps1	,input_ports_willow	,init_cps1	,ROT0	,	"Capcom", "Willow (Japan, Japanese)" )					// Japan "warning"
+	public static GameDriver driver_willowje	   = new GameDriver("1989"	,"willowje"	,"cps1.java"	,rom_willowje,driver_willow	,machine_driver_cps1	,input_ports_willow	,init_cps1	,ROT0	,	"Capcom", "Willow (Japan, English)" )						// (c) Capcom U.S.A. but Japan "warning"
+	public static GameDriver driver_unsquad	   = new GameDriver("1989"	,"unsquad"	,"cps1.java"	,rom_unsquad,null	,machine_driver_cps1	,input_ports_unsquad	,init_cps1	,ROT0	,	"Capcom", "U.N. Squadron (US)" )
+	public static GameDriver driver_area88	   = new GameDriver("1989"	,"area88"	,"cps1.java"	,rom_area88,driver_unsquad	,machine_driver_cps1	,input_ports_unsquad	,init_cps1	,ROT0	,	"Capcom", "Area 88 (Japan)" )
+	public static GameDriver driver_ffight	   = new GameDriver("1989"	,"ffight"	,"cps1.java"	,rom_ffight,null	,machine_driver_cps1	,input_ports_ffight	,init_cps1	,ROT0	,	"Capcom", "Final Fight (World)" )
+	public static GameDriver driver_ffightu	   = new GameDriver("1989"	,"ffightu"	,"cps1.java"	,rom_ffightu,driver_ffight	,machine_driver_cps1	,input_ports_ffight	,init_cps1	,ROT0	,	"Capcom", "Final Fight (US 900112)" )
+	public static GameDriver driver_ffightj	   = new GameDriver("1989"	,"ffightj"	,"cps1.java"	,rom_ffightj,driver_ffight	,machine_driver_cps1	,input_ports_ffight	,init_cps1	,ROT0	,	"Capcom", "Final Fight (Japan set 1)" )
+	public static GameDriver driver_ffightj1	   = new GameDriver("1989"	,"ffightj1"	,"cps1.java"	,rom_ffightj1,driver_ffight	,machine_driver_cps1	,input_ports_ffight	,init_cps1	,ROT0	,	"Capcom", "Final Fight (Japan set 2)" )
+	public static GameDriver driver_1941	   = new GameDriver("1990"	,"1941"	,"cps1.java"	,rom_1941,null	,machine_driver_cps1	,input_ports_1941	,init_cps1	,ROT270	,	"Capcom", "1941 - Counter Attack (World)" )
+	public static GameDriver driver_1941j	   = new GameDriver("1990"	,"1941j"	,"cps1.java"	,rom_1941j,driver_1941	,machine_driver_cps1	,input_ports_1941	,init_cps1	,ROT270	,	"Capcom", "1941 - Counter Attack (Japan)" )
+	public static GameDriver driver_mercs	   = new GameDriver("1990"	,"mercs"	,"cps1.java"	,rom_mercs,null	,machine_driver_cps1	,input_ports_mercs	,init_cps1	,ROT270	,	"Capcom", "Mercs (World 900302)" )						// "ETC"
+	public static GameDriver driver_mercsu	   = new GameDriver("1990"	,"mercsu"	,"cps1.java"	,rom_mercsu,driver_mercs	,machine_driver_cps1	,input_ports_mercs	,init_cps1	,ROT270	,	"Capcom", "Mercs (US 900302)" )
+	public static GameDriver driver_mercsua	   = new GameDriver("1990"	,"mercsua"	,"cps1.java"	,rom_mercsua,driver_mercs	,machine_driver_cps1	,input_ports_mercs	,init_cps1	,ROT270	,	"Capcom", "Mercs (US 900608)" )
+	public static GameDriver driver_mercsj	   = new GameDriver("1990"	,"mercsj"	,"cps1.java"	,rom_mercsj,driver_mercs	,machine_driver_cps1	,input_ports_mercs	,init_cps1	,ROT270	,	"Capcom", "Senjou no Ookami II (Japan 900302)" )
+	public static GameDriver driver_mtwins	   = new GameDriver("1990"	,"mtwins"	,"cps1.java"	,rom_mtwins,null	,machine_driver_cps1	,input_ports_mtwins	,init_cps1	,ROT0	,	"Capcom", "Mega Twins (World 900619)" )					// "ETC" - (c) Capcom U.S.A. with World "warning"
+	public static GameDriver driver_chikij	   = new GameDriver("1990"	,"chikij"	,"cps1.java"	,rom_chikij,driver_mtwins	,machine_driver_cps1	,input_ports_mtwins	,init_cps1	,ROT0	,	"Capcom", "Chiki Chiki Boys (Japan 900619)" )
+	public static GameDriver driver_msword	   = new GameDriver("1990"	,"msword"	,"cps1.java"	,rom_msword,null	,machine_driver_cps1	,input_ports_msword	,init_cps1	,ROT0	,	"Capcom", "Magic Sword - Heroic Fantasy (World 900725)" )		// 25.07.1990  "Other Country"
+	public static GameDriver driver_mswordr1	   = new GameDriver("1990"	,"mswordr1"	,"cps1.java"	,rom_mswordr1,driver_msword	,machine_driver_cps1	,input_ports_msword	,init_cps1	,ROT0	,	"Capcom", "Magic Sword - Heroic Fantasy (World 900623)" )		// 23.06.1990  "Other Country"
+	public static GameDriver driver_mswordu	   = new GameDriver("1990"	,"mswordu"	,"cps1.java"	,rom_mswordu,driver_msword	,machine_driver_cps1	,input_ports_msword	,init_cps1	,ROT0	,	"Capcom", "Magic Sword - Heroic Fantasy (US 900725)" )			// 25.07.1990  "U.S.A."
+	public static GameDriver driver_mswordj	   = new GameDriver("1990"	,"mswordj"	,"cps1.java"	,rom_mswordj,driver_msword	,machine_driver_cps1	,input_ports_msword	,init_cps1	,ROT0	,	"Capcom", "Magic Sword (Japan 900623)" )					// 23.06.1990  "Japan"
+	public static GameDriver driver_cawing	   = new GameDriver("1990"	,"cawing"	,"cps1.java"	,rom_cawing,null	,machine_driver_cps1	,input_ports_cawing	,init_cps1	,ROT0	,	"Capcom", "Carrier Air Wing (World 901012)" )				// "ETC"
+	public static GameDriver driver_cawingu	   = new GameDriver("1990"	,"cawingu"	,"cps1.java"	,rom_cawingu,driver_cawing	,machine_driver_cps1	,input_ports_cawing	,init_cps1	,ROT0	,	"Capcom", "Carrier Air Wing (US 901012)" )
+	public static GameDriver driver_cawingj	   = new GameDriver("1990"	,"cawingj"	,"cps1.java"	,rom_cawingj,driver_cawing	,machine_driver_cps1	,input_ports_cawing	,init_cps1	,ROT0	,	"Capcom", "U.S. Navy (Japan 901012)" )
+	public static GameDriver driver_nemo	   = new GameDriver("1990"	,"nemo"	,"cps1.java"	,rom_nemo,null	,machine_driver_cps1	,input_ports_nemo	,init_cps1	,ROT0	,	"Capcom", "Nemo (World 901130)" )						// "ETC"
+	public static GameDriver driver_nemoj	   = new GameDriver("1990"	,"nemoj"	,"cps1.java"	,rom_nemoj,driver_nemo	,machine_driver_cps1	,input_ports_nemo	,init_cps1	,ROT0	,	"Capcom", "Nemo (Japan 901120)" )
+	public static GameDriver driver_sf2	   = new GameDriver("1991"	,"sf2"	,"cps1.java"	,rom_sf2,null	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (World 910522)" )	// "ETC"
+	public static GameDriver driver_sf2eb	   = new GameDriver("1991"	,"sf2eb"	,"cps1.java"	,rom_sf2eb,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (World 910214)" )	// "ETC"
+	public static GameDriver driver_sf2ua	   = new GameDriver("1991"	,"sf2ua"	,"cps1.java"	,rom_sf2ua,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (US 910206)" )
+	public static GameDriver driver_sf2ub	   = new GameDriver("1991"	,"sf2ub"	,"cps1.java"	,rom_sf2ub,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (US 910214)" )
+	public static GameDriver driver_sf2ud	   = new GameDriver("1991"	,"sf2ud"	,"cps1.java"	,rom_sf2ud,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (US 910318)" )
+	public static GameDriver driver_sf2ue	   = new GameDriver("1991"	,"sf2ue"	,"cps1.java"	,rom_sf2ue,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (US 910228)" )
+	public static GameDriver driver_sf2uf	   = new GameDriver("1991"	,"sf2uf"	,"cps1.java"	,rom_sf2uf,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (US 910411)" )
+	public static GameDriver driver_sf2ui	   = new GameDriver("1991"	,"sf2ui"	,"cps1.java"	,rom_sf2ui,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (US 910522)" )
+	public static GameDriver driver_sf2uk	   = new GameDriver("1991"	,"sf2uk"	,"cps1.java"	,rom_sf2uk,driver_sf2	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (US 911101)" )
+	public static GameDriver driver_sf2j	   = new GameDriver("1991"	,"sf2j"	,"cps1.java"	,rom_sf2j,driver_sf2	,machine_driver_sf2	,input_ports_sf2j	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (Japan 911210)" )
+	public static GameDriver driver_sf2ja	   = new GameDriver("1991"	,"sf2ja"	,"cps1.java"	,rom_sf2ja,driver_sf2	,machine_driver_sf2	,input_ports_sf2j	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (Japan 910214)" )
+	public static GameDriver driver_sf2jc	   = new GameDriver("1991"	,"sf2jc"	,"cps1.java"	,rom_sf2jc,driver_sf2	,machine_driver_sf2	,input_ports_sf2j	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II - The World Warrior (Japan 910306)" )
+	public static GameDriver driver_3wonders	   = new GameDriver("1991"	,"3wonders"	,"cps1.java"	,rom_3wonders,null	,machine_driver_cps1	,input_ports_3wonders	,init_cps1	,ROT0	,	"Capcom", "Three Wonders (World 910520)" )					// "ETC"
+	public static GameDriver driver_3wonderu	   = new GameDriver("1991"	,"3wonderu"	,"cps1.java"	,rom_3wonderu,driver_3wonders	,machine_driver_cps1	,input_ports_3wonders	,init_cps1	,ROT0	,	"Capcom", "Three Wonders (US 910520)" )
+	public static GameDriver driver_wonder3	   = new GameDriver("1991"	,"wonder3"	,"cps1.java"	,rom_wonder3,driver_3wonders	,machine_driver_cps1	,input_ports_3wonders	,init_cps1	,ROT0	,	"Capcom", "Wonder 3 (Japan 910520)" )
+	public static GameDriver driver_kod	   = new GameDriver("1991"	,"kod"	,"cps1.java"	,rom_kod,null	,machine_driver_cps1	,input_ports_kod	,init_cps1	,ROT0	,	"Capcom", "The King of Dragons (World 910711)" )				// "ETC"
+	public static GameDriver driver_kodu	   = new GameDriver("1991"	,"kodu"	,"cps1.java"	,rom_kodu,driver_kod	,machine_driver_cps1	,input_ports_kodj	,init_cps1	,ROT0	,	"Capcom", "The King of Dragons (US 910910)" )
+	public static GameDriver driver_kodj	   = new GameDriver("1991"	,"kodj"	,"cps1.java"	,rom_kodj,driver_kod	,machine_driver_cps1	,input_ports_kodj	,init_cps1	,ROT0	,	"Capcom", "The King of Dragons (Japan 910805)" )
+	public static GameDriver driver_kodb	   = new GameDriver("1991"	,"kodb"	,"cps1.java"	,rom_kodb,driver_kod	,machine_driver_cps1	,input_ports_kod	,init_cps1	,ROT0	,	"Capcom", "The King of Dragons (bootleg)", GAME_NOT_WORKING )		// 910731  "ETC"
+	public static GameDriver driver_captcomm	   = new GameDriver("1991"	,"captcomm"	,"cps1.java"	,rom_captcomm,null	,machine_driver_cps1	,input_ports_captcomm	,init_cps1	,ROT0	,	"Capcom", "Captain Commando (World 911014)" )				// "OTHER COUNTRY"
+	public static GameDriver driver_captcomu	   = new GameDriver("1991"	,"captcomu"	,"cps1.java"	,rom_captcomu,driver_captcomm	,machine_driver_cps1	,input_ports_captcomm	,init_cps1	,ROT0	,	"Capcom", "Captain Commando (US 910928)" )
+	public static GameDriver driver_captcomj	   = new GameDriver("1991"	,"captcomj"	,"cps1.java"	,rom_captcomj,driver_captcomm	,machine_driver_cps1	,input_ports_captcomm	,init_cps1	,ROT0	,	"Capcom", "Captain Commando (Japan 911202)" )
+	public static GameDriver driver_knights	   = new GameDriver("1991"	,"knights"	,"cps1.java"	,rom_knights,null	,machine_driver_cps1	,input_ports_knights	,init_cps1	,ROT0	,	"Capcom", "Knights of the Round (World 911127)" )				// "ETC"
+	public static GameDriver driver_knightsu	   = new GameDriver("1991"	,"knightsu"	,"cps1.java"	,rom_knightsu,driver_knights	,machine_driver_cps1	,input_ports_knights	,init_cps1	,ROT0	,	"Capcom", "Knights of the Round (US 911127)" )
+	public static GameDriver driver_knightsj	   = new GameDriver("1991"	,"knightsj"	,"cps1.java"	,rom_knightsj,driver_knights	,machine_driver_cps1	,input_ports_knights	,init_cps1	,ROT0	,	"Capcom", "Knights of the Round (Japan 911127)" )
+	public static GameDriver driver_sf2ce	   = new GameDriver("1992"	,"sf2ce"	,"cps1.java"	,rom_sf2ce,null	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II' - Champion Edition (World 920313)" )	// "ETC"
+	public static GameDriver driver_sf2ceua	   = new GameDriver("1992"	,"sf2ceua"	,"cps1.java"	,rom_sf2ceua,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II' - Champion Edition (US 920313)" )
+	public static GameDriver driver_sf2ceub	   = new GameDriver("1992"	,"sf2ceub"	,"cps1.java"	,rom_sf2ceub,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II' - Champion Edition (US 920513)" )
+	public static GameDriver driver_sf2ceuc	   = new GameDriver("1992"	,"sf2ceuc"	,"cps1.java"	,rom_sf2ceuc,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II' - Champion Edition (US 920803)" )
+	public static GameDriver driver_sf2cej	   = new GameDriver("1992"	,"sf2cej"	,"cps1.java"	,rom_sf2cej,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2j	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II' - Champion Edition (Japan 920513)" )
+	public static GameDriver driver_sf2rb	   = new GameDriver("1992"	,"sf2rb"	,"cps1.java"	,rom_sf2rb,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (Rainbow set 1)" )	// 920322 - based on World version
+	public static GameDriver driver_sf2rb2	   = new GameDriver("1992"	,"sf2rb2"	,"cps1.java"	,rom_sf2rb2,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (Rainbow set 2)" )	// 920322 - based on World version
+	public static GameDriver driver_sf2red	   = new GameDriver("1992"	,"sf2red"	,"cps1.java"	,rom_sf2red,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (Red Wave)" )		// 920313 - based on World version
+	public static GameDriver driver_sf2v004	   = new GameDriver("1992"	,"sf2v004"	,"cps1.java"	,rom_sf2v004,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II! - Champion Edition (V004)" )		// "102092" !!! - based on (heavily modified) World version
+	public static GameDriver driver_sf2accp2	   = new GameDriver("1992"	,"sf2accp2"	,"cps1.java"	,rom_sf2accp2,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (Accelerator Pt.II)" )  // 920313 - based on USA version
+	public static GameDriver driver_sf2m1	   = new GameDriver("1992"	,"sf2m1"	,"cps1.java"	,rom_sf2m1,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (M1)", GAME_NOT_WORKING )
+	public static GameDriver driver_sf2m2	   = new GameDriver("1992"	,"sf2m2"	,"cps1.java"	,rom_sf2m2,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (M2)", GAME_NOT_WORKING )
+	public static GameDriver driver_sf2m3	   = new GameDriver("1992"	,"sf2m3"	,"cps1.java"	,rom_sf2m3,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (M3)", GAME_NOT_WORKING )
+	public static GameDriver driver_sf2m4	   = new GameDriver("1992"	,"sf2m4"	,"cps1.java"	,rom_sf2m4,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2j	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (M4)" )
+	public static GameDriver driver_sf2m5	   = new GameDriver("1992"	,"sf2m5"	,"cps1.java"	,rom_sf2m5,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (M5)" )
+	public static GameDriver driver_sf2m6	   = new GameDriver("1992"	,"sf2m6"	,"cps1.java"	,rom_sf2m6,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (M6)" )
+	public static GameDriver driver_sf2m7	   = new GameDriver("1992"	,"sf2m7"	,"cps1.java"	,rom_sf2m7,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (M7)" )
+	public static GameDriver driver_sf2yyc	   = new GameDriver("1992"	,"sf2yyc"	,"cps1.java"	,rom_sf2yyc,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (YYC)" )
+	public static GameDriver driver_sf2koryu	   = new GameDriver("1992"	,"sf2koryu"	,"cps1.java"	,rom_sf2koryu,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"bootleg","Street Fighter II' - Champion Edition (Kouryu)" )
+	public static GameDriver driver_varth	   = new GameDriver("1992"	,"varth"	,"cps1.java"	,rom_varth,null	,machine_driver_cps1	,input_ports_varth	,init_cps1	,ROT270	,	"Capcom", "Varth - Operation Thunderstorm (World 920612)" )		// "ETC"
+	public static GameDriver driver_varthu	   = new GameDriver("1992"	,"varthu"	,"cps1.java"	,rom_varthu,driver_varth	,machine_driver_cps1	,input_ports_varth	,init_cps1	,ROT270	,	"Capcom (Romstar license)", "Varth - Operation Thunderstorm (US 920612)" )
+	public static GameDriver driver_varthj	   = new GameDriver("1992"	,"varthj"	,"cps1.java"	,rom_varthj,driver_varth	,machine_driver_cps1	,input_ports_varth	,init_cps1	,ROT270	,	"Capcom", "Varth - Operation Thunderstorm (Japan 920714)" )
+	public static GameDriver driver_cworld2j	   = new GameDriver("1992"	,"cworld2j"	,"cps1.java"	,rom_cworld2j,null	,machine_driver_cps1	,input_ports_cworld2j	,init_cps1	,ROT0	,	"Capcom", "Capcom World 2 (Japan 920611)" )
+	public static GameDriver driver_sf2t	   = new GameDriver("1992"	,"sf2t"	,"cps1.java"	,rom_sf2t,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II' - Hyper Fighting (US 921209)" )
+	public static GameDriver driver_sf2tj	   = new GameDriver("1992"	,"sf2tj"	,"cps1.java"	,rom_sf2tj,driver_sf2ce	,machine_driver_sf2	,input_ports_sf2j	,init_cps1	,ROT0	,	"Capcom", "Street Fighter II' Turbo - Hyper Fighting (Japan 921209)" )
+	public static GameDriver driver_qad	   = new GameDriver("1992"	,"qad"	,"cps1.java"	,rom_qad,null	,machine_driver_cps1	,input_ports_qad	,init_cps1	,ROT0	,	"Capcom", "Quiz & Dragons (US 920701)" )
+	public static GameDriver driver_qadj	   = new GameDriver("1994"	,"qadj"	,"cps1.java"	,rom_qadj,driver_qad	,machine_driver_cps1	,input_ports_qadj	,init_cps1	,ROT0	,	"Capcom", "Quiz & Dragons (Japan 940921)" )
+	public static GameDriver driver_qtono2	   = new GameDriver("1995"	,"qtono2"	,"cps1.java"	,rom_qtono2,null	,machine_driver_cps1	,input_ports_qtono2	,init_cps1	,ROT0	,	"Capcom", "Quiz Tonosama no Yabou 2 Zenkoku-ban (Japan 950123)" )
+	public static GameDriver driver_megaman	   = new GameDriver("1995"	,"megaman"	,"cps1.java"	,rom_megaman,null	,machine_driver_cps1	,input_ports_megaman	,init_cps1	,ROT0	,	"Capcom", "Mega Man - The Power Battle (CPS1 Asia 951006)" )
+	public static GameDriver driver_rockmanj	   = new GameDriver("1995"	,"rockmanj"	,"cps1.java"	,rom_rockmanj,driver_megaman	,machine_driver_cps1	,input_ports_megaman	,init_cps1	,ROT0	,	"Capcom", "Rockman - The Power Battle (CPS1 Japan 950922)" )
 	
-	GAME( 1992, wof,      0,        qsound,   wof,      wof,      ROT0,   "Capcom", "Warriors of Fate (World 921002)" )				// "ETC"
-	GAME( 1992, wofa,     wof,      qsound,   wof,      wof,      ROT0,   "Capcom", "Sangokushi II (Asia 921005)" )					// World "warning"
-	GAME( 1992, wofu,     wof,      qsound,   wof,      wof,      ROT0,   "Capcom", "Warriors of Fate (US 921031)" )					// World "warning"
-	GAME( 1992, wofj,     wof,      qsound,   wof,      wof,      ROT0,   "Capcom", "Tenchi wo Kurau II - Sekiheki no Tatakai (Japan 921031)" )
-	GAME( 1993, dino,     0,        qsound,   dino,     dino,     ROT0,   "Capcom", "Cadillacs and Dinosaurs (World 930201)" )			// "ETC"
-	GAME( 1993, dinou,    dino,     qsound,   dino,     dino ,    ROT0,   "Capcom", "Cadillacs and Dinosaurs (US 930201)" )
-	GAME( 1993, dinoj,    dino,     qsound,   dino,     dino ,    ROT0,   "Capcom", "Cadillacs Kyouryuu-Shinseiki (Japan 930201)" )
-	GAME( 1993, punisher, 0,        qsound,   punisher, punisher, ROT0,   "Capcom", "The Punisher (World 930422)" )					// "ETC"
-	GAME( 1993, punishru, punisher, qsound,   punisher, punisher, ROT0,   "Capcom", "The Punisher (US 930422)" )
-	GAME( 1993, punishrj, punisher, qsound,   punisher, punisher, ROT0,   "Capcom", "The Punisher (Japan 930422)" )
-	GAME( 1993, slammast, 0,        qsound,   slammast, slammast, ROT0,   "Capcom", "Saturday Night Slam Masters (World 930713)" )		// "ETC"
-	GAME( 1993, slammasu, slammast, qsound,   slammast, slammast, ROT0,   "Capcom", "Saturday Night Slam Masters (US 930713)" )
-	GAME( 1993, mbomberj, slammast, qsound,   slammast, slammast, ROT0,   "Capcom", "Muscle Bomber - The Body Explosion (Japan 930713)" )
-	GAME( 1993, mbombrd,  slammast, qsound,   slammast, slammast, ROT0,   "Capcom", "Muscle Bomber Duo - Ultimate Team Battle (World 931206)" )  // "ETC"
-	GAME( 1993, mbombrdj, slammast, qsound,   slammast, slammast, ROT0,   "Capcom", "Muscle Bomber Duo - Heat Up Warriors (Japan 931206)" )
+	public static GameDriver driver_wof	   = new GameDriver("1992"	,"wof"	,"cps1.java"	,rom_wof,null	,machine_driver_qsound	,input_ports_wof	,init_wof	,ROT0	,	"Capcom", "Warriors of Fate (World 921002)" )				// "ETC"
+	public static GameDriver driver_wofa	   = new GameDriver("1992"	,"wofa"	,"cps1.java"	,rom_wofa,driver_wof	,machine_driver_qsound	,input_ports_wof	,init_wof	,ROT0	,	"Capcom", "Sangokushi II (Asia 921005)" )					// World "warning"
+	public static GameDriver driver_wofu	   = new GameDriver("1992"	,"wofu"	,"cps1.java"	,rom_wofu,driver_wof	,machine_driver_qsound	,input_ports_wof	,init_wof	,ROT0	,	"Capcom", "Warriors of Fate (US 921031)" )					// World "warning"
+	public static GameDriver driver_wofj	   = new GameDriver("1992"	,"wofj"	,"cps1.java"	,rom_wofj,driver_wof	,machine_driver_qsound	,input_ports_wof	,init_wof	,ROT0	,	"Capcom", "Tenchi wo Kurau II - Sekiheki no Tatakai (Japan 921031)" )
+	public static GameDriver driver_dino	   = new GameDriver("1993"	,"dino"	,"cps1.java"	,rom_dino,null	,machine_driver_qsound	,input_ports_dino	,init_dino	,ROT0	,	"Capcom", "Cadillacs and Dinosaurs (World 930201)" )			// "ETC"
+	public static GameDriver driver_dinou	   = new GameDriver("1993"	,"dinou"	,"cps1.java"	,rom_dinou,driver_dino	,machine_driver_qsound	,input_ports_dino	,init_dino	,	,	ROT0,   "Capcom", "Cadillacs and Dinosaurs (US 930201)" )
+	public static GameDriver driver_dinoj	   = new GameDriver("1993"	,"dinoj"	,"cps1.java"	,rom_dinoj,driver_dino	,machine_driver_qsound	,input_ports_dino	,init_dino	,	,	ROT0,   "Capcom", "Cadillacs Kyouryuu-Shinseiki (Japan 930201)" )
+	public static GameDriver driver_punisher	   = new GameDriver("1993"	,"punisher"	,"cps1.java"	,rom_punisher,null	,machine_driver_qsound	,input_ports_punisher	,init_punisher	,ROT0	,	"Capcom", "The Punisher (World 930422)" )					// "ETC"
+	public static GameDriver driver_punishru	   = new GameDriver("1993"	,"punishru"	,"cps1.java"	,rom_punishru,driver_punisher	,machine_driver_qsound	,input_ports_punisher	,init_punisher	,ROT0	,	"Capcom", "The Punisher (US 930422)" )
+	public static GameDriver driver_punishrj	   = new GameDriver("1993"	,"punishrj"	,"cps1.java"	,rom_punishrj,driver_punisher	,machine_driver_qsound	,input_ports_punisher	,init_punisher	,ROT0	,	"Capcom", "The Punisher (Japan 930422)" )
+	public static GameDriver driver_slammast	   = new GameDriver("1993"	,"slammast"	,"cps1.java"	,rom_slammast,null	,machine_driver_qsound	,input_ports_slammast	,init_slammast	,ROT0	,	"Capcom", "Saturday Night Slam Masters (World 930713)" )		// "ETC"
+	public static GameDriver driver_slammasu	   = new GameDriver("1993"	,"slammasu"	,"cps1.java"	,rom_slammasu,driver_slammast	,machine_driver_qsound	,input_ports_slammast	,init_slammast	,ROT0	,	"Capcom", "Saturday Night Slam Masters (US 930713)" )
+	public static GameDriver driver_mbomberj	   = new GameDriver("1993"	,"mbomberj"	,"cps1.java"	,rom_mbomberj,driver_slammast	,machine_driver_qsound	,input_ports_slammast	,init_slammast	,ROT0	,	"Capcom", "Muscle Bomber - The Body Explosion (Japan 930713)" )
+	public static GameDriver driver_mbombrd	   = new GameDriver("1993"	,"mbombrd"	,"cps1.java"	,rom_mbombrd,driver_slammast	,machine_driver_qsound	,input_ports_slammast	,init_slammast	,ROT0	,	"Capcom", "Muscle Bomber Duo - Ultimate Team Battle (World 931206)" )  // "ETC"
+	public static GameDriver driver_mbombrdj	   = new GameDriver("1993"	,"mbombrdj"	,"cps1.java"	,rom_mbombrdj,driver_slammast	,machine_driver_qsound	,input_ports_slammast	,init_slammast	,ROT0	,	"Capcom", "Muscle Bomber Duo - Heat Up Warriors (Japan 931206)" )
 	
-	GAME( 1994, pnickj,   0,        cps1,     pnickj,   cps1,     ROT0,   "Compile (Capcom license)", "Pnickies (Japan 940608)" )
+	public static GameDriver driver_pnickj	   = new GameDriver("1994"	,"pnickj"	,"cps1.java"	,rom_pnickj,null	,machine_driver_cps1	,input_ports_pnickj	,init_cps1	,ROT0	,	"Compile (Capcom license)", "Pnickies (Japan 940608)" )
 	/* Japanese version of Pang 3 is encrypted, Euro version is not */
-	GAME( 1995, pang3,    0,        pang3,    pang3,    cps1,     ROT0,   "Mitchell", "Pang! 3 (Euro 950511)" )
-	GAME( 1995, pang3j,   pang3,    pang3,    pang3,    pang3,    ROT0,   "Mitchell", "Pang! 3 (Japan 950511)" )
+	public static GameDriver driver_pang3	   = new GameDriver("1995"	,"pang3"	,"cps1.java"	,rom_pang3,null	,machine_driver_pang3	,input_ports_pang3	,init_cps1	,ROT0	,	"Mitchell", "Pang! 3 (Euro 950511)" )
+	public static GameDriver driver_pang3j	   = new GameDriver("1995"	,"pang3j"	,"cps1.java"	,rom_pang3j,driver_pang3	,machine_driver_pang3	,input_ports_pang3	,init_pang3	,ROT0	,	"Mitchell", "Pang! 3 (Japan 950511)" )
 }

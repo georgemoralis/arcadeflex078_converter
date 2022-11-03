@@ -657,5 +657,5 @@ public class galpani2
 	045(8 banks):	0x40000 *: -
 	*/
 	
-	GAMEX( 1993, galpani2, 0, galpani2, galpani2, 0, ROT90, "Kaneko", "Gals Panic II (Japan?)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_galpani2	   = new GameDriver("1993"	,"galpani2"	,"galpani2.java"	,rom_galpani2,null	,machine_driver_galpani2	,input_ports_galpani2	,null	,ROT90	,	"Kaneko", "Gals Panic II (Japan?)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
 }

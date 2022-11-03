@@ -630,6 +630,6 @@ public class angelkds
 	public static DriverInitHandlerPtr init_spcpostn  = new DriverInitHandlerPtr() { public void handler()	{ spcpostn_decode(); } };
 	
 	
-	GAME( 1988, angelkds, 0, angelkds, angelkds,        0,  ROT90,  "Sega / Nasco?", "Angel Kids (Japan)" ) /* Nasco not displayed but 'Exa Planning' is */
-	GAMEX(1986, spcpostn, 0, angelkds, angelkds, spcpostn,  ROT90,  "Sega / Nasco", "Space Position (Japan)", GAME_NOT_WORKING ) /* encrypted */
+	public static GameDriver driver_angelkds	   = new GameDriver("1988"	,"angelkds"	,"angelkds.java"	,rom_angelkds,null	,machine_driver_angelkds	,input_ports_angelkds	,null	,ROT90	,	"Sega / Nasco?", "Angel Kids (Japan)" ) /* Nasco not displayed but 'Exa Planning' is */
+	public static GameDriver driver_spcpostn	   = new GameDriver("1986"	,"spcpostn"	,"angelkds.java"	,rom_spcpostn,null	,machine_driver_angelkds	,input_ports_angelkds	,init_spcpostn	,ROT90	,	"Sega / Nasco", "Space Position (Japan)", GAME_NOT_WORKING ) /* encrypted */
 }

@@ -594,12 +594,12 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	GAME( 1988, vindictr, 0,        vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 5)" )
-	GAME( 1988, vindicte, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (Europe, rev 5)" )
-	GAME( 1988, vindictg, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (German, rev 1)" )
-	GAME( 1988, vindice4, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (Europe, rev 4)" )
-	GAME( 1988, vindict4, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 4)" )
-	GAME( 1988, vindice3, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (Europe, rev 3)" )
-	GAME( 1988, vindict2, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 2)" )
-	GAME( 1988, vindict1, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 1)" )
+	public static GameDriver driver_vindictr	   = new GameDriver("1988"	,"vindictr"	,"vindictr.java"	,rom_vindictr,null	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 5)" )
+	public static GameDriver driver_vindicte	   = new GameDriver("1988"	,"vindicte"	,"vindictr.java"	,rom_vindicte,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (Europe, rev 5)" )
+	public static GameDriver driver_vindictg	   = new GameDriver("1988"	,"vindictg"	,"vindictr.java"	,rom_vindictg,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (German, rev 1)" )
+	public static GameDriver driver_vindice4	   = new GameDriver("1988"	,"vindice4"	,"vindictr.java"	,rom_vindice4,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (Europe, rev 4)" )
+	public static GameDriver driver_vindict4	   = new GameDriver("1988"	,"vindict4"	,"vindictr.java"	,rom_vindict4,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 4)" )
+	public static GameDriver driver_vindice3	   = new GameDriver("1988"	,"vindice3"	,"vindictr.java"	,rom_vindice3,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (Europe, rev 3)" )
+	public static GameDriver driver_vindict2	   = new GameDriver("1988"	,"vindict2"	,"vindictr.java"	,rom_vindict2,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 2)" )
+	public static GameDriver driver_vindict1	   = new GameDriver("1988"	,"vindict1"	,"vindictr.java"	,rom_vindict1,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 1)" )
 }

@@ -403,6 +403,6 @@ public class suprslam
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	GAMEX( 1995, suprslam, 0, suprslam, suprslam, 0, ROT0, "Banpresto / Toei Animation", "Super Slams", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_suprslam	   = new GameDriver("1995"	,"suprslam"	,"suprslam.java"	,rom_suprslam,null	,machine_driver_suprslam	,input_ports_suprslam	,null	,ROT0	,	"Banpresto / Toei Animation", "Super Slams", GAME_IMPERFECT_GRAPHICS )
 	
 }

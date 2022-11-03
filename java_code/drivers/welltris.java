@@ -863,6 +863,6 @@ public class welltris
 	
 	
 	
-	GAMEX( 1991, welltris, 0,        welltris, welltris, welltris, ROT0,   "Video System Co.", "Welltris (Japan, 2 players)", GAME_NO_COCKTAIL )
-	GAMEX( 1992, quiz18k,  0,        quiz18k,  quiz18k,  quiz18k,  ROT0,   "EIM", "Miyasu Nonki no Quiz 18-Kin", GAME_NO_COCKTAIL )
+	public static GameDriver driver_welltris	   = new GameDriver("1991"	,"welltris"	,"welltris.java"	,rom_welltris,null	,machine_driver_welltris	,input_ports_welltris	,init_welltris	,ROT0	,	"Video System Co.", "Welltris (Japan, 2 players)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_quiz18k	   = new GameDriver("1992"	,"quiz18k"	,"welltris.java"	,rom_quiz18k,null	,machine_driver_quiz18k	,input_ports_quiz18k	,init_quiz18k	,ROT0	,	"EIM", "Miyasu Nonki no Quiz 18-Kin", GAME_NO_COCKTAIL )
 }

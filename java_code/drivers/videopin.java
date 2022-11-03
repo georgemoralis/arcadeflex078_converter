@@ -411,5 +411,5 @@ public class videopin
 	 *
 	 *************************************/
 	
-	GAMEX( 1979, videopin, 0, videopin, videopin, 0, ROT270, "Atari", "Video Pinball", GAME_NO_SOUND )
+	public static GameDriver driver_videopin	   = new GameDriver("1979"	,"videopin"	,"videopin.java"	,rom_videopin,null	,machine_driver_videopin	,input_ports_videopin	,null	,ROT270	,	"Atari", "Video Pinball", GAME_NO_SOUND )
 }

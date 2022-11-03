@@ -814,11 +814,11 @@ public class vendetta
 	
 	
 	
-	GAME( 1991, vendetta, 0,        vendetta, vendet4p, vendetta, ROT0, "Konami", "Vendetta (World 4 Players ver. T)" )
-	GAME( 1991, vendetao, vendetta, vendetta, vendet4p, vendetta, ROT0, "Konami", "Vendetta (World 4 Players ver. R)" )
-	GAME( 1991, vendet2p, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Vendetta (World 2 Players ver. W)" )
-	GAME( 1991, vendetas, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Vendetta (Asia 2 Players ver. U)" )
-	GAME( 1991, vendtaso, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Vendetta (Asia 2 Players ver. D)" )
-	GAME( 1991, vendettj, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Crime Fighters 2 (Japan 2 Players ver. P)" )
-	GAME( 1991, esckids,  0,        esckids,  esckids,  vendetta, ROT0, "Konami", "Escape Kids (Japan 2 Players)" )
+	public static GameDriver driver_vendetta	   = new GameDriver("1991"	,"vendetta"	,"vendetta.java"	,rom_vendetta,null	,machine_driver_vendetta	,input_ports_vendet4p	,init_vendetta	,ROT0	,	"Konami", "Vendetta (World 4 Players ver. T)" )
+	public static GameDriver driver_vendetao	   = new GameDriver("1991"	,"vendetao"	,"vendetta.java"	,rom_vendetao,driver_vendetta	,machine_driver_vendetta	,input_ports_vendet4p	,init_vendetta	,ROT0	,	"Konami", "Vendetta (World 4 Players ver. R)" )
+	public static GameDriver driver_vendet2p	   = new GameDriver("1991"	,"vendet2p"	,"vendetta.java"	,rom_vendet2p,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Vendetta (World 2 Players ver. W)" )
+	public static GameDriver driver_vendetas	   = new GameDriver("1991"	,"vendetas"	,"vendetta.java"	,rom_vendetas,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Vendetta (Asia 2 Players ver. U)" )
+	public static GameDriver driver_vendtaso	   = new GameDriver("1991"	,"vendtaso"	,"vendetta.java"	,rom_vendtaso,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Vendetta (Asia 2 Players ver. D)" )
+	public static GameDriver driver_vendettj	   = new GameDriver("1991"	,"vendettj"	,"vendetta.java"	,rom_vendettj,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Crime Fighters 2 (Japan 2 Players ver. P)" )
+	public static GameDriver driver_esckids	   = new GameDriver("1991"	,"esckids"	,"vendetta.java"	,rom_esckids,null	,machine_driver_esckids	,input_ports_esckids	,init_vendetta	,ROT0	,	"Konami", "Escape Kids (Japan 2 Players)" )
 }

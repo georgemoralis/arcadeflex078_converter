@@ -1137,7 +1137,7 @@ public class fitfight
 	
 	/* GAME */
 	
-	GAMEX(199?, fitfight, 0, fitfight, fitfight, fitfight, ROT0, "bootleg", "Fit of Fighting", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	GAMEX(199?, histryma, 0, fitfight, histryma, histryma, ROT0, "bootleg", "The History of Martial Arts", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	GAMEX(199?, bbprot,   0, bbprot,   bbprot,   bbprot,   ROT0, "<unknown>", "Untitled Fighter 'BB' (prototype)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_fitfight	   = new GameDriver("199?"	,"fitfight"	,"fitfight.java"	,rom_fitfight,null	,machine_driver_fitfight	,input_ports_fitfight	,init_fitfight	,ROT0	,	"bootleg", "Fit of Fighting", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_histryma	   = new GameDriver("199?"	,"histryma"	,"fitfight.java"	,rom_histryma,null	,machine_driver_fitfight	,input_ports_histryma	,init_histryma	,ROT0	,	"bootleg", "The History of Martial Arts", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	public static GameDriver driver_bbprot	   = new GameDriver("199?"	,"bbprot"	,"fitfight.java"	,rom_bbprot,null	,machine_driver_bbprot	,input_ports_bbprot	,init_bbprot	,ROT0	,	"<unknown>", "Untitled Fighter 'BB' (prototype)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

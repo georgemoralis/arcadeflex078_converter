@@ -371,5 +371,5 @@ public class ace
 	
 	ROM_END(); }}; 
 	
-	GAMEX( 1976, ace, 0, ace, ace, 0, ROT0, "Allied Leisure", "Ace", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_ace	   = new GameDriver("1976"	,"ace"	,"ace.java"	,rom_ace,null	,machine_driver_ace	,input_ports_ace	,null	,ROT0	,	"Allied Leisure", "Ace", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
 }

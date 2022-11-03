@@ -156,5 +156,5 @@ public class news
 	ROM_END(); }}; 
 	
 	
-	GAME( 1993, news, 0, news, news, 0, ROT0, "Poby / Virus", "News" )
+	public static GameDriver driver_news	   = new GameDriver("1993"	,"news"	,"news.java"	,rom_news,null	,machine_driver_news	,input_ports_news	,null	,ROT0	,	"Poby / Virus", "News" )
 }

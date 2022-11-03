@@ -503,5 +503,5 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	GAMEX( 1983, gridlee, 0,        gridlee, gridlee, 0,     ROT0, "Videa", "Gridlee", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_gridlee	   = new GameDriver("1983"	,"gridlee"	,"gridlee.java"	,rom_gridlee,null	,machine_driver_gridlee	,input_ports_gridlee	,null	,ROT0	,	"Videa", "Gridlee", GAME_IMPERFECT_SOUND )
 }

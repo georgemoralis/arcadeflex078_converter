@@ -2120,14 +2120,14 @@ public class psikyo
 	***************************************************************************/
 	
 	/* Working Games */
-	GAME ( 1993, samuraia, 0,        sngkace,  samuraia, sngkace,  ROT270, "Psikyo", "Samurai Aces (World)"  ) // Banpresto?
-	GAME ( 1993, sngkace,  samuraia, sngkace,  sngkace,  sngkace,  ROT270, "Psikyo", "Sengoku Ace (Japan)"   ) // Banpresto?
-	GAME ( 1994, gunbird,  0,        gunbird,  gunbird,  gunbird,  ROT270, "Psikyo", "Gunbird (World)"      )
-	GAME ( 1994, gunbirdk, gunbird,  gunbird,  gunbirdj, gunbird,  ROT270, "Psikyo", "Gunbird (Korea)"      )
-	GAME ( 1994, gunbirdj, gunbird,  gunbird,  gunbirdj, gunbird,  ROT270, "Psikyo", "Gunbird (Japan)"      )
-	GAME ( 1994, btlkroad, 0,        gunbird,  btlkroad, gunbird,  ROT0,   "Psikyo", "Battle K-Road" )
-	GAME ( 1995, s1945,    0,        s1945,    s1945,    s1945,    ROT270, "Psikyo", "Strikers 1945" )
-	GAME ( 1995, s1945j,   s1945,    s1945,    s1945j,   s1945j,   ROT270, "Psikyo", "Strikers 1945 (Japan)" )
-	GAME ( 1995, s1945jn,  s1945,    gunbird,  s1945j,   s1945jn,  ROT270, "Psikyo", "Strikers 1945 (Japan, unprotected)" )
-	GAME ( 1996, tengai,   0,        s1945,    tengai,   tengai,   ROT0,   "Psikyo", "Tengai / Sengoku Blade: Sengoku Ace Episode II" )
+	public static GameDriver driver_samuraia	   = new GameDriver("1993"	,"samuraia"	,"psikyo.java"	,rom_samuraia,null	,machine_driver_sngkace	,input_ports_samuraia	,init_sngkace	,ROT270	,	"Psikyo", "Samurai Aces (World)"  ) // Banpresto?
+	public static GameDriver driver_sngkace	   = new GameDriver("1993"	,"sngkace"	,"psikyo.java"	,rom_sngkace,driver_samuraia	,machine_driver_sngkace	,input_ports_sngkace	,init_sngkace	,ROT270	,	"Psikyo", "Sengoku Ace (Japan)"   ) // Banpresto?
+	public static GameDriver driver_gunbird	   = new GameDriver("1994"	,"gunbird"	,"psikyo.java"	,rom_gunbird,null	,machine_driver_gunbird	,input_ports_gunbird	,init_gunbird	,ROT270	,	"Psikyo", "Gunbird (World)"      )
+	public static GameDriver driver_gunbirdk	   = new GameDriver("1994"	,"gunbirdk"	,"psikyo.java"	,rom_gunbirdk,driver_gunbird	,machine_driver_gunbird	,input_ports_gunbirdj	,init_gunbird	,ROT270	,	"Psikyo", "Gunbird (Korea)"      )
+	public static GameDriver driver_gunbirdj	   = new GameDriver("1994"	,"gunbirdj"	,"psikyo.java"	,rom_gunbirdj,driver_gunbird	,machine_driver_gunbird	,input_ports_gunbirdj	,init_gunbird	,ROT270	,	"Psikyo", "Gunbird (Japan)"      )
+	public static GameDriver driver_btlkroad	   = new GameDriver("1994"	,"btlkroad"	,"psikyo.java"	,rom_btlkroad,null	,machine_driver_gunbird	,input_ports_btlkroad	,init_gunbird	,ROT0	,	"Psikyo", "Battle K-Road" )
+	public static GameDriver driver_s1945	   = new GameDriver("1995"	,"s1945"	,"psikyo.java"	,rom_s1945,null	,machine_driver_s1945	,input_ports_s1945	,init_s1945	,ROT270	,	"Psikyo", "Strikers 1945" )
+	public static GameDriver driver_s1945j	   = new GameDriver("1995"	,"s1945j"	,"psikyo.java"	,rom_s1945j,driver_s1945	,machine_driver_s1945	,input_ports_s1945j	,init_s1945j	,ROT270	,	"Psikyo", "Strikers 1945 (Japan)" )
+	public static GameDriver driver_s1945jn	   = new GameDriver("1995"	,"s1945jn"	,"psikyo.java"	,rom_s1945jn,driver_s1945	,machine_driver_gunbird	,input_ports_s1945j	,init_s1945jn	,ROT270	,	"Psikyo", "Strikers 1945 (Japan, unprotected)" )
+	public static GameDriver driver_tengai	   = new GameDriver("1996"	,"tengai"	,"psikyo.java"	,rom_tengai,null	,machine_driver_s1945	,input_ports_tengai	,init_tengai	,ROT0	,	"Psikyo", "Tengai / Sengoku Blade: Sengoku Ace Episode II" )
 }

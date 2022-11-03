@@ -309,5 +309,5 @@ public class battlex
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	GAMEX( 1982, battlex, 0, battlex, battlex, battlex, ROT180, "Omori Electric", "Battle Cross", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_battlex	   = new GameDriver("1982"	,"battlex"	,"battlex.java"	,rom_battlex,null	,machine_driver_battlex	,input_ports_battlex	,init_battlex	,ROT180	,	"Omori Electric", "Battle Cross", GAME_IMPERFECT_GRAPHICS )
 }

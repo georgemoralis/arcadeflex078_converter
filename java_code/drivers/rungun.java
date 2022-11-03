@@ -582,7 +582,7 @@ public class rungun
 		rng_sound_status = 0;
 	} };
 	
-	GAMEX( 1993, rungun,   0,      rng, rng, rng, ROT0, "Konami", "Run and Gun (World ver. EAA)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1993, rungunu,  rungun, rng, rng, rng, ROT0, "Konami", "Run and Gun (US ver. UAB)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	GAMEX( 1993, slmdunkj, rungun, rng, rng, rng, ROT0, "Konami", "Slam Dunk (Japan ver. JAA))", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_rungun	   = new GameDriver("1993"	,"rungun"	,"rungun.java"	,rom_rungun,null	,machine_driver_rng	,input_ports_rng	,init_rng	,ROT0	,	"Konami", "Run and Gun (World ver. EAA)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_rungunu	   = new GameDriver("1993"	,"rungunu"	,"rungun.java"	,rom_rungunu,driver_rungun	,machine_driver_rng	,input_ports_rng	,init_rng	,ROT0	,	"Konami", "Run and Gun (US ver. UAB)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_slmdunkj	   = new GameDriver("1993"	,"slmdunkj"	,"rungun.java"	,rom_slmdunkj,driver_rungun	,machine_driver_rng	,input_ports_rng	,init_rng	,ROT0	,	"Konami", "Slam Dunk (Japan ver. JAA))", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
 }

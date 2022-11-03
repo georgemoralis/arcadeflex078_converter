@@ -578,6 +578,6 @@ public class wilytowr
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1984, wilytowr, 0,        wilytowr, wilytowr, 0, ROT180, "Irem",                    "Wily Tower", GAME_NO_SOUND )
-	GAMEX( 1985, atomboy,  wilytowr, wilytowr, wilytowr, 0, ROT180, "Irem (Memetron license)", "Atomic Boy", GAME_NO_SOUND )
+	public static GameDriver driver_wilytowr	   = new GameDriver("1984"	,"wilytowr"	,"wilytowr.java"	,rom_wilytowr,null	,machine_driver_wilytowr	,input_ports_wilytowr	,null	,ROT180	,	"Irem",                    "Wily Tower", GAME_NO_SOUND )
+	public static GameDriver driver_atomboy	   = new GameDriver("1985"	,"atomboy"	,"wilytowr.java"	,rom_atomboy,driver_wilytowr	,machine_driver_wilytowr	,input_ports_wilytowr	,null	,ROT180	,	"Irem (Memetron license)", "Atomic Boy", GAME_NO_SOUND )
 }

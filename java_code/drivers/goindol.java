@@ -497,8 +497,8 @@ public class goindol
 	
 	
 	
-	GAMEX(1987, goindol,  0,       goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (World)", GAME_UNEMULATED_PROTECTION )
-	GAMEX(1987, goindolu, goindol, goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (US)",    GAME_UNEMULATED_PROTECTION )
-	GAMEX(1987, goindolj, goindol, goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (Japan)", GAME_UNEMULATED_PROTECTION )
-	GAME( 1987, homo,     goindol, goindol, homo,    0,       ROT90, "bootleg", "Homo" )
+	public static GameDriver driver_goindol	   = new GameDriver("1987"	,"goindol"	,"goindol.java"	,rom_goindol,null	,machine_driver_goindol	,input_ports_goindol	,init_goindol	,ROT90	,	"Sun a Electronics", "Goindol (World)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_goindolu	   = new GameDriver("1987"	,"goindolu"	,"goindol.java"	,rom_goindolu,driver_goindol	,machine_driver_goindol	,input_ports_goindol	,init_goindol	,ROT90	,	"Sun a Electronics", "Goindol (US)",    GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_goindolj	   = new GameDriver("1987"	,"goindolj"	,"goindol.java"	,rom_goindolj,driver_goindol	,machine_driver_goindol	,input_ports_goindol	,init_goindol	,ROT90	,	"Sun a Electronics", "Goindol (Japan)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_homo	   = new GameDriver("1987"	,"homo"	,"goindol.java"	,rom_homo,driver_goindol	,machine_driver_goindol	,input_ports_homo	,null	,ROT90	,	"bootleg", "Homo" )
 }

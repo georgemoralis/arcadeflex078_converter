@@ -4038,32 +4038,32 @@ public class ssv
 	
 	//     year   rom       clone     machine   inputs    init      monitor manufacturer          title                                               flags
 	
-	GAMEX( 1993,  keithlcy, 0,        keithlcy, keithlcy, keithlcy, ROT0,   "Visco",              "Dramatic Adventure Quiz Keith & Lucy (Japan)",     GAME_NO_COCKTAIL )
-	GAMEX( 1993,  srmp4,    0,        srmp4,    srmp4,    srmp4,    ROT0,   "Seta",               "Super Real Mahjong PIV (Japan)",                   GAME_NO_COCKTAIL )
-	GAMEX( 1993,  srmp4o,   srmp4,    srmp4,    srmp4,    srmp4,    ROT0,   "Seta",               "Super Real Mahjong PIV (Japan, older set)",        GAME_NO_COCKTAIL ) // by the numbering of the program roms this should be older
-	GAMEX( 1993,  survarts, 0,        survarts, survarts, survarts, ROT0,   "American Sammy",     "Survival Arts (USA)",                              GAME_NO_COCKTAIL )
-	GAMEX( 1994,  drifto94, 0,        drifto94, drifto94, drifto94, ROT0,   "Visco",              "Drift Out '94 - The Hard Order (Japan)",           GAME_NO_COCKTAIL )
-	GAMEX( 1995,  hypreact, 0,        hypreact, hypreact, hypreact, ROT0,   "Sammy",              "Mahjong Hyper Reaction (Japan)",                   GAME_NO_COCKTAIL | GAME_NOT_WORKING )
-	GAMEX( 1996,  janjans1, 0,        janjans1, janjans1, janjans1, ROT0,   "Visco",              "Lovely Pop Mahjong Jan Jan Shimasyo (Japan)",      GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1996?, meosism,  0,        meosism,  meosism,  meosism,  ROT0,   "Sammy",              "Meosis Magic (Japan)",                             GAME_NO_COCKTAIL )
-	GAMEX( 1996,  stmblade, 0,        stmblade, stmblade, stmblade, ROT270, "Visco",              "Storm Blade (US)",                                 GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1997,  hypreac2, 0,        hypreac2, hypreac2, hypreac2, ROT0,   "Sammy",              "Mahjong Hyper Reaction 2 (Japan)",                 GAME_NO_COCKTAIL )
-	GAMEX( 1997,  koikois2, 0,        janjans1, koikois2, janjans1, ROT0,   "Visco",              "Koi Koi Shimasyo 2 - Super Real Hanafuda (Japan)", GAME_NO_COCKTAIL )
-	GAMEX( 1997,  srmp7,    0,        srmp7,    srmp7,    srmp7,    ROT0,   "Seta",               "Super Real Mahjong P7 (Japan)",                    GAME_NO_COCKTAIL | GAME_IMPERFECT_SOUND )
-	GAMEX( 1998,  ryorioh,  0,        ryorioh,  ryorioh,  ryorioh,  ROT0,   "Visco",              "Gourmet Battle Quiz Ryohrioh CooKing (Japan)",     GAME_NO_COCKTAIL )
-	GAMEX( 1998,  sxyreact, 0,        sxyreact, sxyreact, sxyreact, ROT0,   "Sammy",              "Pachinko Sexy Reaction (Japan)",                   GAME_NO_COCKTAIL )
-	GAMEX( 1999,  cairblad, 0,        sxyreact, cairblad, sxyreact, ROT270, "Sammy",              "Change Air Blade (Japan)",                         GAME_NO_COCKTAIL )
-	GAMEX( 2000,  vasara,   0,        ryorioh,  vasara,   vasara,   ROT270, "Visco",              "Vasara",                                 GAME_NO_COCKTAIL )
+	public static GameDriver driver_keithlcy	   = new GameDriver("1993"	,"keithlcy"	,"ssv.java"	,rom_keithlcy,null	,machine_driver_keithlcy	,input_ports_keithlcy	,init_keithlcy	,ROT0	,	"Visco",              "Dramatic Adventure Quiz Keith & Lucy (Japan)",     GAME_NO_COCKTAIL )
+	public static GameDriver driver_srmp4	   = new GameDriver("1993"	,"srmp4"	,"ssv.java"	,rom_srmp4,null	,machine_driver_srmp4	,input_ports_srmp4	,init_srmp4	,ROT0	,	"Seta",               "Super Real Mahjong PIV (Japan)",                   GAME_NO_COCKTAIL )
+	public static GameDriver driver_srmp4o	   = new GameDriver("1993"	,"srmp4o"	,"ssv.java"	,rom_srmp4o,driver_srmp4	,machine_driver_srmp4	,input_ports_srmp4	,init_srmp4	,ROT0	,	"Seta",               "Super Real Mahjong PIV (Japan, older set)",        GAME_NO_COCKTAIL ) // by the numbering of the program roms this should be older
+	public static GameDriver driver_survarts	   = new GameDriver("1993"	,"survarts"	,"ssv.java"	,rom_survarts,null	,machine_driver_survarts	,input_ports_survarts	,init_survarts	,ROT0	,	"American Sammy",     "Survival Arts (USA)",                              GAME_NO_COCKTAIL )
+	public static GameDriver driver_drifto94	   = new GameDriver("1994"	,"drifto94"	,"ssv.java"	,rom_drifto94,null	,machine_driver_drifto94	,input_ports_drifto94	,init_drifto94	,ROT0	,	"Visco",              "Drift Out '94 - The Hard Order (Japan)",           GAME_NO_COCKTAIL )
+	public static GameDriver driver_hypreact	   = new GameDriver("1995"	,"hypreact"	,"ssv.java"	,rom_hypreact,null	,machine_driver_hypreact	,input_ports_hypreact	,init_hypreact	,ROT0	,	"Sammy",              "Mahjong Hyper Reaction (Japan)",                   GAME_NO_COCKTAIL | GAME_NOT_WORKING )
+	public static GameDriver driver_janjans1	   = new GameDriver("1996"	,"janjans1"	,"ssv.java"	,rom_janjans1,null	,machine_driver_janjans1	,input_ports_janjans1	,init_janjans1	,ROT0	,	"Visco",              "Lovely Pop Mahjong Jan Jan Shimasyo (Japan)",      GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_meosism	   = new GameDriver("1996?"	,"meosism"	,"ssv.java"	,rom_meosism,null	,machine_driver_meosism	,input_ports_meosism	,init_meosism	,ROT0	,	"Sammy",              "Meosis Magic (Japan)",                             GAME_NO_COCKTAIL )
+	public static GameDriver driver_stmblade	   = new GameDriver("1996"	,"stmblade"	,"ssv.java"	,rom_stmblade,null	,machine_driver_stmblade	,input_ports_stmblade	,init_stmblade	,ROT270	,	"Visco",              "Storm Blade (US)",                                 GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_hypreac2	   = new GameDriver("1997"	,"hypreac2"	,"ssv.java"	,rom_hypreac2,null	,machine_driver_hypreac2	,input_ports_hypreac2	,init_hypreac2	,ROT0	,	"Sammy",              "Mahjong Hyper Reaction 2 (Japan)",                 GAME_NO_COCKTAIL )
+	public static GameDriver driver_koikois2	   = new GameDriver("1997"	,"koikois2"	,"ssv.java"	,rom_koikois2,null	,machine_driver_janjans1	,input_ports_koikois2	,init_janjans1	,ROT0	,	"Visco",              "Koi Koi Shimasyo 2 - Super Real Hanafuda (Japan)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_srmp7	   = new GameDriver("1997"	,"srmp7"	,"ssv.java"	,rom_srmp7,null	,machine_driver_srmp7	,input_ports_srmp7	,init_srmp7	,ROT0	,	"Seta",               "Super Real Mahjong P7 (Japan)",                    GAME_NO_COCKTAIL | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_ryorioh	   = new GameDriver("1998"	,"ryorioh"	,"ssv.java"	,rom_ryorioh,null	,machine_driver_ryorioh	,input_ports_ryorioh	,init_ryorioh	,ROT0	,	"Visco",              "Gourmet Battle Quiz Ryohrioh CooKing (Japan)",     GAME_NO_COCKTAIL )
+	public static GameDriver driver_sxyreact	   = new GameDriver("1998"	,"sxyreact"	,"ssv.java"	,rom_sxyreact,null	,machine_driver_sxyreact	,input_ports_sxyreact	,init_sxyreact	,ROT0	,	"Sammy",              "Pachinko Sexy Reaction (Japan)",                   GAME_NO_COCKTAIL )
+	public static GameDriver driver_cairblad	   = new GameDriver("1999"	,"cairblad"	,"ssv.java"	,rom_cairblad,null	,machine_driver_sxyreact	,input_ports_cairblad	,init_sxyreact	,ROT270	,	"Sammy",              "Change Air Blade (Japan)",                         GAME_NO_COCKTAIL )
+	public static GameDriver driver_vasara	   = new GameDriver("2000"	,"vasara"	,"ssv.java"	,rom_vasara,null	,machine_driver_ryorioh	,input_ports_vasara	,init_vasara	,ROT270	,	"Visco",              "Vasara",                                 GAME_NO_COCKTAIL )
 	
 	// Games not working properly:
 	
-	GAMEX( 1997,  mslider,  0,        mslider,  mslider,  mslider,  ROT0,   "Visco / Datt Japan", "Monster Slider (Japan)",                           GAME_NO_COCKTAIL ) // game logic?
-	GAMEX( 1995,  ultrax,   0,        ultrax,   ultrax,   ultrax,   ROT270,	"Banpresto + Tsuburaya Prod.", "Ultra X Weapons / Ultra Keibitai",        GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mslider	   = new GameDriver("1997"	,"mslider"	,"ssv.java"	,rom_mslider,null	,machine_driver_mslider	,input_ports_mslider	,init_mslider	,ROT0	,	"Visco / Datt Japan", "Monster Slider (Japan)",                           GAME_NO_COCKTAIL ) // game logic?
+	public static GameDriver driver_ultrax	   = new GameDriver("1995"	,"ultrax"	,"ssv.java"	,rom_ultrax,null	,machine_driver_ultrax	,input_ports_ultrax	,init_ultrax	,ROT270	,	"Banpresto + Tsuburaya Prod.", "Ultra X Weapons / Ultra Keibitai",        GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
 	//	Games not working at all:
 	
-	GAMEX( 1994,  eaglshot, 0,        eaglshot, eaglshot, eaglshot, ROT0,   "Sammy",   			  "Eagle Shot Golf",                                  GAME_NO_COCKTAIL | GAME_NOT_WORKING )
-	GAMEX( 1994,  eaglshta, eaglshot, eaglshot, eaglshot, eaglshot, ROT0,   "Sammy",   			  "Eagle Shot Golf (alt)",                            GAME_NO_COCKTAIL | GAME_NOT_WORKING )
-	GAMEX( 1994,  twineag2, 0,        twineag2, twineag2, twineag2, ROT270, "Seta",               "Twin Eagle II - The Rescue Mission",               GAME_NO_COCKTAIL | GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)
-	GAMEX( 1997,  jsk,      0,        janjans1, janjans1, janjans1, ROT0,   "Visco",              "Joryuu Syougi Kyoushitsu (Japan)",                 GAME_NO_COCKTAIL | GAME_NOT_WORKING )
+	public static GameDriver driver_eaglshot	   = new GameDriver("1994"	,"eaglshot"	,"ssv.java"	,rom_eaglshot,null	,machine_driver_eaglshot	,input_ports_eaglshot	,init_eaglshot	,ROT0	,	"Sammy",   			  "Eagle Shot Golf",                                  GAME_NO_COCKTAIL | GAME_NOT_WORKING )
+	public static GameDriver driver_eaglshta	   = new GameDriver("1994"	,"eaglshta"	,"ssv.java"	,rom_eaglshta,driver_eaglshot	,machine_driver_eaglshot	,input_ports_eaglshot	,init_eaglshot	,ROT0	,	"Sammy",   			  "Eagle Shot Golf (alt)",                            GAME_NO_COCKTAIL | GAME_NOT_WORKING )
+	public static GameDriver driver_twineag2	   = new GameDriver("1994"	,"twineag2"	,"ssv.java"	,rom_twineag2,null	,machine_driver_twineag2	,input_ports_twineag2	,init_twineag2	,ROT270	,	"Seta",               "Twin Eagle II - The Rescue Mission",               GAME_NO_COCKTAIL | GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)
+	public static GameDriver driver_jsk	   = new GameDriver("1997"	,"jsk"	,"ssv.java"	,rom_jsk,null	,machine_driver_janjans1	,input_ports_janjans1	,init_janjans1	,ROT0	,	"Visco",              "Joryuu Syougi Kyoushitsu (Japan)",                 GAME_NO_COCKTAIL | GAME_NOT_WORKING )
 	
 }

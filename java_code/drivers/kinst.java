@@ -537,6 +537,6 @@ public class kinst
 	 *
 	 *************************************/
 	
-	GAME( 1994, kinst,	0,		kinst, kinst,  kinst,	ROT0, "Rare", "Killer Instinct (v1.0)" )
-	GAME( 1994, kinst2, 0,		kinst, kinst,  kinst2,	ROT0, "Rare", "Killer Instinct 2 (v2.1)" )
+	public static GameDriver driver_kinst	   = new GameDriver("1994"	,"kinst"	,"kinst.java"	,rom_kinst,null	,machine_driver_kinst	,input_ports_kinst	,init_kinst	,ROT0	,	"Rare", "Killer Instinct (v1.0)" )
+	public static GameDriver driver_kinst2	   = new GameDriver("1994"	,"kinst2"	,"kinst.java"	,rom_kinst2,null	,machine_driver_kinst	,input_ports_kinst	,init_kinst2	,ROT0	,	"Rare", "Killer Instinct 2 (v2.1)" )
 }

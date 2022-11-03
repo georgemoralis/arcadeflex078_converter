@@ -1200,11 +1200,11 @@ public class armedf
 	
 	
 	/*     YEAR, NAME,   PARENT,   MACHINE,  INPUT,    INIT,     MONITOR, COMPANY,     FULLNAME, FLAGS */
-	GAMEX( 1987, legion,   0,      cclimbr2, legion,   legion,   ROT270, "Nichibutsu", "Legion (ver 2.03)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1987, legiono,  legion, cclimbr2, legion,   legiono,  ROT270, "Nichibutsu", "Legion (ver 1.05)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1987, terraf,   0,      terraf,   terraf,   terraf,   ROT0,   "Nichibutsu", "Terra Force",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1987, terrafu,  terraf, terraf,   terraf,   terraf,   ROT0,   "Nichibutsu USA", "Terra Force (US)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1987, kodure,   0,      kodure,   kodure,   kodure,   ROT0,   "Nichibutsu", "Kodure Ookami (Japan)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	GAME( 1988, cclimbr2, 0,      cclimbr2, cclimbr2, cclimbr2, ROT0,   "Nichibutsu", "Crazy Climber 2 (Japan)")
-	GAME( 1988, armedf,   0,      armedf,   armedf,   armedf,   ROT270, "Nichibutsu", "Armed Formation")
+	public static GameDriver driver_legion	   = new GameDriver("1987"	,"legion"	,"armedf.java"	,rom_legion,null	,machine_driver_cclimbr2	,input_ports_legion	,init_legion	,ROT270	,	"Nichibutsu", "Legion (ver 2.03)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_legiono	   = new GameDriver("1987"	,"legiono"	,"armedf.java"	,rom_legiono,driver_legion	,machine_driver_cclimbr2	,input_ports_legion	,init_legiono	,ROT270	,	"Nichibutsu", "Legion (ver 1.05)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_terraf	   = new GameDriver("1987"	,"terraf"	,"armedf.java"	,rom_terraf,null	,machine_driver_terraf	,input_ports_terraf	,init_terraf	,ROT0	,	"Nichibutsu", "Terra Force",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_terrafu	   = new GameDriver("1987"	,"terrafu"	,"armedf.java"	,rom_terrafu,driver_terraf	,machine_driver_terraf	,input_ports_terraf	,init_terraf	,ROT0	,	"Nichibutsu USA", "Terra Force (US)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_kodure	   = new GameDriver("1987"	,"kodure"	,"armedf.java"	,rom_kodure,null	,machine_driver_kodure	,input_ports_kodure	,init_kodure	,ROT0	,	"Nichibutsu", "Kodure Ookami (Japan)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_cclimbr2	   = new GameDriver("1988"	,"cclimbr2"	,"armedf.java"	,rom_cclimbr2,null	,machine_driver_cclimbr2	,input_ports_cclimbr2	,init_cclimbr2	,ROT0	,	"Nichibutsu", "Crazy Climber 2 (Japan)")
+	public static GameDriver driver_armedf	   = new GameDriver("1988"	,"armedf"	,"armedf.java"	,rom_armedf,null	,machine_driver_armedf	,input_ports_armedf	,init_armedf	,ROT270	,	"Nichibutsu", "Armed Formation")
 }

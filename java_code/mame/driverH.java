@@ -444,7 +444,7 @@ public class driverH
 	
 	***************************************************************************/
 	
-	#define GAME(YEAR,NAME,PARENT,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME)	\
+	#define public static GameDriver driver_NAME	   = new GameDriver("YEAR"	,"NAME"	,"driverH.java"	,rom_NAME,driver_PARENT	,machine_driver_MACHINE	,input_ports_INPUT	,init_INIT	,MONITOR	,	COMPANY,FULLNAME)	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\
@@ -461,7 +461,7 @@ public class driverH
 		MONITOR									\
 	};
 	
-	#define GAMEX(YEAR,NAME,PARENT,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME,FLAGS)	\
+	#define public static GameDriver driver_NAME	   = new GameDriver("YEAR"	,"NAME"	,"driverH.java"	,rom_NAME,driver_PARENT	,machine_driver_MACHINE	,input_ports_INPUT	,init_INIT	,MONITOR	,	COMPANY,FULLNAME,FLAGS)	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\

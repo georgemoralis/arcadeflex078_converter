@@ -400,5 +400,5 @@ public class wolfpack
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1978, wolfpack, 0, wolfpack, wolfpack, 0, ORIENTATION_FLIP_Y, "Atari", "Wolf Pack (prototype)", GAME_NO_SOUND )
+	public static GameDriver driver_wolfpack	   = new GameDriver("1978"	,"wolfpack"	,"wolfpack.java"	,rom_wolfpack,null	,machine_driver_wolfpack	,input_ports_wolfpack	,null	,ORIENTATION_FLIP_Y	,	"Atari", "Wolf Pack (prototype)", GAME_NO_SOUND )
 }

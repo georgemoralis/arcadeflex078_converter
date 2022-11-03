@@ -1528,21 +1528,21 @@ public class system24
 	MACHINE_DRIVER_END
 	
 	
-	GAME( 1988, hotrod,   0, system24, hotrod,   hotrod,   ROT0, "Sega", "Hot Rod (turbo 3 player)")
-	GAME( 1990, bnzabros, 0, system24, bnzabros, bnzabros, ROT0, "Sega", "Bonanza Bros")
-	GAME( 1991, dcclub,   0, system24, dcclub,   dcclub,   ROT0, "Sega", "Dynamic Country Club")
-	GAME( 1992, mahmajn,  0, system24, mahmajn,  mahmajn,  ROT0, "Sega", "Tokoro San no MahMahjan")
-	GAME( 1994, qgh,      0, system24, qgh,      qgh,      ROT0, "Sega", "Quiz Ghost Hunter")
-	GAME( 1994, quizmeku, 0, system24, quizmeku, quizmeku, ROT0, "Sega", "Quiz Mekurumeku Story")
-	GAME( 1994, qrouka,   0, system24, qgh,      qrouka,   ROT0, "Sega", "Quiz Rouka Ni Tattenasai")
-	GAME( 1994, mahmajn2, 0, system24, mahmajn,  mahmajn2, ROT0, "Sega", "Tokoro San no MahMahjan 2")
+	public static GameDriver driver_hotrod	   = new GameDriver("1988"	,"hotrod"	,"system24.java"	,rom_hotrod,null	,machine_driver_system24	,input_ports_hotrod	,init_hotrod	,ROT0	,	"Sega", "Hot Rod (turbo 3 player)")
+	public static GameDriver driver_bnzabros	   = new GameDriver("1990"	,"bnzabros"	,"system24.java"	,rom_bnzabros,null	,machine_driver_system24	,input_ports_bnzabros	,init_bnzabros	,ROT0	,	"Sega", "Bonanza Bros")
+	public static GameDriver driver_dcclub	   = new GameDriver("1991"	,"dcclub"	,"system24.java"	,rom_dcclub,null	,machine_driver_system24	,input_ports_dcclub	,init_dcclub	,ROT0	,	"Sega", "Dynamic Country Club")
+	public static GameDriver driver_mahmajn	   = new GameDriver("1992"	,"mahmajn"	,"system24.java"	,rom_mahmajn,null	,machine_driver_system24	,input_ports_mahmajn	,init_mahmajn	,ROT0	,	"Sega", "Tokoro San no MahMahjan")
+	public static GameDriver driver_qgh	   = new GameDriver("1994"	,"qgh"	,"system24.java"	,rom_qgh,null	,machine_driver_system24	,input_ports_qgh	,init_qgh	,ROT0	,	"Sega", "Quiz Ghost Hunter")
+	public static GameDriver driver_quizmeku	   = new GameDriver("1994"	,"quizmeku"	,"system24.java"	,rom_quizmeku,null	,machine_driver_system24	,input_ports_quizmeku	,init_quizmeku	,ROT0	,	"Sega", "Quiz Mekurumeku Story")
+	public static GameDriver driver_qrouka	   = new GameDriver("1994"	,"qrouka"	,"system24.java"	,rom_qrouka,null	,machine_driver_system24	,input_ports_qgh	,init_qrouka	,ROT0	,	"Sega", "Quiz Rouka Ni Tattenasai")
+	public static GameDriver driver_mahmajn2	   = new GameDriver("1994"	,"mahmajn2"	,"system24.java"	,rom_mahmajn2,null	,machine_driver_system24	,input_ports_mahmajn	,init_mahmajn2	,ROT0	,	"Sega", "Tokoro San no MahMahjan 2")
 	
 	/* Encrypted */
-	GAMEX( ????, sspirits, 0, system24, bnzabros, sspirits, ROT0, "Sega", "Scramble Spirits", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	GAMEX( ????, sgmast,   0, system24, bnzabros, sgmast,   ROT0, "Sega", "Super Masters Golf", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	GAMEX( ????, qsww,     0, system24, bnzabros, qsww,     ROT0, "Sega", "Quiz Syukudai wo Wasuremashita", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	GAMEX( ????, gground,  0, system24, bnzabros, gground,  ROT0, "Sega", "Gain Ground", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	GAMEX( ????, crkdown,  0, system24, bnzabros, crkdown,  ROT0, "Sega", "Crackdown", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	public static GameDriver driver_sspirits	   = new GameDriver("????"	,"sspirits"	,"system24.java"	,rom_sspirits,null	,machine_driver_system24	,input_ports_bnzabros	,init_sspirits	,ROT0	,	"Sega", "Scramble Spirits", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	public static GameDriver driver_sgmast	   = new GameDriver("????"	,"sgmast"	,"system24.java"	,rom_sgmast,null	,machine_driver_system24	,input_ports_bnzabros	,init_sgmast	,ROT0	,	"Sega", "Super Masters Golf", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	public static GameDriver driver_qsww	   = new GameDriver("????"	,"qsww"	,"system24.java"	,rom_qsww,null	,machine_driver_system24	,input_ports_bnzabros	,init_qsww	,ROT0	,	"Sega", "Quiz Syukudai wo Wasuremashita", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	public static GameDriver driver_gground	   = new GameDriver("????"	,"gground"	,"system24.java"	,rom_gground,null	,machine_driver_system24	,input_ports_bnzabros	,init_gground	,ROT0	,	"Sega", "Gain Ground", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	public static GameDriver driver_crkdown	   = new GameDriver("????"	,"crkdown"	,"system24.java"	,rom_crkdown,null	,machine_driver_system24	,input_ports_bnzabros	,init_crkdown	,ROT0	,	"Sega", "Crackdown", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
 	
 	/* Other S24 Games, mostly not dumped / encrypted / only bad disk images exist
 	

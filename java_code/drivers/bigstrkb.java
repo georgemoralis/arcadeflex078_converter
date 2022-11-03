@@ -298,5 +298,5 @@ public class bigstrkb
 	
 	/* GAME drivers */
 	
-	GAMEX( 1992, bigstrkb, bigstrik, bigstrkb, bigstrkb, 0, ROT0, "bootleg", "Big Striker (bootleg)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	public static GameDriver driver_bigstrkb	   = new GameDriver("1992"	,"bigstrkb"	,"bigstrkb.java"	,rom_bigstrkb,driver_bigstrik	,machine_driver_bigstrkb	,input_ports_bigstrkb	,null	,ROT0	,	"bootleg", "Big Striker (bootleg)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

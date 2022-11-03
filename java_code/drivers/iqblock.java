@@ -488,8 +488,8 @@ public class iqblock
 	
 	
 	
-	GAME( 1993, iqblock, 0, iqblock, iqblock, iqblock, ROT0, "IGS", "IQ-Block" )
-	GAME( 1993, grndtour, 0, iqblock, iqblock, grndtour, ROT0, "IGS", "Grand Tour" )
+	public static GameDriver driver_iqblock	   = new GameDriver("1993"	,"iqblock"	,"iqblock.java"	,rom_iqblock,null	,machine_driver_iqblock	,input_ports_iqblock	,init_iqblock	,ROT0	,	"IGS", "IQ-Block" )
+	public static GameDriver driver_grndtour	   = new GameDriver("1993"	,"grndtour"	,"iqblock.java"	,rom_grndtour,null	,machine_driver_iqblock	,input_ports_iqblock	,init_grndtour	,ROT0	,	"IGS", "Grand Tour" )
 	
-	GAMEX( 19??, cabaret, 0, cabaret, iqblock, cabaret, ROT0, "IGS", "Cabaret", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_cabaret	   = new GameDriver("19??"	,"cabaret"	,"iqblock.java"	,rom_cabaret,null	,machine_driver_cabaret	,input_ports_iqblock	,init_cabaret	,ROT0	,	"IGS", "Cabaret", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

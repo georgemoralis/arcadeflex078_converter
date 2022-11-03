@@ -1774,9 +1774,9 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	GAMEX( 1992, spclords, 0,        atarigx2, spclords, spclords, ROT0, "Atari Games", "Space Lords", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1992, spclorda, spclords, atarigx2, spclords, spclords, ROT0, "Atari Games", "Space Lords (alternate)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1992, motofren, 0,        atarigx2, motofren, motofren, ROT0, "Atari Games", "Moto Frenzy", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1994, rrreveng, 0,        atarigx2, rrreveng, rrreveng, ROT0, "Atari Games", "Road Riot's Revenge (prototype)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1994, rrrevenp, rrreveng, atarigx2, rrreveng, rrreveng, ROT0, "Atari Games", "Road Riot's Revenge (prototype alt)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_spclords	   = new GameDriver("1992"	,"spclords"	,"atarigx2.java"	,rom_spclords,null	,machine_driver_atarigx2	,input_ports_spclords	,init_spclords	,ROT0	,	"Atari Games", "Space Lords", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_spclorda	   = new GameDriver("1992"	,"spclorda"	,"atarigx2.java"	,rom_spclorda,driver_spclords	,machine_driver_atarigx2	,input_ports_spclords	,init_spclords	,ROT0	,	"Atari Games", "Space Lords (alternate)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_motofren	   = new GameDriver("1992"	,"motofren"	,"atarigx2.java"	,rom_motofren,null	,machine_driver_atarigx2	,input_ports_motofren	,init_motofren	,ROT0	,	"Atari Games", "Moto Frenzy", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_rrreveng	   = new GameDriver("1994"	,"rrreveng"	,"atarigx2.java"	,rom_rrreveng,null	,machine_driver_atarigx2	,input_ports_rrreveng	,init_rrreveng	,ROT0	,	"Atari Games", "Road Riot's Revenge (prototype)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_rrrevenp	   = new GameDriver("1994"	,"rrrevenp"	,"atarigx2.java"	,rom_rrrevenp,driver_rrreveng	,machine_driver_atarigx2	,input_ports_rrreveng	,init_rrreveng	,ROT0	,	"Atari Games", "Road Riot's Revenge (prototype alt)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

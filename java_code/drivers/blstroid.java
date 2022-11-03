@@ -444,9 +444,9 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	GAME( 1987, blstroid, 0,        blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (rev 4)" )
-	GAME( 1987, blstroi3, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (rev 3)" )
-	GAME( 1987, blstroi2, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (rev 2)" )
-	GAME( 1987, blstroig, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (German, rev 2)" )
-	GAME( 1987, blsthead, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (with heads)" )
+	public static GameDriver driver_blstroid	   = new GameDriver("1987"	,"blstroid"	,"blstroid.java"	,rom_blstroid,null	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (rev 4)" )
+	public static GameDriver driver_blstroi3	   = new GameDriver("1987"	,"blstroi3"	,"blstroid.java"	,rom_blstroi3,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (rev 3)" )
+	public static GameDriver driver_blstroi2	   = new GameDriver("1987"	,"blstroi2"	,"blstroid.java"	,rom_blstroi2,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (rev 2)" )
+	public static GameDriver driver_blstroig	   = new GameDriver("1987"	,"blstroig"	,"blstroid.java"	,rom_blstroig,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (German, rev 2)" )
+	public static GameDriver driver_blsthead	   = new GameDriver("1987"	,"blsthead"	,"blstroid.java"	,rom_blsthead,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (with heads)" )
 }

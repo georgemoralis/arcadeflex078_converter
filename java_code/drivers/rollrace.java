@@ -431,7 +431,7 @@ public class rollrace
 		ROM_LOAD( "8.6f", 0x0000, 0x1000, CRC(6ec3c545) SHA1(1a2477b9e1563734195b0743f5dbbb005e06022e) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1983, fightrol, 0,        rollrace, rollrace, 0, ROT270, "[Kaneko] (Taito license)", "Fighting Roller", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
-	GAMEX( 1983, rollace,  fightrol, rollrace, rollrace, 0, ROT270, "[Kaneko] (Williams license)", "Roller Aces (set 1)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
-	GAMEX( 1983, rollace2, fightrol, rollace2, rollrace, 0, ROT90,  "[Kaneko] (Williams license)", "Roller Aces (set 2)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_fightrol	   = new GameDriver("1983"	,"fightrol"	,"rollrace.java"	,rom_fightrol,null	,machine_driver_rollrace	,input_ports_rollrace	,null	,ROT270	,	"[Kaneko] (Taito license)", "Fighting Roller", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_rollace	   = new GameDriver("1983"	,"rollace"	,"rollrace.java"	,rom_rollace,driver_fightrol	,machine_driver_rollrace	,input_ports_rollrace	,null	,ROT270	,	"[Kaneko] (Williams license)", "Roller Aces (set 1)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_rollace2	   = new GameDriver("1983"	,"rollace2"	,"rollrace.java"	,rom_rollace2,driver_fightrol	,machine_driver_rollace2	,input_ports_rollrace	,null	,ROT90	,	"[Kaneko] (Williams license)", "Roller Aces (set 2)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
 }

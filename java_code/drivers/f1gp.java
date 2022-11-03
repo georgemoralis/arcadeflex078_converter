@@ -640,6 +640,6 @@ public class f1gp
 	
 	
 	
-	GAMEX( 1991, f1gp,  0, f1gp,  f1gp,  0, ROT90, "Video System Co.", "F-1 Grand Prix",         GAME_NO_COCKTAIL )
-	GAMEX( 1992, f1gp2, 0, f1gp2, f1gp2, 0, ROT90, "Video System Co.", "F-1 Grand Prix Part II", GAME_NO_COCKTAIL )
+	public static GameDriver driver_f1gp	   = new GameDriver("1991"	,"f1gp"	,"f1gp.java"	,rom_f1gp,null	,machine_driver_f1gp	,input_ports_f1gp	,null	,ROT90	,	"Video System Co.", "F-1 Grand Prix",         GAME_NO_COCKTAIL )
+	public static GameDriver driver_f1gp2	   = new GameDriver("1992"	,"f1gp2"	,"f1gp.java"	,rom_f1gp2,null	,machine_driver_f1gp2	,input_ports_f1gp2	,null	,ROT90	,	"Video System Co.", "F-1 Grand Prix Part II", GAME_NO_COCKTAIL )
 }

@@ -532,6 +532,6 @@ public class vball
 	ROM_END(); }}; 
 	
 	
-	GAME( 1988, vball,    0,     vball,    vball,    0, ROT0, "Technos", "U.S. Championship V'ball (set 1)" )
-	GAME( 1988, vball2pj, vball, vball2pj, vball2pj, 0, ROT0, "Technos", "U.S. Championship V'ball (Japan)" )
+	public static GameDriver driver_vball	   = new GameDriver("1988"	,"vball"	,"vball.java"	,rom_vball,null	,machine_driver_vball	,input_ports_vball	,null	,ROT0	,	"Technos", "U.S. Championship V'ball (set 1)" )
+	public static GameDriver driver_vball2pj	   = new GameDriver("1988"	,"vball2pj"	,"vball.java"	,rom_vball2pj,driver_vball	,machine_driver_vball2pj	,input_ports_vball2pj	,null	,ROT0	,	"Technos", "U.S. Championship V'ball (Japan)" )
 }

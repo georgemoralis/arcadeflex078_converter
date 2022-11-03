@@ -334,5 +334,5 @@ public class chaknpop
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR  COMPANY              FULLNAME ) */
-	GAME( 1983, chaknpop, 0,        chaknpop, chaknpop, chaknpop, ROT0,    "Taito Corporation", "Chack'n Pop")
+	public static GameDriver driver_chaknpop	   = new GameDriver("1983"	,"chaknpop"	,"chaknpop.java"	,rom_chaknpop,null	,machine_driver_chaknpop	,input_ports_chaknpop	,init_chaknpop	,ROT0	,	"Taito Corporation", "Chack'n Pop")
 }

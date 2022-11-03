@@ -929,10 +929,10 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	GAMEX(1983, prosoccr, 0,        prosoccr,  liberate, prosport, ROT270, "Data East Corporation", "Pro Soccer", GAME_NOT_WORKING )
-	GAMEX(1983, prosport, 0,        prosport,  liberate, prosport, ROT270, "Data East Corporation", "Prosport", GAME_NOT_WORKING )
-	GAME( 1983, boomrang, 0,        boomrang,  boomrang, prosport, ROT270, "Data East Corporation", "Boomer Rang'r / Genesis" )
-	GAME( 1984, kamikcab, 0,        boomrang,  kamikcab, prosport, ROT270, "Data East Corporation", "Kamikaze Cabbie" )
-	GAME( 1984, liberate, 0,        liberate,  liberate, liberate, ROT270, "Data East Corporation", "Liberation" )
-	GAMEX(1984, liberatb, liberate, liberatb,  liberate, prosport, ROT270, "bootleg",               "Liberation (bootleg)", GAME_NOT_WORKING )
+	public static GameDriver driver_prosoccr	   = new GameDriver("1983"	,"prosoccr"	,"liberate.java"	,rom_prosoccr,null	,machine_driver_prosoccr	,input_ports_liberate	,init_prosport	,ROT270	,	"Data East Corporation", "Pro Soccer", GAME_NOT_WORKING )
+	public static GameDriver driver_prosport	   = new GameDriver("1983"	,"prosport"	,"liberate.java"	,rom_prosport,null	,machine_driver_prosport	,input_ports_liberate	,init_prosport	,ROT270	,	"Data East Corporation", "Prosport", GAME_NOT_WORKING )
+	public static GameDriver driver_boomrang	   = new GameDriver("1983"	,"boomrang"	,"liberate.java"	,rom_boomrang,null	,machine_driver_boomrang	,input_ports_boomrang	,init_prosport	,ROT270	,	"Data East Corporation", "Boomer Rang'r / Genesis" )
+	public static GameDriver driver_kamikcab	   = new GameDriver("1984"	,"kamikcab"	,"liberate.java"	,rom_kamikcab,null	,machine_driver_boomrang	,input_ports_kamikcab	,init_prosport	,ROT270	,	"Data East Corporation", "Kamikaze Cabbie" )
+	public static GameDriver driver_liberate	   = new GameDriver("1984"	,"liberate"	,"liberate.java"	,rom_liberate,null	,machine_driver_liberate	,input_ports_liberate	,init_liberate	,ROT270	,	"Data East Corporation", "Liberation" )
+	public static GameDriver driver_liberatb	   = new GameDriver("1984"	,"liberatb"	,"liberate.java"	,rom_liberatb,driver_liberate	,machine_driver_liberatb	,input_ports_liberate	,init_prosport	,ROT270	,	"bootleg",               "Liberation (bootleg)", GAME_NOT_WORKING )
 }

@@ -889,8 +889,8 @@ public class afega
 	
 	***************************************************************************/
 	
-	GAMEX( 1998, stagger1, 0,        stagger1, stagger1, 0,        ROT270, "Afega", "Stagger I (Japan)",                GAME_NOT_WORKING )
-	GAMEX( 1997, redhawk,  stagger1, redhawk,  stagger1, redhawk,  ROT270, "Afega", "Red Hawk (US)", GAME_NOT_WORKING )
-	GAMEX( 1998, grdnstrm, 0,        grdnstrm, grdnstrm, grdnstrm, ROT270, "Afega", "Sen Jin - Guardian Storm (Korea)", GAME_NOT_WORKING )
-	GAMEX( 1998, bubl2000, 0,        bubl2000, bubl2000, bubl2000, ROT0,   "Tuning", "Bubble 2000", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_stagger1	   = new GameDriver("1998"	,"stagger1"	,"afega.java"	,rom_stagger1,null	,machine_driver_stagger1	,input_ports_stagger1	,null	,ROT270	,	"Afega", "Stagger I (Japan)",                GAME_NOT_WORKING )
+	public static GameDriver driver_redhawk	   = new GameDriver("1997"	,"redhawk"	,"afega.java"	,rom_redhawk,driver_stagger1	,machine_driver_redhawk	,input_ports_stagger1	,init_redhawk	,ROT270	,	"Afega", "Red Hawk (US)", GAME_NOT_WORKING )
+	public static GameDriver driver_grdnstrm	   = new GameDriver("1998"	,"grdnstrm"	,"afega.java"	,rom_grdnstrm,null	,machine_driver_grdnstrm	,input_ports_grdnstrm	,init_grdnstrm	,ROT270	,	"Afega", "Sen Jin - Guardian Storm (Korea)", GAME_NOT_WORKING )
+	public static GameDriver driver_bubl2000	   = new GameDriver("1998"	,"bubl2000"	,"afega.java"	,rom_bubl2000,null	,machine_driver_bubl2000	,input_ports_bubl2000	,init_bubl2000	,ROT0	,	"Tuning", "Bubble 2000", GAME_IMPERFECT_GRAPHICS )
 }

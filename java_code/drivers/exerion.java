@@ -525,7 +525,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	GAME( 1983, exerion,  0,       exerion, exerion, exerion,  ROT90, "Jaleco", "Exerion" )
-	GAME( 1983, exeriont, exerion, exerion, exerion, exerion,  ROT90, "Jaleco (Taito America license)", "Exerion (Taito)" )
-	GAME( 1983, exerionb, exerion, exerion, exerion, exerionb, ROT90, "Jaleco", "Exerion (bootleg)" )
+	public static GameDriver driver_exerion	   = new GameDriver("1983"	,"exerion"	,"exerion.java"	,rom_exerion,null	,machine_driver_exerion	,input_ports_exerion	,init_exerion	,ROT90	,	"Jaleco", "Exerion" )
+	public static GameDriver driver_exeriont	   = new GameDriver("1983"	,"exeriont"	,"exerion.java"	,rom_exeriont,driver_exerion	,machine_driver_exerion	,input_ports_exerion	,init_exerion	,ROT90	,	"Jaleco (Taito America license)", "Exerion (Taito)" )
+	public static GameDriver driver_exerionb	   = new GameDriver("1983"	,"exerionb"	,"exerion.java"	,rom_exerionb,driver_exerion	,machine_driver_exerion	,input_ports_exerion	,init_exerionb	,ROT90	,	"Jaleco", "Exerion (bootleg)" )
 }

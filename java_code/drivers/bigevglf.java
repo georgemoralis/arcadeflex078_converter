@@ -557,5 +557,5 @@ public class bigevglf
 		ROM_LOAD( "a67-15",   0x18000, 0x8000, CRC(1d261428) SHA1(0f3e6d83a8a462436fa414de4e1e4306db869d3e))
 	ROM_END(); }}; 
 	
-	GAME( 1986, bigevglf,  0,        bigevglf,  bigevglf,  0, ROT270, "Taito America Corporation", "Big Event Golf")
+	public static GameDriver driver_bigevglf	   = new GameDriver("1986"	,"bigevglf"	,"bigevglf.java"	,rom_bigevglf,null	,machine_driver_bigevglf	,input_ports_bigevglf	,null	,ROT270	,	"Taito America Corporation", "Big Event Golf")
 }

@@ -1178,8 +1178,8 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	GAMEX( 1994, tmek,     0,        atarigt,  tmek,     tmek,     ROT0, "Atari Games", "T-MEK", GAME_UNEMULATED_PROTECTION )
-	GAME ( 1994, tmekprot, tmek,     atarigt,  tmek,     tmek,     ROT0, "Atari Games", "T-MEK (prototype)" )
-	GAMEX( 1994, primrage, 0,        atarigt,  primrage, primrage, ROT0, "Atari Games", "Primal Rage (version 2.3)", GAME_UNEMULATED_PROTECTION )
-	GAMEX( 1994, primraga, primrage, atarigt,  primrage, primraga, ROT0, "Atari Games", "Primal Rage (version 2.0)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_tmek	   = new GameDriver("1994"	,"tmek"	,"atarigt.java"	,rom_tmek,null	,machine_driver_atarigt	,input_ports_tmek	,init_tmek	,ROT0	,	"Atari Games", "T-MEK", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_tmekprot	   = new GameDriver("1994"	,"tmekprot"	,"atarigt.java"	,rom_tmekprot,driver_tmek	,machine_driver_atarigt	,input_ports_tmek	,init_tmek	,ROT0	,	"Atari Games", "T-MEK (prototype)" )
+	public static GameDriver driver_primrage	   = new GameDriver("1994"	,"primrage"	,"atarigt.java"	,rom_primrage,null	,machine_driver_atarigt	,input_ports_primrage	,init_primrage	,ROT0	,	"Atari Games", "Primal Rage (version 2.3)", GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_primraga	   = new GameDriver("1994"	,"primraga"	,"atarigt.java"	,rom_primraga,driver_primrage	,machine_driver_atarigt	,input_ports_primrage	,init_primraga	,ROT0	,	"Atari Games", "Primal Rage (version 2.0)", GAME_UNEMULATED_PROTECTION )
 }

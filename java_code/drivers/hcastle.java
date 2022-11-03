@@ -439,8 +439,8 @@ public class hcastle
 	
 	
 	
-	GAME( 1988, hcastle,  0,       hcastle, hcastle, 0, ROT0, "Konami", "Haunted Castle (version M)" )
-	GAME( 1988, hcastleo, hcastle, hcastle, hcastle, 0, ROT0, "Konami", "Haunted Castle (version K)" )
-	GAME( 1988, hcastlej, hcastle, hcastle, hcastle, 0, ROT0, "Konami", "Akuma-Jou Dracula (Japan version P)" )
-	GAME( 1988, hcastljo, hcastle, hcastle, hcastle, 0, ROT0, "Konami", "Akuma-Jou Dracula (Japan version N)" )
+	public static GameDriver driver_hcastle	   = new GameDriver("1988"	,"hcastle"	,"hcastle.java"	,rom_hcastle,null	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Haunted Castle (version M)" )
+	public static GameDriver driver_hcastleo	   = new GameDriver("1988"	,"hcastleo"	,"hcastle.java"	,rom_hcastleo,driver_hcastle	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Haunted Castle (version K)" )
+	public static GameDriver driver_hcastlej	   = new GameDriver("1988"	,"hcastlej"	,"hcastle.java"	,rom_hcastlej,driver_hcastle	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Akuma-Jou Dracula (Japan version P)" )
+	public static GameDriver driver_hcastljo	   = new GameDriver("1988"	,"hcastljo"	,"hcastle.java"	,rom_hcastljo,driver_hcastle	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Akuma-Jou Dracula (Japan version N)" )
 }

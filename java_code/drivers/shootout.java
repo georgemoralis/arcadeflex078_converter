@@ -465,7 +465,7 @@ public class shootout
 	} };
 	
 	
-	GAME( 1985, shootout, 0,		shootout, shootout, shootout, ROT0, "Data East USA", "Shoot Out (US)")
-	GAME( 1985, shootouj, shootout, shootouj, shootout, 0,		  ROT0, "Data East USA", "Shoot Out (Japan)" )
-	GAME( 1985, shootoub, shootout, shootouj, shootout, shootout, ROT0, "bootleg", "Shoot Out (Korean Bootleg)" )
+	public static GameDriver driver_shootout	   = new GameDriver("1985"	,"shootout"	,"shootout.java"	,rom_shootout,null	,machine_driver_shootout	,input_ports_shootout	,init_shootout	,ROT0	,	"Data East USA", "Shoot Out (US)")
+	public static GameDriver driver_shootouj	   = new GameDriver("1985"	,"shootouj"	,"shootout.java"	,rom_shootouj,driver_shootout	,machine_driver_shootouj	,input_ports_shootout	,null	,ROT0	,	"Data East USA", "Shoot Out (Japan)" )
+	public static GameDriver driver_shootoub	   = new GameDriver("1985"	,"shootoub"	,"shootout.java"	,rom_shootoub,driver_shootout	,machine_driver_shootouj	,input_ports_shootout	,init_shootout	,ROT0	,	"bootleg", "Shoot Out (Korean Bootleg)" )
 }

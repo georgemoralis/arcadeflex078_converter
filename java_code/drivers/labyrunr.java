@@ -321,7 +321,7 @@ public class labyrunr
 	ROM_END(); }}; 
 	
 	
-	GAME( 1987, tricktrp, 0,        labyrunr, labyrunr, 0, ROT90, "Konami", "Trick Trap (World?)" )
-	GAME( 1987, labyrunr, tricktrp, labyrunr, labyrunr, 0, ROT90, "Konami", "Labyrinth Runner (Japan)" )
-	GAME( 1987, labyrunk, tricktrp, labyrunr, labyrunr, 0, ROT90, "Konami", "Labyrinth Runner (World Ver. K)" )
+	public static GameDriver driver_tricktrp	   = new GameDriver("1987"	,"tricktrp"	,"labyrunr.java"	,rom_tricktrp,null	,machine_driver_labyrunr	,input_ports_labyrunr	,null	,ROT90	,	"Konami", "Trick Trap (World?)" )
+	public static GameDriver driver_labyrunr	   = new GameDriver("1987"	,"labyrunr"	,"labyrunr.java"	,rom_labyrunr,driver_tricktrp	,machine_driver_labyrunr	,input_ports_labyrunr	,null	,ROT90	,	"Konami", "Labyrinth Runner (Japan)" )
+	public static GameDriver driver_labyrunk	   = new GameDriver("1987"	,"labyrunk"	,"labyrunr.java"	,rom_labyrunk,driver_tricktrp	,machine_driver_labyrunr	,input_ports_labyrunr	,null	,ROT90	,	"Konami", "Labyrinth Runner (World Ver. K)" )
 }

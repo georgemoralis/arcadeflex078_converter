@@ -1031,12 +1031,12 @@ public class mainevt
 	
 	
 	
-	GAME( 1988, mainevt,  0,        mainevt,  mainevt,  mainevt, ROT0,  "Konami", "The Main Event (4 Players ver. Y)" )
-	GAME( 1988, mainevto, mainevt,  mainevt,  mainevt,  mainevt, ROT0,  "Konami", "The Main Event (4 Players ver. F)" )
-	GAME( 1988, mainev2p, mainevt,  mainevt,  mainev2p, mainevt, ROT0,  "Konami", "The Main Event (2 Players ver. X)" )
-	GAME( 1988, ringohja, mainevt,  mainevt,  mainev2p, mainevt, ROT0,  "Konami", "Ring no Ohja (Japan 2 Players ver. N)" )
-	GAME( 1988, devstors, 0,        devstors, devstors, mainevt, ROT90, "Konami", "Devastators (ver. Z)" )
-	GAME( 1988, devstor2, devstors, devstors, devstor2, mainevt, ROT90, "Konami", "Devastators (ver. X)" )
-	GAME( 1988, devstor3, devstors, devstors, devstors, mainevt, ROT90, "Konami", "Devastators (ver. V)" )
-	GAME( 1988, garuka,   devstors, devstors, devstor2, mainevt, ROT90, "Konami", "Garuka (Japan ver. W)" )
+	public static GameDriver driver_mainevt	   = new GameDriver("1988"	,"mainevt"	,"mainevt.java"	,rom_mainevt,null	,machine_driver_mainevt	,input_ports_mainevt	,init_mainevt	,ROT0	,	"Konami", "The Main Event (4 Players ver. Y)" )
+	public static GameDriver driver_mainevto	   = new GameDriver("1988"	,"mainevto"	,"mainevt.java"	,rom_mainevto,driver_mainevt	,machine_driver_mainevt	,input_ports_mainevt	,init_mainevt	,ROT0	,	"Konami", "The Main Event (4 Players ver. F)" )
+	public static GameDriver driver_mainev2p	   = new GameDriver("1988"	,"mainev2p"	,"mainevt.java"	,rom_mainev2p,driver_mainevt	,machine_driver_mainevt	,input_ports_mainev2p	,init_mainevt	,ROT0	,	"Konami", "The Main Event (2 Players ver. X)" )
+	public static GameDriver driver_ringohja	   = new GameDriver("1988"	,"ringohja"	,"mainevt.java"	,rom_ringohja,driver_mainevt	,machine_driver_mainevt	,input_ports_mainev2p	,init_mainevt	,ROT0	,	"Konami", "Ring no Ohja (Japan 2 Players ver. N)" )
+	public static GameDriver driver_devstors	   = new GameDriver("1988"	,"devstors"	,"mainevt.java"	,rom_devstors,null	,machine_driver_devstors	,input_ports_devstors	,init_mainevt	,ROT90	,	"Konami", "Devastators (ver. Z)" )
+	public static GameDriver driver_devstor2	   = new GameDriver("1988"	,"devstor2"	,"mainevt.java"	,rom_devstor2,driver_devstors	,machine_driver_devstors	,input_ports_devstor2	,init_mainevt	,ROT90	,	"Konami", "Devastators (ver. X)" )
+	public static GameDriver driver_devstor3	   = new GameDriver("1988"	,"devstor3"	,"mainevt.java"	,rom_devstor3,driver_devstors	,machine_driver_devstors	,input_ports_devstors	,init_mainevt	,ROT90	,	"Konami", "Devastators (ver. V)" )
+	public static GameDriver driver_garuka	   = new GameDriver("1988"	,"garuka"	,"mainevt.java"	,rom_garuka,driver_devstors	,machine_driver_devstors	,input_ports_devstor2	,init_mainevt	,ROT90	,	"Konami", "Garuka (Japan ver. W)" )
 }

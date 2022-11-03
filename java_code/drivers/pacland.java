@@ -497,8 +497,8 @@ public class pacland
 	
 	
 	
-	GAME( 1984, pacland,  0,       pacland, pacland, 0, ROT0, "Namco", "Pac-Land (set 1)" )
-	GAME( 1984, pacland2, pacland, pacland, pacland, 0, ROT0, "Namco", "Pac-Land (set 2)" )
-	GAME( 1984, pacland3, pacland, pacland, pacland, 0, ROT0, "Namco", "Pac-Land (set 3)" )
-	GAME( 1984, paclandm, pacland, pacland, pacland, 0, ROT0, "[Namco] (Bally Midway license)", "Pac-Land (Midway)" )
+	public static GameDriver driver_pacland	   = new GameDriver("1984"	,"pacland"	,"pacland.java"	,rom_pacland,null	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"Namco", "Pac-Land (set 1)" )
+	public static GameDriver driver_pacland2	   = new GameDriver("1984"	,"pacland2"	,"pacland.java"	,rom_pacland2,driver_pacland	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"Namco", "Pac-Land (set 2)" )
+	public static GameDriver driver_pacland3	   = new GameDriver("1984"	,"pacland3"	,"pacland.java"	,rom_pacland3,driver_pacland	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"Namco", "Pac-Land (set 3)" )
+	public static GameDriver driver_paclandm	   = new GameDriver("1984"	,"paclandm"	,"pacland.java"	,rom_paclandm,driver_pacland	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"[Namco] (Bally Midway license)", "Pac-Land (Midway)" )
 }

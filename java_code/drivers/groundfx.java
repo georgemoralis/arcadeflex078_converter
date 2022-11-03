@@ -575,5 +575,5 @@ public class groundfx
 	} };
 	
 	
-	GAME( 1992, groundfx, 0, groundfx, groundfx, groundfx, ROT0, "Taito Corporation", "Ground Effects / Super Ground Effects (Japan)" )
+	public static GameDriver driver_groundfx	   = new GameDriver("1992"	,"groundfx"	,"groundfx.java"	,rom_groundfx,null	,machine_driver_groundfx	,input_ports_groundfx	,init_groundfx	,ROT0	,	"Taito Corporation", "Ground Effects / Super Ground Effects (Japan)" )
 }

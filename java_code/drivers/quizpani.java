@@ -314,5 +314,5 @@ public class quizpani
 		ROM_LOAD( "qz8.121", 0x200, 0x100, CRC(b4c19741) SHA1(a6d3686bad6ef2336463b89bc2d249003d9b4bcc) ) /* unknown */
 	ROM_END(); }}; 
 	
-	GAME( 1993, quizpani, 0, quizpani, quizpani, 0, ROT0, "NMK", "Quiz Panicuru Fantasy" )
+	public static GameDriver driver_quizpani	   = new GameDriver("1993"	,"quizpani"	,"quizpani.java"	,rom_quizpani,null	,machine_driver_quizpani	,input_ports_quizpani	,null	,ROT0	,	"NMK", "Quiz Panicuru Fantasy" )
 }

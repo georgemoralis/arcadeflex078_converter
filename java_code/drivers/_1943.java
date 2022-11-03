@@ -460,7 +460,7 @@ public class _1943
 	
 	
 	
-	GAME( 1987, 1943,    0,    1943, 1943, 0, ROT270, "Capcom", "1943 - The Battle of Midway (US)" )
-	GAME( 1987, 1943j,   1943, 1943, 1943, 0, ROT270, "Capcom", "1943 - The Battle of Midway (Japan)" )
-	GAME( 1987, 1943kai, 0,    1943, 1943, 0, ROT270, "Capcom", "1943 Kai - Midway Kaisen" )
+	public static GameDriver driver_1943	   = new GameDriver("1987"	,"1943"	,"_1943.java"	,rom_1943,null	,machine_driver_1943	,input_ports_1943	,null	,ROT270	,	"Capcom", "1943 - The Battle of Midway (US)" )
+	public static GameDriver driver_1943j	   = new GameDriver("1987"	,"1943j"	,"_1943.java"	,rom_1943j,driver_1943	,machine_driver_1943	,input_ports_1943	,null	,ROT270	,	"Capcom", "1943 - The Battle of Midway (Japan)" )
+	public static GameDriver driver_1943kai	   = new GameDriver("1987"	,"1943kai"	,"_1943.java"	,rom_1943kai,null	,machine_driver_1943	,input_ports_1943	,null	,ROT270	,	"Capcom", "1943 Kai - Midway Kaisen" )
 }

@@ -548,7 +548,7 @@ public class tecmosys
 	//	ROM[0x44A/2] = 0x4E71;
 	} };
 	
-	GAMEX( 1996, deroon,      0, deroon, deroon, deroon,     ROT0, "Tecmo", "Deroon DeroDero", GAME_NOT_WORKING | GAME_NO_SOUND )
-	GAMEX( 1996, tkdensho,    0, deroon, deroon, 0,          ROT0, "Tecmo", "Touki Denshou -Angel Eyes-", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_deroon	   = new GameDriver("1996"	,"deroon"	,"tecmosys.java"	,rom_deroon,null	,machine_driver_deroon	,input_ports_deroon	,init_deroon	,ROT0	,	"Tecmo", "Deroon DeroDero", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_tkdensho	   = new GameDriver("1996"	,"tkdensho"	,"tecmosys.java"	,rom_tkdensho,null	,machine_driver_deroon	,input_ports_deroon	,null	,ROT0	,	"Tecmo", "Touki Denshou -Angel Eyes-", GAME_NOT_WORKING | GAME_NO_SOUND )
 	
 }

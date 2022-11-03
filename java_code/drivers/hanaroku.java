@@ -292,5 +292,5 @@ public class hanaroku
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1988, hanaroku, 0,        hanaroku, hanaroku, 0, ROT0, "Alba", "Hanaroku", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_hanaroku	   = new GameDriver("1988"	,"hanaroku"	,"hanaroku.java"	,rom_hanaroku,null	,machine_driver_hanaroku	,input_ports_hanaroku	,null	,ROT0	,	"Alba", "Hanaroku", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
 }

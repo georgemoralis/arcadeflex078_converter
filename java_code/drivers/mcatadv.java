@@ -637,9 +637,9 @@ public class mcatadv
 		ROM_LOAD( "nossn-00.u53", 0x00000, 0x100000, CRC(3bd1bcbc) SHA1(1bcad43792e985402db4eca122676c2c555f3313) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1993, mcatadv,  0,       mcatadv, mcatadv, mcatadv, ROT0,   "Wintechno", "Magical Cat Adventure", GAME_NO_COCKTAIL )
-	GAMEX( 1993, mcatadvj, mcatadv, mcatadv, mcatadv, mcatadv, ROT0,   "Wintechno", "Magical Cat Adventure (Japan)", GAME_NO_COCKTAIL )
-	GAMEX( 1993, nost,     0,       nost,    nost,    mcatadv, ROT270, "Face",      "Nostradamus", GAME_NO_COCKTAIL )
-	GAMEX( 1993, nostj,    nost,    nost,    nost,    mcatadv, ROT270, "Face",      "Nostradamus (Japan)", GAME_NO_COCKTAIL )
-	GAMEX( 1993, nostk,    nost,    nost,    nost,    mcatadv, ROT270, "Face",      "Nostradamus (Korea)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_mcatadv	   = new GameDriver("1993"	,"mcatadv"	,"mcatadv.java"	,rom_mcatadv,null	,machine_driver_mcatadv	,input_ports_mcatadv	,init_mcatadv	,ROT0	,	"Wintechno", "Magical Cat Adventure", GAME_NO_COCKTAIL )
+	public static GameDriver driver_mcatadvj	   = new GameDriver("1993"	,"mcatadvj"	,"mcatadv.java"	,rom_mcatadvj,driver_mcatadv	,machine_driver_mcatadv	,input_ports_mcatadv	,init_mcatadv	,ROT0	,	"Wintechno", "Magical Cat Adventure (Japan)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_nost	   = new GameDriver("1993"	,"nost"	,"mcatadv.java"	,rom_nost,null	,machine_driver_nost	,input_ports_nost	,init_mcatadv	,ROT270	,	"Face",      "Nostradamus", GAME_NO_COCKTAIL )
+	public static GameDriver driver_nostj	   = new GameDriver("1993"	,"nostj"	,"mcatadv.java"	,rom_nostj,driver_nost	,machine_driver_nost	,input_ports_nost	,init_mcatadv	,ROT270	,	"Face",      "Nostradamus (Japan)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_nostk	   = new GameDriver("1993"	,"nostk"	,"mcatadv.java"	,rom_nostk,driver_nost	,machine_driver_nost	,input_ports_nost	,init_mcatadv	,ROT270	,	"Face",      "Nostradamus (Korea)", GAME_NO_COCKTAIL )
 }

@@ -461,6 +461,6 @@ public class sauro
 		RAM[0xe000] = 1;
 	} };
 	
-	GAMEX( 1987, sauro,    0, sauro,    tecfri, tecfri, ROT0, "Tecfri", "Sauro", GAME_IMPERFECT_SOUND )
-	GAME ( 1987, trckydoc, 0, trckydoc, tecfri, tecfri, ROT0, "Tecfri", "Tricky Doc" )
+	public static GameDriver driver_sauro	   = new GameDriver("1987"	,"sauro"	,"sauro.java"	,rom_sauro,null	,machine_driver_sauro	,input_ports_tecfri	,init_tecfri	,ROT0	,	"Tecfri", "Sauro", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_trckydoc	   = new GameDriver("1987"	,"trckydoc"	,"sauro.java"	,rom_trckydoc,null	,machine_driver_trckydoc	,input_ports_tecfri	,init_tecfri	,ROT0	,	"Tecfri", "Tricky Doc" )
 }

@@ -8260,46 +8260,46 @@ public class seta
 	/* Working Games: */
 	
 	/* 68000 + 65C02 */
-	GAME( 1987, tndrcade, 0,        tndrcade, tndrcade, 0,        ROT270, "[Seta] (Taito license)", "Thundercade / Twin Formation" ) // Title/License: DSW
-	GAME( 1987, tndrcadj, tndrcade, tndrcade, tndrcadj, 0,        ROT270, "[Seta] (Taito license)", "Tokusyu Butai U.A.G. (Japan)" ) // License: DSW
-	GAME( 1988, twineagl, 0,        twineagl, twineagl, twineagl, ROT270, "Seta (Taito license)",   "Twin Eagle - Revenge Joe's Brother" ) // Country/License: DSW
-	GAME( 1989, downtown, 0,        downtown, downtown, downtown, ROT270, "Seta",                   "DownTown" ) // Country/License: DSW
-	GAMEX(1989, usclssic, 0,        usclssic, usclssic, 0,        ROT270, "Seta",                   "U.S. Classic", GAME_WRONG_COLORS ) // Country/License: DSW
-	GAME( 1989, calibr50, 0,        calibr50, calibr50, 0,        ROT270, "Athena / Seta",          "Caliber 50" ) // Country/License: DSW
-	GAME( 1989, arbalest, 0,        metafox,  arbalest, arbalest, ROT270, "Seta",                   "Arbalester" ) // Country/License: DSW
-	GAME( 1989, metafox,  0,        metafox,  metafox,  metafox,  ROT270, "Seta",                   "Meta Fox" ) // Country/License: DSW
+	public static GameDriver driver_tndrcade	   = new GameDriver("1987"	,"tndrcade"	,"seta.java"	,rom_tndrcade,null	,machine_driver_tndrcade	,input_ports_tndrcade	,null	,ROT270	,	"[Seta] (Taito license)", "Thundercade / Twin Formation" ) // Title/License: DSW
+	public static GameDriver driver_tndrcadj	   = new GameDriver("1987"	,"tndrcadj"	,"seta.java"	,rom_tndrcadj,driver_tndrcade	,machine_driver_tndrcade	,input_ports_tndrcadj	,null	,ROT270	,	"[Seta] (Taito license)", "Tokusyu Butai U.A.G. (Japan)" ) // License: DSW
+	public static GameDriver driver_twineagl	   = new GameDriver("1988"	,"twineagl"	,"seta.java"	,rom_twineagl,null	,machine_driver_twineagl	,input_ports_twineagl	,init_twineagl	,ROT270	,	"Seta (Taito license)",   "Twin Eagle - Revenge Joe's Brother" ) // Country/License: DSW
+	public static GameDriver driver_downtown	   = new GameDriver("1989"	,"downtown"	,"seta.java"	,rom_downtown,null	,machine_driver_downtown	,input_ports_downtown	,init_downtown	,ROT270	,	"Seta",                   "DownTown" ) // Country/License: DSW
+	public static GameDriver driver_usclssic	   = new GameDriver("1989"	,"usclssic"	,"seta.java"	,rom_usclssic,null	,machine_driver_usclssic	,input_ports_usclssic	,null	,ROT270	,	"Seta",                   "U.S. Classic", GAME_WRONG_COLORS ) // Country/License: DSW
+	public static GameDriver driver_calibr50	   = new GameDriver("1989"	,"calibr50"	,"seta.java"	,rom_calibr50,null	,machine_driver_calibr50	,input_ports_calibr50	,null	,ROT270	,	"Athena / Seta",          "Caliber 50" ) // Country/License: DSW
+	public static GameDriver driver_arbalest	   = new GameDriver("1989"	,"arbalest"	,"seta.java"	,rom_arbalest,null	,machine_driver_metafox	,input_ports_arbalest	,init_arbalest	,ROT270	,	"Seta",                   "Arbalester" ) // Country/License: DSW
+	public static GameDriver driver_metafox	   = new GameDriver("1989"	,"metafox"	,"seta.java"	,rom_metafox,null	,machine_driver_metafox	,input_ports_metafox	,init_metafox	,ROT270	,	"Seta",                   "Meta Fox" ) // Country/License: DSW
 	
 	/* 68000 */
-	GAME( 1989, drgnunit, 0,        drgnunit, drgnunit, 0,        ROT0,   "Seta",                   "Dragon Unit / Castle of Dragon" )
-	GAME( 1989, wits,     0,        wits,     wits,     0,        ROT0,   "Athena (Visco license)", "Wit's (Japan)" ) // Country/License: DSW
-	GAME( 1990, thunderl, 0,        thunderl, thunderl, 0,        ROT270, "Seta",                   "Thunder & Lightning" ) // Country/License: DSW
-	GAME( 1991, rezon,    0,        rezon,    rezon,    rezon,    ROT0,   "Allumer",                "Rezon" )
-	GAME( 1991, stg,      0,        drgnunit, stg,      0,        ROT270, "Athena / Tecmo",         "Strike Gunner S.T.G" )
-	GAME( 1992, blandia,  0,        blandia,  blandia,  blandia,  ROT0,   "Allumer",                "Blandia" )
-	GAME( 1992, blandiap, blandia,  blandiap, blandia,  0,        ROT0,   "Allumer",                "Blandia (prototype)" )
-	GAME( 1992, blockcar, 0,        blockcar, blockcar, 0,        ROT90,  "Visco",                  "Block Carnival / Thunder & Lightning 2" ) // Title: DSW
-	GAME( 1992, qzkklogy, 0,        drgnunit, qzkklogy, 0,        ROT0,   "Tecmo",                  "Quiz Kokology" )
-	GAME( 1992, neobattl, 0,        umanclub, neobattl, 0,        ROT270, "Banpresto / Sotsu Agency. Sunrise", "SD Gundam Neo Battling (Japan)" )
-	GAME( 1992, umanclub, 0,        umanclub, umanclub, 0,        ROT0,   "Tsuburaya Prod. / Banpresto", "Ultraman Club - Tatakae! Ultraman Kyoudai!!" )
-	GAME( 1992, zingzip,  0,        zingzip,  zingzip,  0,        ROT270, "Allumer + Tecmo",        "Zing Zing Zip" )
-	GAME( 1993, atehate,  0,        atehate,  atehate,  0,        ROT0,   "Athena",                 "Athena no Hatena ?" )
-	GAME( 1993, daioh,    0,        daioh,    daioh,    0,        ROT270, "Athena",                 "Daioh" )
-	GAME( 1993, jjsquawk, 0,        jjsquawk, jjsquawk, 0,        ROT0,   "Athena / Able",          "J. J. Squawkers" )
-	GAME( 1993, kamenrid, 0,        kamenrid, kamenrid, 0,        ROT0,   "Toei / Banpresto",       "Masked Riders Club Battle Race" )
-	GAME( 1993, madshark, 0,        madshark, madshark, 0,        ROT270, "Allumer",                "Mad Shark" )
-	GAME( 1993, msgundam, 0,        msgundam, msgundam, 0,        ROT0,   "Banpresto",              "Mobile Suit Gundam" )
-	GAME( 1993, msgunda1, msgundam, msgundam, msgunda1, 0,        ROT0,   "Banpresto",              "Mobile Suit Gundam (Japan)" )
-	GAME( 1993, oisipuzl, 0,        oisipuzl, oisipuzl, 0,        ROT0,   "Sunsoft + Atlus",        "Oishii Puzzle Ha Irimasenka" )
-	GAME( 1993, qzkklgy2, 0,        qzkklgy2, qzkklgy2, 0,        ROT0,   "Tecmo",                  "Quiz Kokology 2" )
-	GAME( 1993, triplfun, oisipuzl, triplfun, oisipuzl, 0,        ROT0,   "bootleg",                "Triple Fun" )
-	GAME( 1993, utoukond, 0,        utoukond, utoukond, 0,        ROT0,   "Banpresto + Tsuburaya Prod.", "Ultra Toukon Densetsu (Japan)" )
-	GAME( 1993, wrofaero, 0,        wrofaero, wrofaero, 0,        ROT270, "Yang Cheng",             "War of Aero - Project MEIOU" )
-	GAME( 1994, eightfrc, 0,        eightfrc, eightfrc, eightfrc, ROT90,  "Tecmo",                  "Eight Forces" )
-	GAME( 1994, kiwame,   0,        kiwame,   kiwame,   kiwame,   ROT0,   "Athena",                 "Pro Mahjong Kiwame" )
-	GAME( 1994, krzybowl, 0,        krzybowl, krzybowl, 0,        ROT270, "American Sammy",   "Krazy Bowl" )
-	GAMEX(1995, extdwnhl, 0,        extdwnhl, extdwnhl, 0,        ROT0,   "Sammy Industries Japan", "Extreme Downhill (v1.5)", GAME_IMPERFECT_GRAPHICS )
-	GAME( 1995, gundhara, 0,        gundhara, gundhara, 0,        ROT270, "Banpresto",              "Gundhara" )
-	GAMEX(1995, sokonuke, 0,        extdwnhl, sokonuke, 0,        ROT0,   "Sammy Industries",       "Sokonuke Taisen Game (Japan)", GAME_IMPERFECT_SOUND )
-	GAMEX(1995, zombraid, 0,        gundhara, zombraid, zombraid, ROT0,   "American Sammy",   "Zombie Raid (US)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_drgnunit	   = new GameDriver("1989"	,"drgnunit"	,"seta.java"	,rom_drgnunit,null	,machine_driver_drgnunit	,input_ports_drgnunit	,null	,ROT0	,	"Seta",                   "Dragon Unit / Castle of Dragon" )
+	public static GameDriver driver_wits	   = new GameDriver("1989"	,"wits"	,"seta.java"	,rom_wits,null	,machine_driver_wits	,input_ports_wits	,null	,ROT0	,	"Athena (Visco license)", "Wit's (Japan)" ) // Country/License: DSW
+	public static GameDriver driver_thunderl	   = new GameDriver("1990"	,"thunderl"	,"seta.java"	,rom_thunderl,null	,machine_driver_thunderl	,input_ports_thunderl	,null	,ROT270	,	"Seta",                   "Thunder & Lightning" ) // Country/License: DSW
+	public static GameDriver driver_rezon	   = new GameDriver("1991"	,"rezon"	,"seta.java"	,rom_rezon,null	,machine_driver_rezon	,input_ports_rezon	,init_rezon	,ROT0	,	"Allumer",                "Rezon" )
+	public static GameDriver driver_stg	   = new GameDriver("1991"	,"stg"	,"seta.java"	,rom_stg,null	,machine_driver_drgnunit	,input_ports_stg	,null	,ROT270	,	"Athena / Tecmo",         "Strike Gunner S.T.G" )
+	public static GameDriver driver_blandia	   = new GameDriver("1992"	,"blandia"	,"seta.java"	,rom_blandia,null	,machine_driver_blandia	,input_ports_blandia	,init_blandia	,ROT0	,	"Allumer",                "Blandia" )
+	public static GameDriver driver_blandiap	   = new GameDriver("1992"	,"blandiap"	,"seta.java"	,rom_blandiap,driver_blandia	,machine_driver_blandiap	,input_ports_blandia	,null	,ROT0	,	"Allumer",                "Blandia (prototype)" )
+	public static GameDriver driver_blockcar	   = new GameDriver("1992"	,"blockcar"	,"seta.java"	,rom_blockcar,null	,machine_driver_blockcar	,input_ports_blockcar	,null	,ROT90	,	"Visco",                  "Block Carnival / Thunder & Lightning 2" ) // Title: DSW
+	public static GameDriver driver_qzkklogy	   = new GameDriver("1992"	,"qzkklogy"	,"seta.java"	,rom_qzkklogy,null	,machine_driver_drgnunit	,input_ports_qzkklogy	,null	,ROT0	,	"Tecmo",                  "Quiz Kokology" )
+	public static GameDriver driver_neobattl	   = new GameDriver("1992"	,"neobattl"	,"seta.java"	,rom_neobattl,null	,machine_driver_umanclub	,input_ports_neobattl	,null	,ROT270	,	"Banpresto / Sotsu Agency. Sunrise", "SD Gundam Neo Battling (Japan)" )
+	public static GameDriver driver_umanclub	   = new GameDriver("1992"	,"umanclub"	,"seta.java"	,rom_umanclub,null	,machine_driver_umanclub	,input_ports_umanclub	,null	,ROT0	,	"Tsuburaya Prod. / Banpresto", "Ultraman Club - Tatakae! Ultraman Kyoudai!!" )
+	public static GameDriver driver_zingzip	   = new GameDriver("1992"	,"zingzip"	,"seta.java"	,rom_zingzip,null	,machine_driver_zingzip	,input_ports_zingzip	,null	,ROT270	,	"Allumer + Tecmo",        "Zing Zing Zip" )
+	public static GameDriver driver_atehate	   = new GameDriver("1993"	,"atehate"	,"seta.java"	,rom_atehate,null	,machine_driver_atehate	,input_ports_atehate	,null	,ROT0	,	"Athena",                 "Athena no Hatena ?" )
+	public static GameDriver driver_daioh	   = new GameDriver("1993"	,"daioh"	,"seta.java"	,rom_daioh,null	,machine_driver_daioh	,input_ports_daioh	,null	,ROT270	,	"Athena",                 "Daioh" )
+	public static GameDriver driver_jjsquawk	   = new GameDriver("1993"	,"jjsquawk"	,"seta.java"	,rom_jjsquawk,null	,machine_driver_jjsquawk	,input_ports_jjsquawk	,null	,ROT0	,	"Athena / Able",          "J. J. Squawkers" )
+	public static GameDriver driver_kamenrid	   = new GameDriver("1993"	,"kamenrid"	,"seta.java"	,rom_kamenrid,null	,machine_driver_kamenrid	,input_ports_kamenrid	,null	,ROT0	,	"Toei / Banpresto",       "Masked Riders Club Battle Race" )
+	public static GameDriver driver_madshark	   = new GameDriver("1993"	,"madshark"	,"seta.java"	,rom_madshark,null	,machine_driver_madshark	,input_ports_madshark	,null	,ROT270	,	"Allumer",                "Mad Shark" )
+	public static GameDriver driver_msgundam	   = new GameDriver("1993"	,"msgundam"	,"seta.java"	,rom_msgundam,null	,machine_driver_msgundam	,input_ports_msgundam	,null	,ROT0	,	"Banpresto",              "Mobile Suit Gundam" )
+	public static GameDriver driver_msgunda1	   = new GameDriver("1993"	,"msgunda1"	,"seta.java"	,rom_msgunda1,driver_msgundam	,machine_driver_msgundam	,input_ports_msgunda1	,null	,ROT0	,	"Banpresto",              "Mobile Suit Gundam (Japan)" )
+	public static GameDriver driver_oisipuzl	   = new GameDriver("1993"	,"oisipuzl"	,"seta.java"	,rom_oisipuzl,null	,machine_driver_oisipuzl	,input_ports_oisipuzl	,null	,ROT0	,	"Sunsoft + Atlus",        "Oishii Puzzle Ha Irimasenka" )
+	public static GameDriver driver_qzkklgy2	   = new GameDriver("1993"	,"qzkklgy2"	,"seta.java"	,rom_qzkklgy2,null	,machine_driver_qzkklgy2	,input_ports_qzkklgy2	,null	,ROT0	,	"Tecmo",                  "Quiz Kokology 2" )
+	public static GameDriver driver_triplfun	   = new GameDriver("1993"	,"triplfun"	,"seta.java"	,rom_triplfun,driver_oisipuzl	,machine_driver_triplfun	,input_ports_oisipuzl	,null	,ROT0	,	"bootleg",                "Triple Fun" )
+	public static GameDriver driver_utoukond	   = new GameDriver("1993"	,"utoukond"	,"seta.java"	,rom_utoukond,null	,machine_driver_utoukond	,input_ports_utoukond	,null	,ROT0	,	"Banpresto + Tsuburaya Prod.", "Ultra Toukon Densetsu (Japan)" )
+	public static GameDriver driver_wrofaero	   = new GameDriver("1993"	,"wrofaero"	,"seta.java"	,rom_wrofaero,null	,machine_driver_wrofaero	,input_ports_wrofaero	,null	,ROT270	,	"Yang Cheng",             "War of Aero - Project MEIOU" )
+	public static GameDriver driver_eightfrc	   = new GameDriver("1994"	,"eightfrc"	,"seta.java"	,rom_eightfrc,null	,machine_driver_eightfrc	,input_ports_eightfrc	,init_eightfrc	,ROT90	,	"Tecmo",                  "Eight Forces" )
+	public static GameDriver driver_kiwame	   = new GameDriver("1994"	,"kiwame"	,"seta.java"	,rom_kiwame,null	,machine_driver_kiwame	,input_ports_kiwame	,init_kiwame	,ROT0	,	"Athena",                 "Pro Mahjong Kiwame" )
+	public static GameDriver driver_krzybowl	   = new GameDriver("1994"	,"krzybowl"	,"seta.java"	,rom_krzybowl,null	,machine_driver_krzybowl	,input_ports_krzybowl	,null	,ROT270	,	"American Sammy",   "Krazy Bowl" )
+	public static GameDriver driver_extdwnhl	   = new GameDriver("1995"	,"extdwnhl"	,"seta.java"	,rom_extdwnhl,null	,machine_driver_extdwnhl	,input_ports_extdwnhl	,null	,ROT0	,	"Sammy Industries Japan", "Extreme Downhill (v1.5)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_gundhara	   = new GameDriver("1995"	,"gundhara"	,"seta.java"	,rom_gundhara,null	,machine_driver_gundhara	,input_ports_gundhara	,null	,ROT270	,	"Banpresto",              "Gundhara" )
+	public static GameDriver driver_sokonuke	   = new GameDriver("1995"	,"sokonuke"	,"seta.java"	,rom_sokonuke,null	,machine_driver_extdwnhl	,input_ports_sokonuke	,null	,ROT0	,	"Sammy Industries",       "Sokonuke Taisen Game (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_zombraid	   = new GameDriver("1995"	,"zombraid"	,"seta.java"	,rom_zombraid,null	,machine_driver_gundhara	,input_ports_zombraid	,init_zombraid	,ROT0	,	"American Sammy",   "Zombie Raid (US)", GAME_NO_COCKTAIL )
 	
 }

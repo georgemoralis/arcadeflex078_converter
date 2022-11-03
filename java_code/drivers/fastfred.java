@@ -886,11 +886,11 @@ public class fastfred
 		fastfred_hardware_type = 3;
 	} };
 	
-	GAMEX(1982, flyboy,   0,      fastfred, flyboy,   flyboy,   ROT90, "Kaneko", "Fly-Boy", GAME_NOT_WORKING )	/* protection */
-	GAME( 1982, flyboyb,  flyboy, fastfred, flyboy,   flyboy,   ROT90, "Kaneko", "Fly-Boy (bootleg)" )
-	GAME( 1982, fastfred, flyboy, fastfred, fastfred, fastfred, ROT90, "Atari", "Fast Freddie" )
-	GAME( 1983, jumpcoas, 0,      jumpcoas, jumpcoas, jumpcoas, ROT90, "Kaneko", "Jump Coaster" )
-	GAME( 1983, boggy84,  0,      jumpcoas, boggy84,  boggy84,  ROT90, "bootleg", "Boggy '84" )
-	GAME( 1986, redrobin, 0,      fastfred, redrobin, flyboy,   ROT90, "Elettronolo", "Red Robin" )
-	GAMEX(1983, imago,	  0,	  imago,	imago,	  imago,	ROT90, "Acom", "Imago", GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS )
+	public static GameDriver driver_flyboy	   = new GameDriver("1982"	,"flyboy"	,"fastfred.java"	,rom_flyboy,null	,machine_driver_fastfred	,input_ports_flyboy	,init_flyboy	,ROT90	,	"Kaneko", "Fly-Boy", GAME_NOT_WORKING )	/* protection */
+	public static GameDriver driver_flyboyb	   = new GameDriver("1982"	,"flyboyb"	,"fastfred.java"	,rom_flyboyb,driver_flyboy	,machine_driver_fastfred	,input_ports_flyboy	,init_flyboy	,ROT90	,	"Kaneko", "Fly-Boy (bootleg)" )
+	public static GameDriver driver_fastfred	   = new GameDriver("1982"	,"fastfred"	,"fastfred.java"	,rom_fastfred,driver_flyboy	,machine_driver_fastfred	,input_ports_fastfred	,init_fastfred	,ROT90	,	"Atari", "Fast Freddie" )
+	public static GameDriver driver_jumpcoas	   = new GameDriver("1983"	,"jumpcoas"	,"fastfred.java"	,rom_jumpcoas,null	,machine_driver_jumpcoas	,input_ports_jumpcoas	,init_jumpcoas	,ROT90	,	"Kaneko", "Jump Coaster" )
+	public static GameDriver driver_boggy84	   = new GameDriver("1983"	,"boggy84"	,"fastfred.java"	,rom_boggy84,null	,machine_driver_jumpcoas	,input_ports_boggy84	,init_boggy84	,ROT90	,	"bootleg", "Boggy '84" )
+	public static GameDriver driver_redrobin	   = new GameDriver("1986"	,"redrobin"	,"fastfred.java"	,rom_redrobin,null	,machine_driver_fastfred	,input_ports_redrobin	,init_flyboy	,ROT90	,	"Elettronolo", "Red Robin" )
+	public static GameDriver driver_imago	   = new GameDriver("1983"	,"imago"	,"fastfred.java"	,rom_imago,null	,machine_driver_imago	,input_ports_imago	,init_imago	,ROT90	,	"Acom", "Imago", GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS )
 }

@@ -1334,13 +1334,13 @@ public class djmain
 	 *
 	 *************************************/
 	
-	GAME( 1997, bm1stmix, 0,        djmain,   bm1stmix,  beatmania, ROT0, "Konami", "beatmania (ver JA-B)" )
-	GAME( 1998, bm2ndmix, 0,        djmain,   bm1stmix,  beatmania, ROT0, "Konami", "beatmania 2nd MIX (ver JA-B)" )
-	GAME( 1998, bm2ndmxa, bm2ndmix, djmain,   bm1stmix,  beatmania, ROT0, "Konami", "beatmania 2nd MIX (ver JA-A)" )
-	GAME( 1999, bmcompmx, 0,        djmain,   bmcompmx,  beatmania, ROT0, "Konami", "beatmania complete MIX (ver JA-B)" )
-	GAME( 1999, hmcompmx, bmcompmx, djmain,   bmcompmx,  hmcompmx,  ROT0, "Konami", "hiphopmania complete MIX (ver UA-B)" )
-	GAME( 1999, bm4thmix, 0,        djmain,   bm4thmix,  bm4thmix,  ROT0, "Konami", "beatmania 4th MIX (ver JA-A)" )
-	GAME( 2000, hmcompm2, 0,        djmain,   hmcompm2,  hmcompm2,  ROT0, "Konami", "hiphopmania complete MIX 2 (ver UA-A)" )
-	GAME( 2000, bmdct,    0,        djmain,   bmdct,     bmdct,     ROT0, "Konami", "beatmania f. Dreams Come True (ver JA-A)" )
-	GAME( 2000, bmcorerm, 0,        djmain,   beatmania, bmcorerm,  ROT0, "Konami", "beatmania CORE REMIX (ver JA-A)" )
+	public static GameDriver driver_bm1stmix	   = new GameDriver("1997"	,"bm1stmix"	,"djmain.java"	,rom_bm1stmix,null	,machine_driver_djmain	,input_ports_bm1stmix	,init_beatmania	,ROT0	,	"Konami", "beatmania (ver JA-B)" )
+	public static GameDriver driver_bm2ndmix	   = new GameDriver("1998"	,"bm2ndmix"	,"djmain.java"	,rom_bm2ndmix,null	,machine_driver_djmain	,input_ports_bm1stmix	,init_beatmania	,ROT0	,	"Konami", "beatmania 2nd MIX (ver JA-B)" )
+	public static GameDriver driver_bm2ndmxa	   = new GameDriver("1998"	,"bm2ndmxa"	,"djmain.java"	,rom_bm2ndmxa,driver_bm2ndmix	,machine_driver_djmain	,input_ports_bm1stmix	,init_beatmania	,ROT0	,	"Konami", "beatmania 2nd MIX (ver JA-A)" )
+	public static GameDriver driver_bmcompmx	   = new GameDriver("1999"	,"bmcompmx"	,"djmain.java"	,rom_bmcompmx,null	,machine_driver_djmain	,input_ports_bmcompmx	,init_beatmania	,ROT0	,	"Konami", "beatmania complete MIX (ver JA-B)" )
+	public static GameDriver driver_hmcompmx	   = new GameDriver("1999"	,"hmcompmx"	,"djmain.java"	,rom_hmcompmx,driver_bmcompmx	,machine_driver_djmain	,input_ports_bmcompmx	,init_hmcompmx	,ROT0	,	"Konami", "hiphopmania complete MIX (ver UA-B)" )
+	public static GameDriver driver_bm4thmix	   = new GameDriver("1999"	,"bm4thmix"	,"djmain.java"	,rom_bm4thmix,null	,machine_driver_djmain	,input_ports_bm4thmix	,init_bm4thmix	,ROT0	,	"Konami", "beatmania 4th MIX (ver JA-A)" )
+	public static GameDriver driver_hmcompm2	   = new GameDriver("2000"	,"hmcompm2"	,"djmain.java"	,rom_hmcompm2,null	,machine_driver_djmain	,input_ports_hmcompm2	,init_hmcompm2	,ROT0	,	"Konami", "hiphopmania complete MIX 2 (ver UA-A)" )
+	public static GameDriver driver_bmdct	   = new GameDriver("2000"	,"bmdct"	,"djmain.java"	,rom_bmdct,null	,machine_driver_djmain	,input_ports_bmdct	,init_bmdct	,ROT0	,	"Konami", "beatmania f. Dreams Come True (ver JA-A)" )
+	public static GameDriver driver_bmcorerm	   = new GameDriver("2000"	,"bmcorerm"	,"djmain.java"	,rom_bmcorerm,null	,machine_driver_djmain	,input_ports_beatmania	,init_bmcorerm	,ROT0	,	"Konami", "beatmania CORE REMIX (ver JA-A)" )
 }

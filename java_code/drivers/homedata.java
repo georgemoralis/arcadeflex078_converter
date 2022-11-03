@@ -1887,23 +1887,23 @@ public class homedata
 		homedata_priority=1; /* priority and initial value for bank write */
 	} };
 	
-	GAMEX(1987, hourouki, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Part 1 - Seisyun Hen (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAME( 1987, mhgaiden, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Gaiden (Japan)" )
-	GAME( 1988, mjhokite, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Okite (Japan)" )
-	GAME( 1988, mjclinic, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Clinic (Japan)" )
-	GAMEX(1988, mrokumei, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Rokumeikan (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_hourouki	   = new GameDriver("1987"	,"hourouki"	,"homedata.java"	,rom_hourouki,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Hourouki Part 1 - Seisyun Hen (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_mhgaiden	   = new GameDriver("1987"	,"mhgaiden"	,"homedata.java"	,rom_mhgaiden,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Hourouki Gaiden (Japan)" )
+	public static GameDriver driver_mjhokite	   = new GameDriver("1988"	,"mjhokite"	,"homedata.java"	,rom_mjhokite,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Hourouki Okite (Japan)" )
+	public static GameDriver driver_mjclinic	   = new GameDriver("1988"	,"mjclinic"	,"homedata.java"	,rom_mjclinic,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Clinic (Japan)" )
+	public static GameDriver driver_mrokumei	   = new GameDriver("1988"	,"mrokumei"	,"homedata.java"	,rom_mrokumei,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Rokumeikan (Japan)", GAME_IMPERFECT_GRAPHICS )
 	
-	GAME( 1988, reikaids, 0, reikaids, reikaids, reikaids,   ROT0, "Home Data", "Reikai Doushi (Japan)" )
-	GAMEX(1991, battlcry, 0, reikaids, battlcry, battlcry,   ROT0, "Home Data", "Battlecry", GAME_IMPERFECT_GRAPHICS  )
-	GAME( 1989, mjkojink, 0, pteacher, pteacher, 0,          ROT0, "Home Data", "Mahjong Kojinkyouju (Private Teacher) (Japan)" )
-	GAME( 1989, vitaminc, 0, pteacher, pteacher, 0,          ROT0, "Home Data", "Mahjong Vitamin C (Japan)" )
-	GAME( 1989, mjyougo,  0, pteacher, pteacher, 0,          ROT0, "Home Data", "Mahjong-yougo no Kisotairyoku (Japan)" )
-	GAME( 1991, mjkinjas, 0, mjkinjas, pteacher, 0,          ROT0, "Home Data", "Mahjong Kinjirareta Asobi (Japan)" )
-	GAME( 1992?,jogakuen, 0, pteacher, jogakuen, jogakuen,   ROT0, "Windom",    "Mahjong Jogakuen (Japan)" )
+	public static GameDriver driver_reikaids	   = new GameDriver("1988"	,"reikaids"	,"homedata.java"	,rom_reikaids,null	,machine_driver_reikaids	,input_ports_reikaids	,init_reikaids	,ROT0	,	"Home Data", "Reikai Doushi (Japan)" )
+	public static GameDriver driver_battlcry	   = new GameDriver("1991"	,"battlcry"	,"homedata.java"	,rom_battlcry,null	,machine_driver_reikaids	,input_ports_battlcry	,init_battlcry	,ROT0	,	"Home Data", "Battlecry", GAME_IMPERFECT_GRAPHICS  )
+	public static GameDriver driver_mjkojink	   = new GameDriver("1989"	,"mjkojink"	,"homedata.java"	,rom_mjkojink,null	,machine_driver_pteacher	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Kojinkyouju (Private Teacher) (Japan)" )
+	public static GameDriver driver_vitaminc	   = new GameDriver("1989"	,"vitaminc"	,"homedata.java"	,rom_vitaminc,null	,machine_driver_pteacher	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Vitamin C (Japan)" )
+	public static GameDriver driver_mjyougo	   = new GameDriver("1989"	,"mjyougo"	,"homedata.java"	,rom_mjyougo,null	,machine_driver_pteacher	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong-yougo no Kisotairyoku (Japan)" )
+	public static GameDriver driver_mjkinjas	   = new GameDriver("1991"	,"mjkinjas"	,"homedata.java"	,rom_mjkinjas,null	,machine_driver_mjkinjas	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Kinjirareta Asobi (Japan)" )
+	public static GameDriver driver_jogakuen	   = new GameDriver("1992?"	,"jogakuen"	,"homedata.java"	,rom_jogakuen,null	,machine_driver_pteacher	,input_ports_jogakuen	,init_jogakuen	,ROT0	,	"Windom",    "Mahjong Jogakuen (Japan)" )
 	
-	GAME( 1990, lemnangl, 0, lemnangl, pteacher, 0,          ROT0, "Home Data", "Mahjong Lemon Angel (Japan)" )
+	public static GameDriver driver_lemnangl	   = new GameDriver("1990"	,"lemnangl"	,"homedata.java"	,rom_lemnangl,null	,machine_driver_lemnangl	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Lemon Angel (Japan)" )
 	
-	GAMEX(1991?,mjikaga,  0, lemnangl, mjikaga,  mjikaga,    ROT0, "Mitchell",  "Mahjong Ikaga Desu ka (Japan)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	public static GameDriver driver_mjikaga	   = new GameDriver("1991?"	,"mjikaga"	,"homedata.java"	,rom_mjikaga,null	,machine_driver_lemnangl	,input_ports_mjikaga	,init_mjikaga	,ROT0	,	"Mitchell",  "Mahjong Ikaga Desu ka (Japan)", GAME_NOT_WORKING | GAME_NO_SOUND )
 	
 	
 	

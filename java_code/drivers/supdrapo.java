@@ -335,5 +335,5 @@ public class supdrapo
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1983, supdrapo, 0, supdrapo, supdrapo, 0, ROT90, "Stern", "Super Draw Poker", GAME_NOT_WORKING )
+	public static GameDriver driver_supdrapo	   = new GameDriver("1983"	,"supdrapo"	,"supdrapo.java"	,rom_supdrapo,null	,machine_driver_supdrapo	,input_ports_supdrapo	,null	,ROT90	,	"Stern", "Super Draw Poker", GAME_NOT_WORKING )
 }

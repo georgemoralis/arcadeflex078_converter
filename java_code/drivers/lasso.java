@@ -1038,9 +1038,9 @@ public class lasso
 	
 	***************************************************************************/
 	
-	GAME( 1982, lasso,    0,     lasso,    lasso,    0, ROT90, "SNK", "Lasso"                   )
-	GAME( 1983, chameleo, 0,     chameleo, chameleo, 0, ROT0,  "Jaleco", "Chameleon"               )
-	GAME( 1984, wwjgtin,  0,     wwjgtin,  wwjgtin,  0, ROT0,  "Jaleco / Casio", "Wai Wai Jockey Gate-In!" )
-	GAME( 1984, pinbo,    0,     pinbo,    pinbo,    0, ROT90, "Jaleco", "Pinbo" )
-	GAME( 1984, pinbos,   pinbo, pinbo,    pinbos,   0, ROT90, "bootleg?", "Pinbo (Strike)" )
+	public static GameDriver driver_lasso	   = new GameDriver("1982"	,"lasso"	,"lasso.java"	,rom_lasso,null	,machine_driver_lasso	,input_ports_lasso	,null	,ROT90	,	"SNK", "Lasso"                   )
+	public static GameDriver driver_chameleo	   = new GameDriver("1983"	,"chameleo"	,"lasso.java"	,rom_chameleo,null	,machine_driver_chameleo	,input_ports_chameleo	,null	,ROT0	,	"Jaleco", "Chameleon"               )
+	public static GameDriver driver_wwjgtin	   = new GameDriver("1984"	,"wwjgtin"	,"lasso.java"	,rom_wwjgtin,null	,machine_driver_wwjgtin	,input_ports_wwjgtin	,null	,ROT0	,	"Jaleco / Casio", "Wai Wai Jockey Gate-In!" )
+	public static GameDriver driver_pinbo	   = new GameDriver("1984"	,"pinbo"	,"lasso.java"	,rom_pinbo,null	,machine_driver_pinbo	,input_ports_pinbo	,null	,ROT90	,	"Jaleco", "Pinbo" )
+	public static GameDriver driver_pinbos	   = new GameDriver("1984"	,"pinbos"	,"lasso.java"	,rom_pinbos,driver_pinbo	,machine_driver_pinbo	,input_ports_pinbos	,null	,ROT90	,	"bootleg?", "Pinbo (Strike)" )
 }

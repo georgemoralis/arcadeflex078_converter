@@ -356,5 +356,5 @@ public class lemmings
 	
 	/******************************************************************************/
 	
-	GAME( 1991, lemmings, 0, lemmings, lemmings, 0, ROT0, "Data East USA", "Lemmings (US Prototype)" )
+	public static GameDriver driver_lemmings	   = new GameDriver("1991"	,"lemmings"	,"lemmings.java"	,rom_lemmings,null	,machine_driver_lemmings	,input_ports_lemmings	,null	,ROT0	,	"Data East USA", "Lemmings (US Prototype)" )
 }

@@ -540,6 +540,6 @@ public class powerins
 		ROM_LOAD( "82s147.bin", 0x0020, 0x0200, CRC(d7818542) SHA1(e94f8004c804f260874a117d59dfa0637c5d3d73) )
 	ROM_END(); }}; 
 	
-	GAME( 1993, powerins, 0,		powerins, powerins, 0, ROT0, "Atlus", "Power Instinct (USA bootleg) (set 1)" )
-	GAMEX(1993, powerina, powerins, powerina, powerins, 0, ROT0, "Atlus", "Power Instinct (USA bootleg) (set 2)", GAME_NO_SOUND )
+	public static GameDriver driver_powerins	   = new GameDriver("1993"	,"powerins"	,"powerins.java"	,rom_powerins,null	,machine_driver_powerins	,input_ports_powerins	,null	,ROT0	,	"Atlus", "Power Instinct (USA bootleg) (set 1)" )
+	public static GameDriver driver_powerina	   = new GameDriver("1993"	,"powerina"	,"powerins.java"	,rom_powerina,driver_powerins	,machine_driver_powerina	,input_ports_powerins	,null	,ROT0	,	"Atlus", "Power Instinct (USA bootleg) (set 2)", GAME_NO_SOUND )
 }

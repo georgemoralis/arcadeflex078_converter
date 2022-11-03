@@ -3040,31 +3040,31 @@ public class system32
 	}
 	
 	/* this one is pretty much ok since it doesn't use backgrounds tilemaps */
-	GAME( 1992, holo,     0,        system32, holo,     holo,     ROT0, "Sega", "Holosseum" )
+	public static GameDriver driver_holo	   = new GameDriver("1992"	,"holo"	,"system32.java"	,rom_holo,null	,machine_driver_system32	,input_ports_holo	,init_holo	,ROT0	,	"Sega", "Holosseum" )
 	
 	/* these have a range of issues, mainly with the backgrounds */
-	GAMEX(1991, radm,     0,        system32, radm,     radm,     ROT0, "Sega", "Rad Mobile", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1991, radr,     0,        sys32_hi, radr,     radr,     ROT0, "Sega", "Rad Rally", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1991, spidey,   0,        system32, spidey,   spidey,   ROT0, "Sega", "Spider-Man: The Videogame (US)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1991, spideyj,  spidey,   system32, spideyj,  spidey,   ROT0, "Sega", "Spider-Man: The Videogame (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1991, f1en,     0,        system32, f1en,     f1en,     ROT0, "Sega", "F1 Exhaust Note", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1992, arabfgt,  0,        system32, spidey,   arf,      ROT0, "Sega", "Arabian Fight", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1992, ga2,      0,        system32, ga2,      ga2,      ROT0, "Sega", "Golden Axe: The Revenge of Death Adder (US)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1992, ga2j,     ga2,      system32, ga2j,     ga2,      ROT0, "Sega", "Golden Axe: The Revenge of Death Adder (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1992, brival,   0,        sys32_hi, brival,   brival,   ROT0, "Sega", "Burning Rival (Japan)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1992, sonic,    0,        sys32_hi, sonic,    sonic,    ROT0, "Sega", "Segasonic the Hedgehog (Japan rev. C)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
-	GAMEX(1992, sonicp,   sonic,    sys32_hi, sonic,    sonic,    ROT0, "Sega", "Segasonic the Hedgehog (Japan prototype)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1993, alien3,   0,        system32, alien3,   alien3,   ROT0, "Sega", "Alien³: The Gun", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1994, jpark,    0,        jpark,    jpark,    jpark,    ROT0, "Sega", "Jurassic Park", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1994, svf,      0,        system32, svf,      s32,      ROT0, "Sega", "Super Visual Football: European Sega Cup", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1994, svs,	  svf,		system32, svf,		s32,	  ROT0, "Sega", "Super Visual Soccer: Sega Cup (US)", GAME_IMPERFECT_GRAPHICS )
-	GAMEX(1994, jleague,  svf,      system32, svf,      s32,      ROT0, "Sega", "The J.League 1994 (Japan)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_radm	   = new GameDriver("1991"	,"radm"	,"system32.java"	,rom_radm,null	,machine_driver_system32	,input_ports_radm	,init_radm	,ROT0	,	"Sega", "Rad Mobile", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_radr	   = new GameDriver("1991"	,"radr"	,"system32.java"	,rom_radr,null	,machine_driver_sys32_hi	,input_ports_radr	,init_radr	,ROT0	,	"Sega", "Rad Rally", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_spidey	   = new GameDriver("1991"	,"spidey"	,"system32.java"	,rom_spidey,null	,machine_driver_system32	,input_ports_spidey	,init_spidey	,ROT0	,	"Sega", "Spider-Man: The Videogame (US)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_spideyj	   = new GameDriver("1991"	,"spideyj"	,"system32.java"	,rom_spideyj,driver_spidey	,machine_driver_system32	,input_ports_spideyj	,init_spidey	,ROT0	,	"Sega", "Spider-Man: The Videogame (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_f1en	   = new GameDriver("1991"	,"f1en"	,"system32.java"	,rom_f1en,null	,machine_driver_system32	,input_ports_f1en	,init_f1en	,ROT0	,	"Sega", "F1 Exhaust Note", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_arabfgt	   = new GameDriver("1992"	,"arabfgt"	,"system32.java"	,rom_arabfgt,null	,machine_driver_system32	,input_ports_spidey	,init_arf	,ROT0	,	"Sega", "Arabian Fight", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_ga2	   = new GameDriver("1992"	,"ga2"	,"system32.java"	,rom_ga2,null	,machine_driver_system32	,input_ports_ga2	,init_ga2	,ROT0	,	"Sega", "Golden Axe: The Revenge of Death Adder (US)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_ga2j	   = new GameDriver("1992"	,"ga2j"	,"system32.java"	,rom_ga2j,driver_ga2	,machine_driver_system32	,input_ports_ga2j	,init_ga2	,ROT0	,	"Sega", "Golden Axe: The Revenge of Death Adder (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_brival	   = new GameDriver("1992"	,"brival"	,"system32.java"	,rom_brival,null	,machine_driver_sys32_hi	,input_ports_brival	,init_brival	,ROT0	,	"Sega", "Burning Rival (Japan)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_sonic	   = new GameDriver("1992"	,"sonic"	,"system32.java"	,rom_sonic,null	,machine_driver_sys32_hi	,input_ports_sonic	,init_sonic	,ROT0	,	"Sega", "Segasonic the Hedgehog (Japan rev. C)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
+	public static GameDriver driver_sonicp	   = new GameDriver("1992"	,"sonicp"	,"system32.java"	,rom_sonicp,driver_sonic	,machine_driver_sys32_hi	,input_ports_sonic	,init_sonic	,ROT0	,	"Sega", "Segasonic the Hedgehog (Japan prototype)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_alien3	   = new GameDriver("1993"	,"alien3"	,"system32.java"	,rom_alien3,null	,machine_driver_system32	,input_ports_alien3	,init_alien3	,ROT0	,	"Sega", "Alien³: The Gun", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_jpark	   = new GameDriver("1994"	,"jpark"	,"system32.java"	,rom_jpark,null	,machine_driver_jpark	,input_ports_jpark	,init_jpark	,ROT0	,	"Sega", "Jurassic Park", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_svf	   = new GameDriver("1994"	,"svf"	,"system32.java"	,rom_svf,null	,machine_driver_system32	,input_ports_svf	,init_s32	,ROT0	,	"Sega", "Super Visual Football: European Sega Cup", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_svs	   = new GameDriver("1994"	,"svs"	,"system32.java"	,rom_svs,driver_svf	,machine_driver_system32	,input_ports_svf	,init_s32	,ROT0	,	"Sega", "Super Visual Soccer: Sega Cup (US)", GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_jleague	   = new GameDriver("1994"	,"jleague"	,"system32.java"	,rom_jleague,driver_svf	,machine_driver_system32	,input_ports_svf	,init_s32	,ROT0	,	"Sega", "The J.League 1994 (Japan)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
 	
 	/* not really working */
-	GAMEX(1993, darkedge, 0,        sys32_hi, darkedge, s32,      ROT0, "Sega", "Dark Edge", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION ) /* locks up on some levels, sprites are submerged, protected */
-	GAMEX(1993, f1lap,    0,        system32, f1lap,	f1sl,     ROT0, "Sega", "F1 Super Lap", GAME_NOT_WORKING ) /* blank screen, also requires 2 linked sys32 boards to function */
-	GAMEX(1994, dbzvrvs,  0,        sys32_hi, system32,	s32,      ROT0, "Sega / Banpresto", "Dragon Ball Z V.R.V.S.", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION) /* does nothing useful, known to be heavily protected */
-	GAMEX(1995, slipstrm, 0,        sys32_hi, system32,	f1en,     ROT0, "Capcom", "Slipstream", GAME_NOT_WORKING ) /* unhandled v60 opcodes .... */
+	public static GameDriver driver_darkedge	   = new GameDriver("1993"	,"darkedge"	,"system32.java"	,rom_darkedge,null	,machine_driver_sys32_hi	,input_ports_darkedge	,init_s32	,ROT0	,	"Sega", "Dark Edge", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION ) /* locks up on some levels, sprites are submerged, protected */
+	public static GameDriver driver_f1lap	   = new GameDriver("1993"	,"f1lap"	,"system32.java"	,rom_f1lap,null	,machine_driver_system32	,input_ports_f1lap	,init_f1sl	,ROT0	,	"Sega", "F1 Super Lap", GAME_NOT_WORKING ) /* blank screen, also requires 2 linked sys32 boards to function */
+	public static GameDriver driver_dbzvrvs	   = new GameDriver("1994"	,"dbzvrvs"	,"system32.java"	,rom_dbzvrvs,null	,machine_driver_sys32_hi	,input_ports_system32	,init_s32	,ROT0	,	"Sega / Banpresto", "Dragon Ball Z V.R.V.S.", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION) /* does nothing useful, known to be heavily protected */
+	public static GameDriver driver_slipstrm	   = new GameDriver("1995"	,"slipstrm"	,"system32.java"	,rom_slipstrm,null	,machine_driver_sys32_hi	,input_ports_system32	,init_f1en	,ROT0	,	"Capcom", "Slipstream", GAME_NOT_WORKING ) /* unhandled v60 opcodes .... */
 	/* Air Rescue */
 	/* Loony Toons (maybe) */
 }

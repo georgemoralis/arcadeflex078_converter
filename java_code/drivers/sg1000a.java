@@ -197,7 +197,7 @@ public class sg1000a
 		regulus_decode();
 	}
 	
-	GAME( 1984, chboxing, 0, sg1000a, chboxing, 0, ROT0, "Sega", "Champion Boxing")
-	GAME( 1985, chwrestl, 0, sg1000a, chwrestl, chwrestl, ROT0, "Sega", "Champion Pro Wrestling")
+	public static GameDriver driver_chboxing	   = new GameDriver("1984"	,"chboxing"	,"sg1000a.java"	,rom_chboxing,null	,machine_driver_sg1000a	,input_ports_chboxing	,null	,ROT0	,	"Sega", "Champion Boxing")
+	public static GameDriver driver_chwrestl	   = new GameDriver("1985"	,"chwrestl"	,"sg1000a.java"	,rom_chwrestl,null	,machine_driver_sg1000a	,input_ports_chwrestl	,init_chwrestl	,ROT0	,	"Sega", "Champion Pro Wrestling")
 	
 }

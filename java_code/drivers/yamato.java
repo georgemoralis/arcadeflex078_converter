@@ -450,6 +450,6 @@ public class yamato
 	} };
 	
 	
-	GAME( 1983, yamato,  0,      yamato, yamato, yamato, ROT90, "Sega", "Yamato (US)" )
-	GAME( 1983, yamato2, yamato, yamato, yamato, yamato, ROT90, "Sega", "Yamato (World?)" )
+	public static GameDriver driver_yamato	   = new GameDriver("1983"	,"yamato"	,"yamato.java"	,rom_yamato,null	,machine_driver_yamato	,input_ports_yamato	,init_yamato	,ROT90	,	"Sega", "Yamato (US)" )
+	public static GameDriver driver_yamato2	   = new GameDriver("1983"	,"yamato2"	,"yamato.java"	,rom_yamato2,driver_yamato	,machine_driver_yamato	,input_ports_yamato	,init_yamato	,ROT90	,	"Sega", "Yamato (World?)" )
 }

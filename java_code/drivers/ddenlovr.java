@@ -2511,13 +2511,13 @@ public class ddenlovr
 	} };
 	
 	
-	GAMEX(1992, mmpanic,  0,       mmpanic,  mmpanic,  0,        ROT0, "Nakanihon + East Technology (Taito license)", "Monkey Mole Panic (USA)",                    GAME_NO_COCKTAIL )
-	GAMEX(1993, quizchq,  0,       quizchq,  quizchq,  0,        ROT0, "Nakanihon",                                   "Quiz Channel Question (Ver 1.00) (Japan)",   GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX(1993, quizchql, quizchq, quizchq,  quizchq,  0,        ROT0, "Nakanihon (Laxan license)",                   "Quiz Channel Question (Ver 1.23) (Taiwan?)", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	GAMEX(1994, quiz365,  0,       quiz365,  quiz365,  0,        ROT0, "Nakanihon",                                   "Quiz 365 (Hong Kong & Taiwan)",              GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
-	GAMEX(1994, rongrong, 0,       rongrong, rongrong, rongrong, ROT0, "Nakanihon",                                   "Rong Rong (Germany)",                        GAME_NO_COCKTAIL )
-	GAMEX(1995, nettoqc,  0,       nettoqc,  nettoqc,  0,        ROT0, "Nakanihon",                                   "Nettoh Quiz Champion (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
-	GAMEX(1996, ddenlovr, 0,       ddenlovr, ddenlovr, 0,        ROT0, "Dynax",                                       "Don Den Lover Vol. 1 (Hong Kong)",           GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_mmpanic	   = new GameDriver("1992"	,"mmpanic"	,"ddenlovr.java"	,rom_mmpanic,null	,machine_driver_mmpanic	,input_ports_mmpanic	,null	,ROT0	,	"Nakanihon + East Technology (Taito license)", "Monkey Mole Panic (USA)",                    GAME_NO_COCKTAIL )
+	public static GameDriver driver_quizchq	   = new GameDriver("1993"	,"quizchq"	,"ddenlovr.java"	,rom_quizchq,null	,machine_driver_quizchq	,input_ports_quizchq	,null	,ROT0	,	"Nakanihon",                                   "Quiz Channel Question (Ver 1.00) (Japan)",   GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_quizchql	   = new GameDriver("1993"	,"quizchql"	,"ddenlovr.java"	,rom_quizchql,driver_quizchq	,machine_driver_quizchq	,input_ports_quizchq	,null	,ROT0	,	"Nakanihon (Laxan license)",                   "Quiz Channel Question (Ver 1.23) (Taiwan?)", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_quiz365	   = new GameDriver("1994"	,"quiz365"	,"ddenlovr.java"	,rom_quiz365,null	,machine_driver_quiz365	,input_ports_quiz365	,null	,ROT0	,	"Nakanihon",                                   "Quiz 365 (Hong Kong & Taiwan)",              GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
+	public static GameDriver driver_rongrong	   = new GameDriver("1994"	,"rongrong"	,"ddenlovr.java"	,rom_rongrong,null	,machine_driver_rongrong	,input_ports_rongrong	,init_rongrong	,ROT0	,	"Nakanihon",                                   "Rong Rong (Germany)",                        GAME_NO_COCKTAIL )
+	public static GameDriver driver_nettoqc	   = new GameDriver("1995"	,"nettoqc"	,"ddenlovr.java"	,rom_nettoqc,null	,machine_driver_nettoqc	,input_ports_nettoqc	,null	,ROT0	,	"Nakanihon",                                   "Nettoh Quiz Champion (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_ddenlovr	   = new GameDriver("1996"	,"ddenlovr"	,"ddenlovr.java"	,rom_ddenlovr,null	,machine_driver_ddenlovr	,input_ports_ddenlovr	,null	,ROT0	,	"Dynax",                                       "Don Den Lover Vol. 1 (Hong Kong)",           GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
 	
-	GAMEX(1996, hanakanz, 0,       rongrong, rongrong, 0,        ROT0, "Dynax",     "Hanakanzashi (Japan)", GAME_NOT_WORKING )
+	public static GameDriver driver_hanakanz	   = new GameDriver("1996"	,"hanakanz"	,"ddenlovr.java"	,rom_hanakanz,null	,machine_driver_rongrong	,input_ports_rongrong	,null	,ROT0	,	"Dynax",     "Hanakanzashi (Japan)", GAME_NOT_WORKING )
 }

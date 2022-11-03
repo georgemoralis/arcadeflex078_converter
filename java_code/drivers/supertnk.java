@@ -446,6 +446,6 @@ public class supertnk
 	
 	
 	/*          rom       parent     machine   inp       init */
-	GAME( 1981, supertnk,  0,        supertnk, supertnk, supertnk, ROT90, "Video Games GmbH", "Super Tank" )
+	public static GameDriver driver_supertnk	   = new GameDriver("1981"	,"supertnk"	,"supertnk.java"	,rom_supertnk,null	,machine_driver_supertnk	,input_ports_supertnk	,init_supertnk	,ROT90	,	"Video Games GmbH", "Super Tank" )
 	
 }

@@ -321,6 +321,6 @@ public class mermaid
 		ROM_LOAD( "rou-42.bin",  0x2000,  0x1000, CRC(5ce13444) SHA1(e6da83190b26b094159a3a97deffd31d0d20a061) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1982, mermaid, 0, mermaid, mermaid, 0, ROT0, "[Sanritsu] Rock-ola", "Mermaid", GAME_NOT_WORKING )
-	GAMEX( 1982, rougien, 0, mermaid, mermaid, 0, ROT0, "Sanritsu", "Rougien", GAME_NOT_WORKING )
+	public static GameDriver driver_mermaid	   = new GameDriver("1982"	,"mermaid"	,"mermaid.java"	,rom_mermaid,null	,machine_driver_mermaid	,input_ports_mermaid	,null	,ROT0	,	"[Sanritsu] Rock-ola", "Mermaid", GAME_NOT_WORKING )
+	public static GameDriver driver_rougien	   = new GameDriver("1982"	,"rougien"	,"mermaid.java"	,rom_rougien,null	,machine_driver_mermaid	,input_ports_mermaid	,null	,ROT0	,	"Sanritsu", "Rougien", GAME_NOT_WORKING )
 }

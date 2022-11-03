@@ -508,7 +508,7 @@ public class thedeep
 		ROM_LOAD( "fi-3", 0x400, 0x200, CRC(f61a9686) SHA1(24082f60b72268d240ceca6999bdf18872625cd2) )
 	ROM_END(); }}; 
 	
-	GAME( 1987, thedeep, 0,      thedeep, thedeep, 0, ROT270, "Woodplace Inc.", "The Deep (Japan)" )
-	GAME( 1988, rundeep, thedeep,thedeep, thedeep, 0, ROT270, "Cream",     "Run Deep" )
+	public static GameDriver driver_thedeep	   = new GameDriver("1987"	,"thedeep"	,"thedeep.java"	,rom_thedeep,null	,machine_driver_thedeep	,input_ports_thedeep	,null	,ROT270	,	"Woodplace Inc.", "The Deep (Japan)" )
+	public static GameDriver driver_rundeep	   = new GameDriver("1988"	,"rundeep"	,"thedeep.java"	,rom_rundeep,driver_thedeep	,machine_driver_thedeep	,input_ports_thedeep	,null	,ROT270	,	"Cream",     "Run Deep" )
 	
 }

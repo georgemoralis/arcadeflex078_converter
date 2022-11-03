@@ -2516,26 +2516,26 @@ public class namcos22
 	
 	/*     YEAR, NAME,    PARENT,    MACHINE,   INPUT,    INIT,     MNTR,  COMPANY, FULLNAME,                                    FLAGS */
 	/* System22 games */
-	GAMEX( 1995, cybrcomm, 0,        namcos22,  cybrcomm, cybrcomm, ROT0, "Namco", "Cyber Commando (Rev. CY1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	GAMEX( 1995, raveracw, 0,        namcos22,  raveracw, raveracw, ROT0, "Namco", "Rave Racer (Rev. RV2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	GAMEX( 1993, ridgeraj, 0,        namcos22,  ridgera,  ridgeraj, ROT0, "Namco", "Ridge Racer (Rev. RR1, Japan)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
-	GAMEX( 1994, ridger2j, 0,        namcos22,  ridgera,  ridger2j, ROT0, "Namco", "Ridge Racer 2 (Rev. RRS1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
-	GAMEX( 1994, acedrvrw, 0,        namcos22,  victlap,  acedrvr,  ROT0, "Namco", "Ace Driver (Rev. AD2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	GAMEX( 1996, victlapw, 0,        namcos22,  victlap,  victlap,  ROT0, "Namco", "Ace Driver: Victory Lap (Rev. ADV2, World)", GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	public static GameDriver driver_cybrcomm	   = new GameDriver("1995"	,"cybrcomm"	,"namcos22.java"	,rom_cybrcomm,null	,machine_driver_namcos22	,input_ports_cybrcomm	,init_cybrcomm	,ROT0	,	"Namco", "Cyber Commando (Rev. CY1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	public static GameDriver driver_raveracw	   = new GameDriver("1995"	,"raveracw"	,"namcos22.java"	,rom_raveracw,null	,machine_driver_namcos22	,input_ports_raveracw	,init_raveracw	,ROT0	,	"Namco", "Rave Racer (Rev. RV2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	public static GameDriver driver_ridgeraj	   = new GameDriver("1993"	,"ridgeraj"	,"namcos22.java"	,rom_ridgeraj,null	,machine_driver_namcos22	,input_ports_ridgera	,init_ridgeraj	,ROT0	,	"Namco", "Ridge Racer (Rev. RR1, Japan)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
+	public static GameDriver driver_ridger2j	   = new GameDriver("1994"	,"ridger2j"	,"namcos22.java"	,rom_ridger2j,null	,machine_driver_namcos22	,input_ports_ridgera	,init_ridger2j	,ROT0	,	"Namco", "Ridge Racer 2 (Rev. RRS1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
+	public static GameDriver driver_acedrvrw	   = new GameDriver("1994"	,"acedrvrw"	,"namcos22.java"	,rom_acedrvrw,null	,machine_driver_namcos22	,input_ports_victlap	,init_acedrvr	,ROT0	,	"Namco", "Ace Driver (Rev. AD2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	public static GameDriver driver_victlapw	   = new GameDriver("1996"	,"victlapw"	,"namcos22.java"	,rom_victlapw,null	,machine_driver_namcos22	,input_ports_victlap	,init_victlap	,ROT0	,	"Namco", "Ace Driver: Victory Lap (Rev. ADV2, World)", GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
 	
 	/* Super System22 games */
-	GAMEX( 1995, airco22b, 0,        namcos22s, victlap,  airco22,  ROT0, "Namco", "Air Combat 22 (Rev. ACS1 Ver.B)"           , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	GAMEX( 1995, alpinerd, 0,        namcos22s, alpiner,  alpiner,  ROT0, "Namco", "Alpine Racer (Rev. AR2 Ver.D)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
-	GAMEX( 1995, alpinerc, alpinerd, namcos22s, alpiner,  alpiner,  ROT0, "Namco", "Alpine Racer (Rev. AR2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
-	GAMEX( 1995, cybrcycc, 0,        namcos22s, cybrcycc, cybrcyc,  ROT0, "Namco", "Cyber Cycles (Rev. CB2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	//GAMEX( 1995, dirtdshx, "Dirt Dash")
-	GAMEX( 1995, timecrsa, 0,        namcos22s, timecris, timecris, ROT0, "Namco", "Time Crisis (Rev. TS2 Ver.A)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* locks up */
-	//GAMEX( 1995, timecris, 0, namcos22s, timecris, timecris, ROT0, "Namco", "Time Crisis (Rev. TS2 Ver.B)"              , GAME_NO_SOUND|GAME_NOT_WORKING )
-	GAMEX( 1996, propcycl, 0,        namcos22s, propcycl, propcycl, ROT0, "Namco", "Prop Cycle (Rev PR2 Ver.A)"                , GAME_NO_SOUND|GAME_IMPERFECT_GRAPHICS )
-	//GAMEX( 1996, tokyowrx, "Tokyo Wars")
-	//GAMEX( 1996, alpinr2x, "Alpine Racer 2")
-	//GAMEX( 1996, alpinesx, "Alpine Surfer")
-	//GAMEX( 1996, aquajetx, "Aqua Jet")
-	//GAMEX( 1997, armdilox, "Armidillo Racing")
-	//GAMEX( 199?, downhbkx, "Downhill Bikers")
+	public static GameDriver driver_airco22b	   = new GameDriver("1995"	,"airco22b"	,"namcos22.java"	,rom_airco22b,null	,machine_driver_namcos22s	,input_ports_victlap	,init_airco22	,ROT0	,	"Namco", "Air Combat 22 (Rev. ACS1 Ver.B)"           , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	public static GameDriver driver_alpinerd	   = new GameDriver("1995"	,"alpinerd"	,"namcos22.java"	,rom_alpinerd,null	,machine_driver_namcos22s	,input_ports_alpiner	,init_alpiner	,ROT0	,	"Namco", "Alpine Racer (Rev. AR2 Ver.D)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
+	public static GameDriver driver_alpinerc	   = new GameDriver("1995"	,"alpinerc"	,"namcos22.java"	,rom_alpinerc,driver_alpinerd	,machine_driver_namcos22s	,input_ports_alpiner	,init_alpiner	,ROT0	,	"Namco", "Alpine Racer (Rev. AR2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
+	public static GameDriver driver_cybrcycc	   = new GameDriver("1995"	,"cybrcycc"	,"namcos22.java"	,rom_cybrcycc,null	,machine_driver_namcos22s	,input_ports_cybrcycc	,init_cybrcyc	,ROT0	,	"Namco", "Cyber Cycles (Rev. CB2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	//public static GameDriver driver_dirtdshx	   = new GameDriver("1995"	,"dirtdshx"	,"namcos22.java"	,rom_dirtdshx,driver_	,machine_driver_Dirt	,input_ports_Dash	,init_	,	,	
+	public static GameDriver driver_timecrsa	   = new GameDriver("1995"	,"timecrsa"	,"namcos22.java"	,rom_timecrsa,null	,machine_driver_namcos22s	,input_ports_timecris	,init_timecris	,ROT0	,	"Namco", "Time Crisis (Rev. TS2 Ver.A)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* locks up */
+	//public static GameDriver driver_timecris	   = new GameDriver("1995"	,"timecris"	,"namcos22.java"	,rom_timecris,null	,machine_driver_namcos22s	,input_ports_timecris	,init_timecris	,ROT0	,	"Namco", "Time Crisis (Rev. TS2 Ver.B)"              , GAME_NO_SOUND|GAME_NOT_WORKING )
+	public static GameDriver driver_propcycl	   = new GameDriver("1996"	,"propcycl"	,"namcos22.java"	,rom_propcycl,null	,machine_driver_namcos22s	,input_ports_propcycl	,init_propcycl	,ROT0	,	"Namco", "Prop Cycle (Rev PR2 Ver.A)"                , GAME_NO_SOUND|GAME_IMPERFECT_GRAPHICS )
+	//public static GameDriver driver_tokyowrx	   = new GameDriver("1996"	,"tokyowrx"	,"namcos22.java"	,rom_tokyowrx,driver_	,machine_driver_Tokyo	,input_ports_Wars	,init_	,	,	
+	//public static GameDriver driver_alpinr2x	   = new GameDriver("1996"	,"alpinr2x"	,"namcos22.java"	,rom_alpinr2x,driver_	,machine_driver_Alpine	,input_ports_Racer	,init_2	,	,	
+	//public static GameDriver driver_alpinesx	   = new GameDriver("1996"	,"alpinesx"	,"namcos22.java"	,rom_alpinesx,driver_	,machine_driver_Alpine	,input_ports_Surfer	,init_	,	,	
+	//public static GameDriver driver_aquajetx	   = new GameDriver("1996"	,"aquajetx"	,"namcos22.java"	,rom_aquajetx,driver_	,machine_driver_Aqua	,input_ports_Jet	,init_	,	,	
+	//public static GameDriver driver_armdilox	   = new GameDriver("1997"	,"armdilox"	,"namcos22.java"	,rom_armdilox,driver_	,machine_driver_Armidillo	,input_ports_Racing	,init_	,	,	
+	//public static GameDriver driver_downhbkx	   = new GameDriver("199?"	,"downhbkx"	,"namcos22.java"	,rom_downhbkx,driver_	,machine_driver_Downhill	,input_ports_Bikers	,init_	,	,	
 }

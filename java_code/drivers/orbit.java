@@ -475,5 +475,5 @@ public class orbit
 	ROM_END(); }}; 
 	
 	
-	GAME( 1978, orbit, 0, orbit, orbit, 0, 0, "Atari", "Orbit" )
+	public static GameDriver driver_orbit	   = new GameDriver("1978"	,"orbit"	,"orbit.java"	,rom_orbit,null	,machine_driver_orbit	,input_ports_orbit	,null	,0	,	"Atari", "Orbit" )
 }

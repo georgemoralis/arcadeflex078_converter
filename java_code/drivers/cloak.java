@@ -518,8 +518,8 @@ public class cloak
 	 *
 	 *************************************/
 	
-	GAME( 1983, cloak,   0,     cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (rev 5)" )
-	GAME( 1983, cloaksp, cloak, cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (Spanish)" )
-	GAME( 1983, cloakfr, cloak, cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (French)" )
-	GAME( 1983, cloakgr, cloak, cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (German)" )
+	public static GameDriver driver_cloak	   = new GameDriver("1983"	,"cloak"	,"cloak.java"	,rom_cloak,null	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (rev 5)" )
+	public static GameDriver driver_cloaksp	   = new GameDriver("1983"	,"cloaksp"	,"cloak.java"	,rom_cloaksp,driver_cloak	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (Spanish)" )
+	public static GameDriver driver_cloakfr	   = new GameDriver("1983"	,"cloakfr"	,"cloak.java"	,rom_cloakfr,driver_cloak	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (French)" )
+	public static GameDriver driver_cloakgr	   = new GameDriver("1983"	,"cloakgr"	,"cloak.java"	,rom_cloakgr,driver_cloak	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (German)" )
 }

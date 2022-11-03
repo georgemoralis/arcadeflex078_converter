@@ -839,10 +839,10 @@ public class gaplus
 	
 	
 	/*          rom       parent    machine   inp      init                                    */
-	GAME( 1984, gaplus,   0,        gaplus,   gaplus,   0, ROT90, "Namco", "Gaplus (rev. D)" )
-	GAME( 1984, gapluso,  gaplus,   gapluso,  gapluso,  0, ROT90, "Namco", "Gaplus (rev. B)" )
-	GAME( 1984, gaplusa,  gaplus,   gaplusa,  gapluso,  0, ROT90, "Namco", "Gaplus (alternate hardware)" )
-	GAME( 1984, galaga3,  gaplus,   gaplus,   gaplus,   0, ROT90, "Namco", "Galaga 3 (rev. C)" )
-	GAME( 1984, galaga3a, gaplus,   gaplus,   galaga3a, 0, ROT90, "Namco", "Galaga 3 (alternate set)" )
-	GAME( 1984, galaga3m, gaplus,   gaplus,   galaga3m, 0, ROT90, "[Namco] (Midway license)", "Galaga 3 (Midway)" )
+	public static GameDriver driver_gaplus	   = new GameDriver("1984"	,"gaplus"	,"gaplus.java"	,rom_gaplus,null	,machine_driver_gaplus	,input_ports_gaplus	,null	,ROT90	,	"Namco", "Gaplus (rev. D)" )
+	public static GameDriver driver_gapluso	   = new GameDriver("1984"	,"gapluso"	,"gaplus.java"	,rom_gapluso,driver_gaplus	,machine_driver_gapluso	,input_ports_gapluso	,null	,ROT90	,	"Namco", "Gaplus (rev. B)" )
+	public static GameDriver driver_gaplusa	   = new GameDriver("1984"	,"gaplusa"	,"gaplus.java"	,rom_gaplusa,driver_gaplus	,machine_driver_gaplusa	,input_ports_gapluso	,null	,ROT90	,	"Namco", "Gaplus (alternate hardware)" )
+	public static GameDriver driver_galaga3	   = new GameDriver("1984"	,"galaga3"	,"gaplus.java"	,rom_galaga3,driver_gaplus	,machine_driver_gaplus	,input_ports_gaplus	,null	,ROT90	,	"Namco", "Galaga 3 (rev. C)" )
+	public static GameDriver driver_galaga3a	   = new GameDriver("1984"	,"galaga3a"	,"gaplus.java"	,rom_galaga3a,driver_gaplus	,machine_driver_gaplus	,input_ports_galaga3a	,null	,ROT90	,	"Namco", "Galaga 3 (alternate set)" )
+	public static GameDriver driver_galaga3m	   = new GameDriver("1984"	,"galaga3m"	,"gaplus.java"	,rom_galaga3m,driver_gaplus	,machine_driver_gaplus	,input_ports_galaga3m	,null	,ROT90	,	"[Namco] (Midway license)", "Galaga 3 (Midway)" )
 }

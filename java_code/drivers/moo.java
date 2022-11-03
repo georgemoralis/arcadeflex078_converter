@@ -928,9 +928,9 @@ public class moo
 		ROM_CONTINUE(          0x300000+0x30000, 0x010000)//bank c hi
 	ROM_END(); }}; 
 	
-	GAME( 1992, moo,     0,       moo,     moo,     moo,      ROT0, "Konami", "Wild West C.O.W.-Boys of Moo Mesa (World version EA)")
-	GAME( 1992, mooua,   moo,     moo,     moo,     moo,      ROT0, "Konami", "Wild West C.O.W.-Boys of Moo Mesa (US version UA)")
-	GAMEX( 1992, moobl,   moo,     moobl,   moo,     moo,      ROT0, "<unknown>", "Wild West C.O.W.-Boys of Moo Mesa (bootleg version AA)", GAME_NOT_WORKING)
-	GAME( 1992, bucky,   0,       bucky,   bucky,   moo,      ROT0, "Konami", "Bucky O'Hare (World version EA)")
-	GAME( 1992, buckyua, bucky,   bucky,   bucky,   moo,      ROT0, "Konami", "Bucky O'Hare (US version UA)")
+	public static GameDriver driver_moo	   = new GameDriver("1992"	,"moo"	,"moo.java"	,rom_moo,null	,machine_driver_moo	,input_ports_moo	,init_moo	,ROT0	,	"Konami", "Wild West C.O.W.-Boys of Moo Mesa (World version EA)")
+	public static GameDriver driver_mooua	   = new GameDriver("1992"	,"mooua"	,"moo.java"	,rom_mooua,driver_moo	,machine_driver_moo	,input_ports_moo	,init_moo	,ROT0	,	"Konami", "Wild West C.O.W.-Boys of Moo Mesa (US version UA)")
+	public static GameDriver driver_moobl	   = new GameDriver("1992"	,"moobl"	,"moo.java"	,rom_moobl,driver_moo	,machine_driver_moobl	,input_ports_moo	,init_moo	,ROT0	,	"<unknown>", "Wild West C.O.W.-Boys of Moo Mesa (bootleg version AA)", GAME_NOT_WORKING)
+	public static GameDriver driver_bucky	   = new GameDriver("1992"	,"bucky"	,"moo.java"	,rom_bucky,null	,machine_driver_bucky	,input_ports_bucky	,init_moo	,ROT0	,	"Konami", "Bucky O'Hare (World version EA)")
+	public static GameDriver driver_buckyua	   = new GameDriver("1992"	,"buckyua"	,"moo.java"	,rom_buckyua,driver_bucky	,machine_driver_bucky	,input_ports_bucky	,init_moo	,ROT0	,	"Konami", "Bucky O'Hare (US version UA)")
 }

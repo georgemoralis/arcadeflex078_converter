@@ -1242,18 +1242,18 @@ public class namconb1
 	
 	
 	
-	GAMEX( 1994, nebulray, 0,        namconb1, namconb1, nebulray, ROT90, "Namco", "Nebulas Ray (World)", GAME_NO_SOUND )
-	GAMEX( 1994, nebulryj, nebulray, namconb1, namconb1, nebulray, ROT90, "Namco", "Nebulas Ray (Japan)", GAME_NO_SOUND )
-	GAMEX( 1994, ptblank,  0,        namconb1, gunbulet, gunbulet, ROT0,  "Namco", "Point Blank", GAME_NO_SOUND )
-	GAMEX( 1994, gunbulet, ptblank,  namconb1, gunbulet, gunbulet, ROT0,  "Namco", "Gun Bullet (Japan)", GAME_NO_SOUND )
-	GAMEX( 1994, gslgr94u, 0,        namconb1, namconb1, gslgr94u, ROT0,  "Namco", "Great Sluggers '94", GAME_NO_SOUND )
-	GAMEX( 1995, sws95,    0,        namconb1, namconb1, sws95,    ROT0,  "Namco", "Super World Stadium '95 (Japan)", GAME_NO_SOUND )
-	GAMEX( 1996, sws96,    0,        namconb1, namconb1, sws96,    ROT0,  "Namco", "Super World Stadium '96 (Japan)", GAME_NO_SOUND )
-	GAMEX( 1997, sws97,    0,        namconb1, namconb1, sws97,    ROT0,  "Namco", "Super World Stadium '97 (Japan)", GAME_NO_SOUND )
-	GAMEX( 1994, vshoot,   0,        namconb1, namconb1, vshoot,   ROT0,  "Namco", "J-League Soccer V-Shoot", GAME_NO_SOUND )
+	public static GameDriver driver_nebulray	   = new GameDriver("1994"	,"nebulray"	,"namconb1.java"	,rom_nebulray,null	,machine_driver_namconb1	,input_ports_namconb1	,init_nebulray	,ROT90	,	"Namco", "Nebulas Ray (World)", GAME_NO_SOUND )
+	public static GameDriver driver_nebulryj	   = new GameDriver("1994"	,"nebulryj"	,"namconb1.java"	,rom_nebulryj,driver_nebulray	,machine_driver_namconb1	,input_ports_namconb1	,init_nebulray	,ROT90	,	"Namco", "Nebulas Ray (Japan)", GAME_NO_SOUND )
+	public static GameDriver driver_ptblank	   = new GameDriver("1994"	,"ptblank"	,"namconb1.java"	,rom_ptblank,null	,machine_driver_namconb1	,input_ports_gunbulet	,init_gunbulet	,ROT0	,	"Namco", "Point Blank", GAME_NO_SOUND )
+	public static GameDriver driver_gunbulet	   = new GameDriver("1994"	,"gunbulet"	,"namconb1.java"	,rom_gunbulet,driver_ptblank	,machine_driver_namconb1	,input_ports_gunbulet	,init_gunbulet	,ROT0	,	"Namco", "Gun Bullet (Japan)", GAME_NO_SOUND )
+	public static GameDriver driver_gslgr94u	   = new GameDriver("1994"	,"gslgr94u"	,"namconb1.java"	,rom_gslgr94u,null	,machine_driver_namconb1	,input_ports_namconb1	,init_gslgr94u	,ROT0	,	"Namco", "Great Sluggers '94", GAME_NO_SOUND )
+	public static GameDriver driver_sws95	   = new GameDriver("1995"	,"sws95"	,"namconb1.java"	,rom_sws95,null	,machine_driver_namconb1	,input_ports_namconb1	,init_sws95	,ROT0	,	"Namco", "Super World Stadium '95 (Japan)", GAME_NO_SOUND )
+	public static GameDriver driver_sws96	   = new GameDriver("1996"	,"sws96"	,"namconb1.java"	,rom_sws96,null	,machine_driver_namconb1	,input_ports_namconb1	,init_sws96	,ROT0	,	"Namco", "Super World Stadium '96 (Japan)", GAME_NO_SOUND )
+	public static GameDriver driver_sws97	   = new GameDriver("1997"	,"sws97"	,"namconb1.java"	,rom_sws97,null	,machine_driver_namconb1	,input_ports_namconb1	,init_sws97	,ROT0	,	"Namco", "Super World Stadium '97 (Japan)", GAME_NO_SOUND )
+	public static GameDriver driver_vshoot	   = new GameDriver("1994"	,"vshoot"	,"namconb1.java"	,rom_vshoot,null	,machine_driver_namconb1	,input_ports_namconb1	,init_vshoot	,ROT0	,	"Namco", "J-League Soccer V-Shoot", GAME_NO_SOUND )
 	
 	//     YEAR, NAME,     PARENT,   MACHINE,  INPUT,    INIT,     MNTR,  COMPANY, FULLNAME,   FLAGS)
-	GAMEX( 1994, outfxies, 0,		 namconb2, namconb1, outfxies, ROT0, "Namco", "Outfoxies", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
-	GAMEX( 1994, outfxesj, outfxies, namconb2, namconb1, outfxies, ROT0, "Namco", "Outfoxies (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
-	GAMEX( 1995, machbrkr, 0,		 namconb2, namconb1, machbrkr, ROT0, "Namco", "Mach Breakers (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
+	public static GameDriver driver_outfxies	   = new GameDriver("1994"	,"outfxies"	,"namconb1.java"	,rom_outfxies,null	,machine_driver_namconb2	,input_ports_namconb1	,init_outfxies	,ROT0	,	"Namco", "Outfoxies", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
+	public static GameDriver driver_outfxesj	   = new GameDriver("1994"	,"outfxesj"	,"namconb1.java"	,rom_outfxesj,driver_outfxies	,machine_driver_namconb2	,input_ports_namconb1	,init_outfxies	,ROT0	,	"Namco", "Outfoxies (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
+	public static GameDriver driver_machbrkr	   = new GameDriver("1995"	,"machbrkr"	,"namconb1.java"	,rom_machbrkr,null	,machine_driver_namconb2	,input_ports_namconb1	,init_machbrkr	,ROT0	,	"Namco", "Mach Breakers (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
 }

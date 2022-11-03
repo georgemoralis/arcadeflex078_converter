@@ -474,5 +474,5 @@ public class btoads
 	 *
 	 *************************************/
 	
-	GAME( 1994, btoads,   0,         btoads, btoads, btoads, ROT0, "Rare",   "Battle Toads" )
+	public static GameDriver driver_btoads	   = new GameDriver("1994"	,"btoads"	,"btoads.java"	,rom_btoads,null	,machine_driver_btoads	,input_ports_btoads	,init_btoads	,ROT0	,	"Rare",   "Battle Toads" )
 }

@@ -2071,18 +2071,18 @@ public class legionna
 	
 	
 	
-	GAMEX( 1992, legionna, 0,        legionna, legionna, legionna, ROT0, "Tad", "Legionnaire (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1992, legionnu, legionna, legionna, legionna, legionna, ROT0, "Tad (Fabtek license)", "Legionnaire (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_legionna	   = new GameDriver("1992"	,"legionna"	,"legionna.java"	,rom_legionna,null	,machine_driver_legionna	,input_ports_legionna	,init_legionna	,ROT0	,	"Tad", "Legionnaire (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_legionnu	   = new GameDriver("1992"	,"legionnu"	,"legionna.java"	,rom_legionnu,driver_legionna	,machine_driver_legionna	,input_ports_legionna	,init_legionna	,ROT0	,	"Tad (Fabtek license)", "Legionnaire (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	GAMEX( 1992, heatbrl,  0,        heatbrl,  heatbrl,  0,        ROT0, "Tad", "Heated Barrel (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1992, heatbrlo, heatbrl,  heatbrl,  heatbrl,  0,        ROT0, "Tad", "Heated Barrel (World old version)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1992, heatbrlu, heatbrl,  heatbrl,  heatbrl,  0,        ROT0, "Tad", "Heated Barrel (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_heatbrl	   = new GameDriver("1992"	,"heatbrl"	,"legionna.java"	,rom_heatbrl,null	,machine_driver_heatbrl	,input_ports_heatbrl	,null	,ROT0	,	"Tad", "Heated Barrel (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_heatbrlo	   = new GameDriver("1992"	,"heatbrlo"	,"legionna.java"	,rom_heatbrlo,driver_heatbrl	,machine_driver_heatbrl	,input_ports_heatbrl	,null	,ROT0	,	"Tad", "Heated Barrel (World old version)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_heatbrlu	   = new GameDriver("1992"	,"heatbrlu"	,"legionna.java"	,rom_heatbrlu,driver_heatbrl	,machine_driver_heatbrl	,input_ports_heatbrl	,null	,ROT0	,	"Tad", "Heated Barrel (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	GAMEX( 1993, godzilla, 0,        godzilla, godzilla, 0,        ROT0, "Banpresto", "Godzilla", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_godzilla	   = new GameDriver("1993"	,"godzilla"	,"legionna.java"	,rom_godzilla,null	,machine_driver_godzilla	,input_ports_godzilla	,null	,ROT0	,	"Banpresto", "Godzilla", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	GAMEX( 1993, sdgndmrb, 0,		 sdgndmrb, sdgndmrb, 0,		   ROT0, "Banpresto", "SD Gundam Sangokushi Rainbow Tairiku Senki", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_sdgndmrb	   = new GameDriver("1993"	,"sdgndmrb"	,"legionna.java"	,rom_sdgndmrb,null	,machine_driver_sdgndmrb	,input_ports_sdgndmrb	,null	,ROT0	,	"Banpresto", "SD Gundam Sangokushi Rainbow Tairiku Senki", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	GAMEX( 1992, cupsoc,   0,		 cupsoc,  cupsoc,	 0,        ROT0, "Seibu", "Seibu Cup Soccer", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1992, cupsoc2,  cupsoc,   cupsoc,  cupsoc,    0,        ROT0, "Seibu", "Seibu Cup Soccer (set 2)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX( 1992, olysoc92, cupsoc,   cupsoc,  cupsoc,    0,        ROT0, "Seibu", "Olympic Soccer '92", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_cupsoc	   = new GameDriver("1992"	,"cupsoc"	,"legionna.java"	,rom_cupsoc,null	,machine_driver_cupsoc	,input_ports_cupsoc	,null	,ROT0	,	"Seibu", "Seibu Cup Soccer", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_cupsoc2	   = new GameDriver("1992"	,"cupsoc2"	,"legionna.java"	,rom_cupsoc2,driver_cupsoc	,machine_driver_cupsoc	,input_ports_cupsoc	,null	,ROT0	,	"Seibu", "Seibu Cup Soccer (set 2)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_olysoc92	   = new GameDriver("1992"	,"olysoc92"	,"legionna.java"	,rom_olysoc92,driver_cupsoc	,machine_driver_cupsoc	,input_ports_cupsoc	,null	,ROT0	,	"Seibu", "Olympic Soccer '92", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

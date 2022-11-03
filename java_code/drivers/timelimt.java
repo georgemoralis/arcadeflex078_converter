@@ -379,6 +379,6 @@ public class timelimt
 		ROM_LOAD( "57.bin", 0x0040, 0x0020, CRC(18455a79) SHA1(e4d64368560e3116a922588129f5f91a4c520f7d) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1983, timelimt, 0, timelimt, timelimt, 0, ROT90, "Chuo Co. Ltd", "Time Limit", GAME_IMPERFECT_COLORS )
-	GAME ( 1984, progress, 0, progress, progress, 0, ROT90, "Chuo Co. Ltd", "Progress" )
+	public static GameDriver driver_timelimt	   = new GameDriver("1983"	,"timelimt"	,"timelimt.java"	,rom_timelimt,null	,machine_driver_timelimt	,input_ports_timelimt	,null	,ROT90	,	"Chuo Co. Ltd", "Time Limit", GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_progress	   = new GameDriver("1984"	,"progress"	,"timelimt.java"	,rom_progress,null	,machine_driver_progress	,input_ports_progress	,null	,ROT90	,	"Chuo Co. Ltd", "Progress" )
 }

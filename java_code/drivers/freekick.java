@@ -1112,13 +1112,13 @@ public class freekick
 		memory_set_opcode_base(0,rom+diff);
 	}
 	
-	GAMEX(1986, gigasb,   0,        gigas,    gigas,    gigas, ROT270, "bootleg", "Gigas (bootleg)", GAME_NO_COCKTAIL )
-	GAMEX(1986, oigas,    gigasb,   oigas,    gigas,    gigas, ROT270, "bootleg", "Oigas (bootleg)", GAME_NO_COCKTAIL )
-	GAMEX(1986, gigasm2b, 0,        gigas,    gigasm2,  gigas, ROT270, "bootleg", "Gigas Mark II (bootleg)", GAME_NO_COCKTAIL )
-	GAME( 1987, pbillrd,  0,        pbillrd,  pbillrd,  0,     ROT0,   "Nihon System", "Perfect Billiard" )
-	GAMEX(1987, pbillrds, pbillrd,  pbillrd,  pbillrd,  0,     ROT0,   "Nihon System", "Perfect Billiard (Sega)", GAME_UNEMULATED_PROTECTION )	// encrypted
-	GAMEX(1987, freekick, 0,        freekckb, freekckb, 0,     ROT270, "Nihon System (Sega license)", "Free Kick", GAME_NOT_WORKING )
-	GAME( 1987, freekckb, freekick, freekckb, freekckb, 0,     ROT270, "bootleg", "Free Kick (bootleg)" )
-	GAMEX(198?, countrun, 0,        freekckb, freekckb, 0,     ROT0,   "Nihon System (Sega license)", "Counter Run", GAME_NOT_WORKING )
-	GAMEX(198?, countrnb, countrun, freekckb, freekckb, 0,     ROT0,   "bootleg", "Counter Run (bootleg)", GAME_NOT_WORKING )
+	public static GameDriver driver_gigasb	   = new GameDriver("1986"	,"gigasb"	,"freekick.java"	,rom_gigasb,null	,machine_driver_gigas	,input_ports_gigas	,init_gigas	,ROT270	,	"bootleg", "Gigas (bootleg)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_oigas	   = new GameDriver("1986"	,"oigas"	,"freekick.java"	,rom_oigas,driver_gigasb	,machine_driver_oigas	,input_ports_gigas	,init_gigas	,ROT270	,	"bootleg", "Oigas (bootleg)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_gigasm2b	   = new GameDriver("1986"	,"gigasm2b"	,"freekick.java"	,rom_gigasm2b,null	,machine_driver_gigas	,input_ports_gigasm2	,init_gigas	,ROT270	,	"bootleg", "Gigas Mark II (bootleg)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_pbillrd	   = new GameDriver("1987"	,"pbillrd"	,"freekick.java"	,rom_pbillrd,null	,machine_driver_pbillrd	,input_ports_pbillrd	,null	,ROT0	,	"Nihon System", "Perfect Billiard" )
+	public static GameDriver driver_pbillrds	   = new GameDriver("1987"	,"pbillrds"	,"freekick.java"	,rom_pbillrds,driver_pbillrd	,machine_driver_pbillrd	,input_ports_pbillrd	,null	,ROT0	,	"Nihon System", "Perfect Billiard (Sega)", GAME_UNEMULATED_PROTECTION )	// encrypted
+	public static GameDriver driver_freekick	   = new GameDriver("1987"	,"freekick"	,"freekick.java"	,rom_freekick,null	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT270	,	"Nihon System (Sega license)", "Free Kick", GAME_NOT_WORKING )
+	public static GameDriver driver_freekckb	   = new GameDriver("1987"	,"freekckb"	,"freekick.java"	,rom_freekckb,driver_freekick	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT270	,	"bootleg", "Free Kick (bootleg)" )
+	public static GameDriver driver_countrun	   = new GameDriver("198?"	,"countrun"	,"freekick.java"	,rom_countrun,null	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT0	,	"Nihon System (Sega license)", "Counter Run", GAME_NOT_WORKING )
+	public static GameDriver driver_countrnb	   = new GameDriver("198?"	,"countrnb"	,"freekick.java"	,rom_countrnb,driver_countrun	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT0	,	"bootleg", "Counter Run (bootleg)", GAME_NOT_WORKING )
 }

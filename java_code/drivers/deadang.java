@@ -462,6 +462,6 @@ public class deadang
 	
 	/* Game Drivers */
 	
-	GAME( 1988, deadang, 0,       deadang, deadang, deadang, ROT0, "Seibu Kaihatsu", "Dead Angle" )
-	GAME( 1988, ghunter, deadang, deadang, ghunter, ghunter, ROT0, "Seibu Kaihatsu (Segasa/Sonic license)", "Gang Hunter (Spain)" )
+	public static GameDriver driver_deadang	   = new GameDriver("1988"	,"deadang"	,"deadang.java"	,rom_deadang,null	,machine_driver_deadang	,input_ports_deadang	,init_deadang	,ROT0	,	"Seibu Kaihatsu", "Dead Angle" )
+	public static GameDriver driver_ghunter	   = new GameDriver("1988"	,"ghunter"	,"deadang.java"	,rom_ghunter,driver_deadang	,machine_driver_deadang	,input_ports_ghunter	,init_ghunter	,ROT0	,	"Seibu Kaihatsu (Segasa/Sonic license)", "Gang Hunter (Spain)" )
 }

@@ -361,5 +361,5 @@ public class triplhnt
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1977, triplhnt, 0, triplhnt, triplhnt, triplhnt, 0, "Atari", "Triple Hunt", GAME_NO_SOUND )
+	public static GameDriver driver_triplhnt	   = new GameDriver("1977"	,"triplhnt"	,"triplhnt.java"	,rom_triplhnt,null	,machine_driver_triplhnt	,input_ports_triplhnt	,init_triplhnt	,0	,	"Atari", "Triple Hunt", GAME_NO_SOUND )
 }

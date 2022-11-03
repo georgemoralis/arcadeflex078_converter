@@ -942,10 +942,10 @@ public class rohga
 		deco74_decrypt(REGION_GFX3);
 	} };
 	
-	GAMEX(1991, rohga,    0,       rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (Asia/Europe v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
-	GAMEX(1991, rohgah,   rohga,   rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (Hong Kong v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAMEX(1991, rohgau,   rohga,   rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (US v1.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	GAME( 1992, wizdfire, 0,       wizdfire, wizdfire, wizdfire, ROT0,   "Data East Corporation", "Wizard Fire (US v1.1)" )
-	GAME( 1992, darksel2, wizdfire,wizdfire, wizdfire, wizdfire, ROT0,   "Data East Corporation", "Dark Seal 2 (Japan v2.1)" )
-	GAME( 1992, nitrobal, 0,       nitrobal, nitrobal, nitrobal, ROT270, "Data East Corporation", "Nitro Ball (US)" )
+	public static GameDriver driver_rohga	   = new GameDriver("1991"	,"rohga"	,"rohga.java"	,rom_rohga,null	,machine_driver_rohga	,input_ports_rohga	,init_rohga	,ROT0	,	"Data East Corporation", "Rohga Armour Force (Asia/Europe v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
+	public static GameDriver driver_rohgah	   = new GameDriver("1991"	,"rohgah"	,"rohga.java"	,rom_rohgah,driver_rohga	,machine_driver_rohga	,input_ports_rohga	,init_rohga	,ROT0	,	"Data East Corporation", "Rohga Armour Force (Hong Kong v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_rohgau	   = new GameDriver("1991"	,"rohgau"	,"rohga.java"	,rom_rohgau,driver_rohga	,machine_driver_rohga	,input_ports_rohga	,init_rohga	,ROT0	,	"Data East Corporation", "Rohga Armour Force (US v1.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	public static GameDriver driver_wizdfire	   = new GameDriver("1992"	,"wizdfire"	,"rohga.java"	,rom_wizdfire,null	,machine_driver_wizdfire	,input_ports_wizdfire	,init_wizdfire	,ROT0	,	"Data East Corporation", "Wizard Fire (US v1.1)" )
+	public static GameDriver driver_darksel2	   = new GameDriver("1992"	,"darksel2"	,"rohga.java"	,rom_darksel2,driver_wizdfire	,machine_driver_wizdfire	,input_ports_wizdfire	,init_wizdfire	,ROT0	,	"Data East Corporation", "Dark Seal 2 (Japan v2.1)" )
+	public static GameDriver driver_nitrobal	   = new GameDriver("1992"	,"nitrobal"	,"rohga.java"	,rom_nitrobal,null	,machine_driver_nitrobal	,input_ports_nitrobal	,init_nitrobal	,ROT270	,	"Data East Corporation", "Nitro Ball (US)" )
 }

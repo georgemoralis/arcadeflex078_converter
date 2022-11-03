@@ -630,5 +630,5 @@ public class shadfrce
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1993, shadfrce, 0, shadfrce, shadfrce, 0, ROT0, "Technos Japan", "Shadow Force (US Version 2)", GAME_NO_COCKTAIL )
+	public static GameDriver driver_shadfrce	   = new GameDriver("1993"	,"shadfrce"	,"shadfrce.java"	,rom_shadfrce,null	,machine_driver_shadfrce	,input_ports_shadfrce	,null	,ROT0	,	"Technos Japan", "Shadow Force (US Version 2)", GAME_NO_COCKTAIL )
 }

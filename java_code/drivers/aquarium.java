@@ -419,8 +419,8 @@ public class aquarium
 	ROM_END(); }}; 
 	
 	#if !AQUARIUS_HACK
-	GAMEX( 1996, aquarium, 0, aquarium, aquarium, aquarium, ROT0, "Excellent System", "Aquarium (Japan)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_aquarium	   = new GameDriver("1996"	,"aquarium"	,"aquarium.java"	,rom_aquarium,null	,machine_driver_aquarium	,input_ports_aquarium	,init_aquarium	,ROT0	,	"Excellent System", "Aquarium (Japan)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 	#else
-	GAMEX( 1996, aquarium, 0, aquarium, aquarium, aquarium, ROT0, "Excellent System", "Aquarium", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	public static GameDriver driver_aquarium	   = new GameDriver("1996"	,"aquarium"	,"aquarium.java"	,rom_aquarium,null	,machine_driver_aquarium	,input_ports_aquarium	,init_aquarium	,ROT0	,	"Excellent System", "Aquarium", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 	#endif
 }

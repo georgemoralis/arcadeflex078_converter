@@ -770,7 +770,7 @@ public class fuukifg2
 	
 	***************************************************************************/
 	
-	GAMEX(1995, gogomile, 0,        fuuki16, gogomile, 0, ROT0, "Fuuki", "Go Go! Mile Smile",          GAME_IMPERFECT_SOUND )
-	GAMEX(1995, gogomilj, gogomile, fuuki16, gogomilj, 0, ROT0, "Fuuki", "Susume! Mile Smile (Japan)", GAME_IMPERFECT_SOUND )
-	GAME( 1996, pbancho,  0,        fuuki16, pbancho,  0, ROT0, "Fuuki", "Gyakuten!! Puzzle Bancho (Japan)")
+	public static GameDriver driver_gogomile	   = new GameDriver("1995"	,"gogomile"	,"fuukifg2.java"	,rom_gogomile,null	,machine_driver_fuuki16	,input_ports_gogomile	,null	,ROT0	,	"Fuuki", "Go Go! Mile Smile",          GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_gogomilj	   = new GameDriver("1995"	,"gogomilj"	,"fuukifg2.java"	,rom_gogomilj,driver_gogomile	,machine_driver_fuuki16	,input_ports_gogomilj	,null	,ROT0	,	"Fuuki", "Susume! Mile Smile (Japan)", GAME_IMPERFECT_SOUND )
+	public static GameDriver driver_pbancho	   = new GameDriver("1996"	,"pbancho"	,"fuukifg2.java"	,rom_pbancho,null	,machine_driver_fuuki16	,input_ports_pbancho	,null	,ROT0	,	"Fuuki", "Gyakuten!! Puzzle Bancho (Japan)")
 }

@@ -670,5 +670,5 @@ public class djboy
 	INPUT_PORTS_END(); }}; 
 	
 	/*     YEAR, NAME,  PARENT, MACHINE, INPUT, INIT, MNTR,  COMPANY, FULLNAME, FLAGS */
-	GAMEX( 1989, djboy, 0,      djboy,   djboy, 0,    ROT0, "Kaneko", "DJ Boy", GAME_NOT_WORKING )
+	public static GameDriver driver_djboy	   = new GameDriver("1989"	,"djboy"	,"djboy.java"	,rom_djboy,null	,machine_driver_djboy	,input_ports_djboy	,null	,ROT0	,	"Kaneko", "DJ Boy", GAME_NOT_WORKING )
 }

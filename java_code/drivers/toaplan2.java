@@ -4976,31 +4976,31 @@ public class toaplan2
 	/* Whoopee  init   to be changed to T2_Z180   when (if) HD647180 is dumped */
 	
 	/*   ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR COMPANY    FULLNAME     FLAGS ) */
-	GAMEX( 1991, tekipaki, 0,        tekipaki, tekipaki, T2_Z180,  ROT0,   "Toaplan", "Teki Paki", GAME_NO_SOUND )
-	GAMEX( 1991, ghox,     0,        ghox,     ghox,     T2_Z180,  ROT270, "Toaplan", "Ghox", GAME_NO_SOUND )
-	GAMEX( 1992, dogyuun,  0,        dogyuun,  dogyuun,  T2_Zx80,  ROT270, "Toaplan", "Dogyuun", GAME_NO_SOUND )
-	GAMEX( 1993, kbash,    0,        kbash,    kbash,    T2_Zx80,  ROT0,   "Toaplan", "Knuckle Bash", GAME_NO_SOUND )
-	GAME ( 1992, truxton2, 0,        truxton2, truxton2, T2_noZ80, ROT270, "Toaplan", "Truxton II / Tatsujin II / Tatsujin Oh (Japan)" )
-	GAME ( 1991, pipibibs, 0,        pipibibs, pipibibs, T2_Z80,   ROT0,   "Toaplan", "Pipi & Bibis / Whoopee!!" )
-	GAME ( 1991, whoopee,  pipibibs, whoopee,  whoopee,  T2_Z80,   ROT0,   "Toaplan", "Whoopee!! / Pipi & Bibis" )
-	GAME ( 1991, pipibibi, pipibibs, pipibibi, pipibibi, pipibibi, ROT0,   "[Toaplan] Ryouta Kikaku", "Pipi & Bibis / Whoopee!! (bootleg ?)" )
-	GAMEX( 1992, fixeight, 0,        fixeight, fixeight, fixeight, ROT270, "Toaplan", "FixEight", GAME_NOT_WORKING )
-	GAMEX( 1992, grindstm, vfive,    vfive,    grindstm, T2_Zx80,  ROT270, "Toaplan", "Grind Stormer", GAME_NO_SOUND )
-	GAMEX( 1992, grindsta, vfive,    vfive,    grindstm, T2_Zx80,  ROT270, "Toaplan", "Grind Stormer (older set)", GAME_NO_SOUND )
-	GAMEX( 1993, vfive,    0,        vfive,    vfive,    T2_Zx80,  ROT270, "Toaplan", "V-Five (Japan)", GAME_NO_SOUND )
-	GAMEX( 1993, batsugun, 0,        batsugun, batsugun, T2_Zx80,  ROT270, "Toaplan", "Batsugun", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	GAMEX( 1993, batugnsp, batsugun, batsugun, batsugun, T2_Zx80,  ROT270, "Toaplan", "Batsugun (Special Ver.)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	GAME ( 1994, snowbro2, 0,        snowbro2, snowbro2, T2_noZ80, ROT0,   "[Toaplan] Hanafram", "Snow Bros. 2 - With New Elves / Otenki Paradise" )
-	GAME ( 1993, mahoudai, 0,        mahoudai, mahoudai, T2_Z80,   ROT270, "Raizing (Able license)", "Mahou Daisakusen (Japan)" )
-	GAME ( 1993, sstriker, mahoudai, mahoudai, sstriker, T2_Z80,   ROT270, "Raizing", "Sorcer Striker (World)" ) // from korean board
-	GAME ( 1994, shippumd, 0,        shippumd, shippumd, T2_Z80,   ROT270, "Raizing / Eighting", "Shippu Mahou Daisakusen (Japan)" )
-	GAME ( 1994, kingdmgp, shippumd, shippumd, kingdmgp, T2_Z80,   ROT270, "Raizing / Eighting", "Kingdom Grandprix (World)" ) // from korean board, missing letters on credits screen but this is correct
-	GAME ( 1996, battleg,  0,        battleg,  battleg,  battleg,  ROT270, "Raizing / Eighting", "Battle Garegga - Type 2 (Denmark / China) (Tue Apr 2 1996)" )
-	GAME ( 1996, battlega, battleg,  battleg,  battlega, battleg,  ROT270, "Raizing / Eighting", "Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb 3 1996)" )
-	GAME ( 1996, battlegb, battleg,  battleg,  battlegb, battleg,  ROT270, "Raizing / Eighting", "Battle Garegga (Austria / Hong Kong) (Sat Mar 2 1996)" ) // displays New Version when set to HK
-	GAME ( 1998, batrider, 0,        batrider, batrider, battleg,  ROT270, "Raizing / Eighting", "Armed Police Batrider (Japan, version B)" )
-	GAME ( 1998, batridra, batrider, batrider, batrider, battleg,  ROT270, "Raizing / Eighting", "Armed Police Batrider (Japan, version A)" )
-	GAME ( 1998, batridrk, batrider, batrider, batrider, battleg,  ROT270, "Raizing / Eighting", "Armed Police Batrider (Korea, version B)" )
-	GAME ( 1999, bbakraid, 0,        bbakraid, bbakraid, bbakraid, ROT270, "Eighting", "Battle Bakraid (Japan) (Wed Apr 7 1999)")
-	GAME ( 1999, bbakradu, bbakraid, bbakraid, bbakraid, bbakrada, ROT270, "Eighting", "Battle Bakraid - Unlimited version (Japan) (Tue Jun 8 1999)")
+	public static GameDriver driver_tekipaki	   = new GameDriver("1991"	,"tekipaki"	,"toaplan2.java"	,rom_tekipaki,null	,machine_driver_tekipaki	,input_ports_tekipaki	,init_T2_Z180	,ROT0	,	"Toaplan", "Teki Paki", GAME_NO_SOUND )
+	public static GameDriver driver_ghox	   = new GameDriver("1991"	,"ghox"	,"toaplan2.java"	,rom_ghox,null	,machine_driver_ghox	,input_ports_ghox	,init_T2_Z180	,ROT270	,	"Toaplan", "Ghox", GAME_NO_SOUND )
+	public static GameDriver driver_dogyuun	   = new GameDriver("1992"	,"dogyuun"	,"toaplan2.java"	,rom_dogyuun,null	,machine_driver_dogyuun	,input_ports_dogyuun	,init_T2_Zx80	,ROT270	,	"Toaplan", "Dogyuun", GAME_NO_SOUND )
+	public static GameDriver driver_kbash	   = new GameDriver("1993"	,"kbash"	,"toaplan2.java"	,rom_kbash,null	,machine_driver_kbash	,input_ports_kbash	,init_T2_Zx80	,ROT0	,	"Toaplan", "Knuckle Bash", GAME_NO_SOUND )
+	public static GameDriver driver_truxton2	   = new GameDriver("1992"	,"truxton2"	,"toaplan2.java"	,rom_truxton2,null	,machine_driver_truxton2	,input_ports_truxton2	,init_T2_noZ80	,ROT270	,	"Toaplan", "Truxton II / Tatsujin II / Tatsujin Oh (Japan)" )
+	public static GameDriver driver_pipibibs	   = new GameDriver("1991"	,"pipibibs"	,"toaplan2.java"	,rom_pipibibs,null	,machine_driver_pipibibs	,input_ports_pipibibs	,init_T2_Z80	,ROT0	,	"Toaplan", "Pipi & Bibis / Whoopee!!" )
+	public static GameDriver driver_whoopee	   = new GameDriver("1991"	,"whoopee"	,"toaplan2.java"	,rom_whoopee,driver_pipibibs	,machine_driver_whoopee	,input_ports_whoopee	,init_T2_Z80	,ROT0	,	"Toaplan", "Whoopee!! / Pipi & Bibis" )
+	public static GameDriver driver_pipibibi	   = new GameDriver("1991"	,"pipibibi"	,"toaplan2.java"	,rom_pipibibi,driver_pipibibs	,machine_driver_pipibibi	,input_ports_pipibibi	,init_pipibibi	,ROT0	,	"[Toaplan] Ryouta Kikaku", "Pipi & Bibis / Whoopee!! (bootleg ?)" )
+	public static GameDriver driver_fixeight	   = new GameDriver("1992"	,"fixeight"	,"toaplan2.java"	,rom_fixeight,null	,machine_driver_fixeight	,input_ports_fixeight	,init_fixeight	,ROT270	,	"Toaplan", "FixEight", GAME_NOT_WORKING )
+	public static GameDriver driver_grindstm	   = new GameDriver("1992"	,"grindstm"	,"toaplan2.java"	,rom_grindstm,driver_vfive	,machine_driver_vfive	,input_ports_grindstm	,init_T2_Zx80	,ROT270	,	"Toaplan", "Grind Stormer", GAME_NO_SOUND )
+	public static GameDriver driver_grindsta	   = new GameDriver("1992"	,"grindsta"	,"toaplan2.java"	,rom_grindsta,driver_vfive	,machine_driver_vfive	,input_ports_grindstm	,init_T2_Zx80	,ROT270	,	"Toaplan", "Grind Stormer (older set)", GAME_NO_SOUND )
+	public static GameDriver driver_vfive	   = new GameDriver("1993"	,"vfive"	,"toaplan2.java"	,rom_vfive,null	,machine_driver_vfive	,input_ports_vfive	,init_T2_Zx80	,ROT270	,	"Toaplan", "V-Five (Japan)", GAME_NO_SOUND )
+	public static GameDriver driver_batsugun	   = new GameDriver("1993"	,"batsugun"	,"toaplan2.java"	,rom_batsugun,null	,machine_driver_batsugun	,input_ports_batsugun	,init_T2_Zx80	,ROT270	,	"Toaplan", "Batsugun", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_batugnsp	   = new GameDriver("1993"	,"batugnsp"	,"toaplan2.java"	,rom_batugnsp,driver_batsugun	,machine_driver_batsugun	,input_ports_batsugun	,init_T2_Zx80	,ROT270	,	"Toaplan", "Batsugun (Special Ver.)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	public static GameDriver driver_snowbro2	   = new GameDriver("1994"	,"snowbro2"	,"toaplan2.java"	,rom_snowbro2,null	,machine_driver_snowbro2	,input_ports_snowbro2	,init_T2_noZ80	,ROT0	,	"[Toaplan] Hanafram", "Snow Bros. 2 - With New Elves / Otenki Paradise" )
+	public static GameDriver driver_mahoudai	   = new GameDriver("1993"	,"mahoudai"	,"toaplan2.java"	,rom_mahoudai,null	,machine_driver_mahoudai	,input_ports_mahoudai	,init_T2_Z80	,ROT270	,	"Raizing (Able license)", "Mahou Daisakusen (Japan)" )
+	public static GameDriver driver_sstriker	   = new GameDriver("1993"	,"sstriker"	,"toaplan2.java"	,rom_sstriker,driver_mahoudai	,machine_driver_mahoudai	,input_ports_sstriker	,init_T2_Z80	,ROT270	,	"Raizing", "Sorcer Striker (World)" ) // from korean board
+	public static GameDriver driver_shippumd	   = new GameDriver("1994"	,"shippumd"	,"toaplan2.java"	,rom_shippumd,null	,machine_driver_shippumd	,input_ports_shippumd	,init_T2_Z80	,ROT270	,	"Raizing / Eighting", "Shippu Mahou Daisakusen (Japan)" )
+	public static GameDriver driver_kingdmgp	   = new GameDriver("1994"	,"kingdmgp"	,"toaplan2.java"	,rom_kingdmgp,driver_shippumd	,machine_driver_shippumd	,input_ports_kingdmgp	,init_T2_Z80	,ROT270	,	"Raizing / Eighting", "Kingdom Grandprix (World)" ) // from korean board, missing letters on credits screen but this is correct
+	public static GameDriver driver_battleg	   = new GameDriver("1996"	,"battleg"	,"toaplan2.java"	,rom_battleg,null	,machine_driver_battleg	,input_ports_battleg	,init_battleg	,ROT270	,	"Raizing / Eighting", "Battle Garegga - Type 2 (Denmark / China) (Tue Apr 2 1996)" )
+	public static GameDriver driver_battlega	   = new GameDriver("1996"	,"battlega"	,"toaplan2.java"	,rom_battlega,driver_battleg	,machine_driver_battleg	,input_ports_battlega	,init_battleg	,ROT270	,	"Raizing / Eighting", "Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb 3 1996)" )
+	public static GameDriver driver_battlegb	   = new GameDriver("1996"	,"battlegb"	,"toaplan2.java"	,rom_battlegb,driver_battleg	,machine_driver_battleg	,input_ports_battlegb	,init_battleg	,ROT270	,	"Raizing / Eighting", "Battle Garegga (Austria / Hong Kong) (Sat Mar 2 1996)" ) // displays New Version when set to HK
+	public static GameDriver driver_batrider	   = new GameDriver("1998"	,"batrider"	,"toaplan2.java"	,rom_batrider,null	,machine_driver_batrider	,input_ports_batrider	,init_battleg	,ROT270	,	"Raizing / Eighting", "Armed Police Batrider (Japan, version B)" )
+	public static GameDriver driver_batridra	   = new GameDriver("1998"	,"batridra"	,"toaplan2.java"	,rom_batridra,driver_batrider	,machine_driver_batrider	,input_ports_batrider	,init_battleg	,ROT270	,	"Raizing / Eighting", "Armed Police Batrider (Japan, version A)" )
+	public static GameDriver driver_batridrk	   = new GameDriver("1998"	,"batridrk"	,"toaplan2.java"	,rom_batridrk,driver_batrider	,machine_driver_batrider	,input_ports_batrider	,init_battleg	,ROT270	,	"Raizing / Eighting", "Armed Police Batrider (Korea, version B)" )
+	public static GameDriver driver_bbakraid	   = new GameDriver("1999"	,"bbakraid"	,"toaplan2.java"	,rom_bbakraid,null	,machine_driver_bbakraid	,input_ports_bbakraid	,init_bbakraid	,ROT270	,	"Eighting", "Battle Bakraid (Japan) (Wed Apr 7 1999)")
+	public static GameDriver driver_bbakradu	   = new GameDriver("1999"	,"bbakradu"	,"toaplan2.java"	,rom_bbakradu,driver_bbakraid	,machine_driver_bbakraid	,input_ports_bbakraid	,init_bbakrada	,ROT270	,	"Eighting", "Battle Bakraid - Unlimited version (Japan) (Tue Jun 8 1999)")
 }

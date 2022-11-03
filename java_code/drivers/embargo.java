@@ -219,5 +219,5 @@ public class embargo
 	ROM_END(); }}; 
 	
 	
-	GAMEX( 1977, embargo, 0, embargo, embargo, 0, ROT0, "Cinematronics", "Embargo", GAME_NO_SOUND )
+	public static GameDriver driver_embargo	   = new GameDriver("1977"	,"embargo"	,"embargo.java"	,rom_embargo,null	,machine_driver_embargo	,input_ports_embargo	,null	,ROT0	,	"Cinematronics", "Embargo", GAME_NO_SOUND )
 }

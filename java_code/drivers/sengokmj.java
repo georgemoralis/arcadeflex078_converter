@@ -386,5 +386,5 @@ public class sengokmj
 		ROM_LOAD( "rs006.89", 0x000, 0x200, CRC(96f7646e) SHA1(400a831b83d6ac4d2a46ef95b97b1ee237099e44)) /* Priority */
 	ROM_END(); }}; 
 	
-	GAMEX( 1991, sengokmj, 0, sengokmj, sengokmj, 0,	ROT0, "Sigma", "Sengoku Mahjong (Japan)" ,GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+	public static GameDriver driver_sengokmj	   = new GameDriver("1991"	,"sengokmj"	,"sengokmj.java"	,rom_sengokmj,null	,machine_driver_sengokmj	,input_ports_sengokmj	,null	,ROT0	,	"Sigma", "Sengoku Mahjong (Japan)" ,GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
 }

@@ -330,5 +330,5 @@ public class skyarmy
 	        ROM_LOAD( "a6.bin",  0x0000, 0x0020, CRC(c721220b) SHA1(61b3320fb616c0600d56840cb6438616c7e0c6eb) )
 	ROM_END(); }}; 
 	
-	GAMEX( 1982, skyarmy, 0, skyarmy, skyarmy, 0, ROT90, "Shoei", "Sky Army", GAME_WRONG_COLORS )
+	public static GameDriver driver_skyarmy	   = new GameDriver("1982"	,"skyarmy"	,"skyarmy.java"	,rom_skyarmy,null	,machine_driver_skyarmy	,input_ports_skyarmy	,null	,ROT90	,	"Shoei", "Sky Army", GAME_WRONG_COLORS )
 }

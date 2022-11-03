@@ -187,5 +187,5 @@ public class truco
 		ROM_LOAD( "truco.u2",   0x0c000, 0x4000, CRC(ff355750) SHA1(1538f20b1919928ffca439e4046a104ddfbc756c) )
 	ROM_END(); }}; 
 	
-	GAMEX( 198?, truco,  0, truco, truco, 0, ROT0, "Playtronic SRL", "Truco-Tron", GAME_NO_SOUND )
+	public static GameDriver driver_truco	   = new GameDriver("198?"	,"truco"	,"truco.java"	,rom_truco,null	,machine_driver_truco	,input_ports_truco	,null	,ROT0	,	"Playtronic SRL", "Truco-Tron", GAME_NO_SOUND )
 }
