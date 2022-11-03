@@ -167,9 +167,9 @@ public class kingobox
 	
 	public static WriteHandlerPtr kingofb_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (kingofb_videoram2[offset] != data)
+		if (kingofb_videoram2.read(offset)!= data)
 		{
-			kingofb_videoram2[offset] = data;
+			kingofb_videoram2.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -214,7 +214,7 @@ public class kingobox
 	{
 		int attr = kingofb_colorram2[tile_index];
 		int bank = (attr & 0x02) >> 1;
-		int code = kingofb_videoram2[tile_index] + ((attr & 0x01) << 8);
+		int code = kingofb_videoram2.read(tile_index)+ ((attr & 0x01) << 8);
 		int color = (attr & 0x38) >> 3;
 	
 		SET_TILE_INFO(bank, code, color, 0)

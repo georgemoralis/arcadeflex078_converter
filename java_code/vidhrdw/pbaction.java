@@ -41,9 +41,9 @@ public class pbaction
 	
 	public static WriteHandlerPtr pbaction_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (pbaction_videoram2[offset] != data)
+		if (pbaction_videoram2.read(offset)!= data)
 		{
-			pbaction_videoram2[offset] = data;
+			pbaction_videoram2.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -83,7 +83,7 @@ public class pbaction
 	static void get_fg_tile_info(int tile_index)
 	{
 		int attr = pbaction_colorram2[tile_index];
-		int code = pbaction_videoram2[tile_index] + 0x10 * (attr & 0x30);
+		int code = pbaction_videoram2.read(tile_index)+ 0x10 * (attr & 0x30);
 		int color = attr & 0x0f;
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	

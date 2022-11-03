@@ -89,17 +89,17 @@ public class bigstrkb
 	{
 		int tileno,col;
 	
-		tileno = bsb_videoram2[tile_index] & 0x0fff;
-		col= 	bsb_videoram2[tile_index] & 0xf000;
+		tileno = bsb_videoram2.read(tile_index)& 0x0fff;
+		col= 	bsb_videoram2.read(tile_index)& 0xf000;
 	
 		SET_TILE_INFO(1,tileno,col>>12,0)
 	}
 	
 	WRITE16_HANDLER( bsb_videoram2_w )
 	{
-		if (bsb_videoram2[offset] != data)
+		if (bsb_videoram2.read(offset)!= data)
 		{
-			bsb_videoram2[offset] = data;
+			bsb_videoram2.write(offset,data);
 			tilemap_mark_tile_dirty(bsb_tilemap2,offset);
 		}
 	}

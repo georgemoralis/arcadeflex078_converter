@@ -1219,6 +1219,42 @@ public class convertMame {
                     Convertor.outbuf[Convertor.outpos++] = '.';
                     Convertor.inpos += 2;
                     break;
+                case 'b':
+                    i = Convertor.inpos;
+                    Convertor.token[0] = sUtil.parseToken();
+                    String t = Convertor.token[0];
+                    if (Convertor.token[0].endsWith("videoram2")) {
+                        if (sUtil.parseChar() != '[') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        Convertor.token[0] = sUtil.parseToken(']');
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != ']') {
+                            Convertor.inpos = i;
+                            break;
+                        } else {
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() == '=') {
+                                int g = Convertor.inpos;
+                                if (sUtil.parseChar() == '=') {
+                                    Convertor.inpos = i;
+                                    break;
+                                }
+                                Convertor.inpos = g;
+                                sUtil.skipSpace();
+                                Convertor.token[1] = sUtil.parseToken(';');
+                                sUtil.putString((new StringBuilder()).append(t).append(".write(").append(Convertor.token[0]).append(",").append(Convertor.token[1]).append(");").toString());
+                                Convertor.inpos += 1;
+                                break;
+                            }
+                            sUtil.putString((new StringBuilder()).append(t).append(".read(").append(Convertor.token[0]).append(")").toString());
+                            Convertor.inpos -= 1;
+                            continue;
+                        }
+                    }
+                    Convertor.inpos =i;
+                    break;
             }
 
             Convertor.outbuf[Convertor.outpos++] = Convertor.inbuf[Convertor.inpos++];//grapse to inputbuffer sto output

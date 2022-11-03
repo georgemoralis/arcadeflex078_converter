@@ -68,8 +68,8 @@ public class labyrunr
 	
 	static void get_tile_info1(int tile_index)
 	{
-		int attr = labyrunr_videoram2[tile_index];
-		int code = labyrunr_videoram2[tile_index + 0x400];
+		int attr = labyrunr_videoram2.read(tile_index);
+		int code = labyrunr_videoram2.read(tile_index + 0x400);
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
@@ -135,9 +135,9 @@ public class labyrunr
 	
 	public static WriteHandlerPtr labyrunr_vram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (labyrunr_videoram2[offset] != data)
+		if (labyrunr_videoram2.read(offset)!= data)
 		{
-			labyrunr_videoram2[offset] = data;
+			labyrunr_videoram2.write(offset,data);
 			tilemap_mark_tile_dirty(layer1,offset & 0x3ff);
 		}
 	} };

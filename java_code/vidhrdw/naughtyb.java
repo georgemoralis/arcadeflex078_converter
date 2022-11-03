@@ -174,11 +174,11 @@ public class naughtyb
 	
 	public static WriteHandlerPtr naughtyb_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (naughtyb_videoram2[offset] != data)
+		if (naughtyb_videoram2.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
 	
-			naughtyb_videoram2[offset] = data;
+			naughtyb_videoram2.write(offset,data);
 		}
 	} };
 	
@@ -294,8 +294,8 @@ public class naughtyb
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
-						naughtyb_videoram2[offs] + 256 * bankreg,
-						(naughtyb_videoram2[offs] >> 5) + 8 * palreg,
+						naughtyb_videoram2.read(offs)+ 256 * bankreg,
+						(naughtyb_videoram2.read(offs)>> 5) + 8 * palreg,
 						0,0,
 						8*sx,8*sy,
 						0,TRANSPARENCY_NONE,0);

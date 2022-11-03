@@ -118,9 +118,9 @@ public class bankp
 	
 	public static WriteHandlerPtr bankp_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (bankp_videoram2[offset] != data)
+		if (bankp_videoram2.read(offset)!= data)
 		{
-			bankp_videoram2[offset] = data;
+			bankp_videoram2.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
@@ -157,7 +157,7 @@ public class bankp
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = bankp_videoram2[tile_index] + 256 * (bankp_colorram2[tile_index] & 0x07);
+		int code = bankp_videoram2.read(tile_index)+ 256 * (bankp_colorram2[tile_index] & 0x07);
 		int color = bankp_colorram2[tile_index] >> 4;
 		int flags = (bankp_colorram2[tile_index] & 0x08) ? TILE_FLIPX : 0;
 	

@@ -38,8 +38,8 @@ public class playmark
 	
 	static void bigtwin_get_fg_tile_info(int tile_index)
 	{
-		UINT16 code = wbeachvl_videoram2[2*tile_index];
-		UINT16 color = wbeachvl_videoram2[2*tile_index+1];
+		UINT16 code = wbeachvl_videoram2.read(2*tile_index);
+		UINT16 color = wbeachvl_videoram2.read(2*tile_index+1);
 		SET_TILE_INFO(
 				1,
 				code,
@@ -61,8 +61,8 @@ public class playmark
 	
 	static void wbeachvl_get_fg_tile_info(int tile_index)
 	{
-		UINT16 code = wbeachvl_videoram2[2*tile_index];
-		UINT16 color = wbeachvl_videoram2[2*tile_index+1];
+		UINT16 code = wbeachvl_videoram2.read(2*tile_index);
+		UINT16 color = wbeachvl_videoram2.read(2*tile_index+1);
 		SET_TILE_INFO(
 				1,
 				code & 0x7fff,
@@ -139,9 +139,9 @@ public class playmark
 	
 	WRITE16_HANDLER( wbeachvl_fgvideoram_w )
 	{
-		int oldword = wbeachvl_videoram2[offset];
-		COMBINE_DATA(&wbeachvl_videoram2[offset]);
-		if (oldword != wbeachvl_videoram2[offset])
+		int oldword = wbeachvl_videoram2.read(offset);
+		COMBINE_DATA(&wbeachvl_videoram2.read(offset));
+		if (oldword != wbeachvl_videoram2.read(offset))
 			tilemap_mark_tile_dirty(fg_tilemap,offset / 2);
 	}
 	

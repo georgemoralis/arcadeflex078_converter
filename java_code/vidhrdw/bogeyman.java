@@ -64,9 +64,9 @@ public class bogeyman
 	
 	public static WriteHandlerPtr bogeyman_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (bogeyman_videoram2[offset] != data)
+		if (bogeyman_videoram2.read(offset)!= data)
 		{
-			bogeyman_videoram2[offset] = data;
+			bogeyman_videoram2.write(offset,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -99,7 +99,7 @@ public class bogeyman
 	static void get_fg_tile_info(int tile_index)
 	{
 		int attr = bogeyman_colorram2[tile_index];
-		int tile = bogeyman_videoram2[tile_index] | ((attr & 0x03) << 8);
+		int tile = bogeyman_videoram2.read(tile_index)| ((attr & 0x03) << 8);
 		int gfxbank = tile / 0x200;
 		int code = tile & 0x1ff;
 	

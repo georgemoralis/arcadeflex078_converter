@@ -199,11 +199,11 @@ public class bosco
 	
 	public static WriteHandlerPtr bosco_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (bosco_videoram2[offset] != data)
+		if (bosco_videoram2.read(offset)!= data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			bosco_videoram2[offset] = data;
+			bosco_videoram2.write(offset,data);
 		}
 	} };
 	
@@ -282,7 +282,7 @@ public class bosco
 				}
 	
 				drawgfx(tmpbitmap1,Machine.gfx[0],
-						bosco_videoram2[offs],
+						bosco_videoram2.read(offs),
 						bosco_colorram2[offs] & 0x3f,
 						flipx,flipy,
 						8*sx,8*sy,
