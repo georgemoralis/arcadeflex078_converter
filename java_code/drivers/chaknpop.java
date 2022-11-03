@@ -96,16 +96,16 @@ public class chaknpop
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,		/* 2 chips */
 		18432000 / 12,	/* 1.536 MHz? */
-		{ 15, 10 },
-		{ input_port_5_r, 0 },		// DSW A
-		{ input_port_4_r, 0 },		// DSW B
-		{ 0, unknown_port_1_w },	// ??
-		{ 0, unknown_port_2_w }		// ??
-	};
+		new int[] { 15, 10 },
+		new ReadHandlerPtr[] { input_port_5_r, 0 },		// DSW A
+		new ReadHandlerPtr[] { input_port_4_r, 0 },		// DSW B
+		new WriteHandlerPtr[] { 0, unknown_port_1_w },	// ??
+		new WriteHandlerPtr[] { 0, unknown_port_2_w }		// ??
+	);
 	
 	
 	/***************************************************************************

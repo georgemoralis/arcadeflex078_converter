@@ -310,16 +310,16 @@ public class popper
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct AY8910interface popper_ay8910_interface =
-	{
+	static AY8910interface popper_ay8910_interface = new AY8910interface
+	(
 		2,	/* 2 chips */
 		18432000/12,
-		{ 25, 25 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 25, 25 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	static MACHINE_DRIVER_START( popper )
 	

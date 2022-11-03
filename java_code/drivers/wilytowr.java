@@ -444,16 +444,16 @@ public class wilytowr
 	
 	
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,	/* 2 chips */
 		3579545/4,	/* ??? using the same as other Irem games */
-		{ 20, 20 },
-		{ 0, 0 },
-		{ 0, 0 },
-		{ 0, 0 },
-		{ 0, 0 }
-	};
+		new int[] { 20, 20 },
+		new ReadHandlerPtr[] { 0, 0 },
+		new ReadHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, 0 }
+	);
 	
 	
 	

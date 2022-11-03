@@ -251,16 +251,16 @@ public class strvmstr
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 	
-	static struct AY8910interface ay8912_interface =
-	{
+	static AY8910interface ay8912_interface = new AY8910interface
+	(
 		3,					/* 3 chip */
 		1500000,
-		{ 25, 25, 25 },
-		{ 0, input_port_1_r, input_port_0_r },
-		{ 0, 0, 0 },
-		{ 0, 0, 0 },
-		{ 0, 0, 0 }
-	};
+		new int[] { 25, 25, 25 },
+		new ReadHandlerPtr[] { 0, input_port_1_r, input_port_0_r },
+		new ReadHandlerPtr[] { 0, 0, 0 },
+		new WriteHandlerPtr[] { 0, 0, 0 },
+		new WriteHandlerPtr[] { 0, 0, 0 }
+	);
 	
 	
 	public static InterruptHandlerPtr strvmstr_interrupt = new InterruptHandlerPtr() {public void handler()

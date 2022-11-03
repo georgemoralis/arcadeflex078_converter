@@ -1149,16 +1149,16 @@ public class _40love
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		1, /* number of chips */
 		2000000, /* 2 MHz ??? */
-		{ 10 },
-		{ 0 },
-		{ 0 },
-		{ sound_control_2_w },
-		{ sound_control_3_w }
-	};
+		new int[] { 10 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { sound_control_2_w },
+		new WriteHandlerPtr[] { sound_control_3_w }
+	);
 	
 	static struct MSM5232interface msm5232_interface =
 	{

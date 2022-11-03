@@ -426,16 +426,16 @@ public class cop01
 	
 	
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		3,	/* 3 chips */
 		1500000,	/* 1.5 MHz?????? */
-		{ 15, 15, 15 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 15, 15, 15 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	static struct YM3526interface YM3526_interface =
 	{

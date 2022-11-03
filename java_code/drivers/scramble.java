@@ -1364,40 +1364,40 @@ public class scramble
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct AY8910interface triplep_ay8910_interface =
-	{
+	static AY8910interface triplep_ay8910_interface = new AY8910interface
+	(
 		1,	/* 1 chip */
 		14318000/8,	/* 1.78975 MHz */
-		{ 50 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 50 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
-	static struct AY8910interface sfx_ay8910_interface =
-	{
+	static AY8910interface sfx_ay8910_interface = new AY8910interface
+	(
 		2,	/* 2 chips */
 		14318000/8,	/* 1.78975 MHz */
 		/* Ant Eater clips if the volume is set higher than this */
-		{ MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER), MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER) },
-		{ 0, soundlatch_r },
-		{ 0, scramble_portB_r },
-		{ soundlatch2_w, 0 },
-		{ sfx_sh_irqtrigger_w, 0 }
-	};
+		new int[] { MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER), MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER) },
+		new ReadHandlerPtr[] { 0, soundlatch_r },
+		new ReadHandlerPtr[] { 0, scramble_portB_r },
+		new WriteHandlerPtr[] { soundlatch2_w, 0 },
+		new WriteHandlerPtr[] { sfx_sh_irqtrigger_w, 0 }
+	);
 	
-	struct AY8910interface explorer_ay8910_interface =
-	{
+	static AY8910interface explorer_ay8910_interface = new AY8910interface
+	(
 		2,	/* 2 chips */
 		14318000/8,	/* 1.78975 MHz */
 		/* Ant Eater clips if the volume is set higher than this */
-		{ MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER), MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER) },
-		{ scramble_portB_r, soundlatch_r },
-		{ 0, 0 },
-		{ 0, 0 },
-		{ 0, 0 }
-	};
+		new int[] { MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER), MIXERG(16,MIXER_GAIN_2x,MIXER_PAN_CENTER) },
+		new ReadHandlerPtr[] { scramble_portB_r, soundlatch_r },
+		new ReadHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, 0 }
+	);
 	
 	static struct DACinterface sfx_dac_interface =
 	{

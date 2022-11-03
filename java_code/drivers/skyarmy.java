@@ -276,16 +276,16 @@ public class skyarmy
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		1, /* number of chips */
 		2500000, /* 2.5 MHz ??? */
-		{ 15 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 15 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	static MACHINE_DRIVER_START( skyarmy )
 	        MDRV_CPU_ADD(Z80,4000000)

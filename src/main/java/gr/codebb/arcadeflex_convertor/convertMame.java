@@ -30,6 +30,7 @@ public class convertMame {
     static final int NVRAM_HANDLER = 17;
     static final int GFXLAYOUT = 18;
     static final int GFXDECODE = 19;
+    static final int AY8910interface = 20;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -198,6 +199,20 @@ public class convertMame {
                                         continue;
                                     }
                                 }
+                            }
+                        }
+                        if (sUtil.getToken("AY8910interface")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() != '=') {
+                                Convertor.inpos = i;
+                            } else {
+                                sUtil.skipSpace();
+                                sUtil.putString("static AY8910interface " + Convertor.token[0] + " = new AY8910interface");
+                                type = AY8910interface;
+                                i3 = -1;
+                                continue;
                             }
                         }
                     }
@@ -705,6 +720,40 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (type == AY8910interface) {
+                        i3++;
+                        insideagk[i3] = 0;
+                        if (i3 == 0) {
+                            Convertor.outbuf[(Convertor.outpos++)] = '(';
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                        if ((i3 == 1) && ((insideagk[0] == 1) || (insideagk[0] == 2))) {
+                            sUtil.putString("new int[] {");
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                        if ((i3 == 1) && ((insideagk[0] == 1) || (insideagk[0] == 3))) {
+                            sUtil.putString("new ReadHandlerPtr[] {");
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                        if ((i3 == 1) && ((insideagk[0] == 1) || (insideagk[0] == 4))) {
+                            sUtil.putString("new ReadHandlerPtr[] {");
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                        if ((i3 == 1) && ((insideagk[0] == 1) || (insideagk[0] == 5))) {
+                            sUtil.putString("new WriteHandlerPtr[] {");
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                        if ((i3 == 1) && ((insideagk[0] == 1) || (insideagk[0] == 6))) {
+                            sUtil.putString("new WriteHandlerPtr[] {");
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
                             || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
                             || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT
@@ -742,6 +791,15 @@ public class convertMame {
                         }
                     }
                     if (type == GFXLAYOUT) {
+                        i3--;
+                        if (i3 == -1) {
+                            Convertor.outbuf[(Convertor.outpos++)] = 41;
+                            Convertor.inpos += 1;
+                            type = -1;
+                            continue;
+                        }
+                    }
+                    if (type == AY8910interface) {
                         i3--;
                         if (i3 == -1) {
                             Convertor.outbuf[(Convertor.outpos++)] = 41;

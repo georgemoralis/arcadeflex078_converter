@@ -1948,16 +1948,16 @@ public class nemesis
 	
 	/******************************************************************************/
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,      		/* 2 chips */
 		14318180/8,     /* 1.78975 MHz */
-		{ 35, 30 },
-		{ nemesis_portA_r, 0 },
-		{ 0, 0 },
-		{ 0, k005289_control_A_w },
-		{ 0, k005289_control_B_w }
-	};
+		new int[] { 35, 30 },
+		new ReadHandlerPtr[] { nemesis_portA_r, 0 },
+		new ReadHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, k005289_control_A_w },
+		new WriteHandlerPtr[] { 0, k005289_control_B_w }
+	);
 	
 	static struct k005289_interface k005289_interface =
 	{

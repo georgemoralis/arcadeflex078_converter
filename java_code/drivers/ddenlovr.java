@@ -2036,16 +2036,16 @@ public class ddenlovr
 		{ YM2413_VOL(80,MIXER_PAN_CENTER,80,MIXER_PAN_CENTER) }
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		1,			/* 1 chip */
 		2000000,	/* ??? */
-		{ 30 },
-		{ quiz365_input_r },
-		{ 0 },
-		{ 0 },
-		{ quiz365_select_w }
-	};
+		new int[] { 30 },
+		new ReadHandlerPtr[] { quiz365_input_r },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { quiz365_select_w }
+	);
 	
 	static struct OKIM6295interface okim6295_interface =
 	{

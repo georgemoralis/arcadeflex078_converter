@@ -1979,16 +1979,16 @@ public class dynax
 									Hana no Mai
 	***************************************************************************/
 	
-	static struct AY8910interface hanamai_ay8910_interface =
-	{
+	static AY8910interface hanamai_ay8910_interface = new AY8910interface
+	(
 		1,			/* 1 chip */
 		22000000 / 8,	/* 2.75MHz ??? */
-		{ 20 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 20 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	static struct YM2203interface hanamai_ym2203_interface =
 	{
@@ -2049,16 +2049,16 @@ public class dynax
 									Hana Oriduru
 	***************************************************************************/
 	
-	static struct AY8910interface hnoridur_ay8910_interface =
-	{
+	static AY8910interface hnoridur_ay8910_interface = new AY8910interface
+	(
 		1,			/* 1 chip */
 		22000000 / 8,	/* 2.75MHz ??? */
-		{ 20 },
-		{ input_port_0_r },		/* Port A Read: DSW */
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 20 },
+		new ReadHandlerPtr[] { input_port_0_r },		/* Port A Read: DSW */
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	static struct YM2413interface hnoridur_ym2413_interface=
 	{

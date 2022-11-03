@@ -278,16 +278,16 @@ public class pitnrun
 		8*8*2
 	);
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,
 		18432000/12,
-		{ 50, 50 },
-		{ soundlatch_r, soundlatch_r },
-		{ soundlatch_r, soundlatch_r },
-		{ 0, 0 },
-		{ 0, 0 }
-	};
+		new int[] { 50, 50 },
+		new ReadHandlerPtr[] { soundlatch_r, soundlatch_r },
+		new ReadHandlerPtr[] { soundlatch_r, soundlatch_r },
+		new WriteHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, 0 }
+	);
 	
 	static GfxDecodeInfo gfxdecodeinfo[] =
 	{

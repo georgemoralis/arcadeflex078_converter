@@ -810,16 +810,16 @@ public class tubep
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		3,					/* 3 chips */
 		19968000 / 8 / 2,	/* Xtal3 div by LS669 Q2, div by LS669 Q0 (signal RH1) */
-		{ 15, 15, 15 },		/* volume */
-		{ 0, 0, 0 },		/* read port A */
-		{ 0, 0, 0 },		/* read port B */
-		{ ay8910_portA_0_w, ay8910_portA_1_w, ay8910_portA_2_w }, /* write port A */
+		new ReadHandlerPtr[] { 15, 15, 15 },		/* volume */
+		new ReadHandlerPtr[] { 0, 0, 0 },		/* read port A */
+		new WriteHandlerPtr[] { 0, 0, 0 },		/* read port B */
+		new WriteHandlerPtr[] { ay8910_portA_0_w, ay8910_portA_1_w, ay8910_portA_2_w }, /* write port A */
 		{ ay8910_portB_0_w, ay8910_portB_1_w, ay8910_portB_2_w }  /* write port B */
-	};
+	);
 	
 	static struct MSM5205interface msm5205_interface =
 	{

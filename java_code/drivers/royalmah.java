@@ -1167,16 +1167,16 @@ public class royalmah
 	
 	
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		1,	/* 1 chip */
 		18432000/12,	/* 1.5 MHz ? */
-		{ 33 },
-		{ royalmah_player_1_port_r },
-		{ royalmah_player_2_port_r },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 33 },
+		new ReadHandlerPtr[] { royalmah_player_1_port_r },
+		new ReadHandlerPtr[] { royalmah_player_2_port_r },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	
 	

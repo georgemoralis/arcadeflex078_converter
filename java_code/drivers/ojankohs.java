@@ -932,38 +932,38 @@ public class ojankohs
 	};
 	
 	
-	static struct AY8910interface ojankohs_ay8910_interface =
-	{
+	static AY8910interface ojankohs_ay8910_interface = new AY8910interface
+	(
 		1,							/* 1 chip */
 		12000000/6,					/* 2 MHz ? */
-		{ 15 },						/* volume */
-		{ ojankohs_ay8910_0_r },	/* read port #0 */
-		{ ojankohs_ay8910_1_r },	/* read port #1 */
-		{ 0 },						/* write port #0 */
-		{ 0 }						/* write port #1 */
-	};
+		new int[] { 15 },						/* volume */
+		new ReadHandlerPtr[] { ojankohs_ay8910_0_r },	/* read port #0 */
+		new ReadHandlerPtr[] { ojankohs_ay8910_1_r },	/* read port #1 */
+		new WriteHandlerPtr[] { 0 },						/* write port #0 */
+		new WriteHandlerPtr[] { 0 }						/* write port #1 */
+	);
 	
-	static struct AY8910interface ojankoy_ay8910_interface =
-	{
+	static AY8910interface ojankoy_ay8910_interface = new AY8910interface
+	(
 		1,							/* 1 chip */
 		12000000/8,					/* 1.5 MHz ? */
-		{ 15 },						/* volume */
-		{ ojankoy_ay8910_0_r },		/* read port #0 */
-		{ ojankoy_ay8910_1_r },		/* read port #1 */
-		{ 0 },						/* write port #0 */
-		{ 0 }						/* write port #1 */
-	};
+		new int[] { 15 },						/* volume */
+		new ReadHandlerPtr[] { ojankoy_ay8910_0_r },		/* read port #0 */
+		new ReadHandlerPtr[] { ojankoy_ay8910_1_r },		/* read port #1 */
+		new WriteHandlerPtr[] { 0 },						/* write port #0 */
+		new WriteHandlerPtr[] { 0 }						/* write port #1 */
+	);
 	
-	static struct AY8910interface ojankoc_ay8910_interface =
-	{
+	static AY8910interface ojankoc_ay8910_interface = new AY8910interface
+	(
 		1,							/* 1 chip */
 		8000000/4,					/* 2.000 MHz */
-		{ 15 },						/* volume */
-		{ input_port_0_r },			/* read port #0 */
-		{ input_port_1_r },			/* read port #1 */
-		{ 0 },						/* write port #0 */
-		{ 0 } 						/* write port #1 */
-	};
+		new int[] { 15 },						/* volume */
+		new ReadHandlerPtr[] { input_port_0_r },			/* read port #0 */
+		new ReadHandlerPtr[] { input_port_1_r },			/* read port #1 */
+		new WriteHandlerPtr[] { 0 },						/* write port #0 */
+		new WriteHandlerPtr[] { 0 } 						/* write port #1 */
+	);
 	
 	static struct MSM5205interface ojankohs_msm5205_interface =
 	{

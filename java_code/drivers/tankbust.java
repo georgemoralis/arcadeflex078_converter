@@ -365,16 +365,16 @@ public class tankbust
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,			/* 2 chips */
 		2000000,	/* 2.0 MHz ??? */
-		{ 10,10 },
-		{ tankbust_soundlatch_r, 0 },
-		{ tankbust_soundtimer_r, 0 },
-		{ 0, 0 },
-		{ 0, 0 }
-	};
+		new int[] { 10,10 },
+		new ReadHandlerPtr[] { tankbust_soundlatch_r, 0 },
+		new ReadHandlerPtr[] { tankbust_soundtimer_r, 0 },
+		new WriteHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, 0 }
+	);
 	
 	static MACHINE_DRIVER_START( tankbust )
 	

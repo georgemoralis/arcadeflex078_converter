@@ -313,16 +313,16 @@ public class wallc
 	
 	
 	
-	static struct AY8910interface ay8912_interface =
-	{
+	static AY8910interface ay8912_interface = new AY8910interface
+	(
 		1,	/* 1 chip */
 		12288000 / 8,	/* 1.536 MHz? */
-		{ 30 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 30 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( wallc )

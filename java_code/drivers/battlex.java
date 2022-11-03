@@ -208,16 +208,16 @@ public class battlex
 	
 	/*** SOUND *******************************************************************/
 	
-	static struct AY8910interface battlex_ay8910_interface =
-	{
+	static AY8910interface battlex_ay8910_interface = new AY8910interface
+	(
 		1,	/* 1 chip */
 		10000000/8,
-		{ 40 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 40 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	/*** MACHINE DRIVERS *********************************************************/
 	

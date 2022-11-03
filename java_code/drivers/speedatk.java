@@ -274,16 +274,16 @@ public class speedatk
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		1,			/* 1 chip */
 		4000000,    /* ?? */
-		{ 100 },
-		{ 0 },
-		{ 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 100 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	static MACHINE_DRIVER_START( speedatk )
 		MDRV_CPU_ADD(Z80,12000000/2)

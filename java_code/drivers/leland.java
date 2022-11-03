@@ -711,16 +711,16 @@ public class leland
 	   register.
 	*/
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,
 		10000000/6, /* 1.666 MHz */
-		{ 25, 25 },
-	    { leland_sound_port_r, leland_sound_port_r },
-		{ 0 },
-	    { leland_sound_port_w, leland_sound_port_w },
-		{ 0 }
-	};
+		new int[] { 25, 25 },
+	    new ReadHandlerPtr[] { leland_sound_port_r, leland_sound_port_r },
+		new ReadHandlerPtr[] { 0 },
+	    new WriteHandlerPtr[] { leland_sound_port_w, leland_sound_port_w },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	
 	static struct CustomSound_interface dac_custom_interface =

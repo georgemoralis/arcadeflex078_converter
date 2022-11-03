@@ -422,17 +422,17 @@ public class equites
 		{ 75 }
 	};
 	
-	struct AY8910interface equites_8910intf =
-	{
+	static AY8910interface equites_8910intf = new AY8910interface
+	(
 		1,
 		6144444/4, // OSC: 6.144MHz
-		{ 50 },
-		{ 0 },
-		{ 0 },
-		{ equites_8910porta_w },
-		{ equites_8910portb_w },
+		new int[] { 50 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { equites_8910porta_w },
+		new WriteHandlerPtr[] { equites_8910portb_w },
 		{ 0 }
-	};
+	);
 	
 	struct DACinterface equites_dacintf =
 	{

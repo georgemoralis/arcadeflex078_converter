@@ -169,16 +169,16 @@ public class ssrj
 		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		1,
 		8000000/5,	/* guess */
-		{ 30,},
-		{ 0 }, /* not used ? */
-		{input_port_3_r},
-		{ 0 }, /* ? */
-		{ 0 }
-	};
+		new int[] { 30,},
+		new ReadHandlerPtr[] { 0 }, /* not used ? */
+		new ReadHandlerPtr[] {input_port_3_r},
+		new WriteHandlerPtr[] { 0 }, /* ? */
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( ssrj )

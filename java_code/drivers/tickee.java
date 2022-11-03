@@ -195,16 +195,16 @@ public class tickee
 	 *
 	 *************************************/
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,
 		40000000/16,
-		{ 50, 50 },
-		{ input_port_0_r, port1_r },
-		{ input_port_2_r, 0 },
-		{ 0 },
-		{ 0 }
-	};
+		new int[] { 50, 50 },
+		new ReadHandlerPtr[] { input_port_0_r, port1_r },
+		new ReadHandlerPtr[] { input_port_2_r, 0 },
+		new WriteHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { 0 }
+	);
 	
 	
 	

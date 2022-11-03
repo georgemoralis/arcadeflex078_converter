@@ -362,16 +362,16 @@ public class taxidrvr
 	
 	
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		2,	/* 2 chips */
 		1250000,	/* 1.25 MHz ??? */
-		{ 25, 25 },
-		{ p8910_0a_r, p8910_1a_r },
-		{ 0, 0 },
-		{ 0, 0 },
-		{ p8910_0b_w, 0 }
-	};
+		new int[] { 25, 25 },
+		new ReadHandlerPtr[] { p8910_0a_r, p8910_1a_r },
+		new ReadHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { 0, 0 },
+		new WriteHandlerPtr[] { p8910_0b_w, 0 }
+	);
 	
 	
 	

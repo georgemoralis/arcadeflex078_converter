@@ -1511,16 +1511,16 @@ public class mazerbla
 	
 	
 	/* only Great Guns */
-	static struct AY8910interface ay8912_interface =
-	{
+	static AY8910interface ay8912_interface = new AY8910interface
+	(
 		2,	/* 2 chips */
 		14318000 / 8,
-		{ 30, 100 },
-		{ 0, 0 },	/* port Aread */
-		{ soundcommand_r, 0 },	/* port Bread */
-		{ /*ay0_output_ctrl_w*/0,/*ay1_output_ctrl_w*/ 0 },	/* port Awrite */
-		{ 0, gg_led_ctrl_w }	/* port Bwrite */
-	};
+		new int[] { 30, 100 },
+		new ReadHandlerPtr[] { 0, 0 },	/* port Aread */
+		new ReadHandlerPtr[] { soundcommand_r, 0 },	/* port Bread */
+		new WriteHandlerPtr[] { /*ay0_output_ctrl_w*/0,/*ay1_output_ctrl_w*/ 0 },	/* port Awrite */
+		new WriteHandlerPtr[] { 0, gg_led_ctrl_w }	/* port Bwrite */
+	);
 	
 	
 	static MACHINE_DRIVER_START( mazerbla )

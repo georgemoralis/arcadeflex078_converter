@@ -348,16 +348,16 @@ public class redalert
 		}
 	} };
 	
-	static struct AY8910interface redalert_ay8910_interface =
-	{
+	static AY8910interface redalert_ay8910_interface = new AY8910interface
+	(
 		1,			/* 1 chip */
 		2000000,	/* 2 MHz */
-		{ 50 },		/* Volume */
-		{ redalert_AY8910_A_r },		/* Port A Read */
-		{ 0 },		/* Port B Read */
-		{ 0 },		/* Port A Write */
-		{ redalert_AY8910_B_w }		/* Port B Write */
-	};
+		new int[] { 50 },		/* Volume */
+		new ReadHandlerPtr[] { redalert_AY8910_A_r },		/* Port A Read */
+		new ReadHandlerPtr[] { 0 },		/* Port B Read */
+		new WriteHandlerPtr[] { 0 },		/* Port A Write */
+		new WriteHandlerPtr[] { redalert_AY8910_B_w }		/* Port B Write */
+	);
 	
 	static MACHINE_DRIVER_START( redalert )
 	
@@ -404,16 +404,16 @@ public class redalert
 		/*irqs   : A/B             */ 0, 0
 	};
 	
-	static struct AY8910interface demoneye_ay8910_interface =
-	{
+	static AY8910interface demoneye_ay8910_interface = new AY8910interface
+	(
 		2,			/* 2 chip */
 		3579545,	/* 3 MHz ? */
-		{ 50, 50 },		/* Volume */
-		{ 0, 0 },		/* Port A Read */
-		{ 0, 0 },		/* Port B Read */
-		{ 0, 0 },		/* Port A Write */
-		{ 0, 0 }		/* Port B Write */
-	};
+		new int[] { 50, 50 },		/* Volume */
+		new ReadHandlerPtr[] { 0, 0 },		/* Port A Read */
+		new ReadHandlerPtr[] { 0, 0 },		/* Port B Read */
+		new WriteHandlerPtr[] { 0, 0 },		/* Port A Write */
+		new WriteHandlerPtr[] { 0, 0 }		/* Port B Write */
+	);
 	
 	public static MachineInitHandlerPtr machine_init_demoneye  = new MachineInitHandlerPtr() { public void handler()
 	{

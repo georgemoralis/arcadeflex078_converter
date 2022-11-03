@@ -112,16 +112,16 @@ public class ladyfrog
 	
 	}
 	
-	static struct AY8910interface ay8910_interface =
-	{
+	static AY8910interface ay8910_interface = new AY8910interface
+	(
 		1,
 		8000000/4,
-		{ 15 },
-		{ 0 },
-		{ 0 },
-		{ unk_w },
-		{ unk_w }
-	};
+		new int[] { 15 },
+		new ReadHandlerPtr[] { 0 },
+		new ReadHandlerPtr[] { 0 },
+		new WriteHandlerPtr[] { unk_w },
+		new WriteHandlerPtr[] { unk_w }
+	);
 	
 	static struct MSM5232interface msm5232_interface =
 	{
