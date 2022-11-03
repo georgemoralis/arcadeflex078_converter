@@ -42,18 +42,18 @@ public class timelimt
 			int bit0,bit1,bit2,r,g,b;
 	
 			/* red component */
-			bit0 = (*color_prom >> 0) & 0x01;
-			bit1 = (*color_prom >> 1) & 0x01;
-			bit2 = (*color_prom >> 2) & 0x01;
+			bit0 = (color_prom.read()>> 0) & 0x01;
+			bit1 = (color_prom.read()>> 1) & 0x01;
+			bit2 = (color_prom.read()>> 2) & 0x01;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (*color_prom >> 3) & 0x01;
-			bit1 = (*color_prom >> 4) & 0x01;
-			bit2 = (*color_prom >> 5) & 0x01;
+			bit0 = (color_prom.read()>> 3) & 0x01;
+			bit1 = (color_prom.read()>> 4) & 0x01;
+			bit2 = (color_prom.read()>> 5) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = (*color_prom >> 6) & 0x01;
-			bit1 = (*color_prom >> 7) & 0x01;
+			bit0 = (color_prom.read()>> 6) & 0x01;
+			bit1 = (color_prom.read()>> 7) & 0x01;
 			b = 0x4f * bit0 + 0xa8 * bit1;
 	
 			palette_set_color(i,r,g,b);

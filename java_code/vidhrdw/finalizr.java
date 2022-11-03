@@ -63,7 +63,7 @@ public class finalizr
 	
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			if (*color_prom & 0x0f) COLOR(1,i) = *color_prom & 0x0f;
+			if (color_prom.read()& 0x0f) COLOR(1,i) = color_prom.read()& 0x0f;
 			else COLOR(1,i) = 0;
 			color_prom++;
 		}

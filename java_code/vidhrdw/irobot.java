@@ -71,7 +71,7 @@ public class irobot
 			int bits,intensity;
 		    unsigned int color;
 	
-		    color = *color_prom;
+		    color = color_prom.read()
 		    intensity = color & 0x03;
 		    bits = (color >> 6) & 0x03;
 		    r = 28 * bits * intensity;

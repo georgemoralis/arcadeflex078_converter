@@ -37,12 +37,12 @@ public class jackal
 		}
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			COLOR(1,i) = (*color_prom & 0x0f);
+			COLOR(1,i) = (color_prom.read()& 0x0f);
 			color_prom++;
 		}
 		for (i = 0;i < TOTAL_COLORS(3);i++)
 		{
-			COLOR(3,i) = (*color_prom & 0x0f) + 16;
+			COLOR(3,i) = (color_prom.read()& 0x0f) + 16;
 			color_prom++;
 		}
 	} };

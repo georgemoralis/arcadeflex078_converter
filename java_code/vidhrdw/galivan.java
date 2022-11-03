@@ -122,9 +122,9 @@ public class galivan
 			for (j = 0;j < 16;j++)
 			{
 				if ((i & 8) != 0)
-					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x0c) << 2) + (*color_prom & 0x0f);
+					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x0c) << 2) + (color_prom.read()& 0x0f);
 				else
-					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x03) << 4) + (*color_prom & 0x0f);
+					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x03) << 4) + (color_prom.read()& 0x0f);
 			}
 	
 			color_prom++;

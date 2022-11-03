@@ -44,10 +44,10 @@ public class tankbatt
 		{
 			int bit0, bit1, bit2, bit3, r, g, b;
 	
-			bit0 = (*color_prom >> 0) & 0x01; /* intensity */
-			bit1 = (*color_prom >> 1) & 0x01; /* red */
-			bit2 = (*color_prom >> 2) & 0x01; /* green */
-			bit3 = (*color_prom >> 3) & 0x01; /* blue */
+			bit0 = (color_prom.read()>> 0) & 0x01; /* intensity */
+			bit1 = (color_prom.read()>> 1) & 0x01; /* red */
+			bit2 = (color_prom.read()>> 2) & 0x01; /* green */
+			bit3 = (color_prom.read()>> 3) & 0x01; /* blue */
 	
 			/* red component */
 			r = RES_1 * bit1;

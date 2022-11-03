@@ -210,9 +210,9 @@ public class centiped
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
-			int r = ((*color_prom >> 2) & 0x01) * 0xff;
-			int g = ((*color_prom >> 1) & 0x01) * 0xff;
-			int b = ((*color_prom >> 0) & 0x01) * 0xff;
+			int r = ((color_prom.read()>> 2) & 0x01) * 0xff;
+			int g = ((color_prom.read()>> 1) & 0x01) * 0xff;
+			int b = ((color_prom.read()>> 0) & 0x01) * 0xff;
 	
 			/* Colors 0x40-0x7f are converted to grey scale as it's used on the
 			   upright version that had an overlay */

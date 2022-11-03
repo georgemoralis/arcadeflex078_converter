@@ -72,21 +72,21 @@ public class turbo
 			int adjusted_index = i ^ 0x70;
 	
 			/* red component */
-			bit0 = (*color_prom >> 0) & 1;
-			bit1 = (*color_prom >> 1) & 1;
-			bit2 = (*color_prom >> 2) & 1;
+			bit0 = (color_prom.read()>> 0) & 1;
+			bit1 = (color_prom.read()>> 1) & 1;
+			bit2 = (color_prom.read()>> 2) & 1;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			/* green component */
-			bit0 = (*color_prom >> 3) & 1;
-			bit1 = (*color_prom >> 4) & 1;
-			bit2 = (*color_prom >> 5) & 1;
+			bit0 = (color_prom.read()>> 3) & 1;
+			bit1 = (color_prom.read()>> 4) & 1;
+			bit2 = (color_prom.read()>> 5) & 1;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			/* blue component */
 			bit0 = 0;
-			bit1 = (*color_prom >> 6) & 1;
-			bit2 = (*color_prom >> 7) & 1;
+			bit1 = (color_prom.read()>> 6) & 1;
+			bit2 = (color_prom.read()>> 7) & 1;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(adjusted_index,r,g,b);
@@ -104,21 +104,21 @@ public class turbo
 			int bit0, bit1, bit2, r, g, b;
 	
 			/* red component */
-			bit0 = (*color_prom >> 0) & 1;
-			bit1 = (*color_prom >> 1) & 1;
-			bit2 = (*color_prom >> 2) & 1;
+			bit0 = (color_prom.read()>> 0) & 1;
+			bit1 = (color_prom.read()>> 1) & 1;
+			bit2 = (color_prom.read()>> 2) & 1;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			/* green component */
-			bit0 = (*color_prom >> 3) & 1;
-			bit1 = (*color_prom >> 4) & 1;
-			bit2 = (*color_prom >> 5) & 1;
+			bit0 = (color_prom.read()>> 3) & 1;
+			bit1 = (color_prom.read()>> 4) & 1;
+			bit2 = (color_prom.read()>> 5) & 1;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			/* blue component */
 			bit0 = 0;
-			bit1 = (*color_prom >> 6) & 1;
-			bit2 = (*color_prom >> 7) & 1;
+			bit1 = (color_prom.read()>> 6) & 1;
+			bit2 = (color_prom.read()>> 7) & 1;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i,r,g,b);
@@ -136,21 +136,21 @@ public class turbo
 			int bit0, bit1, bit2, r, g, b;
 	
 			/* red component */
-			bit0 = (*color_prom >> 0) & 1;
-			bit1 = (*color_prom >> 1) & 1;
-			bit2 = (*color_prom >> 2) & 1;
+			bit0 = (color_prom.read()>> 0) & 1;
+			bit1 = (color_prom.read()>> 1) & 1;
+			bit2 = (color_prom.read()>> 2) & 1;
 			r = 34 * bit0 + 68 * bit1 + 137 * bit2;
 	
 			/* green component */
-			bit0 = (*color_prom >> 3) & 1;
-			bit1 = (*color_prom >> 4) & 1;
-			bit2 = (*color_prom >> 5) & 1;
+			bit0 = (color_prom.read()>> 3) & 1;
+			bit1 = (color_prom.read()>> 4) & 1;
+			bit2 = (color_prom.read()>> 5) & 1;
 			g = 34 * bit0 + 68 * bit1 + 137 * bit2;
 	
 			/* blue component */
 			bit0 = 0;
-			bit1 = (*color_prom >> 6) & 1;
-			bit2 = (*color_prom >> 7) & 1;
+			bit1 = (color_prom.read()>> 6) & 1;
+			bit2 = (color_prom.read()>> 7) & 1;
 			b = 34 * bit0 + 68 * bit1 + 137 * bit2;
 	
 			palette_set_color(i,r,g,b);
@@ -163,20 +163,20 @@ public class turbo
 	
 			/* red component */
 			bit0 =
-			bit1 = (*color_prom >> 0) & 1;
-			bit2 = (*color_prom >> 1) & 1;
+			bit1 = (color_prom.read()>> 0) & 1;
+			bit2 = (color_prom.read()>> 1) & 1;
 			r = 34 * bit0 + 68 * bit1 + 137 * bit2;
 	
 			/* green component */
 			bit0 =
-			bit1 = (*color_prom >> 2) & 1;
-			bit2 = (*color_prom >> 3) & 1;
+			bit1 = (color_prom.read()>> 2) & 1;
+			bit2 = (color_prom.read()>> 3) & 1;
 			g = 34 * bit0 + 68 * bit1 + 137 * bit2;
 	
 			/* blue component */
 			bit0 = 0;
-			bit1 = (*color_prom >> 4) & 1;
-			bit2 = (*color_prom >> 5) & 1;
+			bit1 = (color_prom.read()>> 4) & 1;
+			bit2 = (color_prom.read()>> 5) & 1;
 			b = 34 * bit0 + 68 * bit1 + 137 * bit2;
 	
 			palette_set_color(i+1024,r,g,b);

@@ -55,13 +55,13 @@ public class nova2001
 			int intensity,r,g,b;
 	
 	
-			intensity = (*color_prom >> 0) & 0x03;
+			intensity = (color_prom.read()>> 0) & 0x03;
 			/* red component */
-			r = (((*color_prom >> 0) & 0x0c) | intensity) * 0x11;
+			r = (((color_prom.read()>> 0) & 0x0c) | intensity) * 0x11;
 			/* green component */
-			g = (((*color_prom >> 2) & 0x0c) | intensity) * 0x11;
+			g = (((color_prom.read()>> 2) & 0x0c) | intensity) * 0x11;
 			/* blue component */
-			b = (((*color_prom >> 4) & 0x0c) | intensity) * 0x11;
+			b = (((color_prom.read()>> 4) & 0x0c) | intensity) * 0x11;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;

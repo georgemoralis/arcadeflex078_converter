@@ -57,8 +57,8 @@ public class stfight
 		/* text uses colors 192-207 */
 		for (i = 0;i < TOTAL_COLORS(0);i++)
 		{
-			if ((*color_prom & 0x0f) == 0x0f) COLOR(0,i) = 256;	/* transparent */
-			else COLOR(0,i) = (*color_prom & 0x0f) + 0xc0;
+			if ((color_prom.read()& 0x0f) == 0x0f) COLOR(0,i) = 256;	/* transparent */
+			else COLOR(0,i) = (color_prom.read()& 0x0f) + 0xc0;
 			color_prom++;
 		}
 		color_prom += 256 - TOTAL_COLORS(0);	/* rest of the PROM is unused */

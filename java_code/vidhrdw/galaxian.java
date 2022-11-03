@@ -182,18 +182,18 @@ public class galaxian
 			int bit0,bit1,bit2,r,g,b;
 	
 			/* red component */
-			bit0 = BIT(*color_prom,0);
-			bit1 = BIT(*color_prom,1);
-			bit2 = BIT(*color_prom,2);
+			bit0 = BIT(color_prom.read()0);
+			bit1 = BIT(color_prom.read()1);
+			bit2 = BIT(color_prom.read()2);
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = BIT(*color_prom,3);
-			bit1 = BIT(*color_prom,4);
-			bit2 = BIT(*color_prom,5);
+			bit0 = BIT(color_prom.read()3);
+			bit1 = BIT(color_prom.read()4);
+			bit2 = BIT(color_prom.read()5);
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = BIT(*color_prom,6);
-			bit1 = BIT(*color_prom,7);
+			bit0 = BIT(color_prom.read()6);
+			bit1 = BIT(color_prom.read()7);
 			b = 0x4f * bit0 + 0xa8 * bit1;
 	
 			palette_set_color(i,r,g,b);
@@ -296,18 +296,18 @@ public class galaxian
 			int bit0,bit1,bit2,r,g,b;
 	
 			/* red component */
-			bit0 = BIT(*color_prom,0);
-			bit1 = BIT(*color_prom,1);
-			bit2 = BIT(*color_prom,2);
+			bit0 = BIT(color_prom.read()0);
+			bit1 = BIT(color_prom.read()1);
+			bit2 = BIT(color_prom.read()2);
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = BIT(*color_prom,3);
-			bit1 = BIT(*color_prom,4);
-			bit2 = BIT(*color_prom,5);
+			bit0 = BIT(color_prom.read()3);
+			bit1 = BIT(color_prom.read()4);
+			bit2 = BIT(color_prom.read()5);
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
-			bit0 = BIT(*color_prom,6);
-			bit1 = BIT(*color_prom,7);
+			bit0 = BIT(color_prom.read()6);
+			bit1 = BIT(color_prom.read()7);
 			b = 0x4f * bit0 + 0xa8 * bit1;
 	
 			palette_set_color(i,r,g,b);
@@ -344,16 +344,16 @@ public class galaxian
 			int bit0,bit1,bit2,r,g,b;
 	
 			/* red component */
-			bit0 = BIT(*color_prom,0);
-			bit1 = BIT(*color_prom,1);
-			bit2 = BIT(*color_prom,2);
+			bit0 = BIT(color_prom.read()0);
+			bit1 = BIT(color_prom.read()1);
+			bit2 = BIT(color_prom.read()2);
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
 			g = 0x00;
 			/* blue component */
-			bit0 = BIT(*color_prom,3);
-			bit1 = BIT(*color_prom,4);
-			bit2 = BIT(*color_prom,5);
+			bit0 = BIT(color_prom.read()3);
+			bit1 = BIT(color_prom.read()4);
+			bit2 = BIT(color_prom.read()5);
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i,r,g,b);

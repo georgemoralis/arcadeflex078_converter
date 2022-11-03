@@ -52,18 +52,18 @@ public class mario
 	
 	
 			/* red component */
-			bit0 = (*color_prom >> 5) & 1;
-			bit1 = (*color_prom >> 6) & 1;
-			bit2 = (*color_prom >> 7) & 1;
+			bit0 = (color_prom.read()>> 5) & 1;
+			bit1 = (color_prom.read()>> 6) & 1;
+			bit2 = (color_prom.read()>> 7) & 1;
 			r = 255 - (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
 			/* green component */
-			bit0 = (*color_prom >> 2) & 1;
-			bit1 = (*color_prom >> 3) & 1;
-			bit2 = (*color_prom >> 4) & 1;
+			bit0 = (color_prom.read()>> 2) & 1;
+			bit1 = (color_prom.read()>> 3) & 1;
+			bit2 = (color_prom.read()>> 4) & 1;
 			g = 255 - (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
 			/* blue component */
-			bit0 = (*color_prom >> 0) & 1;
-			bit1 = (*color_prom >> 1) & 1;
+			bit0 = (color_prom.read()>> 0) & 1;
+			bit1 = (color_prom.read()>> 1) & 1;
 			b = 255 - (0x55 * bit0 + 0xaa * bit1);
 	
 			palette_set_color(i,r,g,b);

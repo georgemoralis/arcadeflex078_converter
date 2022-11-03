@@ -66,18 +66,18 @@ public class tubep
 			int bit0,bit1,bit2,r,g,b;
 	
 			/* red component */
-			bit0 = (*color_prom >> 0) & 0x01;
-			bit1 = (*color_prom >> 1) & 0x01;
-			bit2 = (*color_prom >> 2) & 0x01;
+			bit0 = (color_prom.read()>> 0) & 0x01;
+			bit1 = (color_prom.read()>> 1) & 0x01;
+			bit2 = (color_prom.read()>> 2) & 0x01;
 			r = combine_3_weights(weights_rg, bit0, bit1, bit2);
 			/* green component */
-			bit0 = (*color_prom >> 3) & 0x01;
-			bit1 = (*color_prom >> 4) & 0x01;
-			bit2 = (*color_prom >> 5) & 0x01;
+			bit0 = (color_prom.read()>> 3) & 0x01;
+			bit1 = (color_prom.read()>> 4) & 0x01;
+			bit2 = (color_prom.read()>> 5) & 0x01;
 			g = combine_3_weights(weights_rg, bit0, bit1, bit2);
 			/* blue component */
-			bit0 = (*color_prom >> 6) & 0x01;
-			bit1 = (*color_prom >> 7) & 0x01;
+			bit0 = (color_prom.read()>> 6) & 0x01;
+			bit1 = (color_prom.read()>> 7) & 0x01;
 			b = combine_2_weights(weights_b, bit0, bit1);
 	
 			palette_set_color(i, r,g,b);
@@ -258,18 +258,18 @@ public class tubep
 			int bit0,bit1,bit2;
 	
 			/* red component */
-			bit0 = (*color_prom >> 0) & 0x01;
-			bit1 = (*color_prom >> 1) & 0x01;
-			bit2 = (*color_prom >> 2) & 0x01;
+			bit0 = (color_prom.read()>> 0) & 0x01;
+			bit1 = (color_prom.read()>> 1) & 0x01;
+			bit2 = (color_prom.read()>> 2) & 0x01;
 			r = combine_3_weights(weights_txt_rg, bit0, bit1, bit2);
 			/* green component */
-			bit0 = (*color_prom >> 3) & 0x01;
-			bit1 = (*color_prom >> 4) & 0x01;
-			bit2 = (*color_prom >> 5) & 0x01;
+			bit0 = (color_prom.read()>> 3) & 0x01;
+			bit1 = (color_prom.read()>> 4) & 0x01;
+			bit2 = (color_prom.read()>> 5) & 0x01;
 			g = combine_3_weights(weights_txt_rg, bit0, bit1, bit2);
 			/* blue component */
-			bit0 = (*color_prom >> 6) & 0x01;
-			bit1 = (*color_prom >> 7) & 0x01;
+			bit0 = (color_prom.read()>> 6) & 0x01;
+			bit1 = (color_prom.read()>> 7) & 0x01;
 			b = combine_2_weights(weights_txt_b, bit0, bit1);
 	
 			palette_set_color(i, r,g,b);
@@ -287,7 +287,7 @@ public class tubep
 		/* sprites use the second PROM to control 8 x LS368. We copy content of this PROM over here */
 		for (i = 0; i < 32; i++)
 		{
-			prom2[i] = *color_prom;
+			prom2[i] = color_prom.read()
 			color_prom++;
 		}
 	

@@ -95,7 +95,7 @@ public class galaga
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
 			if (i % 4 == 0) COLOR(1,i) = 0;	/* preserve transparency */
-			else COLOR(1,i) = 15 - ((*color_prom & 0x0f)) + 0x10;
+			else COLOR(1,i) = 15 - ((color_prom.read()& 0x0f)) + 0x10;
 	
 			color_prom++;
 		}

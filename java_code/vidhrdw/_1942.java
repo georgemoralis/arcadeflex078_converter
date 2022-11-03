@@ -83,10 +83,10 @@ public class _1942
 		/* background tiles use colors 0-63 in four banks */
 		for (i = 0;i < TOTAL_COLORS(1)/4;i++)
 		{
-			COLOR(1,i) = *color_prom;
-			COLOR(1,i+32*8) = *color_prom + 16;
-			COLOR(1,i+2*32*8) = *color_prom + 32;
-			COLOR(1,i+3*32*8) = *color_prom + 48;
+			COLOR(1,i) = color_prom.read()
+			COLOR(1,i+32*8) = color_prom.read()+ 16;
+			COLOR(1,i+2*32*8) = color_prom.read()+ 32;
+			COLOR(1,i+3*32*8) = color_prom.read()+ 48;
 			color_prom++;
 		}
 	

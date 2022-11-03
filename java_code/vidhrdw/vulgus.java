@@ -77,10 +77,10 @@ public class vulgus
 		/* background tiles use colors 0-15, 64-79, 128-143, 192-207 in four banks */
 		for (i = 0;i < TOTAL_COLORS(1)/4;i++)
 		{
-			COLOR(1,i) = *color_prom;
-			COLOR(1,i+32*8) = *color_prom + 64;
-			COLOR(1,i+2*32*8) = *color_prom + 128;
-			COLOR(1,i+3*32*8) = *color_prom + 192;
+			COLOR(1,i) = color_prom.read()
+			COLOR(1,i+32*8) = color_prom.read()+ 64;
+			COLOR(1,i+2*32*8) = color_prom.read()+ 128;
+			COLOR(1,i+3*32*8) = color_prom.read()+ 192;
 			color_prom++;
 		}
 	} };

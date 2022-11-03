@@ -88,7 +88,7 @@ public class lasso
 	
 		for (i = 0;i < 0x40;i++)
 		{
-			lasso_set_color(i,*color_prom);
+			lasso_set_color(i,color_prom.read();
 			color_prom++;
 		}
 	} };

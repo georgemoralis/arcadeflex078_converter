@@ -101,7 +101,7 @@ public class tp84
 	
 	
 			for (j = 0;j < 8;j++)
-				COLOR(0,i+256*j) = *color_prom + 128 + 16*j;
+				COLOR(0,i+256*j) = color_prom.read()+ 128 + 16*j;
 	
 			color_prom++;
 		}
@@ -114,7 +114,7 @@ public class tp84
 	
 			for (j = 0;j < 8;j++)
 			{
-				if (*color_prom) COLOR(1,i+256*j) = *color_prom + 16*j;
+				if (color_prom.read() COLOR(1,i+256*j) = color_prom.read()+ 16*j;
 				else COLOR(1,i+256*j) = 0;	/* preserve transparency */
 			}
 	

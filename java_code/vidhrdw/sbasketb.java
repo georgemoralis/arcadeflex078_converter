@@ -83,7 +83,7 @@ public class sbasketb
 	
 	
 			for (j = 0;j < 16;j++)
-				COLOR(1,i + j * TOTAL_COLORS(1)/16) = (*color_prom & 0x0f) + 16 * j;
+				COLOR(1,i + j * TOTAL_COLORS(1)/16) = (color_prom.read()& 0x0f) + 16 * j;
 	
 			color_prom++;
 		}

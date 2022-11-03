@@ -117,9 +117,9 @@ public class supertnk
 	
 		for (i = 0;i < 0x20;i++)
 		{
-			r = (*color_prom & 0x04) ? 0xff : 0x00;  /* red component   */
-			g = (*color_prom & 0x20) ? 0xff : 0x00;  /* green component */
-			b = (*color_prom & 0x40) ? 0xff : 0x00;  /* blue component  */
+			r = (color_prom.read()& 0x04) ? 0xff : 0x00;  /* red component   */
+			g = (color_prom.read()& 0x20) ? 0xff : 0x00;  /* green component */
+			b = (color_prom.read()& 0x40) ? 0xff : 0x00;  /* blue component  */
 	
 			palette_set_color(i, r, g, b);
 			color_prom++;
