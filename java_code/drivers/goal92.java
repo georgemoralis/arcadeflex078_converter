@@ -242,40 +242,40 @@ public class goal92
 		{ 100 }
 	};
 	
-	static struct GfxLayout layout_8x8x4 =
-	{
+	static GfxLayout layout_8x8x4 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,4),
 		4,
-		{ RGN_FRAC(3,4),RGN_FRAC(2,4),RGN_FRAC(1,4),RGN_FRAC(0,4) },
-		{ STEP8(0,1) },
-		{ STEP8(0,8) },
+		new int[] { RGN_FRAC(3,4),RGN_FRAC(2,4),RGN_FRAC(1,4),RGN_FRAC(0,4) },
+		new int[] { STEP8(0,1) },
+		new int[] { STEP8(0,8) },
 		8*8
-	};
+	);
 	
-	static struct GfxLayout layout_16x16x4 =
-	{
+	static GfxLayout layout_16x16x4 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,4),
 		4,
-		{ RGN_FRAC(3,4),RGN_FRAC(2,4),RGN_FRAC(1,4),RGN_FRAC(0,4) },
-		{ STEP8(0,1), STEP8(8*8*2,1) },
-		{ STEP8(0,8), STEP8(8*8*1,8) },
+		new int[] { RGN_FRAC(3,4),RGN_FRAC(2,4),RGN_FRAC(1,4),RGN_FRAC(0,4) },
+		new int[] { STEP8(0,1), STEP8(8*8*2,1) },
+		new int[] { STEP8(0,8), STEP8(8*8*1,8) },
 		16*16
-	};
+	);
 	
-	static struct GfxLayout layout_16x16x4_2 =
-	{
+	static GfxLayout layout_16x16x4_2 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{ 0,1,2,3 },
-		{ 4,0,12,8,20,16,28,24,
+		new int[] { 0,1,2,3 },
+		new int[] { 4,0,12,8,20,16,28,24,
 			512+4,512+0,512+12,512+8,512+20,512+16,512+28,512+24 },
-		{ 0*32,1*32,2*32,3*32,4*32,5*32,6*32,7*32,
+		new int[] { 0*32,1*32,2*32,3*32,4*32,5*32,6*32,7*32,
 			256+0*32,256+1*32,256+2*32,256+3*32,256+4*32,256+5*32,256+6*32,256+7*32 },
 		1024
-	};
+	);
 	
 	static struct GfxDecodeInfo goal92_gfxdecodeinfo[] =
 	{

@@ -271,16 +271,16 @@ public class tceptor
 	
 	static int decode_bg(int region)
 	{
-		static struct GfxLayout bg_layout =
-		{
+		static GfxLayout bg_layout = new GfxLayout
+		(
 			8, 8,
 			2048,
 			3,
-			{ 0x40000+4, 0, 4 },
-			{ 0, 1, 2, 3, 8, 9, 10, 11 },
-			{ 0, 16, 32, 48, 64, 80, 96, 112 },
+			new int[] { 0x40000+4, 0, 4 },
+			new int[] { 0, 1, 2, 3, 8, 9, 10, 11 },
+			new int[] { 0, 16, 32, 48, 64, 80, 96, 112 },
 			128
-		};
+		);
 	
 		int gfx_index = bg;
 		data8_t *src = memory_region(region) + 0x8000;
@@ -330,22 +330,22 @@ public class tceptor
 	// fix sprite order
 	static int decode_sprite16(int region)
 	{
-		static struct GfxLayout spr16_layout =
-		{
+		static GfxLayout spr16_layout = new GfxLayout
+		(
 			16, 16,
 			512,
 			4,
-			{ 0x00000, 0x00004, 0x40000, 0x40004 },
-			{
+			new int[] { 0x00000, 0x00004, 0x40000, 0x40004 },
+			new int[] {
 				0*8, 0*8+1, 0*8+2, 0*8+3, 1*8, 1*8+1, 1*8+2, 1*8+3,
 				2*8, 2*8+1, 2*8+2, 2*8+3, 3*8, 3*8+1, 3*8+2, 3*8+3
 			},
-			{
+			new int[] {
 				 0*2*16,  1*2*16,  2*2*16,  3*2*16,  4*2*16,  5*2*16,  6*2*16,  7*2*16,
 				 8*2*16,  9*2*16, 10*2*16, 11*2*16, 12*2*16, 13*2*16, 14*2*16, 15*2*16
 			},
 			2*16*16
-		};
+		);
 	
 		data8_t *src = memory_region(region);
 		int len = memory_region_length(region);
@@ -384,26 +384,26 @@ public class tceptor
 	// fix sprite order
 	static int decode_sprite32(int region)
 	{
-		static struct GfxLayout spr32_layout =
-		{
+		static GfxLayout spr32_layout = new GfxLayout
+		(
 			32, 32,
 			1024,
 			4,
-			{ 0x000000, 0x000004, 0x200000, 0x200004 },
-			{
+			new int[] { 0x000000, 0x000004, 0x200000, 0x200004 },
+			new int[] {
 				0*8, 0*8+1, 0*8+2, 0*8+3, 1*8, 1*8+1, 1*8+2, 1*8+3,
 				2*8, 2*8+1, 2*8+2, 2*8+3, 3*8, 3*8+1, 3*8+2, 3*8+3,
 				4*8, 4*8+1, 4*8+2, 4*8+3, 5*8, 5*8+1, 5*8+2, 5*8+3,
 				6*8, 6*8+1, 6*8+2, 6*8+3, 7*8, 7*8+1, 7*8+2, 7*8+3
 			},
-			{
+			new int[] {
 				 0*2*32,  1*2*32,  2*2*32,  3*2*32,  4*2*32,  5*2*32,  6*2*32,  7*2*32,
 				 8*2*32,  9*2*32, 10*2*32, 11*2*32, 12*2*32, 13*2*32, 14*2*32, 15*2*32,
 				16*2*32, 17*2*32, 18*2*32, 19*2*32, 20*2*32, 21*2*32, 22*2*32, 23*2*32,
 				24*2*32, 25*2*32, 26*2*32, 27*2*32, 28*2*32, 29*2*32, 30*2*32, 31*2*32
 			},
 			2*32*32
-		};
+		);
 	
 		data8_t *src = memory_region(region);
 		int len = memory_region_length(region);

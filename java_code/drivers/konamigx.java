@@ -1416,42 +1416,42 @@ public class konamigx
 	/* i think we could reduce the number of machine drivers with different visible areas by adjusting the sprite
 	   positioning on a per game basis too */
 	
-	static struct GfxLayout bglayout_8bpp =
-	{
+	static GfxLayout bglayout_8bpp = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 1*4, 0*4, 3*4, 2*4, 5*4, 4*4, 7*4, 6*4,
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 1*4, 0*4, 3*4, 2*4, 5*4, 4*4, 7*4, 6*4,
 				9*4, 8*4, 11*4, 10*4, 13*4, 12*4, 15*4, 14*4 },
-		{ 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
+		new int[] { 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
 				8*64, 9*64, 10*64, 11*64, 12*64, 13*64, 14*64, 15*64, },
 		16*64
-	};
+	);
 	
-	struct GfxLayout t1_charlayout6 =
-	{
+	static GfxLayout t1_charlayout6 = new GfxLayout
+	(
 		16, 16,
 		RGN_FRAC(1,1),
 		6,
-		{ 20, 16, 12, 8, 4, 0 },
-		{ 3, 2, 1, 0, 27, 26, 25, 24, 51, 50, 49, 48, 75, 74, 73, 72 },
-		{ 0, 12*8, 12*8*2, 12*8*3, 12*8*4, 12*8*5, 12*8*6, 12*8*7,
+		new int[] { 20, 16, 12, 8, 4, 0 },
+		new int[] { 3, 2, 1, 0, 27, 26, 25, 24, 51, 50, 49, 48, 75, 74, 73, 72 },
+		new int[] { 0, 12*8, 12*8*2, 12*8*3, 12*8*4, 12*8*5, 12*8*6, 12*8*7,
 		  12*8*8, 12*8*9, 12*8*10, 12*8*11, 12*8*12, 12*8*13, 12*8*14, 12*8*15 },
 		16*16*6
-	};
+	);
 	
-	struct GfxLayout t1_charlayout8 =
-	{
+	static GfxLayout t1_charlayout8 = new GfxLayout
+	(
 		16, 16,
 		RGN_FRAC(1,1),
 		8,
-		{ 28, 24, 20, 16, 12, 8, 4, 0 },
-		{ 3, 2, 1, 0, 35, 34, 33, 32, 67, 66, 65, 64, 99, 98, 97, 96 },
-		{ 0, 16*8, 16*8*2, 16*8*3, 16*8*4, 16*8*5, 16*8*6, 16*8*7,
+		new int[] { 28, 24, 20, 16, 12, 8, 4, 0 },
+		new int[] { 3, 2, 1, 0, 35, 34, 33, 32, 67, 66, 65, 64, 99, 98, 97, 96 },
+		new int[] { 0, 16*8, 16*8*2, 16*8*3, 16*8*4, 16*8*5, 16*8*6, 16*8*7,
 		  16*8*8, 16*8*9, 16*8*10, 16*8*11, 16*8*12, 16*8*13, 16*8*14, 16*8*15 },
 		16*16*8
-	};
+	);
 	
 	/* type 1 (opengolf + racinfrc) use 6 and 8 bpp planar layouts for the 53936 */
 	static struct GfxDecodeInfo gfxdecodeinfo_opengolf[] =

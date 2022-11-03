@@ -291,34 +291,34 @@ public class raiden2
 	
 	/* GFX DECODING */
 	
-	static struct GfxLayout raiden2_charlayout =
-	{
+	static GfxLayout raiden2_charlayout = new GfxLayout
+	(
 		8,8,
 		4096,
 		4,
-		{ 8,12,0,4 },
-		{ 3,2,1,0,19,18,17,16 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 8,12,0,4 },
+		new int[] { 3,2,1,0,19,18,17,16 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	};
+	);
 	
 	
-	static struct GfxLayout raiden2_tilelayout =
-	{
+	static GfxLayout raiden2_tilelayout = new GfxLayout
+	(
 		16,16,
 		0x4000,
 		4,
-		{ 8,12,0,4 },
-		{
+		new int[] { 8,12,0,4 },
+		new int[] {
 			3,2,1,0,
 			19,18,17,16,
 			3+64*8, 2+64*8, 1+64*8, 0+64*8,
 			19+64*8,18+64*8,17+64*8,16+64*8,
 		},
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 				8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32 },
 		128*8
-	};
+	);
 	
 	static struct GfxDecodeInfo raiden2_gfxdecodeinfo[] =
 	{

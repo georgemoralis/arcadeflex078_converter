@@ -467,28 +467,28 @@ public class angelkds
 	
 	*/
 	
-	static struct GfxLayout angelkds_charlayout =
-	{
+	static GfxLayout angelkds_charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 0,1,2,3 },
-		{ 0, 4, 8, 12, 16, 20, 24, 28 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0,1,2,3 },
+		new int[] { 0, 4, 8, 12, 16, 20, 24, 28 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		8*32
-	};
+	);
 	
 	
-	static struct GfxLayout angelkds_spritelayout =
-	{
+	static GfxLayout angelkds_spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		4,
-		{ 0,4,	RGN_FRAC(1,2)+0,	RGN_FRAC(1,2)+4 },
-		{ 0, 1, 2, 3, 8, 9, 10, 11, 16,17,18,19, 24,25,26,27,  },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32, 8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32  },
+		new int[] { 0,4,	RGN_FRAC(1,2)+0,	RGN_FRAC(1,2)+4 },
+		new int[] { 0, 1, 2, 3, 8, 9, 10, 11, 16,17,18,19, 24,25,26,27,  },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32, 8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32  },
 		16*32
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

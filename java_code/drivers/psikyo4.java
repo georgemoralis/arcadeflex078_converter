@@ -80,16 +80,16 @@ public class psikyo4
 	
 	/* defined in vidhrdw/psikyo4.c */
 	
-	static struct GfxLayout layout_16x16x8 =
-	{
+	static GfxLayout layout_16x16x8 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		8,
-		{STEP8(0,1)},
-		{STEP16(0,8)},
-		{STEP16(0,16*8)},
+		new int[] {STEP8(0,1)},
+		new int[] {STEP16(0,8)},
+		new int[] {STEP16(0,16*8)},
 		16*16*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfops4[] =
 	{

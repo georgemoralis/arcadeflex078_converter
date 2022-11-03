@@ -221,28 +221,28 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,
 		64,
 		1,
-		{ 0 },
-		{ 4, 5, 6, 7, 0x200*8 + 4, 0x200*8 + 5, 0x200*8 + 6, 0x200*8 + 7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0 },
+		new int[] { 4, 5, 6, 7, 0x200*8 + 4, 0x200*8 + 5, 0x200*8 + 6, 0x200*8 + 7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	};
+	);
 	
 	
-	static struct GfxLayout balllayout =
-	{
+	static GfxLayout balllayout = new GfxLayout
+	(
 		3,3,
 		2,
 		1,
-		{ 0 },
-		{ 0, 1, 2 },
-		{ 0*8, 1*8, 2*8 },
+		new int[] { 0 },
+		new int[] { 0, 1, 2 },
+		new int[] { 0*8, 1*8, 2*8 },
 		3*8
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

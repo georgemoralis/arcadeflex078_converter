@@ -342,50 +342,50 @@ public class drgnmst
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout drgnmst_char8x8_layout =
-	{
+	static GfxLayout drgnmst_char8x8_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 24,8,16, 0 },
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 24,8,16, 0 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		8*32
-	};
+	);
 	
 	
-	static struct GfxLayout drgnmst_char16x16_layout =
-	{
+	static GfxLayout drgnmst_char16x16_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		4,
-		{ 24, 8,16,0 },
-		{ RGN_FRAC(1,2)+0,RGN_FRAC(1,2)+1,RGN_FRAC(1,2)+2,RGN_FRAC(1,2)+3,RGN_FRAC(1,2)+4,RGN_FRAC(1,2)+5,RGN_FRAC(1,2)+6,RGN_FRAC(1,2)+7,
+		new int[] { 24, 8,16,0 },
+		new int[] { RGN_FRAC(1,2)+0,RGN_FRAC(1,2)+1,RGN_FRAC(1,2)+2,RGN_FRAC(1,2)+3,RGN_FRAC(1,2)+4,RGN_FRAC(1,2)+5,RGN_FRAC(1,2)+6,RGN_FRAC(1,2)+7,
 			0,1,2,3,4,5,6,7 },
-		{ 0*32,1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
+		new int[] { 0*32,1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 		  8*32,9*32,10*32,11*32,12*32,13*32,14*32,15*32 },
 		16*32
-	};
+	);
 	
 	
 	
-	static struct GfxLayout drgnmst_char32x32_layout =
-	{
+	static GfxLayout drgnmst_char32x32_layout = new GfxLayout
+	(
 		32,32,
 		RGN_FRAC(1,2),
 		4,
-		{ 24,8, 16,0 },
-		{ 	RGN_FRAC(1,2)+0,RGN_FRAC(1,2)+1,RGN_FRAC(1,2)+2,RGN_FRAC(1,2)+3,RGN_FRAC(1,2)+4,RGN_FRAC(1,2)+5,RGN_FRAC(1,2)+6,RGN_FRAC(1,2)+7,
+		new int[] { 24,8, 16,0 },
+		new int[] { 	RGN_FRAC(1,2)+0,RGN_FRAC(1,2)+1,RGN_FRAC(1,2)+2,RGN_FRAC(1,2)+3,RGN_FRAC(1,2)+4,RGN_FRAC(1,2)+5,RGN_FRAC(1,2)+6,RGN_FRAC(1,2)+7,
 			0,1,2,3,4,5,6,7,
 		    RGN_FRAC(1,2)+32,RGN_FRAC(1,2)+33,RGN_FRAC(1,2)+34,RGN_FRAC(1,2)+35,RGN_FRAC(1,2)+36,RGN_FRAC(1,2)+37,RGN_FRAC(1,2)+38,RGN_FRAC(1,2)+39,
 			32,33,34,35,36,37,38,39 },
 	
-		{	 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
+		new int[] {	 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
 			 8*64, 9*64,10*64,11*64,12*64,13*64,14*64,15*64,
 		 	16*64,17*64,18*64,19*64,20*64,21*64,22*64,23*64,
 		 	24*64,25*64,26*64,27*64,28*64,29*64,30*64,31*64 },
 		32*64
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

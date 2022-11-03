@@ -33,35 +33,35 @@ public class grtwall
 	MEMORY_END
 	
 	
-	static struct GfxLayout grtwall_charlayout =
+	static GfxLayout grtwall_charlayout = new GfxLayout
 	
-	{
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 0,1,2,3 },
-		{ 4, 0,
+		new int[] { 0,1,2,3 },
+		new int[] { 4, 0,
 		  12,  8,
 		  20,16,
 		  28,24,},
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		8*32
-	};
+	);
 	
-	static struct GfxLayout grtwall2_charlayout =
+	static GfxLayout grtwall2_charlayout = new GfxLayout
 	
-	{
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0,8,
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0,8,
 		  16,24,
 		  32,40,
 		  48,56 },
-		{ 0*32*2, 1*32*2, 2*32*2, 3*32*2, 4*32*2, 5*32*2, 6*32*2, 7*32*2 },
+		new int[] { 0*32*2, 1*32*2, 2*32*2, 3*32*2, 4*32*2, 5*32*2, 6*32*2, 7*32*2 },
 		8*32*2
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

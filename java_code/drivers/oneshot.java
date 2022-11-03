@@ -334,29 +334,29 @@ public class oneshot
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout oneshot16x16_layout =
-	{
+	static GfxLayout oneshot16x16_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,8),
 		8,
-		{ RGN_FRAC(0,8),RGN_FRAC(1,8),RGN_FRAC(2,8),RGN_FRAC(3,8),RGN_FRAC(4,8),RGN_FRAC(5,8),RGN_FRAC(6,8),RGN_FRAC(7,8) },
-		{ 0,1,2,3,4,5,6,7,
+		new int[] { RGN_FRAC(0,8),RGN_FRAC(1,8),RGN_FRAC(2,8),RGN_FRAC(3,8),RGN_FRAC(4,8),RGN_FRAC(5,8),RGN_FRAC(6,8),RGN_FRAC(7,8) },
+		new int[] { 0,1,2,3,4,5,6,7,
 		 64+0,64+1,64+2,64+3,64+4,64+5,64+6,64+7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		 128+0*8, 128+1*8, 128+2*8, 128+3*8, 128+4*8, 128+5*8, 128+6*8, 128+7*8 },
 		16*16
-	};
+	);
 	
-	static struct GfxLayout oneshot8x8_layout =
-	{
+	static GfxLayout oneshot8x8_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,8),
 		8,
-		{ RGN_FRAC(0,8),RGN_FRAC(1,8),RGN_FRAC(2,8),RGN_FRAC(3,8),RGN_FRAC(4,8),RGN_FRAC(5,8),RGN_FRAC(6,8),RGN_FRAC(7,8) },
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { RGN_FRAC(0,8),RGN_FRAC(1,8),RGN_FRAC(2,8),RGN_FRAC(3,8),RGN_FRAC(4,8),RGN_FRAC(5,8),RGN_FRAC(6,8),RGN_FRAC(7,8) },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

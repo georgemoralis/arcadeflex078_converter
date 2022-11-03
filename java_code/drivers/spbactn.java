@@ -303,44 +303,44 @@ public class spbactn
 		PORT_DIPSETTING(    0x00, "1/40" );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout fgtilelayout =
-	{
+	static GfxLayout fgtilelayout = new GfxLayout
+	(
 		16,8,
 		RGN_FRAC(1,2),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 0*4, 1*4, RGN_FRAC(1,2)+0*4, RGN_FRAC(1,2)+1*4, 2*4, 3*4, RGN_FRAC(1,2)+2*4, RGN_FRAC(1,2)+3*4,
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 0*4, 1*4, RGN_FRAC(1,2)+0*4, RGN_FRAC(1,2)+1*4, 2*4, 3*4, RGN_FRAC(1,2)+2*4, RGN_FRAC(1,2)+3*4,
 				16*8+0*4, 16*8+1*4, 16*8+RGN_FRAC(1,2)+0*4, 16*8+RGN_FRAC(1,2)+1*4, 16*8+2*4, 16*8+3*4, 16*8+RGN_FRAC(1,2)+2*4, 16*8+RGN_FRAC(1,2)+3*4 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		32*8
-	};
+	);
 	
-	static struct GfxLayout bgtilelayout =
-	{
+	static GfxLayout bgtilelayout = new GfxLayout
+	(
 		16,8,
 		RGN_FRAC(1,2),
 		4,
-		{ 3, 2, 1, 0 },
+		new int[] { 3, 2, 1, 0 },
 	
-		{ RGN_FRAC(1,2)+1*4, RGN_FRAC(1,2)+0*4, 1*4, 0*4,
+		new int[] { RGN_FRAC(1,2)+1*4, RGN_FRAC(1,2)+0*4, 1*4, 0*4,
 		RGN_FRAC(1,2)+3*4, RGN_FRAC(1,2)+2*4, 3*4, 2*4,
 		16*8+RGN_FRAC(1,2)+1*4,16*8+RGN_FRAC(1,2)+0*4, 16*8+1*4,16*8+0*4,
 		16*8+RGN_FRAC(1,2)+3*4, 16*8+RGN_FRAC(1,2)+2*4, 16*8+3*4,16*8+2*4 },
 	
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		32*8
-	};
+	);
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,2),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 0, 4, RGN_FRAC(1,2)+0, RGN_FRAC(1,2)+4, 8+0, 8+4, 8+RGN_FRAC(1,2)+0, 8+RGN_FRAC(1,2)+4 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 0, 4, RGN_FRAC(1,2)+0, RGN_FRAC(1,2)+4, 8+0, 8+4, 8+RGN_FRAC(1,2)+0, 8+RGN_FRAC(1,2)+4 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		16*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

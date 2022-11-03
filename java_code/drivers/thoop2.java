@@ -23,29 +23,29 @@ public class thoop2
 	WRITE16_HANDLER( thoop2_vram_w );
 	
 	
-	static struct GfxLayout thoop2_tilelayout =
-	{
+	static GfxLayout thoop2_tilelayout = new GfxLayout
+	(
 		8,8,									/* 8x8 tiles */
 		0x400000/16,							/* number of tiles */
 		4,										/* 4 bpp */
-		{ 0*0x400000*8+8, 0*0x400000*8, 1*0x400000*8+8, 1*0x400000*8 },
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0*0x400000*8+8, 0*0x400000*8, 1*0x400000*8+8, 1*0x400000*8 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		16*8
-	};
+	);
 	
-	static struct GfxLayout thoop2_tilelayout_16 =
-	{
+	static GfxLayout thoop2_tilelayout_16 = new GfxLayout
+	(
 		16,16,									/* 16x16 tiles */
 		0x400000/64,							/* number of tiles */
 		4,										/* 4 bpp */
-		{ 0*0x400000*8+8, 0*0x400000*8, 1*0x400000*8+8, 1*0x400000*8 },
-		{ 0, 1, 2, 3, 4, 5, 6, 7,
+		new int[] { 0*0x400000*8+8, 0*0x400000*8, 1*0x400000*8+8, 1*0x400000*8 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
 			16*16+0, 16*16+1, 16*16+2, 16*16+3, 16*16+4, 16*16+5, 16*16+6, 16*16+7 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 		  8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16, },
 		64*8
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo thoop2_gfxdecodeinfo[] =

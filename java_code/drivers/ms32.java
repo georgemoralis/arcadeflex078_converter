@@ -1373,39 +1373,39 @@ public class ms32
 	/********** GFX DECODE **********/
 	
 	/* sprites are contained in 256x256 "tiles" */
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		256,256,
 		RGN_FRAC(1,1),
 		8,
-		{ GFX_RAW },
-		{ 0 },		/* org displacement */
-		{ 256*8 },	/* line modulo */
+		new int[] { GFX_RAW },
+		new int[] { 0 },		/* org displacement */
+		new int[] { 256*8 },	/* line modulo */
 		256*256*8	/* char modulo */
-	};
+	);
 	
-	static struct GfxLayout bglayout =
-	{
+	static GfxLayout bglayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		8,
-		{ GFX_RAW },
-		{ 0 },		/* org displacement */
-		{ 16*8 },	/* line modulo */
+		new int[] { GFX_RAW },
+		new int[] { 0 },		/* org displacement */
+		new int[] { 16*8 },	/* line modulo */
 		16*16*8		/* char modulo */
-	};
+	);
 	
 	
-	static struct GfxLayout txlayout =
-	{
+	static GfxLayout txlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
-		{ GFX_RAW },
-		{ 0 },		/* org displacement */
-		{ 8*8 },	/* line modulo */
+		new int[] { GFX_RAW },
+		new int[] { 0 },		/* org displacement */
+		new int[] { 8*8 },	/* line modulo */
 		8*8*8		/* char modulo */
-	};
+	);
 	
 	static struct GfxDecodeInfo ms32_gfxdecodeinfo[] =
 	{

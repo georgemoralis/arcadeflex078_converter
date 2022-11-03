@@ -135,16 +135,16 @@ public class gomoku
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8, 8,		/* 8*8 characters */
 		256,		/* 256 characters */
 		2,		/* 2 bits per pixel */
-		{ 0, 4 },	/* the two bitplanes are packed in one byte */
-		{ 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0, 4 },	/* the two bitplanes are packed in one byte */
+		new int[] { 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		16*8		/* every char takes 16 consecutive bytes */
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

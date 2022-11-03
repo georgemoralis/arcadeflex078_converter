@@ -281,27 +281,27 @@ public class popper
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout popper_charlayout =
-	{
+	static GfxLayout popper_charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(2,2),
 		2,
-		{ 0, 4 },
-		{ STEP4(8,1), STEP4(0,1) },
-		{ STEP8(0,16) },
+		new int[] { 0, 4 },
+		new int[] { STEP4(8,1), STEP4(0,1) },
+		new int[] { STEP8(0,16) },
 		16*8
-	};
+	);
 	
-	static struct GfxLayout popper_spritelayout =
-	{
+	static GfxLayout popper_spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		2,
-		{ 0, RGN_FRAC(1,2) },
-		{ STEP8(8,1), STEP8(0,1) },
-		{ STEP16(0, 16) },
+		new int[] { 0, RGN_FRAC(1,2) },
+		new int[] { STEP8(8,1), STEP8(0,1) },
+		new int[] { STEP16(0, 16) },
 		16*2*8
-	};
+	);
 	
 	static struct GfxDecodeInfo popper_gfxdecodeinfo[] =
 	{

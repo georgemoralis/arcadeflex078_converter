@@ -1577,102 +1577,102 @@ public class namcos2
 	/* Namco System II - Graphics Declarations					 */
 	/*************************************************************/
 	
-	static struct GfxLayout obj_layout = {
+	static GfxLayout obj_layout = new GfxLayout(
 		32,32,
 		0x800,	/* number of sprites */
 		8,		/* bits per pixel */
-		{		/* plane offsets */
+		new int[] {		/* plane offsets */
 			(0x400000*3),(0x400000*3)+4,(0x400000*2),(0x400000*2)+4,
 			(0x400000*1),(0x400000*1)+4,(0x400000*0),(0x400000*0)+4
 		},
-		{ /* x offsets */
+		new int[] { /* x offsets */
 			0*8,0*8+1,0*8+2,0*8+3,1*8,1*8+1,1*8+2,1*8+3,
 			2*8,2*8+1,2*8+2,2*8+3,3*8,3*8+1,3*8+2,3*8+3,
 			4*8,4*8+1,4*8+2,4*8+3,5*8,5*8+1,5*8+2,5*8+3,
 			6*8,6*8+1,6*8+2,6*8+3,7*8,7*8+1,7*8+2,7*8+3,
 		},
-		{ /* y offsets */
+		new int[] { /* y offsets */
 			0x0*128,0x0*128+64,0x1*128,0x1*128+64,0x2*128,0x2*128+64,0x3*128,0x3*128+64,
 			0x4*128,0x4*128+64,0x5*128,0x5*128+64,0x6*128,0x6*128+64,0x7*128,0x7*128+64,
 			0x8*128,0x8*128+64,0x9*128,0x9*128+64,0xa*128,0xa*128+64,0xb*128,0xb*128+64,
 			0xc*128,0xc*128+64,0xd*128,0xd*128+64,0xe*128,0xe*128+64,0xf*128,0xf*128+64
 		},
 		0x800 /* sprite offset */
-	};
+	);
 	
-	static struct GfxLayout chr_layout = {
+	static GfxLayout chr_layout = new GfxLayout(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
-		{ 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
+		new int[] { 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64 },
 		8*64
-	};
+	);
 	
-	static struct GfxLayout roz_layout = {
+	static GfxLayout roz_layout = new GfxLayout(
 		8,8,
 		0x10000,
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
-		{ 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
+		new int[] { 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64 },
 		8*64
-	};
+	);
 	
-	static struct GfxLayout luckywld_sprite_layout = /* same as Namco System21 */
-	{
+	static GfxLayout luckywld_sprite_layout = new GfxLayout/* same as Namco System21 */
+	(
 		16,16,
 		RGN_FRAC(1,4),	/* number of tiles */
 		8,		/* bits per pixel */
-		{		/* plane offsets */
+		new int[] {		/* plane offsets */
 			0,1,2,3,4,5,6,7
 		},
-		{ /* x offsets */
+		new int[] { /* x offsets */
 			0*8,RGN_FRAC(1,4)+0*8,RGN_FRAC(2,4)+0*8,RGN_FRAC(3,4)+0*8,
 			1*8,RGN_FRAC(1,4)+1*8,RGN_FRAC(2,4)+1*8,RGN_FRAC(3,4)+1*8,
 			2*8,RGN_FRAC(1,4)+2*8,RGN_FRAC(2,4)+2*8,RGN_FRAC(3,4)+2*8,
 			3*8,RGN_FRAC(1,4)+3*8,RGN_FRAC(2,4)+3*8,RGN_FRAC(3,4)+3*8
 		},
-		{ /* y offsets */
+		new int[] { /* y offsets */
 			0x0*32,0x1*32,0x2*32,0x3*32,
 			0x4*32,0x5*32,0x6*32,0x7*32,
 			0x8*32,0x9*32,0xa*32,0xb*32,
 			0xc*32,0xd*32,0xe*32,0xf*32
 		},
 		8*64 /* sprite offset */
-	};
+	);
 	
-	static struct GfxLayout luckywld_roz_layout =
-	{
+	static GfxLayout luckywld_roz_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8,8*8,9*8,10*8,11*8,12*8,13*8,14*8,15*8 },
-		{ 0*128,1*128,2*128,3*128,4*128,5*128,6*128,7*128,8*128,9*128,10*128,11*128,12*128,13*128,14*128,15*128 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8,8*8,9*8,10*8,11*8,12*8,13*8,14*8,15*8 },
+		new int[] { 0*128,1*128,2*128,3*128,4*128,5*128,6*128,7*128,8*128,9*128,10*128,11*128,12*128,13*128,14*128,15*128 },
 		16*128
-	};
+	);
 	
-	static struct GfxLayout metlhawk_sprite_layout = {
+	static GfxLayout metlhawk_sprite_layout = new GfxLayout(
 		32,32,
 		0x1000,	/* number of sprites */
 		8, /* bits per pixel */
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248 },
-		{ 0, 256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 4096, 4352, 4608, 4864, 5120, 5376, 5632, 5888, 6144, 6400, 6656, 6912, 7168, 7424, 7680, 7936 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248 },
+		new int[] { 0, 256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 4096, 4352, 4608, 4864, 5120, 5376, 5632, 5888, 6144, 6400, 6656, 6912, 7168, 7424, 7680, 7936 },
 		32*32*8
-	};
+	);
 	/*
-	static struct GfxLayout mask_layout8 = {
+	static GfxLayout mask_layout8 = new GfxLayout(
 		8,8,
 		RGN_FRAC(1,1),
 		1,
-		{ 0 },
-		{ 0,1,2,3,4,5,6,7 },
-		{ 8*0,8*1,8*2,8*3,8*4,8*5,8*6,8*7 },
+		new int[] { 0 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 8*0,8*1,8*2,8*3,8*4,8*5,8*6,8*7 },
 		8*8
-	};
+	);
 		{ REGION_GFX4, 0x000000, &mask_layout8, 0, 16 },
 	*/
 	static struct GfxDecodeInfo metlhawk_gfxdecodeinfo[] =

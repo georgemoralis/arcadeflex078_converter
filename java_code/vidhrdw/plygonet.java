@@ -62,16 +62,16 @@ public class plygonet
 	
 	VIDEO_START(polygonet_vh_start)
 	{
-		static struct GfxLayout charlayout =
-		{
+		static GfxLayout charlayout = new GfxLayout
+		(
 			8, 8,		// 8x8
 			4096,		// # of tiles
 			4,	   	// 4bpp
-			{ 0, 1, 2, 3 },	// plane offsets
-			{ 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },		// X offsets
-			{ 0*8*4, 1*8*4, 2*8*4, 3*8*4, 4*8*4, 5*8*4, 6*8*4, 7*8*4 },	// Y offsets
+			new int[] { 0, 1, 2, 3 },	// plane offsets
+			new int[] { 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },		// X offsets
+			new int[] { 0*8*4, 1*8*4, 2*8*4, 3*8*4, 4*8*4, 5*8*4, 6*8*4, 7*8*4 },	// Y offsets
 			8*8*4
-		};
+		);
 	
 		/* find first empty slot to decode gfx */
 		for (ttl_gfx_index = 0; ttl_gfx_index < MAX_GFX_ELEMENTS; ttl_gfx_index++)

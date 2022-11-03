@@ -320,39 +320,39 @@ public class sprint4
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout tile_layout =
-	{
+	static GfxLayout tile_layout = new GfxLayout
+	(
 		8, 8,
 		256,
 		1,
-		{ 0 },
-		{
+		new int[] { 0 },
+		new int[] {
 			0, 1, 2, 3, 4, 5, 6, 7
 		},
-		{
+		new int[] {
 			0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38
 		},
 		0x40
-	};
+	);
 	
 	
-	static struct GfxLayout car_layout =
-	{
+	static GfxLayout car_layout = new GfxLayout
+	(
 		12, 16,
 		64,
 		1,
-		{ 0 },
-		{
+		new int[] { 0 },
+		new int[] {
 			0x0007, 0x0006, 0x0005, 0x0004,
 			0x2007, 0x2006, 0x2005, 0x2004,
 			0x4007, 0x4006, 0x4005, 0x4004
 		},
-		{
+		new int[] {
 			0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
 			0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78
 		},
 		0x80
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

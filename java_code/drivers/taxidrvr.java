@@ -327,27 +327,27 @@ public class taxidrvr
 	
 	
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 3, 2, 1, 0 },
-		{ 1*4, 0*4, 3*4, 2*4, 5*4, 4*4, 7*4, 6*4 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 3, 2, 1, 0 },
+		new int[] { 1*4, 0*4, 3*4, 2*4, 5*4, 4*4, 7*4, 6*4 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	};
+	);
 	
-	static struct GfxLayout charlayout2 =
-	{
+	static GfxLayout charlayout2 = new GfxLayout
+	(
 		4,4,
 		RGN_FRAC(1,1),
 		4,
-		{ 3, 2, 1, 0 },
-		{ 1*4, 0*4, 3*4, 2*4 },
-		{ 0*16, 1*16, 2*16, 3*16 },
+		new int[] { 3, 2, 1, 0 },
+		new int[] { 1*4, 0*4, 3*4, 2*4 },
+		new int[] { 0*16, 1*16, 2*16, 3*16 },
 		16*4
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

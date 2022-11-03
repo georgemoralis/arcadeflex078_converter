@@ -346,27 +346,27 @@ public class marinedt
 	    PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_Y, 25, 10, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout marinedt_charlayout =
-	{
+	static GfxLayout marinedt_charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },	//maybe 120
-		{ STEP8(0,1) },
-		{ STEP8(0,8) },
+		new int[] { RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },	//maybe 120
+		new int[] { STEP8(0,1) },
+		new int[] { STEP8(0,8) },
 		8*8
-	};
+	);
 	
-	static struct GfxLayout marinedt_objlayout =
-	{
+	static GfxLayout marinedt_objlayout = new GfxLayout
+	(
 		32,32,
 		RGN_FRAC(1,1),
 		2,
-		{ 0, 4 },
-		{ STEP4(32*8*7,1), STEP4(32*8*6,1), STEP4(32*8*5,1), STEP4(32*8*4,1), STEP4(32*8*3,1), STEP4(32*8*2,1), STEP4(32*8*1,1), STEP4(32*8*0,1) },
-		{ STEP16(0,8), STEP16(16*8,8) },
+		new int[] { 0, 4 },
+		new int[] { STEP4(32*8*7,1), STEP4(32*8*6,1), STEP4(32*8*5,1), STEP4(32*8*4,1), STEP4(32*8*3,1), STEP4(32*8*2,1), STEP4(32*8*1,1), STEP4(32*8*0,1) },
+		new int[] { STEP16(0,8), STEP16(16*8,8) },
 		32*32*2
-	};
+	);
 	
 	static struct GfxDecodeInfo marinedt_gfxdecodeinfo[] =
 	{

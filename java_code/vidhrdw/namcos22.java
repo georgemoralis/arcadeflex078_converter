@@ -94,22 +94,22 @@ public class namcos22
 	} /* GetPolyData */
 	
 	/* text layer uses a set of 16x16x8bpp tiles defined in RAM */
-	static struct GfxLayout cg_layout =
-	{
+	static GfxLayout cg_layout = new GfxLayout
+	(
 		16,16,
 		NUM_CG_CHARS,
 		4,
-		{ 0,1,2,3 },
+		new int[] { 0,1,2,3 },
 	#ifdef LSB_FIRST
-		{ 4*6,4*7, 4*4,4*5, 4*2,4*3, 4*0,4*1,
+		new int[] { 4*6,4*7, 4*4,4*5, 4*2,4*3, 4*0,4*1,
 		  4*14,4*15, 4*12,4*13, 4*10,4*11, 4*8,4*9 },
 	#else
-		{ 4*0,4*1,4*2,4*3,4*4,4*5,4*6,4*7,
+		new int[] { 4*0,4*1,4*2,4*3,4*4,4*5,4*6,4*7,
 		  4*8,4*9,4*10,4*11,4*12,4*13,4*14,4*15 },
 	#endif
-		{ 64*0,64*1,64*2,64*3,64*4,64*5,64*6,64*7,64*8,64*9,64*10,64*11,64*12,64*13,64*14,64*15 },
+		new int[] { 64*0,64*1,64*2,64*3,64*4,64*5,64*6,64*7,64*8,64*9,64*10,64*11,64*12,64*13,64*14,64*15 },
 		64*16
-	}; /* cg_layout */
+	); /* cg_layout */
 	
 	data32_t *namcos22_cgram;
 	data32_t *namcos22_textram;

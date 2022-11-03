@@ -216,31 +216,31 @@ public class dogfgt
 	
 	
 	
-	static struct GfxLayout tilelayout =
-	{
+	static GfxLayout tilelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
-		{ 16*8+7, 16*8+6, 16*8+5, 16*8+4, 16*8+3, 16*8+2, 16*8+1, 16*8+0,
+		new int[] { RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
+		new int[] { 16*8+7, 16*8+6, 16*8+5, 16*8+4, 16*8+3, 16*8+2, 16*8+1, 16*8+0,
 				7, 6, 5, 4, 3, 2, 1, 0 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 				8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
 		16*16
-	};
+	);
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
-		{ 7, 6, 5, 4, 3, 2, 1, 0,
+		new int[] { RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
+		new int[] { 7, 6, 5, 4, 3, 2, 1, 0,
 				16*8+7, 16*8+6, 16*8+5, 16*8+4, 16*8+3, 16*8+2, 16*8+1, 16*8+0 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 				8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
 		16*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

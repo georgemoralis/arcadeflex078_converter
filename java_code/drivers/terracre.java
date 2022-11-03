@@ -513,52 +513,52 @@ public class terracre
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout char_layout =
-	{
+	static GfxLayout char_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 1*4, 0*4, 3*4, 2*4, 5*4, 4*4, 7*4, 6*4 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 1*4, 0*4, 3*4, 2*4, 5*4, 4*4, 7*4, 6*4 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	};
+	);
 	
-	static struct GfxLayout tile_layout =
-	{
+	static GfxLayout tile_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{
+		new int[] { 0, 1, 2, 3 },
+		new int[] {
 			4, 0, 12, 8, 20, 16, 28, 24,
 			32+4, 32+0, 32+12, 32+8, 32+20, 32+16, 32+28, 32+24
 		},
-		{
+		new int[] {
 			0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
 			8*64, 9*64, 10*64, 11*64, 12*64, 13*64, 14*64, 15*64
 		},
 		64*16
-	};
+	);
 	
-	static struct GfxLayout sprite_layout =
-	{
+	static GfxLayout sprite_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		4,
-		{ 0, 1, 2, 3 },
-		{
+		new int[] { 0, 1, 2, 3 },
+		new int[] {
 			 4,  0, RGN_FRAC(1,2)+4,  RGN_FRAC(1,2)+0,
 			12,  8, RGN_FRAC(1,2)+12, RGN_FRAC(1,2)+8,
 			20, 16, RGN_FRAC(1,2)+20, RGN_FRAC(1,2)+16,
 			28, 24, RGN_FRAC(1,2)+28, RGN_FRAC(1,2)+24
 		},
-		{
+		new int[] {
 			0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 			8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32
 		},
 		32*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

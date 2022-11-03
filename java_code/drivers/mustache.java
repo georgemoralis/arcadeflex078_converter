@@ -192,26 +192,26 @@ public class mustache
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(0,3), RGN_FRAC(1,3),RGN_FRAC(2,3)},
-		{STEP8(7,-1)},
-		{STEP8(0,8)},
+		new int[] { RGN_FRAC(0,3), RGN_FRAC(1,3),RGN_FRAC(2,3)},
+		new int[] {STEP8(7,-1)},
+		new int[] {STEP8(0,8)},
 		8*8
-	};
-	static struct GfxLayout spritelayout =
-	{
+	);
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,4),
 		4,
-		{ RGN_FRAC(1,4), RGN_FRAC(3,4),RGN_FRAC(0,4),RGN_FRAC(2,4)},
-		{STEP16(15,-1)},
-		{STEP16(0,16)},
+		new int[] { RGN_FRAC(1,4), RGN_FRAC(3,4),RGN_FRAC(0,4),RGN_FRAC(2,4)},
+		new int[] {STEP16(15,-1)},
+		new int[] {STEP16(0,16)},
 		16*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

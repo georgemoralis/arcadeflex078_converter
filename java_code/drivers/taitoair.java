@@ -593,20 +593,20 @@ public class taitoair
 					GFX DECODING
 	************************************************************/
 	
-	static struct GfxLayout tilelayout =
-	{
+	static GfxLayout tilelayout = new GfxLayout
+	(
 		16,16,	/* 16x16 pixels */
 		RGN_FRAC(1,4),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 4, 0, 12, 8,
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 4, 0, 12, 8,
 		  RGN_FRAC(1,4)+4, RGN_FRAC(1,4), RGN_FRAC(1,4)+12, RGN_FRAC(1,4)+8,
 		  RGN_FRAC(2,4)+4, RGN_FRAC(2,4), RGN_FRAC(2,4)+12, RGN_FRAC(2,4)+8,
 		  RGN_FRAC(3,4)+4, RGN_FRAC(3,4), RGN_FRAC(3,4)+12, RGN_FRAC(3,4)+8 },
-		{ 0*16, 1*16, 2*16,  3*16,  4*16,  5*16,  6*16,  7*16,
+		new int[] { 0*16, 1*16, 2*16,  3*16,  4*16,  5*16,  6*16,  7*16,
 		  8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		16*16
-	};
+	);
 	
 	static struct GfxDecodeInfo airsys_gfxdecodeinfo[] =
 	{

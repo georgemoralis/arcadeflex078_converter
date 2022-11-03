@@ -169,38 +169,38 @@ public class poolshrk
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout poolshrk_sprite_layout =
-	{
+	static GfxLayout poolshrk_sprite_layout = new GfxLayout
+	(
 		16, 16,   /* width, height */
 		16,       /* total         */
 		1,        /* planes        */
-		{ 0 },    /* plane offsets */
-		{
+		new int[] { 0 },    /* plane offsets */
+		new int[] {
 			0x04, 0x05, 0x06, 0x07, 0x0C, 0x0D, 0x0E, 0x0F,
 			0x14, 0x15, 0x16, 0x17, 0x1C, 0x1D, 0x1E, 0x1F
 		},
-		{
+		new int[] {
 			0x000, 0x020, 0x040, 0x060, 0x080, 0x0A0, 0x0C0, 0x0E0,
 			0x100, 0x120, 0x140, 0x160, 0x180, 0x1A0, 0x1C0, 0x1E0
 		},
 		0x200     /* increment */
-	};
+	);
 	
 	
-	static struct GfxLayout poolshrk_tile_layout =
-	{
+	static GfxLayout poolshrk_tile_layout = new GfxLayout
+	(
 		8, 8,     /* width, height */
 		64,       /* total         */
 		1,        /* planes        */
-		{ 0 },    /* plane offsets */
-		{
+		new int[] { 0 },    /* plane offsets */
+		new int[] {
 			7, 6, 5, 4, 3, 2, 1, 0
 		},
-		{
+		new int[] {
 			0x000, 0x200, 0x400, 0x600, 0x800, 0xA00, 0xC00, 0xE00
 		},
 		0x8       /* increment */
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo poolshrk_gfx_decode_info[] =

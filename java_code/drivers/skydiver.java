@@ -305,30 +305,30 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,
 		64,
 		1,
-		{ 0 },
-		{ 7, 6, 5, 4, 15, 14, 13, 12 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0 },
+		new int[] { 7, 6, 5, 4, 15, 14, 13, 12 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		8*16
-	};
+	);
 	
 	
-	static struct GfxLayout motion_layout =
-	{
+	static GfxLayout motion_layout = new GfxLayout
+	(
 		16,16,
 		32,
 		1,
-		{ 0 },
-		{ 4, 5, 6, 7, 4 + 0x400*8, 5 + 0x400*8, 6 + 0x400*8, 7 + 0x400*8,
+		new int[] { 0 },
+		new int[] { 4, 5, 6, 7, 4 + 0x400*8, 5 + 0x400*8, 6 + 0x400*8, 7 + 0x400*8,
 		  12, 13, 14, 15, 12 + 0x400*8, 13 + 0x400*8, 14 + 0x400*8, 15 + 0x400*8 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 		  8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		8*32
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

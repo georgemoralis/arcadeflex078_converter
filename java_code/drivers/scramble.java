@@ -1245,96 +1245,96 @@ public class scramble
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout devilfsh_charlayout =
-	{
+	static GfxLayout devilfsh_charlayout = new GfxLayout
+	(
 		8,8,	/* 8*8 characters */
 		256,	/* 256 characters */
 		2,	/* 2 bits per pixel */
-		{ 0, 2*256*8*8 },	/* the bitplanes are separated */
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0, 2*256*8*8 },	/* the bitplanes are separated */
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8	/* every char takes 8 consecutive bytes */
-	};
-	static struct GfxLayout devilfsh_spritelayout =
-	{
+	);
+	static GfxLayout devilfsh_spritelayout = new GfxLayout
+	(
 		16,16,	/* 16*16 sprites */
 		64,	/* 64 sprites */
 		2,	/* 2 bits per pixel */
-		{ 0, 2*64*16*16 },	/* the bitplanes are separated */
-		{ 0, 1, 2, 3, 4, 5, 6, 7,
+		new int[] { 0, 2*64*16*16 },	/* the bitplanes are separated */
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
 				8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 				16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 },
 		32*8	/* every sprite takes 32 consecutive bytes */
-	};
-	static struct GfxLayout newsin7_charlayout =
-	{
+	);
+	static GfxLayout newsin7_charlayout = new GfxLayout
+	(
 		8,8,	/* 8*8 characters */
 		256,	/* 256 characters */
 		3,	/* 3 bits per pixel */
-		{ 0, 2*256*8*8, 2*2*256*8*8 },	/* the bitplanes are separated */
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0, 2*256*8*8, 2*2*256*8*8 },	/* the bitplanes are separated */
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8	/* every char takes 8 consecutive bytes */
-	};
-	static struct GfxLayout newsin7_spritelayout =
-	{
+	);
+	static GfxLayout newsin7_spritelayout = new GfxLayout
+	(
 		16,16,	/* 16*16 sprites */
 		64,	/* 64 sprites */
 		3,	/* 3 bits per pixel */
-		{ 0, 2*64*16*16, 2*2*64*16*16 },	/* the bitplanes are separated */
-		{ 0, 1, 2, 3, 4, 5, 6, 7,
+		new int[] { 0, 2*64*16*16, 2*2*64*16*16 },	/* the bitplanes are separated */
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
 				8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 				16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 },
 		32*8	/* every sprite takes 32 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout mrkougar_charlayout =
-	{
+	static GfxLayout mrkougar_charlayout = new GfxLayout
+	(
 		8,8,
 		256,
 		2,
-		{ 0, 4 },
-		{ 8*8+0, 8*8+1, 8*8+2, 8*8+3, 0, 1, 2, 3 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0, 4 },
+		new int[] { 8*8+0, 8*8+1, 8*8+2, 8*8+3, 0, 1, 2, 3 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		16*8
-	};
-	static struct GfxLayout mrkougar_spritelayout =
-	{
+	);
+	static GfxLayout mrkougar_spritelayout = new GfxLayout
+	(
 		16,16,
 		64,
 		2,
-		{ 0, 4 },
-		{ 8*8+0, 8*8+1, 8*8+2, 8*8+3, 0, 1, 2, 3,
+		new int[] { 0, 4 },
+		new int[] { 8*8+0, 8*8+1, 8*8+2, 8*8+3, 0, 1, 2, 3,
 		  24*8+0, 24*8+1, 24*8+2, 24*8+3, 16*8+0, 16*8+1, 16*8+2, 16*8+3 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		  32*8, 33*8, 34*8, 35*8, 36*8, 37*8, 38*8, 39*8 },
 		64*8
-	};
+	);
 	
-	static struct GfxLayout sfx_charlayout =
-	{
+	static GfxLayout sfx_charlayout = new GfxLayout
+	(
 		8,8,	/* 8*8 characters */
 		RGN_FRAC(1,4),
 		2,	/* 2 bits per pixel */
-		{ RGN_FRAC(0,2), RGN_FRAC(1,2) },	/* the two bitplanes are separated */
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { RGN_FRAC(0,2), RGN_FRAC(1,2) },	/* the two bitplanes are separated */
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8	/* every char takes 8 consecutive bytes */
-	};
-	static struct GfxLayout sfx_spritelayout =
-	{
+	);
+	static GfxLayout sfx_spritelayout = new GfxLayout
+	(
 		16,16,	/* 16*16 sprites */
 		RGN_FRAC(1,4),
 		2,	/* 2 bits per pixel */
-		{ RGN_FRAC(0,2), RGN_FRAC(1,2) },	/* the two bitplanes are separated */
-		{ 0, 1, 2, 3, 4, 5, 6, 7,
+		new int[] { RGN_FRAC(0,2), RGN_FRAC(1,2) },	/* the two bitplanes are separated */
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
 				8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 				16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 },
 		32*8	/* every sprite takes 32 consecutive bytes */
-	};
+	);
 	
 	static struct GfxDecodeInfo devilfsh_gfxdecodeinfo[] =
 	{

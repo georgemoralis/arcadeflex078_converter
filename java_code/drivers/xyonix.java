@@ -230,16 +230,16 @@ public class xyonix
 	
 	/* GFX Decode ****************************************************************/
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		4,8,
 		RGN_FRAC(1,2),
 		4,
-		{ 0, 4, RGN_FRAC(1,2)+0, RGN_FRAC(1,2)+4 },
-		{ 3, 2, 1, 0 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0, 4, RGN_FRAC(1,2)+0, RGN_FRAC(1,2)+4 },
+		new int[] { 3, 2, 1, 0 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		4*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

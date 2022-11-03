@@ -380,29 +380,29 @@ public class esd16
 	***************************************************************************/
 	
 	/* 16x16x5, made of four 8x8 tiles */
-	static struct GfxLayout layout_16x16x5 =
-	{
+	static GfxLayout layout_16x16x5 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,5),
 		5,
-		{ RGN_FRAC(4,5),RGN_FRAC(3,5),RGN_FRAC(2,5),RGN_FRAC(1,5), RGN_FRAC(0,5) },
-		{ STEP8(0+7,-1), STEP8(8*16+7,-1) },
-		{ STEP16(0,8) },
+		new int[] { RGN_FRAC(4,5),RGN_FRAC(3,5),RGN_FRAC(2,5),RGN_FRAC(1,5), RGN_FRAC(0,5) },
+		new int[] { STEP8(0+7,-1), STEP8(8*16+7,-1) },
+		new int[] { STEP16(0,8) },
 		16*16
-	};
+	);
 	
 	/* 8x8x8 */
-	static struct GfxLayout layout_8x8x8 =
-	{
+	static GfxLayout layout_8x8x8 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,4),
 		8,
-		{ STEP8(0,1) },
-		{ RGN_FRAC(3,4)+0*8,RGN_FRAC(2,4)+0*8,RGN_FRAC(1,4)+0*8,RGN_FRAC(0,4)+0*8,
+		new int[] { STEP8(0,1) },
+		new int[] { RGN_FRAC(3,4)+0*8,RGN_FRAC(2,4)+0*8,RGN_FRAC(1,4)+0*8,RGN_FRAC(0,4)+0*8,
 		  RGN_FRAC(3,4)+1*8,RGN_FRAC(2,4)+1*8,RGN_FRAC(1,4)+1*8,RGN_FRAC(0,4)+1*8 },
-		{ STEP8(0,2*8) },
+		new int[] { STEP8(0,2*8) },
 		8*8*2,
-	};
+	);
 	
 	static struct GfxDecodeInfo esd16_gfxdecodeinfo[] =
 	{
@@ -412,42 +412,42 @@ public class esd16
 		{ -1 }
 	};
 	
-	static struct GfxLayout hedpanic_layout_8x8x8 =
-	{
+	static GfxLayout hedpanic_layout_8x8x8 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8,2*8,1*8,3*8,4*8,6*8,5*8,7*8 },
-		{ 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8,2*8,1*8,3*8,4*8,6*8,5*8,7*8 },
+		new int[] { 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64 },
 		64*8,
-	};
+	);
 	
-	static struct GfxLayout hedpanic_layout_16x16x8 =
-	{
+	static GfxLayout hedpanic_layout_16x16x8 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8,2*8,1*8,3*8,4*8,6*8,5*8,7*8,
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8,2*8,1*8,3*8,4*8,6*8,5*8,7*8,
 		  64*8+0*8,64*8+2*8,64*8+1*8,64*8+3*8,64*8+4*8,64*8+6*8,64*8+5*8,64*8+7*8 },
-		{ 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64,
+		new int[] { 0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64,
 		  128*8+0*64,128*8+1*64,128*8+2*64,128*8+3*64,128*8+4*64,128*8+5*64,128*8+6*64,128*8+7*64
 		},
 		256*8,
-	};
+	);
 	
 	
-	static struct GfxLayout hedpanic_sprite_16x16x5 =
-	{
+	static GfxLayout hedpanic_sprite_16x16x5 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,3),
 		5,
-		{   RGN_FRAC(2,3), RGN_FRAC(0,3), RGN_FRAC(0,3)+8, RGN_FRAC(1,3),RGN_FRAC(1,3)+8 },
-		{ 7,6,5,4,3,2,1,0, 256+7,256+6,256+5,256+4,256+3,256+2,256+1,256+0 },
-		{ 0*16,1*16,2*16,3*16,4*16,5*16,6*16,7*16,8*16,9*16,10*16,11*16,12*16,13*16,14*16,15*16 },
+		new int[] {   RGN_FRAC(2,3), RGN_FRAC(0,3), RGN_FRAC(0,3)+8, RGN_FRAC(1,3),RGN_FRAC(1,3)+8 },
+		new int[] { 7,6,5,4,3,2,1,0, 256+7,256+6,256+5,256+4,256+3,256+2,256+1,256+0 },
+		new int[] { 0*16,1*16,2*16,3*16,4*16,5*16,6*16,7*16,8*16,9*16,10*16,11*16,12*16,13*16,14*16,15*16 },
 		16*32,
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo hedpanic_gfxdecodeinfo[] =

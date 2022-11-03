@@ -358,28 +358,28 @@ public class bwing
 	//****************************************************************************
 	// Graphics Layouts
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8, 8,
 		256,
 		2,
-		{ 0, 0x4000 },
-		{ 7, 6, 5, 4, 3, 2, 1, 0 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0, 0x4000 },
+		new int[] { 7, 6, 5, 4, 3, 2, 1, 0 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	};
+	);
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16, 16,
 		512,
 		3,
-		{ 0x40000, 0x20000, 0 },
-		{ 7, 6, 5, 4, 3, 2, 1, 0, 128+7, 128+6, 128+5, 128+4, 128+3, 128+2, 128+1, 128+0 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0x40000, 0x20000, 0 },
+		new int[] { 7, 6, 5, 4, 3, 2, 1, 0, 128+7, 128+6, 128+5, 128+4, 128+3, 128+2, 128+1, 128+0 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		  8*8, 9*8,10*8,11*8,12*8,13*8,14*8,15*8 },
 		32*8
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

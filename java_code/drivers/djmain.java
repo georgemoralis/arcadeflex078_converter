@@ -895,18 +895,18 @@ public class djmain
 	 *
 	 *************************************/
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16, 16,	/* 16x16 characters */
 		0x200000 / 128,	/* 16384 characters */
 		4,	/* bit planes */
-		{ 0, 1, 2, 3 },
-		{ 4, 0, 12, 8, 20, 16, 28, 24,
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 4, 0, 12, 8, 20, 16, 28, 24,
 		  4+256, 0+256, 12+256, 8+256, 20+256, 16+256, 28+256, 24+256 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 		  0*32+512, 1*32+512, 2*32+512, 3*32+512, 4*32+512, 5*32+512, 6*32+512, 7*32+512 },
 		16*16*4
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

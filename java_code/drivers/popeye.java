@@ -422,30 +422,30 @@ public class popeye
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		16,16,	/* 16*16 characters (8*8 doubled) */
 		RGN_FRAC(1,1),
 		1,
-		{ 0 },
-		{ 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1, 0,0 },
-		{ 0*8,0*8, 1*8,1*8, 2*8,2*8, 3*8,3*8, 4*8,4*8, 5*8,5*8, 6*8,6*8, 7*8,7*8 },
+		new int[] { 0 },
+		new int[] { 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1, 0,0 },
+		new int[] { 0*8,0*8, 1*8,1*8, 2*8,2*8, 3*8,3*8, 4*8,4*8, 5*8,5*8, 6*8,6*8, 7*8,7*8 },
 		8*8
-	};
+	);
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,4),
 		2,
-		{ 0, RGN_FRAC(1,2) },
-		{RGN_FRAC(1,4)+7,RGN_FRAC(1,4)+6,RGN_FRAC(1,4)+5,RGN_FRAC(1,4)+4,
+		new int[] { 0, RGN_FRAC(1,2) },
+		new int[] {RGN_FRAC(1,4)+7,RGN_FRAC(1,4)+6,RGN_FRAC(1,4)+5,RGN_FRAC(1,4)+4,
 		 RGN_FRAC(1,4)+3,RGN_FRAC(1,4)+2,RGN_FRAC(1,4)+1,RGN_FRAC(1,4)+0,
 		 7,6,5,4,3,2,1,0 },
-		{ 15*8, 14*8, 13*8, 12*8, 11*8, 10*8, 9*8, 8*8,
+		new int[] { 15*8, 14*8, 13*8, 12*8, 11*8, 10*8, 9*8, 8*8,
 		  7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8, },
 		16*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

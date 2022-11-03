@@ -263,29 +263,29 @@ public class deadang
 	
 	/* Graphics Layouts */
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,		/* 8*8 characters */
 		RGN_FRAC(1,2),
 		4,			/* 4 bits per pixel */
-		{ 0x4000*8, 0x4000*8+4, 0, 4 },
-		{ 3,2,1,0,11,10,9,8 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0x4000*8, 0x4000*8+4, 0, 4 },
+		new int[] { 3,2,1,0,11,10,9,8 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		128
-	};
+	);
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,	/* 16*16 tiles */
 		RGN_FRAC(1,1),
 		4,		/* 4 bits per pixel */
-		{ 8,12,0,4},
-		{ 3,2,1,0, 19,18,17,16, 512+3,512+2,512+1,512+0, 512+11+8,512+10+8,512+9+8,512+8+8},
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
+		new int[] { 8,12,0,4},
+		new int[] { 3,2,1,0, 19,18,17,16, 512+3,512+2,512+1,512+0, 512+11+8,512+10+8,512+9+8,512+8+8},
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 		8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32,
 		},
 	 	1024
-	};
+	);
 	
 	/* Graphics Decode Information */
 	

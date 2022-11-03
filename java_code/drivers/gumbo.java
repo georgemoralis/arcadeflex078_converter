@@ -113,27 +113,27 @@ public class gumbo
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout gumbo_layout =
-	{
+	static GfxLayout gumbo_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,2),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0,RGN_FRAC(1,2)+0, 8,RGN_FRAC(1,2)+8,  16,RGN_FRAC(1,2)+16,24,RGN_FRAC(1,2)+24 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0,RGN_FRAC(1,2)+0, 8,RGN_FRAC(1,2)+8,  16,RGN_FRAC(1,2)+16,24,RGN_FRAC(1,2)+24 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		8*32
-	};
+	);
 	
-	static struct GfxLayout gumbo2_layout =
-	{
+	static GfxLayout gumbo2_layout = new GfxLayout
+	(
 		4,4,
 		RGN_FRAC(1,2),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0,RGN_FRAC(1,2)+0, 8,RGN_FRAC(1,2)+8 },
-		{ 0*16, 1*16, 2*16, 3*16 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0,RGN_FRAC(1,2)+0, 8,RGN_FRAC(1,2)+8 },
+		new int[] { 0*16, 1*16, 2*16, 3*16 },
 		4*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

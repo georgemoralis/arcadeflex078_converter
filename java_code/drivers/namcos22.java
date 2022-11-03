@@ -569,24 +569,24 @@ public class namcos22
 	 * Sprites are rendered as part of the polygon draw list, based on a per-sprite Z attribute.
 	 * Each sprite has explicit placement/color/zoom controls.
 	 */
-	static struct GfxLayout sprite_layout =
-	{
+	static GfxLayout sprite_layout = new GfxLayout
+	(
 		32,32,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1,2,3,4,5,6,7 },
-		{
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] {
 			0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8,
 			8*8,9*8,10*8,11*8,12*8,13*8,14*8,15*8,
 			16*8,17*8,18*8,19*8,20*8,21*8,22*8,23*8,
 			24*8,25*8,26*8,27*8,28*8,29*8,30*8,31*8 },
-		{
+		new int[] {
 			0*32*8,1*32*8,2*32*8,3*32*8,4*32*8,5*32*8,6*32*8,7*32*8,
 			8*32*8,9*32*8,10*32*8,11*32*8,12*32*8,13*32*8,14*32*8,15*32*8,
 			16*32*8,17*32*8,18*32*8,19*32*8,20*32*8,21*32*8,22*32*8,23*32*8,
 			24*32*8,25*32*8,26*32*8,27*32*8,28*32*8,29*32*8,30*32*8,31*32*8 },
 		32*32*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

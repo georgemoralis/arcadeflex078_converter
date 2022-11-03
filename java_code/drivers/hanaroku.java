@@ -217,18 +217,18 @@ public class hanaroku
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout hanaroku_charlayout =
-	{
+	static GfxLayout hanaroku_charlayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,4),
 		4,
-		{ RGN_FRAC(3,4),RGN_FRAC(2,4),RGN_FRAC(1,4),RGN_FRAC(0,4) },
-		{ 0,1,2,3,4,5,6,7,
+		new int[] { RGN_FRAC(3,4),RGN_FRAC(2,4),RGN_FRAC(1,4),RGN_FRAC(0,4) },
+		new int[] { 0,1,2,3,4,5,6,7,
 			64,65,66,67,68,69,70,71},
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 			128+0*8,128+1*8,128+2*8,128+3*8,128+4*8,128+5*8,128+6*8,128+7*8 },
 		16*16
-	};
+	);
 	
 	
 	

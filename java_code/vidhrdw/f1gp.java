@@ -271,23 +271,23 @@ public class f1gp
 	
 	public static VideoUpdateHandlerPtr video_update_f1gp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		static struct GfxLayout tilelayout =
-		{
+		static GfxLayout tilelayout = new GfxLayout
+		(
 			16,16,
 			TOTAL_CHARS,
 			4,
-			{ 0, 1, 2, 3 },
+			new int[] { 0, 1, 2, 3 },
 	#ifdef LSB_FIRST
-			{ 2*4, 3*4, 0*4, 1*4, 6*4, 7*4, 4*4, 5*4,
+			new int[] { 2*4, 3*4, 0*4, 1*4, 6*4, 7*4, 4*4, 5*4,
 					10*4, 11*4, 8*4, 9*4, 14*4, 15*4, 12*4, 13*4 },
 	#else
-			{ 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4,
+			new int[] { 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4,
 					8*4, 9*4, 10*4, 11*4, 12*4, 13*4, 14*4, 15*4 },
 	#endif
-			{ 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
+			new int[] { 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
 					8*64, 9*64, 10*64, 11*64, 12*64, 13*64, 14*64, 15*64 },
 			64*16,
-		};
+		);
 	
 	
 		if (dirtygfx != 0)
@@ -327,7 +327,7 @@ public class f1gp
 			f1gp_drawsprites(bitmap,cliprect,0,0x00);
 			f1gp_drawsprites(bitmap,cliprect,1,0x02);
 		}
-	} };
+	}
 	
 	
 	

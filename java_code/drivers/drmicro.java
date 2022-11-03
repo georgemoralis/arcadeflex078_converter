@@ -167,49 +167,49 @@ public class drmicro
 	
 	/****************************************************************************/
 	
-	static struct GfxLayout spritelayout4 =
-	{
+	static GfxLayout spritelayout4 = new GfxLayout
+	(
 		16,16,
 		0x100,
 		2,
-		{0,0x2000*8},
-		{STEP8(7,-1),STEP8(71,-1)},
-		{STEP8(0,8),STEP8(128,8)},
+		new int[] {0,0x2000*8},
+		new int[] {STEP8(7,-1),STEP8(71,-1)},
+		new int[] {STEP8(0,8),STEP8(128,8)},
 		8*8*4
-	};
+	);
 	
-	static struct GfxLayout spritelayout8 =
-	{
+	static GfxLayout spritelayout8 = new GfxLayout
+	(
 		16,16,
 		0x100,
 		3,
-		{0x2000*16,0x2000*8,0},
-		{STEP8(7,-1),STEP8(71,-1)},
-		{STEP8(0,8),STEP8(128,8)},
+		new int[] {0x2000*16,0x2000*8,0},
+		new int[] {STEP8(7,-1),STEP8(71,-1)},
+		new int[] {STEP8(0,8),STEP8(128,8)},
 		8*8*4
-	};
+	);
 	
-	static struct GfxLayout charlayout4 =
-	{
+	static GfxLayout charlayout4 = new GfxLayout
+	(
 		8,8,
 		0x400,
 		2,
-		{0,0x2000*8},
-		{STEP8(7,-1)},
-		{STEP8(0,8)},
+		new int[] {0,0x2000*8},
+		new int[] {STEP8(7,-1)},
+		new int[] {STEP8(0,8)},
 		8*8*1
-	};
+	);
 	
-	static struct GfxLayout charlayout8 =
-	{
+	static GfxLayout charlayout8 = new GfxLayout
+	(
 		8,8,
 		0x400,
 		3,
-		{0x2000*16,0x2000*8,0},
-		{STEP8(7,-1)},
-		{STEP8(0,8)},
+		new int[] {0x2000*16,0x2000*8,0},
+		new int[] {STEP8(7,-1)},
+		new int[] {STEP8(0,8)},
 		8*8*1
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

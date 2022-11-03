@@ -245,44 +245,44 @@ public class iqblock
 	
 	
 	
-	static struct GfxLayout tilelayout1 =
-	{
+	static GfxLayout tilelayout1 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,3),
 		6,
-		{ 8, 0, RGN_FRAC(1,3)+8, RGN_FRAC(1,3)+0, RGN_FRAC(2,3)+8, RGN_FRAC(2,3)+0 },
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 8, 0, RGN_FRAC(1,3)+8, RGN_FRAC(1,3)+0, RGN_FRAC(2,3)+8, RGN_FRAC(2,3)+0 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		8*16
-	};
+	);
 	
-	static struct GfxLayout tilelayout2 =
-	{
+	static GfxLayout tilelayout2 = new GfxLayout
+	(
 		8,32,
 		RGN_FRAC(1,2),
 		4,
-		{ 8, 0, RGN_FRAC(1,2)+8, RGN_FRAC(1,2)+0 },
-		{	0, 1, 2, 3, 4, 5, 6, 7 },
-		{	0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 8, 0, RGN_FRAC(1,2)+8, RGN_FRAC(1,2)+0 },
+		new int[] {	0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] {	0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 			8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16,
 			16*16, 17*16, 18*16, 19*16, 20*16, 21*16, 22*16, 23*16,
 			24*16, 25*16, 26*16, 27*16, 28*16, 29*16, 30*16, 31*16 },
 		32*16
-	};
+	);
 	
-	static struct GfxLayout tilelayout3 =
-	{
+	static GfxLayout tilelayout3 = new GfxLayout
+	(
 		8,32,
 		RGN_FRAC(1,3),
 		6,
-		{ 8, 0, RGN_FRAC(1,3)+8, RGN_FRAC(1,3)+0, RGN_FRAC(2,3)+8, RGN_FRAC(2,3)+0 },
-		{	0, 1, 2, 3, 4, 5, 6, 7 },
-		{	0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 8, 0, RGN_FRAC(1,3)+8, RGN_FRAC(1,3)+0, RGN_FRAC(2,3)+8, RGN_FRAC(2,3)+0 },
+		new int[] {	0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] {	0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 			8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16,
 			16*16, 17*16, 18*16, 19*16, 20*16, 21*16, 22*16, 23*16,
 			24*16, 25*16, 26*16, 27*16, 28*16, 29*16, 30*16, 31*16 },
 		32*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo_iqblock[] =
 	{

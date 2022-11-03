@@ -128,29 +128,29 @@ public class tryout
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,	/* 8*8 characters */
 		RGN_FRAC(1,2),
 		2,	/* 2 bits per pixel */
-		{ 0, 4 },	/* the two bitplanes for 4 pixels are packed into one byte */
-		{ 3, 2, 1, 0, RGN_FRAC(1,2)+3, RGN_FRAC(1,2)+2, RGN_FRAC(1,2)+1, RGN_FRAC(1,2)+0 },
-		{ 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 },
+		new int[] { 0, 4 },	/* the two bitplanes for 4 pixels are packed into one byte */
+		new int[] { 3, 2, 1, 0, RGN_FRAC(1,2)+3, RGN_FRAC(1,2)+2, RGN_FRAC(1,2)+1, RGN_FRAC(1,2)+0 },
+		new int[] { 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 },
 		8*8	/* every char takes 8 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(0,3), RGN_FRAC(1,3), RGN_FRAC(2,3) },
-		{ 7, 6, 5, 4, 3, 2, 1, 0,
+		new int[] { RGN_FRAC(0,3), RGN_FRAC(1,3), RGN_FRAC(2,3) },
+		new int[] { 7, 6, 5, 4, 3, 2, 1, 0,
 				16*8+7, 16*8+6, 16*8+5, 16*8+4, 16*8+3, 16*8+2, 16*8+1, 16*8+0 },
-		{ 15*8, 14*8, 13*8, 12*8, 11*8, 10*8, 9*8, 8*8,
+		new int[] { 15*8, 14*8, 13*8, 12*8, 11*8, 10*8, 9*8, 8*8,
 				7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 },
 		32*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

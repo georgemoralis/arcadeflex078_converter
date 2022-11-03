@@ -217,38 +217,38 @@ public class realbrk
 	
 	***************************************************************************/
 	
-	static struct GfxLayout layout_8x8x4 =
-	{
+	static GfxLayout layout_8x8x4 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{	STEP4(0,1)		},
-		{	STEP4(3*4,-4),STEP4(7*4,-4)		},
-		{	STEP8(0,8*4)	},
+		new int[] {	STEP4(0,1)		},
+		new int[] {	STEP4(3*4,-4),STEP4(7*4,-4)		},
+		new int[] {	STEP8(0,8*4)	},
 		8*8*4
-	};
+	);
 	
-	static struct GfxLayout layout_16x16x4 =
-	{
+	static GfxLayout layout_16x16x4 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{	STEP4(0,1)		},
-		{	1*4,0*4,3*4,2*4,5*4,4*4,7*4,6*4,9*4,8*4,11*4,10*4,13*4,12*4,15*4,14*4 },
-		{	STEP16(0,16*4)	},
+		new int[] {	STEP4(0,1)		},
+		new int[] {	1*4,0*4,3*4,2*4,5*4,4*4,7*4,6*4,9*4,8*4,11*4,10*4,13*4,12*4,15*4,14*4 },
+		new int[] {	STEP16(0,16*4)	},
 		16*16*4
-	};
+	);
 	
-	static struct GfxLayout layout_16x16x8 =
-	{
+	static GfxLayout layout_16x16x8 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		8,
-		{	STEP8(0,1)		},
-		{	STEP16(0,8)		},
-		{	STEP16(0,16*8)	},
+		new int[] {	STEP8(0,1)		},
+		new int[] {	STEP16(0,8)		},
+		new int[] {	STEP16(0,16*8)	},
 		16*16*8
-	};
+	);
 	
 	static struct GfxDecodeInfo realbrk_gfxdecodeinfo[] =
 	{

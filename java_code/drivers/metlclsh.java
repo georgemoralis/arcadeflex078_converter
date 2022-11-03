@@ -245,38 +245,38 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
-		{ STEP8(8*8*2,1), STEP8(8*8*0,1) },
-		{ STEP8(8*8*0,8), STEP8(8*8*1,8) },
+		new int[] { RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
+		new int[] { STEP8(8*8*2,1), STEP8(8*8*0,1) },
+		new int[] { STEP8(8*8*0,8), STEP8(8*8*1,8) },
 		16*16
-	};
+	);
 	
-	static struct GfxLayout tilelayout16 =
-	{
+	static GfxLayout tilelayout16 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,4),
 		3,
-		{ RGN_FRAC(2,4), RGN_FRAC(1,4), RGN_FRAC(0,4) },
-		{ STEP8(8*8*0+7,-1), STEP8(8*8*2+7,-1) },
-		{ STEP8(8*8*0,8), STEP8(8*8*1,8) },
+		new int[] { RGN_FRAC(2,4), RGN_FRAC(1,4), RGN_FRAC(0,4) },
+		new int[] { STEP8(8*8*0+7,-1), STEP8(8*8*2+7,-1) },
+		new int[] { STEP8(8*8*0,8), STEP8(8*8*1,8) },
 		16*16
-	};
+	);
 	
-	static struct GfxLayout tilelayout8 =
-	{
+	static GfxLayout tilelayout8 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,2),
 		2,
-		{ 0, 4 },
-		{ STEP4(RGN_FRAC(1,2),1), STEP4(0,1) },
-		{ STEP8(0,8) },
+		new int[] { 0, 4 },
+		new int[] { STEP4(RGN_FRAC(1,2),1), STEP4(0,1) },
+		new int[] { STEP8(0,8) },
 		8*8
-	};
+	);
 	
 	static struct GfxDecodeInfo metlclsh_gfxdecodeinfo[] =
 	{

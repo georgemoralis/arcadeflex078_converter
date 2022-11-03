@@ -525,16 +525,16 @@ public class snowbros
 	
 	/* SnowBros */
 	
-	static struct GfxLayout tilelayout =
-	{
+	static GfxLayout tilelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ STEP8(0,4), STEP8(8*32,4) },
-		{ STEP8(0,32), STEP8(16*32,32) },
+		new int[] { 0, 1, 2, 3 },
+		new int[] { STEP8(0,4), STEP8(8*32,4) },
+		new int[] { STEP8(0,32), STEP8(16*32,32) },
 		32*32
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{
@@ -544,16 +544,16 @@ public class snowbros
 	
 	/* Winter Bobble */
 	
-	static struct GfxLayout tilelayout_wb =
-	{
+	static GfxLayout tilelayout_wb = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ STEP4(3*4,-4), STEP4(7*4,-4), STEP4(11*4,-4), STEP4(15*4,-4) },
-		{ STEP16(0,64) },
+		new int[] { 0, 1, 2, 3 },
+		new int[] { STEP4(3*4,-4), STEP4(7*4,-4), STEP4(11*4,-4), STEP4(15*4,-4) },
+		new int[] { STEP16(0,64) },
 		16*64
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo_wb[] =
 	{
@@ -563,18 +563,18 @@ public class snowbros
 	
 	/* SemiCom */
 	
-	static struct GfxLayout hyperpac_tilelayout =
-	{
+	static GfxLayout hyperpac_tilelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 4, 0, 8*32+4, 8*32+0, 20,16, 8*32+20, 8*32+16,
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 4, 0, 8*32+4, 8*32+0, 20,16, 8*32+20, 8*32+16,
 		  12, 8, 8*32+12, 8*32+8, 28, 24, 8*32+28, 8*32+24 },
-		{ 0*32, 2*32, 1*32, 3*32, 16*32+0*32, 16*32+2*32, 16*32+1*32, 16*32+3*32,
+		new int[] { 0*32, 2*32, 1*32, 3*32, 16*32+0*32, 16*32+2*32, 16*32+1*32, 16*32+3*32,
 		  4*32, 6*32, 5*32, 7*32, 16*32+4*32, 16*32+6*32, 16*32+5*32, 16*32+7*32 },
 		32*32
-	};
+	);
 	
 	static struct GfxDecodeInfo hyperpac_gfxdecodeinfo[] =
 	{

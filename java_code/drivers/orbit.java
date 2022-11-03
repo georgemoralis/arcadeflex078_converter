@@ -231,74 +231,74 @@ public class orbit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout orbit_full_sprite_layout =
-	{
+	static GfxLayout orbit_full_sprite_layout = new GfxLayout
+	(
 		8, 32,    /* width, height */
 		128,      /* total         */
 		1,        /* planes        */
-		{ 0 },    /* plane offsets */
-		{
+		new int[] { 0 },    /* plane offsets */
+		new int[] {
 			0, 1, 2, 3, 4, 5, 6, 7
 		},
-		{
+		new int[] {
 			0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
 			0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78,
 			0x80, 0x88, 0x90, 0x98, 0xA0, 0xA8, 0xB0, 0xB8,
 			0xC0, 0xC8, 0xD0, 0xD8, 0xE0, 0xE8, 0xF0, 0xF8
 		},
 		0x100     /* increment */
-	};
+	);
 	
 	
-	static struct GfxLayout orbit_upper_sprite_layout =
-	{
+	static GfxLayout orbit_upper_sprite_layout = new GfxLayout
+	(
 		8, 16,    /* width, height */
 		128,      /* total         */
 		1,        /* planes        */
-		{ 0 },    /* plane offsets */
-		{
+		new int[] { 0 },    /* plane offsets */
+		new int[] {
 			0, 1, 2, 3, 4, 5, 6, 7
 		},
-		{
+		new int[] {
 			0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
 			0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78
 		},
 		0x100     /* increment */
-	};
+	);
 	
 	
-	static struct GfxLayout orbit_lower_sprite_layout =
-	{
+	static GfxLayout orbit_lower_sprite_layout = new GfxLayout
+	(
 		8, 16,    /* width, height */
 		128,      /* total         */
 		1,        /* planes        */
-		{ 0 },    /* plane offsets */
-		{
+		new int[] { 0 },    /* plane offsets */
+		new int[] {
 			0, 1, 2, 3, 4, 5, 6, 7
 		},
-		{
+		new int[] {
 			0x80, 0x88, 0x90, 0x98, 0xA0, 0xA8, 0xB0, 0xB8,
 			0xC0, 0xC8, 0xD0, 0xD8, 0xE0, 0xE8, 0xF0, 0xF8
 		},
 		0x100     /* increment */
-	};
+	);
 	
 	
-	static struct GfxLayout orbit_tile_layout =
-	{
+	static GfxLayout orbit_tile_layout = new GfxLayout
+	(
 		16, 16,   /* width, height */
 		64,       /* total         */
 		1,        /* planes        */
-		{ 0 },    /* plane offsets */
-		{
+		new int[] { 0 },    /* plane offsets */
+		new int[] {
 			0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7
 		},
-		{
+		new int[] {
 			0x00, 0x00, 0x08, 0x08, 0x10, 0x10, 0x18, 0x18,
 			0x20, 0x20, 0x28, 0x28, 0x30, 0x30, 0x38, 0x38
 		},
 		0x40      /* increment */
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo orbit_gfx_decode_info[] =

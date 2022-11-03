@@ -89,16 +89,16 @@ public class news
 	
 	
 	
-	static struct GfxLayout tiles8x8_layout =
-	{
+	static GfxLayout tiles8x8_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 0, 4, 8, 12, 16, 20, 24, 28 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 0, 4, 8, 12, 16, 20, 24, 28 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

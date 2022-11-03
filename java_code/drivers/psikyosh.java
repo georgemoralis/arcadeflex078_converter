@@ -140,27 +140,27 @@ public class psikyosh
 	
 	data32_t *psikyosh_bgram, *psikyosh_zoomram, *psikyosh_vidregs, *psh_ram;
 	
-	static struct GfxLayout layout_16x16x4 =
-	{
+	static GfxLayout layout_16x16x4 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{STEP4(0,1)},
-		{STEP16(0,4)},
-		{STEP16(0,16*4)},
+		new int[] {STEP4(0,1)},
+		new int[] {STEP16(0,4)},
+		new int[] {STEP16(0,16*4)},
 		16*16*4
-	};
+	);
 	
-	static struct GfxLayout layout_16x16x8 =
-	{
+	static GfxLayout layout_16x16x8 = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		8,
-		{STEP8(0,1)},
-		{STEP16(0,8)},
-		{STEP16(0,16*8)},
+		new int[] {STEP8(0,1)},
+		new int[] {STEP16(0,8)},
+		new int[] {STEP16(0,16*8)},
 		16*16*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

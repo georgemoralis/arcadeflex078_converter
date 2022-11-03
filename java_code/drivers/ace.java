@@ -259,60 +259,60 @@ public class ace
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		16,16,	/* 16*16 chars */
 		8,	/* 8 characters */
 		1,		/* 1 bit per pixel */
-		{ 4 },	/* character rom is 512x4 bits (3622 type)*/
-		{ 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3, 16+0, 16+1, 16+2, 16+3, 24+0, 24+1, 24+2, 24+3 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32, 8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32 },
+		new int[] { 4 },	/* character rom is 512x4 bits (3622 type)*/
+		new int[] { 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3, 16+0, 16+1, 16+2, 16+3, 24+0, 24+1, 24+2, 24+3 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32, 8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32 },
 		64*8	/* every char takes 64 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout charlayout0 =
-	{
+	static GfxLayout charlayout0 = new GfxLayout
+	(
 		16,16,	/* 16*16 chars */
 		1,	/* 1 characters */
 		1,		/* 1 bit per pixel */
-		{ 7 },	/* bit 0 in character ram */
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
-		{ 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128, 8*128, 9*128, 10*128, 11*128, 12*128, 13*128, 14*128, 15*128 },
+		new int[] { 7 },	/* bit 0 in character ram */
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
+		new int[] { 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128, 8*128, 9*128, 10*128, 11*128, 12*128, 13*128, 14*128, 15*128 },
 		256*8	/* every char takes 256 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout charlayout1 =
-	{
+	static GfxLayout charlayout1 = new GfxLayout
+	(
 		16,16,	/* 16*16 chars */
 		1,	/* 1 characters */
 		1,		/* 1 bit per pixel */
-		{ 6 },	/* bit 1 in character ram */
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
-		{ 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128, 8*128, 9*128, 10*128, 11*128, 12*128, 13*128, 14*128, 15*128 },
+		new int[] { 6 },	/* bit 1 in character ram */
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
+		new int[] { 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128, 8*128, 9*128, 10*128, 11*128, 12*128, 13*128, 14*128, 15*128 },
 		256*8	/* every char takes 256 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout charlayout2 =
-	{
+	static GfxLayout charlayout2 = new GfxLayout
+	(
 		16,16,	/* 16*16 chars */
 		1,	/* 1 characters */
 		1,		/* 1 bit per pixel */
-		{ 5 },	/* bit 2 in character ram */
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
-		{ 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128, 8*128, 9*128, 10*128, 11*128, 12*128, 13*128, 14*128, 15*128 },
+		new int[] { 5 },	/* bit 2 in character ram */
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
+		new int[] { 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128, 8*128, 9*128, 10*128, 11*128, 12*128, 13*128, 14*128, 15*128 },
 		256*8	/* every char takes 256 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout scorelayout =
-	{
+	static GfxLayout scorelayout = new GfxLayout
+	(
 		16,16,	/* 16*16 chars */
 		8,	/* 8 characters */
 		1,		/* 1 bit per pixel */
-		{ 0 },	/*  */
-		{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16, 8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
+		new int[] { 0 },	/*  */
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16, 8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		32*8	/* every char takes 32 consecutive bytes */
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

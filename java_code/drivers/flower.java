@@ -219,27 +219,27 @@ public class flower
 	
 	
 	
-	static struct GfxLayout flower_charlayout =
-	{
+	static GfxLayout flower_charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		2,
-		{ 0, 4 },
-		{ STEP4(0,1), STEP4(8,1) },
-		{ STEP8(0,16) },
+		new int[] { 0, 4 },
+		new int[] { STEP4(0,1), STEP4(8,1) },
+		new int[] { STEP8(0,16) },
 		8*8*2
-	};
+	);
 	
-	static struct GfxLayout flower_spritelayout =
-	{
+	static GfxLayout flower_spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		4,
-		{ 0, 4, RGN_FRAC(1,2), RGN_FRAC(1,2)+4 },
-		{ STEP4(0,1), STEP4(8,1), STEP4(8*8*2,1), STEP4(8*8*2+8,1) },
-		{ STEP8(0,16), STEP8(8*8*4,16) },
+		new int[] { 0, 4, RGN_FRAC(1,2), RGN_FRAC(1,2)+4 },
+		new int[] { STEP4(0,1), STEP4(8,1), STEP4(8*8*2,1), STEP4(8*8*2+8,1) },
+		new int[] { STEP8(0,16), STEP8(8*8*4,16) },
 		16*16*2
-	};
+	);
 	
 	static struct GfxDecodeInfo flower_gfxdecodeinfo[] =
 	{

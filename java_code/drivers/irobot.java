@@ -264,16 +264,16 @@ public class irobot
 	 *
 	 *************************************/
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,
 	    64,
 	    1,
-	    { 0 },
-	    { 4, 5, 6, 7, 12, 13, 14, 15},
-	    { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16},
+	    new int[] { 0 },
+	    new int[] { 4, 5, 6, 7, 12, 13, 14, 15},
+	    new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16},
 	    16*8
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

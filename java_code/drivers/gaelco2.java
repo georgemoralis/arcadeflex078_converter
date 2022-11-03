@@ -46,16 +46,16 @@ public class gaelco2
 	WRITE16_HANDLER( gaelco2_palette_w );
 	
 	
-	#define TILELAYOUT16(NUM) static struct GfxLayout tilelayout16_##NUM =				\
-	{																					\
+	#define TILELAYOUT16(NUM) static GfxLayout tilelayout16_##NUM = new GfxLayout\
+	(																					\
 		16,16,											/* 16x16 tiles */				\
 		NUM/32,											/* number of tiles */			\
 		5,												/* 5 bpp */						\
-		{ 4*NUM*8, 3*NUM*8, 2*NUM*8, 1*NUM*8, 0*NUM*8 },								\
-		{ 0,1,2,3,4,5,6,7, 16*8+0,16*8+1,16*8+2,16*8+3,16*8+4,16*8+5,16*8+6,16*8+7 },	\
-		{ 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8, 8*8,9*8,10*8,11*8,12*8,13*8,14*8,15*8 },		\
+		new int[] { 4*NUM*8, 3*NUM*8, 2*NUM*8, 1*NUM*8, 0*NUM*8 },								\
+		new int[] { 0,1,2,3,4,5,6,7, 16*8+0,16*8+1,16*8+2,16*8+3,16*8+4,16*8+5,16*8+6,16*8+7 },	\
+		new int[] { 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8, 8*8,9*8,10*8,11*8,12*8,13*8,14*8,15*8 },		\
 		32*8																			\
-	}
+	)
 	
 	#define GFXDECODEINFO(NUM,ENTRIES) static struct GfxDecodeInfo gfxdecodeinfo_##NUM[] =	\
 	{																						\

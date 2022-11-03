@@ -289,39 +289,39 @@ public class videopin
 	 *
 	 *************************************/
 	
-	static struct GfxLayout tile_layout =
-	{
+	static GfxLayout tile_layout = new GfxLayout
+	(
 		8, 8,
 		64,
 		1,
-		{ 0 },
-		{
+		new int[] { 0 },
+		new int[] {
 			0, 1, 2, 3, 4, 5, 6, 7
 		},
-		{
+		new int[] {
 			0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38
 		},
 		0x40
-	};
+	);
 	
 	
-	static struct GfxLayout ball_layout =
-	{
+	static GfxLayout ball_layout = new GfxLayout
+	(
 		16, 16,
 		1,
 		1,
-		{ 0 },
-		{
+		new int[] { 0 },
+		new int[] {
 			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
 			0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87
 	
 		},
-		{
+		new int[] {
 			0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
 			0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78
 		},
 		0x100
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo videopin_gfxdecodeinfo[] =

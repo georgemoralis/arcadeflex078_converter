@@ -55,17 +55,17 @@ public class bwing
 	//****************************************************************************
 	// Exports
 	
-	struct GfxLayout bwing_tilelayout =
-	{
+	static GfxLayout bwing_tilelayout = new GfxLayout
+	(
 		16, 16,
 		BW_NTILES,
 		3,
-		{ 0x4000*8, 0x2000*8, 0 },
-		{ 7, 6, 5, 4, 3, 2, 1, 0, 128+7, 128+6, 128+5, 128+4, 128+3, 128+2, 128+1, 128+0 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0x4000*8, 0x2000*8, 0 },
+		new int[] { 7, 6, 5, 4, 3, 2, 1, 0, 128+7, 128+6, 128+5, 128+4, 128+3, 128+2, 128+1, 128+0 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		  8*8, 9*8,10*8,11*8,12*8,13*8,14*8,15*8 },
 		32*8
-	};
+	);
 	
 	
 	public static WriteHandlerPtr bwing_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data) { buffered_spriteram[offset] = data; } };

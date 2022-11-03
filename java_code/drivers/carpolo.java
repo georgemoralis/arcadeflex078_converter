@@ -191,43 +191,43 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,4),
 		1,
-		{ 0 },
-		{ STEP4(3*0x100*8+4,1),
+		new int[] { 0 },
+		new int[] { STEP4(3*0x100*8+4,1),
 		  STEP4(2*0x100*8+4,1),
 		  STEP4(1*0x100*8+4,1),
 		  STEP4(0*0x100*8+4,1) },
-		{ STEP16(0,8) },
+		new int[] { STEP16(0,8) },
 		16*8
-	};
+	);
 	
-	static struct GfxLayout goallayout =
-	{
+	static GfxLayout goallayout = new GfxLayout
+	(
 		8,32,
 		1,
 		4,
-		{ 4, 5, 6, 7 },
-		{ STEP8(0,8) },
-		{ STEP8(192*8,8*8),
+		new int[] { 4, 5, 6, 7 },
+		new int[] { STEP8(0,8) },
+		new int[] { STEP8(192*8,8*8),
 		  STEP16( 0*8,8*8),
 		  STEP8(128*8,8*8) },
 		0
-	};
+	);
 	
-	static struct GfxLayout alphalayout =
-	{
+	static GfxLayout alphalayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		1,
-		{ 0 },
-		{ STEP8(0,1) },
-		{ STEP8(0,8) },
+		new int[] { 0 },
+		new int[] { STEP8(0,1) },
+		new int[] { STEP8(0,8) },
 		8*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

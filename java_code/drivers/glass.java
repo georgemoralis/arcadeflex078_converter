@@ -44,22 +44,22 @@ public class glass
 	} };
 	
 	
-	static struct GfxLayout glass_tilelayout16 =
-	{
+	static GfxLayout glass_tilelayout16 = new GfxLayout
+	(
 		16,16,									/* 16x16 tiles */
 		0x100000/32,							/* number of tiles */
 		4,										/* 4 bpp */
-		{ 3*0x100000*8, 2*0x100000*8, 1*0x100000*8, 0*0x100000*8 },
-		{	
+		new int[] { 3*0x100000*8, 2*0x100000*8, 1*0x100000*8, 0*0x100000*8 },
+		new int[] {	
 			0, 1, 2, 3, 4, 5, 6, 7, 
 			16*8+0, 16*8+1, 16*8+2, 16*8+3, 16*8+4, 16*8+5, 16*8+6, 16*8+7
 		},
-		{ 
+		new int[] { 
 			0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 
 			8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 
 		},
 		32*8
-	};
+	);
 	
 	static struct GfxDecodeInfo glass_gfxdecodeinfo[] =
 	{

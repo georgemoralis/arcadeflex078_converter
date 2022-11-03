@@ -216,16 +216,16 @@ public class usrintrf
 		0x80,0xf0,0x88,0x88,0xf0,0x80,0x80,0x80,0x50,0x00,0x88,0x88,0x88,0x78,0x08,0x70
 	};
 	
-	static const struct GfxLayout uifontlayout =
-	{
+	static const static GfxLayout uifontlayout = new GfxLayout
+	(
 		6,8,
 		256,
 		1,
-		{ 0 },
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	};
+	);
 	
 	
 	
@@ -378,7 +378,7 @@ public class usrintrf
 	
 	struct GfxElement *builduifont(void)
 	{
-		struct GfxLayout layout = uifontlayout;
+		static GfxLayout layout = new GfxLayoutuifontlayout;
 		UINT32 tempoffset[MAX_GFX_SIZE];
 		struct GfxElement *font;
 		int temp, i;
@@ -396,12 +396,12 @@ public class usrintrf
 	
 		/* pixel double horizontally */
 		if (uirotwidth >= 420)
-		{
+		(
 			memcpy(tempoffset, layout.xoffset, sizeof(tempoffset));
 			for (i = 0; i < layout.width; i++)
 				layout.xoffset[i*2+0] = layout.xoffset[i*2+1] = tempoffset[i];
 			layout.width *= 2;
-		}
+		)
 	
 		/* pixel double vertically */
 		if (uirotheight >= 420)

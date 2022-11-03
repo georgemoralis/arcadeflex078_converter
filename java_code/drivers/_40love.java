@@ -1115,31 +1115,31 @@ public class _40love
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout char_layout =
-	{
+	static GfxLayout char_layout = new GfxLayout
+	(
 		8,8,
 		0x400,
 		4,
-		{ 2*0x2000*8+0, 2*0x2000*8+4, 0,4 },
-		{ 3,2,1,0, 11,10,9,8 },
-		{ 0*8,2*8,4*8,6*8,8*8,10*8,12*8,14*8 },
+		new int[] { 2*0x2000*8+0, 2*0x2000*8+4, 0,4 },
+		new int[] { 3,2,1,0, 11,10,9,8 },
+		new int[] { 0*8,2*8,4*8,6*8,8*8,10*8,12*8,14*8 },
 		16*8
-	};
+	);
 	
-	static struct GfxLayout sprite_layout =
-	{
+	static GfxLayout sprite_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		4,
-		{ RGN_FRAC(1,2)+0, RGN_FRAC(1,2)+4, 0,4 },
+		new int[] { RGN_FRAC(1,2)+0, RGN_FRAC(1,2)+4, 0,4 },
 	
-		{ 3,2,1,0, 11,10,9,8,
+		new int[] { 3,2,1,0, 11,10,9,8,
 			16*8+3, 16*8+2, 16*8+1, 16*8+0, 16*8+11, 16*8+10, 16*8+9, 16*8+8 },
 	
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 				16*16, 17*16, 18*16, 19*16, 20*16, 21*16, 22*16, 23*16 },
 		64*8
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

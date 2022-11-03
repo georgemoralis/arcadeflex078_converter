@@ -220,28 +220,28 @@ public class avengrgs
 	
 	/******************************************************************************/
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		4,
-		{ RGN_FRAC(1,2)+16, RGN_FRAC(1,2)+0, 16, 0 },
-		{ 15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
+		new int[] { RGN_FRAC(1,2)+16, RGN_FRAC(1,2)+0, 16, 0 },
+		new int[] { 15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 				8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32 },
 		16*32
-	};
+	);
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,
 		255, //todo
 		4,
-		{ RGN_FRAC(1,2)+16, RGN_FRAC(1,2)+0, 16, 0 },
-		{ 15,13,11,9,7,5,3,1 },
-		{ 0*32, 2*32, 4*32, 6*32, 8*32, 10*32, 12*32, 14*32 },
+		new int[] { RGN_FRAC(1,2)+16, RGN_FRAC(1,2)+0, 16, 0 },
+		new int[] { 15,13,11,9,7,5,3,1 },
+		new int[] { 0*32, 2*32, 4*32, 6*32, 8*32, 10*32, 12*32, 14*32 },
 		16*32
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

@@ -327,27 +327,27 @@ public class cshooter
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout cshooter_charlayout =
-	{
+	static GfxLayout cshooter_charlayout = new GfxLayout
+	(
 		8,8,		/* 8*8 characters */
 		RGN_FRAC(1,1),		/* 512 characters */
 		2,			/* 4 bits per pixel */
-		{ 0,4 },
-		{ 8,9,10,11,0,1,2,3 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0,4 },
+		new int[] { 8,9,10,11,0,1,2,3 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		128*2
-	};
+	);
 	
-	static struct GfxLayout cshooter_unknownlayout =
-	{
+	static GfxLayout cshooter_unknownlayout = new GfxLayout
+	(
 		8,8,		/* 8*8 characters */
 		RGN_FRAC(1,1),		/* 512 characters */
 		4,			/* 4 bits per pixel */
-		{ 0,8,16,24 },
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0,8,16,24 },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

@@ -150,30 +150,30 @@ public class xorworld
 		{ -1 }
 	};
 	
-	static struct GfxLayout xorworld_tilelayout =
-	{
+	static GfxLayout xorworld_tilelayout = new GfxLayout
+	(
 		8,8,															/* 8x8 tiles */
 		0x10000/16,														/* 4096 tiles */
 		4,																/* 4 bpp */
-		{ 1*0x10000*8, 1*0x10000*8+4, 0, 4 },							/* plane offsets */
-		{ 0*8, 0*8+1, 0*8+2, 0*8+3, 1*8+0, 1*8+1, 1*8+2, 1*8+3 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 1*0x10000*8, 1*0x10000*8+4, 0, 4 },							/* plane offsets */
+		new int[] { 0*8, 0*8+1, 0*8+2, 0*8+3, 1*8+0, 1*8+1, 1*8+2, 1*8+3 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		16*8
-	};
+	);
 	
 	
-	static struct GfxLayout xorworld_spritelayout =
-	{
+	static GfxLayout xorworld_spritelayout = new GfxLayout
+	(
 		16,16,																/* 16x16 sprites */
 		0x10000/64,															/* 1024 sprites */
 		4,																	/* 4 bpp */
-		{ 1*0x10000*8, 1*0x10000*8+4, 0, 4 },								/* plane offsets */
-		{ 0*8, 0*8+1, 0*8+2, 0*8+3, 1*8+0, 1*8+1, 1*8+2, 1*8+3,
+		new int[] { 1*0x10000*8, 1*0x10000*8+4, 0, 4 },								/* plane offsets */
+		new int[] { 0*8, 0*8+1, 0*8+2, 0*8+3, 1*8+0, 1*8+1, 1*8+2, 1*8+3,
 			32*8+0, 32*8+1, 32*8+2, 32*8+3, 33*8+0, 33*8+1, 33*8+2, 33*8+3},
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 			8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		64*8
-	};
+	);
 	
 	static struct GfxDecodeInfo xorworld_gfxdecodeinfo[] =
 	{

@@ -30,13 +30,13 @@ public class portrait
 	int portrait_scrollx_hi, portrait_scrollx_lo;
 	
 	
-	static struct GfxLayout tile_layout =
-	{
+	static GfxLayout tile_layout = new GfxLayout
+	(
 		16,16, /* tile width, height   */
 		1024,  /* number of characters  */
 		3,     /* bits per pixel */
-		{ 0, 0x4000*8, 0x8000*8 }, /* bitplane offsets */
-		{
+		new int[] { 0, 0x4000*8, 0x8000*8 }, /* bitplane offsets */
+		new int[] {
 			RGN_FRAC(1,2)+7,
 			RGN_FRAC(1,2)+6,
 			RGN_FRAC(1,2)+5,
@@ -47,9 +47,9 @@ public class portrait
 			RGN_FRAC(1,2)+0,
 			0, 1, 2, 3, 4, 5, 6, 7
 		},
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 8*9, 8*10, 8*11, 8*12, 8*13, 8*14, 8*15 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 8*9, 8*10, 8*11, 8*12, 8*13, 8*14, 8*15 },
 		8*16 /* character offset */
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

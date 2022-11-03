@@ -69,18 +69,18 @@ public class gradius3
 	public static VideoStartHandlerPtr video_start_gradius3  = new VideoStartHandlerPtr() { public int handler()
 	{
 		int i;
-		static struct GfxLayout spritelayout =
-		{
+		static GfxLayout spritelayout = new GfxLayout
+		(
 			8,8,
 			TOTAL_SPRITES,
 			4,
-			{ 0, 1, 2, 3 },
-			{ 2*4, 3*4, 0*4, 1*4, 6*4, 7*4, 4*4, 5*4,
+			new int[] { 0, 1, 2, 3 },
+			new int[] { 2*4, 3*4, 0*4, 1*4, 6*4, 7*4, 4*4, 5*4,
 					32*8+2*4, 32*8+3*4, 32*8+0*4, 32*8+1*4, 32*8+6*4, 32*8+7*4, 32*8+4*4, 32*8+5*4 },
-			{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
+			new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 					64*8+0*32, 64*8+1*32, 64*8+2*32, 64*8+3*32, 64*8+4*32, 64*8+5*32, 64*8+6*32, 64*8+7*32 },
 			128*8
-		};
+		);
 	
 	
 		layer_colorbase[0] = 0;
@@ -103,7 +103,7 @@ public class gradius3
 		memset(dirtychar,1,TOTAL_CHARS);
 	
 		return 0;
-	} };
+	}
 	
 	
 	
@@ -146,20 +146,20 @@ public class gradius3
 	
 	public static VideoUpdateHandlerPtr video_update_gradius3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		static struct GfxLayout charlayout =
-		{
+		static GfxLayout charlayout = new GfxLayout
+		(
 			8,8,
 			TOTAL_CHARS,
 			4,
-			{ 0, 1, 2, 3 },
+			new int[] { 0, 1, 2, 3 },
 	#ifdef LSB_FIRST
-			{ 2*4, 3*4, 0*4, 1*4, 6*4, 7*4, 4*4, 5*4 },
+			new int[] { 2*4, 3*4, 0*4, 1*4, 6*4, 7*4, 4*4, 5*4 },
 	#else
-			{ 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },
+			new int[] { 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },
 	#endif
-			{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+			new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 			32*8
-		};
+		);
 	
 		/* TODO: this kludge enforces the char banks. For some reason, they don't work otherwise. */
 		K052109_w(0x1d80,0x10);
@@ -200,5 +200,5 @@ public class gradius3
 		}
 	
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
-	} };
+	}
 }

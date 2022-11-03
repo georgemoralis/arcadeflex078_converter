@@ -207,18 +207,18 @@ public class wrally
 	
 	
 	
-	static struct GfxLayout wrally_tilelayout16 =
-	{
+	static GfxLayout wrally_tilelayout16 = new GfxLayout
+	(
 		16,16,									/* 16x16 tiles */
 		RGN_FRAC(1,2),							/* number of tiles */
 		4,										/* 4 bpp */
-		{ RGN_FRAC(1,2)+8, RGN_FRAC(1,2)+0, 8, 0 },
-		{ 0, 1, 2, 3, 4, 5, 6, 7,
+		new int[] { RGN_FRAC(1,2)+8, RGN_FRAC(1,2)+0, 8, 0 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
 			16*16+0, 16*16+1, 16*16+2, 16*16+3, 16*16+4, 16*16+5, 16*16+6, 16*16+7 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 		  8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16, },
 		64*8
-	};
+	);
 	
 	static struct GfxDecodeInfo wrally_gfxdecodeinfo[] =
 	{

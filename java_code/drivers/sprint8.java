@@ -482,55 +482,55 @@ public class sprint8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout tile_layout_1 =
-	{
+	static GfxLayout tile_layout_1 = new GfxLayout
+	(
 		16, 8,
 		64,
 		1,
-		{ 0 },
-		{
+		new int[] { 0 },
+		new int[] {
 			7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1, 0, 0
 		},
-		{
+		new int[] {
 			0x000, 0x200, 0x400, 0x600, 0x800, 0xa00, 0xc00, 0xe00
 		},
 		8
-	};
+	);
 	
 	
-	static struct GfxLayout tile_layout_2 =
-	{
+	static GfxLayout tile_layout_2 = new GfxLayout
+	(
 		16, 8,
 		64,
 		1,
-		{ 0 },
-		{
+		new int[] { 0 },
+		new int[] {
 			0x000, 0x000, 0x200, 0x200, 0x400, 0x400, 0x600, 0x600,
 			0x800, 0x800, 0xa00, 0xa00, 0xc00, 0xc00, 0xe00, 0xe00
 	
 		},
-		{
+		new int[] {
 			0, 1, 2, 3, 4, 5, 6, 7
 		},
 		8
-	};
+	);
 	
 	
-	static struct GfxLayout car_layout =
-	{
+	static GfxLayout car_layout = new GfxLayout
+	(
 		16, 8,
 		8,
 		1,
-		{ 0 },
-		{
+		new int[] { 0 },
+		new int[] {
 			0x07, 0x06, 0x05, 0x04, 0x0f, 0x0e, 0x0d, 0x0c,
 			0x17, 0x16, 0x15, 0x14, 0x1f, 0x1e, 0x1d, 0x1c
 		},
-		{
+		new int[] {
 			0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0
 		},
 		0x100
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

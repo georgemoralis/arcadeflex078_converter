@@ -318,40 +318,40 @@ public class tankbust
 		PORT_DIPSETTING(	0x00, "4" );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		32,32,	/* 32*32 pixels */
 		64,		/* 64 sprites */
 		4,		/* 4 bits per pixel */
-		{ 0, 8192*8*1, 8192*8*2, 8192*8*3 },
-		{ 0, 1, 2, 3, 4, 5, 6, 7,
+		new int[] { 0, 8192*8*1, 8192*8*2, 8192*8*3 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
 			8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7,
 			32*8+0, 32*8+1, 32*8+2, 32*8+3, 32*8+4, 32*8+5, 32*8+6, 32*8+7,
 			40*8+0, 40*8+1, 40*8+2, 40*8+3, 40*8+4, 40*8+5, 40*8+6, 40*8+7 },
-		{ 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8,
+		new int[] { 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8,
 			23*8, 22*8, 21*8, 20*8, 19*8, 18*8, 17*8, 16*8,
 			71*8, 70*8, 69*8, 68*8, 67*8, 66*8, 65*8, 64*8,
 			87*8, 86*8, 85*8, 84*8, 83*8, 82*8, 81*8, 80*8 },
 		128*8	/* every sprite takes 128 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,	/* 8*8 pixels */
 		2048,	/* 2048 characters */
 		3,		/* 3 bits per pixel */
-		{ 0, 16384*8*1, 16384*8*2 },
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 },
+		new int[] { 0, 16384*8*1, 16384*8*2 },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 },
 		8*8		/* every char takes 8 consecutive bytes */
-	};
+	);
 	
-	static struct GfxLayout charlayout2 =
-	{
+	static GfxLayout charlayout2 = new GfxLayout
+	(
 		8,8,	/* 8*8 pixels */
 		256,	/* 256 characters */
 		1,		/* 1 bit per pixel - the data repeats 4 times within one ROM */
-		{ 0 }, /* , 2048*8*1, 2048*8*2, 2048*8*3 },*/
+		new int[] { 0 }, /* , 2048*8*1, 2048*8*2, 2048*8*3 ),*/
 		{ 0, 1, 2, 3, 4, 5, 6, 7 },
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8		/* every char takes 8 consecutive bytes */

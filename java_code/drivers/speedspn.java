@@ -272,29 +272,29 @@ public class speedspn
 	
 	/*** GFX DECODE **************************************************************/
 	
-	static struct GfxLayout speedspn_charlayout =
-	{
+	static GfxLayout speedspn_charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,4),
 		4,
-		{ RGN_FRAC(2,4), RGN_FRAC(3,4), RGN_FRAC(0,4), RGN_FRAC(1,4) },
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 },
+		new int[] { RGN_FRAC(2,4), RGN_FRAC(3,4), RGN_FRAC(0,4), RGN_FRAC(1,4) },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 },
 		8*8
-	};
+	);
 	
-	static struct GfxLayout speedspn_spritelayout =
-	{
+	static GfxLayout speedspn_spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		4,
-		{ 4, 0, RGN_FRAC(1,2)+4, RGN_FRAC(1,2)+0 },
-		{ 16*16+11, 16*16+10, 16*16+9, 16*16+8, 16*16+3, 16*16+2, 16*16+1, 16*16+0,
+		new int[] { 4, 0, RGN_FRAC(1,2)+4, RGN_FRAC(1,2)+0 },
+		new int[] { 16*16+11, 16*16+10, 16*16+9, 16*16+8, 16*16+3, 16*16+2, 16*16+1, 16*16+0,
 		        11,       10,       9,       8,       3,       2,       1,       0  },
-		{ 8*16+7*16, 8*16+6*16, 8*16+5*16, 8*16+4*16, 8*16+3*16, 8*16+2*16, 8*16+1*16, 8*16+0*16,
+		new int[] { 8*16+7*16, 8*16+6*16, 8*16+5*16, 8*16+4*16, 8*16+3*16, 8*16+2*16, 8*16+1*16, 8*16+0*16,
 		       7*16,      6*16,      5*16,      4*16,      3*16,      2*16,      1*16,      0*16  },
 		32*16
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

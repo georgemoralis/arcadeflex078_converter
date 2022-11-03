@@ -899,48 +899,48 @@ public class tsamurai
 	
 	
 	
-	static struct GfxLayout char_layout =
-	{
+	static GfxLayout char_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
-		{ 0,1,2,3, 4,5,6,7 },
-		{ 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
+		new int[] { RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
+		new int[] { 0,1,2,3, 4,5,6,7 },
+		new int[] { 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
 		8*8
-	};
+	);
 	
-	static struct GfxLayout sprite_layout =
-	{
+	static GfxLayout sprite_layout = new GfxLayout
+	(
 		32,32,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
-		{
+		new int[] { RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
+		new int[] {
 			0,1,2,3,4,5,6,7,
 			64+0,64+1,64+2,64+3,64+4,64+5,64+6,64+7,
 			128+0,128+1,128+2,128+3,128+4,128+5,128+6,128+7,
 			64*3+0,64*3+1,64*3+2,64*3+3,64*3+4,64*3+5,64*3+6,64*3+7
 		},
-		{
+		new int[] {
 			0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8,
 			1*256+0*8,1*256+1*8,1*256+2*8,1*256+3*8,1*256+4*8,1*256+5*8,1*256+6*8,1*256+7*8,
 			2*256+0*8,2*256+1*8,2*256+2*8,2*256+3*8,2*256+4*8,2*256+5*8,2*256+6*8,2*256+7*8,
 			3*256+0*8,3*256+1*8,3*256+2*8,3*256+3*8,3*256+4*8,3*256+5*8,3*256+6*8,3*256+7*8
 		},
 		4*256
-	};
+	);
 	
-	static struct GfxLayout tile_layout =
-	{
+	static GfxLayout tile_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,3),
 		3,
-		{ RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
+		new int[] { RGN_FRAC(2,3), RGN_FRAC(1,3), RGN_FRAC(0,3) },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8,1*8,2*8,3*8,4*8,5*8,6*8,7*8 },
 		8*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

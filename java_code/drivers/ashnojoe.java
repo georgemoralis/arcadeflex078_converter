@@ -267,29 +267,29 @@ public class ashnojoe
 		PORT_DIPSETTING(      0x8000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout tiles8x8_layout =
-	{
+	static GfxLayout tiles8x8_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 0, 4, 8, 12, 16, 20, 24, 28 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 0, 4, 8, 12, 16, 20, 24, 28 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	};
+	);
 	
-	static struct GfxLayout tiles16x16_layout =
-	{
+	static GfxLayout tiles16x16_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
-		{ 0, 1, 2, 3 },
-		{ 0, 4, 8, 12, 16, 20, 24, 28,
+		new int[] { 0, 1, 2, 3 },
+		new int[] { 0, 4, 8, 12, 16, 20, 24, 28,
 		 32,36,40, 44, 48, 52, 56, 60 },
-		{ 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
+		new int[] { 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
 		  8*64, 9*64,10*64,11*64,12*64,13*64,14*64,15*64 },
 		16*64
-	};
+	);
 	
 	static struct GfxDecodeInfo ashnojoe_gfxdecodeinfo[] =
 	{

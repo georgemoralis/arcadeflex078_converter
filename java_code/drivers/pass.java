@@ -244,28 +244,28 @@ public class pass
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct GfxLayout tiles8x8_layout =
-	{
+	static GfxLayout tiles8x8_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1, 2,3, 4,5,6,7 },
-		{ 0, 8, 16, 24, 32, 40, 48, 56 },
-		{ 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64 },
+		new int[] { 0,1, 2,3, 4,5,6,7 },
+		new int[] { 0, 8, 16, 24, 32, 40, 48, 56 },
+		new int[] { 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64 },
 		64*8
-	};
+	);
 	
 	/* for something so simple this took a while to see */
-	static struct GfxLayout tiles4x4_fg_layout =
-	{
+	static GfxLayout tiles4x4_fg_layout = new GfxLayout
+	(
 		4,4,
 		RGN_FRAC(1,1),
 		8,
-		{ 0,1, 2,3, 4,5,6,7 },
-		{ 0, 8, 16, 24 },
-		{ 0*32, 1*32, 2*32, 3*32 },
+		new int[] { 0,1, 2,3, 4,5,6,7 },
+		new int[] { 0, 8, 16, 24 },
+		new int[] { 0*32, 1*32, 2*32, 3*32 },
 		4*32
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

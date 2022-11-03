@@ -791,29 +791,29 @@ public class namcoic
 	#define ROAD_TILE_COUNT_MAX	(0xfa00/0x40) /* 0x3e8 */
 	#define WORDS_PER_ROAD_TILE (0x40/2)
 	
-	static struct GfxLayout RoadTileLayout =
-	{
+	static GfxLayout RoadTileLayout = new GfxLayout
+	(
 		ROAD_TILE_SIZE,
 		ROAD_TILE_SIZE,
 		ROAD_TILE_COUNT_MAX,
 		2,
-		{
+		new int[] {
 	#ifndef LSB_FIRST
 			0,8
 	#else
 			8,0
 	#endif
 		},
-		{/* x offset */
+		new int[] {/* x offset */
 			0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,
 			0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17
 		},
-		{/* y offset */
+		new int[] {/* y offset */
 			0x000,0x020,0x040,0x060,0x080,0x0a0,0x0c0,0x0e0,
 			0x100,0x120,0x140,0x160,0x180,0x1a0,0x1c0,0x1e0
 		},
 		0x200, /* offset to next tile */
-	};
+	);
 	
 	void get_road_info( int tile_index )
 	{

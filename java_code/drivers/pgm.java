@@ -448,33 +448,33 @@ public class pgm
 	/* we can't decode the sprite data like this because it isn't tile based.  the
 	   data decoded by pgm32_charlayout was rearranged at start-up */
 	
-	static struct GfxLayout pgm8_charlayout =
-	{
+	static GfxLayout pgm8_charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 0,1,2,3 },
-		{ 4, 0, 12, 8, 20,16,  28, 24 },
-		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
+		new int[] { 0,1,2,3 },
+		new int[] { 4, 0, 12, 8, 20,16,  28, 24 },
+		new int[] { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		8*32
-	};
+	);
 	
-	static struct GfxLayout pgm32_charlayout =
-	{
+	static GfxLayout pgm32_charlayout = new GfxLayout
+	(
 		32,32,
 		RGN_FRAC(1,1),
 		5,
-		{ 3,4,5,6,7 },
-		{ 0  , 8 ,16 ,24 ,32 ,40 ,48 ,56 ,
+		new int[] { 3,4,5,6,7 },
+		new int[] { 0  , 8 ,16 ,24 ,32 ,40 ,48 ,56 ,
 		  64 ,72 ,80 ,88 ,96 ,104,112,120,
 		  128,136,144,152,160,168,176,184,
 		  192,200,208,216,224,232,240,248 },
-		{ 0*256, 1*256, 2*256, 3*256, 4*256, 5*256, 6*256, 7*256,
+		new int[] { 0*256, 1*256, 2*256, 3*256, 4*256, 5*256, 6*256, 7*256,
 		  8*256, 9*256,10*256,11*256,12*256,13*256,14*256,15*256,
 		 16*256,17*256,18*256,19*256,20*256,21*256,22*256,23*256,
 		 24*256,25*256,26*256,27*256,28*256,29*256,30*256,31*256 },
 		 32*256
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

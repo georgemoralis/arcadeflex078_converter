@@ -592,28 +592,28 @@ public class hyprduel
 	***************************************************************************/
 	
 	/* 8x8x4 tiles */
-	static struct GfxLayout layout_8x8x4 =
-	{
+	static GfxLayout layout_8x8x4 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ GFX_RAW },
-		{ 0 },		/* org displacement */
-		{ 4*8 },	/* line modulo */
+		new int[] { GFX_RAW },
+		new int[] { 0 },		/* org displacement */
+		new int[] { 4*8 },	/* line modulo */
 		32*8		/* char modulo */
-	};
+	);
 	
 	/* 8x8x8 tiles for later games */
-	static struct GfxLayout layout_8x8x8h =
-	{
+	static GfxLayout layout_8x8x8h = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
-		{ GFX_RAW },
-		{ 0 },		/* org displacement */
-		{ 8*8 },	/* line modulo */
+		new int[] { GFX_RAW },
+		new int[] { 0 },		/* org displacement */
+		new int[] { 8*8 },	/* line modulo */
 		32*8		/* char modulo (half char step) */
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo_14220[] =
 	{

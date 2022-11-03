@@ -50,3 +50,4 @@ if(!something) will become if(something==0)
 &spritevisiblearea to spritevisiblearea
 AY8910 r/w handlers
 *color_prom converts to color_prom.read()
+conversion of GfxLayout

@@ -1739,66 +1739,66 @@ public class cave
 	***************************************************************************/
 	
 	/* 8x8x4 tiles */
-	static struct GfxLayout layout_8x8x4 =
-	{
+	static GfxLayout layout_8x8x4 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{STEP4(0,1)},
-		{STEP8(0,4)},
-		{STEP8(0,4*8)},
+		new int[] {STEP4(0,1)},
+		new int[] {STEP8(0,4)},
+		new int[] {STEP8(0,4*8)},
 		8*8*4
-	};
+	);
 	
 	/* 8x8x6 tiles (in a 8x8x8 layout) */
-	static struct GfxLayout layout_8x8x6 =
-	{
+	static GfxLayout layout_8x8x6 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		6,
-		{8,9, 0,1,2,3},
-		{0*4,1*4,4*4,5*4,8*4,9*4,12*4,13*4},
-		{0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64},
+		new int[] {8,9, 0,1,2,3},
+		new int[] {0*4,1*4,4*4,5*4,8*4,9*4,12*4,13*4},
+		new int[] {0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64},
 		8*8*8
-	};
+	);
 	
 	/* 8x8x6 tiles (4 bits in one rom, 2 bits in the other,
 	   unpacked in 2 pages of 4 bits) */
-	static struct GfxLayout layout_8x8x6_2 =
-	{
+	static GfxLayout layout_8x8x6_2 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,2),
 		6,
-		{RGN_FRAC(1,2)+2,RGN_FRAC(1,2)+3, STEP4(0,1)},
-		{STEP8(0,4)},
-		{STEP8(0,4*8)},
+		new int[] {RGN_FRAC(1,2)+2,RGN_FRAC(1,2)+3, STEP4(0,1)},
+		new int[] {STEP8(0,4)},
+		new int[] {STEP8(0,4*8)},
 		8*8*4
-	};
+	);
 	
 	/* 8x8x8 tiles */
-	static struct GfxLayout layout_8x8x8 =
-	{
+	static GfxLayout layout_8x8x8 = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
-		{8,9,10,11, 0,1,2,3},
-		{0*4,1*4,4*4,5*4,8*4,9*4,12*4,13*4},
-		{0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64},
+		new int[] {8,9,10,11, 0,1,2,3},
+		new int[] {0*4,1*4,4*4,5*4,8*4,9*4,12*4,13*4},
+		new int[] {0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64},
 		8*8*8
-	};
+	);
 	
 	#if 0
 	/* 16x16x8 Zooming Sprites - No need to decode them */
-	static struct GfxLayout layout_sprites =
-	{
+	static GfxLayout layout_sprites = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,1),
 		8,
-		{STEP8(0,1)},
-		{STEP16(0,8)},
-		{STEP16(0,16*8)},
+		new int[] {STEP8(0,1)},
+		new int[] {STEP16(0,8)},
+		new int[] {STEP16(0,16*8)},
 		16*16*8
-	};
+	);
 	#endif
 	
 	/***************************************************************************

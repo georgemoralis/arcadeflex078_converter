@@ -173,30 +173,30 @@ public class battlex
 	/*** GFX DECODE **************************************************************/
 	
 	
-	static struct GfxLayout battlex_charlayout =
-	{
+	static GfxLayout battlex_charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
-		{ 0,1,2,3 },
-		{ 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },
-		{ 0*8*4, 1*8*4, 2*8*4, 3*8*4, 4*8*4, 5*8*4, 6*8*4, 7*8*4 },
+		new int[] { 0,1,2,3 },
+		new int[] { 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },
+		new int[] { 0*8*4, 1*8*4, 2*8*4, 3*8*4, 4*8*4, 5*8*4, 6*8*4, 7*8*4 },
 		8*8*4
-	};
+	);
 	
 	
-	static struct GfxLayout battlex_spritelayout =
-	{
+	static GfxLayout battlex_spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,3),
 		3,
-		{ 0,RGN_FRAC(1,3),RGN_FRAC(2,3) },
-		{ 7,6,5,4,3,2,1,0,
+		new int[] { 0,RGN_FRAC(1,3),RGN_FRAC(2,3) },
+		new int[] { 7,6,5,4,3,2,1,0,
 			15,14,13,12,11,10,9,8 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 			8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		16*16
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =

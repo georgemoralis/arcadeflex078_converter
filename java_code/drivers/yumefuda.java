@@ -70,30 +70,30 @@ public class yumefuda
 	
 	
 	
-	static struct GfxLayout charlayout =
-	{
+	static GfxLayout charlayout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,4),
 		4,
-		{ RGN_FRAC(0,4), RGN_FRAC(1,4), RGN_FRAC(2,4), RGN_FRAC(3,4) },
-		{ 0, 1, 2, 3, 4, 5, 6, 7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { RGN_FRAC(0,4), RGN_FRAC(1,4), RGN_FRAC(2,4), RGN_FRAC(3,4) },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	};
+	);
 	
 	/*
-	static struct GfxLayout spritelayout =
-	{
+	static GfxLayout spritelayout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,2),
 		2,
-		{ RGN_FRAC(0,2), RGN_FRAC(1,2) },
-		{ 0, 1, 2, 3, 4, 5, 6, 7,
+		new int[] { RGN_FRAC(0,2), RGN_FRAC(1,2) },
+		new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
 				16*8+0, 16*8+1, 16*8+2, 16*8+3, 16*8+4, 16*8+5, 16*8+6, 16*8+7 },
-		{ 0*16, 2*16, 4*16, 6*16, 8*16, 10*16, 12*16, 14*16,
+		new int[] { 0*16, 2*16, 4*16, 6*16, 8*16, 10*16, 12*16, 14*16,
 				16*16, 18*16, 20*16, 22*16, 24*16, 26*16, 28*16, 30*16 },
 		32*8
-	};
+	);
 	*/
 	struct GfxDecodeInfo yumefuda_gfxdecodeinfo[] =
 	{

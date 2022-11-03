@@ -206,16 +206,16 @@ public class mogura
 	
 	
 	
-	static struct GfxLayout tiles8x8_layout =
-	{
+	static GfxLayout tiles8x8_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,1),
 		2,
-		{ 0, 1 },
-		{ 0, 2, 4, 6, 8, 10, 12, 14 },
-		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
+		new int[] { 0, 1 },
+		new int[] { 0, 2, 4, 6, 8, 10, 12, 14 },
+		new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		16*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{

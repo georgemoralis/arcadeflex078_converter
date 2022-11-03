@@ -838,45 +838,45 @@ public class fitfight
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static struct GfxLayout fof_tile_layout =
-	{
+	static GfxLayout fof_tile_layout = new GfxLayout
+	(
 		8,8,
 		RGN_FRAC(1,4),
 		4,
-		{ 0,RGN_FRAC(1,4),RGN_FRAC(2,4),RGN_FRAC(3,4) },
-		{ 0,1,2,3,4,5,6,7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
+		new int[] { 0,RGN_FRAC(1,4),RGN_FRAC(2,4),RGN_FRAC(3,4) },
+		new int[] { 0,1,2,3,4,5,6,7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	};
+	);
 	
 	
-	static struct GfxLayout fof_sprite_layout =
-	{
+	static GfxLayout fof_sprite_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,4),
 		4,
-		{ 0,RGN_FRAC(1,4),RGN_FRAC(2,4),RGN_FRAC(3,4) },
-		{ 0,1,2,3,4,5,6,7,8*8+0,8*8+1,8*8+2,8*8+3,8*8+4,8*8+5,8*8+6,8*8+7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0,RGN_FRAC(1,4),RGN_FRAC(2,4),RGN_FRAC(3,4) },
+		new int[] { 0,1,2,3,4,5,6,7,8*8+0,8*8+1,8*8+2,8*8+3,8*8+4,8*8+5,8*8+6,8*8+7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		16*8+0*8,16*8+1*8,16*8+2*8,16*8+3*8,16*8+4*8,16*8+5*8,16*8+6*8,16*8+7*8
 	
 		},
 		16*16
-	};
+	);
 	
-	static struct GfxLayout bbprot_sprite_layout =
-	{
+	static GfxLayout bbprot_sprite_layout = new GfxLayout
+	(
 		16,16,
 		RGN_FRAC(1,5),
 		5,
-		{ 0,RGN_FRAC(1,5),RGN_FRAC(2,5),RGN_FRAC(3,5),RGN_FRAC(4,5) },
-		{ 0,1,2,3,4,5,6,7,8*8+0,8*8+1,8*8+2,8*8+3,8*8+4,8*8+5,8*8+6,8*8+7 },
-		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
+		new int[] { 0,RGN_FRAC(1,5),RGN_FRAC(2,5),RGN_FRAC(3,5),RGN_FRAC(4,5) },
+		new int[] { 0,1,2,3,4,5,6,7,8*8+0,8*8+1,8*8+2,8*8+3,8*8+4,8*8+5,8*8+6,8*8+7 },
+		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		16*8+0*8,16*8+1*8,16*8+2*8,16*8+3*8,16*8+4*8,16*8+5*8,16*8+6*8,16*8+7*8
 	
 		},
 		16*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	{
