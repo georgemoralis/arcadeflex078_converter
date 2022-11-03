@@ -290,7 +290,8 @@ public class lemmings
 		{ sound_irq }
 	};
 	
-	static MACHINE_DRIVER_START( lemmings )
+	public static MachineHandlerPtr machine_driver_lemmings = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -320,7 +321,9 @@ public class lemmings
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

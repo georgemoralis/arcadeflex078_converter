@@ -683,7 +683,8 @@ public class equites
 	/******************************************************************************/
 	// Hardware Definitions
 	
-	static MACHINE_DRIVER_START( equites )
+	public static MachineHandlerPtr machine_driver_equites = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000/2) // OSC: 12Mhz
@@ -708,9 +709,12 @@ public class equites
 		/* sound hardware */
 		EQUITES_ADD_SOUNDBOARD7
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( splndrbt )
+	public static MachineHandlerPtr machine_driver_splndrbt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000/2) // OSC: 12Mhz
@@ -736,7 +740,9 @@ public class equites
 		/* sound hardware */
 		EQUITES_ADD_SOUNDBOARD7
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	// Equites ROM Map

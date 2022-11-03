@@ -268,7 +268,8 @@ public class timelimt
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( timelimt )
+	public static MachineHandlerPtr machine_driver_timelimt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)	/* 5.000 MHz */
@@ -302,9 +303,12 @@ public class timelimt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( progress )
+	public static MachineHandlerPtr machine_driver_progress = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(timelimt)
 	
@@ -312,7 +316,9 @@ public class timelimt
 		MDRV_PALETTE_LENGTH(96)
 		MDRV_COLORTABLE_LENGTH(96)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

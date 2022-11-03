@@ -265,7 +265,8 @@ public class quizpani
 	};
 	
 	
-	static MACHINE_DRIVER_START( quizpani )
+	public static MachineHandlerPtr machine_driver_quizpani = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 10000000)
 		MDRV_CPU_MEMORY(quizpani_readmem,quizpani_writemem)
 		MDRV_CPU_VBLANK_INT(irq4_line_hold,1)
@@ -285,7 +286,9 @@ public class quizpani
 		MDRV_VIDEO_UPDATE(quizpani)
 	
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_quizpani = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x340000, REGION_CPU1, 0 ) /* 68000 Code */

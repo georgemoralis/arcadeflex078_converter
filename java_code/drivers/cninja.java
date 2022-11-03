@@ -899,7 +899,8 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	static MACHINE_DRIVER_START( cninja )
+	public static MachineHandlerPtr machine_driver_cninja = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -929,9 +930,12 @@ public class cninja
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( stoneage )
+	public static MachineHandlerPtr machine_driver_stoneage = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -960,9 +964,12 @@ public class cninja
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface2)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( edrandy )
+	public static MachineHandlerPtr machine_driver_edrandy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -992,9 +999,12 @@ public class cninja
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( robocop2 )
+	public static MachineHandlerPtr machine_driver_robocop2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -1025,9 +1035,12 @@ public class cninja
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mutantf )
+	public static MachineHandlerPtr machine_driver_mutantf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -1055,7 +1068,9 @@ public class cninja
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/**********************************************************************************/
 	

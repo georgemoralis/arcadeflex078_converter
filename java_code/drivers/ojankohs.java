@@ -984,7 +984,8 @@ public class ojankohs
 	};
 	
 	
-	static MACHINE_DRIVER_START( ojankohs )
+	public static MachineHandlerPtr machine_driver_ojankohs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 MHz ? */
@@ -1011,9 +1012,12 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankohs_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankohs_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ojankoy )
+	public static MachineHandlerPtr machine_driver_ojankoy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 MHz ? */
@@ -1041,9 +1045,12 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankoy_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankohs_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ccasino )
+	public static MachineHandlerPtr machine_driver_ccasino = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 MHz ? */
@@ -1070,9 +1077,12 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankoy_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankohs_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ojankoc )
+	public static MachineHandlerPtr machine_driver_ojankoc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)			/* 4.00 MHz */
@@ -1098,7 +1108,9 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankoc_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankoc_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_ojankohs = new RomLoadPtr(){ public void handler(){ 

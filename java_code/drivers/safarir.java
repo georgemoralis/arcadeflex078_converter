@@ -256,7 +256,8 @@ public class safarir
 		{ 0	/* N/C */}		/* 24  oneshot_res		 */
 	};
 	
-	static MACHINE_DRIVER_START( safarir )
+	public static MachineHandlerPtr machine_driver_safarir = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 3072000)	/* 3 MHz ? */
@@ -279,7 +280,9 @@ public class safarir
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76477, safarir_sn76477_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

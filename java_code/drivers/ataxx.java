@@ -374,7 +374,8 @@ public class ataxx
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( ataxx )
+	public static MachineHandlerPtr machine_driver_ataxx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("master", Z80, 6000000)
@@ -409,17 +410,22 @@ public class ataxx
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, i186_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( wsf )
+	public static MachineHandlerPtr machine_driver_wsf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ataxx)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

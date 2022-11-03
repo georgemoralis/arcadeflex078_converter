@@ -241,7 +241,8 @@ public class surpratk
 	
 	
 	
-	static MACHINE_DRIVER_START( surpratk )
+	public static MachineHandlerPtr machine_driver_surpratk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* 053248 */
@@ -265,7 +266,9 @@ public class surpratk
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

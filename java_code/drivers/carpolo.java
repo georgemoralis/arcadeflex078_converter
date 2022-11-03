@@ -244,7 +244,8 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( carpolo )
+	public static MachineHandlerPtr machine_driver_carpolo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/12)		/* 940.75 kHz */
@@ -269,7 +270,9 @@ public class carpolo
 		MDRV_VIDEO_START(carpolo)
 		MDRV_VIDEO_UPDATE(carpolo)
 		MDRV_VIDEO_EOF(carpolo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

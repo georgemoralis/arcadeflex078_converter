@@ -1413,7 +1413,8 @@ public class itech32
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( timekill )
+	public static MachineHandlerPtr machine_driver_timekill = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, CLOCK_12MHz)
@@ -1440,10 +1441,13 @@ public class itech32
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(ES5506, es5506_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bloodstm )
+	public static MachineHandlerPtr machine_driver_bloodstm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(timekill)
@@ -1453,30 +1457,39 @@ public class itech32
 	
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(32768)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pairs )
+	public static MachineHandlerPtr machine_driver_pairs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(pairs_readmem,pairs_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( wcbowl )
+	public static MachineHandlerPtr machine_driver_wcbowl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 383, 0, 254)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( drivedge )
+	public static MachineHandlerPtr machine_driver_drivedge = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
@@ -1486,10 +1499,13 @@ public class itech32
 		MDRV_CPU_VBLANK_INT(NULL,0)
 	
 		MDRV_NVRAM_HANDLER(itech020)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sftm )
+	public static MachineHandlerPtr machine_driver_sftm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
@@ -1505,7 +1521,9 @@ public class itech32
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 383, 0, 254)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

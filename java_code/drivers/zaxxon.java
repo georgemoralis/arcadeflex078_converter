@@ -1184,7 +1184,8 @@ public class zaxxon
 	
 	/* Machine Drivers */
 	
-	static MACHINE_DRIVER_START( root )
+	public static MachineHandlerPtr machine_driver_root = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		// basic machine hardware
 		MDRV_CPU_ADD_TAG("main", Z80, 48660000/16)	// 3.04125 MHz
 		MDRV_CPU_MEMORY(readmem, writemem)
@@ -1206,15 +1207,21 @@ public class zaxxon
 		MDRV_PALETTE_INIT(zaxxon)
 		MDRV_VIDEO_START(zaxxon)
 		MDRV_VIDEO_UPDATE(zaxxon)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( zaxxon )
+	public static MachineHandlerPtr machine_driver_zaxxon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_SOUND_ADD(SAMPLES, zaxxon_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( razmataz )
+	public static MachineHandlerPtr machine_driver_razmataz = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1222,9 +1229,12 @@ public class zaxxon
 	
 		MDRV_VIDEO_START(razmataz)
 		MDRV_VIDEO_UPDATE(razmataz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ixion )
+	public static MachineHandlerPtr machine_driver_ixion = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1232,9 +1242,12 @@ public class zaxxon
 	
 		MDRV_VIDEO_START(razmataz)
 		MDRV_VIDEO_UPDATE(razmataz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( congo )
+	public static MachineHandlerPtr machine_driver_congo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1254,9 +1267,12 @@ public class zaxxon
 	
 		MDRV_SOUND_ADD(SN76496, congo_sn76496_interface)
 		MDRV_SOUND_ADD(SAMPLES, congo_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( futspy )
+	public static MachineHandlerPtr machine_driver_futspy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1269,7 +1285,9 @@ public class zaxxon
 		MDRV_VIDEO_UPDATE(futspy)
 	
 		MDRV_SOUND_ADD(SAMPLES, zaxxon_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* ROMs */
 	

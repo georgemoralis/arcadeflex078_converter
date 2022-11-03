@@ -753,7 +753,9 @@ public class cage
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(CUSTOM, cage_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( cage_seattle )
@@ -761,5 +763,7 @@ public class cage
 		
 		MDRV_CPU_MODIFY("cage")
 		MDRV_CPU_MEMORY(readmem_cage_seattle,writemem_cage_seattle)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 }

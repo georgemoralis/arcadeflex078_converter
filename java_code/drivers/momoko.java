@@ -260,7 +260,8 @@ public class momoko
 		{ 0 }
 	};
 	
-	static MACHINE_DRIVER_START( momoko )
+	public static MachineHandlerPtr machine_driver_momoko = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)	/* 5.0MHz */
@@ -286,7 +287,9 @@ public class momoko
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/****************************************************************************/
 	

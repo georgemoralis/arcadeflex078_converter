@@ -3691,7 +3691,8 @@ public class cps1
 	*
 	********************************************************************/
 	
-	static MACHINE_DRIVER_START( cps1 )
+	public static MachineHandlerPtr machine_driver_cps1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 10000000)
@@ -3719,36 +3720,48 @@ public class cps1
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("2151", YM2151, ym2151_interface)
 		MDRV_SOUND_ADD_TAG("okim", OKIM6295, okim6295_interface_7576)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( forgottn )
+	public static MachineHandlerPtr machine_driver_forgottn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cps1)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("okim", OKIM6295, okim6295_interface_6061)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sf2 )
+	public static MachineHandlerPtr machine_driver_sf2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cps1)
 		MDRV_CPU_REPLACE("main", M68000, 12000000)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pang3 )
+	public static MachineHandlerPtr machine_driver_pang3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cps1)
 		MDRV_NVRAM_HANDLER(pang3)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qsound )
+	public static MachineHandlerPtr machine_driver_qsound = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cps1)
@@ -3767,7 +3780,9 @@ public class cps1
 		MDRV_SOUND_REPLACE("2151", QSOUND, qsound_interface)
 		MDRV_SOUND_REMOVE("okim")
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

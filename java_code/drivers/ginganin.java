@@ -372,7 +372,8 @@ public class ginganin
 		{ 0 }	/* I/O write */
 	};
 	
-	static MACHINE_DRIVER_START( ginganin )
+	public static MachineHandlerPtr machine_driver_ginganin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000)	/* ? */
@@ -400,7 +401,9 @@ public class ginganin
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, AY8910_interface)
 		MDRV_SOUND_ADD(Y8950, y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

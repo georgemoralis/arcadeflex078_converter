@@ -244,7 +244,8 @@ public class prehisle
 	
 	/******************************************************************************/
 	
-	static MACHINE_DRIVER_START( prehisle )
+	public static MachineHandlerPtr machine_driver_prehisle = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -272,7 +273,9 @@ public class prehisle
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

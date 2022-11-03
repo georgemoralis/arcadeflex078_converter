@@ -470,7 +470,8 @@ public class blockade
 	
 	
 	
-	static MACHINE_DRIVER_START( blockade )
+	public static MachineHandlerPtr machine_driver_blockade = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 2079000)
@@ -495,24 +496,35 @@ public class blockade
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( comotion )
+	public static MachineHandlerPtr machine_driver_comotion = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(blockade)
 		MDRV_PALETTE_INIT(bw)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( blasto )
+	public static MachineHandlerPtr machine_driver_blasto = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(blockade)
 		MDRV_GFXDECODE(blasto_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(bw)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( hustle )
+	public static MachineHandlerPtr machine_driver_hustle = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(blockade)
 		MDRV_GFXDECODE(blasto_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(yellow)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

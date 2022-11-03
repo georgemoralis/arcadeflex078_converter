@@ -581,7 +581,8 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( mhavoc )
+	public static MachineHandlerPtr machine_driver_mhavoc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("alpha", M6502, MHAVOC_CLOCK_2_5M)		/* 2.5 MHz */
@@ -606,10 +607,13 @@ public class mhavoc
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("pokey", POKEY, pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( alphaone )
+	public static MachineHandlerPtr machine_driver_alphaone = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mhavoc)
@@ -623,7 +627,9 @@ public class mhavoc
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", POKEY, pokey_interface_alphaone)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

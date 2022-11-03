@@ -446,7 +446,8 @@ public class tecmosys
 		{ 0 }	/* irq */
 	};
 	
-	static MACHINE_DRIVER_START( deroon )
+	public static MachineHandlerPtr machine_driver_deroon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 16000000/8) /* the /8 divider is here only for OPL3 testing */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		//MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -474,7 +475,9 @@ public class tecmosys
 		MDRV_SOUND_ADD(YMF262,   ymf262_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YMZ280B,  ymz280b_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_deroon = new RomLoadPtr(){ public void handler(){ 

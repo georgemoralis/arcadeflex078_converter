@@ -358,7 +358,8 @@ public class wc90
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	static MACHINE_DRIVER_START( wc90 )
+	public static MachineHandlerPtr machine_driver_wc90 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6.0 MHz ??? */
@@ -388,13 +389,18 @@ public class wc90
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2608, ym2608_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( wc90t )
+	public static MachineHandlerPtr machine_driver_wc90t = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM( wc90 )
 		MDRV_VIDEO_START( wc90t )
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_wc90 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128k for code */

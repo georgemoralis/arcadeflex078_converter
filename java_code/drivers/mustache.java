@@ -228,7 +228,8 @@ public class mustache
 	} };
 	
 	
-	static MACHINE_DRIVER_START( mustache )
+	public static MachineHandlerPtr machine_driver_mustache = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 18432000/4) /* maybe 12000000/3 - two xtals (18.432 and 12.xxx) near cpu*/
@@ -248,7 +249,9 @@ public class mustache
 		MDRV_PALETTE_INIT(mustache)
 		MDRV_VIDEO_START(mustache)
 		MDRV_VIDEO_UPDATE(mustache)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_mustache = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )

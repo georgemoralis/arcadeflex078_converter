@@ -192,7 +192,8 @@ public class cchasm
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( cchasm )
+	public static MachineHandlerPtr machine_driver_cchasm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,8000000)	/* 8 MHz (from schematics) */
@@ -217,7 +218,9 @@ public class cchasm
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

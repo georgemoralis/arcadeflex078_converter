@@ -325,7 +325,8 @@ public class hyhoo
 	};
 	
 	
-	static MACHINE_DRIVER_START( hyhoo )
+	public static MachineHandlerPtr machine_driver_hyhoo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000/1)	/* 2.50 MHz */
@@ -354,7 +355,9 @@ public class hyhoo
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_hyhoo = new RomLoadPtr(){ public void handler(){ 

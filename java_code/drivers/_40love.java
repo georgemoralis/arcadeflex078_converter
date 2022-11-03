@@ -1176,7 +1176,8 @@ public class _40love
 	
 	/*******************************************************************************/
 	
-	static MACHINE_DRIVER_START( 40love )
+	public static MachineHandlerPtr machine_driver_40love = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2) /* OK */
@@ -1211,9 +1212,12 @@ public class _40love
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( undoukai )
+	public static MachineHandlerPtr machine_driver_undoukai = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)
@@ -1247,7 +1251,9 @@ public class _40love
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*******************************************************************************/
 	

@@ -1074,7 +1074,8 @@ public class outrun
 	} };
 	
 	
-	static MACHINE_DRIVER_START( outrun )
+	public static MachineHandlerPtr machine_driver_outrun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -1110,16 +1111,21 @@ public class outrun
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, sys16_ym2151_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_15k)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( outruna )
+	public static MachineHandlerPtr machine_driver_outruna = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(outrun)
 	
 		MDRV_MACHINE_INIT(outruna)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static data16_t *shared_ram2;
@@ -1318,7 +1324,8 @@ public class outrun
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( shangon )
+	public static MachineHandlerPtr machine_driver_shangon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1353,7 +1360,9 @@ public class outrun
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, sys16_ym2151_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_15k_512)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	public static GameDriver driver_shangon	   = new GameDriver("1992"	,"shangon"	,"outrun.java"	,rom_shangon,null	,machine_driver_shangon	,input_ports_shangon	,init_shangon	,ROT0	,	"Sega",    "Super Hang-On", GAME_NOT_WORKING )
 	public static GameDriver driver_shangonb	   = new GameDriver("1992"	,"shangonb"	,"outrun.java"	,rom_shangonb,driver_shangon	,machine_driver_shangon	,input_ports_shangon	,init_shangonb	,ROT0	,	"bootleg", "Super Hang-On (bootleg)" )

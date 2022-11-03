@@ -297,7 +297,8 @@ public class pass
 		{ 60 }
 	};
 	
-	static MACHINE_DRIVER_START( pass )
+	public static MachineHandlerPtr machine_driver_pass = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14318180/2 )
 		MDRV_CPU_MEMORY(pass_readmem,pass_writemem)
@@ -327,7 +328,9 @@ public class pass
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_pass = new RomLoadPtr(){ public void handler(){ 

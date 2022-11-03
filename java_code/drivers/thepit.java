@@ -622,7 +622,8 @@ public class thepit
 	);
 	
 	
-	static MACHINE_DRIVER_START( thepit )
+	public static MachineHandlerPtr machine_driver_thepit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18432000/6)     /* 3.072 MHz */
@@ -652,10 +653,13 @@ public class thepit
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( intrepid )
+	public static MachineHandlerPtr machine_driver_intrepid = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(thepit)
@@ -665,10 +669,13 @@ public class thepit
 		/* video hardware */
 		MDRV_GFXDECODE(intrepid_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(thepit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( suprmous )
+	public static MachineHandlerPtr machine_driver_suprmous = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(intrepid)
@@ -676,7 +683,9 @@ public class thepit
 		/* video hardware */
 		MDRV_GFXDECODE(suprmous_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(suprmous)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

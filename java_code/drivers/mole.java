@@ -150,7 +150,8 @@ public class mole
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static MACHINE_DRIVER_START( mole )
+	public static MachineHandlerPtr machine_driver_mole = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 4000000) /* ? */
@@ -173,7 +174,9 @@ public class mole
 		MDRV_VIDEO_UPDATE(moleattack)
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_mole = new RomLoadPtr(){ public void handler(){  /* ALL ROMS ARE 2732 */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for 6502 code */

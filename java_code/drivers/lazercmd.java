@@ -685,7 +685,8 @@ public class lazercmd
 		{ 100 }
 	};
 	
-	static MACHINE_DRIVER_START( lazercmd )
+	public static MachineHandlerPtr machine_driver_lazercmd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,8064000/12/3)				/* 672 kHz? */
@@ -715,10 +716,13 @@ public class lazercmd
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, lazercmd_DAC_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( medlanes )
+	public static MachineHandlerPtr machine_driver_medlanes = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,8064000/12/3)				/* 672 kHz? */
@@ -747,10 +751,13 @@ public class lazercmd
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, lazercmd_DAC_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bbonk )
+	public static MachineHandlerPtr machine_driver_bbonk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,8064000/12/3)				/* 672 kHz? */
@@ -780,7 +787,9 @@ public class lazercmd
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, lazercmd_DAC_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

@@ -478,7 +478,8 @@ public class badlands
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( badlands )
+	public static MachineHandlerPtr machine_driver_badlands = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -506,7 +507,9 @@ public class badlands
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

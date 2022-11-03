@@ -227,7 +227,8 @@ public class toratora
 	
 	
 	
-	static MACHINE_DRIVER_START( toratora )
+	public static MachineHandlerPtr machine_driver_toratora = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800,500000)	/* ?????? game speed is entirely controlled by this */
@@ -251,7 +252,9 @@ public class toratora
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

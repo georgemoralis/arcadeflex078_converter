@@ -236,7 +236,8 @@ public class sbasketb
 	};
 	
 	
-	static MACHINE_DRIVER_START( sbasketb )
+	public static MachineHandlerPtr machine_driver_sbasketb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1400000)        /* 1.400 MHz ??? */
@@ -266,7 +267,9 @@ public class sbasketb
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, sbasketb_vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

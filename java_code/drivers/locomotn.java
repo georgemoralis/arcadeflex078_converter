@@ -500,7 +500,8 @@ public class locomotn
 	
 	
 	
-	static MACHINE_DRIVER_START( tactcian )
+	public static MachineHandlerPtr machine_driver_tactcian = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18432000/6)	/* 3.072 MHz */
@@ -528,10 +529,13 @@ public class locomotn
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, timeplt_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( jungler )
+	public static MachineHandlerPtr machine_driver_jungler = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tactcian)
@@ -540,20 +544,26 @@ public class locomotn
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(jungler)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( locomotn )
+	public static MachineHandlerPtr machine_driver_locomotn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tactcian)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 0*8, 28*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( commsega )
+	public static MachineHandlerPtr machine_driver_commsega = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tactcian)
@@ -563,7 +573,9 @@ public class locomotn
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 0*8, 28*8-1)
 		MDRV_VIDEO_UPDATE(commsega)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -1111,7 +1111,8 @@ public class fromance
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( nekkyoku )
+	public static MachineHandlerPtr machine_driver_nekkyoku = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 Mhz ? */
@@ -1140,10 +1141,13 @@ public class fromance
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( idolmj )
+	public static MachineHandlerPtr machine_driver_idolmj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 Mhz ? */
@@ -1172,10 +1176,13 @@ public class fromance
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( fromance )
+	public static MachineHandlerPtr machine_driver_fromance = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 Mhz ? */
@@ -1204,7 +1211,9 @@ public class fromance
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(MSM5205, fromance_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -262,7 +262,8 @@ public class mikie
 	
 	
 	
-	static MACHINE_DRIVER_START( mikie )
+	public static MachineHandlerPtr machine_driver_mikie = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1250000)        /* 1.25 MHz */
@@ -290,7 +291,9 @@ public class mikie
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

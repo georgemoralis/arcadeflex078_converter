@@ -576,7 +576,8 @@ public class playmark
 	
 	
 	
-	static MACHINE_DRIVER_START( bigtwin )
+	public static MachineHandlerPtr machine_driver_bigtwin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz? */
@@ -602,10 +603,13 @@ public class playmark
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( wbeachvl )
+	public static MachineHandlerPtr machine_driver_wbeachvl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz? */
@@ -629,7 +633,9 @@ public class playmark
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

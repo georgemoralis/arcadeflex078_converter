@@ -412,7 +412,8 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	static MACHINE_DRIVER_START( inufuku )
+	public static MachineHandlerPtr machine_driver_inufuku = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 32000000/2)	/* 16.00 MHz */
@@ -442,7 +443,9 @@ public class inufuku
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/******************************************************************************

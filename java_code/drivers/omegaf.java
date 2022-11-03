@@ -622,7 +622,8 @@ public class omegaf
 		{ 0 }
 	};
 	
-	static MACHINE_DRIVER_START( omegaf )
+	public static MachineHandlerPtr machine_driver_omegaf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 12000000/2)		/* 12000000/2 ??? */
@@ -651,10 +652,13 @@ public class omegaf
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( robokid )
+	public static MachineHandlerPtr machine_driver_robokid = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(omegaf)
 	
 		MDRV_CPU_MODIFY("main")
@@ -662,7 +666,9 @@ public class omegaf
 	
 		MDRV_GFXDECODE(robokid_gfxdecodeinfo)
 		MDRV_VIDEO_START(robokid)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/**************************************************************************

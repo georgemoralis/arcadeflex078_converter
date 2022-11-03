@@ -358,7 +358,8 @@ public class crbaloon
 	};
 	
 	
-	static MACHINE_DRIVER_START( crbaloon )
+	public static MachineHandlerPtr machine_driver_crbaloon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ????? */
@@ -385,7 +386,9 @@ public class crbaloon
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76477, sn76477_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -373,7 +373,8 @@ public class spacefb
 		{ 100 }
 	};
 	
-	static MACHINE_DRIVER_START( spacefb )
+	public static MachineHandlerPtr machine_driver_spacefb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)    /* 4 MHz? */
@@ -405,7 +406,9 @@ public class spacefb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

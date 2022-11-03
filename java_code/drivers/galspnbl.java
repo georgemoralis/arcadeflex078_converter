@@ -333,7 +333,8 @@ public class galspnbl
 	
 	
 	
-	static MACHINE_DRIVER_START( hotpinbl )
+	public static MachineHandlerPtr machine_driver_hotpinbl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz ??? */
@@ -362,7 +363,9 @@ public class galspnbl
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

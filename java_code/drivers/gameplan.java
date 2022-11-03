@@ -507,7 +507,8 @@ public class gameplan
 	);
 	
 	
-	static MACHINE_DRIVER_START( gameplan )
+	public static MachineHandlerPtr machine_driver_gameplan = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,3579000 / 4)		/* 3.579 / 4 MHz */
@@ -533,7 +534,9 @@ public class gameplan
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

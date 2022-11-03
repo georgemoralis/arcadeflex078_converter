@@ -288,7 +288,9 @@ public class dcs
 		MDRV_CPU_MEMORY(dcs_readmem,dcs_writemem)
 	
 		MDRV_SOUND_ADD(CUSTOM, dcs_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( dcs_audio_uart )
@@ -296,7 +298,9 @@ public class dcs
 	
 		MDRV_CPU_MODIFY("dcs")
 		MDRV_CPU_MEMORY(dcs_uart_readmem,dcs_uart_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( dcs2_audio )
@@ -306,13 +310,17 @@ public class dcs
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(CUSTOM, dcs2_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( dcs2_audio_2104 )
 		MDRV_IMPORT_FROM(dcs2_audio)
 		MDRV_CPU_REPLACE("dcs2", ADSP2104, 16000000)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

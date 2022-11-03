@@ -1765,7 +1765,8 @@ public class namcos2
 	/*															 */
 	/*************************************************************/
 	
-	static MACHINE_DRIVER_START( default )
+	public static MachineHandlerPtr machine_driver_default = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_default,writemem_master_default)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1802,9 +1803,12 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gollygho )
+	public static MachineHandlerPtr machine_driver_gollygho = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_default,writemem_master_default)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1841,9 +1845,12 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( finallap )
+	public static MachineHandlerPtr machine_driver_finallap = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_finallap,writemem_master_finallap)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1881,9 +1888,12 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( sgunner )
+	public static MachineHandlerPtr machine_driver_sgunner = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_sgunner,writemem_master_sgunner)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1920,9 +1930,12 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( luckywld )
+	public static MachineHandlerPtr machine_driver_luckywld = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_luckywld,writemem_master_luckywld)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1959,9 +1972,12 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( metlhawk )
+	public static MachineHandlerPtr machine_driver_metlhawk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_metlhawk,writemem_master_metlhawk)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -2000,7 +2016,9 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************************************/

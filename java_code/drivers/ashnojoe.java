@@ -349,7 +349,8 @@ public class ashnojoe
 		cpu_setbank(4, memory_region(REGION_SOUND1));
 	} };
 	
-	static MACHINE_DRIVER_START( ashnojoe )
+	public static MachineHandlerPtr machine_driver_ashnojoe = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -378,7 +379,9 @@ public class ashnojoe
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_ashnojoe = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 68000 code */

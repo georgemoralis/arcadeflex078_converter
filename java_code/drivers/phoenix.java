@@ -622,7 +622,8 @@ public class phoenix
 	
 	
 	
-	static MACHINE_DRIVER_START( phoenix )
+	public static MachineHandlerPtr machine_driver_phoenix = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", 8085A, 11000000/4)	/* 2.75 MHz */
@@ -646,10 +647,13 @@ public class phoenix
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("tms",  TMS36XX, phoenix_tms36xx_interface)
 		MDRV_SOUND_ADD_TAG("cust", CUSTOM, phoenix_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pleiads )
+	public static MachineHandlerPtr machine_driver_pleiads = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(phoenix)
@@ -665,12 +669,15 @@ public class phoenix
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("tms",  TMS36XX, pleiads_tms36xx_interface)
 		MDRV_SOUND_REPLACE("cust", CUSTOM, pleiads_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Same as Phoenix, but uses an AY8910 and an extra visible line (column) */
 	
-	static MACHINE_DRIVER_START( survival )
+	public static MachineHandlerPtr machine_driver_survival = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8085A,11000000/4)	/* 2.75 MHz */
@@ -693,16 +700,21 @@ public class phoenix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, survival_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Uses a Z80 */
-	static MACHINE_DRIVER_START( condor )
+	public static MachineHandlerPtr machine_driver_condor = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(phoenix)
 		MDRV_CPU_REPLACE("main", Z80, 11000000/4)	/* 2.75 MHz??? */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

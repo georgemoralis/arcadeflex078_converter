@@ -134,7 +134,8 @@ public class rotaryf
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static MACHINE_DRIVER_START( rotaryf )
+	public static MachineHandlerPtr machine_driver_rotaryf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",8085A,2000000) /* 8080? */ /* 2 MHz? */
@@ -157,7 +158,9 @@ public class rotaryf
 		MDRV_SOUND_ADD(SAMPLES, invaders_samples_interface)
 		MDRV_SOUND_ADD(SN76477, invaders_sn76477_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_rotaryf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */

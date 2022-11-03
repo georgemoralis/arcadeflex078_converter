@@ -308,7 +308,8 @@ public class spiders
 	
 	
 	
-	static MACHINE_DRIVER_START( spiders )
+	public static MachineHandlerPtr machine_driver_spiders = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2800000)
@@ -335,7 +336,9 @@ public class spiders
 		MDRV_VIDEO_UPDATE(spiders)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_spiders = new RomLoadPtr(){ public void handler(){ 

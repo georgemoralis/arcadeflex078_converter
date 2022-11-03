@@ -694,7 +694,8 @@ public class nycaptor
 	
 	
 	
-	static MACHINE_DRIVER_START( nycaptor )
+	public static MachineHandlerPtr machine_driver_nycaptor = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)		/* ??? */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -732,9 +733,12 @@ public class nycaptor
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( cyclshtg )
+	public static MachineHandlerPtr machine_driver_cyclshtg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80,8000000/2)
 	
 		MDRV_CPU_MEMORY(cyclshtg_readmem,cyclshtg_writemem)
@@ -769,7 +773,9 @@ public class nycaptor
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

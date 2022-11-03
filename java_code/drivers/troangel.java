@@ -172,7 +172,8 @@ public class troangel
 	
 	
 	
-	static MACHINE_DRIVER_START( troangel )
+	public static MachineHandlerPtr machine_driver_troangel = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)	/* 3 MHz ??? */
@@ -198,7 +199,9 @@ public class troangel
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

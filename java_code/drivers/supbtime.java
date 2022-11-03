@@ -400,7 +400,8 @@ public class supbtime
 		{ sound_irq }
 	};
 	
-	static MACHINE_DRIVER_START( supbtime )
+	public static MachineHandlerPtr machine_driver_supbtime = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -427,10 +428,13 @@ public class supbtime
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( chinatwn )
+	public static MachineHandlerPtr machine_driver_chinatwn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -457,7 +461,9 @@ public class supbtime
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

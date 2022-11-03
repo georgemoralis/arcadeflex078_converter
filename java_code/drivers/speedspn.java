@@ -316,7 +316,8 @@ public class speedspn
 	
 	
 	
-	static MACHINE_DRIVER_START( speedspn )
+	public static MachineHandlerPtr machine_driver_speedspn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,6000000)		 /* 6 MHz */
@@ -343,7 +344,9 @@ public class speedspn
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*** ROM LOADING *************************************************************/
 	

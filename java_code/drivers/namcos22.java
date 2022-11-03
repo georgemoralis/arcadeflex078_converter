@@ -1009,7 +1009,8 @@ public class namcos22
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( namcos22s )
+	public static MachineHandlerPtr machine_driver_namcos22s = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020,25000000) /* 25 MHz? */
 		MDRV_CPU_MEMORY(namcos22s_readmem,namcos22s_writemem)
@@ -1027,7 +1028,9 @@ public class namcos22
 	
 		MDRV_VIDEO_START(namcos22s)
 		MDRV_VIDEO_UPDATE(namcos22s)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*********************************************************************************/
 	
@@ -1123,7 +1126,8 @@ public class namcos22
 	
 	} };
 	
-	static MACHINE_DRIVER_START( namcos22 )
+	public static MachineHandlerPtr machine_driver_namcos22 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68020,25000000) /* 25 MHz? */
 		MDRV_CPU_MEMORY(namcos22_readmem,namcos22_writemem)
@@ -1141,7 +1145,9 @@ public class namcos22
 	
 		MDRV_VIDEO_START(namcos22s)
 		MDRV_VIDEO_UPDATE(namcos22)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*********************************************************************************/
 	

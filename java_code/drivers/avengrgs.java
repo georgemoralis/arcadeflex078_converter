@@ -273,7 +273,8 @@ public class avengrgs
 		cpu_set_irq_line(0, 1, HOLD_LINE);
 	}
 	
-	static MACHINE_DRIVER_START( avengrgs )
+	public static MachineHandlerPtr machine_driver_avengrgs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(SH2,42000000/2) /* 42 MHz clock */
@@ -299,7 +300,9 @@ public class avengrgs
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	

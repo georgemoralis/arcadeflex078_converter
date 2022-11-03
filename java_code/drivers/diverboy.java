@@ -214,7 +214,8 @@ public class diverboy
 	
 	
 	
-	static MACHINE_DRIVER_START( diverboy )
+	public static MachineHandlerPtr machine_driver_diverboy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12000000) /* guess */
 		MDRV_CPU_MEMORY(diverboy_readmem,diverboy_writemem)
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -237,7 +238,9 @@ public class diverboy
 		MDRV_VIDEO_UPDATE(diverboy)
 	
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -297,7 +297,8 @@ public class pitnrun
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static MACHINE_DRIVER_START( pitnrun )
+	public static MachineHandlerPtr machine_driver_pitnrun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80,8000000/2)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(pitnrun_nmi_source,1)
@@ -330,7 +331,9 @@ public class pitnrun
 		MDRV_VIDEO_UPDATE(pitnrun)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_pitnrun = new RomLoadPtr(){ public void handler(){ 

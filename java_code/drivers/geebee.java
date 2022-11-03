@@ -466,7 +466,8 @@ public class geebee
 		geebee_sh_update
 	};
 	
-	static MACHINE_DRIVER_START( geebee )
+	public static MachineHandlerPtr machine_driver_geebee = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -491,10 +492,13 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( navalone )
+	public static MachineHandlerPtr machine_driver_navalone = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -519,10 +523,13 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( kaitei )
+	public static MachineHandlerPtr machine_driver_kaitei = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -547,10 +554,13 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sos )
+	public static MachineHandlerPtr machine_driver_sos = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -575,7 +585,9 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

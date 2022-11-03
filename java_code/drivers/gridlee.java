@@ -439,7 +439,8 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( gridlee )
+	public static MachineHandlerPtr machine_driver_gridlee = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 5000000/4)
@@ -464,7 +465,9 @@ public class gridlee
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM,  custom_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

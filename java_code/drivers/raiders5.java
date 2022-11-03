@@ -256,7 +256,8 @@ public class raiders5
 		new WriteHandlerPtr[] { 0, 0 },
 	);
 	
-	static MACHINE_DRIVER_START( raiders5 )
+	public static MachineHandlerPtr machine_driver_raiders5 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/4)	/* 3.0MHz? */
@@ -284,7 +285,9 @@ public class raiders5
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/****************************************************************************/
 	

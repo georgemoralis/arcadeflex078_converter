@@ -348,7 +348,8 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( thunderj )
+	public static MachineHandlerPtr machine_driver_thunderj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -376,7 +377,9 @@ public class thunderj
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_ii_mono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

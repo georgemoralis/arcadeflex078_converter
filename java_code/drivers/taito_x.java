@@ -1085,7 +1085,8 @@ public class taito_x
 	
 	/**************************************************************************/
 	
-	static MACHINE_DRIVER_START( superman )
+	public static MachineHandlerPtr machine_driver_superman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1113,10 +1114,13 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( daisenpu )
+	public static MachineHandlerPtr machine_driver_daisenpu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1144,9 +1148,12 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gigandes )
+	public static MachineHandlerPtr machine_driver_gigandes = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1174,10 +1181,13 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ballbros_ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ballbros )
+	public static MachineHandlerPtr machine_driver_ballbros = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1206,7 +1216,9 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ballbros_ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -422,7 +422,8 @@ public class mexico86
 	
 	
 	
-	static MACHINE_DRIVER_START( mexico86 )
+	public static MachineHandlerPtr machine_driver_mexico86 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)      /* 6 MHz??? */
@@ -453,17 +454,22 @@ public class mexico86
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( kikikai )
+	public static MachineHandlerPtr machine_driver_kikikai = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mexico86)
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(kikikai)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

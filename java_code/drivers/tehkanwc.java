@@ -808,7 +808,8 @@ public class tehkanwc
 		{ 45 }
 	};
 	
-	static MACHINE_DRIVER_START( tehkanwc )
+	public static MachineHandlerPtr machine_driver_tehkanwc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 4608000)	/* 18.432000 / 4 */
@@ -841,23 +842,31 @@ public class tehkanwc
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gridiron )
+	public static MachineHandlerPtr machine_driver_gridiron = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tehkanwc)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(gridiron_readmem,gridiron_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( teedoff )
+	public static MachineHandlerPtr machine_driver_teedoff = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tehkanwc)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(teedoff_readmem,teedoff_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -242,7 +242,8 @@ public class toobin
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( toobin )
+	public static MachineHandlerPtr machine_driver_toobin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68010, ATARI_CLOCK_32MHz/4)
@@ -266,7 +267,9 @@ public class toobin
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_stereo_pokey)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

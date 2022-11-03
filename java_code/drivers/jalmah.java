@@ -130,7 +130,8 @@ public class jalmah
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( jalmah )
+	public static MachineHandlerPtr machine_driver_jalmah = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 8000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 	//	MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -150,7 +151,9 @@ public class jalmah
 		MDRV_VIDEO_START(jalmah)
 		MDRV_VIDEO_UPDATE(jalmah)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

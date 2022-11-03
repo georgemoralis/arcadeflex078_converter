@@ -410,7 +410,8 @@ public class overdriv
 	
 	
 	
-	static MACHINE_DRIVER_START( overdriv )
+	public static MachineHandlerPtr machine_driver_overdriv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)	/* 12 MHz */
@@ -448,7 +449,9 @@ public class overdriv
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

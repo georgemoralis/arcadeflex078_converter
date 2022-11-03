@@ -1475,7 +1475,8 @@ public class konamigx
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( konamigx )
+	public static MachineHandlerPtr machine_driver_konamigx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68EC020, 24000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -1508,31 +1509,46 @@ public class konamigx
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( dragoonj )
+	public static MachineHandlerPtr machine_driver_dragoonj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_CPU_REPLACE("main", M68EC020, 26400000) // needs higher clock to stop sprite flickerings
 		MDRV_VISIBLE_AREA(40, 40+384-1, 16, 16+224-1)
 		MDRV_VIDEO_START(dragoonj)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( le2 )
+	public static MachineHandlerPtr machine_driver_le2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VIDEO_START(le2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( konamigx_6bpp )
+	public static MachineHandlerPtr machine_driver_konamigx_6bpp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VIDEO_START(konamigx_6bpp)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( konamigx_6bpp_2 )
+	public static MachineHandlerPtr machine_driver_konamigx_6bpp_2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VIDEO_START(konamigx_6bpp_2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( opengolf )
+	public static MachineHandlerPtr machine_driver_opengolf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VISIBLE_AREA(40, 40+384-1, 16, 16+224-1)
 		MDRV_GFXDECODE(gfxdecodeinfo_opengolf)
@@ -1540,9 +1556,12 @@ public class konamigx
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(type1readmem, type1writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( racinfrc )
+	public static MachineHandlerPtr machine_driver_racinfrc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VISIBLE_AREA(32, 32+384-1, 16, 16+224-1)
 		MDRV_GFXDECODE(gfxdecodeinfo_racinfrc)
@@ -1550,9 +1569,12 @@ public class konamigx
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(type1readmem, type1writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gxtype3 )
+	public static MachineHandlerPtr machine_driver_gxtype3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1563,9 +1585,12 @@ public class konamigx
 		MDRV_PALETTE_LENGTH(16384)
 		MDRV_VISIBLE_AREA(0, 64*8-1, 0, 32*8-1)
 		MDRV_GFXDECODE(gfxdecodeinfo_type34)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gxtype4 )
+	public static MachineHandlerPtr machine_driver_gxtype4 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1576,14 +1601,19 @@ public class konamigx
 		MDRV_PALETTE_LENGTH(16384)
 		MDRV_GFXDECODE(gfxdecodeinfo_type34)
 		MDRV_VIDEO_START(konamigx_type4)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( winspike )
+	public static MachineHandlerPtr machine_driver_winspike = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(konamigx)
 	
 		MDRV_VISIBLE_AREA(38, 38+384-1, 16, 16+224-1)
 		MDRV_VIDEO_START(winspike)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/**********************************************************************************/
 	/* port maps */

@@ -463,7 +463,8 @@ public class taito_f3
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) },		/* master volume */
 	};
 	
-	static MACHINE_DRIVER_START( f3 )
+	public static MachineHandlerPtr machine_driver_f3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -495,27 +496,38 @@ public class taito_f3
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5505, es5505_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* These games reprogram the video output registers to display different scanlines,
 	 we can't change our screen display at runtime, so we do it here instead.  None
 	 of the games change the registers during the game (to do so would probably require
 	 monitor recalibration.)
 	*/
-	static MACHINE_DRIVER_START( f3_224a )
+	public static MachineHandlerPtr machine_driver_f3_224a = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(f3)
 		MDRV_VISIBLE_AREA(46, 40*8-1+46, 31, 31+224-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( f3_224b )
+	public static MachineHandlerPtr machine_driver_f3_224b = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(f3)
 		MDRV_VISIBLE_AREA(46, 40*8-1+46, 32, 32+224-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( f3_224c )
+	public static MachineHandlerPtr machine_driver_f3_224c = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(f3)
 		MDRV_VISIBLE_AREA(46, 40*8-1+46, 24, 24+224-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

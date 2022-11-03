@@ -229,7 +229,8 @@ public class batman
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( batman )
+	public static MachineHandlerPtr machine_driver_batman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz)
@@ -254,7 +255,9 @@ public class batman
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

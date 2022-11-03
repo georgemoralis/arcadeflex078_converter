@@ -396,7 +396,8 @@ public class btoads
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( btoads )
+	public static MachineHandlerPtr machine_driver_btoads = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_CPU_ADD(TMS34020, 40000000/TMS34020_CLOCK_DIVIDER)
 		MDRV_CPU_CONFIG(cpu_config)
@@ -425,7 +426,9 @@ public class btoads
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(BSMT2000, bsmt2000_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

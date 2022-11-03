@@ -685,7 +685,8 @@ public class ninjaw
 	Darius2: arbitrary interleaving of 10 to keep cpus synced.
 	*************************************************************/
 	
-	static MACHINE_DRIVER_START( ninjaw )
+	public static MachineHandlerPtr machine_driver_ninjaw = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)	/* 8 MHz ? */
@@ -721,10 +722,13 @@ public class ninjaw
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ADD(CUSTOM, subwoofer_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( darius2 )
+	public static MachineHandlerPtr machine_driver_darius2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)	/* 8 MHz ? */
@@ -760,7 +764,9 @@ public class ninjaw
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ADD(CUSTOM, subwoofer_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

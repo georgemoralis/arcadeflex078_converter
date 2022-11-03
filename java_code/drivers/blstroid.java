@@ -203,7 +203,8 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( blstroid )
+	public static MachineHandlerPtr machine_driver_blstroid = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -228,7 +229,9 @@ public class blstroid
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_stereo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

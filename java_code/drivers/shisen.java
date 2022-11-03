@@ -254,7 +254,8 @@ public class shisen
 	
 	
 	
-	static MACHINE_DRIVER_START( shisen )
+	public static MachineHandlerPtr machine_driver_shisen = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz ? */
@@ -287,7 +288,9 @@ public class shisen
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

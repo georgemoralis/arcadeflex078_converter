@@ -231,7 +231,8 @@ public class splash
 	};
 	
 	
-	static MACHINE_DRIVER_START( splash )
+	public static MachineHandlerPtr machine_driver_splash = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -259,7 +260,9 @@ public class splash
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, splash_ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, splash_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_splash = new RomLoadPtr(){ public void handler(){ 

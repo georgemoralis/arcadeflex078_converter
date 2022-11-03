@@ -279,7 +279,8 @@ public class dcon
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(4000000,8000,REGION_SOUND1);
 	SEIBU_SOUND_SYSTEM_YM2151_HARDWARE(14318180/4,8000,REGION_SOUND1);
 	
-	static MACHINE_DRIVER_START( dcon )
+	public static MachineHandlerPtr machine_driver_dcon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -304,9 +305,12 @@ public class dcon
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( sdgndmps )
+	public static MachineHandlerPtr machine_driver_sdgndmps = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -331,7 +335,9 @@ public class dcon
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM2151_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	

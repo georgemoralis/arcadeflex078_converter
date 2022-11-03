@@ -292,7 +292,8 @@ public class supdrapo
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static MACHINE_DRIVER_START( supdrapo )
+	public static MachineHandlerPtr machine_driver_supdrapo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80,8000000/2)		 /* ??? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq0_line_pulse,1)
@@ -312,7 +313,9 @@ public class supdrapo
 		MDRV_VIDEO_UPDATE(supdrapo)
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_supdrapo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )

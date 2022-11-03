@@ -720,7 +720,8 @@ public class tetrisp2
 	} };
 	
 	
-	static MACHINE_DRIVER_START( tetrisp2 )
+	public static MachineHandlerPtr machine_driver_tetrisp2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -745,9 +746,12 @@ public class tetrisp2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( rockn )
+	public static MachineHandlerPtr machine_driver_rockn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -772,7 +776,9 @@ public class tetrisp2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

@@ -586,7 +586,8 @@ public class kingobox
 			cpu_set_irq_line(cpu_getactivecpu(), IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( kingofb )
+	public static MachineHandlerPtr machine_driver_kingofb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.0 MHz */
@@ -626,11 +627,14 @@ public class kingobox
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Ring King */
-	static MACHINE_DRIVER_START( ringking )
+	public static MachineHandlerPtr machine_driver_ringking = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.0 MHz */
@@ -670,7 +674,9 @@ public class kingobox
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

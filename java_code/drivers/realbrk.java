@@ -297,7 +297,8 @@ public class realbrk
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( realbrk )
+	public static MachineHandlerPtr machine_driver_realbrk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,32000000 / 2)			/* !! TMP68301 !! */
@@ -323,7 +324,9 @@ public class realbrk
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B,	realbrk_ymz280b_intf)
 		MDRV_SOUND_ADD(YM2413,	realbrk_ym2413_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

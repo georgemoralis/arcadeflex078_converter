@@ -1948,7 +1948,9 @@ public class seattle
 		MDRV_VIDEO_UPDATE(voodoo)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( seattle150 )
@@ -1956,20 +1958,26 @@ public class seattle
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs2_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( seattle200 )
 		MDRV_IMPORT_FROM(seattle150)
 		MDRV_CPU_REPLACE("main", R5000LE, 50000000*4)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( carnevil )
 		MDRV_IMPORT_FROM(seattle150)
 		MDRV_FRAMES_PER_SECOND(54)
 		MDRV_VIDEO_UPDATE(carnevil)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( flagstaff )
@@ -1981,7 +1989,9 @@ public class seattle
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(cage_seattle)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -842,7 +842,8 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( atarigt )
+	public static MachineHandlerPtr machine_driver_atarigt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, ATARI_CLOCK_50MHz/2)
@@ -869,7 +870,9 @@ public class atarigt
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(cage)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

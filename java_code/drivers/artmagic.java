@@ -871,7 +871,9 @@ public class artmagic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( stonebal )
@@ -882,7 +884,9 @@ public class artmagic
 	
 		MDRV_CPU_MODIFY("tms")
 		MDRV_CPU_MEMORY(stonebal_tms_readmem,stonebal_tms_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

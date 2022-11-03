@@ -249,7 +249,8 @@ public class ssozumo
 	};
 	
 	
-	static MACHINE_DRIVER_START( ssozumo )
+	public static MachineHandlerPtr machine_driver_ssozumo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1200000)	/* 1.2 MHz ???? */
@@ -279,7 +280,9 @@ public class ssozumo
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

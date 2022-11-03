@@ -988,7 +988,8 @@ public class namcona1
 	};
 	
 	/* cropped at sides */
-	static MACHINE_DRIVER_START( namcona1 )
+	public static MachineHandlerPtr machine_driver_namcona1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 50113000/4)
 		MDRV_CPU_MEMORY(namcona1_readmem,namcona1_writemem)
@@ -1011,18 +1012,23 @@ public class namcona1
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(NAMCONA, NAMCONA_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* full-width */
-	static MACHINE_DRIVER_START( namcona1w )
+	public static MachineHandlerPtr machine_driver_namcona1w = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(namcona1)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 38*8-1-0, 4*8, 32*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static void

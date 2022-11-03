@@ -1180,7 +1180,8 @@ public class royalmah
 	
 	
 	
-	static MACHINE_DRIVER_START( royalmah )
+	public static MachineHandlerPtr machine_driver_royalmah = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)        /* 3.00 MHz ? */
@@ -1205,10 +1206,13 @@ public class royalmah
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dondenmj )
+	public static MachineHandlerPtr machine_driver_dondenmj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000/2)	/* 4 MHz ? */
@@ -1233,37 +1237,52 @@ public class royalmah
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( suzume )
+	public static MachineHandlerPtr machine_driver_suzume = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(suzume_readport,suzume_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( tontonb )
+	public static MachineHandlerPtr machine_driver_tontonb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(tontonb_readport,tontonb_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mjdiplob )
+	public static MachineHandlerPtr machine_driver_mjdiplob = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(mjdiplob_readport,mjdiplob_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( majs101b )
+	public static MachineHandlerPtr machine_driver_majs101b = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(majs101b_readport,majs101b_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mjderngr )
+	public static MachineHandlerPtr machine_driver_mjderngr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
@@ -1272,7 +1291,9 @@ public class royalmah
 		MDRV_PALETTE_LENGTH(512)
 	
 		MDRV_PALETTE_INIT(mjderngr)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

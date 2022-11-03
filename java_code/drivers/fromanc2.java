@@ -759,7 +759,8 @@ public class fromanc2
 	//
 	// ----------------------------------------------------------------------------
 	
-	static MACHINE_DRIVER_START( fromanc2 )
+	public static MachineHandlerPtr machine_driver_fromanc2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)		/* 16.00 MHz */
@@ -793,9 +794,12 @@ public class fromanc2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( fromancr )
+	public static MachineHandlerPtr machine_driver_fromancr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)		/* 16.00 MHz */
@@ -829,9 +833,12 @@ public class fromanc2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( fromanc4 )
+	public static MachineHandlerPtr machine_driver_fromanc4 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)		/* 16.00 MHz */
@@ -861,7 +868,9 @@ public class fromanc2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	// ----------------------------------------------------------------------------

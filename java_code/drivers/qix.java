@@ -689,7 +689,8 @@ public class qix
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( qix )
+	public static MachineHandlerPtr machine_driver_qix = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, MAIN_CLOCK_OSC/4/4)	/* 1.25 MHz */
@@ -720,10 +721,13 @@ public class qix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("dac", DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mcu )
+	public static MachineHandlerPtr machine_driver_mcu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(qix)
@@ -732,10 +736,13 @@ public class qix
 		MDRV_CPU_MEMORY(mcu_readmem,mcu_writemem)
 	
 		MDRV_MACHINE_INIT(qixmcu)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( zookeep )
+	public static MachineHandlerPtr machine_driver_zookeep = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcu)
@@ -745,10 +752,13 @@ public class qix
 	
 		MDRV_CPU_MODIFY("video")
 		MDRV_CPU_MEMORY(zoo_readmem_video,zoo_writemem_video)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( slither )
+	public static MachineHandlerPtr machine_driver_slither = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(qix)
@@ -764,7 +774,9 @@ public class qix
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("dac", SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

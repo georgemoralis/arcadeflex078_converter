@@ -592,7 +592,8 @@ public class mappy
 	
 	
 	/* the machine driver: 2 6809s running at 1MHz */
-	static MACHINE_DRIVER_START( mappy )
+	public static MachineHandlerPtr machine_driver_mappy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -623,10 +624,13 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( digdug2 )
+	public static MachineHandlerPtr machine_driver_digdug2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -657,10 +661,13 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( motos )
+	public static MachineHandlerPtr machine_driver_motos = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -691,10 +698,13 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( todruaga )
+	public static MachineHandlerPtr machine_driver_todruaga = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -725,7 +735,9 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

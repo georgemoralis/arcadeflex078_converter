@@ -335,7 +335,8 @@ public class rungun
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( rng )
+	public static MachineHandlerPtr machine_driver_rng = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -368,7 +369,9 @@ public class rungun
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static InputPortPtr input_ports_rng = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 

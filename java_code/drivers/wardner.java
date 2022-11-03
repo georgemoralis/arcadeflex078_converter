@@ -574,7 +574,8 @@ public class wardner
 	};
 	
 	
-	static MACHINE_DRIVER_START( wardner )
+	public static MachineHandlerPtr machine_driver_wardner = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,24000000/4)			/* 6MHz ??? - Real board crystal is 24MHz */
@@ -609,7 +610,9 @@ public class wardner
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

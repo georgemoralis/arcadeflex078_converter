@@ -832,7 +832,8 @@ public class tubep
 	
 	
 	
-	static MACHINE_DRIVER_START( tubep )
+	public static MachineHandlerPtr machine_driver_tubep = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,16000000 / 4)	/* 4 MHz */
@@ -873,10 +874,13 @@ public class tubep
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( rjammer )
+	public static MachineHandlerPtr machine_driver_rjammer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,16000000 / 4)	/* 4 MHz */
@@ -918,7 +922,9 @@ public class tubep
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

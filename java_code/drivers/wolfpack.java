@@ -367,7 +367,9 @@ public class wolfpack
 		MDRV_VIDEO_EOF(wolfpack)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_wolfpack = new RomLoadPtr(){ public void handler(){ 

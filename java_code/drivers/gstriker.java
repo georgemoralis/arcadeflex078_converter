@@ -450,7 +450,8 @@ public class gstriker
 	
 	/*** MACHINE DRIVER **********************************************************/
 	
-	static MACHINE_DRIVER_START( gstriker )
+	public static MachineHandlerPtr machine_driver_gstriker = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 10000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -474,7 +475,9 @@ public class gstriker
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*** ROM LOADING *************************************************************/
 	

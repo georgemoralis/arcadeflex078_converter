@@ -213,7 +213,8 @@ public class kickgoal
 	
 	/* MACHINE drivers ***********************************************************/
 	
-	static MACHINE_DRIVER_START( kickgoal )
+	public static MachineHandlerPtr machine_driver_kickgoal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -239,7 +240,9 @@ public class kickgoal
 	
 		/* sound hardware */
 	//	MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* Rom Loading ***************************************************************/
 	

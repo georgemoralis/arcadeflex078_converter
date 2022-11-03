@@ -922,7 +922,8 @@ public class ddragon
 			cpu_set_irq_line(0,M6809_FIRQ_LINE,ASSERT_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( ddragon )
+	public static MachineHandlerPtr machine_driver_ddragon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -955,9 +956,12 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( darktowr )
+	public static MachineHandlerPtr machine_driver_darktowr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -993,9 +997,12 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ddragonb )
+	public static MachineHandlerPtr machine_driver_ddragonb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -1028,9 +1035,12 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ddragon2 )
+	public static MachineHandlerPtr machine_driver_ddragon2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -1063,9 +1073,12 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( toffy )
+	public static MachineHandlerPtr machine_driver_toffy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,3579545) // 12 MHz / 2 or 3.579545 ?
@@ -1094,7 +1107,9 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

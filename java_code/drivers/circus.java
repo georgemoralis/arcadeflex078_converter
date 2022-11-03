@@ -285,7 +285,8 @@ public class circus
 		{ 255, 255 }
 	};
 	
-	static MACHINE_DRIVER_START( circus )
+	public static MachineHandlerPtr machine_driver_circus = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16) /* 705.562kHz */
@@ -309,10 +310,13 @@ public class circus
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, circus_samples_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( robotbwl )
+	public static MachineHandlerPtr machine_driver_robotbwl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16) /* 705.562kHz */
@@ -335,9 +339,12 @@ public class circus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( crash )
+	public static MachineHandlerPtr machine_driver_crash = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16) /* 705.562kHz */
@@ -360,9 +367,12 @@ public class circus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ripcord )
+	public static MachineHandlerPtr machine_driver_ripcord = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 705562)        /* 11.289MHz / 16 */
@@ -385,7 +395,9 @@ public class circus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

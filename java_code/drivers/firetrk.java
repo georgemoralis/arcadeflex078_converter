@@ -1657,7 +1657,8 @@ public class firetrk
 	DISCRETE_SOUND_END
 	
 	
-	static MACHINE_DRIVER_START( firetrk )
+	public static MachineHandlerPtr machine_driver_firetrk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6800, 12096000 / 12)	/* 750Khz during service mode */
@@ -1685,10 +1686,13 @@ public class firetrk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, firetrk_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( superbug )
+	public static MachineHandlerPtr machine_driver_superbug = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(firetrk)
@@ -1704,10 +1708,13 @@ public class firetrk
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, superbug_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( montecar )
+	public static MachineHandlerPtr machine_driver_montecar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(firetrk)
@@ -1723,7 +1730,9 @@ public class firetrk
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, montecar_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_firetrk = new RomLoadPtr(){ public void handler(){ 

@@ -229,7 +229,8 @@ public class dlair
 	
 	
 	
-	static MACHINE_DRIVER_START( dlair )
+	public static MachineHandlerPtr machine_driver_dlair = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ? */
@@ -253,7 +254,9 @@ public class dlair
 		MDRV_VIDEO_UPDATE(dlair)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

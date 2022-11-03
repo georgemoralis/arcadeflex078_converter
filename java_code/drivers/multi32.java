@@ -686,7 +686,8 @@ public class multi32
 		{ YM3012_VOL(100, MIXER_PAN_CENTER, 100, MIXER_PAN_CENTER) }
 	};
 	
-	static MACHINE_DRIVER_START( base )
+	public static MachineHandlerPtr machine_driver_base = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V60, 20000000/10) // Reality is 20mhz but V60/V70 timings are unknown
@@ -716,17 +717,25 @@ public class multi32
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3438, mul32_ym3438_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( multi32 )
+	public static MachineHandlerPtr machine_driver_multi32 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(base)
 		MDRV_SOUND_ADD(MULTIPCM, mul32_multipcm_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( scross )
+	public static MachineHandlerPtr machine_driver_scross = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(base)
 		MDRV_SOUND_ADD(MULTIPCM, scross_multipcm_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static DRIVER_INIT(orunners)
 	{

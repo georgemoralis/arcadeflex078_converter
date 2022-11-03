@@ -563,7 +563,8 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( jedi )
+	public static MachineHandlerPtr machine_driver_jedi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,MAIN_CPU_OSC/2/2)		/* 2.5MHz */
@@ -593,7 +594,9 @@ public class jedi
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(POKEY,   pokey_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

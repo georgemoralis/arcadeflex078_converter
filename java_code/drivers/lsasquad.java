@@ -335,7 +335,8 @@ public class lsasquad
 	);
 	
 	
-	static MACHINE_DRIVER_START( lsasquad )
+	public static MachineHandlerPtr machine_driver_lsasquad = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz? */
@@ -368,7 +369,9 @@ public class lsasquad
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

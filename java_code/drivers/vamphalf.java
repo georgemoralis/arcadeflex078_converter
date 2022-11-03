@@ -77,7 +77,8 @@ public class vamphalf
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( vamphalf )
+	public static MachineHandlerPtr machine_driver_vamphalf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(E132XS,10000000)		 /* ?? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 	
@@ -95,10 +96,13 @@ public class vamphalf
 	
 		MDRV_VIDEO_START(vamphalf)
 		MDRV_VIDEO_UPDATE(vamphalf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( xfiles )
+	public static MachineHandlerPtr machine_driver_xfiles = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(E132XS,10000000)		 /* ?? */
 		MDRV_CPU_MEMORY(xfiles_readmem,xfiles_writemem)
 	
@@ -116,7 +120,9 @@ public class vamphalf
 	
 		MDRV_VIDEO_START(vamphalf)
 		MDRV_VIDEO_UPDATE(vamphalf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* f2 systems hardware */
 	

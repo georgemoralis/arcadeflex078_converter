@@ -321,7 +321,8 @@ public class popper
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static MACHINE_DRIVER_START( popper )
+	public static MachineHandlerPtr machine_driver_popper = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)
@@ -350,7 +351,9 @@ public class popper
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, popper_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_popper = new RomLoadPtr(){ public void handler(){ 

@@ -202,7 +202,8 @@ public class astrof
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static MACHINE_DRIVER_START( astrof )
+	public static MachineHandlerPtr machine_driver_astrof = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 10595000/16)	/* 0.66 MHz */
@@ -224,10 +225,13 @@ public class astrof
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("samples", SAMPLES, astrof_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( tomahawk )
+	public static MachineHandlerPtr machine_driver_tomahawk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(astrof)
@@ -239,7 +243,9 @@ public class astrof
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("samples", SAMPLES, tomahawk_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

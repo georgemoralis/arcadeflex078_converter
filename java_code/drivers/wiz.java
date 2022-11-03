@@ -780,7 +780,8 @@ public class wiz
 	//* ANALOG SOUND ENDS
 	
 	
-	static MACHINE_DRIVER_START( wiz )
+	public static MachineHandlerPtr machine_driver_wiz = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 18432000/6)	/* 3.072 MHz ??? */
@@ -810,10 +811,13 @@ public class wiz
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("8910", AY8910, wiz_ay8910_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( stinger )
+	public static MachineHandlerPtr machine_driver_stinger = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(wiz)
@@ -826,10 +830,13 @@ public class wiz
 		MDRV_SOUND_REPLACE("8910", AY8910, stinger_ay8910_interface)
 		MDRV_SOUND_ADD(DISCRETE, stinger_discrete_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( scion )
+	public static MachineHandlerPtr machine_driver_scion = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(stinger)
@@ -837,10 +844,13 @@ public class wiz
 		/* video hardware */
 		MDRV_VISIBLE_AREA(2*8, 32*8-1, 2*8, 30*8-1)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( kungfut )
+	public static MachineHandlerPtr machine_driver_kungfut = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(wiz)
@@ -849,7 +859,9 @@ public class wiz
 		MDRV_GFXDECODE(stinger_gfxdecodeinfo)
 		MDRV_VIDEO_UPDATE(kungfut)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

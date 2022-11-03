@@ -833,7 +833,8 @@ public class zn
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	static MACHINE_DRIVER_START( zn )
+	public static MachineHandlerPtr machine_driver_zn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33868800) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -857,9 +858,12 @@ public class zn
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( znqsound )
+	public static MachineHandlerPtr machine_driver_znqsound = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -890,9 +894,12 @@ public class zn
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(QSOUND, qsound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( znlink )
+	public static MachineHandlerPtr machine_driver_znlink = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -919,9 +926,12 @@ public class zn
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( fx1a )
+	public static MachineHandlerPtr machine_driver_fx1a = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -951,9 +961,12 @@ public class zn
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( fx1b )
+	public static MachineHandlerPtr machine_driver_fx1b = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -977,7 +990,9 @@ public class zn
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static InputPortPtr input_ports_zn = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 		/* IN0 */

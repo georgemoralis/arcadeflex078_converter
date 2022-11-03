@@ -372,7 +372,8 @@ public class wc90b
 		{ irqhandler }
 	};
 	
-	static MACHINE_DRIVER_START( wc90b )
+	public static MachineHandlerPtr machine_driver_wc90b = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6.0 MHz ??? */
@@ -402,7 +403,9 @@ public class wc90b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_wc90b = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128k for code */

@@ -403,7 +403,8 @@ public class vball
 		{ 100 }
 	};
 	
-	static MACHINE_DRIVER_START( vball )
+	public static MachineHandlerPtr machine_driver_vball = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(M6502, 2000000)	/* 2 MHz - measured by guru but it makes the game far far too slow ?! */
@@ -431,9 +432,12 @@ public class vball
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( vball2pj )
+	public static MachineHandlerPtr machine_driver_vball2pj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(M6502, 2000000)	/* 2.0 MHz */
@@ -461,7 +465,9 @@ public class vball
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

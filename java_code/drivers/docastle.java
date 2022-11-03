@@ -764,7 +764,8 @@ public class docastle
 	
 	
 	
-	static MACHINE_DRIVER_START( docastle )
+	public static MachineHandlerPtr machine_driver_docastle = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -795,9 +796,12 @@ public class docastle
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( dorunrun )
+	public static MachineHandlerPtr machine_driver_dorunrun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -828,9 +832,12 @@ public class docastle
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( idsoccer )
+	public static MachineHandlerPtr machine_driver_idsoccer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -862,7 +869,9 @@ public class docastle
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		/* also an MSM5205 */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

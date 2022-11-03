@@ -2024,7 +2024,8 @@ public class system32
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( system32 )
+	public static MachineHandlerPtr machine_driver_system32 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V60, OSC_A/2/12) // Reality is 16.somethingMHz, use magic /12 factor to get approximate speed
@@ -2055,19 +2056,25 @@ public class system32
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3438, sys32_ym3438_interface)
 		MDRV_SOUND_ADD(RF5C68, sys32_rf5c68_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	// system 32 hi-res mode is 416x224.  Yes that's TRUSTED.
-	static MACHINE_DRIVER_START( sys32_hi )
+	public static MachineHandlerPtr machine_driver_sys32_hi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM( system32 )
 	
 		MDRV_MACHINE_INIT(s32hi)
 	
 		MDRV_SCREEN_SIZE(52*8, 28*8)
 		MDRV_VISIBLE_AREA(0*8, 52*8-1, 0*8, 28*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( jpark )
+	public static MachineHandlerPtr machine_driver_jpark = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM( system32 )
 	
 		MDRV_CPU_ADD_TAG("cabinet", Z80, OSC_A/8)	// ???
@@ -2075,7 +2082,9 @@ public class system32
 		MDRV_CPU_PORTS( jpcab_readport, jpcab_writeport )
 	//	MDRV_CPU_VBLANK_INT(irq0_line_pulse,1)		// CPU has an IRQ handler, it appears to be periodic
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_ga2 = new RomLoadPtr(){ public void handler(){ 

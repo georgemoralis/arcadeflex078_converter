@@ -544,7 +544,8 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( omegrace )
+	public static MachineHandlerPtr machine_driver_omegrace = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)
@@ -575,7 +576,9 @@ public class omegrace
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

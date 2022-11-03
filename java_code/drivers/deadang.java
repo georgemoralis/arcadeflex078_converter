@@ -317,7 +317,8 @@ public class deadang
 	
 	/* Machine Drivers */
 	
-	static MACHINE_DRIVER_START( deadang )
+	public static MachineHandlerPtr machine_driver_deadang = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V20,16000000/2) /* Sony 8623h9 CXQ70116D-8 (V20 compatible) */
@@ -349,7 +350,9 @@ public class deadang
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM2203_INTERFACE
 		SEIBU_SOUND_SYSTEM_ADPCM_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* ROMs */
 	

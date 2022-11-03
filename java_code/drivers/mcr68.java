@@ -929,7 +929,8 @@ public class mcr68
 	
 	=================================================================*/
 	
-	static MACHINE_DRIVER_START( zwackery )
+	public static MachineHandlerPtr machine_driver_zwackery = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 7652400)
@@ -953,10 +954,13 @@ public class mcr68
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(chip_squeak_deluxe)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mcr68 )
+	public static MachineHandlerPtr machine_driver_mcr68 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 7723800)
@@ -978,34 +982,46 @@ public class mcr68
 		MDRV_VIDEO_UPDATE(mcr68)
 	
 		/* sound hardware -- determined by specific machine */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( xenophob )
+	public static MachineHandlerPtr machine_driver_xenophob = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
 		MDRV_IMPORT_FROM(sounds_good)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spyhunt2 )
+	public static MachineHandlerPtr machine_driver_spyhunt2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
 		MDRV_IMPORT_FROM(turbo_chip_squeak_plus_sounds_good)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( archrivl )
+	public static MachineHandlerPtr machine_driver_archrivl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
 		MDRV_IMPORT_FROM(williams_cvsd_sound)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pigskin )
+	public static MachineHandlerPtr machine_driver_pigskin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
@@ -1013,10 +1029,13 @@ public class mcr68
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(pigskin_readmem,pigskin_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( trisport )
+	public static MachineHandlerPtr machine_driver_trisport = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
@@ -1026,7 +1045,9 @@ public class mcr68
 		MDRV_CPU_MEMORY(trisport_readmem,trisport_writemem)
 	
 		MDRV_NVRAM_HANDLER(generic_0fill)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

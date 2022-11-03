@@ -312,7 +312,8 @@ public class triplhnt
 	} };
 	
 	
-	static MACHINE_DRIVER_START( triplhnt )
+	public static MachineHandlerPtr machine_driver_triplhnt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 800000)
@@ -335,7 +336,9 @@ public class triplhnt
 		MDRV_VIDEO_UPDATE(triplhnt)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_triplhnt = new RomLoadPtr(){ public void handler(){ 

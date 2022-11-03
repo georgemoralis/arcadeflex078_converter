@@ -666,7 +666,8 @@ public class renegade
 	
 	
 	
-	static MACHINE_DRIVER_START( renegade )
+	public static MachineHandlerPtr machine_driver_renegade = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz? */
@@ -693,7 +694,9 @@ public class renegade
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

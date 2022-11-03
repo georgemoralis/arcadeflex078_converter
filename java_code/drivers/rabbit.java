@@ -98,7 +98,8 @@ public class rabbit
 	}
 	
 	
-	static MACHINE_DRIVER_START( rabbit )
+	public static MachineHandlerPtr machine_driver_rabbit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68020, 24000000 )
 		MDRV_CPU_MEMORY(rabbit_readmem,rabbit_writemem)
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -122,7 +123,9 @@ public class rabbit
 	
 		MDRV_VIDEO_START(rabbit)
 		MDRV_VIDEO_UPDATE(rabbit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_rabbit = new RomLoadPtr(){ public void handler(){ 

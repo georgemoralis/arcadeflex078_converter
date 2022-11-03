@@ -377,7 +377,8 @@ public class malzak
 	};
 	
 	
-	static MACHINE_DRIVER_START( malzak )
+	public static MachineHandlerPtr machine_driver_malzak = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 3800000/4/3)
@@ -405,7 +406,9 @@ public class malzak
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76477,sn76477_intf);
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_malzak = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x8000, REGION_CPU1, 0 )

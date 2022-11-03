@@ -321,7 +321,8 @@ public class exerion
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( exerion )
+	public static MachineHandlerPtr machine_driver_exerion = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_CPU_ADD(Z80, 10000000/3)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -346,7 +347,9 @@ public class exerion
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

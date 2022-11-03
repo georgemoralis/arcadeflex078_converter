@@ -899,7 +899,8 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	static MACHINE_DRIVER_START( hbarrel )
+	public static MachineHandlerPtr machine_driver_hbarrel = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -927,9 +928,12 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( baddudes )
+	public static MachineHandlerPtr machine_driver_baddudes = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -957,9 +961,12 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( birdtry )
+	public static MachineHandlerPtr machine_driver_birdtry = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -987,9 +994,12 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( robocop )
+	public static MachineHandlerPtr machine_driver_robocop = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1021,9 +1031,12 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( robocopb )
+	public static MachineHandlerPtr machine_driver_robocopb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1051,9 +1064,12 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( hippodrm )
+	public static MachineHandlerPtr machine_driver_hippodrm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1085,9 +1101,12 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( slyspy )
+	public static MachineHandlerPtr machine_driver_slyspy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -1115,9 +1134,12 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812b_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( midres )
+	public static MachineHandlerPtr machine_driver_midres = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -1145,7 +1167,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812b_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

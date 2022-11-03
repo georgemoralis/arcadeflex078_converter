@@ -308,7 +308,8 @@ public class sprcros2
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( sprcros2 )
+	public static MachineHandlerPtr machine_driver_sprcros2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/2)
@@ -338,7 +339,9 @@ public class sprcros2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sprcros2_sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	public static DriverInitHandlerPtr init_sprcros2  = new DriverInitHandlerPtr() { public void handler()
 	{

@@ -521,7 +521,8 @@ public class shangha3
 	
 	
 	
-	static MACHINE_DRIVER_START( shangha3 )
+	public static MachineHandlerPtr machine_driver_shangha3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -544,10 +545,13 @@ public class shangha3
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( heberpop )
+	public static MachineHandlerPtr machine_driver_heberpop = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -574,10 +578,13 @@ public class shangha3
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3438, ym3438_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( blocken )
+	public static MachineHandlerPtr machine_driver_blocken = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -604,7 +611,9 @@ public class shangha3
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3438, ym3438_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

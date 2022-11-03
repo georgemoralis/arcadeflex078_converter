@@ -282,7 +282,8 @@ public class raiden
 		buffer_spriteram_w(0,0); /* Could be a memory location instead */
 	} };
 	
-	static MACHINE_DRIVER_START( raiden )
+	public static MachineHandlerPtr machine_driver_raiden = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,20000000/2) /* NEC V30 CPU, 20MHz */
@@ -314,10 +315,13 @@ public class raiden
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( raidena )
+	public static MachineHandlerPtr machine_driver_raidena = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,20000000/2) /* NEC V30 CPU, 20MHz */
@@ -349,7 +353,9 @@ public class raiden
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	

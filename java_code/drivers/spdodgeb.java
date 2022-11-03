@@ -438,7 +438,8 @@ public class spdodgeb
 	
 	
 	
-	static MACHINE_DRIVER_START( spdodgeb )
+	public static MachineHandlerPtr machine_driver_spdodgeb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12000000/6)	/* 2MHz ? */
@@ -468,7 +469,9 @@ public class spdodgeb
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

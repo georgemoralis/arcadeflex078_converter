@@ -443,7 +443,8 @@ public class mcatadv
 	} };
 	
 	
-	static MACHINE_DRIVER_START( mcatadv )
+	public static MachineHandlerPtr machine_driver_mcatadv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -473,15 +474,20 @@ public class mcatadv
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, mcatadv_ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( nost )
+	public static MachineHandlerPtr machine_driver_nost = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM( mcatadv )
 	
 		MDRV_CPU_MODIFY("sound")
 		MDRV_CPU_MEMORY(nost_sound_readmem,nost_sound_writemem)
 		MDRV_CPU_PORTS(nost_sound_readport,nost_sound_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	public static DriverInitHandlerPtr init_mcatadv  = new DriverInitHandlerPtr() { public void handler()

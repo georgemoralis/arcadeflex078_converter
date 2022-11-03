@@ -492,7 +492,8 @@ public class namcos21
 		50
 	};
 	
-	static MACHINE_DRIVER_START( s21base )
+	public static MachineHandlerPtr machine_driver_s21base = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12288000) /* Master */
@@ -530,25 +531,33 @@ public class namcos21
 		MDRV_VIDEO_START(namcos21)
 		MDRV_VIDEO_UPDATE(namcos21_default)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( poly_c140_typeA )
+	public static MachineHandlerPtr machine_driver_poly_c140_typeA = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(s21base)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface_typeA)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( poly_c140_typeB )
+	public static MachineHandlerPtr machine_driver_poly_c140_typeB = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(s21base)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface_typeB)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_aircombu = new RomLoadPtr(){ public void handler(){ 

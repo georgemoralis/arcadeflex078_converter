@@ -312,7 +312,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( system16 )
+	public static MachineHandlerPtr machine_driver_system16 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 10000000)
@@ -339,10 +340,13 @@ public class system16
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("2151", YM2151, sys16_ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( system16_7759 )
+	public static MachineHandlerPtr machine_driver_system16_7759 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -353,10 +357,13 @@ public class system16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("7759", UPD7759, sys16_upd7759_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( system16_7751 )
+	public static MachineHandlerPtr machine_driver_system16_7751 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -372,7 +379,9 @@ public class system16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, sys16_7751_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	
@@ -595,7 +604,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( alexkidd )
+	public static MachineHandlerPtr machine_driver_alexkidd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -603,7 +613,9 @@ public class system16
 		MDRV_CPU_MEMORY(alexkidd_readmem,alexkidd_writemem)
 	
 		MDRV_MACHINE_INIT(alexkidd)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -829,7 +841,8 @@ public class system16
 	
 	/****************************************************************************/
 	
-	static MACHINE_DRIVER_START( aliensyn )
+	public static MachineHandlerPtr machine_driver_aliensyn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -837,7 +850,9 @@ public class system16
 		MDRV_CPU_MEMORY(aliensyn_readmem,aliensyn_writemem)
 	
 		MDRV_MACHINE_INIT(aliensyn)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -1033,7 +1048,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( altbeast )
+	public static MachineHandlerPtr machine_driver_altbeast = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1041,10 +1057,13 @@ public class system16
 		MDRV_CPU_MEMORY(altbeast_readmem,altbeast_writemem)
 	
 		MDRV_MACHINE_INIT(altbeast)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( altbeas2 )
+	public static MachineHandlerPtr machine_driver_altbeas2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1052,7 +1071,9 @@ public class system16
 		MDRV_CPU_MEMORY(altbeast_readmem,altbeast_writemem)
 	
 		MDRV_MACHINE_INIT(altbeas2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -1223,7 +1244,8 @@ public class system16
 	} };
 	
 	
-	static MACHINE_DRIVER_START( atomicp )
+	public static MachineHandlerPtr machine_driver_atomicp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -1238,7 +1260,9 @@ public class system16
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_REPLACE("2151", YM2413, sys16_ym2413_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -1446,7 +1470,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( aurail )
+	public static MachineHandlerPtr machine_driver_aurail = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1454,7 +1479,9 @@ public class system16
 		MDRV_CPU_MEMORY(aurail_readmem,aurail_writemem)
 	
 		MDRV_MACHINE_INIT(aurail)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -1675,7 +1702,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( bayroute )
+	public static MachineHandlerPtr machine_driver_bayroute = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1683,7 +1711,9 @@ public class system16
 		MDRV_CPU_MEMORY(bayroute_readmem,bayroute_writemem)
 	
 		MDRV_MACHINE_INIT(bayroute)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	
@@ -1912,7 +1942,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( bodyslam )
+	public static MachineHandlerPtr machine_driver_bodyslam = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -1920,7 +1951,9 @@ public class system16
 		MDRV_CPU_MEMORY(bodyslam_readmem,bodyslam_writemem)
 	
 		MDRV_MACHINE_INIT(bodyslam)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -2097,7 +2130,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( dduxbl )
+	public static MachineHandlerPtr machine_driver_dduxbl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2105,7 +2139,9 @@ public class system16
 		MDRV_CPU_MEMORY(dduxbl_readmem,dduxbl_writemem)
 	
 		MDRV_MACHINE_INIT(dduxbl)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -2272,7 +2308,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( eswat )
+	public static MachineHandlerPtr machine_driver_eswat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -2280,7 +2317,9 @@ public class system16
 		MDRV_CPU_MEMORY(eswat_readmem,eswat_writemem)
 	
 		MDRV_MACHINE_INIT(eswat)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16A
@@ -2499,7 +2538,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( fantzono )
+	public static MachineHandlerPtr machine_driver_fantzono = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2507,10 +2547,13 @@ public class system16
 		MDRV_CPU_MEMORY(fantzono_readmem,fantzono_writemem)
 	
 		MDRV_MACHINE_INIT(fantzono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( fantzone )
+	public static MachineHandlerPtr machine_driver_fantzone = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2518,7 +2561,9 @@ public class system16
 		MDRV_CPU_MEMORY(fantzone_readmem,fantzone_writemem)
 	
 		MDRV_MACHINE_INIT(fantzone)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -2781,7 +2826,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( fpoint )
+	public static MachineHandlerPtr machine_driver_fpoint = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2789,7 +2835,9 @@ public class system16
 		MDRV_CPU_MEMORY(fpoint_readmem,fpoint_writemem)
 	
 		MDRV_MACHINE_INIT(fpoint)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -3029,7 +3077,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( goldnaxe )
+	public static MachineHandlerPtr machine_driver_goldnaxe = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -3037,7 +3086,9 @@ public class system16
 		MDRV_CPU_MEMORY(goldnaxe_readmem,goldnaxe_writemem)
 	
 		MDRV_MACHINE_INIT(goldnaxe)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -3222,7 +3273,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( goldnaxa )
+	public static MachineHandlerPtr machine_driver_goldnaxa = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -3230,7 +3282,9 @@ public class system16
 		MDRV_CPU_MEMORY(goldnaxa_readmem,goldnaxa_writemem)
 	
 		MDRV_MACHINE_INIT(goldnaxa)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -3450,7 +3504,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( hwchamp )
+	public static MachineHandlerPtr machine_driver_hwchamp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -3458,7 +3513,9 @@ public class system16
 		MDRV_CPU_MEMORY(hwchamp_readmem,hwchamp_writemem)
 	
 		MDRV_MACHINE_INIT(hwchamp)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// pre16
@@ -3688,7 +3745,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( mjleague )
+	public static MachineHandlerPtr machine_driver_mjleague = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -3696,7 +3754,9 @@ public class system16
 		MDRV_CPU_MEMORY(mjleague_readmem,mjleague_writemem)
 	
 		MDRV_MACHINE_INIT(mjleague)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -4063,7 +4123,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( passsht )
+	public static MachineHandlerPtr machine_driver_passsht = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -4071,10 +4132,13 @@ public class system16
 		MDRV_CPU_MEMORY(passsht_readmem,passsht_writemem)
 	
 		MDRV_MACHINE_INIT(passsht)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( passht4b )
+	public static MachineHandlerPtr machine_driver_passht4b = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -4082,7 +4146,9 @@ public class system16
 		MDRV_CPU_MEMORY(passht4b_readmem,passht4b_writemem)
 	
 		MDRV_MACHINE_INIT(passht4b)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// pre16
@@ -4303,7 +4369,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( quartet )
+	public static MachineHandlerPtr machine_driver_quartet = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -4311,7 +4378,9 @@ public class system16
 		MDRV_CPU_MEMORY(quartet_readmem,quartet_writemem)
 	
 		MDRV_MACHINE_INIT(quartet)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// pre16
@@ -4491,7 +4560,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( quartet2 )
+	public static MachineHandlerPtr machine_driver_quartet2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -4499,7 +4569,9 @@ public class system16
 		MDRV_CPU_MEMORY(quartet2_readmem,quartet2_writemem)
 	
 		MDRV_MACHINE_INIT(quartet2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	
@@ -4644,7 +4716,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( riotcity )
+	public static MachineHandlerPtr machine_driver_riotcity = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -4652,7 +4725,9 @@ public class system16
 		MDRV_CPU_MEMORY(riotcity_readmem,riotcity_writemem)
 	
 		MDRV_MACHINE_INIT(riotcity)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -4855,7 +4930,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( sdi )
+	public static MachineHandlerPtr machine_driver_sdi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -4863,7 +4939,9 @@ public class system16
 		MDRV_CPU_MEMORY(sdi_readmem,sdi_writemem)
 	
 		MDRV_MACHINE_INIT(sdi)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	
@@ -5027,7 +5105,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( shinobi )
+	public static MachineHandlerPtr machine_driver_shinobi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5035,7 +5114,9 @@ public class system16
 		MDRV_CPU_MEMORY(shinobi_readmem,shinobi_writemem)
 	
 		MDRV_MACHINE_INIT(shinobi)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16A
@@ -5171,7 +5252,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( shinobl )
+	public static MachineHandlerPtr machine_driver_shinobl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -5179,7 +5261,9 @@ public class system16
 		MDRV_CPU_MEMORY(shinobl_readmem,shinobl_writemem)
 	
 		MDRV_MACHINE_INIT(shinobl)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	
@@ -5337,7 +5421,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( tetris )
+	public static MachineHandlerPtr machine_driver_tetris = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -5345,7 +5430,9 @@ public class system16
 		MDRV_CPU_MEMORY(tetris_readmem,tetris_writemem)
 	
 		MDRV_MACHINE_INIT(tetris)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -5509,7 +5596,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( timscanr )
+	public static MachineHandlerPtr machine_driver_timscanr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5517,7 +5605,9 @@ public class system16
 		MDRV_CPU_MEMORY(timscanr_readmem,timscanr_writemem)
 	
 		MDRV_MACHINE_INIT(timscanr)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	
@@ -5637,7 +5727,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( toryumon )
+	public static MachineHandlerPtr machine_driver_toryumon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5645,7 +5736,9 @@ public class system16
 		MDRV_CPU_MEMORY(toryumon_readmem,toryumon_writemem)
 	
 		MDRV_MACHINE_INIT(toryumon)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	
@@ -5806,7 +5899,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( tturf )
+	public static MachineHandlerPtr machine_driver_tturf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5814,15 +5908,20 @@ public class system16
 		MDRV_CPU_MEMORY(tturf_readmem,tturf_writemem)
 	
 		MDRV_MACHINE_INIT(tturf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( tturfu )
+	public static MachineHandlerPtr machine_driver_tturfu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tturf)
 		MDRV_MACHINE_INIT(tturfu)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -5942,7 +6041,8 @@ public class system16
 	} };
 	/***************************************************************************/
 	// sound ??
-	static MACHINE_DRIVER_START( tturfbl )
+	public static MachineHandlerPtr machine_driver_tturfbl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5950,7 +6050,9 @@ public class system16
 		MDRV_CPU_MEMORY(tturfbl_readmem,tturfbl_writemem)
 	
 		MDRV_MACHINE_INIT(tturfbl)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -6101,7 +6203,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( wb3 )
+	public static MachineHandlerPtr machine_driver_wb3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -6109,7 +6212,9 @@ public class system16
 		MDRV_CPU_MEMORY(wb3_readmem,wb3_writemem)
 	
 		MDRV_MACHINE_INIT(wb3)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -6233,7 +6338,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( wb3bl )
+	public static MachineHandlerPtr machine_driver_wb3bl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -6241,7 +6347,9 @@ public class system16
 		MDRV_CPU_MEMORY(wb3bl_readmem,wb3bl_writemem)
 	
 		MDRV_MACHINE_INIT(wb3bl)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	// sys16B
@@ -6408,7 +6516,8 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( wrestwar )
+	public static MachineHandlerPtr machine_driver_wrestwar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -6416,7 +6525,9 @@ public class system16
 		MDRV_CPU_MEMORY(wrestwar_readmem,wrestwar_writemem)
 	
 		MDRV_MACHINE_INIT(wrestwar)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*****************************************************************************/
 	/* Dummy drivers for games that don't have a working clone and are protected */
@@ -6443,7 +6554,8 @@ public class system16
 	static InputPortPtr input_ports_s16dummy = new InputPortPtr(){ public void handler() { 
 	INPUT_PORTS_END(); }}; 
 	
-	static MACHINE_DRIVER_START( s16dummy )
+	public static MachineHandlerPtr machine_driver_s16dummy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -6451,7 +6563,9 @@ public class system16
 		MDRV_CPU_MEMORY(sys16_dummy_readmem,sys16_dummy_writemem)
 	
 		MDRV_MACHINE_INIT(sys16_dummy)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*****************************************************************************/
 	// Cotton

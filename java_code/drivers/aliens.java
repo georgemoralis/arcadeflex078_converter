@@ -271,7 +271,8 @@ public class aliens
 		{ aliens_snd_bankswitch_w }
 	};
 	
-	static MACHINE_DRIVER_START( aliens )
+	public static MachineHandlerPtr machine_driver_aliens = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)		/* ? */
@@ -299,7 +300,9 @@ public class aliens
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

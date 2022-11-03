@@ -178,7 +178,8 @@ public class namcond1
 	  - The level 1 interrupt to the 68k has been measured at 60Hz.
 	*******************************************/
 	
-	static MACHINE_DRIVER_START( namcond1 )
+	public static MachineHandlerPtr machine_driver_namcond1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12288000)
@@ -203,7 +204,9 @@ public class namcond1
 		MDRV_VIDEO_START(ygv608)
 		MDRV_VIDEO_UPDATE(ygv608)
 		MDRV_VIDEO_STOP(ygv608)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_ncv1 = new RomLoadPtr(){ public void handler(){ 

@@ -506,7 +506,8 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( atarig42 )
+	public static MachineHandlerPtr machine_driver_atarig42 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz)
@@ -532,7 +533,9 @@ public class atarig42
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

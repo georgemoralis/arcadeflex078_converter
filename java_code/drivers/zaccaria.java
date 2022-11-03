@@ -673,7 +673,8 @@ public class zaccaria
 	
 	
 	
-	static MACHINE_DRIVER_START( zaccaria )
+	public static MachineHandlerPtr machine_driver_zaccaria = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)	/* 3.072 MHz */
@@ -710,7 +711,9 @@ public class zaccaria
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

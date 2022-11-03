@@ -267,7 +267,8 @@ public class pcktgal
 	
 	/***************************************************************************/
 	
-	static MACHINE_DRIVER_START( pcktgal )
+	public static MachineHandlerPtr machine_driver_pcktgal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 2000000)
@@ -297,13 +298,18 @@ public class pcktgal
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bootleg )
+	public static MachineHandlerPtr machine_driver_bootleg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(pcktgal)
 		MDRV_GFXDECODE(bootleg_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	

@@ -834,7 +834,9 @@ public class cojag
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( r3knarrow )
@@ -842,7 +844,9 @@ public class cojag
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 0*8, 30*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( cojag68k )
@@ -878,7 +882,9 @@ public class cojag
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

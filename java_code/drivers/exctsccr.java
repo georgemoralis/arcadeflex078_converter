@@ -351,7 +351,8 @@ public class exctsccr
 	
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( exctsccr )
+	public static MachineHandlerPtr machine_driver_exctsccr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4.0 MHz (?) */
@@ -381,10 +382,13 @@ public class exctsccr
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* Bootleg */
-	static MACHINE_DRIVER_START( exctsccb )
+	public static MachineHandlerPtr machine_driver_exctsccb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4.0 MHz (?) */
@@ -412,7 +416,9 @@ public class exctsccr
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, bl_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, bl_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

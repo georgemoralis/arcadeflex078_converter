@@ -183,7 +183,8 @@ public class embargo
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static MACHINE_DRIVER_START( embargo )
+	public static MachineHandlerPtr machine_driver_embargo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 625000)
@@ -203,7 +204,9 @@ public class embargo
 		MDRV_VIDEO_UPDATE(embargo)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_embargo = new RomLoadPtr(){ public void handler(){ 

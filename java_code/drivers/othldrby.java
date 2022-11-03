@@ -254,7 +254,8 @@ public class othldrby
 	};
 	
 	
-	static MACHINE_DRIVER_START( othldrby )
+	public static MachineHandlerPtr machine_driver_othldrby = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -277,7 +278,9 @@ public class othldrby
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

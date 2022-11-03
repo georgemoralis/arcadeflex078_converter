@@ -1163,7 +1163,8 @@ public class segar
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( segar )
+	public static MachineHandlerPtr machine_driver_segar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 3867120)
@@ -1185,10 +1186,13 @@ public class segar
 		MDRV_PALETTE_INIT(segar)
 		MDRV_VIDEO_START(segar)
 		MDRV_VIDEO_UPDATE(segar)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( astrob )
+	public static MachineHandlerPtr machine_driver_astrob = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1201,10 +1205,13 @@ public class segar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, astrob_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spaceod )
+	public static MachineHandlerPtr machine_driver_spaceod = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1219,20 +1226,26 @@ public class segar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, spaceod_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( 005 )
+	public static MachineHandlerPtr machine_driver_005 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_005)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( monsterb )
+	public static MachineHandlerPtr machine_driver_monsterb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1254,10 +1267,13 @@ public class segar
 		MDRV_SOUND_ADD(SAMPLES, monsterb_samples_interface)
 		MDRV_SOUND_ADD(TMS36XX, monsterb_tms3617_interface)
 		MDRV_SOUND_ADD(DAC,     monsterb_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pignewt )
+	public static MachineHandlerPtr machine_driver_pignewt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1269,10 +1285,13 @@ public class segar
 	
 		MDRV_VIDEO_START(monsterb)
 		MDRV_VIDEO_UPDATE(sindbadm)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sindbadm )
+	public static MachineHandlerPtr machine_driver_sindbadm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ? */
@@ -1302,7 +1321,9 @@ public class segar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

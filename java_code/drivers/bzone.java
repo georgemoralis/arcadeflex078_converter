@@ -716,7 +716,8 @@ public class bzone
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( bzone )
+	public static MachineHandlerPtr machine_driver_bzone = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 1500000)
@@ -738,20 +739,26 @@ public class bzone
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("pokey",  POKEY,  bzone_pokey_interface)
 		MDRV_SOUND_ADD_TAG("custom", CUSTOM, bzone_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bradley )
+	public static MachineHandlerPtr machine_driver_bradley = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bzone)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey",  POKEY,  bradley_pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( redbaron )
+	public static MachineHandlerPtr machine_driver_redbaron = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bzone)
@@ -770,7 +777,9 @@ public class bzone
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey",  POKEY,  redbaron_pokey_interface)
 		MDRV_SOUND_REPLACE("custom", CUSTOM, redbaron_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

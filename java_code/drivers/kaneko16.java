@@ -2723,7 +2723,8 @@ public class kaneko16
 		6-7]	rte
 	*/
 	
-	static MACHINE_DRIVER_START( berlwall )
+	public static MachineHandlerPtr machine_driver_berlwall = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* MC68000P12 */
@@ -2750,14 +2751,17 @@ public class kaneko16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(AY8910, ay8910_intf_2x1MHz_DSW)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_12kHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
 								Bakuretsu Breaker
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( bakubrkr )
+	public static MachineHandlerPtr machine_driver_bakubrkr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* TMP68HC000-12 */
@@ -2783,7 +2787,9 @@ public class kaneko16
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_intf_2x2MHz_EEPROM)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_8kHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -2800,7 +2806,8 @@ public class kaneko16
 			6-7]	busy loop
 	*/
 	
-	static MACHINE_DRIVER_START( blazeon )
+	public static MachineHandlerPtr machine_driver_blazeon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000)	/* TMP68HC000-12 */
@@ -2829,7 +2836,9 @@ public class kaneko16
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_intf_blazeon)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -2847,7 +2856,8 @@ public class kaneko16
 		VIDEO_UPDATE_AFTER_VBLANK fixes the mangled/wrong colored sprites
 	*/
 	
-	static MACHINE_DRIVER_START( gtmr )
+	public static MachineHandlerPtr machine_driver_gtmr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("gtmr", M68000, 16000000)	/* ? Most likely a 68000-HC16 */
@@ -2871,13 +2881,16 @@ public class kaneko16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_2x12kHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 									Blood Warrior
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( bloodwar )
+	public static MachineHandlerPtr machine_driver_bloodwar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gtmr)
@@ -2886,36 +2899,45 @@ public class kaneko16
 	
 		MDRV_MACHINE_INIT( bloodwar )
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 								Great 1000 Miles Rally 2
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( gtmr2 )
+	public static MachineHandlerPtr machine_driver_gtmr2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gtmr)
 		MDRV_CPU_MODIFY("gtmr")
 		MDRV_CPU_MEMORY(gtmr2_readmem,gtmr_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 								Bonks Adventure
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( bonkadv )
+	public static MachineHandlerPtr machine_driver_bonkadv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gtmr)
 		MDRV_NVRAM_HANDLER(93C46)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 									Magical Crystal
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( mgcrystl )
+	public static MachineHandlerPtr machine_driver_mgcrystl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -2941,7 +2963,9 @@ public class kaneko16
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_intf_2x2MHz_EEPROM)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_18kHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -2968,7 +2992,8 @@ public class kaneko16
 	};
 	
 	
-	static MACHINE_DRIVER_START( sandscrp )
+	public static MachineHandlerPtr machine_driver_sandscrp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000)	/* TMP68HC000N-12 */
@@ -2999,7 +3024,9 @@ public class kaneko16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_15kHz)
 		MDRV_SOUND_ADD(YM2203, ym2203_intf_sandscrp)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -3029,7 +3056,8 @@ public class kaneko16
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( shogwarr )
+	public static MachineHandlerPtr machine_driver_shogwarr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3053,7 +3081,9 @@ public class kaneko16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_2x12kHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

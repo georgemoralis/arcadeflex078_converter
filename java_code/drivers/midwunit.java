@@ -597,7 +597,8 @@ public class midwunit
 		nbamaxht: 0014-0112 / 0120 (254)     0065-001F5 / 01F9 (400)
 	*/
 	
-	static MACHINE_DRIVER_START( wunit )
+	public static MachineHandlerPtr machine_driver_wunit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_CPU_ADD(TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
 		MDRV_CPU_CONFIG(cpu_config)
@@ -619,7 +620,9 @@ public class midwunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -281,7 +281,8 @@ public class blmbycar
 		{ 100 }
 	};
 	
-	static MACHINE_DRIVER_START( blmbycar )
+	public static MachineHandlerPtr machine_driver_blmbycar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* ? */
@@ -304,7 +305,9 @@ public class blmbycar
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, blmbycar_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -339,7 +339,8 @@ public class deniam
 	
 	
 	
-	static MACHINE_DRIVER_START( deniam16b )
+	public static MachineHandlerPtr machine_driver_deniam16b = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,25000000/2)	/* ??? */
@@ -368,9 +369,12 @@ public class deniam
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( deniam16c )
+	public static MachineHandlerPtr machine_driver_deniam16c = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,25000000/2)	/* ??? */
@@ -395,7 +399,9 @@ public class deniam
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

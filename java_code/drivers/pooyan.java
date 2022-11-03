@@ -233,7 +233,8 @@ public class pooyan
 	
 	
 	
-	static MACHINE_DRIVER_START( pooyan )
+	public static MachineHandlerPtr machine_driver_pooyan = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -261,7 +262,9 @@ public class pooyan
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, timeplt_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

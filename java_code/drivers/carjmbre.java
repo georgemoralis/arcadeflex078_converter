@@ -204,7 +204,8 @@ public class carjmbre
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static MACHINE_DRIVER_START( carjmbre )
+	public static MachineHandlerPtr machine_driver_carjmbre = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)
@@ -234,7 +235,9 @@ public class carjmbre
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, carjmbre_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_carjmbre = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )

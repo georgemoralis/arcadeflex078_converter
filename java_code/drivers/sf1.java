@@ -829,7 +829,8 @@ public class sf1
 		{ 100, 100 }
 	};
 	
-	static MACHINE_DRIVER_START( sf1 )
+	public static MachineHandlerPtr machine_driver_sf1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 8000000)	/* 8 MHz ? (xtal is 16MHz) */
@@ -863,34 +864,45 @@ public class sf1
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sf1us )
+	public static MachineHandlerPtr machine_driver_sf1us = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sf1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmemus,writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sf1jp )
+	public static MachineHandlerPtr machine_driver_sf1jp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sf1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmemjp,writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sf1p )
+	public static MachineHandlerPtr machine_driver_sf1p = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sf1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_sf1 = new RomLoadPtr(){ public void handler(){ 

@@ -2065,7 +2065,8 @@ public class nbmj8688
 	
 	
 	
-	static MACHINE_DRIVER_START( NBMJDRV_4096 )
+	public static MachineHandlerPtr machine_driver_NBMJDRV_4096 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 5000000)	/* 5.00 MHz */
@@ -2089,10 +2090,13 @@ public class nbmj8688
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("8910", AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( NBMJDRV_256 )
+	public static MachineHandlerPtr machine_driver_NBMJDRV_256 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2102,10 +2106,13 @@ public class nbmj8688
 	
 		MDRV_PALETTE_INIT(mbmj8688_8bit)
 		MDRV_VIDEO_START(mbmj8688_8bit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( NBMJDRV_65536 )
+	public static MachineHandlerPtr machine_driver_NBMJDRV_65536 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2116,12 +2123,15 @@ public class nbmj8688
 	
 		MDRV_PALETTE_INIT(mbmj8688_16bit)
 		MDRV_VIDEO_START(mbmj8688_hybrid_16bit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	// --------------------------------------------------------------------------------
 	
-	static MACHINE_DRIVER_START( crystalg )
+	public static MachineHandlerPtr machine_driver_crystalg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_256)
@@ -2129,10 +2139,13 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_crystal2)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,96)	// nmiclock = 2f
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( apparel )
+	public static MachineHandlerPtr machine_driver_apparel = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_256)
@@ -2140,10 +2153,13 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_secolove)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mbmj_h12bit )
+	public static MachineHandlerPtr machine_driver_mbmj_h12bit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2154,10 +2170,13 @@ public class nbmj8688
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mbmj8688_hybrid_12bit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mbmj_p16bit )
+	public static MachineHandlerPtr machine_driver_mbmj_p16bit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2168,10 +2187,13 @@ public class nbmj8688
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mbmj8688_pure_16bit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mbmj_p16bit_LCD )
+	public static MachineHandlerPtr machine_driver_mbmj_p16bit_LCD = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mbmj_p16bit)
@@ -2185,10 +2207,13 @@ public class nbmj8688
 	
 		MDRV_VIDEO_START(mbmj8688_pure_16bit_LCD)
 		MDRV_VIDEO_UPDATE(mbmj8688_LCD)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( seiha )
+	public static MachineHandlerPtr machine_driver_seiha = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2196,10 +2221,13 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_seiha)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( iemoto )
+	public static MachineHandlerPtr machine_driver_iemoto = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2207,10 +2235,13 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_iemoto)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ojousan )
+	public static MachineHandlerPtr machine_driver_ojousan = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2218,10 +2249,13 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_ojousan,writemem_ojousan)
 		MDRV_CPU_PORTS(readport_secolove,writeport_iemoto)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mbmj_p12bit )
+	public static MachineHandlerPtr machine_driver_mbmj_p12bit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2229,10 +2263,13 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_mjsikaku,writemem_mjsikaku)
 		MDRV_CPU_PORTS(readport_kaguya,writeport_kaguya)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjsikaku )
+	public static MachineHandlerPtr machine_driver_mjsikaku = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2243,16 +2280,21 @@ public class nbmj8688
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( otonano )
+	public static MachineHandlerPtr machine_driver_otonano = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mjsikaku)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_otonano,writeport_otonano)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -360,7 +360,8 @@ public class wwfsstar
 	 Clock Speeds are currently Unknown
 	*******************************************************************************/
 	
-	static MACHINE_DRIVER_START( wwfsstar )
+	public static MachineHandlerPtr machine_driver_wwfsstar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* unknown */
@@ -388,7 +389,9 @@ public class wwfsstar
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*******************************************************************************
 	 Rom Loaders / Game Drivers

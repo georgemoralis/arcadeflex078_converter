@@ -567,7 +567,8 @@ public class vendetta
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( vendetta )
+	public static MachineHandlerPtr machine_driver_vendetta = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", KONAMI, 6000000)		/* ? */
@@ -597,10 +598,13 @@ public class vendetta
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( esckids )
+	public static MachineHandlerPtr machine_driver_esckids = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(vendetta)
@@ -609,7 +613,9 @@ public class vendetta
 	
 		MDRV_VIDEO_START(esckids)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

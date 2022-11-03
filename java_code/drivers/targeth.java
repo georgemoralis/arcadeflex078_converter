@@ -195,7 +195,8 @@ public class targeth
 		{ 100 }				/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( targeth )
+	public static MachineHandlerPtr machine_driver_targeth = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -217,7 +218,9 @@ public class targeth
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, targeth_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_targeth = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */

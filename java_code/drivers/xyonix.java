@@ -257,7 +257,8 @@ public class xyonix
 	};
 	
 	
-	static MACHINE_DRIVER_START( xyonix )
+	public static MachineHandlerPtr machine_driver_xyonix = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,16000000 / 4)		 /* 4 MHz ? */
@@ -282,7 +283,9 @@ public class xyonix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* ROM Loading ***************************************************************/
 	

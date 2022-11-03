@@ -256,7 +256,8 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( skullxbo )
+	public static MachineHandlerPtr machine_driver_skullxbo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -281,7 +282,9 @@ public class skullxbo
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_ii_mono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

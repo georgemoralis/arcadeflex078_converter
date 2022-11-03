@@ -614,7 +614,8 @@ public class rainbow
 	                      MACHINE DRIVERS
 	***********************************************************/
 	
-	static MACHINE_DRIVER_START( rainbow )
+	public static MachineHandlerPtr machine_driver_rainbow = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -640,10 +641,13 @@ public class rainbow
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( jumping )
+	public static MachineHandlerPtr machine_driver_jumping = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -669,7 +673,9 @@ public class rainbow
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -203,7 +203,8 @@ public class thoop2
 		{ 100 }				/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( thoop2 )
+	public static MachineHandlerPtr machine_driver_thoop2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -225,7 +226,9 @@ public class thoop2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, thoop2_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_thoop2 = new RomLoadPtr(){ public void handler(){ 

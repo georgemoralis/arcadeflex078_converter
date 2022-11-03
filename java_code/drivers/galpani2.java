@@ -500,7 +500,8 @@ public class galpani2
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( galpani2 )
+	public static MachineHandlerPtr machine_driver_galpani2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16MHz */
@@ -532,7 +533,9 @@ public class galpani2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, galpani2_okim6295_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

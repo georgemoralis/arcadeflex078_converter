@@ -400,7 +400,8 @@ public class psikyo4
 		{ irqhandler }
 	};
 	
-	static MACHINE_DRIVER_START( ps4big )
+	public static MachineHandlerPtr machine_driver_ps4big = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", SH2, MASTER_CLOCK/2)
 		MDRV_CPU_MEMORY(ps4_readmem,ps4_writemem)
@@ -432,9 +433,12 @@ public class psikyo4
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF278B, ymf278b_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ps4small )
+	public static MachineHandlerPtr machine_driver_ps4small = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ps4big)
 	
@@ -443,7 +447,9 @@ public class psikyo4
 	#else
 		MDRV_VISIBLE_AREA(0, 40*8-1, 0, 30*8-1)
 	#endif
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

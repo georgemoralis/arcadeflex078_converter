@@ -1409,7 +1409,8 @@ public class m62
 	
 	
 	
-	static MACHINE_DRIVER_START( ldrun )
+	public static MachineHandlerPtr machine_driver_ldrun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 24000000/6)
@@ -1433,10 +1434,13 @@ public class m62
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( kungfum )
+	public static MachineHandlerPtr machine_driver_kungfum = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1449,10 +1453,13 @@ public class m62
 	
 		MDRV_VIDEO_START(kungfum)
 		MDRV_VIDEO_UPDATE(kungfum)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( battroad )
+	public static MachineHandlerPtr machine_driver_battroad = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1468,20 +1475,26 @@ public class m62
 		MDRV_PALETTE_INIT(battroad)
 		MDRV_VIDEO_START(battroad)
 		MDRV_VIDEO_UPDATE(battroad)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ldrun2 )
+	public static MachineHandlerPtr machine_driver_ldrun2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(ldrun2_readmem,ldrun2_writemem)
 		MDRV_CPU_PORTS(ldrun2_readport,ldrun2_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ldrun3 )
+	public static MachineHandlerPtr machine_driver_ldrun3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1491,10 +1504,13 @@ public class m62
 	
 		/* video hardware */
 		MDRV_GFXDECODE(ldrun3_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ldrun4 )
+	public static MachineHandlerPtr machine_driver_ldrun4 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1506,10 +1522,13 @@ public class m62
 		MDRV_GFXDECODE(ldrun3_gfxdecodeinfo)
 		MDRV_VIDEO_START(ldrun4)
 		MDRV_VIDEO_UPDATE(ldrun4)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( lotlot )
+	public static MachineHandlerPtr machine_driver_lotlot = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1522,10 +1541,13 @@ public class m62
 	
 		MDRV_VIDEO_START(lotlot)
 		MDRV_VIDEO_UPDATE(lotlot)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( kidniki )
+	public static MachineHandlerPtr machine_driver_kidniki = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1538,10 +1560,13 @@ public class m62
 	
 		MDRV_VIDEO_START(kidniki)
 		MDRV_VIDEO_UPDATE(kidniki)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spelunkr )
+	public static MachineHandlerPtr machine_driver_spelunkr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1553,10 +1578,13 @@ public class m62
 	
 		MDRV_VIDEO_START(spelunkr)
 		MDRV_VIDEO_UPDATE(spelunkr)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spelunk2 )
+	public static MachineHandlerPtr machine_driver_spelunk2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1570,10 +1598,13 @@ public class m62
 		MDRV_PALETTE_INIT(spelunk2)
 		MDRV_VIDEO_START(spelunk2)
 		MDRV_VIDEO_UPDATE(spelunk2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( youjyudn )
+	public static MachineHandlerPtr machine_driver_youjyudn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1587,10 +1618,13 @@ public class m62
 	
 		MDRV_VIDEO_START(youjyudn)
 		MDRV_VIDEO_UPDATE(youjyudn)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( horizon )
+	public static MachineHandlerPtr machine_driver_horizon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1602,7 +1636,9 @@ public class m62
 	
 		MDRV_VIDEO_START(horizon)
 		MDRV_VIDEO_UPDATE(horizon)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -770,7 +770,8 @@ public class freekick
 	
 	
 	
-	static MACHINE_DRIVER_START( pbillrd )
+	public static MachineHandlerPtr machine_driver_pbillrd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80, 12000000/2)	/* 6 MHz? */
 		MDRV_CPU_MEMORY(pbillrd_readmem,pbillrd_writemem)
 		MDRV_CPU_PERIODIC_INT(irq0_line_pulse,60*3) //??
@@ -792,9 +793,12 @@ public class freekick
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( freekckb )
+	public static MachineHandlerPtr machine_driver_freekckb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80, 12000000/2)	/* 6 MHz? */
 		MDRV_CPU_MEMORY(freekckb_readmem,freekckb_writemem)
 		MDRV_CPU_PORTS(freekckb_readport,freekckb_writeport)
@@ -818,9 +822,12 @@ public class freekick
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gigas )
+	public static MachineHandlerPtr machine_driver_gigas = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD_TAG("main",Z80, 18432000/6)	//confirmed
 		MDRV_CPU_MEMORY(gigas_readmem,gigas_writemem)
 		MDRV_CPU_PORTS(gigas_readport,gigas_writeport)
@@ -843,13 +850,18 @@ public class freekick
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( oigas )
+	public static MachineHandlerPtr machine_driver_oigas = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(gigas)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(oigas_readport,oigas_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* roms */
 	

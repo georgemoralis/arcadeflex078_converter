@@ -628,7 +628,8 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( gyrodine )
+	public static MachineHandlerPtr machine_driver_gyrodine = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18432000 / 4)	/* 18.432 MHz crystal */
@@ -660,18 +661,24 @@ public class kyugo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( sonofphx )
+	public static MachineHandlerPtr machine_driver_sonofphx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gyrodine)
 		MDRV_CPU_MODIFY("sub")
 		MDRV_CPU_MEMORY(sonofphx_sub_readmem,sonofphx_sub_writemem)
 		MDRV_CPU_PORTS(sonofphx_sub_readport,sonofphx_sub_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( srdmissn )
+	public static MachineHandlerPtr machine_driver_srdmissn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gyrodine)
@@ -681,24 +688,32 @@ public class kyugo
 		MDRV_CPU_MODIFY("sub")
 		MDRV_CPU_MEMORY(srdmissn_sub_readmem,srdmissn_sub_writemem)
 		MDRV_CPU_PORTS(srdmissn_sub_readport,srdmissn_sub_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( flashgal )
+	public static MachineHandlerPtr machine_driver_flashgal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sonofphx)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(0,flashgal_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( legend )
+	public static MachineHandlerPtr machine_driver_legend = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gyrodine)
 		MDRV_CPU_MODIFY("sub")
 		MDRV_CPU_MEMORY(legend_sub_readmem,legend_sub_writemem)
 		MDRV_CPU_PORTS(srdmissn_sub_readport,srdmissn_sub_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************

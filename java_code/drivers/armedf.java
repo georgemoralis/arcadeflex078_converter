@@ -797,7 +797,8 @@ public class armedf
 	
 	
 	
-	static MACHINE_DRIVER_START( terraf )
+	public static MachineHandlerPtr machine_driver_terraf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -827,9 +828,12 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( kodure )
+	public static MachineHandlerPtr machine_driver_kodure = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -859,9 +863,12 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( armedf )
+	public static MachineHandlerPtr machine_driver_armedf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -891,9 +898,12 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( cclimbr2 )
+	public static MachineHandlerPtr machine_driver_cclimbr2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -923,7 +933,9 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, cclimbr2_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_legion = new RomLoadPtr(){ public void handler(){ 

@@ -267,7 +267,8 @@ public class speedbal
 	
 	
 	
-	static MACHINE_DRIVER_START( speedbal )
+	public static MachineHandlerPtr machine_driver_speedbal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz ??? */
@@ -295,7 +296,9 @@ public class speedbal
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

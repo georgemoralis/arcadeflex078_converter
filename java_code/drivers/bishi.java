@@ -229,7 +229,8 @@ public class bishi
 		{ sound_irq_gen }
 	};
 	
-	static MACHINE_DRIVER_START( bishi )
+	public static MachineHandlerPtr machine_driver_bishi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -254,7 +255,9 @@ public class bishi
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	// ROM definitions
 	

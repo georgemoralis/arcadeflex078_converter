@@ -279,7 +279,8 @@ public class skyraid
 	};
 	
 	
-	static MACHINE_DRIVER_START( skyraid )
+	public static MachineHandlerPtr machine_driver_skyraid = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 12)
@@ -302,7 +303,9 @@ public class skyraid
 		MDRV_VIDEO_UPDATE(skyraid)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_skyraid = new RomLoadPtr(){ public void handler(){ 

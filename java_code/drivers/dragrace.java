@@ -523,7 +523,8 @@ public class dragrace
 	DISCRETE_SOUND_END
 	
 	
-	static MACHINE_DRIVER_START( dragrace )
+	public static MachineHandlerPtr machine_driver_dragrace = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 12096000 / 12)
@@ -548,7 +549,9 @@ public class dragrace
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, dragrace_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_dragrace = new RomLoadPtr(){ public void handler(){ 

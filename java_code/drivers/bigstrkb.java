@@ -239,7 +239,8 @@ public class bigstrkb
 		{ MIXER(30,MIXER_PAN_LEFT), MIXER(30,MIXER_PAN_RIGHT) }
 	};
 	
-	static MACHINE_DRIVER_START( bigstrkb )
+	public static MachineHandlerPtr machine_driver_bigstrkb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(bigstrkb_readmem,bigstrkb_writemem)
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -262,7 +263,9 @@ public class bigstrkb
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	//	MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* Rom Loading */
 	

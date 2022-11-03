@@ -316,7 +316,8 @@ public class irobot
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( irobot )
+	public static MachineHandlerPtr machine_driver_irobot = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,1500000)
@@ -342,7 +343,9 @@ public class irobot
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

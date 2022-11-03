@@ -261,7 +261,8 @@ public class paradise
 		{ 50,50 }
 	};
 	
-	static MACHINE_DRIVER_START( paradise )
+	public static MachineHandlerPtr machine_driver_paradise = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)			/* Z8400B */
@@ -285,7 +286,9 @@ public class paradise
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, paradise_okim6295_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

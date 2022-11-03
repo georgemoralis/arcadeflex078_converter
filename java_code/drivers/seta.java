@@ -6055,7 +6055,8 @@ public class seta
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( tndrcade )
+	public static MachineHandlerPtr machine_driver_tndrcade = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6083,7 +6084,9 @@ public class seta
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, tndrcade_ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -6097,7 +6100,8 @@ public class seta
 	
 	/* twineagl lev 3 = lev 2 + lev 1 ! */
 	
-	static MACHINE_DRIVER_START( twineagl )
+	public static MachineHandlerPtr machine_driver_twineagl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6124,7 +6128,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -6134,7 +6140,8 @@ public class seta
 	
 	/* downtown lev 3 = lev 2 + lev 1 ! */
 	
-	static MACHINE_DRIVER_START( downtown )
+	public static MachineHandlerPtr machine_driver_downtown = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6161,7 +6168,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_8MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -6189,7 +6198,8 @@ public class seta
 	} };
 	
 	
-	static MACHINE_DRIVER_START( usclssic )
+	public static MachineHandlerPtr machine_driver_usclssic = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6218,7 +6228,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD( X1_010, seta_sound_intf_16MHz2 )
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -6230,7 +6242,8 @@ public class seta
 		Test mode shows a 16ms and 4ms counters. I wonder if every game has
 		5 ints per frame */
 	
-	static MACHINE_DRIVER_START( calibr50 )
+	public static MachineHandlerPtr machine_driver_calibr50 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6257,7 +6270,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -6266,7 +6281,8 @@ public class seta
 	
 	/* metafox lev 3 = lev 2 + lev 1 ! */
 	
-	static MACHINE_DRIVER_START( metafox )
+	public static MachineHandlerPtr machine_driver_metafox = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6293,7 +6309,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -6304,7 +6322,8 @@ public class seta
 									Athena no Hatena?
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( atehate )
+	public static MachineHandlerPtr machine_driver_atehate = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6327,7 +6346,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -6340,7 +6361,8 @@ public class seta
 		samples are bankswitched
 	*/
 	
-	static MACHINE_DRIVER_START( blandia )
+	public static MachineHandlerPtr machine_driver_blandia = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6367,9 +6389,12 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( blandiap )
+	public static MachineHandlerPtr machine_driver_blandiap = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6395,14 +6420,17 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
 									Block Carnival
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( blockcar )
+	public static MachineHandlerPtr machine_driver_blockcar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -6425,14 +6453,17 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
 									Daioh
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( daioh )
+	public static MachineHandlerPtr machine_driver_daioh = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6455,7 +6486,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 					Dragon Unit, Quiz Kokology, Strike Gunner
@@ -6467,7 +6500,8 @@ public class seta
 		lev 2 drives the game
 	*/
 	
-	static MACHINE_DRIVER_START( drgnunit )
+	public static MachineHandlerPtr machine_driver_drgnunit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -6491,12 +6525,15 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*	Same as qzkklogy, but with a 16MHz CPU and different
 		layout for the layer's tiles	*/
 	
-	static MACHINE_DRIVER_START( qzkklgy2 )
+	public static MachineHandlerPtr machine_driver_qzkklgy2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6520,14 +6557,17 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
 									Eight Force
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( eightfrc )
+	public static MachineHandlerPtr machine_driver_eightfrc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6550,7 +6590,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -6562,7 +6604,8 @@ public class seta
 		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
 		lev 2 drives the game
 	*/
-	static MACHINE_DRIVER_START( extdwnhl )
+	public static MachineHandlerPtr machine_driver_extdwnhl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6587,7 +6630,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -6611,7 +6656,8 @@ public class seta
 		lev 2: VBlank
 		lev 4: Sound (generated by a timer mapped at $d00000-6 ?)
 	*/
-	static MACHINE_DRIVER_START( gundhara )
+	public static MachineHandlerPtr machine_driver_gundhara = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6646,7 +6692,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -6657,7 +6705,8 @@ public class seta
 		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
 		lev 2 drives the game
 	*/
-	static MACHINE_DRIVER_START( jjsquawk )
+	public static MachineHandlerPtr machine_driver_jjsquawk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6682,14 +6731,17 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 					(Kamen) Masked Riders Club Battle Race
 	***************************************************************************/
 	
 	/*	kamenrid: lev 2 by vblank, lev 4 by timer */
-	static MACHINE_DRIVER_START( kamenrid )
+	public static MachineHandlerPtr machine_driver_kamenrid = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6717,14 +6769,17 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz) // ?
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
 									Krazy Bowl
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( krzybowl )
+	public static MachineHandlerPtr machine_driver_krzybowl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6747,7 +6802,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -6755,7 +6812,8 @@ public class seta
 	***************************************************************************/
 	
 	/*	madshark: lev 2 by vblank, lev 4 by timer */
-	static MACHINE_DRIVER_START( madshark )
+	public static MachineHandlerPtr machine_driver_madshark = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6787,7 +6845,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 								Mobile Suit Gundam
@@ -6795,7 +6855,8 @@ public class seta
 	
 	/* msgundam lev 2 == lev 6 ! */
 	
-	static MACHINE_DRIVER_START( msgundam )
+	public static MachineHandlerPtr machine_driver_msgundam = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6828,7 +6889,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -6836,7 +6899,8 @@ public class seta
 								Oishii Puzzle
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( oisipuzl )
+	public static MachineHandlerPtr machine_driver_oisipuzl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6859,7 +6923,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 								Triple Fun
@@ -6875,7 +6941,8 @@ public class seta
 		{ 100 }
 	};
 	
-	static MACHINE_DRIVER_START( triplfun )
+	public static MachineHandlerPtr machine_driver_triplfun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6898,13 +6965,16 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 								Pro Mahjong Kiwame
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( kiwame )
+	public static MachineHandlerPtr machine_driver_kiwame = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6927,7 +6997,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -6937,7 +7009,8 @@ public class seta
 	
 	/* pretty much like wrofaero, but ints are 1&2, not 2&4 */
 	
-	static MACHINE_DRIVER_START( rezon )
+	public static MachineHandlerPtr machine_driver_rezon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6960,7 +7033,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -6970,7 +7045,8 @@ public class seta
 	
 	/*	thunderl lev 2 = lev 3 - other levels lead to an error */
 	
-	static MACHINE_DRIVER_START( thunderl )
+	public static MachineHandlerPtr machine_driver_thunderl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -6993,9 +7069,12 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( wits )
+	public static MachineHandlerPtr machine_driver_wits = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -7018,7 +7097,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -7026,7 +7107,8 @@ public class seta
 						Ultraman Club / SD Gundam Neo Battling
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( umanclub )
+	public static MachineHandlerPtr machine_driver_umanclub = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7049,14 +7131,17 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
 								Ultra Toukond Densetsu
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( utoukond )
+	public static MachineHandlerPtr machine_driver_utoukond = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7086,14 +7171,17 @@ public class seta
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
 		MDRV_SOUND_ADD(YM2612, utoukond_ym3438_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
 									War of Aero
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( wrofaero )
+	public static MachineHandlerPtr machine_driver_wrofaero = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7125,7 +7213,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -7139,7 +7229,8 @@ public class seta
 	   at int 1 is necessary: it plays the background music.
 	*/
 	
-	static MACHINE_DRIVER_START( zingzip )
+	public static MachineHandlerPtr machine_driver_zingzip = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7164,7 +7255,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

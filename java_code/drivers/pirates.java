@@ -298,7 +298,8 @@ public class pirates
 	
 	
 	
-	static MACHINE_DRIVER_START( pirates )
+	public static MachineHandlerPtr machine_driver_pirates = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 16000000) /* 16mhz */
 		MDRV_CPU_MEMORY(pirates_readmem,pirates_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -319,7 +320,9 @@ public class pirates
 		MDRV_VIDEO_UPDATE(pirates)
 	
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

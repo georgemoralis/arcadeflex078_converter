@@ -780,7 +780,8 @@ public class topspeed
 	                     MACHINE DRIVERS
 	***********************************************************/
 	
-	static MACHINE_DRIVER_START( topspeed )
+	public static MachineHandlerPtr machine_driver_topspeed = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -811,7 +812,9 @@ public class topspeed
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

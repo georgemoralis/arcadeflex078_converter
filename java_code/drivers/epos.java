@@ -394,7 +394,8 @@ public class epos
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( epos )
+	public static MachineHandlerPtr machine_driver_epos = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 11000000/4)	/* 2.75 MHz (see notes) */
@@ -417,10 +418,13 @@ public class epos
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dealer )
+	public static MachineHandlerPtr machine_driver_dealer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 11000000/4)	/* 2.75 MHz (see notes) */
 		MDRV_CPU_MEMORY(dealer_readmem,dealer_writemem)
@@ -443,7 +447,9 @@ public class epos
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************

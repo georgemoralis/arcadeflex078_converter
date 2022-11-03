@@ -298,7 +298,8 @@ public class hexion
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( hexion )
+	public static MachineHandlerPtr machine_driver_hexion = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,24000000/4)	/* Z80B 6 MHz */
@@ -322,7 +323,9 @@ public class hexion
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(K051649, k051649_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

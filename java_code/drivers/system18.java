@@ -661,7 +661,8 @@ public class system18
 	
 	/*****************************************************************************/
 	
-	static MACHINE_DRIVER_START( system18 )
+	public static MachineHandlerPtr machine_driver_system18 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 10000000)
@@ -689,10 +690,13 @@ public class system18
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("3438", YM3438, sys18_ym3438_interface)
 		MDRV_SOUND_ADD_TAG("5c68", RF5C68, sys18_rf5c68_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( astorm )
+	public static MachineHandlerPtr machine_driver_astorm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -700,10 +704,13 @@ public class system18
 		MDRV_CPU_MEMORY(astorm_readmem,astorm_writemem)
 	
 		MDRV_MACHINE_INIT(astorm)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( moonwalk )
+	public static MachineHandlerPtr machine_driver_moonwalk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -711,10 +718,13 @@ public class system18
 		MDRV_CPU_MEMORY(moonwalk_readmem,moonwalk_writemem)
 	
 		MDRV_MACHINE_INIT(moonwalk)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( shdancer )
+	public static MachineHandlerPtr machine_driver_shdancer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -722,10 +732,13 @@ public class system18
 		MDRV_CPU_MEMORY(shdancer_readmem,shdancer_writemem)
 	
 		MDRV_MACHINE_INIT(shdancer)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( shdancbl )
+	public static MachineHandlerPtr machine_driver_shdancbl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -733,16 +746,21 @@ public class system18
 		MDRV_CPU_MEMORY(shdancbl_readmem,shdancbl_writemem)
 	
 		MDRV_MACHINE_INIT(shdancbl)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( shdancrj )
+	public static MachineHandlerPtr machine_driver_shdancrj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(shdancer)
 	
 		MDRV_MACHINE_INIT(shdancrj)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************/

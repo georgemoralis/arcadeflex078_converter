@@ -507,7 +507,8 @@ public class angelkds
 	
 	*/
 	
-	static MACHINE_DRIVER_START( angelkds )
+	public static MachineHandlerPtr machine_driver_angelkds = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80, 8000000) /* 8MHz? 6 seems too slow? */
 		MDRV_CPU_MEMORY(readmem_main,writemem_main)
 		MDRV_CPU_PORTS(readport_main,writeport_main)
@@ -533,7 +534,9 @@ public class angelkds
 		MDRV_VIDEO_UPDATE(angelkds)
 	
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*** Rom Loading
 	

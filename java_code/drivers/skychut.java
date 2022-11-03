@@ -189,7 +189,8 @@ public class skychut
 	};
 	
 	
-	static MACHINE_DRIVER_START( skychut )
+	public static MachineHandlerPtr machine_driver_skychut = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,20000000/8)
@@ -212,10 +213,13 @@ public class skychut
 		MDRV_VIDEO_UPDATE(skychut)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( greenberet )
+	public static MachineHandlerPtr machine_driver_greenberet = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,20000000/8)
@@ -237,7 +241,9 @@ public class skychut
 		MDRV_VIDEO_UPDATE(iremm15)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

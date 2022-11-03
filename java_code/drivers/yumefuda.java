@@ -199,7 +199,8 @@ public class yumefuda
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static MACHINE_DRIVER_START( yumefuda )
+	public static MachineHandlerPtr machine_driver_yumefuda = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80 , 6000000)/*???*/
@@ -222,7 +223,9 @@ public class yumefuda
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************************/
 	

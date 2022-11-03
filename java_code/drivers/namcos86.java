@@ -1211,7 +1211,8 @@ public class namcos86
 	} };
 	
 	
-	static MACHINE_DRIVER_START( hopmappy )
+	public static MachineHandlerPtr machine_driver_hopmappy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("cpu1", M6809, 6000000/4)	/*49152000/32, rthunder doesn't work with this */
@@ -1250,10 +1251,13 @@ public class namcos86
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( skykiddx )
+	public static MachineHandlerPtr machine_driver_skykiddx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1262,10 +1266,13 @@ public class namcos86
 	
 		MDRV_CPU_MODIFY("mcu")
 		MDRV_CPU_MEMORY(skykiddx_mcu_readmem,skykiddx_mcu_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( roishtar )
+	public static MachineHandlerPtr machine_driver_roishtar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1274,10 +1281,13 @@ public class namcos86
 	
 		MDRV_CPU_MODIFY("mcu")
 		MDRV_CPU_MEMORY(roishtar_mcu_readmem,roishtar_mcu_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( genpeitd )
+	public static MachineHandlerPtr machine_driver_genpeitd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1289,10 +1299,13 @@ public class namcos86
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_1024)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( rthunder )
+	public static MachineHandlerPtr machine_driver_rthunder = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1304,10 +1317,13 @@ public class namcos86
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_512)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( wndrmomo )
+	public static MachineHandlerPtr machine_driver_wndrmomo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1319,7 +1335,9 @@ public class namcos86
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_512)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

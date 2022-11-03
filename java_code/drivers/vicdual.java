@@ -1204,7 +1204,8 @@ public class vicdual
 	};
 	
 	
-	static MACHINE_DRIVER_START( 2ports )
+	public static MachineHandlerPtr machine_driver_2ports = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 15468480/8)
@@ -1226,75 +1227,98 @@ public class vicdual
 		MDRV_VIDEO_UPDATE(vicdual)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( 3ports )
+	public static MachineHandlerPtr machine_driver_3ports = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_3ports,writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( 4ports )
+	public static MachineHandlerPtr machine_driver_4ports = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_4ports,writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( safari )
+	public static MachineHandlerPtr machine_driver_safari = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(safari_readmem,safari_writemem)
 		MDRV_CPU_PORTS(readport_safari,writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( depthch )
+	public static MachineHandlerPtr machine_driver_depthch = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_depthch)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( invinco3 )
+	public static MachineHandlerPtr machine_driver_invinco3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(3ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_invinco3)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( invinco4 )
+	public static MachineHandlerPtr machine_driver_invinco4 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(4ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_invinco3)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pulsar )
+	public static MachineHandlerPtr machine_driver_pulsar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(4ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_pulsar)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -1311,7 +1335,8 @@ public class vicdual
 	
 	/* don't know if any of the other games use the 8048 music board */
 	/* so, we won't burden those drivers with the extra music handling */
-	static MACHINE_DRIVER_START( carnival )
+	public static MachineHandlerPtr machine_driver_carnival = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,15468480/8)
@@ -1341,7 +1366,9 @@ public class vicdual
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, carnival_ay8910_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_carnival)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

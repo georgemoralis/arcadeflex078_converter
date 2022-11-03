@@ -824,7 +824,8 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( atarisy1 )
+	public static MachineHandlerPtr machine_driver_atarisy1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68010, ATARI_CLOCK_14MHz/2)
@@ -855,7 +856,9 @@ public class atarisy1
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

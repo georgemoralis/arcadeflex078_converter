@@ -343,7 +343,8 @@ public class sauro
 		{ 100 } 	/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( tecfri )
+	public static MachineHandlerPtr machine_driver_tecfri = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 4000000)        // 4 MHz???
 		MDRV_CPU_VBLANK_INT(irq0_line_hold, 1)
@@ -360,9 +361,12 @@ public class sauro
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( trckydoc )
+	public static MachineHandlerPtr machine_driver_trckydoc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(tecfri)
 	
 		MDRV_CPU_MODIFY("main")
@@ -372,9 +376,12 @@ public class sauro
 	
 		MDRV_VIDEO_START(trckydoc)
 		MDRV_VIDEO_UPDATE(trckydoc)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( sauro )
+	public static MachineHandlerPtr machine_driver_sauro = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(tecfri)
 	
 		MDRV_CPU_MODIFY("main")
@@ -390,7 +397,9 @@ public class sauro
 	
 		MDRV_VIDEO_START(sauro)
 		MDRV_VIDEO_UPDATE(sauro)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

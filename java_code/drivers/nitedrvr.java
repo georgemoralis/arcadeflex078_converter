@@ -361,7 +361,8 @@ public class nitedrvr
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( nitedrvr )
+	public static MachineHandlerPtr machine_driver_nitedrvr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1000000)	   /* 1 MHz ???? */
@@ -387,7 +388,9 @@ public class nitedrvr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, nitedrvr_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

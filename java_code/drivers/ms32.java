@@ -1553,7 +1553,8 @@ public class ms32
 	
 	/********** MACHINE DRIVER **********/
 	
-	static MACHINE_DRIVER_START( ms32 )
+	public static MachineHandlerPtr machine_driver_ms32 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V70, 20000000/9) // 20MHz
@@ -1583,7 +1584,9 @@ public class ms32
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF271, ymf271_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/********** ROM LOADING **********/

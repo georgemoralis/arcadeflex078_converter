@@ -270,7 +270,8 @@ public class chaknpop
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( chaknpop )
+	public static MachineHandlerPtr machine_driver_chaknpop = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		/* the real board is 3.072MHz, but it is faster for MAME */
@@ -297,7 +298,9 @@ public class chaknpop
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

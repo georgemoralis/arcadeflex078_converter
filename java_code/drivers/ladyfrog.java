@@ -285,7 +285,8 @@ public class ladyfrog
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static MACHINE_DRIVER_START( ladyfrog )
+	public static MachineHandlerPtr machine_driver_ladyfrog = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80,8000000/2)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
@@ -316,7 +317,9 @@ public class ladyfrog
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_ladyfrog = new RomLoadPtr(){ public void handler(){ 

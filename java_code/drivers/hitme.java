@@ -283,7 +283,8 @@ public class hitme
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static MACHINE_DRIVER_START( hitme )
+	public static MachineHandlerPtr machine_driver_hitme = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 8945000/16 )	/* .559 MHz */
@@ -305,7 +306,9 @@ public class hitme
 		MDRV_VIDEO_START(hitme)
 		MDRV_VIDEO_UPDATE(hitme)
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 		/*	The Barricade rom is using a resolution of 32x24 which suggests slightly
 	   	different hardware from HitMe (40x19) however the screenshot on the arcade
@@ -315,7 +318,8 @@ public class hitme
 	      */
 	
 	
-	static MACHINE_DRIVER_START( brickyrd )
+	public static MachineHandlerPtr machine_driver_brickyrd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 8945000/16 )	/* .559 MHz */
@@ -336,7 +340,9 @@ public class hitme
 		MDRV_VIDEO_START(brickyrd)
 		MDRV_VIDEO_UPDATE(hitme)
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_hitme = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, ROMREGION_INVERT ) /* 64k for code */

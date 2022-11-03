@@ -215,7 +215,8 @@ public class superqix
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( superqix )
+	public static MachineHandlerPtr machine_driver_superqix = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz ? */
@@ -241,7 +242,9 @@ public class superqix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

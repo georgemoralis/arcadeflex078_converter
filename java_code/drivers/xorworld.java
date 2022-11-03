@@ -234,7 +234,8 @@ public class xorworld
 	};
 	
 	
-	static MACHINE_DRIVER_START( xorworld )
+	public static MachineHandlerPtr machine_driver_xorworld = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz */
@@ -261,7 +262,9 @@ public class xorworld
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAA1099, xorworld_saa1099_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_xorworld = new RomLoadPtr(){ public void handler(){ 

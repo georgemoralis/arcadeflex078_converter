@@ -312,7 +312,8 @@ public class subs
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( subs )
+	public static MachineHandlerPtr machine_driver_subs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12096000/16)		/* clock input is the "4H" signal */
@@ -340,7 +341,9 @@ public class subs
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, subs_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

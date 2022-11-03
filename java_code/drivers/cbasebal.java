@@ -283,7 +283,8 @@ public class cbasebal
 	
 	
 	
-	static MACHINE_DRIVER_START( cbasebal )
+	public static MachineHandlerPtr machine_driver_cbasebal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* ??? */
@@ -309,7 +310,9 @@ public class cbasebal
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

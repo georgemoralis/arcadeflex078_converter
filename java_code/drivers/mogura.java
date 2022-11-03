@@ -229,7 +229,8 @@ public class mogura
 		{ MIXER(50, MIXER_PAN_LEFT), MIXER(50, MIXER_PAN_RIGHT) }
 	};
 	
-	static MACHINE_DRIVER_START( mogura )
+	public static MachineHandlerPtr machine_driver_mogura = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,3000000)		 /* 3 MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -254,7 +255,9 @@ public class mogura
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_mogura = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )

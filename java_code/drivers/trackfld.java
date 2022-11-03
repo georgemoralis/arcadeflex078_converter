@@ -491,7 +491,8 @@ public class trackfld
 	
 	
 	
-	static MACHINE_DRIVER_START( trackfld )
+	public static MachineHandlerPtr machine_driver_trackfld = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 2048000)        /* 1.400 MHz ??? */
@@ -523,11 +524,14 @@ public class trackfld
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, trackfld_vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* same as the original, but uses ADPCM instead of VLM5030 */
 	/* also different memory handlers do handle that */
-	static MACHINE_DRIVER_START( hyprolyb )
+	public static MachineHandlerPtr machine_driver_hyprolyb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2048000)        /* 1.400 MHz ??? */
@@ -559,10 +563,13 @@ public class trackfld
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(ADPCM, hyprolyb_adpcm_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mastkin )
+	public static MachineHandlerPtr machine_driver_mastkin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(trackfld)
@@ -570,7 +577,9 @@ public class trackfld
 		MDRV_CPU_MEMORY(mastkin_readmem,mastkin_writemem)
 	
 		MDRV_NVRAM_HANDLER(mastkin)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

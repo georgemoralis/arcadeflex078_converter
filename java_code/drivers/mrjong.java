@@ -192,7 +192,8 @@ public class mrjong
 	};
 	
 	
-	static MACHINE_DRIVER_START( mrjong )
+	public static MachineHandlerPtr machine_driver_mrjong = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,15468000/6)	/* 2.578 MHz?? */
@@ -217,7 +218,9 @@ public class mrjong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

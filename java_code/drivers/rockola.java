@@ -689,7 +689,8 @@ public class rockola
 	
 	
 	
-	static MACHINE_DRIVER_START( sasuke )
+	public static MachineHandlerPtr machine_driver_sasuke = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16)    /* 700 kHz */
@@ -712,10 +713,13 @@ public class rockola
 		MDRV_VIDEO_UPDATE(rockola)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( satansat )
+	public static MachineHandlerPtr machine_driver_satansat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16)    /* 700 kHz */
@@ -740,10 +744,13 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( vanguard )
+	public static MachineHandlerPtr machine_driver_vanguard = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)    /* 1 MHz??? */
@@ -768,10 +775,13 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( fantasy )
+	public static MachineHandlerPtr machine_driver_fantasy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)    /* 1 MHz??? */
@@ -796,11 +806,14 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* note that in this driver the visible area is different! */
-	static MACHINE_DRIVER_START( pballoon )
+	public static MachineHandlerPtr machine_driver_pballoon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)    /* 1 MHz??? */
@@ -825,7 +838,9 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

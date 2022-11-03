@@ -264,7 +264,8 @@ public class dogfgt
 	
 	
 	
-	static MACHINE_DRIVER_START( dogfgt )
+	public static MachineHandlerPtr machine_driver_dogfgt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz ???? */
@@ -291,7 +292,9 @@ public class dogfgt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

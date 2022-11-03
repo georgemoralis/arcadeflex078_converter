@@ -590,7 +590,8 @@ public class turbo
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( turbo )
+	public static MachineHandlerPtr machine_driver_turbo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)
@@ -614,10 +615,13 @@ public class turbo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, turbo_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( subroc3d )
+	public static MachineHandlerPtr machine_driver_subroc3d = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)
@@ -640,10 +644,13 @@ public class turbo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, subroc3d_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( buckrog )
+	public static MachineHandlerPtr machine_driver_buckrog = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)
@@ -671,7 +678,9 @@ public class turbo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, buckrog_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -409,7 +409,8 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	static MACHINE_DRIVER_START( actfancr )
+	public static MachineHandlerPtr machine_driver_actfancr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(H6280,21477200/3) /* Should be accurate */
@@ -437,9 +438,12 @@ public class actfancr
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( triothep )
+	public static MachineHandlerPtr machine_driver_triothep = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(H6280,21477200/3) /* Should be accurate */
@@ -467,7 +471,9 @@ public class actfancr
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

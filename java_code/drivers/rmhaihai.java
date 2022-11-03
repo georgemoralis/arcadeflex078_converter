@@ -543,7 +543,8 @@ public class rmhaihai
 	
 	
 	
-	static MACHINE_DRIVER_START( rmhaihai )
+	public static MachineHandlerPtr machine_driver_rmhaihai = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,20000000/4)	/* 5 MHz ??? */
@@ -569,9 +570,12 @@ public class rmhaihai
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( rmhaisei )
+	public static MachineHandlerPtr machine_driver_rmhaisei = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rmhaihai)
@@ -579,9 +583,12 @@ public class rmhaihai
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo2)
 		MDRV_PALETTE_LENGTH(0x200)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( themj )
+	public static MachineHandlerPtr machine_driver_themj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rmhaihai)
@@ -595,7 +602,9 @@ public class rmhaihai
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo2)
 		MDRV_PALETTE_LENGTH(0x200)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

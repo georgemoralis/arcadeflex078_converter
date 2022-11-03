@@ -3852,7 +3852,8 @@ public class toaplan2
 	
 	
 	
-	static MACHINE_DRIVER_START( tekipaki )
+	public static MachineHandlerPtr machine_driver_tekipaki = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -3882,10 +3883,13 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ghox )
+	public static MachineHandlerPtr machine_driver_ghox = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -3916,10 +3920,13 @@ public class toaplan2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dogyuun )
+	public static MachineHandlerPtr machine_driver_dogyuun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -3952,10 +3959,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( kbash )
+	public static MachineHandlerPtr machine_driver_kbash = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -3988,10 +3998,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( truxton2 )
+	public static MachineHandlerPtr machine_driver_truxton2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -4018,10 +4031,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pipibibs )
+	public static MachineHandlerPtr machine_driver_pipibibs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4050,10 +4066,13 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( whoopee )
+	public static MachineHandlerPtr machine_driver_whoopee = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4083,10 +4102,13 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pipibibi )
+	public static MachineHandlerPtr machine_driver_pipibibi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4115,10 +4137,13 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( fixeight )
+	public static MachineHandlerPtr machine_driver_fixeight = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -4152,10 +4177,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( vfive )
+	public static MachineHandlerPtr machine_driver_vfive = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4187,10 +4215,13 @@ public class toaplan2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( batsugun )
+	public static MachineHandlerPtr machine_driver_batsugun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4223,10 +4254,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( snowbro2 )
+	public static MachineHandlerPtr machine_driver_snowbro2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -4253,10 +4287,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mahoudai )
+	public static MachineHandlerPtr machine_driver_mahoudai = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4287,10 +4324,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, raizing_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( shippumd )
+	public static MachineHandlerPtr machine_driver_shippumd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4321,10 +4361,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, raizing_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( battleg )
+	public static MachineHandlerPtr machine_driver_battleg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4355,10 +4398,13 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, raizing_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, battleg_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( batrider )
+	public static MachineHandlerPtr machine_driver_batrider = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4390,9 +4436,12 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, raizing_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, batrider_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( bbakraid )
+	public static MachineHandlerPtr machine_driver_bbakraid = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)
@@ -4422,7 +4471,9 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

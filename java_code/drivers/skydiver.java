@@ -346,7 +346,8 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( skydiver )
+	public static MachineHandlerPtr machine_driver_skydiver = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800,3000000/4)	   /* ???? */
@@ -368,7 +369,9 @@ public class skydiver
 		MDRV_PALETTE_INIT(skydiver)
 		MDRV_VIDEO_START(skydiver)
 		MDRV_VIDEO_UPDATE(skydiver)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

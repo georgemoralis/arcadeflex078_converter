@@ -1483,7 +1483,8 @@ public class dkong
 		dkongjr_sample_names
 	};
 	
-	static MACHINE_DRIVER_START( radarscp )
+	public static MachineHandlerPtr machine_driver_radarscp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1513,9 +1514,12 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkong_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( dkong )
+	public static MachineHandlerPtr machine_driver_dkong = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1545,14 +1549,17 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkong_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	public static InterruptHandlerPtr hunchbkd_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x03);
 	} };
 	
-	static MACHINE_DRIVER_START( hunchbkd )
+	public static MachineHandlerPtr machine_driver_hunchbkd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", S2650, 3072000/2/3)	/* ??? */
@@ -1582,9 +1589,12 @@ public class dkong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( herbiedk )
+	public static MachineHandlerPtr machine_driver_herbiedk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
@@ -1592,9 +1602,12 @@ public class dkong
 		MDRV_CPU_PORTS(herbiedk_readport,hunchbkd_writeport)
 	
 		MDRV_VBLANK_DURATION(1000)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( spclforc )
+	public static MachineHandlerPtr machine_driver_spclforc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
@@ -1607,25 +1620,34 @@ public class dkong
 		MDRV_VIDEO_UPDATE(spclforc)
 	
 		/* analog sound */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( eightact )
+	public static MachineHandlerPtr machine_driver_eightact = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(eightact_readport,hunchbkd_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( shootgal )
+	public static MachineHandlerPtr machine_driver_shootgal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(shootgal_readport,hunchbkd_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( dkongjr )
+	public static MachineHandlerPtr machine_driver_dkongjr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1655,9 +1677,12 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkongjr_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( pestplce )
+	public static MachineHandlerPtr machine_driver_pestplce = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1688,9 +1713,12 @@ public class dkong
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 	
 		/* samples*/
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( strtheat )
+	public static MachineHandlerPtr machine_driver_strtheat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1722,7 +1750,9 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkongjr_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static struct NESinterface nes_interface =
 	{
@@ -1732,7 +1762,8 @@ public class dkong
 	};
 	
 	
-	static MACHINE_DRIVER_START( dkong3 )
+	public static MachineHandlerPtr machine_driver_dkong3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)	/* 4 MHz */
@@ -1767,7 +1798,9 @@ public class dkong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NES, nes_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

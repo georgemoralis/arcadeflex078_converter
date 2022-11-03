@@ -207,7 +207,8 @@ public class glass
 		{ 100 }				/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( glass )
+	public static MachineHandlerPtr machine_driver_glass = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)		/* 12 MHz (M680000 P12) */
@@ -231,7 +232,9 @@ public class glass
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, glass_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_glass = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )	/* 68000 code */

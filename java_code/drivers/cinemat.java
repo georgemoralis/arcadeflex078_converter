@@ -951,7 +951,8 @@ public class cinemat
 	
 	/* Note: the CPU speed is somewhat arbitrary as the cycle timings in
 	   the core are incomplete. */
-	static MACHINE_DRIVER_START( cinemat )
+	public static MachineHandlerPtr machine_driver_cinemat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(CCPU, 5000000)
@@ -973,10 +974,13 @@ public class cinemat
 		MDRV_VIDEO_UPDATE(vector)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spacewar )
+	public static MachineHandlerPtr machine_driver_spacewar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -986,30 +990,39 @@ public class cinemat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, spacewar_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( starcas )
+	public static MachineHandlerPtr machine_driver_starcas = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, starcas_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ripoff )
+	public static MachineHandlerPtr machine_driver_ripoff = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, ripoff_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( warrior )
+	public static MachineHandlerPtr machine_driver_warrior = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -1019,10 +1032,13 @@ public class cinemat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, warrior_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( armora )
+	public static MachineHandlerPtr machine_driver_armora = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -1031,20 +1047,26 @@ public class cinemat
 		MDRV_VISIBLE_AREA(0, 1024, 0, 772)
 	        /* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, armora_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( solarq )
+	public static MachineHandlerPtr machine_driver_solarq = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, solarq_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( demon )
+	public static MachineHandlerPtr machine_driver_demon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -1052,25 +1074,33 @@ public class cinemat
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 1024, 0, 800)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( sundance )
+	public static MachineHandlerPtr machine_driver_sundance = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, sundance_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( cincolor )
+	public static MachineHandlerPtr machine_driver_cincolor = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* video hardware */
 		MDRV_PALETTE_INIT(cinemat_color)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -273,7 +273,8 @@ public class usgames
 	
 	
 	
-	static MACHINE_DRIVER_START( usg )
+	public static MachineHandlerPtr machine_driver_usg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 2000000) /* ?? */
@@ -299,13 +300,18 @@ public class usgames
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( usg185 )
+	public static MachineHandlerPtr machine_driver_usg185 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(usg)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(usg185_readmem,usg185_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

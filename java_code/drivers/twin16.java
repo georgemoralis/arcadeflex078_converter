@@ -964,7 +964,8 @@ public class twin16
 	
 	/* Machine Drivers */
 	
-	static MACHINE_DRIVER_START( twin16 )
+	public static MachineHandlerPtr machine_driver_twin16 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		// basic machine hardware
 		MDRV_CPU_ADD(Z80, 3579545)
 		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)
@@ -998,14 +999,20 @@ public class twin16
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( heavysync )
+	public static MachineHandlerPtr machine_driver_heavysync = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_INTERLEAVE(1000)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( fround )
+	public static MachineHandlerPtr machine_driver_fround = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3579545)
 		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)
@@ -1035,25 +1042,36 @@ public class twin16
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( hpuncher )
+	public static MachineHandlerPtr machine_driver_hpuncher = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_VIDEO_START(fround)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mia )
+	public static MachineHandlerPtr machine_driver_mia = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_VISIBLE_AREA(1*8, 39*8-1, 2*8, 30*8-1)
 		MDRV_VIDEO_START(fround)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( cuebrick )
+	public static MachineHandlerPtr machine_driver_cuebrick = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_VISIBLE_AREA(1*8, 39*8-1, 2*8, 30*8-1)
 		MDRV_VIDEO_START(fround)
 		MDRV_NVRAM_HANDLER(generic_0fill)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* ROMs */
 	

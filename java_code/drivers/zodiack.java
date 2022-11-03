@@ -502,7 +502,8 @@ public class zodiack
 	);
 	
 	
-	static MACHINE_DRIVER_START( zodiack )
+	public static MachineHandlerPtr machine_driver_zodiack = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.00 MHz??? */
@@ -533,17 +534,25 @@ public class zodiack
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( percuss )
+	public static MachineHandlerPtr machine_driver_percuss = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(zodiack)
 		MDRV_MACHINE_INIT(percuss)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( moguchan )
+	public static MachineHandlerPtr machine_driver_moguchan = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(zodiack)
 		MDRV_MACHINE_INIT(percuss)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

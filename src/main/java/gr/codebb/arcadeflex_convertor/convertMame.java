@@ -32,6 +32,7 @@ public class convertMame {
     static final int GFXDECODE = 19;
     static final int AY8910interface = 20;
     static final int GAMEDRIVER = 21;
+    static final int MACHINEDRIVER = 22;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -115,6 +116,18 @@ public class convertMame {
                                 sUtil.putString("public static MachineInitHandlerPtr machine_init_" + Convertor.token[0] + "  = new MachineInitHandlerPtr() { public void handler()");
                                 type = MACHINE_INIT;
                                 i3 = -1;
+                                Convertor.inpos += 1;
+                                continue;
+                            }
+                        }
+                        if (sUtil.getToken("MACHINE_DRIVER_START(")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.getToken(")")) {
+                                sUtil.putString("public static MachineHandlerPtr machine_driver_" + Convertor.token[0] + " = new MachineHandlerPtr() {\n" + "        public void handler(InternalMachineDriver machine) {");
+                                type = MACHINEDRIVER;
+                                i3 = 1;
                                 Convertor.inpos += 1;
                                 continue;
                             }
@@ -841,6 +854,10 @@ public class convertMame {
                     break;
                 case 'M': {
                     i = Convertor.inpos;
+                    if(sUtil.getToken("MACHINE_DRIVER_END")){
+                        sUtil.putString((new StringBuilder()).append("MACHINE_DRIVER_END();\n }\n};").toString());
+                        continue;   
+                    }
                     if (sUtil.getToken("MEMORY_READ_START(")) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();

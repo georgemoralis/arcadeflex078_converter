@@ -2011,7 +2011,8 @@ public class taitosj
 	
 	
 	
-	static MACHINE_DRIVER_START( nomcu )
+	public static MachineHandlerPtr machine_driver_nomcu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,8000000/2)      /* 4 MHz */
@@ -2048,11 +2049,14 @@ public class taitosj
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* same as above, but with additional 68705 MCU */
-	static MACHINE_DRIVER_START( mcu )
+	public static MachineHandlerPtr machine_driver_mcu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nomcu)
@@ -2061,9 +2065,12 @@ public class taitosj
 	
 		MDRV_CPU_ADD(M68705,3000000/4)      /* xtal is 3MHz, divided by 4 internally */
 		MDRV_CPU_MEMORY(m68705_readmem,m68705_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( kikstart )
+	public static MachineHandlerPtr machine_driver_kikstart = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nomcu)
@@ -2072,7 +2079,9 @@ public class taitosj
 	
 		MDRV_CPU_ADD(M68705,3000000/4)      /* xtal is 3MHz, divided by 4 internally */
 		MDRV_CPU_MEMORY(m68705_readmem,m68705_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

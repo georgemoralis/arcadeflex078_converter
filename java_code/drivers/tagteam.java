@@ -300,7 +300,8 @@ public class tagteam
 		{ 255 }
 	};
 	
-	static MACHINE_DRIVER_START( tagteam )
+	public static MachineHandlerPtr machine_driver_tagteam = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz ?? */
@@ -330,7 +331,9 @@ public class tagteam
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

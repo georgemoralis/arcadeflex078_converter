@@ -641,7 +641,8 @@ public class hnayayoi
 	
 	
 	
-	static MACHINE_DRIVER_START( hnayayoi )
+	public static MachineHandlerPtr machine_driver_hnayayoi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 20000000/4 )        /* 5 MHz ???? */
 		MDRV_CPU_MEMORY(hnayayoi_readmem,hnayayoi_writemem)
@@ -668,23 +669,31 @@ public class hnayayoi
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( hnfubuki )
+	public static MachineHandlerPtr machine_driver_hnfubuki = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(hnayayoi)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(hnfubuki_readmem,hnfubuki_writemem)
 		MDRV_CPU_PORTS(hnfubuki_readport,hnfubuki_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( untoucha )
+	public static MachineHandlerPtr machine_driver_untoucha = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(hnayayoi)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(untoucha_readmem,untoucha_writemem)
 		MDRV_CPU_PORTS(untoucha_readport,untoucha_writeport)
 	
 		MDRV_VIDEO_START(untoucha)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

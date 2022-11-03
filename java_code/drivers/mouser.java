@@ -220,7 +220,8 @@ public class mouser
 		{ 0 }
 	);
 	
-	static MACHINE_DRIVER_START( mouser )
+	public static MachineHandlerPtr machine_driver_mouser = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz ? */
@@ -249,7 +250,9 @@ public class mouser
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_mouser = new RomLoadPtr(){ public void handler(){ 

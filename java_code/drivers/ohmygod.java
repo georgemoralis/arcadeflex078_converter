@@ -371,7 +371,8 @@ public class ohmygod
 	
 	
 	
-	static MACHINE_DRIVER_START( ohmygod )
+	public static MachineHandlerPtr machine_driver_ohmygod = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -395,7 +396,9 @@ public class ohmygod
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

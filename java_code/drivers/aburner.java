@@ -878,7 +878,8 @@ public class aburner
 			irq4_line_hold(); /* vblank */
 	} };
 	
-	static MACHINE_DRIVER_START( aburner )
+	public static MachineHandlerPtr machine_driver_aburner = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -914,7 +915,9 @@ public class aburner
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, sys16_ym2151_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_15k_512)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*          rom       parent    machine   inp       init */
 	public static GameDriver driver_aburner	   = new GameDriver("1987"	,"aburner"	,"aburner.java"	,rom_aburner,driver_aburner2	,machine_driver_aburner	,input_ports_aburner	,init_aburner	,ROT0	,	"Sega", "After Burner (Japan)" )

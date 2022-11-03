@@ -465,7 +465,8 @@ public class brkthru
 	
 	
 	
-	static MACHINE_DRIVER_START( brkthru )
+	public static MachineHandlerPtr machine_driver_brkthru = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1250000)        /* 1.25 MHz ? */
@@ -493,9 +494,12 @@ public class brkthru
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( darwin )
+	public static MachineHandlerPtr machine_driver_darwin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)        /* 1.25 MHz ? */
@@ -535,7 +539,9 @@ public class brkthru
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

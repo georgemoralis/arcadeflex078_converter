@@ -278,7 +278,8 @@ public class lastduel
 		else cpu_set_irq_line(0, 6, HOLD_LINE); /* Controls */
 	} };
 	
-	static MACHINE_DRIVER_START( lastduel )
+	public static MachineHandlerPtr machine_driver_lastduel = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* Could be 8 MHz */
@@ -305,10 +306,13 @@ public class lastduel
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( madgear )
+	public static MachineHandlerPtr machine_driver_madgear = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* Accurate */
@@ -336,7 +340,9 @@ public class lastduel
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

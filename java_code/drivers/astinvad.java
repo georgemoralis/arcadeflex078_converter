@@ -255,7 +255,8 @@ public class astinvad
 	} };
 	
 	
-	static MACHINE_DRIVER_START( astinvad )
+	public static MachineHandlerPtr machine_driver_astinvad = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)
@@ -278,10 +279,13 @@ public class astinvad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, astinvad_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spcking2 )
+	public static MachineHandlerPtr machine_driver_spcking2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(astinvad)
@@ -290,10 +294,13 @@ public class astinvad
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 2*8, 30*8-1)
 	
 		MDRV_VIDEO_START( spcking2 )
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spaceint )
+	public static MachineHandlerPtr machine_driver_spaceint = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)        /* 2 MHz? */
@@ -315,7 +322,9 @@ public class astinvad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, astinvad_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_astinvad = new RomLoadPtr(){ public void handler(){ 

@@ -856,7 +856,8 @@ public class midyunit
 	
 	#define COMPUTED_VBLANK(yvis, ytotal, fps) ((1000000 * (ytotal - yvis)) / (fps * ytotal))
 	
-	static MACHINE_DRIVER_START( zunit )
+	public static MachineHandlerPtr machine_driver_zunit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34010, 48000000/TMS34010_CLOCK_DIVIDER)
@@ -880,7 +881,9 @@ public class midyunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(williams_narc_sound)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -890,7 +893,8 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( yunit_core )
+	public static MachineHandlerPtr machine_driver_yunit_core = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
@@ -910,10 +914,13 @@ public class midyunit
 	
 		MDRV_VIDEO_EOF(midyunit)
 		MDRV_VIDEO_UPDATE(midyunit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( yunit_cvsd_4bit )
+	public static MachineHandlerPtr machine_driver_yunit_cvsd_4bit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(yunit_core)
@@ -922,10 +929,13 @@ public class midyunit
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(256)
 		MDRV_VIDEO_START(midyunit_4bit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( yunit_cvsd_6bit )
+	public static MachineHandlerPtr machine_driver_yunit_cvsd_6bit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(yunit_core)
@@ -934,10 +944,13 @@ public class midyunit
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(4096)
 		MDRV_VIDEO_START(midyunit_6bit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( yunit_adpcm )
+	public static MachineHandlerPtr machine_driver_yunit_adpcm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(yunit_core)
@@ -946,7 +959,9 @@ public class midyunit
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(4096)
 		MDRV_VIDEO_START(midyunit_6bit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*
@@ -966,53 +981,74 @@ public class midyunit
 	*/
 	
 	
-	static MACHINE_DRIVER_START( trog )
+	public static MachineHandlerPtr machine_driver_trog = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(yunit_cvsd_4bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 395, 0, 255)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( strkforc )
+	public static MachineHandlerPtr machine_driver_strkforc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(yunit_cvsd_4bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(255, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 399, 0, 254)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( smashtv )
+	public static MachineHandlerPtr machine_driver_smashtv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(yunit_cvsd_6bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 409, 0, 255)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hiimpact )
+	public static MachineHandlerPtr machine_driver_hiimpact = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(yunit_cvsd_6bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 395, 0, 255)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( term2 )
+	public static MachineHandlerPtr machine_driver_term2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(yunit_adpcm)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(255, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 403, 0, 254)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mk )
+	public static MachineHandlerPtr machine_driver_mk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(yunit_adpcm)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(254, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 399, 0, 253)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( totcarn )
+	public static MachineHandlerPtr machine_driver_totcarn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(yunit_adpcm)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 399, 0, 255)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -705,7 +705,8 @@ public class bwidow
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( bwidow )
+	public static MachineHandlerPtr machine_driver_bwidow = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 1500000)	/* 1.5 MHz */
@@ -727,20 +728,26 @@ public class bwidow
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gravitar )
+	public static MachineHandlerPtr machine_driver_gravitar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bwidow)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 420, 0, 400)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( lunarbat )
+	public static MachineHandlerPtr machine_driver_lunarbat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gravitar)
@@ -751,10 +758,13 @@ public class bwidow
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 500, 0, 440)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( spacduel )
+	public static MachineHandlerPtr machine_driver_spacduel = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gravitar)
@@ -765,7 +775,9 @@ public class bwidow
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 540, 0, 400)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

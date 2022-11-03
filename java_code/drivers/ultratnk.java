@@ -644,7 +644,8 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( ultratnk )
+	public static MachineHandlerPtr machine_driver_ultratnk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1500000)
@@ -668,7 +669,9 @@ public class ultratnk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, ultratnk_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -359,7 +359,8 @@ public class redalert
 		new WriteHandlerPtr[] { redalert_AY8910_B_w }		/* Port B Write */
 	);
 	
-	static MACHINE_DRIVER_START( redalert )
+	public static MachineHandlerPtr machine_driver_redalert = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)	   /* ???? */
@@ -393,7 +394,9 @@ public class redalert
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, redalert_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* PIA 0, sound CPU */
@@ -422,7 +425,8 @@ public class redalert
 		pia_reset();
 	} };
 	
-	static MACHINE_DRIVER_START( demoneye )
+	public static MachineHandlerPtr machine_driver_demoneye = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 11730000/2)	/* 11.73MHz */
@@ -452,7 +456,9 @@ public class redalert
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, demoneye_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

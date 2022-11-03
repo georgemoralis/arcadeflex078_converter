@@ -842,7 +842,8 @@ public class darius
 	                       MACHINE DRIVERS
 	***********************************************************/
 	
-	static MACHINE_DRIVER_START( darius )
+	public static MachineHandlerPtr machine_driver_darius = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)	/* 8 MHz ? */
@@ -883,7 +884,9 @@ public class darius
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -295,7 +295,8 @@ public class hcastle
 		45,			/* Volume */
 	};
 	
-	static MACHINE_DRIVER_START( hcastle )
+	public static MachineHandlerPtr machine_driver_hcastle = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* Derived from 24 MHz clock */
@@ -325,7 +326,9 @@ public class hcastle
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(K051649, k051649_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	

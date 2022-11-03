@@ -455,7 +455,9 @@ public class policetr
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(BSMT2000, bsmt2000_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( sshooter )
@@ -464,7 +466,9 @@ public class policetr
 		/* basic machine hardware */
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(policetr_readmem,sshooter_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -333,7 +333,8 @@ public class powerins
 		{ 100, 100 }
 	};
 	
-	static MACHINE_DRIVER_START( powerins )
+	public static MachineHandlerPtr machine_driver_powerins = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* ? (it affects the game's speed!) */
@@ -357,9 +358,12 @@ public class powerins
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("sound", OKIM6295, powerins_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( powerina )
+	public static MachineHandlerPtr machine_driver_powerina = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(powerins)
@@ -370,7 +374,9 @@ public class powerins
 		MDRV_CPU_PORTS(readport_snd,writeport_snd)
 	
 		MDRV_SOUND_REPLACE("sound", OKIM6295, powerin2_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

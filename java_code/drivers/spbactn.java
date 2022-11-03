@@ -371,7 +371,8 @@ public class spbactn
 		{ 50 }
 	};
 	
-	static MACHINE_DRIVER_START( spbactn )
+	public static MachineHandlerPtr machine_driver_spbactn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(spbactn_readmem,spbactn_writemem)
@@ -397,7 +398,9 @@ public class spbactn
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_spbactn = new RomLoadPtr(){ public void handler(){ 
 		/* Board 9002-A (CPU Board) */

@@ -257,7 +257,9 @@ public class williams
 		MDRV_SOUND_ADD(YM2151, cvsd_ym2151_interface)
 		MDRV_SOUND_ADD(DAC,    single_dac_interface)
 		MDRV_SOUND_ADD(HC55516,cvsd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( williams_adpcm_sound )
@@ -269,7 +271,9 @@ public class williams
 		MDRV_SOUND_ADD(YM2151,  adpcm_ym2151_interface)
 		MDRV_SOUND_ADD(DAC,     single_dac_interface)
 		MDRV_SOUND_ADD(OKIM6295,adpcm_6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( williams_narc_sound )
@@ -285,7 +289,9 @@ public class williams
 		MDRV_SOUND_ADD(YM2151, adpcm_ym2151_interface)
 		MDRV_SOUND_ADD(DAC,    double_dac_interface)
 		MDRV_SOUND_ADD(HC55516,cvsd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

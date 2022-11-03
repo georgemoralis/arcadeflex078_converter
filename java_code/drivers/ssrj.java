@@ -181,7 +181,8 @@ public class ssrj
 	);
 	
 	
-	static MACHINE_DRIVER_START( ssrj )
+	public static MachineHandlerPtr machine_driver_ssrj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)
@@ -207,7 +208,9 @@ public class ssrj
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

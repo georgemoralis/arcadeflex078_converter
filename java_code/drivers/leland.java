@@ -749,7 +749,8 @@ public class leland
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( leland )
+	public static MachineHandlerPtr machine_driver_leland = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("master", Z80, 6000000)
@@ -781,10 +782,13 @@ public class leland
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("ay8910", AY8910, ay8910_interface)
 		MDRV_SOUND_ADD_TAG("custom", CUSTOM, dac_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( redline )
+	public static MachineHandlerPtr machine_driver_redline = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(leland)
@@ -795,10 +799,13 @@ public class leland
 		
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("custom", CUSTOM, redline_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( quarterb )
+	public static MachineHandlerPtr machine_driver_quarterb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(redline)
@@ -807,16 +814,21 @@ public class leland
 		
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("custom", CUSTOM, i186_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( lelandi )
+	public static MachineHandlerPtr machine_driver_lelandi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(quarterb)
 		MDRV_CPU_MODIFY("slave")
 		MDRV_CPU_MEMORY(slave_large_readmem,slave_large_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

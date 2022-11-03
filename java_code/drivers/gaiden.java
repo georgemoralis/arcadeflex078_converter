@@ -827,7 +827,8 @@ public class gaiden
 	};
 	
 	
-	static MACHINE_DRIVER_START( shadoww )
+	public static MachineHandlerPtr machine_driver_shadoww = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 18432000/2)	/* 9.216 MHz */
@@ -856,16 +857,21 @@ public class gaiden
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( raiga )
+	public static MachineHandlerPtr machine_driver_raiga = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(shadoww)
 	
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER | VIDEO_NEEDS_6BITS_PER_GUN | VIDEO_RGB_DIRECT)
 	
 		MDRV_VIDEO_START(raiga)
 		MDRV_VIDEO_UPDATE(raiga)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

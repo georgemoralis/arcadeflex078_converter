@@ -242,7 +242,8 @@ public class enigma2
 		palette_set_color(7,0xff,0xff,0xff);
 	} };
 	
-	static MACHINE_DRIVER_START( enigma2 )
+	public static MachineHandlerPtr machine_driver_enigma2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD_TAG("main",Z80, 2500000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -260,12 +261,17 @@ public class enigma2
 	
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( enigma2a )
+	public static MachineHandlerPtr machine_driver_enigma2a = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(enigma2)
 		MDRV_CPU_REPLACE("main", 8080, 2000000)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_enigma2a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )

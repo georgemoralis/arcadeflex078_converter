@@ -438,7 +438,8 @@ public class psikyosh
 		{ irqhandler }
 	};
 	
-	static MACHINE_DRIVER_START( psikyo3v1 )
+	public static MachineHandlerPtr machine_driver_psikyo3v1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", SH2, MASTER_CLOCK/2)
 		MDRV_CPU_MEMORY(ps3v1_readmem,ps3v1_writemem)
@@ -463,15 +464,20 @@ public class psikyosh
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF278B, ymf278b_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( psikyo5 )
+	public static MachineHandlerPtr machine_driver_psikyo5 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(psikyo3v1)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(ps5_readmem,ps5_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	#define UNUSED_PORT \
 		PORT_START(); 	/* not read? */ \

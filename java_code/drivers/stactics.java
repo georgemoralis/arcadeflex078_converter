@@ -232,7 +232,8 @@ public class stactics
 	    new GfxDecodeInfo( -1 )
 	};
 	
-	static MACHINE_DRIVER_START( stactics )
+	public static MachineHandlerPtr machine_driver_stactics = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 1933560)
@@ -255,7 +256,9 @@ public class stactics
 		MDRV_VIDEO_UPDATE(stactics)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

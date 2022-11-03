@@ -461,7 +461,8 @@ public class dbz2
 	
 	/**********************************************************************************/
 	
-	static MACHINE_DRIVER_START( dbz2 )
+	public static MachineHandlerPtr machine_driver_dbz2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -490,15 +491,20 @@ public class dbz2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, m6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( dbz )
+	public static MachineHandlerPtr machine_driver_dbz = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(dbz2)
 	
 		MDRV_VIDEO_START(dbz)
 		MDRV_VIDEO_UPDATE(dbz)
 		MDRV_VISIBLE_AREA(34, 34+48*8-1, 0, 32*8-1 )
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/**********************************************************************************/
 	

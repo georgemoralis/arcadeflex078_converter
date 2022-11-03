@@ -1499,7 +1499,8 @@ public class system24
 		{ 50 }
 	};
 	
-	static MACHINE_DRIVER_START( system24 )
+	public static MachineHandlerPtr machine_driver_system24 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 10000000)
 		MDRV_CPU_MEMORY(system24_readmem, system24_writemem)
 		MDRV_CPU_VBLANK_INT(irq_vbl, 2)
@@ -1525,7 +1526,9 @@ public class system24
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC,    dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	public static GameDriver driver_hotrod	   = new GameDriver("1988"	,"hotrod"	,"system24.java"	,rom_hotrod,null	,machine_driver_system24	,input_ports_hotrod	,init_hotrod	,ROT0	,	"Sega", "Hot Rod (turbo 3 player)")

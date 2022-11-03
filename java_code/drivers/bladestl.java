@@ -443,7 +443,8 @@ public class bladestl
 		{ 0 }
 	};
 	
-	static MACHINE_DRIVER_START( bladestl )
+	public static MachineHandlerPtr machine_driver_bladestl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)		/* 24MHz/8 (?) */
@@ -475,7 +476,9 @@ public class bladestl
 		   called at initialization time */
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

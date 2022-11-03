@@ -160,7 +160,8 @@ public class gomoku
 		0
 	};
 	
-	static MACHINE_DRIVER_START( gomoku )
+	public static MachineHandlerPtr machine_driver_gomoku = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/8)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem_gomoku,writemem_gomoku)
@@ -182,7 +183,9 @@ public class gomoku
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

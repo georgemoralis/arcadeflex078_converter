@@ -2055,7 +2055,8 @@ public class ddenlovr
 		{ 80 }
 	};
 	
-	static MACHINE_DRIVER_START( ddenlovr )
+	public static MachineHandlerPtr machine_driver_ddenlovr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,24000000 / 2)
@@ -2078,24 +2079,32 @@ public class ddenlovr
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( quiz365 )
+	public static MachineHandlerPtr machine_driver_quiz365 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ddenlovr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(quiz365_readmem,quiz365_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( nettoqc )
+	public static MachineHandlerPtr machine_driver_nettoqc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ddenlovr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(nettoqc_readmem,nettoqc_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 									Rong Rong
@@ -2129,7 +2138,8 @@ public class ddenlovr
 	//	cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xfc);
 	} };
 	
-	static MACHINE_DRIVER_START( quizchq )
+	public static MachineHandlerPtr machine_driver_quizchq = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000)	/* ? */
@@ -2154,16 +2164,21 @@ public class ddenlovr
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( rongrong )
+	public static MachineHandlerPtr machine_driver_rongrong = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(quizchq)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(rongrong_readmem,rongrong_writemem)
 		MDRV_CPU_PORTS(rongrong_readport,rongrong_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	***************************************************************************/
@@ -2190,7 +2205,8 @@ public class ddenlovr
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	// RST 08, vblank
 	} };
 	
-	static MACHINE_DRIVER_START( mmpanic )
+	public static MachineHandlerPtr machine_driver_mmpanic = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000)	/* ? */
@@ -2220,7 +2236,9 @@ public class ddenlovr
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

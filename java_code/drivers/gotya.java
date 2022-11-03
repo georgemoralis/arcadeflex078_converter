@@ -192,7 +192,8 @@ public class gotya
 	};
 	
 	
-	static MACHINE_DRIVER_START( gotya )
+	public static MachineHandlerPtr machine_driver_gotya = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)	/* 3.072 MHz ??? */
@@ -216,7 +217,9 @@ public class gotya
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

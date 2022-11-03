@@ -2560,7 +2560,8 @@ public class pacman
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( pacman )
+	public static MachineHandlerPtr machine_driver_pacman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18432000/6)
@@ -2586,10 +2587,13 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("namco", NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pacplus )
+	public static MachineHandlerPtr machine_driver_pacplus = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2598,10 +2602,13 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(pacplus_interrupt,1)
 	
 		MDRV_MACHINE_INIT(pacplus)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mspacman )
+	public static MachineHandlerPtr machine_driver_mspacman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2611,10 +2618,13 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(mspacman_interrupt,1)
 	
 		MDRV_MACHINE_INIT(mspacman)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mspacpls )
+	public static MachineHandlerPtr machine_driver_mspacpls = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2623,10 +2633,13 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
 	
 		MDRV_MACHINE_INIT(NULL)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mschamp )
+	public static MachineHandlerPtr machine_driver_mschamp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2640,10 +2653,13 @@ public class pacman
 	
 		/* video hardware */
 		MDRV_GFXDECODE(mschampgfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( theglobp )
+	public static MachineHandlerPtr machine_driver_theglobp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2653,10 +2669,13 @@ public class pacman
 		MDRV_CPU_PORTS(theglobp_readport,writeport)
 	
 		MDRV_MACHINE_INIT(theglobp)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( vanvan )
+	public static MachineHandlerPtr machine_driver_vanvan = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2674,10 +2693,13 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("namco", SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dremshpr )
+	public static MachineHandlerPtr machine_driver_dremshpr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2690,10 +2712,13 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("namco", AY8910, dremshpr_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( alibaba )
+	public static MachineHandlerPtr machine_driver_alibaba = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2703,9 +2728,12 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
 	
 		MDRV_MACHINE_INIT(NULL)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( piranha )
+	public static MachineHandlerPtr machine_driver_piranha = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2715,10 +2743,13 @@ public class pacman
 		MDRV_CPU_PORTS(0,piranha_writeport)
 	
 		MDRV_MACHINE_INIT(piranha)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( nmouse )
+	public static MachineHandlerPtr machine_driver_nmouse = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2728,10 +2759,13 @@ public class pacman
 		MDRV_CPU_PORTS(0,nmouse_writeport)
 	
 		MDRV_MACHINE_INIT(NULL)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( acitya )
+	public static MachineHandlerPtr machine_driver_acitya = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2741,10 +2775,13 @@ public class pacman
 		MDRV_CPU_PORTS(acitya_readport,writeport)
 	
 		MDRV_MACHINE_INIT(acitya)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bigbucks )
+	public static MachineHandlerPtr machine_driver_bigbucks = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2758,10 +2795,13 @@ public class pacman
 		MDRV_MACHINE_INIT(NULL)
 	
 		MDRV_VISIBLE_AREA(0*8, 36*8-1, 0*8-1, 28*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( s2650games )
+	public static MachineHandlerPtr machine_driver_s2650games = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2782,37 +2822,48 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("namco", SN76496, sn76489_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( drivfrcp )
+	public static MachineHandlerPtr machine_driver_drivfrcp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(s2650games)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(drivfrcp_readport,s2650games_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( 8bpm )
+	public static MachineHandlerPtr machine_driver_8bpm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(s2650games)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(_8bpm_readport,s2650games_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( porky )
+	public static MachineHandlerPtr machine_driver_porky = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(s2650games)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(porky_readport,s2650games_writeport)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************

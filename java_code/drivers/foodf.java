@@ -372,7 +372,8 @@ public class foodf
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( foodf )
+	public static MachineHandlerPtr machine_driver_foodf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000)
@@ -397,7 +398,9 @@ public class foodf
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -264,7 +264,8 @@ public class cloud9
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( cloud9 )
+	public static MachineHandlerPtr machine_driver_cloud9 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12096000/8)	/* 1.512 MHz?? */
@@ -288,7 +289,9 @@ public class cloud9
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*************************************
 	 *

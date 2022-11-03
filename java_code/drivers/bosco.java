@@ -425,7 +425,8 @@ public class bosco
 	};
 	
 	
-	static MACHINE_DRIVER_START( bosco )
+	public static MachineHandlerPtr machine_driver_bosco = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3125000)	/* 3.125 MHz */
@@ -462,7 +463,9 @@ public class bosco
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

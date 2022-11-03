@@ -574,7 +574,8 @@ public class bloodbro
 	/* Parameters: YM3812 frequency, Oki frequency, Oki memory region */
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(14318180/4,8000,REGION_SOUND1);
 	
-	static MACHINE_DRIVER_START( bloodbro )
+	public static MachineHandlerPtr machine_driver_bloodbro = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -599,9 +600,12 @@ public class bloodbro
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( skysmash )
+	public static MachineHandlerPtr machine_driver_skysmash = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -626,9 +630,12 @@ public class bloodbro
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( weststry )
+	public static MachineHandlerPtr machine_driver_weststry = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -653,7 +660,9 @@ public class bloodbro
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

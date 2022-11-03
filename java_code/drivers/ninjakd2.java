@@ -523,7 +523,8 @@ public class ninjakd2
 	};
 	
 	
-	static MACHINE_DRIVER_START( ninjakd2 )
+	public static MachineHandlerPtr machine_driver_ninjakd2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 12000000/2 ??? */
@@ -545,10 +546,13 @@ public class ninjakd2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ninjak2a )
+	public static MachineHandlerPtr machine_driver_ninjak2a = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 12000000/2 ??? */
@@ -578,7 +582,9 @@ public class ninjakd2
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

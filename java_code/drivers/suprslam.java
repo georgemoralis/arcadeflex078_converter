@@ -343,7 +343,8 @@ public class suprslam
 	
 	/*** MACHINE DRIVER **********************************************************/
 	
-	static MACHINE_DRIVER_START( suprslam )
+	public static MachineHandlerPtr machine_driver_suprslam = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 16000000)
 		MDRV_CPU_MEMORY(suprslam_readmem,suprslam_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -368,7 +369,9 @@ public class suprslam
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*** ROM LOADING *************************************************************/
 	

@@ -243,7 +243,8 @@ public class rollrace
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static MACHINE_DRIVER_START( rollrace )
+	public static MachineHandlerPtr machine_driver_rollrace = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)			/* ?? */
@@ -272,15 +273,20 @@ public class rollrace
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ra_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( rollace2 )
+	public static MachineHandlerPtr machine_driver_rollace2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rollrace)
 	
 		MDRV_VISIBLE_AREA(0,255-24,16, 255-16)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -555,7 +555,8 @@ public class senjyo
 	
 	
 	
-	static MACHINE_DRIVER_START( senjyo )
+	public static MachineHandlerPtr machine_driver_senjyo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz? */
@@ -586,7 +587,9 @@ public class senjyo
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

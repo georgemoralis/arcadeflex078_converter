@@ -327,7 +327,8 @@ public class xain
 	
 	
 	
-	static MACHINE_DRIVER_START( xsleena )
+	public static MachineHandlerPtr machine_driver_xsleena = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)	/* 2 MHz ??? */
@@ -361,7 +362,9 @@ public class xain
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -368,7 +368,8 @@ public class retofinv
 	
 	
 	
-	static MACHINE_DRIVER_START( retofinv )
+	public static MachineHandlerPtr machine_driver_retofinv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)
@@ -404,11 +405,14 @@ public class retofinv
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* bootleg has no mcu */
-	static MACHINE_DRIVER_START( retofinb )
+	public static MachineHandlerPtr machine_driver_retofinb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)
@@ -441,7 +445,9 @@ public class retofinv
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

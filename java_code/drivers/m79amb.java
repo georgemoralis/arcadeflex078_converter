@@ -141,7 +141,8 @@ public class m79amb
 			rom[i] = ~rom[i];
 	} };
 	
-	static MACHINE_DRIVER_START( m79amb )
+	public static MachineHandlerPtr machine_driver_m79amb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 1996800)
@@ -162,7 +163,9 @@ public class m79amb
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

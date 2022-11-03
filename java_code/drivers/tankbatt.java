@@ -281,7 +281,8 @@ public class tankbatt
 	
 	
 	
-	static MACHINE_DRIVER_START( tankbatt )
+	public static MachineHandlerPtr machine_driver_tankbatt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)	/* 1 MHz ???? */
@@ -305,7 +306,9 @@ public class tankbatt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

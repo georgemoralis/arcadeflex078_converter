@@ -383,7 +383,8 @@ public class pbillian
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static MACHINE_DRIVER_START( pbillian )
+	public static MachineHandlerPtr machine_driver_pbillian = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80,6000000)		 /* 6 MHz */
 		MDRV_CPU_PORTS(readport,writeport)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -406,7 +407,9 @@ public class pbillian
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_pbillian = new RomLoadPtr(){ public void handler(){ 

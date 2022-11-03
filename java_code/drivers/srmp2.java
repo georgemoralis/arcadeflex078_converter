@@ -1124,7 +1124,8 @@ public class srmp2
 	};
 	
 	
-	static MACHINE_DRIVER_START( srmp2 )
+	public static MachineHandlerPtr machine_driver_srmp2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)				/* 8.00 MHz */
@@ -1151,10 +1152,13 @@ public class srmp2
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, srmp2_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, srmp2_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( srmp3 )
+	public static MachineHandlerPtr machine_driver_srmp3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	
@@ -1183,10 +1187,13 @@ public class srmp2
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, srmp3_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, srmp3_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjyuugi )
+	public static MachineHandlerPtr machine_driver_mjyuugi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)				/* 8.00 MHz */
@@ -1211,7 +1218,9 @@ public class srmp2
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, mjyuugi_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, srmp2_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

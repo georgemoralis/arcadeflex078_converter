@@ -1018,7 +1018,8 @@ public class cosmic
 	};
 	
 	
-	static MACHINE_DRIVER_START( cosmic )
+	public static MachineHandlerPtr machine_driver_cosmic = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80,10816000/6)	/* 1.802 MHz*/
@@ -1030,10 +1031,13 @@ public class cosmic
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER)
 		MDRV_SCREEN_SIZE(32*8, 32*8)
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 4*8, 28*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( panic )
+	public static MachineHandlerPtr machine_driver_panic = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1053,10 +1057,13 @@ public class cosmic
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, panic_samples_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cosmica )
+	public static MachineHandlerPtr machine_driver_cosmica = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1072,10 +1079,13 @@ public class cosmic
 	
 		MDRV_PALETTE_INIT(cosmica)
 		MDRV_VIDEO_UPDATE(cosmica)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cosmicg )
+	public static MachineHandlerPtr machine_driver_cosmicg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS9980, 1228500)
@@ -1102,10 +1112,13 @@ public class cosmic
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, cosmicg_samples_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( magspot2 )
+	public static MachineHandlerPtr machine_driver_magspot2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1124,20 +1137,26 @@ public class cosmic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( devzone )
+	public static MachineHandlerPtr machine_driver_devzone = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(magspot2)
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(devzone)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( nomnlnd )
+	public static MachineHandlerPtr machine_driver_nomnlnd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1156,7 +1175,9 @@ public class cosmic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_panic = new RomLoadPtr(){ public void handler(){ 

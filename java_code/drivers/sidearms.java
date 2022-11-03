@@ -660,7 +660,8 @@ public class sidearms
 		{ 0 }
 	};
 	
-	static MACHINE_DRIVER_START( sidearms )
+	public static MachineHandlerPtr machine_driver_sidearms = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz (?) */
@@ -687,10 +688,13 @@ public class sidearms
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( turtship )
+	public static MachineHandlerPtr machine_driver_turtship = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz (?) */
@@ -717,9 +721,12 @@ public class sidearms
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( whizz )
+	public static MachineHandlerPtr machine_driver_whizz = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4 MHz (?) */
@@ -747,7 +754,9 @@ public class sidearms
 		MDRV_INTERLEAVE(1000)
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_whizz_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

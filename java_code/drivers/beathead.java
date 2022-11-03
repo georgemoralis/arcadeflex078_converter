@@ -438,7 +438,8 @@ public class beathead
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( beathead )
+	public static MachineHandlerPtr machine_driver_beathead = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ASAP, ATARI_CLOCK_14MHz)
@@ -461,7 +462,9 @@ public class beathead
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -863,7 +863,8 @@ public class cps2
 		CPS2_Read16, CPS2_Read32
 	};
 	
-	static MACHINE_DRIVER_START( cps2 )
+	public static MachineHandlerPtr machine_driver_cps2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 11800000)
@@ -895,7 +896,9 @@ public class cps2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(QSOUND, qsound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_1944 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( CODE_SIZE, REGION_CPU1, 0 )      /* 68000 code */

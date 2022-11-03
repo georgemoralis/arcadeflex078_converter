@@ -294,7 +294,8 @@ public class mrflea
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static MACHINE_DRIVER_START( mrflea )
+	public static MachineHandlerPtr machine_driver_mrflea = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz? */
@@ -323,7 +324,9 @@ public class mrflea
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_mrflea = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 code; main CPU */

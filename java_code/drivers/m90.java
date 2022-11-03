@@ -551,7 +551,8 @@ public class m90
 	
 	
 	
-	static MACHINE_DRIVER_START( m90 )
+	public static MachineHandlerPtr machine_driver_m90 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 8 MHz ??????? */
@@ -583,17 +584,23 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( quizf1 )
+	public static MachineHandlerPtr machine_driver_quizf1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM( m90 )
 		MDRV_VISIBLE_AREA(6*8, 54*8-1, 17*8-8, 47*8-1+8)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bombrman )
+	public static MachineHandlerPtr machine_driver_bombrman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 8 MHz ??????? */
@@ -624,10 +631,13 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bbmanw )
+	public static MachineHandlerPtr machine_driver_bbmanw = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 8 MHz ??????? */
@@ -658,10 +668,13 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bootleg )
+	public static MachineHandlerPtr machine_driver_bootleg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz */
@@ -692,7 +705,9 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	

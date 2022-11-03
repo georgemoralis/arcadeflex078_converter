@@ -236,7 +236,8 @@ public class wrally
 		{ 100 }				/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( wrally )
+	public static MachineHandlerPtr machine_driver_wrally = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
 		MDRV_CPU_MEMORY(wrally_readmem,wrally_writemem)
@@ -258,7 +259,9 @@ public class wrally
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, wrally_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

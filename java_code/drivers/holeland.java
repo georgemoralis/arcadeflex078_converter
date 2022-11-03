@@ -304,7 +304,8 @@ public class holeland
 	
 	
 	
-	static MACHINE_DRIVER_START( holeland )
+	public static MachineHandlerPtr machine_driver_holeland = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4 MHz ? */
@@ -328,10 +329,13 @@ public class holeland
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( crzrally )
+	public static MachineHandlerPtr machine_driver_crzrally = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4 MHz ? */
@@ -355,7 +359,9 @@ public class holeland
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

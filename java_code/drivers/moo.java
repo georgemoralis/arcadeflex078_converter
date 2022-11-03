@@ -661,7 +661,8 @@ public class moo
 	} };
 	
 	
-	static MACHINE_DRIVER_START( moo )
+	public static MachineHandlerPtr machine_driver_moo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -693,9 +694,12 @@ public class moo
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( moobl )
+	public static MachineHandlerPtr machine_driver_moobl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16100000)
@@ -721,9 +725,12 @@ public class moo
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( bucky )
+	public static MachineHandlerPtr machine_driver_bucky = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(moo)
 	
 		MDRV_CPU_MODIFY("main")
@@ -731,7 +738,9 @@ public class moo
 	
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(4096)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

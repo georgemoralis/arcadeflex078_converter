@@ -307,7 +307,8 @@ public class simpsons
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( simpsons )
+	public static MachineHandlerPtr machine_driver_simpsons = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000) /* ? */
@@ -337,7 +338,9 @@ public class simpsons
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -372,7 +372,8 @@ public class looping
 		{ 30 }
 	};
 	
-	static MACHINE_DRIVER_START( looping )
+	public static MachineHandlerPtr machine_driver_looping = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS9995, 3000000) /* ? */
@@ -403,7 +404,9 @@ public class looping
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

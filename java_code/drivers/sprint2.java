@@ -851,7 +851,8 @@ public class sprint2
 	DISCRETE_SOUND_END
 	
 	
-	static MACHINE_DRIVER_START( sprint2 )
+	public static MachineHandlerPtr machine_driver_sprint2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 16)
@@ -877,27 +878,35 @@ public class sprint2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, sprint2_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sprint1 )
+	public static MachineHandlerPtr machine_driver_sprint1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM(sprint2)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, sprint1_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dominos )
+	public static MachineHandlerPtr machine_driver_dominos = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM(sprint2)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, dominos_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_sprint1 = new RomLoadPtr(){ public void handler(){ 

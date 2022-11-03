@@ -150,7 +150,8 @@ public class truco
 			trigger = 0;
 	} };
 	
-	static MACHINE_DRIVER_START( truco )
+	public static MachineHandlerPtr machine_driver_truco = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1000000)        /* 1 MHz ? */
@@ -172,7 +173,9 @@ public class truco
 		MDRV_VIDEO_UPDATE(truco)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

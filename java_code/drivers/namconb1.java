@@ -674,7 +674,8 @@ public class namconb1
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( namconb1 )
+	public static MachineHandlerPtr machine_driver_namconb1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020,25000000/2) /* 25 MHz? */
@@ -699,9 +700,12 @@ public class namconb1
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		/* similar to C140?  managed by MCU */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( namconb2 )
+	public static MachineHandlerPtr machine_driver_namconb2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020,25000000) /* 25 MHz? */
@@ -723,7 +727,9 @@ public class namconb1
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************/
 	

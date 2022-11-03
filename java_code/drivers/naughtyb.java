@@ -315,7 +315,8 @@ public class naughtyb
 	
 	
 	
-	static MACHINE_DRIVER_START( naughtyb )
+	public static MachineHandlerPtr machine_driver_naughtyb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1500000)	/* 3 MHz ? */
@@ -341,11 +342,14 @@ public class naughtyb
 		/* uses the TMS3615NS for sound */
 		MDRV_SOUND_ADD(TMS36XX, tms3615_interface)
 		MDRV_SOUND_ADD(CUSTOM, naughtyb_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Exactly the same but for the writemem handler */
-	static MACHINE_DRIVER_START( popflame )
+	public static MachineHandlerPtr machine_driver_popflame = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1500000)	/* 3 MHz ? */
@@ -370,7 +374,9 @@ public class naughtyb
 		/* sound hardware */
 		MDRV_SOUND_ADD(TMS36XX, tms3615_interface)
 		MDRV_SOUND_ADD(CUSTOM, popflame_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

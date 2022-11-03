@@ -375,7 +375,8 @@ public class bsktball
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( bsktball )
+	public static MachineHandlerPtr machine_driver_bsktball = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,750000)
@@ -399,7 +400,9 @@ public class bsktball
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, bsktball_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

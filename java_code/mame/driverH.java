@@ -87,7 +87,9 @@ public class driverH
 			struct MachineCPU *cpu = NULL;									\
 			(void)cpu;														\
 	
-	#define MACHINE_DRIVER_END 												\
+	#define MACHINE_DRIVER_END();
+ }
+}; 												\
 		}																	\
 	
 	

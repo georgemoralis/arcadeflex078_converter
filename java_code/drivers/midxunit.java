@@ -212,7 +212,8 @@ public class midxunit
 		revx:     0014-0112 / 0120 (254)     0065-001F5 / 01F9 (400)
 	*/
 	
-	static MACHINE_DRIVER_START( midxunit )
+	public static MachineHandlerPtr machine_driver_midxunit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34020, 40000000/TMS34020_CLOCK_DIVIDER)
@@ -235,7 +236,9 @@ public class midxunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio_uart)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

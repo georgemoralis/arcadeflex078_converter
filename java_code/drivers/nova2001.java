@@ -195,7 +195,8 @@ public class nova2001
 		{ 0 }
 	);
 	
-	static MACHINE_DRIVER_START( nova2001 )
+	public static MachineHandlerPtr machine_driver_nova2001 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 12000000/4)	// 3 MHz
@@ -219,7 +220,9 @@ public class nova2001
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

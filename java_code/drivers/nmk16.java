@@ -2640,7 +2640,8 @@ public class nmk16
 	/* Parameters: YM3812 frequency, Oki frequency, Oki memory region */
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(14318180/4, 8000, REGION_SOUND1);
 	
-	static MACHINE_DRIVER_START( urashima )
+	public static MachineHandlerPtr machine_driver_urashima = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2664,10 +2665,13 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( vandyke )
+	public static MachineHandlerPtr machine_driver_vandyke = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2693,10 +2697,13 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( tharrier )
+	public static MachineHandlerPtr machine_driver_tharrier = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -2727,9 +2734,12 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( manybloc )
+	public static MachineHandlerPtr machine_driver_manybloc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10? MHz - check */
@@ -2759,9 +2769,12 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mustang )
+	public static MachineHandlerPtr machine_driver_mustang = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2788,9 +2801,12 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mustangb )
+	public static MachineHandlerPtr machine_driver_mustangb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2818,9 +2834,12 @@ public class nmk16
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( acrobatm )
+	public static MachineHandlerPtr machine_driver_acrobatm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? 12 MHz? */
@@ -2846,10 +2865,13 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203? */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bioship )
+	public static MachineHandlerPtr machine_driver_bioship = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000) /* 16 MHz ? */
@@ -2875,11 +2897,14 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* bootleg using Raiden sound hardware */
-	static MACHINE_DRIVER_START( tdragonb )
+	public static MachineHandlerPtr machine_driver_tdragonb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -2906,9 +2931,12 @@ public class nmk16
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( tdragon )
+	public static MachineHandlerPtr machine_driver_tdragon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -2932,9 +2960,12 @@ public class nmk16
 		MDRV_VIDEO_UPDATE(macross)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ssmissin )
+	public static MachineHandlerPtr machine_driver_ssmissin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -2963,10 +2994,13 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_ssmissin)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( strahl )
+	public static MachineHandlerPtr machine_driver_strahl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* 12 MHz ? */
@@ -2992,10 +3026,13 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hachamf )
+	public static MachineHandlerPtr machine_driver_hachamf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3021,10 +3058,13 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( macross )
+	public static MachineHandlerPtr machine_driver_macross = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3050,10 +3090,13 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gunnail )
+	public static MachineHandlerPtr machine_driver_gunnail = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz? */
@@ -3078,10 +3121,13 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( macross2 )
+	public static MachineHandlerPtr machine_driver_macross2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3112,9 +3158,12 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( tdragon2 )
+	public static MachineHandlerPtr machine_driver_tdragon2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3145,9 +3194,12 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( raphero )
+	public static MachineHandlerPtr machine_driver_raphero = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000) /* 14 MHz measured */
@@ -3180,9 +3232,12 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( bjtwin )
+	public static MachineHandlerPtr machine_driver_bjtwin = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz? It's a P12, but xtals are 10MHz and 16MHz */
@@ -3207,7 +3262,9 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

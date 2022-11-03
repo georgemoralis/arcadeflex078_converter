@@ -457,7 +457,8 @@ public class pushman
 	
 	static UINT32 amask_m68705 = 0xfff;
 	
-	static MACHINE_DRIVER_START( pushman )
+	public static MachineHandlerPtr machine_driver_pushman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -490,9 +491,12 @@ public class pushman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( bballs )
+	public static MachineHandlerPtr machine_driver_bballs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -522,7 +526,9 @@ public class pushman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************/

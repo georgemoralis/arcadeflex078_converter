@@ -267,7 +267,8 @@ public class pastelgl
 	};
 	
 	
-	static MACHINE_DRIVER_START( pastelgl )
+	public static MachineHandlerPtr machine_driver_pastelgl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 19968000/8)	/* 2.496 MHz ? */
@@ -294,7 +295,9 @@ public class pastelgl
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_pastelgl = new RomLoadPtr(){ public void handler(){ 

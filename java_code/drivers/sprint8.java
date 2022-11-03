@@ -542,7 +542,8 @@ public class sprint8
 	};
 	
 	
-	static MACHINE_DRIVER_START( sprint8 )
+	public static MachineHandlerPtr machine_driver_sprint8 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 11055000 / 11) /* ? */
@@ -566,7 +567,9 @@ public class sprint8
 		MDRV_VIDEO_EOF(sprint8)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_sprint8 = new RomLoadPtr(){ public void handler(){ 

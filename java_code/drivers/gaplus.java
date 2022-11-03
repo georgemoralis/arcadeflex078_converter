@@ -507,7 +507,8 @@ public class gaplus
 	
 	
 	
-	static MACHINE_DRIVER_START( gaplus )
+	public static MachineHandlerPtr machine_driver_gaplus = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,	1536000)	/* 24.576 MHz / 16 = 1.536 MHz */
@@ -542,9 +543,12 @@ public class gaplus
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gapluso )
+	public static MachineHandlerPtr machine_driver_gapluso = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,	1536000)	/* 24.576 MHz / 16 = 1.536 MHz */
@@ -579,9 +583,12 @@ public class gaplus
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( gaplusa )
+	public static MachineHandlerPtr machine_driver_gaplusa = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1536000)	/* 24.576 MHz / 16 = 1.536 MHz */
@@ -617,7 +624,9 @@ public class gaplus
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

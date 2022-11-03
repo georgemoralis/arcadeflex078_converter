@@ -402,7 +402,8 @@ public class offtwall
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( offtwall )
+	public static MachineHandlerPtr machine_driver_offtwall = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -426,7 +427,9 @@ public class offtwall
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono_noadpcm)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

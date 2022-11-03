@@ -441,7 +441,8 @@ public class decocass
 	} };
 	
 	
-	static MACHINE_DRIVER_START( decocass )
+	public static MachineHandlerPtr machine_driver_decocass = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,750000)
@@ -474,207 +475,284 @@ public class decocass
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ctsttape )
+	public static MachineHandlerPtr machine_driver_ctsttape = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(ctsttape)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( clocknch )
+	public static MachineHandlerPtr machine_driver_clocknch = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(clocknch)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ctisland )
+	public static MachineHandlerPtr machine_driver_ctisland = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(ctisland)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( csuperas )
+	public static MachineHandlerPtr machine_driver_csuperas = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(csuperas)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( castfant )
+	public static MachineHandlerPtr machine_driver_castfant = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(castfant)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cluckypo )
+	public static MachineHandlerPtr machine_driver_cluckypo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cluckypo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cterrani )
+	public static MachineHandlerPtr machine_driver_cterrani = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cterrani)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cexplore )
+	public static MachineHandlerPtr machine_driver_cexplore = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cexplore)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cprogolf )
+	public static MachineHandlerPtr machine_driver_cprogolf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cprogolf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cmissnx )
+	public static MachineHandlerPtr machine_driver_cmissnx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cmissnx)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cdiscon1 )
+	public static MachineHandlerPtr machine_driver_cdiscon1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cdiscon1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cptennis )
+	public static MachineHandlerPtr machine_driver_cptennis = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cptennis)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ctornado )
+	public static MachineHandlerPtr machine_driver_ctornado = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(ctornado)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cbnj )
+	public static MachineHandlerPtr machine_driver_cbnj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cbnj)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cburnrub )
+	public static MachineHandlerPtr machine_driver_cburnrub = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cburnrub)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cbtime )
+	public static MachineHandlerPtr machine_driver_cbtime = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cbtime)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cgraplop )
+	public static MachineHandlerPtr machine_driver_cgraplop = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cgraplop)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( clapapa )
+	public static MachineHandlerPtr machine_driver_clapapa = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(clapapa)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cfghtice )
+	public static MachineHandlerPtr machine_driver_cfghtice = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cfghtice)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cprobowl )
+	public static MachineHandlerPtr machine_driver_cprobowl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cprobowl)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cnightst )
+	public static MachineHandlerPtr machine_driver_cnightst = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cnightst)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cprosocc )
+	public static MachineHandlerPtr machine_driver_cprosocc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cprosocc)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cppicf )
+	public static MachineHandlerPtr machine_driver_cppicf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cppicf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cbdash )
+	public static MachineHandlerPtr machine_driver_cbdash = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cbdash)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cscrtry )
+	public static MachineHandlerPtr machine_driver_cscrtry = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(decocass)
 		MDRV_MACHINE_INIT(cscrtry)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

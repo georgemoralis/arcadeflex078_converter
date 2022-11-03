@@ -1182,7 +1182,8 @@ public class atarisy2
 	};
 	
 	
-	static MACHINE_DRIVER_START( atarisy2 )
+	public static MachineHandlerPtr machine_driver_atarisy2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", T11, ATARI_CLOCK_20MHz/2)
@@ -1215,26 +1216,34 @@ public class atarisy2
 		MDRV_SOUND_ADD_TAG("ym",    YM2151,  ym2151_interface)
 		MDRV_SOUND_ADD_TAG("pokey", POKEY,   pokey_interface)
 		MDRV_SOUND_ADD_TAG("tms",   TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( 720 )
+	public static MachineHandlerPtr machine_driver_720 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarisy2)
 		
 		MDRV_CPU_REPLACE("sound", M6502, 2200000) /* artifically high to prevent deadlock at startup ATARI_CLOCK_14MHz/8,*/
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sprint )
+	public static MachineHandlerPtr machine_driver_sprint = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarisy2)
 		
 		/* sound hardware */
 		MDRV_SOUND_REMOVE("tms")
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

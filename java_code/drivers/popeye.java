@@ -491,7 +491,8 @@ public class popeye
 	
 	
 	
-	static MACHINE_DRIVER_START( skyskipr )
+	public static MachineHandlerPtr machine_driver_skyskipr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000/2)	/* 4 MHz */
 		MDRV_CPU_MEMORY(skyskipr_readmem,skyskipr_writemem)
@@ -515,26 +516,34 @@ public class popeye
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( popeye )
+	public static MachineHandlerPtr machine_driver_popeye = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(skyskipr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(popeye_readmem,popeye_writemem)
 	
 		MDRV_VIDEO_START(popeye)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( popeyebl )
+	public static MachineHandlerPtr machine_driver_popeyebl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(skyskipr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(popeyebl_readmem,popeyebl_writemem)
 	
 		MDRV_PALETTE_INIT(popeyebl)
 		MDRV_VIDEO_START(popeye)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

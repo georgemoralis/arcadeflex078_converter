@@ -1445,7 +1445,8 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( atarigx2 )
+	public static MachineHandlerPtr machine_driver_atarigx2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, ATARI_CLOCK_14MHz)
@@ -1471,7 +1472,9 @@ public class atarigx2
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iiis_stereo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

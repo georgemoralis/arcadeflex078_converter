@@ -524,7 +524,8 @@ public class djboy
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, addr);
 	} };
 	
-	static MACHINE_DRIVER_START( djboy )
+	public static MachineHandlerPtr machine_driver_djboy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80,6000000) /* ? */
 		MDRV_CPU_MEMORY(cpu1_readmem,cpu1_writemem)
 		MDRV_CPU_PORTS(0,cpu1_writeport)
@@ -556,7 +557,9 @@ public class djboy
 	
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_djboy = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x48000, REGION_CPU1, 0 )

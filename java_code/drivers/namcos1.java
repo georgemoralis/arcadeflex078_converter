@@ -1155,7 +1155,8 @@ public class namcos1
 	};
 	
 	
-	static MACHINE_DRIVER_START( ns1 )
+	public static MachineHandlerPtr machine_driver_ns1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M6809,49152000/24) /* Not sure if divided by 32 or 24 */
@@ -1197,10 +1198,13 @@ public class namcos1
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bakutotu )
+	public static MachineHandlerPtr machine_driver_bakutotu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM(ns1)
 	
@@ -1210,27 +1214,35 @@ public class namcos1
 		// heavy sync required to prevent CPUs from fighting for video RAM access and going into deadlocks
 		MDRV_INTERLEAVE(640)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( quester )
+	public static MachineHandlerPtr machine_driver_quester = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM(ns1)
 	
 		MDRV_CPU_MODIFY("MCU")
 		MDRV_CPU_MEMORY(quester_mcu_readmem,mcu_writemem)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( faceoff )
+	public static MachineHandlerPtr machine_driver_faceoff = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM(ns1)
 	
 		MDRV_CPU_MODIFY("MCU")
 		MDRV_CPU_MEMORY(faceoff_mcu_readmem,mcu_writemem)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***********************************************************************

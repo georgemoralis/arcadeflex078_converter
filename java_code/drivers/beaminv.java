@@ -127,7 +127,8 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( beaminv )
+	public static MachineHandlerPtr machine_driver_beaminv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)	/* 2 MHz ? */
@@ -146,7 +147,9 @@ public class beaminv
 		MDRV_PALETTE_INIT(black_and_white)
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************

@@ -504,7 +504,8 @@ public class f1gp
 	
 	
 	
-	static MACHINE_DRIVER_START( f1gp )
+	public static MachineHandlerPtr machine_driver_f1gp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,10000000)	/* 10 MHz ??? */
@@ -536,9 +537,12 @@ public class f1gp
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( f1gp2 )
+	public static MachineHandlerPtr machine_driver_f1gp2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(f1gp)
@@ -551,7 +555,9 @@ public class f1gp
 	
 		MDRV_VIDEO_START(f1gp2)
 		MDRV_VIDEO_UPDATE(f1gp2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

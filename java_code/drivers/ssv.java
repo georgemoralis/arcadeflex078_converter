@@ -2689,7 +2689,8 @@ public class ssv
 									ssv_sprites_offsx = +0;	ssv_sprites_offsy = +0xf0;
 									ssv_tilemap_offsx = +0;	ssv_tilemap_offsy = -0xf8;	} };
 	
-	static MACHINE_DRIVER_START( ssv )
+	public static MachineHandlerPtr machine_driver_ssv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", V60, CLOCK_16MHz) /* Based on STA-0001 & STA-0001B System boards */
@@ -2714,10 +2715,13 @@ public class ssv
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5506, es5506_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( drifto94 )
+	public static MachineHandlerPtr machine_driver_drifto94 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2728,10 +2732,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 4, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hypreact )
+	public static MachineHandlerPtr machine_driver_hypreact = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2740,10 +2747,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(8, 0x148-1, 16, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hypreac2 )
+	public static MachineHandlerPtr machine_driver_hypreac2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2752,10 +2762,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 8, 0xf8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( janjans1 )
+	public static MachineHandlerPtr machine_driver_janjans1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2764,10 +2777,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( keithlcy )
+	public static MachineHandlerPtr machine_driver_keithlcy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2776,10 +2792,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 4, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( meosism )
+	public static MachineHandlerPtr machine_driver_meosism = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2790,10 +2809,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mslider )
+	public static MachineHandlerPtr machine_driver_mslider = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2802,10 +2824,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ryorioh )
+	public static MachineHandlerPtr machine_driver_ryorioh = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2814,10 +2839,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( srmp4 )
+	public static MachineHandlerPtr machine_driver_srmp4 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2826,10 +2854,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 4, 0xf4-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( srmp7 )
+	public static MachineHandlerPtr machine_driver_srmp7 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2838,10 +2869,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( stmblade )
+	public static MachineHandlerPtr machine_driver_stmblade = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2851,10 +2885,13 @@ public class ssv
 		MDRV_NVRAM_HANDLER(ssv)
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x158-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( survarts )
+	public static MachineHandlerPtr machine_driver_survarts = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2863,10 +2900,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 4, 0xf4-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( eaglshot )
+	public static MachineHandlerPtr machine_driver_eaglshot = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(survarts)
@@ -2874,10 +2914,13 @@ public class ssv
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
 		MDRV_GFXDECODE(eaglshot_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sxyreact )
+	public static MachineHandlerPtr machine_driver_sxyreact = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2888,10 +2931,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( twineag2 )
+	public static MachineHandlerPtr machine_driver_twineag2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2900,10 +2946,13 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ultrax )
+	public static MachineHandlerPtr machine_driver_ultrax = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ssv)
@@ -2912,7 +2961,9 @@ public class ssv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x150-1, 0, 0xf0-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

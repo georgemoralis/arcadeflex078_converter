@@ -110,7 +110,8 @@ public class dorachan
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 	INPUT_PORTS_END(); }}; 
 	
-	static MACHINE_DRIVER_START( dorachan )
+	public static MachineHandlerPtr machine_driver_dorachan = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(Z80, 2000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -123,7 +124,9 @@ public class dorachan
 		MDRV_PALETTE_LENGTH(8)
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_dorachan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )

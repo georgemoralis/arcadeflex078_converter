@@ -229,7 +229,8 @@ public class nss
 			colortable[i] = 0;
 	} };
 	
-	static MACHINE_DRIVER_START( snes )
+	public static MachineHandlerPtr machine_driver_snes = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", G65816, 2680000)	/* 2.68Mhz, also 3.58Mhz */
 		MDRV_CPU_MEMORY(snes_readmem, snes_writemem)
@@ -261,7 +262,9 @@ public class nss
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, snes_sound_interface)
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

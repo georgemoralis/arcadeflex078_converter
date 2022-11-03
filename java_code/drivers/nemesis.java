@@ -2027,7 +2027,8 @@ public class nemesis
 	
 	/******************************************************************************/
 	
-	static MACHINE_DRIVER_START( nemesis )
+	public static MachineHandlerPtr machine_driver_nemesis = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)         /* 9.216 MHz? */
@@ -2058,10 +2059,13 @@ public class nemesis
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(K005289, k005289_interface)
 		MDRV_SOUND_ADD(VLM5030, gx400_vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( konamigt )
+	public static MachineHandlerPtr machine_driver_konamigt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)         /* 9.216 MHz? */
@@ -2090,10 +2094,13 @@ public class nemesis
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(K005289, k005289_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( salamand )
+	public static MachineHandlerPtr machine_driver_salamand = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)       /* 9.216MHz */
@@ -2124,10 +2131,13 @@ public class nemesis
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( blkpnthr )
+	public static MachineHandlerPtr machine_driver_blkpnthr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)         /* 9.216 MHz? */
@@ -2157,10 +2167,13 @@ public class nemesis
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( citybomb )
+	public static MachineHandlerPtr machine_driver_citybomb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)         /* 9.216 MHz? */
@@ -2191,10 +2204,13 @@ public class nemesis
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(K051649, k051649_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( nyanpani )
+	public static MachineHandlerPtr machine_driver_nyanpani = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)         /* 9.216 MHz? */
@@ -2225,10 +2241,13 @@ public class nemesis
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(K051649, k051649_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gx400 )
+	public static MachineHandlerPtr machine_driver_gx400 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)     /* 9.216MHz */
@@ -2258,10 +2277,13 @@ public class nemesis
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(K005289, k005289_interface)
 		MDRV_SOUND_ADD(VLM5030, gx400_vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( rf2_gx400 )
+	public static MachineHandlerPtr machine_driver_rf2_gx400 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,18432000/2)     /* 9.216MHz */
@@ -2292,7 +2314,9 @@ public class nemesis
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(K005289, k005289_interface)
 		MDRV_SOUND_ADD(VLM5030, gx400_vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

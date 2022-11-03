@@ -341,7 +341,8 @@ public class nyny
 	
 	
 	
-	static MACHINE_DRIVER_START( nyny )
+	public static MachineHandlerPtr machine_driver_nyny = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1400000)	/* 1.40 MHz */
@@ -373,7 +374,9 @@ public class nyny
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	  Game driver(s)

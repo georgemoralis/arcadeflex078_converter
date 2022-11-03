@@ -230,7 +230,8 @@ public class tryout
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( tryout )
+	public static MachineHandlerPtr machine_driver_tryout = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M6502, 2000000)		 /* ?? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(tryout_interrupt,1)
@@ -256,7 +257,9 @@ public class tryout
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_tryout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 

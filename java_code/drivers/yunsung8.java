@@ -456,7 +456,8 @@ public class yunsung8
 	};
 	
 	
-	static MACHINE_DRIVER_START( yunsung8 )
+	public static MachineHandlerPtr machine_driver_yunsung8 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)			/* Z80B */
@@ -488,7 +489,9 @@ public class yunsung8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, yunsung8_ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, yunsung8_msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

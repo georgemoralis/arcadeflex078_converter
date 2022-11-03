@@ -717,7 +717,8 @@ public class bbusters
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
-	static MACHINE_DRIVER_START( bbusters )
+	public static MachineHandlerPtr machine_driver_bbusters = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -751,9 +752,12 @@ public class bbusters
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mechatt )
+	public static MachineHandlerPtr machine_driver_mechatt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -785,7 +789,9 @@ public class bbusters
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2608, ym2608_interface)
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

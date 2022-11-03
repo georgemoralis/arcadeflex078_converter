@@ -283,7 +283,8 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( vindictr )
+	public static MachineHandlerPtr machine_driver_vindictr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68010, ATARI_CLOCK_14MHz/2)
@@ -307,7 +308,9 @@ public class vindictr
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_stereo_pokey)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

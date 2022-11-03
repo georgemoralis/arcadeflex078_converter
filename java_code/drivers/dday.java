@@ -311,7 +311,8 @@ public class dday
 	);
 	
 	
-	static MACHINE_DRIVER_START( dday )
+	public static MachineHandlerPtr machine_driver_dday = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)     /* 2 MHz ? */
@@ -334,7 +335,9 @@ public class dday
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

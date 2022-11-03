@@ -330,7 +330,8 @@ public class jchan
 	
 	/* machine driver */
 	
-	static MACHINE_DRIVER_START( jchan )
+	public static MachineHandlerPtr machine_driver_jchan = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1) // ?
@@ -350,7 +351,9 @@ public class jchan
 		MDRV_VIDEO_UPDATE(jchan)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* rom loading */
 	

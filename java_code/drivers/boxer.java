@@ -345,7 +345,9 @@ public class boxer
 		MDRV_VIDEO_UPDATE(boxer)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_boxer = new RomLoadPtr(){ public void handler(){ 

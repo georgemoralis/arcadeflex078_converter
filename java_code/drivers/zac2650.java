@@ -322,7 +322,8 @@ public class zac2650
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( tinvader )
+	public static MachineHandlerPtr machine_driver_tinvader = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 3800000/4/3)
@@ -345,7 +346,9 @@ public class zac2650
 		MDRV_VIDEO_UPDATE(tinvader)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	public static WriteHandlerPtr tinvader_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

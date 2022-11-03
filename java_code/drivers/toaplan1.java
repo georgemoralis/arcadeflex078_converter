@@ -1602,7 +1602,8 @@ public class toaplan1
 	
 	
 	
-	static MACHINE_DRIVER_START( rallybik )
+	public static MachineHandlerPtr machine_driver_rallybik = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1632,10 +1633,13 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( truxton )
+	public static MachineHandlerPtr machine_driver_truxton = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1666,10 +1670,13 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hellfire )
+	public static MachineHandlerPtr machine_driver_hellfire = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1699,10 +1706,13 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( zerowing )
+	public static MachineHandlerPtr machine_driver_zerowing = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1732,10 +1742,13 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( demonwld )
+	public static MachineHandlerPtr machine_driver_demonwld = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1769,10 +1782,13 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( samesame )
+	public static MachineHandlerPtr machine_driver_samesame = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1797,10 +1813,13 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( outzone )
+	public static MachineHandlerPtr machine_driver_outzone = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1830,10 +1849,13 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( vimana )
+	public static MachineHandlerPtr machine_driver_vimana = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1858,7 +1880,9 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

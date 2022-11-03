@@ -271,7 +271,8 @@ public class pengo
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( pengo )
+	public static MachineHandlerPtr machine_driver_pengo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3020000)		/* The correct speed is 3.072 MHz, but 3.020 gives a more */
@@ -298,7 +299,9 @@ public class pengo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -1432,7 +1432,8 @@ public class neogeo
 	
 	/******************************************************************************/
 	
-	static MACHINE_DRIVER_START( neogeo )
+	public static MachineHandlerPtr machine_driver_neogeo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 12000000) /* verified */
@@ -1471,10 +1472,13 @@ public class neogeo
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, neogeo_ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( raster )
+	public static MachineHandlerPtr machine_driver_raster = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(neogeo)
@@ -1483,10 +1487,13 @@ public class neogeo
 	
 		/* video hardware */
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER | VIDEO_RGB_DIRECT)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( raster_busy )
+	public static MachineHandlerPtr machine_driver_raster_busy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(raster)
@@ -1494,9 +1501,12 @@ public class neogeo
 		MDRV_CPU_VBLANK_INT(neogeo_raster_interrupt_busy,RASTER_LINES)
 	
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 2*8, 30*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( neo320 )
+	public static MachineHandlerPtr machine_driver_neo320 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(neogeo)
 		/* Screen width *should* be 320, at least in the test mode for the crosshatch,
 		   this has been verified on original hardware, glitches that occur at 320 in
@@ -1504,12 +1514,17 @@ public class neogeo
 		   probably correct in all cases, however to avoid confusion we use 304 unless
 		   a game *needs* 320 */
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 2*8, 30*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ras320 )
+	public static MachineHandlerPtr machine_driver_ras320 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(raster)
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 2*8, 30*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*

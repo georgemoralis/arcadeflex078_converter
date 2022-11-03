@@ -226,7 +226,8 @@ public class sspeedr
 	};
 	
 	
-	static MACHINE_DRIVER_START( sspeedr )
+	public static MachineHandlerPtr machine_driver_sspeedr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 19968000 / 8)
@@ -250,7 +251,9 @@ public class sspeedr
 		MDRV_VIDEO_EOF(sspeedr)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_sspeedr = new RomLoadPtr(){ public void handler(){ 

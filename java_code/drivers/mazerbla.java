@@ -1523,7 +1523,8 @@ public class mazerbla
 	);
 	
 	
-	static MACHINE_DRIVER_START( mazerbla )
+	public static MachineHandlerPtr machine_driver_mazerbla = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz, no NMI, IM2 - vectors at 0xf8, 0xfa, 0xfc */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -1561,10 +1562,13 @@ public class mazerbla
 		MDRV_VIDEO_UPDATE(mazerbla)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( greatgun )
+	public static MachineHandlerPtr machine_driver_greatgun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz, no NMI, IM2 - vectors at 0xf8, 0xfa, 0xfc */
@@ -1603,7 +1607,9 @@ public class mazerbla
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

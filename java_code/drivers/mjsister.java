@@ -316,7 +316,8 @@ public class mjsister
 		{ 100 }
 	};
 	
-	static MACHINE_DRIVER_START( mjsister )
+	public static MachineHandlerPtr machine_driver_mjsister = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MCLK/2) /* 6.000 MHz */
@@ -342,7 +343,9 @@ public class mjsister
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

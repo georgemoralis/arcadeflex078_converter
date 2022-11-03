@@ -184,7 +184,8 @@ public class gaelco2
 		{ 100, 100 }							/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( maniacsq )
+	public static MachineHandlerPtr machine_driver_maniacsq = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 26000000/2)		/* 13 MHz? */
 		MDRV_CPU_MEMORY(maniacsq_readmem, maniacsq_writemem)
@@ -207,7 +208,9 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_GAE1, maniacsq_snd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_maniacsq = new RomLoadPtr(){ public void handler(){ 
@@ -331,7 +334,8 @@ public class gaelco2
 		{ 100, 100 }											/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( bang )
+	public static MachineHandlerPtr machine_driver_bang = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 30000000/2)			/* 15 MHz */
 		MDRV_CPU_MEMORY(bang_readmem, bang_writemem)
@@ -356,7 +360,9 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_CG1V, bang_snd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_bang = new RomLoadPtr(){ public void handler(){ 
@@ -530,7 +536,8 @@ public class gaelco2
 		{ 100, 100 }											/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( alighunt )
+	public static MachineHandlerPtr machine_driver_alighunt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 24000000/2)			/* 12 MHz */
 		MDRV_CPU_MEMORY(alighunt_readmem, alighunt_writemem)
@@ -553,7 +560,9 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_GAE1, alighunt_snd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*
@@ -794,7 +803,8 @@ public class gaelco2
 		{ 100, 100 }							/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( touchgo )
+	public static MachineHandlerPtr machine_driver_touchgo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 32000000/2)			/* 16 MHz */
 		MDRV_CPU_MEMORY(touchgo_readmem, touchgo_writemem)
@@ -826,7 +836,9 @@ public class gaelco2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	#endif
 		MDRV_SOUND_ADD(GAELCO_GAE1, touchgo_snd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*
 	PCB Layout:
@@ -965,7 +977,8 @@ public class gaelco2
 		{ 100, 100 }							/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( snowboar )
+	public static MachineHandlerPtr machine_driver_snowboar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 30000000/2)			/* 15 MHz */
 		MDRV_CPU_MEMORY(snowboar_readmem, snowboar_writemem)
@@ -990,7 +1003,9 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_CG1V, snowboar_snd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*
@@ -1210,7 +1225,8 @@ public class gaelco2
 		{ 100, 100 }						/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( wrally2 )
+	public static MachineHandlerPtr machine_driver_wrally2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 26000000/2)			/* 13 MHz */
 		MDRV_CPU_MEMORY(wrally2_readmem, wrally2_writemem)
@@ -1244,7 +1260,9 @@ public class gaelco2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	#endif
 		MDRV_SOUND_ADD(GAELCO_GAE1, wrally2_snd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*
 	PCB Layout:

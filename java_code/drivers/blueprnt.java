@@ -333,7 +333,8 @@ public class blueprnt
 	
 	
 	
-	static MACHINE_DRIVER_START( blueprnt )
+	public static MachineHandlerPtr machine_driver_blueprnt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/4)	/* 2.5 MHz (2H) */
@@ -361,7 +362,9 @@ public class blueprnt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

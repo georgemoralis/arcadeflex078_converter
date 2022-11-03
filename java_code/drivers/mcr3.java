@@ -1254,7 +1254,8 @@ public class mcr3
 	 *************************************/
 	
 	/* Core MCR3 system with no sound */
-	static MACHINE_DRIVER_START( mcr3 )
+	public static MachineHandlerPtr machine_driver_mcr3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 5000000)
@@ -1277,41 +1278,53 @@ public class mcr3
 	
 		MDRV_VIDEO_START(mcr3)
 		MDRV_VIDEO_UPDATE(mcr3)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* General MCR3 system with SSIO */
-	static MACHINE_DRIVER_START( mcr3_ssio )
+	public static MachineHandlerPtr machine_driver_mcr3_ssio = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
 		MDRV_IMPORT_FROM(mcr_ssio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Discs of Tron = General MCR3 with Squawk & Talk */
-	static MACHINE_DRIVER_START( dotron )
+	public static MachineHandlerPtr machine_driver_dotron = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3_ssio)
 		MDRV_IMPORT_FROM(squawk_n_talk)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Demolition Derby = General MCR3 with Turbo Chip Squeak instead of SSIO */
-	static MACHINE_DRIVER_START( demoderb )
+	public static MachineHandlerPtr machine_driver_demoderb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
 		MDRV_IMPORT_FROM(turbo_chip_squeak)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************/
 	
 	
 	/* Core MCR monoboard system with no sound */
-	static MACHINE_DRIVER_START( mcrmono )
+	public static MachineHandlerPtr machine_driver_mcrmono = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
@@ -1322,33 +1335,42 @@ public class mcr3
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mcrmono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Sarge/Demolition Derby Mono/Max RPM = MCR monoboardmonoboard = MCR3 with no SSIO */
 	/* in this case, Turbo Chip Squeak is used for sound */
-	static MACHINE_DRIVER_START( mono_tcs )
+	public static MachineHandlerPtr machine_driver_mono_tcs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrmono)
 		MDRV_IMPORT_FROM(turbo_chip_squeak)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Rampage/Power Drive/Star Guards = MCR monoboard with Sounds Good */
-	static MACHINE_DRIVER_START( mono_sg )
+	public static MachineHandlerPtr machine_driver_mono_sg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrmono)
 		MDRV_IMPORT_FROM(sounds_good)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************/
 	
 	
 	/* Core scrolling system with no sound */
-	static MACHINE_DRIVER_START( mcrscroll )
+	public static MachineHandlerPtr machine_driver_mcrscroll = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
@@ -1365,35 +1387,46 @@ public class mcr3
 		MDRV_PALETTE_INIT(spyhunt)
 		MDRV_VIDEO_START(spyhunt)
 		MDRV_VIDEO_UPDATE(spyhunt)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Spy Hunter = scrolling system with an SSIO and a chip squeak deluxe */
-	static MACHINE_DRIVER_START( spyhunt )
+	public static MachineHandlerPtr machine_driver_spyhunt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrscroll)
 		MDRV_IMPORT_FROM(mcr_ssio)
 		MDRV_IMPORT_FROM(chip_squeak_deluxe)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Crater Raider = scrolling system with SSIO only */
-	static MACHINE_DRIVER_START( crater )
+	public static MachineHandlerPtr machine_driver_crater = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrscroll)
 		MDRV_IMPORT_FROM(mcr_ssio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Turbo Tag = scrolling system with CSD only */
-	static MACHINE_DRIVER_START( turbotag )
+	public static MachineHandlerPtr machine_driver_turbotag = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrscroll)
 		MDRV_IMPORT_FROM(chip_squeak_deluxe)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

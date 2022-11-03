@@ -392,7 +392,9 @@ public class kinst
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

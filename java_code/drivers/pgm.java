@@ -492,7 +492,8 @@ public class pgm
 			cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( pgm )
+	public static MachineHandlerPtr machine_driver_pgm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 20000000) /* 20 mhz! verified on real board */
@@ -514,7 +515,9 @@ public class pgm
 		MDRV_VIDEO_START(pgm)
 		MDRV_VIDEO_EOF(pgm)
 		MDRV_VIDEO_UPDATE(pgm)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*** Init Stuff **************************************************************/
 	

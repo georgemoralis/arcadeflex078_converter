@@ -487,7 +487,8 @@ public class stfight
 		{ 50 }
 	};
 	
-	static MACHINE_DRIVER_START( stfight )
+	public static MachineHandlerPtr machine_driver_stfight = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)	/* 3 MHz */
@@ -521,7 +522,9 @@ public class stfight
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

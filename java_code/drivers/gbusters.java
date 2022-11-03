@@ -312,7 +312,8 @@ public class gbusters
 		{ 0 }
 	};
 	
-	static MACHINE_DRIVER_START( gbusters )
+	public static MachineHandlerPtr machine_driver_gbusters = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* Konami custom 052526 */
@@ -340,7 +341,9 @@ public class gbusters
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

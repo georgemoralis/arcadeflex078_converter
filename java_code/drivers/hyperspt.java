@@ -462,7 +462,8 @@ public class hyperspt
 	};
 	
 	
-	static MACHINE_DRIVER_START( hyperspt )
+	public static MachineHandlerPtr machine_driver_hyperspt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2048000)		/* 1.400 MHz ??? */
@@ -494,15 +495,20 @@ public class hyperspt
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, hyperspt_vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( roadf )
+	public static MachineHandlerPtr machine_driver_roadf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(hyperspt)
 		MDRV_CPU_MEMORY(roadf_readmem, writemem)
 		MDRV_GFXDECODE(roadf_gfxdecodeinfo)
 		MDRV_VIDEO_START(roadf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

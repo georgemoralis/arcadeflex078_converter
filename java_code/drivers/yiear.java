@@ -267,7 +267,8 @@ public class yiear
 	
 	
 	
-	static MACHINE_DRIVER_START( yiear )
+	public static MachineHandlerPtr machine_driver_yiear = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,18432000/16)	/* ???? */
@@ -293,7 +294,9 @@ public class yiear
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -1406,7 +1406,8 @@ public class scramble
 	};
 	
 	
-	static MACHINE_DRIVER_START( scramble )
+	public static MachineHandlerPtr machine_driver_scramble = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1428,9 +1429,12 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("8910", AY8910, scobra_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( explorer )
+	public static MachineHandlerPtr machine_driver_explorer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1441,9 +1445,12 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, explorer_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( theend )
+	public static MachineHandlerPtr machine_driver_theend = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1453,9 +1460,12 @@ public class scramble
 	
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(theend)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( froggers )
+	public static MachineHandlerPtr machine_driver_froggers = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1469,9 +1479,12 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mars )
+	public static MachineHandlerPtr machine_driver_mars = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1481,9 +1494,12 @@ public class scramble
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( devilfsh )
+	public static MachineHandlerPtr machine_driver_devilfsh = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1494,9 +1510,12 @@ public class scramble
 		MDRV_GFXDECODE(devilfsh_gfxdecodeinfo)
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( newsin7 )
+	public static MachineHandlerPtr machine_driver_newsin7 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1508,9 +1527,12 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(newsin7)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mrkougar )
+	public static MachineHandlerPtr machine_driver_mrkougar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1521,9 +1543,12 @@ public class scramble
 		MDRV_GFXDECODE(mrkougar_gfxdecodeinfo)
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mrkougb )
+	public static MachineHandlerPtr machine_driver_mrkougb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1533,9 +1558,12 @@ public class scramble
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ckongs )
+	public static MachineHandlerPtr machine_driver_ckongs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1546,9 +1574,12 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(ckongs)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( hotshock )
+	public static MachineHandlerPtr machine_driver_hotshock = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1562,9 +1593,12 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( cavelon )
+	public static MachineHandlerPtr machine_driver_cavelon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1573,9 +1607,12 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(ckongs)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( sfx )
+	public static MachineHandlerPtr machine_driver_sfx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1599,9 +1636,12 @@ public class scramble
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, sfx_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, sfx_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mimonscr )
+	public static MachineHandlerPtr machine_driver_mimonscr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1610,10 +1650,13 @@ public class scramble
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mimonkey)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* Triple Punch and Mariner are different - only one CPU, one 8910 */
-	static MACHINE_DRIVER_START( triplep )
+	public static MachineHandlerPtr machine_driver_triplep = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1629,9 +1672,12 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, triplep_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( mariner )
+	public static MachineHandlerPtr machine_driver_mariner = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(triplep)
@@ -1641,10 +1687,13 @@ public class scramble
 	
 		MDRV_PALETTE_INIT(mariner)
 		MDRV_VIDEO_START(mariner)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* Hunchback replaces the Z80 with a S2650 CPU */
-	static MACHINE_DRIVER_START( hunchbks )
+	public static MachineHandlerPtr machine_driver_hunchbks = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1659,7 +1708,9 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets */
 	
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

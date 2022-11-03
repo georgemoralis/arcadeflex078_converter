@@ -670,7 +670,8 @@ public class combatsc
 	
 	
 	/* combat school (original) */
-	static MACHINE_DRIVER_START( combasc )
+	public static MachineHandlerPtr machine_driver_combasc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)	/* 3 MHz? */
@@ -702,10 +703,13 @@ public class combatsc
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* combat school (bootleg on different hardware) */
-	static MACHINE_DRIVER_START( combascb )
+	public static MachineHandlerPtr machine_driver_combascb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)	/* 3 MHz? */
@@ -737,7 +741,9 @@ public class combatsc
 		/* We are using the original sound subsystem */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

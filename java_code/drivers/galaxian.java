@@ -3458,20 +3458,26 @@ public class galaxian
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(galaxian)
 		MDRV_VIDEO_UPDATE(galaxian)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( galaxian )
+	public static MachineHandlerPtr machine_driver_galaxian = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, galaxian_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gmgalax )
+	public static MachineHandlerPtr machine_driver_gmgalax = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3485,60 +3491,78 @@ public class galaxian
 		MDRV_COLORTABLE_LENGTH(16*4)
 	
 		MDRV_VIDEO_START(gmgalax)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pisces )
+	public static MachineHandlerPtr machine_driver_pisces = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gteikob2 )
+	public static MachineHandlerPtr machine_driver_gteikob2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(gteikob2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( batman2 )
+	public static MachineHandlerPtr machine_driver_batman2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(batman2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mooncrgx )
+	public static MachineHandlerPtr machine_driver_mooncrgx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mooncrgx)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pacmanbl )
+	public static MachineHandlerPtr machine_driver_pacmanbl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_GFXDECODE(pacmanbl_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( devilfsg )
+	public static MachineHandlerPtr machine_driver_devilfsg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3548,10 +3572,13 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_GFXDECODE(pacmanbl_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mooncrst )
+	public static MachineHandlerPtr machine_driver_mooncrst = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3560,10 +3587,13 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mooncrst)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( skybase )
+	public static MachineHandlerPtr machine_driver_skybase = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3572,10 +3602,13 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( moonqsr )
+	public static MachineHandlerPtr machine_driver_moonqsr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3584,10 +3617,13 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(moonqsr)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mshuttle )
+	public static MachineHandlerPtr machine_driver_mshuttle = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3603,10 +3639,13 @@ public class galaxian
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, cclimber_ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, cclimber_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( scramblb )
+	public static MachineHandlerPtr machine_driver_scramblb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3618,10 +3657,13 @@ public class galaxian
 	
 		MDRV_PALETTE_INIT(scramble)
 		MDRV_VIDEO_START(scramble)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( zigzag )
+	public static MachineHandlerPtr machine_driver_zigzag = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3637,10 +3679,13 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( jumpbug )
+	public static MachineHandlerPtr machine_driver_jumpbug = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3654,10 +3699,13 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( checkman )
+	public static MachineHandlerPtr machine_driver_checkman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3679,10 +3727,13 @@ public class galaxian
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, galaxian_custom_interface)
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( checkmaj )
+	public static MachineHandlerPtr machine_driver_checkmaj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3700,10 +3751,13 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, checkmaj_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( kingball )
+	public static MachineHandlerPtr machine_driver_kingball = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3720,10 +3774,13 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, kingball_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( scorpnmc )
+	public static MachineHandlerPtr machine_driver_scorpnmc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3732,10 +3789,13 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(batman2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( 4in1 )
+	public static MachineHandlerPtr machine_driver_4in1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3746,10 +3806,13 @@ public class galaxian
 		MDRV_GFXDECODE(_4in1_gfxdecodeinfo)
 	
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bagmanmc )
+	public static MachineHandlerPtr machine_driver_bagmanmc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3762,10 +3825,13 @@ public class galaxian
 		MDRV_GFXDECODE(bagmanmc_gfxdecodeinfo)
 	
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dkongjrm )
+	public static MachineHandlerPtr machine_driver_dkongjrm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3774,10 +3840,13 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(dkongjrm)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( froggrmc )
+	public static MachineHandlerPtr machine_driver_froggrmc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 	
@@ -3800,9 +3869,12 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( rockclim )
+	public static MachineHandlerPtr machine_driver_rockclim = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 		MDRV_CPU_MODIFY("main")
@@ -3815,9 +3887,12 @@ public class galaxian
 		MDRV_PALETTE_INIT(rockclim)
 		MDRV_SCREEN_SIZE(64*8, 32*8)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ozon1 )
+	public static MachineHandlerPtr machine_driver_ozon1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
 		MDRV_CPU_MODIFY("main")
@@ -3831,9 +3906,12 @@ public class galaxian
 	
 		MDRV_VIDEO_START(galaxian_plain)
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( drivfrcg )
+	public static MachineHandlerPtr machine_driver_drivfrcg = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 18432000/6)
@@ -3858,7 +3936,9 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, galaxian_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

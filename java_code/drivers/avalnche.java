@@ -235,7 +235,8 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( avalnche )
+	public static MachineHandlerPtr machine_driver_avalnche = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12096000/16)	   /* clock input is the "2H" signal divided by two */
@@ -257,7 +258,9 @@ public class avalnche
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, avalnche_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

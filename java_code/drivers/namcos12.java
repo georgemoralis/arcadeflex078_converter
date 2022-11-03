@@ -282,7 +282,8 @@ public class namcos12
 		psx_machine_init();
 	} };
 	
-	static MACHINE_DRIVER_START( coh700 )
+	public static MachineHandlerPtr machine_driver_coh700 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD( PSXCPU, 33868800 / 2 ) /* 33MHz ?? */
 		MDRV_CPU_MEMORY( namcos12_readmem, namcos12_writemem )
@@ -312,7 +313,9 @@ public class namcos12
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES( SOUND_SUPPORTS_STEREO )
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static InputPortPtr input_ports_namcos12 = new InputPortPtr(){ public void handler() { 
 		/* IN 0 */

@@ -212,7 +212,8 @@ public class sgladiat
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static MACHINE_DRIVER_START( sgladiat )
+	public static MachineHandlerPtr machine_driver_sgladiat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -245,7 +246,9 @@ public class sgladiat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_sgladiat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */

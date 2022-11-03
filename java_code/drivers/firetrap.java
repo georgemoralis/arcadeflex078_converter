@@ -586,7 +586,8 @@ public class firetrap
 			cpu_set_irq_line (0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( firetrap )
+	public static MachineHandlerPtr machine_driver_firetrap = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz */
@@ -616,9 +617,12 @@ public class firetrap
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( firetpbl )
+	public static MachineHandlerPtr machine_driver_firetpbl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz */
@@ -647,7 +651,9 @@ public class firetrap
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

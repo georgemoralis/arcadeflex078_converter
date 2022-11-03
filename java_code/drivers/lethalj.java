@@ -324,7 +324,9 @@ public class lethalj
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( eggventr )
@@ -338,7 +340,9 @@ public class lethalj
 		MDRV_SCREEN_SIZE(512, 239)
 		MDRV_VISIBLE_AREA(0, 511, 0, 238)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************

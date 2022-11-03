@@ -328,7 +328,8 @@ public class xmen
 		else irq3_line_hold();
 	} };
 	
-	static MACHINE_DRIVER_START( xmen )
+	public static MachineHandlerPtr machine_driver_xmen = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* ? */
@@ -357,7 +358,9 @@ public class xmen
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

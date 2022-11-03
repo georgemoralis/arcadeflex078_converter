@@ -763,7 +763,8 @@ public class punchout
 	
 	
 	
-	static MACHINE_DRIVER_START( punchout )
+	public static MachineHandlerPtr machine_driver_punchout = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000/2)	/* 4 MHz */
@@ -797,10 +798,13 @@ public class punchout
 		/* sound hardware */
 		MDRV_SOUND_ADD(NES, nes_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( armwrest )
+	public static MachineHandlerPtr machine_driver_armwrest = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(punchout)
@@ -812,7 +816,9 @@ public class punchout
 		MDRV_PALETTE_INIT(armwrest)
 		MDRV_VIDEO_START(armwrest)
 		MDRV_VIDEO_UPDATE(armwrest)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

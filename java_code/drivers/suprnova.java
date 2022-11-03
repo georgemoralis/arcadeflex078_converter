@@ -1075,7 +1075,9 @@ public class suprnova
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***** BIOS SKIPPING *****/
 	

@@ -202,7 +202,8 @@ public class stlforce
 		{ 47 }
 	};
 	
-	static MACHINE_DRIVER_START( stlforce )
+	public static MachineHandlerPtr machine_driver_stlforce = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* guess ... it might be 15000000 or 12000000/2 ... */
 		MDRV_CPU_MEMORY(stlforce_readmem,stlforce_writemem)
@@ -223,7 +224,9 @@ public class stlforce
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface) // guess
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_stlforce = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */

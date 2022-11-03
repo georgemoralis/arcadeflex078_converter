@@ -729,7 +729,8 @@ public class atarifb
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( atarifb )
+	public static MachineHandlerPtr machine_driver_atarifb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 750000)
@@ -753,10 +754,13 @@ public class atarifb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, atarifb_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( atarifb4 )
+	public static MachineHandlerPtr machine_driver_atarifb4 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarifb)
@@ -764,20 +768,26 @@ public class atarifb
 		MDRV_CPU_MEMORY(atarifb4_readmem,atarifb4_writemem)
 	
 		MDRV_VISIBLE_AREA(0*8, 38*8-1, 0*8, 32*8-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( abaseb )
+	public static MachineHandlerPtr machine_driver_abaseb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarifb)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, abaseb_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( soccer )
+	public static MachineHandlerPtr machine_driver_soccer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarifb)
@@ -787,7 +797,9 @@ public class atarifb
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 38*8-1, 2*8, 32*8-1)
 		MDRV_GFXDECODE(soccer_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

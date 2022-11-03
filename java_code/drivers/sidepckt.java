@@ -312,7 +312,8 @@ public class sidepckt
 	
 	
 	
-	static MACHINE_DRIVER_START( sidepckt )
+	public static MachineHandlerPtr machine_driver_sidepckt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)        /* 2 MHz */
@@ -340,10 +341,13 @@ public class sidepckt
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sidepctj )
+	public static MachineHandlerPtr machine_driver_sidepctj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)        /* 2 MHz */
@@ -371,7 +375,9 @@ public class sidepckt
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

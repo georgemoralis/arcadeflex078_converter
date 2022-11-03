@@ -418,7 +418,8 @@ public class orbit
 	DISCRETE_SOUND_END
 	
 	
-	static MACHINE_DRIVER_START( orbit )
+	public static MachineHandlerPtr machine_driver_orbit = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 12096000 / 16)
@@ -443,7 +444,9 @@ public class orbit
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, orbit_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_orbit = new RomLoadPtr(){ public void handler(){ 

@@ -52,7 +52,8 @@ public class minivadr
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static MACHINE_DRIVER_START( minivadr )
+	public static MachineHandlerPtr machine_driver_minivadr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,24000000 / 6)		 /* 4 MHz ? */
@@ -73,7 +74,9 @@ public class minivadr
 		MDRV_VIDEO_UPDATE(minivadr)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

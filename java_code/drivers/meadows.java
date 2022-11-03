@@ -651,7 +651,8 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( meadows )
+	public static MachineHandlerPtr machine_driver_meadows = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 5000000/8/3) 	/* 5MHz / 8 = 625 kHz */
@@ -681,10 +682,13 @@ public class meadows
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( minferno )
+	public static MachineHandlerPtr machine_driver_minferno = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 5000000/8/3) 	/* 5MHz / 8 = 625 kHz */
@@ -707,7 +711,9 @@ public class meadows
 		MDRV_VIDEO_UPDATE(meadows)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

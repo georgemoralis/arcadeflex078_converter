@@ -645,7 +645,8 @@ public class taitoair
 					MACHINE DRIVERS
 	************************************************************/
 	
-	static MACHINE_DRIVER_START( airsys )
+	public static MachineHandlerPtr machine_driver_airsys = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000 / 2)		/* 12 MHz ??? */
@@ -675,7 +676,9 @@ public class taitoair
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, airsys_ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************************************

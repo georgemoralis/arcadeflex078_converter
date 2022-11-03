@@ -624,7 +624,8 @@ public class suna16
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( bssoccer )
+	public static MachineHandlerPtr machine_driver_bssoccer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* ? */
@@ -663,7 +664,9 @@ public class suna16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, bssoccer_ym2151_interface)
 		MDRV_SOUND_ADD(DAC, bssoccer_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -686,7 +689,8 @@ public class suna16
 		{ MIXER(50,MIXER_PAN_LEFT), MIXER(50,MIXER_PAN_RIGHT) }
 	};
 	
-	static MACHINE_DRIVER_START( uballoon )
+	public static MachineHandlerPtr machine_driver_uballoon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -722,7 +726,9 @@ public class suna16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, uballoon_ym2151_interface)
 		MDRV_SOUND_ADD(DAC, uballoon_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

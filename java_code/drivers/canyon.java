@@ -469,7 +469,8 @@ public class canyon
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( canyon )
+	public static MachineHandlerPtr machine_driver_canyon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 16)
@@ -494,7 +495,9 @@ public class canyon
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, canyon_sound_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

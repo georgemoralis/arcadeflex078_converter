@@ -288,7 +288,8 @@ public class _1942
 	
 	
 	
-	static MACHINE_DRIVER_START( 1942 )
+	public static MachineHandlerPtr machine_driver_1942 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -317,7 +318,9 @@ public class _1942
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

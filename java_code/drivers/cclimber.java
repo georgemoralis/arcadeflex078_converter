@@ -577,7 +577,8 @@ public class cclimber
 	
 	
 	
-	static MACHINE_DRIVER_START( cclimber )
+	public static MachineHandlerPtr machine_driver_cclimber = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz */
@@ -604,11 +605,14 @@ public class cclimber
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, cclimber_ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, cclimber_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* copy of cclimber except for readmem and writemem */
-	static MACHINE_DRIVER_START( cannonb )
+	public static MachineHandlerPtr machine_driver_cannonb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz */
@@ -635,7 +639,9 @@ public class cclimber
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, cclimber_ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, cclimber_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -1376,7 +1382,8 @@ public class cclimber
 	
 	
 	
-	static MACHINE_DRIVER_START( swimmer )
+	public static MachineHandlerPtr machine_driver_swimmer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz */
@@ -1406,7 +1413,9 @@ public class cclimber
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, swimmer_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

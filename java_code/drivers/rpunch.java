@@ -625,7 +625,8 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( rpunch )
+	public static MachineHandlerPtr machine_driver_rpunch = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, MASTER_CLOCK/2)
@@ -652,7 +653,9 @@ public class rpunch
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

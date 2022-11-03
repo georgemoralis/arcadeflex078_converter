@@ -183,7 +183,8 @@ public class bankp
 	
 	
 	
-	static MACHINE_DRIVER_START( bankp )
+	public static MachineHandlerPtr machine_driver_bankp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3867120)	/* ?? the main oscillator is 15.46848 MHz */
@@ -208,7 +209,9 @@ public class bankp
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -287,7 +287,8 @@ public class skyarmy
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static MACHINE_DRIVER_START( skyarmy )
+	public static MachineHandlerPtr machine_driver_skyarmy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	        MDRV_CPU_ADD(Z80,4000000)
 		MDRV_CPU_MEMORY(skyarmy_readmem,skyarmy_writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -308,7 +309,9 @@ public class skyarmy
 	        MDRV_VIDEO_UPDATE(skyarmy)
 	        
 	        MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_skyarmy = new RomLoadPtr(){ public void handler(){ 

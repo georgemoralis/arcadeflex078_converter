@@ -738,7 +738,8 @@ public class segasyse
 	};
 	
 	
-	static MACHINE_DRIVER_START( segae )
+	public static MachineHandlerPtr machine_driver_segae = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10738600/2) /* correct for hangonjr, and astroflash/transformer at least  */
@@ -760,7 +761,9 @@ public class segasyse
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76489_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*******************************************************************************
 	 General Init

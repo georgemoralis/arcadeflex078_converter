@@ -419,7 +419,8 @@ public class bwing
 	};
 	
 	
-	static MACHINE_DRIVER_START( bwing )
+	public static MachineHandlerPtr machine_driver_bwing = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		// basic machine hardware
 		MDRV_CPU_ADD(M6809, 2000000)
@@ -454,7 +455,9 @@ public class bwing
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	//****************************************************************************
 	// ROM Maps

@@ -331,7 +331,8 @@ public class metlclsh
 		flip_screen_set(0);
 	} };
 	
-	static MACHINE_DRIVER_START( metlclsh )
+	public static MachineHandlerPtr machine_driver_metlclsh = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)        // ?
@@ -361,7 +362,9 @@ public class metlclsh
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, metlclsh_ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, metlclsh_ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -719,7 +719,8 @@ public class twincobr
 	
 	
 	
-	static MACHINE_DRIVER_START( twincobr )
+	public static MachineHandlerPtr machine_driver_twincobr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,28000000/4)			/* 7.0MHz - Main board Crystal is 28MHz */
@@ -753,7 +754,9 @@ public class twincobr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -486,7 +486,8 @@ public class gundealr
 	
 	
 	
-	static MACHINE_DRIVER_START( gundealr )
+	public static MachineHandlerPtr machine_driver_gundealr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* 8 MHz ??? */
@@ -509,7 +510,9 @@ public class gundealr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

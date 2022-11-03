@@ -136,7 +136,8 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( clayshoo )
+	public static MachineHandlerPtr machine_driver_clayshoo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,5068000/4)		/* 5.068/4 Mhz (divider is a guess) */
@@ -158,7 +159,9 @@ public class clayshoo
 		MDRV_PALETTE_INIT(clayshoo)
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -860,7 +860,9 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("ym", YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Used by Xybots */
@@ -871,7 +873,9 @@ public class atarijsa
 		
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("ym", YM2151, ym2151_interface_swapped)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Used by Toobin', Vindicators */
@@ -882,7 +886,9 @@ public class atarijsa
 		
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Used by Escape from the Planet of the Robot Monsters */
@@ -894,7 +900,9 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Used by Cyberball 2072, STUN Runner, Skull & Crossbones, ThunderJaws, Hydra, Pit Fighter */
@@ -908,7 +916,9 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_ADD_TAG("adpcm", OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Used by Batman, Guardians of the 'Hood, Road Riot 4WD */
@@ -918,7 +928,9 @@ public class atarijsa
 		MDRV_IMPORT_FROM(jsa_ii_mono)
 		MDRV_CPU_MODIFY("jsa")
 		MDRV_CPU_MEMORY(atarijsa3_readmem,atarijsa3_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Used by Off the Wall */
@@ -929,7 +941,9 @@ public class atarijsa
 	
 		/* sound hardware */
 		MDRV_SOUND_REMOVE("adpcm")
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Used by Space Lords, Moto Frenzy, Steel Talons, Road Riot's Revenge Rally */
@@ -943,5 +957,7 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_REPLACE("adpcm", OKIM6295, okim6295s_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 }

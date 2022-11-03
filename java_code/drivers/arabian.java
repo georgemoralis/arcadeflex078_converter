@@ -367,7 +367,8 @@ public class arabian
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( arabian )
+	public static MachineHandlerPtr machine_driver_arabian = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_OSC/4)
@@ -392,7 +393,9 @@ public class arabian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

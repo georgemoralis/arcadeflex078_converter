@@ -338,7 +338,8 @@ public class bionicc
 	};
 	
 	
-	static MACHINE_DRIVER_START( bionicc )
+	public static MachineHandlerPtr machine_driver_bionicc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* ?? MHz ? */
@@ -365,7 +366,9 @@ public class bionicc
 		MDRV_VIDEO_UPDATE(bionicc)
 	
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -555,7 +555,8 @@ public class tbowl
 	
 	***/
 	
-	static MACHINE_DRIVER_START( tbowl )
+	public static MachineHandlerPtr machine_driver_tbowl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* CPU on Board '6206B' */
 		MDRV_CPU_ADD(Z80, 8000000) /* NEC D70008AC-8 (Z80 Clone) */
@@ -590,7 +591,9 @@ public class tbowl
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		/* something for the samples? */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Board Layout from readme.txt

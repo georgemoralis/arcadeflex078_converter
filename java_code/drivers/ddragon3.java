@@ -515,7 +515,8 @@ public class ddragon3
 	
 	/* Machine Drivers */
 	
-	static MACHINE_DRIVER_START( ddragon3 )
+	public static MachineHandlerPtr machine_driver_ddragon3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 12000000) // Guess
 		MDRV_CPU_MEMORY(readmem, writemem)
@@ -542,16 +543,22 @@ public class ddragon3
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ddrago3b )
+	public static MachineHandlerPtr machine_driver_ddrago3b = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(ddragon3)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(dd3b_readmem, dd3b_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( ctribe )
+	public static MachineHandlerPtr machine_driver_ctribe = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* Guess */
 		MDRV_CPU_MEMORY(ctribe_readmem,ctribe_writemem)
@@ -578,7 +585,9 @@ public class ddragon3
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* ROMs */
 	

@@ -1021,7 +1021,8 @@ public class harddriv
 	*/
 	
 	/* Driver board without MSP (used by Race Drivin' cockpit) */
-	static MACHINE_DRIVER_START( driver_nomsp )
+	public static MachineHandlerPtr machine_driver_driver_nomsp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68010, 32000000/4)
@@ -1049,11 +1050,14 @@ public class harddriv
 		MDRV_VIDEO_START(harddriv)
 		MDRV_VIDEO_EOF(harddriv)
 		MDRV_VIDEO_UPDATE(harddriv)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Driver board with MSP (used by Hard Drivin' cockpit) */
-	static MACHINE_DRIVER_START( driver_msp )
+	public static MachineHandlerPtr machine_driver_driver_msp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(driver_nomsp)
 	
 		/* basic machine hardware */
@@ -1063,11 +1067,14 @@ public class harddriv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(89, 596, 0, 383)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Multisync board without MSP (used by STUN Runner, Steel Talons, Race Drivin' compact) */
-	static MACHINE_DRIVER_START( multisync_nomsp )
+	public static MachineHandlerPtr machine_driver_multisync_nomsp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(driver_nomsp)
 	
 		/* basic machine hardware */
@@ -1082,22 +1089,28 @@ public class harddriv
 		/* video hardware */
 		MDRV_SCREEN_SIZE(640, 288)
 		MDRV_VISIBLE_AREA(109, 620, 0, 287)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Multisync board with MSP (used by Hard Drivin' compact) */
-	static MACHINE_DRIVER_START( multisync_msp )
+	public static MachineHandlerPtr machine_driver_multisync_msp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(multisync_nomsp)
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("msp", TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
 		MDRV_CPU_MEMORY(multisync_readmem_msp,multisync_writemem_msp)
 		MDRV_CPU_CONFIG(msp_config)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Multisync II board (used by Hard Drivin's Airborne) */
-	static MACHINE_DRIVER_START( multisync2 )
+	public static MachineHandlerPtr machine_driver_multisync2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(multisync_nomsp)
 	
 		/* basic machine hardware */
@@ -1106,7 +1119,9 @@ public class harddriv
 	
 		MDRV_CPU_MODIFY("gsp")
 		MDRV_CPU_MEMORY(multisync2_readmem_gsp,multisync2_writemem_gsp)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -1117,27 +1132,34 @@ public class harddriv
 	 *************************************/
 	
 	/* ADSP/ADSP II boards (used by Hard/Race Drivin', STUN Runner) */
-	static MACHINE_DRIVER_START( adsp )
+	public static MachineHandlerPtr machine_driver_adsp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("adsp", ADSP2100, 8000000)
 		MDRV_CPU_MEMORY(adsp_readmem,adsp_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* DS III board (used by Steel Talons) */
-	static MACHINE_DRIVER_START( ds3 )
+	public static MachineHandlerPtr machine_driver_ds3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("adsp", ADSP2101, 12000000)
 		MDRV_CPU_MEMORY(ds3_readmem,ds3_writemem)
 		
 		MDRV_INTERLEAVE(1000)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* DS IV board (used by Hard Drivin's Airborne) */
-	static MACHINE_DRIVER_START( ds4 )
+	public static MachineHandlerPtr machine_driver_ds4 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("adsp", ADSP2101, 12000000)
@@ -1152,7 +1174,9 @@ public class harddriv
 	//	MDRV_CPU_MEMORY(ds3snd_readmem,ds3snd_writemem)
 	
 		MDRV_SOUND_ADD(DAC, dac2_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -1163,23 +1187,29 @@ public class harddriv
 	 *************************************/
 	
 	/* DSK board (used by Race Drivin') */
-	static MACHINE_DRIVER_START( dsk )
+	public static MachineHandlerPtr machine_driver_dsk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("dsp32", DSP32C, 40000000)
 		MDRV_CPU_CONFIG(dsp32c_config)
 		MDRV_CPU_MEMORY(dsk_readmem_dsp32,dsk_writemem_dsp32)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* DSK II board (used by Hard Drivin's Airborne) */
-	static MACHINE_DRIVER_START( dsk2 )
+	public static MachineHandlerPtr machine_driver_dsk2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("dsp32", DSP32C, 40000000)
 		MDRV_CPU_CONFIG(dsp32c_config)
 		MDRV_CPU_MEMORY(dsk2_readmem_dsp32,dsk2_writemem_dsp32)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -1189,7 +1219,8 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( driversnd )
+	public static MachineHandlerPtr machine_driver_driversnd = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("sound", M68000, 16000000/2)
@@ -1203,7 +1234,9 @@ public class harddriv
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -1213,45 +1246,58 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( harddriv )
+	public static MachineHandlerPtr machine_driver_harddriv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( driver_msp )		/* original driver board with MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( harddrvc )
+	public static MachineHandlerPtr machine_driver_harddrvc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_msp )	/* multisync board with MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( racedriv )
+	public static MachineHandlerPtr machine_driver_racedriv = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( driver_nomsp )	/* original driver board without MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( dsk )				/* DSK board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( racedrvc )
+	public static MachineHandlerPtr machine_driver_racedrvc = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_nomsp )	/* multisync board without MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( dsk )				/* DSK board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( stunrun )
+	public static MachineHandlerPtr machine_driver_stunrun = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_nomsp )	/* multisync board without MSP */
@@ -1263,25 +1309,33 @@ public class harddriv
 		/* video hardware */
 		MDRV_SCREEN_SIZE(640, 240)
 		MDRV_VISIBLE_AREA(103, 614, 0, 239)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( steeltal )
+	public static MachineHandlerPtr machine_driver_steeltal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_msp )	/* multisync board with MSP */
 		MDRV_IMPORT_FROM( ds3 )				/* DS III board */
 		MDRV_IMPORT_FROM( jsa_iii_mono )	/* JSA III sound board */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hdrivair )
+	public static MachineHandlerPtr machine_driver_hdrivair = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync2 )		/* multisync II board */
 		MDRV_IMPORT_FROM( ds4 )				/* DS IV board */
 		MDRV_IMPORT_FROM( dsk2 )			/* DSK II board */
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

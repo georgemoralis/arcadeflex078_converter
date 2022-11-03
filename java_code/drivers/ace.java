@@ -326,7 +326,8 @@ public class ace
 	
 	
 	
-	static MACHINE_DRIVER_START( ace )
+	public static MachineHandlerPtr machine_driver_ace = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 18000000 / 9)	/* 2 MHz ? */
@@ -349,7 +350,9 @@ public class ace
 		/* sound hardware */
 		/* ???? */
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

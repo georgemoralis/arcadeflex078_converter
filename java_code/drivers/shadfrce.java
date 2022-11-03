@@ -568,7 +568,8 @@ public class shadfrce
 	} };
 	
 	
-	static MACHINE_DRIVER_START( shadfrce )
+	public static MachineHandlerPtr machine_driver_shadfrce = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 28000000/2) /* ? Guess */
 		MDRV_CPU_MEMORY(shadfrce_readmem,shadfrce_writemem)
 		MDRV_CPU_VBLANK_INT(shadfrce_interrupt,2)
@@ -596,7 +597,9 @@ public class shadfrce
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* Rom Defs. */
 	

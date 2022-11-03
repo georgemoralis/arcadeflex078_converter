@@ -238,7 +238,8 @@ public class drmicro
 	
 	/****************************************************************************/
 	
-	static MACHINE_DRIVER_START( drmicro )
+	public static MachineHandlerPtr machine_driver_drmicro = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,MCLK/6)	/* 3.072MHz? */
@@ -265,7 +266,9 @@ public class drmicro
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/****************************************************************************/
 	

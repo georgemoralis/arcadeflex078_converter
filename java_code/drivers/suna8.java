@@ -1959,7 +1959,8 @@ public class suna8
 	};
 	
 	
-	static MACHINE_DRIVER_START( hardhead )
+	public static MachineHandlerPtr machine_driver_hardhead = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -1990,7 +1991,9 @@ public class suna8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, hardhead_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, hardhead_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -2013,7 +2016,8 @@ public class suna8
 		{ 0,0 }		/* IRQ handler  */
 	};
 	
-	static MACHINE_DRIVER_START( rranger )
+	public static MachineHandlerPtr machine_driver_rranger = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2043,7 +2047,9 @@ public class suna8
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, rranger_ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -2084,7 +2090,8 @@ public class suna8
 		else				 cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( brickzn )
+	public static MachineHandlerPtr machine_driver_brickzn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2121,7 +2128,9 @@ public class suna8
 		MDRV_SOUND_ADD(YM3812, brickzn_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, brickzn_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, brickzn_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -2139,7 +2148,8 @@ public class suna8
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( hardhea2 )
+	public static MachineHandlerPtr machine_driver_hardhea2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* SUNA T568009 */
@@ -2176,7 +2186,9 @@ public class suna8
 		MDRV_SOUND_ADD(YM3812, brickzn_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, brickzn_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, brickzn_dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -2202,7 +2214,8 @@ public class suna8
 		{  0 },
 	};
 	
-	static MACHINE_DRIVER_START( starfigh )
+	public static MachineHandlerPtr machine_driver_starfigh = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2234,7 +2247,9 @@ public class suna8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, starfigh_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, starfigh_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************
@@ -2250,7 +2265,8 @@ public class suna8
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	static MACHINE_DRIVER_START( sparkman )
+	public static MachineHandlerPtr machine_driver_sparkman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2280,7 +2296,9 @@ public class suna8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, hardhead_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, hardhead_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

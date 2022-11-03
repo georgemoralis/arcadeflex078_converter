@@ -328,7 +328,8 @@ public class vaportra
 	
 	
 	
-	static MACHINE_DRIVER_START( vaportra )
+	public static MachineHandlerPtr machine_driver_vaportra = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000) /* Custom chip 59 */
@@ -356,7 +357,9 @@ public class vaportra
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

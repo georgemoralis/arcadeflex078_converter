@@ -338,7 +338,8 @@ public class raiden2
 	
 	/* MACHINE DRIVERS */
 	
-	static MACHINE_DRIVER_START( raiden2 )
+	public static MachineHandlerPtr machine_driver_raiden2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/2) /* NEC V30 CPU, 32? Mhz */
@@ -357,7 +358,9 @@ public class raiden2
 	
 		MDRV_VIDEO_START(raiden2)
 		MDRV_VIDEO_UPDATE(raiden2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/* ROM LOADING */
 	

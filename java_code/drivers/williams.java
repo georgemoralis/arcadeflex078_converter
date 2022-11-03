@@ -1309,7 +1309,8 @@ public class williams
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( defender )
+	public static MachineHandlerPtr machine_driver_defender = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 1000000)
@@ -1336,10 +1337,13 @@ public class williams
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( williams )
+	public static MachineHandlerPtr machine_driver_williams = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(defender)
@@ -1348,30 +1352,39 @@ public class williams
 		MDRV_CPU_MEMORY(williams_readmem,williams_writemem)
 	
 		MDRV_MACHINE_INIT(williams)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sinistar )
+	public static MachineHandlerPtr machine_driver_sinistar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(williams)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(HC55516, sinistar_cvsd_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( playball )
+	public static MachineHandlerPtr machine_driver_playball = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sinistar)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(6, 298-1, 8, 239-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( blaster )
+	public static MachineHandlerPtr machine_driver_blaster = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(williams)
@@ -1383,10 +1396,13 @@ public class williams
 		MDRV_PALETTE_LENGTH(16+240)
 	
 		MDRV_VIDEO_START(blaster)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( williams2 )
+	public static MachineHandlerPtr machine_driver_williams2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 1000000)
@@ -1413,10 +1429,13 @@ public class williams
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("wmsdac", DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( joust2 )
+	public static MachineHandlerPtr machine_driver_joust2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(williams2)
@@ -1426,7 +1445,9 @@ public class williams
 	
 		/* sound hardware */
 		MDRV_SOUND_REMOVE("wmsdac")
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

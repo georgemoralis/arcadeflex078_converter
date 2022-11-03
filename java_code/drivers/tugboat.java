@@ -323,7 +323,8 @@ public class tugboat
 	
 	
 	
-	static MACHINE_DRIVER_START( tugboat )
+	public static MachineHandlerPtr machine_driver_tugboat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD_TAG("main", M6502, 2000000)	/* 2 MHz ???? */
 		MDRV_CPU_MEMORY(tugboat_readmem,tugboat_writemem)
 		MDRV_CPU_VBLANK_INT(nmi_line_pulse,1)
@@ -344,7 +345,9 @@ public class tugboat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

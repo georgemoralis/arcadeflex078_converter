@@ -712,7 +712,8 @@ public class unico
 									Burglar X
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( burglarx )
+	public static MachineHandlerPtr machine_driver_burglarx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -738,7 +739,9 @@ public class unico
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, unico_ym3812_intf)
 		MDRV_SOUND_ADD(OKIM6295, unico_m6295_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -752,7 +755,8 @@ public class unico
 		unico_has_lightgun = 1;
 	} };
 	
-	static MACHINE_DRIVER_START( zeropnt )
+	public static MachineHandlerPtr machine_driver_zeropnt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -778,7 +782,9 @@ public class unico
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, unico_ym3812_intf)
 		MDRV_SOUND_ADD(OKIM6295, unico_m6295_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	
@@ -786,7 +792,8 @@ public class unico
 									Zero Point 2
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( zeropnt2 )
+	public static MachineHandlerPtr machine_driver_zeropnt2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -814,7 +821,9 @@ public class unico
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD( YM2151,		zeropnt2_ym2151_intf )
 		MDRV_SOUND_ADD( OKIM6295,	zeropnt2_m6295_intf  )
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -151,7 +151,8 @@ public class gumbo
 		{ 47 }
 	};
 	
-	static MACHINE_DRIVER_START( gumbo )
+	public static MachineHandlerPtr machine_driver_gumbo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_CPU_ADD(M68000, 14318180 /2) // or 10mhz? ?
 		MDRV_CPU_MEMORY(gumbo_readmem,gumbo_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1) // all the same
@@ -171,7 +172,9 @@ public class gumbo
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static RomLoadPtr rom_gumbo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* 68000 Code */

@@ -1048,7 +1048,9 @@ public class midvunit
 	
 		MDRV_VIDEO_START(midvunit)
 		MDRV_VIDEO_UPDATE(midvunit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( midvunit )
@@ -1056,7 +1058,9 @@ public class midvunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	MACHINE_DRIVER_START( midvplus )
@@ -1072,7 +1076,9 @@ public class midvunit
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs2_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

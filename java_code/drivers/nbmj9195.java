@@ -3905,7 +3905,8 @@ public class nbmj9195
 	};
 	
 	
-	static MACHINE_DRIVER_START( NBMJDRV1 )
+	public static MachineHandlerPtr machine_driver_NBMJDRV1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,12000000/2)		/* TMPZ84C011, 6.00 MHz */
@@ -3937,10 +3938,13 @@ public class nbmj9195
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( NBMJDRV2 )
+	public static MachineHandlerPtr machine_driver_NBMJDRV2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -3948,10 +3952,13 @@ public class nbmj9195
 		/* video hardware */
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER | VIDEO_PIXEL_ASPECT_RATIO_1_2)
 		MDRV_VIDEO_START(mjkoiura)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( NBMJDRV3 )
+	public static MachineHandlerPtr machine_driver_NBMJDRV3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -3962,41 +3969,53 @@ public class nbmj9195
 	
 		MDRV_VIDEO_START(mscoutm)
 		MDRV_VIDEO_UPDATE(mscoutm)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	//-------------------------------------------------------------------------
 	
-	static MACHINE_DRIVER_START( mjuraden )
+	public static MachineHandlerPtr machine_driver_mjuraden = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjuraden,writemem_mjuraden)
 		MDRV_CPU_PORTS(readport_mjuraden,writeport_mjuraden)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( koinomp )
+	public static MachineHandlerPtr machine_driver_koinomp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_koinomp,writemem_koinomp)
 		MDRV_CPU_PORTS(readport_koinomp,writeport_koinomp)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( patimono )
+	public static MachineHandlerPtr machine_driver_patimono = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_patimono,writeport_patimono)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjanbari )
+	public static MachineHandlerPtr machine_driver_mjanbari = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4004,10 +4023,13 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_patimono,writeport_patimono)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mmehyou )
+	public static MachineHandlerPtr machine_driver_mmehyou = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4016,10 +4038,13 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_mmehyou,writeport_mmehyou)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ultramhm )
+	public static MachineHandlerPtr machine_driver_ultramhm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4028,46 +4053,61 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_koinomp,writeport_koinomp)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gal10ren )
+	public static MachineHandlerPtr machine_driver_gal10ren = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_gal10ren,writeport_gal10ren)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( renaiclb )
+	public static MachineHandlerPtr machine_driver_renaiclb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_renaiclb,writeport_renaiclb)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjlaman )
+	public static MachineHandlerPtr machine_driver_mjlaman = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_mjlaman,writeport_mjlaman)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mkeibaou )
+	public static MachineHandlerPtr machine_driver_mkeibaou = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_mkeibaou,writeport_mkeibaou)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pachiten )
+	public static MachineHandlerPtr machine_driver_pachiten = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4075,17 +4115,23 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_pachiten,writeport_pachiten)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sailorws )
+	public static MachineHandlerPtr machine_driver_sailorws = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( sailorwr )
+	public static MachineHandlerPtr machine_driver_sailorwr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4093,114 +4139,149 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_sailorwr,writeport_sailorwr)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( psailor1 )
+	public static MachineHandlerPtr machine_driver_psailor1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_psailor1,writeport_psailor1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( psailor2 )
+	public static MachineHandlerPtr machine_driver_psailor2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_psailor2,writeport_psailor2)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( otatidai )
+	public static MachineHandlerPtr machine_driver_otatidai = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_otatidai,writeport_otatidai)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ngpgal )
+	public static MachineHandlerPtr machine_driver_ngpgal = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
 		MDRV_CPU_PORTS(readport_ngpgal,writeport_ngpgal)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjgottsu )
-	
-		/* basic machine hardware */
-		MDRV_IMPORT_FROM( NBMJDRV2 )
-		MDRV_CPU_MODIFY("main")
-		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
-		MDRV_CPU_PORTS(readport_mjgottsu,writeport_mjgottsu)
-	MACHINE_DRIVER_END
-	
-	
-	static MACHINE_DRIVER_START( bakuhatu )
+	public static MachineHandlerPtr machine_driver_mjgottsu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
 		MDRV_CPU_PORTS(readport_mjgottsu,writeport_mjgottsu)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cmehyou )
+	public static MachineHandlerPtr machine_driver_bakuhatu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
+	
+		/* basic machine hardware */
+		MDRV_IMPORT_FROM( NBMJDRV2 )
+		MDRV_CPU_MODIFY("main")
+		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
+		MDRV_CPU_PORTS(readport_mjgottsu,writeport_mjgottsu)
+	MACHINE_DRIVER_END();
+ }
+};
+	
+	
+	public static MachineHandlerPtr machine_driver_cmehyou = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
 		MDRV_CPU_PORTS(readport_cmehyou,writeport_cmehyou)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjkoiura )
+	public static MachineHandlerPtr machine_driver_mjkoiura = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjuraden,writemem_mjuraden)
 		MDRV_CPU_PORTS(readport_mjkoiura,writeport_mjkoiura)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mscoutm )
+	public static MachineHandlerPtr machine_driver_mscoutm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV3 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mscoutm,writemem_mscoutm)
 		MDRV_CPU_PORTS(readport_mscoutm,writeport_mscoutm)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( imekura )
+	public static MachineHandlerPtr machine_driver_imekura = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV3 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjegolf,writemem_mjegolf)
 		MDRV_CPU_PORTS(readport_imekura,writeport_imekura)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjegolf )
+	public static MachineHandlerPtr machine_driver_mjegolf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV3 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjegolf,writemem_mjegolf)
 		MDRV_CPU_PORTS(readport_mjegolf,writeport_mjegolf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_mjuraden = new RomLoadPtr(){ public void handler(){ 

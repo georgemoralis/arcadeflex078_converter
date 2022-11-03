@@ -380,7 +380,8 @@ public class thedeep
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( thedeep )
+	public static MachineHandlerPtr machine_driver_thedeep = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 6MHz */
@@ -411,7 +412,9 @@ public class thedeep
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, thedeep_ym2203_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

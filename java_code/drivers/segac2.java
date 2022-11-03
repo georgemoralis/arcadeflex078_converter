@@ -3100,7 +3100,8 @@ public class segac2
 	
 	******************************************************************************/
 	
-	static MACHINE_DRIVER_START( segac )
+	public static MachineHandlerPtr machine_driver_segac = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000, MASTER_CLOCK/7) 		/* yes, there is a divide-by-7 circuit */
@@ -3125,20 +3126,26 @@ public class segac2
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2612, ym3438_intf)
 		MDRV_SOUND_ADD(SN76496, sn76489_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( segac2 )
+	public static MachineHandlerPtr machine_driver_segac2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( segac )
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(UPD7759, upd7759_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( puckpkmn )
+	public static MachineHandlerPtr machine_driver_puckpkmn = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( segac )
@@ -3151,9 +3158,12 @@ public class segac2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, puckpkmn_m6295_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( genesis )
+	public static MachineHandlerPtr machine_driver_genesis = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/*basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 53693100 / 7)
 		MDRV_CPU_MEMORY(genesis_readmem, genesis_writemem)
@@ -3183,10 +3193,13 @@ public class segac2
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2612, gen_ym3438_intf )
 		MDRV_SOUND_ADD(SN76496, sn76489_intf)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( megatech )
+	public static MachineHandlerPtr machine_driver_megatech = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( genesis )
@@ -3204,9 +3217,12 @@ public class segac2
 		MDRV_CPU_MEMORY(megatech_bios_readmem, megatech_bios_writemem)
 		MDRV_CPU_PORTS(megatech_bios_readport,megatech_bios_writeport)
 		MDRV_CPU_VBLANK_INT(megatech_irq, 262)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( megaplay )
+	public static MachineHandlerPtr machine_driver_megaplay = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( genesis )
@@ -3225,7 +3241,9 @@ public class segac2
 		MDRV_CPU_MEMORY(megaplay_bios_readmem, megaplay_bios_writemem)
 		MDRV_CPU_PORTS(megaplay_bios_readport,megaplay_bios_writeport)
 		MDRV_CPU_VBLANK_INT(megatech_irq, 262)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************
 		Rom Definitions

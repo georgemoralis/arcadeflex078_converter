@@ -186,7 +186,8 @@ public class higemaru
 	);
 	
 	
-	static MACHINE_DRIVER_START( higemaru )
+	public static MachineHandlerPtr machine_driver_higemaru = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz ? Main xtal is 12MHz */
@@ -210,7 +211,9 @@ public class higemaru
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

@@ -282,7 +282,8 @@ public class mayumi
 		{ 0 },
 	};
 	
-	static MACHINE_DRIVER_START( mayumi )
+	public static MachineHandlerPtr machine_driver_mayumi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MCLK/2) /* 5.000 MHz ? */
@@ -310,7 +311,9 @@ public class mayumi
 	
 		MDRV_NVRAM_HANDLER(generic_0fill)
 	
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/****************************************************************************/
 	

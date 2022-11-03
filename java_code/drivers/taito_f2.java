@@ -4764,7 +4764,8 @@ public class taito_f2
 	} };
 	
 	
-	static MACHINE_DRIVER_START( taito_f2 )
+	public static MachineHandlerPtr machine_driver_taito_f2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 24000000/2)	/* 12 MHz */
@@ -4791,10 +4792,13 @@ public class taito_f2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( finalb )
+	public static MachineHandlerPtr machine_driver_finalb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4805,10 +4809,13 @@ public class taito_f2
 		MDRV_GFXDECODE(finalb_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_finalb)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dondokod )
+	public static MachineHandlerPtr machine_driver_dondokod = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4820,10 +4827,13 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_dondokod)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( megab )
+	public static MachineHandlerPtr machine_driver_megab = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4833,10 +4843,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_megab)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( thundfox )
+	public static MachineHandlerPtr machine_driver_thundfox = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4848,10 +4861,13 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_thundfox)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed_thundfox)
 		MDRV_VIDEO_UPDATE(thundfox)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( cameltry )
+	public static MachineHandlerPtr machine_driver_cameltry = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4862,10 +4878,13 @@ public class taito_f2
 		MDRV_GFXDECODE(pivot_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_dondokod)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qtorimon )
+	public static MachineHandlerPtr machine_driver_qtorimon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4875,10 +4894,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( liquidk )
+	public static MachineHandlerPtr machine_driver_liquidk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4889,10 +4911,13 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_megab)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( quizhq )
+	public static MachineHandlerPtr machine_driver_quizhq = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4902,10 +4927,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ssi )
+	public static MachineHandlerPtr machine_driver_ssi = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4916,10 +4944,13 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_ssi)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
 		MDRV_VIDEO_UPDATE(ssi)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gunfront )
+	public static MachineHandlerPtr machine_driver_gunfront = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4929,10 +4960,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_gunfront)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( growl )
+	public static MachineHandlerPtr machine_driver_growl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4942,10 +4976,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_growl)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mjnquest )
+	public static MachineHandlerPtr machine_driver_mjnquest = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4954,10 +4991,13 @@ public class taito_f2
 	
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_mjnquest)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( footchmp )
+	public static MachineHandlerPtr machine_driver_footchmp = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4969,10 +5009,13 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_footchmp)
 		MDRV_VIDEO_EOF(taitof2_full_buffer_delayed)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hthero )
+	public static MachineHandlerPtr machine_driver_hthero = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4984,10 +5027,13 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_hthero)
 		MDRV_VIDEO_EOF(taitof2_full_buffer_delayed)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( koshien )
+	public static MachineHandlerPtr machine_driver_koshien = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4997,10 +5043,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_koshien)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( yuyugogo )
+	public static MachineHandlerPtr machine_driver_yuyugogo = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5013,10 +5062,13 @@ public class taito_f2
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_yuyugogo)
 		MDRV_VIDEO_UPDATE(yesnoj)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ninjak )
+	public static MachineHandlerPtr machine_driver_ninjak = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5026,10 +5078,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_ninjak)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( solfigtr )
+	public static MachineHandlerPtr machine_driver_solfigtr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5039,10 +5094,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_solfigtr)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qzquest )
+	public static MachineHandlerPtr machine_driver_qzquest = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5051,10 +5109,13 @@ public class taito_f2
 	
 		/* video hardware */
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( pulirula )
+	public static MachineHandlerPtr machine_driver_pulirula = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5065,10 +5126,13 @@ public class taito_f2
 		MDRV_GFXDECODE(pivot_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_pulirula)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( metalb )
+	public static MachineHandlerPtr machine_driver_metalb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5080,10 +5144,13 @@ public class taito_f2
 		MDRV_PALETTE_LENGTH(8192)
 		MDRV_VIDEO_START(taitof2_metalb)
 		MDRV_VIDEO_UPDATE(metalb)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qzchikyu )
+	public static MachineHandlerPtr machine_driver_qzchikyu = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5093,10 +5160,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_qzchikyu)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed_qzchikyu)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( yesnoj )
+	public static MachineHandlerPtr machine_driver_yesnoj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5107,10 +5177,13 @@ public class taito_f2
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_yesnoj)
 		MDRV_VIDEO_UPDATE(yesnoj)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( deadconx )
+	public static MachineHandlerPtr machine_driver_deadconx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5121,10 +5194,13 @@ public class taito_f2
 		MDRV_GFXDECODE(deadconx_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_deadconx)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( deadconj )
+	public static MachineHandlerPtr machine_driver_deadconj = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5135,10 +5211,13 @@ public class taito_f2
 		MDRV_GFXDECODE(deadconx_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_deadconj)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dinorex )
+	public static MachineHandlerPtr machine_driver_dinorex = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5148,10 +5227,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_dinorex)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qjinsei )
+	public static MachineHandlerPtr machine_driver_qjinsei = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5161,10 +5243,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_quiz)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qcrayon )
+	public static MachineHandlerPtr machine_driver_qcrayon = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5176,10 +5261,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_quiz)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qcrayon2 )
+	public static MachineHandlerPtr machine_driver_qcrayon2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5191,10 +5279,13 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_quiz)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( driftout )
+	public static MachineHandlerPtr machine_driver_driftout = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5205,10 +5296,13 @@ public class taito_f2
 		MDRV_GFXDECODE(pivot_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_driftout)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( camltrua )
+	public static MachineHandlerPtr machine_driver_camltrua = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)	/* 12 MHz */
@@ -5235,10 +5329,13 @@ public class taito_f2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( driveout )
+	public static MachineHandlerPtr machine_driver_driveout = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)	/* 12 MHz */
@@ -5266,7 +5363,9 @@ public class taito_f2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)   /* does it ? */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

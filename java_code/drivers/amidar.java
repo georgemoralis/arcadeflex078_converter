@@ -386,7 +386,8 @@ public class amidar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static MACHINE_DRIVER_START( amidar )
+	public static MachineHandlerPtr machine_driver_amidar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -408,7 +409,9 @@ public class amidar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, scobra_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

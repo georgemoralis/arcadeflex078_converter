@@ -429,7 +429,8 @@ public class ironhors
 	};
 	
 	
-	static MACHINE_DRIVER_START( ironhors )
+	public static MachineHandlerPtr machine_driver_ironhors = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,18432000/6)        /* 3.072 MHz??? mod by Shingo Suzuki 1999/10/15 */
@@ -458,17 +459,22 @@ public class ironhors
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( farwest )
+	public static MachineHandlerPtr machine_driver_farwest = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		MDRV_IMPORT_FROM(ironhors)
 	
 		MDRV_CPU_MODIFY("sound")
 		MDRV_CPU_MEMORY(farwest_sound_readmem, farwest_sound_writemem)
 	
 		MDRV_GFXDECODE(farwest_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

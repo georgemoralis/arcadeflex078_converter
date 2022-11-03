@@ -147,7 +147,8 @@ public class cheekyms
 	};
 	
 	
-	static MACHINE_DRIVER_START( cheekyms )
+	public static MachineHandlerPtr machine_driver_cheekyms = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,5000000/2)  /* 2.5 MHz */
@@ -172,7 +173,9 @@ public class cheekyms
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

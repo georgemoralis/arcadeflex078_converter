@@ -575,7 +575,8 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	static MACHINE_DRIVER_START( marvins )
+	public static MachineHandlerPtr machine_driver_marvins = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3360000)	/* 3.36 MHz */
@@ -609,10 +610,13 @@ public class marvins
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(NAMCO, snkwave_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( vangrd2 )
+	public static MachineHandlerPtr machine_driver_vangrd2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 3360000)	/* 3.36 MHz */
@@ -646,10 +650,13 @@ public class marvins
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(NAMCO, snkwave_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( madcrash )
+	public static MachineHandlerPtr machine_driver_madcrash = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( vangrd2 )
@@ -664,7 +671,9 @@ public class marvins
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(16, 16+256-1, 0, 0+216-1)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

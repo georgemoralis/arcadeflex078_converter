@@ -322,7 +322,8 @@ public class berzerk
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static MACHINE_DRIVER_START( berzerk )
+	public static MachineHandlerPtr machine_driver_berzerk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 2500000)        /* 2.5 MHz */
@@ -349,9 +350,12 @@ public class berzerk
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, berzerk_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, berzerk_custom_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( frenzy )
+	public static MachineHandlerPtr machine_driver_frenzy = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(berzerk)
@@ -360,7 +364,9 @@ public class berzerk
 	
 		MDRV_MACHINE_INIT(NULL)
 		MDRV_NVRAM_HANDLER(NULL)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

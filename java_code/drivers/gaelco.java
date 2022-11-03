@@ -230,7 +230,8 @@ public class gaelco
 	};
 	
 	
-	static MACHINE_DRIVER_START( bigkarnk )
+	public static MachineHandlerPtr machine_driver_bigkarnk = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* MC68000P10, 10 MHz */
@@ -258,7 +259,9 @@ public class gaelco
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, bigkarnk_ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, bigkarnk_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_bigkarnk = new RomLoadPtr(){ public void handler(){ 
@@ -481,7 +484,8 @@ public class gaelco
 		{ 100 }				/* volume */
 	};
 	
-	static MACHINE_DRIVER_START( maniacsq )
+	public static MachineHandlerPtr machine_driver_maniacsq = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -503,7 +507,9 @@ public class gaelco
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, maniacsq_okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_maniacsp = new RomLoadPtr(){ public void handler(){ 

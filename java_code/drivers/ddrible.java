@@ -341,7 +341,8 @@ public class ddrible
 		0x10000     /* memory size 64Kbyte * 2 bank */
 	};
 	
-	static MACHINE_DRIVER_START( ddribble )
+	public static MachineHandlerPtr machine_driver_ddribble = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,	1536000)	/* 18432000/12 MHz? */
@@ -376,7 +377,9 @@ public class ddrible
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_ddribble = new RomLoadPtr(){ public void handler(){ 

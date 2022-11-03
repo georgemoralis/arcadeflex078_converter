@@ -479,7 +479,8 @@ public class bigevglf
 		{ 100 }	/* mixing level ??? */
 	};
 	
-	static MACHINE_DRIVER_START( bigevglf )
+	public static MachineHandlerPtr machine_driver_bigevglf = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/2)		/* 5 MHz ? */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -518,7 +519,9 @@ public class bigevglf
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface) /* YM2149 really */
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

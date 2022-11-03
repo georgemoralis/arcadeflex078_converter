@@ -618,7 +618,8 @@ public class midtunit
 		nbajam:   0014-0112 / 0120 (254)     0032-00FA / 00FC (400)
 	*/
 	
-	static MACHINE_DRIVER_START( tunit_core )
+	public static MachineHandlerPtr machine_driver_tunit_core = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
@@ -638,23 +639,31 @@ public class midtunit
 	
 		MDRV_VIDEO_START(midtunit)
 		MDRV_VIDEO_UPDATE(midtunit)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( tunit_adpcm )
+	public static MachineHandlerPtr machine_driver_tunit_adpcm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tunit_core)
 		MDRV_IMPORT_FROM(williams_adpcm_sound)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( tunit_dcs )
+	public static MachineHandlerPtr machine_driver_tunit_dcs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tunit_core)
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

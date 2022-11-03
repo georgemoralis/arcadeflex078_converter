@@ -561,7 +561,8 @@ public class psychic5
 		{ irqhandler }
 	};
 	
-	static MACHINE_DRIVER_START( psychic5 )
+	public static MachineHandlerPtr machine_driver_psychic5 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)
@@ -591,7 +592,9 @@ public class psychic5
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -420,7 +420,8 @@ public class wwfwfest
 	 Machine Driver(s)
 	*******************************************************************************/
 	
-	static MACHINE_DRIVER_START( wwfwfest )
+	public static MachineHandlerPtr machine_driver_wwfwfest = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 24 crystal, 12 rated chip */
@@ -448,7 +449,9 @@ public class wwfwfest
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/*******************************************************************************
 	 Rom Loaders / Game Drivers

@@ -327,7 +327,8 @@ public class parodius
 	
 	
 	
-	static MACHINE_DRIVER_START( parodius )
+	public static MachineHandlerPtr machine_driver_parodius = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)		/* 053248 */
@@ -356,7 +357,9 @@ public class parodius
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

@@ -1589,7 +1589,8 @@ public class balsente
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( balsente )
+	public static MachineHandlerPtr machine_driver_balsente = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 5000000/4)
@@ -1619,10 +1620,13 @@ public class balsente
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CEM3394, cem_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( shrike )
+	public static MachineHandlerPtr machine_driver_shrike = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(balsente)
@@ -1634,7 +1638,9 @@ public class balsente
 	
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(1025)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

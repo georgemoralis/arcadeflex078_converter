@@ -295,7 +295,8 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	static MACHINE_DRIVER_START( battlera )
+	public static MachineHandlerPtr machine_driver_battlera = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(H6280,21477200/3)
@@ -325,7 +326,9 @@ public class battlera
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
 		MDRV_SOUND_ADD(C6280, c6280_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/******************************************************************************/
 	

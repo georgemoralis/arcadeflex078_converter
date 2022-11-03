@@ -195,7 +195,8 @@ public class tourtabl
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static MACHINE_DRIVER_START( tourtabl )
+	public static MachineHandlerPtr machine_driver_tourtabl = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 3579575 / 3)	/* actually M6507 */
 		MDRV_CPU_MEMORY(readmem, writemem)
@@ -216,7 +217,9 @@ public class tourtabl
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(TIA, tia_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	static RomLoadPtr rom_tourtabl = new RomLoadPtr(){ public void handler(){ 

@@ -279,7 +279,8 @@ public class ccastles
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( ccastles )
+	public static MachineHandlerPtr machine_driver_ccastles = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1500000)
@@ -303,7 +304,9 @@ public class ccastles
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

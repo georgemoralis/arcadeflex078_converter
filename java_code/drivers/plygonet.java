@@ -416,7 +416,9 @@ public class plygonet
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	static InputPortPtr input_ports_polygonet = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 

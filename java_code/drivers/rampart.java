@@ -406,7 +406,8 @@ public class rampart
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( rampart )
+	public static MachineHandlerPtr machine_driver_rampart = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -432,7 +433,9 @@ public class rampart
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

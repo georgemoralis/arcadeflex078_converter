@@ -625,7 +625,8 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( pipedrm )
+	public static MachineHandlerPtr machine_driver_pipedrm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)
@@ -655,10 +656,13 @@ public class pipedrm
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hatris )
+	public static MachineHandlerPtr machine_driver_hatris = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)
@@ -688,7 +692,9 @@ public class pipedrm
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2608, ym2608_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

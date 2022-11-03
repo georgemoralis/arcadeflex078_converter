@@ -311,7 +311,8 @@ public class pacland
 	};
 	
 	
-	static MACHINE_DRIVER_START( pacland )
+	public static MachineHandlerPtr machine_driver_pacland = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)	/* 1.500 MHz (?) */
@@ -342,7 +343,9 @@ public class pacland
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

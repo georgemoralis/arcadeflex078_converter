@@ -1413,7 +1413,8 @@ public class gottlieb
 	********************************************************************/
 	
 	/* games using the revision 1 sound board */
-	static MACHINE_DRIVER_START( gottlieb )
+	public static MachineHandlerPtr machine_driver_gottlieb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", I86, 5000000)	/* 5 MHz */
@@ -1442,10 +1443,13 @@ public class gottlieb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac1_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( reactor )
+	public static MachineHandlerPtr machine_driver_reactor = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb)
@@ -1457,31 +1461,40 @@ public class gottlieb
 		/* video hardware */
 		MDRV_GFXDECODE(charRAM_gfxdecodeinfo)
 		MDRV_SOUND_ADD(SAMPLES, reactor_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( qbert )
+	public static MachineHandlerPtr machine_driver_qbert = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb)
 	
 		/* video hardware */
 		MDRV_SOUND_ADD(SAMPLES, qbert_samples_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( krull )
+	public static MachineHandlerPtr machine_driver_krull = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb)
 	
 		/* video hardware */
 		MDRV_GFXDECODE(charRAM_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* games using the revision 2 sound board */
-	static MACHINE_DRIVER_START( gottlieb2 )
+	public static MachineHandlerPtr machine_driver_gottlieb2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", I86, 5000000)	/* 5 MHz */
@@ -1515,26 +1528,35 @@ public class gottlieb
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac2_interface)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mach3 )
+	public static MachineHandlerPtr machine_driver_mach3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb2)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(gottlieb_readmem,usvsthem_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( usvsthem )
+	public static MachineHandlerPtr machine_driver_usvsthem = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mach3)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( stooges )
+	public static MachineHandlerPtr machine_driver_stooges = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb2)
@@ -1543,7 +1565,9 @@ public class gottlieb
 	
 		/* video hardware */
 		MDRV_GFXDECODE(charRAM_gfxdecodeinfo)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

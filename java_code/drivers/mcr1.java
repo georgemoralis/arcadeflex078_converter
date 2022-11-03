@@ -356,7 +356,8 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( mcr1 )
+	public static MachineHandlerPtr machine_driver_mcr1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_OSC_MCR_I/8)
@@ -382,7 +383,9 @@ public class mcr1
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(mcr_ssio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

@@ -963,7 +963,8 @@ public class snk
 	
 	/**********************************************************************/
 	
-	static MACHINE_DRIVER_START( tnk3 )
+	public static MachineHandlerPtr machine_driver_tnk3 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -996,10 +997,13 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( athena )
+	public static MachineHandlerPtr machine_driver_athena = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1032,10 +1036,13 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ikari )
+	public static MachineHandlerPtr machine_driver_ikari = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1068,10 +1075,13 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_ym3526_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( victroad )
+	public static MachineHandlerPtr machine_driver_victroad = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1105,10 +1115,13 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( gwar )
+	public static MachineHandlerPtr machine_driver_gwar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1142,10 +1155,13 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( bermudat )
+	public static MachineHandlerPtr machine_driver_bermudat = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1180,10 +1196,13 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( psychos )
+	public static MachineHandlerPtr machine_driver_psychos = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1217,10 +1236,13 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( chopper1 )
+	public static MachineHandlerPtr machine_driver_chopper1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1254,10 +1276,13 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(Y8950, y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( tdfever )
+	public static MachineHandlerPtr machine_driver_tdfever = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1291,10 +1316,13 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( tdfever2 )
+	public static MachineHandlerPtr machine_driver_tdfever2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1328,10 +1356,13 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( ftsoccer )
+	public static MachineHandlerPtr machine_driver_ftsoccer = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1364,7 +1395,9 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(Y8950, y8950_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***********************************************************************/

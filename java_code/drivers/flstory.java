@@ -566,7 +566,8 @@ public class flstory
 	};
 	
 	
-	static MACHINE_DRIVER_START( flstory )
+	public static MachineHandlerPtr machine_driver_flstory = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10733000/2)		/* ??? */
@@ -602,9 +603,12 @@ public class flstory
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( onna34ro )
+	public static MachineHandlerPtr machine_driver_onna34ro = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10733000/2)		/* ??? */
@@ -639,7 +643,9 @@ public class flstory
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

@@ -499,7 +499,8 @@ public class fuukifg3
 		}
 	} };
 	
-	static MACHINE_DRIVER_START( fuuki32 )
+	public static MachineHandlerPtr machine_driver_fuuki32 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 20000000) /* verified */
@@ -528,7 +529,9 @@ public class fuukifg3
 	//	MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	//	MDRV_SOUND_ADD(YM2151, ym2151_interface)
 	//	MDRV_SOUND_ADD(OKIM6295, m6295_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

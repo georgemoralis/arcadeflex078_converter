@@ -1143,7 +1143,8 @@ public class scobra
 	);
 	
 	
-	static MACHINE_DRIVER_START( type1 )
+	public static MachineHandlerPtr machine_driver_type1 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1165,11 +1166,14 @@ public class scobra
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, scobra_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* same as regular type 1, the only difference that it has long bullets */
-	static MACHINE_DRIVER_START( armorcar )
+	public static MachineHandlerPtr machine_driver_armorcar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1179,11 +1183,14 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(theend)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* same as regular type 1, the only difference is that the bullets are less yellow */
-	static MACHINE_DRIVER_START( moonwar )
+	public static MachineHandlerPtr machine_driver_moonwar = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1192,12 +1199,15 @@ public class scobra
 		MDRV_PALETTE_LENGTH(32+64+2)	/* 32 for characters, 64 for stars, 2 for bullets */
 	
 		MDRV_PALETTE_INIT(moonwar)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* Rescue, Minefield and Strategy X have extra colors, and custom video initialise */
 	/* routines to set up the graduated color backgound they use */
-	static MACHINE_DRIVER_START( rescue )
+	public static MachineHandlerPtr machine_driver_rescue = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1208,10 +1218,13 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(rescue)
 		MDRV_VIDEO_START(rescue)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( minefld )
+	public static MachineHandlerPtr machine_driver_minefld = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1222,22 +1235,28 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(minefld)
 		MDRV_VIDEO_START(minefld)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/* same as the others, but no sprite flipping, but instead the bits are used
 	   as extra sprite code bits, giving 256 sprite images */
-	static MACHINE_DRIVER_START( calipso )
+	public static MachineHandlerPtr machine_driver_calipso = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(calipso)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( mimonkey )
+	public static MachineHandlerPtr machine_driver_mimonkey = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1246,19 +1265,25 @@ public class scobra
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mimonkey)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( type2 )
+	public static MachineHandlerPtr machine_driver_type2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(type2_readmem,type2_writemem)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( stratgyx )
+	public static MachineHandlerPtr machine_driver_stratgyx = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type2)
@@ -1268,10 +1293,13 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(stratgyx)
 		MDRV_VIDEO_START(stratgyx)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( darkplnt )
+	public static MachineHandlerPtr machine_driver_darkplnt = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type2)
@@ -1281,10 +1309,13 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(darkplnt)
 		MDRV_VIDEO_START(darkplnt)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hustler )
+	public static MachineHandlerPtr machine_driver_hustler = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1305,10 +1336,13 @@ public class scobra
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( hustlerb )
+	public static MachineHandlerPtr machine_driver_hustlerb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1329,7 +1363,9 @@ public class scobra
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/***************************************************************************

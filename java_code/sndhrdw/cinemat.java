@@ -862,5 +862,7 @@ public class cinemat
 		
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, demon_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 }

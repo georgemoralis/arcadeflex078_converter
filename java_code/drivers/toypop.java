@@ -356,7 +356,8 @@ public class toypop
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( toypop )
+	public static MachineHandlerPtr machine_driver_toypop = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1536000)	/* 1.536 MHz (measured on Libble Rabble board) */
@@ -391,7 +392,9 @@ public class toypop
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

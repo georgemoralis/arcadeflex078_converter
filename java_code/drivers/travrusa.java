@@ -402,7 +402,8 @@ public class travrusa
 	
 	
 	
-	static MACHINE_DRIVER_START( travrusa )
+	public static MachineHandlerPtr machine_driver_travrusa = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -429,9 +430,12 @@ public class travrusa
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
-	static MACHINE_DRIVER_START( shtrider )
+	public static MachineHandlerPtr machine_driver_shtrider = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		MDRV_IMPORT_FROM(travrusa)
 	
@@ -439,7 +443,9 @@ public class travrusa
 		MDRV_GFXDECODE(sht_gfxdecodeinfo)
 	
 		MDRV_PALETTE_INIT(shtrider)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

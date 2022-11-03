@@ -424,7 +424,8 @@ public class cvs
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static MACHINE_DRIVER_START( cvs )
+	public static MachineHandlerPtr machine_driver_cvs = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,894886.25/3)
@@ -455,7 +456,9 @@ public class cvs
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(TMS5110, tms5110_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************
 	

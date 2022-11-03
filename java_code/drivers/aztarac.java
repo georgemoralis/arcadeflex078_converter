@@ -192,7 +192,8 @@ public class aztarac
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( aztarac )
+	public static MachineHandlerPtr machine_driver_aztarac = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -219,7 +220,9 @@ public class aztarac
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	

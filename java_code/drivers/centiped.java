@@ -1244,7 +1244,8 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static MACHINE_DRIVER_START( centiped )
+	public static MachineHandlerPtr machine_driver_centiped = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 12096000/8)	/* 1.512 MHz (slows down to 0.75MHz while accessing playfield RAM) */
@@ -1270,20 +1271,26 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("pokey", POKEY, centiped_pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( centipdb )
+	public static MachineHandlerPtr machine_driver_centipdb = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", AY8910, centipdb_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( centipb2 )
+	public static MachineHandlerPtr machine_driver_centipb2 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
@@ -1292,20 +1299,26 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", AY8910, centipb2_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( magworm )
+	public static MachineHandlerPtr machine_driver_magworm = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", AY8910, centipb2_ay8910_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( milliped )
+	public static MachineHandlerPtr machine_driver_milliped = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
@@ -1322,10 +1335,13 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", POKEY, milliped_pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( warlords )
+	public static MachineHandlerPtr machine_driver_warlords = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
@@ -1343,7 +1359,9 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", POKEY, warlords_pokey_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
 	/*************************************

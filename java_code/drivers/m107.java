@@ -515,7 +515,8 @@ public class m107
 			m107_vblank=0;
 	} };
 	
-	static MACHINE_DRIVER_START( firebarr )
+	public static MachineHandlerPtr machine_driver_firebarr = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33, 28000000/2)	/* NEC V33, 28MHz clock */
@@ -544,10 +545,13 @@ public class m107
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	
-	static MACHINE_DRIVER_START( dsoccr94 )
+	public static MachineHandlerPtr machine_driver_dsoccr94 = new MachineHandlerPtr() {
+        public void handler(InternalMachineDriver machine) {
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33, 20000000/2)	/* NEC V33, Could be 28MHz clock? */
@@ -576,7 +580,9 @@ public class m107
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END
+	MACHINE_DRIVER_END();
+ }
+};
 	
 	/***************************************************************************/
 	
