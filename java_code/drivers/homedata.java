@@ -1222,11 +1222,11 @@ public class homedata
 		32*8
 	);
 	
-	static struct GfxDecodeInfo mrokumei_gfxdecodeinfo[] =
+	static GfxDecodeInfo mrokumei_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &char_layout, 0x6000, 0x100 },
-		{ REGION_GFX2, 0, &char_layout, 0x7000, 0x100 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, char_layout, 0x6000, 0x100 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, char_layout, 0x7000, 0x100 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static GfxLayout tile_layout = new GfxLayout
@@ -1240,20 +1240,20 @@ public class homedata
 		64*8
 	);
 	
-	static struct GfxDecodeInfo reikaids_gfxdecodeinfo[] =
+	static GfxDecodeInfo reikaids_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout, 0x6000, 0x20 },
-		{ REGION_GFX2, 0, &tile_layout, 0x4000, 0x20 },
-		{ REGION_GFX3, 0, &tile_layout, 0x2000, 0x20 },
-		{ REGION_GFX4, 0, &tile_layout, 0x0000, 0x20 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout, 0x6000, 0x20 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tile_layout, 0x4000, 0x20 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, tile_layout, 0x2000, 0x20 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, tile_layout, 0x0000, 0x20 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo pteacher_gfxdecodeinfo[] =
+	static GfxDecodeInfo pteacher_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout, 0x0000, 0x40 },
-		{ REGION_GFX2, 0, &tile_layout, 0x4000, 0x40 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout, 0x0000, 0x40 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tile_layout, 0x4000, 0x40 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static GfxLayout tile_layout_4bpp_hi = new GfxLayout
@@ -1278,13 +1278,13 @@ public class homedata
 		64*8
 	);
 	
-	static struct GfxDecodeInfo lemnangl_gfxdecodeinfo[] =
+	static GfxDecodeInfo lemnangl_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout_4bpp_hi, 0x0000, 0x200 },
-		{ REGION_GFX1, 0, &tile_layout_4bpp_lo, 0x2000, 0x200 },
-		{ REGION_GFX2, 0, &tile_layout_4bpp_lo, 0x4000, 0x200 },
-		{ REGION_GFX2, 0, &tile_layout_4bpp_hi, 0x6000, 0x200 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout_4bpp_hi, 0x0000, 0x200 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout_4bpp_lo, 0x2000, 0x200 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tile_layout_4bpp_lo, 0x4000, 0x200 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tile_layout_4bpp_hi, 0x6000, 0x200 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

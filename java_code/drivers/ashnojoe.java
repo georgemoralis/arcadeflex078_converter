@@ -291,14 +291,14 @@ public class ashnojoe
 		16*64
 	);
 	
-	static struct GfxDecodeInfo ashnojoe_gfxdecodeinfo[] =
+	static GfxDecodeInfo ashnojoe_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tiles8x8_layout, 0, 0x100 },
-		{ REGION_GFX2, 0, &tiles8x8_layout, 0, 0x100 },
-		{ REGION_GFX3, 0, &tiles8x8_layout, 0, 0x100 },
-		{ REGION_GFX4, 0, &tiles16x16_layout, 0, 0x100 },
-		{ REGION_GFX5, 0, &tiles16x16_layout, 0, 0x100 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles8x8_layout, 0, 0x100 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tiles8x8_layout, 0, 0x100 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, tiles8x8_layout, 0, 0x100 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, tiles16x16_layout, 0, 0x100 ),
+		new GfxDecodeInfo( REGION_GFX5, 0, tiles16x16_layout, 0, 0x100 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static void irqhandler(int irq)

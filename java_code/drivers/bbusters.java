@@ -627,24 +627,24 @@ public class bbusters
 		128*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,     0, 16 },
-		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
-		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
-		{ REGION_GFX4, 0, &tilelayout,   768, 16 },
-		{ REGION_GFX5, 0, &tilelayout,  1024+256, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,     0, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, spritelayout, 512, 16 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, tilelayout,   768, 16 ),
+		new GfxDecodeInfo( REGION_GFX5, 0, tilelayout,  1024+256, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo gfxdecodeinfo_mechatt[] =
+	static GfxDecodeInfo gfxdecodeinfo_mechatt[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,     0, 16 },
-		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
-		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
-		{ REGION_GFX4, 0, &tilelayout,   512, 16 },
-		{ REGION_GFX5, 0, &tilelayout,   768, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,     0, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, spritelayout, 512, 16 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, tilelayout,   512, 16 ),
+		new GfxDecodeInfo( REGION_GFX5, 0, tilelayout,   768, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/******************************************************************************/

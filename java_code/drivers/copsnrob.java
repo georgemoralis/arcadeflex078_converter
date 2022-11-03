@@ -244,12 +244,12 @@ public class copsnrob
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,  0, 1 },
-		{ REGION_GFX2, 0, &carlayout,   0, 1 },
-		{ REGION_GFX3, 0, &trucklayout, 0, 1 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,  0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, carlayout,   0, 1 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, trucklayout, 0, 1 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

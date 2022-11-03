@@ -382,13 +382,13 @@ public class bwing
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1,  0, &charlayout,       0x00, 1 }, // chars
-		{ REGION_GFX2,  0, &spritelayout,     0x20, 2 }, // sprites
-		{ REGION_USER1, 0, &bwing_tilelayout, 0x10, 2 }, // foreground tiles place holder
-		{ REGION_USER1, 0, &bwing_tilelayout, 0x30, 2 }, // background tiles place holder
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1,  0, charlayout,       0x00, 1 ), // chars
+		new GfxDecodeInfo( REGION_GFX2,  0, spritelayout,     0x20, 2 ), // sprites
+		new GfxDecodeInfo( REGION_USER1, 0, bwing_tilelayout, 0x10, 2 ), // foreground tiles place holder
+		new GfxDecodeInfo( REGION_USER1, 0, bwing_tilelayout, 0x30, 2 ), // background tiles place holder
+		new GfxDecodeInfo( -1 )
 	};
 	
 	//****************************************************************************

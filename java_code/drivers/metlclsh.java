@@ -278,12 +278,12 @@ public class metlclsh
 		8*8
 	);
 	
-	static struct GfxDecodeInfo metlclsh_gfxdecodeinfo[] =
+	static GfxDecodeInfo metlclsh_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &spritelayout, 0x00, 2 }, // [0] Sprites
-		{ REGION_GFX2, 0, &tilelayout16, 0x10, 1 }, // [1] Background
-		{ REGION_GFX3, 0, &tilelayout8,  0x20, 4 }, // [2] Foreground
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 0x00, 2 ), // [0] Sprites
+		new GfxDecodeInfo( REGION_GFX2, 0, tilelayout16, 0x10, 1 ), // [1] Background
+		new GfxDecodeInfo( REGION_GFX3, 0, tilelayout8,  0x20, 4 ), // [2] Foreground
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

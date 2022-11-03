@@ -29,6 +29,7 @@ public class convertMame {
     static final int MACHINE_STOP = 16;
     static final int NVRAM_HANDLER = 17;
     static final int GFXLAYOUT = 18;
+    static final int GFXDECODE = 19;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -173,6 +174,30 @@ public class convertMame {
                                 type = GFXLAYOUT;
                                 i3 = -1;
                                 continue;
+                            }
+                        }
+                        if (sUtil.getToken("GfxDecodeInfo")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() != '[') {
+                                Convertor.inpos = i;
+                            } else {
+                                sUtil.skipSpace();
+                                if (sUtil.parseChar() != ']') {
+                                    Convertor.inpos = i;
+                                } else {
+                                    sUtil.skipSpace();
+                                    if (sUtil.parseChar() != '=') {
+                                        Convertor.inpos = i;
+                                    } else {
+                                        sUtil.skipSpace();
+                                        sUtil.putString("static GfxDecodeInfo " + Convertor.token[0] + "[] =");
+                                        type = GFXDECODE;
+                                        i3 = -1;
+                                        continue;
+                                    }
+                                }
                             }
                         }
                     }
@@ -671,6 +696,15 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (type == GFXDECODE) {
+                        i3++;
+                        insideagk[i3] = 0;
+                        if (i3 == 1) {
+                            sUtil.putString("new GfxDecodeInfo(");
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
                     if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT
                             || type == VIDEO_UPDATE || type == VIDEO_START || type == VIDEO_STOP
                             || type == VIDEO_EOF || type == MACHINE_INIT || type == DRIVER_INIT
@@ -692,6 +726,16 @@ public class convertMame {
                         if (i3 == 0) {
                             type = -1;
                         } else if (i3 == 1) {
+                            Convertor.outbuf[(Convertor.outpos++)] = ')';
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
+                    if (type == GFXDECODE) {
+                        i3--;
+                        if (i3 == -1) {
+                            type = -1;
+                        } else if (i3 == 0) {
                             Convertor.outbuf[(Convertor.outpos++)] = ')';
                             Convertor.inpos += 1;
                             continue;
@@ -1058,7 +1102,7 @@ public class convertMame {
                     }
                     break;
                 case '&': {
-                    if (type == MEMORY_READ8 || type == MEMORY_WRITE8 || type == PORT_READ8 || type == PORT_WRITE8) {
+                    if (type == MEMORY_READ8 || type == MEMORY_WRITE8 || type == PORT_READ8 || type == PORT_WRITE8 || type == GFXDECODE) {
                         Convertor.inpos += 1;
                         continue;
                     }

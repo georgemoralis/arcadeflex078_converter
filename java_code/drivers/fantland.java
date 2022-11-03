@@ -338,10 +338,10 @@ public class fantland
 		16*16*6
 	);
 	
-	static struct GfxDecodeInfo fantland_gfxdecodeinfo[] =
+	static GfxDecodeInfo fantland_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout16x16x6, 0, 4 }, // [0] Sprites
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout16x16x6, 0, 4 ), // [0] Sprites
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************

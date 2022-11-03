@@ -286,12 +286,12 @@ public class exerion
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,         0, 64 },
-		{ REGION_GFX2, 0, &spritelayout,     256, 64 },
-		{ REGION_GFX2, 0, &bigspritelayout,  256, 64 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,         0, 64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout,     256, 64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, bigspritelayout,  256, 64 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

@@ -357,12 +357,12 @@ public class tankbust
 		8*8		/* every char takes 8 consecutive bytes */
 	};
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &spritelayout,	0x00, 2 },	/* sprites 32x32  (2 * 16 colors) */
-		{ REGION_GFX2, 0, &charlayout,		0x20, 8 },	/* bg tilemap characters */
-		{ REGION_GFX3, 0, &charlayout2,		0x60, 16  },	/* txt tilemap characters*/
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout,	0x00, 2 ),	/* sprites 32x32  (2 * 16 colors) */
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout,		0x20, 8 ),	/* bg tilemap characters */
+		new GfxDecodeInfo( REGION_GFX3, 0, charlayout2,		0x60, 16  ),	/* txt tilemap characters*/
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct AY8910interface ay8910_interface =

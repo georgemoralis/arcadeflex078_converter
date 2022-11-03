@@ -121,13 +121,13 @@ public class jalmah
 		32*32
 	);
 	
-	static struct GfxDecodeInfo jalmah_gfxdecodeinfo[] =
+	static GfxDecodeInfo jalmah_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout, 0x000, 16 },
-		{ REGION_GFX2, 0, &tilelayout, 0x000, 16 },
-		{ REGION_GFX3, 0, &tilelayout, 0x000, 16 },
-		{ REGION_GFX4, 0, &tilelayout, 0x000, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 0x000, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tilelayout, 0x000, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, tilelayout, 0x000, 16 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, tilelayout, 0x000, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static MACHINE_DRIVER_START( jalmah )

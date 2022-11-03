@@ -285,21 +285,21 @@ public class redalert
 		8*8 /* every char takes 8 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo redalert_gfxdecodeinfo[] =
+	static GfxDecodeInfo redalert_gfxdecodeinfo[] =
 	{
-		{ 0, 0x3000, &backlayout,	0, 8 }, 	/* the game dynamically modifies this */
-		{ 0, 0x4800, &charlayout,	0, 8 }, 	/* the game dynamically modifies this */
-		{ 0, 0x4400, &spritelayout,16, 4 }, 	/* the game dynamically modifies this */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( 0, 0x3000, backlayout,	0, 8 ), 	/* the game dynamically modifies this */
+		new GfxDecodeInfo( 0, 0x4800, charlayout,	0, 8 ), 	/* the game dynamically modifies this */
+		new GfxDecodeInfo( 0, 0x4400, spritelayout,16, 4 ), 	/* the game dynamically modifies this */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo demoneye_gfxdecodeinfo[] =
+	static GfxDecodeInfo demoneye_gfxdecodeinfo[] =
 	{
-		{ 0, 0x3000, &backlayout,	0, 8 }, 	/* the game dynamically modifies this */
-		{ 0, 0x4800, &spritelayout,16, 4 }, 	/* the game dynamically modifies this */
-		{ 0, 0x4400, &spritelayout,16, 4 }, 	/* the game dynamically modifies this */
-		{ 0, 0x5400, &spritelayout,16, 4 }, 	/* the game dynamically modifies this */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( 0, 0x3000, backlayout,	0, 8 ), 	/* the game dynamically modifies this */
+		new GfxDecodeInfo( 0, 0x4800, spritelayout,16, 4 ), 	/* the game dynamically modifies this */
+		new GfxDecodeInfo( 0, 0x4400, spritelayout,16, 4 ), 	/* the game dynamically modifies this */
+		new GfxDecodeInfo( 0, 0x5400, spritelayout,16, 4 ), 	/* the game dynamically modifies this */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/* Arbitrary colortable */

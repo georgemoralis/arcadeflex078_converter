@@ -2537,11 +2537,11 @@ public class ssv
 		16*8*2
 	);
 	
-	static struct GfxDecodeInfo ssv_gfxdecodeinfo[] =
+	static GfxDecodeInfo ssv_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x8x8, 0, 0x8000/64 }, // [0] Sprites (256 colors)
-		{ REGION_GFX1, 0, &layout_16x8x6, 0, 0x8000/64 }, // [1] Sprites (64 colors)
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x8x8, 0, 0x8000/64 ), // [0] Sprites (256 colors)
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x8x6, 0, 0x8000/64 ), // [1] Sprites (64 colors)
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static GfxLayout layout_16x8x8_2 = new GfxLayout
@@ -2566,11 +2566,11 @@ public class ssv
 		16*8*8
 	);
 	
-	static struct GfxDecodeInfo eaglshot_gfxdecodeinfo[] =
+	static GfxDecodeInfo eaglshot_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x8x8_2, 0, 0x8000/64 }, // [0] Sprites (256 colors)
-		{ REGION_GFX1, 0, &layout_16x8x6_2, 0, 0x8000/64 }, // [1] Sprites (64 colors)
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x8x8_2, 0, 0x8000/64 ), // [0] Sprites (256 colors)
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x8x6_2, 0, 0x8000/64 ), // [1] Sprites (64 colors)
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************

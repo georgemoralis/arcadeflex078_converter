@@ -362,12 +362,12 @@ public class spdbuggy
 	LAYOUT_CHUNKY_16x16x8( spritelayout,			 0x10000 )
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &tilelayout,   256*0, 16 }, // [0] bg
-		{ REGION_GFX1, 0x030000, &charlayout,   256*1, 16 }, // [1] txt
-		{ REGION_GFX1, 0x038000, &spritelayout, 256*2, 16 }, // [2] sprites
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, tilelayout,   256*0, 16 ), // [0] bg
+		new GfxDecodeInfo( REGION_GFX1, 0x030000, charlayout,   256*1, 16 ), // [1] txt
+		new GfxDecodeInfo( REGION_GFX1, 0x038000, spritelayout, 256*2, 16 ), // [2] sprites
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

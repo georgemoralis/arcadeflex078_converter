@@ -57,10 +57,10 @@ public class gaelco2
 		32*8																			\
 	)
 	
-	#define GFXDECODEINFO(NUM,ENTRIES) static struct GfxDecodeInfo gfxdecodeinfo_##NUM[] =	\
+	#define GFXDECODEINFO(NUM,ENTRIES) static GfxDecodeInfo gfxdecodeinfo_##NUM[] =\
 	{																						\
-		{ REGION_GFX1, 0x0000000, &tilelayout16_##NUM,0,	ENTRIES },						\
-		{ -1 }																				\
+		new GfxDecodeInfo( REGION_GFX1, 0x0000000, tilelayout16_##NUM,0,	ENTRIES ),						\
+		new GfxDecodeInfo( -1 )																				\
 	}
 	
 	TILELAYOUT16(0x0080000);

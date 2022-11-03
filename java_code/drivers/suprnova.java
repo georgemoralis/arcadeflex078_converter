@@ -1030,14 +1030,14 @@ public class suprnova
 		16*16*4
 	);
 	
-	static struct GfxDecodeInfo skns_bg_decode[] =
+	static GfxDecodeInfo skns_bg_decode[] =
 	{
 	   /* REGION_GFX1 is sprites, RLE encoded */
-		{ REGION_GFX2, 0, &skns_tilemap_layout, 0x000, 128 },
-		{ REGION_GFX3, 0, &skns_tilemap_layout, 0x000, 128 },
-		{ REGION_GFX2, 0, &skns_4bpptilemap_layout, 0x000, 128 },
-		{ REGION_GFX3, 0, &skns_4bpptilemap_layout, 0x000, 128 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, skns_tilemap_layout, 0x000, 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, skns_tilemap_layout, 0x000, 128 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, skns_4bpptilemap_layout, 0x000, 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, skns_4bpptilemap_layout, 0x000, 128 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***** MACHINE DRIVER *****/

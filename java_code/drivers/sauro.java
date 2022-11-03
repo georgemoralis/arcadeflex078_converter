@@ -315,19 +315,19 @@ public class sauro
 	    16*16     /* every sprite takes 32 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo sauro_gfxdecodeinfo[] =
+	static GfxDecodeInfo sauro_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout, 0, 64 },
-		{ REGION_GFX2, 0, &charlayout, 0, 64 },
-		{ REGION_GFX3, 0, &sauro_spritelayout, 0, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, sauro_spritelayout, 0, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo trckydoc_gfxdecodeinfo[] =
+	static GfxDecodeInfo trckydoc_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout, 0, 64 },
-		{ REGION_GFX2, 0, &trckydoc_spritelayout, 0, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, trckydoc_spritelayout, 0, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	public static InterruptHandlerPtr sauro_interrupt = new InterruptHandlerPtr() {public void handler()

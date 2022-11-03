@@ -418,11 +418,11 @@ public class mugsmash
 		32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &mugsmash_layout,   0x00, 16  }, /* sprites */
-		{ REGION_GFX2, 0, &mugsmash2_layout,  0x100, 256  }, /* bg tiles */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, mugsmash_layout,   0x00, 16  ), /* sprites */
+		new GfxDecodeInfo( REGION_GFX2, 0, mugsmash2_layout,  0x100, 256  ), /* bg tiles */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static void irq_handler(int irq)

@@ -529,12 +529,12 @@ public class shadfrce
 		64*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &fg8x8x4_layout,   0x0000, 256 },
-		{ REGION_GFX2, 0, &sp16x16x5_layout, 0x1000, 128 },
-		{ REGION_GFX3, 0, &bg16x16x6_layout, 0x2000, 128 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, fg8x8x4_layout,   0x0000, 256 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, sp16x16x5_layout, 0x1000, 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, bg16x16x6_layout, 0x2000, 128 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/* Machine Driver Bits */

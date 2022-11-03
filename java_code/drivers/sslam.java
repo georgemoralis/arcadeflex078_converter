@@ -236,13 +236,13 @@ public class sslam
 		16*16
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tiles16x16_layout, 0    , 16 }, /* bg */
-		{ REGION_GFX1, 0, &tiles16x16_layout, 0x100, 16 }, /* mid */
-		{ REGION_GFX1, 0, &tiles8x8_layout,   0x200, 16 }, /* tx */
-		{ REGION_GFX2, 0, &tiles8x8_layout,   0x300, 16 }, /* spr */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles16x16_layout, 0    , 16 ), /* bg */
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles16x16_layout, 0x100, 16 ), /* mid */
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles8x8_layout,   0x200, 16 ), /* tx */
+		new GfxDecodeInfo( REGION_GFX2, 0, tiles8x8_layout,   0x300, 16 ), /* spr */
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/* Machine Driver */

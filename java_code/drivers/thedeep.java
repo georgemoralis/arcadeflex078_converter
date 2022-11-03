@@ -319,12 +319,12 @@ public class thedeep
 		16*16
 	);
 	
-	static struct GfxDecodeInfo thedeep_gfxdecodeinfo[] =
+	static GfxDecodeInfo thedeep_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x4,	0x080,  8 }, // [0] Sprites
-		{ REGION_GFX2, 0, &layout_16x16x4,	0x100, 16 }, // [1] Background Layer
-		{ REGION_GFX3, 0, &layout_8x8x2,	0x000, 16 }, // [2] Text Layer
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x4,	0x080,  8 ), // [0] Sprites
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_16x16x4,	0x100, 16 ), // [1] Background Layer
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x2,	0x000, 16 ), // [2] Text Layer
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

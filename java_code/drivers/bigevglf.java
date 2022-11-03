@@ -447,10 +447,10 @@ public class bigevglf
 		8*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &gfxlayout,   0x20*16, 16 },
-		{ -1 }	/* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, gfxlayout,   0x20*16, 16 ),
+		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
 	public static MachineInitHandlerPtr machine_init_bigevglf  = new MachineInitHandlerPtr() { public void handler()

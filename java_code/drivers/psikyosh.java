@@ -162,11 +162,11 @@ public class psikyosh
 		16*16*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x4, 0x000, 0x100 }, // 4bpp tiles
-		{ REGION_GFX1, 0, &layout_16x16x8, 0x000, 0x100 }, // 8bpp tiles
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x4, 0x000, 0x100 ), // 4bpp tiles
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x8, 0x000, 0x100 ), // 8bpp tiles
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct EEPROM_interface eeprom_interface_93C56 =

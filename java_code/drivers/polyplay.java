@@ -299,11 +299,11 @@ public class polyplay
 		8*8	/* every char takes 8 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_CPU1, 0xe800, &charlayout_1_bit, 0, 1 },
-		{ REGION_CPU1, 0xec00, &charlayout_3_bit, 2, 1 },
-		{ -1 }	/* end of array */
+		new GfxDecodeInfo( REGION_CPU1, 0xe800, charlayout_1_bit, 0, 1 ),
+		new GfxDecodeInfo( REGION_CPU1, 0xec00, charlayout_3_bit, 2, 1 ),
+		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
 	

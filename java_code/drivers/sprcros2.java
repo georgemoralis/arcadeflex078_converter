@@ -273,12 +273,12 @@ public class sprcros2
 		8*8*2
 	);
 	
-	static struct GfxDecodeInfo sprcros2_gfxdecodeinfo[] =
+	static GfxDecodeInfo sprcros2_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &sprcros2_bglayout,     0,   16 },
-		{ REGION_GFX2, 0, &sprcros2_spritelayout, 256, 6  },
-		{ REGION_GFX3, 0, &sprcros2_fglayout,     512, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, sprcros2_bglayout,     0,   16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, sprcros2_spritelayout, 256, 6  ),
+		new GfxDecodeInfo( REGION_GFX3, 0, sprcros2_fglayout,     512, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct SN76496interface sprcros2_sn76496_interface =

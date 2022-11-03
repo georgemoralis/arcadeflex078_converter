@@ -220,12 +220,12 @@ public class bigstrkb
 	
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &bigstrkb_charlayout,   0x200, 16 },
-		{ REGION_GFX2, 0, &bigstrkb_char16layout,   0, 32 },
-		{ REGION_GFX3, 0, &bigstrkb_char16layout,   0x300, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, bigstrkb_charlayout,   0x200, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, bigstrkb_char16layout,   0, 32 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, bigstrkb_char16layout,   0x300, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

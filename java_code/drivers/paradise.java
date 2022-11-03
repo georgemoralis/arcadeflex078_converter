@@ -237,13 +237,13 @@ public class paradise
 		16*16*4
 	);
 	
-	static struct GfxDecodeInfo paradise_gfxdecodeinfo[] =
+	static GfxDecodeInfo paradise_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x8,	0x100, 1  }, // [0] Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x400, 16 }, // [1] Background
-		{ REGION_GFX3, 0, &layout_8x8x8,	0x300, 1  }, // [2] Midground
-		{ REGION_GFX4, 0, &layout_8x8x8,	0x000, 1  }, // [3] Foreground
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x8,	0x100, 1  ), // [0] Sprites
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x400, 16 ), // [1] Background
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x8,	0x300, 1  ), // [2] Midground
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_8x8x8,	0x000, 1  ), // [3] Foreground
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

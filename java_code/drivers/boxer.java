@@ -315,12 +315,12 @@ public class boxer
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &sprite_layout, 0, 1 },
-		{ REGION_GFX2, 0, &sprite_layout, 0, 1 },
-		{ REGION_GFX3, 0, &tile_layout, 2, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, sprite_layout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, sprite_layout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, tile_layout, 2, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

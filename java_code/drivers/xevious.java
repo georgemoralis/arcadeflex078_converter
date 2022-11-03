@@ -864,24 +864,24 @@ public class xevious
 	
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &charlayout, 128*4+64*8,  64 },
-		{ REGION_GFX2, 0x0000, &bgcharlayout,        0, 128 },
-		{ REGION_GFX3, 0x0000, &spritelayout1,   128*4,  64 },
-		{ REGION_GFX3, 0x2000, &spritelayout2,   128*4,  64 },
-		{ REGION_GFX3, 0x6000, &spritelayout3,   128*4,  64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, charlayout, 128*4+64*8,  64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x0000, bgcharlayout,        0, 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x0000, spritelayout1,   128*4,  64 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x2000, spritelayout2,   128*4,  64 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x6000, spritelayout3,   128*4,  64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	/*static struct GfxDecodeInfo battles_gfxdecodeinfo[] =
+	/*static GfxDecodeInfo battles_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &charlayout,      128*4 + 128*8, 128 },
-		{ REGION_GFX2, 0x0000, &bgcharlayout,                0, 128 },
-		{ REGION_GFX3, 0x0000, &spritelayout1,   128*4        , 128 },
-		{ REGION_GFX3, 0x2000, &spritelayout2,   128*4        , 128 },
-		{ REGION_GFX3, 0x6000, &spritelayout3,   128*4        , 128 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, charlayout,      128*4 + 128*8, 128 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x0000, bgcharlayout,                0, 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x0000, spritelayout1,   128*4        , 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x2000, spritelayout2,   128*4        , 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x6000, spritelayout3,   128*4        , 128 ),
+		new GfxDecodeInfo( -1 )
 	};
 	*/
 	

@@ -203,11 +203,11 @@ public class poolshrk
 	);
 	
 	
-	static struct GfxDecodeInfo poolshrk_gfx_decode_info[] =
+	static GfxDecodeInfo poolshrk_gfx_decode_info[] =
 	{
-		{ REGION_GFX1, 0, &poolshrk_sprite_layout, 0, 2 },
-		{ REGION_GFX2, 0, &poolshrk_tile_layout, 0, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, poolshrk_sprite_layout, 0, 2 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, poolshrk_tile_layout, 0, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

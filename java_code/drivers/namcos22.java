@@ -588,10 +588,10 @@ public class namcos22
 		32*32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &sprite_layout,  0, 0x80 },
-		{ -1 },
+		new GfxDecodeInfo( REGION_GFX1, 0, sprite_layout,  0, 0x80 ),
+		new GfxDecodeInfo( -1 ),
 	};
 	
 	/*********************************************************************************/

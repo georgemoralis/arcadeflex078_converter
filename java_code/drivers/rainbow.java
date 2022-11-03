@@ -539,11 +539,11 @@ public class rainbow
 		128*8   /* every sprite takes 128 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo rainbow_gfxdecodeinfo[] =
+	static GfxDecodeInfo rainbow_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX2, 0x000000, &spritelayout, 0, 0x80 },	/* OBJ 16x16 */
-		{ REGION_GFX1, 0x000000, &tilelayout,   0, 0x80 },	/* SCR 8x8 */
-		{ -1 }	/* end of array */
+		new GfxDecodeInfo( REGION_GFX2, 0x000000, spritelayout, 0, 0x80 ),	/* OBJ 16x16 */
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, tilelayout,   0, 0x80 ),	/* SCR 8x8 */
+		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
 	
@@ -569,11 +569,11 @@ public class rainbow
 		32*8    /* every sprite takes 32 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo jumping_gfxdecodeinfo[] =
+	static GfxDecodeInfo jumping_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX2, 0, &jumping_spritelayout, 0, 0x80 },	/* OBJ 16x16 */
-		{ REGION_GFX1, 0, &jumping_tilelayout,   0, 0x80 },	/* SCR 8x8 */
-		{ -1 }	/* end of array */
+		new GfxDecodeInfo( REGION_GFX2, 0, jumping_spritelayout, 0, 0x80 ),	/* OBJ 16x16 */
+		new GfxDecodeInfo( REGION_GFX1, 0, jumping_tilelayout,   0, 0x80 ),	/* SCR 8x8 */
+		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
 	

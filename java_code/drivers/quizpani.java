@@ -249,11 +249,11 @@ public class quizpani
 		32*32
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout, 0x100, 16 }, /* Background */
-		{ REGION_GFX2, 0, &tilelayout, 0x000, 16 }, /* Text */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout, 0x100, 16 ), /* Background */
+		new GfxDecodeInfo( REGION_GFX2, 0, tilelayout, 0x000, 16 ), /* Text */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct OKIM6295interface okim6295_interface =

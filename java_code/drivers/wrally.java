@@ -220,10 +220,10 @@ public class wrally
 		64*8
 	);
 	
-	static struct GfxDecodeInfo wrally_gfxdecodeinfo[] =
+	static GfxDecodeInfo wrally_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &wrally_tilelayout16, 0, 64*8 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, wrally_tilelayout16, 0, 64*8 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

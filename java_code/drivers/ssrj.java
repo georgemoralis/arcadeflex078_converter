@@ -163,10 +163,10 @@ public class ssrj
 		8*8	/* every char takes 8 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,     0, 8*4 },
-		{ -1 }	/* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,     0, 8*4 ),
+		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
 	static struct AY8910interface ay8910_interface =

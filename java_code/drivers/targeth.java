@@ -33,10 +33,10 @@ public class targeth
 		32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo_0x080000[] =
+	static GfxDecodeInfo gfxdecodeinfo_0x080000[] =
 	{
-		{ REGION_GFX1, 0x000000, &tilelayout16_0x080000, 0, 64 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, tilelayout16_0x080000, 0, 64 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

@@ -334,13 +334,13 @@ public class destroyr
 	);
 	
 	
-	static struct GfxDecodeInfo destroyr_gfx_decode_info[] =
+	static GfxDecodeInfo destroyr_gfx_decode_info[] =
 	{
-		{ REGION_GFX1, 0, &destroyr_alpha_num_layout, 4, 1 },
-		{ REGION_GFX2, 0, &destroyr_minor_object_layout, 4, 1 },
-		{ REGION_GFX3, 0, &destroyr_major_object_layout, 0, 1 },
-		{ REGION_GFX4, 0, &destroyr_waves_layout, 4, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, destroyr_alpha_num_layout, 4, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, destroyr_minor_object_layout, 4, 1 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, destroyr_major_object_layout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, destroyr_waves_layout, 4, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

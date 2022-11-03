@@ -252,10 +252,10 @@ public class usgames
 		8*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_CPU1, 0x2800, &charlayout, 0, 256 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_CPU1, 0x2800, charlayout, 0, 256 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

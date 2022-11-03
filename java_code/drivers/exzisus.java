@@ -351,11 +351,11 @@ public class exzisus
 		16*8
 	);
 	
-	static struct GfxDecodeInfo exzisus_gfxdecodeinfo[] =
+	static GfxDecodeInfo exzisus_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0, 256 },
-		{ REGION_GFX2, 0, &charlayout, 256, 256 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0, 256 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout, 256, 256 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static MACHINE_DRIVER_START( exzisus )

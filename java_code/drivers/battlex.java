@@ -199,11 +199,11 @@ public class battlex
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &battlex_charlayout,      0, 8 },
-		{ REGION_GFX2, 0, &battlex_spritelayout, 16*8, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, battlex_charlayout,      0, 8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, battlex_spritelayout, 16*8, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/*** SOUND *******************************************************************/

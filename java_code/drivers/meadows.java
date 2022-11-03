@@ -604,21 +604,21 @@ public class meadows
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,	 0, 1 },		/* character generator */
-		{ REGION_GFX2, 0, &spritelayout, 0, 1 },		/* sprite prom 1 */
-		{ REGION_GFX3, 0, &spritelayout, 0, 1 },		/* sprite prom 2 */
-		{ REGION_GFX4, 0, &spritelayout, 0, 1 },		/* sprite prom 3 (unused) */
-		{ REGION_GFX5, 0, &spritelayout, 0, 1 },		/* sprite prom 4 (unused) */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,	 0, 1 ),		/* character generator */
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 0, 1 ),		/* sprite prom 1 */
+		new GfxDecodeInfo( REGION_GFX3, 0, spritelayout, 0, 1 ),		/* sprite prom 2 */
+		new GfxDecodeInfo( REGION_GFX4, 0, spritelayout, 0, 1 ),		/* sprite prom 3 (unused) */
+		new GfxDecodeInfo( REGION_GFX5, 0, spritelayout, 0, 1 ),		/* sprite prom 4 (unused) */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	
-	static struct GfxDecodeInfo minferno_gfxdecodeinfo[] =
+	static GfxDecodeInfo minferno_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0, 4 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0, 4 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

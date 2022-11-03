@@ -265,10 +265,10 @@ public class mayumi
 		8*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x00000, &charlayout, 0, 32 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x00000, charlayout, 0, 32 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct YM2203interface ym2203_interface =

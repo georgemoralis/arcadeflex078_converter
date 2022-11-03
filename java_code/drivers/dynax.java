@@ -868,10 +868,10 @@ public class dynax
 		8*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX2, 0, &charlayout,  0, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout,  0, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/***************************************************************************

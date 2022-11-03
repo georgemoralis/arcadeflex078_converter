@@ -718,11 +718,11 @@ public class welltris
 		64*8
 	);
 	
-	static struct GfxDecodeInfo welltris_gfxdecodeinfo[] =
+	static GfxDecodeInfo welltris_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &welltris_charlayout,   16* 0, 4*16 },
-		{ REGION_GFX2, 0, &welltris_spritelayout, 16*96, 2*16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, welltris_charlayout,   16* 0, 4*16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, welltris_spritelayout, 16*96, 2*16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

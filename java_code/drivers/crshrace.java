@@ -607,12 +607,12 @@ public class crshrace
 		128*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,     0,  1 },
-		{ REGION_GFX2, 0, &tilelayout,   256, 16 },
-		{ REGION_GFX3, 0, &spritelayout, 512, 32 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,     0,  1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tilelayout,   256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, spritelayout, 512, 32 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

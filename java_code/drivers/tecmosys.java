@@ -268,10 +268,10 @@ public class tecmosys
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tecmosys_charlayout,   0, 1  },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tecmosys_charlayout,   0, 1  ),
+		new GfxDecodeInfo( -1 )
 	};
 	*/
 	

@@ -146,10 +146,10 @@ public class gomoku
 		16*8		/* every char takes 16 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,    0, 32 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,    0, 32 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

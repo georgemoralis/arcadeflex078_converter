@@ -891,16 +891,16 @@ public class mystwarr
 		16*128
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo_gaiapols[] =
+	static GfxDecodeInfo gfxdecodeinfo_gaiapols[] =
 	{
-		{ REGION_GFX3, 0, &bglayout_4bpp, 0x0000, 128 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX3, 0, bglayout_4bpp, 0x0000, 128 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo gfxdecodeinfo_dadandrn[] =
+	static GfxDecodeInfo gfxdecodeinfo_dadandrn[] =
 	{
-		{ REGION_GFX3, 0, &bglayout_8bpp, 0x0000, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX3, 0, bglayout_8bpp, 0x0000, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static MACHINE_DRIVER_START( mystwarr )

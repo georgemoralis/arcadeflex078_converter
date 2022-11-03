@@ -3638,20 +3638,20 @@ public class stv
 	
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tiles8x8x4_layout,   0x00, 0x80  },
-		{ REGION_GFX1, 0, &tiles16x16x4_layout,   0x00, 0x80  },
-		{ REGION_GFX1, 0, &tiles8x8x8_layout,   0x00, 0x10  },
-		{ REGION_GFX1, 0, &tiles16x16x8_layout,   0x00, 0x10  },
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles8x8x4_layout,   0x00, 0x80  ),
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles16x16x4_layout,   0x00, 0x80  ),
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles8x8x8_layout,   0x00, 0x10  ),
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles16x16x8_layout,   0x00, 0x10  ),
 	
 		/* vdp1 .. pointless for drawing but can help us debug */
-		{ REGION_GFX2, 0, &tiles8x8x4_layout,   0x00, 0x100  },
-		{ REGION_GFX2, 0, &tiles16x16x4_layout,   0x00, 0x100  },
-		{ REGION_GFX2, 0, &tiles8x8x8_layout,   0x00, 0x20  },
-		{ REGION_GFX2, 0, &tiles16x16x8_layout,   0x00, 0x20  },
+		new GfxDecodeInfo( REGION_GFX2, 0, tiles8x8x4_layout,   0x00, 0x100  ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tiles16x16x4_layout,   0x00, 0x100  ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tiles8x8x8_layout,   0x00, 0x20  ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tiles16x16x8_layout,   0x00, 0x20  ),
 	
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	struct sh2_config sh2_conf_master = { 0 };

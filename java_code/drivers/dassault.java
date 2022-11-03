@@ -554,15 +554,15 @@ public class dassault
 		64*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
 		/* REGION_GFX1 is copied to REGION_GFX2 at runtime */
-		{ REGION_GFX2, 0, &charlayout,     0,  32 },	/* Characters 8x8 */
-		{ REGION_GFX2, 0, &tilelayout,     0,  32 },	/* Tiles 16x16 */
-		{ REGION_GFX3, 0, &tilelayout,   512,  32 },	/* Tiles 16x16 */
-		{ REGION_GFX4, 0, &tilelayout,  1024,  64 },	/* Sprites 16x16 */
-		{ REGION_GFX5, 0, &tilelayout,  2048,  64 },	/* Sprites 16x16 */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout,     0,  32 ),	/* Characters 8x8 */
+		new GfxDecodeInfo( REGION_GFX2, 0, tilelayout,     0,  32 ),	/* Tiles 16x16 */
+		new GfxDecodeInfo( REGION_GFX3, 0, tilelayout,   512,  32 ),	/* Tiles 16x16 */
+		new GfxDecodeInfo( REGION_GFX4, 0, tilelayout,  1024,  64 ),	/* Sprites 16x16 */
+		new GfxDecodeInfo( REGION_GFX5, 0, tilelayout,  2048,  64 ),	/* Sprites 16x16 */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/**********************************************************************************/

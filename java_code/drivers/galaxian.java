@@ -3360,51 +3360,51 @@ public class galaxian
 		8*8*2
 	);
 	
-	static struct GfxDecodeInfo rockclim_gfxdecodeinfo[] =
+	static GfxDecodeInfo rockclim_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &galaxian_charlayout,   32, 8 },
-		{ REGION_GFX1, 0x0000, &galaxian_spritelayout, 32, 8 },
-		{ REGION_GFX2, 0x0000, &rockclim_charlayout, 0, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, galaxian_charlayout,   32, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, galaxian_spritelayout, 32, 8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x0000, rockclim_charlayout, 0, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	
 	
 	
-	struct GfxDecodeInfo galaxian_gfxdecodeinfo[] =
+	static GfxDecodeInfo galaxian_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &galaxian_charlayout,   0, 8 },
-		{ REGION_GFX1, 0x0000, &galaxian_spritelayout, 0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, galaxian_charlayout,   0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, galaxian_spritelayout, 0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	struct GfxDecodeInfo gmgalax_gfxdecodeinfo[] =
+	static GfxDecodeInfo gmgalax_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &galaxian_charlayout,   0, 16 },
-		{ REGION_GFX1, 0x0000, &galaxian_spritelayout, 0, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, galaxian_charlayout,   0, 16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, galaxian_spritelayout, 0, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/* separate character and sprite ROMs */
-	static struct GfxDecodeInfo pacmanbl_gfxdecodeinfo[] =
+	static GfxDecodeInfo pacmanbl_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &pacmanbl_charlayout,   0, 8 },
-		{ REGION_GFX1, 0x1000, &pacmanbl_spritelayout, 0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, pacmanbl_charlayout,   0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x1000, pacmanbl_spritelayout, 0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo bagmanmc_gfxdecodeinfo[] =
+	static GfxDecodeInfo bagmanmc_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &bagmanmc_charlayout,    0, 8 },
-		{ REGION_GFX1, 0x2000, &pacmanbl_spritelayout, 0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, bagmanmc_charlayout,    0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x2000, pacmanbl_spritelayout, 0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo _4in1_gfxdecodeinfo[] =
+	static GfxDecodeInfo _4in1_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &_4in1_charlayout,      0, 8 },
-		{ REGION_GFX1, 0x4000, &_4in1_spritelayout,    0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, _4in1_charlayout,      0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x4000, _4in1_spritelayout,    0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

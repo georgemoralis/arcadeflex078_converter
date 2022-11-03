@@ -276,10 +276,10 @@ public class irobot
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-	    { REGION_GFX1, 0, &charlayout, 64, 16 },
-		{ -1 }
+	    new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 64, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

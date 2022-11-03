@@ -185,10 +185,10 @@ public class hitme
 		8*8 /* every char takes 8 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0, 1  },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0, 1  ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static public static ReadHandlerPtr hitme_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)

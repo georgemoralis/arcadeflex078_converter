@@ -356,12 +356,12 @@ public class gcpinbal
 		128*8	/* every sprite takes 128 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX3, 0, &tilelayout,       0, 256 },	/* sprites & playfield */
-		{ REGION_GFX1, 0, &charlayout,       0, 256 },	/* sprites & playfield */
-		{ REGION_GFX2, 0, &char_8x8_layout,  0, 256 },	/* sprites & playfield */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX3, 0, tilelayout,       0, 256 ),	/* sprites  playfield */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,       0, 256 ),	/* sprites  playfield */
+		new GfxDecodeInfo( REGION_GFX2, 0, char_8x8_layout,  0, 256 ),	/* sprites  playfield */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

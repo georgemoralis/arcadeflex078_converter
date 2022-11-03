@@ -944,18 +944,18 @@ public class cosmic
 	);
 	
 	
-	static struct GfxDecodeInfo panic_gfxdecodeinfo[] =
+	static GfxDecodeInfo panic_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &cosmic_spritelayout16,  0, 8 },
-		{ REGION_GFX1, 0, &cosmic_spritelayout32,  0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, cosmic_spritelayout16,  0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, cosmic_spritelayout32,  0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo cosmica_gfxdecodeinfo[] =
+	static GfxDecodeInfo cosmica_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &cosmic_spritelayout16,  0, 16 },
-		{ REGION_GFX1, 0, &cosmic_spritelayout32,  0, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, cosmic_spritelayout16,  0, 16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, cosmic_spritelayout32,  0, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

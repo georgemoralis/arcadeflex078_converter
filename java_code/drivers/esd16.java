@@ -404,12 +404,12 @@ public class esd16
 		8*8*2,
 	);
 	
-	static struct GfxDecodeInfo esd16_gfxdecodeinfo[] =
+	static GfxDecodeInfo esd16_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x5, 0x200, 8 }, // [0] Sprites
-		{ REGION_GFX2, 0, &layout_8x8x8,   0x000, 2 }, // [1] Layers
-		{ REGION_GFX1, 0, &layout_16x16x5, 0x200, 8 }, // [0] Sprites
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x5, 0x200, 8 ), // [0] Sprites
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x8,   0x000, 2 ), // [1] Layers
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x5, 0x200, 8 ), // [0] Sprites
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static GfxLayout hedpanic_layout_8x8x8 = new GfxLayout
@@ -450,12 +450,12 @@ public class esd16
 	);
 	
 	
-	static struct GfxDecodeInfo hedpanic_gfxdecodeinfo[] =
+	static GfxDecodeInfo hedpanic_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &hedpanic_sprite_16x16x5, 0x200, 8 }, // [0] Sprites
-		{ REGION_GFX2, 0, &hedpanic_layout_8x8x8,   0x000, 2 }, // [1] Layers
-		{ REGION_GFX2, 0, &hedpanic_layout_16x16x8, 0x000, 2 }, // [1] Layers
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, hedpanic_sprite_16x16x5, 0x200, 8 ), // [0] Sprites
+		new GfxDecodeInfo( REGION_GFX2, 0, hedpanic_layout_8x8x8,   0x000, 2 ), // [1] Layers
+		new GfxDecodeInfo( REGION_GFX2, 0, hedpanic_layout_16x16x8, 0x000, 2 ), // [1] Layers
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

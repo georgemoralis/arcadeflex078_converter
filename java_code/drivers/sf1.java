@@ -796,13 +796,13 @@ public class sf1
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &sprite_layout,   0, 16 },
-		{ REGION_GFX2, 0, &sprite_layout, 256, 16 },
-		{ REGION_GFX3, 0, &sprite_layout, 512, 16 },
-		{ REGION_GFX4, 0, &char_layout,   768, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, sprite_layout,   0, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, sprite_layout, 256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, sprite_layout, 512, 16 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, char_layout,   768, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

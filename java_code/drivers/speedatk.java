@@ -267,11 +267,11 @@ public class speedatk
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout_1bpp,   0, 32 },
-		{ REGION_GFX2, 0, &charlayout_3bpp,   0, 32 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout_1bpp,   0, 32 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout_3bpp,   0, 32 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct AY8910interface ay8910_interface =

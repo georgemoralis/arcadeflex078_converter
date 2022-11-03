@@ -2699,10 +2699,10 @@ public class tmnt
 				8*64, 9*64, 10*64, 11*64, 12*64, 13*64, 14*64, 15*64, },
 		16*64
 	);
-	static struct GfxDecodeInfo glfgreat_gfxdecodeinfo[] =
+	static GfxDecodeInfo glfgreat_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX3, 0, &zoomlayout, 0x400, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX3, 0, zoomlayout, 0x400, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static MACHINE_DRIVER_START( glfgreat )

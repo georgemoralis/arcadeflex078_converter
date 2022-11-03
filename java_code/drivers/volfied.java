@@ -289,10 +289,10 @@ public class volfied
 		128*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout, 4096, 256 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout, 4096, 256 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

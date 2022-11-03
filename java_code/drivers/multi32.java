@@ -584,11 +584,11 @@ public class multi32
 		16*16
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &s32_bgcharlayout,   0x00, 0x3ff  },
-		{ REGION_GFX3, 0, &s32_fgcharlayout,   0x00, 0x3ff  },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, s32_bgcharlayout,   0x00, 0x3ff  ),
+		new GfxDecodeInfo( REGION_GFX3, 0, s32_fgcharlayout,   0x00, 0x3ff  ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static UINT8 *sys32_SoundMemBank;

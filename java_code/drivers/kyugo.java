@@ -595,12 +595,12 @@ public class kyugo
 		16*16
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &fg_tilelayout, 0, 64 },
-		{ REGION_GFX2, 0, &bg_tilelayout, 0, 32 },
-		{ REGION_GFX3, 0, &spritelayout,  0, 32 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, fg_tilelayout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, bg_tilelayout, 0, 32 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, spritelayout,  0, 32 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

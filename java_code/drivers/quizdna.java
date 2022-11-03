@@ -443,12 +443,12 @@ public class quizdna
 		16*16*4
 	);
 	
-	static struct GfxDecodeInfo quizdna_gfxdecodeinfo[] =
+	static GfxDecodeInfo quizdna_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &fglayout,  0x7e0,  16 },
-		{ REGION_GFX2, 0x0000, &bglayout,  0x000, 128 },
-		{ REGION_GFX3, 0x0000, &objlayout, 0x600,  32 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, fglayout,  0x7e0,  16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x0000, bglayout,  0x000, 128 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x0000, objlayout, 0x600,  32 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

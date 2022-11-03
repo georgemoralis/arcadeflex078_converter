@@ -270,12 +270,12 @@ public class skyraid
 	);
 	
 	
-	static struct GfxDecodeInfo skyraid_gfxdecodeinfo[] =
+	static GfxDecodeInfo skyraid_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &skyraid_text_layout, 18, 1 },
-		{ REGION_GFX2, 0, &skyraid_sprite_layout, 8, 2 },
-		{ REGION_GFX3, 0, &skyraid_missile_layout, 16, 1 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, skyraid_text_layout, 18, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, skyraid_sprite_layout, 8, 2 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, skyraid_missile_layout, 16, 1 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

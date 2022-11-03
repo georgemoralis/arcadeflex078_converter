@@ -359,11 +359,11 @@ public class oneshot
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &oneshot16x16_layout,   0x00, 4  }, /* sprites */
-		{ REGION_GFX1, 0, &oneshot8x8_layout,     0x00, 4  }, /* sprites */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, oneshot16x16_layout,   0x00, 4  ), /* sprites */
+		new GfxDecodeInfo( REGION_GFX1, 0, oneshot8x8_layout,     0x00, 4  ), /* sprites */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static void irq_handler(int irq)

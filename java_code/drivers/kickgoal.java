@@ -203,12 +203,12 @@ public class kickgoal
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &fg816_charlayout,   0x000, 0x40 },
-		{ REGION_GFX1, 0, &bg1632_charlayout,  0x000, 0x40 },
-		{ REGION_GFX1, 0, &bg3264_charlayout,  0x000, 0x40 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, fg816_charlayout,   0x000, 0x40 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, bg1632_charlayout,  0x000, 0x40 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, bg3264_charlayout,  0x000, 0x40 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/* MACHINE drivers ***********************************************************/

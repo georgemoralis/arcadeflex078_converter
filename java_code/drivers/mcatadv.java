@@ -409,11 +409,11 @@ public class mcatadv
 		128*8
 	);
 	
-	static struct GfxDecodeInfo mcatadv_gfxdecodeinfo[] =
+	static GfxDecodeInfo mcatadv_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX2, 0, &mcatadv_tiles16x16x4_layout, 0, 0x200 },
-		{ REGION_GFX3, 0, &mcatadv_tiles16x16x4_layout, 0, 0x200 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, mcatadv_tiles16x16x4_layout, 0, 0x200 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, mcatadv_tiles16x16x4_layout, 0, 0x200 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

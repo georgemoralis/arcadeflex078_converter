@@ -217,10 +217,10 @@ public class mogura
 		16*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tiles8x8_layout, 0, 8 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles8x8_layout, 0, 8 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct DACinterface dac_interface =

@@ -324,11 +324,11 @@ public class videopin
 	);
 	
 	
-	static struct GfxDecodeInfo videopin_gfxdecodeinfo[] =
+	static GfxDecodeInfo videopin_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &tile_layout, 0, 1 },
-		{ REGION_GFX2, 0x0000, &ball_layout, 0, 1 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, tile_layout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x0000, ball_layout, 0, 1 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

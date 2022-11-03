@@ -388,13 +388,13 @@ public class drgnmst
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &drgnmst_char16x16_layout,   0,      0x200  }, /* sprite tiles */
-		{ REGION_GFX2, 0, &drgnmst_char8x8_layout,     0x200,  0x200  }, /* fg tiles */
-		{ REGION_GFX2, 0, &drgnmst_char16x16_layout,   0x0400, 0x200  }, /* md tiles */
-		{ REGION_GFX2, 0, &drgnmst_char32x32_layout,   0x0600, 0x200  }, /* bg tiles */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, drgnmst_char16x16_layout,   0,      0x200  ), /* sprite tiles */
+		new GfxDecodeInfo( REGION_GFX2, 0, drgnmst_char8x8_layout,     0x200,  0x200  ), /* fg tiles */
+		new GfxDecodeInfo( REGION_GFX2, 0, drgnmst_char16x16_layout,   0x0400, 0x200  ), /* md tiles */
+		new GfxDecodeInfo( REGION_GFX2, 0, drgnmst_char32x32_layout,   0x0600, 0x200  ), /* bg tiles */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

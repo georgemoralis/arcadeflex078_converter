@@ -241,12 +241,12 @@ public class flower
 		16*16*2
 	);
 	
-	static struct GfxDecodeInfo flower_gfxdecodeinfo[] =
+	static GfxDecodeInfo flower_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &flower_charlayout,   0,  8 },
-		{ REGION_GFX2, 0, &flower_spritelayout, 0,  8 },
-		{ REGION_GFX3, 0, &flower_spritelayout, 0,  8 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, flower_charlayout,   0,  8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, flower_spritelayout, 0,  8 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, flower_spritelayout, 0,  8 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

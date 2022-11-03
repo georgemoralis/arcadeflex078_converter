@@ -263,11 +263,11 @@ public class chaknpop
 		8*8	/* every char takes 8 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &spritelayout, 0,  8 },
-		{ REGION_GFX2, 0, &charlayout,   32, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 0,  8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout,   32, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static MACHINE_DRIVER_START( chaknpop )

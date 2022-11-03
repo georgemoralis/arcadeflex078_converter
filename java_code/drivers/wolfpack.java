@@ -334,13 +334,13 @@ public class wolfpack
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout, 0, 2 },
-		{ REGION_GFX2, 0, &ship_layout, 6, 1 },
-		{ REGION_GFX3, 0, &pt_layout, 0, 1 },
-		{ REGION_GFX4, 0, &torpedo_layout, 4, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout, 0, 2 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, ship_layout, 6, 1 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, pt_layout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, torpedo_layout, 4, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

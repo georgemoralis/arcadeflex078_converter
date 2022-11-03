@@ -253,18 +253,18 @@ public class circus
 		8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,  0, 1 },
-		{ REGION_GFX2, 0, &clownlayout, 0, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,  0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, clownlayout, 0, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo robotbwl_gfxdecodeinfo[] =
+	static GfxDecodeInfo robotbwl_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,  0, 1 },
-		{ REGION_GFX2, 0, &robotlayout, 0, 1 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,  0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, robotlayout, 0, 1 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

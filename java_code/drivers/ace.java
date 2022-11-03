@@ -314,14 +314,14 @@ public class ace
 		32*8	/* every char takes 32 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0     , &charlayout,  0, 2 },
-		{ 0          , 0x8000, &charlayout0, 0, 2 },    /* the game dynamically modifies this */
-		{ 0          , 0x8000, &charlayout1, 0, 2 },    /* the game dynamically modifies this */
-		{ 0          , 0x8000, &charlayout2, 0, 2 },    /* the game dynamically modifies this */
-		{ 0          , 0x8000, &scorelayout, 0, 2 },    /* the game dynamically modifies this */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0     , charlayout,  0, 2 ),
+		new GfxDecodeInfo( 0          , 0x8000, charlayout0, 0, 2 ),    /* the game dynamically modifies this */
+		new GfxDecodeInfo( 0          , 0x8000, charlayout1, 0, 2 ),    /* the game dynamically modifies this */
+		new GfxDecodeInfo( 0          , 0x8000, charlayout2, 0, 2 ),    /* the game dynamically modifies this */
+		new GfxDecodeInfo( 0          , 0x8000, scorelayout, 0, 2 ),    /* the game dynamically modifies this */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

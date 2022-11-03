@@ -1080,12 +1080,12 @@ public class wecleman
 		64*1
 	);
 	
-	static struct GfxDecodeInfo wecleman_gfxdecodeinfo[] =
+	static GfxDecodeInfo wecleman_gfxdecodeinfo[] =
 	{
 		// REGION_GFX1 holds sprite, which are not decoded here
-		{ REGION_GFX2, 0, &wecleman_bg_layout,   0, 2048/8 },	// [0] bg + fg + txt
-		{ REGION_GFX3, 0, &wecleman_road_layout, 0, 2048/8 },	// [1] road
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, wecleman_bg_layout,   0, 2048/8 ),	// [0] bg + fg + txt
+		new GfxDecodeInfo( REGION_GFX3, 0, wecleman_road_layout, 0, 2048/8 ),	// [1] road
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
@@ -1109,12 +1109,12 @@ public class wecleman
 		32*4
 	);
 	
-	static struct GfxDecodeInfo hotchase_gfxdecodeinfo[] =
+	static GfxDecodeInfo hotchase_gfxdecodeinfo[] =
 	{
 		// REGION_GFX1 holds sprite, which are not decoded here
 		// REGION_GFX2 and 3 are for the 051316
-		{ REGION_GFX4, 0, &hotchase_road_layout, 0x70*16, 16 },	// road
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX4, 0, hotchase_road_layout, 0x70*16, 16 ),	// road
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

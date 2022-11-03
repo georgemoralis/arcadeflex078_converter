@@ -230,11 +230,11 @@ public class mainsnk
 	};
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0, &tile_layout,	0,  8 },
-		{ REGION_GFX2, 0x0, &sprite_layout,	0, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x0, tile_layout,	0,  8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x0, sprite_layout,	0, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static MACHINE_DRIVER_START( mainsnk)

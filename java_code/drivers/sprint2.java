@@ -489,11 +489,11 @@ public class sprint2
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout, 0, 2 },
-		{ REGION_GFX2, 0, &car_layout, 4, 4 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout, 0, 2 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, car_layout, 4, 4 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

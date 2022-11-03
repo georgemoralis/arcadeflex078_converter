@@ -787,14 +787,14 @@ public class gaiden
 		16*8	/* offset to next sprite */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout,        256, 4096 - 256 },	/* tiles 8x8  */
-		{ REGION_GFX2, 0, &tile2layout,       768, 4096 - 768 },	/* tiles 16x16 */
-		{ REGION_GFX3, 0, &tile2layout,       512, 4096 - 512 },	/* tiles 16x16 */
-		{ REGION_GFX4, 0, &spritelayout,        0, 4096 -   0 },	/* sprites 8x8 */
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout,        256, 4096 - 256 ),	/* tiles 8x8  */
+		new GfxDecodeInfo( REGION_GFX2, 0, tile2layout,       768, 4096 - 768 ),	/* tiles 16x16 */
+		new GfxDecodeInfo( REGION_GFX3, 0, tile2layout,       512, 4096 - 512 ),	/* tiles 16x16 */
+		new GfxDecodeInfo( REGION_GFX4, 0, spritelayout,        0, 4096 -   0 ),	/* sprites 8x8 */
 	
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

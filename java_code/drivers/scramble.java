@@ -1336,32 +1336,32 @@ public class scramble
 		32*8	/* every sprite takes 32 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo devilfsh_gfxdecodeinfo[] =
+	static GfxDecodeInfo devilfsh_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &devilfsh_charlayout,   0, 8 },
-		{ REGION_GFX1, 0x0800, &devilfsh_spritelayout, 0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, devilfsh_charlayout,   0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x0800, devilfsh_spritelayout, 0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo newsin7_gfxdecodeinfo[] =
+	static GfxDecodeInfo newsin7_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &newsin7_charlayout,   0, 4 },
-		{ REGION_GFX1, 0x0800, &newsin7_spritelayout, 0, 4 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, newsin7_charlayout,   0, 4 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x0800, newsin7_spritelayout, 0, 4 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo mrkougar_gfxdecodeinfo[] =
+	static GfxDecodeInfo mrkougar_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &mrkougar_charlayout,   0, 8 },
-		{ REGION_GFX1, 0x0000, &mrkougar_spritelayout, 0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, mrkougar_charlayout,   0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, mrkougar_spritelayout, 0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	struct GfxDecodeInfo sfx_gfxdecodeinfo[] =
+	static GfxDecodeInfo sfx_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0800, &sfx_charlayout,    0, 8 },
-		{ REGION_GFX1, 0x0000, &sfx_spritelayout,  0, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0800, sfx_charlayout,    0, 8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, sfx_spritelayout,  0, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct AY8910interface triplep_ay8910_interface =

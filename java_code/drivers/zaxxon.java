@@ -1084,20 +1084,20 @@ public class zaxxon
 	
 	/* Graphics Decode Info */
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &zaxxon_charlayout1,	 0, 32 },	/* characters */
-		{ REGION_GFX2, 0, &zaxxon_charlayout2,	 0, 32 },	/* background tiles */
-		{ REGION_GFX3, 0, &zaxxon_spritelayout,  0, 32 },	/* sprites */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, zaxxon_charlayout1,	 0, 32 ),	/* characters */
+		new GfxDecodeInfo( REGION_GFX2, 0, zaxxon_charlayout2,	 0, 32 ),	/* background tiles */
+		new GfxDecodeInfo( REGION_GFX3, 0, zaxxon_spritelayout,  0, 32 ),	/* sprites */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo congo_gfxdecodeinfo[] =
+	static GfxDecodeInfo congo_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &zaxxon_charlayout1,	 0, 32 },	/* characters */
-		{ REGION_GFX2, 0, &zaxxon_charlayout2,	 0, 32 },	/* background tiles */
-		{ REGION_GFX3, 0, &congo_spritelayout,  0, 32 },	/* sprites */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, zaxxon_charlayout1,	 0, 32 ),	/* characters */
+		new GfxDecodeInfo( REGION_GFX2, 0, zaxxon_charlayout2,	 0, 32 ),	/* background tiles */
+		new GfxDecodeInfo( REGION_GFX3, 0, congo_spritelayout,  0, 32 ),	/* sprites */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/* Sound Samples */

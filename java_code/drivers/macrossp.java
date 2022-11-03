@@ -733,14 +733,14 @@ public class macrossp
 		16*128
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &macrossp_char16x16x8layout,   0x000, 0x20 },	/* 8bpp but 6bpp granularity */
-		{ REGION_GFX2, 0, &macrossp_char16x16x8layout,   0x800, 0x20 },	/* 8bpp but 6bpp granularity */
-		{ REGION_GFX3, 0, &macrossp_char16x16x8layout,   0x800, 0x20 },	/* 8bpp but 6bpp granularity */
-		{ REGION_GFX4, 0, &macrossp_char16x16x8layout,   0x800, 0x20 },	/* 8bpp but 6bpp granularity */
-		{ REGION_GFX5, 0, &macrossp_char16x16x4layout,   0x800, 0x80 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, macrossp_char16x16x8layout,   0x000, 0x20 ),	/* 8bpp but 6bpp granularity */
+		new GfxDecodeInfo( REGION_GFX2, 0, macrossp_char16x16x8layout,   0x800, 0x20 ),	/* 8bpp but 6bpp granularity */
+		new GfxDecodeInfo( REGION_GFX3, 0, macrossp_char16x16x8layout,   0x800, 0x20 ),	/* 8bpp but 6bpp granularity */
+		new GfxDecodeInfo( REGION_GFX4, 0, macrossp_char16x16x8layout,   0x800, 0x20 ),	/* 8bpp but 6bpp granularity */
+		new GfxDecodeInfo( REGION_GFX5, 0, macrossp_char16x16x4layout,   0x800, 0x80 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/*** MACHINE DRIVER **********************************************************/

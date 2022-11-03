@@ -377,10 +377,10 @@ public class pbillian
 	   8*8*4
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &gfxlayout,   0, 32 }, 
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, gfxlayout,   0, 32 ), 
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static MACHINE_DRIVER_START( pbillian )

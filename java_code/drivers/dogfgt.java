@@ -242,11 +242,11 @@ public class dogfgt
 		16*16
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout,   16, 4 },
-		{ REGION_GFX2, 0, &spritelayout,  0, 2 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout,   16, 4 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout,  0, 2 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

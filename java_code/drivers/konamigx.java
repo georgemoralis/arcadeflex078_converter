@@ -1454,25 +1454,25 @@ public class konamigx
 	);
 	
 	/* type 1 (opengolf + racinfrc) use 6 and 8 bpp planar layouts for the 53936 */
-	static struct GfxDecodeInfo gfxdecodeinfo_opengolf[] =
+	static GfxDecodeInfo gfxdecodeinfo_opengolf[] =
 	{
-		{ REGION_GFX3, 0, &t1_charlayout8, 0x0000, 8 },
-		{ REGION_GFX4, 0, &t1_charlayout6, 0x0000, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX3, 0, t1_charlayout8, 0x0000, 8 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, t1_charlayout6, 0x0000, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo gfxdecodeinfo_racinfrc[] =
+	static GfxDecodeInfo gfxdecodeinfo_racinfrc[] =
 	{
-		{ REGION_GFX3, 0, &t1_charlayout6, 0x0000, 8 },
-		{ REGION_GFX4, 0, &t1_charlayout6, 0x0000, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX3, 0, t1_charlayout6, 0x0000, 8 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, t1_charlayout6, 0x0000, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/* type 3 & 4 games use a simple 8bpp decode for the 53936 */
-	static struct GfxDecodeInfo gfxdecodeinfo_type34[] =
+	static GfxDecodeInfo gfxdecodeinfo_type34[] =
 	{
-		{ REGION_GFX3, 0, &bglayout_8bpp, 0x0000, 8 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX3, 0, bglayout_8bpp, 0x0000, 8 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static MACHINE_DRIVER_START( konamigx )

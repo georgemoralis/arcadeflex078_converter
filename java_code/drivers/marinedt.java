@@ -368,12 +368,12 @@ public class marinedt
 		32*32*2
 	);
 	
-	static struct GfxDecodeInfo marinedt_gfxdecodeinfo[] =
+	static GfxDecodeInfo marinedt_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &marinedt_charlayout, 0,  4 },	//really only 1 colour set?
-		{ REGION_GFX2, 0, &marinedt_objlayout,  48, 4 },
-		{ REGION_GFX3, 0, &marinedt_objlayout,  32, 4 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, marinedt_charlayout, 0,  4 ),	//really only 1 colour set?
+		new GfxDecodeInfo( REGION_GFX2, 0, marinedt_objlayout,  48, 4 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, marinedt_objlayout,  32, 4 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	public static PaletteInitHandlerPtr palette_init_marinedt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)

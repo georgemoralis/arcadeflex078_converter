@@ -463,21 +463,21 @@ public class f1gp
 		128*8
 	);
 	
-	static struct GfxDecodeInfo f1gp_gfxdecodeinfo[] =
+	static GfxDecodeInfo f1gp_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0x000,  1 },
-		{ REGION_GFX2, 0, &spritelayout, 0x100, 16 },
-		{ REGION_GFX3, 0, &spritelayout, 0x200, 16 },
-		{ REGION_GFX4, 0, &tilelayout,   0x300, 16 },	/* changed at runtime */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0x000,  1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 0x100, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, spritelayout, 0x200, 16 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, tilelayout,   0x300, 16 ),	/* changed at runtime */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo f1gp2_gfxdecodeinfo[] =
+	static GfxDecodeInfo f1gp2_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0x000,  1 },
-		{ REGION_GFX2, 0, &spritelayout, 0x200, 32 },
-		{ REGION_GFX3, 0, &tilelayout,   0x100, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0x000,  1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 0x200, 32 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, tilelayout,   0x100, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

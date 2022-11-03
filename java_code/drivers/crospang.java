@@ -247,11 +247,11 @@ public class crospang
 		8*32
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x4a, 0x0000, 0x40 }, // [0] Sprites
-		{ REGION_GFX2, 0, &layout_16x16x4,  0x0000, 0x40 }, // [1] Tiles
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x4a, 0x0000, 0x40 ), // [0] Sprites
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_16x16x4,  0x0000, 0x40 ), // [1] Tiles
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/* todo : is this correct? */

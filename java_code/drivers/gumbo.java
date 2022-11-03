@@ -135,11 +135,11 @@ public class gumbo
 		4*16
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &gumbo_layout,   0x0, 2  }, /* bg tiles */
-		{ REGION_GFX2, 0, &gumbo2_layout,  0x0, 2  }, /* fg tiles */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, gumbo_layout,   0x0, 2  ), /* bg tiles */
+		new GfxDecodeInfo( REGION_GFX2, 0, gumbo2_layout,  0x0, 2  ), /* fg tiles */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

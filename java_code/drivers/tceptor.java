@@ -502,15 +502,15 @@ public class tceptor
 		2*8*8
 	};
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout,     0,  256 },
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout,     0,  256 ),
 	
 		/* decode in VIDEO_START */
-		//{ REGION_GFX2, 0, &bg_layout,    2048,   64 },
-		//{ REGION_GFX3, 0, &spr16_layout, 1024,   64 },
-		//{ REGION_GFX4, 0, &spr32_layout, 1024,   64 },
-		{ -1 }
+		//new GfxDecodeInfo( REGION_GFX2, 0, bg_layout,    2048,   64 ),
+		//new GfxDecodeInfo( REGION_GFX3, 0, spr16_layout, 1024,   64 ),
+		//new GfxDecodeInfo( REGION_GFX4, 0, spr32_layout, 1024,   64 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

@@ -134,12 +134,12 @@ public class sengokmj
 		128*8	/* every sprite takes 128 consecutive bytes */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x00000, &tilelayout, 0x00*16,  0x40 }, /* Sprites */
-		{ REGION_GFX2, 0x00000, &tilelayout, 0x00*16,  0x80 }, /* Tiles */
-		{ REGION_GFX2, 0x00000, &charlayout, 0x00*16,  0x80 }, /* Text */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x00000, tilelayout, 0x00*16,  0x40 ), /* Sprites */
+		new GfxDecodeInfo( REGION_GFX2, 0x00000, tilelayout, 0x00*16,  0x80 ), /* Tiles */
+		new GfxDecodeInfo( REGION_GFX2, 0x00000, charlayout, 0x00*16,  0x80 ), /* Text */
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************************/

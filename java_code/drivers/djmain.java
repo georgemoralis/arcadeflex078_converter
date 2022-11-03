@@ -908,10 +908,10 @@ public class djmain
 		16*16*4
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &spritelayout, 0,  (0x4440/4)/16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 0,  (0x4440/4)/16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

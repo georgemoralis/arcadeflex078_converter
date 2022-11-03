@@ -693,26 +693,26 @@ public class lasso
 	);
 	
 	
-	static struct GfxDecodeInfo lasso_gfxdecodeinfo[] =
+	static GfxDecodeInfo lasso_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &lasso_charlayout,   0, 16 },
-		{ REGION_GFX1, 0, &lasso_spritelayout, 0, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, lasso_charlayout,   0, 16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, lasso_spritelayout, 0, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo wwjgtin_gfxdecodeinfo[] =
+	static GfxDecodeInfo wwjgtin_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &lasso_charlayout,       0, 16 },
-		{ REGION_GFX1, 0, &lasso_spritelayout,     0, 16 },
-		{ REGION_GFX2, 0, &wwjgtin_tracklayout,	4*16, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, lasso_charlayout,       0, 16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, lasso_spritelayout,     0, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, wwjgtin_tracklayout,	4*16, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo pinbo_gfxdecodeinfo[] =
+	static GfxDecodeInfo pinbo_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &pinbo_charlayout,   0, 16 },
-		{ REGION_GFX1, 0, &pinbo_spritelayout, 0, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, pinbo_charlayout,   0, 16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, pinbo_spritelayout, 0, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

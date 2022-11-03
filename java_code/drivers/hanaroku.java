@@ -232,11 +232,11 @@ public class hanaroku
 	
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &hanaroku_charlayout,   0, 32  },
+		new GfxDecodeInfo( REGION_GFX1, 0, hanaroku_charlayout,   0, 32  ),
 	
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

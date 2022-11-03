@@ -48,11 +48,11 @@ public class thoop2
 	);
 	
 	
-	static struct GfxDecodeInfo thoop2_gfxdecodeinfo[] =
+	static GfxDecodeInfo thoop2_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &thoop2_tilelayout, 0,		64 },
-		{ REGION_GFX1, 0x000000, &thoop2_tilelayout_16, 0,	64 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, thoop2_tilelayout, 0,		64 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, thoop2_tilelayout_16, 0,	64 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

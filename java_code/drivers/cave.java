@@ -1805,7 +1805,7 @@ public class cave
 									Dangun Feveron
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo dfeveron_gfxdecodeinfo[] =
+	static GfxDecodeInfo dfeveron_gfxdecodeinfo[] =
 	{
 		/* There are only $800 colors here, the first half for sprites
 		   the second half for tiles. We use $8000 virtual colors instead
@@ -1813,35 +1813,35 @@ public class cave
 		   A vh_init_palette function is thus needed for sprites */
 	
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x4400, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x4,	0x4400, 0x40 }, // [1] Layer 1
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x4400, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x4,	0x4400, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************
 									Dodonpachi
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo ddonpach_gfxdecodeinfo[] =
+	static GfxDecodeInfo ddonpach_gfxdecodeinfo[] =
 	{
-		/* Layers 0&1 are 4 bit deep and use the first 16 of every 256
+		/* Layers 01 are 4 bit deep and use the first 16 of every 256
 		   colors for any given color code (a vh_init_palette function
 		   is provided for these layers, filling the 8000-83ff entries
 		   in the color table). Layer 2 uses the whole 256 for any given
 		   color code and the 4000-7fff range in the color table.	*/
 	
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x8000, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x4,	0x8000, 0x40 }, // [1] Layer 1
-		{ REGION_GFX4, 0, &layout_8x8x8,	0x4000, 0x40 }, // [2] Layer 2
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x8000, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x4,	0x8000, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_8x8x8,	0x4000, 0x40 ), // [2] Layer 2
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************
 									Donpachi
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo donpachi_gfxdecodeinfo[] =
+	static GfxDecodeInfo donpachi_gfxdecodeinfo[] =
 	{
 		/* There are only $800 colors here, the first half for sprites
 		   the second half for tiles. We use $8000 virtual colors instead
@@ -1849,30 +1849,30 @@ public class cave
 		   A vh_init_palette function is thus needed for sprites */
 	
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x4400, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x4,	0x4400, 0x40 }, // [1] Layer 1
-		{ REGION_GFX4, 0, &layout_8x8x4,	0x4400, 0x40 }, // [2] Layer 2
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x4400, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x4,	0x4400, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_8x8x4,	0x4400, 0x40 ), // [2] Layer 2
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************
 									Esprade
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo esprade_gfxdecodeinfo[] =
+	static GfxDecodeInfo esprade_gfxdecodeinfo[] =
 	{
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x8,	0x4000, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x8,	0x4000, 0x40 }, // [1] Layer 1
-		{ REGION_GFX4, 0, &layout_8x8x8,	0x4000, 0x40 }, // [2] Layer 2
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x8,	0x4000, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x8,	0x4000, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_8x8x8,	0x4000, 0x40 ), // [2] Layer 2
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************
 									Hotdog Storm
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo hotdogst_gfxdecodeinfo[] =
+	static GfxDecodeInfo hotdogst_gfxdecodeinfo[] =
 	{
 		/* There are only $800 colors here, the first half for sprites
 		   the second half for tiles. We use $8000 virtual colors instead
@@ -1880,17 +1880,17 @@ public class cave
 		   A vh_init_palette function is needed for sprites */
 	
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x4000, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x4,	0x4000, 0x40 }, // [1] Layer 1
-		{ REGION_GFX4, 0, &layout_8x8x4,	0x4000, 0x40 }, // [2] Layer 2
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x4000, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x4,	0x4000, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_8x8x4,	0x4000, 0x40 ), // [2] Layer 2
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************
 									Mazinger Z
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo mazinger_gfxdecodeinfo[] =
+	static GfxDecodeInfo mazinger_gfxdecodeinfo[] =
 	{
 		/*	Sprites are 4 bit deep.
 			Layer 0 is 4 bit deep.
@@ -1901,9 +1901,9 @@ public class cave
 			A vh_init_palette is thus needed for sprites and layer 0.	*/
 	
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x4000, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x6,	0x4400, 0x40 }, // [1] Layer 1
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x4000, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x6,	0x4400, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
@@ -1911,14 +1911,14 @@ public class cave
 									Power Instinct 2
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo pwrinst2_gfxdecodeinfo[] =
+	static GfxDecodeInfo pwrinst2_gfxdecodeinfo[] =
 	{
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x0800+0x8000, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x4,	0x1000+0x8000, 0x40 }, // [1] Layer 1
-		{ REGION_GFX4, 0, &layout_8x8x4,	0x1800+0x8000, 0x40 }, // [2] Layer 2
-		{ REGION_GFX5, 0, &layout_8x8x4,	0x2000+0x8000, 0x40 }, // [3] Layer 3
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x0800+0x8000, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x4,	0x1000+0x8000, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_8x8x4,	0x1800+0x8000, 0x40 ), // [2] Layer 2
+		new GfxDecodeInfo( REGION_GFX5, 0, layout_8x8x4,	0x2000+0x8000, 0x40 ), // [3] Layer 3
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
@@ -1926,14 +1926,14 @@ public class cave
 									Sailor Moon
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo sailormn_gfxdecodeinfo[] =
+	static GfxDecodeInfo sailormn_gfxdecodeinfo[] =
 	{
 		/* 4 bit sprites ? */
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x4,	0x4400, 0x40 }, // [0] Layer 0
-		{ REGION_GFX3, 0, &layout_8x8x4,	0x4800, 0x40 }, // [1] Layer 1
-		{ REGION_GFX4, 0, &layout_8x8x6_2,	0x4c00, 0x40 }, // [2] Layer 2
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,	0x4400, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_8x8x4,	0x4800, 0x40 ), // [1] Layer 1
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_8x8x6_2,	0x4c00, 0x40 ), // [2] Layer 2
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
@@ -1941,11 +1941,11 @@ public class cave
 									Uo Poko
 	***************************************************************************/
 	
-	static struct GfxDecodeInfo uopoko_gfxdecodeinfo[] =
+	static GfxDecodeInfo uopoko_gfxdecodeinfo[] =
 	{
 	//    REGION_GFX1										// Sprites
-		{ REGION_GFX2, 0, &layout_8x8x8,	0x4000, 0x40 }, // [0] Layer 0
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x8,	0x4000, 0x40 ), // [0] Layer 0
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

@@ -61,10 +61,10 @@ public class glass
 		32*8
 	);
 	
-	static struct GfxDecodeInfo glass_gfxdecodeinfo[] =
+	static GfxDecodeInfo glass_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &glass_tilelayout16, 0, 64 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, glass_tilelayout16, 0, 64 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

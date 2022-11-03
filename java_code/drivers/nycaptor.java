@@ -684,11 +684,11 @@ public class nycaptor
 		64*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,     0, 16 },//16 kolorow
-		{ REGION_GFX1, 0, &spritelayout, 256, 16 },//paleta 2, 16 kolorow
-		{ -1 }	/* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,     0, 16 ),//16 kolorow
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 256, 16 ),//paleta 2, 16 kolorow
+		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
 	

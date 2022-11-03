@@ -283,13 +283,13 @@ public class jcross
 		256
 	);
 	
-	static struct GfxDecodeInfo jcross_gfxdecodeinfo[] =
+	static GfxDecodeInfo jcross_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout,	0x080, 8  },
-		{ REGION_GFX2, 0, &tile_layout,	0x110, 1  },
-		{ REGION_GFX3, 0, &tile_layout,	0x100, 1  },
-		{ REGION_GFX4, 0, &sprite_layout,	0x000, 16 }, /* sprites */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout,	0x080, 8  ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tile_layout,	0x110, 1  ),
+		new GfxDecodeInfo( REGION_GFX3, 0, tile_layout,	0x100, 1  ),
+		new GfxDecodeInfo( REGION_GFX4, 0, sprite_layout,	0x000, 16 ), /* sprites */
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

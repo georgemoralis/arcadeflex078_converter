@@ -331,11 +331,11 @@ public class skydiver
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,    0, 4 },
-		{ REGION_GFX2, 0, &motion_layout, 0, 4 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,    0, 4 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, motion_layout, 0, 4 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

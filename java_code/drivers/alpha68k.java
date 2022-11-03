@@ -1809,52 +1809,52 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	static struct GfxDecodeInfo alpha68k_II_gfxdecodeinfo[] =
+	static GfxDecodeInfo alpha68k_II_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0,  16 },
-		{ REGION_GFX2, 0, &spritelayout, 0, 128 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0,  16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 0, 128 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo alpha68k_V_gfxdecodeinfo[] =
+	static GfxDecodeInfo alpha68k_V_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout_V,    0,  16 },
-		{ REGION_GFX2, 0, &spritelayout_V,  0, 256 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout_V,    0,  16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout_V,  0, 256 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo paddle_gfxdecodeinfo[] =
+	static GfxDecodeInfo paddle_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &paddle_layout,  0, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, paddle_layout,  0, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo tnexspce_gfxdecodeinfo[] =
+	static GfxDecodeInfo tnexspce_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tnexspce_layout,  0, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tnexspce_layout,  0, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo sstingry_gfxdecodeinfo[] =
+	static GfxDecodeInfo sstingry_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x00000, &sting_layout1,  0, 32 },
-		{ REGION_GFX1, 0x00000, &sting_layout2,  0, 32 },
-		{ REGION_GFX1, 0x10000, &sting_layout1,  0, 32 },
-		{ REGION_GFX1, 0x10000, &sting_layout3,  0, 32 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x00000, sting_layout1,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x00000, sting_layout2,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x10000, sting_layout1,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x10000, sting_layout3,  0, 32 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo kyros_gfxdecodeinfo[] =
+	static GfxDecodeInfo kyros_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x00000, &kyros_char_layout1,  0, 32 },
-		{ REGION_GFX1, 0x00000, &kyros_char_layout2,  0, 32 },
-		{ REGION_GFX1, 0x18000, &kyros_char_layout1,  0, 32 },
-		{ REGION_GFX1, 0x18000, &kyros_char_layout2,  0, 32 },
-		{ REGION_GFX1, 0x30000, &kyros_char_layout1,  0, 32 },
-		{ REGION_GFX1, 0x30000, &kyros_char_layout2,  0, 32 },
-		{ REGION_GFX1, 0x48000, &kyros_char_layout1,  0, 32 },
-		{ REGION_GFX1, 0x48000, &kyros_char_layout2,  0, 32 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x00000, kyros_char_layout1,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x00000, kyros_char_layout2,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x18000, kyros_char_layout1,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x18000, kyros_char_layout2,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x30000, kyros_char_layout1,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x30000, kyros_char_layout2,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x48000, kyros_char_layout1,  0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x48000, kyros_char_layout2,  0, 32 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/******************************************************************************/

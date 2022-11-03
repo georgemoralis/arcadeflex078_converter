@@ -250,13 +250,13 @@ public class realbrk
 		16*16*8
 	);
 	
-	static struct GfxDecodeInfo realbrk_gfxdecodeinfo[] =
+	static GfxDecodeInfo realbrk_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x8,		0, 0x80		},	// [0] Backgrounds
-		{ REGION_GFX2, 0, &layout_8x8x4,		0, 0x800	},	// [1] Text
-		{ REGION_GFX3, 0, &layout_16x16x8,		0, 0x80		},	// [2] Sprites (256 colors)
-		{ REGION_GFX4, 0, &layout_16x16x4,		0, 0x800	},	// [3] Sprites (16 colors)
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x8,		0, 0x80		),	// [0] Backgrounds
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_8x8x4,		0, 0x800	),	// [1] Text
+		new GfxDecodeInfo( REGION_GFX3, 0, layout_16x16x8,		0, 0x80		),	// [2] Sprites (256 colors)
+		new GfxDecodeInfo( REGION_GFX4, 0, layout_16x16x4,		0, 0x800	),	// [3] Sprites (16 colors)
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

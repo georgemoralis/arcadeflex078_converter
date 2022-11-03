@@ -91,10 +91,10 @@ public class psikyo4
 		16*16*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfops4[] =
+	static GfxDecodeInfo gfxdecodeinfops4[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x8, 0x000, 0x80 }, // 8bpp tiles
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x8, 0x000, 0x80 ), // 8bpp tiles
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct EEPROM_interface eeprom_interface_93C56 =

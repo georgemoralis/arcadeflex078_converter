@@ -211,13 +211,13 @@ public class drmicro
 		8*8*1
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x0000, &charlayout4,     0, 64 }, /* tiles */
-		{ REGION_GFX2, 0x0000, &charlayout8,   256, 32 }, /* tiles */
-		{ REGION_GFX1, 0x0000, &spritelayout4,   0, 64 }, /* sprites */
-		{ REGION_GFX2, 0x0000, &spritelayout8, 256, 32 }, /* sprites */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, charlayout4,     0, 64 ), /* tiles */
+		new GfxDecodeInfo( REGION_GFX2, 0x0000, charlayout8,   256, 32 ), /* tiles */
+		new GfxDecodeInfo( REGION_GFX1, 0x0000, spritelayout4,   0, 64 ), /* sprites */
+		new GfxDecodeInfo( REGION_GFX2, 0x0000, spritelayout8, 256, 32 ), /* sprites */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct SN76496interface sn76496_interface =

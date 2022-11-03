@@ -1108,37 +1108,37 @@ public class firetrk
 	);
 	
 	
-	static struct GfxDecodeInfo firetrk_gfxdecodeinfo[] =
+	static GfxDecodeInfo firetrk_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &firetrk_text_layout, 26, 1 },
-		{ REGION_GFX2, 0, &firetrk_tile_layout, 0, 8 },
-		{ REGION_GFX2, 0, &firetrk_tile_layout, 16, 3 },
-		{ REGION_GFX3, 0, &firetrk_car_layout1, 22, 2 },
-		{ REGION_GFX3, 0, &firetrk_car_layout2, 22, 2 },
-		{ REGION_GFX4, 0, &firetrk_trailer_layout, 22, 2 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, firetrk_text_layout, 26, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, firetrk_tile_layout, 0, 8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, firetrk_tile_layout, 16, 3 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, firetrk_car_layout1, 22, 2 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, firetrk_car_layout2, 22, 2 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, firetrk_trailer_layout, 22, 2 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
-	static struct GfxDecodeInfo superbug_gfxdecodeinfo[] =
+	static GfxDecodeInfo superbug_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &superbug_text_layout, 26, 1 },
-		{ REGION_GFX2, 0, &superbug_tile_layout, 0, 8 },
-		{ REGION_GFX2, 0, &superbug_tile_layout, 16, 3 },
-		{ REGION_GFX3, 0, &superbug_car_layout1, 22, 2 },
-		{ REGION_GFX3, 0, &superbug_car_layout2, 22, 2 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, superbug_text_layout, 26, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, superbug_tile_layout, 0, 8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, superbug_tile_layout, 16, 3 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, superbug_car_layout1, 22, 2 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, superbug_car_layout2, 22, 2 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
-	static struct GfxDecodeInfo montecar_gfxdecodeinfo[] =
+	static GfxDecodeInfo montecar_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &montecar_text_layout, 44, 1 },
-		{ REGION_GFX2, 0, &firetrk_tile_layout, 0, 8 },
-		{ REGION_GFX2, 0, &firetrk_tile_layout, 16, 4 },
-		{ REGION_GFX3, 0, &montecar_car_layout, 24, 1 },
-		{ REGION_GFX4, 0, &montecar_car_layout, 28, 4 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, montecar_text_layout, 44, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, firetrk_tile_layout, 0, 8 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, firetrk_tile_layout, 16, 4 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, montecar_car_layout, 24, 1 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, montecar_car_layout, 28, 4 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

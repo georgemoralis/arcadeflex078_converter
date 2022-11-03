@@ -382,11 +382,11 @@ public class missb2
 		256*128
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x00000, &charlayout, 0, 1 },
-		{ REGION_GFX2, 0x00000, &bglayout, 0, 2 },
-		{ -1 }	/* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0x00000, charlayout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x00000, bglayout, 0, 2 ),
+		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
 	// ?? not sure for this

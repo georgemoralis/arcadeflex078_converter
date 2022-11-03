@@ -259,12 +259,12 @@ public class lemmings
 		32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &sprite_layout,  32*16, 16 },	/* Sprites 16x16 */
-		{ REGION_GFX2, 0, &sprite_layout,  48*16, 16 },	/* Sprites 16x16 */
-		{ 0,           0, &charlayout,         0, 16 }, /* Dynamically modified */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, sprite_layout,  32*16, 16 ),	/* Sprites 16x16 */
+		new GfxDecodeInfo( REGION_GFX2, 0, sprite_layout,  48*16, 16 ),	/* Sprites 16x16 */
+		new GfxDecodeInfo( 0,           0, charlayout,         0, 16 ), /* Dynamically modified */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/******************************************************************************/

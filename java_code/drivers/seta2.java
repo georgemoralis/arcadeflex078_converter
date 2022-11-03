@@ -1308,15 +1308,15 @@ public class seta2
 	
 	/*	Tiles are 8bpp, but the hardware is additionally able to discard
 		some bitplanes and use the low 4 bits only, or the high 4 bits only	*/
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_4bpp_lo, 0, 0x8000/16 },
-		{ REGION_GFX1, 0, &layout_4bpp_hi, 0, 0x8000/16 },
-		{ REGION_GFX1, 0, &layout_6bpp,    0, 0x8000/16 },	/* 6bpp, but 4bpp granularity */
-		{ REGION_GFX1, 0, &layout_8bpp,    0, 0x8000/16 },	/* 8bpp, but 4bpp granularity */
-		{ REGION_GFX1, 0, &layout_3bpp_lo, 0, 0x8000/16 },	/* 3bpp, but 4bpp granularity */
-		{ REGION_GFX1, 0, &layout_2bpp_hi, 0, 0x8000/16 },	/* ??? */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_4bpp_lo, 0, 0x8000/16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_4bpp_hi, 0, 0x8000/16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_6bpp,    0, 0x8000/16 ),	/* 6bpp, but 4bpp granularity */
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_8bpp,    0, 0x8000/16 ),	/* 8bpp, but 4bpp granularity */
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_3bpp_lo, 0, 0x8000/16 ),	/* 3bpp, but 4bpp granularity */
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_2bpp_hi, 0, 0x8000/16 ),	/* ??? */
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

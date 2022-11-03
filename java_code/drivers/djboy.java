@@ -482,12 +482,12 @@ public class djboy
 		4*8*32
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tile_layout, 0x000, 16 }, /* foreground tiles? */
-		{ REGION_GFX2, 0, &tile_layout, 0x100, 16 }, /* sprite */
-		{ REGION_GFX3, 0, &tile_layout, 0x000, 16 }, /* background tiles */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout, 0x000, 16 ), /* foreground tiles? */
+		new GfxDecodeInfo( REGION_GFX2, 0, tile_layout, 0x100, 16 ), /* sprite */
+		new GfxDecodeInfo( REGION_GFX3, 0, tile_layout, 0x000, 16 ), /* background tiles */
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/******************************************************************************/

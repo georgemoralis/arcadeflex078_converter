@@ -311,12 +311,12 @@ public class suprslam
 		16*64
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &suprslam_8x8x4_layout,   0x000, 16 },
-		{ REGION_GFX2, 0, &suprslam_16x16x4_layout, 0x200, 16 },
-		{ REGION_GFX3, 0, &suprslam_16x16x4_layout, 0x100, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, suprslam_8x8x4_layout,   0x000, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, suprslam_16x16x4_layout, 0x200, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, suprslam_16x16x4_layout, 0x100, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/*** MORE SOUND **************************************************************/

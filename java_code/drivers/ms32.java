@@ -1407,13 +1407,13 @@ public class ms32
 		8*8*8		/* char modulo */
 	);
 	
-	static struct GfxDecodeInfo ms32_gfxdecodeinfo[] =
+	static GfxDecodeInfo ms32_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &spritelayout, 0x0000, 0x10 },
-		{ REGION_GFX2, 0, &bglayout,     0x2000, 0x10 },
-		{ REGION_GFX3, 0, &bglayout,     0x1000, 0x10 },
-		{ REGION_GFX4, 0, &txlayout,     0x6000, 0x10 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 0x0000, 0x10 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, bglayout,     0x2000, 0x10 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, bglayout,     0x1000, 0x10 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, txlayout,     0x6000, 0x10 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

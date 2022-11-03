@@ -386,18 +386,18 @@ public class travrusa
 		32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,      0, 16 },
-		{ REGION_GFX2, 0, &spritelayout, 16*8, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,      0, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 16*8, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo sht_gfxdecodeinfo[] =
+	static GfxDecodeInfo sht_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,          0, 16 },
-		{ REGION_GFX2, 0, &sht_spritelayout, 16*8, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,          0, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, sht_spritelayout, 16*8, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

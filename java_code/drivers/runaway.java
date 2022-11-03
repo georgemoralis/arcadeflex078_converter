@@ -326,19 +326,19 @@ public class runaway
 	);
 	
 	
-	static struct GfxDecodeInfo runaway_gfxdecodeinfo[] =
+	static GfxDecodeInfo runaway_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000, &runaway_tile_layout,   0, 1 },
-		{ REGION_GFX1, 0x800, &runaway_sprite_layout, 8, 1 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000, runaway_tile_layout,   0, 1 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x800, runaway_sprite_layout, 8, 1 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
-	static struct GfxDecodeInfo qwak_gfxdecodeinfo[] =
+	static GfxDecodeInfo qwak_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x800, &qwak_tile_layout,   0, 1 },
-		{ REGION_GFX1, 0x000, &qwak_sprite_layout, 0, 1 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x800, qwak_tile_layout,   0, 1 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x000, qwak_sprite_layout, 0, 1 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

@@ -315,12 +315,12 @@ public class compgolf
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &spritelayout, 0, 0x10 },
-		{ REGION_GFX2, 0, &tilelayoutbg, 0, 0x10 },
-		{ REGION_GFX3, 0, &tilelayout8,  0, 0x10 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 0, 0x10 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tilelayoutbg, 0, 0x10 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, tilelayout8,  0, 0x10 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************/

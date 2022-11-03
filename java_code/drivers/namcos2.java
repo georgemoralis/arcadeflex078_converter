@@ -1675,45 +1675,45 @@ public class namcos2
 	);
 		{ REGION_GFX4, 0x000000, &mask_layout8, 0, 16 },
 	*/
-	static struct GfxDecodeInfo metlhawk_gfxdecodeinfo[] =
+	static GfxDecodeInfo metlhawk_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &metlhawk_sprite_layout,	 0*256, 16 },
-		{ REGION_GFX3, 0x000000, &luckywld_roz_layout,		 0*256, 16 },
-		{ REGION_GFX2, 0x000000, &chr_layout,				16*256, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, metlhawk_sprite_layout,	 0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x000000, luckywld_roz_layout,		 0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x000000, chr_layout,				16*256, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &obj_layout,  0*256, 16 },
-		{ REGION_GFX1, 0x200000, &obj_layout,  0*256, 16 },
-		{ REGION_GFX2, 0x000000, &chr_layout, 16*256, 16 },
-		{ REGION_GFX3, 0x000000, &roz_layout,  0*256, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, obj_layout,  0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x200000, obj_layout,  0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x000000, chr_layout, 16*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x000000, roz_layout,  0*256, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo finallap_gfxdecodeinfo[] =
+	static GfxDecodeInfo finallap_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &obj_layout,  0*256, 16 },
-		{ REGION_GFX1, 0x200000, &obj_layout,  0*256, 16 },
-		{ REGION_GFX2, 0x000000, &chr_layout, 16*256, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, obj_layout,  0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x200000, obj_layout,  0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x000000, chr_layout, 16*256, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo sgunner_gfxdecodeinfo[] =
+	static GfxDecodeInfo sgunner_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &luckywld_sprite_layout,	 0*256, 16 },
-		{ REGION_GFX3, 0x000000, &luckywld_roz_layout,		 0*256, 16 },
-		{ REGION_GFX2, 0x000000, &chr_layout,				16*256, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, luckywld_sprite_layout,	 0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x000000, luckywld_roz_layout,		 0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x000000, chr_layout,				16*256, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo luckywld_gfxdecodeinfo[] =
+	static GfxDecodeInfo luckywld_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000000, &luckywld_sprite_layout,	 0*256, 16 },
-		{ REGION_GFX3, 0x000000, &luckywld_roz_layout,		 0*256, 16 },
-		{ REGION_GFX2, 0x000000, &chr_layout,				16*256, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000000, luckywld_sprite_layout,	 0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0x000000, luckywld_roz_layout,		 0*256, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x000000, chr_layout,				16*256, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct YM2151interface ym2151_interface =

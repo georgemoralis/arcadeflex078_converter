@@ -262,13 +262,13 @@ public class gstriker
 		16*64
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &gs_8x8x4_layout,     0, 256 },
-		{ REGION_GFX2, 0, &gs_16x16x4_layout,   0, 256 },
-		{ REGION_GFX3, 0, &gs_16x16x4_layout,   0, 256 },
+		new GfxDecodeInfo( REGION_GFX1, 0, gs_8x8x4_layout,     0, 256 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, gs_16x16x4_layout,   0, 256 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, gs_16x16x4_layout,   0, 256 ),
 	
-		{ -1 },
+		new GfxDecodeInfo( -1 ),
 	};
 	
 	/*** MORE SOUND RELATED ******************************************************/

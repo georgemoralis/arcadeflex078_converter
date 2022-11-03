@@ -628,11 +628,11 @@ public class unico
 		16*16*2
 	);
 	
-	static struct GfxDecodeInfo unico_gfxdecodeinfo[] =
+	static GfxDecodeInfo unico_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x8, 0x0, 0x20 }, // [0] Sprites
-		{ REGION_GFX2, 0, &layout_16x16x8, 0x0, 0x20 }, // [1] Layers
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x8, 0x0, 0x20 ), // [0] Sprites
+		new GfxDecodeInfo( REGION_GFX2, 0, layout_16x16x8, 0x0, 0x20 ), // [1] Layers
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

@@ -507,16 +507,16 @@ public class rmhaihai
 		16*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo1[] =
+	static GfxDecodeInfo gfxdecodeinfo1[] =
 	{
-		{ REGION_GFX1, 0, &charlayout, 0, 32 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 0, 32 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct GfxDecodeInfo gfxdecodeinfo2[] =
+	static GfxDecodeInfo gfxdecodeinfo2[] =
 	{
-		{ REGION_GFX1, 0, &charlayout, 0, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 0, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

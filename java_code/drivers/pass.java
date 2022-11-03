@@ -267,11 +267,11 @@ public class pass
 		4*32
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tiles4x4_fg_layout, 256, 2 },
-		{ REGION_GFX2, 0, &tiles8x8_layout, 0, 2 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles4x4_fg_layout, 256, 2 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tiles8x8_layout, 0, 2 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/* todo : is this correct? */

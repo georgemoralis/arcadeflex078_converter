@@ -370,12 +370,12 @@ public class inufuku
 		128*8
 	);
 	
-	static struct GfxDecodeInfo inufuku_gfxdecodeinfo[] =
+	static GfxDecodeInfo inufuku_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout,    0, 256*16 },	// bg
-		{ REGION_GFX2, 0, &tilelayout,    0, 256*16 },	// text
-		{ REGION_GFX3, 0, &spritelayout,  0, 256*16 },	// sprite
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout,    0, 256*16 ),	// bg
+		new GfxDecodeInfo( REGION_GFX2, 0, tilelayout,    0, 256*16 ),	// text
+		new GfxDecodeInfo( REGION_GFX3, 0, spritelayout,  0, 256*16 ),	// sprite
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

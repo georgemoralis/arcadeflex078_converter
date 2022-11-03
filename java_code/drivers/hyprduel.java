@@ -615,11 +615,11 @@ public class hyprduel
 		32*8		/* char modulo (half char step) */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo_14220[] =
+	static GfxDecodeInfo gfxdecodeinfo_14220[] =
 	{
-		{ REGION_GFX1, 0, &layout_8x8x4,    0x0, 0x200 }, // [0] 4 Bit Tiles
-		{ REGION_GFX1, 0, &layout_8x8x8h,   0x0,  0x20 }, // [1] 8 Bit Tiles
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_8x8x4,    0x0, 0x200 ), // [0] 4 Bit Tiles
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_8x8x8h,   0x0,  0x20 ), // [1] 8 Bit Tiles
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************

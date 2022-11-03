@@ -492,13 +492,13 @@ public class msisaac
 		32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &char_layout, 0, 64 },
-		{ REGION_GFX2, 0, &char_layout, 0, 64 },
-		{ REGION_GFX1, 0, &tile_layout, 0, 64 },
-		{ REGION_GFX2, 0, &tile_layout, 0, 64 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, char_layout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, char_layout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, tile_layout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, tile_layout, 0, 64 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct AY8910interface ay8910_interface =

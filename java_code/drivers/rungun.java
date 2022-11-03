@@ -329,10 +329,10 @@ public class rungun
 		128*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &bglayout, 0x0000, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, bglayout, 0x0000, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static MACHINE_DRIVER_START( rng )

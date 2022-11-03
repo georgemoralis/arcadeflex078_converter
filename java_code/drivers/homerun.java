@@ -72,11 +72,11 @@ public class homerun
 	   8*8*2*4
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &gfxlayout,   0, 16 }, 
-		{ REGION_GFX2, 0, &spritelayout,   0, 16 }, 
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, gfxlayout,   0, 16 ), 
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout,   0, 16 ), 
+		new GfxDecodeInfo( -1 )
 	};
 	
 	public static Memory_ReadAddress readmem[]={

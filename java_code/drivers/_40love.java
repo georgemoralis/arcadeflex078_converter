@@ -1142,11 +1142,11 @@ public class _40love
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX2, 0, &char_layout, 0, 64 },
-		{ REGION_GFX1, 0, &sprite_layout, 0, 64 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX2, 0, char_layout, 0, 64 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, sprite_layout, 0, 64 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct AY8910interface ay8910_interface =

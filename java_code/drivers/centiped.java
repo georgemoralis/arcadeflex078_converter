@@ -1109,18 +1109,18 @@ public class centiped
 		16*8
 	);
 	
-	static struct GfxDecodeInfo centiped_gfxdecodeinfo[] =
+	static GfxDecodeInfo centiped_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,     0, 1 },
-		{ REGION_GFX1, 0, &spritelayout,   4, 4*4*4 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,     0, 1 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout,   4, 4*4*4 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo milliped_gfxdecodeinfo[] =
+	static GfxDecodeInfo milliped_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,     0, 4 },
-		{ REGION_GFX1, 0, &spritelayout, 4*4, 4*4*4*4 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,     0, 4 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 4*4, 4*4*4*4 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	
@@ -1142,11 +1142,11 @@ public class centiped
 		8*8
 	);
 	
-	static struct GfxDecodeInfo warlords_gfxdecodeinfo[] =
+	static GfxDecodeInfo warlords_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000, &warlords_charlayout, 0,   8 },
-		{ REGION_GFX1, 0x200, &warlords_charlayout, 8*4, 8*4 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000, warlords_charlayout, 0,   8 ),
+		new GfxDecodeInfo( REGION_GFX1, 0x200, warlords_charlayout, 8*4, 8*4 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

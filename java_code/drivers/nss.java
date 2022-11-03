@@ -207,9 +207,9 @@ public class nss
 	static struct CustomSound_interface snes_sound_interface =
 	{ snes_sh_start, 0, 0 };
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static public static PaletteInitHandlerPtr palette_init_snes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)

@@ -447,11 +447,11 @@ public class popeye
 		16*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,      0, 16 },	/* chars */
-		{ REGION_GFX2, 0, &spritelayout, 16*2, 64 },	/* sprites */
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,      0, 16 ),	/* chars */
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 16*2, 64 ),	/* sprites */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

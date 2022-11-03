@@ -2017,11 +2017,11 @@ public class system32
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &s32_bgcharlayout,   0x00, 0x3ff  },
-		{ REGION_GFX3, 0, &s32_fgcharlayout,   0x00, 0x3ff  },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, s32_bgcharlayout,   0x00, 0x3ff  ),
+		new GfxDecodeInfo( REGION_GFX3, 0, s32_fgcharlayout,   0x00, 0x3ff  ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static MACHINE_DRIVER_START( system32 )

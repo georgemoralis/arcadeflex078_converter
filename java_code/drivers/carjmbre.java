@@ -186,11 +186,11 @@ public class carjmbre
 		16*8
 	);
 	
-	static struct GfxDecodeInfo carjmbre_gfxdecodeinfo[] =
+	static GfxDecodeInfo carjmbre_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &carjmbre_charlayout,   0, 16 },
-		{ REGION_GFX2, 0, &carjmbre_spritelayout, 0, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, carjmbre_charlayout,   0, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, carjmbre_spritelayout, 0, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct AY8910interface carjmbre_ay8910_interface =

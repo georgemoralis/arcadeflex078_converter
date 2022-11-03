@@ -925,10 +925,10 @@ public class ojankohs
 		16*8
 	);
 	
-	static struct GfxDecodeInfo ojankohs_gfxdecodeinfo[] =
+	static GfxDecodeInfo ojankohs_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &ojankohs_bglayout,   0, 64 },
-		{ -1 } 						/* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, ojankohs_bglayout,   0, 64 ),
+		new GfxDecodeInfo( -1 ) 						/* end of array */
 	};
 	
 	

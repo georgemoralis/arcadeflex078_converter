@@ -283,12 +283,12 @@ public class tunhunt
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0x000, &alpha_layout, 0, 4 },
-		{ REGION_GFX2, 0x200, &obj_layout,	 8, 1 },
-		{ REGION_GFX2, 0x000, &obj_layout,	 8, 1 }, /* second bank, or second bitplane? */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0x000, alpha_layout, 0, 4 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x200, obj_layout,	 8, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0x000, obj_layout,	 8, 1 ), /* second bank, or second bitplane? */
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

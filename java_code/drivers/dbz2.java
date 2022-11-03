@@ -452,11 +452,11 @@ public class dbz2
 		128*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX3, 0, &bglayout,     0x400, 64 },
-		{ REGION_GFX4, 0, &bglayout,	 0x800, 64 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX3, 0, bglayout,     0x400, 64 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, bglayout,	 0x800, 64 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/**********************************************************************************/

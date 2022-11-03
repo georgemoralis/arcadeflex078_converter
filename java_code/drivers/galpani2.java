@@ -450,10 +450,10 @@ public class galpani2
 		16*16*8
 	);
 	
-	static struct GfxDecodeInfo galpani2_gfxdecodeinfo[] =
+	static GfxDecodeInfo galpani2_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &layout_16x16x8,	0,	0x40	}, // [0] Sprites
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, layout_16x16x8,	0,	0x40	), // [0] Sprites
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/***************************************************************************

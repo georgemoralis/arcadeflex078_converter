@@ -186,12 +186,12 @@ public class stlforce
 		32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &stlforce_bglayout, 0, 256  },
-		{ REGION_GFX1, 0, &stlforce_txlayout, 0, 256  },
-		{ REGION_GFX2, 0, &stlforce_splayout, 0, 256  },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, stlforce_bglayout, 0, 256  ),
+		new GfxDecodeInfo( REGION_GFX1, 0, stlforce_txlayout, 0, 256  ),
+		new GfxDecodeInfo( REGION_GFX2, 0, stlforce_splayout, 0, 256  ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	static struct OKIM6295interface okim6295_interface =

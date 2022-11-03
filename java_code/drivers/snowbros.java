@@ -536,10 +536,10 @@ public class snowbros
 		32*32
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout,  0, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout,  0, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/* Winter Bobble */
@@ -555,10 +555,10 @@ public class snowbros
 		16*64
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo_wb[] =
+	static GfxDecodeInfo gfxdecodeinfo_wb[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout_wb,  0, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout_wb,  0, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	/* SemiCom */
@@ -576,10 +576,10 @@ public class snowbros
 		32*32
 	);
 	
-	static struct GfxDecodeInfo hyperpac_gfxdecodeinfo[] =
+	static GfxDecodeInfo hyperpac_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &hyperpac_tilelayout,  0, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, hyperpac_tilelayout,  0, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/* handler called by the 3812/2151 emulator when the internal timers cause an IRQ */

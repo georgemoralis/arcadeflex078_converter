@@ -290,12 +290,12 @@ public class triplhnt
 	);
 	
 	
-	static struct GfxDecodeInfo triplhnt_gfx_decode_info[] =
+	static GfxDecodeInfo triplhnt_gfx_decode_info[] =
 	{
-		{ REGION_GFX1, 0, &triplhnt_small_sprite_layout, 0, 1 },
-		{ REGION_GFX1, 0, &triplhnt_large_sprite_layout, 0, 1 },
-		{ REGION_GFX2, 0, &triplhnt_tile_layout, 4, 2 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, triplhnt_small_sprite_layout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, triplhnt_large_sprite_layout, 0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, triplhnt_tile_layout, 4, 2 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

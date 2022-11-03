@@ -308,10 +308,10 @@ public class sbowling
 		8*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0x18, 1 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0x18, 1 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

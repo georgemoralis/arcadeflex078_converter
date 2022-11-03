@@ -798,16 +798,16 @@ public class tubep
 		new int[] { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8 /* every char takes 8 consecutive bytes */
 	);
-	static struct GfxDecodeInfo tubep_gfxdecodeinfo[] =
+	static GfxDecodeInfo tubep_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1,      0, &charlayout,       0, 32 },	/* 32 color codes */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1,      0, charlayout,       0, 32 ),	/* 32 color codes */
+		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct GfxDecodeInfo rjammer_gfxdecodeinfo[] =
+	static GfxDecodeInfo rjammer_gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1,      0, &charlayout,       0, 16 },	/* 16 color codes */
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1,      0, charlayout,       0, 16 ),	/* 16 color codes */
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct AY8910interface ay8910_interface =

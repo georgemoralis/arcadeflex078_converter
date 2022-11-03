@@ -514,14 +514,14 @@ public class tbowl
 		8*32	/* offset to next tile */
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   256, 16 },
-		{ REGION_GFX2, 0, &bgtilelayout, 768, 16 },
-		{ REGION_GFX2, 0, &bgtilelayout, 512, 16 },
-		{ REGION_GFX3, 0, &sprite8layout, 0,   16 },
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   256, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, bgtilelayout, 768, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, bgtilelayout, 512, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, sprite8layout, 0,   16 ),
 	
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	/*** Sound Bits

@@ -351,12 +351,12 @@ public class starshp1
 	);
 	
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tilelayout,   0, 1 },
-		{ REGION_GFX2, 0, &spritelayout, 2, 2 },
-		{ REGION_GFX3, 0, &shiplayout,   6, 2 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, tilelayout,   0, 1 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, spritelayout, 2, 2 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, shiplayout,   6, 2 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

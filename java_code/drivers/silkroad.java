@@ -378,10 +378,10 @@ public class silkroad
 		16*32
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &tiles16x16x6_layout,  0x0000, 256 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, tiles16x16x6_layout,  0x0000, 256 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	static struct YM2151interface ym2151_interface =

@@ -299,13 +299,13 @@ public class tugboat
 		8*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout, 0x80, 16 },
-		{ REGION_GFX2, 0, &charlayout, 0x80, 16 },
-		{ REGION_GFX3, 0, &charlayout, 0x00, 16 },
-		{ REGION_GFX4, 0, &charlayout, 0x00, 16 },
-		{ -1 }
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 0x80, 16 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, charlayout, 0x80, 16 ),
+		new GfxDecodeInfo( REGION_GFX3, 0, charlayout, 0x00, 16 ),
+		new GfxDecodeInfo( REGION_GFX4, 0, charlayout, 0x00, 16 ),
+		new GfxDecodeInfo( -1 )
 	};
 	
 	

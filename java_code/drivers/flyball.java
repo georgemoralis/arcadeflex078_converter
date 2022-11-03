@@ -265,11 +265,11 @@ public class flyball
 		0x100     /* increment */
 	);
 	
-	static struct GfxDecodeInfo flyball_gfx_decode_info[] =
+	static GfxDecodeInfo flyball_gfx_decode_info[] =
 	{
-		{ REGION_GFX1, 0, &flyball_tiles_layout, 0, 2 },
-		{ REGION_GFX2, 0, &flyball_sprites_layout, 2, 2 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, flyball_tiles_layout, 0, 2 ),
+		new GfxDecodeInfo( REGION_GFX2, 0, flyball_sprites_layout, 2, 2 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	

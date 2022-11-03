@@ -284,11 +284,11 @@ public class mjkjidai
 		32*8
 	);
 	
-	static struct GfxDecodeInfo gfxdecodeinfo[] =
+	static GfxDecodeInfo gfxdecodeinfo[] =
 	{
-		{ REGION_GFX1, 0, &charlayout,   0, 32 },
-		{ REGION_GFX1, 0, &spritelayout, 0, 16 },
-		{ -1 } /* end of array */
+		new GfxDecodeInfo( REGION_GFX1, 0, charlayout,   0, 32 ),
+		new GfxDecodeInfo( REGION_GFX1, 0, spritelayout, 0, 16 ),
+		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
 	
