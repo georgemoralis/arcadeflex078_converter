@@ -1050,6 +1050,39 @@ public class convertMame {
                         }
                     }
                     Convertor.inpos=i;
+                    i = Convertor.inpos;
+                    Convertor.token[0]= sUtil.parseToken();
+                    if (Convertor.token[0].contains("_bgvideoram")) {
+                        if (sUtil.parseChar() != '[') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        Convertor.token[1] = sUtil.parseToken(']');
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != ']') {
+                            Convertor.inpos = i;
+                            break;
+                        } else {
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() == '=') {
+                                int g = Convertor.inpos;
+                                if (sUtil.parseChar() == '=') {
+                                    Convertor.inpos = i;
+                                    break;
+                                }
+                                Convertor.inpos = g;
+                                sUtil.skipSpace();
+                                Convertor.token[1] = sUtil.parseToken(';');
+                                sUtil.putString((new StringBuilder()).append(Convertor.token[0]).append(".write(").append(Convertor.token[1]).append(",").append(Convertor.token[1]).append(");").toString());
+                                Convertor.inpos += 1;
+                                break;
+                            }
+                            sUtil.putString((new StringBuilder()).append(Convertor.token[0]).append(".read(").append(Convertor.token[1]).append(")").toString());
+                            Convertor.inpos -= 1;
+                            continue;
+                        }
+                    }
+                    Convertor.inpos=i;
                     if (type == VIDEO_UPDATE || type == VIDEO_START || type == WRITE_HANDLER8 || type == VIDEO_STOP || type == VIDEO_EOF) {
                         Convertor.token[0] = sUtil.parseToken();
                         if (Convertor.token[0].startsWith("plot_pixel")) {

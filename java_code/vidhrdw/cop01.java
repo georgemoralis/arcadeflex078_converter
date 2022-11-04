@@ -83,8 +83,8 @@ public class cop01
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int tile = cop01_bgvideoram[tile_index];
-		int attr = cop01_bgvideoram[tile_index+0x800];
+		int tile = cop01_bgvideoram.read(tile_index);
+		int attr = cop01_bgvideoram.read(tile_index+0x800);
 		int pri  = (attr & 0x80) >> 7;
 	
 		/* kludge: priority is not actually pen based, but color based. Since the
@@ -143,9 +143,9 @@ public class cop01
 	
 	public static WriteHandlerPtr cop01_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (cop01_bgvideoram[offset] != data)
+		if (cop01_bgvideoram.read(offset)!= data)
 		{
-			cop01_bgvideoram[offset] = data;
+			cop01_bgvideoram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset & 0x7ff);
 		}
 	} };

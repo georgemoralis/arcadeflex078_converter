@@ -59,9 +59,9 @@ public class sprcros2
 	
 	public static WriteHandlerPtr sprcros2_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (sprcros2_bgvideoram[offset] != data)
+		if (sprcros2_bgvideoram.read(offset)!= data)
 		{
-			sprcros2_bgvideoram[offset] = data;
+			sprcros2_bgvideoram.write(data,data);
 			tilemap_mark_tile_dirty(sprcros2_bgtilemap,offset&0x3ff);
 		}
 	} };
@@ -81,8 +81,8 @@ public class sprcros2
 	
 	static void get_sprcros2_bgtile_info(int tile_index)
 	{
-		unsigned int tile_number = sprcros2_bgvideoram[tile_index];
-		unsigned char attr = sprcros2_bgvideoram[tile_index+0x400];
+		unsigned int tile_number = sprcros2_bgvideoram.read(tile_index);
+		unsigned char attr = sprcros2_bgvideoram.read(tile_index+0x400);
 	
 		//attr
 		//76543210

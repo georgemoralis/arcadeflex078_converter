@@ -203,8 +203,8 @@ public class spbactn
 		{
 			int attr, code, colour;
 	
-			code = spbactn_bgvideoram[offs + 0x4000 / 2];
-			attr = spbactn_bgvideoram[offs + 0x0000 / 2];
+			code = spbactn_bgvideoram.read(offs + 0x4000 / 2);
+			attr = spbactn_bgvideoram.read(offs + 0x0000 / 2);
 	
 			colour = ((attr & 0x00f0) >> 4) | 0x80;
 	
@@ -230,8 +230,8 @@ public class spbactn
 			{
 				int attr, code, colour;
 	
-				code = spbactn_bgvideoram[offs + 0x4000 / 2];
-				attr = spbactn_bgvideoram[offs + 0x0000 / 2];
+				code = spbactn_bgvideoram.read(offs + 0x4000 / 2);
+				attr = spbactn_bgvideoram.read(offs + 0x0000 / 2);
 	
 				colour = ((attr & 0x00f0) >> 4) | 0x80;
 	

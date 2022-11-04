@@ -43,7 +43,7 @@ public class galpanic
 		int sx,sy;
 	
 	
-		data = COMBINE_DATA(&galpanic_bgvideoram[offset]);
+		data = COMBINE_DATA(&galpanic_bgvideoram.read(offset));
 	
 		sy = offset / 256;
 		sx = offset % 256;

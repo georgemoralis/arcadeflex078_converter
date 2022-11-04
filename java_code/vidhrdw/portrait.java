@@ -20,10 +20,10 @@ public class portrait
 	
 	public static WriteHandlerPtr portrait_bgvideo_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (portrait_bgvideoram[offset] != data)
+		if (portrait_bgvideoram.read(offset)!= data)
 		{
 			tilemap_mark_tile_dirty(background,offset/2);
-			portrait_bgvideoram[offset] = data;
+			portrait_bgvideoram.write(data,data);
 		}
 	} };
 	

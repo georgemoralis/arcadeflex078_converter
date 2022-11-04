@@ -40,7 +40,7 @@ public class galspnbl
 		int sx,sy;
 	
 	
-		data = COMBINE_DATA(&galspnbl_bgvideoram[offset]);
+		data = COMBINE_DATA(&galspnbl_bgvideoram.read(offset));
 	
 		sx = offset % 512;
 		sy = offset / 512;
