@@ -45,7 +45,7 @@ public class f1gp
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int code = f1gp_fgvideoram[tile_index];
+		int code = f1gp_fgvideoram.read(tile_index);
 	
 		SET_TILE_INFO(0,code & 0x7fff,0,(code & 0x8000)?TILE_FLIPY:0)
 	}
@@ -143,9 +143,9 @@ public class f1gp
 	
 	WRITE16_HANDLER( f1gp_fgvideoram_w )
 	{
-		int oldword = f1gp_fgvideoram[offset];
-		COMBINE_DATA(&f1gp_fgvideoram[offset]);
-		if (oldword != f1gp_fgvideoram[offset])
+		int oldword = f1gp_fgvideoram.read(offset);
+		COMBINE_DATA(&f1gp_fgvideoram.read(offset));
+		if (oldword != f1gp_fgvideoram.read(offset))
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 	}
 	

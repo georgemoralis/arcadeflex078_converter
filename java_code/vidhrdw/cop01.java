@@ -104,7 +104,7 @@ public class cop01
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int tile = cop01_fgvideoram[tile_index];
+		int tile = cop01_fgvideoram.read(tile_index);
 		SET_TILE_INFO(0,tile,0,0);
 	}
 	
@@ -152,9 +152,9 @@ public class cop01
 	
 	public static WriteHandlerPtr cop01_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (cop01_fgvideoram[offset] != data)
+		if (cop01_fgvideoram.read(offset)!= data)
 		{
-			cop01_fgvideoram[offset] = data;
+			cop01_fgvideoram.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };

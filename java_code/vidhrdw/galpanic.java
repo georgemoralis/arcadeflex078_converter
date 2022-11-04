@@ -155,7 +155,7 @@ public class galpanic
 	
 			sx = offs % 256;
 			sy = offs / 256;
-			color = galpanic_fgvideoram[offs];
+			color = galpanic_fgvideoram.read(offs);
 			if (color != 0)
 				plot_pixel(bitmap, sx, sy, Machine.pens[color]);
 		}

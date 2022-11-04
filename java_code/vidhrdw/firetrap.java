@@ -102,8 +102,8 @@ public class firetrap
 	{
 		int code, color;
 	
-		code = firetrap_fgvideoram[tile_index];
-		color = firetrap_fgvideoram[tile_index + 0x400];
+		code = firetrap_fgvideoram.read(tile_index);
+		color = firetrap_fgvideoram.read(tile_index + 0x400);
 		SET_TILE_INFO(
 				0,
 				code | ((color & 0x01) << 8),
@@ -165,7 +165,7 @@ public class firetrap
 	
 	public static WriteHandlerPtr firetrap_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		firetrap_fgvideoram[offset] = data;
+		firetrap_fgvideoram.write(data,data);
 		tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 	} };
 	

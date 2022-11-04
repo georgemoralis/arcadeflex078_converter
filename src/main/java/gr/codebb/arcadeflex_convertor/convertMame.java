@@ -1052,7 +1052,7 @@ public class convertMame {
                     Convertor.inpos=i;
                     i = Convertor.inpos;
                     Convertor.token[0]= sUtil.parseToken();
-                    if (Convertor.token[0].contains("_bgvideoram")) {
+                    if (Convertor.token[0].contains("_bgvideoram") || Convertor.token[0].contains("_fgvideoram")) {
                         if (sUtil.parseChar() != '[') {
                             Convertor.inpos = i;
                             break;
