@@ -17,7 +17,7 @@ public class combatsc
 	
 	static struct tilemap *tilemap[2];
 	static struct tilemap *textlayer;
-	static unsigned char *private_spriteram[2];
+	static unsigned char *private_spriteram.read(2);
 	static int priority;
 	
 	unsigned char *combasc_io_ram;
@@ -235,10 +235,10 @@ public class combatsc
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		textlayer =  tilemap_create(get_text_info, tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
 	
-		private_spriteram[0] = auto_malloc(0x800);
-		private_spriteram[1] = auto_malloc(0x800);
-		memset(private_spriteram[0],0,0x800);
-		memset(private_spriteram[1],0,0x800);
+		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
+		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
+		memset(private_spriteram.read(0),0,0x800);
+		memset(private_spriteram.read(1),0,0x800);
 	
 		if (tilemap[0] && tilemap[1] && textlayer)
 		{
@@ -262,10 +262,10 @@ public class combatsc
 		tilemap[1] = tilemap_create(get_tile_info1_bootleg,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		textlayer =  tilemap_create(get_text_info_bootleg, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		private_spriteram[0] = auto_malloc(0x800);
-		private_spriteram[1] = auto_malloc(0x800);
-		memset(private_spriteram[0],0,0x800);
-		memset(private_spriteram[1],0,0x800);
+		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
+		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
+		memset(private_spriteram.read(0),0,0x800);
+		memset(private_spriteram.read(1),0,0x800);
 	
 		if (tilemap[0] && tilemap[1] && textlayer)
 		{
@@ -457,9 +457,9 @@ public class combatsc
 		if (offset == 3)
 		{
 			if ((data & 0x08) != 0)
-				memcpy(private_spriteram[combasc_video_circuit],combasc_page[combasc_video_circuit]+0x1000,0x800);
+				memcpy(private_spriteram.read(combasc_video_circuit),combasc_page[combasc_video_circuit]+0x1000,0x800);
 			else
-				memcpy(private_spriteram[combasc_video_circuit],combasc_page[combasc_video_circuit]+0x1800,0x800);
+				memcpy(private_spriteram.read(combasc_video_circuit),combasc_page[combasc_video_circuit]+0x1800,0x800);
 		}
 	} };
 	
@@ -535,8 +535,8 @@ public class combatsc
 			tilemap_draw(bitmap,cliprect,tilemap[0],1,2);
 	
 			/* we use the priority buffer so sprites are drawn front to back */
-			draw_sprites(bitmap,cliprect,private_spriteram[1],1,0x0f00);
-			draw_sprites(bitmap,cliprect,private_spriteram[0],0,0x4444);
+			draw_sprites(bitmap,cliprect,private_spriteram.read(1),1,0x0f00);
+			draw_sprites(bitmap,cliprect,private_spriteram.read(0),0,0x4444);
 		}
 		else
 		{
@@ -546,8 +546,8 @@ public class combatsc
 			tilemap_draw(bitmap,cliprect,tilemap[1],0,8);
 	
 			/* we use the priority buffer so sprites are drawn front to back */
-			draw_sprites(bitmap,cliprect,private_spriteram[1],1,0x0f00);
-			draw_sprites(bitmap,cliprect,private_spriteram[0],0,0x4444);
+			draw_sprites(bitmap,cliprect,private_spriteram.read(1),1,0x0f00);
+			draw_sprites(bitmap,cliprect,private_spriteram.read(0),0,0x4444);
 		}
 	
 		if (K007121_ctrlram[0][0x01] & 0x08)

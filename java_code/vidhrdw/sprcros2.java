@@ -137,7 +137,7 @@ public class sprcros2
 	
 		for (offs = sprcros2_spriteram_size-4; offs >= 0; offs -= 4)
 		{
-			if(sprcros2_spriteram[offs])
+			if(sprcros2_spriteram.read(offs))
 			{
 	
 				//offs
@@ -154,9 +154,9 @@ public class sprcros2
 				//offs+2   y pos
 				//offs+3   x pos
 	
-				sx = ((sprcros2_spriteram[offs+3]+0x10)%0x100)-0x10;
-				sy = 225-(((sprcros2_spriteram[offs+2]+0x10)%0x100)-0x10);
-				flipx = sprcros2_spriteram[offs+1]&0x02;
+				sx = ((sprcros2_spriteram.read(offs+3)+0x10)%0x100)-0x10;
+				sy = 225-(((sprcros2_spriteram.read(offs+2)+0x10)%0x100)-0x10);
+				flipx = sprcros2_spriteram.read(offs+1)&0x02;
 				flipy = 0;
 	
 				if ((sprcros2_m_port7 & 0x02) != 0)
@@ -168,8 +168,8 @@ public class sprcros2
 				}
 	
 				drawgfx(bitmap,Machine.gfx[1],
-					sprcros2_spriteram[offs],
-					(sprcros2_spriteram[offs+1]&0x38)>>3,
+					sprcros2_spriteram.read(offs),
+					(sprcros2_spriteram.read(offs+1)&0x38)>>3,
 					flipx,flipy,
 					sx,sy,
 					cliprect,TRANSPARENCY_COLOR,0);

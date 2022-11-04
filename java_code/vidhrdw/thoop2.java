@@ -134,8 +134,8 @@ public class thoop2
 		sprite_count[4] = 0;
 	
 		for (i = 3; i < (0x1000 - 6)/2; i += 4){
-			int color = (thoop2_spriteram[i+2] & 0x7e00) >> 9;
-			int priority = (thoop2_spriteram[i] & 0x3000) >> 12;
+			int color = (thoop2_spriteram.read(i+2)& 0x7e00) >> 9;
+			int priority = (thoop2_spriteram.read(i)& 0x3000) >> 12;
 	
 			/* palettes 0x38-0x3f are used for high priority sprites in Big Karnak */
 			if (color >= 0x38){
@@ -178,11 +178,11 @@ public class thoop2
 	
 		for (j = 0; j < sprite_count[pri]; j++){
 			int i = sprite_table[pri][j];
-			int sx = thoop2_spriteram[i+2] & 0x01ff;
-			int sy = (240 - (thoop2_spriteram[i] & 0x00ff)) & 0x00ff;
-			int number = thoop2_spriteram[i+3];
-			int color = (thoop2_spriteram[i+2] & 0x7e00) >> 9;
-			int attr = (thoop2_spriteram[i] & 0xfe00) >> 9;
+			int sx = thoop2_spriteram.read(i+2)& 0x01ff;
+			int sy = (240 - (thoop2_spriteram.read(i)& 0x00ff)) & 0x00ff;
+			int number = thoop2_spriteram.read(i+3);
+			int color = (thoop2_spriteram.read(i+2)& 0x7e00) >> 9;
+			int attr = (thoop2_spriteram.read(i)& 0xfe00) >> 9;
 	
 			int xflip = attr & 0x20;
 			int yflip = attr & 0x40;

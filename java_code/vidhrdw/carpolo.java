@@ -278,8 +278,8 @@ public class carpolo
 	
 		/* car 1 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram[0x00], carpolo_spriteram[0x01],
-					0, carpolo_spriteram[0x0c] & 0x0f, CAR1_COLOR);
+					carpolo_spriteram.read(0x00), carpolo_spriteram.read(0x01),
+					0, carpolo_spriteram.read(0x0c)& 0x0f, CAR1_COLOR);
 	
 		/* border - position determined by bit 4 and 7 of the vertical timing PROM */
 		plot_box(bitmap,0,TOP_BORDER,   RIGHT_BORDER+1,1,Machine.pens[LINE_COLOR]);
@@ -289,23 +289,23 @@ public class carpolo
 	
 		/* car 4 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram[0x06], carpolo_spriteram[0x07],
-					0, carpolo_spriteram[0x0d] >> 4, CAR4_COLOR);
+					carpolo_spriteram.read(0x06), carpolo_spriteram.read(0x07),
+					0, carpolo_spriteram.read(0x0d)>> 4, CAR4_COLOR);
 	
 		/* car 3 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram[0x04], carpolo_spriteram[0x05],
-					0, carpolo_spriteram[0x0d] & 0x0f, CAR3_COLOR);
+					carpolo_spriteram.read(0x04), carpolo_spriteram.read(0x05),
+					0, carpolo_spriteram.read(0x0d)& 0x0f, CAR3_COLOR);
 	
 		/* car 2 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram[0x02], carpolo_spriteram[0x03],
-					0, carpolo_spriteram[0x0c] >> 4, CAR2_COLOR);
+					carpolo_spriteram.read(0x02), carpolo_spriteram.read(0x03),
+					0, carpolo_spriteram.read(0x0c)>> 4, CAR2_COLOR);
 	
 		/* ball */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram[0x08], carpolo_spriteram[0x09],
-					1, carpolo_spriteram[0x0e] & 0x0f, BALL_COLOR);
+					carpolo_spriteram.read(0x08), carpolo_spriteram.read(0x09),
+					1, carpolo_spriteram.read(0x0e)& 0x0f, BALL_COLOR);
 	
 		/* left goal - position determined by bit 6 of the
 		   horizontal and vertical timing PROMs */
@@ -326,16 +326,16 @@ public class carpolo
 	
 		/* special char - bit 0 of 0x0f enables it,
 						  bit 1 marked as WIDE, but never appears to be set */
-		if (carpolo_spriteram[0x0f] & 0x02)
+		if (carpolo_spriteram.read(0x0f)& 0x02)
 		{
 			logerror("WIDE!\n");
 		}
 	
-		if (carpolo_spriteram[0x0f] & 0x01)
+		if (carpolo_spriteram.read(0x0f)& 0x01)
 		{
 			draw_sprite(bitmap, cliprect,
-						carpolo_spriteram[0x0a], carpolo_spriteram[0x0b],
-						1, carpolo_spriteram[0x0e] >> 4, SPECIAL_CHAR_COLOR);
+						carpolo_spriteram.read(0x0a), carpolo_spriteram.read(0x0b),
+						1, carpolo_spriteram.read(0x0e)>> 4, SPECIAL_CHAR_COLOR);
 		}
 	
 	
@@ -639,25 +639,25 @@ public class carpolo
 	
 		// check car-car collision first
 	
-		car1_x = carpolo_spriteram[0x00];
-		car1_y = carpolo_spriteram[0x01];
-		remap_sprite_code(0, carpolo_spriteram[0x0c] & 0x0f, &car1_code, &car1_flipy);
+		car1_x = carpolo_spriteram.read(0x00);
+		car1_y = carpolo_spriteram.read(0x01);
+		remap_sprite_code(0, carpolo_spriteram.read(0x0c)& 0x0f, &car1_code, &car1_flipy);
 	
-		car2_x = carpolo_spriteram[0x02];
-		car2_y = carpolo_spriteram[0x03];
-		remap_sprite_code(0, carpolo_spriteram[0x0c] >> 4,   &car2_code, &car2_flipy);
+		car2_x = carpolo_spriteram.read(0x02);
+		car2_y = carpolo_spriteram.read(0x03);
+		remap_sprite_code(0, carpolo_spriteram.read(0x0c)>> 4,   &car2_code, &car2_flipy);
 	
-		car3_x = carpolo_spriteram[0x04];
-		car3_y = carpolo_spriteram[0x05];
-		remap_sprite_code(0, carpolo_spriteram[0x0d] & 0x0f, &car3_code, &car3_flipy);
+		car3_x = carpolo_spriteram.read(0x04);
+		car3_y = carpolo_spriteram.read(0x05);
+		remap_sprite_code(0, carpolo_spriteram.read(0x0d)& 0x0f, &car3_code, &car3_flipy);
 	
-		car4_x = carpolo_spriteram[0x06];
-		car4_y = carpolo_spriteram[0x07];
-		remap_sprite_code(0, carpolo_spriteram[0x0d] >> 4,   &car4_code, &car4_flipy);
+		car4_x = carpolo_spriteram.read(0x06);
+		car4_y = carpolo_spriteram.read(0x07);
+		remap_sprite_code(0, carpolo_spriteram.read(0x0d)>> 4,   &car4_code, &car4_flipy);
 	
-		ball_x = carpolo_spriteram[0x08];
-		ball_y = carpolo_spriteram[0x09];
-		remap_sprite_code(1, carpolo_spriteram[0x0e] & 0x0f, &ball_code, &ball_flipy);
+		ball_x = carpolo_spriteram.read(0x08);
+		ball_y = carpolo_spriteram.read(0x09);
+		remap_sprite_code(1, carpolo_spriteram.read(0x0e)& 0x0f, &ball_code, &ball_flipy);
 	
 	
 		// cars 1 and 2

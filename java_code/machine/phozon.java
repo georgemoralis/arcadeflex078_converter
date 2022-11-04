@@ -30,11 +30,11 @@ public class phozon
 	
 	/* memory handlers */
 	public static ReadHandlerPtr phozon_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
-	    return phozon_spriteram[offset];
+	    return phozon_spriteram.read(offset);
 	} };
 	
 	public static WriteHandlerPtr phozon_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-	   phozon_spriteram[offset] = data;
+	   phozon_spriteram.write(data,data);
 	} };
 	
 	public static ReadHandlerPtr phozon_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){

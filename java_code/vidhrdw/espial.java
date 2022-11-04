@@ -200,12 +200,12 @@ public class espial
 			int sx,sy,code,color,flipx,flipy;
 	
 	
-			sx = espial_spriteram_1[offs + 16];
-			sy = espial_spriteram_2[offs];
-			code = espial_spriteram_1[offs] >> 1;
-			color = espial_spriteram_2[offs + 16];
-			flipx = espial_spriteram_3[offs] & 0x04;
-			flipy = espial_spriteram_3[offs] & 0x08;
+			sx = espial_spriteram_1.read(offs + 16);
+			sy = espial_spriteram_2.read(offs);
+			code = espial_spriteram_1.read(offs)>> 1;
+			color = espial_spriteram_2.read(offs + 16);
+			flipx = espial_spriteram_3.read(offs)& 0x04;
+			flipy = espial_spriteram_3.read(offs)& 0x08;
 	
 			if (flipscreen != 0)
 			{
@@ -217,7 +217,7 @@ public class espial
 				sy = 240 - sy;
 			}
 	
-			if (espial_spriteram_1[offs] & 1)	/* double height */
+			if (espial_spriteram_1.read(offs)& 1)	/* double height */
 			{
 				if (flipscreen != 0)
 				{

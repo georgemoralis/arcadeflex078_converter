@@ -73,9 +73,9 @@ public class phozon
 	public static VideoStartHandlerPtr video_start_phozon  = new VideoStartHandlerPtr() { public int handler() {
 		/* set up spriteram area */
 		spriteram_size[0] = 0x80;
-		spriteram = &phozon_spriteram[0x780];
-		spriteram_2 = &phozon_spriteram[0x780+0x800];
-		spriteram_3 = &phozon_spriteram[0x780+0x800+0x800];
+		spriteram = &phozon_spriteram.read(0x780);
+		spriteram_2 = &phozon_spriteram.read(0x780+0x800);
+		spriteram_3 = &phozon_spriteram.read(0x780+0x800+0x800);
 	
 		return video_start_generic.handler();
 	} };

@@ -207,7 +207,7 @@ public class popper
 		for (offs = 0; offs < popper_spriteram_size-4; offs += 4)
 		{
 			//if y position is in the current strip
-			if(popper_spriteram[offs+1] && (((popper_spriteram[offs]+(popper_flipscreen?2:0))&0xf0) == (0x0f-offs/0x80)<<4))
+			if(popper_spriteram.read(offs+1)&& (((popper_spriteram.read(offs)+(popper_flipscreen?2:0))&0xf0) == (0x0f-offs/0x80)<<4))
 			{
 				//offs     y pos
 				//offs+1   sprite number
@@ -219,10 +219,10 @@ public class popper
 				//----xxxx colour
 				//offs+3   x pos
 	
-				sx = popper_spriteram[offs+3];
-				sy = 240-popper_spriteram[offs];
-				flipx = (popper_spriteram[offs+2]&0x40)>>6;
-				flipy = (popper_spriteram[offs+2]&0x80)>>7;
+				sx = popper_spriteram.read(offs+3);
+				sy = 240-popper_spriteram.read(offs);
+				flipx = (popper_spriteram.read(offs+2)&0x40)>>6;
+				flipy = (popper_spriteram.read(offs+2)&0x80)>>7;
 	
 				if (popper_flipscreen != 0)
 				{
@@ -233,8 +233,8 @@ public class popper
 				}
 	
 				drawgfx(bitmap,Machine.gfx[1],
-						popper_spriteram[offs+1],
-						(popper_spriteram[offs+2]&0x0f),
+						popper_spriteram.read(offs+1),
+						(popper_spriteram.read(offs+2)&0x0f),
 						flipx,flipy,
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,0);

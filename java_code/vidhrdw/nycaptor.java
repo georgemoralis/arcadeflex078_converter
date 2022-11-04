@@ -34,12 +34,12 @@ public class nycaptor
 	UINT8 *nycaptor_spriteram;
 	WRITE_HANDLER(nycaptor_spriteram_w)
 	{
-		nycaptor_spriteram[offset]=data;
+		nycaptor_spriteram.write(data,data);
 	}
 	
 	READ_HANDLER(nycaptor_spriteram_r)
 	{
-		return nycaptor_spriteram[offset];
+		return nycaptor_spriteram.read(offset);
 	}
 	
 	static void get_tile_info(int tile_index)
@@ -145,22 +145,22 @@ public class nycaptor
 		int i;
 		for (i=0;i<0x20;i++)
 		{
-			int pr = nycaptor_spriteram[0x9f-i];
+			int pr = nycaptor_spriteram.read(0x9f-i);
 			int offs = (pr & 0x1f) * 4;
 			{
 				int code,sx,sy,flipx,flipy,pal,priori;
-				code = nycaptor_spriteram[offs+2] + ((nycaptor_spriteram[offs+1] & 0x10) << 4);//1 bit wolny = 0x20
-				pal=nycaptor_spriteram[offs+1] & 0x0f;
-				sx = nycaptor_spriteram[offs+3];
-				sy = 240-nycaptor_spriteram[offs+0];
+				code = nycaptor_spriteram.read(offs+2)+ ((nycaptor_spriteram.read(offs+1)& 0x10) << 4);//1 bit wolny = 0x20
+				pal=nycaptor_spriteram.read(offs+1)& 0x0f;
+				sx = nycaptor_spriteram.read(offs+3);
+				sy = 240-nycaptor_spriteram.read(offs+0);
 				priori=(pr&0xe0)>>5;
 	      if(priori==pri)
 	      {
 	#ifdef MAME_DEBUG
 	      if(nycaptor_mask&(1<<(pri+4)))pal=0xd;
 	#endif
-				flipx = ((nycaptor_spriteram[offs+1]&0x40)>>6);
-				flipy = ((nycaptor_spriteram[offs+1]&0x80)>>7);
+				flipx = ((nycaptor_spriteram.read(offs+1)&0x40)>>6);
+				flipy = ((nycaptor_spriteram.read(offs+1)&0x80)>>7);
 	
 				drawgfx(bitmap,Machine.gfx[1],
 						code,
@@ -169,9 +169,9 @@ public class nycaptor
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,15);
 	
-				if(nycaptor_spriteram[offs+3]>240)
+				if(nycaptor_spriteram.read(offs+3)>240)
 				{
-					sx = (nycaptor_spriteram[offs+3]-256);
+					sx = (nycaptor_spriteram.read(offs+3)-256);
 					drawgfx(bitmap,Machine.gfx[1],
 	        				code,
 					        pal,
