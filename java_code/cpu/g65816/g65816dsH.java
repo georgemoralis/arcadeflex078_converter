@@ -23,7 +23,7 @@ unsigned int g65816_read_8_disassembler(unsigned int address);
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.cpu.g65816;
 

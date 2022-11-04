@@ -35,7 +35,7 @@ added together (=873b), subtracted [f840] (=87d9)
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

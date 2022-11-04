@@ -6,7 +6,7 @@ Taxi Driver  (c) 1984 Graphic Techno
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

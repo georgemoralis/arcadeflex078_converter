@@ -43,7 +43,7 @@ Shisensho II                            1993  Rev 3.34 M81  Yes
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.sndhrdw;
 

@@ -10,7 +10,7 @@ zooming might be wrong (only used on title logo?)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.vidhrdw;
 

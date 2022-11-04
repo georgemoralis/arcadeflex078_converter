@@ -78,7 +78,7 @@ Compared to the real PCB, MAME is too fast, so 60fps needs to be changed to 58fp
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

@@ -32,7 +32,7 @@ Static Program ROM (48K bytes)            4000-FFFF   R    D0-D7
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.sndhrdw;
 

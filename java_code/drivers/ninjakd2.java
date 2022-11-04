@@ -223,7 +223,7 @@ The first sprite data is located at fa0b,then fa1b and so on.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

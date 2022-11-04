@@ -59,7 +59,7 @@ example, the protection data for that game was extracted from the bootleg.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

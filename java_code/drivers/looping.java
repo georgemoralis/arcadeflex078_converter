@@ -60,7 +60,7 @@ L056-6    9A          "      "      VLI-8-4 7A         "
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

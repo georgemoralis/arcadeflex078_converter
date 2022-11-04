@@ -1082,7 +1082,7 @@ X1-010                           5168-10       68000-16
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

@@ -11,7 +11,7 @@ The blitter reads compressed data from ROM and copies it to the bitmap RAM.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.vidhrdw;
 

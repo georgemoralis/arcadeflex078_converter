@@ -42,7 +42,7 @@ conversion kit which could be applied to a bootleg double dragon :-p?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

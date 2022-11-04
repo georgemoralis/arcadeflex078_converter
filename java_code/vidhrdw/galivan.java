@@ -31,7 +31,7 @@ background:	0x4000 bytes of ROM:	76543210	tile code low bits
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.vidhrdw;
 

@@ -27,7 +27,7 @@ The Sen Jin protection supplies some 68k code seen in the 2760-29cf range
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.drivers;
 

@@ -720,7 +720,7 @@ static void (*fill_op_table[])(int) =
 	#define FUNCTION_NAME(base)				base##_1_op0
 	/*
  * ported to v0.78
- * using automatic conversion tool v0.02
+ * using automatic conversion tool v0.03
  */ 
 package arcadeflex.v078.cpu.tms34010;
 
