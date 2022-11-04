@@ -215,9 +215,9 @@ public class pgm
 	
 	WRITE16_HANDLER( pgm_tx_videoram_w )
 	{
-		if (pgm_tx_videoram[offset] != data)
+		if (pgm_tx_videoram.read(offset)!= data)
 		{
-			pgm_tx_videoram[offset] = data;
+			pgm_tx_videoram.write(data,data);
 			tilemap_mark_tile_dirty(pgm_tx_tilemap,offset/2);
 		}
 	}
@@ -241,9 +241,9 @@ public class pgm
 	*/
 		int tileno,colour,flipyx; //,game;
 	
-		tileno = pgm_tx_videoram[tile_index *2] & 0xffff;
-		colour = (pgm_tx_videoram[tile_index*2+1] & 0x3e) >> 1;
-		flipyx = (pgm_tx_videoram[tile_index*2+1] & 0xc0) >> 6;;
+		tileno = pgm_tx_videoram.read(tile_index *2)& 0xffff;
+		colour = (pgm_tx_videoram.read(tile_index*2+1)& 0x3e) >> 1;
+		flipyx = (pgm_tx_videoram.read(tile_index*2+1)& 0xc0) >> 6;;
 	
 		if (tileno > 0xbfff) { tileno -= 0xc000 ; tileno += 0x20000; } /* not sure about this */
 	

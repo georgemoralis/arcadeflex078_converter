@@ -26,36 +26,36 @@ public class sauro
 	
 	public static WriteHandlerPtr tecfri_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tecfri_videoram[offset] != data)
+		if (tecfri_videoram.read(offset)!= data)
 		{
-			tecfri_videoram[offset] = data;
+			tecfri_videoram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
 	public static WriteHandlerPtr tecfri_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tecfri_colorram[offset] != data)
+		if (tecfri_colorram.read(offset)!= data)
 		{
-			tecfri_colorram[offset] = data;
+			tecfri_colorram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
 	public static WriteHandlerPtr tecfri_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tecfri_videoram2[offset] != data)
+		if (tecfri_videoram2.read(offset)!= data)
 		{
-			tecfri_videoram2[offset] = data;
+			tecfri_videoram2.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
 	public static WriteHandlerPtr tecfri_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tecfri_colorram2[offset] != data)
+		if (tecfri_colorram2.read(offset)!= data)
 		{
-			tecfri_colorram2[offset] = data;
+			tecfri_colorram2.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -72,18 +72,18 @@ public class sauro
 	
 	static void get_tile_info_bg(int tile_index)
 	{
-		int code = tecfri_videoram[tile_index] + ((tecfri_colorram[tile_index] & 0x07) << 8);
-		int color = (tecfri_colorram[tile_index] >> 4) & 0x0f;
-		int flags = tecfri_colorram[tile_index] & 0x08 ? TILE_FLIPX : 0;
+		int code = tecfri_videoram.read(tile_index)+ ((tecfri_colorram.read(tile_index)& 0x07) << 8);
+		int color = (tecfri_colorram.read(tile_index)>> 4) & 0x0f;
+		int flags = tecfri_colorram.read(tile_index)& 0x08 ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
 	static void get_tile_info_fg(int tile_index)
 	{
-		int code = tecfri_videoram2[tile_index] + ((tecfri_colorram2[tile_index] & 0x07) << 8);
-		int color = (tecfri_colorram2[tile_index] >> 4) & 0x0f;
-		int flags = tecfri_colorram2[tile_index] & 0x08 ? TILE_FLIPX : 0;
+		int code = tecfri_videoram2.read(tile_index)+ ((tecfri_colorram2.read(tile_index)& 0x07) << 8);
+		int color = (tecfri_colorram2.read(tile_index)>> 4) & 0x0f;
+		int flags = tecfri_colorram2.read(tile_index)& 0x08 ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(1, code, color, flags)
 	}

@@ -88,7 +88,7 @@ public class mystston
 	{
 		if (videoram.read(offset)!= data)
 		{
-			mystston_videoram2[offset] = data;
+			mystston_videoram2.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset & 0x1ff);
 		}
 	} };
@@ -120,7 +120,7 @@ public class mystston
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = mystston_videoram2[tile_index] + ((mystston_videoram2[tile_index + 0x200] & 0x01) << 8);
+		int code = mystston_videoram2.read(tile_index)+ ((mystston_videoram2.read(tile_index + 0x200)& 0x01) << 8);
 		int flags = (tile_index & 0x10) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(1, code, 0, flags)

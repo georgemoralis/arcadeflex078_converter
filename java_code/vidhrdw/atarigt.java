@@ -200,28 +200,28 @@ public class atarigt
 	
 		/* update the raw data */
 		address = (address & 0x7ffff) / 2;
-		olddata = atarigt_colorram[address];
-		COMBINE_DATA(&atarigt_colorram[address]);
+		olddata = atarigt_colorram.read(address);
+		COMBINE_DATA(&atarigt_colorram.read(address));
 	
 		/* update the TRAM checksum */
 		if (address >= 0x10000 && address < 0x14000)
-			tram_checksum += atarigt_colorram[address] - olddata;
+			tram_checksum += atarigt_colorram.read(address)- olddata;
 	
 		/* update expanded MRAM */
 		else if (address >= 0x20000 && address < 0x28000)
 		{
-			expanded_mram[0 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram[address] >> 8) << rshift;
-			expanded_mram[1 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram[address] & 0xff) << gshift;
+			expanded_mram[0 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram.read(address)>> 8) << rshift;
+			expanded_mram[1 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram.read(address)& 0xff) << gshift;
 		}
 		else if (address >= 0x30000 && address < 0x38000)
-			expanded_mram[2 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram[address] & 0xff) << bshift;
+			expanded_mram[2 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram.read(address)& 0xff) << bshift;
 	}
 	
 	
 	data16_t atarigt_colorram_r(offs_t address)
 	{
 		address &= 0x7ffff;
-		return atarigt_colorram[address / 2];
+		return atarigt_colorram.read(address / 2);
 	}
 	
 	
@@ -582,9 +582,9 @@ public class atarigt
 		tilemap_draw(an_bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
 	
 		/* cache pointers */
-		color_latch = atarigt_colorram[0x30000/2];
-		cram = (UINT16 *)&atarigt_colorram[0x00000/2] + 0x2000 * ((color_latch >> 3) & 1);
-		tram = (UINT16 *)&atarigt_colorram[0x20000/2] + 0x1000 * ((color_latch >> 4) & 3);
+		color_latch = atarigt_colorram.read(0x30000/2);
+		cram = (UINT16 *)&atarigt_colorram.read(0x00000/2)+ 0x2000 * ((color_latch >> 3) & 1);
+		tram = (UINT16 *)&atarigt_colorram.read(0x20000/2)+ 0x1000 * ((color_latch >> 4) & 3);
 		mram = expanded_mram + 0x2000 * ((color_latch >> 6) & 3);
 	
 		/* now do the nasty blend */

@@ -178,7 +178,7 @@ public class naughtyb
 		{
 			dirtybuffer[offset] = 1;
 	
-			naughtyb_videoram2.write(offset,data);
+			naughtyb_videoram2.write(data,data);
 		}
 	} };
 	

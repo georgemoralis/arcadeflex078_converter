@@ -42,11 +42,11 @@ public class twin16
 	
 	WRITE16_HANDLER( twin16_videoram2_w )
 	{
-		int oldword = twin16_videoram2[offset];
+		int oldword = twin16_videoram2.read(offset);
 	
-		COMBINE_DATA(&twin16_videoram2[offset]);
+		COMBINE_DATA(&twin16_videoram2.read(offset));
 	
-		if (oldword != twin16_videoram2[offset])
+		if (oldword != twin16_videoram2.read(offset))
 		{
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}

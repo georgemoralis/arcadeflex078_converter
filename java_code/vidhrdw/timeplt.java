@@ -103,11 +103,11 @@ public class timeplt
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char attr = timeplt_colorram[tile_index];
+		unsigned char attr = timeplt_colorram.read(tile_index);
 		tile_info.priority = (attr & 0x10) >> 4;
 		SET_TILE_INFO(
 				0,
-				timeplt_videoram[tile_index] + ((attr & 0x20) << 3),
+				timeplt_videoram.read(tile_index)+ ((attr & 0x20) << 3),
 				attr & 0x1f,
 				TILE_FLIPYX((attr & 0xc0) >> 6))
 	}
@@ -143,18 +143,18 @@ public class timeplt
 	
 	public static WriteHandlerPtr timeplt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (timeplt_videoram[offset] != data)
+		if (timeplt_videoram.read(offset)!= data)
 		{
-			timeplt_videoram[offset] = data;
+			timeplt_videoram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };
 	
 	public static WriteHandlerPtr timeplt_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (timeplt_colorram[offset] != data)
+		if (timeplt_colorram.read(offset)!= data)
 		{
-			timeplt_colorram[offset] = data;
+			timeplt_colorram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };

@@ -84,7 +84,7 @@ public class liberatr
 	{
 		int pen;
 	
-		liberatr_videoram[(y<<8) | x] = data & 0xe0;
+		liberatr_videoram.write(data & 0xe0,data & 0xe0);
 	
 		pen = Machine.pens[(data >> 5) + 0x10];
 		plot_pixel(tmpbitmap, x, y, pen);
@@ -111,7 +111,7 @@ public class liberatr
 	
 	public static ReadHandlerPtr liberatr_bitmap_xy_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return liberatr_videoram[((*liberatr_y)<<8) | (*liberatr_x)];
+		return liberatr_videoram.read(((*liberatr_y)<<8) | (*liberatr_x));
 	} };
 	
 	
@@ -380,7 +380,7 @@ public class liberatr
 				for (i = 0; i < segment_length; i++, x++)
 				{
 					/* only plot pixels that don't cover the foreground up */
-					if (!liberatr_videoram[(y<<8) | x])
+					if (!liberatr_videoram.read((y<<8) | x))
 						plot_pixel(bitmap, x, y, pen);
 				}
 			}

@@ -120,7 +120,7 @@ public class fastfred
 	{
 		data8_t x = tile_index & 0x1f;
 	
-		data16_t code = charbank | fastfred_videoram[tile_index];
+		data16_t code = charbank | fastfred_videoram.read(tile_index);
 		data8_t color = colorbank | (fastfred_attributesram[2 * x + 1] & 0x07);
 	
 		SET_TILE_INFO(0, code, color, 0)
@@ -155,9 +155,9 @@ public class fastfred
 	
 	public static WriteHandlerPtr fastfred_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (fastfred_videoram[offset] != data)
+		if (fastfred_videoram.read(offset)!= data)
 		{
-			fastfred_videoram[offset] = data;
+			fastfred_videoram.write(data,data);
 	
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
@@ -353,7 +353,7 @@ public class fastfred
 	{
 		data8_t x = tile_index & 0x1f;
 	
-		data16_t code = charbank * 0x100 + fastfred_videoram[tile_index];
+		data16_t code = charbank * 0x100 + fastfred_videoram.read(tile_index);
 		data8_t color = colorbank | (fastfred_attributesram[2 * x + 1] & 0x07);
 	
 		SET_TILE_INFO(0, code, color, 0)

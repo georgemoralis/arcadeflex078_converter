@@ -140,7 +140,7 @@ public class phoenix
 	{
 		int code;
 	
-		code = current_videoram_pg[tile_index];
+		code = current_videoram_pg.read(tile_index);
 		SET_TILE_INFO(
 				1,
 				code,
@@ -152,7 +152,7 @@ public class phoenix
 	{
 		int code;
 	
-		code = current_videoram_pg[tile_index + 0x800];
+		code = current_videoram_pg.read(tile_index + 0x800);
 		SET_TILE_INFO(
 				0,
 				code,
@@ -203,14 +203,14 @@ public class phoenix
 	
 	public static ReadHandlerPtr phoenix_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return current_videoram_pg[offset];
+		return current_videoram_pg.read(offset);
 	} };
 	
 	public static WriteHandlerPtr phoenix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
-		current_videoram_pg[offset] = data;
+		current_videoram_pg.write(data,data);
 	
 		if ((offset & 0x7ff) < 0x340)
 		{

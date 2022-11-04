@@ -21,16 +21,16 @@ public class oneshot
 	{
 		int tileno;
 	
-		tileno = oneshot_bg_videoram[tile_index*2+1];
+		tileno = oneshot_bg_videoram.read(tile_index*2+1);
 	
 		SET_TILE_INFO(0,tileno,0,0)
 	}
 	
 	WRITE16_HANDLER( oneshot_bg_videoram_w )
 	{
-		if (oneshot_bg_videoram[offset] != data)
+		if (oneshot_bg_videoram.read(offset)!= data)
 		{
-			COMBINE_DATA(&oneshot_bg_videoram[offset]);
+			COMBINE_DATA(&oneshot_bg_videoram.read(offset));
 			tilemap_mark_tile_dirty(oneshot_bg_tilemap,offset/2);
 		}
 	}
@@ -40,16 +40,16 @@ public class oneshot
 	{
 		int tileno;
 	
-		tileno = oneshot_mid_videoram[tile_index*2+1];
+		tileno = oneshot_mid_videoram.read(tile_index*2+1);
 	
 		SET_TILE_INFO(0,tileno,2,0)
 	}
 	
 	WRITE16_HANDLER( oneshot_mid_videoram_w )
 	{
-		if (oneshot_mid_videoram[offset] != data)
+		if (oneshot_mid_videoram.read(offset)!= data)
 		{
-			COMBINE_DATA(&oneshot_mid_videoram[offset]);
+			COMBINE_DATA(&oneshot_mid_videoram.read(offset));
 			tilemap_mark_tile_dirty(oneshot_mid_tilemap,offset/2);
 		}
 	}
@@ -60,16 +60,16 @@ public class oneshot
 	{
 		int tileno;
 	
-		tileno = oneshot_fg_videoram[tile_index*2+1];
+		tileno = oneshot_fg_videoram.read(tile_index*2+1);
 	
 		SET_TILE_INFO(0,tileno,3,0)
 	}
 	
 	WRITE16_HANDLER( oneshot_fg_videoram_w )
 	{
-		if (oneshot_fg_videoram[offset] != data)
+		if (oneshot_fg_videoram.read(offset)!= data)
 		{
-			COMBINE_DATA(&oneshot_fg_videoram[offset]);
+			COMBINE_DATA(&oneshot_fg_videoram.read(offset));
 			tilemap_mark_tile_dirty(oneshot_fg_tilemap,offset/2);
 		}
 	}

@@ -29,8 +29,8 @@ public class tecmo16
 	
 	static void fg_get_tile_info(int tile_index)
 	{
-		int tile = tecmo16_videoram[tile_index] & 0x1fff;
-		int color = tecmo16_colorram[tile_index] & 0x0f;
+		int tile = tecmo16_videoram.read(tile_index)& 0x1fff;
+		int color = tecmo16_colorram.read(tile_index)& 0x0f;
 	
 		SET_TILE_INFO(
 				1,
@@ -41,8 +41,8 @@ public class tecmo16
 	
 	static void bg_get_tile_info(int tile_index)
 	{
-		int tile = tecmo16_videoram2[tile_index] & 0x1fff;
-		int color = (tecmo16_colorram2[tile_index] & 0x0f)+0x10;
+		int tile = tecmo16_videoram2.read(tile_index)& 0x1fff;
+		int color = (tecmo16_colorram2.read(tile_index)& 0x0f)+0x10;
 	
 		SET_TILE_INFO(
 				1,
@@ -101,33 +101,33 @@ public class tecmo16
 	
 	WRITE16_HANDLER( tecmo16_videoram_w )
 	{
-		int oldword = tecmo16_videoram[offset];
-		COMBINE_DATA(&tecmo16_videoram[offset]);
-		if (oldword != tecmo16_videoram[offset])
+		int oldword = tecmo16_videoram.read(offset);
+		COMBINE_DATA(&tecmo16_videoram.read(offset));
+		if (oldword != tecmo16_videoram.read(offset))
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 	}
 	
 	WRITE16_HANDLER( tecmo16_colorram_w )
 	{
-		int oldword = tecmo16_colorram[offset];
-		COMBINE_DATA(&tecmo16_colorram[offset]);
-		if (oldword != tecmo16_colorram[offset])
+		int oldword = tecmo16_colorram.read(offset);
+		COMBINE_DATA(&tecmo16_colorram.read(offset));
+		if (oldword != tecmo16_colorram.read(offset))
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 	}
 	
 	WRITE16_HANDLER( tecmo16_videoram2_w )
 	{
-		int oldword = tecmo16_videoram2[offset];
-		COMBINE_DATA(&tecmo16_videoram2[offset]);
-		if (oldword != tecmo16_videoram2[offset])
+		int oldword = tecmo16_videoram2.read(offset);
+		COMBINE_DATA(&tecmo16_videoram2.read(offset));
+		if (oldword != tecmo16_videoram2.read(offset))
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 	}
 	
 	WRITE16_HANDLER( tecmo16_colorram2_w )
 	{
-		int oldword = tecmo16_colorram2[offset];
-		COMBINE_DATA(&tecmo16_colorram2[offset]);
-		if (oldword != tecmo16_colorram2[offset])
+		int oldword = tecmo16_colorram2.read(offset);
+		COMBINE_DATA(&tecmo16_colorram2.read(offset));
+		if (oldword != tecmo16_colorram2.read(offset))
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 	}
 	

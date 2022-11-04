@@ -258,11 +258,11 @@ public class taitosj
 	
 	public static WriteHandlerPtr taitosj_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (taitosj_videoram2[offset] != data)
+		if (taitosj_videoram2.read(offset)!= data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			taitosj_videoram2[offset] = data;
+			taitosj_videoram2.write(data,data);
 		}
 	} };
 	
@@ -270,11 +270,11 @@ public class taitosj
 	
 	public static WriteHandlerPtr taitosj_videoram3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (taitosj_videoram3[offset] != data)
+		if (taitosj_videoram3.read(offset)!= data)
 		{
 			dirtybuffer3[offset] = 1;
 	
-			taitosj_videoram3[offset] = data;
+			taitosj_videoram3.write(data,data);
 		}
 	} };
 	
@@ -844,7 +844,7 @@ public class taitosj
 				if (flipscreen[1]) sy = 31 - sy;
 	
 				drawgfx(taitosj_tmpbitmap[1],Machine.gfx[taitosj_colorbank[0] & 0x80 ? 2 : 0],
-						taitosj_videoram2[offs],
+						taitosj_videoram2.read(offs),
 						((taitosj_colorbank[0] >> 4) & 0x07) + 8,	/* use transparent pen 0 */
 						flipscreen[0],flipscreen[1],
 						8*sx,8*sy,
@@ -864,7 +864,7 @@ public class taitosj
 				if (flipscreen[1]) sy = 31 - sy;
 	
 				drawgfx(taitosj_tmpbitmap[2],Machine.gfx[taitosj_colorbank[1] & 0x08 ? 2 : 0],
-						taitosj_videoram3[offs],
+						taitosj_videoram3.read(offs),
 						(taitosj_colorbank[1] & 0x07) + 8,	/* use transparent pen 0 */
 						flipscreen[0],flipscreen[1],
 						8*sx,8*sy,

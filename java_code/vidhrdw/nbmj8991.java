@@ -239,11 +239,11 @@ public class nbmj8991
 		{
 			for (x = 0; x < Machine.drv.screen_width; x++)
 			{
-				color1 = pstadium_videoram[(y * Machine.drv.screen_width) + x];
-				color2 = pstadium_videoram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)];
+				color1 = pstadium_videoram.read((y * Machine->drv->screen_width) + x);
+				color2 = pstadium_videoram.read(((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff));
 	
-				pstadium_videoram[(y * Machine.drv.screen_width) + x] = color2;
-				pstadium_videoram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)] = color1;
+				pstadium_videoram.write(color2,color2);
+				pstadium_videoram.write(color1,color1);
 			}
 		}
 	}
@@ -348,12 +348,12 @@ public class nbmj8991
 	
 				if (tflag1 != 0)
 				{
-					pstadium_videoram[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
+					pstadium_videoram.write(drawcolor1,drawcolor1);
 					plot_pixel(pstadium_tmpbitmap, dx1, dy, Machine.pens[drawcolor1]);
 				}
 				if (tflag2 != 0)
 				{
-					pstadium_videoram[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+					pstadium_videoram.write(drawcolor2,drawcolor2);
 					plot_pixel(pstadium_tmpbitmap, dx2, dy, Machine.pens[drawcolor2]);
 				}
 			}
@@ -389,7 +389,7 @@ public class nbmj8991
 			{
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
+					color = pstadium_videoram.read((y * Machine->drv->screen_width) + x);
 					plot_pixel.handler(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
@@ -421,7 +421,7 @@ public class nbmj8991
 			{
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
+					color = pstadium_videoram.read((y * Machine->drv->screen_width) + x);
 					plot_pixel.handler(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}

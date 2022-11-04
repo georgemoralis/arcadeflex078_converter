@@ -19,17 +19,17 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_bg_videoram[tile_index] & 0x0fff;
-		colour = stlforce_bg_videoram[tile_index] & 0xe000;
+		tileno = stlforce_bg_videoram.read(tile_index)& 0x0fff;
+		colour = stlforce_bg_videoram.read(tile_index)& 0xe000;
 		colour = colour >> 13;
 		SET_TILE_INFO(0,tileno,colour,0)
 	}
 	
 	WRITE16_HANDLER( stlforce_bg_videoram_w )
 	{
-		if (stlforce_bg_videoram[offset] != data)
+		if (stlforce_bg_videoram.read(offset)!= data)
 		{
-			stlforce_bg_videoram[offset] = data;
+			stlforce_bg_videoram.write(data,data);
 			tilemap_mark_tile_dirty(stlforce_bg_tilemap,offset);
 		}
 	}
@@ -40,8 +40,8 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_mlow_videoram[tile_index] & 0x0fff;
-		colour = stlforce_mlow_videoram[tile_index] & 0xe000;
+		tileno = stlforce_mlow_videoram.read(tile_index)& 0x0fff;
+		colour = stlforce_mlow_videoram.read(tile_index)& 0xe000;
 		colour = colour >> 13;
 		colour += 8;
 		tileno += 0x1000;
@@ -51,9 +51,9 @@ public class stlforce
 	
 	WRITE16_HANDLER( stlforce_mlow_videoram_w )
 	{
-		if (stlforce_mlow_videoram[offset] != data)
+		if (stlforce_mlow_videoram.read(offset)!= data)
 		{
-			stlforce_mlow_videoram[offset] = data;
+			stlforce_mlow_videoram.write(data,data);
 			tilemap_mark_tile_dirty(stlforce_mlow_tilemap,offset);
 		}
 	}
@@ -64,8 +64,8 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_mhigh_videoram[tile_index] & 0x0fff;
-		colour = stlforce_mhigh_videoram[tile_index] & 0xe000;
+		tileno = stlforce_mhigh_videoram.read(tile_index)& 0x0fff;
+		colour = stlforce_mhigh_videoram.read(tile_index)& 0xe000;
 		colour = colour >> 13;
 		colour += 16;
 		tileno += 0x2000;
@@ -75,9 +75,9 @@ public class stlforce
 	
 	WRITE16_HANDLER( stlforce_mhigh_videoram_w )
 	{
-		if (stlforce_mhigh_videoram[offset] != data)
+		if (stlforce_mhigh_videoram.read(offset)!= data)
 		{
-			stlforce_mhigh_videoram[offset] = data;
+			stlforce_mhigh_videoram.write(data,data);
 			tilemap_mark_tile_dirty(stlforce_mhigh_tilemap,offset);
 		}
 	}
@@ -88,8 +88,8 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_tx_videoram[tile_index] & 0x0fff;
-		colour = stlforce_tx_videoram[tile_index] & 0xe000;
+		tileno = stlforce_tx_videoram.read(tile_index)& 0x0fff;
+		colour = stlforce_tx_videoram.read(tile_index)& 0xe000;
 		colour = colour >> 13;
 	
 		tileno += 0xc000;
@@ -100,9 +100,9 @@ public class stlforce
 	
 	WRITE16_HANDLER( stlforce_tx_videoram_w )
 	{
-		if (stlforce_tx_videoram[offset] != data)
+		if (stlforce_tx_videoram.read(offset)!= data)
 		{
-			stlforce_tx_videoram[offset] = data;
+			stlforce_tx_videoram.write(data,data);
 			tilemap_mark_tile_dirty(stlforce_tx_tilemap,offset);
 		}
 	}

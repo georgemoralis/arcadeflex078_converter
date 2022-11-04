@@ -148,8 +148,8 @@ public class gotya
 			}
 	
 			drawgfx(bitmap,Machine.gfx[0],
-				gotya_videoram2[row * 32 + col],
-				gotya_videoram2[row * 32 + col + 0x10] & 0x0f,
+				gotya_videoram2.read(row * 32 + col),
+				gotya_videoram2.read(row * 32 + col + 0x10)& 0x0f,
 				flip_screen_x, flip_screen_y,
 				8 * sx, 8 * sy,
 				Machine.visible_area,

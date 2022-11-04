@@ -197,7 +197,7 @@ public class route16
 	***************************************************************************/
 	public static ReadHandlerPtr route16_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return route16_videoram1[offset];
+		return route16_videoram1.read(offset);
 	} };
 	
 	/***************************************************************************
@@ -205,7 +205,7 @@ public class route16
 	***************************************************************************/
 	public static ReadHandlerPtr route16_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return route16_videoram1[offset];
+		return route16_videoram1.read(offset);
 	} };
 	
 	/***************************************************************************
@@ -213,7 +213,7 @@ public class route16
 	***************************************************************************/
 	public static WriteHandlerPtr route16_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		route16_videoram1[offset] = data;
+		route16_videoram1.write(data,data);
 	
 		common_videoram_w.handler(offset, data, 0, tmpbitmap1);
 	} };
@@ -223,7 +223,7 @@ public class route16
 	***************************************************************************/
 	public static WriteHandlerPtr route16_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		route16_videoram2[offset] = data;
+		route16_videoram2.write(data,data);
 	
 		common_videoram_w.handler(offset, data, 4, tmpbitmap2);
 	} };
@@ -299,8 +299,8 @@ public class route16
 			// redraw bitmaps
 			for (offs = 0; offs < route16_videoram_size; offs++)
 			{
-				route16_videoram1_w(offs, route16_videoram1[offs]);
-				route16_videoram2_w(offs, route16_videoram2[offs]);
+				route16_videoram1_w(offs, route16_videoram1.read(offs));
+				route16_videoram2_w(offs, route16_videoram2.read(offs));
 			}
 		}
 	

@@ -187,7 +187,7 @@ public class inufuku
 	{
 		SET_TILE_INFO(
 				1,
-				inufuku_text_videoram[tile_index],
+				inufuku_text_videoram.read(tile_index),
 				inufuku_text_palettebank,
 				0)
 	}
@@ -207,14 +207,14 @@ public class inufuku
 	
 	READ16_HANDLER( inufuku_text_videoram_r )
 	{
-		return inufuku_text_videoram[offset];
+		return inufuku_text_videoram.read(offset);
 	}
 	
 	WRITE16_HANDLER( inufuku_text_videoram_w )
 	{
-		int oldword = inufuku_text_videoram[offset];
-		COMBINE_DATA(&inufuku_text_videoram[offset]);
-		if (oldword != inufuku_text_videoram[offset])
+		int oldword = inufuku_text_videoram.read(offset);
+		COMBINE_DATA(&inufuku_text_videoram.read(offset));
+		if (oldword != inufuku_text_videoram.read(offset))
 			tilemap_mark_tile_dirty(inufuku_text_tilemap, offset);
 	}
 	

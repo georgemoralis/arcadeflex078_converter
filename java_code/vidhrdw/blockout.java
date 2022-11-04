@@ -88,8 +88,8 @@ public class blockout
 				y > Machine.visible_area.max_y)
 			return;
 	
-		front = blockout_videoram[y*256+x/2];
-		back = blockout_videoram[0x10000 + y*256+x/2];
+		front = blockout_videoram.read(y*256+x/2);
+		back = blockout_videoram.read(0x10000 + y*256+x/2);
 	
 		if (front>>8) color = front>>8;
 		else color = (back>>8) + 256;
@@ -104,10 +104,10 @@ public class blockout
 	
 	WRITE16_HANDLER( blockout_videoram_w )
 	{
-		data16_t oldword = blockout_videoram[offset];
-		COMBINE_DATA(&blockout_videoram[offset]);
+		data16_t oldword = blockout_videoram.read(offset);
+		COMBINE_DATA(&blockout_videoram.read(offset));
 	
-		if (oldword != blockout_videoram[offset])
+		if (oldword != blockout_videoram.read(offset))
 		{
 			updatepixels((offset % 256)*2,(offset / 256) % 256);
 		}

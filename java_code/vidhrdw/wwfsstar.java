@@ -26,17 +26,17 @@ public class wwfsstar
 	
 	WRITE16_HANDLER( wwfsstar_fg0_videoram_w )
 	{
-		int oldword = wwfsstar_fg0_videoram[offset];
-		COMBINE_DATA(&wwfsstar_fg0_videoram[offset]);
-		if (oldword != wwfsstar_fg0_videoram[offset])
+		int oldword = wwfsstar_fg0_videoram.read(offset);
+		COMBINE_DATA(&wwfsstar_fg0_videoram.read(offset));
+		if (oldword != wwfsstar_fg0_videoram.read(offset))
 			tilemap_mark_tile_dirty(fg0_tilemap,offset/2);
 	}
 	
 	WRITE16_HANDLER( wwfsstar_bg0_videoram_w )
 	{
-		int oldword =wwfsstar_bg0_videoram[offset];
-		COMBINE_DATA(&wwfsstar_bg0_videoram[offset]);
-		if (oldword != wwfsstar_bg0_videoram[offset])
+		int oldword =wwfsstar_bg0_videoram.read(offset);
+		COMBINE_DATA(&wwfsstar_bg0_videoram.read(offset));
+		if (oldword != wwfsstar_bg0_videoram.read(offset))
 			tilemap_mark_tile_dirty(bg0_tilemap,offset/2);
 	}
 	
@@ -64,7 +64,7 @@ public class wwfsstar
 		data16_t *tilebase;
 		int tileno;
 		int colbank;
-		tilebase =  &wwfsstar_fg0_videoram[tile_index*2];
+		tilebase =  &wwfsstar_fg0_videoram.read(tile_index*2);
 		tileno =  (tilebase[1] & 0x00ff) | ((tilebase[0] & 0x000f) << 8);
 		colbank = (tilebase[0] & 0x00f0) >> 4;
 		SET_TILE_INFO(
@@ -99,7 +99,7 @@ public class wwfsstar
 	
 		data16_t *tilebase;
 		int tileno, colbank, flipx;
-		tilebase =  &wwfsstar_bg0_videoram[tile_index*2];
+		tilebase =  &wwfsstar_bg0_videoram.read(tile_index*2);
 		tileno =  (tilebase[1] & 0x00ff) | ((tilebase[0] & 0x000f) << 8);
 		colbank = (tilebase[0] & 0x0070) >> 4;
 		flipx   = (tilebase[0] & 0x0080) >> 7;

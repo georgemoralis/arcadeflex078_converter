@@ -41,7 +41,7 @@ public class citycon
 	{
 		SET_TILE_INFO(
 				0,
-				citycon_videoram[tile_index],
+				citycon_videoram.read(tile_index),
 				(tile_index & 0x03e0) >> 5,	/* color depends on scanline only */
 				0)
 	}
@@ -89,9 +89,9 @@ public class citycon
 	
 	public static WriteHandlerPtr citycon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (citycon_videoram[offset] != data)
+		if (citycon_videoram.read(offset)!= data)
 		{
-			citycon_videoram[offset] = data;
+			citycon_videoram.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };

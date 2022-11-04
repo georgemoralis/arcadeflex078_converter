@@ -150,12 +150,14 @@ public class supertnk
 	
 		if (supertnk_video_bitplane > 2)
 		{
-			supertnk_videoram[0x0000 + offset] =
-			supertnk_videoram[0x2000 + offset] =
-			supertnk_videoram[0x4000 + offset] = 0;
+			supertnk_videoram.write(
+		supertnk_videoram[0x2000 + offset] =
+		supertnk_videoram[0x4000 + offset] = 0,
+		supertnk_videoram[0x2000 + offset] =
+		supertnk_videoram[0x4000 + offset] = 0);
 		}
 		else
-			supertnk_videoram[0x2000 * supertnk_video_bitplane + offset] = data;
+			supertnk_videoram.write(data,data);
 	
 	
 		x = (offset % 32) * 8 ;
@@ -163,9 +165,9 @@ public class supertnk
 	
 		for (i=0; i<8; i++)
 		{
-			col0 = (supertnk_videoram[0x0000 + offset] >> (7-i)) & 0x01;
-			col1 = (supertnk_videoram[0x2000 + offset] >> (7-i)) & 0x01;
-			col2 = (supertnk_videoram[0x4000 + offset] >> (7-i)) & 0x01;
+			col0 = (supertnk_videoram.read(0x0000 + offset)>> (7-i)) & 0x01;
+			col1 = (supertnk_videoram.read(0x2000 + offset)>> (7-i)) & 0x01;
+			col2 = (supertnk_videoram.read(0x4000 + offset)>> (7-i)) & 0x01;
 			col = ( (col0 << 2) | (col1 << 1) | (col2 << 0) );
 	
 			plot_pixel.handler(tmpbitmap, x+i, y, Machine.pens[col]);
@@ -177,7 +179,7 @@ public class supertnk
 	public static ReadHandlerPtr supertnk_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (supertnk_video_bitplane < 3)
-			return supertnk_videoram[0x2000 * supertnk_video_bitplane + offset];
+			return supertnk_videoram.read(0x2000 * supertnk_video_bitplane + offset);
 		else
 			return 0;
 	} };

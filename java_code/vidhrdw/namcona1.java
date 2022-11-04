@@ -34,7 +34,7 @@ public class namcona1
 	#endif
 		static UINT8 mask_data[8];
 	
-		int data = tilemap_videoram[tile_index];
+		int data = tilemap_videoram.read(tile_index);
 		int tile = data&0xfff;
 	
 		if ((data & 0x8000) != 0)

@@ -363,12 +363,12 @@ public class system1
 	
 		for (offs = 0;offs < system1_videoram_size;offs += 2)
 		{
-			if ((system1_videoram[offs+1] & 0x08) == priority)
+			if ((system1_videoram.read(offs+1)& 0x08) == priority)
 			{
 				int code,color;
 	
 	
-				code = (system1_videoram[offs] | (system1_videoram[offs+1] << 8));
+				code = (system1_videoram.read(offs)| (system1_videoram.read(offs+1)<< 8));
 				code = ((code >> 4) & 0x800) | (code & 0x7ff);	/* Heavy Metal only */
 				color = ((code >> 5) & 0x3f);
 				sx = (offs/2) % 32;

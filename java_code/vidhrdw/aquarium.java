@@ -99,16 +99,16 @@ public class aquarium
 	{
 		int tileno,colour;
 	
-		tileno = (aquarium_txt_videoram[tile_index] & 0x0fff);
-		colour = (aquarium_txt_videoram[tile_index] & 0xf000) >> 12;
+		tileno = (aquarium_txt_videoram.read(tile_index)& 0x0fff);
+		colour = (aquarium_txt_videoram.read(tile_index)& 0xf000) >> 12;
 		SET_TILE_INFO(2,tileno,colour,0)
 	}
 	
 	WRITE16_HANDLER( aquarium_txt_videoram_w )
 	{
-		if (aquarium_txt_videoram[offset] != data)
+		if (aquarium_txt_videoram.read(offset)!= data)
 		{
-			aquarium_txt_videoram[offset] = data;
+			aquarium_txt_videoram.write(data,data);
 			tilemap_mark_tile_dirty(aquarium_txt_tilemap,offset);
 		}
 	}

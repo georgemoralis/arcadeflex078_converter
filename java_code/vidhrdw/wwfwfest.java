@@ -28,34 +28,34 @@ public class wwfwfest
 	
 	WRITE16_HANDLER( wwfwfest_fg0_videoram_w )
 	{
-		int oldword = wwfwfest_fg0_videoram[offset];
+		int oldword = wwfwfest_fg0_videoram.read(offset);
 	
 		/* Videoram is 8 bit, upper & lower byte writes end up in the same place */
 		if (ACCESSING_MSB && ACCESSING_LSB) {
-			COMBINE_DATA(&wwfwfest_fg0_videoram[offset]);
+			COMBINE_DATA(&wwfwfest_fg0_videoram.read(offset));
 		} else if (ACCESSING_MSB != 0) {
-			wwfwfest_fg0_videoram[offset]=(data>>8)&0xff;
+			wwfwfest_fg0_videoram.write((data>>8)&0xff,(data>>8)&0xff);
 		} else {
-			wwfwfest_fg0_videoram[offset]=data&0xff;
+			wwfwfest_fg0_videoram.write(data&0xff,data&0xff);
 		}
 	
-		if (oldword != wwfwfest_fg0_videoram[offset])
+		if (oldword != wwfwfest_fg0_videoram.read(offset))
 			tilemap_mark_tile_dirty(fg0_tilemap,offset/2);
 	}
 	
 	WRITE16_HANDLER( wwfwfest_bg0_videoram_w )
 	{
-		int oldword = wwfwfest_bg0_videoram[offset];
-		COMBINE_DATA(&wwfwfest_bg0_videoram[offset]);
-		if (oldword != wwfwfest_bg0_videoram[offset])
+		int oldword = wwfwfest_bg0_videoram.read(offset);
+		COMBINE_DATA(&wwfwfest_bg0_videoram.read(offset));
+		if (oldword != wwfwfest_bg0_videoram.read(offset))
 			tilemap_mark_tile_dirty(bg0_tilemap,offset/2);
 	}
 	
 	WRITE16_HANDLER( wwfwfest_bg1_videoram_w )
 	{
-		int oldword = wwfwfest_bg1_videoram[offset];
-		COMBINE_DATA(&wwfwfest_bg1_videoram[offset]);
-		if (oldword != wwfwfest_bg1_videoram[offset])
+		int oldword = wwfwfest_bg1_videoram.read(offset);
+		COMBINE_DATA(&wwfwfest_bg1_videoram.read(offset));
+		if (oldword != wwfwfest_bg1_videoram.read(offset))
 			tilemap_mark_tile_dirty(bg1_tilemap,offset);
 	}
 	
@@ -83,7 +83,7 @@ public class wwfwfest
 		data16_t *tilebase;
 		int tileno;
 		int colbank;
-		tilebase =  &wwfwfest_fg0_videoram[tile_index*2];
+		tilebase =  &wwfwfest_fg0_videoram.read(tile_index*2);
 		tileno =  (tilebase[0] & 0x00ff) | ((tilebase[1] & 0x000f) << 8);
 		colbank = (tilebase[1] & 0x00f0) >> 4;
 		SET_TILE_INFO(
@@ -113,7 +113,7 @@ public class wwfwfest
 		data16_t *tilebase;
 		int tileno,colbank;
 	
-		tilebase =  &wwfwfest_bg0_videoram[tile_index*2];
+		tilebase =  &wwfwfest_bg0_videoram.read(tile_index*2);
 		tileno =  (tilebase[1] & 0x0fff);
 		colbank = (tilebase[0] & 0x000f);
 		SET_TILE_INFO(
@@ -139,7 +139,7 @@ public class wwfwfest
 		data16_t *tilebase;
 		int tileno;
 		int colbank;
-		tilebase =  &wwfwfest_bg1_videoram[tile_index];
+		tilebase =  &wwfwfest_bg1_videoram.read(tile_index);
 		tileno =  (tilebase[0] & 0x0fff);
 		colbank = (tilebase[0] & 0xf000) >> 12;
 		SET_TILE_INFO(

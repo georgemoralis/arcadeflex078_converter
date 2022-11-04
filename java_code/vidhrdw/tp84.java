@@ -143,18 +143,18 @@ public class tp84
 	
 	public static WriteHandlerPtr tp84_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tp84_videoram2[offset] != data)
+		if (tp84_videoram2.read(offset)!= data)
 		{
-			tp84_videoram2[offset] = data;
+			tp84_videoram2.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
 	public static WriteHandlerPtr tp84_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (tp84_colorram2[offset] != data)
+		if (tp84_colorram2.read(offset)!= data)
 		{
-			tp84_colorram2[offset] = data;
+			tp84_colorram2.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -219,8 +219,8 @@ public class tp84
 	static void get_fg_tile_info(int tile_index)
 	{
 		int coloffs = ((col0 & 0x18) << 1) + ((col0 & 0x07) << 6);
-		int attr = tp84_colorram2[tile_index];
-		int code = tp84_videoram2[tile_index]+ ((attr & 0x30) << 4);
+		int attr = tp84_colorram2.read(tile_index);
+		int code = tp84_videoram2.read(tile_index)+ ((attr & 0x30) << 4);
 		int color = (attr & 0x0f) + coloffs;
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0) | TILE_IGNORE_TRANSPARENCY;
 	

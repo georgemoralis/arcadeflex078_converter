@@ -95,10 +95,10 @@ public class gberet
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char attr = gberet_colorram[tile_index];
+		unsigned char attr = gberet_colorram.read(tile_index);
 		SET_TILE_INFO(
 				0,
-				gberet_videoram[tile_index] + ((attr & 0x40) << 2),
+				gberet_videoram.read(tile_index)+ ((attr & 0x40) << 2),
 				attr & 0x0f,
 				TILE_FLIPYX((attr & 0x30) >> 4))
 		tile_info.priority = (attr & 0x80) >> 7;
@@ -135,18 +135,18 @@ public class gberet
 	
 	public static WriteHandlerPtr gberet_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (gberet_videoram[offset] != data)
+		if (gberet_videoram.read(offset)!= data)
 		{
-			gberet_videoram[offset] = data;
+			gberet_videoram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };
 	
 	public static WriteHandlerPtr gberet_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (gberet_colorram[offset] != data)
+		if (gberet_colorram.read(offset)!= data)
 		{
-			gberet_colorram[offset] = data;
+			gberet_colorram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };

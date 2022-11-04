@@ -172,7 +172,7 @@ public class midvunit
 	
 	static void render_straight_flat_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		INT32 sx, sy, ex, ey, x, y;
 	
@@ -209,7 +209,7 @@ public class midvunit
 	
 	static void render_straight_flat_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		INT32 sx, sy, ex, ey, x, y;
 	
@@ -251,7 +251,7 @@ public class midvunit
 	
 	static void render_straight_tex_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		INT32 sx, sy, ex, ey, su, sv, dudx, dvdx, dudy, dvdy, x, y, u, v;
@@ -322,7 +322,7 @@ public class midvunit
 	
 	static void render_straight_textrans_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		INT32 sx, sy, ex, ey, su, sv, dudx, dvdx, dudy, dvdy, x, y, u, v;
@@ -394,7 +394,7 @@ public class midvunit
 	
 	static void render_straight_textransmask_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		INT32 sx, sy, ex, ey, su, sv, dudx, dvdx, dudy, dvdy, x, y, u, v;
@@ -473,7 +473,7 @@ public class midvunit
 	
 	static void render_flat_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
 		const struct poly_scanline *curscan;
@@ -508,7 +508,7 @@ public class midvunit
 	
 	static void render_flat_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
 		const struct poly_scanline *curscan;
@@ -550,7 +550,7 @@ public class midvunit
 	
 	static void render_tex_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -602,7 +602,7 @@ public class midvunit
 	
 	static void render_textrans_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -655,7 +655,7 @@ public class midvunit
 	
 	static void render_textransmask_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
@@ -715,7 +715,7 @@ public class midvunit
 	
 	static void render_tex_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -778,7 +778,7 @@ public class midvunit
 	
 	static void render_textrans_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -842,7 +842,7 @@ public class midvunit
 	
 	static void render_textransmask_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
+		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
@@ -1114,13 +1114,13 @@ public class midvunit
 	
 	WRITE32_HANDLER( midvunit_videoram_w )
 	{
-		COMBINE_DATA(&midvunit_videoram[offset]);
+		COMBINE_DATA(&midvunit_videoram.read(offset));
 	}
 	
 	
 	READ32_HANDLER( midvunit_videoram_r )
 	{
-		return midvunit_videoram[offset];
+		return midvunit_videoram.read(offset);
 	}
 	
 	
@@ -1214,7 +1214,7 @@ public class midvunit
 		{
 			UINT16 *dest = (UINT16 *)bitmap.base + y * bitmap.rowpixels + cliprect.min_x;
 			for (x = 0; x < width; x++)
-				*dest++ = midvunit_videoram[offset + x] & 0x7fff;
+				*dest++ = midvunit_videoram.read(offset + x)& 0x7fff;
 			offset += 512;
 		}
 	} };

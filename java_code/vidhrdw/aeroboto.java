@@ -31,7 +31,7 @@ public class aeroboto
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char code = aeroboto_videoram[tile_index];
+		unsigned char code = aeroboto_videoram.read(tile_index);
 		SET_TILE_INFO(
 				0,
 				code + (aeroboto_charbank << 8),
@@ -108,9 +108,9 @@ public class aeroboto
 	
 	public static WriteHandlerPtr aeroboto_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (aeroboto_videoram[offset] != data)
+		if (aeroboto_videoram.read(offset)!= data)
 		{
-			aeroboto_videoram[offset] = data;
+			aeroboto_videoram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };

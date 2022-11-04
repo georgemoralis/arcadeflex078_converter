@@ -21,16 +21,16 @@ public class drgnmst
 	static void get_drgnmst_fg_tile_info(int tile_index)
 	{
 		int tileno,colour, flipyx;
-		tileno = drgnmst_fg_videoram[tile_index*2] & 0xfff;
-		colour = drgnmst_fg_videoram[tile_index*2+1] & 0x1f;
-		flipyx = (drgnmst_fg_videoram[tile_index*2+1] & 0x60)>>5;
+		tileno = drgnmst_fg_videoram.read(tile_index*2)& 0xfff;
+		colour = drgnmst_fg_videoram.read(tile_index*2+1)& 0x1f;
+		flipyx = (drgnmst_fg_videoram.read(tile_index*2+1)& 0x60)>>5;
 	
 		SET_TILE_INFO(1,tileno,colour,TILE_FLIPYX(flipyx))
 	}
 	
 	WRITE16_HANDLER( drgnmst_fg_videoram_w )
 	{
-		COMBINE_DATA(&drgnmst_fg_videoram[offset]);
+		COMBINE_DATA(&drgnmst_fg_videoram.read(offset));
 		tilemap_mark_tile_dirty(drgnmst_fg_tilemap,offset/2);
 	}
 	
@@ -39,33 +39,33 @@ public class drgnmst
 	static void get_drgnmst_bg_tile_info(int tile_index)
 	{
 		int tileno,colour,flipyx;
-		tileno = (drgnmst_bg_videoram[tile_index*2]& 0x1fff)+0x800;
-		colour = drgnmst_bg_videoram[tile_index*2+1] & 0x1f;
-		flipyx = (drgnmst_bg_videoram[tile_index*2+1] & 0x60)>>5;
+		tileno = (drgnmst_bg_videoram.read(tile_index*2)& 0x1fff)+0x800;
+		colour = drgnmst_bg_videoram.read(tile_index*2+1)& 0x1f;
+		flipyx = (drgnmst_bg_videoram.read(tile_index*2+1)& 0x60)>>5;
 	
 		SET_TILE_INFO(3,tileno,colour,TILE_FLIPYX(flipyx))
 	}
 	
 	WRITE16_HANDLER( drgnmst_bg_videoram_w )
 	{
-		COMBINE_DATA(&drgnmst_bg_videoram[offset]);
+		COMBINE_DATA(&drgnmst_bg_videoram.read(offset));
 		tilemap_mark_tile_dirty(drgnmst_bg_tilemap,offset/2);
 	}
 	
 	static void get_drgnmst_md_tile_info(int tile_index)
 	{
 		int tileno,colour,flipyx;
-		tileno = (drgnmst_md_videoram[tile_index*2]& 0x7fff)-0x2000;
+		tileno = (drgnmst_md_videoram.read(tile_index*2)& 0x7fff)-0x2000;
 	
-		colour = drgnmst_md_videoram[tile_index*2+1] & 0x1f;
-		flipyx = (drgnmst_md_videoram[tile_index*2+1] & 0x60)>>5;
+		colour = drgnmst_md_videoram.read(tile_index*2+1)& 0x1f;
+		flipyx = (drgnmst_md_videoram.read(tile_index*2+1)& 0x60)>>5;
 	
 		SET_TILE_INFO(2,tileno,colour,TILE_FLIPYX(flipyx))
 	}
 	
 	WRITE16_HANDLER( drgnmst_md_videoram_w )
 	{
-		COMBINE_DATA(&drgnmst_md_videoram[offset]);
+		COMBINE_DATA(&drgnmst_md_videoram.read(offset));
 		tilemap_mark_tile_dirty(drgnmst_md_tilemap,offset/2);
 	}
 	

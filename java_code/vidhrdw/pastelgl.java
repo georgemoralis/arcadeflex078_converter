@@ -162,10 +162,10 @@ public class pastelgl
 		{
 			for (x = 0; x < Machine.drv.screen_width; x++)
 			{
-				color1 = pastelgl_videoram[(y * Machine.drv.screen_width) + x];
-				color2 = pastelgl_videoram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0xff)];
-				pastelgl_videoram[(y * Machine.drv.screen_width) + x] = color2;
-				pastelgl_videoram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0xff)] = color1;
+				color1 = pastelgl_videoram.read((y * Machine->drv->screen_width) + x);
+				color2 = pastelgl_videoram.read(((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0xff));
+				pastelgl_videoram.write(color2,color2);
+				pastelgl_videoram.write(color1,color1);
 			}
 		}
 	}
@@ -273,7 +273,7 @@ public class pastelgl
 	
 				if (tflag != 0)
 				{
-					pastelgl_videoram[(dy * Machine.drv.screen_width) + dx] = drawcolor;
+					pastelgl_videoram.write(drawcolor,drawcolor);
 					plot_pixel(pastelgl_tmpbitmap, dx, dy, Machine.pens[drawcolor]);
 				}
 	
@@ -314,7 +314,7 @@ public class pastelgl
 			{
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pastelgl_videoram[(y * Machine.drv.screen_width) + x];
+					color = pastelgl_videoram.read((y * Machine->drv->screen_width) + x);
 					plot_pixel.handler(pastelgl_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}

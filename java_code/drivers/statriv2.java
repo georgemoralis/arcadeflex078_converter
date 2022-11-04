@@ -81,8 +81,8 @@ public class statriv2
 	
 	static void get_statriv2_tile_info(int tile_index)
 	{
-		int code = statriv2_videoram[0x400+tile_index];
-		int attr = statriv2_videoram[tile_index];
+		int code = statriv2_videoram.read(0x400+tile_index);
+		int attr = statriv2_videoram.read(tile_index);
 	
 		SET_TILE_INFO(
 				0,
@@ -94,7 +94,7 @@ public class statriv2
 	
 	public static WriteHandlerPtr statriv2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		statriv2_videoram[offset] = data;
+		statriv2_videoram.write(data,data);
 		tilemap_mark_tile_dirty(statriv2_tilemap,offset & 0x3ff);
 	} };
 	

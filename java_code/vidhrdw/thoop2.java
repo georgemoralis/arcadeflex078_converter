@@ -52,8 +52,8 @@ public class thoop2
 	
 	static void get_tile_info_thoop2_screen0(int tile_index)
 	{
-		int data = thoop2_videoram[tile_index << 1];
-		int data2 = thoop2_videoram[(tile_index << 1) + 1];
+		int data = thoop2_videoram.read(tile_index << 1);
+		int data2 = thoop2_videoram.read((tile_index << 1) + 1);
 		int code = ((data & 0xfffc) >> 2) | ((data & 0x0003) << 14);
 	
 		tile_info.priority = (data2 >> 6) & 0x03;
@@ -64,8 +64,8 @@ public class thoop2
 	
 	static void get_tile_info_thoop2_screen1(int tile_index)
 	{
-		int data = thoop2_videoram[(0x1000/2) + (tile_index << 1)];
-		int data2 = thoop2_videoram[(0x1000/2) + (tile_index << 1) + 1];
+		int data = thoop2_videoram.read((0x1000/2) + (tile_index << 1));
+		int data2 = thoop2_videoram.read((0x1000/2) + (tile_index << 1) + 1);
 		int code = ((data & 0xfffc) >> 2) | ((data & 0x0003) << 14);
 	
 		tile_info.priority = (data2 >> 6) & 0x03;
@@ -81,10 +81,10 @@ public class thoop2
 	
 	WRITE16_HANDLER( thoop2_vram_w )
 	{
-		int oldword = thoop2_videoram[offset];
-		COMBINE_DATA(&thoop2_videoram[offset]);
+		int oldword = thoop2_videoram.read(offset);
+		COMBINE_DATA(&thoop2_videoram.read(offset));
 	
-		if (oldword != thoop2_videoram[offset])
+		if (oldword != thoop2_videoram.read(offset))
 			tilemap_mark_tile_dirty(pant[offset >> 11],((offset << 1) & 0x0fff) >> 2);
 	}
 	

@@ -429,10 +429,10 @@ public class stactics
 	
 	public static WriteHandlerPtr stactics_videoram_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	    if (stactics_videoram_b[offset] != data)
+	    if (stactics_videoram_b.read(offset)!= data)
 	    {
-	        stactics_videoram_b[offset] = data;
-	        dirty_videoram_b[offset] = 1;
+	        stactics_videoram_b.write(data,data);
+	        dirty_videoram_b.write(1,1);
 	    }
 	} };
 	
@@ -447,10 +447,10 @@ public class stactics
 	
 	public static WriteHandlerPtr stactics_videoram_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	    if (stactics_videoram_d[offset] != data)
+	    if (stactics_videoram_d.read(offset)!= data)
 	    {
-	        stactics_videoram_d[offset] = data;
-	        dirty_videoram_d[offset] = 1;
+	        stactics_videoram_d.write(data,data);
+	        dirty_videoram_d.write(1,1);
 	    }
 	} };
 	
@@ -465,10 +465,10 @@ public class stactics
 	
 	public static WriteHandlerPtr stactics_videoram_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	    if (stactics_videoram_e[offset] != data)
+	    if (stactics_videoram_e.read(offset)!= data)
 	    {
-	        stactics_videoram_e[offset] = data;
-	        dirty_videoram_e[offset] = 1;
+	        stactics_videoram_e.write(data,data);
+	        dirty_videoram_e.write(1,1);
 	    }
 	} };
 	
@@ -483,10 +483,10 @@ public class stactics
 	
 	public static WriteHandlerPtr stactics_videoram_f_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	    if (stactics_videoram_f[offset] != data)
+	    if (stactics_videoram_f.read(offset)!= data)
 	    {
-	        stactics_videoram_f[offset] = data;
-	        dirty_videoram_f[offset] = 1;
+	        stactics_videoram_f.write(data,data);
+	        dirty_videoram_f.write(1,1);
 	    }
 	} };
 	
@@ -526,11 +526,11 @@ public class stactics
 	        sx = offs%32;
 	        sy = offs/32;
 	
-	        color_code = palette_offset + (stactics_videoram_b[offs]>>4);
+	        color_code = palette_offset + (stactics_videoram_b.read(offs)>>4);
 	
 	        /* Draw aliens in Page D */
 	
-	        char_number = stactics_videoram_d[offs];
+	        char_number = stactics_videoram_d.read(offs);
 	
 	        if (dirty_chardata_d[char_number] == 1)
 	        {
@@ -539,14 +539,14 @@ public class stactics
 	                       stactics_chardata_d,
 	                       Machine.drv.gfxdecodeinfo[3].gfxlayout);
 	            dirty_chardata_d[char_number] = 2;
-	            dirty_videoram_d[offs] = 1;
+	            dirty_videoram_d.write(1,1);
 	        }
 	        else if (dirty_chardata_d[char_number] == 2)
 	        {
-	            dirty_videoram_d[offs] = 1;
+	            dirty_videoram_d.write(1,1);
 	        }
 	
-	        if (dirty_videoram_d[offs])
+	        if (dirty_videoram_d.read(offs))
 	        {
 	            drawgfx(bitmap_D,Machine.gfx[3],
 	                    char_number,
@@ -554,12 +554,12 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_d[offs] = 0;
+	            dirty_videoram_d.write(0,0);
 	        }
 	
 	        /* Draw aliens in Page E */
 	
-	        char_number = stactics_videoram_e[offs];
+	        char_number = stactics_videoram_e.read(offs);
 	
 	        if (dirty_chardata_e[char_number] == 1)
 	        {
@@ -568,14 +568,14 @@ public class stactics
 	                       stactics_chardata_e,
 	                       Machine.drv.gfxdecodeinfo[2].gfxlayout);
 	            dirty_chardata_e[char_number] = 2;
-	            dirty_videoram_e[offs] = 1;
+	            dirty_videoram_e.write(1,1);
 	        }
 	        else if (dirty_chardata_e[char_number] == 2)
 	        {
-	            dirty_videoram_e[offs] = 1;
+	            dirty_videoram_e.write(1,1);
 	        }
 	
-	        if (dirty_videoram_e[offs])
+	        if (dirty_videoram_e.read(offs))
 	        {
 	            drawgfx(bitmap_E,Machine.gfx[2],
 	                    char_number,
@@ -583,12 +583,12 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_e[offs] = 0;
+	            dirty_videoram_e.write(0,0);
 	        }
 	
 	        /* Draw aliens in Page F */
 	
-	        char_number = stactics_videoram_f[offs];
+	        char_number = stactics_videoram_f.read(offs);
 	
 	        if (dirty_chardata_f[char_number] == 1)
 	        {
@@ -597,14 +597,14 @@ public class stactics
 	                       stactics_chardata_f,
 	                       Machine.drv.gfxdecodeinfo[1].gfxlayout);
 	            dirty_chardata_f[char_number] = 2;
-	            dirty_videoram_f[offs] = 1;
+	            dirty_videoram_f.write(1,1);
 	        }
 	        else if (dirty_chardata_f[char_number] == 2)
 	        {
-	            dirty_videoram_f[offs] = 1;
+	            dirty_videoram_f.write(1,1);
 	        }
 	
-	        if (dirty_videoram_f[offs])
+	        if (dirty_videoram_f.read(offs))
 	        {
 	            drawgfx(bitmap_F,Machine.gfx[1],
 	                    char_number,
@@ -612,12 +612,12 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_f[offs] = 0;
+	            dirty_videoram_f.write(0,0);
 	        }
 	
 	        /* Draw the page B stuff */
 	
-	        char_number = stactics_videoram_b[offs];
+	        char_number = stactics_videoram_b.read(offs);
 	
 	        if (dirty_chardata_b[char_number] == 1)
 	        {
@@ -626,14 +626,14 @@ public class stactics
 	                       stactics_chardata_b,
 	                       Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	            dirty_chardata_b[char_number] = 2;
-	            dirty_videoram_b[offs] = 1;
+	            dirty_videoram_b.write(1,1);
 	        }
 	        else if (dirty_chardata_b[char_number] == 2)
 	        {
-	            dirty_videoram_b[offs] = 1;
+	            dirty_videoram_b.write(1,1);
 	        }
 	
-	        if (dirty_videoram_b[offs])
+	        if (dirty_videoram_b.read(offs))
 	        {
 	            drawgfx(bitmap_B,Machine.gfx[0],
 	                    char_number,
@@ -641,7 +641,7 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_b[offs] = 0;
+	            dirty_videoram_b.write(0,0);
 	        }
 	
 	    }

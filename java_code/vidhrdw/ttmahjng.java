@@ -124,7 +124,7 @@ public class ttmahjng
 	***************************************************************************/
 	public static ReadHandlerPtr ttmahjng_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return ttmahjng_videoram1[offset];
+		return ttmahjng_videoram1.read(offset);
 	} };
 	
 	/***************************************************************************
@@ -132,7 +132,7 @@ public class ttmahjng
 	***************************************************************************/
 	public static ReadHandlerPtr ttmahjng_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return ttmahjng_videoram1[offset];
+		return ttmahjng_videoram1.read(offset);
 	} };
 	
 	/***************************************************************************
@@ -140,7 +140,7 @@ public class ttmahjng
 	***************************************************************************/
 	public static WriteHandlerPtr ttmahjng_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		ttmahjng_videoram1[offset] = data;
+		ttmahjng_videoram1.write(data,data);
 	
 		common_videoram_w.handler(offset, data, 0, tmpbitmap1);
 	} };
@@ -150,7 +150,7 @@ public class ttmahjng
 	***************************************************************************/
 	public static WriteHandlerPtr ttmahjng_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		ttmahjng_videoram2[offset] = data;
+		ttmahjng_videoram2.write(data,data);
 	
 		common_videoram_w.handler(offset, data, 4, tmpbitmap2);
 	} };
@@ -226,8 +226,8 @@ public class ttmahjng
 			// redraw bitmaps
 			for (offs = 0; offs < ttmahjng_videoram_size; offs++)
 			{
-				ttmahjng_videoram1_w(offs, ttmahjng_videoram1[offs]);
-				ttmahjng_videoram2_w(offs, ttmahjng_videoram2[offs]);
+				ttmahjng_videoram1_w(offs, ttmahjng_videoram1.read(offs));
+				ttmahjng_videoram2_w(offs, ttmahjng_videoram2.read(offs));
 			}
 		}
 	

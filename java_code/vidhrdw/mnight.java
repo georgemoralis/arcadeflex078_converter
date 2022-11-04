@@ -47,17 +47,17 @@ public class mnight
 	
 	public static WriteHandlerPtr mnight_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (mnight_background_videoram[offset] != data)
+		if (mnight_background_videoram.read(offset)!= data)
 		{
 			bg_dirtybuffer[offset >> 1] = 1;
-			mnight_background_videoram[offset] = data;
+			mnight_background_videoram.write(data,data);
 		}
 	} };
 	
 	public static WriteHandlerPtr mnight_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (mnight_foreground_videoram[offset] != data)
-			mnight_foreground_videoram[offset] = data;
+		if (mnight_foreground_videoram.read(offset)!= data)
+			mnight_foreground_videoram.write(data,data);
 	} };
 	
 	public static WriteHandlerPtr mnight_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -93,13 +93,13 @@ public class mnight
 		{
 			int sx,sy,tile,palette,flipx,flipy,lo,hi;
 	
-			if (mnight_foreground_videoram[offs*2] | mnight_foreground_videoram[offs*2+1])
+			if (mnight_foreground_videoram.read(offs*2)| mnight_foreground_videoram.read(offs*2+1))
 			{
 				sx = (offs % 32) << 3;
 				sy = (offs >> 5) << 3;
 	
-				lo = mnight_foreground_videoram[offs*2];
-				hi = mnight_foreground_videoram[offs*2+1];
+				lo = mnight_foreground_videoram.read(offs*2);
+				hi = mnight_foreground_videoram.read(offs*2+1);
 				tile = ((hi & 0xc0) << 2) | lo;
 				flipx = hi & 0x10;
 				flipy = hi & 0x20;
@@ -135,8 +135,8 @@ public class mnight
 	
 				bg_dirtybuffer[offs] = 0;
 	
-				lo = mnight_background_videoram[offs*2];
-				hi = mnight_background_videoram[offs*2+1];
+				lo = mnight_background_videoram.read(offs*2);
+				hi = mnight_background_videoram.read(offs*2+1);
 				tile = ((hi & 0x10) << 6) | ((hi & 0xc0) << 2) | lo;
 				flipy = hi & 0x20;
 				palette = hi & 0x0f;

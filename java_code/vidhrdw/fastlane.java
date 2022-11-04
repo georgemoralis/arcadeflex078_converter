@@ -33,8 +33,8 @@ public class fastlane
 	
 	static void get_tile_info0(int tile_index)
 	{
-		int attr = fastlane_videoram1[tile_index];
-		int code = fastlane_videoram1[tile_index + 0x400];
+		int attr = fastlane_videoram1.read(tile_index);
+		int code = fastlane_videoram1.read(tile_index + 0x400);
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
@@ -58,8 +58,8 @@ public class fastlane
 	
 	static void get_tile_info1(int tile_index)
 	{
-		int attr = fastlane_videoram2[tile_index];
-		int code = fastlane_videoram2[tile_index + 0x400];
+		int attr = fastlane_videoram2.read(tile_index);
+		int code = fastlane_videoram2.read(tile_index + 0x400);
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
@@ -115,19 +115,19 @@ public class fastlane
 	
 	public static WriteHandlerPtr fastlane_vram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (fastlane_videoram1[offset] != data)
+		if (fastlane_videoram1.read(offset)!= data)
 		{
 			tilemap_mark_tile_dirty(layer0,offset & 0x3ff);
-			fastlane_videoram1[offset] = data;
+			fastlane_videoram1.write(data,data);
 		}
 	} };
 	
 	public static WriteHandlerPtr fastlane_vram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (fastlane_videoram2[offset] != data)
+		if (fastlane_videoram2.read(offset)!= data)
 		{
 			tilemap_mark_tile_dirty(layer1,offset & 0x3ff);
-			fastlane_videoram2[offset] = data;
+			fastlane_videoram2.write(data,data);
 		}
 	} };
 	

@@ -79,12 +79,12 @@ public class mjsister
 	{
 		if (vrambank != 0)
 		{
-			mjsister_videoram1[offset] = data;
+			mjsister_videoram1.write(data,data);
 			mjsister_plot1(offset,data);
 		}
 		else
 		{
-			mjsister_videoram0[offset] = data;
+			mjsister_videoram0.write(data,data);
 			mjsister_plot0(offset,data);
 		}
 	} };
@@ -100,8 +100,8 @@ public class mjsister
 	
 			for (offs=0; offs<0x8000; offs++)
 			{
-				mjsister_plot0(offs,mjsister_videoram0[offs]);
-				mjsister_plot1(offs,mjsister_videoram1[offs]);
+				mjsister_plot0(offs,mjsister_videoram0.read(offs));
+				mjsister_plot1(offs,mjsister_videoram1.read(offs));
 			}
 	
 			mjsister_screen_redraw = 0;

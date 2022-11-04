@@ -196,10 +196,10 @@ public class travrusa
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char attr = travrusa_videoram[2*tile_index+1];
+		unsigned char attr = travrusa_videoram.read(2*tile_index+1);
 		SET_TILE_INFO(
 				0,
-				travrusa_videoram[2*tile_index] + ((attr & 0xc0) << 2),
+				travrusa_videoram.read(2*tile_index)+ ((attr & 0xc0) << 2),
 				attr & 0x0f,
 				TILE_FLIPXY((attr & 0x30) >> 4))
 		if ((attr & 0x0f) == 0x0f) tile_info.flags |= TILE_SPLIT(1);	/* tunnels */
@@ -238,9 +238,9 @@ public class travrusa
 	
 	public static WriteHandlerPtr travrusa_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (travrusa_videoram[offset] != data)
+		if (travrusa_videoram.read(offset)!= data)
 		{
-			travrusa_videoram[offset] = data;
+			travrusa_videoram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 		}
 	} };

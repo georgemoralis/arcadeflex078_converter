@@ -296,11 +296,11 @@ public class punchout
 	
 	public static WriteHandlerPtr punchout_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (punchout_videoram2[offset] != data)
+		if (punchout_videoram2.read(offset)!= data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			punchout_videoram2[offset] = data;
+			punchout_videoram2.write(data,data);
 		}
 	} };
 	
@@ -396,9 +396,9 @@ public class punchout
 				sy = offs/2 / 64;
 	
 				drawgfx(tmpbitmap,Machine.gfx[1],
-						punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03),
-						((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * bottom_palette_bank,
-						punchout_videoram2[offs + 1] & 0x80,0,
+						punchout_videoram2.read(offs)+ 256 * (punchout_videoram2.read(offs + 1)& 0x03),
+						((punchout_videoram2.read(offs + 1)& 0x7c) >> 2) + 64 * bottom_palette_bank,
+						punchout_videoram2.read(offs + 1)& 0x80,0,
 						8*sx,8*sy + 8*TOP_MONITOR_ROWS - 16,
 						&backgroundvisiblearea,TRANSPARENCY_NONE,0);
 			}
@@ -557,9 +557,9 @@ public class punchout
 					/* top screen */
 					sy -= 32;
 					drawgfx(tmpbitmap,Machine.gfx[0],
-							punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03) +
-									8 * (punchout_videoram2[offs + 1] & 0x80),
-							((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * top_palette_bank,
+							punchout_videoram2.read(offs)+ 256 * (punchout_videoram2.read(offs + 1)& 0x03) +
+									8 * (punchout_videoram2.read(offs + 1)& 0x80),
+							((punchout_videoram2.read(offs + 1)& 0x7c) >> 2) + 64 * top_palette_bank,
 							0,0,
 							8*sx,8*sy - 16,
 							&topvisiblearea,TRANSPARENCY_NONE,0);
@@ -567,9 +567,9 @@ public class punchout
 				else
 					/* bottom screen background */
 					drawgfx(tmpbitmap,Machine.gfx[0],
-							punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03),
-							128 + ((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * bottom_palette_bank,
-							punchout_videoram2[offs + 1] & 0x80,0,
+							punchout_videoram2.read(offs)+ 256 * (punchout_videoram2.read(offs + 1)& 0x03),
+							128 + ((punchout_videoram2.read(offs + 1)& 0x7c) >> 2) + 64 * bottom_palette_bank,
+							punchout_videoram2.read(offs + 1)& 0x80,0,
 							8*sx,8*sy + 8*TOP_MONITOR_ROWS - 16,
 							&backgroundvisiblearea,TRANSPARENCY_NONE,0);
 			}

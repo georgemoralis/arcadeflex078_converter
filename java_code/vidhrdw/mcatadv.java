@@ -31,9 +31,9 @@ public class mcatadv
 	{
 		int tileno, colour, pri;
 	
-		tileno = mcatadv_videoram1[tile_index*2+1];
-		colour = (mcatadv_videoram1[tile_index*2] & 0x3f00)>>8;
-		pri = (mcatadv_videoram1[tile_index*2] & 0xc000)>>14;
+		tileno = mcatadv_videoram1.read(tile_index*2+1);
+		colour = (mcatadv_videoram1.read(tile_index*2)& 0x3f00)>>8;
+		pri = (mcatadv_videoram1.read(tile_index*2)& 0xc000)>>14;
 	
 		SET_TILE_INFO(0,tileno,colour + palette_bank1*0x40,0)
 		tile_info.priority = pri;
@@ -41,9 +41,9 @@ public class mcatadv
 	
 	WRITE16_HANDLER( mcatadv_videoram1_w )
 	{
-		if (mcatadv_videoram1[offset] != data)
+		if (mcatadv_videoram1.read(offset)!= data)
 		{
-			COMBINE_DATA(&mcatadv_videoram1[offset]);
+			COMBINE_DATA(&mcatadv_videoram1.read(offset));
 			tilemap_mark_tile_dirty(mcatadv_tilemap1,offset/2);
 		}
 	}
@@ -52,9 +52,9 @@ public class mcatadv
 	{
 		int tileno, colour, pri;
 	
-		tileno = mcatadv_videoram2[tile_index*2+1];
-		colour = (mcatadv_videoram2[tile_index*2] & 0x3f00)>>8;
-		pri = (mcatadv_videoram2[tile_index*2] & 0xc000)>>14;
+		tileno = mcatadv_videoram2.read(tile_index*2+1);
+		colour = (mcatadv_videoram2.read(tile_index*2)& 0x3f00)>>8;
+		pri = (mcatadv_videoram2.read(tile_index*2)& 0xc000)>>14;
 	
 		SET_TILE_INFO(1,tileno,colour + palette_bank2*0x40,0)
 		tile_info.priority = pri;
@@ -62,9 +62,9 @@ public class mcatadv
 	
 	WRITE16_HANDLER( mcatadv_videoram2_w )
 	{
-		if (mcatadv_videoram2[offset] != data)
+		if (mcatadv_videoram2.read(offset)!= data)
 		{
-			COMBINE_DATA(&mcatadv_videoram2[offset]);
+			COMBINE_DATA(&mcatadv_videoram2.read(offset));
 			tilemap_mark_tile_dirty(mcatadv_tilemap2,offset/2);
 		}
 	}

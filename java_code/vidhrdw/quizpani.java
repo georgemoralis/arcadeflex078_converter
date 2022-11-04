@@ -39,7 +39,7 @@ public class quizpani
 	
 	static void txt_tile_info(int tile_index)
 	{
-		int code = quizpani_txt_videoram[tile_index];
+		int code = quizpani_txt_videoram.read(tile_index);
 	
 		SET_TILE_INFO(
 				0,
@@ -56,7 +56,7 @@ public class quizpani
 	
 	WRITE16_HANDLER( quizpani_txt_videoram_w )
 	{
-		quizpani_txt_videoram[offset] = data;
+		quizpani_txt_videoram.write(data,data);
 		tilemap_mark_tile_dirty(txt_tilemap, offset);
 	}
 	

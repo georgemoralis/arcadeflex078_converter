@@ -49,16 +49,16 @@ public class armedf
 	
 	static void get_tx_tile_info(int tile_index)
 	{
-		int tile_number = terraf_text_videoram[tile_index]&0xff;
+		int tile_number = terraf_text_videoram.read(tile_index)&0xff;
 		int attributes;
 	
 		if( scroll_type == 1 )
 		{
-			attributes = terraf_text_videoram[tile_index+0x800]&0xff;
+			attributes = terraf_text_videoram.read(tile_index+0x800)&0xff;
 		}
 		else
 		{
-			attributes = terraf_text_videoram[tile_index+0x400]&0xff;
+			attributes = terraf_text_videoram.read(tile_index+0x400)&0xff;
 		}
 		SET_TILE_INFO(
 				0,
@@ -134,9 +134,9 @@ public class armedf
 	
 	WRITE16_HANDLER( armedf_text_videoram_w )
 	{
-		int oldword = terraf_text_videoram[offset];
-		COMBINE_DATA(&terraf_text_videoram[offset]);
-		if (oldword != terraf_text_videoram[offset])
+		int oldword = terraf_text_videoram.read(offset);
+		COMBINE_DATA(&terraf_text_videoram.read(offset));
+		if (oldword != terraf_text_videoram.read(offset))
 		{
 			if( scroll_type == 1 )
 			{
@@ -287,8 +287,8 @@ public class armedf
 					int scrollx,scrolly;
 	
 					/* scrolling is handled by the protection mcu */
-					scrollx = (terraf_text_videoram[13] & 0xff) | (terraf_text_videoram[14] << 8);
-					scrolly = (terraf_text_videoram[11] & 0xff) | (terraf_text_videoram[12] << 8);
+					scrollx = (terraf_text_videoram.read(13)& 0xff) | (terraf_text_videoram.read(14)<< 8);
+					scrolly = (terraf_text_videoram.read(11)& 0xff) | (terraf_text_videoram.read(12)<< 8);
 					tilemap_set_scrollx( fg_tilemap, 0, scrollx);
 					tilemap_set_scrolly( fg_tilemap, 0, scrolly);
 				}
@@ -316,7 +316,7 @@ public class armedf
 			unsigned i;
 			for( i=0; i<0x800; i++ )
 			{
-				terraf_text_videoram[i] = 0x0;
+				terraf_text_videoram.write(0x0,0x0);
 			}
 			tilemap_mark_all_tiles_dirty( tx_tilemap );
 		}

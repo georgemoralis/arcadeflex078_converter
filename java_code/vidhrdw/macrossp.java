@@ -131,7 +131,7 @@ public class macrossp
 	
 	WRITE32_HANDLER( macrossp_text_videoram_w )
 	{
-		COMBINE_DATA(&macrossp_text_videoram[offset]);
+		COMBINE_DATA(&macrossp_text_videoram.read(offset));
 	
 		tilemap_mark_tile_dirty(macrossp_text_tilemap,offset);
 	}
@@ -141,8 +141,8 @@ public class macrossp
 	{
 		UINT32 tileno, colour;
 	
-		tileno = macrossp_text_videoram[tile_index] & 0x0000ffff;
-		colour = (macrossp_text_videoram[tile_index] & 0x00fe0000) >> 17;
+		tileno = macrossp_text_videoram.read(tile_index)& 0x0000ffff;
+		colour = (macrossp_text_videoram.read(tile_index)& 0x00fe0000) >> 17;
 	
 		SET_TILE_INFO(4,tileno,colour,0)
 	}

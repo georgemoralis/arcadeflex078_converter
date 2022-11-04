@@ -69,7 +69,7 @@ public class timelimt
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		SET_TILE_INFO(1, timelimt_bg_videoram[tile_index], 0, 0);
+		SET_TILE_INFO(1, timelimt_bg_videoram.read(tile_index), 0, 0);
 	}
 	
 	static void get_fg_tile_info(int tile_index)
@@ -109,9 +109,9 @@ public class timelimt
 	
 	public static WriteHandlerPtr timelimt_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (timelimt_bg_videoram[offset] != data)
+		if (timelimt_bg_videoram.read(offset)!= data)
 		{
-			timelimt_bg_videoram[offset] = data;
+			timelimt_bg_videoram.write(data,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };

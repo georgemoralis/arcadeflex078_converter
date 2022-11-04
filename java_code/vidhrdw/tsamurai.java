@@ -30,8 +30,8 @@ public class tsamurai
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		unsigned char attributes = tsamurai_videoram[2*tile_index+1];
-		int tile_number = tsamurai_videoram[2*tile_index];
+		unsigned char attributes = tsamurai_videoram.read(2*tile_index+1);
+		int tile_number = tsamurai_videoram.read(2*tile_index);
 		tile_number += (( attributes & 0xc0 ) >> 6 ) * 256;	 /* legacy */
 		tile_number += (( attributes & 0x20 ) >> 5 ) * 1024; /* Mission 660 add-on*/
 		SET_TILE_INFO(
@@ -116,9 +116,9 @@ public class tsamurai
 	
 	public static WriteHandlerPtr tsamurai_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if( tsamurai_videoram[offset]!=data )
+		if( tsamurai_videoram.read(offset)!=data )
 		{
-			tsamurai_videoram[offset]=data;
+			tsamurai_videoram.write(data,data);
 			offset = offset/2;
 			tilemap_mark_tile_dirty(background,offset);
 		}

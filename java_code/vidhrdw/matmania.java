@@ -158,11 +158,11 @@ public class matmania
 	
 	public static WriteHandlerPtr matmania_videoram3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (matmania_videoram3[offset] != data)
+		if (matmania_videoram3.read(offset)!= data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			matmania_videoram3[offset] = data;
+			matmania_videoram3.write(data,data);
 		}
 	} };
 	
@@ -170,11 +170,11 @@ public class matmania
 	
 	public static WriteHandlerPtr matmania_colorram3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (matmania_colorram3[offset] != data)
+		if (matmania_colorram3.read(offset)!= data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			matmania_colorram3[offset] = data;
+			matmania_colorram3.write(data,data);
 		}
 	} };
 	
@@ -220,8 +220,8 @@ public class matmania
 				sy = offs % 32;
 	
 				drawgfx(tmpbitmap2,Machine.gfx[1],
-						matmania_videoram3[offs] + ((matmania_colorram3[offs] & 0x08) << 5),
-						(matmania_colorram3[offs] & 0x30) >> 4,
+						matmania_videoram3.read(offs)+ ((matmania_colorram3.read(offs)& 0x08) << 5),
+						(matmania_colorram3.read(offs)& 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
 						16*sx,16*sy,
 						0,TRANSPARENCY_NONE,0);
@@ -267,8 +267,8 @@ public class matmania
 			sy = offs % 32;
 	
 			drawgfx(bitmap,Machine.gfx[0],
-					matmania_videoram2[offs] + 256 * (matmania_colorram2[offs] & 0x07),
-					(matmania_colorram2[offs] & 0x30) >> 4,
+					matmania_videoram2.read(offs)+ 256 * (matmania_colorram2.read(offs)& 0x07),
+					(matmania_colorram2.read(offs)& 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
 					Machine.visible_area,TRANSPARENCY_PEN,0);
@@ -316,8 +316,8 @@ public class matmania
 				sy = offs % 32;
 	
 				drawgfx(tmpbitmap2,Machine.gfx[1],
-						matmania_videoram3[offs] + ((matmania_colorram3[offs] & 0x03) << 8),
-						(matmania_colorram3[offs] & 0x30) >> 4,
+						matmania_videoram3.read(offs)+ ((matmania_colorram3.read(offs)& 0x03) << 8),
+						(matmania_colorram3.read(offs)& 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
 						16*sx,16*sy,
 						0,TRANSPARENCY_NONE,0);
@@ -363,8 +363,8 @@ public class matmania
 			sy = offs % 32;
 	
 			drawgfx(bitmap,Machine.gfx[0],
-					matmania_videoram2[offs] + 256 * (matmania_colorram2[offs] & 0x07),
-					(matmania_colorram2[offs] & 0x30) >> 4,
+					matmania_videoram2.read(offs)+ 256 * (matmania_colorram2.read(offs)& 0x07),
+					(matmania_colorram2.read(offs)& 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
 					Machine.visible_area,TRANSPARENCY_PEN,0);

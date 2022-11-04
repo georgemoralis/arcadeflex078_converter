@@ -113,9 +113,9 @@ public class wilytowr
 	
 	public static WriteHandlerPtr wilytowr_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (wilytowr_videoram2[offset] != data)
+		if (wilytowr_videoram2.read(offset)!= data)
 		{
-			wilytowr_videoram2[offset] = data;
+			wilytowr_videoram2.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
@@ -149,7 +149,7 @@ public class wilytowr
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int code = wilytowr_videoram2[tile_index];
+		int code = wilytowr_videoram2.read(tile_index);
 	
 		SET_TILE_INFO(0, code, 0, 0)
 	}

@@ -565,24 +565,24 @@ public class toaplan1
 	/* tile palette */
 	READ16_HANDLER( toaplan1_colorram1_r )
 	{
-		return toaplan1_colorram1[offset];
+		return toaplan1_colorram1.read(offset);
 	}
 	
 	WRITE16_HANDLER( toaplan1_colorram1_w )
 	{
-		COMBINE_DATA(&toaplan1_colorram1[offset]);
+		COMBINE_DATA(&toaplan1_colorram1.read(offset));
 		paletteram16_xBBBBBGGGGGRRRRR_word_w(offset, data, mem_mask);
 	}
 	
 	/* sprite palette */
 	READ16_HANDLER( toaplan1_colorram2_r )
 	{
-		return toaplan1_colorram2[offset];
+		return toaplan1_colorram2.read(offset);
 	}
 	
 	WRITE16_HANDLER( toaplan1_colorram2_w )
 	{
-		COMBINE_DATA(&toaplan1_colorram2[offset]);
+		COMBINE_DATA(&toaplan1_colorram2.read(offset));
 		paletteram16_xBBBBBGGGGGRRRRR_word_w(offset+(toaplan1_colorram1_size/2), data, mem_mask);
 	}
 	

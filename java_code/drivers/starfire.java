@@ -117,7 +117,7 @@ public class starfire
 	
 		/* convert to a videoram offset */
 		offset = (offset & 0x31f) | ((offset & 0xe0) << 5);
-	    starfire_videoram[offset] = data;
+	    starfire_videoram.write(data,data);
 	} };
 	
 	
@@ -129,7 +129,7 @@ public class starfire
 	
 		/* convert to a videoram offset */
 		offset = (offset & 0x31f) | ((offset & 0xe0) << 5);
-	    return starfire_videoram[offset];
+	    return starfire_videoram.read(offset);
 	} };
 	
 	

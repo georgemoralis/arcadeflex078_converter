@@ -115,15 +115,15 @@ public class brkthru
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		data8_t code = brkthru_videoram[tile_index];
+		data8_t code = brkthru_videoram.read(tile_index);
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
 	public static WriteHandlerPtr brkthru_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (brkthru_videoram[offset] != data)
+		if (brkthru_videoram.read(offset)!= data)
 		{
-			brkthru_videoram[offset] = data;
+			brkthru_videoram.write(data,data);
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };

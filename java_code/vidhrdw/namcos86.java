@@ -129,10 +129,10 @@ public class namcos86
 				0)
 	}
 	
-	static void get_tile_info0(int tile_index) { get_tile_info(tile_index,0,&rthunder_videoram1[0x0000]); }
-	static void get_tile_info1(int tile_index) { get_tile_info(tile_index,1,&rthunder_videoram1[0x1000]); }
-	static void get_tile_info2(int tile_index) { get_tile_info(tile_index,2,&rthunder_videoram2[0x0000]); }
-	static void get_tile_info3(int tile_index) { get_tile_info(tile_index,3,&rthunder_videoram2[0x1000]); }
+	static void get_tile_info0(int tile_index) { get_tile_info(tile_index,0,&rthunder_videoram1.read(0x0000)); }
+	static void get_tile_info1(int tile_index) { get_tile_info(tile_index,1,&rthunder_videoram1.read(0x1000)); }
+	static void get_tile_info2(int tile_index) { get_tile_info(tile_index,2,&rthunder_videoram2.read(0x0000)); }
+	static void get_tile_info3(int tile_index) { get_tile_info(tile_index,3,&rthunder_videoram2.read(0x1000)); }
 	
 	
 	/***************************************************************************
@@ -169,28 +169,28 @@ public class namcos86
 	
 	public static ReadHandlerPtr rthunder_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return rthunder_videoram1[offset];
+		return rthunder_videoram1.read(offset);
 	} };
 	
 	public static WriteHandlerPtr rthunder_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (rthunder_videoram1[offset] != data)
+		if (rthunder_videoram1.read(offset)!= data)
 		{
-			rthunder_videoram1[offset] = data;
+			rthunder_videoram1.write(data,data);
 			tilemap_mark_tile_dirty(tilemap[offset/0x1000],(offset & 0xfff)/2);
 		}
 	} };
 	
 	public static ReadHandlerPtr rthunder_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return rthunder_videoram2[offset];
+		return rthunder_videoram2.read(offset);
 	} };
 	
 	public static WriteHandlerPtr rthunder_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (rthunder_videoram2[offset] != data)
+		if (rthunder_videoram2.read(offset)!= data)
 		{
-			rthunder_videoram2[offset] = data;
+			rthunder_videoram2.write(data,data);
 			tilemap_mark_tile_dirty(tilemap[2+offset/0x1000],(offset & 0xfff)/2);
 		}
 	} };

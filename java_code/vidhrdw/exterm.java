@@ -57,22 +57,22 @@ public class exterm
 	
 	void exterm_to_shiftreg_master(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(shiftreg, &exterm_master_videoram[TOWORD(address)], 256 * sizeof(UINT16));
+		memcpy(shiftreg, &exterm_master_videoram.read(TOWORD(address)), 256 * sizeof(UINT16));
 	}
 	
 	void exterm_from_shiftreg_master(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(&exterm_master_videoram[TOWORD(address)], shiftreg, 256 * sizeof(UINT16));
+		memcpy(&exterm_master_videoram.read(TOWORD(address)), shiftreg, 256 * sizeof(UINT16));
 	}
 	
 	void exterm_to_shiftreg_slave(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(shiftreg, &exterm_slave_videoram[TOWORD(address)], 256 * 2 * sizeof(UINT8));
+		memcpy(shiftreg, &exterm_slave_videoram.read(TOWORD(address)), 256 * 2 * sizeof(UINT8));
 	}
 	
 	void exterm_from_shiftreg_slave(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(&exterm_slave_videoram[TOWORD(address)], shiftreg, 256 * 2 * sizeof(UINT8));
+		memcpy(&exterm_slave_videoram.read(TOWORD(address)), shiftreg, 256 * 2 * sizeof(UINT8));
 	}
 	
 	
@@ -110,7 +110,7 @@ public class exterm
 		/* 16-bit case */
 		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
-			data16_t *bgsrc = &exterm_master_videoram[256 * y];
+			data16_t *bgsrc = &exterm_master_videoram.read(256 * y);
 			UINT16 scanline[256];
 	
 			/* on the top/bottom of the screen, it's all background */
@@ -124,7 +124,7 @@ public class exterm
 			/* elsewhere, we have to blend foreground and background */
 			else
 			{
-				data16_t *fgsrc = (tms34010_get_DPYSTRT(1) & 0x800) ? &exterm_slave_videoram[y*128] : &exterm_slave_videoram[(256+y)*128];
+				data16_t *fgsrc = (tms34010_get_DPYSTRT(1) & 0x800) ? &exterm_slave_videoram.read(y*128): &exterm_slave_videoram.read((256+y)*128);
 	
 				for (x = 0; x < 256; x += 2)
 				{

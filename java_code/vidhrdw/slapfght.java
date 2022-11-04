@@ -63,8 +63,8 @@ public class slapfght
 	{
 		int tile,color;
 	
-		tile=slapfight_videoram[tile_index] + ((slapfight_colorram[tile_index] & 0x03) << 8);
-		color=(slapfight_colorram[tile_index] & 0xfc) >> 2;
+		tile=slapfight_videoram.read(tile_index)+ ((slapfight_colorram.read(tile_index)& 0x03) << 8);
+		color=(slapfight_colorram.read(tile_index)& 0xfc) >> 2;
 	
 		SET_TILE_INFO(
 				0,
@@ -126,13 +126,13 @@ public class slapfght
 	
 	public static WriteHandlerPtr slapfight_fixram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		slapfight_videoram[offset]=data;
+		slapfight_videoram.write(data,data);
 		tilemap_mark_tile_dirty(fix_tilemap,offset);
 	} };
 	
 	public static WriteHandlerPtr slapfight_fixcol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		slapfight_colorram[offset]=data;
+		slapfight_colorram.write(data,data);
 		tilemap_mark_tile_dirty(fix_tilemap,offset);
 	} };
 	

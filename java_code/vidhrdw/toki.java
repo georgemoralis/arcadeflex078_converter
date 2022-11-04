@@ -96,7 +96,7 @@ public class toki
 	
 	static void get_back_tile_info(int tile_index)
 	{
-		int tile = toki_background1_videoram16[tile_index];
+		int tile = toki_background1_videoram16.read(tile_index);
 		int color=(tile>>12)&0xf;
 	
 		tile&=0xfff;
@@ -110,7 +110,7 @@ public class toki
 	
 	static void get_fore_tile_info(int tile_index)
 	{
-		int tile = toki_background2_videoram16[tile_index];
+		int tile = toki_background2_videoram16.read(tile_index);
 		int color=(tile>>12)&0xf;
 	
 		tile&=0xfff;
@@ -158,17 +158,17 @@ public class toki
 	
 	WRITE16_HANDLER( toki_background1_videoram16_w )
 	{
-		int oldword = toki_background1_videoram16[offset];
-		COMBINE_DATA(&toki_background1_videoram16[offset]);
-		if (oldword != toki_background1_videoram16[offset])
+		int oldword = toki_background1_videoram16.read(offset);
+		COMBINE_DATA(&toki_background1_videoram16.read(offset));
+		if (oldword != toki_background1_videoram16.read(offset))
 			tilemap_mark_tile_dirty(background_layer,offset);
 	}
 	
 	WRITE16_HANDLER( toki_background2_videoram16_w )
 	{
-		int oldword = toki_background2_videoram16[offset];
-		COMBINE_DATA(&toki_background2_videoram16[offset]);
-		if (oldword != toki_background2_videoram16[offset])
+		int oldword = toki_background2_videoram16.read(offset);
+		COMBINE_DATA(&toki_background2_videoram16.read(offset));
+		if (oldword != toki_background2_videoram16.read(offset))
 			tilemap_mark_tile_dirty(foreground_layer,offset);
 	}
 	

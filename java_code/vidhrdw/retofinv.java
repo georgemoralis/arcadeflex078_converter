@@ -118,52 +118,52 @@ public class retofinv
 	
 	public static ReadHandlerPtr retofinv_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return retofinv_bg_videoram[offset];
+		return retofinv_bg_videoram.read(offset);
 	} };
 	
 	public static ReadHandlerPtr retofinv_fg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return retofinv_fg_videoram[offset];
+		return retofinv_fg_videoram.read(offset);
 	} };
 	
 	public static ReadHandlerPtr retofinv_bg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return retofinv_bg_colorram[offset];
+		return retofinv_bg_colorram.read(offset);
 	} };
 	
 	public static ReadHandlerPtr retofinv_fg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return retofinv_fg_colorram[offset];
+		return retofinv_fg_colorram.read(offset);
 	} };
 	
 	public static WriteHandlerPtr retofinv_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (retofinv_bg_videoram[offset] != data)
+		if (retofinv_bg_videoram.read(offset)!= data)
 		{
 			bg_dirtybuffer[offset] = 1;
-			retofinv_bg_videoram[offset] = data;
+			retofinv_bg_videoram.write(data,data);
 		}
 	} };
 	
 	public static WriteHandlerPtr retofinv_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (retofinv_fg_videoram[offset] != data)
-			retofinv_fg_videoram[offset] = data;
+		if (retofinv_fg_videoram.read(offset)!= data)
+			retofinv_fg_videoram.write(data,data);
 	} };
 	
 	public static WriteHandlerPtr retofinv_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (retofinv_bg_colorram[offset] != data)
+		if (retofinv_bg_colorram.read(offset)!= data)
 		{
 			bg_dirtybuffer[offset] = 1;
-			retofinv_bg_colorram[offset] = data;
+			retofinv_bg_colorram.write(data,data);
 		}
 	} };
 	
 	public static WriteHandlerPtr retofinv_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (retofinv_fg_colorram[offset] != data)
-			retofinv_fg_colorram[offset] = data;
+		if (retofinv_fg_colorram.read(offset)!= data)
+			retofinv_fg_colorram.write(data,data);
 	} };
 	
 	void retofinv_render_sprites(struct mame_bitmap *bitmap)
@@ -287,8 +287,8 @@ public class retofinv
 					}
 	
 					bg_dirtybuffer[offs] = 0;
-					tile = retofinv_bg_videoram[offs] + 256 * bg_bank;
-					palette = retofinv_bg_colorram[offs] & 0x3f;
+					tile = retofinv_bg_videoram.read(offs)+ 256 * bg_bank;
+					palette = retofinv_bg_colorram.read(offs)& 0x3f;
 	
 					drawgfx(bitmap_bg,Machine.gfx[1],
 							tile,
@@ -327,8 +327,8 @@ public class retofinv
 					flipx = flipy = 1;
 				}
 	
-				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
-				palette = retofinv_fg_colorram[offs];
+				tile = retofinv_fg_videoram.read(offs)+(retofinv_fg_char_bank[0]*256);
+				palette = retofinv_fg_colorram.read(offs);
 	
 				drawgfx(bitmap,Machine.gfx[0],
 							  tile,
@@ -356,8 +356,8 @@ public class retofinv
 					flipx = flipy = 1;
 				}
 	
-				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
-				palette = retofinv_fg_colorram[offs];
+				tile = retofinv_fg_videoram.read(offs)+(retofinv_fg_char_bank[0]*256);
+				palette = retofinv_fg_colorram.read(offs);
 	
 				drawgfx(bitmap,Machine.gfx[0],
 							  tile,
@@ -385,8 +385,8 @@ public class retofinv
 					flipx = flipy = 1;
 				}
 	
-				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
-				palette = retofinv_fg_colorram[offs];
+				tile = retofinv_fg_videoram.read(offs)+(retofinv_fg_char_bank[0]*256);
+				palette = retofinv_fg_colorram.read(offs);
 	
 				drawgfx(bitmap,Machine.gfx[0],
 							  tile,
