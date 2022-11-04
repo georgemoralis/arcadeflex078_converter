@@ -212,12 +212,12 @@ public class pitnrun
 			if (flip_screen_x != 0)
 			{
 				sx = 256 - sx;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 			
 			drawgfx(bitmap,Machine.gfx[2],

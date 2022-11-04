@@ -136,7 +136,7 @@ public class amspdwy
 			if (flip_screen != 0)
 			{
 				x = max_x - x - 8;	y = max_y - y - 8;
-				flipx = !flipx;	flipy = !flipy;
+				flipx = NOT(flipx);	flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[0],

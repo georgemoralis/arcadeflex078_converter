@@ -228,8 +228,8 @@ public class cloak
 			{
 				sx -= 9;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap, Machine.gfx[1], code, 0, flipx, flipy,

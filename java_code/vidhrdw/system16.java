@@ -416,13 +416,13 @@ public class system16
 					if( sprite.flags & SYS16_SPR_DRAW_TO_TOP )
 					{
 						ypos -= sprite.screen_height;
-						flipy = !flipy;
+						flipy = NOT(flipy);
 					}
 	
 					if( sprite.flags & SYS16_SPR_DRAW_TO_LEFT )
 					{
 						xpos -= screen_width;
-						flipx = !flipx;
+						flipx = NOT(flipx);
 					}
 				}
 				else if( sys16_spritesystem==sys16_sprite_sharrier )

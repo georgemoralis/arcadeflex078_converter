@@ -184,8 +184,8 @@ public class toypop
 				x = (spriteram_2.read(offs+1)| ((spriteram_3.read(offs+1)& 1) << 8)) - 71;
 				y = 217 - spriteram_2.read(offs);
 				if (flipscreen != 0) {
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				switch (spriteram_3.read(offs)& 0x0c)
@@ -215,7 +215,7 @@ public class toypop
 						break;
 					case 12:		/* 2x both ways */
 						sprite &= ~3;
-						if (!flipy && !flipx) {
+						if (NOT(flipy) && NOT(flipx)) {
 							toypop_draw_sprite(bitmap,2+sprite,color,0,0,x,y);
 							toypop_draw_sprite(bitmap,3+sprite,color,0,0,x+16,y);
 							toypop_draw_sprite(bitmap,sprite,color,0,0,x,y-16);

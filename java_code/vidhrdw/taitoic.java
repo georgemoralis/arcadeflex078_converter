@@ -1591,8 +1591,8 @@ public class taitoic
 			{
 				x = 320 - x - 16;
 				y = 256 - y - 16;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			x += PC090OJ_xoffs;

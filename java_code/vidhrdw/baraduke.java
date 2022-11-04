@@ -230,7 +230,7 @@ public class baraduke
 								drawgfx( bitmap, Machine.gfx[5],
 									sprite_number+2*row+col,
 									color,
-									!flipx,!flipy,
+									NOT(flipx),NOT(flipy),
 									512-67 - (sx+16*(flipx ? 1-col : col)),
 									64-16-209 - (sy+16*(flipy ? 1-row : row)),
 									cliprect,

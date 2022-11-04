@@ -164,8 +164,8 @@ public class wwfsstar
 	
 				if (flip_screen != 0)
 				{
-					flipy = !flipy;
-					flipx = !flipx;
+					flipy = NOT(flipy);
+					flipx = NOT(flipx);
 					ypos=240-ypos;
 					xpos=240-xpos;
 				}

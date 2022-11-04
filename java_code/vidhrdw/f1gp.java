@@ -386,7 +386,7 @@ public class f1gp
 						drawgfxzoom(bitmap,Machine.gfx[1],
 								code,
 								color,
-								!flipx,!flipy,
+								NOT(flipx),NOT(flipy),
 								304-sx,208-sy,
 								cliprect,TRANSPARENCY_PEN,15,
 								zoomx << 11,zoomy << 11);

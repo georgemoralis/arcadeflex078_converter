@@ -110,8 +110,8 @@ public class psikyo4
 				{
 					ypos = Machine.visible_area.max_y+1 - ypos - high*16; /* Screen Height depends on game */
 					xpos = 40*8 - xpos - wide*16;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 	#if DUAL_SCREEN /* if we are displaying both screens simultaneously */

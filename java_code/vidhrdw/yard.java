@@ -274,7 +274,7 @@ public class yard
 				{
 					sx = 63 - sx;
 					sy = 31 - sy;
-					flipx = !flipx;
+					flipx = NOT(flipx);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
@@ -331,8 +331,8 @@ public class yard
 	
 			if (flip_screen != 0)
 			{
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 				sx  = 240 - sx;
 				sy2 = 224 - sy1;
 				sy1 = sy2 + 0x10;

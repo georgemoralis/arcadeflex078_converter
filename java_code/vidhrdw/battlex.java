@@ -119,8 +119,8 @@ public class battlex
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,gfx,tile,color,flipx,flipy,sx,sy,cliprect,TRANSPARENCY_PEN,0);

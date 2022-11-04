@@ -83,8 +83,8 @@ public class snowbros
 			{
 				sx = 240 - x;
 				sy = 240 - y;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 			else
 			{
@@ -126,8 +126,8 @@ public class snowbros
 			{
 				xpos = 240 - xpos;
 				ypos = 240 - ypos;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if ((xpos > -16) && (ypos > 0) && (xpos < 256) && (ypos < 240) && (disbl !=2))

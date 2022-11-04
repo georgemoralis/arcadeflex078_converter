@@ -243,8 +243,8 @@ public class firetrap
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if (spriteram.read(offs + 1)& 0x10)	/* double width */

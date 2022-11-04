@@ -380,8 +380,8 @@ public class psikyo
 			{
 				x = width  - x - (nx * zoomx)/2;
 				y = height - y - (ny * zoomy)/2;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if (flipx != 0)	{ xstart = nx-1;  xend = -1;  xinc = -1; }

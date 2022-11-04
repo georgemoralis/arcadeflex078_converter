@@ -251,8 +251,8 @@ public class kncljoe
 	
 			if (flipscreen != 0)
 			{
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 				sx = 240 - sx;
 				sy = 240 - sy;
 			}

@@ -150,7 +150,7 @@ public class trackfld
 			if (flip_screen != 0)
 			{
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			/* Note that this adjustement must be done AFTER handling flip screen, thus */

@@ -53,3 +53,4 @@ AY8910 r/w handlers
 *color_prom converts to color_prom.read()
 GAME - GAMEX conversions
 flip_screen to flip_screen()
+!flipx ,! flipy  to NOT(flipx) , NOT(flipy)

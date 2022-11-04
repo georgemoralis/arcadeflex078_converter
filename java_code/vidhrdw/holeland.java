@@ -142,13 +142,13 @@ public class holeland
 	
 			if (flip_screen_x != 0)
 			{
-				flipx = !flipx;
+				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
 			if (flip_screen_y != 0)
 			{
-				flipy = !flipy;
+				flipy = NOT(flipy);
 				sy = 240 - sy;
 			}
 	
@@ -180,13 +180,13 @@ public class holeland
 	
 			if (flip_screen_x != 0)
 			{
-				flipx = !flipx;
+				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
 			if (flip_screen_y != 0)
 			{
-				flipy = !flipy;
+				flipy = NOT(flipy);
 				sy = 240 - sy;
 			}
 	

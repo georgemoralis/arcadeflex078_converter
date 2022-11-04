@@ -241,12 +241,12 @@ public class chaknpop
 			if (flip_x != 0)
 			{
 				sx = 240 - sx;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_y != 0)
 			{
 				sy = 242 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[0],

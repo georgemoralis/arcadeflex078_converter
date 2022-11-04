@@ -488,8 +488,8 @@ public class magmax
 				{
 					sx = 255-16 - sx;
 					sy = 239 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				if ((code & 0x80) != 0)	/* sprite bankswitch */

@@ -209,8 +209,8 @@ public class espial
 	
 			if (flipscreen != 0)
 			{
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 			else
 			{

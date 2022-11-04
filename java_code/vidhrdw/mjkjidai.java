@@ -122,8 +122,8 @@ public class mjkjidai
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			sx += 16;

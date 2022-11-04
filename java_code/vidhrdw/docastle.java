@@ -294,8 +294,8 @@ public class docastle
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			/* first draw the sprite, visible */

@@ -169,8 +169,8 @@ public class sbasketb
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(bitmap,Machine.gfx[1],

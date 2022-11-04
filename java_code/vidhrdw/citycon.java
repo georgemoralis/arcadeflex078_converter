@@ -146,7 +146,7 @@ public class citycon
 			{
 				sx = 240 - sx;
 				sy = 238 - sy;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[spriteram.read(offs + 1)& 0x80 ? 2 : 1],

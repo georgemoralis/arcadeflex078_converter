@@ -316,8 +316,8 @@ public class powerins
 			/* Handle flip_screen(). Apply a global offset of 32 pixels along x too */
 	
 			if (flip_screen != 0)
-			{	sx = screen_w - sx - dimx*16 - 32;	flipx = !flipx;
-				sy = screen_h - sy - dimy*16;		flipy = !flipy;
+			{	sx = screen_w - sx - dimx*16 - 32;	flipx = NOT(flipx);
+				sy = screen_h - sy - dimy*16;		flipy = NOT(flipy);
 				code += dimx*dimy-1;			inc = -1;	}
 			else
 			{	sx += 32;						inc = +1;	}

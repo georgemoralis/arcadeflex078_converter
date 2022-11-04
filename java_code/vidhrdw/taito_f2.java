@@ -701,8 +701,8 @@ public class taito_f2
 	
 				curx = 320 - curx - zx;
 				cury = 256 - cury - zy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			{

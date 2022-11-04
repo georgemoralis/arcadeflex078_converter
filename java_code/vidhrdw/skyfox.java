@@ -215,8 +215,8 @@ public class skyfox
 			{
 				x = width  - x - (n-1)*8;
 				y = height - y - (n-1)*8;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if (flipx != 0)	{ xstart = n-1;  xend = -1;  xinc = -1; }

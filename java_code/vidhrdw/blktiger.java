@@ -222,7 +222,7 @@ public class blktiger
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[2],

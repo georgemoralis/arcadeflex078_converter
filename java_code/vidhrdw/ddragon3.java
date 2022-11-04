@@ -176,8 +176,8 @@ public class ddragon3
 				{
 					sx = 304 - sx;
 					sy = 224 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				for (i = 0; i <= height; i++)

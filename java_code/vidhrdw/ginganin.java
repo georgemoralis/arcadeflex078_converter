@@ -244,7 +244,7 @@ public class ginganin
 			if (flipscreen != 0)
 			{
 				x = 240 - x;		y = 240 - y;
-				flipx = !flipx; 	flipy = !flipy;
+				flipx = NOT(flipx); 	flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[3],

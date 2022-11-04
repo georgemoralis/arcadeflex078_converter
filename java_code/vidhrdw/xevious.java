@@ -397,8 +397,8 @@ public class xevious
 				flipy = spriteram_3.read(offs)& 8;
 				if (flip_screen != 0)
 				{
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 				sx = spriteram_2.read(offs + 1)- 40 + 0x100*(spriteram_3.read(offs + 1)& 1);
 				sy = 28*8-spriteram_2.read(offs)-1;

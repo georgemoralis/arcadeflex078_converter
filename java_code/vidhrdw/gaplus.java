@@ -292,8 +292,8 @@ public class gaplus
 	
 				if (flip_screen != 0)
 				{
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				if ((spriteram_3.read(offs)& 0xa8) == 0xa0){ /* draw the sprite twice in a row */

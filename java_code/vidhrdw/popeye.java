@@ -390,8 +390,8 @@ public class popeye
 	
 			if (flip_screen != 0)
 			{
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 				sx = 496 - sx;
 				sy = 496 - sy;
 			}

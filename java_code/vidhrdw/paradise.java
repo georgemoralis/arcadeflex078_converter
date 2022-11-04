@@ -214,8 +214,8 @@ public class paradise
 			int flipx	=	0;	// ?
 			int flipy	=	0;
 	
-			if (flip_screen != 0)	{	x = 0xf0 - x;	flipx = !flipx;
-									y = 0xf0 - y;	flipy = !flipy;	}
+			if (flip_screen != 0)	{	x = 0xf0 - x;	flipx = NOT(flipx);
+									y = 0xf0 - y;	flipy = NOT(flipy);	}
 	
 			drawgfx(bitmap,Machine.gfx[0],
 					code + (attr << 8),

@@ -242,8 +242,8 @@ public class armedf
 			if (flip_screen != 0) {
 				sx = 320 - sx + 176;	/* don't ask where 176 comes from, just tried it out */
 				sy = 240 - sy + 1;		/* don't ask where 1 comes from, just tried it out */
-				flipx = !flipx;			/* the values seem to result in pixel-correct placement */
-				flipy = !flipy;			/* in all the games supported by this driver */
+				flipx = NOT(flipx);			/* the values seem to result in pixel-correct placement */
+				flipy = NOT(flipy);			/* in all the games supported by this driver */
 			}
 	
 			if (((buffered_spriteram16[offs+0] & 0x3000) >> 12) == priority)

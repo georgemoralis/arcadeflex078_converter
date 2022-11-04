@@ -238,11 +238,11 @@ public class mcr3
 			else
 			{
 				/* first draw the sprite, visible */
-				pdrawgfx(bitmap, Machine.gfx[1], code, color, !flipx, !flipy, 480 - sx, 452 - sy,
+				pdrawgfx(bitmap, Machine.gfx[1], code, color, NOT(flipx), NOT(flipy), 480 - sx, 452 - sy,
 						cliprect, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 				/* then draw the mask, behind the background but obscuring following sprites */
-				pdrawgfx(bitmap, Machine.gfx[1], code, color, !flipx, !flipy, 480 - sx, 452 - sy,
+				pdrawgfx(bitmap, Machine.gfx[1], code, color, NOT(flipx), NOT(flipy), 480 - sx, 452 - sy,
 						cliprect, TRANSPARENCY_PENS, 0xfeff, 0x02);
 			}
 		}

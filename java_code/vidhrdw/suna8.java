@@ -379,8 +379,8 @@ public class suna8
 					int sy		=	(y + real_ty * 8) & 0xff;
 	
 					if (flip_screen != 0)
-					{	sx = max_x - sx;	flipx = !flipx;
-						sy = max_y - sy;	flipy = !flipy;	}
+					{	sx = max_x - sx;	flipx = NOT(flipx);
+						sy = max_y - sy;	flipy = NOT(flipy);	}
 	
 					drawgfx(	bitmap,Machine.gfx[0],
 								tile + (attr & 0x3)*0x100 + bank,

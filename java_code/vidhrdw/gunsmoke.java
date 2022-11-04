@@ -214,8 +214,8 @@ public class gunsmoke
 						{
 							tx = 8 - tx;
 							ty = 8 - ty;
-							flipx = !flipx;
-							flipy = !flipy;
+							flipx = NOT(flipx);
+							flipy = NOT(flipy);
 						}
 	
 						drawgfx(bgbitmap,Machine.gfx[1],
@@ -267,8 +267,8 @@ public class gunsmoke
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(bitmap,Machine.gfx[2],

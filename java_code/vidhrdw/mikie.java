@@ -169,7 +169,7 @@ public class mikie
 			if (flip_screen != 0)
 			{
 				sy = 242 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap, Machine.gfx[gfxbank],

@@ -55,12 +55,12 @@ public class freekick
 			if (flip_screen_x != 0)
 			{
 				xpos = 240 - xpos;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				ypos = 256 - ypos;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[1],
@@ -90,12 +90,12 @@ public class freekick
 			if (flip_screen_x != 0)
 			{
 				xpos = 240 - xpos;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				ypos = 256 - ypos;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[1],
@@ -126,12 +126,12 @@ public class freekick
 			if (flip_screen_x != 0)
 			{
 				xpos = 240 - xpos;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				ypos = 256 - ypos;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[1],

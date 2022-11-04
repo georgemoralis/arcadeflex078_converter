@@ -112,8 +112,8 @@ public class solomon
 			{
 				sx = 240 - sx;
 				sy = 242 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap, Machine.gfx[2],

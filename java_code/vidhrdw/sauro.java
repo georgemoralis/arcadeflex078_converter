@@ -152,7 +152,7 @@ public class sauro
 	
 			if (flip_screen != 0)
 			{
-				flipx = !flipx;
+				flipx = NOT(flipx);
 				sx = (235 - sx) & 0xff;  // The &0xff is not 100% percent correct
 				sy = 240 - sy;
 			}
@@ -231,7 +231,7 @@ public class sauro
 	
 			if (flip_screen != 0)
 			{
-				flipx = !flipx;
+				flipx = NOT(flipx);
 				sx = (235 - sx) & 0xff;  /* The &0xff is not 100% percent correct */
 				sy = 240 - sy;
 			}

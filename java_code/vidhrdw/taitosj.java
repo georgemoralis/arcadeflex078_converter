@@ -541,13 +541,13 @@ public class taitosj
 	
 		if (flipscreen[0])
 		{
-			flipx = !flipx;
+			flipx = NOT(flipx);
 			minx = MIN(minx + 2, Machine.drv.screen_width);
 			maxx = MIN(maxx + 2, Machine.drv.screen_width);
 		}
 		if (flipscreen[1])
 		{
-			flipy = !flipy;
+			flipy = NOT(flipy);
 			miny = MIN(miny + 2, Machine.drv.screen_height);
 			maxy = MIN(maxy + 2, Machine.drv.screen_height);
 		}
@@ -635,12 +635,12 @@ public class taitosj
 					if (flipscreen[0])
 					{
 						sx = 238 - sx;
-						flipx = !flipx;
+						flipx = NOT(flipx);
 					}
 					if (flipscreen[1])
 					{
 						sy = 242 - sy;
-						flipy = !flipy;
+						flipy = NOT(flipy);
 					}
 	
 					drawgfx(bitmap,Machine.gfx[(spriteram.read(offs + 3)& 0x40) ? 3 : 1],

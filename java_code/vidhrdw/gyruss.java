@@ -189,8 +189,8 @@ public class gyruss
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
@@ -224,8 +224,8 @@ public class gyruss
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if ((colorram.read(offs)& 0x10) != 0)

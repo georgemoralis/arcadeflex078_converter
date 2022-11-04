@@ -267,8 +267,8 @@ public class realbrk
 			xdim	=		((zoom & 0x00ff) >> 0) << (16-6+4);
 			ydim	=		((zoom & 0xff00) >> 8) << (16-6+4);
 	
-			if (flip_screen_x != 0)	{	flipx = !flipx;		sx = (max_x << 16) - sx - xnum * xdim;	}
-			if (flip_screen_y != 0)	{	flipy = !flipy;		sy = (max_y << 16) - sy - ynum * ydim;	}
+			if (flip_screen_x != 0)	{	flipx = NOT(flipx);		sx = (max_x << 16) - sx - xnum * xdim;	}
+			if (flip_screen_y != 0)	{	flipy = NOT(flipy);		sy = (max_y << 16) - sy - ynum * ydim;	}
 	
 			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }

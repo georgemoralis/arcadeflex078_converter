@@ -212,8 +212,8 @@ public class esd16
 			sy	-=	dimy*16;
 	
 			if (flip_screen != 0)
-			{	flipx = !flipx;		sx = max_x - sx -    1 * 16 + 2;	// small offset
-				flipy = !flipy;		sy = max_y - sy - dimy * 16;	}
+			{	flipx = NOT(flipx);		sx = max_x - sx -    1 * 16 + 2;	// small offset
+				flipy = NOT(flipy);		sy = max_y - sy - dimy * 16;	}
 	
 			if (flipy != 0)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
 			else		{	starty = sy;				endy = sy+dimy*16;	incy = +16;	}
@@ -264,8 +264,8 @@ public class esd16
 			sy = 0x1ff-sy;
 	
 			if (flip_screen != 0)
-			{	flipx = !flipx;		sx = max_x - sx -    1 * 16 + 2;	// small offset
-				flipy = !flipy;		sy = max_y - sy - dimy * 16;	}
+			{	flipx = NOT(flipx);		sx = max_x - sx -    1 * 16 + 2;	// small offset
+				flipy = NOT(flipy);		sy = max_y - sy - dimy * 16;	}
 	
 			if (flipy != 0)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
 			else		{	starty = sy-dimy*16;				endy = sy;	incy = +16;	}

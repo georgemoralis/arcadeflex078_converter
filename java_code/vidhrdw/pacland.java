@@ -245,8 +245,8 @@ public class pacland
 			if (flip_screen != 0)
 			{
 				x += 8;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			switch ( spriteram_3.read(offs)& 0x0c )
@@ -281,7 +281,7 @@ public class pacland
 	
 				case 12:		/* 2x both ways */
 					sprite &= ~3;
-					if ( !flipy && !flipx )
+					if ( NOT(flipy) && NOT(flipx) )
 					{
 						DRAW_SPRITE( sprite, x, y-16 )
 						DRAW_SPRITE( 1+sprite, x+16, y-16 )

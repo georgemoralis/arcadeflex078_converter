@@ -167,7 +167,7 @@ public class crshrace
 						drawgfxzoom(bitmap,Machine.gfx[2],
 								code,
 								color,
-								!flipx,!flipy,
+								NOT(flipx),NOT(flipy),
 								304-sx,208-sy,
 								cliprect,TRANSPARENCY_PEN,15,
 								0x1000 * zoomx,0x1000 * zoomy);

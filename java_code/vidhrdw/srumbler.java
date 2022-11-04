@@ -163,7 +163,7 @@ public class srumbler
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[2],

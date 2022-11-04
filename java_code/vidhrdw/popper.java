@@ -228,8 +228,8 @@ public class popper
 				{
 					sx = 248 - sx;
 					sy = 242 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(bitmap,Machine.gfx[1],

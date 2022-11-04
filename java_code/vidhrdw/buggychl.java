@@ -227,7 +227,7 @@ public class buggychl
 	
 						pos = base_pos + 2*ch;
 						code = 8 * (lookup[pos] | ((lookup[pos+1] & 0x07) << 8));
-						realflipy = (lookup[pos+1] & 0x80) ? !flipy : flipy;
+						realflipy = (lookup[pos+1] & 0x80) ? NOT(flipy) : flipy;
 						code += (realflipy ? (charline ^ 7) : charline);
 						pendata = Machine.gfx[1].gfxdata + code*16;
 	

@@ -354,8 +354,8 @@ public class zaxxon
 	
 				if (flip_screen != 0)
 				{
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 					sx = 223 - sx;
 					sy = 224 - sy;
 				}
@@ -509,8 +509,8 @@ public class zaxxon
 	
 				if (flip_screen != 0)
 				{
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 					sx = 223 - sx;
 					sy = 224 - sy;
 				}
@@ -547,8 +547,8 @@ public class zaxxon
 	
 				if (flip_screen != 0)
 				{
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 					sx = 223 - sx;
 					sy = 224 - sy;
 				}

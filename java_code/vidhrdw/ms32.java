@@ -349,8 +349,8 @@ public class ms32
 			{
 				sx = 320 - ((xsize*xzoom)>>16) - sx;
 				sy = 224 - ((ysize*yzoom)>>16) - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			/* change GfxElement parameters to draw only the needed part of the 256x256 tile */

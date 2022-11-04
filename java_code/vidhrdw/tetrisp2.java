@@ -340,8 +340,8 @@ public class tetrisp2
 			/* Flip Screen */
 			if (flipscreen != 0)
 			{
-				sx = max_x + 1 - sx - xsize;	flipx = !flipx;
-				sy = max_y + 1 - sy - ysize;	flipy = !flipy;
+				sx = max_x + 1 - sx - xsize;	flipx = NOT(flipx);
+				sy = max_y + 1 - sy - ysize;	flipy = NOT(flipy);
 			}
 	
 			/* Clip the sprite if its width or height is not an integer

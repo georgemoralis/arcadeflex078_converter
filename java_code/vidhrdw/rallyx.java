@@ -259,8 +259,8 @@ public class rallyx
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap1,Machine.gfx[0],
@@ -290,8 +290,8 @@ public class rallyx
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
@@ -339,8 +339,8 @@ public class rallyx
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[0],
@@ -421,8 +421,8 @@ public class rallyx
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap1,Machine.gfx[0],
@@ -452,8 +452,8 @@ public class rallyx
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
@@ -537,8 +537,8 @@ public class rallyx
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap1,Machine.gfx[0],
@@ -569,8 +569,8 @@ public class rallyx
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
@@ -676,8 +676,8 @@ public class rallyx
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap1,Machine.gfx[0],
@@ -708,8 +708,8 @@ public class rallyx
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
@@ -762,8 +762,8 @@ public class rallyx
 			flipy = ~spriteram.read(offs)& 2;
 			if (flip_screen != 0)
 			{
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if (spriteram.read(offs)& 0x01)	/* ??? */

@@ -1770,8 +1770,8 @@ public class konamigx
 				if (flipscreenx != 0) ox += screenwidth;
 			}
 	
-			if (flipscreenx != 0) { ox = -ox; if (mirrorx == 0) flipx = !flipx; }
-			if (flipscreeny != 0) { oy = -oy; if (mirrory == 0) flipy = !flipy; }
+			if (flipscreenx != 0) { ox = -ox; if (mirrorx == 0) flipx = NOT(flipx); }
+			if (flipscreeny != 0) { oy = -oy; if (mirrory == 0) flipy = NOT(flipy); }
 	
 			// apply wrapping and global offsets
 			temp = wrapsize-1;
@@ -1804,7 +1804,7 @@ public class konamigx
 	
 					if (mirrorx != 0)
 					{
-						if ((!flipx)^((i<<1)<k))
+						if ((NOT(flipx))^((i<<1)<k))
 						{
 							/* mirror left/right */
 							temp += xoffset[(k-1-i+xa)&7];
@@ -1825,7 +1825,7 @@ public class konamigx
 	
 					if (mirrory != 0)
 					{
-						if ((!flipy)^((j<<1)>=l))
+						if ((NOT(flipy))^((j<<1)>=l))
 						{
 							/* mirror top/bottom */
 							temp += yoffset[(l-1-j+ya)&7];

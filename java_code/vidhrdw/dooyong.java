@@ -102,8 +102,8 @@ public class dooyong
 			{
 				sx = 512-32 - sx;
 				sy = 256-32 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[gfx],
@@ -150,8 +150,8 @@ public class dooyong
 			{
 				sx = 512-32 - sx;
 				sy = 256-32 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[gfx],
@@ -198,8 +198,8 @@ public class dooyong
 			{
 				sx = 512-32 - sx;
 				sy = 256-32 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[gfx],
@@ -248,8 +248,8 @@ public class dooyong
 			{
 				sx = 512-16 - sx;
 				sy = 256-16 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[gfx],
@@ -351,8 +351,8 @@ public class dooyong
 			{
 				sx = 498 - sx;
 				sy = 240-16*height - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			for (y = 0;y <= height;y++)
@@ -389,8 +389,8 @@ public class dooyong
 				{
 					sx = 498-16*width - sx;
 					sy = 240-16*height - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				for (y = 0;y <= height;y++)

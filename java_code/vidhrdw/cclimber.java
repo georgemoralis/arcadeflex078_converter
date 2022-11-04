@@ -325,7 +325,7 @@ public class cclimber
 		if (flip_screen_y != 0)      /* only the Y direction has to be flipped */
 		{
 			oy = 128 - oy;
-			flipy = !flipy;
+			flipy = NOT(flipy);
 		}
 		color = cclimber_bigspriteram[1] & 0x07;	/* cclimber */
 	//	color = cclimber_bigspriteram[1] & 0x03;	/* swimmer */
@@ -388,12 +388,12 @@ public class cclimber
 				if (flip_screen_x != 0)
 				{
 					sx = 31 - sx;
-					flipx = !flipx;
+					flipx = NOT(flipx);
 				}
 				if (flip_screen_y != 0)
 				{
 					sy = 31 - sy;
-					flipy = !flipy;
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[(colorram.read(offs)& 0x10) ? 1 : 0],
@@ -451,12 +451,12 @@ public class cclimber
 			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[spriteram.read(offs + 1)& 0x10 ? 4 : 3],
@@ -512,12 +512,12 @@ public class cclimber
 				if (flip_screen_x != 0)
 				{
 					sx = 31 - sx;
-					flipx = !flipx;
+					flipx = NOT(flipx);
 				}
 				if (flip_screen_y != 0)
 				{
 					sy = 31 - sy;
-					flipy = !flipy;
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
@@ -569,12 +569,12 @@ public class cclimber
 			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[1],

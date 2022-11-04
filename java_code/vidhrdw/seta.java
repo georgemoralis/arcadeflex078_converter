@@ -703,8 +703,8 @@ public class seta
 				if (flip != 0)
 				{
 					sy = max_y - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				color	=	( color >> (16-5) ) % total_color_codes;
@@ -764,8 +764,8 @@ public class seta
 			if (flip != 0)
 			{
 				y = (0x100 - Machine.drv.screen_height) + max_y - y;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			code = (code & 0x3fff) + (bank * 0x4000);

@@ -284,7 +284,7 @@ public class stfight
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
-					flipx = !flipx;
+					flipx = NOT(flipx);
 				}
 	
 				code = stfight_sprite_base + stfight_sprite_ram[offs];

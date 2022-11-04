@@ -3122,8 +3122,8 @@ public class taito_f3
 				if (tx+x_addition<=min_x || tx>max_x || ty+y_addition<=min_y || ty>max_y) continue;
 				sprite_ptr.x = tx;
 				sprite_ptr.y = ty;
-				sprite_ptr.flipx = !flipx;
-				sprite_ptr.flipy = !flipy;
+				sprite_ptr.flipx = NOT(flipx);
+				sprite_ptr.flipy = NOT(flipy);
 			}
 			else
 			{

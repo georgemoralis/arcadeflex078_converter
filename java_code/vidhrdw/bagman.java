@@ -140,12 +140,12 @@ public class bagman
 			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx +1;	/* compensate misplacement */
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			if (spriteram.read(offs + 2)&& spriteram.read(offs + 3))

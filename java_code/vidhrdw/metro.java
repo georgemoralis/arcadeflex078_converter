@@ -658,8 +658,8 @@ public class metro
 	
 			if (flip_screen != 0)
 			{
-				flipx = !flipx;		x = max_x - x - width;
-				flipy = !flipy;		y = max_y - y - height;
+				flipx = NOT(flipx);		x = max_x - x - width;
+				flipy = NOT(flipy);		y = max_y - y - height;
 			}
 	
 			if (support_8bpp && color == 0xf)	/* 8bpp */

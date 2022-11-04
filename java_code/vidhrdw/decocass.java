@@ -463,8 +463,8 @@ public class decocass
 				sx = 240 - sx;
 				sy = 240 - sy + sprite_y_adjust_flip_screen;
 	
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			sy -= sprite_y_adjust;

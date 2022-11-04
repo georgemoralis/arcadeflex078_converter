@@ -451,8 +451,8 @@ public class nemesis
 						{
 							sx = 256 - ((zoom * w) >> 16) - sx;
 							sy = 256 - ((zoom * h) >> 16) - sy;
-							flipx = !flipx;
-							flipy = !flipy;
+							flipx = NOT(flipx);
+							flipy = NOT(flipy);
 						}
 						pdrawgfxzoom(bitmap,Machine.gfx[char_type],
 							code,

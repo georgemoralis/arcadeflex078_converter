@@ -139,8 +139,8 @@ public class pbaction
 					sx = 240 - sx;
 					sy = 241 - sy;
 				}
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[(spriteram.read(offs)& 0x80) ? 3 : 2],	/* normal or double size */

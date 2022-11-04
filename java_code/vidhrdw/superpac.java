@@ -117,8 +117,8 @@ public class superpac
 	
 				if (flip_screen != 0)
 				{
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				pens = (drawmode == TRANSPARENCY_PENS) ? ~color15_mask[color] : 16;
@@ -159,7 +159,7 @@ public class superpac
 	
 					case 12:		/* 2x both ways */
 						sprite &= ~3;
-						if (!flipx && !flipy)
+						if (NOT(flipx) && NOT(flipy))
 						{
 							drawgfx(bitmap, gfx, sprite + 2, color, flipx, flipy, x + 0,  y - 0,  clip, drawmode, pens);
 							drawgfx(bitmap, gfx, sprite + 3, color, flipx, flipy, x + 16, y - 0,  clip, drawmode, pens);

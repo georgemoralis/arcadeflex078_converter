@@ -402,8 +402,8 @@ public class slapshot
 	
 				curx = 319 - curx - zx;
 				cury = 256 - cury - zy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			cury += y_offset;

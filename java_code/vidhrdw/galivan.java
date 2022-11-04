@@ -391,8 +391,8 @@ public class galivan
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 	//		code = spriteram.read(offs+1)+ ((attr & 0x02) << 7);

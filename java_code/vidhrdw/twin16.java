@@ -260,12 +260,12 @@ public class twin16
 				if ((video_register & TWIN16_SCREEN_FLIPY) != 0){
 					if (ypos>65000) ypos=ypos-65536; /* Bit hacky */
 					ypos = 256-ypos-height;
-					flipy = !flipy;
+					flipy = NOT(flipy);
 				}
 				if ((video_register & TWIN16_SCREEN_FLIPX) != 0){
 					if (xpos>65000) xpos=xpos-65536; /* Bit hacky */
 					xpos = 320-xpos-width;
-					flipx = !flipx;
+					flipx = NOT(flipx);
 				}
 	
 				//if( sprite_which==count || !keyboard_pressed( KEYCODE_B ) )

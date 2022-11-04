@@ -119,11 +119,11 @@ public class mcatadv
 	#if 0 // For Flipscreen/Cocktail
 			if(mcatadv_vidregs[0]&0x8000)
 			{
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if(mcatadv_vidregs[1]&0x8000)
 			{
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	#endif
 	

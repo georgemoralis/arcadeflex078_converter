@@ -126,12 +126,12 @@ public class undrfire
 	
 			color |= (0x100 + (priority << 6));		/* priority bits select color bank */
 			color /= 2;		/* as sprites are 5bpp */
-			flipy = !flipy;
+			flipy = NOT(flipy);
 			y = (-y &0x3ff);
 	
 			if (tilenum == 0) continue;
 	
-			flipy = !flipy;
+			flipy = NOT(flipy);
 			zoomx += 1;
 			zoomy += 1;
 	
@@ -182,14 +182,14 @@ public class undrfire
 	
 						curx = 320 - curx - zx;
 						cury = 256 - cury - zy;
-						flipx = !flipx;
-						flipy = !flipy;
+						flipx = NOT(flipx);
+						flipy = NOT(flipy);
 					}
 	
 					sprite_ptr.gfx = 0;
 					sprite_ptr.code = code;
 					sprite_ptr.color = color;
-					sprite_ptr.flipx = !flipx;
+					sprite_ptr.flipx = NOT(flipx);
 					sprite_ptr.flipy = flipy;
 					sprite_ptr.x = curx;
 					sprite_ptr.y = cury;

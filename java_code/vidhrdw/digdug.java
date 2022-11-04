@@ -276,8 +276,8 @@ public class digdug
 	
 				if (flipscreen != 0)
 				{
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				if (x < 8) x += 256;
@@ -290,7 +290,7 @@ public class digdug
 				else
 				{
 					sprite = (sprite & 0xc0) | ((sprite & ~0xc0) << 2);
-					if (!flipx && !flipy)
+					if (NOT(flipx) && NOT(flipy))
 					{
 						digdug_draw_sprite(bitmap,2+sprite,color,flipx,flipy,x,y);
 						digdug_draw_sprite(bitmap,3+sprite,color,flipx,flipy,x+16,y);

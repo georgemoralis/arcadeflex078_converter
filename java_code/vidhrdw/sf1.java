@@ -166,8 +166,8 @@ public class sf1
 				{
 					sx = 480 - sx;
 					sy = 224 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				c1 = c;
@@ -221,8 +221,8 @@ public class sf1
 				{
 					sx = 496 - sx;
 					sy = 240 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(bitmap,

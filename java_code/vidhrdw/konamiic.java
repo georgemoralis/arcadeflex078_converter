@@ -1766,8 +1766,8 @@ public class konamiic
 			{
 				ox = 256 - ox - ((zoom * w + (1<<12)) >> 13);
 				oy = 256 - oy - ((zoom * h + (1<<12)) >> 13);
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if (zoom == 0x10000)
@@ -2722,8 +2722,8 @@ public class konamiic
 			{
 				ox = 512 - (zoomx * w >> 12) - ox;
 				oy = 256 - (zoomy * h >> 12) - oy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if (zoomx == 0x10000 && zoomy == 0x10000)
@@ -3227,12 +3227,12 @@ public class konamiic
 			if (flipscreenX != 0)
 			{
 				ox = 512 - ox;
-				if (mirrorx == 0) flipx = !flipx;
+				if (mirrorx == 0) flipx = NOT(flipx);
 			}
 			if (flipscreenY != 0)
 			{
 				oy = -oy;
-				if (mirrory == 0) flipy = !flipy;
+				if (mirrory == 0) flipy = NOT(flipy);
 			}
 	
 			ox = (ox + 0x5d) & 0x3ff;
@@ -4116,12 +4116,12 @@ public class konamiic
 			if (flipscreenx != 0)
 			{
 				ox = -ox;
-				if (mirrorx == 0) flipx = !flipx;
+				if (mirrorx == 0) flipx = NOT(flipx);
 			}
 			if (flipscreeny != 0)
 			{
 				oy = -oy;
-				if (mirrory == 0) flipy = !flipy;
+				if (mirrory == 0) flipy = NOT(flipy);
 			}
 	
 			// apply wrapping and global offsets

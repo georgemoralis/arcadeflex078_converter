@@ -299,8 +299,8 @@ public class taito_l
 			{
 				sx = 304 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			pdrawgfx(bitmap,Machine.gfx[1],

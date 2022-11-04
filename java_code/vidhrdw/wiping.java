@@ -150,8 +150,8 @@ public class wiping
 			if (flipscreen != 0)
 			{
 				sy = 208 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[1],

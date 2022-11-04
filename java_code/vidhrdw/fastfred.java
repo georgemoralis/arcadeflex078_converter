@@ -323,12 +323,12 @@ public class fastfred
 			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flip_screen_y != 0)
 			{
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[1],

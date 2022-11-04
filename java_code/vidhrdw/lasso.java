@@ -308,12 +308,12 @@ public class lasso
 			if (flip_screen_x != 0)
 			{
 				sx = 240 - sx;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 	
 			if (flip_screen_y != 0)
 			{
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 			else
 			{

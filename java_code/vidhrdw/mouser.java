@@ -144,13 +144,13 @@ public class mouser
 	
 			if (flip_screen_x != 0)
 			{
-				flipx = !flipx;
+				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
 			if (flip_screen_y != 0)
 			{
-				flipy = !flipy;
+				flipy = NOT(flipy);
 				sy = 238 - sy;
 			}
 	
@@ -174,13 +174,13 @@ public class mouser
 	
 			if (flip_screen_x != 0)
 			{
-				flipx = !flipx;
+				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
 			if (flip_screen_y != 0)
 			{
-				flipy = !flipy;
+				flipy = NOT(flipy);
 				sy = 238 - sy;
 			}
 	

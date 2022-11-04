@@ -226,8 +226,8 @@ public class tecmo
 				{
 					xpos = 256 - (8 * size) - xpos;
 					ypos = 256 - (8 * size) - ypos;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				/* bg: 1; fg:2; text: 4 */

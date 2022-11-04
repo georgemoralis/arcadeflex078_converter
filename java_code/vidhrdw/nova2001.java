@@ -199,8 +199,8 @@ public class nova2001
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[2 + ((spriteram.read(offs+0)& 0x80) >> 7)],

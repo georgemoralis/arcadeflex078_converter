@@ -82,12 +82,12 @@ public class pkunwar
 			if (flipscreen[0])
 			{
 				sx = 240 - sx;
-				flipx = !flipx;
+				flipx = NOT(flipx);
 			}
 			if (flipscreen[1])
 			{
 				sy = 240 - sy;
-				flipy = !flipy;
+				flipy = NOT(flipy);
 			}
 	
 			drawgfx(bitmap,Machine.gfx[1],

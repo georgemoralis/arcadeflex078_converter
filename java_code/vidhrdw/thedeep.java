@@ -200,8 +200,8 @@ public class thedeep
 	
 			if (flip_screen != 0)
 			{
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 				sy = sy - 8;
 			}
 			else

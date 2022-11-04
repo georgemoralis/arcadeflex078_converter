@@ -277,8 +277,8 @@ public class bosco
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap1,Machine.gfx[0],
@@ -308,8 +308,8 @@ public class bosco
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
-					flipx = !flipx;
-					flipy = !flipy;
+					flipx = NOT(flipx);
+					flipy = NOT(flipy);
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],

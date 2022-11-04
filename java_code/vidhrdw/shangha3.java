@@ -147,8 +147,8 @@ public class shangha3
 			{
 				sx = 383 - sx - sizex;
 				sy = 255 - sy - sizey;
-				flipx = !flipx;
-				flipy = !flipy;
+				flipx = NOT(flipx);
+				flipy = NOT(flipy);
 			}
 	
 			if ((sizex || sizey)
