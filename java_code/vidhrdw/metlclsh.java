@@ -261,7 +261,7 @@ public class metlclsh
 		if (metlclsh_scrollx[0] & 0x08)					// background (if enabled)
 		{
 			/* The background seems to be always flipped along x */
-			tilemap_set_flip(bg_tilemap, (flip_screen ? (TILEMAP_FLIPX|TILEMAP_FLIPY) : 0) ^ TILEMAP_FLIPX);
+			tilemap_set_flip(bg_tilemap, (flip_screen() ? (TILEMAP_FLIPX|TILEMAP_FLIPY) : 0) ^ TILEMAP_FLIPX);
 			tilemap_set_scrollx(bg_tilemap, 0,metlclsh_scrollx[1] + ((metlclsh_scrollx[0]&0x02)<<7) );
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		}

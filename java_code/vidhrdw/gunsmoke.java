@@ -297,7 +297,7 @@ public class gunsmoke
 				drawgfx(bitmap,Machine.gfx[0],
 						videoram.read(offs)+ ((colorram.read(offs)& 0xc0) << 2),
 						colorram.read(offs)& 0x1f,
-						!flip_screen,!flip_screen,
+						!flip_screen(),!flip_screen(),
 						8*sx,8*sy,
 						Machine.visible_area,TRANSPARENCY_COLOR,79);
 			}

@@ -228,7 +228,7 @@ public class blktiger
 			drawgfx(bitmap,Machine.gfx[2],
 					code,
 					color,
-					flipx,flip_screen,
+					flipx,flip_screen(),
 					sx,sy,
 					cliprect,TRANSPARENCY_PEN,15);
 		}

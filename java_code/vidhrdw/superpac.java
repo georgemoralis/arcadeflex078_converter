@@ -92,7 +92,7 @@ public class superpac
 	{
 		flip_screen_set(1);
 	
-		return flip_screen;	/* return value not used */
+		return flip_screen();	/* return value not used */
 	}
 	
 	
@@ -250,7 +250,7 @@ public class superpac
 				}
 	
 				drawgfx(tmpbitmap, Machine.gfx[0], videoram.read(offs), colorram.read(offs),
-						flip_screen, flip_screen, 8 * sx, 8 * sy,
+						flip_screen(), flip_screen(), 8 * sx, 8 * sy,
 						Machine.visible_area, TRANSPARENCY_NONE, 0);
 			}
 	
@@ -292,7 +292,7 @@ public class superpac
 				}
 	
 				drawgfx(bitmap, Machine.gfx[0], videoram.read(offs), colorram.read(offs),
-						flip_screen, flip_screen, 8 * sx, 8 * sy,
+						flip_screen(), flip_screen(), 8 * sx, 8 * sy,
 						Machine.visible_area, TRANSPARENCY_COLOR, 31);
 			}
 	

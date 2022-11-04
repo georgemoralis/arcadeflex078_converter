@@ -235,9 +235,9 @@ public class dogfgt
 		int offs;
 	
 	
-		if (lastflip != flip_screen || lastpixcolor != pixcolor)
+		if (lastflip != flip_screen() || lastpixcolor != pixcolor)
 		{
-			lastflip = flip_screen;
+			lastflip = flip_screen();
 			lastpixcolor = pixcolor;
 	
 			for (offs = 0;offs < BITMAPRAM_SIZE;offs++)

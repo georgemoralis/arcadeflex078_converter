@@ -408,14 +408,14 @@ public class dec8
 	    	drawgfx(bitmap,Machine.gfx[1],
 	        		code,
 					color,
-					fx,flip_screen,
+					fx,flip_screen(),
 					sx,sy,
 					cliprect,TRANSPARENCY_PEN,0);
 	        if (multi != 0)
 	    		drawgfx(bitmap,Machine.gfx[1],
 					code+1,
 					color,
-					fx,flip_screen,
+					fx,flip_screen(),
 					sx,sy2,
 					cliprect,TRANSPARENCY_PEN,0);
 		}

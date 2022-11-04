@@ -230,7 +230,7 @@ public class superqix
 			}
 		}
 	
-		copybitmap(bitmap,tmpbitmap2,flip_screen,flip_screen,0,0,Machine.visible_area,TRANSPARENCY_PEN,0);
+		copybitmap(bitmap,tmpbitmap2,flip_screen(),flip_screen(),0,0,Machine.visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	static void superqix_draw_sprites( struct mame_bitmap *bitmap )

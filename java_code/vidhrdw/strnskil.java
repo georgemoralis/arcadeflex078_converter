@@ -68,7 +68,7 @@ public class strnskil
 	{
 		strnskil_scrl_ctrl = data >> 5;
 	
-		if (flip_screen != (data & 0x08))
+		if (flip_screen() != (data & 0x08))
 		{
 			flip_screen_set(data & 0x08);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);

@@ -476,7 +476,7 @@ public class decocass
 					sx,sy,
 					cliprect, TRANSPARENCY_PEN, 0);
 	
-			sy += (flip_screen ? -256 : 256);
+			sy += (flip_screen() ? -256 : 256);
 	
 			// Wrap around
 			drawgfx(bitmap,Machine.gfx[1],

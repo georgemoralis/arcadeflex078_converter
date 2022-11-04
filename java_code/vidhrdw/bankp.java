@@ -146,7 +146,7 @@ public class bankp
 		interrupt_enable_w(0,(data & 0x10)>>4);
 	
 		/* bit 5 controls screen flip */
-		if (flip_screen != (data & 0x20))
+		if (flip_screen() != (data & 0x20))
 		{
 			flip_screen_set(data & 0x20);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);

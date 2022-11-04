@@ -74,7 +74,7 @@ public class battlex
 	
 		/* bit 7 is flip screen */
 	
-		if (flip_screen != (data & 0x80))
+		if (flip_screen() != (data & 0x80))
 		{
 			flip_screen_set(data & 0x80);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);

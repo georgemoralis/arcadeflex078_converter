@@ -238,7 +238,7 @@ public class _1942
 			{
 				drawgfx(bitmap,Machine.gfx[2],
 						code + i,col,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						sx,sy + 16 * i * dir,
 						cliprect,TRANSPARENCY_PEN,15);
 	

@@ -18,7 +18,7 @@ public class citycon
 	
 	public static ReadHandlerPtr citycon_in_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return readinputport(flip_screen ? 1 : 0);
+		return readinputport(flip_screen() ? 1 : 0);
 	} };
 	
 	

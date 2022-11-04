@@ -169,7 +169,7 @@ public class srumbler
 			drawgfx(bitmap,Machine.gfx[2],
 					code,
 					colour,
-					flip_screen,flipy,
+					flip_screen(),flipy,
 					sx, sy,
 					cliprect,TRANSPARENCY_PEN,15);
 		}

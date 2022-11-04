@@ -314,13 +314,13 @@ public class system1
 				if (color1 != 0)
 					draw_pixel(bitmap,x,y,x_flipped,y_flipped,spr_number,sprite_palette[color1]);
 				x++;
-				x_flipped += flip_screen ? -1 : 1;
+				x_flipped += flip_screen() ? -1 : 1;
 	
 				if (color2 == 15) break;
 				if (color2 != 0)
 					draw_pixel(bitmap,x,y,x_flipped,y_flipped,spr_number,sprite_palette[color2]);
 				x++;
-				x_flipped += flip_screen ? -1 : 1;
+				x_flipped += flip_screen() ? -1 : 1;
 			}
 		}
 	}
@@ -388,7 +388,7 @@ public class system1
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							8*sx + blockgal_kludgeoffset,8*sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
@@ -442,7 +442,7 @@ public class system1
 					drawgfx(tmp_bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							8*sx,8*sy,
 							0,TRANSPARENCY_NONE,0);
 				}
@@ -486,25 +486,25 @@ public class system1
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx-256,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx,sy-256,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx-256,sy-256,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
@@ -583,7 +583,7 @@ public class system1
 					drawgfx(tmp_bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							8*sx,8*sy,
 							0,TRANSPARENCY_NONE,0);
 				}
@@ -644,7 +644,7 @@ public class system1
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx,8*sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
@@ -741,14 +741,14 @@ public class system1
 						drawgfx(bitmap,Machine.gfx[0],
 								code,
 								((code >> 5) & 0x3f) + 64,
-								flip_screen,flip_screen,
+								flip_screen(),flip_screen(),
 								x,y,
 								Machine.visible_area, TRANSPARENCY_NONE, 0);
 					else if (priority != 0)
 						drawgfx(bitmap,Machine.gfx[0],
 								code,
 								((code >> 5) & 0x3f) + 64,
-								flip_screen,flip_screen,
+								flip_screen(),flip_screen(),
 								x,y,
 								Machine.visible_area, TRANSPARENCY_PEN, 0);
 	
@@ -782,7 +782,7 @@ public class system1
 			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					(code >> 5) & 0x3f,
-					flip_screen,flip_screen,
+					flip_screen(),flip_screen(),
 					8*sx,8*sy,
 					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}

@@ -137,7 +137,7 @@ public class spacefb
 					drawgfx(bitmap,Machine.gfx[1],
 							code & 0x3f,
 							col,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 	
@@ -155,7 +155,7 @@ public class spacefb
 					drawgfx(bitmap,Machine.gfx[0],
 							255 - code,
 							col,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx,sy,
 							Machine.visible_area,TRANSPARENCY_NONE,0);
 				}

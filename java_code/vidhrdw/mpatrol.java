@@ -344,8 +344,8 @@ public class mpatrol
 			xpos = 256 - xpos;
 			ypos = Machine.drv.screen_height - BGHEIGHT - ypos;
 		}
-		copybitmap(bitmap,bgbitmap[image],flip_screen,flip_screen,xpos,      ypos,&clip1,transparency,128);
-		copybitmap(bitmap,bgbitmap[image],flip_screen,flip_screen,xpos - 256,ypos,&clip1,transparency,128);
+		copybitmap(bitmap,bgbitmap[image],flip_screen(),flip_screen(),xpos,      ypos,&clip1,transparency,128);
+		copybitmap(bitmap,bgbitmap[image],flip_screen(),flip_screen(),xpos - 256,ypos,&clip1,transparency,128);
 		fillbitmap(bitmap,Machine.gfx[image*2+2].colortable[3],&clip2);
 	}
 	
@@ -391,7 +391,7 @@ public class mpatrol
 				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+ 2 * (colorram.read(offs)& 0x80),
 						color,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						8*sx,8*sy,
 						0,TRANSPARENCY_NONE,0);
 			}

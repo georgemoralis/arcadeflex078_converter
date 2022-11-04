@@ -99,7 +99,7 @@ public class gotya
 	
 		scroll_bit_8 = data & 0x01;
 	
-		if (flip_screen != (data & 0x02))
+		if (flip_screen() != (data & 0x02))
 		{
 			flip_screen_set(data & 0x02);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);

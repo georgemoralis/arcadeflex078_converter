@@ -154,7 +154,7 @@ public class exzisus
 					drawgfx(bitmap, Machine.gfx[0],
 							code & 0x3fff,
 							color,
-							flip_screen, flip_screen,
+							flip_screen(), flip_screen(),
 							x, y,
 							Machine.visible_area, TRANSPARENCY_PEN, 15);
 					goffs += 2;
@@ -224,7 +224,7 @@ public class exzisus
 					drawgfx(bitmap, Machine.gfx[1],
 							code & 0x3fff,
 							color,
-							flip_screen, flip_screen,
+							flip_screen(), flip_screen(),
 							x, y,
 							Machine.visible_area, TRANSPARENCY_PEN, 15);
 					goffs += 2;

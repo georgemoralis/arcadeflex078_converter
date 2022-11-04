@@ -280,7 +280,7 @@ public class yard
 				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+ ((videoram.read(offs+1)& 0xc0) << 2),
 						videoram.read(offs+1)& 0x1f,
-						flipx,flip_screen,
+						flipx,flip_screen(),
 						8*sx,8*sy,
 						0,TRANSPARENCY_NONE,0);
 			}
@@ -363,12 +363,12 @@ public class yard
 		{
 			int xpos;
 	
-			xpos = flip_screen ? Machine.visible_area.min_x - 8 :
+			xpos = flip_screen() ? Machine.visible_area.min_x - 8 :
 			                     Machine.visible_area.max_x + 1 - SCROLL_PANEL_WIDTH;
 	
-			copybitmap(bitmap,scroll_panel_bitmap,flip_screen,flip_screen,
+			copybitmap(bitmap,scroll_panel_bitmap,flip_screen(),flip_screen(),
 			           xpos,0,
-					   flip_screen ? &panelvisibleareaflip : &panelvisiblearea,TRANSPARENCY_NONE,0);
+					   flip_screen() ? &panelvisibleareaflip : &panelvisiblearea,TRANSPARENCY_NONE,0);
 		}
 	} };
 }

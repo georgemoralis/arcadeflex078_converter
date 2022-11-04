@@ -135,7 +135,7 @@ public class suprloco
 	
 	public static WriteHandlerPtr suprloco_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		int adj = flip_screen ? -8 : 8;
+		int adj = flip_screen() ? -8 : 8;
 	
 		suprloco_scrollram[offset] = data;
 		tilemap_set_scrollx(bg_tilemap,offset, data - adj);
@@ -167,7 +167,7 @@ public class suprloco
 		coin_counter_w(1, data & 0x02);
 	
 		flip_screen_set(data & 0x80);
-		tilemap_set_scrolly(bg_tilemap,0,flip_screen ? -32 : 0);
+		tilemap_set_scrolly(bg_tilemap,0,flip_screen() ? -32 : 0);
 	
 		control = data;
 	} };

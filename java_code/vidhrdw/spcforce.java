@@ -60,7 +60,7 @@ public class spcforce
 	
 			drawgfx(bitmap,Machine.gfx[0],
 					code, col,
-					flip_screen, flip_screen,
+					flip_screen(), flip_screen(),
 					sx, sy,
 					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}

@@ -326,8 +326,8 @@ public class fuukifg2
 	
 		/* Layers scrolling */
 	
-		scrolly_offs = fuuki16_vregs[0xc/2] - (flip_screen ? 0x103 : 0x1f3);
-		scrollx_offs = fuuki16_vregs[0xe/2] - (flip_screen ? 0x2a7 : 0x3f6);
+		scrolly_offs = fuuki16_vregs[0xc/2] - (flip_screen() ? 0x103 : 0x1f3);
+		scrollx_offs = fuuki16_vregs[0xe/2] - (flip_screen() ? 0x2a7 : 0x3f6);
 	
 		layer0_scrolly = fuuki16_vregs[0x0/2] + scrolly_offs;
 		layer0_scrollx = fuuki16_vregs[0x2/2] + scrollx_offs;

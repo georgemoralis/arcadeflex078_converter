@@ -147,7 +147,7 @@ public class pbaction
 					spriteram.read(offs),
 					spriteram.read(offs + 1)& 0x0f,
 					flipx,flipy,
-					sx + (flip_screen ? scroll : -scroll), sy,
+					sx + (flip_screen() ? scroll : -scroll), sy,
 					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}

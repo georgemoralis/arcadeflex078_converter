@@ -152,7 +152,7 @@ public class citycon
 			drawgfx(bitmap,Machine.gfx[spriteram.read(offs + 1)& 0x80 ? 2 : 1],
 					spriteram.read(offs + 1)& 0x7f,
 					spriteram.read(offs + 2)& 0x0f,
-					flipx,flip_screen,
+					flipx,flip_screen(),
 					sx,sy,
 					cliprect,TRANSPARENCY_PEN,0);
 		}

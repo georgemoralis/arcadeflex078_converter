@@ -87,7 +87,7 @@ public class aeroboto
 	
 	public static ReadHandlerPtr aeroboto_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return readinputport(flip_screen ? 1 : 0);
+		return readinputport(flip_screen() ? 1 : 0);
 	} };
 	
 	public static WriteHandlerPtr aeroboto_3000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -150,7 +150,7 @@ public class aeroboto
 			drawgfx(bitmap, Machine.gfx[1],
 					spriteram.read(offs+1),
 					spriteram.read(offs+2)& 0x07,
-					flip_screen, flip_screen,
+					flip_screen(), flip_screen(),
 					((x + 8) & 0xff) - 8, y,
 					cliprect, TRANSPARENCY_PEN, 0);
 		}

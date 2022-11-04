@@ -313,7 +313,7 @@ public class powerins
 			SIGN_EXTEND_POS(sx)
 			SIGN_EXTEND_POS(sy)
 	
-			/* Handle flip_screen. Apply a global offset of 32 pixels along x too */
+			/* Handle flip_screen(). Apply a global offset of 32 pixels along x too */
 	
 			if (flip_screen != 0)
 			{	sx = screen_w - sx - dimx*16 - 32;	flipx = !flipx;

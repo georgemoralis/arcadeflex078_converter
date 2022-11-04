@@ -92,14 +92,14 @@ public class hanaawas
 	
 			/* dirty both current and next offsets */
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
-			tilemap_mark_tile_dirty(bg_tilemap, (offset + (flip_screen ? -1 : 1)) & 0x03ff);
+			tilemap_mark_tile_dirty(bg_tilemap, (offset + (flip_screen() ? -1 : 1)) & 0x03ff);
 		}
 	} };
 	
 	public static WriteHandlerPtr hanaawas_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 7 is flip screen */
-		if (flip_screen != (~data & 0x80))
+		if (flip_screen() != (~data & 0x80))
 		{
 			flip_screen_set(~data & 0x80);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
@@ -109,7 +109,7 @@ public class hanaawas
 	static void get_bg_tile_info(int tile_index)
 	{
 		/* the color is determined by the current color byte, but the bank is via the previous one!!! */
-		int offset = (tile_index + (flip_screen ? 1 : -1)) & 0x3ff;
+		int offset = (tile_index + (flip_screen() ? 1 : -1)) & 0x3ff;
 		int attr = colorram.read(offset);
 		int gfxbank = (attr & 0x40) >> 6;
 		int code = videoram.read(tile_index)+ ((attr & 0x20) << 3);

@@ -193,7 +193,7 @@ public class kingobox
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
 	
-		if (flip_screen != (data & 0x80))
+		if (flip_screen() != (data & 0x80))
 		{
 			flip_screen_set(data & 0x80);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);

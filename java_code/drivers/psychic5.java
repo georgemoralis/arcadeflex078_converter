@@ -352,7 +352,7 @@ public class psychic5
 		// bit 7 toggles flip screen
 		if ((data & 0x80) != 0)
 		{
-			flip_screen_set(!flip_screen);
+			flip_screen_set(!flip_screen());
 		}
 	} };
 	

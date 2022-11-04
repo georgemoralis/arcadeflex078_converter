@@ -215,7 +215,7 @@ public class vulgus
 				drawgfx(bitmap,Machine.gfx[2],
 						code + i,
 						col,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						sx, sy + 16 * i * dir,
 						cliprect,TRANSPARENCY_PEN,15);
 	
@@ -223,7 +223,7 @@ public class vulgus
 				drawgfx(bitmap,Machine.gfx[2],
 						code + i,
 						col,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						sx, sy + 16 * i * dir -  dir * 256,
 						cliprect,TRANSPARENCY_PEN,15);
 				i--;

@@ -78,12 +78,12 @@ public class funkybee
 	
 	public static WriteHandlerPtr funkybee_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		tilemap_set_scrollx(bg_tilemap, 0, flip_screen ? -data : data);
+		tilemap_set_scrollx(bg_tilemap, 0, flip_screen() ? -data : data);
 	} };
 	
 	public static WriteHandlerPtr funkybee_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (flip_screen != (data & 0x01))
+		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
@@ -164,7 +164,7 @@ public class funkybee
 	
 			drawgfx(bitmap,Machine.gfx[gfx_bank],
 					code, color,
-					flip_screen, flip_screen,
+					flip_screen(), flip_screen(),
 					sx, sy,
 					0,TRANSPARENCY_PEN,0);
 	
@@ -181,7 +181,7 @@ public class funkybee
 	
 			drawgfx(bitmap,Machine.gfx[gfx_bank],
 					code, color,
-					flip_screen, flip_screen,
+					flip_screen(), flip_screen(),
 					sx, sy,
 					0,TRANSPARENCY_PEN,0);
 		}

@@ -545,7 +545,7 @@ public class cosmic
 					if (!hd_ & hc_ & !hb_)
 					{
 						offs_t offs = ((x >> 3) & 0x03) | ((y & 0x1f) << 2) |
-						              (flip_screen ? 0x80 : 0);
+						              (flip_screen() ? 0x80 : 0);
 	
 						data8_t plane1 = PROM[offs         ] << (x & 0x07);
 						data8_t plane2 = PROM[offs | 0x0400] << (x & 0x07);

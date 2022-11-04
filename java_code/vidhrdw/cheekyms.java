@@ -216,7 +216,7 @@ public class cheekyms
 				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs),
 						0 + char_palette,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						8*sx, 8*sy - (man_area ? man_scroll : 0),
 						Machine.visible_area,TRANSPARENCY_NONE,0);
 			}

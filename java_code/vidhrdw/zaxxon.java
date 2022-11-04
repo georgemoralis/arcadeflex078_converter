@@ -284,9 +284,9 @@ public class zaxxon
 	
 					if ((zaxxon_vid_type == ZAXXON_VID || zaxxon_vid_type == FUTSPY_VID)
 						 && (*zaxxon_background_color_bank & 1))
-						copybitmap(bitmap,backgroundbitmap2,flip_screen,flip_screen,-scroll,skew,&clip,TRANSPARENCY_NONE,0);
+						copybitmap(bitmap,backgroundbitmap2,flip_screen(),flip_screen(),-scroll,skew,&clip,TRANSPARENCY_NONE,0);
 					else
-						copybitmap(bitmap,backgroundbitmap1,flip_screen,flip_screen,-scroll,skew,&clip,TRANSPARENCY_NONE,0);
+						copybitmap(bitmap,backgroundbitmap1,flip_screen(),flip_screen(),-scroll,skew,&clip,TRANSPARENCY_NONE,0);
 	
 					skew += 2;
 				}
@@ -323,9 +323,9 @@ public class zaxxon
 	
 					if ((zaxxon_vid_type == ZAXXON_VID || zaxxon_vid_type == FUTSPY_VID)
 						 && (*zaxxon_background_color_bank & 1))
-						copybitmap(bitmap,backgroundbitmap2,flip_screen,flip_screen,skew,scroll,&clip,TRANSPARENCY_NONE,0);
+						copybitmap(bitmap,backgroundbitmap2,flip_screen(),flip_screen(),skew,scroll,&clip,TRANSPARENCY_NONE,0);
 					else
-						copybitmap(bitmap,backgroundbitmap1,flip_screen,flip_screen,skew,scroll,&clip,TRANSPARENCY_NONE,0);
+						copybitmap(bitmap,backgroundbitmap1,flip_screen(),flip_screen(),skew,scroll,&clip,TRANSPARENCY_NONE,0);
 	
 					skew--;
 				}

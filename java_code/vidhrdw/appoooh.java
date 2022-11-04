@@ -225,7 +225,7 @@ public class appoooh
 			drawgfx( dest_bmp, gfx,
 					code,
 					color,
-					flipx,flip_screen,
+					flipx,flip_screen(),
 					sx, sy,
 					cliprect,
 					TRANSPARENCY_PEN , 0);

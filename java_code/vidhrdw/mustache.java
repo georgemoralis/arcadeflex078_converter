@@ -62,7 +62,7 @@ public class mustache
 	
 	WRITE_HANDLER (mustache_video_control_w)
 	{
-		if (flip_screen != (data & 0x01))
+		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
@@ -139,7 +139,7 @@ public class mustache
 			drawgfx(bitmap,gfx,
 					code,
 					color,
-					flip_screen,flip_screen,
+					flip_screen(),flip_screen(),
 					sx,sy,
 					&clip,TRANSPARENCY_PEN,0);
 		}

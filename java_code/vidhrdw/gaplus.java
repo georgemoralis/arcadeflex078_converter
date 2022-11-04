@@ -398,7 +398,7 @@ public class gaplus
 	        drawgfx(bitmap,Machine.gfx[bank],
 	                videoram.read(offs),
 	                colorram.read(offs)& 0x3f,
-	                flip_screen,flip_screen,8*sy,8*sx,
+	                flip_screen(),flip_screen(),8*sy,8*sx,
 	                Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	

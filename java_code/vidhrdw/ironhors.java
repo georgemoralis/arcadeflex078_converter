@@ -145,7 +145,7 @@ public class ironhors
 	
 	public static WriteHandlerPtr ironhors_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (flip_screen != (~data & 0x08))
+		if (flip_screen() != (~data & 0x08))
 		{
 			flip_screen_set(~data & 0x08);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
@@ -196,7 +196,7 @@ public class ironhors
 			int flipy = sr[offs+4] & 0x40;
 			int code = (sr[offs] << 2) + ((sr[offs+1] & 0x03) << 10) + ((sr[offs+1] & 0x0c) >> 2);
 			int color = ((sr[offs+1] & 0xf0)>>4) + 16 * palettebank;
-		//	int mod = flip_screen ? -8 : 8;
+		//	int mod = flip_screen() ? -8 : 8;
 	
 			if (flip_screen != 0)
 			{

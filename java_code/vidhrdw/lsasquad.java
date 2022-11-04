@@ -43,14 +43,14 @@ public class lsasquad
 				drawgfx(bitmap,Machine.gfx[0],
 						code,
 						color,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						sx,sy,
 						Machine.visible_area,TRANSPARENCY_PEN,15);
 				if (sx > 248)	/* wraparound */
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx-256,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,15);
 			}

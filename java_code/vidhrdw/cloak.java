@@ -240,7 +240,7 @@ public class cloak
 	public static VideoUpdateHandlerPtr video_update_cloak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
-		copybitmap(bitmap, (bmap ? tmpbitmap2 : tmpbitmap),flip_screen,flip_screen,0,0,cliprect,TRANSPARENCY_COLOR,16);
+		copybitmap(bitmap, (bmap ? tmpbitmap2 : tmpbitmap),flip_screen(),flip_screen(),0,0,cliprect,TRANSPARENCY_COLOR,16);
 		cloak_draw_sprites(bitmap, cliprect);
 	} };
 }

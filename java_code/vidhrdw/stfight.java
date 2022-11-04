@@ -292,7 +292,7 @@ public class stfight
 				pdrawgfx(bitmap,Machine.gfx[4],
 					     code,
 						 color,
-						 flipx,flip_screen,
+						 flipx,flip_screen(),
 						 sx,sy,
 					     cliprect,TRANSPARENCY_PEN,0x0f,
 						 pri ? 0x02 : 0);

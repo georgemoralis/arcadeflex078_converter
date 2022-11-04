@@ -1508,6 +1508,14 @@ public class convertMame {
                     }
                 }
                 break;
+                case 'f':
+                    i = Convertor.inpos;
+                    if(sUtil.getToken("flip_screen")){
+                        sUtil.putString((new StringBuilder()).append("flip_screen()").toString());
+                        continue;   
+                    }
+                    Convertor.inpos =i;
+                    break;
             }
 
             Convertor.outbuf[Convertor.outpos++] = Convertor.inbuf[Convertor.inpos++];//grapse to inputbuffer sto output

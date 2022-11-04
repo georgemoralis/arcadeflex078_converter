@@ -281,7 +281,7 @@ public class dooyong
 			drawgfx(bitmap,Machine.gfx[0],
 					lastday_txvideoram[offs] | ((attr & 0x0f) << 8),
 					(attr & 0xf0) >> 4,
-					flip_screen,flip_screen,
+					flip_screen(),flip_screen(),
 					8*sx,8*(sy + yoffset),
 					Machine.visible_area,TRANSPARENCY_PEN,15);
 		}
@@ -307,7 +307,7 @@ public class dooyong
 			drawgfx(bitmap,Machine.gfx[0],
 					lastday_txvideoram[offs] | ((attr & 0x0f) << 8),
 					(attr & 0xf0) >> 4,
-					flip_screen,flip_screen,
+					flip_screen(),flip_screen(),
 					8*sx,8*sy,
 					Machine.visible_area,TRANSPARENCY_PEN,15);
 		}

@@ -133,15 +133,15 @@ public class goindol
 				drawgfx(bitmap,Machine.gfx[gfxbank],
 							tile,
 							palette,
-							flip_screen,flip_screen,
+							flip_screen(),flip_screen(),
 							sx,sy,
 							cliprect,
 							TRANSPARENCY_PEN, 0);
 				drawgfx(bitmap,Machine.gfx[gfxbank],
 							tile+1,
 							palette,
-							flip_screen,flip_screen,
-							sx,sy + (flip_screen ? -8 : 8),
+							flip_screen(),flip_screen(),
+							sx,sy + (flip_screen() ? -8 : 8),
 							cliprect,
 							TRANSPARENCY_PEN, 0);
 			}

@@ -154,7 +154,7 @@ public class nyny
 	
 	public static VideoUpdateHandlerPtr video_update_nyny  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		copybitmap(bitmap,tmpbitmap2,flip_screen,flip_screen,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
-		copybitmap(bitmap,tmpbitmap1,flip_screen,flip_screen,0,0,Machine.visible_area,TRANSPARENCY_COLOR,0);
+		copybitmap(bitmap,tmpbitmap2,flip_screen(),flip_screen(),0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap1,flip_screen(),flip_screen(),0,0,Machine.visible_area,TRANSPARENCY_COLOR,0);
 	} };
 }

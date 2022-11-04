@@ -319,12 +319,12 @@ public class popeye
 		int offs;
 		static int lastflip = 0;
 	
-		if (lastflip != flip_screen)
+		if (lastflip != flip_screen())
 		{
 			for (offs = 0;offs < popeye_bitmapram_size;offs++)
 				popeye_bitmap_w(offs,popeye_bitmapram[offs]);
 	
-			lastflip = flip_screen;
+			lastflip = flip_screen();
 		}
 	
 		set_background_palette((*popeye_palettebank & 0x08) >> 3);

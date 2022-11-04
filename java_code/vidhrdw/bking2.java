@@ -34,7 +34,7 @@ public class bking2
 	static int palette_bank;
 	static int controller;
 	static int hit;
-	static int flip_screen;
+	static int flip_screen();
 	
 	static struct mame_bitmap* helper0;
 	static struct mame_bitmap* helper1;
@@ -154,9 +154,9 @@ public class bking2
 	
 		coin_lockout_global_w(~data & 0x01);
 	
-		flip_screen = data & 0x04;
+		flip_screen() = data & 0x04;
 	
-		tilemap_set_flip(ALL_TILEMAPS, flip_screen ? TILEMAP_FLIPX | TILEMAP_FLIPY : 0);
+		tilemap_set_flip(ALL_TILEMAPS, flip_screen() ? TILEMAP_FLIPX | TILEMAP_FLIPY : 0);
 	
 		controller = data & 0x02;
 	
@@ -348,8 +348,8 @@ public class bking2
 			latch = 0x0400;
 		}
 	
-		tilemap_set_scrollx(tilemap, 0, flip_screen ? -xld : xld);
-		tilemap_set_scrolly(tilemap, 0, flip_screen ? -yld : yld);
+		tilemap_set_scrollx(tilemap, 0, flip_screen() ? -xld : xld);
+		tilemap_set_scrolly(tilemap, 0, flip_screen() ? -yld : yld);
 	
 		tilemap_draw(helper0, &rect, tilemap, 0, 0);
 	
@@ -375,8 +375,8 @@ public class bking2
 						int col = (xld + x) / 8 + 1;
 						int row = (yld + y) / 8 + 0;
 	
-						latch |= (flip_screen ? 31 - col : col) << 0;
-						latch |= (flip_screen ? 31 - row : row) << 5;
+						latch |= (flip_screen() ? 31 - col : col) << 0;
+						latch |= (flip_screen() ? 31 - row : row) << 5;
 	
 						pc3259_output[0] = (latch >> 0x0) & 0xf;
 						pc3259_output[1] = (latch >> 0x4) & 0xf;

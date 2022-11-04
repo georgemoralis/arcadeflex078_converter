@@ -52,7 +52,7 @@ public class ddragon3
 			case 1: return ddragon3_fg_scrolly;
 			case 2: return ddragon3_bg_scrollx;
 			case 3: return ddragon3_bg_scrolly;
-			case 5: return flip_screen;
+			case 5: return flip_screen();
 			case 6: return ddragon3_bg_tilebase;
 		}
 	
@@ -183,7 +183,7 @@ public class ddragon3
 				for (i = 0; i <= height; i++)
 				{
 					drawgfx(bitmap, Machine.gfx[1], code + i, color, flipx, flipy,
-						sx, sy + (flip_screen ? (i * 16) : (-i * 16)), cliprect, 
+						sx, sy + (flip_screen() ? (i * 16) : (-i * 16)), cliprect, 
 						TRANSPARENCY_PEN, 0);
 				}
 			}

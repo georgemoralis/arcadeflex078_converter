@@ -260,7 +260,7 @@ public class paradise
 	
 		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0, 0,0);
 		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
-		if ((layers_ctrl & 4) != 0)	copybitmap(bitmap,tmpbitmap,flip_screen,flip_screen,0,0,cliprect,TRANSPARENCY_PEN, 0x80f);
+		if ((layers_ctrl & 4) != 0)	copybitmap(bitmap,tmpbitmap,flip_screen(),flip_screen(),0,0,cliprect,TRANSPARENCY_PEN, 0x80f);
 	
 		if ((paradise_priority & 2) != 0)
 		{

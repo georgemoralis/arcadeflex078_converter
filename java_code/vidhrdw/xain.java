@@ -192,13 +192,13 @@ public class xain
 				drawgfx(bitmap,Machine.gfx[3],
 						numtile,
 						color,
-						flipx,flip_screen,
-						sx-1,flip_screen?sy+16:sy-16,
+						flipx,flip_screen(),
+						sx-1,flip_screen()?sy+16:sy-16,
 						cliprect,TRANSPARENCY_PEN,0);
 				drawgfx(bitmap,Machine.gfx[3],
 						numtile+1,
 						color,
-						flipx,flip_screen,
+						flipx,flip_screen(),
 						sx-1,sy,
 						cliprect,TRANSPARENCY_PEN,0);
 			}
@@ -207,7 +207,7 @@ public class xain
 				drawgfx(bitmap,Machine.gfx[3],
 						numtile,
 						color,
-						flipx,flip_screen,
+						flipx,flip_screen(),
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,0);
 			}

@@ -98,7 +98,7 @@ public class ambush
 			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					(col & 0x0f) | ((*ambush_colorbank & 0x03) << 4),
-					flip_screen,flip_screen,
+					flip_screen(),flip_screen(),
 					8*sx, (8*sy + scroll) & 0xff,
 					Machine.visible_area,transparency,0);
 		}

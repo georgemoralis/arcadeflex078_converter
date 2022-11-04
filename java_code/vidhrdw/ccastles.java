@@ -314,7 +314,7 @@ public class ccastles
 				drawgfx(sprite_bm,Machine.gfx[0],
 						spriteaddr[offs],
 						0,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						0,0,
 						0,TRANSPARENCY_NONE,0);
 	
@@ -344,7 +344,7 @@ public class ccastles
 				drawgfx(bitmap,Machine.gfx[0],
 						spriteaddr[offs],
 						0,
-						flip_screen,flip_screen,
+						flip_screen(),flip_screen(),
 						x,y,
 						cliprect,TRANSPARENCY_PEN,7);
 			}

@@ -108,7 +108,7 @@ public class ladybug
 	
 	public static WriteHandlerPtr ladybug_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (flip_screen != (data & 0x01))
+		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);

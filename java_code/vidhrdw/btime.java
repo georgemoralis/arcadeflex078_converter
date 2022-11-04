@@ -392,7 +392,7 @@ public class btime
 	        drawgfx(bitmap,Machine.gfx[0],
 	                code,
 	                color,
-	                flip_screen,flip_screen,
+	                flip_screen(),flip_screen(),
 	                8*sx,8*sy,
 	                Machine.visible_area,transparency,0);
 	    }
@@ -435,7 +435,7 @@ public class btime
 	                sx,sy,
 	                Machine.visible_area,TRANSPARENCY_PEN,0);
 	
-	        sy += (flip_screen ? -256 : 256);
+	        sy += (flip_screen() ? -256 : 256);
 	
 	        // Wrap around
 	        drawgfx(bitmap,Machine.gfx[1],
@@ -479,7 +479,7 @@ public class btime
 	            drawgfx(bitmap, Machine.gfx[2],
 	                    memory_region(REGION_GFX3)[tileoffset + offs],
 	                    btime_palette,
-	                    flip_screen,flip_screen,
+	                    flip_screen(),flip_screen(),
 	                    sx,sy,
 	                    0,TRANSPARENCY_NONE,0);
 	        }
@@ -663,7 +663,7 @@ public class btime
 	            drawgfx(background_bitmap, Machine.gfx[2],
 	                    (bnj_backgroundram[offs] >> 4) + ((offs & 0x80) >> 3) + 32,
 	                    0,
-	                    flip_screen, flip_screen,
+	                    flip_screen(), flip_screen(),
 	                    sx, sy,
 	                    0, TRANSPARENCY_NONE, 0);
 	        }
@@ -720,7 +720,7 @@ public class btime
 	        drawgfx(bitmap, Machine.gfx[2],
 	                bnj_backgroundram[offs],
 	                0,
-	                flip_screen, flip_screen,
+	                flip_screen(), flip_screen(),
 	                8*sx,8*sy,
 	                0, TRANSPARENCY_NONE, 0);
 	    }

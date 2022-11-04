@@ -311,7 +311,7 @@ public class dkong
 		const UINT8 *table = memory_region(REGION_GFX3);
 		int x,y,counter;
 	
-		counter = flip_screen ? 0x000 : 0x400;
+		counter = flip_screen() ? 0x000 : 0x400;
 	
 		x = Machine.visible_area.min_x;
 		y = Machine.visible_area.min_y;

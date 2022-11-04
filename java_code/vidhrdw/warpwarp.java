@@ -135,7 +135,7 @@ public class warpwarp
 	
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,flip_screen,flip_screen,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,flip_screen(),flip_screen(),0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		if (warpwarp_bulletsram[0] > 1)

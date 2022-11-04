@@ -202,7 +202,7 @@ public class rallyx
 	
 	public static WriteHandlerPtr rallyx_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (flip_screen != (data & 1))
+		if (flip_screen() != (data & 1))
 		{
 			flip_screen_set(data & 1);
 			memset(dirtybuffer,1,videoram_size[0]);
@@ -617,7 +617,7 @@ public class rallyx
 			sy = 225 - spriteram_2.read(offs)- displacement;
 	
 			/* handle reduced visible area in some games */
-			if (flip_screen && Machine.drv.default_visible_area.max_x == 32*8-1) sx += 32;
+			if (flip_screen() && Machine.drv.default_visible_area.max_x == 32*8-1) sx += 32;
 	
 			drawgfx(bitmap,Machine.gfx[1],
 					((spriteram.read(offs)& 0x7c) >> 2) + 0x20*(spriteram.read(offs)& 0x01) + ((spriteram.read(offs)& 0x80) >> 1),
@@ -638,7 +638,7 @@ public class rallyx
 			if (flip_screen != 0) x -= 3;
 	
 			/* handle reduced visible area in some games */
-			if (flip_screen && Machine.drv.default_visible_area.max_x == 32*8-1) x += 32;
+			if (flip_screen() && Machine.drv.default_visible_area.max_x == 32*8-1) x += 32;
 	
 			drawgfx(bitmap,Machine.gfx[2],
 					(rallyx_radarattr[offs & 0x0f] & 0x07) ^ 0x07,
