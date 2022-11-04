@@ -491,11 +491,11 @@ public class ninjakd2
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		1,	/* 1 channel */
 		25	/* volume */
-	};
+	);
 	
 	static struct CustomSound_interface custom_interface =
 	{

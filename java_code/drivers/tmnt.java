@@ -2460,11 +2460,11 @@ public class tmnt
 		{0}
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		1,	/* 1 channel for the title music */
 		100	/* volume */
-	};
+	);
 	
 	static struct CustomSound_interface custom_interface =
 	{

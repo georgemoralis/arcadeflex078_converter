@@ -44,12 +44,12 @@ public class astrof
 		0   /* end of array */
 	};
 	
-	struct Samplesinterface astrof_samples_interface =
-	{
+	static Samplesinterface astrof_samples_interface = new Samplesinterface
+	(
 		4,	/* 4 channels */
 		25,	/* volume */
 		astrof_sample_names
-	};
+	);
 	
 	#if 0
 	static const char *tomahawk_sample_names[] =
@@ -60,12 +60,12 @@ public class astrof
 	};
 	#endif
 	
-	struct Samplesinterface tomahawk_samples_interface =
-	{
+	static Samplesinterface tomahawk_samples_interface = new Samplesinterface
+	(
 		1,	/* 1 channel for now */
 		25,	/* volume */
 		0,//tomahawk_sample_names
-	};
+	);
 	
 	
 	static int start_explosion = 0;

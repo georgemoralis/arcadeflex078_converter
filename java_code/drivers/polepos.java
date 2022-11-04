@@ -413,12 +413,12 @@ public class polepos
 		0	/* end of array */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		2,	/* 2 channels */
 		40, /* volume */
 		polepos_sample_names
-	};
+	);
 	
 	
 	

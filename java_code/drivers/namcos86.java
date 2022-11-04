@@ -1187,11 +1187,11 @@ public class namcos86
 		0		/* stereo */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		2,	/* 2 channels for voice effects */
 		40	/* volume */
-	};
+	);
 	
 	static struct CustomSound_interface custom_interface =
 	{

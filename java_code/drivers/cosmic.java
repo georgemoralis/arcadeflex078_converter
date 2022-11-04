@@ -982,12 +982,12 @@ public class cosmic
 		0       /* end of array */
 	};
 	
-	static struct Samplesinterface panic_samples_interface =
-	{
+	static Samplesinterface panic_samples_interface = new Samplesinterface
+	(
 		9,	/* 9 channels */
 		25,	/* volume */
 		panic_sample_names
-	};
+	);
 	
 	static const char *cosmicg_sample_names[] =
 	{
@@ -1010,12 +1010,12 @@ public class cosmic
 		0       /* end of array */
 	};
 	
-	static struct Samplesinterface cosmicg_samples_interface =
-	{
+	static Samplesinterface cosmicg_samples_interface = new Samplesinterface
+	(
 		9,	/* 9 channels */
 		25,	/* volume */
 		cosmicg_sample_names
-	};
+	);
 	
 	
 	public static MachineHandlerPtr machine_driver_cosmic = new MachineHandlerPtr() {

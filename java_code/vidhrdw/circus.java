@@ -35,12 +35,12 @@ public class circus
 		0       /* end of array */
 	};
 	
-	struct Samplesinterface circus_samples_interface =
-	{
+	static Samplesinterface circus_samples_interface = new Samplesinterface
+	(
 		3,	/* 3 channels */
 		25,	/* volume */
 		circus_sample_names
-	};
+	);
 	
 	public static WriteHandlerPtr circus_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

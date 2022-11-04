@@ -315,12 +315,12 @@ public class berzerk
 	} };
 	
 	
-	struct Samplesinterface berzerk_samples_interface =
-	{
+	static Samplesinterface berzerk_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		sample_names
-	};
+	);
 	
 	struct CustomSound_interface berzerk_custom_interface =
 	{

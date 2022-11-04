@@ -184,12 +184,12 @@ public class gotya
 		0       /* end of array */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		4,	/* 4 channels */
 		50,	/* volume */
 		sample_names
-	};
+	);
 	
 	
 	public static MachineHandlerPtr machine_driver_gotya = new MachineHandlerPtr() {

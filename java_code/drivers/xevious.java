@@ -914,19 +914,19 @@ public class xevious
 		0	/* end of array */
 	};
 	
-	struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		1,	/* one channel */
 		80,	/* volume */
 		xevious_sample_names
-	};
+	);
 	
-	struct Samplesinterface xevios_samples_interface =
-	{
+	static Samplesinterface xevios_samples_interface = new Samplesinterface
+	(
 		1,	/* one channel */
 		80,	/* volume */
 		xevios_sample_names
-	};
+	);
 	
 	
 	static const char *battles_sample_names[] =
@@ -937,12 +937,12 @@ public class xevious
 		0	/* end of array */
 	};
 	
-	struct Samplesinterface battles_samples_interface =
-	{
+	static Samplesinterface battles_samples_interface = new Samplesinterface
+	(
 		1,	/* one channel */
 		80,	/* volume */
 		battles_sample_names
-	};
+	);
 	
 	
 	

@@ -910,12 +910,12 @@ public class exidy
 	};
 	
 	
-	static struct Samplesinterface targ_samples_interface =
-	{
+	static Samplesinterface targ_samples_interface = new Samplesinterface
+	(
 		3,	/* 3 Channels */
 		25,	/* volume */
 		targ_sample_names
-	};
+	);
 	
 	
 	static struct CustomSound_interface targ_custom_interface =

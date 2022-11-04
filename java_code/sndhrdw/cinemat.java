@@ -111,12 +111,12 @@ public class cinemat
 	    0	/* end of array */
 	};
 	
-	struct Samplesinterface sundance_samples_interface =
-	{
+	static Samplesinterface sundance_samples_interface = new Samplesinterface
+	(
 		6,	/* 8 channels */
 		25,	/* volume */
 		sundance_sample_names
-	};
+	);
 	
 	void sundance_sound_w(UINT8 sound_val, UINT8 bits_changed)
 	{
@@ -177,12 +177,12 @@ public class cinemat
 	    0	/* end of array */
 	};
 	
-	struct Samplesinterface starcas_samples_interface =
-	{
+	static Samplesinterface starcas_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		starcas_sample_names
-	};
+	);
 	
 	void starcas_sound_w(UINT8 sound_val, UINT8 bits_changed)
 	{
@@ -285,12 +285,12 @@ public class cinemat
 	    0	/* end of array */
 	};
 	
-	struct Samplesinterface warrior_samples_interface =
-	{
+	static Samplesinterface warrior_samples_interface = new Samplesinterface
+	(
 		5,	/* 8 channels */
 		25,	/* volume */
 		warrior_sample_names
-	};
+	);
 	
 	void warrior_sound_w(UINT8 sound_val, UINT8 bits_changed)
 	{
@@ -343,12 +343,12 @@ public class cinemat
 	    0	/* end of array */
 	};
 	
-	struct Samplesinterface armora_samples_interface =
-	{
+	static Samplesinterface armora_samples_interface = new Samplesinterface
+	(
 		7,	/* 8 channels */
 		25,	/* volume */
 		armora_sample_names
-	};
+	);
 	
 	
 	void armora_sound_w(UINT8 sound_val, UINT8 bits_changed)
@@ -431,12 +431,12 @@ public class cinemat
 	    0	/* end of array */
 	};
 	
-	struct Samplesinterface ripoff_samples_interface =
-	{
+	static Samplesinterface ripoff_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		ripoff_sample_names
-	};
+	);
 	
 	void ripoff_sound_w(UINT8 sound_val, UINT8 bits_changed)
 	{
@@ -518,12 +518,12 @@ public class cinemat
 	    0	/* end of array */
 	};
 	
-	struct Samplesinterface solarq_samples_interface =
-	{
+	static Samplesinterface solarq_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		solarq_sample_names
-	};
+	);
 	
 	
 	void solarq_sound_w(UINT8 sound_val, UINT8 bits_changed)
@@ -643,12 +643,12 @@ public class cinemat
 	    0	/* end of array */
 	};
 	
-	struct Samplesinterface spacewar_samples_interface =
-	{
+	static Samplesinterface spacewar_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		spacewar_sample_names
-	};
+	);
 	
 	void spacewar_sound_w(UINT8 sound_val, UINT8 bits_changed)
 	{

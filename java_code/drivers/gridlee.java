@@ -424,12 +424,12 @@ public class gridlee
 		0	/* end of array */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		40, /* volume */
 		sample_names
-	};
+	);
 	
 	
 	

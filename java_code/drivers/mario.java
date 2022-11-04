@@ -373,12 +373,12 @@ public class mario
 	    0	/* end of array */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		3,	/* 3 channels */
 		25,	/* volume */
 		mario_sample_names
-	};
+	);
 	
 	static AY8910interface ay8910_interface = new AY8910interface
 	(

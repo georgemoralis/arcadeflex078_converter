@@ -461,12 +461,12 @@ public class blockade
 	    0   /* end of array */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 	    1,	/* 1 channel */
 		25,	/* volume */
 		blockade_sample_names
-	};
+	);
 	
 	
 	

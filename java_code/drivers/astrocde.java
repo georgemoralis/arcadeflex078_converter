@@ -569,19 +569,19 @@ public class astrocde
 	
 	
 	
-	static struct Samplesinterface wow_samples_interface =
-	{
+	static Samplesinterface wow_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		wow_sample_names
-	};
+	);
 	
-	static struct Samplesinterface gorf_samples_interface =
-	{
+	static Samplesinterface gorf_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		gorf_sample_names
-	};
+	);
 	
 	static struct astrocade_interface astrocade_2chip_interface =
 	{

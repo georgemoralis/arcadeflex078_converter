@@ -526,12 +526,12 @@ public class turbo
 		0
 	};
 	
-	static struct Samplesinterface turbo_samples_interface =
-	{
+	static Samplesinterface turbo_samples_interface = new Samplesinterface
+	(
 		8,			/* eight channels */
 		25,			/* volume */
 		turbo_sample_names
-	};
+	);
 	
 	
 	static const char *buckrog_sample_names[]=
@@ -551,12 +551,12 @@ public class turbo
 		0
 	};
 	
-	static struct Samplesinterface buckrog_samples_interface =
-	{
+	static Samplesinterface buckrog_samples_interface = new Samplesinterface
+	(
 		6,          /* 6 channels */
 		25,         /* volume */
 		buckrog_sample_names
-	};
+	);
 	
 	
 	static const char *subroc3d_sample_names[] =
@@ -576,12 +576,12 @@ public class turbo
 		0
 	};
 	
-	static struct Samplesinterface subroc3d_samples_interface =
-	{
+	static Samplesinterface subroc3d_samples_interface = new Samplesinterface
+	(
 		8,          /* eight channels */
 		50,         /* volume */
 		subroc3d_sample_names
-	};
+	);
 	
 	
 	/*************************************

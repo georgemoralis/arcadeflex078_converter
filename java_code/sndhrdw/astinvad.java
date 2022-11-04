@@ -55,12 +55,12 @@ public class astinvad
 	};
 	
 	
-	struct Samplesinterface astinvad_samples_interface =
-	{
+	static Samplesinterface astinvad_samples_interface = new Samplesinterface
+	(
 		6,   /* channels */
 		25,  /* volume   */
 		astinvad_sample_names
-	};
+	);
 	
 	
 	public static WriteHandlerPtr astinvad_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data)

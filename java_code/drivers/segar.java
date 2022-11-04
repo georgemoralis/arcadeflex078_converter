@@ -1100,35 +1100,35 @@ public class segar
 	 *
 	 *************************************/
 	
-	static struct Samplesinterface astrob_samples_interface =
-	{
+	static Samplesinterface astrob_samples_interface = new Samplesinterface
+	(
 		11,    /* 11 channels */
 		25,    /* volume */
 		astrob_sample_names
-	};
+	);
 	
-	static struct Samplesinterface spaceod_samples_interface =
-	{
+	static Samplesinterface spaceod_samples_interface = new Samplesinterface
+	(
 		12,    /* 12 channels */
 		25,    /* volume */
 		spaceod_sample_names
-	};
+	);
 	
 	
-	static struct Samplesinterface samples_interface_005 =
-	{
+	static Samplesinterface samples_interface_005 = new Samplesinterface
+	(
 		12,    /* 12 channels */
 		25,    /* volume */
 		s005_sample_names
-	};
+	);
 	
 	
-	static struct Samplesinterface monsterb_samples_interface =
-	{
+	static Samplesinterface monsterb_samples_interface = new Samplesinterface
+	(
 		2,    /* 2 channels */
 		25,    /* volume */
 		monsterb_sample_names
-	};
+	);
 	
 	
 	static struct DACinterface monsterb_dac_interface =

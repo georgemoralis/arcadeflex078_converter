@@ -1175,33 +1175,33 @@ public class vicdual
 	
 	
 	
-	static struct Samplesinterface samples_interface_carnival =
-	{
+	static Samplesinterface samples_interface_carnival = new Samplesinterface
+	(
 	 	12,	/* 12 channels */
 	 	50,	/* volume */
 		carnival_sample_names
-	};
+	);
 	
-	static struct Samplesinterface samples_interface_depthch =
-	{
+	static Samplesinterface samples_interface_depthch = new Samplesinterface
+	(
 		12,	/* 12 channels */
 		50,	/* volume */
 		depthch_sample_names
-	};
+	);
 	
-	static struct Samplesinterface samples_interface_invinco3 =
-	{
+	static Samplesinterface samples_interface_invinco3 = new Samplesinterface
+	(
 		12,	/* 12 channels */
 		50,	/* volume */
 		invinco_sample_names
-	};
+	);
 	
-	static struct Samplesinterface samples_interface_pulsar =
-	{
+	static Samplesinterface samples_interface_pulsar = new Samplesinterface
+	(
 		12,	/* 12 channels */
 		50,	/* volume */
 		pulsar_sample_names
-	};
+	);
 	
 	
 	public static MachineHandlerPtr machine_driver_2ports = new MachineHandlerPtr() {

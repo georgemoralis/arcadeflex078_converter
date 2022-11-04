@@ -680,12 +680,12 @@ public class rockola
 		rockola_sh_update
 	};
 	
-	static struct Samplesinterface vanguard_samples_interface =
-	{
+	static Samplesinterface vanguard_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		vanguard_sample_names
-	};
+	);
 	
 	
 	

@@ -272,12 +272,12 @@ public class tankbatt
 	    0	/* end of array */
 	};
 	
-	static struct Samplesinterface samples_interface =
-	{
+	static Samplesinterface samples_interface = new Samplesinterface
+	(
 		3,	/* 3 channels */
 		25,	/* volume */
 		tankbatt_sample_names
-	};
+	);
 	
 	
 	

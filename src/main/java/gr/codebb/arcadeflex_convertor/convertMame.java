@@ -33,6 +33,7 @@ public class convertMame {
     static final int AY8910interface = 20;
     static final int GAMEDRIVER = 21;
     static final int MACHINEDRIVER = 22;
+    static final int Samplesinterface = 23;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -230,6 +231,20 @@ public class convertMame {
                                 sUtil.skipSpace();
                                 sUtil.putString("static AY8910interface " + Convertor.token[0] + " = new AY8910interface");
                                 type = AY8910interface;
+                                i3 = -1;
+                                continue;
+                            }
+                        }
+                        if (sUtil.getToken("Samplesinterface")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() != '=') {
+                                Convertor.inpos = i;
+                            } else {
+                                sUtil.skipSpace();
+                                sUtil.putString("static Samplesinterface " + Convertor.token[0] + " = new Samplesinterface");
+                                type = Samplesinterface;
                                 i3 = -1;
                                 continue;
                             }
@@ -739,6 +754,15 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (type == Samplesinterface) {
+                        i3++;
+                        insideagk[i3] = 0;
+                        if (i3 == 0) {
+                            Convertor.outbuf[(Convertor.outpos++)] = '(';
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
                     if (type == AY8910interface) {
                         i3++;
                         insideagk[i3] = 0;
@@ -818,6 +842,15 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (type == Samplesinterface) {
+                        i3--;
+                        if (i3 == -1) {
+                            Convertor.outbuf[(Convertor.outpos++)] = 41;
+                            Convertor.inpos += 1;
+                            type = -1;
+                            continue;
+                        }
+                    }
                     if (type == AY8910interface) {
                         i3--;
                         if (i3 == -1) {
@@ -854,9 +887,9 @@ public class convertMame {
                     break;
                 case 'M': {
                     i = Convertor.inpos;
-                    if(sUtil.getToken("MACHINE_DRIVER_END")){
+                    if (sUtil.getToken("MACHINE_DRIVER_END")) {
                         sUtil.putString((new StringBuilder()).append("MACHINE_DRIVER_END();\n }\n};").toString());
-                        continue;   
+                        continue;
                     }
                     if (sUtil.getToken("MEMORY_READ_START(")) {
                         sUtil.skipSpace();
@@ -1510,23 +1543,23 @@ public class convertMame {
                 break;
                 case 'f':
                     i = Convertor.inpos;
-                    if(sUtil.getToken("flip_screen")){
+                    if (sUtil.getToken("flip_screen")) {
                         sUtil.putString((new StringBuilder()).append("flip_screen()").toString());
-                        continue;   
+                        continue;
                     }
-                    Convertor.inpos =i;
+                    Convertor.inpos = i;
                     break;
                 case '!':
                     i = Convertor.inpos;
-                    if(sUtil.getToken("!flipx")){
+                    if (sUtil.getToken("!flipx")) {
                         sUtil.putString((new StringBuilder()).append("NOT(flipx)").toString());
-                        continue;   
+                        continue;
                     }
-                    if(sUtil.getToken("!flipy")){
+                    if (sUtil.getToken("!flipy")) {
                         sUtil.putString((new StringBuilder()).append("NOT(flipy)").toString());
-                        continue;   
+                        continue;
                     }
-                    Convertor.inpos =i;
+                    Convertor.inpos = i;
                     break;
             }
 

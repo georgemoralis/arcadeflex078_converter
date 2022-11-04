@@ -1369,19 +1369,19 @@ public class gottlieb
 		0	/* end of array */
 	};
 	
-	static struct Samplesinterface qbert_samples_interface =
-	{
+	static Samplesinterface qbert_samples_interface = new Samplesinterface
+	(
 	 	1,	/* one channel */
 		100,	/* volume */
 		qbert_sample_names
-	};
+	);
 	
-	static struct Samplesinterface reactor_samples_interface =
-	{
+	static Samplesinterface reactor_samples_interface = new Samplesinterface
+	(
 		1,	/* one channel */
 		100,	/* volume */
 		reactor_sample_names
-	};
+	);
 	
 	#define gottlieb_samples_interface qbert_samples_interface	/* not used */
 	#define krull_samples_interface qbert_samples_interface		/* not used */

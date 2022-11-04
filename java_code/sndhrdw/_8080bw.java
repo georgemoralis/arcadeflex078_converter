@@ -87,12 +87,12 @@ public class _8080bw
 		0       /* end of array */
 	};
 	
-	struct Samplesinterface invaders_samples_interface =
-	{
+	static Samplesinterface invaders_samples_interface = new Samplesinterface
+	(
 		4,	/* 4 channels */
 		25,	/* volume */
 		invaders_sample_names
-	};
+	);
 	
 	
 	struct SN76477interface invad2ct_sn76477_interface =
@@ -140,12 +140,12 @@ public class _8080bw
 		0       /* end of array */
 	};
 	
-	struct Samplesinterface invad2ct_samples_interface =
-	{
+	static Samplesinterface invad2ct_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25,	/* volume */
 		invad2ct_sample_names
-	};
+	);
 	
 	
 	public static MachineInitHandlerPtr machine_init_invaders  = new MachineInitHandlerPtr() { public void handler()
@@ -312,12 +312,12 @@ public class _8080bw
 		0       /* end of array */
 	};
 	
-	struct Samplesinterface boothill_samples_interface =
-	{
+	static Samplesinterface boothill_samples_interface = new Samplesinterface
+	(
 		9,	/* 9 channels */
 		25,	/* volume */
 		boothill_sample_names
-	};
+	);
 	
 	
 	/* HC 4/14/98 NOTE: *I* THINK there are sounds missing...
@@ -1109,12 +1109,12 @@ public class _8080bw
 		0       /* end of array */
 	};
 	
-	struct Samplesinterface seawolf_samples_interface =
-	{
+	static Samplesinterface seawolf_samples_interface = new Samplesinterface
+	(
 		5,	/* 5 channels */
 		25,	/* volume */
 		seawolf_sample_names
-	};
+	);
 	
 	public static MachineInitHandlerPtr machine_init_seawolf  = new MachineInitHandlerPtr() { public void handler()
 	{
