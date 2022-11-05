@@ -928,10 +928,10 @@ public class tms9928a
 	
 	static TMS9928a_interface sIntf;
 	
-	static VIDEO_START ( TMS9928A_hack )
+	static public static VideoStartHandlerPtr video_start_TMS9928A_hack  = new VideoStartHandlerPtr() { public int handler()
 	{
 		return TMS9928A_start(&sIntf);
-	}
+	} };
 	
 	void mdrv_tms9928a(struct InternalMachineDriver *machine, const TMS9928a_interface *intf)
 	{

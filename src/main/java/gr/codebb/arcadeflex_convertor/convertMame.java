@@ -583,7 +583,7 @@ public class convertMame {
                     break;
                 case 'V': {
                     i = Convertor.inpos;
-                    if (sUtil.getToken("VIDEO_UPDATE(")) {
+                    if ((sUtil.getToken("VIDEO_UPDATE("))||(sUtil.getToken("VIDEO_UPDATE ("))) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();
@@ -599,7 +599,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (sUtil.getToken("VIDEO_START(")) {
+                    if ((sUtil.getToken("VIDEO_START(")) || sUtil.getToken("VIDEO_START (")) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();
@@ -615,7 +615,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (sUtil.getToken("VIDEO_STOP(")) {
+                    if ((sUtil.getToken("VIDEO_STOP(")) || (sUtil.getToken("VIDEO_STOP ("))){
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();

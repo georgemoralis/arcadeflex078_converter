@@ -1284,7 +1284,7 @@ public class wecleman
 								Video Updates
 	***************************************************************************/
 	
-	VIDEO_UPDATE ( wecleman )
+	public static VideoUpdateHandlerPtr video_update_wecleman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pen_t *mrct;
 		int video_on;
@@ -1367,7 +1367,7 @@ public class wecleman
 	
 		/* Draw the text layer */
 		if (video_on != 0) tilemap_draw(bitmap,cliprect, txt_tilemap, 0, 0);
-	}
+	} };
 	
 	/***************************************************************************
 									Hot Chase
