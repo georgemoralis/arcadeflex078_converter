@@ -119,7 +119,7 @@ public class segac2
 	/* tilemaps are annoying, they can change size, use ram based tiles, base address changes etc. */
 	static struct tilemap *scrolla_tilemap, *scrollb_tilemap;
 	
-	static void get_scrolla_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_scrolla_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	/*
 	Scroll Name Table
@@ -142,9 +142,9 @@ public class segac2
 				tileno,
 				colour,
 				TILE_FLIPYX(flipyx))
-	}
+	} };
 	
-	static void get_scrollb_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_scrollb_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	/*
 	Scroll Name Table
@@ -168,7 +168,7 @@ public class segac2
 				tileno,
 				colour,
 				TILE_FLIPYX(flipyx))
-	}
+	} };
 	#endif
 	
 	/******************************************************************************

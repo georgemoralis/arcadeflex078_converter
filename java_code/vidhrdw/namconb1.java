@@ -60,12 +60,12 @@ public class namconb1
 		tile_info.mask_data = 8*tile + mpMaskData;
 	}
 	
-	static void tilemapNB1_get_info0(int tile_index) { tilemapNB1_get_info(tile_index,tilemap_palette_bank[0],&videoram32[0x0000]); }
-	static void tilemapNB1_get_info1(int tile_index) { tilemapNB1_get_info(tile_index,tilemap_palette_bank[1],&videoram32[0x0800]); }
-	static void tilemapNB1_get_info2(int tile_index) { tilemapNB1_get_info(tile_index,tilemap_palette_bank[2],&videoram32[0x1000]); }
-	static void tilemapNB1_get_info3(int tile_index) { tilemapNB1_get_info(tile_index,tilemap_palette_bank[3],&videoram32[0x1800]); }
-	static void tilemapNB1_get_info4(int tile_index) { tilemapNB1_get_info(tile_index,tilemap_palette_bank[4],&videoram32[NAMCONB1_FG1BASE/2]); }
-	static void tilemapNB1_get_info5(int tile_index) { tilemapNB1_get_info(tile_index,tilemap_palette_bank[5],&videoram32[NAMCONB1_FG2BASE/2]); }
+	public static GetTileInfoHandlerPtr tilemapNB1_get_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB1_get_info(tile_index,tilemap_palette_bank[0],&videoram32[0x0000]); } };
+	public static GetTileInfoHandlerPtr tilemapNB1_get_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB1_get_info(tile_index,tilemap_palette_bank[1],&videoram32[0x0800]); } };
+	public static GetTileInfoHandlerPtr tilemapNB1_get_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB1_get_info(tile_index,tilemap_palette_bank[2],&videoram32[0x1000]); } };
+	public static GetTileInfoHandlerPtr tilemapNB1_get_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB1_get_info(tile_index,tilemap_palette_bank[3],&videoram32[0x1800]); } };
+	public static GetTileInfoHandlerPtr tilemapNB1_get_info4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB1_get_info(tile_index,tilemap_palette_bank[4],&videoram32[NAMCONB1_FG1BASE/2]); } };
+	public static GetTileInfoHandlerPtr tilemapNB1_get_info5 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB1_get_info(tile_index,tilemap_palette_bank[5],&videoram32[NAMCONB1_FG2BASE/2]); } };
 	
 	WRITE32_HANDLER( namconb1_videoram_w )
 	{
@@ -317,12 +317,12 @@ public class namconb1
 		tile_info.mask_data = 8*tile + mpMaskData;
 	} /* tilemapNB2_get_info */
 	
-	static void tilemapNB2_get_info0(int tile_index) { tilemapNB2_get_info(tile_index,0,&videoram32[0x0000/4]); }
-	static void tilemapNB2_get_info1(int tile_index) { tilemapNB2_get_info(tile_index,1,&videoram32[0x2000/4]); }
-	static void tilemapNB2_get_info2(int tile_index) { tilemapNB2_get_info(tile_index,2,&videoram32[0x4000/4]); }
-	static void tilemapNB2_get_info3(int tile_index) { tilemapNB2_get_info(tile_index,3,&videoram32[0x6000/4]); }
-	static void tilemapNB2_get_info4(int tile_index) { tilemapNB2_get_info(tile_index,4,&videoram32[NAMCONB1_FG1BASE/2]); }
-	static void tilemapNB2_get_info5(int tile_index) { tilemapNB2_get_info(tile_index,5,&videoram32[NAMCONB1_FG2BASE/2]); }
+	public static GetTileInfoHandlerPtr tilemapNB2_get_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB2_get_info(tile_index,0,&videoram32[0x0000/4]); } };
+	public static GetTileInfoHandlerPtr tilemapNB2_get_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB2_get_info(tile_index,1,&videoram32[0x2000/4]); } };
+	public static GetTileInfoHandlerPtr tilemapNB2_get_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB2_get_info(tile_index,2,&videoram32[0x4000/4]); } };
+	public static GetTileInfoHandlerPtr tilemapNB2_get_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB2_get_info(tile_index,3,&videoram32[0x6000/4]); } };
+	public static GetTileInfoHandlerPtr tilemapNB2_get_info4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB2_get_info(tile_index,4,&videoram32[NAMCONB1_FG1BASE/2]); } };
+	public static GetTileInfoHandlerPtr tilemapNB2_get_info5 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { tilemapNB2_get_info(tile_index,5,&videoram32[NAMCONB1_FG2BASE/2]); } };
 	
 	public static VideoUpdateHandlerPtr video_update_namconb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		video_update_common( bitmap, cliprect, 1 );

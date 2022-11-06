@@ -44,23 +44,23 @@ public class targeth
 		  1  | xxxxxxxx x------- | not used?
 	*/
 	
-	static void get_tile_info_targeth_screen0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_targeth_screen0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = targeth_videoram[tile_index << 1];
 		int data2 = targeth_videoram[(tile_index << 1) + 1];
 		int code = data & 0x3fff;
 	
 		SET_TILE_INFO(0, code, data2 & 0x1f, TILE_FLIPXY((data2 >> 5) & 0x03))
-	}
+	} };
 	
-	static void get_tile_info_targeth_screen1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_targeth_screen1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = targeth_videoram[(0x2000/2) + (tile_index << 1)];
 		int data2 = targeth_videoram[(0x2000/2) + (tile_index << 1) + 1];
 		int code = data & 0x3fff;
 	
 		SET_TILE_INFO(0, code, data2 & 0x1f, TILE_FLIPXY((data2 >> 5) & 0x03))
-	}
+	} };
 	
 	/***************************************************************************
 	

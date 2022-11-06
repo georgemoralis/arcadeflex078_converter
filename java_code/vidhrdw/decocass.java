@@ -100,7 +100,7 @@ public class decocass
 		return tile_offset[col * num_rows + row];
 	}
 	
-	static void get_bg_l_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_l_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color = (color_center_bot >> 7) & 1;
 		SET_TILE_INFO(
@@ -108,9 +108,9 @@ public class decocass
 				(0x80 == (tile_index & 0x80)) ? 16 : decocass_bgvideoram[tile_index] >> 4,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_bg_r_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_r_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color = (color_center_bot >> 7) & 1;
 		SET_TILE_INFO(
@@ -118,9 +118,9 @@ public class decocass
 				(0x00 == (tile_index & 0x80)) ? 16 : decocass_bgvideoram[tile_index] >> 4,
 				color,
 				TILE_FLIPY)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char code = decocass_fgvideoram[tile_index];
 		unsigned char attr = decocass_colorram[tile_index];
@@ -129,7 +129,7 @@ public class decocass
 				256 * (attr & 3) + code,
 				color_center_bot & 1,
 				0)
-	}
+	} };
 	
 	/********************************************
 		big object

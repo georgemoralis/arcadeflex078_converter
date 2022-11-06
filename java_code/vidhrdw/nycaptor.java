@@ -40,7 +40,7 @@ public class nycaptor
 		return nycaptor_spriteram[offset];
 	} };
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int flags,pal;
 		tile_info.priority = (videoram.read(tile_index*2 + 1)& 0x30)>>4;
@@ -61,7 +61,7 @@ public class nycaptor
 				videoram.read(tile_index*2)+ ((videoram.read(tile_index*2+1)& 0xc0) << 2) +0x400 * char_bank,
 				pal,flags;
 				)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_nycaptor  = new VideoStartHandlerPtr() { public int handler(){

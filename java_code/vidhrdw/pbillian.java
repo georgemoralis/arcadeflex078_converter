@@ -22,13 +22,13 @@ public class pbillian
 		tilemap_mark_tile_dirty(pb_tilemap,offset&0x3ff);
 	} };
 	
-	static void get_pb_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pb_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,pal;
 		tileno = pb_videoram[tile_index]+((pb_videoram[tile_index+0x400]&0x7)<<8);
 		pal=(pb_videoram[tile_index+0x400]&0xf0)>>4;
 		SET_TILE_INFO(0,tileno,pal+0x10,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_pbillian  = new VideoStartHandlerPtr() { public int handler(){
 		pb_tilemap = tilemap_create(get_pb_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,32,32);

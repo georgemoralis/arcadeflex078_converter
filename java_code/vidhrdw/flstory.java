@@ -21,7 +21,7 @@ public class flstory
 	UINT8 *flstory_scrlram;
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index*2);
 		int attr = videoram.read(tile_index*2+1);
@@ -33,7 +33,7 @@ public class flstory
 				tile_number,
 				attr & 0x0f,
 				flags)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_flstory  = new VideoStartHandlerPtr() { public int handler(){

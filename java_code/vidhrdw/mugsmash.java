@@ -69,7 +69,7 @@ public class mugsmash
 		}
 	}
 	
-	static void get_mugsmash_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_mugsmash_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 		/* fF-- cccc  nnnn nnnn */
@@ -87,7 +87,7 @@ public class mugsmash
 		fx = (mugsmash_videoram1[tile_index *2] & 0xc0) >>6;
 	
 		SET_TILE_INFO(1,tileno,colour,TILE_FLIPYX(fx))
-	}
+	} };
 	
 	WRITE16_HANDLER( mugsmash_videoram1_w )
 	{
@@ -98,7 +98,7 @@ public class mugsmash
 		}
 	}
 	
-	static void get_mugsmash_tile_info2(int tile_index)
+	public static GetTileInfoHandlerPtr get_mugsmash_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 		/* fF-- cccc  nnnn nnnn */
@@ -116,7 +116,7 @@ public class mugsmash
 		fx = (mugsmash_videoram2[tile_index *2] & 0xc0) >>6;
 	
 		SET_TILE_INFO(1,tileno,16+colour,TILE_FLIPYX(fx))
-	}
+	} };
 	
 	WRITE16_HANDLER( mugsmash_videoram2_w )
 	{

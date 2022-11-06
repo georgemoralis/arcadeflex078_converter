@@ -17,7 +17,7 @@ public class pass
 	
 	/* background tilemap stuff */
 	
-	static void get_pass_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pass_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,fx;
 	
@@ -25,7 +25,7 @@ public class pass
 		fx = (pass_bg_videoram[tile_index] & 0xc000) >> 14;
 		SET_TILE_INFO(1,tileno,0,TILE_FLIPYX(fx))
 	
-	}
+	} };
 	
 	WRITE16_HANDLER( pass_bg_videoram_w )
 	{
@@ -38,7 +38,7 @@ public class pass
 	
 	/* foreground 'sprites' tilemap stuff */
 	
-	static void get_pass_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pass_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, flip;
 	
@@ -47,7 +47,7 @@ public class pass
 	
 		SET_TILE_INFO(0,tileno,0,TILE_FLIPYX(flip));
 	
-	}
+	} };
 	
 	WRITE16_HANDLER( pass_fg_videoram_w )
 	{

@@ -27,7 +27,7 @@ public class tail2nos
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = tail2nos_bgvideoram[tile_index];
 		SET_TILE_INFO(
@@ -35,7 +35,7 @@ public class tail2nos
 				(code & 0x1fff) + (charbank << 13),
 				((code & 0xe000) >> 13) + charpalette * 16,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -70,7 +70,7 @@ public class esd16
 	
 	struct tilemap *esdtilemap_0, *esdtilemap_1, *esdtilemap_1_16x16;
 	
-	static void get_tile_info_0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = esd16_vram_0[tile_index];
 		SET_TILE_INFO(
@@ -78,9 +78,9 @@ public class esd16
 				code,
 				1,
 				0)
-	}
+	} };
 	
-	static void get_tile_info_1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = esd16_vram_1[tile_index];
 		SET_TILE_INFO(
@@ -88,9 +88,9 @@ public class esd16
 				code,
 				0,
 				0)
-	}
+	} };
 	
-	static void get_tile_info_1_16x16(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_1_16x16 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = esd16_vram_1[tile_index];
 		SET_TILE_INFO(
@@ -98,7 +98,7 @@ public class esd16
 				code,
 				0,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( esd16_vram_0_w )
 	{

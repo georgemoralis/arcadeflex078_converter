@@ -25,7 +25,7 @@ public class playmark
 	
 	***************************************************************************/
 	
-	static void bigtwin_get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr bigtwin_get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = wbeachvl_videoram1[2*tile_index];
 		UINT16 color = wbeachvl_videoram1[2*tile_index+1];
@@ -34,9 +34,9 @@ public class playmark
 				code,
 				color,
 				0)
-	}
+	} };
 	
-	static void bigtwin_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr bigtwin_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = wbeachvl_videoram2[2*tile_index];
 		UINT16 color = wbeachvl_videoram2[2*tile_index+1];
@@ -45,10 +45,10 @@ public class playmark
 				code,
 				color,
 				0)
-	}
+	} };
 	
 	
-	static void wbeachvl_get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr wbeachvl_get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = wbeachvl_videoram1[2*tile_index];
 		UINT16 color = wbeachvl_videoram1[2*tile_index+1];
@@ -57,9 +57,9 @@ public class playmark
 				code,
 				color / 4,
 				0)
-	}
+	} };
 	
-	static void wbeachvl_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr wbeachvl_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = wbeachvl_videoram2[2*tile_index];
 		UINT16 color = wbeachvl_videoram2[2*tile_index+1];
@@ -68,9 +68,9 @@ public class playmark
 				code & 0x7fff,
 				color / 4 + 8,
 				(code & 0x8000) ? TILE_FLIPX : 0)
-	}
+	} };
 	
-	static void wbeachvl_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr wbeachvl_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = wbeachvl_videoram3[2*tile_index];
 		UINT16 color = wbeachvl_videoram3[2*tile_index+1];
@@ -79,7 +79,7 @@ public class playmark
 				code & 0x7fff,
 				color / 4,
 				(code & 0x8000) ? TILE_FLIPX : 0)
-	}
+	} };
 	
 	
 	

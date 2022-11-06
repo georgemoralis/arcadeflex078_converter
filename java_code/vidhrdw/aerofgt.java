@@ -28,7 +28,7 @@ public class aerofgt
 	
 	***************************************************************************/
 	
-	static void get_pspikes_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pspikes_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = aerofgt_bg1videoram[tile_index];
 		int bank = (code & 0x1000) >> 12;
@@ -37,9 +37,9 @@ public class aerofgt
 				(code & 0x0fff) + (gfxbank[bank] << 12),
 				((code & 0xe000) >> 13) + 8 * charpalettebank,
 				0)
-	}
+	} };
 	
-	static void karatblz_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr karatblz_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = aerofgt_bg1videoram[tile_index];
 		SET_TILE_INFO(
@@ -47,10 +47,10 @@ public class aerofgt
 				(code & 0x1fff) + (gfxbank[0] << 13),
 				(code & 0xe000) >> 13,
 				0)
-	}
+	} };
 	
 	/* also spinlbrk */
-	static void karatblz_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr karatblz_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = aerofgt_bg2videoram[tile_index];
 		SET_TILE_INFO(
@@ -58,9 +58,9 @@ public class aerofgt
 				(code & 0x1fff) + (gfxbank[1] << 13),
 				(code & 0xe000) >> 13,
 				0)
-	}
+	} };
 	
-	static void spinlbrk_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr spinlbrk_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = aerofgt_bg1videoram[tile_index];
 		SET_TILE_INFO(
@@ -68,9 +68,9 @@ public class aerofgt
 				(code & 0x0fff) + (gfxbank[0] << 12),
 				(code & 0xf000) >> 12,
 				0)
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = aerofgt_bg1videoram[tile_index];
 		int bank = (code & 0x1800) >> 11;
@@ -79,9 +79,9 @@ public class aerofgt
 				(code & 0x07ff) + (gfxbank[bank] << 11),
 				(code & 0xe000) >> 13,
 				0)
-	}
+	} };
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = aerofgt_bg2videoram[tile_index];
 		int bank = 4 + ((code & 0x1800) >> 11);
@@ -90,7 +90,7 @@ public class aerofgt
 				(code & 0x07ff) + (gfxbank[bank] << 11),
 				(code & 0xe000) >> 13,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -212,7 +212,7 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	static void get_fix_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=videoram16[tile_index];
 		SET_TILE_INFO(
@@ -220,7 +220,7 @@ public class karnov
 				tile&0xfff,
 				tile>>14,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( karnov_videoram_w )
 	{

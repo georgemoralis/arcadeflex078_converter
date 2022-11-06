@@ -59,7 +59,7 @@ public class hcastle
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 6);	/* skip 0x400 */
 	}
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
@@ -79,9 +79,9 @@ public class hcastle
 				tile + bank*0x100 + pf1_bankbase,
 				((K007121_ctrlram[0][6]&0x30)*2+16) + color,
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int bit0 = (K007121_ctrlram[1][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[1][0x05] >> 2) & 0x03;
@@ -101,7 +101,7 @@ public class hcastle
 				tile + bank*0x100 + pf2_bankbase,
 				((K007121_ctrlram[1][6]&0x30)*2+16) + color,
 				0)
-	}
+	} };
 	
 	
 	

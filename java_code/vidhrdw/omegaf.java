@@ -118,7 +118,7 @@ public class omegaf
 	  Callbacks for the tilemap code
 	***************************************************************************/
 	
-	static void get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile, hi, lo;
 	
@@ -135,9 +135,9 @@ public class omegaf
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile, hi, lo;
 	
@@ -154,9 +154,9 @@ public class omegaf
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile, hi, lo;
 	
@@ -173,9 +173,9 @@ public class omegaf
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
-	static void robokid_get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr robokid_get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile, hi, lo;
 	
@@ -192,9 +192,9 @@ public class omegaf
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
-	static void robokid_get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr robokid_get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile, hi, lo;
 	
@@ -211,9 +211,9 @@ public class omegaf
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
-	static void robokid_get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr robokid_get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile, hi, lo;
 	
@@ -230,9 +230,9 @@ public class omegaf
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile, hi, lo;
 	
@@ -247,7 +247,7 @@ public class omegaf
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
 	
 	/***************************************************************************

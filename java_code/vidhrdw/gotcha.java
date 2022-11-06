@@ -33,8 +33,8 @@ public class gotcha
 		SET_TILE_INFO(0,code,(data >> 12) + color_offs,0)
 	}
 	
-	static void fg_get_tile_info(int tile_index) { get_tile_info(tile_index,gotcha_fgvideoram, 0); }
-	static void bg_get_tile_info(int tile_index) { get_tile_info(tile_index,gotcha_bgvideoram,16); }
+	public static GetTileInfoHandlerPtr fg_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,gotcha_fgvideoram, 0); } };
+	public static GetTileInfoHandlerPtr bg_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,gotcha_bgvideoram,16); } };
 	
 	
 	

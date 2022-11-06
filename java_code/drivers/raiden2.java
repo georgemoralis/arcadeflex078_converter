@@ -86,7 +86,7 @@ public class raiden2
 	
 	/* TILEMAP RELATED (move to vidhrdw file) */
 	
-	static void get_back_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_back_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=back_data[offs]+(back_data[offs+1]<<8);
@@ -95,9 +95,9 @@ public class raiden2
 		tile=tile&0xfff;
 	
 		SET_TILE_INFO(1,tile+0x0000,color,0)
-	}
+	} };
 	
-	static void get_mid_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_mid_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=mid_data[offs]+(mid_data[offs+1]<<8);
@@ -106,9 +106,9 @@ public class raiden2
 		tile=tile&0xfff;
 	
 		SET_TILE_INFO(1,tile+0x1000,color,0)
-	}
+	} };
 	
-	static void get_fore_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_fore_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=fore_data[offs]+(fore_data[offs+1]<<8);
@@ -117,9 +117,9 @@ public class raiden2
 		tile=tile&0xfff;
 	
 		SET_TILE_INFO(1,tile+0x1000,color,0)
-	}
+	} };
 	
-	static void get_text_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=videoram.read(offs)+(videoram.read(offs+1)<<8);
@@ -128,7 +128,7 @@ public class raiden2
 		tile&=0xfff;
 	
 		SET_TILE_INFO(0,tile,color,0)
-	}
+	} };
 	
 	/* VIDEO START (move to vidhrdw file) */
 	

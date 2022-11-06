@@ -56,40 +56,40 @@ public class cyberbal
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha[tile_index];
 		int code = data & 0xfff;
 		int color = (data >> 12) & 0x07;
 		SET_TILE_INFO(2, code, color, (data >> 15) & 1);
-	}
+	} };
 	
 	
-	static void get_alpha2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha2[tile_index];
 		int code = data & 0xfff;
 		int color = (data >> 12) & 0x07;
 		SET_TILE_INFO(2, code, 0x80 | color, (data >> 15) & 1);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield[tile_index];
 		int code = data & 0x1fff;
 		int color = (data >> 11) & 0x0f;
 		SET_TILE_INFO(0, code, color, (data >> 15) & 1);
-	}
+	} };
 	
 	
-	static void get_playfield2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield2[tile_index];
 		int code = data & 0x1fff;
 		int color = (data >> 11) & 0x0f;
 		SET_TILE_INFO(0, code, 0x80 | color, (data >> 15) & 1);
-	}
+	} };
 	
 	
 	

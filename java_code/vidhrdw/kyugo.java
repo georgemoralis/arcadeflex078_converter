@@ -37,17 +37,17 @@ public class kyugo
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = kyugo_fgvideoram[tile_index];
 		SET_TILE_INFO(0,
 					  code,
 					  2*color_codes[code >> 3] + fgcolor,
 					  0)
-	}
+	} };
 	
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = kyugo_bgvideoram[tile_index];
 		int attr = kyugo_bgattribram[tile_index];
@@ -55,7 +55,7 @@ public class kyugo
 					  code | ((attr & 0x03) << 8),
 					  (attr >> 4) | (bgpalbank << 4),
 					  TILE_FLIPYX((attr & 0x0c) >> 2))
-	}
+	} };
 	
 	
 	/*************************************

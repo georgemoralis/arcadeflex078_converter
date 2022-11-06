@@ -98,7 +98,7 @@ public class kncljoe
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = videoram.read(2*tile_index+1);
 		int code = videoram.read(2*tile_index)+ ((attr & 0xc0) << 2) + (tile_bank << 10);
@@ -108,7 +108,7 @@ public class kncljoe
 				code,
 				attr & 0xf,
 				TILE_FLIPXY((attr & 0x30) >> 4))
-	}
+	} };
 	
 	
 	

@@ -80,7 +80,7 @@ public class bogeyman
 		paletteram_BBGGGRRR_w(offset, ~data);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int gfxbank = ((((attr & 0x01) << 8) + videoram.read(tile_index)) / 0x80) + 3;
@@ -88,9 +88,9 @@ public class bogeyman
 		int color = (attr >> 1) & 0x07;
 	
 		SET_TILE_INFO(gfxbank, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = bogeyman_colorram2[tile_index];
 		int tile = bogeyman_videoram2[tile_index] | ((attr & 0x03) << 8);
@@ -98,7 +98,7 @@ public class bogeyman
 		int code = tile & 0x1ff;
 	
 		SET_TILE_INFO(gfxbank, code, 0, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_bogeyman  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

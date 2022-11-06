@@ -94,11 +94,11 @@ public class paradise
 		}
 	} };
 	
-	static void get_tile_info_0( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = paradise_vram_0[tile_index] + (paradise_vram_0[tile_index + 0x400] << 8);
 		SET_TILE_INFO(1, code, paradise_palbank, 0);
-	}
+	} };
 	
 	
 	/* Midground */
@@ -110,11 +110,11 @@ public class paradise
 		}
 	} };
 	
-	static void get_tile_info_1( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = paradise_vram_1[tile_index] + (paradise_vram_1[tile_index + 0x400] << 8);
 		SET_TILE_INFO(2, code, 0, 0);
-	}
+	} };
 	
 	
 	/* Foreground */
@@ -126,11 +126,11 @@ public class paradise
 		}
 	} };
 	
-	static void get_tile_info_2( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = paradise_vram_2[tile_index] + (paradise_vram_2[tile_index + 0x400] << 8);
 		SET_TILE_INFO(3, code, 0, 0);
-	}
+	} };
 	
 	/* 256 x 256 bitmap. 4 bits per pixel so every byte encodes 2 pixels */
 	

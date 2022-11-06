@@ -52,7 +52,7 @@ public class liberate
 		return (row & 0x1f) + ((31-(col &0x1f))<<5);
 	}
 	
-	static void get_back_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_back_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		const data8_t *RAM = memory_region(REGION_USER1);
 		int tile,bank;
@@ -73,9 +73,9 @@ public class liberate
 		tile=RAM[tile_index];
 		if (tile>0x7f) bank=3; else bank=2;
 		SET_TILE_INFO(bank,tile&0x7f,background_color,0)
-	}
+	} };
 	
-	static void get_fix_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color;
 	
@@ -88,7 +88,7 @@ public class liberate
 	//else tile+=0x200;
 	
 		SET_TILE_INFO(0,tile,color,0)
-	}
+	} };
 	
 	/***************************************************************************/
 	

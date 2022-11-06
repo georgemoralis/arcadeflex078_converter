@@ -27,12 +27,12 @@ public class videopin
 	}
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = videopin_video_ram[tile_index];
 	
 		SET_TILE_INFO(0, code, 0, (code & 0x40) ? TILE_FLIPY : 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_videopin  = new VideoStartHandlerPtr() { public int handler(){

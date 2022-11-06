@@ -104,17 +104,17 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha[tile_index];
 		int code = data & 0x3ff;
 		int color = (data >> 10) & 0x07;
 		int opaque = data & 0x2000;
 		SET_TILE_INFO(0, code, color, opaque ? TILE_IGNORE_TRANSPARENCY : 0);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield[tile_index];
 		UINT16 lookup = playfield_lookup[((data >> 8) & 0x7f) | (playfield_tile_bank << 7)];
@@ -122,7 +122,7 @@ public class atarisy1
 		int code = ((lookup & 0xff) << 8) | (data & 0xff);
 		int color = 0x20 + (((lookup >> 12) & 15) << bank_color_shift[gfxindex]);
 		SET_TILE_INFO(gfxindex, code, color, (data >> 15) & 1);
-	}
+	} };
 	
 	
 	

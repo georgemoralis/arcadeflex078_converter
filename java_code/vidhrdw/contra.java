@@ -66,7 +66,7 @@ public class contra
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = contra_fg_cram[tile_index];
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
@@ -88,9 +88,9 @@ public class contra
 				contra_fg_vram[tile_index]+bank*256,
 				((K007121_ctrlram[0][6]&0x30)*2+16)+(attr&7),
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = contra_bg_cram[tile_index];
 		int bit0 = (K007121_ctrlram[1][0x05] >> 0) & 0x03;
@@ -112,9 +112,9 @@ public class contra
 				contra_bg_vram[tile_index]+bank*256,
 				((K007121_ctrlram[1][6]&0x30)*2+16)+(attr&7),
 				0)
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = contra_text_cram[tile_index];
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
@@ -131,7 +131,7 @@ public class contra
 				contra_text_vram[tile_index]+bank*256,
 				((K007121_ctrlram[0][6]&0x30)*2+16)+(attr&7),
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

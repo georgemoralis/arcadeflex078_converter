@@ -102,7 +102,7 @@ public class hanaawas
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/* the color is determined by the current color byte, but the bank is via the previous one!!! */
 		int offset = (tile_index + (flip_screen() ? 1 : -1)) & 0x3ff;
@@ -112,7 +112,7 @@ public class hanaawas
 		int color = colorram.read(tile_index)& 0x1f;
 		
 		SET_TILE_INFO(gfxbank, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_hanaawas  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

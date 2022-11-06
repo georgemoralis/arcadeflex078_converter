@@ -86,7 +86,7 @@ public class appoooh
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = appoooh_fg_videoram[tile_index] + 256 * ((appoooh_fg_colorram[tile_index]>>5) & 7);
 	
@@ -96,9 +96,9 @@ public class appoooh
 				appoooh_fg_colorram[tile_index]&0x0f,
 				(appoooh_fg_colorram[tile_index] & 0x10 ) ? TILEMAP_FLIPX : 0
 		);
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = appoooh_bg_videoram[tile_index] + 256 * ((appoooh_bg_colorram[tile_index]>>5) & 7);
 	
@@ -108,7 +108,7 @@ public class appoooh
 				appoooh_bg_colorram[tile_index]&0x0f,
 				(appoooh_bg_colorram[tile_index] & 0x10 ) ? TILEMAP_FLIPX : 0
 		);
-	}
+	} };
 	
 	/***************************************************************************
 	

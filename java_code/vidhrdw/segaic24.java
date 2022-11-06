@@ -105,33 +105,33 @@ public class segaic24
 	);
 	#endif
 	
-	static void sys24_tile_info_0s(int tile_index)
+	public static GetTileInfoHandlerPtr sys24_tile_info_0s = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 val = sys24_tile_ram[tile_index];
 		tile_info.priority = (val & 0x8000) != 0;
 		SET_TILE_INFO(sys24_char_gfx_index, val & sys24_tile_mask, (val >> 7) & 0xff, 0);
-	}
+	} };
 	
-	static void sys24_tile_info_0w(int tile_index)
+	public static GetTileInfoHandlerPtr sys24_tile_info_0w = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 val = sys24_tile_ram[tile_index|0x1000];
 		tile_info.priority = (val & 0x8000) != 0;
 		SET_TILE_INFO(sys24_char_gfx_index, val & sys24_tile_mask, (val >> 7) & 0xff, 0);
-	}
+	} };
 	
-	static void sys24_tile_info_1s(int tile_index)
+	public static GetTileInfoHandlerPtr sys24_tile_info_1s = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 val = sys24_tile_ram[tile_index|0x2000];
 		tile_info.priority = (val & 0x8000) != 0;
 		SET_TILE_INFO(sys24_char_gfx_index, val & sys24_tile_mask, (val >> 7) & 0xff, 0);
-	}
+	} };
 	
-	static void sys24_tile_info_1w(int tile_index)
+	public static GetTileInfoHandlerPtr sys24_tile_info_1w = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 val = sys24_tile_ram[tile_index|0x3000];
 		tile_info.priority = (val & 0x8000) != 0;
 		SET_TILE_INFO(sys24_char_gfx_index, val & sys24_tile_mask, (val >> 7) & 0xff, 0);
-	}
+	} };
 	
 	static void sys24_tile_dirtyall(void)
 	{

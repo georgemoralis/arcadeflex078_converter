@@ -50,12 +50,12 @@ public class starshp1
 	}
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = starshp1_playfield_ram[tile_index];
 	
 		SET_TILE_INFO(0, code & 0x3f, 0, 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_starshp1  = new VideoStartHandlerPtr() { public int handler(){

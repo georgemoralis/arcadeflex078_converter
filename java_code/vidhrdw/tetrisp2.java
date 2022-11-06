@@ -132,7 +132,7 @@ public class tetrisp2
 	#define NX_0  (0x40)
 	#define NY_0  (0x40)
 	
-	static void get_tile_info_bg(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_bg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code_hi = tetrisp2_vram_bg[ 2 * tile_index + 0];
 		data16_t code_lo = tetrisp2_vram_bg[ 2 * tile_index + 1];
@@ -141,7 +141,7 @@ public class tetrisp2
 				code_hi,
 				code_lo & 0xf,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( tetrisp2_vram_bg_w )
 	{
@@ -155,7 +155,7 @@ public class tetrisp2
 	#define NX_1  (0x40)
 	#define NY_1  (0x40)
 	
-	static void get_tile_info_fg(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_fg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code_hi = tetrisp2_vram_fg[ 2 * tile_index + 0];
 		data16_t code_lo = tetrisp2_vram_fg[ 2 * tile_index + 1];
@@ -164,7 +164,7 @@ public class tetrisp2
 				code_hi,
 				code_lo & 0xf,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( tetrisp2_vram_fg_w )
 	{
@@ -174,7 +174,7 @@ public class tetrisp2
 	}
 	
 	
-	static void get_tile_info_rot(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_rot = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code_hi = tetrisp2_vram_rot[ 2 * tile_index + 0];
 		data16_t code_lo = tetrisp2_vram_rot[ 2 * tile_index + 1];
@@ -183,7 +183,7 @@ public class tetrisp2
 				code_hi,
 				code_lo & 0xf,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( tetrisp2_vram_rot_w )
 	{

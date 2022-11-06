@@ -81,19 +81,19 @@ public class kopunch
 		tilemap_set_flip(fg_tilemap, (data & 0x08) ? TILEMAP_FLIPY : 0);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 	
 		SET_TILE_INFO(0, code, 0, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (kopunch_videoram2[tile_index] & 0x7f) + 128 * gfxbank;
 	
 		SET_TILE_INFO(1, code, 0, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_kopunch  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

@@ -24,7 +24,7 @@ public class plygonet
 	
 	/* TTL text plane */
 	
-	static void ttl_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr ttl_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr, code;
 	
@@ -34,7 +34,7 @@ public class plygonet
 		tile_info.flags = 0;
 	
 		SET_TILE_INFO(ttl_gfx_index, code, attr, tile_info.flags);
-	}
+	} };
 	
 	static UINT32 ttl_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{

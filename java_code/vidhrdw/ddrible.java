@@ -82,7 +82,7 @@ public class ddrible
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 6);	/* skip 0x400 */
 	}
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = ddrible_fg_videoram[tile_index];
 		int num = ddrible_fg_videoram[tile_index + 0x400] +
@@ -92,9 +92,9 @@ public class ddrible
 				num,
 				0,
 				TILE_FLIPYX((attr & 0x30) >> 4))
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = ddrible_bg_videoram[tile_index];
 		int num = ddrible_bg_videoram[tile_index + 0x400] +
@@ -104,7 +104,7 @@ public class ddrible
 				num,
 				0,
 				TILE_FLIPYX((attr & 0x30) >> 4))
-	}
+	} };
 	
 	/***************************************************************************
 	

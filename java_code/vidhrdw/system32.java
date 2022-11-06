@@ -1223,18 +1223,18 @@ public class system32
 		SET_TILE_INFO(0,tileno,sys32_palettebank[layer]+s32palette+(monitor*MAX_COLOURS/0x10),TILE_FLIPYX(yxflip))
 	}
 	
-	static void get_system32_layer0_tile_info(int tile_index) {
+	public static GetTileInfoHandlerPtr get_system32_layer0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  {
 		get_system32_tile_info(tile_index,0);
-	}
-	static void get_system32_layer1_tile_info(int tile_index) {
+	} };
+	public static GetTileInfoHandlerPtr get_system32_layer1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  {
 		get_system32_tile_info(tile_index,1);
-	}
-	static void get_system32_layer2_tile_info(int tile_index) {
+	} };
+	public static GetTileInfoHandlerPtr get_system32_layer2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  {
 		get_system32_tile_info(tile_index,2);
-	}
-	static void get_system32_layer3_tile_info(int tile_index) {
+	} };
+	public static GetTileInfoHandlerPtr get_system32_layer3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  {
 		get_system32_tile_info(tile_index,3);
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_system32  = new VideoStartHandlerPtr() { public int handler()
 		int i;

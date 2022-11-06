@@ -212,7 +212,7 @@ public class zaxxon
 		return 0;
 	}
 	
-	static void zaxxon_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr zaxxon_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int sy = tile_index / 32;
 		int sx = tile_index % 32;
@@ -221,7 +221,7 @@ public class zaxxon
 		// not sure about the color code calculation - char_color_bank is used only in test mode
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_zaxxon  = new VideoStartHandlerPtr() { public int handler(){
 		if ( zaxxon_create_background() )
@@ -370,13 +370,13 @@ public class zaxxon
 	
 	/* Razzmatazz */
 	
-	static void razmataz_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr razmataz_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = (color_codes[code] & 0x0f) + 16 * (*zaxxon_char_color_bank & 0x01);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_razmataz  = new VideoStartHandlerPtr() { public int handler(){
 		int offs;
@@ -447,13 +447,13 @@ public class zaxxon
 	
 	/* Congo Bongo */
 	
-	static void congo_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr congo_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = colorram.read(tile_index);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_congo  = new VideoStartHandlerPtr() { public int handler(){
 		if ( zaxxon_create_background() )

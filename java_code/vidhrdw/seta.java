@@ -343,8 +343,8 @@ public class seta
 		SET_TILE_INFO( 1, (code & 0x3fff), attr & 0x1f, TILE_FLIPXY((code & 0xc000) >> 14) )
 	}
 	
-	static void twineagl_get_tile_info_0( int tile_index ) { twineagl_tile_info( tile_index, seta_vram_0 + 0x0000 ); }
-	static void twineagl_get_tile_info_1( int tile_index ) { twineagl_tile_info( tile_index, seta_vram_0 + 0x1000 ); }
+	public static GetTileInfoHandlerPtr twineagl_get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { twineagl_tile_info( tile_index, seta_vram_0 + 0x0000 ); } };
+	public static GetTileInfoHandlerPtr twineagl_get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { twineagl_tile_info( tile_index, seta_vram_0 + 0x1000 ); } };
 	
 	
 	INLINE void get_tile_info( int tile_index, int layer, data16_t *vram )
@@ -354,10 +354,10 @@ public class seta
 		SET_TILE_INFO( 1 + layer, seta_tiles_offset + (code & 0x3fff), attr & 0x1f, TILE_FLIPXY((code & 0xc000) >> 14) )
 	}
 	
-	static void get_tile_info_0( int tile_index ) { get_tile_info( tile_index, 0, seta_vram_0 + 0x0000 ); }
-	static void get_tile_info_1( int tile_index ) { get_tile_info( tile_index, 0, seta_vram_0 + 0x1000 ); }
-	static void get_tile_info_2( int tile_index ) { get_tile_info( tile_index, 1, seta_vram_2 + 0x0000 ); }
-	static void get_tile_info_3( int tile_index ) { get_tile_info( tile_index, 1, seta_vram_2 + 0x1000 ); }
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info( tile_index, 0, seta_vram_0 + 0x0000 ); } };
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info( tile_index, 0, seta_vram_0 + 0x1000 ); } };
+	public static GetTileInfoHandlerPtr get_tile_info_2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info( tile_index, 1, seta_vram_2 + 0x0000 ); } };
+	public static GetTileInfoHandlerPtr get_tile_info_3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info( tile_index, 1, seta_vram_2 + 0x1000 ); } };
 	
 	
 	WRITE16_HANDLER( seta_vram_0_w )

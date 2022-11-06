@@ -32,7 +32,7 @@ public class xain
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
-	static void get_bgram0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bgram0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = xain_bgram0[tile_index | 0x400];
 		SET_TILE_INFO(
@@ -40,9 +40,9 @@ public class xain
 				xain_bgram0[tile_index] | ((attr & 7) << 8),
 				(attr & 0x70) >> 4,
 				(attr & 0x80) ? TILE_FLIPX : 0)
-	}
+	} };
 	
-	static void get_bgram1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bgram1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = xain_bgram1[tile_index | 0x400];
 		SET_TILE_INFO(
@@ -50,9 +50,9 @@ public class xain
 				xain_bgram1[tile_index] | ((attr & 7) << 8),
 				(attr & 0x70) >> 4,
 				(attr & 0x80) ? TILE_FLIPX : 0)
-	}
+	} };
 	
-	static void get_char_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_char_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = xain_charram[tile_index | 0x400];
 		SET_TILE_INFO(
@@ -60,7 +60,7 @@ public class xain
 				xain_charram[tile_index] | ((attr & 3) << 8),
 				(attr & 0xe0) >> 5,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

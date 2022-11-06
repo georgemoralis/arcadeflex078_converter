@@ -168,14 +168,14 @@ public class gsword
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ ((charbank & 0x03) << 8);
 		int color = ((code & 0x3c0) >> 6) + 16 * charpalbank;
 		int flags = flipscreen ? (TILE_FLIPX | TILE_FLIPY) : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_gsword  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

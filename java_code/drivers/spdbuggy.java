@@ -573,11 +573,11 @@ public class spdbuggy
 	#define BG_NY  (0x40)
 	#define BG_GFX (0)
 	
-	static void spdbuggy_get_bg_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr spdbuggy_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code 		=	spdbuggy_bgram[tile_index*2] + spdbuggy_bgram[tile_index*2+1]*256;
 		SET_TILE_INFO(BG_GFX, code & 0x0fff, code >> 12, 0 );	// $3000 tiles!
-	}
+	} };
 	
 	public static WriteHandlerPtr spdbuggy_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != spdbuggy_bgram[offset])
@@ -597,11 +597,11 @@ public class spdbuggy
 	#define FG_NY  (0x40)
 	#define FG_GFX (1)
 	
-	static void spdbuggy_get_fg_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr spdbuggy_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code 		=	spdbuggy_fgram[tile_index*2] + spdbuggy_fgram[tile_index*2+1]*256;
 		SET_TILE_INFO(FG_GFX, code & 0x07ff, code >> 12, 0 );
-	}
+	} };
 	
 	public static WriteHandlerPtr spdbuggy_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != spdbuggy_fgram[offset])

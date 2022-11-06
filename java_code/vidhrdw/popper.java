@@ -104,7 +104,7 @@ public class popper
 		}
 	} };
 	
-	static void get_popper_p123_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_popper_p123_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned int tile_number = popper_videoram[tile_index];
 		unsigned char attr  = popper_attribram[tile_index];
@@ -115,9 +115,9 @@ public class popper
 				tile_number,
 				(attr&0xf),
 				TILE_SPLIT((attr & 0x80)>>7))
-	}
+	} };
 	
-	static void get_popper_p0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_popper_p0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned int tile_number = popper_videoram[tile_index];
 		unsigned char attr = popper_attribram[tile_index];
@@ -132,9 +132,9 @@ public class popper
 				tile_number,
 				((attr&0x70)>>4)+8,
 				flags)
-	}
+	} };
 	
-	static void get_popper_ol_p123_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_popper_ol_p123_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned int tile_number = popper_ol_videoram[tile_index];
 		unsigned char attr  = popper_ol_attribram[tile_index];
@@ -145,9 +145,9 @@ public class popper
 				tile_number,
 				(attr&0xf),
 				TILE_SPLIT((attr & 0x80)>>7))
-	}
+	} };
 	
-	static void get_popper_ol_p0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_popper_ol_p0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned int tile_number = popper_ol_videoram[tile_index];
 		unsigned char attr = popper_ol_attribram[tile_index];
@@ -162,7 +162,7 @@ public class popper
 				tile_number,
 				((attr&0x70)>>4)+8,
 				flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_popper  = new VideoStartHandlerPtr() { public int handler(){
 		popper_p123_tilemap    = tilemap_create( get_popper_p123_tile_info,   tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );

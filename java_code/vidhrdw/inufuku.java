@@ -174,23 +174,23 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	static void get_inufuku_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_inufuku_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(
 				0,
 				inufuku_bg_videoram[tile_index],
 				inufuku_bg_palettebank,
 				0)
-	}
+	} };
 	
-	static void get_inufuku_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_inufuku_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(
 				1,
 				inufuku_text_videoram[tile_index],
 				inufuku_text_palettebank,
 				0)
-	}
+	} };
 	
 	READ16_HANDLER( inufuku_bg_videoram_r )
 	{

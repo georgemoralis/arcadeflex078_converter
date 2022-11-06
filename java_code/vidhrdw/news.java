@@ -22,7 +22,7 @@ public class news
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (news_fgram[tile_index*2] << 8) | news_fgram[tile_index*2+1];
 		SET_TILE_INFO(
@@ -30,9 +30,9 @@ public class news
 				code & 0x0fff,
 				(code & 0xf000) >> 12,
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (news_bgram[tile_index*2] << 8) | news_bgram[tile_index*2+1];
 		int color = (code & 0xf000) >> 12;
@@ -45,7 +45,7 @@ public class news
 				code,
 				color,
 				0)
-	}
+	} };
 	
 	
 	

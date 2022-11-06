@@ -283,9 +283,9 @@ public class hyprduel
 	
 	
 	
-	static void get_tile_info_0_8bit(int tile_index) { get_tile_info_8bit(tile_index,0,hyprduel_vram_0); }
-	static void get_tile_info_1_8bit(int tile_index) { get_tile_info_8bit(tile_index,1,hyprduel_vram_1); }
-	static void get_tile_info_2_8bit(int tile_index) { get_tile_info_8bit(tile_index,2,hyprduel_vram_2); }
+	public static GetTileInfoHandlerPtr get_tile_info_0_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_8bit(tile_index,0,hyprduel_vram_0); } };
+	public static GetTileInfoHandlerPtr get_tile_info_1_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_8bit(tile_index,1,hyprduel_vram_1); } };
+	public static GetTileInfoHandlerPtr get_tile_info_2_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_8bit(tile_index,2,hyprduel_vram_2); } };
 	
 	WRITE16_HANDLER( hyprduel_vram_0_w ) { hyprduel_vram_w(offset,data,mem_mask,0,hyprduel_vram_0); }
 	WRITE16_HANDLER( hyprduel_vram_1_w ) { hyprduel_vram_w(offset,data,mem_mask,1,hyprduel_vram_1); }

@@ -92,7 +92,7 @@ public class gberet
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = gberet_colorram[tile_index];
 		SET_TILE_INFO(
@@ -101,7 +101,7 @@ public class gberet
 				attr & 0x0f,
 				TILE_FLIPYX((attr & 0x30) >> 4))
 		tile_info.priority = (attr & 0x80) >> 7;
-	}
+	} };
 	
 	
 	

@@ -132,21 +132,21 @@ public class wilytowr
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)| ((attr & 0x30) << 4);
 		int color = (attr & 0x0f) + (pal_bank << 4);
 	
 		SET_TILE_INFO(1, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = wilytowr_videoram2[tile_index];
 	
 		SET_TILE_INFO(0, code, 0, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_wilytowr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

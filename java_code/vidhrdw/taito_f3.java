@@ -493,27 +493,27 @@ public class taito_f3
 		}
 	}
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info(tile_index,f3_pf_data_1);
-	}
+	} };
 	
-	static void get_tile_info2(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info(tile_index,f3_pf_data_2);
-	}
+	} };
 	
-	static void get_tile_info3(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info(tile_index,f3_pf_data_3);
-	}
+	} };
 	
-	static void get_tile_info4(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info(tile_index,f3_pf_data_4);
-	}
+	} };
 	
-	static void get_tile_info_pixel(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_pixel = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color,col_off;
 		int y_offs=(f3_control_1[2]&0x1ff)+scroll_kludge_y;
@@ -537,7 +537,7 @@ public class taito_f3
 				color&0x3f,
 				0)
 		tile_info.flags = f3_game_config->pivot ? TILE_FLIPX : 0;
-	}
+	} };
 	
 	/******************************************************************************/
 	

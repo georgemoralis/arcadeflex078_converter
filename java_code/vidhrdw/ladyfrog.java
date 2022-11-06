@@ -30,7 +30,7 @@ public class ladyfrog
 		return ladyfrog_spriteram[offset];
 	} };
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int pal,tile;
 		pal=videoram.read(tile_index*2+1)&0x0f;
@@ -40,7 +40,7 @@ public class ladyfrog
 				tile +0x1000 * tilebank,
 				pal,TILE_FLIPY;
 				)
-	}
+	} };
 	
 	public static WriteHandlerPtr ladyfrog_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);

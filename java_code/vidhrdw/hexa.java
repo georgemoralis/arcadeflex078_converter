@@ -60,14 +60,14 @@ public class hexa
 		/* bit 6 - 7 unknown */
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs = tile_index * 2;
 		int tile = videoram.read(offs + 1)+ ((videoram.read(offs)& 0x07) << 8) + (charbank << 11);
 		int color = (videoram.read(offs)& 0xf8) >> 3;
 	
 		SET_TILE_INFO(0, tile, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_hexa  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

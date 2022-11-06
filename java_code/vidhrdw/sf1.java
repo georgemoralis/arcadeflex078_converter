@@ -21,7 +21,7 @@ public class sf1
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char *base = memory_region(REGION_GFX5) + 2*tile_index;
 		int attr = base[0x10000];
@@ -32,9 +32,9 @@ public class sf1
 				code,
 				color,
 				TILE_FLIPYX(attr & 3))
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char *base = memory_region(REGION_GFX5) + 0x20000 + 2*tile_index;
 		int attr = base[0x10000];
@@ -45,9 +45,9 @@ public class sf1
 				code,
 				color,
 				TILE_FLIPYX(attr & 3))
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = sf1_videoram[tile_index];
 		SET_TILE_INFO(
@@ -55,7 +55,7 @@ public class sf1
 				code & 0x3ff,
 				code>>12,
 				TILE_FLIPYX((code & 0xc00)>>10))
-	}
+	} };
 	
 	
 	

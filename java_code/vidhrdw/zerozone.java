@@ -35,7 +35,7 @@ public class zerozone
 		tilemap_mark_all_tiles_dirty(zerozone_tilemap);
 	}
 	
-	static void get_zerozone_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_zerozone_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 		tileno = zerozone_videoram[tile_index] & 0x07ff;
@@ -44,7 +44,7 @@ public class zerozone
 		if (zerozone_videoram[tile_index] & 0x0800) tileno += zerozone_tilebank * 0x800;
 	
 		SET_TILE_INFO(0,tileno,colour>>12,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_zerozone  = new VideoStartHandlerPtr() { public int handler(){
 		// i'm not 100% sure it should be opaque, pink title screen looks strange in las vegas girls

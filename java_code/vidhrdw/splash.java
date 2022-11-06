@@ -53,7 +53,7 @@ public class splash
 		  0  | xxxx---- -------- | color
 	*/
 	
-	static void get_tile_info_splash_screen0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_splash_screen0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = splash_videoram[tile_index];
 		int attr = data >> 8;
@@ -64,9 +64,9 @@ public class splash
 				code + ((0x20 + (attr & 0x0f)) << 8),
 				(attr & 0xf0) >> 4,
 				0)
-	}
+	} };
 	
-	static void get_tile_info_splash_screen1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_splash_screen1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = splash_videoram[(0x1000/2) + tile_index];
 		int attr = data >> 8;
@@ -77,7 +77,7 @@ public class splash
 				(code >> 2) + ((0x30 + (attr & 0x0f)) << 6),
 				(attr & 0xf0) >> 4,
 				TILE_FLIPXY(code & 0x03))
-	}
+	} };
 	
 	/***************************************************************************
 	

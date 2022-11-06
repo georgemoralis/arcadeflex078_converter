@@ -1012,7 +1012,7 @@ public class cps1
 	
 	static UINT8 empty_tile[32*32/2];
 	
-	static void get_tile0_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile0_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int base = cps1_game_config->bank_scroll1 * 0x08000;
 		int code = cps1_scroll1[2*tile_index];
@@ -1037,9 +1037,9 @@ public class cps1
 			tile_info.pen_data = empty_tile;
 			tile_info.pen_usage = 0x8000;
 		}
-	}
+	} };
 	
-	static void get_tile1_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile1_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int base = cps1_game_config->bank_scroll2 * 0x04000;
 		const int startcode = cps1_game_config->start_scroll2;
@@ -1063,9 +1063,9 @@ public class cps1
 			tile_info.pen_data = empty_tile;
 			tile_info.pen_usage = 0x8000;
 		}
-	}
+	} };
 	
-	static void get_tile2_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile2_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int base = cps1_game_config->bank_scroll3 * 0x1000;
 		const int startcode = cps1_game_config->start_scroll3;
@@ -1097,7 +1097,7 @@ public class cps1
 			tile_info.pen_data = empty_tile;
 			tile_info.pen_usage = 0x8000;
 		}
-	}
+	} };
 	
 	
 	

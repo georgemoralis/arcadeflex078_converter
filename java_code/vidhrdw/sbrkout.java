@@ -26,12 +26,12 @@ public class sbrkout
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (videoram.read(tile_index)& 0x80) ? videoram.read(tile_index): 0;
 	
 		SET_TILE_INFO(0, code, 0, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_sbrkout  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

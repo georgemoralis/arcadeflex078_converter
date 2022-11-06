@@ -1487,8 +1487,8 @@ public class konamiic
 				tile_info.flags)
 	}
 	
-	static void K007342_get_tile_info0(int tile_index) { K007342_get_tile_info(tile_index,0,K007342_colorram_0,K007342_videoram_0); }
-	static void K007342_get_tile_info1(int tile_index) { K007342_get_tile_info(tile_index,1,K007342_colorram_1,K007342_videoram_1); }
+	public static GetTileInfoHandlerPtr K007342_get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K007342_get_tile_info(tile_index,0,K007342_colorram_0,K007342_videoram_0); } };
+	public static GetTileInfoHandlerPtr K007342_get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K007342_get_tile_info(tile_index,1,K007342_colorram_1,K007342_videoram_1); } };
 	
 	
 	
@@ -1931,9 +1931,9 @@ public class konamiic
 		if (flipy && (K052109_tileflip_enable & 2)) tile_info.flags |= TILE_FLIPY;
 	}
 	
-	static void K052109_get_tile_info0(int tile_index) { K052109_get_tile_info(tile_index,0,K052109_colorram_F,K052109_videoram_F,K052109_videoram2_F); }
-	static void K052109_get_tile_info1(int tile_index) { K052109_get_tile_info(tile_index,1,K052109_colorram_A,K052109_videoram_A,K052109_videoram2_A); }
-	static void K052109_get_tile_info2(int tile_index) { K052109_get_tile_info(tile_index,2,K052109_colorram_B,K052109_videoram_B,K052109_videoram2_B); }
+	public static GetTileInfoHandlerPtr K052109_get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K052109_get_tile_info(tile_index,0,K052109_colorram_F,K052109_videoram_F,K052109_videoram2_F); } };
+	public static GetTileInfoHandlerPtr K052109_get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K052109_get_tile_info(tile_index,1,K052109_colorram_A,K052109_videoram_A,K052109_videoram2_A); } };
+	public static GetTileInfoHandlerPtr K052109_get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K052109_get_tile_info(tile_index,2,K052109_colorram_B,K052109_videoram_B,K052109_videoram2_B); } };
 	
 	
 	static void K052109_tileflip_reset(void)
@@ -4270,9 +4270,9 @@ public class konamiic
 				tile_info.flags)
 	}
 	
-	static void K051316_get_tile_info0(int tile_index) { K051316_get_tile_info(tile_index,0); }
-	static void K051316_get_tile_info1(int tile_index) { K051316_get_tile_info(tile_index,1); }
-	static void K051316_get_tile_info2(int tile_index) { K051316_get_tile_info(tile_index,2); }
+	public static GetTileInfoHandlerPtr K051316_get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K051316_get_tile_info(tile_index,0); } };
+	public static GetTileInfoHandlerPtr K051316_get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K051316_get_tile_info(tile_index,1); } };
+	public static GetTileInfoHandlerPtr K051316_get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K051316_get_tile_info(tile_index,2); } };
 	
 	
 	int K051316_vh_start(int chip, int gfx_memory_region,int bpp,
@@ -5024,10 +5024,10 @@ public class konamiic
 				tile_info.flags)
 	}
 	
-	static void K054157_get_tile_info0(int tile_index) { K054157_get_tile_info(tile_index,0); }
-	static void K054157_get_tile_info1(int tile_index) { K054157_get_tile_info(tile_index,1); }
-	static void K054157_get_tile_info2(int tile_index) { K054157_get_tile_info(tile_index,2); }
-	static void K054157_get_tile_info3(int tile_index) { K054157_get_tile_info(tile_index,3); }
+	public static GetTileInfoHandlerPtr K054157_get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K054157_get_tile_info(tile_index,0); } };
+	public static GetTileInfoHandlerPtr K054157_get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K054157_get_tile_info(tile_index,1); } };
+	public static GetTileInfoHandlerPtr K054157_get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K054157_get_tile_info(tile_index,2); } };
+	public static GetTileInfoHandlerPtr K054157_get_tile_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K054157_get_tile_info(tile_index,3); } };
 	
 	
 	static void K054157_lsu_1_256(int layer)
@@ -5682,22 +5682,22 @@ public class konamiic
 				tile_info.flags)
 	}
 	
-	static void K056832_get_tile_info0(int tile_index) { K056832_get_tile_info(tile_index,0x0); }
-	static void K056832_get_tile_info1(int tile_index) { K056832_get_tile_info(tile_index,0x1); }
-	static void K056832_get_tile_info2(int tile_index) { K056832_get_tile_info(tile_index,0x2); }
-	static void K056832_get_tile_info3(int tile_index) { K056832_get_tile_info(tile_index,0x3); }
-	static void K056832_get_tile_info4(int tile_index) { K056832_get_tile_info(tile_index,0x4); }
-	static void K056832_get_tile_info5(int tile_index) { K056832_get_tile_info(tile_index,0x5); }
-	static void K056832_get_tile_info6(int tile_index) { K056832_get_tile_info(tile_index,0x6); }
-	static void K056832_get_tile_info7(int tile_index) { K056832_get_tile_info(tile_index,0x7); }
-	static void K056832_get_tile_info8(int tile_index) { K056832_get_tile_info(tile_index,0x8); }
-	static void K056832_get_tile_info9(int tile_index) { K056832_get_tile_info(tile_index,0x9); }
-	static void K056832_get_tile_infoa(int tile_index) { K056832_get_tile_info(tile_index,0xa); }
-	static void K056832_get_tile_infob(int tile_index) { K056832_get_tile_info(tile_index,0xb); }
-	static void K056832_get_tile_infoc(int tile_index) { K056832_get_tile_info(tile_index,0xc); }
-	static void K056832_get_tile_infod(int tile_index) { K056832_get_tile_info(tile_index,0xd); }
-	static void K056832_get_tile_infoe(int tile_index) { K056832_get_tile_info(tile_index,0xe); }
-	static void K056832_get_tile_infof(int tile_index) { K056832_get_tile_info(tile_index,0xf); }
+	public static GetTileInfoHandlerPtr K056832_get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x0); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x1); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x2); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x3); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x4); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info5 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x5); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info6 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x6); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info7 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x7); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info8 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x8); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_info9 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0x9); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_infoa = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0xa); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_infob = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0xb); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_infoc = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0xc); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_infod = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0xd); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_infoe = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0xe); } };
+	public static GetTileInfoHandlerPtr K056832_get_tile_infof = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { K056832_get_tile_info(tile_index,0xf); } };
 	
 	static void K056832_change_rambank(void)
 	{

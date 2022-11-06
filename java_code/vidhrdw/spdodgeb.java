@@ -64,7 +64,7 @@ public class spdodgeb
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char code = spdodgeb_videoram[tile_index];
 		unsigned char attr = spdodgeb_videoram[tile_index + 0x800];
@@ -73,7 +73,7 @@ public class spdodgeb
 				code + ((attr & 0x1f) << 8),
 				((attr & 0xe0) >> 5) + 8 * tile_palbank,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

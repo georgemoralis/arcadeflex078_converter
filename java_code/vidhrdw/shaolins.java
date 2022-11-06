@@ -141,7 +141,7 @@ public class shaolins
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)+ ((attr & 0x40) << 2);
@@ -149,7 +149,7 @@ public class shaolins
 		int flags = (attr & 0x20) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_shaolins  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

@@ -38,21 +38,21 @@ public class deadang
 		return (col&0xf) | ((row&0xf)<<4) | ((col&0x70)<<4) | ((row&0xf0)<<7);
 	}
 	
-	static void get_pf3_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		const data8_t *bgMap = memory_region(REGION_GFX6);
 		int code=(bgMap[tile_index*2]<<8) | bgMap[tile_index*2+1];
 		SET_TILE_INFO(4,code&0x7ff,code>>12,0);
-	}
+	} };
 	
-	static void get_pf2_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		const data8_t *bgMap = memory_region(REGION_GFX7);
 		int code=(bgMap[tile_index*2]<<8) | bgMap[tile_index*2+1];
 		SET_TILE_INFO(3,code&0x7ff,code>>12,0);
-	}
+	} };
 	
-	static void get_pf1_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=deadang_video_data[offs]+(deadang_video_data[offs+1]<<8);
@@ -60,16 +60,16 @@ public class deadang
 		tile=tile&0xfff;
 	
 		SET_TILE_INFO(2,tile+deadangle_tilebank*0x1000,color,0)
-	}
+	} };
 	
-	static void get_text_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=videoram.read(offs)+((videoram.read(offs+1)&0xc0)<<2);
 		int color=videoram.read(offs+1)&0xf;
 	
 		SET_TILE_INFO(0,tile,color,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_deadang  = new VideoStartHandlerPtr() { public int handler(){
 		pf3_layer = tilemap_create(get_pf3_tile_info,bg_scan,          TILEMAP_OPAQUE,     16,16,128,256);

@@ -32,6 +32,7 @@ public class convertMame {
     static final int INPUTPORTS = 19;
     static final int AY8910INTF = 20;
     static final int SAMPLESINTF = 21;
+    static final int TILEINFO = 22;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -812,6 +813,35 @@ public class convertMame {
                     }
                     if (!sUtil.getToken("struct")) //static but not static struct
                     {
+                         if (sUtil.getToken("void")) {
+
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() != '(') {
+                                Convertor.inpos = i;
+                                break;
+                            }
+                            sUtil.skipSpace();
+                            if(sUtil.getToken("int tile_index"))
+                            {
+                                sUtil.skipSpace();
+                                if (sUtil.parseChar() != ')') {
+                                    Convertor.inpos = i;
+                                    break;
+                                }
+                                if (sUtil.getChar() == ';') {
+                                    sUtil.skipLine();
+                                    continue;
+                                }
+                                if (Convertor.token[0].contains("tile")) {
+                                    sUtil.putString((new StringBuilder()).append("public static GetTileInfoHandlerPtr ").append(Convertor.token[0]).append(" = new GetTileInfoHandlerPtr() { public void handler(int tile_index) ").toString());
+                                    type = TILEINFO;
+                                    i3 = -1;
+                                    continue;
+                                }
+                            }
+                         }
                         if (sUtil.getToken("VIDEO_EOF")) {
                             sUtil.skipSpace();
                             if (sUtil.parseChar() != '(') {
@@ -1314,7 +1344,8 @@ public class convertMame {
                     if (type == VIDEO_START || type == VIDEO_STOP || type == VIDEO_UPDATE
                             || type == VIDEO_EOF || type == PALETTE_INIT || type == MACHINE_INIT
                             || type == DRIVER_INIT || type == MACHINE_STOP || type == NVRAM_HANDLER
-                            || type == INTERRUPT || type == READ_HANDLER8 || type == WRITE_HANDLER8) {
+                            || type == INTERRUPT || type == READ_HANDLER8 || type == WRITE_HANDLER8
+                            || type == TILEINFO) {
                         i3++;
                     }
                     if (type == MEMORY_READ8) {
@@ -1425,7 +1456,8 @@ public class convertMame {
                     if (type == VIDEO_START || type == VIDEO_STOP || type == VIDEO_UPDATE
                             || type == VIDEO_EOF || type == PALETTE_INIT || type == MACHINE_INIT
                             || type == DRIVER_INIT || type == MACHINE_STOP || type == NVRAM_HANDLER
-                            || type == INTERRUPT || type == READ_HANDLER8 || type == WRITE_HANDLER8) {
+                            || type == INTERRUPT || type == READ_HANDLER8 || type == WRITE_HANDLER8
+                            || type == TILEINFO) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");

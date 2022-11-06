@@ -167,15 +167,15 @@ public class rockola
 	  the main emulation engine.
 	
 	***************************************************************************/
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ 256 * charbank;
 		int color = (colorram.read(tile_index)& 0x38) >> 3;
 	
 		SET_TILE_INFO(1, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = rockola_videoram2[tile_index];
 		int color = colorram.read(tile_index)& 0x07;
@@ -184,7 +184,7 @@ public class rockola
 			Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_rockola  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
@@ -298,15 +298,15 @@ public class rockola
 		}
 	} };
 	
-	static void satansat_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr satansat_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = (colorram.read(tile_index)& 0x0c) >> 2;
 	
 		SET_TILE_INFO(1, code, color, 0)
-	}
+	} };
 	
-	static void satansat_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr satansat_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = rockola_videoram2[tile_index];
 		int color = colorram.read(tile_index)& 0x03;
@@ -315,7 +315,7 @@ public class rockola
 			Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_satansat  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(satansat_get_bg_tile_info, tilemap_scan_rows, 

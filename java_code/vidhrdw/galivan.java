@@ -141,7 +141,7 @@ public class galivan
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char *BGROM = memory_region(REGION_GFX4);
 		int attr = BGROM[tile_index + 0x4000];
@@ -151,9 +151,9 @@ public class galivan
 				code,
 				(attr & 0x78) >> 3,		/* seems correct */
 				0)
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)| ((attr & 0x01) << 8);
@@ -163,9 +163,9 @@ public class galivan
 				(attr & 0xe0) >> 5,		/* not sure */
 				0)
 		tile_info.priority = attr & 8 ? 0 : 1;	/* wrong */
-	}
+	} };
 	
-	static void ninjemak_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr ninjemak_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char *BGROM = memory_region(REGION_GFX4);
 		int attr = BGROM[tile_index + 0x4000];
@@ -175,9 +175,9 @@ public class galivan
 				code,
 				((attr & 0x60) >> 3) | ((attr & 0x0c) >> 2),	/* seems correct */
 				0)
-	}
+	} };
 	
-	static void ninjemak_get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr ninjemak_get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)| ((attr & 0x03) << 8);
@@ -186,7 +186,7 @@ public class galivan
 				code,
 				(attr & 0x1c) >> 2,		/* seems correct ? */
 				0)
-	}
+	} };
 	
 	
 	

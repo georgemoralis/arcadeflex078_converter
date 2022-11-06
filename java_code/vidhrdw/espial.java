@@ -84,7 +84,7 @@ public class espial
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code = espial_videoram[tile_index];
 		data8_t col = espial_colorram[tile_index];
@@ -93,7 +93,7 @@ public class espial
 					  code | ((attr & 0x03) << 8),
 					  col & 0x3f,
 					  TILE_FLIPYX(attr >> 2))
-	}
+	} };
 	
 	
 	

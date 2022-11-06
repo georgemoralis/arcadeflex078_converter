@@ -44,7 +44,7 @@ public class wwfsstar
 	 Tilemap Related Functions
 	*******************************************************************************/
 	
-	static void get_fg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/*- FG0 RAM Format -**
 	
@@ -72,14 +72,14 @@ public class wwfsstar
 				tileno,
 				colbank,
 				0)
-	}
+	} };
 	
 	static UINT32 bg0_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
-	static void get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/*- BG0 RAM Format -**
 	
@@ -108,7 +108,7 @@ public class wwfsstar
 				tileno,
 				colbank,
 				flipx ? TILE_FLIPX : 0)
-	}
+	} };
 	
 	/*******************************************************************************
 	 Sprite Related Functions

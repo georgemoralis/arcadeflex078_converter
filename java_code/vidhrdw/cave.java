@@ -348,10 +348,10 @@ public class cave
 		tilemap_mark_tile_dirty(TILEMAP,offset/2);
 	}
 	
-	static void get_tile_info_0(int tile_index)	{ get_tile_info(0, cave_vram_0, tiledim_0, tile_index); }
-	static void get_tile_info_1(int tile_index)	{ get_tile_info(1, cave_vram_1, tiledim_1, tile_index); }
-	static void get_tile_info_2(int tile_index)	{ get_tile_info(2, cave_vram_2, tiledim_2, tile_index); }
-	static void get_tile_info_3(int tile_index)	{ get_tile_info(3, cave_vram_3, tiledim_3, tile_index); }
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 	{ get_tile_info(0, cave_vram_0, tiledim_0, tile_index); } };
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 	{ get_tile_info(1, cave_vram_1, tiledim_1, tile_index); } };
+	public static GetTileInfoHandlerPtr get_tile_info_2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 	{ get_tile_info(2, cave_vram_2, tiledim_2, tile_index); } };
+	public static GetTileInfoHandlerPtr get_tile_info_3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 	{ get_tile_info(3, cave_vram_3, tiledim_3, tile_index); } };
 	
 	WRITE16_HANDLER( cave_vram_0_w )		{ vram_w    (cave_vram_0, tilemap_0, offset, data, mem_mask); }
 	WRITE16_HANDLER( cave_vram_0_8x8_w )	{ vram_8x8_w(cave_vram_0, tilemap_0, offset, data, mem_mask); }

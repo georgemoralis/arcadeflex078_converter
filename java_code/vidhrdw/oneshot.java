@@ -17,14 +17,14 @@ public class oneshot
 	static struct tilemap *oneshot_fg_tilemap;
 	
 	/* bg tilemap */
-	static void get_oneshot_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_oneshot_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 	
 		tileno = oneshot_bg_videoram[tile_index*2+1];
 	
 		SET_TILE_INFO(0,tileno,0,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( oneshot_bg_videoram_w )
 	{
@@ -36,14 +36,14 @@ public class oneshot
 	}
 	
 	/* mid tilemap */
-	static void get_oneshot_mid_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_oneshot_mid_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 	
 		tileno = oneshot_mid_videoram[tile_index*2+1];
 	
 		SET_TILE_INFO(0,tileno,2,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( oneshot_mid_videoram_w )
 	{
@@ -56,14 +56,14 @@ public class oneshot
 	
 	
 	/* fg tilemap */
-	static void get_oneshot_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_oneshot_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 	
 		tileno = oneshot_fg_videoram[tile_index*2+1];
 	
 		SET_TILE_INFO(0,tileno,3,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( oneshot_fg_videoram_w )
 	{

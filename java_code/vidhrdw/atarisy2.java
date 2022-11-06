@@ -54,23 +54,23 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha[tile_index];
 		int code = data & 0x3ff;
 		int color = (data >> 13) & 0x07;
 		SET_TILE_INFO(2, code, color, 0);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield[tile_index];
 		int code = playfield_tile_bank[(data >> 10) & 1] + (data & 0x3ff);
 		int color = (data >> 11) & 7;
 		SET_TILE_INFO(0, code, color, 0);
 		tile_info.priority = (~data >> 14) & 3;
-	}
+	} };
 	
 	
 	

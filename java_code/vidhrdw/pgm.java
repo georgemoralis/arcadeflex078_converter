@@ -222,7 +222,7 @@ public class pgm
 		}
 	}
 	
-	static void get_pgm_tx_tilemap_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pgm_tx_tilemap_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 	/* 0x904000 - 0x90ffff is the Text Overlay Ram (pgm_tx_videoram)
@@ -248,7 +248,7 @@ public class pgm
 		if (tileno > 0xbfff) { tileno -= 0xc000 ; tileno += 0x20000; } /* not sure about this */
 	
 		SET_TILE_INFO(0,tileno,colour,TILE_FLIPYX(flipyx))
-	}
+	} };
 	
 	/* BG Layer */
 	
@@ -261,7 +261,7 @@ public class pgm
 		}
 	}
 	
-	static void get_pgm_bg_tilemap_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pgm_bg_tilemap_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/* pretty much the same as tx layer */
 	
@@ -273,7 +273,7 @@ public class pgm
 		flipyx = (pgm_bg_videoram[tile_index*2+1] & 0xc0) >> 6;;
 	
 		SET_TILE_INFO(1,tileno,colour,TILE_FLIPYX(flipyx))
-	}
+	} };
 	
 	
 	

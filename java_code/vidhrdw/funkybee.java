@@ -84,13 +84,13 @@ public class funkybee
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = colorram.read(tile_index)& 0x03;
 	
 		SET_TILE_INFO(gfx_bank, code, color, 0)
-	}
+	} };
 	
 	static UINT32 funkybee_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{

@@ -165,7 +165,7 @@ public class argus
 	  Callbacks for the tilemap code
 	***************************************************************************/
 	
-	static void argus_get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr argus_get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int hi, lo;
 	
@@ -177,9 +177,9 @@ public class argus
 				((hi & 0xc0) << 2) | lo,
 				hi & 0x0f,
 				TILE_FLIPYX((hi & 0x30) >> 4))
-	}
+	} };
 	
-	static void argus_get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr argus_get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int hi, lo;
 	
@@ -191,9 +191,9 @@ public class argus
 				((hi & 0xc0) << 2) | lo,
 				hi & 0x0f,
 				TILE_FLIPYX((hi & 0x30) >> 4))
-	}
+	} };
 	
-	static void argus_get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr argus_get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int hi, lo;
 	
@@ -205,9 +205,9 @@ public class argus
 				lo,
 				hi & 0x0f,
 				TILE_FLIPYX((hi & 0x30) >> 4))
-	}
+	} };
 	
-	static void valtric_get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr valtric_get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int hi, lo;
 	
@@ -219,9 +219,9 @@ public class argus
 				((hi & 0xc0) << 2) | lo,
 				hi & 0x0f,
 				TILE_FLIPYX((hi & 0x30) >> 4))
-	}
+	} };
 	
-	static void valtric_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr valtric_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int hi, lo, color, tile;
 	
@@ -236,9 +236,9 @@ public class argus
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void butasan_get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr butasan_get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int hi, lo;
 	
@@ -252,9 +252,9 @@ public class argus
 				((hi & 0xc0) << 2) | lo,
 				hi & 0x0f,
 				TILE_FLIPYX((hi & 0x30) >> 4))
-	}
+	} };
 	
-	static void butasan_get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr butasan_get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int hi, lo;
 		int attrib;
@@ -271,9 +271,9 @@ public class argus
 				((hi & 0xc0) << 2) | lo,
 				hi & 0x0f,
 				TILE_FLIPYX((hi & 0x30) >> 4))
-	}
+	} };
 	
-	static void butasan_get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr butasan_get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int bank, tile, attrib, color;
 	
@@ -290,7 +290,7 @@ public class argus
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

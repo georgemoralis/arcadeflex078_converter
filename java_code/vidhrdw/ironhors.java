@@ -148,7 +148,7 @@ public class ironhors
 		/* other bits are used too, but unknown */
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ ((colorram.read(tile_index)& 0x40) << 2) +
 			((colorram.read(tile_index)& 0x20) << 4) + (charbank << 10);
@@ -157,7 +157,7 @@ public class ironhors
 			((colorram.read(tile_index)& 0x20) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_ironhors  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

@@ -36,7 +36,7 @@ public class yumefuda
 	
 	static struct tilemap *bg_tilemap;
 	
-	static void y_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr y_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = colorram.read(tile_index);
@@ -46,7 +46,7 @@ public class yumefuda
 				code,
 				color & 0xf,
 				0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_yumefuda  = new VideoStartHandlerPtr() { public int handler(){

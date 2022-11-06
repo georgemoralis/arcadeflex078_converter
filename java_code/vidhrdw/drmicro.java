@@ -45,7 +45,7 @@ public class drmicro
 	
 	/****************************************************************************/
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code,col,flags;
 	
@@ -57,9 +57,9 @@ public class drmicro
 		col &= 0x0f;
 	
 		SET_TILE_INFO( 0, code, col, flags)
-	}
+	} };
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code,col,flags;
 	
@@ -71,7 +71,7 @@ public class drmicro
 		col &= 0x0f;
 	
 		SET_TILE_INFO( 1, code, col, flags)
-	}
+	} };
 	
 	/****************************************************************************/
 	

@@ -263,23 +263,23 @@ public class crospang
 		{ REGION_SOUND1 },
 		{ 60 }
 	};
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data  = bg_videoram[tile_index];
 		int tile  = data & 0xfff;
 		int color = (data >> 12) & 0x0f;
 	
 		SET_TILE_INFO(1,tile,color + 0x20,0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data  = fg_videoram[tile_index];
 		int tile  = data & 0xfff;
 		int color = (data >> 12) & 0x0f;
 	
 		SET_TILE_INFO(1,tile,color + 0x10,0)
-	}
+	} };
 	
 	/*
 	

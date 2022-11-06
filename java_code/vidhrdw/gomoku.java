@@ -67,7 +67,7 @@ public class gomoku
 	
 	******************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (gomoku_videoram[tile_index]);
 		int attr = (gomoku_colorram[tile_index]);
@@ -79,7 +79,7 @@ public class gomoku
 				code,
 				color,
 				TILE_FLIPYX(flipyx))
-	}
+	} };
 	
 	public static WriteHandlerPtr gomoku_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gomoku_videoram[offset] = data;

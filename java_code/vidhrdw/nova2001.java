@@ -141,21 +141,21 @@ public class nova2001
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = colorram.read(tile_index)& 0x0f;
 	
 		SET_TILE_INFO(1, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = nova2001_videoram2[tile_index];
 		int color = nova2001_colorram2[tile_index] & 0x0f;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_nova2001  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

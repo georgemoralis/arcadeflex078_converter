@@ -100,14 +100,14 @@ public class bagman
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int gfxbank = (Machine->gfx[2] && (colorram.read(tile_index)& 0x10)) ? 2 : 0;
 		int code = videoram.read(tile_index)+ 8 * (colorram.read(tile_index)& 0x20);
 		int color = colorram.read(tile_index)& 0x0f;
 	
 		SET_TILE_INFO(gfxbank, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_bagman  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

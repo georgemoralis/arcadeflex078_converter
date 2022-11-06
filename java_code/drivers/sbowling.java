@@ -55,13 +55,13 @@ public class sbowling
 	static UINT8 pix_sh = 0;
 	static UINT8 pix[2] = {0, 0};
 	
-	static void get_sb_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sb_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char *rom = memory_region(REGION_USER1);
 		int tileno = rom[tile_index + bgmap * 1024];
 	
 		SET_TILE_INFO(0, tileno, 0, 0)
-	}
+	} };
 	
 	static void plot_pixel_sbw(int x, int y, int col)
 	{

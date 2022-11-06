@@ -40,7 +40,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	static void get_tile_info0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = labyrunr_videoram1[tile_index];
 		int code = labyrunr_videoram1[tile_index + 0x400];
@@ -63,9 +63,9 @@ public class labyrunr
 				code+bank*256,
 				((K007121_ctrlram[0][6]&0x30)*2+16)+(attr&7),
 				0)
-	}
+	} };
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = labyrunr_videoram2[tile_index];
 		int code = labyrunr_videoram2[tile_index + 0x400];
@@ -88,7 +88,7 @@ public class labyrunr
 				code+bank*256,
 				((K007121_ctrlram[0][6]&0x30)*2+16)+(attr&7),
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

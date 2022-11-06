@@ -69,14 +69,14 @@ public class arkanoid
 		/* bit 7 is unknown */
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs = tile_index * 2;
 		int code = videoram.read(offs + 1)+ ((videoram.read(offs)& 0x07) << 8) + 2048 * gfxbank;
 		int color = ((videoram.read(offs)& 0xf8) >> 3) + 32 * palettebank;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_arkanoid  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

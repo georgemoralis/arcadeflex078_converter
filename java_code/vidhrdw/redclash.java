@@ -115,13 +115,13 @@ public class redclash
 	public static WriteHandlerPtr redclash_star2_w = new WriteHandlerPtr() {public void handler(int offset, int data) star_speed = (star_speed & ~4) | ((data & 1) << 2); }
 	public static WriteHandlerPtr redclash_star_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data) }
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = (videoram.read(tile_index)& 0x70) >> 4; // ??
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_redclash  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 

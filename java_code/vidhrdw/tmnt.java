@@ -21,7 +21,7 @@ public class tmnt
 	
 	static int glfgreat_roz_rom_bank,glfgreat_roz_char_bank,glfgreat_roz_rom_mode;
 	
-	static void glfgreat_get_roz_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr glfgreat_get_roz_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t *rom = memory_region(REGION_USER1);
 		int code;
@@ -31,15 +31,15 @@ public class tmnt
 		code = rom[tile_index+0x80000] + 256*rom[tile_index] + 256*256*((rom[tile_index/4+0x100000]>>(2*(tile_index&3)))&3);
 	
 		SET_TILE_INFO(0,code & 0x3fff,code >> 14,0)
-	}
+	} };
 	
-	static void prmrsocr_get_roz_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr prmrsocr_get_roz_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t *rom = memory_region(REGION_USER1);
 		int code = rom[tile_index+0x20000] + 256*rom[tile_index];
 	
 		SET_TILE_INFO(0,code & 0x1fff,code >> 13,0)
-	}
+	} };
 	
 	
 	

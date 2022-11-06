@@ -21,12 +21,12 @@ public class sprint2
 	static int collision[2];
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = sprint2_video_ram[tile_index];
 	
 		SET_TILE_INFO(0, code & 0x3f, code >> 7, 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_sprint2  = new VideoStartHandlerPtr() { public int handler(){

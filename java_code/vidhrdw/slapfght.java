@@ -32,7 +32,7 @@ public class slapfght
 	
 	***************************************************************************/
 	
-	static void get_pf_tile_info(int tile_index)	/* For Performan only */
+	public static GetTileInfoHandlerPtr get_pf_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 	/* For Performan only */
 	{
 		int tile,color;
 	
@@ -43,9 +43,9 @@ public class slapfght
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_pf1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color;
 	
@@ -57,9 +57,9 @@ public class slapfght
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_fix_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color;
 	
@@ -71,7 +71,7 @@ public class slapfght
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -27,7 +27,7 @@ public class srumbler
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = srumbler_foregroundram[2*tile_index];
 		SET_TILE_INFO(
@@ -35,9 +35,9 @@ public class srumbler
 				srumbler_foregroundram[2*tile_index + 1] + ((attr & 0x03) << 8),
 				(attr & 0x3c) >> 2,
 				(attr & 0x40) ? TILE_IGNORE_TRANSPARENCY : 0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = srumbler_backgroundram[2*tile_index];
 		SET_TILE_INFO(
@@ -45,7 +45,7 @@ public class srumbler
 				srumbler_backgroundram[2*tile_index + 1] + ((attr & 0x07) << 8),
 				(attr & 0xe0) >> 5,
 				TILE_SPLIT((attr & 0x10) >> 4) | ((attr & 0x08) ? TILE_FLIPY : 0))
-	}
+	} };
 	
 	
 	

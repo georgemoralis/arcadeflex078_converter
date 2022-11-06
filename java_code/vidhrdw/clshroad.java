@@ -128,7 +128,7 @@ public class clshroad
 	
 	***************************************************************************/
 	
-	static void get_tile_info_0a( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_0a = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code;
 		tile_index = (tile_index & 0x1f) + (tile_index & ~0x1f)*2;
@@ -139,9 +139,9 @@ public class clshroad
 				code,
 				0,
 				0)
-	}
+	} };
 	
-	static void get_tile_info_0b( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_0b = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code;
 		tile_index = (tile_index & 0x1f) + (tile_index & ~0x1f)*2;
@@ -152,7 +152,7 @@ public class clshroad
 				code,
 				0,
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr clshroad_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (clshroad_vram_0[offset] != data)
@@ -200,7 +200,7 @@ public class clshroad
 		return (col-2) + row * 0x20;
 	}
 	
-	static void get_tile_info_fb1( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_fb1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code	=	clshroad_vram_1[ tile_index + 0x000 ];
 		data8_t color	=	clshroad_vram_1[ tile_index + 0x400 ];
@@ -209,9 +209,9 @@ public class clshroad
 				code,
 				color & 0x3f,
 				0)
-	}
+	} };
 	
-	static void get_tile_info_1( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code	=	clshroad_vram_1[ tile_index + 0x000 ];
 		data8_t color	=	clshroad_vram_1[ tile_index + 0x400 ];
@@ -220,7 +220,7 @@ public class clshroad
 				code + ((color & 0xf0)<<4),
 				color & 0x0f,
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr clshroad_vram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (clshroad_vram_1[offset] != data)

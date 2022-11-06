@@ -184,21 +184,21 @@ public class docastle
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ 8 * (colorram.read(tile_index)& 0x20);
 		int color = colorram.read(tile_index)& 0x1f;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ 8 * (colorram.read(tile_index)& 0x20);
 		int color = (colorram.read(tile_index)& 0x1f) + 32;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_docastle  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

@@ -64,7 +64,7 @@ public class pbaction
 		flip_screen_set(data & 0x01);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)+ 0x10 * (attr & 0x70);
@@ -72,9 +72,9 @@ public class pbaction
 		int flags = (attr & 0x80) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(1, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = pbaction_colorram2[tile_index];
 		int code = pbaction_videoram2[tile_index] + 0x10 * (attr & 0x30);
@@ -82,7 +82,7 @@ public class pbaction
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_pbaction  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

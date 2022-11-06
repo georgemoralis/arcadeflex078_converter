@@ -21,7 +21,7 @@ public class ohmygod
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = ohmygod_videoram[2*tile_index+1];
 		UINT16 attr = ohmygod_videoram[2*tile_index];
@@ -30,7 +30,7 @@ public class ohmygod
 				code,
 				(attr & 0x0f00) >> 8,
 				0)
-	}
+	} };
 	
 	
 	

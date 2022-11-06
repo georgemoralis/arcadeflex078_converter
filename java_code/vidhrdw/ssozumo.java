@@ -125,22 +125,22 @@ public class ssozumo
 		flip_screen_set(data & 0x80);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ ((colorram.read(tile_index)& 0x08) << 5);
 		int color = (colorram.read(tile_index)& 0x30) >> 4;
 		int flags = ((tile_index % 32) >= 16) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(1, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ssozumo_videoram2[tile_index] + 256 * (ssozumo_colorram2[tile_index] & 0x07);
 		int color = (ssozumo_colorram2[tile_index] & 0x30) >> 4;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_ssozumo  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_x, 

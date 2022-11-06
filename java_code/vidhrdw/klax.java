@@ -21,14 +21,14 @@ public class klax
 	 *
 	 *************************************/
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data1 = atarigen_playfield[tile_index];
 		UINT16 data2 = atarigen_playfield_upper[tile_index] >> 8;
 		int code = data1 & 0x1fff;
 		int color = data2 & 0x0f;
 		SET_TILE_INFO(0, code, color, (data1 >> 15) & 1);
-	}
+	} };
 	
 	
 	

@@ -279,10 +279,10 @@ public class tumblep
 				0)
 	}
 	
-	static void get_bg1_tile_info(int tile_index) { get_bg_tile_info(tile_index,2,tumblep_pf1_data); }
-	static void get_bg2_tile_info(int tile_index) { get_bg_tile_info(tile_index,1,tumblep_pf2_data); }
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_bg_tile_info(tile_index,2,tumblep_pf1_data); } };
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_bg_tile_info(tile_index,1,tumblep_pf2_data); } };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = tumblep_pf1_data[tile_index];
 	
@@ -291,7 +291,7 @@ public class tumblep
 				data & 0x0fff,
 				data >> 12,
 				0)
-	}
+	} };
 	
 	INLINE void get_fncywld_bg_tile_info(int tile_index,int gfx_bank,data16_t *gfx_base)
 	{
@@ -305,10 +305,10 @@ public class tumblep
 				0)
 	}
 	
-	static void get_fncywld_bg1_tile_info(int tile_index) { get_fncywld_bg_tile_info(tile_index,2,tumblep_pf1_data); }
-	static void get_fncywld_bg2_tile_info(int tile_index) { get_fncywld_bg_tile_info(tile_index,1,tumblep_pf2_data); }
+	public static GetTileInfoHandlerPtr get_fncywld_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_fncywld_bg_tile_info(tile_index,2,tumblep_pf1_data); } };
+	public static GetTileInfoHandlerPtr get_fncywld_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_fncywld_bg_tile_info(tile_index,1,tumblep_pf2_data); } };
 	
-	static void get_fncywld_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fncywld_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = tumblep_pf1_data[tile_index*2];
 		int attr = tumblep_pf1_data[tile_index*2+1];
@@ -318,7 +318,7 @@ public class tumblep
 				data & 0x1fff,
 				attr & 0x1f,
 				0)
-	}
+	} };
 	
 	
 	

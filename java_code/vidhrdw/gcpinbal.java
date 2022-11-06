@@ -26,7 +26,7 @@ public class gcpinbal
 	/*******************************************************************/
 	
 	
-	static void get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 tilenum = gcpinbal_tilemapram[0 + tile_index*2];
 		UINT16 attr    = gcpinbal_tilemapram[1 + tile_index*2];
@@ -36,9 +36,9 @@ public class gcpinbal
 				(tilenum & 0xfff) + bg0_gfxset,
 				(attr & 0x1f),
 				TILE_FLIPYX( (attr & 0x300) >> 8))
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 tilenum = gcpinbal_tilemapram[0x800 + tile_index*2];
 		UINT16 attr    = gcpinbal_tilemapram[0x801 + tile_index*2];
@@ -48,9 +48,9 @@ public class gcpinbal
 				(tilenum & 0xfff) + 0x2000 + bg1_gfxset,
 				(attr & 0x1f) + 0x30,
 				TILE_FLIPYX( (attr & 0x300) >> 8))
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 tilenum = gcpinbal_tilemapram[0x1000 + tile_index];
 	
@@ -59,7 +59,7 @@ public class gcpinbal
 				(tilenum & 0xfff),
 				(tilenum >> 12) | 0x70,
 				0)
-	}
+	} };
 	
 	#if 0
 	static void dirty_tilemaps(void)	// will be used for save states

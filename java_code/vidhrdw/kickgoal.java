@@ -12,32 +12,32 @@ public class kickgoal
 	struct tilemap *kickgoal_fgtm, *kickgoal_bgtm, *kickgoal_bg2tm;
 	
 	/* FG */
-	static void get_kickgoal_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_kickgoal_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno = kickgoal_fgram[tile_index*2] & 0x0fff;
 		int color = kickgoal_fgram[tile_index*2+1] & 0x000f;
 	
 		SET_TILE_INFO(0,tileno + 0x7000,color + 0x00,0)
-	}
+	} };
 	
 	/* BG */
-	static void get_kickgoal_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_kickgoal_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno = kickgoal_bgram[tile_index*2] & 0x0fff;
 		int color = kickgoal_bgram[tile_index*2+1] & 0x000f;
 	
 		SET_TILE_INFO(1,tileno + 0x1000,color + 0x10,0)
-	}
+	} };
 	
 	/* BG 2 */
-	static void get_kickgoal_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_kickgoal_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno = kickgoal_bg2ram[tile_index*2] & 0x07ff;
 		int color = kickgoal_bg2ram[tile_index*2+1] & 0x000f;
 		int flipx = kickgoal_bg2ram[tile_index*2+1] & 0x0020;
 	
 		SET_TILE_INFO(2,tileno + 0x800,color + 0x20,flipx ? TILE_FLIPX : 0);
-	}
+	} };
 	
 	
 	static UINT32 tilemap_scan_kicksbg2( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )

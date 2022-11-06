@@ -160,12 +160,12 @@ public class cloak
 		flip_screen_set(data & 0x80);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 	
 		SET_TILE_INFO(0, code, 0, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_cloak  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

@@ -23,7 +23,7 @@ public class _4enraya
 		tilemap_mark_tile_dirty(tilemap,offset&0x3ff);
 	} };
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index*2)+(videoram.read(tile_index*2+1)<<8);
 		SET_TILE_INFO(
@@ -31,7 +31,7 @@ public class _4enraya
 			code,
 			0,
 			0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_4enraya  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );

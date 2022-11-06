@@ -33,23 +33,23 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha[tile_index];
 		int code = data & 0x3ff;
 		int color = ((data >> 10) & 0x0f) | ((data >> 9) & 0x20);
 		int opaque = data & 0x8000;
 		SET_TILE_INFO(1, code, color, opaque ? TILE_IGNORE_TRANSPARENCY : 0);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield[tile_index];
 		int code = (playfield_tile_bank * 0x1000) + (data & 0xfff);
 		int color = 0x10 + 2 * ((data >> 12) & 7);
 		SET_TILE_INFO(0, code, color, (data >> 15) & 1);
-	}
+	} };
 	
 	
 	

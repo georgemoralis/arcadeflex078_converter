@@ -33,12 +33,12 @@ public class triplhnt
 	}
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = triplhnt_playfield_ram[tile_index] & 0x3f;
 	
 		SET_TILE_INFO(2, code, code == 0x3f ? 1 : 0, 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_triplhnt  = new VideoStartHandlerPtr() { public int handler(){

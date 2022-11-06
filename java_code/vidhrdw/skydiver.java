@@ -43,11 +43,11 @@ public class skydiver
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code = skydiver_videoram[tile_index];
 		SET_TILE_INFO(0, code & 0x3f, code >> 6, 0)
-	}
+	} };
 	
 	
 	

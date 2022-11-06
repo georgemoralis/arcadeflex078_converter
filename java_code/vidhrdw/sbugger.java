@@ -12,7 +12,7 @@ public class sbugger
 	
 	static struct tilemap *sbugger_tilemap;
 	
-	static void get_sbugger_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sbugger_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, color;
 	
@@ -20,7 +20,7 @@ public class sbugger
 		color = sbugger_videoram_attr[tile_index];
 	
 		SET_TILE_INFO(0,tileno,color,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr sbugger_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sbugger_videoram[offset] = data;

@@ -26,10 +26,10 @@ public class poolshrk
 	}
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(1, poolshrk_playfield_ram[tile_index] & 0x3f, 0, 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_poolshrk  = new VideoStartHandlerPtr() { public int handler(){

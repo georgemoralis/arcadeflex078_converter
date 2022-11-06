@@ -45,7 +45,7 @@ public class bionicc
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = bionicc_bgvideoram[2*tile_index+1];
 		SET_TILE_INFO(
@@ -53,9 +53,9 @@ public class bionicc
 				(bionicc_bgvideoram[2*tile_index] & 0xff) + ((attr & 0x07) << 8),
 				(attr & 0x18) >> 3,
 				TILE_FLIPXY((attr & 0xc0) >> 6))
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = bionicc_fgvideoram[2*tile_index+1];
 		int flags;
@@ -76,9 +76,9 @@ public class bionicc
 				(bionicc_fgvideoram[2*tile_index] & 0xff) + ((attr & 0x07) << 8),
 				(attr & 0x18) >> 3,
 				flags)
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = bionicc_txvideoram[tile_index + 0x400];
 		SET_TILE_INFO(
@@ -86,7 +86,7 @@ public class bionicc
 				(bionicc_txvideoram[tile_index] & 0xff) + ((attr & 0x00c0) << 2),
 				attr & 0x3f,
 				0)
-	}
+	} };
 	
 	
 	

@@ -93,7 +93,7 @@ public class flower
 	}
 	
 	
-	static void get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (flower_sharedram[0x3000+tile_index]);
 	//	int attr = (flower_sharedram[0x3100+tile_index]);
@@ -103,9 +103,9 @@ public class flower
 				code,
 				0,
 				0)
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (flower_sharedram[0x3800+tile_index]);
 	//	int attr = (flower_sharedram[0x3900+tile_index]);
@@ -115,7 +115,7 @@ public class flower
 				code,
 				0,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_flower  = new VideoStartHandlerPtr() { public int handler(){
 		flower_bg0_tilemap = tilemap_create(get_bg0_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16, 16);

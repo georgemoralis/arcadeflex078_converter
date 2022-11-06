@@ -103,7 +103,7 @@ public class battlane
 		battlane_video_ctrl = data;
 	} };
 	
-	static void get_tile_info_bg(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_bg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = battlane_tileram[tile_index];
 		int attr = battlane_tileram[tile_index + 0x400];
@@ -111,7 +111,7 @@ public class battlane
 		int color = (attr >> 1) & 0x03;
 	
 		SET_TILE_INFO(gfxn, code, color, 0)
-	}
+	} };
 	
 	static UINT32 battlane_tilemap_scan_rows_2x2( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{

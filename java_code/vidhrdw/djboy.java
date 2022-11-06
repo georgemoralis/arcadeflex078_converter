@@ -28,7 +28,7 @@ public class djboy
 		djboy_scrolly = data;
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr;
 		attr = videoram.read(tile_index + 0x400);
@@ -37,7 +37,7 @@ public class djboy
 				videoram.read(tile_index)+ ((attr & 0x0f) << 8),
 				(attr >> 4),
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr djboy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!= data)

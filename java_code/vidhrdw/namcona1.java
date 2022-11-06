@@ -61,10 +61,10 @@ public class namcona1
 		}
 	} /* tilemap_get_info */
 	
-	static void tilemap_get_info0(int tile_index){ tilemap_get_info(tile_index,0*0x1000+videoram16,tilemap_palette_bank[0]); }
-	static void tilemap_get_info1(int tile_index){ tilemap_get_info(tile_index,1*0x1000+videoram16,tilemap_palette_bank[1]); }
-	static void tilemap_get_info2(int tile_index){ tilemap_get_info(tile_index,2*0x1000+videoram16,tilemap_palette_bank[2]); }
-	static void tilemap_get_info3(int tile_index){ tilemap_get_info(tile_index,3*0x1000+videoram16,tilemap_palette_bank[3]); }
+	public static GetTileInfoHandlerPtr tilemap_get_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) { tilemap_get_info(tile_index,0*0x1000+videoram16,tilemap_palette_bank[0]); } };
+	public static GetTileInfoHandlerPtr tilemap_get_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) { tilemap_get_info(tile_index,1*0x1000+videoram16,tilemap_palette_bank[1]); } };
+	public static GetTileInfoHandlerPtr tilemap_get_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) { tilemap_get_info(tile_index,2*0x1000+videoram16,tilemap_palette_bank[2]); } };
+	public static GetTileInfoHandlerPtr tilemap_get_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) { tilemap_get_info(tile_index,3*0x1000+videoram16,tilemap_palette_bank[3]); } };
 	
 	/*************************************************************************/
 	

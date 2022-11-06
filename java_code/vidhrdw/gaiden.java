@@ -26,7 +26,7 @@ public class gaiden
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 *videoram1 = &gaiden_videoram3[0x0800];
 		UINT16 *videoram2 = gaiden_videoram3;
@@ -35,9 +35,9 @@ public class gaiden
 				videoram1[tile_index] & 0x0fff,
 				(videoram2[tile_index] & 0xf0) >> 4,
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 *videoram1 = &gaiden_videoram2[0x0800];
 		UINT16 *videoram2 = gaiden_videoram2;
@@ -46,9 +46,9 @@ public class gaiden
 				videoram1[tile_index] & 0x0fff,
 				(videoram2[tile_index] & 0xf0) >> 4,
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info_raiga(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info_raiga = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 *videoram1 = &gaiden_videoram2[0x0800];
 		UINT16 *videoram2 = gaiden_videoram2;
@@ -61,9 +61,9 @@ public class gaiden
 				videoram1[tile_index] & 0x0fff,
 				((videoram2[tile_index] & 0xf0) >> 4) | (tile_info.priority ? 0x80 : 0x00),
 				0)
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 *videoram1 = &gaiden_videoram[0x0400];
 		UINT16 *videoram2 = gaiden_videoram;
@@ -72,7 +72,7 @@ public class gaiden
 				videoram1[tile_index] & 0x07ff,
 				(videoram2[tile_index] & 0xf0) >> 4,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -27,7 +27,7 @@ public class ltcasino
 	
 	/* Video */
 	
-	static void get_ltcasino_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ltcasino_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 	
@@ -37,7 +37,7 @@ public class ltcasino
 		tileno += (colour & 0x80) << 1;
 	
 		SET_TILE_INFO(0,tileno,colour,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_ltcasino  = new VideoStartHandlerPtr() { public int handler(){
 		ltcasino_tilemap = tilemap_create(get_ltcasino_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,64,32);

@@ -106,7 +106,7 @@ public class firetrk
 	}
 	
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = firetrk_playfield_ram[tile_index];
 	
@@ -122,10 +122,10 @@ public class firetrk
 		}
 	
 		SET_TILE_INFO(1, code & 0x3f, color, 0)
-	}
+	} };
 	
 	
-	static void get_tile_info2(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = firetrk_playfield_ram[tile_index];
 	
@@ -178,7 +178,7 @@ public class firetrk
 		}
 	
 		SET_TILE_INFO(2, code & 0x3f, color, 0)
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr firetrk_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data){

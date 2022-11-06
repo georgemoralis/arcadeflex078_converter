@@ -34,7 +34,7 @@ public class skyarmy
 	data8_t *skyarmy_scrollram;
 	static struct tilemap* skyarmy_tilemap;
 	
-	static void get_skyarmy_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_skyarmy_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	        int code = skyarmy_videoram[tile_index];
 	        int attr = skyarmy_colorram[tile_index];
@@ -49,7 +49,7 @@ public class skyarmy
 		}
 	
 		SET_TILE_INFO( 0, code, attr, 0)
-	}
+	} };
 	
 	public static WriteHandlerPtr skyarmy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	        skyarmy_videoram[offset] = data;

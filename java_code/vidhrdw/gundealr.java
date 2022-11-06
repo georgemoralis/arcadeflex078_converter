@@ -30,7 +30,7 @@ public class gundealr
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = gundealr_bg_videoram[2*tile_index+1];
 		SET_TILE_INFO(
@@ -38,7 +38,7 @@ public class gundealr
 				gundealr_bg_videoram[2*tile_index] + ((attr & 0x07) << 8),
 				(attr & 0xf0) >> 4,
 				0)
-	}
+	} };
 	
 	static UINT32 gundealr_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
@@ -46,7 +46,7 @@ public class gundealr
 		return (row & 0x0f) + ((col & 0x3f) << 4) + ((row & 0x10) << 6);
 	}
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = gundealr_fg_videoram[2*tile_index+1];
 		SET_TILE_INFO(
@@ -54,7 +54,7 @@ public class gundealr
 				gundealr_fg_videoram[2*tile_index] + ((attr & 0x03) << 8),
 				(attr & 0xf0) >> 4,
 				0)
-	}
+	} };
 	
 	
 	

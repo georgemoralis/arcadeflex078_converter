@@ -37,16 +37,16 @@ public class citycon
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x60) << 5);
 	}
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(
 				0,
 				citycon_videoram[tile_index],
 				(tile_index & 0x03e0) >> 5,	/* color depends on scanline only */
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t *rom = memory_region(REGION_GFX4);
 		int code = rom[0x1000 * bg_image + tile_index];
@@ -55,7 +55,7 @@ public class citycon
 				code,
 				rom[0xc000 + 0x100 * bg_image + code],
 				0)
-	}
+	} };
 	
 	
 	

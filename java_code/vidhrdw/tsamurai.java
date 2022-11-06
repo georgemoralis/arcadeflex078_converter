@@ -28,7 +28,7 @@ public class tsamurai
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attributes = tsamurai_videoram[2*tile_index+1];
 		int tile_number = tsamurai_videoram[2*tile_index];
@@ -39,9 +39,9 @@ public class tsamurai
 				tile_number,
 				attributes & 0x1f,
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile_number = videoram.read(tile_index);
 		if (textbank1 & 0x01) tile_number += 256; /* legacy */
@@ -51,7 +51,7 @@ public class tsamurai
 				tile_number,
 				colorram.read(((tile_index&0x1f)*2)+1)& 0x1f,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -247,7 +247,7 @@ public class tsamurai
 	} };
 	
 	
-	static void get_vsgongf_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_vsgongf_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile_number = videoram.read(tile_index);
 		int color = vsgongf_color&0x1f;
@@ -257,7 +257,7 @@ public class tsamurai
 				tile_number,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_vsgongf  = new VideoStartHandlerPtr() { public int handler(){
 		foreground = tilemap_create(get_vsgongf_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);

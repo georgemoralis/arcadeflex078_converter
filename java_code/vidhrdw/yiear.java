@@ -98,7 +98,7 @@ public class yiear
 		coin_counter_w(1, data & 0x10);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs = tile_index * 2;
 		int attr = videoram.read(offs);
@@ -107,7 +107,7 @@ public class yiear
 		int flags = ((attr & 0x80) ? TILE_FLIPX : 0) | ((attr & 0x40) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(0, code, 0, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_yiear  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

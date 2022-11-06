@@ -133,7 +133,7 @@ public class yunsung8
 	#define DIM_NX_0			(0x40)
 	#define DIM_NY_0			(0x20)
 	
-	static void get_tile_info_0( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code  =  yunsung8_videoram_0[0x1000+tile_index * 2 + 0] + yunsung8_videoram_0[0x1000+tile_index * 2 + 1] * 256;
 		int color =  yunsung8_videoram_0[0x0800+ tile_index] & 0x07;
@@ -142,14 +142,14 @@ public class yunsung8
 				code,
 				color,
 				0)
-	}
+	} };
 	
 	/* Text Plane */
 	
 	#define DIM_NX_1			(0x40)
 	#define DIM_NY_1			(0x20)
 	
-	static void get_tile_info_1( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code  =  yunsung8_videoram_1[0x1000+ tile_index * 2 + 0] + yunsung8_videoram_1[0x1000+tile_index * 2 + 1] * 256;
 		int color =  yunsung8_videoram_1[0x0800+ tile_index] & 0x3f;
@@ -158,7 +158,7 @@ public class yunsung8
 				code,
 				color,
 				0)
-	}
+	} };
 	
 	
 	

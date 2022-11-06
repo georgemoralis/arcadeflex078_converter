@@ -37,10 +37,10 @@ public class darius
 				TILE_FLIPYX((attr & 0xc000) >> 14))
 	}
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		actual_get_fg_tile_info(darius_fg_ram,2,tile_index);
-	}
+	} };
 	
 	static void (*darius_fg_get_tile_info[1])(int tile_index) =
 	{

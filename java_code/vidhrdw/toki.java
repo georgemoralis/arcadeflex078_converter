@@ -78,7 +78,7 @@ public class toki
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
-	static void get_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = videoram16[tile_index];
 		int color=(tile>>12)&0xf;
@@ -90,9 +90,9 @@ public class toki
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_back_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_back_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = toki_background1_videoram16[tile_index];
 		int color=(tile>>12)&0xf;
@@ -104,9 +104,9 @@ public class toki
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_fore_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fore_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = toki_background2_videoram16[tile_index];
 		int color=(tile>>12)&0xf;
@@ -118,7 +118,7 @@ public class toki
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	
 	/*************************************

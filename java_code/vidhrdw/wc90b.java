@@ -28,7 +28,7 @@ public class wc90b
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = wc90b_bgvideoram[tile_index];
 		int tile = wc90b_bgvideoram[tile_index + 0x800];
@@ -37,9 +37,9 @@ public class wc90b
 				tile,
 				attr >> 4,
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = wc90b_fgvideoram[tile_index];
 		int tile = wc90b_fgvideoram[tile_index + 0x800];
@@ -48,16 +48,16 @@ public class wc90b
 				tile,
 				attr >> 4,
 				0)
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(
 				0,
 				wc90b_txvideoram[tile_index + 0x800] + ((wc90b_txvideoram[tile_index] & 0x07) << 8),
 				wc90b_txvideoram[tile_index] >> 4,
 				0)
-	}
+	} };
 	
 	
 	

@@ -86,16 +86,16 @@ public class jcross
 	} };
 	
 	
-	static void get_bg_tilemap_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tilemap_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(
 				1,
 				videoram.read(tile_index),
 				0,
 				0)
-	}
+	} };
 	
-	static void get_tx_tilemap_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tilemap_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile_number = jcr_textram[tile_index];
 		SET_TILE_INFO(
@@ -103,7 +103,7 @@ public class jcross
 				tile_number,
 				0,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_jcross  = new VideoStartHandlerPtr() { public int handler(){
 		flipscreen = -1;  old_fg_color = -1;

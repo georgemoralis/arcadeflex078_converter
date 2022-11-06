@@ -70,12 +70,12 @@ public class namcos2
 		SET_TILE_INFO(2,tile,0,0)
 	}
 	
-	static void get_tile_info0(int tile_index) { get_tile_info(tile_index,videoram16+0x0000); }
-	static void get_tile_info1(int tile_index) { get_tile_info(tile_index,videoram16+0x1000); }
-	static void get_tile_info2(int tile_index) { get_tile_info(tile_index,videoram16+0x2000); }
-	static void get_tile_info3(int tile_index) { get_tile_info(tile_index,videoram16+0x3000); }
-	static void get_tile_info4(int tile_index) { get_tile_info(tile_index,videoram16+0x4008); }
-	static void get_tile_info5(int tile_index) { get_tile_info(tile_index,videoram16+0x4408); }
+	public static GetTileInfoHandlerPtr get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,videoram16+0x0000); } };
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,videoram16+0x1000); } };
+	public static GetTileInfoHandlerPtr get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,videoram16+0x2000); } };
+	public static GetTileInfoHandlerPtr get_tile_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,videoram16+0x3000); } };
+	public static GetTileInfoHandlerPtr get_tile_info4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,videoram16+0x4008); } };
+	public static GetTileInfoHandlerPtr get_tile_info5 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,videoram16+0x4408); } };
 	
 	static int
 	CreateTilemaps( void )
@@ -227,11 +227,11 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	static void get_tile_info_roz(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_roz = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = namcos2_68k_roz_ram[tile_index];
 		SET_TILE_INFO(3,tile,0/*color*/,0)
-	}
+	} };
 	
 	static void
 	DrawROZ(struct mame_bitmap *bitmap,const struct rectangle *cliprect)

@@ -111,7 +111,7 @@ public class superqix
 		flip_screen_set(!data);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int bank = (attr & 0x04) ? 0 : (1 + gfxbank);
@@ -121,7 +121,7 @@ public class superqix
 		tile_info.priority = (attr & 0x08) >> 3;
 	
 		SET_TILE_INFO(bank, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_superqix  = new VideoStartHandlerPtr() { public int handler(){
 		/* palette RAM is accessed thorough I/O ports, so we have to */

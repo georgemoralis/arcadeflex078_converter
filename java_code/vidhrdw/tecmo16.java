@@ -27,7 +27,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	static void fg_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr fg_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = tecmo16_videoram[tile_index] & 0x1fff;
 		int color = tecmo16_colorram[tile_index] & 0x0f;
@@ -37,9 +37,9 @@ public class tecmo16
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void bg_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr bg_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = tecmo16_videoram2[tile_index] & 0x1fff;
 		int color = (tecmo16_colorram2[tile_index] & 0x0f)+0x10;
@@ -49,9 +49,9 @@ public class tecmo16
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void tx_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr tx_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = tecmo16_charram[tile_index];
 		SET_TILE_INFO(
@@ -59,7 +59,7 @@ public class tecmo16
 				tile & 0x0fff,
 				tile >> 12,
 				0)
-	}
+	} };
 	
 	/******************************************************************************/
 	

@@ -66,7 +66,7 @@ public class bigstrkb
 		return offset;
 	}
 	
-	static void get_bsb_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bsb_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,col;
 	
@@ -74,7 +74,7 @@ public class bigstrkb
 		col= 	bsb_videoram[tile_index] & 0xf000;
 	
 		SET_TILE_INFO(0,tileno,col>>12,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( bsb_videoram_w )
 	{
@@ -85,7 +85,7 @@ public class bigstrkb
 		}
 	}
 	
-	static void get_bsb_tile2_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bsb_tile2_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,col;
 	
@@ -93,7 +93,7 @@ public class bigstrkb
 		col= 	bsb_videoram2[tile_index] & 0xf000;
 	
 		SET_TILE_INFO(1,tileno,col>>12,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( bsb_videoram2_w )
 	{
@@ -105,7 +105,7 @@ public class bigstrkb
 	}
 	
 	
-	static void get_bsb_tile3_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bsb_tile3_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,col;
 	
@@ -113,7 +113,7 @@ public class bigstrkb
 		col= 	bsb_videoram3[tile_index] & 0xf000;
 	
 		SET_TILE_INFO(1,tileno+0x2000,(col>>12)+(0x100/16),0)
-	}
+	} };
 	
 	WRITE16_HANDLER( bsb_videoram3_w )
 	{

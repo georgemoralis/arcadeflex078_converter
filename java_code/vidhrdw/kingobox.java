@@ -193,7 +193,7 @@ public class kingobox
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int bank = ((attr & 0x04) >> 2) + 2;
@@ -201,9 +201,9 @@ public class kingobox
 		int color = ((attr & 0x70) >> 4) + 8 * palette_bank;
 	
 		SET_TILE_INFO(bank, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = kingofb_colorram2[tile_index];
 		int bank = (attr & 0x02) >> 1;
@@ -211,7 +211,7 @@ public class kingobox
 		int color = (attr & 0x38) >> 3;
 	
 		SET_TILE_INFO(bank, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_kingofb  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_y, 
@@ -270,13 +270,13 @@ public class kingobox
 	
 	/* Ring King */
 	
-	static void ringking_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr ringking_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (tile_index / 16) ? videoram.read(tile_index): 0;
 		int color = ((colorram.read(tile_index)& 0x70) >> 4) + 8 * palette_bank;
 	
 		SET_TILE_INFO(4, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_ringking  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(ringking_get_bg_tile_info, tilemap_scan_cols_flip_y, 

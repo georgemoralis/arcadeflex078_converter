@@ -141,7 +141,7 @@ public class exedexes
 	} };
 	
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 *tilerom = memory_region(REGION_GFX5);
 	
@@ -151,22 +151,22 @@ public class exedexes
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(1, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = memory_region(REGION_GFX5)[tile_index];
 	
 		SET_TILE_INFO(2, code, 0, 0)
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ 2 * (colorram.read(tile_index)& 0x80);
 		int color = colorram.read(tile_index)& 0x3f;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	static UINT32 exedexes_bg_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{

@@ -122,21 +122,21 @@ public class zodiack
 		COLOR(2, 1) = 48;
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = zodiack_videoram2[tile_index];
 		int color = (zodiack_attributesram[2 * (tile_index % 32) + 1] >> 4) & 0x07;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = zodiack_attributesram[2 * (tile_index % 32) + 1] & 0x07;
 	
 		SET_TILE_INFO(3, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_zodiack  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

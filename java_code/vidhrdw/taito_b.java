@@ -146,7 +146,7 @@ public class taito_b
 	
 	
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile  = TC0180VCU_ram[tile_index + bg_rambank[0]];
 		int color = TC0180VCU_ram[tile_index + bg_rambank[1]];
@@ -156,9 +156,9 @@ public class taito_b
 			tile,
 			b_bg_color_base + (color&0x3f),
 			TILE_FLIPYX((color & 0x00c0)>>6))
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile  = TC0180VCU_ram[tile_index + fg_rambank[0]];
 		int color = TC0180VCU_ram[tile_index + fg_rambank[1]];
@@ -168,9 +168,9 @@ public class taito_b
 			tile,
 			b_fg_color_base + (color&0x3f),
 			TILE_FLIPYX((color & 0x00c0)>>6))
-	}
+	} };
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = TC0180VCU_ram[tile_index + tx_rambank];
 	
@@ -179,7 +179,7 @@ public class taito_b
 			(tile & 0x07ff) | ((TC0180VCU_ctrl[4 + ((tile & 0x800) >> 11)]>>8) << 11),
 			b_tx_color_base + ((tile >> 12) & 0x0f),
 			0)
-	}
+	} };
 	
 	
 	static public static VideoStartHandlerPtr video_start_taitob_core  = new VideoStartHandlerPtr() { public int handler(){

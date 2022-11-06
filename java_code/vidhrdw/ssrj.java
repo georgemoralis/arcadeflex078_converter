@@ -21,7 +21,7 @@ public class ssrj
 		return ssrj_vram1[offset];
 	} };
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 		code=ssrj_vram1[tile_index<<1]+(ssrj_vram1[(tile_index<<1)+1]<<8);
@@ -30,7 +30,7 @@ public class ssrj
 			code&1023,
 			(code>>12)&0x3,
 		  ((code & 0x8000) ? TILE_FLIPX:0) |( (code & 0x4000) ? TILE_FLIPY:0)	)
-	}
+	} };
 	
 	/* tilemap 2 */
 	
@@ -43,7 +43,7 @@ public class ssrj
 		return ssrj_vram2[offset];
 	} };
 	
-	static void get_tile_info2(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 		code=ssrj_vram2[tile_index<<1]+(ssrj_vram2[(tile_index<<1)+1]<<8);
@@ -52,7 +52,7 @@ public class ssrj
 			code&1023,
 			((code>>12)&0x3)+4,
 		  ((code & 0x8000) ? TILE_FLIPX:0) |( (code & 0x4000) ? TILE_FLIPY:0)	)
-	}
+	} };
 	
 	/* tilemap 4 */
 	
@@ -65,7 +65,7 @@ public class ssrj
 		return ssrj_vram4[offset];
 	} };
 	
-	static void get_tile_info4(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 		code=ssrj_vram4[tile_index<<1]+(ssrj_vram4[(tile_index<<1)+1]<<8);
@@ -74,7 +74,7 @@ public class ssrj
 			code&1023,
 			((code>>12)&0x3)+12,
 		  ((code & 0x8000) ? TILE_FLIPX:0) |( (code & 0x4000) ? TILE_FLIPY:0)	)
-	}
+	} };
 	
 	
 	

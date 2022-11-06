@@ -106,18 +106,18 @@ public class unico
 	#define LAYER( _N_ ) \
 	static struct tilemap *tilemap_##_N_; \
 	\
-	static void get_tile_info_##_N_(int tile_index) \
+	public static GetTileInfoHandlerPtr get_tile_info_##_N_ = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  \
 	{ \
 		data16_t code = unico_vram_##_N_[ 2 * tile_index + 0 ]; \
 		data16_t attr = unico_vram_##_N_[ 2 * tile_index + 1 ]; \
 		SET_TILE_INFO(1, code, attr & 0x1f, TILE_FLIPYX( attr >> 5 )) \
-	} \
+	} }; \
 	\
-	static void get_tile_info32_##_N_(int tile_index) \
+	public static GetTileInfoHandlerPtr get_tile_info32_##_N_ = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  \
 	{ \
 		data32_t code = unico_vram32_##_N_[tile_index]; \
 		SET_TILE_INFO(1, code >> 16, code & 0x1f, TILE_FLIPYX( code >> 5 )) \
-	} \
+	} }; \
 	\
 	WRITE16_HANDLER( unico_vram_##_N_##_w ) \
 	{ \

@@ -48,24 +48,24 @@ public class glass
 		  1  | xxxxxxxx -------- | not used
 	*/
 	
-	static void get_tile_info_glass_screen0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_glass_screen0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = glass_videoram[tile_index << 1];
 		int data2 = glass_videoram[(tile_index << 1) + 1];
 		int code = ((data & 0x03) << 14) | ((data & 0x0fffc) >> 2);
 	
 		SET_TILE_INFO(0, code, 0x20 + (data2 & 0x1f), TILE_FLIPYX((data2 & 0xc0) >> 6))
-	}
+	} };
 	
 	
-	static void get_tile_info_glass_screen1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_glass_screen1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = glass_videoram[(0x1000/2) + (tile_index << 1)];
 		int data2 = glass_videoram[(0x1000/2) + (tile_index << 1) + 1];
 		int code = ((data & 0x03) << 14) | ((data & 0x0fffc) >> 2);
 	
 		SET_TILE_INFO(0, code, 0x20 + (data2 & 0x1f), TILE_FLIPYX((data2 & 0xc0) >> 6))
-	}
+	} };
 	
 	/***************************************************************************
 	

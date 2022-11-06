@@ -80,7 +80,7 @@ public class cop01
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = cop01_bgvideoram[tile_index];
 		int attr = cop01_bgvideoram[tile_index+0x800];
@@ -99,13 +99,13 @@ public class cop01
 		if (attr & 0x10) pri = 0;
 	
 		SET_TILE_INFO(1,tile + ((attr & 0x03) << 8),(attr & 0x1c) >> 2,TILE_SPLIT(pri));
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = cop01_fgvideoram[tile_index];
 		SET_TILE_INFO(0,tile,0,0);
-	}
+	} };
 	
 	
 	

@@ -110,7 +110,7 @@ public class lasso
 	
 	***************************************************************************/
 	
-	static void lasso_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr lasso_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code  = lasso_videoram[tile_index];
 		int color = lasso_colorram[tile_index];
@@ -118,9 +118,9 @@ public class lasso
 					  code + (gfxbank << 8),
 					  color & 0x0f,
 					  0)
-	}
+	} };
 	
-	static void wwjgtin_get_track_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr wwjgtin_get_track_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t *ROM = memory_region(REGION_USER1);
 		int code  = ROM[tile_index];
@@ -129,9 +129,9 @@ public class lasso
 					  code,
 					  color & 0x0f,
 					  0)
-	}
+	} };
 	
-	static void pinbo_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr pinbo_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code  = lasso_videoram[tile_index];
 		int color = lasso_colorram[tile_index];
@@ -139,7 +139,7 @@ public class lasso
 					  code + ((color & 0x30) << 4),
 					  color & 0x0f,
 					  0)
-	}
+	} };
 	
 	
 	/*************************************

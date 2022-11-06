@@ -33,7 +33,7 @@ public class goindol
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = goindol_fg_videoram[2*tile_index+1];
 		int attr = goindol_fg_videoram[2*tile_index];
@@ -42,9 +42,9 @@ public class goindol
 				code | ((attr & 0x7) << 8) | (goindol_char_bank << 11),
 				(attr & 0xf8) >> 3,
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = goindol_bg_videoram[2*tile_index+1];
 		int attr = goindol_bg_videoram[2*tile_index];
@@ -53,7 +53,7 @@ public class goindol
 				code | ((attr & 0x7) << 8) | (goindol_char_bank << 11),
 				(attr & 0xf8) >> 3,
 				0)
-	}
+	} };
 	
 	
 	

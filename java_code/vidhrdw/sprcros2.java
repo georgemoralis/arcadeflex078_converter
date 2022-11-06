@@ -74,7 +74,7 @@ public class sprcros2
 		tilemap_set_scrolly(sprcros2_bgtilemap,0,data);
 	} };
 	
-	static void get_sprcros2_bgtile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sprcros2_bgtile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned int tile_number = sprcros2_bgvideoram[tile_index];
 		unsigned char attr = sprcros2_bgvideoram[tile_index+0x400];
@@ -92,9 +92,9 @@ public class sprcros2
 				tile_number,
 				(attr&0xf0)>>4,
 				(attr&0x08)?TILE_FLIPX:0)
-	}
+	} };
 	
-	static void get_sprcros2_fgtile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sprcros2_fgtile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned int tile_number = sprcros2_fgvideoram[tile_index];
 		unsigned char attr = sprcros2_fgvideoram[tile_index+0x400];
@@ -111,7 +111,7 @@ public class sprcros2
 				tile_number,
 				(attr&0xfc)>>2,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_sprcros2  = new VideoStartHandlerPtr() { public int handler(){
 		sprcros2_bgtilemap = tilemap_create( get_sprcros2_bgtile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );

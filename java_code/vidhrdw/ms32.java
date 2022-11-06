@@ -43,7 +43,7 @@ public class ms32
 	static int flipscreen;
 	
 	
-	static void get_ms32_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ms32_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 	
@@ -51,9 +51,9 @@ public class ms32
 		colour = ms32_txram[tile_index *2+1] & 0x000000f;
 	
 		SET_TILE_INFO(3,tileno,colour,0)
-	}
+	} };
 	
-	static void get_ms32_roz_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ms32_roz_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
@@ -61,9 +61,9 @@ public class ms32
 		colour = ms32_rozram[tile_index *2+1] & 0x000000f;
 	
 		SET_TILE_INFO(1,tileno,colour,0)
-	}
+	} };
 	
-	static void get_ms32_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ms32_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
@@ -71,7 +71,7 @@ public class ms32
 		colour = ms32_bgram[tile_index *2+1] & 0x000000f;
 	
 		SET_TILE_INFO(2,tileno,colour,0)
-	}
+	} };
 	
 	static data32_t brt[4];
 	static int brt_r,brt_g,brt_b;

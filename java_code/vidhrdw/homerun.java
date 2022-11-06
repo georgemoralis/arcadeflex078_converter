@@ -55,13 +55,13 @@ public class homerun
 		palette_set_color(offset,r,g,b);
 	} };
 	
-	static void get_homerun_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_homerun_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,palno;
 		tileno = (homerun_videoram[tile_index])+((homerun_videoram[tile_index+0x1000]&0x38)<<5)+ ((homerun_gfx_ctrl&1)<<11);
 		palno=(homerun_videoram[tile_index+0x1000]&0x7);
 		SET_TILE_INFO(0,tileno,palno,0)
-	}
+	} };
 	
 	
 	

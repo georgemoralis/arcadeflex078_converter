@@ -128,10 +128,10 @@ public class namcos86
 				0)
 	}
 	
-	static void get_tile_info0(int tile_index) { get_tile_info(tile_index,0,&rthunder_videoram1[0x0000]); }
-	static void get_tile_info1(int tile_index) { get_tile_info(tile_index,1,&rthunder_videoram1[0x1000]); }
-	static void get_tile_info2(int tile_index) { get_tile_info(tile_index,2,&rthunder_videoram2[0x0000]); }
-	static void get_tile_info3(int tile_index) { get_tile_info(tile_index,3,&rthunder_videoram2[0x1000]); }
+	public static GetTileInfoHandlerPtr get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,0,&rthunder_videoram1[0x0000]); } };
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,1,&rthunder_videoram1[0x1000]); } };
+	public static GetTileInfoHandlerPtr get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,2,&rthunder_videoram2[0x0000]); } };
+	public static GetTileInfoHandlerPtr get_tile_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,3,&rthunder_videoram2[0x1000]); } };
 	
 	
 	/***************************************************************************

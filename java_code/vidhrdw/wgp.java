@@ -37,20 +37,20 @@ public class wgp
 				TILE_FLIPYX( (attr & 0xc0) >> 6))
 	}
 	
-	static void get_piv0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_piv0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		common_get_piv_tile_info(0,tile_index);
-	}
+	} };
 	
-	static void get_piv1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_piv1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		common_get_piv_tile_info(1,tile_index);
-	}
+	} };
 	
-	static void get_piv2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_piv2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		common_get_piv_tile_info(2,tile_index);
-	}
+	} };
 	
 	static void dirty_piv_tilemaps(void)
 	{

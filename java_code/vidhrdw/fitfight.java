@@ -47,7 +47,7 @@ public class fitfight
 		}
 	}
 	
-	static void get_fof_bak_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fof_bak_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = fof_bak_tileram[tile_index*2+1];
 		int colr = fof_bak_tileram[tile_index*2] & 0x1f;
@@ -55,7 +55,7 @@ public class fitfight
 		xflip ^= 1;
 	
 		SET_TILE_INFO(2,code,colr,TILE_FLIPYX(xflip))
-	}
+	} };
 	
 	WRITE16_HANDLER(  fof_bak_tileram_w )
 	{
@@ -64,7 +64,7 @@ public class fitfight
 	}
 	
 	
-	static void get_fof_mid_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fof_mid_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = fof_mid_tileram[tile_index*2+1];
 		int colr = fof_mid_tileram[tile_index*2] & 0x1f;
@@ -72,7 +72,7 @@ public class fitfight
 		xflip ^= 1;
 	
 		SET_TILE_INFO(1,code,colr,TILE_FLIPYX(xflip))
-	}
+	} };
 	
 	WRITE16_HANDLER(  fof_mid_tileram_w )
 	{
@@ -81,7 +81,7 @@ public class fitfight
 		tilemap_mark_tile_dirty(fof_mid_tilemap,offset/2);
 	}
 	
-	static void get_fof_txt_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fof_txt_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = fof_txt_tileram[tile_index*2+1];
 		int colr = fof_txt_tileram[tile_index*2] & 0x1f;
@@ -89,7 +89,7 @@ public class fitfight
 		xflip ^= 1;
 	
 		SET_TILE_INFO(0,code,colr,TILE_FLIPYX(xflip))
-	}
+	} };
 	
 	WRITE16_HANDLER(  fof_txt_tileram_w )
 	{

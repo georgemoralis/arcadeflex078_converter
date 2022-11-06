@@ -75,13 +75,13 @@ public class xorworld
 		  0	 | xxxx---- -------- | color
 	*/
 	
-	static void get_tile_info_xorworld_screen(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_xorworld_screen = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = xorworld_videoram[tile_index];
 		int code = data & 0x0fff;
 	
 		SET_TILE_INFO(0, code, data >> 12, 0);
-	}
+	} };
 	
 	
 	/***************************************************************************

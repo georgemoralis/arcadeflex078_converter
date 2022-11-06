@@ -15,7 +15,7 @@ public class stlforce
 	
 	/* background, appears to be the bottom layer */
 	
-	static void get_stlforce_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_stlforce_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
@@ -23,7 +23,7 @@ public class stlforce
 		colour = stlforce_bg_videoram[tile_index] & 0xe000;
 		colour = colour >> 13;
 		SET_TILE_INFO(0,tileno,colour,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( stlforce_bg_videoram_w )
 	{
@@ -36,7 +36,7 @@ public class stlforce
 	
 	/* middle layer, low */
 	
-	static void get_stlforce_mlow_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_stlforce_mlow_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
@@ -47,7 +47,7 @@ public class stlforce
 		tileno += 0x1000;
 	
 		SET_TILE_INFO(0,tileno,colour,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( stlforce_mlow_videoram_w )
 	{
@@ -60,7 +60,7 @@ public class stlforce
 	
 	/* middle layer, high */
 	
-	static void get_stlforce_mhigh_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_stlforce_mhigh_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
@@ -71,7 +71,7 @@ public class stlforce
 		tileno += 0x2000;
 	
 		SET_TILE_INFO(0,tileno,colour,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( stlforce_mhigh_videoram_w )
 	{
@@ -84,7 +84,7 @@ public class stlforce
 	
 	/* text layer, appears to be the top layer */
 	
-	static void get_stlforce_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_stlforce_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
@@ -96,7 +96,7 @@ public class stlforce
 	
 		colour += 24;
 		SET_TILE_INFO(1,tileno,colour,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( stlforce_tx_videoram_w )
 	{

@@ -134,7 +134,7 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 	
@@ -144,9 +144,9 @@ public class phoenix
 				code,
 				(code >> 5) | (palette_bank << 3),
 				(tile_index & 0x1f) ? 0 : TILE_IGNORE_TRANSPARENCY)	/* first row (column) is opaque */
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 	
@@ -156,7 +156,7 @@ public class phoenix
 				code,
 				(code >> 5) | (palette_bank << 3),
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

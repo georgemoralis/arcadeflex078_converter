@@ -38,23 +38,23 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	static void get_bbuster_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_bbuster_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=videoram16[tile_index];
 		SET_TILE_INFO(0,tile&0xfff,tile>>12,0)
-	}
+	} };
 	
-	static void get_pf1_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=bbuster_pf1_data[tile_index];
 		SET_TILE_INFO(3,tile&0xfff,tile>>12,0)
-	}
+	} };
 	
-	static void get_pf2_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=bbuster_pf2_data[tile_index];
 		SET_TILE_INFO(4,tile&0xfff,tile>>12,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( bbuster_video_w )
 	{

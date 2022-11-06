@@ -258,13 +258,13 @@ public class popeye
 		popeye_bitmap_w(offset,data);
 	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = colorram.read(tile_index);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_skyskipr  = new VideoStartHandlerPtr() { public int handler(){
 		if ((popeye_bitmapram = auto_malloc(popeye_bitmapram_size)) == 0)

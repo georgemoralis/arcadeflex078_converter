@@ -15,7 +15,7 @@ public class shangkid
 	
 	
 	
-	static void get_bg_tile_info(int tile_index){
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) {
 		int attributes = videoram.read(tile_index+0x800);
 		int tile_number = videoram.read(tile_index)+0x100*(attributes&0x3);
 		int color;
@@ -52,7 +52,7 @@ public class shangkid
 	
 		tile_info.priority =
 			(memory_region( REGION_PROMS )[0x800+color*4]==2)?1:0;
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_shangkid  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);

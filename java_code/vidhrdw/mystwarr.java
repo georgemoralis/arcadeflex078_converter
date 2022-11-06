@@ -95,7 +95,7 @@ public class mystwarr
 	
 	
 	
-	static void get_gai_936_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_gai_936_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 		unsigned char *ROM = memory_region(REGION_GFX4);
@@ -113,7 +113,7 @@ public class mystwarr
 		colour |= sub1_colorbase << 4;
 	
 		SET_TILE_INFO(0, tileno, colour, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_gaiapols  = new VideoStartHandlerPtr() { public int handler(){
 		K055555_vh_start();
@@ -147,7 +147,7 @@ public class mystwarr
 		return 0;
 	} };
 	
-	static void get_ult_936_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ult_936_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 		unsigned char *ROM = memory_region(REGION_GFX4);
@@ -158,7 +158,7 @@ public class mystwarr
 		colour = sub1_colorbase;
 	
 		SET_TILE_INFO(0, tileno, colour, (dat1[tile_index]&0x40) ? TILE_FLIPX : 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_dadandrn  = new VideoStartHandlerPtr() { public int handler(){
 		K055555_vh_start();

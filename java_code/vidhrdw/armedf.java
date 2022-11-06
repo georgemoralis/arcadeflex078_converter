@@ -47,7 +47,7 @@ public class armedf
 		}
 	}
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile_number = terraf_text_videoram[tile_index]&0xff;
 		int attributes;
@@ -65,9 +65,9 @@ public class armedf
 				tile_number + 256 * (attributes & 0x3),
 				attributes >> 4,
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = armedf_fg_videoram[tile_index];
 		SET_TILE_INFO(
@@ -75,10 +75,10 @@ public class armedf
 				data&0x7ff,
 				data>>11,
 				0)
-	}
+	} };
 	
 	
-	static void get_bg_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = armedf_bg_videoram[tile_index];
 		SET_TILE_INFO(
@@ -86,7 +86,7 @@ public class armedf
 				data&0x3ff,
 				data>>11,
 				0)
-	}
+	} };
 	
 	
 	

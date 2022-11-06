@@ -164,23 +164,23 @@ public class sshangha
 	}
 	#endif
 	
-	static void get_pf2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=sshangha_pf2_data[tile_index];
 		SET_TILE_INFO(1,(tile&0xfff)|sshangha_pf2_bank,(tile>>12)|32,0)
-	}
+	} };
 	
-	static void get_pf1_16x16_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_16x16_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=sshangha_pf1_data[tile_index];
 		SET_TILE_INFO(1,(tile&0xfff)|sshangha_pf1_bank,tile>>12,0)
-	}
+	} };
 	
-	static void get_pf1_8x8_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_8x8_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=sshangha_pf1_data[tile_index];
 		SET_TILE_INFO(0,(tile&0xfff)|sshangha_pf1_bank,tile>>12,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_sshangha  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_8x8_tilemap   = tilemap_create(get_pf1_8x8_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);

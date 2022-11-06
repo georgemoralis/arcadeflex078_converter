@@ -109,7 +109,7 @@ public class suprslam
 	}
 	
 	
-	static void get_suprslam_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_suprslam_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 	
@@ -120,7 +120,7 @@ public class suprslam
 		colour = colour >> 12;
 	
 		SET_TILE_INFO(0,tileno,colour,0)
-	}
+	} };
 	
 	
 	/* BG LAYER */
@@ -133,7 +133,7 @@ public class suprslam
 	}
 	
 	
-	static void get_suprslam_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_suprslam_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 	
@@ -144,7 +144,7 @@ public class suprslam
 		colour = colour >> 12;
 	
 		SET_TILE_INFO(2,tileno,colour,0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_suprslam  = new VideoStartHandlerPtr() { public int handler(){

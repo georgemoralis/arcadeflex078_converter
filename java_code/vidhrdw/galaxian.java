@@ -44,8 +44,6 @@ public class galaxian
 	size_t galaxian_bulletsram_size;
 	
 	
-	static void get_tile_info(int tile_index);
-	static void rockclim_get_tile_info(int tile_index);
 	static struct tilemap *tilemap;
 	static struct tilemap *rockclim_tilemap;
 	static int mooncrst_gfxextend;
@@ -772,7 +770,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	static void drivfrcg_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr drivfrcg_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = galaxian_videoram[tile_index];
 		UINT8 x = tile_index & 0x1f;
@@ -783,7 +781,7 @@ public class galaxian
 	//	color |= ((galaxian_attributesram[(x << 1) | 1] & 0x40) >> 2);
 	
 		SET_TILE_INFO(0,code,color,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_drivfrcg  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(drivfrcg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -1736,7 +1734,7 @@ public class galaxian
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 x = tile_index & 0x1f;
 	
@@ -1754,13 +1752,13 @@ public class galaxian
 		}
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
-	static void rockclim_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr rockclim_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = rockclim_videoram[tile_index];
 		SET_TILE_INFO(2, code, 0, 0)
-	}
+	} };
 	
 	static void draw_bullets_common(struct mame_bitmap *bitmap)
 	{

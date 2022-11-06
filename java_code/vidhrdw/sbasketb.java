@@ -121,14 +121,14 @@ public class sbasketb
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ ((colorram.read(tile_index)& 0x20) << 3);
 		int color = colorram.read(tile_index)& 0x0f;
 		int flags = ((colorram.read(tile_index)& 0x40) ? TILE_FLIPX : 0) | ((colorram.read(tile_index)& 0x80) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_sbasketb  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

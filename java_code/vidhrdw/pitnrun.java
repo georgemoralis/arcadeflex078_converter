@@ -36,7 +36,7 @@ public class pitnrun
 	UINT8* videoram2;
 	
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 		code = videoram.read(tile_index);
@@ -45,9 +45,9 @@ public class pitnrun
 			code,
 			0,
 			0)
-	}
+	} };
 	
-	static void get_tile_info2(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 		code = videoram2[tile_index];
@@ -56,7 +56,7 @@ public class pitnrun
 			code + (pitnrun_char_bank<<8),
 			pitnrun_color_select&1,
 			0)
-	}
+	} };
 	
 	public static WriteHandlerPtr pitnrun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);

@@ -79,7 +79,7 @@ public class statriv2
 	
 	/* Video Related, move to vidhrdw later */
 	
-	static void get_statriv2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_statriv2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = statriv2_videoram[0x400+tile_index];
 		int attr = statriv2_videoram[tile_index];
@@ -89,7 +89,7 @@ public class statriv2
 				code,
 				attr,
 				0)
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr statriv2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){

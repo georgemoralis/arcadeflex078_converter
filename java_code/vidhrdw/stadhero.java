@@ -139,7 +139,7 @@ public class stadhero
 		return (col & 0xf) + ((row & 0xf) << 4) + ((row & 0x30) << 4) + ((col & 0x30) << 6);
 	}
 	
-	static void get_pf2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color;
 	
@@ -152,9 +152,9 @@ public class stadhero
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_pf1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=stadhero_pf1_data[tile_index];
 		int color=tile >> 12;
@@ -165,7 +165,7 @@ public class stadhero
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_stadhero  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap =     tilemap_create(get_pf1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);

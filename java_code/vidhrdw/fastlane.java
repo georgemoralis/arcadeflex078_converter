@@ -30,7 +30,7 @@ public class fastlane
 	
 	***************************************************************************/
 	
-	static void get_tile_info0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = fastlane_videoram1[tile_index];
 		int code = fastlane_videoram1[tile_index + 0x400];
@@ -53,9 +53,9 @@ public class fastlane
 				code+bank*256,
 				1 + 64 * (attr & 0x0f),
 				0)
-	}
+	} };
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = fastlane_videoram2[tile_index];
 		int code = fastlane_videoram2[tile_index + 0x400];
@@ -78,7 +78,7 @@ public class fastlane
 				code+bank*256,
 				0 + 64 * (attr & 0x0f),
 				0)
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -68,14 +68,14 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(
 				0,
 				dogfgt_bgvideoram[tile_index],
 				dogfgt_bgvideoram[tile_index + 0x400] & 0x03,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

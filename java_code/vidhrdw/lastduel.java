@@ -29,7 +29,7 @@ public class lastduel
 	
 	***************************************************************************/
 	
-	static void ld_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr ld_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = lastduel_scroll2[2*tile_index] & 0x1fff;
 		int color = lastduel_scroll2[2*tile_index+1];
@@ -37,9 +37,9 @@ public class lastduel
 				2,
 				tile,color & 0xf,
 				TILE_FLIPYX((color & 0x60) >> 5))
-	}
+	} };
 	
-	static void ld_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr ld_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = lastduel_scroll1[2*tile_index] & 0x1fff;
 		int color = lastduel_scroll1[2*tile_index+1];
@@ -48,9 +48,9 @@ public class lastduel
 				tile,
 				color & 0xf,
 				TILE_FLIPYX((color & 0x60) >> 5) | TILE_SPLIT((color & 0x80) >> 7))
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = lastduel_scroll2[tile_index] & 0x1fff;
 		int color = lastduel_scroll2[tile_index+0x0800];
@@ -59,9 +59,9 @@ public class lastduel
 				tile,
 				color & 0xf,
 				TILE_FLIPYX((color & 0x60) >> 5))
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = lastduel_scroll1[tile_index] & 0x1fff;
 		int color = lastduel_scroll1[tile_index+0x0800];
@@ -70,7 +70,7 @@ public class lastduel
 				tile,
 				color & 0xf,
 				TILE_FLIPYX((color & 0x60) >> 5) | TILE_SPLIT((color & 0x10) >> 4))
-	}
+	} };
 	
 	static void get_fix_info(int tile_index)
 	{

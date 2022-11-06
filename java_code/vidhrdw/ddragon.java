@@ -73,7 +73,7 @@ public class ddragon
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = ddragon_bgvideoram[2*tile_index];
 		SET_TILE_INFO(
@@ -81,9 +81,9 @@ public class ddragon
 				ddragon_bgvideoram[2*tile_index+1] + ((attr & 0x07) << 8),
 				(attr >> 3) & 0x07,
 				TILE_FLIPYX((attr & 0xc0) >> 6))
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = ddragon_fgvideoram[2*tile_index];
 		SET_TILE_INFO(
@@ -91,9 +91,9 @@ public class ddragon
 				ddragon_fgvideoram[2*tile_index+1] + ((attr & 0x07) << 8),
 				attr >> 5,
 				0)
-	}
+	} };
 	
-	static void get_fg_16color_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_16color_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = ddragon_fgvideoram[2*tile_index];
 		SET_TILE_INFO(
@@ -101,7 +101,7 @@ public class ddragon
 				ddragon_fgvideoram[2*tile_index+1] + ((attr & 0x0f) << 8),
 				attr >> 4,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

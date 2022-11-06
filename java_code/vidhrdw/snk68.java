@@ -30,7 +30,7 @@ public class snk68
 	
 	***************************************************************************/
 	
-	static void get_pow_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pow_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=videoram16[2*tile_index]&0xff;
 		int color=videoram16[2*tile_index+1];
@@ -43,9 +43,9 @@ public class snk68
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_sar_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sar_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=videoram16[2*tile_index];
 		int color=tile >> 12;
@@ -57,9 +57,9 @@ public class snk68
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_ikari3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ikari3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=videoram16[2*tile_index];
 		int color=tile >> 12;
@@ -76,7 +76,7 @@ public class snk68
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	/***************************************************************************
 	

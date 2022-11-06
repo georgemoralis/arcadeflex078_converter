@@ -56,7 +56,7 @@ public class dbz2
 		tilemap_mark_tile_dirty(dbz2_bg2_tilemap,offset/2);
 	}
 	
-	static void get_dbz2_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_dbz2_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour, flipx;
 	
@@ -68,7 +68,7 @@ public class dbz2
 		flipx = (dbz2_bg2_videoram[tile_index*2] & 0x0080) >> 7;
 	
 		SET_TILE_INFO(0,tileno,colour,TILE_FLIPYX(flipx))
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( dbz2_bg_videoram_w )
@@ -78,7 +78,7 @@ public class dbz2
 	}
 	
 	
-	static void get_dbz2_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_dbz2_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour, flipx;
 	
@@ -90,7 +90,7 @@ public class dbz2
 		flipx = (dbz2_bg_videoram[tile_index*2] & 0x0080) >> 7;
 	
 		SET_TILE_INFO(1,tileno,colour,TILE_FLIPYX(flipx))
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_dbz2  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();

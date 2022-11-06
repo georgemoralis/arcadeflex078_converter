@@ -105,13 +105,13 @@ public class kaneko16
 	
 	
 	#define KANEKO16_LAYER(_N_) \
-	static void get_tile_info_##_N_(int tile_index) \
+	public static GetTileInfoHandlerPtr get_tile_info_##_N_ = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  \
 	{ \
 		data16_t code_hi = kaneko16_vram_##_N_[ 2 * tile_index + 0]; \
 		data16_t code_lo = kaneko16_vram_##_N_[ 2 * tile_index + 1]; \
 		SET_TILE_INFO(1 + _N_/2, code_lo, (code_hi >> 2) & 0x3f, TILE_FLIPXY( code_hi & 3 )); \
 		tile_info.priority	=	(code_hi >> 8) & 3; \
-	} \
+	} }; \
 	\
 	WRITE16_HANDLER( kaneko16_vram_##_N_##_w ) \
 	{ \

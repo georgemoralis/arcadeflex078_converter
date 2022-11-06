@@ -66,12 +66,12 @@ public class fuukifg3
 	\
 	static struct tilemap *tilemap_##_N_; \
 	\
-	static void get_tile_info_##_N_(int tile_index) \
+	public static GetTileInfoHandlerPtr get_tile_info_##_N_ = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  \
 	{ \
 		data16_t code = (fuuki32_vram_##_N_[tile_index]&0xffff0000)>>16; \
 		data16_t attr = (fuuki32_vram_##_N_[tile_index]&0x0000ffff); \
 		SET_TILE_INFO(1 + _N_, code, attr & 0x3f,TILE_FLIPYX( (attr >> 6) & 3 )) \
-	} \
+	} }; \
 	\
 	WRITE32_HANDLER( fuuki32_vram_##_N_##_w ) \
 	{ \

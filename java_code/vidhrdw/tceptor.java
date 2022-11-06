@@ -131,14 +131,14 @@ public class tceptor
 		return TX_TILE_OFFSET_CENTER + (x - 1) + y * 32;
 	}
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offset = get_tile_addr(tile_index);
 		int code = tceptor_tile_ram[offset];
 		int color = tceptor_tile_attr[offset];
 	
 		SET_TILE_INFO(0, code, color, 0);
-	}
+	} };
 	
 	static void tile_mark_dirty(int offset)
 	{
@@ -194,23 +194,23 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = tceptor_bg_ram[tile_index * 2] | (tceptor_bg_ram[tile_index * 2 + 1] << 8);
 		int code = (data & 0x3ff) | 0x000;
 		int color = (data & 0xfc00) >> 10;
 	
 		SET_TILE_INFO(bg, code, color, 0);
-	}
+	} };
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = tceptor_bg_ram[tile_index * 2 + 0x1000] | (tceptor_bg_ram[tile_index * 2 + 1 + 0x1000] << 8);
 		int code = (data & 0x3ff) | 0x400;
 		int color = (data & 0xfc00) >> 10;
 	
 		SET_TILE_INFO(bg, code, color, 0);
-	}
+	} };
 	
 	public static ReadHandlerPtr tceptor_bg_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tceptor_bg_ram[offset];

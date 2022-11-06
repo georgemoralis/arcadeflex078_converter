@@ -27,10 +27,10 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(0, videoram.read(tile_index)& 0x7f, 0, 0);
-	}
+	} };
 	
 	
 	

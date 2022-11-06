@@ -75,13 +75,13 @@ public class battlex
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = videoram.read(tile_index*2)| (((videoram.read(tile_index*2+1)& 0x01)) << 8);
 		int color = (videoram.read(tile_index*2+1)& 0x0e) >> 1;
 	
 		SET_TILE_INFO(0,tile,color,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_battlex  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

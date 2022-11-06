@@ -23,7 +23,7 @@ public class pushman
 		return ((col & 0x7)) + ((7-(row & 0x7)) << 3) + ((col & 0x78) <<3) + ((0x38-(row&0x38))<<7);
 	}
 	
-	static void get_back_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_back_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char *bgMap = memory_region(REGION_GFX4);
 		int tile;
@@ -34,9 +34,9 @@ public class pushman
 				(tile&0xff)|((tile&0x4000)>>6),
 				(tile>>8)&0xf,
 				(tile&0x2000)?TILE_FLIPX:0)
-	}
+	} };
 	
-	static void get_text_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = videoram16[tile_index];
 		SET_TILE_INFO(
@@ -44,7 +44,7 @@ public class pushman
 				(tile&0xff)|((tile&0xc000)>>6)|((tile&0x2000)>>3),
 				(tile>>8)&0xf,
 				(tile&0x1000)?TILE_FLIPY:0)	/* not used? from Tiger Road */
-	}
+	} };
 	
 	
 	

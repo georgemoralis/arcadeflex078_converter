@@ -50,7 +50,7 @@ public class amspdwy
 	
 	***************************************************************************/
 	
-	static void get_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code	=	videoram.read( tile_index );
 		data8_t color	=	colorram.read( tile_index );
@@ -59,7 +59,7 @@ public class amspdwy
 				code + ((color & 0x18)<<5),
 				color & 0x07,
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr amspdwy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)

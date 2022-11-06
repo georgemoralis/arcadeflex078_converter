@@ -18,29 +18,29 @@ public class pirates
 	
 	/* tilemaps */
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = pirates_tx_tileram[tile_index*2];
 		int colr = pirates_tx_tileram[tile_index*2+1];
 	
 		SET_TILE_INFO(0,code,colr,0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = pirates_fg_tileram[tile_index*2];
 		int colr = pirates_fg_tileram[tile_index*2+1]+0x80;
 	
 		SET_TILE_INFO(0,code,colr,0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = pirates_bg_tileram[tile_index*2];
 		int colr = pirates_bg_tileram[tile_index*2+1]+ 0x100;
 	
 		SET_TILE_INFO(0,code,colr,0)
-	}
+	} };
 	
 	
 	/* video start / update */

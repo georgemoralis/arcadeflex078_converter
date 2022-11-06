@@ -238,7 +238,7 @@ public class deco16ic
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5) + ((row & 0x20) << 6);
 	}
 	
-	static void get_pf4_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf4_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=deco16_pf4_data[tile_index];
 		data8_t colour=(tile>>12)&0xf;
@@ -260,9 +260,9 @@ public class deco16ic
 				(tile&0xfff)|deco16_pf4_bank,
 				(colour&deco16_pf4_colourmask)+deco16_pf4_colour_bank,
 				flags)
-	}
+	} };
 	
-	static void get_pf3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=deco16_pf3_data[tile_index];
 		data8_t colour=(tile>>12)&0xf;
@@ -284,9 +284,9 @@ public class deco16ic
 				(tile&0xfff)|deco16_pf3_bank,
 				(colour&deco16_pf3_colourmask)+deco16_pf3_colour_bank,
 				flags)
-	}
+	} };
 	
-	static void get_pf2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=deco16_pf2_data[tile_index];
 		data8_t colour=(tile>>12)&0xf;
@@ -308,9 +308,9 @@ public class deco16ic
 				(tile&0xfff)|deco16_pf2_bank,
 				(colour&deco16_pf2_colourmask)+deco16_pf2_colour_bank,
 				flags)
-	}
+	} };
 	
-	static void get_pf1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=deco16_pf1_data[tile_index];
 		data8_t colour=(tile>>12)&0xf;
@@ -332,9 +332,9 @@ public class deco16ic
 				(tile&0xfff)|deco16_pf1_bank,
 				(colour&deco16_pf1_colourmask)+deco16_pf1_colour_bank,
 				flags)
-	}
+	} };
 	
-	static void get_pf2_tile_info_b(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info_b = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=deco16_pf2_data[tile_index];
 		data8_t colour=(tile>>12)&0xf;
@@ -356,9 +356,9 @@ public class deco16ic
 				(tile&0xfff)|deco16_pf2_bank,
 				(colour&deco16_pf2_colourmask)+deco16_pf2_colour_bank,
 				flags)
-	}
+	} };
 	
-	static void get_pf1_tile_info_b(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info_b = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=deco16_pf1_data[tile_index];
 		data8_t colour=(tile>>12)&0xf;
@@ -380,7 +380,7 @@ public class deco16ic
 				(tile&0xfff)|deco16_pf1_bank,
 				(colour&deco16_pf1_colourmask)+deco16_pf1_colour_bank,
 				flags)
-	}
+	} };
 	
 	/******************************************************************************/
 	

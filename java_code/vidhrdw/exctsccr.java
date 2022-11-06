@@ -139,13 +139,13 @@ public class exctsccr
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int color = colorram.read(tile_index)& 0x1f;
 	
 		SET_TILE_INFO(gfx_bank, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_exctsccr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

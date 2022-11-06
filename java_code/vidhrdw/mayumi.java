@@ -19,13 +19,13 @@ public class mayumi
 	static data8_t *mayumi_videoram;
 	static struct tilemap *mayumi_tilemap;
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = mayumi_videoram[tile_index] + (mayumi_videoram[tile_index+0x800] & 0x1f)*0x100 ;
 		int col = (mayumi_videoram[tile_index+0x1000] >> 3) & 0x1f;
 	
 		SET_TILE_INFO(0, code, col, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_mayumi  = new VideoStartHandlerPtr() { public int handler(){
 		mayumi_videoram = auto_malloc(0x1800);

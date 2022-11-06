@@ -82,22 +82,22 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha32[tile_index / 2] >> (16 * (~tile_index & 1));
 		int code = data & 0xfff;
 		int color = (data >> 12) & 0x0f;
 		SET_TILE_INFO(1, code, color, 0);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield32[tile_index / 2] >> (16 * (~tile_index & 1));
 		int code = (playfield_tile_bank << 12) | (data & 0xfff);
 		int color = (data >> 12) & 7;
 		SET_TILE_INFO(0, code, color, (data >> 15) & 1);
-	}
+	} };
 	
 	
 	static UINT32 atarigt_playfield_scan(UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows)

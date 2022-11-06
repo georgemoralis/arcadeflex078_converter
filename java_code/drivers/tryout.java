@@ -27,7 +27,7 @@ public class tryout
 	
 	static struct tilemap *fg_tilemap;
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, attr;
 	
@@ -39,7 +39,7 @@ public class tryout
 	//	attr & 0x0c ?
 	
 		SET_TILE_INFO(0, code, attr >> 4, 0)
-	}
+	} };
 	
 	public static WriteHandlerPtr tryout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!= data )

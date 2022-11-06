@@ -53,8 +53,8 @@ public class fromance
 		SET_TILE_INFO(layer, tile, color, 0);
 	}
 	
-	static void get_fromance_bg_tile_info(int tile_index) { get_fromance_tile_info(tile_index, 0); }
-	static void get_fromance_fg_tile_info(int tile_index) { get_fromance_tile_info(tile_index, 1); }
+	public static GetTileInfoHandlerPtr get_fromance_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_fromance_tile_info(tile_index, 0); } };
+	public static GetTileInfoHandlerPtr get_fromance_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_fromance_tile_info(tile_index, 1); } };
 	
 	INLINE void get_nekkyoku_tile_info(int tile_index,int layer)
 	{
@@ -65,8 +65,8 @@ public class fromance
 		SET_TILE_INFO(layer, tile, color, 0);
 	}
 	
-	static void get_nekkyoku_bg_tile_info(int tile_index) { get_nekkyoku_tile_info(tile_index, 0); }
-	static void get_nekkyoku_fg_tile_info(int tile_index) { get_nekkyoku_tile_info(tile_index, 1); }
+	public static GetTileInfoHandlerPtr get_nekkyoku_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_nekkyoku_tile_info(tile_index, 0); } };
+	public static GetTileInfoHandlerPtr get_nekkyoku_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_nekkyoku_tile_info(tile_index, 1); } };
 	
 	
 	

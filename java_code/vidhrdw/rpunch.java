@@ -47,7 +47,7 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	static void get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram16[tile_index];
 		int code;
@@ -59,9 +59,9 @@ public class rpunch
 				code,
 				((videoflags & 0x0010) >> 1) | ((data >> 13) & 7),
 				0)
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram16[videoram_size / 4 + tile_index];
 		int code;
@@ -73,7 +73,7 @@ public class rpunch
 				code,
 				((videoflags & 0x0020) >> 2) | ((data >> 13) & 7),
 				0)
-	}
+	} };
 	
 	
 	/*************************************

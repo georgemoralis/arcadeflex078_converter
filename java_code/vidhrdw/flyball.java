@@ -35,7 +35,7 @@ public class flyball
 	}
 	
 	
-	static void flyball_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr flyball_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 data = flyball_playfield_ram[tile_index];
 	
@@ -51,7 +51,7 @@ public class flyball
 		}
 	
 		SET_TILE_INFO(0, code, 0, flags)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_flyball  = new VideoStartHandlerPtr() { public int handler(){

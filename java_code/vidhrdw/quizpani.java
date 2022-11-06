@@ -26,7 +26,7 @@ public class quizpani
 		return (row & 0x0f) + ((col & 0xff) << 4) + ((row & 0x70) << 8);
 	}
 	
-	static void bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = quizpani_bg_videoram[tile_index];
 	
@@ -35,9 +35,9 @@ public class quizpani
 				(code & 0xfff) + (0x1000 * quizpani_bgbank),
 				code >> 12,
 				0)
-	}
+	} };
 	
-	static void txt_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr txt_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = quizpani_txt_videoram[tile_index];
 	
@@ -46,7 +46,7 @@ public class quizpani
 				(code & 0xfff) + (0x1000 * quizpani_txtbank),
 				code >> 12,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( quizpani_bg_videoram_w )
 	{

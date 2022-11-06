@@ -70,7 +70,7 @@ public class tunhunt
 		}
 	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = videoram.read(tile_index);
 		int code = attr & 0x3f;
@@ -78,7 +78,7 @@ public class tunhunt
 		int flags = color ? TILE_IGNORE_TRANSPARENCY : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_tunhunt  = new VideoStartHandlerPtr() { public int handler(){
 		/*

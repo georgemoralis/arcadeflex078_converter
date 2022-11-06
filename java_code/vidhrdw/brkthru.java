@@ -87,7 +87,7 @@ public class brkthru
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/* BG RAM format
 			0         1
@@ -100,7 +100,7 @@ public class brkthru
 		int colour = bgbasecolor + ((videoram.read(tile_index*2+1)& 0x04) >> 2);
 	
 		SET_TILE_INFO(region, code & 0x7f,colour,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr brkthru_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
@@ -111,11 +111,11 @@ public class brkthru
 	} };
 	
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code = brkthru_videoram[tile_index];
 		SET_TILE_INFO(0, code, 0, 0)
-	}
+	} };
 	
 	public static WriteHandlerPtr brkthru_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (brkthru_videoram[offset] != data)

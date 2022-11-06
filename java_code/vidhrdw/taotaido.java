@@ -176,7 +176,7 @@ public class taotaido
 		}
 	}
 	
-	static void taotaido_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr taotaido_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = taotaido_bgram[tile_index]&0x01ff;
 		int bank = (taotaido_bgram[tile_index]&0x0e00)>>9;
@@ -189,7 +189,7 @@ public class taotaido
 				code,
 				col,
 				0)
-	}
+	} };
 	
 	UINT32 taotaido_tilemap_scan_rows( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{

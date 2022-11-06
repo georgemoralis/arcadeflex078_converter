@@ -76,7 +76,7 @@ public class pandoras
 	
 	***************************************************************************/
 	
-	static void get_tile_info0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = colorram.read(tile_index);
 		SET_TILE_INFO(
@@ -85,7 +85,7 @@ public class pandoras
 				attr & 0x0f,
 				TILE_FLIPYX((attr & 0xc0) >> 6))
 		tile_info.priority = (attr & 0x20) >> 5;
-	}
+	} };
 	
 	/***************************************************************************
 	

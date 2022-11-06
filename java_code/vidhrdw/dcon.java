@@ -88,7 +88,7 @@ public class dcon
 			tilemap_mark_tile_dirty(text_layer,offset);
 	}
 	
-	static void get_back_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_back_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=dcon_back_data[tile_index];
 		int color=(tile>>12)&0xf;
@@ -100,9 +100,9 @@ public class dcon
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_fore_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fore_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=dcon_fore_data[tile_index];
 		int color=(tile>>12)&0xf;
@@ -114,9 +114,9 @@ public class dcon
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_mid_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_mid_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=dcon_mid_data[tile_index];
 		int color=(tile>>12)&0xf;
@@ -128,9 +128,9 @@ public class dcon
 				tile|dcon_gfx_bank_select,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = dcon_textram[tile_index];
 		int color=(tile>>12)&0xf;
@@ -142,7 +142,7 @@ public class dcon
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_dcon  = new VideoStartHandlerPtr() { public int handler(){
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,32,32);

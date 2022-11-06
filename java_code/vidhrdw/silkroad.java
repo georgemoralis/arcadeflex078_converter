@@ -73,7 +73,7 @@ public class silkroad
 	}
 	
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 		int code = ((silkroad_vidram[tile_index] & 0xffff0000) >> 16 );
@@ -87,7 +87,7 @@ public class silkroad
 				code,
 				color,
 				TILE_FLIPYX(flipx))
-	}
+	} };
 	
 	
 	
@@ -98,7 +98,7 @@ public class silkroad
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
 	}
 	
-	static void get_fg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ((silkroad_vidram2[tile_index] & 0xffff0000) >> 16 );
 		int color = ((silkroad_vidram2[tile_index] & 0x000001f));
@@ -109,7 +109,7 @@ public class silkroad
 				code,
 				color,
 				TILE_FLIPYX(flipx))
-	}
+	} };
 	
 	
 	
@@ -119,7 +119,7 @@ public class silkroad
 		tilemap_mark_tile_dirty(fg2_tilemap,offset);
 	}
 	
-	static void get_fg3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ((silkroad_vidram3[tile_index] & 0xffff0000) >> 16 );
 		int color = ((silkroad_vidram3[tile_index] & 0x000001f));
@@ -130,7 +130,7 @@ public class silkroad
 				code,
 				color,
 				TILE_FLIPYX(flipx))
-	}
+	} };
 	
 	
 	

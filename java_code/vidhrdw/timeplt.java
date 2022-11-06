@@ -100,7 +100,7 @@ public class timeplt
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = timeplt_colorram[tile_index];
 		tile_info.priority = (attr & 0x10) >> 4;
@@ -109,7 +109,7 @@ public class timeplt
 				timeplt_videoram[tile_index] + ((attr & 0x20) << 3),
 				attr & 0x1f,
 				TILE_FLIPYX((attr & 0xc0) >> 6))
-	}
+	} };
 	
 	
 	

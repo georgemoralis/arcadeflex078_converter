@@ -29,7 +29,7 @@ public class mosaic
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		tile_index *= 2;
 		SET_TILE_INFO(
@@ -37,9 +37,9 @@ public class mosaic
 				mosaic_fgvideoram[tile_index] + (mosaic_fgvideoram[tile_index+1] << 8),
 				0,
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		tile_index *= 2;
 		SET_TILE_INFO(
@@ -47,7 +47,7 @@ public class mosaic
 				mosaic_bgvideoram[tile_index] + (mosaic_bgvideoram[tile_index+1] << 8),
 				0,
 				0)
-	}
+	} };
 	
 	
 	

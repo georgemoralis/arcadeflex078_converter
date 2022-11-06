@@ -501,7 +501,7 @@ public class suprnova
 	static struct tilemap *skns_tilemap_A;
 	static struct tilemap *skns_tilemap_B;
 	
-	static void get_tilemap_A_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tilemap_A_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ((skns_tilemapA_ram[tile_index] & 0x001fffff) >> 0 );
 		int colr = ((skns_tilemapA_ram[tile_index] & 0x3f000000) >> 24 );
@@ -518,7 +518,7 @@ public class suprnova
 				0x40+colr,
 				tile_info.flags)
 	//	tile_info.priority = pri;
-	}
+	} };
 	
 	WRITE32_HANDLER ( skns_tilemapA_w )
 	{
@@ -526,7 +526,7 @@ public class suprnova
 		tilemap_mark_tile_dirty(skns_tilemap_A,offset);
 	}
 	
-	static void get_tilemap_B_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tilemap_B_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ((skns_tilemapB_ram[tile_index] & 0x001fffff) >> 0 );
 		int colr = ((skns_tilemapB_ram[tile_index] & 0x3f000000) >> 24 );
@@ -543,7 +543,7 @@ public class suprnova
 				0x40+colr,
 				tile_info.flags)
 	//	tile_info.priority = pri;
-	}
+	} };
 	
 	WRITE32_HANDLER ( skns_tilemapB_w )
 	{

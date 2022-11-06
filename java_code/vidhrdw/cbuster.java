@@ -46,13 +46,13 @@ public class cbuster
 				0)
 	}
 	
-	static void get_back_tile_info2(int tile_index) { get_back_tile_info(tile_index,1,twocrude_pf2_data); }
-	static void get_back_tile_info3(int tile_index) { get_back_tile_info(tile_index,2,twocrude_pf3_data); }
-	static void get_back_tile_info4(int tile_index) { get_back_tile_info(tile_index,3,twocrude_pf4_data); }
+	public static GetTileInfoHandlerPtr get_back_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_back_tile_info(tile_index,1,twocrude_pf2_data); } };
+	public static GetTileInfoHandlerPtr get_back_tile_info3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_back_tile_info(tile_index,2,twocrude_pf3_data); } };
+	public static GetTileInfoHandlerPtr get_back_tile_info4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_back_tile_info(tile_index,3,twocrude_pf4_data); } };
 	
 	
 	/* 8x8 top layer */
-	static void get_fore_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fore_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=twocrude_pf1_data[tile_index];
 		int color=tile >> 12;
@@ -64,7 +64,7 @@ public class cbuster
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	/******************************************************************************/
 	

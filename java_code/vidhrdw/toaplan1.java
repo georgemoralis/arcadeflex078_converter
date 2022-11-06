@@ -196,7 +196,7 @@ public class toaplan1
 	
 	***************************************************************************/
 	
-	static void get_pf1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -210,9 +210,9 @@ public class toaplan1
 				0)
 		if (pf1_tilevram16[2*tile_index+1] & 0x8000) tile_info.priority = 0;
 		else tile_info.priority = (attrib & 0xf000) >> 12;
-	}
+	} };
 	
-	static void get_pf2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -226,9 +226,9 @@ public class toaplan1
 				0)
 		if (pf2_tilevram16[2*tile_index+1] & 0x8000) tile_info.priority = 0;
 		else tile_info.priority = (attrib & 0xf000) >> 12;
-	}
+	} };
 	
-	static void get_pf3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -242,9 +242,9 @@ public class toaplan1
 				0)
 		if (pf3_tilevram16[2*tile_index+1] & 0x8000) tile_info.priority = 0;
 		else tile_info.priority = (attrib & 0xf000) >> 12;
-	}
+	} };
 	
-	static void get_pf4_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf4_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -258,7 +258,7 @@ public class toaplan1
 				0)
 		if (pf4_tilevram16[2*tile_index+1] & 0x8000) tile_info.priority = 0;
 		else tile_info.priority = (attrib & 0xf000) >> 12;
-	}
+	} };
 	
 	/***************************************************************************
 	

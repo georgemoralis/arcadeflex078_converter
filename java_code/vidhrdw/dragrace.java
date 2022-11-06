@@ -25,7 +25,7 @@ public class dragrace
 	}
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = dragrace_playfield_ram[tile_index];
 	
@@ -56,7 +56,7 @@ public class dragrace
 		}
 	
 		SET_TILE_INFO(((code & 0xA0) == 0x80) ? 1 : 0, num, col, 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_dragrace  = new VideoStartHandlerPtr() { public int handler(){

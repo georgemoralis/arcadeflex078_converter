@@ -83,14 +83,14 @@ public class playch10
 		{ ppu_irq }				/* irq */
 	};
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs = tile_index * 2;
 		int code = videoram.read(offs)+ ((videoram.read(offs + 1)& 0x07) << 8);
 		int color = (videoram.read(offs + 1)>> 3) & 0x1f;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_playch10  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

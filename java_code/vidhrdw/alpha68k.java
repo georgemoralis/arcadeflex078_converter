@@ -50,7 +50,7 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile  = videoram16[2*tile_index]   &0xff;
 		int color = videoram16[2*tile_index+1] &0x0f;
@@ -62,7 +62,7 @@ public class alpha68k
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( alpha68k_videoram_w )
 	{

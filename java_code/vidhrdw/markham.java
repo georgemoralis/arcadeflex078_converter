@@ -68,14 +68,14 @@ public class markham
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = videoram.read(tile_index * 2);
 		int code = videoram.read((tile_index * 2) + 1)+ ((attr & 0x60) << 3);
 		int color = (attr & 0x1f) | ((attr & 0x80) >> 2);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_markham  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols, 

@@ -229,7 +229,7 @@ public class bking2
 	}
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code0 = bking2_playfield_ram[2 * tile_index + 0];
 		UINT8 code1 = bking2_playfield_ram[2 * tile_index + 1];
@@ -240,7 +240,7 @@ public class bking2
 		if (code1 & 8) flags |= TILE_FLIPY;
 	
 		SET_TILE_INFO(0, code0 + 256 * code1, palette_bank, flags)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_bking2  = new VideoStartHandlerPtr() { public int handler(){

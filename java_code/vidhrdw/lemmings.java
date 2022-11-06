@@ -86,7 +86,7 @@ public class lemmings
 	
 	/******************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t tile=lemmings_vram_data[tile_index];
 	
@@ -95,7 +95,7 @@ public class lemmings
 				tile&0x7ff,
 				(tile>>12)&0xf,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_lemmings  = new VideoStartHandlerPtr() { public int handler(){
 		bitmap0 = bitmap_alloc(2048,256);

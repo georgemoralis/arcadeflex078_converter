@@ -32,7 +32,7 @@ public class lwings
 		return (row * 0x800) | (col * 2);
 	}
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -43,9 +43,9 @@ public class lwings
 				code + ((color & 0xc0) << 2),
 				color & 0x0f,
 				TILE_FLIPYX((color & 0x30) >> 4))
-	}
+	} };
 	
-	static void lwings_get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr lwings_get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -56,9 +56,9 @@ public class lwings
 				code + ((color & 0xe0) << 3),
 				color & 0x07,
 				TILE_FLIPYX((color & 0x18) >> 3))
-	}
+	} };
 	
-	static void trojan_get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr trojan_get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -70,9 +70,9 @@ public class lwings
 				code,
 				bAvengersHardware ? ((color & 7) ^ 6) : (color & 7),
 				TILE_SPLIT((color & 0x08) >> 3) | ((color & 0x10) ? TILE_FLIPX : 0))
-	}
+	} };
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 		UINT8 *rom = memory_region(REGION_GFX5);
@@ -86,7 +86,7 @@ public class lwings
 				code + ((color & 0x80) << 1),
 				color & 0x07,
 				TILE_FLIPYX((color & 0x30) >> 4))
-	}
+	} };
 	
 	/***************************************************************************
 	

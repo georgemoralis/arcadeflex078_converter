@@ -39,7 +39,7 @@ public class tankbust
 	
 	*/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index);
 		int attr = colorram.read(tile_index);
@@ -67,9 +67,9 @@ public class tankbust
 				code,
 				(color&4) | ((color&2)>>1) | ((color&1)<<1),
 				0)
-	}
+	} };
 	
-	static void get_txt_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_txt_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = txt_ram[tile_index];
 		int color = ((code>>6) & 0x03);
@@ -78,7 +78,7 @@ public class tankbust
 				code & 0x3f,
 				((color&2)>>1) | ((color&1)<<1),
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

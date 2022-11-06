@@ -65,20 +65,20 @@ public class runaway
 	} };
 	
 	
-	static void runaway_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr runaway_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = runaway_video_ram[tile_index];
 	
 		SET_TILE_INFO(0, ((code & 0x3f) << 1) | ((code & 0x40) >> 6) | (tile_bank << 7), 0, (code & 0x80) ? TILE_FLIPY : 0);
-	}
+	} };
 	
 	
-	static void qwak_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr qwak_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = runaway_video_ram[tile_index];
 	
 		SET_TILE_INFO(0, ((code & 0x7f) << 1) | ((code & 0x80) >> 7), 0, 0);
-	}
+	} };
 	
 	
 	

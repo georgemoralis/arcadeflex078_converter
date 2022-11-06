@@ -25,28 +25,28 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static void centiped_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr centiped_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram.read(tile_index);
 		SET_TILE_INFO(0, (data & 0x3f) + 0x40, 0, TILE_FLIPYX(data >> 6));
-	}
+	} };
 	
 	
-	static void warlords_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr warlords_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram.read(tile_index);
 		int color = ((tile_index & 0x10) >> 4) | ((tile_index & 0x200) >> 8) | (centiped_flipscreen >> 5);
 		SET_TILE_INFO(0, data & 0x3f, color, TILE_FLIPYX(data >> 6));
-	}
+	} };
 	
 	
-	static void milliped_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr milliped_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram.read(tile_index);
 		int bank = (data >> 6) & 1;
 		int color = (data >> 6) & 3;
 		SET_TILE_INFO(0, (data & 0x3f) + 0x40 + (bank * 0x80), color, 0);
-	}
+	} };
 	
 	
 	/*************************************

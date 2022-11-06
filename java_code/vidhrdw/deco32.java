@@ -673,20 +673,20 @@ public class deco32
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
-	static void get_pf1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=deco32_pf1_data[tile_index];
 		SET_TILE_INFO(0,(tile&0xfff)|deco32_pf1_bank,(tile>>12)&0xf,0)
-	}
+	} };
 	
-	static void get_pf1a_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1a_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 		int tile=deco32_pf1_data[tile_index];
 		SET_TILE_INFO(1,(tile&0xfff)|deco32_pf1_bank,(tile>>12)&0xf,0)
-	}
+	} };
 	
-	static void get_pf2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data32_t tile=deco32_pf2_data[tile_index];
 		data8_t	colour=(tile>>12)&0xf;
@@ -704,9 +704,9 @@ public class deco32
 		}
 	
 		SET_TILE_INFO(1,(tile&0xfff)|deco32_pf2_bank,colour+deco32_pf2_colourbank,flags)
-	}
+	} };
 	
-	static void get_pf3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data32_t tile=deco32_pf3_data[tile_index];
 		data8_t	colour=(tile>>12)&0xf;
@@ -724,9 +724,9 @@ public class deco32
 		}
 	
 		SET_TILE_INFO(2,(tile&0xfff)|deco32_pf3_bank,colour,flags)
-	}
+	} };
 	
-	static void get_pf4_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf4_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data32_t tile=deco32_pf4_data[tile_index];
 		data8_t	colour=(tile>>12)&0xf;
@@ -744,16 +744,16 @@ public class deco32
 		}
 	
 		SET_TILE_INFO(2,(tile&0xfff)|deco32_pf4_bank,colour+deco32_pf4_colourbank,flags)
-	}
+	} };
 	
 	/* Captain America tilemap chip 2 has different banking and colour from normal */
-	static void get_ca_pf3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ca_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=deco32_pf3_data[tile_index];
 		SET_TILE_INFO(2,(tile&0x3fff)+deco32_pf3_bank,(tile >> 14)&3,0)
-	}
+	} };
 	
-	static void get_ll_pf3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ll_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data32_t tile=deco32_pf3_data[tile_index];
 		data8_t flags=0;
@@ -766,9 +766,9 @@ public class deco32
 		}
 	
 		SET_TILE_INFO(2,(tile&0x0fff)|deco32_pf3_bank,(tile >> 12)&3,flags)
-	}
+	} };
 	
-	static void get_ll_pf4_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_ll_pf4_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data32_t tile=deco32_pf4_data[tile_index];
 		data8_t flags=0;
@@ -781,7 +781,7 @@ public class deco32
 		}
 	
 		SET_TILE_INFO(2,(tile&0x0fff)|deco32_pf4_bank,(tile >> 12)&3,flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_captaven  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);

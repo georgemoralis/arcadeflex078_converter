@@ -51,7 +51,7 @@ public class exprraid
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 *tilerom = memory_region(REGION_GFX4);
 	
@@ -76,16 +76,16 @@ public class exprraid
 		tile_info.priority = ((attr & 0x80) ? 1 : 0);
 	
 		SET_TILE_INFO(bank, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int code = videoram.read(tile_index)+ ((attr & 0x07) << 8);
 		int color = (attr & 0x10) >> 4;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_exprraid  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

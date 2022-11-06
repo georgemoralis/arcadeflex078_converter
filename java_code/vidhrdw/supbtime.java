@@ -123,7 +123,7 @@ public class supbtime
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color;
 	
@@ -136,9 +136,9 @@ public class supbtime
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=supbtime_pf1_data[tile_index];
 		int color=tile >> 12;
@@ -149,7 +149,7 @@ public class supbtime
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_supbtime  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);

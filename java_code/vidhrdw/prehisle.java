@@ -73,7 +73,7 @@ public class prehisle
 		}
 	}
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 *tilerom = memory_region(REGION_GFX5);
 	
@@ -84,9 +84,9 @@ public class prehisle
 		int flags = (attr & 0x800) ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(1, code, color, flags)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = prehisle_bg_videoram16[tile_index];
 		int code = attr & 0x7ff;
@@ -94,16 +94,16 @@ public class prehisle
 		int flags = (attr & 0x800) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(2, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = videoram16[tile_index];
 		int code = attr & 0xfff;
 		int color = attr >> 12;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_prehisle  = new VideoStartHandlerPtr() { public int handler(){
 		bg2_tilemap = tilemap_create(get_bg2_tile_info, tilemap_scan_cols, 

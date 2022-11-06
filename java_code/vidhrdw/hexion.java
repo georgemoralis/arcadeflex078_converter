@@ -30,15 +30,15 @@ public class hexion
 				0)
 	}
 	
-	static void get_tile_info0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info(tile_index,vram[0]);
-	}
+	} };
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info(tile_index,vram[1]);
-	}
+	} };
 	
 	
 	

@@ -115,7 +115,7 @@ public class fastfred
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t x = tile_index & 0x1f;
 	
@@ -123,7 +123,7 @@ public class fastfred
 		data8_t color = colorbank | (fastfred_attributesram[2 * x + 1] & 0x07);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	
 	
@@ -337,7 +337,7 @@ public class fastfred
 	} };
 	
 	
-	static void imago_get_tile_info_bg(int tile_index)
+	public static GetTileInfoHandlerPtr imago_get_tile_info_bg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t x = tile_index & 0x1f;
 	
@@ -345,13 +345,13 @@ public class fastfred
 		data8_t color = colorbank | (fastfred_attributesram[2 * x + 1] & 0x07);
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
-	static void imago_get_tile_info_fg(int tile_index)
+	public static GetTileInfoHandlerPtr imago_get_tile_info_fg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = imago_fg_videoram[tile_index];
 		SET_TILE_INFO(2, code, 0, 0)
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr imago_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){

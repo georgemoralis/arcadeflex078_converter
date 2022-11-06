@@ -113,21 +113,21 @@ public class mystston
 		flip_screen_set((data & 0x80) ^ ((readinputport(3) & 0x20) ? 0x80:0));
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = mystston_videoram2[tile_index] + ((mystston_videoram2[tile_index + 0x200] & 0x01) << 8);
 		int flags = (tile_index & 0x10) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(1, code, 0, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ ((videoram.read(tile_index + 0x400)& 0x07) << 8);
 		int color = mystston_fgcolor;
 		
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_mystston  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_x, 

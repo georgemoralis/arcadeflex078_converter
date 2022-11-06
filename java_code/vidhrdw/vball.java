@@ -41,7 +41,7 @@ public class vball
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5) + ((row & 0x20) <<6);
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char code = vb_videoram[tile_index];
 		unsigned char attr = vb_attribram[tile_index];
@@ -50,7 +50,7 @@ public class vball
 				code + ((attr & 0x1f) << 8) + (vball_gfxset<<8),
 				(attr >> 5) & 0x7,
 				0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_vb  = new VideoStartHandlerPtr() { public int handler(){

@@ -19,7 +19,7 @@ public class ashnojoe
 	
 	data16_t *ashnojoe_tilemap_reg;
 	
-	static void get_joe_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_joe_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ashnojoetileram16 [tile_index];
 	
@@ -28,9 +28,9 @@ public class ashnojoe
 				code & 0xfff,
 				((code >> 12) & 0x0f),
 				0)
-	}
+	} };
 	
-	static void get_joe_tile_info_2(int tile_index)
+	public static GetTileInfoHandlerPtr get_joe_tile_info_2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ashnojoetileram16_2 [tile_index*2];
 		int attr = ashnojoetileram16_2 [tile_index*2+1];
@@ -40,9 +40,9 @@ public class ashnojoe
 				(code & 0x7fff),
 				((attr >> 8) & 0x1f) + 0x40,
 				0)
-	}
+	} };
 	
-	static void get_joe_tile_info_3(int tile_index)
+	public static GetTileInfoHandlerPtr get_joe_tile_info_3 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ashnojoetileram16_3 [tile_index];
 	
@@ -51,9 +51,9 @@ public class ashnojoe
 				code & 0xfff,
 				((code >> 12) & 0x0f) + 0x10,
 				0)
-	}
+	} };
 	
-	static void get_joe_tile_info_4(int tile_index)
+	public static GetTileInfoHandlerPtr get_joe_tile_info_4 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ashnojoetileram16_4 [tile_index];
 	
@@ -62,9 +62,9 @@ public class ashnojoe
 				code & 0xfff,
 				((code >> 12) & 0x0f) + 0x60,
 				0)
-	}
+	} };
 	
-	static void get_joe_tile_info_5(int tile_index)
+	public static GetTileInfoHandlerPtr get_joe_tile_info_5 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ashnojoetileram16_5 [tile_index*2];
 		int attr = ashnojoetileram16_5 [tile_index*2+1];
@@ -74,9 +74,9 @@ public class ashnojoe
 				(code & 0x7fff),
 				((attr >> 8) & 0x1f) + 0x20,
 				0)
-	}
+	} };
 	
-	static void get_joe_tile_info_6(int tile_index)
+	public static GetTileInfoHandlerPtr get_joe_tile_info_6 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ashnojoetileram16_6 [tile_index*2];
 		int attr = ashnojoetileram16_6 [tile_index*2+1];
@@ -86,10 +86,10 @@ public class ashnojoe
 				(code & 0x1fff),
 				((attr >> 8) & 0x1f) + 0x70,
 				0)
-	}
+	} };
 	
 	
-	static void get_joe_tile_info_7(int tile_index)
+	public static GetTileInfoHandlerPtr get_joe_tile_info_7 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = ashnojoetileram16_7 [tile_index*2];
 		int attr = ashnojoetileram16_7 [tile_index*2+1];
@@ -99,7 +99,7 @@ public class ashnojoe
 				(code & 0x1fff),
 				((attr >> 8) & 0x1f) + 0x70,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( ashnojoe_tileram_w )
 	{

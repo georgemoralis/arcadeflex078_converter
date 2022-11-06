@@ -18,7 +18,7 @@ public class drgnmst
 	
 	
 	
-	static void get_drgnmst_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_drgnmst_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour, flipyx;
 		tileno = drgnmst_fg_videoram[tile_index*2] & 0xfff;
@@ -26,7 +26,7 @@ public class drgnmst
 		flipyx = (drgnmst_fg_videoram[tile_index*2+1] & 0x60)>>5;
 	
 		SET_TILE_INFO(1,tileno,colour,TILE_FLIPYX(flipyx))
-	}
+	} };
 	
 	WRITE16_HANDLER( drgnmst_fg_videoram_w )
 	{
@@ -36,7 +36,7 @@ public class drgnmst
 	
 	
 	
-	static void get_drgnmst_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_drgnmst_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour,flipyx;
 		tileno = (drgnmst_bg_videoram[tile_index*2]& 0x1fff)+0x800;
@@ -44,7 +44,7 @@ public class drgnmst
 		flipyx = (drgnmst_bg_videoram[tile_index*2+1] & 0x60)>>5;
 	
 		SET_TILE_INFO(3,tileno,colour,TILE_FLIPYX(flipyx))
-	}
+	} };
 	
 	WRITE16_HANDLER( drgnmst_bg_videoram_w )
 	{
@@ -52,7 +52,7 @@ public class drgnmst
 		tilemap_mark_tile_dirty(drgnmst_bg_tilemap,offset/2);
 	}
 	
-	static void get_drgnmst_md_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_drgnmst_md_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour,flipyx;
 		tileno = (drgnmst_md_videoram[tile_index*2]& 0x7fff)-0x2000;
@@ -61,7 +61,7 @@ public class drgnmst
 		flipyx = (drgnmst_md_videoram[tile_index*2+1] & 0x60)>>5;
 	
 		SET_TILE_INFO(2,tileno,colour,TILE_FLIPYX(flipyx))
-	}
+	} };
 	
 	WRITE16_HANDLER( drgnmst_md_videoram_w )
 	{

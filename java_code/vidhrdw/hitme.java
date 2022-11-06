@@ -21,7 +21,7 @@ public class hitme
 	
 	static struct tilemap *hitme_tilemap;
 	
-	static void get_hitme_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_hitme_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = hitme_vidram[tile_index] & 0x3f;
 		SET_TILE_INFO(
@@ -29,7 +29,7 @@ public class hitme
 				code,
 				0,
 				0)
-	}
+	} };
 	
 	/* the old vidhrdw/hitme.c had some invert thing, need to change it to work with this I guess .. */
 	

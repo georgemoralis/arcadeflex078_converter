@@ -154,13 +154,13 @@ public class dkong
 		color_codes = color_prom;	/* we'll need it later */
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ 256 * gfx_bank;
 		int color = (color_codes[tile_index % 32 + 32 * (tile_index / 32 / 4)] & 0x0f) + 0x10 * palette_bank;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_dkong  = new VideoStartHandlerPtr() { public int handler(){
 		gfx_bank = 0;

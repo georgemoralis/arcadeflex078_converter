@@ -444,7 +444,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	static void get_bac0_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_bac0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,offs=tile_index<<1;
 	
@@ -457,9 +457,9 @@ public class dec8
 				tile&0xfff,
 				color&gfx_mask,
 				0)
-	}
+	} };
 	
-	static void get_bac1_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_bac1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,offs=tile_index<<1;
 	
@@ -472,7 +472,7 @@ public class dec8
 				tile&0xfff,
 				color&3,
 				0)
-	}
+	} };
 	
 	static UINT32 bac0_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
@@ -480,7 +480,7 @@ public class dec8
 		return ((col & 0x0f) + ((row & 0x0f) << 4)) + ((col & 0x10) << 5) + ((row & 0x10) << 4);
 	}
 	
-	static void get_cobracom_fix_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_cobracom_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index<<1;
 		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
@@ -491,7 +491,7 @@ public class dec8
 				tile&0xfff,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_cobracom  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
@@ -530,7 +530,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
 	} };
 	
-	static void get_ghostb_fix_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_ghostb_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index<<1;
 		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
@@ -541,7 +541,7 @@ public class dec8
 				tile&0x3ff,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_ghostb  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
@@ -572,7 +572,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
 	} };
 	
-	static void get_oscar_fix_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_oscar_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index<<1;
 		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
@@ -583,7 +583,7 @@ public class dec8
 				tile&0xfff,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_oscar  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,TILEMAP_SPLIT,16,16,32,32);
@@ -630,7 +630,7 @@ public class dec8
 		return ((col & 0x0f) + ((row & 0x0f) << 4)) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
-	static void get_lastmiss_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_lastmiss_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=dec8_pf0_data[offs+1]+(dec8_pf0_data[offs]<<8);
@@ -643,9 +643,9 @@ public class dec8
 				tile&0xfff,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_lastmiss_fix_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_lastmiss_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index<<1;
 		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
@@ -656,7 +656,7 @@ public class dec8
 				tile&0xfff,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_lastmiss  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_lastmiss_tile_info,lastmiss_scan_rows,0,16,16,32,32);
@@ -697,7 +697,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
 	} };
 	
-	static void get_srdarwin_fix_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_srdarwin_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=videoram.read(tile_index);
 		int color=0; /* ? */
@@ -709,10 +709,10 @@ public class dec8
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	//AT: improved priority and fixed stage 4+ crashes caused by bank overflow
-	static void get_srdarwin_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_srdarwin_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=dec8_pf0_data[2*tile_index+1]+(dec8_pf0_data[2*tile_index]<<8);
 		int color=tile >> 12 & 3;
@@ -727,7 +727,7 @@ public class dec8
 				tile,
 				color,
 				flag)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_srdarwin  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_srdarwin_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,16);
@@ -768,7 +768,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
 	} };
 	
-	static void get_gondo_fix_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_gondo_fix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=videoram.read(offs+1)+(videoram.read(offs)<<8);
@@ -779,9 +779,9 @@ public class dec8
 				tile&0xfff,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_gondo_tile_info( int tile_index )
+	public static GetTileInfoHandlerPtr get_gondo_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs=tile_index*2;
 		int tile=dec8_pf0_data[offs+1]+(dec8_pf0_data[offs]<<8);
@@ -794,7 +794,7 @@ public class dec8
 				tile&0xfff,
 				color,
 				0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_gondo  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_fix_tilemap=tilemap_create(get_gondo_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);

@@ -35,28 +35,28 @@ public class mcr12
 	 *
 	 *************************************/
 	
-	static void mcr1_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr mcr1_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(0, videoram.read(tile_index), 0, 0);
-	}
+	} };
 	
 	
-	static void mcr2_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr mcr2_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram.read(tile_index * 2)| (videoram.read(tile_index * 2 + 1)<< 8);
 		int code = data & 0x1ff;
 		int color = (data >> 11) & 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 9) & 3));
-	}
+	} };
 	
 	
-	static void twotigra_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr twotigra_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram.read(tile_index)| (videoram.read(tile_index + 0x400)<< 8);
 		int code = data & 0x1ff;
 		int color = (data >> 11) & 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 9) & 3));
-	}
+	} };
 	
 	
 	

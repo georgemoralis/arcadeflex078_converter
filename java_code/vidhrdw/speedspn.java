@@ -17,13 +17,13 @@ public class speedspn
 	static data8_t* speedspn_vidram;
 	
 	
-	static void get_speedspn_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_speedspn_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = speedspn_vidram[tile_index*2+1] | (speedspn_vidram[tile_index*2] << 8);
 		int attr = speedspn_attram[tile_index^0x400];
 	
 		SET_TILE_INFO(0,code,attr & 0x3f,(attr & 0x80) ? TILE_FLIPX : 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_speedspn  = new VideoStartHandlerPtr() { public int handler(){
 		speedspn_vidram = auto_malloc(0x1000 * 2);

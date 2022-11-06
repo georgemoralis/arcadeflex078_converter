@@ -39,7 +39,7 @@ public class orbit
 	}
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = orbit_playfield_ram[tile_index];
 	
@@ -55,7 +55,7 @@ public class orbit
 		}
 	
 		SET_TILE_INFO(3, code & 0x3f, 0, flags)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_orbit  = new VideoStartHandlerPtr() { public int handler(){

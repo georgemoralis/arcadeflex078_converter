@@ -256,12 +256,12 @@ public class supdrapo
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ char_bank[tile_index] * 0x100;
 	
 		SET_TILE_INFO( 0, code, 0, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_supdrapo  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);

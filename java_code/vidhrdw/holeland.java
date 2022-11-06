@@ -25,7 +25,7 @@ public class holeland
 	
 	***************************************************************************/
 	
-	static void holeland_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr holeland_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int tile_number = videoram.read(tile_index)| ((attr & 0x03) << 8);
@@ -39,9 +39,9 @@ public class holeland
 				tile_number,
 				palette_offset + ((attr >> 4) & 0x0f),
 				TILE_FLIPYX((attr >> 2) & 0x03) | TILE_SPLIT((attr >> 4) & 1))
-	}
+	} };
 	
-	static void crzrally_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr crzrally_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = colorram.read(tile_index);
 		int tile_number = videoram.read(tile_index)| ((attr & 0x03) << 8);
@@ -51,7 +51,7 @@ public class holeland
 				tile_number,
 				palette_offset + ((attr >> 4) & 0x0f),
 				TILE_FLIPYX((attr >> 2) & 0x03) | TILE_SPLIT((attr >> 4) & 1))
-	}
+	} };
 	
 	/***************************************************************************
 	

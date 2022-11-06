@@ -62,7 +62,7 @@ public class wwfwfest
 	/*******************************************************************************
 	 Tilemap Related Functions
 	*******************************************************************************/
-	static void get_fg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/*- FG0 RAM Format -**
 	
@@ -91,9 +91,9 @@ public class wwfwfest
 				tileno,
 				colbank,
 				0)
-	}
+	} };
 	
-	static void get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/*- BG0 RAM Format -**
 	
@@ -121,9 +121,9 @@ public class wwfwfest
 				tileno,
 				colbank,
 				TILE_FLIPYX((tilebase[0] & 0x00c0) >> 6))
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		/*- BG1 RAM Format -**
 	
@@ -147,7 +147,7 @@ public class wwfwfest
 				tileno,
 				colbank,
 				0)
-	}
+	} };
 	
 	/*******************************************************************************
 	 Sprite Related Functions

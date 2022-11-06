@@ -54,10 +54,10 @@ public class m90
 	}
 	
 	
-	static void get_pf1_tile_info (int tile_index) { get_tile_info(tile_index,0,3); }
-	static void get_pf1w_tile_info(int tile_index) { get_tile_info(tile_index,0,2); }
-	static void get_pf2_tile_info (int tile_index) { get_tile_info(tile_index,1,3); }
-	static void get_pf2w_tile_info(int tile_index) { get_tile_info(tile_index,1,2); }
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,0,3); } };
+	public static GetTileInfoHandlerPtr get_pf1w_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,0,2); } };
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,1,3); } };
+	public static GetTileInfoHandlerPtr get_pf2w_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,1,2); } };
 	
 	
 	public static VideoStartHandlerPtr video_start_m90  = new VideoStartHandlerPtr() { public int handler(){

@@ -58,7 +58,7 @@ public class goal92
 			tilemap_mark_tile_dirty(foreground_layer,offset);
 	}
 	
-	static void get_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = goal92_textram[tile_index];
 		int color=(tile>>12)&0xf;
@@ -68,9 +68,9 @@ public class goal92
 		tile |= 0xc000;
 	
 		SET_TILE_INFO(1,tile,color,0)
-	}
+	} };
 	
-	static void get_back_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_back_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=goal92_back_data[tile_index];
 		int color=(tile>>12)&0xf;
@@ -78,9 +78,9 @@ public class goal92
 		tile &= 0xfff;
 	
 		SET_TILE_INFO(2,tile,color,0)
-	}
+	} };
 	
-	static void get_fore_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fore_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=goal92_fore_data[tile_index];
 		int color=(tile>>12)&0xf;
@@ -100,7 +100,7 @@ public class goal92
 		}
 	
 		SET_TILE_INFO(region,tile,color,0)
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int pri)
 	{

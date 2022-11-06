@@ -31,16 +31,16 @@ public class toobin
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha[tile_index];
 		int code = data & 0x3ff;
 		int color = (data >> 12) & 0x0f;
 		SET_TILE_INFO(2, code, color, (data >> 10) & 1);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data1 = atarigen_playfield[tile_index * 2];
 		UINT16 data2 = atarigen_playfield[tile_index * 2 + 1];
@@ -48,7 +48,7 @@ public class toobin
 		int color = data1 & 0x0f;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX(data2 >> 14));
 		tile_info.priority = (data1 >> 4) & 3;
-	}
+	} };
 	
 	
 	

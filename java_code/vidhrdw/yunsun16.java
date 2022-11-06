@@ -61,7 +61,7 @@ public class yunsun16
 				(col % TILES_PER_PAGE_X) * TILES_PER_PAGE_Y;
 	}
 	
-	static void get_tile_info_0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = yunsun16_vram_0[ 2 * tile_index + 0 ];
 		data16_t attr = yunsun16_vram_0[ 2 * tile_index + 1 ];
@@ -70,9 +70,9 @@ public class yunsun16
 				code,
 				attr & 0xf,
 				0)
-	}
+	} };
 	
-	static void get_tile_info_1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = yunsun16_vram_1[ 2 * tile_index + 0 ];
 		data16_t attr = yunsun16_vram_1[ 2 * tile_index + 1 ];
@@ -81,7 +81,7 @@ public class yunsun16
 				code,
 				attr & 0xf,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( yunsun16_vram_0_w )
 	{

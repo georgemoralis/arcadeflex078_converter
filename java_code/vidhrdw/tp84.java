@@ -194,7 +194,7 @@ public class tp84
 		return scanline;
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int coloffs = ((col0 & 0x18) << 1) + ((col0 & 0x07) << 6);
 		int attr = colorram.read(tile_index);
@@ -203,9 +203,9 @@ public class tp84
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int coloffs = ((col0 & 0x18) << 1) + ((col0 & 0x07) << 6);
 		int attr = tp84_colorram2[tile_index];
@@ -214,7 +214,7 @@ public class tp84
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0) | TILE_IGNORE_TRANSPARENCY;
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_tp84  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

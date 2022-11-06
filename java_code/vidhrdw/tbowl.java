@@ -27,7 +27,7 @@ public class tbowl
 	
 	/* Foreground Layer (tx) Tilemap */
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 		int col;
@@ -36,7 +36,7 @@ public class tbowl
 		col = (tbowl_txvideoram[tile_index+0x800] & 0xf0) >> 4;
 	
 		SET_TILE_INFO(0,tileno,col,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr tbowl_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tbowl_txvideoram[offset] != data)
@@ -48,7 +48,7 @@ public class tbowl
 	
 	/* Bottom BG Layer (bg) Tilemap */
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 		int col;
@@ -57,7 +57,7 @@ public class tbowl
 		col = (tbowl_bgvideoram[tile_index+0x1000] & 0xf0) >> 4;
 	
 		SET_TILE_INFO(1,tileno,col,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr tbowl_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tbowl_bg2videoram[offset] != data)
@@ -89,7 +89,7 @@ public class tbowl
 	
 	/* Middle BG Layer (bg2) Tilemaps */
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 		int col;
@@ -99,7 +99,7 @@ public class tbowl
 		col = (tbowl_bg2videoram[tile_index+0x1000] & 0xf0) >> 4;
 	
 		SET_TILE_INFO(2,tileno,col,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr tbowl_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tbowl_bgvideoram[offset] != data)

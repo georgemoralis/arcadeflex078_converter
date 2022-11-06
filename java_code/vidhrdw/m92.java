@@ -147,7 +147,7 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	static void get_pf1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,pri;
 		tile_index = 4*tile_index+pf1_vram_ptr;
@@ -163,9 +163,9 @@ public class m92
 				tile,
 				color&0x7f,
 				TILE_FLIPYX((m92_vram_data[tile_index+3] & 0x6)>>1) | TILE_SPLIT(pri))
-	}
+	} };
 	
-	static void get_pf1_htile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_htile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,pri;
 		tile_index = 4*tile_index + 0xc000;
@@ -181,9 +181,9 @@ public class m92
 				tile,
 				color&0x7f,
 				TILE_FLIPYX((m92_vram_data[tile_index+3] & 0x6)>>1) | TILE_SPLIT(pri))
-	}
+	} };
 	
-	static void get_pf1_ltile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_ltile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,pri;
 		tile_index *= 4;
@@ -201,9 +201,9 @@ public class m92
 				tile,
 				color&0x7f,
 				TILE_FLIPYX((m92_vram_data[tile_index+3] & 0x6)>>1) | TILE_SPLIT(pri))
-	}
+	} };
 	
-	static void get_pf2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,pri;
 		tile_index = 4*tile_index + pf2_vram_ptr;
@@ -219,9 +219,9 @@ public class m92
 				tile,
 				color&0x7f,
 				TILE_FLIPYX((m92_vram_data[tile_index+3] & 0x6)>>1) | TILE_SPLIT(pri))
-	}
+	} };
 	
-	static void get_pf3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,pri;
 		tile_index = 4*tile_index + pf3_vram_ptr;
@@ -236,9 +236,9 @@ public class m92
 				tile,
 				color&0x7f,
 				TILE_FLIPYX((m92_vram_data[tile_index+3] & 0x6)>>1) | TILE_SPLIT(pri))
-	}
+	} };
 	
-	static void get_pf1_wide_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_wide_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,pri;
 		tile_index = 4*tile_index + pf1_vram_ptr;
@@ -254,9 +254,9 @@ public class m92
 				tile,
 				color&0x7f,
 				TILE_FLIPYX((m92_vram_data[tile_index+3] & 0x6)>>1) | TILE_SPLIT(pri))
-	}
+	} };
 	
-	static void get_pf3_wide_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf3_wide_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile,color,pri;
 		tile_index = 4*tile_index + pf3_vram_ptr;
@@ -272,7 +272,7 @@ public class m92
 				tile,
 				color&0x7f,
 				TILE_FLIPYX((m92_vram_data[tile_index+3] & 0x6)>>1) | TILE_SPLIT(pri))
-	}
+	} };
 	
 	/*****************************************************************************/
 	

@@ -82,14 +82,14 @@ public class sslam
 	
 	/* Text Layer */
 	
-	static void get_sslam_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sslam_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 		int code = sslam_tx_tileram[tile_index] & 0xfff;
 		int colr = sslam_tx_tileram[tile_index] & 0xe000;
 	
 		SET_TILE_INFO(2,code+0xc000 ,colr >> 13,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( sslam_tx_tileram_w )
 	{
@@ -99,13 +99,13 @@ public class sslam
 	
 	/* Middle Layer */
 	
-	static void get_sslam_md_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sslam_md_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = sslam_md_tileram[tile_index] & 0x0fff;
 		int colr = sslam_md_tileram[tile_index] & 0xe000;
 	
 		SET_TILE_INFO(1,code+0x2000 ,colr >> 13,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( sslam_md_tileram_w )
 	{
@@ -113,13 +113,13 @@ public class sslam
 		tilemap_mark_tile_dirty(sslam_md_tilemap,offset);
 	}
 	
-	static void get_sslam_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sslam_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = sslam_bg_tileram[tile_index] & 0x1fff;
 		int colr = sslam_bg_tileram[tile_index] & 0xe000;
 	
 		SET_TILE_INFO(0,code ,colr >> 13,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( sslam_bg_tileram_w )
 	{

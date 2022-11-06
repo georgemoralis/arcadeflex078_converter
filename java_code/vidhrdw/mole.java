@@ -36,11 +36,11 @@ public class mole
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = tile_data[tile_index];
 		SET_TILE_INFO((code & 0x200) ? 1 : 0, code & 0x1ff, 0, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_moleattack  = new VideoStartHandlerPtr() { public int handler(){
 		tile_data = (UINT16 *)auto_malloc(NUM_TILES * sizeof(UINT16));

@@ -20,7 +20,7 @@ public class mainsnk
 		me_gfx_ctrl=data;
 	} };
 	
-	static void get_me_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_me_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (me_fgram[tile_index]);
 	
@@ -29,7 +29,7 @@ public class mainsnk
 				code,
 				0x10,
 				0)
-	}
+	} };
 	
 	static void stuff_palette( int source_index, int dest_index, int num_colors )
 	{
@@ -88,7 +88,7 @@ public class mainsnk
 	} };
 	
 	
-	static void get_me_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_me_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (me_bgram[tile_index]);
 	
@@ -97,7 +97,7 @@ public class mainsnk
 				code  + ((me_gfx_ctrl<<4)&0x300),
 				0x10,
 				0)
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr me_bgram_r  = new ReadHandlerPtr() { public int handler(int offset){

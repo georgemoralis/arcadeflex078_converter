@@ -267,7 +267,7 @@ public class psychic5
 		}
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs = tile_index * 2;
 		int attr = psychic5_bg_videoram[offs + 1];
@@ -276,9 +276,9 @@ public class psychic5
 		int flags = ((attr & 0x10) ? TILE_FLIPX : 0) + ((attr & 0x20) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(1, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs = tile_index * 2;
 		int attr = psychic5_fg_videoram[offs + 1];
@@ -287,7 +287,7 @@ public class psychic5
 		int flags = ((attr & 0x10) ? TILE_FLIPX : 0) + ((attr & 0x20) ? TILE_FLIPY : 0);
 	
 		SET_TILE_INFO(2, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_psychic5  = new VideoStartHandlerPtr() { public int handler(){
 		if ((psychic5_bg_videoram = auto_malloc(0x1000)) == 0)

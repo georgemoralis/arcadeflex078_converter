@@ -89,7 +89,7 @@ public class psikyo
 	
 	***************************************************************************/
 	
-	static void get_tile_info_0( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = ((data16_t *)psikyo_vram_0)[BYTE_XOR_BE(tile_index)];
 		SET_TILE_INFO(
@@ -97,9 +97,9 @@ public class psikyo
 				(code & 0x1fff) + 0x2000*tilemap_0_bank,
 				(code >> 13) & 7,
 				0)
-	}
+	} };
 	
-	static void get_tile_info_1( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = ((data16_t *)psikyo_vram_1)[BYTE_XOR_BE(tile_index)];
 		SET_TILE_INFO(
@@ -107,7 +107,7 @@ public class psikyo
 				(code & 0x1fff) + 0x2000*tilemap_1_bank,
 				((code >> 13) & 7) + 0x40, // So we only have to decode the gfx once.
 				0)
-	}
+	} };
 	
 	
 	WRITE32_HANDLER( psikyo_vram_0_w )

@@ -22,12 +22,12 @@ public class gumbo
 		}
 	}
 	
-	static void get_gumbo_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_gumbo_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 		tileno = gumbo_bg_videoram[tile_index];
 		SET_TILE_INFO(0,tileno,0,0)
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( gumbo_fg_videoram_w )
@@ -39,12 +39,12 @@ public class gumbo
 		}
 	}
 	
-	static void get_gumbo_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_gumbo_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 		tileno = gumbo_fg_videoram[tile_index];
 		SET_TILE_INFO(1,tileno,1,0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_gumbo  = new VideoStartHandlerPtr() { public int handler(){

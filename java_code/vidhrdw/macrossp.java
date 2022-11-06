@@ -32,7 +32,7 @@ public class macrossp
 	}
 	
 	
-	static void get_macrossp_scra_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_macrossp_scra_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT32 attr,tileno,color;
 	
@@ -55,7 +55,7 @@ public class macrossp
 		}
 	
 		SET_TILE_INFO(1,tileno,color,TILE_FLIPYX((attr & 0xc0000000) >> 30))
-	}
+	} };
 	
 	/*** SCR B LAYER ***/
 	
@@ -67,7 +67,7 @@ public class macrossp
 	}
 	
 	
-	static void get_macrossp_scrb_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_macrossp_scrb_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT32 attr,tileno,color;
 	
@@ -90,7 +90,7 @@ public class macrossp
 		}
 	
 		SET_TILE_INFO(2,tileno,color,TILE_FLIPYX((attr & 0xc0000000) >> 30))
-	}
+	} };
 	
 	/*** SCR C LAYER ***/
 	
@@ -102,7 +102,7 @@ public class macrossp
 	}
 	
 	
-	static void get_macrossp_scrc_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_macrossp_scrc_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT32 attr,tileno,color;
 	
@@ -125,7 +125,7 @@ public class macrossp
 		}
 	
 		SET_TILE_INFO(3,tileno,color,TILE_FLIPYX((attr & 0xc0000000) >> 30))
-	}
+	} };
 	
 	/*** TEXT LAYER ***/
 	
@@ -137,7 +137,7 @@ public class macrossp
 	}
 	
 	
-	static void get_macrossp_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_macrossp_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT32 tileno, colour;
 	
@@ -145,7 +145,7 @@ public class macrossp
 		colour = (macrossp_text_videoram[tile_index] & 0x00fe0000) >> 17;
 	
 		SET_TILE_INFO(4,tileno,colour,0)
-	}
+	} };
 	
 	
 	

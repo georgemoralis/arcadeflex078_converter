@@ -81,14 +81,14 @@ public class mustache
 		tilemap_set_scrollx(bg_tilemap, 3, 0x100);
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = videoram.read(2 * tile_index + 1);
 		int code = videoram.read(2 * tile_index)+ ((attr & 0xe0) << 3) + ((control_byte & 0x08) << 7);
 		int color = attr & 0x0f;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_mustache  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_x,

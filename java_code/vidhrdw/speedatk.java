@@ -89,7 +89,7 @@ public class speedatk
 		flip_screen_set(data);
 	} };
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color, region;
 	
@@ -102,7 +102,7 @@ public class speedatk
 			color += 0x10;
 	
 		SET_TILE_INFO(region, code, color, 0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_speedatk  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,34,32);

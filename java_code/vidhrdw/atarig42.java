@@ -62,24 +62,24 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha[tile_index];
 		int code = data & 0xfff;
 		int color = (data >> 12) & 0x0f;
 		int opaque = data & 0x8000;
 		SET_TILE_INFO(1, code, color, opaque ? TILE_IGNORE_TRANSPARENCY : 0);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield[tile_index];
 		int code = (playfield_tile_bank << 12) | (data & 0xfff);
 		int color = (atarig42_playfield_base >> 5) + ((playfield_color_bank << 3) & 0x18) + ((data >> 12) & 7);
 		SET_TILE_INFO(0, code, color, (data >> 15) & 1);
 		tile_info.priority = (playfield_color_bank >> 2) & 7;
-	}
+	} };
 	
 	
 	static UINT32 atarig42_playfield_scan(UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows)

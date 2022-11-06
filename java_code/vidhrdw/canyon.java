@@ -28,12 +28,12 @@ public class canyon
 	} };
 	
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = canyon_videoram[tile_index];
 	
 		SET_TILE_INFO(0, code & 0x3f, code >> 7, 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_canyon  = new VideoStartHandlerPtr() { public int handler(){

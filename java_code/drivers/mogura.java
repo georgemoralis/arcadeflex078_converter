@@ -45,7 +45,7 @@ public class mogura
 	} };
 	
 	
-	static void get_mogura_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_mogura_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = mogura_tileram[tile_index];
 		int attr = mogura_tileram[tile_index+0x800];
@@ -55,7 +55,7 @@ public class mogura
 				code,
 				(attr>>1)&7,
 				0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_mogura  = new VideoStartHandlerPtr() { public int handler(){

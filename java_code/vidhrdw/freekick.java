@@ -13,14 +13,14 @@ public class freekick
 	data8_t *freek_videoram;
 	
 	
-	static void get_freek_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_freek_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,palno;
 	
 		tileno = freek_videoram[tile_index]+((freek_videoram[tile_index+0x400]&0xe0)<<3);
 		palno=freek_videoram[tile_index+0x400]&0x1f;
 		SET_TILE_INFO(0,tileno,palno,0)
-	}
+	} };
 	
 	
 	

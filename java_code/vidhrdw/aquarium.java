@@ -95,14 +95,14 @@ public class aquarium
 	
 	/* TXT Layer */
 	
-	static void get_aquarium_txt_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_aquarium_txt_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
 		tileno = (aquarium_txt_videoram[tile_index] & 0x0fff);
 		colour = (aquarium_txt_videoram[tile_index] & 0xf000) >> 12;
 		SET_TILE_INFO(2,tileno,colour,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( aquarium_txt_videoram_w )
 	{
@@ -115,7 +115,7 @@ public class aquarium
 	
 	/* MID Layer */
 	
-	static void get_aquarium_mid_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_aquarium_mid_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno,colour;
 	
@@ -123,7 +123,7 @@ public class aquarium
 		colour = (aquarium_mid_videoram[tile_index*2+1] & 0x001f);
 	
 		SET_TILE_INFO(1,tileno,colour,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( aquarium_mid_videoram_w )
 	{
@@ -135,7 +135,7 @@ public class aquarium
 	}
 	
 	/* BAK Layer */
-	static void get_aquarium_bak_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_aquarium_bak_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	
 	{
 		int tileno,colour;
@@ -144,7 +144,7 @@ public class aquarium
 		colour = (aquarium_bak_videoram[tile_index*2+1] & 0x001f);
 	
 		SET_TILE_INFO(3,tileno,colour,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( aquarium_bak_videoram_w )
 	{

@@ -36,7 +36,7 @@ public class gstriker
 	sVS920A VS920A[MAX_VS920A];
 	static sVS920A* VS920A_cur_chip;
 	
-	static void VS920A_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr VS920A_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data;
 		int tileno, pal;
@@ -47,7 +47,7 @@ public class gstriker
 		pal =   (data >> 12) & 0xF;
 	
 		SET_TILE_INFO(VS920A_cur_chip->gfx_region, tileno, VS920A_cur_chip->pal_base + pal, 0)
-	}
+	} };
 	
 	WRITE16_HANDLER( VS920A_0_vram_w )
 	{
@@ -150,7 +150,7 @@ public class gstriker
 	
 	static tMB60553 *MB60553_cur_chip;
 	
-	static void MB60553_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr MB60553_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data, bankno;
 		int tileno, pal;
@@ -162,7 +162,7 @@ public class gstriker
 		bankno = (data >> 9) & 0x7;
 	
 		SET_TILE_INFO(MB60553->gfx_region, tileno + MB60553_cur_chip->bank[bankno] * 0x200, pal + MB60553->pal_base, 0)
-	}
+	} };
 	
 	static void MB60553_reg_written(int numchip, int num_reg)
 	{

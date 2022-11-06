@@ -393,7 +393,7 @@ public class pengo
 		}
 	} };
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int colbank, code, attr;
 	
@@ -410,7 +410,7 @@ public class pengo
 		}
 	
 		SET_TILE_INFO(0,code,attr & 0x1f,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr s2650games_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);

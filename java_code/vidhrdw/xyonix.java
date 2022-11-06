@@ -40,7 +40,7 @@ public class xyonix
 	} };
 	
 	
-	static void get_xyonix_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_xyonix_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 		int attr = xyonix_vidram[tile_index+0x1000+1];
@@ -48,7 +48,7 @@ public class xyonix
 		tileno = (xyonix_vidram[tile_index+1] << 0) | ((attr & 0x0f) << 8);
 	
 		SET_TILE_INFO(0,tileno,attr >> 4,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr xyonix_vidram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xyonix_vidram[offset] = data;

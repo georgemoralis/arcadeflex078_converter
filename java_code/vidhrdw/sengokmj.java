@@ -52,7 +52,7 @@ public class sengokmj
 		tilemap_mark_tile_dirty(fg_tilemap,offset/2);
 	} };
 	
-	static void sengoku_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr sengoku_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = bg_vram[tile_index*2] + (bg_vram[2*tile_index+1] << 8);
 		int color = (tile >> 12) & 0x0f;
@@ -64,9 +64,9 @@ public class sengokmj
 				tile,
 				color+0x40,
 				0)
-	}
+	} };
 	
-	static void sengoku_md_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr sengoku_md_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = md_vram[tile_index*2] + (md_vram[2*tile_index+1] << 8);
 		int color = (tile >> 12) & 0x0f;
@@ -78,9 +78,9 @@ public class sengokmj
 				tile + 0x1000,
 				color+0x60,
 				0)
-	}
+	} };
 	
-	static void sengoku_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr sengoku_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = fg_vram[tile_index*2] + (fg_vram[2*tile_index+1] << 8);
 		int color = (tile >> 12) & 0x0f;
@@ -92,9 +92,9 @@ public class sengokmj
 				tile + 0x2000,
 				color+0x50,
 				0)
-	}
+	} };
 	
-	static void sengoku_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr sengoku_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = tx_vram[tile_index*2] + (tx_vram[2*tile_index+1] << 8);
 		int color = (tile >> 12) & 0x0f;
@@ -106,7 +106,7 @@ public class sengokmj
 				tile + 0x3000,
 				color + 0x70,
 				0)
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int pri)
 	{

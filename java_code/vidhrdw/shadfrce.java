@@ -12,7 +12,7 @@ public class shadfrce
 	static data16_t *shadfrce_spvideoram_old; /* I *think* the sprites need to be delayed anyway */
 	
 	
-	static void get_shadfrce_fgtile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_shadfrce_fgtile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 		/* ---- ----  tttt tttt  ---- ----  pppp TTTT */
@@ -22,7 +22,7 @@ public class shadfrce
 		colour = (shadfrce_fgvideoram[tile_index *2+1] & 0x00f0) >>4;
 	
 		SET_TILE_INFO(0,tileno,colour*4,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( shadfrce_fgvideoram_w )
 	{
@@ -33,7 +33,7 @@ public class shadfrce
 		}
 	}
 	
-	static void get_shadfrce_bg0tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_shadfrce_bg0tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 	
 		/* ---- ----  ---- cccc  --TT TTTT TTTT TTTT */
@@ -45,7 +45,7 @@ public class shadfrce
 		fyx = (shadfrce_bg0videoram[tile_index *2] & 0x00c0) >>6;
 	
 		SET_TILE_INFO(2,tileno,colour,TILE_FLIPYX(fyx))
-	}
+	} };
 	
 	WRITE16_HANDLER( shadfrce_bg0videoram_w )
 	{
@@ -56,7 +56,7 @@ public class shadfrce
 		}
 	}
 	
-	static void get_shadfrce_bg1tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_shadfrce_bg1tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 	
@@ -64,7 +64,7 @@ public class shadfrce
 		colour = (shadfrce_bg1videoram[tile_index] & 0xf000) >> 12;
 	
 		SET_TILE_INFO(2,tileno,colour+64,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( shadfrce_bg1videoram_w )
 	{

@@ -80,7 +80,7 @@ public class metro
 	static data16_t *metro_tiletable_old;
 	
 	
-	static void metro_K053936_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr metro_K053936_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = metro_K053936_ram[tile_index];
 	
@@ -89,9 +89,9 @@ public class metro
 				code & 0x7fff,
 				0x1e,
 				0)
-	}
+	} };
 	
-	static void metro_K053936_gstrik2_get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr metro_K053936_gstrik2_get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = metro_K053936_ram[tile_index];
 	
@@ -100,7 +100,7 @@ public class metro
 				(code & 0x7fff)>>2,
 				0x1e,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( metro_K053936_w )
 	{
@@ -340,17 +340,17 @@ public class metro
 	
 	
 	
-	static void get_tile_info_0(int tile_index) { get_tile_info(tile_index,0,metro_vram_0); }
-	static void get_tile_info_1(int tile_index) { get_tile_info(tile_index,1,metro_vram_1); }
-	static void get_tile_info_2(int tile_index) { get_tile_info(tile_index,2,metro_vram_2); }
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,0,metro_vram_0); } };
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,1,metro_vram_1); } };
+	public static GetTileInfoHandlerPtr get_tile_info_2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info(tile_index,2,metro_vram_2); } };
 	
-	static void get_tile_info_0_8bit(int tile_index) { get_tile_info_8bit(tile_index,0,metro_vram_0); }
-	static void get_tile_info_1_8bit(int tile_index) { get_tile_info_8bit(tile_index,1,metro_vram_1); }
-	static void get_tile_info_2_8bit(int tile_index) { get_tile_info_8bit(tile_index,2,metro_vram_2); }
+	public static GetTileInfoHandlerPtr get_tile_info_0_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_8bit(tile_index,0,metro_vram_0); } };
+	public static GetTileInfoHandlerPtr get_tile_info_1_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_8bit(tile_index,1,metro_vram_1); } };
+	public static GetTileInfoHandlerPtr get_tile_info_2_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_8bit(tile_index,2,metro_vram_2); } };
 	
-	static void get_tile_info_0_16x16_8bit(int tile_index) { get_tile_info_16x16_8bit(tile_index,0,metro_vram_0); }
-	static void get_tile_info_1_16x16_8bit(int tile_index) { get_tile_info_16x16_8bit(tile_index,1,metro_vram_1); }
-	static void get_tile_info_2_16x16_8bit(int tile_index) { get_tile_info_16x16_8bit(tile_index,2,metro_vram_2); }
+	public static GetTileInfoHandlerPtr get_tile_info_0_16x16_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_16x16_8bit(tile_index,0,metro_vram_0); } };
+	public static GetTileInfoHandlerPtr get_tile_info_1_16x16_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_16x16_8bit(tile_index,1,metro_vram_1); } };
+	public static GetTileInfoHandlerPtr get_tile_info_2_16x16_8bit = new GetTileInfoHandlerPtr() { public void handler(int tile_index)  { get_tile_info_16x16_8bit(tile_index,2,metro_vram_2); } };
 	
 	WRITE16_HANDLER( metro_vram_0_w ) { metro_vram_w(offset,data,mem_mask,0,metro_vram_0); }
 	WRITE16_HANDLER( metro_vram_1_w ) { metro_vram_w(offset,data,mem_mask,1,metro_vram_1); }

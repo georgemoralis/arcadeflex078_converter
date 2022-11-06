@@ -27,14 +27,14 @@ public class angelkds
 	static int angelkds_txbank;
 	
 	
-	static void get_tx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 	
 		tileno = angelkds_txvideoram[tile_index] + (angelkds_txbank * 0x100);
 	
 		SET_TILE_INFO(0,tileno,0,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr angelkds_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (angelkds_txvideoram[offset] != data)
@@ -61,7 +61,7 @@ public class angelkds
 	static int angelkds_bgtopbank;
 	
 	
-	static void get_bgtop_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bgtop_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 	
@@ -69,7 +69,7 @@ public class angelkds
 	
 		tileno += angelkds_bgtopbank*0x100 ;
 		SET_TILE_INFO(1,tileno,0,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr angelkds_bgtopvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (angelkds_bgtopvideoram[offset] != data)
@@ -99,7 +99,7 @@ public class angelkds
 	
 	static int angelkds_bgbotbank;
 	
-	static void get_bgbot_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bgbot_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 	
@@ -107,7 +107,7 @@ public class angelkds
 	
 		tileno += angelkds_bgbotbank * 0x100 ;
 		SET_TILE_INFO(1,tileno,1,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr angelkds_bgbotvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (angelkds_bgbotvideoram[offset] != data)

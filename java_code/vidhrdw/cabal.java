@@ -18,7 +18,7 @@ public class cabal
 	static struct tilemap *background_layer,*text_layer;
 	
 	
-	static void get_back_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_back_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = videoram16[tile_index];
 		int color = (tile>>12)&0xf;
@@ -30,9 +30,9 @@ public class cabal
 				tile,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile = colorram16[tile_index];
 		int color = (tile>>10);
@@ -44,7 +44,7 @@ public class cabal
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_cabal  = new VideoStartHandlerPtr() { public int handler(){

@@ -94,7 +94,7 @@ public class combatsc
 	
 	***************************************************************************/
 	
-	static void get_tile_info0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attributes = combasc_page[0][tile_index];
 		int bank = 4*((combasc_vreg & 0x0f) - 1);
@@ -117,9 +117,9 @@ public class combatsc
 				color,
 				0)
 		tile_info.priority = (attributes & 0x40) >> 6;
-	}
+	} };
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attributes = combasc_page[1][tile_index];
 		int bank = 4*((combasc_vreg >> 4) - 1);
@@ -142,7 +142,7 @@ public class combatsc
 				color,
 				0)
 		tile_info.priority = (attributes & 0x40) >> 6;
-	}
+	} };
 	
 	static void get_text_info(int tile_index)
 	{
@@ -158,7 +158,7 @@ public class combatsc
 	}
 	
 	
-	static void get_tile_info0_bootleg(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info0_bootleg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attributes = combasc_page[0][tile_index];
 		int bank = 4*((combasc_vreg & 0x0f) - 1);
@@ -180,9 +180,9 @@ public class combatsc
 				number,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_tile_info1_bootleg(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1_bootleg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attributes = combasc_page[1][tile_index];
 		int bank = 4*((combasc_vreg >> 4) - 1);
@@ -204,7 +204,7 @@ public class combatsc
 				number,
 				color,
 				0)
-	}
+	} };
 	
 	static void get_text_info_bootleg(int tile_index)
 	{

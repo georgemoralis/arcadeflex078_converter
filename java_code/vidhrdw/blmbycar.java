@@ -86,7 +86,7 @@ public class blmbycar
 	#define DIM_NX		(0x40)
 	#define DIM_NY		(0x20)
 	
-	static void get_tile_info_0( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = blmbycar_vram_0[ tile_index * 2 + 0 ];
 		data16_t attr = blmbycar_vram_0[ tile_index * 2 + 1 ];
@@ -97,9 +97,9 @@ public class blmbycar
 				TILE_FLIPYX((attr >> 6) & 3))
 	
 		tile_info.priority = (attr >> 5) & 1;
-	}
+	} };
 	
-	static void get_tile_info_1( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = blmbycar_vram_1[ tile_index * 2 + 0 ];
 		data16_t attr = blmbycar_vram_1[ tile_index * 2 + 1 ];
@@ -110,7 +110,7 @@ public class blmbycar
 				TILE_FLIPYX((attr >> 6) & 3))
 	
 		tile_info.priority = (attr >> 5) & 1;
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( blmbycar_vram_0_w )

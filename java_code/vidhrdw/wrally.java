@@ -45,23 +45,23 @@ public class wrally
 	*/
 	
 	
-	static void get_tile_info_wrally_screen0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_wrally_screen0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = wrally_videoram[tile_index << 1];
 		int data2 = wrally_videoram[(tile_index << 1) + 1];
 		int code = data & 0x3fff;
 	
 		SET_TILE_INFO(0, code, data2 & 0x1f, TILE_FLIPXY((data2 >> 5) & 0x00))
-	}
+	} };
 	
-	static void get_tile_info_wrally_screen1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_wrally_screen1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = wrally_videoram[(0x2000/2) + (tile_index << 1)];
 		int data2 = wrally_videoram[(0x2000/2) + (tile_index << 1) + 1];
 		int code = data & 0x3fff;
 	
 		SET_TILE_INFO(0, code, data2 & 0x1f, TILE_FLIPXY((data2 >> 5) & 0x00))
-	}
+	} };
 	
 	/***************************************************************************
 	

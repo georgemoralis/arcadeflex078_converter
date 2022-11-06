@@ -230,7 +230,7 @@ public class toaplan2
 	
 	***************************************************************************/
 	
-	static void get_top0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_top0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -243,9 +243,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void get_fg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -258,9 +258,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -274,9 +274,9 @@ public class toaplan2
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
 	///	if ((attrib & 0x0f00) == 0) tile_info.flags |= TILE_IGNORE_TRANSPARENCY;
-	}
+	} };
 	
-	static void get_top1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_top1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -289,9 +289,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void get_fg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -304,9 +304,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -319,9 +319,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void batrider_get_top0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr batrider_get_top0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib, tile;
 	
@@ -335,9 +335,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void batrider_get_fg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr batrider_get_fg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib, tile;
 	
@@ -351,9 +351,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void batrider_get_bg0_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr batrider_get_bg0_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib, tile;
 	
@@ -367,9 +367,9 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = (attrib & 0x0f00) >> 8;
-	}
+	} };
 	
-	static void get_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int color, tile_number, attrib;
 	
@@ -382,7 +382,7 @@ public class toaplan2
 				color,
 				0)
 		tile_info.priority = 0;
-	}
+	} };
 	
 	/***************************************************************************
 	

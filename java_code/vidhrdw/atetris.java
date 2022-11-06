@@ -23,13 +23,13 @@ public class atetris
 	 *
 	 *************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index * 2)| ((videoram.read(tile_index * 2 + 1)& 7) << 8);
 		int color = (videoram.read(tile_index * 2 + 1)& 0xf0) >> 4;
 	
 		SET_TILE_INFO(0, code, color, 0);
-	}
+	} };
 	
 	
 	

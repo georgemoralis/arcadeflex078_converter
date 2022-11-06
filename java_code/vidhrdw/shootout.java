@@ -45,7 +45,7 @@ public class shootout
 	
 	
 	
-	static void get_bg_tile_info(int tile_index){
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) {
 		int attributes = videoram.read(tile_index+0x400); /* CCCC -TTT */
 		int tile_number = videoram.read(tile_index)+ 256*(attributes&7);
 		int color = attributes>>4;
@@ -54,9 +54,9 @@ public class shootout
 				tile_number,
 				color,
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index){
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) {
 		int attributes = shootout_textram[tile_index+0x400]; /* CCCC --TT */
 		int tile_number = shootout_textram[tile_index] + 256*(attributes&0x3);
 		int color = attributes>>4;
@@ -65,7 +65,7 @@ public class shootout
 				tile_number,
 				color,
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr shootout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if( videoram.read(offset)!=data ){

@@ -28,16 +28,16 @@ public class msisaac
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile_number = videoram.read(tile_index);
 		SET_TILE_INFO(	0,
 				tile_number,
 				0x10,
 				0)
-	}
+	} };
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile_number = msisaac_videoram2[tile_index];
 	
@@ -48,16 +48,16 @@ public class msisaac
 				tile_number,
 				0x20,
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile_number = msisaac_videoram[tile_index];
 		SET_TILE_INFO(	1,
 				0x100+tile_number,
 				0x30,
 				0)
-	}
+	} };
 	
 	/***************************************************************************
 	

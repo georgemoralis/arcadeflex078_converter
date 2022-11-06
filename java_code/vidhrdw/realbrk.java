@@ -74,7 +74,7 @@ public class realbrk
 	
 	***************************************************************************/
 	
-	static void get_tile_info_0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t attr = realbrk_vram_0[tile_index * 2 + 0];
 		data16_t code = realbrk_vram_0[tile_index * 2 + 1];
@@ -83,9 +83,9 @@ public class realbrk
 				code,
 				attr & 0x7f,
 				TILE_FLIPYX( attr >> 14 ))
-	}
+	} };
 	
-	static void get_tile_info_1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t attr = realbrk_vram_1[tile_index * 2 + 0];
 		data16_t code = realbrk_vram_1[tile_index * 2 + 1];
@@ -94,7 +94,7 @@ public class realbrk
 				code,
 				attr & 0x7f,
 				TILE_FLIPYX( attr >> 14 ))
-	}
+	} };
 	
 	WRITE16_HANDLER( realbrk_vram_0_w )
 	{
@@ -124,7 +124,7 @@ public class realbrk
 	
 	***************************************************************************/
 	
-	static void get_tile_info_2(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = realbrk_vram_2[tile_index];
 		SET_TILE_INFO(
@@ -132,7 +132,7 @@ public class realbrk
 				code & 0x0fff,
 				((code & 0xf000) >> 12) | ((realbrk_vregs[0xa/2] & 0x7f) << 4),
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( realbrk_vram_2_w )
 	{

@@ -206,23 +206,23 @@ public class strvmstr
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static void get_tile_info_bg(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_bg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = bg_videoram[tile_index];
 		
 		code += ((strvmstr_control & 4) << 6);
 	
 		SET_TILE_INFO(0,code,0,0)
-	}
+	} };
 	
-	static void get_tile_info_fg(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_fg = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = fg_videoram[tile_index];
 	
 		code += ((strvmstr_control & 4) << 6);
 	
 		SET_TILE_INFO(1,code,0,0)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_strvmstr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create( get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32 );

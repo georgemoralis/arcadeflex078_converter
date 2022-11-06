@@ -58,7 +58,7 @@ public class thedeep
 		return (col & 0x0f) + ((col & 0x10) << 5) + (row << 4);
 	}
 	
-	static void get_tile_info_0( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code	=	thedeep_vram_0[ tile_index * 2 + 0 ];
 		data8_t color	=	thedeep_vram_0[ tile_index * 2 + 1 ];
@@ -67,9 +67,9 @@ public class thedeep
 				code + (color << 8),
 				(color & 0xf0) >> 4,
 				TILE_FLIPX	)	// why?
-	}
+	} };
 	
-	static void get_tile_info_1( int tile_index )
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code	=	thedeep_vram_1[ tile_index * 2 + 0 ];
 		data8_t color	=	thedeep_vram_1[ tile_index * 2 + 1 ];
@@ -78,7 +78,7 @@ public class thedeep
 				code + (color << 8),
 				(color & 0xf0) >> 4,
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr thedeep_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (thedeep_vram_0[offset] != data)

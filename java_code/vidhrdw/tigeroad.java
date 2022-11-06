@@ -119,7 +119,7 @@ public class tigeroad
 		}
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 *tilerom = memory_region(REGION_GFX4);
 	
@@ -130,9 +130,9 @@ public class tigeroad
 		int flags = ((attr & 0x20) ? TILE_FLIPX : 0) | ((attr & 0x10) ? TILE_SPLIT(1) : 0);
 	
 		SET_TILE_INFO(1, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int data = videoram16[tile_index];
 		int attr = data >> 8;
@@ -141,7 +141,7 @@ public class tigeroad
 		int flags = (attr & 0x10) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	static UINT32 tigeroad_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{

@@ -31,13 +31,13 @@ public class badlands
 	 *
 	 *************************************/
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_playfield[tile_index];
 		int code = (data & 0x1fff) + ((data & 0x1000) ? (playfield_tile_bank << 12) : 0);
 		int color = (data >> 13) & 0x07;
 		SET_TILE_INFO(0, code, color, 0);
-	}
+	} };
 	
 	
 	

@@ -91,7 +91,7 @@ public class vulgus
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -102,9 +102,9 @@ public class vulgus
 				code + ((color & 0x80) << 1),
 				color & 0x3f,
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -115,7 +115,7 @@ public class vulgus
 				code + ((color & 0x80) << 1),
 				(color & 0x1f) + (0x20 * vulgus_palette_bank),
 				TILE_FLIPYX((color & 0x60) >> 5))
-	}
+	} };
 	
 	
 	/***************************************************************************

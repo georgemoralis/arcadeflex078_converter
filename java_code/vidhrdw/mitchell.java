@@ -33,7 +33,7 @@ public class mitchell
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = pang_colorram[tile_index];
 		int code = pang_videoram[2*tile_index] + (pang_videoram[2*tile_index+1] << 8);
@@ -42,7 +42,7 @@ public class mitchell
 				code,
 				attr & 0x7f,
 				(attr & 0x80) ? TILE_FLIPX : 0)
-	}
+	} };
 	
 	
 	

@@ -86,7 +86,7 @@ public class suna8
 	static struct tilemap *tilemap;
 	static int tiles, rombank;
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code, attr;
 		if (keyboard_pressed(KEYCODE_X))
@@ -101,7 +101,7 @@ public class suna8
 				( (attr & 0x03) << 8 ) + code + tiles*0x400,
 				(attr >> 2) & 0xf,
 				TILE_FLIPYX( (attr >> 6) & 3 ))
-	}
+	} };
 	
 	
 	

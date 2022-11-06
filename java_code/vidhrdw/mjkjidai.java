@@ -21,13 +21,13 @@ public class mjkjidai
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int attr = mjkjidai_videoram[tile_index + 0x800];
 		int code = mjkjidai_videoram[tile_index] + ((attr & 0x1f) << 8);
 		int color = mjkjidai_videoram[tile_index + 0x1000];
 		SET_TILE_INFO(0,code,color >> 3,0);
-	}
+	} };
 	
 	
 	

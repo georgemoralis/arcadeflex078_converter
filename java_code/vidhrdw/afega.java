@@ -108,7 +108,7 @@ public class afega
 	
 	static struct tilemap *tilemap_0, *tilemap_1;
 	
-	static void get_tile_info_0(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info_0 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = afega_vram_0[tile_index];
 		SET_TILE_INFO(
@@ -116,8 +116,8 @@ public class afega
 				code,
 				(code & 0xf000) >> 12,
 				0)
-	}
-	static void get_tile_info_1(int tile_index)
+	} };
+	public static GetTileInfoHandlerPtr get_tile_info_1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = afega_vram_1[tile_index];
 		SET_TILE_INFO(
@@ -125,7 +125,7 @@ public class afega
 				code,
 				(code & 0xf000) >> 12,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( afega_vram_0_w )
 	{

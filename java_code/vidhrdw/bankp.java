@@ -148,23 +148,23 @@ public class bankp
 		/* bits 6-7 unknown */
 	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = bankp_videoram2[tile_index] + 256 * (bankp_colorram2[tile_index] & 0x07);
 		int color = bankp_colorram2[tile_index] >> 4;
 		int flags = (bankp_colorram2[tile_index] & 0x08) ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(1, code, color, flags)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = videoram.read(tile_index)+ 256 * ((colorram.read(tile_index)& 3) >> 0);
 		int color = colorram.read(tile_index)>> 3;
 		int flags = (colorram.read(tile_index)& 0x04) ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_bankp  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 

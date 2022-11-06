@@ -31,17 +31,17 @@ public class batman
 	 *
 	 *************************************/
 	
-	static void get_alpha_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_alpha_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data = atarigen_alpha[tile_index];
 		int code = ((data & 0x400) ? (batman_alpha_tile_bank * 0x400) : 0) + (data & 0x3ff);
 		int color = (data >> 11) & 0x0f;
 		int opaque = data & 0x8000;
 		SET_TILE_INFO(2, code, color, opaque ? TILE_IGNORE_TRANSPARENCY : 0);
-	}
+	} };
 	
 	
-	static void get_playfield_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data1 = atarigen_playfield[tile_index];
 		UINT16 data2 = atarigen_playfield_upper[tile_index] & 0xff;
@@ -49,10 +49,10 @@ public class batman
 		int color = 0x10 + (data2 & 0x0f);
 		SET_TILE_INFO(0, code, color, (data1 >> 15) & 1);
 		tile_info.priority = (data2 >> 4) & 3;
-	}
+	} };
 	
 	
-	static void get_playfield2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_playfield2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 data1 = atarigen_playfield2[tile_index];
 		UINT16 data2 = atarigen_playfield_upper[tile_index] >> 8;
@@ -60,7 +60,7 @@ public class batman
 		int color = data2 & 0x0f;
 		SET_TILE_INFO(0, code, color, (data1 >> 15) & 1);
 		tile_info.priority = (data2 >> 4) & 3;
-	}
+	} };
 	
 	
 	

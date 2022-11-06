@@ -853,25 +853,25 @@ public class dec0
 		return (col & 0x1f) + ((row & 0x7f) << 5);
 	}
 	
-	static void get_pf1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=dec0_pf1_data[tile_index];
 		SET_TILE_INFO(0,tile&0xfff,tile>>12,0)
-	}
+	} };
 	
-	static void get_pf2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=dec0_pf2_data[tile_index];
 		int pri=((tile>>12)>7);
 		SET_TILE_INFO(1,tile&0xfff,tile>>12,TILE_SPLIT(pri))
-	}
+	} };
 	
-	static void get_pf3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_pf3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=dec0_pf3_data[tile_index];
 		int pri=((tile>>12)>7);
 		SET_TILE_INFO(2,tile&0xfff,tile>>12,TILE_SPLIT(pri))
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_dec0_nodma  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap_0 = tilemap_create(get_pf1_tile_info,tile_shape0_8x8_scan,TILEMAP_TRANSPARENT, 8, 8,128, 32);

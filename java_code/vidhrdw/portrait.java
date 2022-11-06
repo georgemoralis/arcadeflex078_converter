@@ -51,15 +51,15 @@ public class portrait
 		SET_TILE_INFO( 0, tilenum, color, flags )
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info( portrait_bgvideoram, tile_index );
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		get_tile_info( portrait_fgvideoram, tile_index );
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_portrait  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create( get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32 );

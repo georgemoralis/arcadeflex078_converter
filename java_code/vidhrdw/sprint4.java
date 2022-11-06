@@ -21,7 +21,7 @@ public class sprint4
 	static struct mame_bitmap* helper;
 	
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = sprint4_video_ram[tile_index];
 	
@@ -33,7 +33,7 @@ public class sprint4
 		{
 			SET_TILE_INFO(0, code, 4, 0)
 		}
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_sprint4  = new VideoStartHandlerPtr() { public int handler(){

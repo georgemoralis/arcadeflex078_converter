@@ -27,7 +27,7 @@ public class mcatadv
 	static int palette_bank1, palette_bank2;
 	
 	
-	static void get_mcatadv_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_mcatadv_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour, pri;
 	
@@ -37,7 +37,7 @@ public class mcatadv
 	
 		SET_TILE_INFO(0,tileno,colour + palette_bank1*0x40,0)
 		tile_info.priority = pri;
-	}
+	} };
 	
 	WRITE16_HANDLER( mcatadv_videoram1_w )
 	{
@@ -48,7 +48,7 @@ public class mcatadv
 		}
 	}
 	
-	static void get_mcatadv_tile_info2(int tile_index)
+	public static GetTileInfoHandlerPtr get_mcatadv_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour, pri;
 	
@@ -58,7 +58,7 @@ public class mcatadv
 	
 		SET_TILE_INFO(1,tileno,colour + palette_bank2*0x40,0)
 		tile_info.priority = pri;
-	}
+	} };
 	
 	WRITE16_HANDLER( mcatadv_videoram2_w )
 	{

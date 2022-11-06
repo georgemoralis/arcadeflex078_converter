@@ -94,7 +94,7 @@ public class cshooter
 	data8_t* cshooter_txram;
 	static struct tilemap *cshooter_txtilemap;
 	
-	static void get_cstx_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_cstx_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = (cshooter_txram[tile_index*2]);
 		int attr = (cshooter_txram[tile_index*2+1]);
@@ -108,7 +108,7 @@ public class cshooter
 				code & 0x1ff,
 				attr&0x1f,
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr cshooter_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cshooter_txram[offset] = data;

@@ -23,7 +23,7 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = iqblock_bgvideoram[tile_index] + (iqblock_bgvideoram[tile_index + 0x800] << 8);
 		SET_TILE_INFO(
@@ -31,9 +31,9 @@ public class iqblock
 				code &(iqblock_vidhrdw_type ? 0x1fff : 0x3fff),
 				iqblock_vidhrdw_type? (2*(code >> 13)+1) : (4*(code >> 14)+3),
 				0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = iqblock_fgvideoram[tile_index];
 		SET_TILE_INFO(
@@ -41,7 +41,7 @@ public class iqblock
 				code & 0x7f,
 				(code & 0x80) ? 3 : 0,
 				0)
-	}
+	} };
 	
 	
 	

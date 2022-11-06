@@ -18,7 +18,7 @@ public class ninjakid
 	 Tilemap Callbacks
 	*******************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index){
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) {
 		unsigned int tile_number = videoram.read(tile_index)& 0xFF;
 		unsigned char attr  = videoram.read(tile_index+0x400);
 		tile_number += (attr & 0x20) << 3; /* bank */
@@ -27,9 +27,9 @@ public class ninjakid
 				tile_number,
 				(attr&0xf),
 				0)
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index){
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) {
 		unsigned int tile_number = videoram.read(tile_index+0x800)& 0xFF;
 		unsigned char attr  = videoram.read(tile_index+0xc00);
 		tile_number += (attr & 0xC0) << 2; /* bank */
@@ -38,7 +38,7 @@ public class ninjakid
 				tile_number,
 				(attr&0xf),
 				0)
-	}
+	} };
 	
 	public static WriteHandlerPtr ninjakid_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		videoram.write(offset,data);

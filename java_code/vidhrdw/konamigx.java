@@ -22,7 +22,7 @@ public class konamigx
 	
 	static void (*game_tile_callback)(int, int *, int *);
 	
-	static void get_gx_psac_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_gx_psac_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour, flipx;
 		data16_t *map16 = (data16_t *)gx_psacram;
@@ -32,9 +32,9 @@ public class konamigx
 		flipx = 0;
 	
 		SET_TILE_INFO(0, tileno, colour, TILE_FLIPYX(flipx))
-	}
+	} };
 	
-	static void get_gx_psac3_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_gx_psac3_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour;
 		unsigned char *tmap = memory_region(REGION_GFX4);
@@ -43,9 +43,9 @@ public class konamigx
 		colour = (psac_colorbase << 4);
 	
 		SET_TILE_INFO(0, tileno, colour, 0)
-	}
+	} };
 	
-	static void get_gx_psac1a_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_gx_psac1a_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour, flip;
 		data8_t *map = (data8_t *)&gx_psacram[tile_index*8];
@@ -61,9 +61,9 @@ public class konamigx
 		if (map[7] & 0x40) flip |= TILE_FLIPY;
 	
 		SET_TILE_INFO(1, tileno, colour, flip)
-	}		 
+	} };		 
 	
-	static void get_gx_psac1b_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_gx_psac1b_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno, colour, flip;
 		data8_t *map = (data8_t *)&gx_psacram[tile_index*8];
@@ -79,7 +79,7 @@ public class konamigx
 		if (map[7] & 0x10) flip |= TILE_FLIPY;
 	
 		SET_TILE_INFO(0, tileno, colour, flip)
-	}
+	} };
 	
 	static void konamigx_type2_tile_callback(int layer, int *code, int *color)
 	{

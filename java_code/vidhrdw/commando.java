@@ -29,7 +29,7 @@ public class commando
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -40,9 +40,9 @@ public class commando
 				code + ((color & 0xc0) << 2),
 				color & 0x0f,
 				TILE_FLIPYX((color & 0x30) >> 4))
-	}
+	} };
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -53,7 +53,7 @@ public class commando
 				code + ((color & 0xc0) << 2),
 				color & 0x0f,
 				TILE_FLIPYX((color & 0x30) >> 4))
-	}
+	} };
 	
 	
 	/***************************************************************************

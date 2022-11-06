@@ -30,7 +30,7 @@ public class quizdna
 	static int quizdna_video_enable;
 	
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = quizdna_bg_ram[tile_index*2] + quizdna_bg_ram[tile_index*2+1]*0x100 ;
 		int col = quizdna_bg_ram[tile_index*2+0x1000] & 0x7f;
@@ -39,9 +39,9 @@ public class quizdna
 			code &= 0x83ff;
 	
 		SET_TILE_INFO(1, code, col, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code,col,x,y;
 		data8_t *FG = memory_region(REGION_USER1);
@@ -58,7 +58,7 @@ public class quizdna
 		col = (col & 3) | ((col & 4) << 1);
 	
 		SET_TILE_INFO(0, code, col, 0)
-	}
+	} };
 	
 	
 	public static VideoStartHandlerPtr video_start_quizdna  = new VideoStartHandlerPtr() { public int handler(){

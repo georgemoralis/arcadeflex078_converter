@@ -82,7 +82,7 @@ public class suprloco
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char attr = suprloco_videoram[2*tile_index+1];
 		SET_TILE_INFO(
@@ -91,7 +91,7 @@ public class suprloco
 				(attr & 0x1c) >> 2,
 				0)
 		tile_info.priority = (attr & 0x20) >> 5;
-	}
+	} };
 	
 	
 	

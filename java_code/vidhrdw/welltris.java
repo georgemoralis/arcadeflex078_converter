@@ -199,7 +199,7 @@ public class welltris
 		}
 	}
 	
-	static void get_welltris_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_welltris_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 code = welltris_charvideoram[tile_index];
 		int bank = (code & 0x1000) >> 12;
@@ -209,7 +209,7 @@ public class welltris
 				(code & 0x0fff) + (gfxbank[bank] << 12),
 				((code & 0xe000) >> 13) + (8 * charpalettebank),
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( welltris_charvideoram_w )
 	{

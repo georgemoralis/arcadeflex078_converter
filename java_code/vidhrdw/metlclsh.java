@@ -83,10 +83,10 @@ public class metlclsh
 		return	(row & 7) + ((row & ~7) << 4) + ((col & 0xf) << 3) + ((col & ~0xf) << 4);
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		SET_TILE_INFO(1, metlclsh_bgram[tile_index] + (metlclsh_gfxbank << 7),0,0)
-	}
+	} };
 	
 	public static WriteHandlerPtr metlclsh_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	This ram is banked: it's either the tilemap (e401 = 1)
@@ -126,13 +126,13 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data8_t code = metlclsh_fgram[tile_index + 0x000];
 		data8_t attr = metlclsh_fgram[tile_index + 0x400];
 		SET_TILE_INFO(2, code + ((attr & 0x03) << 8), (attr >> 5) & 3, 0)
 		tile_info.priority = ((attr & 0x80) ? 1 : 2);
-	}
+	} };
 	
 	public static WriteHandlerPtr metlclsh_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (metlclsh_fgram[offset] != data)

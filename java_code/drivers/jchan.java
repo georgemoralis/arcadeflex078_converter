@@ -438,14 +438,14 @@ public class jchan
 	}
 	
 	
-	static void get_jchan_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_jchan_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tileno;
 	
 		tileno = jchan_videoram[tile_index*2];
 	
 		SET_TILE_INFO(0,tileno,0,0)
-	}
+	} };
 	
 	WRITE16_HANDLER( jchan_videoram_w )
 	{

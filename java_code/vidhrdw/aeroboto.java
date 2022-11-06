@@ -29,7 +29,7 @@ public class aeroboto
 	
 	***************************************************************************/
 	
-	static void get_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		unsigned char code = aeroboto_videoram[tile_index];
 		SET_TILE_INFO(
@@ -37,7 +37,7 @@ public class aeroboto
 				code + (aeroboto_charbank << 8),
 				aeroboto_tilecolor[code],
 				(aeroboto_tilecolor[code] >= 0x33) ? 0 : TILE_IGNORE_TRANSPARENCY)
-	}
+	} };
 	// transparency should only affect tiles with color 0x33 or higher
 	
 	

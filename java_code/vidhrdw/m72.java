@@ -115,35 +115,35 @@ public class m72
 	}
 	
 	
-	static void m72_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr m72_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		m72_get_tile_info(tile_index,m72_videoram2,2);
-	}
+	} };
 	
-	static void m72_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr m72_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		m72_get_tile_info(tile_index,m72_videoram1,1);
-	}
+	} };
 	
-	static void hharry_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr hharry_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		m72_get_tile_info(tile_index,m72_videoram2,1);
-	}
+	} };
 	
-	static void hharry_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr hharry_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		m72_get_tile_info(tile_index,m72_videoram1,1);
-	}
+	} };
 	
-	static void rtype2_get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr rtype2_get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		rtype2_get_tile_info(tile_index,m72_videoram2,1);
-	}
+	} };
 	
-	static void rtype2_get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr rtype2_get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		rtype2_get_tile_info(tile_index,m72_videoram1,1);
-	}
+	} };
 	
 	
 	static UINT32 majtitle_scan_rows( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )

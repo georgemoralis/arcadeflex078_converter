@@ -88,7 +88,7 @@ public class ginganin
 	#define BG_NX  (16*32)
 	#define BG_NY  (16*2)
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code = memory_region(REGION_GFX5)[2*tile_index + 0] * 256 + memory_region(REGION_GFX5)[2*tile_index + 1];
 		SET_TILE_INFO(
@@ -96,7 +96,7 @@ public class ginganin
 				code,
 				code >> 12,
 				0)
-	}
+	} };
 	
 	
 	/* Foreground - Resides in RAM */
@@ -105,7 +105,7 @@ public class ginganin
 	#define FG_NX  (16*16)
 	#define FG_NY  (16*2)
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = ginganin_fgram16[tile_index];
 		SET_TILE_INFO(
@@ -113,7 +113,7 @@ public class ginganin
 				code,
 				code >> 12,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( ginganin_fgram16_w )
 	{
@@ -130,7 +130,7 @@ public class ginganin
 	#define TXT_NX	(32)
 	#define TXT_NY	(32)
 	
-	static void get_txt_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_txt_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		data16_t code = ginganin_txtram16[tile_index];
 		SET_TILE_INFO(
@@ -138,7 +138,7 @@ public class ginganin
 				code,
 				code >> 12,
 				0)
-	}
+	} };
 	
 	WRITE16_HANDLER( ginganin_txtram16_w )
 	{

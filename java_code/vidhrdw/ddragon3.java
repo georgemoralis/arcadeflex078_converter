@@ -83,16 +83,16 @@ public class ddragon3
 		}
 	}
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT16 attr = ddragon3_bg_videoram16[tile_index];
 		int code = (attr & 0x0fff) | ((ddragon3_bg_tilebase & 0x01) << 12);
 		int color = ((attr & 0xf000) >> 12) + 16;
 	
 		SET_TILE_INFO(0, code, color, 0)
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int offs = tile_index * 2;
 		UINT16 attr = ddragon3_fg_videoram16[offs];
@@ -101,7 +101,7 @@ public class ddragon3
 		int flags = (attr & 0x40) ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(0, code, color, flags);
-	}
+	} };
 	
 	public static VideoStartHandlerPtr video_start_ddragon3  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,

@@ -26,7 +26,7 @@ public class sprint8
 	static struct mame_bitmap* helper2;
 	
 	
-	static void get_tile_info1(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info1 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = sprint8_video_ram[tile_index];
 	
@@ -53,10 +53,10 @@ public class sprint8
 		}
 	
 		SET_TILE_INFO(code >> 7, code, color, (code & 0x40) ? (TILE_FLIPX | TILE_FLIPY) : 0)
-	}
+	} };
 	
 	
-	static void get_tile_info2(int tile_index)
+	public static GetTileInfoHandlerPtr get_tile_info2 = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		UINT8 code = sprint8_video_ram[tile_index];
 	
@@ -72,7 +72,7 @@ public class sprint8
 		}
 	
 		SET_TILE_INFO(code >> 7, code, color, (code & 0x40) ? (TILE_FLIPX | TILE_FLIPY) : 0)
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr sprint8_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){

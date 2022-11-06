@@ -31,7 +31,7 @@ public class vastar
 	
 	***************************************************************************/
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -42,9 +42,9 @@ public class vastar
 				code,
 				color & 0x3f,
 				0)
-	}
+	} };
 	
-	static void get_bg1_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg1_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -55,9 +55,9 @@ public class vastar
 				code,
 				color & 0x3f,
 				0)
-	}
+	} };
 	
-	static void get_bg2_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg2_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, color;
 	
@@ -68,7 +68,7 @@ public class vastar
 				code,
 				color & 0x3f,
 				0)
-	}
+	} };
 	
 	
 	/***************************************************************************

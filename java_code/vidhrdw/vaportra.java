@@ -51,7 +51,7 @@ public class vaportra
 	
 	
 	/* 8x8 top layer */
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int tile=vaportra_pf1_data[tile_index];
 		int color=tile >> 12;
@@ -63,7 +63,7 @@ public class vaportra
 				tile,
 				color,
 				0)
-	}
+	} };
 	
 	/******************************************************************************/
 	

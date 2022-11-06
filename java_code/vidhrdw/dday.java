@@ -181,32 +181,32 @@ public class dday
 	
 	***************************************************************************/
 	
-	static void get_bg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_bg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 	
 		code = dday_bgvideoram[tile_index];
 		SET_TILE_INFO(0, code, code >> 5, 0);
-	}
+	} };
 	
-	static void get_fg_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_fg_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, flipx;
 	
 		flipx = dday_colorram[tile_index & 0x03e0] & 0x01;
 		code = dday_fgvideoram[flipx ? tile_index ^ 0x1f : tile_index];
 		SET_TILE_INFO(2, code, code >> 5, flipx ? TILE_FLIPX : 0);
-	}
+	} };
 	
-	static void get_text_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_text_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code;
 	
 		code = dday_textvideoram[tile_index];
 		SET_TILE_INFO(1, code, code >> 5, 0)
-	}
+	} };
 	
-	static void get_sl_tile_info(int tile_index)
+	public static GetTileInfoHandlerPtr get_sl_tile_info = new GetTileInfoHandlerPtr() { public void handler(int tile_index) 
 	{
 		int code, sl_flipx, flipx;
 		UINT8* sl_map;
@@ -231,7 +231,7 @@ public class dday
 		}
 	
 		SET_TILE_INFO(3, code & 0x3f, 0, flipx ? TILE_FLIPX : 0)
-	}
+	} };
 	
 	
 	/***************************************************************************
